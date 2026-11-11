@@ -364,3 +364,6 @@ Follow-up to HTTP error redaction: validate only the envelope types consumed by 
 
 ## W8.1 案件大厅最小闭环（2026-11-12）
 复用 GET /cases 摘要合同；不新增后端接口。不包含新建、编辑或 .mcase 导入导出。修改共享 Layout/caseContext/main/routes 接入列表与案件切换；仅已支持案件上下文的页面保留 case 参数，Outlet 按案件与身份隔离重新挂载，防止旧页面状态跨案残留。未知/未加载的案件不标为真实报告来源。独立验收前标记待测。
+
+## W13.2 proposal: reject malformed new replay intents before queue insertion
+Against main b6fc86c. Cross-package edit: service sim/router.py and contracts/CONTRACTS.md. Existing command schema is permissive; tighten new POST /sim/commands inputs to the already accepted ReplayCommandAdapter parameters. This intentionally changes malformed requests from 201 to 422. Keep all valid wire payloads, state telemetry rate range, historical command rows, audit history, cursor/ACK/restart behavior unchanged. A focus callback may still be unavailable or fail: this validation is not a delivery or execution guarantee. No remote publication or merge in this review task.
