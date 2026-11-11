@@ -1,0 +1,7 @@
+.........                                                                [100%]
+9 passed in 0.13s
+Current CLI compiled inputs: 56 (55 source + csproj); no RestHours paths
+tools/mcis-core/out/mcis-core.dll f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf
+service/mcis_service/analysis/data/w12-analysis-seed.json 988e9abd3b39959864f42912d8d3454dacd7821156fd8b21268631f30f4693e3
+RestHours SHA256 before/after full service regression unchanged: de85a06bb13428798147bf3268b6ac3b618cb65511ce04e70267bf8d633852e2
+After full service regression: active DLL SHA256 still matches seed provenance.

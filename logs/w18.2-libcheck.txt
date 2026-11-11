@@ -1,0 +1,7 @@
+  W18.HF -> /workspace/scratch/d5cd4f6afdb1/mcis-work/unity/Tests_W18_HF/bin/Debug/netstandard2.1/Mcis.W18.HF.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.91

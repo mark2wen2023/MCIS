@@ -46,3 +46,6 @@
 - W6核心/静态99/99重跑；W12独立21/21，来源工具9项；报告Web148断言；当前新seed跨页浏览器35/35无JS/console/HTTP错误。
 - W12旧Layout硬编码架构断言改为实际effect的14路由/失败场景，保留原用例及analysis专属fallback要求；未改数值断言。
 详见 current-core-seed-candidate.md、current-core-independent-review.md、current-core-service-configured-pytest.txt、current-core-browser-summary.md。
+
+## W18.2后整合复验
+W18.2 D08独立101/101、自测100/100后，针对改动后树重新跑完整service：**316 passed，66.24s**；来源工具9/9。RestHours不在CLI的55源码输入中，运行前后文件冻结一致，DLL/seed保持已审查身份。见w18.2-service-regression.txt、w18.2-provenance-regression.txt。没有将前一树的316结果冒充新树复验。

@@ -61,10 +61,9 @@ namespace Mcis.Acceptance.W18
         /// 但该窗口与更早的确定违规对齐窗口相邻，整组被记为违规，边界窗口没有 InsufficientData 痕迹。
         /// </summary>
         [Fact]
-        [Trait("Category", "KnownDefect")]
         public void W18_D08_EdgeWindow_AbsorbedIntoAdjacentViolationGroup()
         {
-            // 期望（尚未实现）：记录尾−24h 窗口结论取决于被截断的 5h59m 段，应进 InsufficientData，不应被相邻确定违规组吞掉。
+            // W18.2独立验收已验证：记录尾−24h 窗口结论取决于被截断的 5h59m 段，应进 InsufficientData，不应被相邻确定违规组吞掉。
             var rep = Check(FromMinutes(48 * 60, (4 * 60, 10 * 60), (42 * 60 + 1, 48 * 60)), RestOnly());
             var t24 = T0.AddHours(24);
             Assert.Contains(rep.InsufficientData, v => v.Rule == RestRule.LongestRest && v.ViolatingFrom <= t24 && t24 <= v.ViolatingTo);
@@ -179,18 +178,10 @@ namespace Mcis.Acceptance.W18
                 {
                     var hitI = insuff.Where(v => Minutes(v.ViolatingFrom - T0) <= tm && tm <= Minutes(v.ViolatingTo - T0)).ToList();
                     var hitV = viol.Where(v => Minutes(v.ViolatingFrom - T0) <= tm && tm <= Minutes(v.ViolatingTo - T0)).ToList();
-                    if (hitI.Count > 0)
-                    {
-                        Assert.Empty(hitV);
-                    }
-                    else
-                    {
-                        // W18-D08：悲观独有窗口所在组若与确定违规组按 [From, To+24h) 重叠，整组不进 InsufficientData；
-                        // 公布的违规范围可能不含该窗口，于是被静默丢弃。相交被截断的记录边界休息段的窗口都会受影响。
-                        bool overlapsViol = viol.Any(v =>
-                            Minutes(v.ViolatingFrom - T0) < tm + 24 * 60 && tm < Minutes(v.ViolatingTo - T0) + 24 * 60);
-                        Assert.True(overlapsViol, "C# 漏报数据不足 " + ctx + " " + Describe(rep));
-                    }
+                    // W18.2: every pessimistic-only window must remain visible;
+                    // overlap with a neighbouring definite group is not an exemption.
+                    Assert.True(hitI.Count > 0, "C# 漏报数据不足 " + ctx + " " + Describe(rep));
+                    Assert.Empty(hitV);
                 }
                 else
                 {

@@ -285,3 +285,6 @@ W12.1独立验收发现冻结seed的notes仍写“本案未接入服务数据库
 
 ### 当前 CLI 基线纳入与完整复验完成
 独立审查确认当前 Linux / SDK 8.0.428 多临时路径构建一致，原 build_seed 真正重算，14539 数值逐项相同且仅时间/DLL SHA变化。将原 seed+旁注逐字节归档至 service/mcis_service/analysis/data/history/w12-original-20261111/（附恢复说明），安装已审查候选并由新 wrapper 重建 DLL；不改历史冻结清单/数值断言。完整服务首次315过1败为mcis-compat依赖DOTNET_ROOT未配置，保留日志；正确配置同一SDK重跑316/316通过。W12+provenance30/30、独立W12 21/21、报告前端148断言通过。详见 logs/current-core-seed-candidate.md 及 installed-provenance.json。未部署、未合并，提交由主控处理。
+
+## W18.2 D08 实现登记（续作）
+按 DEFECTS/W18.md 21:49 裁定，修改已冻结的 `Domain/HumanFactors/RestHours.cs`：拆分规则的乐观/悲观视图按相同候选窗口先分类，再分别归组，避免边界截断导致的数据不足窗口被相邻确定违规组吞掉。总量/间隔规则不改变。Assumptions补齐指定记录首/尾窗口说明；新增实施自测，保留既有D08及220组独立参考、真实案例回归。无公共API/schema变化，不修改W14/W12来源链；实现后另冻结并交独立验收。

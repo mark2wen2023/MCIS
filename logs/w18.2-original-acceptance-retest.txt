@@ -1,0 +1,10 @@
+/workspace/scratch/d5cd4f6afdb1/mcis-work/tests_acceptance/W18/W18.Acceptance.csproj : warning NU1900: Error occurred while getting package vulnerability data: Read-only file system : '/home/agent/.local/share/NuGet/http-cache/670c1461c29885f9aa22c281d8b7da90845b38e4$ps:_api.nuget.org_v3_index.json/vuln_index.dat-new'
+  W18.Acceptance -> /workspace/scratch/d5cd4f6afdb1/mcis-work/tests_acceptance/W18/bin/Debug/net8.0/W18.Acceptance.dll
+Test run for /workspace/scratch/d5cd4f6afdb1/mcis-work/tests_acceptance/W18/bin/Debug/net8.0/W18.Acceptance.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    97, Skipped:     0, Total:    97, Duration: 36 s - W18.Acceptance.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

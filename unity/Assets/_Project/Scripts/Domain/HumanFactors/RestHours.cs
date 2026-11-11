@@ -560,9 +560,13 @@ namespace Mcis.Domain.HumanFactors
         public const string UnknownAndRecordEdges =
             "未标注时段与被记录首尾截断的休息段：结论取决于它们时列为“数据不足”（乐观视图仍违规才列为违规）。";
 
+        /// <summary>W18.2：记录边界额外候选窗口及不确定性披露。</summary>
+        public const string SplitRecordEdges =
+            "拆分规则另评估记录首窗口和记录尾−24h 窗口；被记录边界截断的休息段按可见长度计，并标注数据不足。";
+
         public static List<string> CreateDefaultList()
         {
-            return new List<string> { TotalRuleStrictAnyWindow, SplitRuleByFullSegment, IntervalRule, UnknownAndRecordEdges };
+            return new List<string> { TotalRuleStrictAnyWindow, SplitRuleByFullSegment, IntervalRule, UnknownAndRecordEdges, SplitRecordEdges };
         }
     }
 
@@ -668,15 +672,27 @@ namespace Mcis.Domain.HumanFactors
                 Optimistic = false
             };
 
-            List<RestHourViolation> violations = Evaluate(optimistic);
+            List<RestHourViolation> violations = Evaluate(optimistic, alignedWith: pessimistic);
             var insufficient = new List<RestHourViolation>();
-            foreach (RestHourViolation p in Evaluate(pessimistic))
+            foreach (RestHourViolation p in Evaluate(pessimistic, includeSplit: false))
             {
                 if (!violations.Any(o => o.Rule == p.Rule && Overlaps(o, p)))
                 {
                     insufficient.Add(new RestHourViolation(p.Rule, p.WindowStart, p.WindowEnd, p.Actual, p.Limit, p.ViolatingFrom, p.ViolatingTo, p.Clause,
                         "数据不足：结论取决于未标注时段或被记录边界截断的休息段（按不利情形）——" + p.Detail));
                 }
+            }
+
+            // Split rules must classify each aligned window before grouping. A pessimistic-only
+            // edge window can overlap the time span of a definite group without being definite.
+            // The existing whole-group overlap policy is retained only for rolling/interval rules.
+            var uncertainSplit = new List<RestHourViolation>();
+            CheckSplit(pessimistic, uncertainSplit, optimistic, alignedWith: optimistic);
+            foreach (RestHourViolation p in uncertainSplit)
+            {
+                insufficient.Add(new RestHourViolation(p.Rule, p.WindowStart, p.WindowEnd, p.Actual, p.Limit,
+                    p.ViolatingFrom, p.ViolatingTo, p.Clause,
+                    "数据不足：结论取决于未标注时段或被记录边界截断的休息段（按不利情形）——" + p.Detail));
             }
 
             TimeSpan totalRest = SumKind(s.RestPeriods, s.RecordStart, s.RecordEnd);
@@ -686,7 +702,7 @@ namespace Mcis.Domain.HumanFactors
             return Result<RestHourReport>.Ok(report);
         }
 
-        private List<RestHourViolation> Evaluate(View v)
+        private List<RestHourViolation> Evaluate(View v, bool includeSplit = true, View alignedWith = null)
         {
             var violations = new List<RestHourViolation>();
             CheckRolling(v, DutyKind.Rest, TimeSpan.FromHours(24), _rules.MinRestPer24h, RestRule.Rest24h, "STCW A-VIII/1 §2.1 / MLC A2.3 §5(b)(i)", violations);
@@ -697,7 +713,10 @@ namespace Mcis.Domain.HumanFactors
                 CheckRolling(v, DutyKind.Work, TimeSpan.FromDays(7), _rules.MaxWorkPer7d, RestRule.Work7d, "MLC A2.3 §5(a)(ii)", violations);
             }
 
-            CheckSplit(v, violations);
+            if (includeSplit)
+            {
+                CheckSplit(v, violations, alignedWith: alignedWith);
+            }
             CheckIntervals(v, violations);
             return violations;
         }
@@ -875,7 +894,7 @@ namespace Mcis.Domain.HumanFactors
         /// 乐观视图下触及记录首/尾的休息段真实长度未知，视为足够长；悲观视图按观测长度。
         /// 候选起点按时间排序后，相邻的违规窗口归为一组：ViolatingFrom/To = 组内首/末窗口起点，最差窗口取值最小者（同值取最早）。
         /// </summary>
-        private void CheckSplit(View s, List<RestHourViolation> outViolations)
+        private void CheckSplit(View s, List<RestHourViolation> outViolations, View optimistic = null, View alignedWith = null)
         {
             TimeSpan windowLength = TimeSpan.FromHours(24);
             DateTimeOffset last = s.RecordEnd - windowLength;
@@ -885,7 +904,10 @@ namespace Mcis.Domain.HumanFactors
             }
 
             var starts = new SortedSet<DateTimeOffset> { s.RecordStart, last };
-            foreach (DutyInterval p in s.Rest)
+            // Unknown intervals may merge/split rest periods differently between views.
+            // Use their union so neither emitted group can bridge an opposite-class window.
+            IEnumerable<DutyInterval> alignedRests = alignedWith == null ? s.Rest : s.Rest.Concat(alignedWith.Rest);
+            foreach (DutyInterval p in alignedRests)
             {
                 AddCandidate(starts, p.Start, s.RecordStart, last);
                 AddCandidate(starts, p.End, s.RecordStart, last);
@@ -898,6 +920,10 @@ namespace Mcis.Domain.HumanFactors
                 stats.Add(Stats(s, t, windowLength));
             }
 
+            // In the uncertain pass, compare optimistic and pessimistic statistics at the
+            // exact same candidate start, not the overlapping span of their emitted groups.
+            var optimisticStats = optimistic == null ? null : pts.Select(t => Stats(optimistic, t, windowLength)).ToList();
+            bool optimisticHasRest = optimistic != null && optimistic.Rest.Count > 0;
             bool hasRest = s.Rest.Count > 0;
             TimeSpan minLongest = _rules.MinLongestRestPeriod;
             TimeSpan minRest = _rules.MinRestPer24h;
@@ -905,12 +931,14 @@ namespace Mcis.Domain.HumanFactors
                 st => hasRest && st.Longest < minLongest,
                 st => st.Longest,
                 (st, t) => string.Format("窗口 {0} ~ {1}（对齐休息段起止点，相交段按完整长度计）：最长休息段 {2}，低于最短单段 {3}", Utc(t), Utc(t + windowLength), Hm(st.Longest), Hm(minLongest)),
-                outViolations);
+                outViolations,
+                i => optimisticStats == null || !(optimisticHasRest && optimisticStats[i].Longest < minLongest));
             EmitAlignedGroups(pts, stats, windowLength, RestRule.RestSplit, minRest,
                 st => st.Total >= minRest && st.TopN < minRest,
                 st => st.TopN,
                 (st, t) => string.Format("窗口 {0} ~ {1}（对齐休息段起止点，相交段按完整长度计）：休息段合计 {2} 充足但最长 {4} 段之和 {3} 不足 {5}", Utc(t), Utc(t + windowLength), Hm(st.Total), Hm(st.TopN), _rules.MaxRestPeriodsPer24h, Hm(minRest)),
-                outViolations);
+                outViolations,
+                i => optimisticStats == null || !(optimisticStats[i].Total >= minRest && optimisticStats[i].TopN < minRest));
         }
 
         private struct SplitStats
@@ -968,12 +996,13 @@ namespace Mcis.Domain.HumanFactors
             Func<SplitStats, bool> violates,
             Func<SplitStats, TimeSpan> value,
             Func<SplitStats, DateTimeOffset, string> detail,
-            List<RestHourViolation> outViolations)
+            List<RestHourViolation> outViolations,
+            Func<int, bool> includeWindow)
         {
             int g = -1;
             for (int i = 0; i <= pts.Count; i++)
             {
-                bool v = i < pts.Count && violates(stats[i]);
+                bool v = i < pts.Count && violates(stats[i]) && includeWindow(i);
                 if (v && g < 0)
                 {
                     g = i;
