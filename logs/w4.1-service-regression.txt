@@ -1,0 +1,9 @@
+........................................................................ [ 19%]
+........................................................................ [ 39%]
+........................................................................ [ 59%]
+........................................................................ [ 79%]
+........................................................................ [ 99%]
+...                                                                      [100%]
+363 passed in 79.52s (0:01:19)
+
+Context: W4.1 final frozen tree; full service directory including new preview tests; official SDK8.0.428 Linux x64, persistent MCIS_DOTNET/DOTNET_ROOT/DOTNET_CLI_HOME. All 13 frozen hashes and existing core/seed/other contracts verified unchanged before/after.

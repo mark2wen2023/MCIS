@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useSyncExternalStore } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import type { EChartsOption } from 'echarts'
-import { api, casePath, CASE_ID } from '../api'
+import { api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
+import { AlignPreviewPanel } from '../align/AlignPreviewPanel'
 import { SERVICE_ADDR } from '../config'
 import { EChart } from '../components/EChart'
 import { Metric, Panel } from '../components/Panel'
@@ -38,12 +39,15 @@ export async function loadEvidenceCpa(caseId: string) {
   return { ...result, status: 'calculated' as const }
 }
 
+const evidenceIdentity = () => `${getRole()}\n${getOperator()}`
+
 export function EvidencePage() {
+  const who = useSyncExternalStore(onIdentityChange, evidenceIdentity, evidenceIdentity)
   const [params] = useSearchParams()
   const caseId = params.get('case') || CASE_ID
   const requestedId = params.get('id') || ''
   // A case/query boundary unmounts the old loaders and all mutation forms.
-  return <EvidenceCasePage key={`${caseId}:${requestedId}`} caseId={caseId} requestedId={requestedId} />
+  return <EvidenceCasePage key={`${caseId}:${requestedId}:${who}`} caseId={caseId} requestedId={requestedId} />
 }
 
 function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId: string }) {
@@ -78,7 +82,7 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
   }
 
   return (
-    <div>
+    <div className="w4-page">
       <div className="page-head">
         <div>
           <div className="page-title">证据中心 · 保管链与时间冲突 <span className="p6-tag">{caseRes.data ? (caseRes.data.isFictionalDemo ? '示例数据（虚构）' : '真实案例（公开报告）') : '案件信息加载中'}</span><span className="p6-tag cyan">LIVE · {SERVICE_ADDR}</span></div>
@@ -93,10 +97,15 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
         </div>
       </div>
 
+      <details className="w4-preview-disclosure">
+        <summary>临时CSV预览，未入库</summary>
+        <AlignPreviewPanel caseId={caseId} />
+      </details>
+
       {requestedId && ev.data && !sel && <div className="p6-note">当前案件未找到指定证据 {requestedId}，未替换为其他证据。</div>}
       {(ev.error || tl.error) && <div className="p6-card" style={{ borderColor: 'var(--red)', marginBottom: 12 }}>后端错误：{ev.error ?? tl.error}</div>}
 
-      <div className="grid" style={{ gridTemplateColumns: 'repeat(6, 1fr)', marginBottom: 12 }}>
+      <div className="grid w4-metrics" style={{ marginBottom: 12 }}>
         <Metric label="证据条目" value={counts.total} unit="条" />
         <Metric label="哈希校验一致" value={counts.verified} unit={`/ ${counts.total}`} tone="green" />
         <Metric label="需复核" value={counts.review} unit="条" tone="amber" />
@@ -105,7 +114,7 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
         <Metric label="未决时间冲突" value={counts.openConflicts} unit={`/ ${(conflicts.data ?? []).length}`} tone={counts.openConflicts ? 'red' : 'green'} />
       </div>
 
-      <div className="grid" style={{ gridTemplateColumns: '7fr 5fr', marginBottom: 12 }}>
+      <div className="grid w4-columns" style={{ marginBottom: 12 }}>
         <Panel title="证据清单（Evidence Register）" meta={<><span>caseId · EV-NNN</span><span>点击行查看保管链</span></>} bodyStyle={{ padding: 0, maxHeight: 300 }}>
           <table className="p6-table">
             <thead>
@@ -134,7 +143,7 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
         <CustodyPanel key={sel?.evidenceId || 'missing'} caseId={caseId} item={sel} events={custody.data?.evidenceId === sel?.evidenceId ? custody.data?.events ?? [] : []} onChanged={refreshEvidence} />
       </div>
 
-      <div className="grid" style={{ gridTemplateColumns: '7fr 5fr' }}>
+      <div className="grid w4-columns">
         <Panel title="事件时间线 · 冲突标注 · 两船距离" meta={<span>北京时间 UTC+8 · 源：/timeline + mcis-core cpa</span>} bodyStyle={{ padding: '4px 6px' }}>
           {cpa.data?.status === 'missing-tracks' && <div className="empty">轨迹数据不足：尚无两艘船的非空轨迹，CPA / 两船距离未运行。</div>}
           {cpa.error && <div className="empty">轨迹或 CPA 加载失败：{cpa.error}</div>}

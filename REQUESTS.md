@@ -336,3 +336,13 @@ W12.1独立验收发现冻结seed的notes仍写“本案未接入服务数据库
 - 独立验收文件不修改；实现新增自身回归测试，冻结后再独立复验。
 - W7.3独立补充验收登记：另增优先级/Unicode边界测试，不改8项红基线；未知/关闭轮次先于空白放弃理由、已有开放轮先于party错误、权限先于域空白校验，空reason仍结构422。仓库外离线net8 console实际核对IsNullOrWhiteSpace，与Python验收独立，锁风险仍仅源码评审且本片不修。
 - W7.3 Unicode边界：采用显式.NET Char.IsWhiteSpace字符集合，不用Python strip/isspace（后者还把U+001C..001F归空白）；加入合法控制字符与零宽空格原样保留的HTTP测试，不扩展拒绝范围。
+- W4.1独立验收准备：新tests_acceptance/W4覆盖case-scoped inline CSV预览安全边界；临时SQLite、自己创建的非敏感canary、调用spy及真实本地DLL分层记录，不修改实现。冻结前仅准备，真实执行结果另记；不把旧/core/align入口风险称为已修复。
+
+## W4.1 案件级 inline-only align 临时预览（2026-11-12）
+- 先新增typed schema/OpenAPI再实现新POST /cases/{caseId}/timeline/align-preview。仅内联CSV及显式列映射，逐层strict/extra forbid；固定align命令，不接受caseId/epoch/command/path/manualAnchors/未知参数。案件与纪元由服务load_case读取，timeline read权限足够，关闭只读session后计算。
+- 工程预算：最多4源，每源文本256KiB UTF8、总1MiB，每源16列，源ID64字符、列名128；非空/源ID唯一。kind限Heading/CourseOverGround/SpeedOverGround。CSV逗号、UTC（无offset按UTC）、scale1/offset0；使用者明确保证时间为UTC，不猜本地时区。calibrate=true，无锚点/未校准状态及错误必须显示，不承诺成功校准。
+- 响应明确previewOnly/persisted:false/current case与epoch，校验结果案件和全部冲突schema。未知基础设施错误不回显路径/stderr。无持久化、审计、冲突采纳或人工复核覆盖；旧裸/core/align完全不改，不能把新代理说成整个服务路径漏洞已修。
+- Evidence整页身份/案件重挂载失效旧数据、表单和响应；独立局部预览面板读取实际policy，失败禁用，RO可预览。修改已冻EvidencePage需后续全web/关联页回归；如静态断言与新身份key冲突仅强化改写，不删测试。
+- W4.1关联页静态断言按原规则强化：Evidence和Recommendations均要求case/id/identity key，不删除原断言；相应test文件纳入新冻结。此为新增整页权限隔离接线，不改变原报告引用目标逻辑。
+- W4.1局部响应式：Evidence原两列/六指标改局部class，w4.css只对当前路由折叠及顶栏换行，保留所有内容；不改共享styles或旧写操作。
+- W4.1根布局审查返工：预览长表单不能默认挤走原证据KPI/清单。Evidence仅将新增工具包在原生details默认收起，summary『临时CSV预览，未入库』；展开后原计算/权限状态不变。原13项冻结保留before-collapse，重跑web/build后重新冻结。

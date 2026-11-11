@@ -1,0 +1,21 @@
+BEFORE: all 13 W4.1 freeze entries match. Existing core/seed and contracts outside authorized freeze equal HEAD. Authorized schema/OpenAPI changes checked against new freeze.
+{
+  "contracts/schemas/align-preview.schema.json": "7f6e2c46b2e9335e0d397f3e94d2ac430265ad42ebe4ffb827de169cae3cb26b",
+  "contracts/openapi.yaml": "b5f66b562fe292648b56409172f7e356a2f552edd72ec90ee2c4a6aa51d16d06",
+  "service/mcis_service/timeline/align_preview.py": "00395156c1c85be5b47bcaa766060065758f935e1f3c5626b2d92f51e2ccc771",
+  "service/mcis_service/timeline/router.py": "d5ef3f7aaf4a1a329079344b114d3532fae3c04d9dbbc6332eae849b04735d6a",
+  "service/tests/test_align_preview_w41.py": "8b5d8118b5f6bf084a193e058f40709e79db664e9731dbc72b0e71cb777c5df3",
+  "web/src/pages/EvidencePage.tsx": "f5fff695fd0eca753da5173b4b2ec9bd03046152accdef5072c1a2dbbef8b084",
+  "web/src/align/AlignPreviewPanel.tsx": "dd4eacbcd558eb2d0c409b0e8490e13faa5d9e56de94e8b7710fdd9fe3b8055c",
+  "web/src/align/model.ts": "30b952f2f314f7043f1c35873973e061a9bc7d40bb5287f5a58c75ca0b4f5080",
+  "web/src/align/types.ts": "82f8fc9403ac10d0057b216f064e04534c0361bc5e67f16190a17371fa9683a3",
+  "web/src/styles/w4.css": "9414a03f4248edf5606f29ae40c0deece915e2d6e2219e803b1413a095906493",
+  "web/tests/align-preview-w41.test.tsx": "2d352f6bfbbfea3a34461c43ae29665d5c3c62045b0bdc92acd499b90b003c4c",
+  "web/tests/run-align-preview-w41.sh": "30418d2175638bb272d22de4c6e86f58b9ca9864128e01f48f8ba05d5111b68b",
+  "web/tests/case-linked-pages.test.tsx": "4807df6878c9cd5018306a4716957c40db5cbb3378781cecbdc9e692f7f4b03d"
+}
+.........                                                                [100%]
+9 passed in 0.19s
+AFTER: all 210 recorded inputs unchanged, including 13 W4.1 frozen files.
+Snapshot SHA256: 6261c456499ad406b5508c6587574790aa23c113141ee40e95796d2be4a9c4d0
+Active DLL matches seed: f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf

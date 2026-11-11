@@ -1,0 +1,13 @@
+contracts/schemas/align-preview.schema.json: OK
+contracts/openapi.yaml: OK
+service/mcis_service/timeline/align_preview.py: OK
+service/mcis_service/timeline/router.py: OK
+service/tests/test_align_preview_w41.py: OK
+web/src/pages/EvidencePage.tsx: OK
+web/src/align/AlignPreviewPanel.tsx: OK
+web/src/align/model.ts: OK
+web/src/align/types.ts: OK
+web/src/styles/w4.css: OK
+web/tests/align-preview-w41.test.tsx: OK
+web/tests/run-align-preview-w41.sh: OK
+web/tests/case-linked-pages.test.tsx: OK

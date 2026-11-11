@@ -11,7 +11,7 @@
 | W1 | COLREG核心历史已验收；本轮真实CLI参与W6验收 | 非本轮完整W1套件复验；handoff §6 |
 | W2 | VDR/时间轴核心历史系列结案 | 证据页align接线仍归W4；handoff §6 |
 | W3 | 历史已验收；本轮按裁定调整可选字段断言后真实.NET 186/186 | 页面整体视觉另验；W5.1验收记录 |
-| W4 | 证据页面主体已有 | W2 align结果联动未完整接通；handoff §6 |
+| W4 | W4.1案件级inline CSV临时预览通过安全/真实DLL/浏览器验收，Evidence身份切换隔离强化 | 不采纳入库、不支持文件/锚点；完整源映射/重算合并/人工处理保留规则仍缺；旧裸align风险未修 |
 | W5 | 核心W5.1本轮47原验收+2加强回归通过，Python24、Web38通过 | 已有本地浏览器人物切换/笔录抽验，非移动端或全包视觉认证；tests_acceptance/W5/RETEST-20261111.md |
 | W6 | W6.2合同裁定落地并真实CLI 99项+网络4项通过，D06/D07关闭 | 原浏览器套件19/19（含4网络），与99核心合计118/118；tests_acceptance/W6/RETEST-20261111.md |
 | W7 | W7.1回复/采纳及W7.2默认30天新建、登记已确认放弃、关闭UI通过独立验收 | 四类后端输入规则已在W7.3对齐；自定义期限/跨客户端事务并发仍未做；无外部发送，不称整包/生产完成；logs/w7.2-browser-review.md |
@@ -99,3 +99,12 @@ D06保留并收紧为与0.01s暴扫绝对差≤0.1m。独立82/82、自测129/12
 - 最终完整service333/333（72.03s，新增17项），来源工具9；201保护输入及W7.3两项/W7.2八项冻结前后一致。
 - 撤回简单外层WRITE_LOCK方案：其它路由先持SQLite写事务再等audit锁，局部外锁会反向等待。此为静态调用顺序发现，未执行并发反例，未声称任何并发问题已修；需全事务入口一致协议另行设计。无合同字段/锁/UI/历史数据变更。
 - 证据：logs/w7.3-independent-green-review.md、w7.3-independent-contract-review.md、w7.3-service-regression.txt。图片仍只本地，未合并/部署。
+
+## W4.1 受限临时CSV预览
+- 新POST /cases/{caseId}/timeline/align-preview复用每案timeline读取权限；服务从URL/DB注入案号与UTC纪元，读session关闭后固定运行align。严格嵌套DTO与构建白名单，拒绝所有path/未知键/manualAnchors/自带案号纪元；不调用旧裸HTTP路由。
+- 支持Heading/COG（度）、SOG（节），逗号CSV、scale1/offset0，无时区按UTC解释，用户明确列映射及测量对象/单位，不猜两船关系或本地时区。最多4源、每源256KiB UTF8文本/总1MiB、16值列；这是文本预算，不是整个HTTP body上限。
+- 新工具默认折叠保留证据清单首屏；需要确认假设才计算。结果明确未入库、不改人工复核、不写审计，独立只读冲突表无采纳按钮。无锚点校准失败/未校准源、空钟差与诊断全部呈现，0冲突不等于一致/无风险。本片没有真正完成钟差校正。
+- 独立31项服务/安全/合同测试通过，含路径canary拒绝且未调核心、跨案独立权限、错误脱敏、真实DLL5°冲突/未校准。10套Web517断言/build；最终全服务363/363（79.52s）、来源9、210保护输入/13冻结前后一致。
+- 真浏览器最终35/35：实际COG5°及offsetless UTC、RO预览/Deny无控件、迟到旧案件/角色预览与旧Evidence数据不回填、UTF8字节限制、成功及错误全过程所有DB表每行完全不变、1440/768本地图检。Heading/SOG仅选项存在验证，不冒称三种数值都实测；operator-only无独立浏览器覆盖。早期测试选择器匹配填值label失败，DOM证据及历史留存，换稳定textarea/select定位后完整重跑，未放宽业务断言或改实现。
+- 仓库OpenAPI完整响应schema且运行时验证；live自动生成OpenAPI未声明完整200响应模型，这是保留的文档生成差异。现有角色仍为本机演示请求头，不是生产认证。旧/core/align无案件权限且可读服务器path的风险未修，新代理不能使整个服务安全；不得因此部署到公网。无图片上传、合并或部署。
+- 证据：logs/w4.1-independent-review.md、w4.1-browser-review.md、w4-align-preview-security-review.md、w4.1-service-regression.txt。

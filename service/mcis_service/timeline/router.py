@@ -97,3 +97,7 @@ def patch_conflict(case_id: str, conflict_id: str, body: ConflictPatch, ctx: Ctx
         audit.append(s, case_id=case_id, operator=ctx.operator, role=ctx.role, action="conflict.update", category="Timeline",
                      command=f"更新冲突处理 {conflict_id}", before=b, after=a, entity_type="conflict", entity_id=conflict_id)
         return new
+
+# New guarded preview only; existing persistence routes and legacy core endpoint are unchanged.
+from .align_preview import router as preview_router
+router.include_router(preview_router)

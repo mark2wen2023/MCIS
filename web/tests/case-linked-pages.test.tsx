@@ -54,7 +54,7 @@ async function main() {
     assert(calls.length > 5, `${name}: inspect every API scope call`)
     assert(calls.every((call) => call[1]!.trim() === ', caseId'), `${name}: every API call explicitly scoped to caseId`)
     assert(source.includes("params.get('case') || CASE_ID") && source.includes("params.get('id') || ''"), `${name}: read case and citation id`)
-    const boundaryKey = name === 'RecommendationsPage' ? 'key={`${caseId}:${requestedId}:${who}`}' : 'key={`${caseId}:${requestedId}`}'
+    const boundaryKey = 'key={`${caseId}:${requestedId}:${who}`}'
     assert(source.includes(boundaryKey) && (name !== 'RecommendationsPage' || source.includes('useSyncExternalStore(onIdentityChange, recommendationsIdentity, recommendationsIdentity)')), `${name}: case/query/identity boundary unmounts stale loaders and forms`)
     const html = renderToStaticMarkup(createElement(MemoryRouter, { initialEntries: [`/${route}?case=${real}&id=EV-201`] }, createElement(Page)))
     assert(!html.includes('示例数据（虚构）'), `${name}: real case loading never mislabeled fictional`)
