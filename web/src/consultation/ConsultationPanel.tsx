@@ -4,6 +4,7 @@ import { Panel } from '../components/Panel'
 import { access, decisionValid, eligibleParties, RequestGate, sortedRounds } from './model'
 import type { Decision, Policy, Round } from './types'
 import type { ConsultationRound } from '../types'
+import { RoundLifecycle } from './RoundLifecycle'
 import '../styles/w7.css'
 const identity = () => `${getRole()}\n${getOperator()}`
 export function ConsultationPanel(props: { caseId: string; renderMatrix: (rounds: ConsultationRound[]) => ReactNode; onChanged: () => void }) {
@@ -57,12 +58,13 @@ function ConsultationSession({ caseId, who, renderMatrix, onChanged }: {
       const result = patch ? await api.patch<Round>(casePath(path, caseId), body) : await api.post<Round>(casePath(path, caseId), body)
       if (!live(token)) return
       if (result.caseId !== caseId) throw new Error('返回案件不匹配，请重新读取核对')
-      setNotice('已登记；正在重新读取轮次与审计。'); setFormEpoch((x) => x + 1)
+      setSelected(result.roundNo); setNotice('已登记；正在重新读取轮次与审计。'); setFormEpoch((x) => x + 1)
       onChanged(); setReload((x) => x + 1)
     } catch (e) {
       if (!live(token)) return
       setError(e instanceof ApiError ? `${e.code}：${e.message}` : `结果未确认：${e instanceof Error ? e.message : String(e)}。请重新读取核对，勿直接重复提交。`)
       // Refresh only reads. Never automatically retry a mutation, even after a stale-form conflict.
+      onChanged() // Read-only audit reconciliation: the server may have committed before a lost response.
       setFormEpoch((x) => x + 1); setReload((x) => x + 1)
     } finally {
       // Keep the synchronous write lock until the reload effect clears stale data.
@@ -76,6 +78,7 @@ function ConsultationSession({ caseId, who, renderMatrix, onChanged }: {
       <button className="btn btn-sm" disabled={busy || loading} onClick={() => { setError(''); setNotice(''); setFormEpoch((x) => x + 1); setReload((x) => x + 1) }}>重新读取</button>
       {loading ? <p role="status">正在读取轮次与权限…</p> : <>
         {renderMatrix(rounds)}
+        <RoundLifecycle key={`lifecycle:${current?.roundNo ?? 0}:${formEpoch}`} rounds={rounds} current={current} writable={rights.write} busy={busy} mutate={mutate} />
         {current && <>
           <label>选择轮次 <select aria-label="选择轮次" className="input" disabled={busy} value={current.roundNo} onChange={(e) => { setSelected(Number(e.target.value)); setFormEpoch((x) => x + 1); setError(''); setNotice('') }}>
             {rounds.map((r) => <option key={r.roundNo} value={r.roundNo}>第 {r.roundNo} 轮 · {r.draftVersion}{r.isClosed ? ' · 已关闭' : ''}</option>)}

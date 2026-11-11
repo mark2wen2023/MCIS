@@ -1,0 +1,25 @@
+BEFORE: 8 frozen W7.2 files verified; existing service/core/contract inputs equal HEAD.
+{
+  "web/src/pages/RecommendationsPage.tsx": "cc55e2300260e1bb1360d6e57fe997c2cdb87eb9734d8aa9ca7769ce91e27fa8",
+  "web/src/consultation/ConsultationPanel.tsx": "4ad9c1b0b2e697f6c4659ca207d99ee9c515d242593bfb0bf375904256e57955",
+  "web/src/consultation/RoundLifecycle.tsx": "6ea5caefc8f357b61e4d642c7d73f1869dec3e239c50bb4e4033e2497b6a1044",
+  "web/src/consultation/model.ts": "1e84ae4d96637d77afd815826a018b3336165b8cb2d339363b17e75a91d3e060",
+  "web/src/consultation/types.ts": "85fce5ba3d600ba3091ccfc1fd20f40f6ae76dc7672eca0d854f41d1cef30ddd",
+  "web/src/styles/w7.css": "efab43782c493f46f29c593ec87fb058492c83d2e53c5d261d196ea828f3f35b",
+  "web/tests/consultation-w72.test.tsx": "0c705d486a83bf109b03bb2e1fd5d6a7836a663ded152cc3592c8274afb0a030",
+  "web/tests/run-consultation-w72.sh": "e2dad559ccf21bfc22e91e3cc284348ab1346bb90da5ff49c41ff81638268c60"
+}
+.........                                                                [100%]
+9 passed in 0.15s
+AFTER: all 277 recorded inputs unchanged, including 8 final W7.2 frozen files.
+Snapshot SHA256: f079317c68b37706ec35c85c06802cd098e695a28e5d67eac2eab457cb730bf1
+Active DLL matches seed: f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf
+Frozen manifest after run:
+cc55e2300260e1bb1360d6e57fe997c2cdb87eb9734d8aa9ca7769ce91e27fa8  web/src/pages/RecommendationsPage.tsx
+4ad9c1b0b2e697f6c4659ca207d99ee9c515d242593bfb0bf375904256e57955  web/src/consultation/ConsultationPanel.tsx
+6ea5caefc8f357b61e4d642c7d73f1869dec3e239c50bb4e4033e2497b6a1044  web/src/consultation/RoundLifecycle.tsx
+1e84ae4d96637d77afd815826a018b3336165b8cb2d339363b17e75a91d3e060  web/src/consultation/model.ts
+85fce5ba3d600ba3091ccfc1fd20f40f6ae76dc7672eca0d854f41d1cef30ddd  web/src/consultation/types.ts
+efab43782c493f46f29c593ec87fb058492c83d2e53c5d261d196ea828f3f35b  web/src/styles/w7.css
+0c705d486a83bf109b03bb2e1fd5d6a7836a663ded152cc3592c8274afb0a030  web/tests/consultation-w72.test.tsx
+e2dad559ccf21bfc22e91e3cc284348ab1346bb90da5ff49c41ff81638268c60  web/tests/run-consultation-w72.sh

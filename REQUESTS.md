@@ -316,3 +316,15 @@ W12.1独立验收发现冻结seed的notes仍写“本案未接入服务数据库
 ### W7.1 身份隔离修复后的旧断言适配
 整页Recommendations key由case/id增加role/operator身份，旧case-linked-pages测试固定字符串因此失败。保留原测试及断言数量，Recommendations分支改查更严格的case/id/who key和身份订阅，Evidence分支保留原case/id key；未放宽卸载旧数据/表单要求，不改实现。
 - W7.1 浏览器返工：768px文档横向溢出（实际37检查中唯一失败）。局部w7-page栅格折叠、看板/操作行换行；w7.css仅对.app:has(.w7-page)修正顶栏最小内容撑宽与行高，保留侧栏/按钮/内容，不以overflow:hidden掩盖。全局styles与Layout不变。
+
+### W7.2 独立验收准备
+新增独立test_round_lifecycle_w72_http.py，复用未改W7.1真实回环临时数据库fixture，不覆盖W7.1用例。覆盖默认固定days=30/isAgreedDeadline=false、新建/已确认放弃/关闭的审计与持久化、重复和非法失败无增审计、RO/Deny权限、跨案数据不变、关闭时仍有Pending意见可合法决定。UI冻结后另验身份/异步/防双击与全web；无外部发送。后端空串/重复party及跨客户端并发open既有风险明确记录，不在本UI验收中悄悄修改合同或实现。
+
+## W7.2 轮次生命周期 UI（2026-11-12）
+- 登记修改W7.1冻结的consultation组件/model/types并新增RoundLifecycle组件与测试；W7.1冻结记录不覆盖。
+- 新建仅固定默认30天，版本/各方ID与名称trim必填，ID按大小写敏感去重，草案哈希可空或规范化64位小写hex；不上传附件、不发送草案。
+- 登记已确认的放弃回复事实，非替相关方作出放弃；理由trim必填。关闭前提示无重开接口且Pending意见仍可决定，客户端时间仅提示，最终由服务判断allReplied或到期。
+- 三操作本地二次确认、沿用同步gate/案件身份隔离/无自动写重试。网络失败后只读核对，不声称未生效。
+- 不改服务合同/实现；后端仍有空白/重复输入弱校验及跨客户端新建竞态，本UI校验不等于后端安全补齐。固定30天避免days非30却标默认30天的既有审计语义问题。
+- W7.2追加受控截止时间独立验收：新增test_round_deadline_w72.py，每项独立临时DB，TestClient仅monkeypatch本轮router now_utc，deadline−1μs/等于/+1μs验证关闭规则与审计，不修改生产时钟或伪称真实浏览器时间测试；与6项真实HTTP分开计数。
+- W7.2 根源码审查返工：mutation catch必须同时重读父级审计。已落库但响应丢失时仅重读rounds会保留旧审计；新增onChanged只读刷新，不重试写。首版冻结清单已按仅此一行修复前内容恢复归档before-audit-reconcile-fix（从当前文本移除明确新增行重建其SHA256，未声称是独立验收产物），更新正式冻结并重跑实现方Web套件427条/build；完整九套件由独立验收另跑。

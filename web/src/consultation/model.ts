@@ -22,3 +22,23 @@ export class RequestGate {
   begin(): number | null { if (this.busy) return null; this.busy = true; return this.generation }
   finish(token: number) { if (this.current(token)) this.busy = false }
 }
+export interface NewRoundInput { draftVersion: string; parties: { partyId: string; name: string }[]; draftSha256: string }
+export function newRoundPayload(input: NewRoundInput) {
+  const draftVersion = input.draftVersion.trim()
+  const parties = input.parties.map((p) => ({ partyId: p.partyId.trim(), name: p.name.trim() }))
+  const draftSha256 = input.draftSha256.trim().toLowerCase()
+  if (!draftVersion) throw new Error('草案版本不能为空')
+  if (!parties.length || parties.some((p) => !p.partyId || !p.name)) throw new Error('至少一方，编号与名称均不能为空')
+  if (new Set(parties.map((p) => p.partyId)).size !== parties.length) throw new Error('相关方编号重复（区分大小写）')
+  if (draftSha256 && !/^[0-9a-f]{64}$/.test(draftSha256)) throw new Error('草案哈希须为空或64位十六进制')
+  return { draftVersion, parties, draftSha256, days: 30, isAgreedDeadline: false }
+}
+export function canOpenRound(rounds: Round[]) { return !rounds.some((r) => !r.isClosed) }
+export function closeHint(round: Round, now: number) {
+  if (round.isClosed) return '本轮已关闭'
+  if (round.allReplied) return '各方均已回复或放弃，可以请求关闭。'
+  const deadline = Date.parse(round.deadlineUtc)
+  return Number.isFinite(deadline) && now >= deadline
+    ? '按本机时间已到期限；最终以服务时间判断。'
+    : '尚有未回复方，且本机时间未到期限；服务可能拒绝关闭。'
+}
