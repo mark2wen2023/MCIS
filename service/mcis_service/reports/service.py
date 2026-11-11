@@ -17,15 +17,16 @@ from ..common.timeutil import iso, now_utc
 from ..db import get_doc, list_docs, put_doc
 from .models import ReportAuditRow, ReportRow
 
-YANGZE22_CASE_ID = 'CJK-2024-1230-YangZe22-VegaDream'  # 规范 caseId（DEFECTS/W12.md 21:52 裁定）；仍仅作真实案例入口，不读 reports/。
+YANGZE22_CASE_ID = 'CJK-2024-1230-YangZe22-VegaDream'  # 规范 caseId；公开使用已授权，是否入库以实际CaseRow为准。
 REAL_CASE_IDS = {HAILI5_CASE_ID, YANGZE22_CASE_ID}
 DISCLAIMER_ZH = '不作责任认定'
 DISCLAIMER_EN = 'This report does not apportion blame or liability'
 
 
 def case_info(s, case_id: str) -> dict:
-    if case_id == YANGZE22_CASE_ID:
-        return {'caseId': case_id, 'title': 'YANGZE 22', 'isFictionalDemo': False}
+    from ..cases.models import CaseRow
+    if case_id == YANGZE22_CASE_ID and get_doc(s, CaseRow, case_id, case_id) is None:
+        return {'caseId': case_id, 'title': 'YANGZE 22', 'isFictionalDemo': False, '_reportCaseNotImported': True}
     return cases.load_case(s, case_id)
 
 
@@ -34,11 +35,13 @@ def is_fictional(case: dict) -> bool:
 
 
 def data_status(case: dict) -> str:
-    return 'fictional' if is_fictional(case) else 'pending-confirmation'
+    return 'fictional' if is_fictional(case) else ('authorized-public' if case['caseId'] in REAL_CASE_IDS else 'pending-confirmation')
 
 
-def require_fictional(case: dict) -> None:
-    if not is_fictional(case):
+def require_available(case: dict) -> None:
+    if case.get("_reportCaseNotImported"):
+        raise problem(409, "report_case_not_imported", "公开报告已获使用许可；YANGZE 22 尚未导入案件数据库")
+    if data_status(case) == "pending-confirmation":
         raise problem(409, 'report_real_data_pending', '真实数据使用待 Mark 本人确认')
 
 
@@ -54,9 +57,9 @@ def get_report(s, case_id: str, report_id: str) -> dict:
     return deepcopy(doc)
 
 
-def template_for(template_id: str) -> dict:
-    from .templates import TEMPLATES
-    found = next((t for t in TEMPLATES if t['templateId'] == template_id), None)
+def template_for(template_id: str, case_id: str | None = None) -> dict:
+    from .templates import get_template
+    found = get_template(template_id, case_id)
     if found is None:
         raise problem(422, 'report_invalid_argument', '未知报告模板')
     return deepcopy(found)
@@ -93,8 +96,8 @@ def append_operation(s, ctx, case_id: str, *, action: str, report_id: str | None
 def create_report(s, ctx, case: dict, template_id: str, lang: str, *, parent: dict | None = None,
                   colreg_only: bool = False) -> dict:
     from .sources import build_sections
-    require_fictional(case)
-    template = template_for(template_id)
+    require_available(case)
+    template = template_for(template_id, case["caseId"])
     report_id = 'RPT-' + uuid4().hex[:20]
     family_id = parent['familyId'] if parent else report_id
     versions = [r['version'] for r in list_docs(s, ReportRow, case['caseId']) if r['familyId'] == family_id]
@@ -113,7 +116,7 @@ def create_report(s, ctx, case: dict, template_id: str, lang: str, *, parent: di
     from urllib.parse import urlencode
     report = {'reportId': report_id, 'familyId': family_id, 'parentReportId': parent['reportId'] if parent else None,
               'caseId': case['caseId'], 'templateId': template_id, 'lang': lang, 'version': max(versions or [0]) + 1,
-              'status': 'Draft', 'isFictionalDemo': True, 'realDataStatus': 'fictional',
+              'status': 'Draft', 'isFictionalDemo': is_fictional(case), 'realDataStatus': data_status(case),
               'createdBy': ctx.operator, 'createdUtc': iso(now_utc()), 'sections': sections,
               'disclaimerZh': DISCLAIMER_ZH, 'disclaimerEn': DISCLAIMER_EN,
               'reportHref': '#/report?' + urlencode({'case': case['caseId'], 'report': report_id})}

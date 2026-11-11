@@ -12,7 +12,7 @@ from mcis_service.main import create_app
 CASE = "CASE-2026-DEMO-LILY-MARY"
 C = f"/api/v1/cases/{CASE}"
 CORE = PROJECT_ROOT / "tools" / "mcis-core" / "mcis-core.sh"
-HAS_DOTNET = (Path.home() / ".dotnet" / "dotnet").exists() and CORE.exists()
+HAS_DOTNET = Path(os.environ.get("MCIS_DOTNET", str(Path.home() / ".dotnet" / "dotnet"))).is_file() and CORE.exists()
 
 
 def make_settings(tmp: Path, seed: bool = True) -> Settings:

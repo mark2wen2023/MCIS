@@ -122,7 +122,8 @@ def test_snapshot_http_error_codes_and_role_limits(client):
     assert missing.status_code == 404 and missing.json()['code'] == 'report_snapshot_not_found'
     for case_id in (REAL, PENDING):
         pending = client.get(f'/api/v1/cases/{case_id}/report-snapshots/RA-absent', headers=H())
-        assert pending.status_code == 409 and pending.json()['code'] == 'report_real_data_pending'
+        assert pending.status_code == 404
+        assert pending.json()['code'] == 'report_snapshot_not_found'
 
 
 def test_sentence_review_keeps_section_and_sentence_generated_text(client):
@@ -148,22 +149,23 @@ def snapshot_real(app):
         return hashlib.sha256(json.dumps(result, ensure_ascii=False, default=str, sort_keys=True).encode()).hexdigest()
 
 
-@pytest.mark.parametrize('case_id', [REAL, PENDING])
-def test_real_read_pending_write_export_blocked_without_any_change(client, app, case_id):
+def test_yangze_authorized_but_not_imported_without_any_change(client, app):
+    case_id = PENDING
+    from sqlalchemy import delete
+    from mcis_service.cases.models import CaseRow
+    with app.state.db.session() as s:
+        s.execute(delete(CaseRow).where(CaseRow.case_id == case_id))
     before = snapshot_real(app)
-    seed = PROJECT_ROOT / 'service/mcis_service/colreg/haili5_seed.py'
-    seed_before = seed.read_bytes()
     prefix = f'/api/v1/cases/{case_id}'
-    assert client.get('/api/v1/report-templates', params={'caseId': case_id}, headers=H()).json()['realDataStatus'] == 'pending-confirmation'
-    assert client.get(prefix+'/reports', headers=H()).json()['realDataStatus'] == 'pending-confirmation'
-    assert client.get(prefix+'/reports/no-report', headers=H()).json()['realDataStatus'] == 'pending-confirmation'
-    operations = [('POST', '/reports', {'templateId': 'imo-cic', 'lang': 'zh'}), ('POST', '/reports/no-report:generate', None), ('POST', '/reports/sections/colreg:draft', {}), ('GET', '/reports/no-report/export?format=pdf', None), ('GET', '/gisis/export?format=csv', None), ('POST', '/gisis:validate', {'export': True})]
+    assert client.get('/api/v1/report-templates', params={'caseId': case_id}, headers=H()).json()['realDataStatus'] == 'authorized-public'
+    listing = client.get(prefix+'/reports', headers=H()).json()
+    assert listing['realDataStatus'] == 'authorized-public' and listing['blockedReason'] == 'report_case_not_imported'
+    operations = [('GET', '/reports/no-report', None), ('GET', '/gisis', None), ('POST', '/reports', {'templateId': 'imo-cic', 'lang': 'zh'}), ('POST', '/reports/no-report:generate', None), ('POST', '/reports/sections/colreg:draft', {}), ('GET', '/reports/no-report/export?format=pdf', None), ('GET', '/gisis/export?format=csv', None), ('POST', '/gisis:validate', {'export': True})]
     for method, path, body in operations:
         r = client.request(method, prefix+path, headers=H(), **({'json': body} if body is not None else {}))
         assert r.status_code == 409, (path, r.text)
-        assert r.json()['code'] == 'report_real_data_pending'
-        assert r.json()['message'] == '真实数据使用待 Mark 本人确认'
-    assert snapshot_real(app) == before and seed.read_bytes() == seed_before
+        assert r.json()['code'] == 'report_case_not_imported'
+    assert snapshot_real(app) == before
 
 
 def test_colreg_draft_entry_and_templates_glossary(client):

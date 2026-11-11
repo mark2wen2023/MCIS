@@ -65,6 +65,14 @@ def get_analysis(case_id: str) -> dict[str, Any]:
     doc, sha = load_seed()
     for c in doc["cases"]:
         if c["caseId"] == case_id or c["key"] == case_id:
-            return {**c, "meta": _meta(doc, sha)}
+            response = {**c, "meta": _meta(doc, sha)}
+            # The immutable numeric seed predates public-case import. Avoid claiming
+            # a current database state from historical generation-time metadata.
+            stale_note = "本案未接入服务数据库（无 /cases/{id}），基线曲线取 W14 S0 报告航迹重建。"
+            if c["caseId"] == "CJK-2024-1230-YangZe22-VegaDream":
+                response["notes"] = [
+                    "基线曲线取 W14 S0 报告航迹重建；案件入库状态以案件管理服务为准。"
+                    if note == stale_note else note for note in c.get("notes", [])]
+            return response
     raise problem(404, "analysis_case_not_found", f"分析页没有该案例：{case_id}",
                   {"available": [c["caseId"] for c in doc["cases"]]})

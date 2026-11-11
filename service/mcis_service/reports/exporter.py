@@ -41,7 +41,11 @@ def _state(report):
 
 
 def _fiction(report):
-    return "虚构示例 / Fictional" if report.get("isFictionalDemo") is True else "真实数据待确认 / Real data pending confirmation"
+    if report.get("isFictionalDemo") is True:
+        return "虚构示例 / Fictional"
+    if report.get("realDataStatus") == "authorized-public":
+        return "公开报告资料 / Public report data"
+    return "真实数据待确认 / Real data pending confirmation"
 
 
 def _title(report):
@@ -84,7 +88,7 @@ def _references(report):
     for section in report.get("sections", []):
         for sentence in section.get("sentences", []):
             for citation in sentence.get("citations", []):
-                found.setdefault((citation["kind"], citation["id"], citation["href"]), citation)
+                found.setdefault((citation["kind"], citation["id"], citation["href"], citation.get("sourceRef", "")), citation)
     return list(found.values())
 
 
@@ -149,7 +153,7 @@ def render_pdf(report: dict, lang: str, *, include_glossary=True) -> bytes:
     if not refs:
         flow.append(p("缺数据：未提供引用 / Missing data: no references provided"))
     for citation in refs:
-        flow.append(p(f"{_reference_label(citation)} {citation['kind']} — {citation['href']}", small))
+        flow.append(p(f"{_reference_label(citation)} {citation['kind']} — {citation['href']} | {citation.get('sourceRef', '')}", small))
     if include_glossary:
         flow.append(p("术语表 / SMCP glossary（中文为项目译文）", heading))
         flow.extend(p(f"{term['termZh']} / {term['termEn']}", small) for term in GLOSSARY)
@@ -210,7 +214,7 @@ def render_docx(report: dict, lang: str, *, include_glossary=True) -> bytes:
     if not refs:
         document.add_paragraph("缺数据：未提供引用 / Missing data: no references provided")
     for citation in refs:
-        document.add_paragraph(f"{_reference_label(citation)} {citation['kind']} — {citation['href']}")
+        document.add_paragraph(f"{_reference_label(citation)} {citation['kind']} — {citation['href']} | {citation.get('sourceRef', '')}")
     if include_glossary:
         document.add_heading("术语表 / SMCP glossary（中文为项目译文）", level=1)
         table = document.add_table(rows=1, cols=2)

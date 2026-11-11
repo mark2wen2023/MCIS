@@ -21,7 +21,9 @@ from mcis_service.main import create_app  # noqa: E402
 
 LILY = "CASE-2026-DEMO-LILY-MARY"
 HAILI = "CASE-2025-HAILI5-WANA17"
-HAS_CORE = (Path.home() / ".dotnet" / "dotnet").exists() and (ROOT / "tools/mcis-core/out/mcis-core.dll").exists()
+DOTNET = Path(os.environ.get("MCIS_DOTNET", str(Path.home() / ".dotnet" / "dotnet")))
+CORE_DLL = Path(os.environ.get("MCIS_CORE_DLL", str(ROOT / "tools/mcis-core/out/mcis-core.dll")))
+HAS_CORE = DOTNET.is_file() and os.access(DOTNET, os.X_OK) and CORE_DLL.is_file()
 
 
 def H(role: str = "Investigator", operator: str | None = None) -> dict[str, str]:

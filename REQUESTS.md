@@ -253,3 +253,23 @@
   6. GISIS 里 Table 5 本地等级对应和部分字段仍标「待核」。
 - **W16.1 改过的文件**：contracts/schemas/audit-event.schema.json、contracts/schemas/report.schema.json、contracts/openapi.yaml、contracts/gisis-mapping.md（新）；service/mcis_service/audit/service.py、service/mcis_service/reports/{templates,gisis,sources,service,router}.py；service/tests/test_reports_w16.py、test_reports_w16_direct.py、test_reports_w16_export.py、test_reports_w16_sources.py、test_reports_w161_gisis.py（新）、test_reports_w161_snapshot.py（新）；web/src/reports/{ReportView.tsx,types.ts}、web/src/pages/{ReportPage.tsx,RecommendationsPage.tsx}、web/src/styles/w16.css、web/tests/report-render.test.tsx；删除 web/src/reports/ColregDraftButton.tsx；REQUESTS.md。改动前备份在 /workspace/w16-backup/。日志 logs/w16.1-codex-*。
 - 未做任何 GitHub 操作，未 push。
+
+## 2026-11-11 W16.1 继续开发：公开报告来源适配切片
+
+用户在本次续作对话明确说明「里面没有敏感资料 都是公开发布的报告 都可以用」。该许可仅用于项目内部开发/测试，不扩展为对外发布许可。
+本切片修改 reports/sources.py（既有 W16 冻结范围）及自测：允许海力5、YANGZE 22 的 W14 条目从已做 SHA256 校验的 W12 seed 进入报告来源适配，逐条保留 seed 定位、来源文件/哈希与【推算】标注。不重算、不修改 W12 seed；无 W14 结果仍显示缺数据。未解锁报告 HTTP 入口、未导入 YANGZE 22 数据库，未修改模板或共享合同。完整 W16.1 的上述后续工作仍待完成。
+
+## 2026-11-11 W16.1 公开报告链路续作登记（实现前）
+沿用本次用户公开报告使用许可，修改既有 reports/service/router/gisis/exporter、templates 及报告前端、report schema/OpenAPI 的冻结范围。新增 realDataStatus=`authorized-public`（仅明确允许的公开案例），未知真实案例仍 pending-confirmation。海力5已入库，开放原有调查员权限下生成/复核/审计/导出；YANGZE 22 尚未入库，不用占位案生成，列表额外 blockedReason=`report_case_not_imported`，相关操作409同名错误，导入仍为下一包。中国海事模板按两个原文逐字标题，IMO/MAIB不变，缺少映射的章节明确缺数据，不把推算冒充责任认定。不改变访问角色、不外网监听、不推送或部署。
+
+## 2026-11-11 YANGZE 22 入库与原文摘录续作（实现前登记）
+按本次继续开发及公开报告使用许可，修改已冻结 service/main.py、reports/service.py/router.py/sources.py、相关测试和前端案件文案，新增幂等公开种子与原文摘录模块。仅使用 reports/yangze22/case.json/report.txt 已有来源；不制造航迹、不将国内事故等级未经确认映射IMO等级、不把原报告责任认定当本系统的新认定。入库不覆盖已有用户案件；原文摘录保留来源/hash/页码，仍是Draft。原W16.1-public-flow冻结清单保留历史，本轮另行冻结。对正常入库YANGZE开放现有调查员链路；缺失案件仍保留not_imported检查，不改安全角色或对外发布范围。
+正文续作附加：修改reports/exporter.py与ReportView引用表，保留同一证据不同sourceRef的条目并显示出处，避免17章引用折叠为一个不含页码的引用。新增PDF/DOCX来源定位回读测试，不改变引用schema。
+
+## 2026-11-11 验收续作发现：YANGZE分析页过时入库提示
+W12.1独立验收发现冻结seed的notes仍写“本案未接入服务数据库”。本轮YANGZE已入库，该文案已过时。登记修改已冻结analysis/router.py：仅响应副本改为“基线曲线来自W14 S0报告航迹重建；入库状态以案件管理为准”，不改seed字节/哈希/缓存，不重算任何数值，不增加数据库写入或权限范围。新增独立回归确认数值/来源完整保留；此改动独立于W12.1原冻结验收结论。
+
+## 2026-11-11 验收工装可移植性与提交授权
+- W6/W12验收launcher从原机硬编码路径改为仓库相对路径，支持MCIS_DOTNET；服务测试conftest也按MCIS_DOTNET识别真实SDK，防止SDK已存在却误跳过。没有改引擎结果或删除验收用例。
+- W6旧PATCH/F1用例、W3可选statementVersion断言按既有架构裁定改写；新增严格回归见各独立验收记录。
+- 本次对话用户明确允许完成后提交独立分支并创建PR，不允许直接合并main或部署。此前“未push”记录为阶段事实，最新远端操作以PR记录为准。

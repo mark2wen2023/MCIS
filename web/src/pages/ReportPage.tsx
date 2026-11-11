@@ -25,6 +25,7 @@ export function ReportPage() {
   const [error, setError] = useState<string | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
   const [validation, setValidation] = useState<GisisValidation | null>(null)
+  const [blockedReason, setBlockedReason] = useState<'report_case_not_imported' | undefined>()
   const [revision, setRevision] = useState(0)
   const activeCase = useRef(caseId)
   activeCase.current = caseId
@@ -35,14 +36,18 @@ export function ReportPage() {
   useEffect(() => {
     const controller = new AbortController()
     const { signal } = controller
-    setLoading(true); setError(null); setReport(null); setAudit([]); setGisis(null); setReview(null); setValidation(null)
+    setLoading(true); setBlockedReason(undefined); setReports([]); setError(null); setReport(null); setAudit([]); setGisis(null); setReview(null); setValidation(null)
     setRealDataStatus(caseId === DEMO_CASE_ID ? 'fictional' : 'pending-confirmation')
     void (async () => {
       try {
-        // 模板、报告列表和 GISIS 没有数据依赖，合并等待以缩短切换时间。
-        const [tpl, list, fields] = await Promise.all([reportApi.templates(caseId, signal), reportApi.list(caseId, signal), reportApi.gisis(caseId, signal)])
+        // 先检查数据就绪状态，尚未入库的公开案例不请求 GISIS 或报告。
+        const [tpl, list] = await Promise.all([reportApi.templates(caseId, signal), reportApi.list(caseId, signal)])
         if (signal.aborted) return
-        setTemplates(tpl.templates); setReports(list.reports); setGisis(fields); setRealDataStatus(list.realDataStatus)
+        setTemplates(tpl.templates); setReports(list.reports); setRealDataStatus(list.realDataStatus); setBlockedReason(list.blockedReason)
+        if (list.blockedReason) return
+        const fields = await reportApi.gisis(caseId, signal)
+        if (signal.aborted) return
+        setGisis(fields)
         const chosen = requestedReport || [...list.reports].sort((a, b) => b.createdUtc.localeCompare(a.createdUtc) || b.version - a.version).find((r) => r.templateId === requestedTemplate && r.lang === requestedLanguage)?.reportId
         if (chosen && list.realDataStatus !== 'pending-confirmation') {
           const [document, events] = await Promise.all([reportApi.get(caseId, chosen, signal), reportApi.audit(caseId, chosen, signal)])
@@ -92,7 +97,7 @@ export function ReportPage() {
   }
 
   return <>
-    <ReportView caseId={caseId} templates={templates} templateId={templateId} lang={lang} report={report} reports={reports} gisis={gisis} audit={audit} realDataStatus={realDataStatus} selectedSectionId={selectedSection} busy={loading || saving} error={error} notice={notice || (loading ? '正在载入报告数据…' : null)} validation={validation}
+    <ReportView blockedReason={blockedReason} caseId={caseId} templates={templates} templateId={templateId} lang={lang} report={report} reports={reports} gisis={gisis} audit={audit} realDataStatus={realDataStatus} selectedSectionId={selectedSection} busy={loading || saving} error={error} notice={notice || (loading ? '正在载入报告数据…' : null)} validation={validation}
       onSelectSection={setSelectedSection} onSwitchCase={(id) => { setNotice(null); setSelectedSection(null); setParams({ case: id, template: templateId, lang }) }}
       onTemplate={(id) => changeOptions(id, lang)} onLang={(next) => changeOptions(templateId, next)} onSelectReport={(id) => setParams({ case: caseId, report: id })}
       onCreate={(generateLang = lang) => { void perform(async () => navigateReport(await reportApi.create(caseId, templateId, generateLang)), '已生成 Draft 报告。').catch(() => {}) }}

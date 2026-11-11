@@ -926,7 +926,7 @@ paths:
     get:
       tags:
       - reports
-      summary: 三模板、中英章节及数据源；真实案例仅待确认
+      summary: 三模板、中英章节及数据源；已授权公开案例采用原文章节并标 authorized-public
       responses:
         '200':
           description: 成功
@@ -969,7 +969,8 @@ paths:
     get:
       tags:
       - reports
-      summary: 报告版本列表；真实案例返回 pending-confirmation
+      summary: 报告版本列表；已授权公开案例 authorized-public，未授权真实案例 pending-confirmation
+      description: YANGZE 22 缺少已入库案件时 reports 为空并返回 blockedReason=report_case_not_imported；生成、GISIS、快照与导出返回409同名错误。授权状态不代表数据完整或报告已复核。
       responses:
         '200':
           description: 成功
@@ -1136,7 +1137,7 @@ paths:
       tags:
       - reports
       summary: 按 snapshotRef 获取报告完整操作快照
-      description: 仅 LeadInvestigator / Investigator，权限与报告审计相同；理由及前后值全文保留。真实案例返回 409 report_real_data_pending，不存在返回 404 report_snapshot_not_found。
+      description: 仅 LeadInvestigator / Investigator，权限与报告审计相同；理由及前后值全文保留。海力5已授权并入库，可正常访问；未授权真实案例返回 409 report_real_data_pending；YANGZE 22 缺少已入库案件时返回 409 report_case_not_imported；不存在返回 404 report_snapshot_not_found。
       responses:
         '200':
           description: 完整操作快照

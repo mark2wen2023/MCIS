@@ -196,8 +196,8 @@ def test_w14_real_or_report_backed_seed_is_not_consumed(app, monkeypatch, fictio
                        'sourceRefs': refs, 'whatif': _UnreadWhatIf({'rows': []})}]}
     monkeypatch.setattr(sources, 'load_seed', lambda: (seed, 'test-sha'), raising=False)
     analysis = next(section for section in _sections(app) if section['sectionId'] == 'analysis')
-    assert '缺数据：真实案例 W14 数据待 Mark 确认' in analysis['textZh']
-    assert 'Missing data: real-case W14 data awaits Mark' in analysis['textEn']
+    assert '缺数据：W14 案例来源未获许可或虚构/真实标记不一致' in analysis['textZh']
+    assert 'Missing data: W14 case provenance is not authorized' in analysis['textEn']
     assert not any(citation['kind'] == 'whatif' and citation['registration'] == 'registered'
                    for sentence in analysis['sentences'] for citation in sentence['citations'])
 

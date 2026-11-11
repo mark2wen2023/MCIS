@@ -381,7 +381,7 @@ namespace Mcis.Acceptance.W3
             using (JsonDocument d = JsonDocument.Parse(pending))
             {
                 string[] keys = d.RootElement.EnumerateObject().Select(p => p.Name).ToArray();
-                Assert.Equal(ExpectedKeys, keys);
+                Assert.Equal(ExpectedKeys, keys.Where(k => ExpectedKeys.Contains(k)).ToArray());
                 Assert.All(keys, k => Assert.True(char.IsLower(k[0]) && !k.Contains('_'), "非 camelCase 键：" + k));
                 Assert.False(d.RootElement.GetProperty("confirmedInBatch").GetBoolean());
                 Assert.Equal("PendingConfirmation", d.RootElement.GetProperty("state").GetString());
@@ -390,9 +390,14 @@ namespace Mcis.Acceptance.W3
                 Assert.Equal(12.5, d.RootElement.GetProperty("delta").GetDouble());
             }
 
-            // schema 属性集合与输出键一致（双向）
+            // W5.1 裁定：允许新增可选字段；既有字段及必填集合保持不变。
             var schemaKeys = CrossCheckSchema().GetProperty("properties").EnumerateObject().Select(p => p.Name).OrderBy(x => x, StringComparer.Ordinal).ToArray();
-            Assert.Equal(ExpectedKeys.OrderBy(x => x, StringComparer.Ordinal).ToArray(), schemaKeys);
+            Assert.All(ExpectedKeys, key => Assert.Contains(key, schemaKeys));
+            string[] required = CrossCheckSchema().GetProperty("required").EnumerateArray().Select(x => x.GetString()).ToArray();
+            Assert.Equal(new[] { "statementId", "recordId", "outcome", "claimedText", "observedText", "sourceLabel", "state" }, required);
+            Assert.All(schemaKeys.Except(ExpectedKeys), key => Assert.DoesNotContain(key, required));
+            Assert.Contains("statementVersion", schemaKeys);
+            Assert.DoesNotContain("statementVersion", required);
             ValidateAgainstSchema(pending);
 
             string unv = reg.Get("S-u1").ToJson();

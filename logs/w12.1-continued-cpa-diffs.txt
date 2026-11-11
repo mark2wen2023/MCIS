@@ -1,0 +1,15 @@
+# W12 独立 mcis-core cpa 重算 vs 种子
+# 容差 1e-06
+
+CASE-2026-DEMO-LILY-MARY baseline: n=109 max|D|=0.000e+00 nm  max|DCPA|=0.000e+00 nm  max|TCPA|=0.000e+00 min  misses=0
+CASE-2025-HAILI5-WANA17 baseline: n=151 max|D|=0.000e+00 nm  max|DCPA|=0.000e+00 nm  max|TCPA|=0.000e+00 min  misses=0
+CJK-2024-1230-YangZe22-VegaDream baseline(=S0): n=106 max|D|=0.000e+00 nm  max|DCPA|=0.000e+00 nm  max|TCPA|=0.000e+00 min  misses=0
+demo S0: n=270 max|D|=0.000e+00 nm  max|DCPA|=0.000e+00 nm  max|TCPA|=0.000e+00 min  misses=0
+demo S1: n=361 max|D|=0.000e+00 nm  max|DCPA|=0.000e+00 nm  max|TCPA|=0.000e+00 min  misses=0
+demo S2: n=280 max|D|=0.000e+00 nm  max|DCPA|=0.000e+00 nm  max|TCPA|=0.000e+00 min  misses=0
+demo S3: n=361 max|D|=0.000e+00 nm  max|DCPA|=0.000e+00 nm  max|TCPA|=0.000e+00 min  misses=0
+yangze22 S0: n=106 max|D|=0.000e+00 nm  max|DCPA|=0.000e+00 nm  max|TCPA|=0.000e+00 min  misses=0
+yangze22 Y1: n=151 max|D|=0.000e+00 nm  max|DCPA|=0.000e+00 nm  max|TCPA|=0.000e+00 min  misses=0
+yangze22 Y5: n=151 max|D|=0.000e+00 nm  max|DCPA|=0.000e+00 nm  max|TCPA|=0.000e+00 min  misses=0
+yangze22 Y1+Y5: n=151 max|D|=0.000e+00 nm  max|DCPA|=0.000e+00 nm  max|TCPA|=0.000e+00 min  misses=0
+yangze22 Y4: n=151 max|D|=0.000e+00 nm  max|DCPA|=0.000e+00 nm  max|TCPA|=0.000e+00 min  misses=0
