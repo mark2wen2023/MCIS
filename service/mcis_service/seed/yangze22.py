@@ -19,7 +19,7 @@ from ..redaction.policy import default_policy
 CASE_ID = 'CJK-2024-1230-YangZe22-VegaDream'
 SOURCE_HASHES = {
     'case.json': '63aad2f28aef4f67ecaf346dea13a2004f268ad9afc4b5d7f86783fcacb5b2c2',
-    'report.txt': '7adad5bb499c28eb3985b79411c61dad593797e0d2a8aa64feb203077e43ee2b',
+    'report.txt': 'bca8f8b8ba04a5d0669a121bc6c9380c8cd6f8397f67be2d0b30b38871c22ef2',
 }
 VESSEL_FIELDS = ('vesselId', 'name', 'imoNumber', 'callSign', 'mmsi', 'flagState',
                  'vesselTypeCode', 'loaM', 'beamM')

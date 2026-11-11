@@ -167,7 +167,7 @@ _PUBLIC_CN_SECTIONS = {
 
 _PUBLIC_CN_REFS = {
     'CASE-2025-HAILI5-WANA17': {"title": '原文目录：reports/haili5/_report_clean.txt；PDF 第4–5页目录；文本行53–101；SHA256=00bbf711cd7418633d586567c69d0d009f68b1bc1fe5c2bd01107bc11493a0d0；英文标题为项目译文', "href": 'https://github.com/mark2wen2023/MCIS/blob/c6113bee85d25bf97d805fb2d264fb6ab138b2e2/reports/haili5/_report_clean.txt'},
-    'CJK-2024-1230-YangZe22-VegaDream': {"title": '原文目录：reports/yangze22/report.txt；PDF 第2页目录；文本行11–53；SHA256=7adad5bb499c28eb3985b79411c61dad593797e0d2a8aa64feb203077e43ee2b；英文标题为项目译文', "href": 'https://github.com/mark2wen2023/MCIS/blob/c6113bee85d25bf97d805fb2d264fb6ab138b2e2/reports/yangze22/report.txt'},
+    'CJK-2024-1230-YangZe22-VegaDream': {"title": '原文目录：reports/yangze22/report.txt；PDF 第2页目录；文本行11–53；SHA256=bca8f8b8ba04a5d0669a121bc6c9380c8cd6f8397f67be2d0b30b38871c22ef2；英文标题为项目译文', "href": 'https://github.com/mark2wen2023/MCIS/blob/c6113bee85d25bf97d805fb2d264fb6ab138b2e2/reports/yangze22/report.txt'},
 }
 
 

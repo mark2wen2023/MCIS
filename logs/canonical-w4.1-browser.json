@@ -1,0 +1,472 @@
+{
+  "checks": [
+    {
+      "name": "frozen implementation hashes before",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "preview collapsed by default",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "explicit temporary UTC units no anchors warnings",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "explicit supported mappings",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ack required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "empty CSV blocked before request",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "real core preview HTTP200",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "doubleclick one preview",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "real scoped five degree conflict",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "unanchored remains uncalibrated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all persistent tables unchanged after successful preview",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "editing clears old result",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "offsetless UTC succeeds",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "UTF8 byte budget blocks without request",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "four source maximum",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "malformed input never stale success",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "timeline RO can preview",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "old preview response held",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "old case preview cannot refill new case",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "allowed old-role preview response held",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "late allowed preview cannot refill denied role",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "old Evidence response held",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Deny has no CSV or preview action",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "old Evidence list cannot refill Deny",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "policy failure fail closed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "failure explicit no retry or stale result",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no layout overflow 1440",
+      "passed": true,
+      "detail": {
+        "document": 1440,
+        "main": 1216,
+        "scroll": 1216
+      }
+    },
+    {
+      "name": "no layout overflow 768",
+      "passed": true,
+      "detail": {
+        "document": 768,
+        "main": 544,
+        "scroll": 544
+      }
+    },
+    {
+      "name": "all persistent table contents unchanged including audit evidence conflict custody",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "every browser POST is scoped preview not legacy core",
+      "passed": true,
+      "detail": [
+        {
+          "phase": "normal",
+          "method": "POST",
+          "url": "http://127.0.0.1:35863/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/timeline/align-preview",
+          "body": "{\"sources\":[{\"sourceId\":\"SOURCE-1\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,45\\n2026-05-18T06:21:00Z,45\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}},{\"sourceId\":\"SOURCE-2\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,50\\n2026-05-18T06:21:00Z,50\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}}]}"
+        },
+        {
+          "phase": "normal",
+          "method": "POST",
+          "url": "http://127.0.0.1:35863/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/timeline/align-preview",
+          "body": "{\"sources\":[{\"sourceId\":\"SOURCE-1\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00,45\\n2026-05-18T06:21:00,45\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}},{\"sourceId\":\"SOURCE-2\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00,50\\n2026-05-18T06:21:00,50\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}}]}"
+        },
+        {
+          "phase": "normal",
+          "method": "POST",
+          "url": "http://127.0.0.1:35863/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/timeline/align-preview",
+          "body": "{\"sources\":[{\"sourceId\":\"SOURCE-1\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,45\\n2026-05-18T06:21:00Z,45\\n\",\"csvMapping\":{\"timeColumn\":\"missing_column\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}},{\"sourceId\":\"SOURCE-2\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,50\\n2026-05-18T06:21:00Z,50\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}}]}"
+        },
+        {
+          "phase": "role-readonly",
+          "method": "POST",
+          "url": "http://127.0.0.1:35863/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/timeline/align-preview",
+          "body": "{\"sources\":[{\"sourceId\":\"SOURCE-1\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,45\\n2026-05-18T06:21:00Z,45\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}},{\"sourceId\":\"SOURCE-2\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,50\\n2026-05-18T06:21:00Z,50\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}}]}"
+        },
+        {
+          "phase": "normal",
+          "method": "POST",
+          "url": "http://127.0.0.1:35863/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/timeline/align-preview",
+          "body": "{\"sources\":[{\"sourceId\":\"SOURCE-1\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,45\\n2026-05-18T06:21:00Z,45\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}},{\"sourceId\":\"SOURCE-2\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,50\\n2026-05-18T06:21:00Z,50\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}}]}"
+        },
+        {
+          "phase": "normal",
+          "method": "POST",
+          "url": "http://127.0.0.1:35863/api/v1/cases/CASE-2026-DEMO-LILY-MARY/timeline/align-preview",
+          "body": "{\"sources\":[{\"sourceId\":\"SOURCE-1\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,45\\n2026-05-18T06:21:00Z,45\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}},{\"sourceId\":\"SOURCE-2\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,50\\n2026-05-18T06:21:00Z,50\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}}]}"
+        },
+        {
+          "phase": "expected-preview-failure",
+          "method": "POST",
+          "url": "http://127.0.0.1:35863/api/v1/cases/CASE-2026-DEMO-LILY-MARY/timeline/align-preview",
+          "body": "{\"sources\":[{\"sourceId\":\"SOURCE-1\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,45\\n2026-05-18T06:21:00Z,45\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}},{\"sourceId\":\"SOURCE-2\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,50\\n2026-05-18T06:21:00Z,50\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}}]}"
+        },
+        {
+          "phase": "normal",
+          "method": "POST",
+          "url": "http://127.0.0.1:35863/api/v1/cases/CASE-2026-DEMO-LILY-MARY/timeline/align-preview",
+          "body": "{\"sources\":[{\"sourceId\":\"SOURCE-1\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,45\\n2026-05-18T06:21:00Z,45\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}},{\"sourceId\":\"SOURCE-2\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,50\\n2026-05-18T06:21:00Z,50\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}}]}"
+        }
+      ]
+    },
+    {
+      "name": "no external network",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "no JS errors",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "all HTTP errors explained",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "no unexpected console errors",
+      "passed": true,
+      "detail": [
+        {
+          "phase": "normal",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 422 (Unprocessable Entity)"
+        },
+        {
+          "phase": "role-denied",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        },
+        {
+          "phase": "role-denied",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        },
+        {
+          "phase": "role-denied",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        },
+        {
+          "phase": "role-denied",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        },
+        {
+          "phase": "role-denied",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        },
+        {
+          "phase": "role-denied",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        },
+        {
+          "phase": "role-denied",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        },
+        {
+          "phase": "role-denied",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        },
+        {
+          "phase": "expected-policy-error",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+        },
+        {
+          "phase": "expected-preview-failure",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+        }
+      ]
+    },
+    {
+      "name": "frozen implementation hashes after",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "errors": [],
+  "console": [
+    {
+      "phase": "normal",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 422 (Unprocessable Entity)"
+    },
+    {
+      "phase": "role-denied",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "phase": "role-denied",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "phase": "role-denied",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "phase": "role-denied",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "phase": "role-denied",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "phase": "role-denied",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "phase": "role-denied",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "phase": "role-denied",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "phase": "expected-policy-error",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "phase": "expected-preview-failure",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    }
+  ],
+  "httpErrors": [
+    {
+      "phase": "normal",
+      "status": 422,
+      "url": "http://127.0.0.1:35863/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/timeline/align-preview",
+      "role": "Investigator"
+    },
+    {
+      "phase": "role-denied",
+      "status": 403,
+      "url": "http://127.0.0.1:35863/api/v1/cases/CASE-2026-DEMO-LILY-MARY/evidence",
+      "role": "Public"
+    },
+    {
+      "phase": "role-denied",
+      "status": 403,
+      "url": "http://127.0.0.1:35863/api/v1/cases/CASE-2026-DEMO-LILY-MARY/custody:verify-chain",
+      "role": "Public"
+    },
+    {
+      "phase": "role-denied",
+      "status": 403,
+      "url": "http://127.0.0.1:35863/api/v1/cases/CASE-2026-DEMO-LILY-MARY/timeline",
+      "role": "Public"
+    },
+    {
+      "phase": "role-denied",
+      "status": 403,
+      "url": "http://127.0.0.1:35863/api/v1/cases/CASE-2026-DEMO-LILY-MARY/conflicts",
+      "role": "Public"
+    },
+    {
+      "phase": "role-denied",
+      "status": 403,
+      "url": "http://127.0.0.1:35863/api/v1/cases/CASE-2026-DEMO-LILY-MARY/custody:verify-chain",
+      "role": "Public"
+    },
+    {
+      "phase": "role-denied",
+      "status": 403,
+      "url": "http://127.0.0.1:35863/api/v1/cases/CASE-2026-DEMO-LILY-MARY/conflicts",
+      "role": "Public"
+    },
+    {
+      "phase": "role-denied",
+      "status": 403,
+      "url": "http://127.0.0.1:35863/api/v1/cases/CASE-2026-DEMO-LILY-MARY/evidence",
+      "role": "Public"
+    },
+    {
+      "phase": "role-denied",
+      "status": 403,
+      "url": "http://127.0.0.1:35863/api/v1/cases/CASE-2026-DEMO-LILY-MARY/timeline",
+      "role": "Public"
+    },
+    {
+      "phase": "expected-policy-error",
+      "status": 503,
+      "url": "http://127.0.0.1:35863/api/v1/cases/CASE-2026-DEMO-LILY-MARY/access-policy",
+      "role": "Investigator"
+    },
+    {
+      "phase": "expected-preview-failure",
+      "status": 503,
+      "url": "http://127.0.0.1:35863/api/v1/cases/CASE-2026-DEMO-LILY-MARY/timeline/align-preview",
+      "role": "Investigator"
+    }
+  ],
+  "mutations": [
+    {
+      "phase": "normal",
+      "method": "POST",
+      "url": "http://127.0.0.1:35863/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/timeline/align-preview",
+      "body": "{\"sources\":[{\"sourceId\":\"SOURCE-1\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,45\\n2026-05-18T06:21:00Z,45\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}},{\"sourceId\":\"SOURCE-2\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,50\\n2026-05-18T06:21:00Z,50\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}}]}"
+    },
+    {
+      "phase": "normal",
+      "method": "POST",
+      "url": "http://127.0.0.1:35863/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/timeline/align-preview",
+      "body": "{\"sources\":[{\"sourceId\":\"SOURCE-1\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00,45\\n2026-05-18T06:21:00,45\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}},{\"sourceId\":\"SOURCE-2\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00,50\\n2026-05-18T06:21:00,50\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}}]}"
+    },
+    {
+      "phase": "normal",
+      "method": "POST",
+      "url": "http://127.0.0.1:35863/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/timeline/align-preview",
+      "body": "{\"sources\":[{\"sourceId\":\"SOURCE-1\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,45\\n2026-05-18T06:21:00Z,45\\n\",\"csvMapping\":{\"timeColumn\":\"missing_column\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}},{\"sourceId\":\"SOURCE-2\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,50\\n2026-05-18T06:21:00Z,50\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}}]}"
+    },
+    {
+      "phase": "role-readonly",
+      "method": "POST",
+      "url": "http://127.0.0.1:35863/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/timeline/align-preview",
+      "body": "{\"sources\":[{\"sourceId\":\"SOURCE-1\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,45\\n2026-05-18T06:21:00Z,45\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}},{\"sourceId\":\"SOURCE-2\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,50\\n2026-05-18T06:21:00Z,50\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}}]}"
+    },
+    {
+      "phase": "normal",
+      "method": "POST",
+      "url": "http://127.0.0.1:35863/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/timeline/align-preview",
+      "body": "{\"sources\":[{\"sourceId\":\"SOURCE-1\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,45\\n2026-05-18T06:21:00Z,45\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}},{\"sourceId\":\"SOURCE-2\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,50\\n2026-05-18T06:21:00Z,50\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}}]}"
+    },
+    {
+      "phase": "normal",
+      "method": "POST",
+      "url": "http://127.0.0.1:35863/api/v1/cases/CASE-2026-DEMO-LILY-MARY/timeline/align-preview",
+      "body": "{\"sources\":[{\"sourceId\":\"SOURCE-1\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,45\\n2026-05-18T06:21:00Z,45\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}},{\"sourceId\":\"SOURCE-2\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,50\\n2026-05-18T06:21:00Z,50\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}}]}"
+    },
+    {
+      "phase": "expected-preview-failure",
+      "method": "POST",
+      "url": "http://127.0.0.1:35863/api/v1/cases/CASE-2026-DEMO-LILY-MARY/timeline/align-preview",
+      "body": "{\"sources\":[{\"sourceId\":\"SOURCE-1\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,45\\n2026-05-18T06:21:00Z,45\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}},{\"sourceId\":\"SOURCE-2\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,50\\n2026-05-18T06:21:00Z,50\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}}]}"
+    },
+    {
+      "phase": "normal",
+      "method": "POST",
+      "url": "http://127.0.0.1:35863/api/v1/cases/CASE-2026-DEMO-LILY-MARY/timeline/align-preview",
+      "body": "{\"sources\":[{\"sourceId\":\"SOURCE-1\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,45\\n2026-05-18T06:21:00Z,45\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}},{\"sourceId\":\"SOURCE-2\",\"text\":\"time_utc,cog_deg\\n2026-05-18T06:20:00Z,50\\n2026-05-18T06:21:00Z,50\\n\",\"csvMapping\":{\"timeColumn\":\"time_utc\",\"columns\":[{\"column\":\"cog_deg\",\"kind\":\"CourseOverGround\"}]}}]}"
+    }
+  ],
+  "screenshotsLocalOnly": [
+    "align-1440.png",
+    "align-768.png"
+  ]
+}

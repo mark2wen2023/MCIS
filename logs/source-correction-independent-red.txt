@@ -1,0 +1,7 @@
+local bytes 62608 sha256 7adad5bb499c28eb3985b79411c61dad593797e0d2a8aa64feb203077e43ee2b gitblob 7b09dc292f23fec2064a0e73d170bc549c2b61b3
+canonical connector bytes 62607 sha256 bca8f8b8ba04a5d0669a121bc6c9380c8cd6f8397f67be2d0b30b38871c22ef2 gitblob d5a6b5fc79ad0371c8ccc372b40ca9110d5c30c4
+Exact difference: only one appended LF; common prefix entire canonical bytes. Last32 canonical b'\x84\xe9\x80\x9a\xe4\xbf\xa1\xe3\x80\x82\n\n\n\n\n             51\n\x0c'
+load_source independent failure: YANGZE public source checksum mismatch: report.txt
+Canonical excerpts returns empty (checksum mismatch before section parsing)
+Independent fresh seeded app failure: YANGZE public source checksum mismatch: report.txt
+No repository source changed. Red reproduction used isolated canonical copy and temporary DB.

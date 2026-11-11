@@ -1,0 +1,60 @@
+....FF...................                                                [100%]
+=================================== FAILURES ===================================
+____________ test_fresh_database_evidence_and_custody_pin_canonical ____________
+
+app = <fastapi.applications.FastAPI object at 0x7fda4f07d430>
+
+    def test_fresh_database_evidence_and_custody_pin_canonical(app):
+        with app.state.db.session() as session:
+            item = get_doc(session, EvidenceRow, seed.CASE_ID, 'EV-201')
+            assert item['sha256'] == CANONICAL_SHA
+            raw = (app.state.settings.blob_dir / seed.CASE_ID / item['relativePath']).read_bytes()
+            assert len(raw) == CANONICAL_SIZE and hashlib.sha256(raw).hexdigest() == CANONICAL_SHA
+            events = evidence.custody_events(session, seed.CASE_ID, 'EV-201')
+>           assert events and all(e['sha256'] == CANONICAL_SHA for e in events)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_yangze_canonical_source_correction.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x7fda4dce1720>
+
+>   assert events and all(e['sha256'] == CANONICAL_SHA for e in events)
+                          ^^^^^^^^^^^
+E   TypeError: 'CustodyEventRow' object is not subscriptable
+
+service/tests/test_yangze_canonical_source_correction.py:55: TypeError
+____________ test_legacy_bad_pin_database_is_not_silently_rewritten ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-31/test_legacy_bad_pin_database_i0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fda4dab2bd0>
+
+    def test_legacy_bad_pin_database_is_not_silently_rewritten(tmp_path, monkeypatch):
+        source = tmp_path / 'old-source'; source.mkdir()
+        shutil.copy(REPORT.parent / 'case.json', source / 'case.json')
+        (source / 'report.txt').write_bytes(REPORT.read_bytes() + b'\n')
+        db = Database(f"sqlite:///{tmp_path / 'legacy.db'}"); db.create_all()
+        blobs = tmp_path / 'blobs'
+        # Deliberately construct a historical bad-pin DB in isolation; production source is never modified.
+        with monkeypatch.context() as patch:
+            patch.setitem(seed.SOURCE_HASHES, 'report.txt', OLD_SHA)
+            with db.session() as session:
+                assert seed.seed(session, blobs, source_root=source)
+        def snapshot(session):
+            return (get_doc(session, EvidenceRow, seed.CASE_ID, 'EV-201'),
+                    evidence.custody_events(session, seed.CASE_ID, 'EV-201'),
+                    audit.list_events(session, seed.CASE_ID))
+        with db.session() as session: before = snapshot(session)
+        with db.session() as session:
+            assert seed.seed(session, blobs) is False
+>           assert snapshot(session) == before
+E           AssertionError: assert ({'evidenceId...开报告导入', ...}]) == ({'evidenceId...开报告导入', ...}])
+E             
+E             At index 1 diff: [<mcis_service.evidence.models.CustodyEventRow object at 0x7fda4d960980>] != [<mcis_service.evidence.models.CustodyEventRow object at 0x7fda4d960e60>]
+E             Use -v to get more diff
+
+service/tests/test_yangze_canonical_source_correction.py:76: AssertionError
+=========================== short test summary info ============================
+FAILED service/tests/test_yangze_canonical_source_correction.py::test_fresh_database_evidence_and_custody_pin_canonical
+FAILED service/tests/test_yangze_canonical_source_correction.py::test_legacy_bad_pin_database_is_not_silently_rewritten
+2 failed, 23 passed in 4.04s
