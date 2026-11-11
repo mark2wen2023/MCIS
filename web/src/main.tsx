@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './styles.css'
 import './styles/w16.css' // W16 报告页样式（独立文件，不再追加共享 styles.css）
+import { LobbyPage } from './pages/LobbyPage'
 import { Layout } from './Layout'
 import { ToastProvider } from './components/Toast'
 import { EvidencePage } from './pages/EvidencePage'
@@ -15,6 +16,7 @@ import { ROUTES } from './routes'
 import { AnalysisPage } from './pages/AnalysisPage'
 
 const LIVE: Record<string, () => React.ReactElement> = {
+  lobby: () => <LobbyPage />,
   evidence: () => <EvidencePage />,
   interview: () => <InterviewPage />,
   colreg: () => <ColregPage />,
@@ -29,11 +31,11 @@ createRoot(document.getElementById('root')!).render(
       <HashRouter>
         <Routes>
           <Route element={<Layout />}>
-            <Route index element={<Navigate to="/evidence" replace />} />
+            <Route index element={<Navigate to="/lobby" replace />} />
             {ROUTES.map((r) => (
               <Route key={r.path} path={r.path} element={LIVE[r.path]?.() ?? <Placeholder route={r} />} />
             ))}
-            <Route path="*" element={<Navigate to="/evidence" replace />} />
+            <Route path="*" element={<Navigate to="/lobby" replace />} />
           </Route>
         </Routes>
       </HashRouter>

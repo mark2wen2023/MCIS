@@ -156,3 +156,6 @@
 | 2026-11-12 UTC+8 | W7.3服务输入对齐 | 独立切片验收通过 | 按既有C#拒空白版本/ID、精确重复ID、空白放弃理由，合法文本原样、名称空合法；红8中6败/2过原样保留→独立29过，另HTTP11/期限3、原浏览器57、完整service333(72.03s)/来源9。两项新freeze/八项前端freeze匹配；无锁/合同/UI改动。简单外锁因跨路由锁序风险撤回，并发未修。见logs/w7.3-independent-green-review.md。 |
 | 2026-11-12 UTC+8 | W4.1案件级inline CSV临时预览 | 独立受限切片验收通过 | timeline读权限/服务案号纪元/严格白名单拒路径、不入库不改人工冲突；无锚点明确未校准。独立31、Web517/build、真浏览器35、完整service363(79.52s)/来源9；13freeze/210保护输入一致。默认折叠，CSV单位UTC/限额显式；只数值实测COG，旧裸接口/生产认证/持久化合并未解决，live自动响应文档仍缺模型。见logs/w4.1-independent-review.md及browser-review.md。 |
 | 2026-11-12 UTC+8 | YANGZE来源pin审计纠错 | canonical快照重验通过，旧输入成绩降格 | 初始本地原文误增1尾LF，三pin错误导致远端原文freshseed失败，红复现已保留；只修pin与回归，远端原文blob不变。新逐blob快照service369(83.33s)/来源9/Web517，专项32、浏览器35+57、真实报告HTTP13。非完整clone：722已核/633明确遗漏；旧库不自动迁移。旧363等仅旧本地输入，不算干净仓库证据。见docs/CONTINUATION-STATUS-20261111.md置顶纠错。 |
+
+| 2026-11-12 | W8.1 | 案件大厅最小闭环待测：GET /cases 列表、进入证据中心、加载/空/错误重试、案件与角色切换重新挂载。新建/编辑/.mcase 导入导出不在本片范围。build + 22 自测通过；冻结 logs/w8.1-impl-hashes-frozen.txt，独立浏览器验收待完成。 |
+| 2026-11-12 | W8.1 | 最小切片独立验收通过 | 案件大厅列表/进入、空错重试、case/role重新挂载；Web611断言+另case-context28、SSR16、mock浏览器20、真实HTTP浏览器21与build通过。按钮对比缺陷修复复验；真实HTTP为新种子库只读集成，非生产认证。新建/编辑/.mcase/全模块隔离未完成。见 logs/w8.1-integration-review.md；不部署。 |
