@@ -1,18 +1,21 @@
 """报告只读来源适配：每个结论句引用原始业务条目，不补造缺失数据。
 
-W14/W15 尚无服务合同，默认适配器只返回缺数据。未来可替换 SOURCE_ADAPTERS
-中对应 callable；协议是 (session, case) -> {missing: bool, items: [...]}，每个
-item 必须带 id、textZh、textEn，可带 evidenceIds。适配器不得写数据库或运行引擎。
+W14 只读 W12 已校验分析种子中的虚构条目，W15 保留缺数据。可替换
+SOURCE_ADAPTERS 中对应 callable；协议是 (session, case) ->
+{missing: bool, items: [...]}，每个 item 必须带 id、textZh、textEn，
+可带 evidenceIds。适配器不得写数据库、读取真实报告或运行引擎。
 """
 from __future__ import annotations
 
 from copy import deepcopy
+from math import isfinite
 from typing import Any, Callable
 from urllib.parse import quote
 
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
+from ..analysis.router import load_seed
 from ..cases import service as cases
 from ..colreg import evidence_refs
 from ..colreg.models import ColregAnalysisRow
@@ -30,7 +33,65 @@ def _unavailable(_s: Session, _case: dict[str, Any]) -> dict[str, Any]:
     return {'missing': True, 'items': []}
 
 
-SOURCE_ADAPTERS: dict[str, SourceAdapter] = {'whatif': _unavailable, 'systemic': _unavailable}
+def _whatif(_s: Session, case: dict[str, Any]) -> dict[str, Any]:
+    """只用种子的字段生成句子；来源许可先于访问 whatif 正文。"""
+    try:
+        seed, _digest = load_seed()
+    except Exception:
+        # 包括 analysis_seed_tampered；上游种子故障不阻断其它章节生成。
+        return {'missing': True, 'items': [],
+                'missingZh': 'W14 分析种子不可用（含哈希自检失败）',
+                'missingEn': 'W14 analysis seed is unavailable (including hash verification failure)'}
+    entry = next((value for value in seed.get('cases', [])
+                  if value.get('caseId') == case['caseId']), None)
+    if entry is None:
+        return _unavailable(_s, case)
+    refs = entry.get('sourceRefs') or []
+    if entry.get('isFictionalDemo') is not True or any(
+            not isinstance(ref, dict) or not isinstance(ref.get('path'), str)
+            or ref['path'].startswith('reports/') for ref in refs):
+        return {'missing': True, 'items': [],
+                'missingZh': '真实案例 W14 数据待 Mark 确认',
+                'missingEn': "real-case W14 data awaits Mark's confirmation"}
+    whatif = entry.get('whatif') or {}
+    rows = whatif.get('rows') or []
+    if not rows:
+        return _unavailable(_s, case)
+
+    def text(value: Any) -> str | None:
+        return value if isinstance(value, str) and value.strip() else None
+
+    supplied = []
+    for row in rows:
+        identifier = text(row.get('id')) or ''
+        name = text(row.get('name'))
+        verdict_zh = text(row.get('displayVerdictText')) or text(row.get('verdictText')) or text(row.get('verdict'))
+        verdict_en = text(row.get('verdict')) or text(row.get('verdictText'))
+        description = text(row.get('changeSummary'))
+        clearance = row.get('minClearanceM')
+        number = (str(float(clearance)) + ' m' if isinstance(clearance, (int, float))
+                  and not isinstance(clearance, bool) and isfinite(clearance) else None)
+        supplied.append({
+            'id': identifier, 'scenarioId': identifier,
+            'textZh': f'W14 推演情景 {identifier}「{name or "缺数据"}」：判定={verdict_zh or "缺数据"}；最小净距={number or "缺数据"}；情景说明={description or "缺数据"}。【推算，仅供分析参考】',
+            'textEn': f'W14 what-if scenario {identifier} "{name or "Missing data"}": verdict={verdict_en or "Missing data"}; minimum clearance={number or "Missing data"}; scenario description (source text)={description or "Missing data"}. [Derived; for analysis reference only]',
+            'missing': any(value is None for value in (name, verdict_zh, verdict_en, description, number)),
+            'reviewStatus': 'Derived',
+        })
+    disclaimer = text(whatif.get('disclaimer'))
+    assumptions = whatif.get('assumptions')
+    count = str(len(assumptions)) if isinstance(assumptions, list) else None
+    supplied.append({
+        'id': 'W14-notes', 'scenarioId': None,
+        'textZh': f'W14 推演说明：{disclaimer or "缺数据"}；假设数量={count or "缺数据"}。【推算，仅供分析参考】',
+        'textEn': f'W14 what-if disclaimer (source text): {disclaimer or "Missing data"}; assumptions count={count or "Missing data"}. [Derived; for analysis reference only]',
+        'missing': disclaimer is None or count is None,
+        'reviewStatus': 'Derived',
+    })
+    return {'missing': False, 'items': supplied}
+
+
+SOURCE_ADAPTERS: dict[str, SourceAdapter] = {'whatif': _whatif, 'systemic': _unavailable}
 
 VERDICT_ZH = {
     'Complies': '符合', 'Partial': '部分符合', 'NotComplied': '未符合',
@@ -251,9 +312,9 @@ def build_sections(s: Session, case: dict[str, Any], template: dict[str, Any]) -
         supplied = source.get('items') or []
         if source.get('missing', True) or not supplied:
             grouped['analysis'].append(_missing(
-                'analysis-' + kind + '-missing', f'{number} {label_zh}未提供',
-                f'{number} {label_en} has not been provided',
-                [_citation(kind, number, _url(kind, case=case_id), registration='missing',
+                'analysis-' + kind + '-missing', source.get('missingZh') or f'{number} {label_zh}未提供',
+                source.get('missingEn') or f'{number} {label_en} has not been provided',
+                [_citation(kind, number, _url('analysis' if kind == 'whatif' else kind, case=case_id), registration='missing',
                            source_ref=number)]))
             continue
         for i, value in enumerate(supplied, 1):
@@ -264,11 +325,14 @@ def build_sections(s: Session, case: dict[str, Any], template: dict[str, Any]) -
                     f'{number} source item lacks an identifier or bilingual text'))
                 continue
             identifier = value['id']
-            refs = [_citation(kind, identifier, _url(kind, case=case_id, id=identifier),
+            href = (_url('analysis', case=case_id, scenario=value.get('scenarioId', identifier))
+                    if kind == 'whatif' else _url(kind, case=case_id, id=identifier))
+            refs = [_citation(kind, identifier, href,
                               source_ref=f'{number}/{identifier}')]
             refs.extend(ev_citations(value.get('evidenceIds')))
             grouped['analysis'].append(_sentence(
                 f'analysis-{kind}-{i}-{identifier}', value['textZh'], value['textEn'], refs,
+                missing=bool(value.get('missing')),
                 source_status=str(value.get('reviewStatus') or 'Provided')))
 
     for rec in recommendations:

@@ -92,7 +92,7 @@ def test_gisis_does_not_invent_missing_values_or_tonnage():
     assert fields["vessels.lily.grossTonnage"]["value"] is None
     assert fields["vessels.lily.grossTonnage"]["missing"] is True
     assert fields["deaths"]["value"] is None and fields["deaths"]["missingLabel"] == "缺数据 / Missing data"
-    assert fields["severity"]["value"] == "Very serious"
+    assert fields["severity"]["value"] == "Very serious marine casualty"
     assert fields["vessels.lily.imoNumber"]["value"] == "9074729"
     assert all(f["sourceRefs"] and f["rules"] and f["labelZh"] and f["labelEn"] for f in doc["fields"])
     assert doc["isFictionalDemo"] is True
@@ -131,7 +131,7 @@ def test_gisis_json_csv_preserve_null_missing_and_provenance():
 
 def test_gisis_valid_complete_projection_preserves_zero_and_false():
     case = {"caseId": "CASE-2026-DEMO-LILY-MARY", "isFictionalDemo": True,
-            "incidentTimeUtc": "2026-05-18T06:24:00Z", "incidentLocation": {"latDeg": 0, "lonDeg": 0},
+            "incidentTimeUtc": "2026-05-18T06:24:00Z", "incidentLocation": {"latDeg": 0, "lonDeg": 0, "locationCategory": "Unknown"},
             "accidentGrade": "VerySerious", "accidentType": "Collision", "deaths": 0, "missingPersons": 0,
             "injuries": 0, "pollution": False, "shipLoss": False, "investigatingState": "示例调查国（虚构）", "reportStatus": "Draft"}
     vessel = {"vesselId": "lily", "name": "Lily", "imoNumber": "9074729", "flagState": "虚构船旗国",

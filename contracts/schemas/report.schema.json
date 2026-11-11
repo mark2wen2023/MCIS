@@ -468,6 +468,17 @@
         "rules": {
           "type": "object"
         },
+        "gisisRef": {
+          "type": "string",
+          "description": "MSC-MEPC.3/Circ.4/Rev.1 通函条目；本地字段无对应时为 —。"
+        },
+        "mappingStatus": {
+          "enum": ["exact", "partial", "none", "pending"]
+        },
+        "mappingNote": {
+          "type": "string",
+          "description": "对应差异、待核事项与取值来源限制。"
+        },
         "value": {},
         "missing": {
           "type": "boolean"
@@ -567,10 +578,27 @@
       },
       "additionalProperties": false
     },
+    "snapshot": {
+      "type": "object",
+      "required": ["snapshotId", "reportId", "sectionId", "sentenceId", "reason", "beforeValue", "afterValue", "summary", "auditSeq"],
+      "properties": {
+        "snapshotId": {"type": "string", "pattern": "^RA-[0-9a-f]{32}$"},
+        "reportId": {"type": ["string", "null"]},
+        "sectionId": {"type": ["string", "null"]},
+        "sentenceId": {"type": ["string", "null"]},
+        "reason": {"type": "string"},
+        "beforeValue": {},
+        "afterValue": {},
+        "summary": {"type": "string"},
+        "auditSeq": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    },
     "auditRecord": {
       "type": "object",
       "required": [
         "auditEvent",
+        "snapshotRef",
         "reportId",
         "sectionId",
         "sentenceId",
@@ -582,6 +610,10 @@
       "properties": {
         "auditEvent": {
           "$ref": "audit-event.schema.json"
+        },
+        "snapshotRef": {
+          "type": "string",
+          "pattern": "^report-snapshot:RA-[0-9a-f]{32}$"
         },
         "reportId": {
           "type": [

@@ -66,6 +66,7 @@ components:
     ReportGisis: { $ref: 'schemas/report.schema.json#/$defs/gisis' }
     ReportPending: { $ref: 'schemas/report.schema.json#/$defs/pending' }
     ReportAudit: { $ref: 'schemas/report.schema.json#/$defs/auditRecord' }
+    ReportSnapshot: { $ref: 'schemas/report.schema.json#/$defs/snapshot' }
     IntegrityReport:
       type: object
       description: 与 C# IntegrityCheckReport 对应
@@ -1119,6 +1120,30 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ReportAudit'
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '422': *id001
+  /api/v1/cases/{caseId}/report-snapshots/{snapshotId}:
+    parameters:
+    - *id002
+    - name: snapshotId
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - reports
+      summary: 按 snapshotRef 获取报告完整操作快照
+      description: 仅 LeadInvestigator / Investigator，权限与报告审计相同；理由及前后值全文保留。真实案例返回 409 report_real_data_pending，不存在返回 404 report_snapshot_not_found。
+      responses:
+        '200':
+          description: 完整操作快照
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportSnapshot'
         '403': *id001
         '404': *id001
         '409': *id001

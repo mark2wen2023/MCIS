@@ -1,5 +1,5 @@
 import { useState, type DragEvent } from 'react'
-import { api, casePath } from '../api'
+import { api, casePath, CASE_ID } from '../api'
 import { SERVICE_ADDR } from '../config'
 import { Metric, Panel } from '../components/Panel'
 import { useToast } from '../components/Toast'
@@ -83,6 +83,7 @@ export function RecommendationsPage() {
           </div>
         </div>
         <div className="page-actions">
+          <a className="btn" href={`#/report?case=${encodeURIComponent(CASE_ID)}`}>📄 国际格式报告 →</a>
           <button className="btn btn-primary" onClick={() => setCreating((v) => !v)}>＋ 新建安全建议</button>
         </div>
       </div>

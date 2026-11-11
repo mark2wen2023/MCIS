@@ -1,0 +1,1661 @@
+                                                                                                    E
+
+                                       4 ALBERT EMBANKMENT
+                                           LONDON SE1 7SR
+                    Telephone: +44 (0)20 7735 7611      Fax: +44 (0)20 7587 3210
+
+
+                                                                          MSC-MEPC.3/Circ.4/Rev.1
+                                                                               18 November 2014
+
+                          CASUALTY-RELATED MATTERS*
+                   REPORTS ON MARINE CASUALTIES AND INCIDENTS
+
+          Revised harmonized reporting procedures – Reports required under
+           SOLAS regulations I/21 and XI-1/6, and MARPOL, articles 8 and 12
+
+
+1          The Maritime Safety Committee, at its seventy-second session (17 to 26 May 2000)
+and the Marine Environment Protection Committee, at its forty-fourth and forty-fifth sessions
+(6 to 13 March 2000 and 2 to 6 October 2000, respectively) approved MSC/Circ.953 –
+MEPC/Circ.372 on Reports on marine casualties and incidents – Harmonized reporting
+procedures, amalgamating and harmonizing the procedures for reporting casualties to the
+Organization contained in existing MSC and MEPC circulars, which was subsequently amended
+by means of MSC-MEPC.3 circulars. The Marine Environment Protection Committee, at its
+sixty-fifth session (13 to 17 May 2013) and the Maritime Safety Committee, at its ninety-second
+session (12 to 21 June 2013) approved amendments to MSC-MEPC.3/Circ.3.
+2       Under SOLAS regulation I/21 and MARPOL articles 8 and 12, each Administration
+undertakes to conduct an investigation into any casualty occurring to ships under its flag
+subject to those conventions and to supply the Organization with pertinent information
+concerning the findings of such investigations if:
+         .1        it judges that such an investigation may assist in determining what changes
+                   in the present regulations may be desirable; and/or
+
+         .2        the casualty has produced a major deleterious effect on the marine
+                   environment.
+3        Additionally, each Administration shall conduct investigations of marine casualties
+and incidents, in accordance with SOLAS regulation XI-1/6, as supplemented by the
+provisions of the Code of the International Standards and Recommended Practices for a
+
+*
+      In order to facilitate the identification and retrieval of information circulated by means of joint
+      MSC-MEPC circulars, from now on such information will be disseminated through the following circular
+      series:
+
+              1    Organization and methods of work, as MSC-MEPC.1/Circ…
+              2    General matters, as MSC-MEPC.2/Circ…
+              3    Casualty-related matters, as MSC-MEPC.3/Circ…
+              4    Port State control-related matters, as MSC-MEPC.4/Circ…
+              5    Survey and certification-related matters, as MSC-MEPC.5/Circ…
+              6    National contact points for safety and pollution prevention        and   response,   as
+                   MSC-MEPC.6/Circ…
+              7    Human element-related matters, as MSC-MEPC.7/Circ….
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+MSC-MEPC.3/Circ.4/Rev.1
+Page 2
+
+Safety Investigation into a Marine Casualty or Marine Incident (Casualty Investigation Code)
+adopted by resolution MSC.255(84).
+4         The reporting formats contained in the annex to this circular replace the reporting
+forms contained in MSC-MEPC.3/Circ.3. They do not replace the reports required under
+MSC/Circ.539/Add.2 – Reports on casualty statistics concerning fishing vessels and
+fishermen at sea and MSC/Circ.802 – MEPC/Circ.332 – Provision of preliminary information
+on serious and very serious casualties by rescue coordination centres. The reporting format
+on incidental spillages of harmful substances of 50 tonnes or more has been added, as such
+reports are considered necessary when investigating a casualty or an incident (MARPOL,
+articles 8 and 12). This, however, does not replace the online entry report required by the
+annual mandatory report under MARPOL, article 11 (MEPC/Circ.318 – Formats for a
+mandatory reporting under MARPOL 73/78, part 1).
+5         Unlike MSC-MEPC.3/Circ.3, this circular only serves as an aide-memoire for online
+reporting through the IMO Global Integrated Shipping Information System (GISIS) and
+should not be used as a paper means for accumulating data. The marine safety investigating
+State should submit data through the GISIS marine casualties and incidents (MCI) module
+directly and by electronic means only.
+6        Following a very serious marine casualty, where data from a marine safety
+investigation is to be supplied to the Organization, the marine safety investigating State
+should submit a marine safety investigation report in addition to the data required in the
+appendices to this circular. Where there are important lessons to be learned from marine
+casualties or incidents other than very serious marine casualties, full investigation reports
+should also be submitted in addition to completing the database.
+7        Investigating States are invited to populate the GISIS MCI module with basic factual
+data about the casualty as soon as possible after the occurrence. This will register on GISIS
+that a casualty event has occurred and that it is being investigated. At this early stage,
+investigating States should aim, as a minimum, at completing all the asterisked fields in
+appendices 1 and 2 and as much of the consequence data in appendix 3, as possible.
+
+8        The GISIS MCI module is divided into five appendices, as follows:
+         .1       Appendix 1 requires generic information: the marine safety investigating
+                  State, the number of ships involved, generic casualty data, external
+                  environmental data, actions taken following the marine casualties and/or
+                  marine incidents forming the overall occurrence, and safety
+                  recommendations made with the aim of preventing future marine
+                  casualties;
+         .2       Appendix 2 requires factual information relating to each ship involved in
+                  each marine casualty or marine incident: ship particulars, voyage data,
+                  casualty data and consequences;
+         .3       Appendix 3 requires casualty analysis data relating to each ship involved
+                  in each marine casualty or marine incident: accidental events and
+                  contributing factors;
+         .4       Appendix 4 requires supplementary information to be added in particular
+                  circumstances relating to each marine casualty or marine incident. These
+                  additional data requirements will be automatically prompted; and
+         .5       Appendix 5 provides field value option tables.
+
+
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+                                                                    MSC-MEPC.3/Circ.4/Rev.1
+                                                                                    Page 3
+
+9         Member Governments are requested to use the present circular when making use of the
+electronic data exchange and reporting facilities available through GISIS for reporting on marine
+casualties and incidents (http://gisis.imo.org/Members), as described in Circular Letter No.2892 –
+Access to IMO web services, including GISIS and IMODOCS.
+
+10       The present circular supersedes MSC-MEPC.3/Circ.3.
+
+LIST OF APPENDICES
+
+APPENDIX 1:    GENERIC INFORMATION
+
+APPENDIX 2:    FACTUAL INFORMATION, relating to each ship involved in a marine casualty or
+               marine incident
+
+APPENDIX 3:    CASUALTY ANALYSIS DATA, relating to each ship involved in a marine casualty or
+               marine incident
+
+APPENDIX 4:    SUPPLEMENTARY INFORMATION, required in particular circumstances relating to
+               each marine casualty or marine incident
+
+APPENDIX 5:    FIELD VALUE OPTION TABLES:
+               Table 1:  Marine safety investigating State/Administration/Nationality
+               Table 2:  Safety recommendation focus
+               Table 3:  Location of initial marine casualty or marine incident
+               Table 4:  Casualty event
+               Table 5:  Casualty event severity
+               Table 6:  Sea state
+               Table 7:  Wind force
+               Table 8:  Natural light
+               Table 9:  Visibility
+               Table 10: Type of weather
+               Table 11: Ice
+               Table 12: Ship operation/Task operation
+               Table 13: Oil cargo/bunkers type & quantity
+               Table 14: Dangerous goods in packaged form
+               Table 15: Chemicals in bulk pollution category
+               Table 16: Accident event
+               Table 17: Rank
+               Table 18: Relevant training
+               Table 19: Error type
+               Table 20: Temporary related contributing factors
+               Table 21: Permanent related contributing factors
+               Table 22: Operational contributing factors
+               Table 23: Management/organizational contributing factors
+               Table 24: Equipment system
+               Table 25: Type of equipment failure
+               Table 26: Hazardous material type
+               Table 27: Type of hazardous material effect
+               Table 28: Environmental effect phenomenon
+               Table 29: External agencies system
+               Table 30: External agencies task affected
+
+
+                                               ***
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+                                                                     MSC-MEPC.3/Circ.4/Rev.1
+                                                                              Annex, page 1
+
+                                             ANNEX
+
+          REVISED HARMONIZED REPORTING PROCEDURES – REPORTS REQUIRED UNDER
+           SOLAS REGULATIONS I/21 AND XI-1/6, AND MARPOL, ARTICLES 8 AND 12
+
+                                          APPENDIX 1
+
+                                     GENERIC INFORMATION
+
+
+General
+
+Field      Field description                                               Field value
+number                                                                     type
+.1*        Marine safety investigating State                               See table 1
+.2*        Number of ships involved                                        Number
+.3         Actions taken                                                   Text
+.4         Safety recommendation focus (loop for more than one             See table 2
+           safety recommendation)                                          (multi-choice)
+.5         Safety recommendation acceptance                                Y/N/Partial
+.6         Safety recommendation                                           Text
+
+
+Generic casualty data
+
+.1    Summary of events                                                     Text
+.2*   Date of initial marine casualty or marine incident (local)            Numbers
+.3*   Time of initial marine casualty or marine incident (local)            Numbers
+.4*   Position of initial marine casualty or marine incident – latitude     Numbers
+.5*   Position of initial marine casualty or marine incident – longitude    Numbers
+.6*   Location of initial marine casualty or marine incident                See table 3
+.7*   Overall occurrence designated casualty event                          See table 4
+.8*   Overall occurrence severity                                           See table 5
+
+
+External environmental data
+
+.1    Sea state                                                            See table 6
+.2    Wind force                                                           See table 7
+.3    Natural light                                                        See table 8
+.4    Visibility                                                           See table 9
+.5    Type of weather                                                      See table 10
+.6    Ice                                                                  See table 11
+
+
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+MSC-MEPC.3/Circ.4/Rev.1
+Annex, page 2
+
+                                                 APPENDIX 2
+
+                                         FACTUAL INFORMATION
+                                   (relating to each ship involved)
+
+
+1     Ship particulars
+
+.1*   IMO number                                                      Number/Auto1
+.2*   Name of ship                                                    Text/Auto
+.3    Call sign                                                       Text/Auto
+.4    MMSI number                                                     Number/Auto
+.5*   Flag State                                                      Auto
+.6*   Type of ship (drop list to include high speed craft)            Auto
+.7    Gross tonnage                                                   Auto
+.8    Length overall                                                  Auto
+.9    Classification society                                          Auto
+.10   Registered shipowner                                            Auto
+.11   Ship's company                                                  Auto
+.12   Year of build                                                   Auto
+.13   Deadweight                                                      Auto
+.14   Hull material                                                   Auto
+.15   Hull construction                                               Auto
+.16   Propulsion type                                                 Auto
+.17   Type of bunkers                                                 See table 13
+.18   Number of crew on ship's certificate                            Number
+.19   Number of passengers on ship's certificate                      Number
+
+
+2     Voyage data
+
+.1    Type of cargo                                                   Text
+.2    Packaged dangerous goods or marine pollutants on board          Y/N/U2
+.3    Number of crew on board                                         Number
+.4    Number of passengers on board                                   Number
+.5    Number of other persons on board                                Number
+
+
+
+
+1
+       "Auto" means "automatically populated".
+2
+       Y/N/U means Yes/No/Unknown.
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+                                                                  MSC-MEPC.3/Circ.4/Rev.1
+                                                                           Annex, page 3
+
+3     Casualty data
+
+.1    Casualty event (loop for more than one casualty event)           See table 4
+.2*   Casualty event severity                                          See table 5
+.3    Ship operation                                                   See table 12
+                                                                       (multi-choice)
+.4    Under pilotage                                                   Y/N/U
+.5    GMDSS used                                                       Y/N/U
+.6    Life-saving appliances used                                      Y/N/U
+.7    Ship abandoned                                                   Y/N/U
+.8    VDR / S-VDR fitted                                               Y/N/U
+.9    VDR / S-VDR information available                                Y/N/U
+.10   VDR / S-VDR information downloaded                               Y/N/U
+.11   VDR / S-VDR information useable                                  Y/N/U
+
+
+4     Consequences
+
+.1    Number of dead or missing crew                                   Number
+.2    Number of dead or missing passengers                             Number
+.3    Number of other dead or missing persons                          Number
+.4    Number of crew seriously injured                                 Number
+.5    Number of passengers seriously injured                           Number
+.6    Number of other persons seriously injured                        Number
+.7    Total loss of ship                                               Y/N/U
+.8    Material damage to ship                                          Y/N/U
+.9    Breach of hull causing flooding                                  Y/N/U
+.10   Ship unfit to proceed to sea                                     Y/N/U
+.11   Third party damage (including non-ship source pollution)         Text
+.12   Ship pollution – oil cargo type & quantity                       See table 13
+                                                                       (multi-choice)
+.13 Ship pollution – oil bunkers type & quantity                       Table 13
+                                                                       (multi-choice)
+.14 Ship pollution – chemicals in bulk pollution category & quantity   Table 15
+                                                                       (multi-choice)
+.15 Ship pollution – packaged dangerous goods and marine               Table 14
+    pollutants type & quantity lost overboard
+
+
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+MSC-MEPC.3/Circ.4/Rev.1
+Annex, page 4
+
+                                          APPENDIX 3
+
+                                     CASUALTY ANALYSIS DATA
+                                 (relating to each ship involved)
+For each casualty event
+
+.1    Accident event (loop for more than one accident event)           See table 16
+
+For each "human erroneous action" accident event
+
+.1     Subject – age                                                   Number
+.2     Subject – gender                                                M/F/U3
+.3     Subject – nationality                                           See table 1
+.4     Subject – rank                                                  See table 17
+.5     Subject – time at sea                                           Number
+.6     Subject – time in present rank                                  Number
+.7     Subject – time held current qualification                       Number
+.8     Subject – Certificate of competency (type)                      Drop down
+                                                                       (STCW/Others)
+.9     Subject – State issuing certificate of competency               See table 1
+.10    Subject – time served with current employer                     Number
+.11    Subject – time with related experience                          Number
+.12    Subject – duration of handover                                  Number
+.13    Subject – lack of relevant training                             See table 18
+                                                                       (multi-choice)
+.14    Subject – hours of rest in last 24 hours                        Number
+.15    Subject – hours of rest in last 7 days                          Number
+.16    Subject – number of rest periods in last 24 hours               Number
+.17    Subject – longest rest period in last 24 hours                  Number
+.18    Subject – hours of sleep in last 24 hours                       Number
+.19    Subject – hours of sleep in last 7 days                         Number
+.20    Subject – time on duty before marine casualty or marine         Number
+       incident
+.21    Subject – time since last sleep period before marine casualty   Number
+       or marine incident
+.22    Subject – watchkeeping pattern (drop down list:4 on/8 off, or   Y/N/U
+       6 on/6 off, or 12 on/12 off, or Other)
+.23    Subject – time served on board ship up to
+       occurrence/continuous service]
+.24    Task operation                                                  See table 12
+.25    Description of accidental event                                 Text
+.26    Error type                                                      See table 19
+.27    Temporary related contributing factors                          See table 20
+                                                                       (multi-choice)
+.28    Permanent related contributing factors                          See table 21
+                                                                       (multi-choice)
+.29    Operational contributing factors                                See table 22
+                                                                       (multi-choice)
+.30    Management contributing factors                                 See table 23
+                                                                       (multi-choice)
+
+3
+      M/F/U means Male/Female/Unknown.
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+                                                        MSC-MEPC.3/Circ.4/Rev.1
+                                                                 Annex, page 5
+
+For each "equipment failure" accidental event
+
+.1    Subject – equipment system                           See table 24
+.2    Subject – equipment type                             Text
+.3    Type of equipment failure                            See table 25
+.4    Description of accidental event                      Text
+.5    Operational contributing factors                     See table 22
+                                                           (multi-choice)
+.6    Management contributing factors                      See table 23
+                                                           (multi-choice)
+
+
+For each "hazardous material effect" accidental event
+
+.1    Subject – material type                              See table 26
+.2    Type of effect                                       See table 27
+.3    Description of accidental event                      Text
+
+
+For each "environmental effect" accidental event
+
+.1    Subject – phenomenon                                 See table 28
+.2    Description of accidental event                      Text
+
+
+For each "external agencies" accidental event
+
+.1    Subject – system                                     See table 29
+.2    Task affected                                        See table 30
+.3    Description of accidental event                      Text
+.4    Operational contributing factors                     See table 22
+                                                           (multi-choice)
+.5    Management contributing factors                      See table 23
+                                                           (multi-choice)
+
+
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+MSC-MEPC.3/Circ.4/Rev.1
+Annex, page 6
+
+                                        APPENDIX 4
+
+                                 SUPPLEMENTARY INFORMATION
+
+
+ 1    If "packaged marine dangerous goods or marine pollutants on board" (Field at
+ appendix 2.2.2) – then complete following appendix 4 data.
+
+1.1        Cargo(es) involved
+1.1.1      Proper Shipping Name: UN Number:         IMO Hazard Class:
+1.1.2      Name and address of manufacturer, or consignor, or consignee:
+1.1.3      Type of packaging/container:
+1.1.4      Quantity and condition of goods:
+1.1.5      Stowage/securing arrangements:
+
+1.2     Pollution – goods lost overboard (yes/no):
+If yes:
+Lost goods floated or sank:
+Lost goods released from packaging (yes/no):
+
+
+2       If "breach of hull causing flooding" (Field at appendix 2.4.9) AND
+"flooding/foundering" casualty event (Field at appendix 2.3.1) AND and 25 metres or
+more "length overall" (Field at appendix 2.1.8) – then complete following appendix 4
+data
+
+2.1        Nature of damage:
+2.2        Length between perpendiculars Lpp:
+2.3        Moulded breadth B:
+2.4        Moulded depth D (to bulkhead deck in passenger ships and freeboard deck in
+           non-passenger ships, or to the uppermost completed deck if bulkhead or freeboard
+           deck are not specified):
+2.5        Draught before damage di:
+
+                                                 Ship side                              I
+
+                                                 BuIkhead- or freeboard deck
+
+        Ship bottom   d                                           D
+                                                                               hI                      h
+
+                                                             dd                             II
+                                  h
+                          I                                           d             z
+                                                             X                                             FP
+           X                                                                                     Lpp
+
+2.6        Ship side (port/starboard/bottom):
+2.7        Damage position (fore ship/afterbody/cargo hold/rudder/engine room/other):
+2.8        Position (height) with reference to WL:
+2.9        Damage type (below and above/above but not below/below but not above/within
+           – the physical limits of the ship structure):
+2.10       Distance from AP to centre of damage X:
+2.11       Distance from base line to the lower point of damage Z:
+2.12       Length of l: Height of h: Penetration d:
+2.13       damage l1: damage h1: damage d1:
+2.14       dd mid: dd fore: dd aft: (draughts after damage):
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+                                                                 MSC-MEPC.3/Circ.4/Rev.1
+                                                                          Annex, page 7
+
+2.15     dd mid calc:
+2.16     Hole in ship: Y/N Struck ship: Y/N
+         Ship to ship collision: Y/N Striking ship Y/N
+         (If damage extends above bulkhead/freeboard deck, additional dimensions should
+         be given for the part located below this deck, these being marked with suffix "1"):
+2.17     Speed of damaged ship at time of impact in knots:
+2.18     Speed of second ship at time of impact in knots:
+2.19     Angle of encounter:
+2.20     Did the ship sink: Y/N
+If so:
+2.20.1   Time taken to sink and manner of sinking:
+2.21     Appropriation of breached compartment(s) (e.g. machinery room, cargo hold, etc.):
+2.22     Type and quantity of cargo in damaged compartment, if any:
+2.23     Were there any special circumstances which influenced the results of damage
+         (e.g. open watertight doors, manholes, side-scuttles or pipes, fractures, etc.)?:
+2.24     Position of watertight bulkheads in vicinity of damage (distance from AP to each of
+         them):
+2.25     How many compartments flooded?:
+2.26     Was there a double bottom in the damaged area? Y/N
+If so:
+2.26.1   Indicate whether the inner bottom was breached:
+2.27     Separate penetration from the bulbous bow? Y/N
+2.28     Transverse subdivision bulkhead damaged? Y/N
+2.29     Collision bulkhead damaged? Y/N
+2.30     Damage assessment:
+2.31     Any additional information considered useful:
+
+
+3        If "capsize/listing" casualty event (Field at appendix 2.3.1) OR "total loss of
+ship" (Field at appendix 2.4.7), AND 25 metres (15 metres for fishing vessels) or more
+in "length overall" (Field at appendix 2.1.8) – then complete following data
+
+3.1      Length between perpendiculars Lpp:
+3.2      Moulded breadth B:
+3.3      Moulded depth D (to bulkhead deck in passenger ships and freeboard deck in
+         non-passenger ships, or to the uppermost completed deck if bulkhead or freeboard
+         deck are not specified):
+3.4      Draught amidships to assigned loadline or subdivision line:
+3.5      Service conditions (light or loaded, with approximate percentage of cargo, stores,
+         fuel and passengers):
+3.6      Disposition of cargo:
+3.7      Stowage factor of cargo:
+3.8      Type and quantity of deck cargo, if any:
+3.9      Quantity of water ballast, if any:
+3.10     Wave length:
+3.11     Wave height:
+3.12     Direction of wind relative to ship's head (degrees):
+3.13     Direction of waves relative to ship's head (degrees):
+3.14     Speed of ship at time of casualty:
+3.15     Name, length and height of enclosed superstructures and deckhouses above deck
+         to which D was measured:
+3.16     Bilge keels: width: longitudinal extent:
+3.17     Depth of bar keel, if any:
+3.18     Was water trapped on deck?
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+MSC-MEPC.3/Circ.4/Rev.1
+Annex, page 8
+
+If so:
+3.19     Indicate the extent:
+3.20     Were all vulnerable openings effectively closed at time of casualty?:
+3.21     Was the ship under action of helm at time of casualty?:
+3.22     Were any special instructions relative to this ship in existence concerning the
+         maintenance of stability, e.g. filling tanks, etc.?:
+3.23     Were any voyage limits and/or weather restrictions imposed for the ship?:
+For ship in fully loaded homogeneous arrival condition (with 10% stores, fuel, etc.):
+3.24     Draught (amidships):
+3.25     Displacement:
+3.26     Centre of gravity above moulded base line:
+3.27     Metacentric height (uncorrected):
+3.28     Distance between the transverse metacentre and centre of buoyancy:
+3.29     Reduction in GM due to any free surface of liquids:
+3.30     Block coefficient of fineness of displacement:
+3.31     Coefficient of fineness of midship section:
+3.32     Coefficient of fineness of waterplane:
+3.33     Height of centre of buoyancy above moulded base line:
+3.34     Lateral are of ship's profile (including erections, etc.) exposed to wind:
+3.35     Distance between centre of lateral area of ship's profile exposed to wind and
+         corresponding waterline:
+3.36     Estimated rolling period (P-S-P):
+3.37     Rated amplitude of roll (maximum):
+3.38     Angle of heel for immersion of uppermost continuous deck:
+3.39     Righting levers based on centre of gravity corrected for any free surfaces, for the
+         following angles of heel: 0º,10º,20º,30º,40º,50º,60º,70º,80º,90º:
+3.40     Maximum righting lever:
+3.41     Angle of maximum stability:
+3.42     Angle of vanishing stability:
+For ship in condition at time of loss:
+3.43     Draught (amidships):
+3.44     Displacement:
+3.45     Centre of gravity above moulded base line:
+3.46     Metacentric height (uncorrected):
+3.47     Distance between the transverse metacentre and centre of buoyancy:
+3.48     Reduction in GM due to any free surface of liquids:
+3.49     Block coefficient of fineness of displacement:
+3.50     Coefficient of fineness of midship section:
+3.51     Coefficient of fineness of waterplane:
+3.52     Height of centre of buoyancy above moulded base line:
+3.53     Lateral are of ship's profile (including erections, etc.) exposed to wind:
+3.54     Distance between centre of lateral area of ship's profile exposed to wind and
+         corresponding waterline:
+3.55     Estimated rolling period (P-S-P):
+3.56     Rated amplitude of roll (maximum):
+3.57     Angle of heel for immersion of uppermost continuous deck:
+3.58     Righting levers based on centre of gravity corrected for any free surfaces, for the
+         following angles of heel: 0º,10º,20º,30º,40º,50º,60º,70º,80º,90º:
+3.59     Maximum righting lever:
+3.60     Angle of maximum stability:
+3.61     Angle of vanishing stability:
+3.62     Lightship displacement:
+3.63     Centre of gravity above moulded base line:
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+                                                                     MSC-MEPC.3/Circ.4/Rev.1
+                                                                              Annex, page 9
+
+(It is desirable to attach a sketch of statical stability curves, drawn for both the below loading
+conditions, using the following scales:
+20 mm for every 10º angle of inclination
+10 mm (or 20mm) for every 0.1 metre of righting lever)
+
+
+4       If "fire/explosion" casualty event (Field at appendix 2.3.1) AND "very serious"
+casualty severity (Field at appendix 2.3.2) – then complete following data.
+
+4.1      Wind direction:
+4.2      Part of ship where fire broke out:
+4.3      Explain how persons on board were alerted:
+4.4      Means by which fire was initially detected: Fixed fire detection system/by ship's crew
+         or passenger/not known:
+4.5      Briefly, describe the performance of structural fire protection (fire resisting and fire
+         retarding bulkheads, doors, decks, etc.) with respect to: containment and
+         extinguishment of any fire in the space of origin, protection of means of escape or
+         access for firefighting, adequacy of structural fire protection:
+4.6      Ship's portable fire-extinguishing equipment used (foam, dry chemical, CO2, water,
+         etc.):
+4.7      Fixed fire-extinguishing installations: at site of origin of fire (specify the type),
+         adjacent areas (specify the type):
+4.8      Were fixed fire-extinguishing systems used in an attempt to extinguish the fire?:
+4.9      Did the use of fixed fire-extinguishing systems contribute to the extinguishment of
+         the fire?:
+4.10     Briefly explain the action taken by the crew to contain, control and suppress the fire
+         and explosion in the space of origin:
+4.11     Was outside assistance provided (e.g. fire department, other ship, etc.)?:
+If so:
+4.12     What equipment was used?:
+4.13     Determine qualifications and training of all ship's crew involved in the firefighting
+         operations:
+4.14     Report on whether company or industry procedures, including hot work procedures,
+         were in place and relevant to the operation concerned:
+4.15     If the procedures were in place, were they correctly implemented?:
+4.16     Time taken to fight fire from first alarm: to control the fire; once controlled, to
+         extinguish the fire:
+4.17     Total duration of fire:
+4.18     Damage caused by fire: loss of life or injuries to personnel, to the cargo, to the ship,
+         release of pollutants:
+4.19     Was there an adequate supply of air on board for self-contained breathing
+         apparatus or was outside assistance needed to supply such air?:
+
+
+5        If "GMDSS used" (Field at appendix 2.3.5) – then complete following data.
+
+5.1      GMDSS sea area or sea areas for which radio equipment was installed:
+5.2      GMDSS sea area:
+5.3      Description of distress and safety radio communications, including particulars of:
+         means of communication (radiotelegraphy, radiotelephony, INMARSAT SES, DSC,
+         EPIRB) and frequencies used for distress alert by ship, distress relay by RCC, SAR
+         coordinating communications; use of alarm signal; contents of distress message;
+         RCC(s), ships, coast station or coast earth stations which acknowledged distress
+         message (state time and position); language difficulties:
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+MSC-MEPC.3/Circ.4/Rev.1
+Annex, page 10
+
+5.4         If the ship was abandoned, description of distress radio communications and
+            location signals from survival craft:
+5.5         If a satellite EPIRB or EPIRB was used for alerting and/or locating survivors, give
+            details (frequency, type of activation, etc.) and which LUT/CES or coast station
+            received the alerting signal:
+5.6         Description     of   on-scene     radio  communications,    including   surface/air
+            communications:
+
+
+6        If "oil cargo" (2.4.12) OR "oil bunkers" (2.4.13) OR "chemicals in bulk"
+(Field 2.4.14) OR "packaged dangerous goods and marine pollutants" (Field 2.4.15)
+"quantity spilled" or "lost overboard" total 50 tonnes or more – then complete following
+data.
+
+                                 Direct Natural Resources Damages
+
+Loss of wildlife:
+.1   Impact on birds
+.2   Impact on marine mammals
+.3   Impact on fish
+.4   Impact on the marine life, including invertebrates
+
+Loss of fisheries:
+.1   Fin fish
+.2   Shellfish
+.3   Fish farming
+
+Damage to the marine environment:
+
+Damage to the shore environment:
+
+Habitat Degradation:
+.1   Soft habitats (salt marshes, mangroves, mudflats)
+.2   Shoreline (beaches)
+.3   Rocky coasts/reefs, including coral
+
+.1       No action
+.2       Pending
+.3       Action taken, i.e.
+
+
+7       If "life-saving appliances used" (Field at appendix 2.3.6) – then complete
+following data.
+
+7.1         Wave height (observed):
+7.2         Sea temperature ºC:
+7.3         Air temperature ºC:
+7.4         Warm climates: Y/N:
+7.5         Inflatable liferaft involved?
+If so:
+7.5.1       Capacity: POB:      Davit launched?: Y/N
+
+
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+                                                               MSC-MEPC.3/Circ.4/Rev.1
+                                                                      Annex, page 11
+
+7.6      Marine Evacuation System (MES) involved?
+If so:
+7.6.1    Vertical?        Slide?
+7.7      Lifeboat involved?
+If so:
+7.7.1    Capacity: POB: Davit launched? Free fall?:
+7.8      Buoyant apparatus involved?:
+7.9      Ship's rescue boat involved?:
+7.10     Launching appliances involved?:
+If so:
+7.10.1   Capacity:         POB:
+7.11     Other life-saving appliance involved?:
+If so:
+7.11.1   Capacity:          POB:
+7.12     Immersion suit used?:
+7.13     Lifejacket used?:
+7.14     Personal Flotation Device (PFD) other than a lifejacket used?:
+7.15     Anti-exposure suit used?:
+7.16     Lifebuoy used?:
+7.17     Reason for deployment of life-saving appliance: emergency
+         evacuation/abandonment/crew training/deployment as required by regulations/
+         approval trials (give details):
+
+
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+MSC-MEPC.3/Circ.4/Rev.1
+Annex, page 12
+
+                                        APPENDIX 5
+
+                                  FIELD VALUE OPTION TABLES
+
+                                           Table 1
+
+               Marine safety investigating State/Administration/Nationality
+
+                                  As per GISIS nomenclatures
+
+                                           Table 2
+
+                                 Safety recommendation focus
+
+.1    Carriage of cargo
+.2    Electrical installation
+.3    Fire protection/firefighting equipment
+.4    Human factors
+.5    Life-saving equipment
+.6    Machinery
+.7    Operational practice
+.8    Radio installation
+.9    Safety of navigation
+.10   Seaworthiness
+.11   Stability
+.12   Other
+.13   No safety recommendations
+
+
+                                           Table 3
+
+                   Location of initial marine casualty or marine incident
+
+.1    At berth
+.2    Anchorage
+.3    Port
+.4    Port approach
+.5    Inland waters
+.6    Canal
+.7    River
+.8    Archipelagos
+.9    Coastal waters
+.10   Open sea
+.11   Unknown
+.12   Strait/channel
+.13   Traffic separation scheme
+.14   Offshore installation
+
+
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+                                                             MSC-MEPC.3/Circ.4/Rev.1
+                                                                    Annex, page 13
+
+                                    Table 4
+
+                                 Casualty event
+
+.1    Collision                      own ship not under way
+.2                                   with multiple ships
+.3                                   with other ship
+.4    Grounding                      while drifting
+.5                                   while under power
+.6    Contact                        with fixed object
+.7                                   with floating object
+.8                                   with flying object
+.9    Fire/explosion                 fire
+.10                                  explosion
+.11   Hull failure
+.12   Loss of control                loss of containment
+.13                                  loss of directional control
+.14                                  loss of electrical power
+.15                                  loss of propulsion power
+.16   Ship/equipment damage
+.17   Capsize/listing                capsize
+.18                                  listing
+.19   Flooding/foundering            flooding
+.20                                  foundering
+.21   Ship missing
+.22   Occupational accident          body movement under or with physical
+                                     stress (generally leading to an internal
+                                     injury)
+.23                                  body movement without any physical
+                                     stress (generally leading to an external
+                                     injury)
+.24                                  breakage, bursting, splitting, fall or
+                                     collapse of material agent
+.25                                  overflow,      overturn,     leak,     flow,
+                                     vaporization, emission of material agent
+.26                                  electrical problems, explosion, fire
+.27                                  loss of control of machine, means of
+                                     transport     or   handling      equipment,
+                                     hand-held tool, object, animal
+.28                                  shock, fright, violence, aggression,
+                                     threat, presence
+.29                                  slipping, stumbling, falling of person
+                                     overboard
+.30                                  slipping, stumbling, falling of person to a
+                                     lower level
+.31                                  Slipping, stumbling, falling of a person on
+                                     the same level
+.32                                  Others
+.33   Other
+.34   Unknown
+
+
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+MSC-MEPC.3/Circ.4/Rev.1
+Annex, page 14
+
+                                          Table 5
+
+                                 Casualty event severity
+
+.1    Very serious marine casualty
+.2    Marine casualty
+.3    Marine incident
+
+
+                                          Table 6
+
+                                         Sea state
+
+.1    0 – Calm glassy – (0m)
+.2    1 – Calm rippled – (0 – 0.1m)
+.3    2 – Smooth – (0.1 – 0.5m)
+.4    3 – Slight – (0.5 – 1.25m)
+.5    4 – Moderate – (1.25 – 2.5m)
+.6    5 – Rough – (2.5 – 4m)
+.7    6 – Very rough – (4 – 6m)
+.8    7 – High – (6 – 9m)
+.9    8 – Very high – (9 – 14m)
+.10   9 – Phenomenal – (+14m)
+.11   Unknown
+
+
+                                          Table 7
+
+                                        Wind force
+
+.1    0 – Calm – knot (0 – 1) m/s (0 – 1)
+.2    1 – Light air – knot (1 – 3) m/s (1 – 2)
+.3    2 – Light breeze – knot (4 – 6) m/s (2 – 3)
+.4    3 – Gentle breeze – knot (7 - 10) m/s (4 – 5)
+.5    4 – Moderate breeze – knot (11 – 16) m/s (6 – 8)
+.6    5 – Fresh breeze – knot (17 - 21) m/s (9 -11)
+.7    6 – Strong breeze – knot (22 – 27) m/s (11 – 14)
+.8    7 – Near gale – knot (28 – 33) m/s (14 – 17)
+.9    8 – Gale – knot (34 – 40) m/s (17 – 21)
+.10   9 – Strong gale – knot (41 – 47) m/s (21 – 24)
+.11   10 – Storm – knot (48 – 55) m/s (25 – 28)
+.12   11 – Violent storm – knot (56 – 63) m/s (29 – 32)
+.13   12 – Hurricane – knot (+64) m/s (+33)
+.14   Beaufort Scale: Unknown
+
+
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+                                                                 MSC-MEPC.3/Circ.4/Rev.1
+                                                                        Annex, page 15
+
+                                             Table 8
+
+                                          Natural light
+
+.1    Daylight
+.2    Twilight
+.3    Night
+.4    Unknown
+
+
+                                             Table 9
+
+                                            Visibility
+
+.1    Very poor – Vis < 0.5nm
+.2    Poor – 0.5 <= Vis < 2nm
+.3    Moderate – 2 <= Vis < 5nm
+.4    Good – 5 <= Vis < 25nm
+.5    Very good – Vis >= 25nm
+.6    Unknown
+
+
+                                            Table 10
+
+                                        Type of weather
+
+ .1    Clear/partly cloudy
+ .2    Overcast
+ .3    Fog
+ .4    Rain
+ .5    Snow
+ .6    Humidity
+
+
+                                            Table 11
+
+                                                 Ice
+
+ .1   Thickness (m) (drop down list)
+ .2   Percent coverage (drop down list)
+ .3   Type of ice (multi year, 1st year, etc.)
+
+                                            Table 12
+
+                                 Ship operation/Task operation
+
+.1    Being towed
+.2    Emergency
+.3    Fishing             Gutting/handling/stowing fish
+.4                        Preparing/stowing fishing gear
+.5                        Shooting/hauling fishing gear
+.6                        Towing fishing gear
+.7    Normal service      Alongside/moored/anchored
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+MSC-MEPC.3/Circ.4/Rev.1
+Annex, page 16
+
+.8                        Ballasting/deballasting
+.9                        Berthing
+.10                       Bunkering
+.11                       Cleaning/washing tanks
+.12                       Dropping/hoisting anchor
+.13                       Embarking/disembarking people
+.14                       On passage                        Displacement mode
+.15                                                         Non-displacement
+                                                            mode
+.16                                                         Transitional mode
+.17                       Loading
+.18                       Maintenance
+.19                       Manoeuvring
+.20                       Open/close door, hatches, etc.
+.21                       Repairing
+.22                       Starting/stopping engine
+.23                       Taking stores
+.24                       Turning
+.25                       Under pilotage
+.26                       Unloading/discharging cargo
+.27                       Water ballast exchange
+.28   Sailing             Beam reaching
+.29                       Broad reaching
+.30                       Close reaching
+.31                       Cruising using engine
+.32                       Head to wind
+.33                       On the port/starboard tack
+.34                       Running
+.35                       Set and lower a sail
+.36                       Tacking
+.37                       Gybing
+.38   Special service     Disposal of residues/slops
+.39                       Dredging
+.40                       Drifting
+.41                       Drilling
+.42                       Gas freeing
+.43                       Hove-to/dodging
+.44                       Ice breaking
+.45                       Idle, off-hire
+.46                       In icebreaker assistance
+.47                       Offshore support
+.48                       Inerting
+.49                       On watch
+.50                       Replenishment at sea operations
+.51                       Rowing/paddling
+.52                       Ship-to-ship transfer of cargo
+.53                       Towing/pushing
+.54                       Trials/drills/tests
+.55                       Under tow/push
+.56                       Anchor handling
+.57   Other
+.58   Unknown
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+                                                                    MSC-MEPC.3/Circ.4/Rev.1
+                                                                           Annex, page 17
+
+                                            Table 13
+
+                                 Oil cargo/Bunker type & quantity
+
+      Dropdown list from MARPOL Annex 1, Appendix 1, applies to            Quantity
+      each item below
+.1    Asphalt solutions
+.2    Oils
+.3    Distillates
+.4    Gas Oil
+.5    Gasoline blending stocks
+.6    Gasolines
+.7    Jet fuels
+.8    Naphta
+.9    Unknown
+.10   None
+
+
+                                            Table 14
+
+                            Dangerous goods in packaged form
+
+Class (IMDG         Proper                 UN number          Quantity lost overboard
+    Code)       Shipping Name
+.1
+.2
+.3
+.4.1
+.4.2
+.4.3
+.5.1
+.5.2
+.6.1
+.6.2
+.7
+.8
+.9
+
+
+                                            Table 15
+
+                            Chemicals in bulk pollution category
+
+                                                                           Quantity
+.1    Category X
+.2    Category Y
+.3    Category Z
+.4    Category OS
+.5    Unknown
+.6    None
+
+
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+MSC-MEPC.3/Circ.4/Rev.1
+Annex, page 18
+
+                                       Table 16
+
+                                    Accident event
+
+.1     Human erroneous action
+.2     Equipment failure
+.3     Hazardous material effect
+.4     Environmental effect
+.5     External agencies
+.6     Unknown
+
+
+                                       Table 17
+
+                                        Rank
+
+.1     Master
+.2     Chief mate
+.3     Deck officer
+.4     Chief engineer officer
+.5     Second engineer officer
+.6     Engineer officer
+.7     Trainee cadet
+.8     Radio personnel
+.9     Rating deck
+.10    Rating engine
+.11    Others
+.12    Electro-technical officer
+.13    Electro-technical rating
+.14    Skipper
+.15    Other crew member
+.16    Pilot
+.17    Other non-crew member
+.18    Unknown
+
+
+                                       Table 18
+
+                                   Relevant training
+
+.1    Basic training               Personal survival techniques
+.2                                 Fire prevention and firefighting
+.3                                 Elementary first aid
+.4                                 Personal safety
+.5                                 Basic safety familiarization
+.6                                 Ship specific familiarization
+.7    Advanced training            Advanced firefighting
+.8                                 Proficiency in survival craft and rescue boat
+.9                                 Proficiency in fast rescue boat
+.10                                Shore-based firefighting
+
+
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+                                                                 MSC-MEPC.3/Circ.4/Rev.1
+                                                                        Annex, page 19
+
+.11   Specific training              Automatic Radar Plotting Aids
+.12                                  Bridge team management
+.13                                  Crane operation
+.14                                  Crew resource management
+.15                                  ECDIS
+.16                                  GMDSS
+.17                                  Oil tanker specialized
+.18                                  Chemical tanker specialized
+.19                                  Integrated bridge
+.20                                  Liquefied gas tanker specialized
+.21                                  Passenger ship familiarization
+.22                                  Passenger ship safety
+.23                                  Passenger ship crowd management
+.24                                  Passenger ship crisis management
+.25                                  Passenger ship safety, cargo safety, etc.
+.26                                  Ship/engine control
+.27                                  Tanker familiarization
+.28                                  Towing operations
+.29                                  Dynamic positioning
+.30   Training not according to
+      national law
+.31   Other
+.32   None
+.33   Unknown
+
+
+                                         Table 19
+
+                                        Error type
+
+.1    Observation
+.2    Interpretation
+.3    Planning / Intention
+.4    Action
+
+
+                                         Table 20
+
+              Temporary related contributing factors (select all that applies)
+
+.1     Distraction
+.2     Fatigue
+.3     Fear
+.4     Inattention
+.5     Memory failure
+.6     Performance variability
+.7     Physical or physiological stress
+.8     Psychological stress
+.9     Alcohol or drugs
+.10    Non-prescription/Prescription medication
+.11    Other (specify)
+
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+MSC-MEPC.3/Circ.4/Rev.1
+Annex, page 20
+
+                                            Table 21
+
+                          Permanent related contributing factors
+
+.1    Cognitive bias
+.2    Cognitive style
+.3    Functional impairment
+
+
+                                            Table 22
+
+                                 Operational contributing factors
+
+Social environment
+
+.1    Less than adequate labour-management relations
+.2    less than adequate communications
+.3    Language problem
+.4    Social and cultural barriers and conflicts
+.5    Person-to-person conflict/animosity
+.6    Inadequate safety/risk awareness
+.7    Inappropriate or adventurous behaviour/comportment
+.8    Resistance to change
+
+Supervision
+
+.9    Lack of coordination of tasks
+.10   Inadequate work preparation
+.11   Inadequate briefing/instruction
+.12   Lack of resources
+.13   Poor Supervision
+.14   Inadequate work procedures
+.15   Conflicting orders/priorities
+.16   Inappropriate peer pressure
+.17
+
+Manning
+
+.18   Long working periods, excessive overtime
+.19   Frequent change of watch schedule
+.20   Inappropriate person assigned
+.21   Too high work load/low work load
+.22   Idleness, waiting
+.23   Low job satisfaction, monotony
+.24   Lack of responsibility for own job
+.25   Inadequate manning
+
+Personnel
+
+.26   Lack of motivation/morale
+.27   Lack of skill
+.28   Lack of knowledge
+.29   Less than adequate physical/physiological capability
+.30   Less than adequate mental and psychological state
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+                                                                MSC-MEPC.3/Circ.4/Rev.1
+                                                                       Annex, page 21
+
+Workplace conditions
+
+.31   Anthropometric factors, dimensions
+.32   Lack of information, inadequately presented information
+.33   Display design, controls
+.34   Inadequate illumination
+.35   Hazardous/disorderly workplace
+
+Internal environment
+
+.36   Noise, vibration
+.37   Sea motion, acceleration
+.38   Temperature, humidity
+.39   Toxic substance, other health hazards
+.40   Lack of oxygen
+
+Inadequate tools and equipment
+
+.41   Right tools and equipment unavailable
+.42   Less than adequate assessment of needs and risks
+.43   Inadequate tool or aid
+.44   Inadequate standards or specifications
+.45   Use of wrong equipment
+
+Maintenance
+
+.46   Failure not detected during maintenance
+.47   Lack of maintenance
+.48   Inadequate maintenance
+.49   Improper performance of maintenance/repair
+.50   System out of operation
+
+Navigational/Geographical constraints
+
+.51   High traffic density hinders vessel control
+.52   Hindrances in the seaway
+.53   Restricted fairway/channel
+
+Emergency response
+
+.54   Contingency plans not followed
+.55   Inadequate/lack of training
+.56   Lacks initiative to deal with emergencies
+.57   Training ignored
+.58   Inadequate control of life-saving equipment
+.59   Lack of command and control
+.60   Inadequate/erroneous information to passengers
+
+
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+MSC-MEPC.3/Circ.4/Rev.1
+Annex, page 22
+
+                                         Table 23
+
+                     Management/organizational contributing factors
+
+Impact on business climate
+
+.1    Economic conditions
+.2    Market change
+.3    Bad relation with other organization
+.4    Extreme competition
+
+Organization and general management
+
+.5    Policy, ethical values
+.6    Focus on liability and punishment
+.7    Communication policy
+.8    Standard set by example
+.9    Company loyalty and commitment
+.10   Response to feedback from employees
+.11   Ship undermanned
+.12   Support from land organization
+.13   Too wide control span
+.14   Authoritarian command style
+.15   Unclear roles and responsibility
+.16   Cross-pressure from schedule and economy
+.17   Lack of communication and coordination
+
+Operations management
+
+.18   Pressure to keep schedule and costs
+.19   Inadequate procedures and checklists
+.20   No review of critical tasks/operations
+.21   Management training
+
+Safety and environmental management
+
+.22   Critical system and cargo documentation
+.23   Inspection/internal audits
+.24   Follow-up of non-conformities
+.25   Incident reporting, analysis, improvement
+.26   Work instruction
+.27   Concern for quality improvement
+.28   Inadequate promotion of safety
+.29   Less than adequate safety plan and programme
+.30   Less than adequate formal safety assessment, risk analysis
+
+Occupational health management
+
+.31   Information about health risks
+.32   Personal protective equipment
+.33   Health control of personnel
+.34   Workplace inspections
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+                                                        MSC-MEPC.3/Circ.4/Rev.1
+                                                               Annex, page 23
+
+.35   Substandard hygiene on board
+.36   Less than adequate medical services provided
+.37   Follow-up of programmes and plans
+.38   No off-the-job safety policy
+
+Personnel management
+
+.39   Hiring and selection policy
+.40   Inadequate training programme
+.41   Selection / training of officers
+.42   Control with use of overtime
+.43   Opportunity for advancement
+.44   High turnover, lack of continuity
+
+System acquisition
+
+.45   Substandard components
+.46   Substandard contractors
+.47   Control of contractors
+.48   Verification of contract requirements
+.49   Inadequate testing
+
+Design
+
+.50   Deviation from standards/specifications
+.51   Inappropriate regulations
+.52   Design error
+.53   Less than adequate design verification
+.54   Less than adequate system review and evaluation
+.55   Less than adequate change management
+
+Maintenance policy
+
+.56   Lack of priority to maintenance
+.57   Lack of competent repair personnel
+.58   Less than adequate planning
+.59   Lack of follow-up and compliance check
+
+Emergency preparedness
+
+.60   Emergency plans
+.61   Emergency procedures
+.62   Management training
+.63   Crisis handling
+.64   Maintenance of life-saving equipment
+.65   Inadequate firefighting equipment
+.66   Emergency training programme
+.67   Life-saving equipment
+.68   Lack of decision support
+.69   Lack of warning systems
+
+
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+MSC-MEPC.3/Circ.4/Rev.1
+Annex, page 24
+
+Regulatory activities
+
+.70   Regulatory procedures
+.71   Regulatory standards
+.72   Regulation
+.73   Inspection and survey
+.74   Monitoring
+.75   Surveillance
+.76   Audit
+.77   Checks
+
+
+                                      Table 24
+
+                                 Equipment system
+
+.1    Auxiliary machinery
+.2    Ballast
+.3    Bilge, drain
+.4    Cargo
+.5    Cargo securing
+.6    Cargo tank venting
+.7    Navigational lights or sound signals
+.8    Compressed air
+.9    COW
+.10   Deck machinery
+.11   Doors, hatches, ports, etc.
+.12   Dredging
+.13   Electrical appliances
+.14   Electrical installation
+.15   Exhaust gas
+.16   Fire protection
+.17   Fishing gear
+.18   Fixtures/fitting
+.19   Freshwater
+.20   Fuel
+.21   IGS
+.22   Internal communication, alarms except related to fire
+.23   Life-saving appliances
+.24   Lifting appliances
+.25   Lubrication
+.26   Manoeuvrability/DP system
+.27   Shipborne Navigational equipment and systems (drop down list include:
+      RADAR, ECDIS, Echo Sounders, GPS, Magnetic compass, Gyro compass,
+      NAVTEX receiver, AIS)
+.28   Pollution prevention
+.29   Propulsion machinery
+.30   Radio communication
+.31   Sewage
+.32   Ship structure
+.33   Stability calculations/loading instrument
+.34   Steam generation
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+                                                                  MSC-MEPC.3/Circ.4/Rev.1
+                                                                         Annex, page 25
+
+.35   Stripping
+.36   Ventilation
+.37   Welding appliances
+.38   Other
+.39   Unknown
+.40   CCTV
+
+
+                                         Table 25
+
+                                 Type of equipment failure
+
+.1    Structure failure               Deformation (bulges, deflections, buckling)
+.2                                    Fractured (breaks or incipient cracks)
+.3                                    Penetrated, holed
+.4    Containment failure
+.5    Physical binding or jamming
+.6    Vibration
+.7    Fails to remain (in position)
+.8    Fails to open
+.9    Fails to close
+.10   Fails open
+.11   Fails closed
+.12   Internal leakage
+.13   External leakage
+.14   Fails out of tolerance (high)
+.15   Fails out of tolerance (low)
+.16   Inadvertent operation
+.17   Intermittent operation
+.18   Erratic operation
+.19   Erroneous indication
+.20   Restricted flow
+.21   False actuation
+.22   Fails to stop
+.23   Fails to start
+.24   Fails to switch
+.25   Premature operation
+.26   Delayed operation
+.27   Erroneous input (increased)
+.28   Erroneous input (decreased)
+.29   Erroneous output
+      (increased)
+.30   Erroneous output
+      (decreased)
+.31   Loss of input
+.32   Loss of output
+.33   Shorted (electrical)
+.34   Open (electrical)
+.35   Leakage (electrical)
+.36   Other
+.37   Unknown
+
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+MSC-MEPC.3/Circ.4/Rev.1
+Annex, page 26
+
+                                           Table 26
+
+                                   Hazardous material type
+
+.1    Cargo
+.2    Deck stores
+.3    Engine stores
+.4    Fuel
+.5    Provisions
+.6    Residues/wastes                  Oily waste
+.7                                     NLS waste
+.8                                     Garbage
+.9                                     Sewage
+.10                                    Ozone-depleting substances
+.11                                    Exhaust gas-cleaning residues
+.12   Other
+.13   Unknown
+
+
+                                           Table 27
+
+                               Type of hazardous material effect
+
+.1    Cargo liquefaction
+.2    Cargo shifting
+.3    Chemical reaction                Corrosive effects
+.4                                     Dust effects
+.5                                     Explosive mixture
+.6                                     Poisoning
+.7                                     Flammable mixture
+.8                                     Radiation
+.9                                     Spontaneous combustion
+.10                                    Toxic fumes or gas
+.11   Insufficient stability
+.12   Overflow/leak/escape
+.13   Oxygenation
+.14   Structural damage
+.15   Other
+.16   Unknown
+
+
+                                           Table 28
+
+                             Environmental effect phenomenon
+
+.1    Wind
+.2    Wave
+.3    Current
+.4    Tide
+.5    Shallow water
+.6    Channel effect
+.7    Hydrostatic head
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+                                                                   MSC-MEPC.3/Circ.4/Rev.1
+                                                                          Annex, page 27
+
+.8    Light
+.9    Whiteout
+.10   Fog, haze, smoke
+.11   Rain, snow, hail
+.12   Ice
+.13   Icing
+.14   Debris
+.15   Multi-phenomenon
+.16   Other ship interference
+.17   Uncharted underwater obstruction
+.18   Rope/net (own ship's)
+.19   Rope/net (other ship's or source unknown)
+.20   Natural disaster/tsunami
+.21   Other
+.22   Unknown
+
+
+                                            Table 29
+
+                                   External agencies system
+
+.1    Coastal VTS
+.2    Navigation aids
+.3    Navigation sign, buoy, etc.
+.4    Pilot service
+.5    Pollution response
+.6    Port VTS
+.7    SAR Centre
+.8    SAR craft
+.9    Towing service
+.10   Other
+.11   Unknown
+
+
+                                            Table 30
+
+                                 External agencies task affected
+
+.1    Monitoring
+.2    Coordination
+.3    Communication
+.4    Planning
+.5    Operation
+.6    Other
+.7    Unknown
+
+
+                                         ____________
+
+
+
+
+I:\CIRC\MSC-MEPC\3\4-Rev-1.doc
+

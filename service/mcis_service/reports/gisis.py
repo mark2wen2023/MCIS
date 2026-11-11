@@ -11,8 +11,8 @@ from datetime import datetime
 
 from .templates import DISCLAIMER_EN, DISCLAIMER_ZH, GISIS_FIELDS
 
-_SEVERITY = {"VerySerious": "Very serious", "Very serious": "Very serious", "Serious": "Serious",
-             "LessSerious": "Less serious", "Less serious": "Less serious", "MarineIncident": "Marine incident", "Marine incident": "Marine incident"}
+_SEVERITY = {"VerySerious": "Very serious marine casualty", "Very serious": "Very serious marine casualty",
+             "MarineIncident": "Marine incident", "Marine incident": "Marine incident"}
 _MISSING = "缺数据 / Missing data"
 
 
@@ -50,9 +50,12 @@ def build_gisis(case: dict, vessels: list) -> dict:
                 fields.append(_materialize(definition, value, vessel_id=vessel.get("vesselId") or "missing-vessel"))
             continue
         source = definition["sourceRefs"][0].removeprefix("case.")
-        value = _get_path(case, source)
+        if definition["id"] == "numberOfShips":
+            value = len(vessels) if vessels else None
+        else:
+            value = _get_path(case, source)
         if definition["id"] == "severity":
-            value = _SEVERITY.get(value, value) if isinstance(value, str) else value
+            value = _SEVERITY.get(value) if isinstance(value, str) else None
         fields.append(_materialize(definition, value))
     fictional = case.get("isFictionalDemo") is True
     return {"caseId": case["caseId"], "isFictionalDemo": fictional,
@@ -129,7 +132,7 @@ def serialize_gisis(doc: dict, format: str) -> bytes:
     if format != "csv":
         raise ValueError("GISIS format must be json or csv")
     output = io.StringIO(newline="")
-    keys = ["caseId", "isFictionalDemo", "notice", "id", "labelZh", "labelEn", "vesselId", "required", "value", "missing", "missingLabel", "sourceRefs", "rules"]
+    keys = ["caseId", "isFictionalDemo", "notice", "id", "labelZh", "labelEn", "vesselId", "required", "value", "missing", "missingLabel", "sourceRefs", "gisisRef", "mappingStatus", "mappingNote", "rules"]
     writer = csv.DictWriter(output, fieldnames=keys)
     writer.writeheader()
     for field in doc["fields"]:

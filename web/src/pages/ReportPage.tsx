@@ -95,7 +95,7 @@ export function ReportPage() {
     <ReportView caseId={caseId} templates={templates} templateId={templateId} lang={lang} report={report} reports={reports} gisis={gisis} audit={audit} realDataStatus={realDataStatus} selectedSectionId={selectedSection} busy={loading || saving} error={error} notice={notice || (loading ? '正在载入报告数据…' : null)} validation={validation}
       onSelectSection={setSelectedSection} onSwitchCase={(id) => { setNotice(null); setSelectedSection(null); setParams({ case: id, template: templateId, lang }) }}
       onTemplate={(id) => changeOptions(id, lang)} onLang={(next) => changeOptions(templateId, next)} onSelectReport={(id) => setParams({ case: caseId, report: id })}
-      onCreate={() => { void perform(async () => navigateReport(await reportApi.create(caseId, templateId, lang)), '已生成 Draft 报告。').catch(() => {}) }}
+      onCreate={(generateLang = lang) => { void perform(async () => navigateReport(await reportApi.create(caseId, templateId, generateLang)), '已生成 Draft 报告。').catch(() => {}) }}
       onRegenerate={() => { if (report) void perform(async () => navigateReport(await reportApi.regenerate(caseId, report.reportId)), '已生成新版本；旧版本及复核记录保留。').catch(() => {}) }}
       onReview={(action, target) => { setError(null); setReview({ action, target }) }}
       onExport={(format, exportLang) => { if (report) void perform(async () => { const file = await reportApi.export(caseId, report.reportId, format, exportLang); setNotice(`已导出 ${file.filename}${file.sha256 ? ` · SHA-256 ${file.sha256}` : ''}`); refresh() }).catch(() => {}) }}

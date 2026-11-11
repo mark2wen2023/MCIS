@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+import json
 from typing import Any
 
 from sqlalchemy import func, select
@@ -21,7 +22,8 @@ def _summ(v: Any, limit: int = 400) -> str:
 
 
 def build_line(*, utc: str, operator: str, action: str, category: str, command: str, before: str, after: str,
-               seq: int, role: str, entity_type: str, entity_id: str, prev: str, reason: str | None = None) -> str:
+               seq: int, role: str, entity_type: str, entity_id: str, prev: str, reason: str | None = None,
+               snapshot_ref: str | None = None) -> str:
     pairs: list[tuple[str, object]] = [
         ("utc", utc), ("operator", operator), ("action", action), ("category", category),
         ("command", command), ("before", before), ("after", after),
@@ -30,12 +32,15 @@ def build_line(*, utc: str, operator: str, action: str, category: str, command: 
     if reason is not None:
         # 扩展键：理由全文（不截断），进入哈希链；C# AuditLog.ReadAll 忽略扩展键
         pairs.append(("reason", reason))
+    if snapshot_ref is not None:
+        pairs.append(("snapshot_ref", snapshot_ref))
     return flat_line(pairs)
 
 
 def append(s: Session, *, case_id: str, operator: str, role: str, action: str, category: str, command: str,
            before: Any = "", after: Any = "", entity_type: str = "", entity_id: str = "",
-           utc: datetime | str | None = None, reason: str | None = None) -> AuditEventRow:
+           utc: datetime | str | None = None, reason: str | None = None,
+           snapshot_ref: str | None = None) -> AuditEventRow:
     with WRITE_LOCK:
         last = s.scalars(select(AuditEventRow).where(AuditEventRow.case_id == case_id)
                          .order_by(AuditEventRow.seq.desc()).limit(1)).first()
@@ -50,7 +55,7 @@ def append(s: Session, *, case_id: str, operator: str, role: str, action: str, c
         b, a = _summ(before), _summ(after)
         line = build_line(utc=utc_s, operator=operator, action=action, category=category, command=command,
                           before=b, after=a, seq=seq, role=role, entity_type=entity_type, entity_id=entity_id, prev=prev,
-                          reason=reason)
+                          reason=reason, snapshot_ref=snapshot_ref)
         row = AuditEventRow(case_id=case_id, seq=seq, utc=utc_s, operator=operator, role=role, action=action,
                             category=category, command=command, before=b, after=a, entity_type=entity_type,
                             entity_id=entity_id, prev_hash=prev, line=line)
@@ -70,9 +75,16 @@ def append_raw_line(s: Session, case_id: str, rec: dict[str, Any], line: str, se
 
 
 def to_doc(r: AuditEventRow) -> dict[str, Any]:
-    return {"seq": r.seq, "caseId": r.case_id, "utc": r.utc, "operator": r.operator, "role": r.role or "Investigator",
+    doc = {"seq": r.seq, "caseId": r.case_id, "utc": r.utc, "operator": r.operator, "role": r.role or "Investigator",
             "action": r.action, "category": r.category, "command": r.command, "before": r.before, "after": r.after,
             "entityType": r.entity_type, "entityId": r.entity_id, "prevHash": r.prev_hash, "line": r.line}
+    try:
+        line = json.loads(r.line)
+    except (TypeError, ValueError):
+        line = {}
+    if isinstance(line, dict) and "snapshot_ref" in line:
+        doc["snapshotRef"] = line["snapshot_ref"]
+    return doc
 
 
 def list_events(s: Session, case_id: str, *, category: str | None = None, entity_id: str | None = None,

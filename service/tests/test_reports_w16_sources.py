@@ -2,6 +2,7 @@
 from copy import deepcopy
 from urllib.parse import parse_qs, urlparse
 
+import pytest
 from sqlalchemy import event
 
 from mcis_service.cases.service import load_case
@@ -36,7 +37,7 @@ def _sentences(sections):
     return [sentence for section in sections for sentence in section['sentences']]
 
 
-def test_source_sections_are_draft_with_explicit_w14_w15_missing_and_no_writes(app):
+def test_source_sections_are_draft_with_w14_scenarios_w15_missing_and_no_writes(app):
     from mcis_service.reports.sources import build_sections
     statements = []
     def observe(_conn, _cursor, statement, _parameters, _context, _many):
@@ -52,9 +53,10 @@ def test_source_sections_are_draft_with_explicit_w14_w15_missing_and_no_writes(a
     assert all(x['status'] == 'Draft' and x['reviewedBy'] is None for x in sections)
     assert all(x['status'] == 'Draft' for x in _sentences(sections))
     analysis = next(x for x in sections if x['sectionId'] == 'analysis')
-    assert '缺数据：W14 推演对比表未提供' in analysis['textZh']
+    assert 'W14 推演情景 S0「原始」' in analysis['textZh']
+    assert 'W14 推演对比表未提供' not in analysis['textZh']
     assert '缺数据：W15 系统分析未提供' in analysis['textZh']
-    assert 'Missing data: W14' in analysis['textEn'] and 'Missing data: W15' in analysis['textEn']
+    assert 'W14 what-if scenario S0' in analysis['textEn'] and 'Missing data: W15' in analysis['textEn']
     assert analysis['missing']
     for section in sections:
         assert not contracts.errors('report#/$defs/section', section)
@@ -62,7 +64,7 @@ def test_source_sections_are_draft_with_explicit_w14_w15_missing_and_no_writes(a
 
 def test_every_conclusion_and_source_sentence_links_to_existing_web_route(app):
     sections = _sections(app)
-    allowed = {'evidence', 'colreg', 'recs', 'interview', 'whatif', 'systemic'}
+    allowed = {'evidence', 'colreg', 'recs', 'interview', 'analysis', 'systemic'}
     ids = set()
     for sentence in _sentences(sections):
         assert sentence['sentenceId'] not in ids
@@ -81,6 +83,12 @@ def test_every_conclusion_and_source_sentence_links_to_existing_web_route(app):
             if citation['kind'] == 'evidence':
                 assert parse_qs(parsed.query)['id'] == [citation['id']]
                 assert citation['registration'] == 'registered'
+            if citation['kind'] == 'whatif':
+                assert parsed.path == '/analysis'
+                query = parse_qs(parsed.query)
+                assert query['case'] == [CASE]
+                if citation['id'].startswith('S'):
+                    assert query['scenario'] == [citation['id']]
     conclusion = next(x for x in sections if x['sectionId'] == 'conclusions')
     assert all(x['citations'] or x['missing'] for x in conclusion['sentences'])
 
@@ -147,3 +155,79 @@ def test_stored_colreg_review_metadata_and_evidence_review_flags_are_preserved(a
                for x in sentence['citations'])
     conclusions = next(x for x in sections if x['sectionId'] == 'conclusions')
     assert any(x['sentenceId'] == 'conclusions-colreg-' + cid for x in conclusions['sentences'])
+
+
+def test_w14_all_seed_rows_and_assumptions_have_bilingual_source_sentences(app):
+    from mcis_service.analysis.router import load_seed
+    seed, _digest = load_seed()
+    source = next(case for case in seed['cases'] if case['caseId'] == CASE)['whatif']
+    sentences = next(section for section in _sections(app) if section['sectionId'] == 'analysis')['sentences']
+    for row in source['rows']:
+        sentence = next(sentence for sentence in sentences if any(
+            citation['kind'] == 'whatif' and citation['id'] == row['id']
+            for citation in sentence['citations']))
+        assert f'W14 推演情景 {row["id"]}「{row["name"]}」' in sentence['textZh']
+        assert row['verdictText'] in sentence['textZh'] and row['verdict'] in sentence['textEn']
+        assert row['changeSummary'] in sentence['textZh'] and row['changeSummary'] in sentence['textEn']
+        assert str(float(row['minClearanceM'])) + ' m' in sentence['textZh']
+        assert str(float(row['minClearanceM'])) + ' m' in sentence['textEn']
+        assert '【推算，仅供分析参考】' in sentence['textZh']
+        assert 'Derived; for analysis reference only' in sentence['textEn']
+        assert not sentence['missing']
+    explanation = next(sentence for sentence in sentences if sentence['sentenceId'].endswith('W14-notes'))
+    assert source['disclaimer'] in explanation['textZh'] and source['disclaimer'] in explanation['textEn']
+    assert f'假设数量={len(source["assumptions"])}' in explanation['textZh']
+    assert f'assumptions count={len(source["assumptions"])}' in explanation['textEn']
+
+
+class _UnreadWhatIf(dict):
+    def get(self, *_args, **_kwargs):
+        raise AssertionError('拒绝来源前不得访问其 W14 payload')
+
+
+@pytest.mark.parametrize('fictional,refs', [
+    (False, [{'path': 'service/mcis_service/seed/lily_mary.py'}]),
+    (True, [{'path': 'reports/haili5/case.json'}]),
+    (True, [{'path': 'service/mcis_service/seed/lily_mary.py'}, {'path': 'reports/yangze22/case.json'}]),
+])
+def test_w14_real_or_report_backed_seed_is_not_consumed(app, monkeypatch, fictional, refs):
+    from mcis_service.reports import sources
+    seed = {'cases': [{'caseId': CASE, 'isFictionalDemo': fictional,
+                       'sourceRefs': refs, 'whatif': _UnreadWhatIf({'rows': []})}]}
+    monkeypatch.setattr(sources, 'load_seed', lambda: (seed, 'test-sha'), raising=False)
+    analysis = next(section for section in _sections(app) if section['sectionId'] == 'analysis')
+    assert '缺数据：真实案例 W14 数据待 Mark 确认' in analysis['textZh']
+    assert 'Missing data: real-case W14 data awaits Mark' in analysis['textEn']
+    assert not any(citation['kind'] == 'whatif' and citation['registration'] == 'registered'
+                   for sentence in analysis['sentences'] for citation in sentence['citations'])
+
+
+def test_w14_seed_verification_failure_degrades_to_missing(app, monkeypatch):
+    from mcis_service.reports import sources
+    def unavailable():
+        raise RuntimeError('模拟种子哈希自检失败')
+    monkeypatch.setattr(sources, 'load_seed', unavailable, raising=False)
+    analysis = next(section for section in _sections(app) if section['sectionId'] == 'analysis')
+    assert '缺数据：W14 分析种子不可用' in analysis['textZh']
+    assert 'Missing data: W14 analysis seed is unavailable' in analysis['textEn']
+    assert 'W15 系统分析未提供' in analysis['textZh']
+
+
+def test_w14_only_exact_case_id_matches_and_missing_row_fields_are_not_fabricated(app, monkeypatch):
+    from mcis_service.reports import sources
+    seed = {'cases': [
+        {'caseId': 'another-case', 'key': CASE, 'isFictionalDemo': True, 'sourceRefs': [],
+         'whatif': {'rows': [{'id': 'wrong', 'name': '不应采用'}]}},
+        {'caseId': CASE, 'isFictionalDemo': True, 'sourceRefs': [],
+         'whatif': {'rows': [{'id': 'S9'}]}},
+    ]}
+    monkeypatch.setattr(sources, 'load_seed', lambda: (seed, 'test-sha'), raising=False)
+    analysis = next(section for section in _sections(app) if section['sectionId'] == 'analysis')
+    assert '不应采用' not in analysis['textZh']
+    row = next(sentence for sentence in analysis['sentences'] if any(
+        citation['kind'] == 'whatif' and citation['id'] == 'S9' for citation in sentence['citations']))
+    assert 'W14 推演情景 S9「缺数据」：判定=缺数据；最小净距=缺数据；情景说明=缺数据。' in row['textZh']
+    assert 'verdict=Missing data; minimum clearance=Missing data; scenario description (source text)=Missing data.' in row['textEn']
+    assert row['missing']
+    notes = next(sentence for sentence in analysis['sentences'] if sentence['sentenceId'].endswith('W14-notes'))
+    assert '假设数量=缺数据' in notes['textZh'] and 'assumptions count=Missing data' in notes['textEn']

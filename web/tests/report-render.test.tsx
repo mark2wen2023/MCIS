@@ -1,7 +1,6 @@
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { ReportView, ReviewDialog, reviewProblem, reviewPayload } from '../src/reports/ReportView'
-import { ColregDraftButton } from '../src/reports/ColregDraftButton'
 import { ReportApiError, reportApi } from '../src/reports/api'
 import { YANGZE_CASE_ID } from '../src/reports/types'
 import { readFileSync, existsSync } from 'node:fs'
@@ -23,21 +22,21 @@ assert(YANGZE_CASE_ID === 'CJK-2024-1230-YangZe22-VegaDream', 'YANGZE 22 规范 
 const caseId = 'CASE-2026-DEMO-LILY-MARY'
 const section: ReportSection = {
   sectionId: 'analysis', titleZh: '避碰规则分析', titleEn: 'Analysis', dataSources: ['colreg', 'whatif', 'systemic'],
-  status: 'Draft', source: 'Generated', textZh: '核查 CK-01 为 Draft。缺数据：W14 推演对比表未提供。',
-  textEn: 'Check CK-01 is Draft. Missing data: W14 comparison table is unavailable.',
+  status: 'Draft', source: 'Generated', textZh: '核查 CK-01 为 Draft。W14 推演情景 S0「原始」：判定=碰撞；最小净距=0.0 m。',
+  textEn: 'Check CK-01 is Draft. W14 scenario S0: verdict=Collision; minimum clearance=0.0 m.',
   generatedText: { textZh: '原生成中文', textEn: 'Original generated English' }, reviewedBy: null, reviewedAt: null, reviews: [], missing: true,
   sentences: [
     { sentenceId: 'S1', textZh: '核查 CK-01 待复核。', textEn: 'Check CK-01 is awaiting review.', status: 'Draft', source: 'Generated', generatedText: { textZh: '核查 CK-01 待复核。', textEn: 'Check CK-01 is awaiting review.' }, reviewedBy: null, reviewedAt: null, reviews: [], missing: false,
       citations: [{ kind: 'colreg-check', id: 'CK-01', href: `#/colreg?case=${caseId}&check=CK-01`, registration: 'registered', unregistered: false }, { kind: 'evidence', id: 'EV-999', href: '#/evidence?id=EV-999', registration: 'unregistered', unregistered: true }] },
-    { sentenceId: 'S2', textZh: '缺数据：W14 推演对比表未提供。', textEn: 'Missing data: W14 comparison table is unavailable.', status: 'Draft', source: 'Generated', generatedText: { textZh: '', textEn: '' }, reviewedBy: null, reviewedAt: null, reviews: [], missing: true,
-      citations: [{ kind: 'whatif', id: 'W14', href: '#/whatif', registration: 'missing', unregistered: false }] },
+    { sentenceId: 'S2', textZh: 'W14 推演情景 S0「原始」：判定=碰撞；最小净距=0.0 m。【推算，仅供分析参考】', textEn: 'W14 scenario S0: verdict=Collision; minimum clearance=0.0 m. [Calculated, for analysis only]', status: 'Draft', source: 'Generated', generatedText: { textZh: '', textEn: '' }, reviewedBy: null, reviewedAt: null, reviews: [], missing: false,
+      citations: [{ kind: 'whatif', id: 'S0', href: `#/analysis?case=${caseId}&scenario=S0`, registration: 'registered', unregistered: false }] },
     { sentenceId: 'S3', textZh: '缺数据：W15 系统分析未提供。', textEn: 'Missing data: W15 systemic analysis is unavailable.', status: 'Draft', source: 'Generated', generatedText: { textZh: '', textEn: '' }, reviewedBy: null, reviewedAt: null, reviews: [], missing: true,
       citations: [{ kind: 'systemic', id: 'W15', href: '#/systemic', registration: 'missing', unregistered: false }] },
   ],
 }
-const templates: ReportTemplate[] = ['imo-cic', 'maib', 'cn-msa'].map((id) => ({ templateId: id as Report['templateId'], titleZh: { 'imo-cic': 'IMO 格式', maib: 'MAIB', 'cn-msa': '中国海事' }[id]!, titleEn: id, sections: [] }))
+const templates: ReportTemplate[] = ['imo-cic', 'maib', 'cn-msa'].map((id) => ({ templateId: id as Report['templateId'], titleZh: { 'imo-cic': 'IMO 格式', maib: 'MAIB', 'cn-msa': '中国海事' }[id]!, titleEn: id, sections: [], standardRefs: id === 'cn-msa' ? [{ title: '项目模板', href: '#/report', pendingRuling: '章节标题待裁定落实' }] : [] }))
 const report: Report = { reportId: 'RPT-1', familyId: 'FAM-1', parentReportId: null, caseId, templateId: 'imo-cic', lang: 'bilingual', version: 1, status: 'Draft', isFictionalDemo: true, realDataStatus: 'fictional', createdBy: '调查员 A', createdUtc: '2026-11-11T12:00:00Z', sections: [section], disclaimerZh: '不作责任认定', disclaimerEn: 'This report does not apportion blame or liability', reportHref: '#/report?report=RPT-1' }
-const gisis: GisisDocument = { caseId, isFictionalDemo: true, realDataStatus: 'fictional', notice: '本地准备字段，不表示已提交 IMO GISIS。', fields: [{ id: 'vessels.lily.imoNumber', labelZh: 'IMO 号', labelEn: 'IMO number', required: true, value: null, missing: true, missingLabel: '缺数据', vesselId: 'lily', sourceRefs: ['vessels.lily.imoNumber'], rules: { pattern: '^[0-9]{7}$' } }] }
+const gisis: GisisDocument = { caseId, isFictionalDemo: true, realDataStatus: 'fictional', notice: '本地准备字段，不表示已提交 IMO GISIS。', fields: [{ id: 'vessels.lily.imoNumber', labelZh: 'IMO 号', labelEn: 'IMO number', required: true, value: null, missing: true, missingLabel: '缺数据', vesselId: 'lily', sourceRefs: ['vessels.lily.imoNumber'], rules: { pattern: '^[0-9]{7}$' }, gisisRef: '附录2 1.1*', mappingStatus: 'exact', mappingNote: '完全对应' }] }
 
 function html(overrides: Partial<Parameters<typeof ReportView>[0]> = {}) {
   return renderToStaticMarkup(createElement(ReportView, { caseId, templates, templateId: 'imo-cic', lang: 'bilingual', report, reports: [report], gisis, audit: [], selectedSectionId: 'analysis', busy: false, onSelectSection: () => {}, onSwitchCase: () => {}, onTemplate: () => {}, onLang: () => {}, onSelectReport: () => {}, onCreate: () => {}, onRegenerate: () => {}, onReview: () => {}, onExport: () => {}, onGisisExport: () => {}, onGisisValidate: () => {}, onGlossary: () => {}, ...overrides }))
@@ -51,11 +50,43 @@ for (const template of templates) {
     assert(out.includes('示例数据（虚构）') && out.includes('DRAFT'), '虚构与草稿标注')
     assert(out.includes('缺数据') && out.includes('EV-999') && out.includes('未登记'), '缺数据和未登记引用')
     assert(out.includes('#/colreg?case=') && out.includes('check=CK-01') && out.includes('#/evidence?id=EV-999'), '引用链回')
-    if (lang !== 'en') assert(out.includes('W14 推演对比表未提供') && out.includes('W15 系统分析未提供'), '中文缺数据')
-    if (lang !== 'zh') assert(out.includes('W14 comparison table is unavailable') && out.includes('W15 systemic analysis is unavailable'), '英文缺数据')
+    if (lang !== 'en') assert(out.includes('W14 推演情景 S0') && out.includes('W15 系统分析未提供'), '中文 W14 情景与 W15 缺数据')
+    if (lang !== 'zh') assert(out.includes('W14 scenario S0') && out.includes('W15 systemic analysis is unavailable'), '英文 W14 情景与 W15 缺数据')
+    assert(out.includes('#/analysis?case=') && out.includes('scenario=S0'), 'W14 情景引用回分析页')
   }
 }
 const out = html()
+assert(out.includes('附录2 1.1*') && out.includes('完全对应'), 'GISIS 显示通函条目和对应程度')
+const ruleDetails = [...out.matchAll(/<details\b([^>]*)>[\s\S]*?<\/details>/g)].filter((m) => m[0].includes('^[0-9]{7}$'))
+assert(ruleDetails.length === 1 && ruleDetails[0]![0].includes('校验规则'), '规则 JSON 只在 details 折叠区内')
+assert(!/\bopen(?:\s|=|$)/.test(ruleDetails[0]![1]!), '校验规则默认收起')
+assert(!out.replace(/<details\b[^>]*>[\s\S]*?<\/details>/g, '').includes('^[0-9]{7}$'), 'details 外不露出规则 JSON')
+for (const [status, label] of [['partial', '部分对应'], ['none', '无对应'], ['pending', '待核']] as const) {
+  const mapped = html({ gisis: { ...gisis, fields: [{ ...gisis.fields[0]!, mappingStatus: status, mappingNote: '录入格式待核' }] } })
+  assert(mapped.includes(label) && mapped.includes('录入格式待核'), `GISIS ${status} 程度和说明`)
+  assert(mapped.includes('rpt-mapping-pending'), `${status} 含待核时醒目标注`)
+}
+assert(out.includes('章节标题待裁定落实'), '中国海事模板显示章节待裁定标签')
+const heading = /<div class="page-head rpt-heading">([\s\S]*?)<\/div>\s*<div class="rpt-columns">/.exec(out)?.[1] || out.slice(out.indexOf('page-head rpt-heading'), out.indexOf('rpt-columns'))
+assert(heading.includes('📄 生成双语报告'), '页头标题行右侧含双语生成按钮')
+assert(!existsSync('src/reports/ColregDraftButton.tsx'), '按裁定删除备用 ColregDraftButton 文件')
+const recsSource = readFileSync('src/pages/RecommendationsPage.tsx', 'utf8')
+assert(recsSource.includes('📄 国际格式报告 →') && recsSource.includes('#/report?case='), '安全建议页头含带当前案件的报告入口')
+const reportPageSource = readFileSync('src/pages/ReportPage.tsx', 'utf8')
+assert(reportPageSource.includes('reportApi.create(caseId, templateId, generateLang)'), '页头生成动作沿用当前模板并接受指定语言')
+let generatedLanguage: string | undefined
+const view = ReportView({ caseId, templates, templateId: 'maib', lang: 'zh', report, reports: [report], gisis, audit: [], selectedSectionId: 'analysis', busy: false, onSelectSection: () => {}, onSwitchCase: () => {}, onTemplate: () => {}, onLang: () => {}, onSelectReport: () => {}, onCreate: (language) => { generatedLanguage = language }, onRegenerate: () => {}, onReview: () => {}, onExport: () => {}, onGisisExport: () => {}, onGisisValidate: () => {}, onGlossary: () => {} })
+function findHeaderButton(node: unknown): { onClick: () => void; disabled: boolean } | undefined {
+  if (!node || typeof node !== 'object') return undefined
+  if (Array.isArray(node)) return node.map(findHeaderButton).find(Boolean)
+  const element = node as { type?: unknown; props?: { children?: unknown; onClick?: () => void; disabled?: boolean } }
+  if (element.type === 'button' && String(element.props?.children).includes('生成双语报告')) return element.props as { onClick: () => void; disabled: boolean }
+  return findHeaderButton(element.props?.children)
+}
+const bilingualButton = findHeaderButton(view)
+assert(bilingualButton && !bilingualButton.disabled, '虚构案件双语生成可点击')
+bilingualButton!.onClick()
+assert(generatedLanguage === 'bilingual', '双语生成按钮显式指定 bilingual，覆盖当前中文预览语言')
 for (const label of ['IMO 格式', 'MAIB', '中国海事', '中文', 'English', '中英双语', 'PDF 中文', 'PDF English', 'PDF 中英对照', 'DOCX', '术语表', 'GISIS 上报字段', 'JSON', 'CSV', '校验并导出', '章节复核', '确认', '驳回', '修改', '报告审计']) assert(out.includes(label), label)
 for (const status of ['Draft', 'Confirmed', 'Modified', 'Dismissed'] as const) assert(html({ report: { ...report, sections: [{ ...section, status }] } }).includes(status), `${status} 标签`)
 const real = html({ caseId: 'CASE-2025-HAILI5-WANA17', report: null, reports: [], realDataStatus: 'pending-confirmation', gisis: null })
@@ -81,8 +112,6 @@ assert(!html({ report: { ...report, status: 'Confirmed', sections: [{ ...section
 const longReason = '合成理由全文。'.repeat(110)
 const aud = html({ audit: [{ auditEvent: { seq: 7, utc: '2026-11-11T12:00:00Z', operator: '调查员甲', action: 'report.review.modify', category: 'Report', command: '修改', before: '', after: '' }, reportId: report.reportId, sectionId: section.sectionId, sentenceId: null, reason: longReason, beforeValue: { textZh: '旧值' }, afterValue: { textZh: '新值' }, summary: '简述' }] })
 assert(aud.includes(longReason) && aud.includes('调查员甲') && aud.includes('旧值') && aud.includes('新值'), '审计全文与原新值')
-assert(renderToStaticMarkup(createElement(ColregDraftButton, { caseId })).includes('生成规则分析章节草稿'), '独立规则章节草稿按钮')
-assert(renderToStaticMarkup(createElement(ColregDraftButton, { caseId: 'CJK-2024-1230-YangZe22-VegaDream' })).includes('待确认'), '真实草稿按钮待确认')
 async function clientContractTests() {
   const originalFetch = globalThis.fetch
   let lastUrl = ''
@@ -93,6 +122,8 @@ async function clientContractTests() {
     // 与 src/api.ts 一致走同源 /api（vite 代理目标取自 MCIS_API 配置）；直连 SERVICE_URL 会被 CORS 拦截（临时端口 preview 实测 Failed to fetch）
     assert(lastUrl === `/api/v1/cases/${caseId}/reports`, '同源 /api 路径，代理目标来自 config')
     assert(lastRequest.method === 'POST' && lastRequest.body === '{"templateId":"maib","lang":"en"}', '创建合同')
+    await reportApi.create(caseId, 'maib', 'bilingual')
+    assert(lastRequest.body === '{"templateId":"maib","lang":"bilingual"}', '当前 MAIB 模板生成 bilingual 请求合同')
     const headers = lastRequest.headers as Record<string, string>
     assert(headers['X-MCIS-Role'] === 'Investigator' && decodeURIComponent(headers['X-MCIS-Operator']!) === '调查员 A', '沿用操作人请求头')
     await reportApi.review(caseId, report.reportId, section.sectionId, reviewPayload('confirm', target, '', '不能夹带', 'not allowed'))

@@ -33,17 +33,20 @@ export interface Report {
 export interface ReportTemplate {
   templateId: ReportTemplateId; titleZh: string; titleEn: string
   sections: { sectionId: string; titleZh: string; titleEn: string; dataSources: string[] }[]
+  standardRefs?: { title: string; href: string; pendingRuling?: string }[]
 }
 export interface ReportTemplateList { templates: ReportTemplate[]; realDataStatus: RealDataStatus; caseId?: string }
 export interface ReportList { reports: Report[]; realDataStatus: RealDataStatus; caseId: string }
 export interface ReportAudit {
-  auditEvent: { seq: number; utc: string; operator: string; action: string; category: string; command: string; before: string; after: string }
+  auditEvent: { seq: number; utc: string; operator: string; action: string; category: string; command: string; before: string; after: string; snapshotRef?: string }
   reportId: string | null; sectionId: string | null; sentenceId: string | null; reason: string
   beforeValue: Record<string, unknown> | null; afterValue: Record<string, unknown> | null; summary: string
+  snapshotRef?: string
 }
 export interface GisisField {
   id: string; labelZh: string; labelEn: string; required: boolean; sourceRefs: string[]
   rules: Record<string, unknown>; value: unknown; missing: boolean; missingLabel: string | null; vesselId: string | null
+  gisisRef?: string; mappingStatus?: 'exact' | 'partial' | 'none' | 'pending'; mappingNote?: string
 }
 export interface GisisDocument { caseId: string; isFictionalDemo: boolean; realDataStatus: RealDataStatus; fields: GisisField[]; notice: string }
 export interface GisisValidation { valid: boolean; errors: { field?: string; fieldId?: string; id?: string; code?: string; message: string }[]; fields: GisisField[] }

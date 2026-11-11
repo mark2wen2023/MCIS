@@ -38,7 +38,8 @@ def test_templates_languages_draft_contract(client, template, lang):
     assert all(s['status'] == 'Draft' for s in report['sections'])
     assert all(t['status'] == 'Draft' for s in report['sections'] for t in s['sentences'])
     text = json.dumps(report, ensure_ascii=False)
-    assert 'W14 推演对比表未提供' in text and 'W15 系统分析未提供' in text
+    assert 'W14 推演情景 S0「原始」' in text and 'W15 系统分析未提供' in text
+    assert 'W14 推演对比表未提供' not in text
     assert 'Missing data:' in text and '不作责任认定' in text
     assert client.get(f"{C}/reports/{report['reportId']}", headers=H()).json() == report
 
@@ -87,6 +88,16 @@ def test_audit_reason_full_original_new_operator_and_regenerate(client):
     assert entry['auditEvent']['operator'] == '复核调查员'
     assert json.loads(entry['auditEvent']['line'])['reason'] == reason
     assert not contracts.errors('audit-event', entry['auditEvent'])
+    assert entry['auditEvent']['snapshotRef'] == entry['snapshotRef']
+    snapshot_id = entry['snapshotRef'].split(':', 1)[1]
+    snapshot_response = client.get(f'{C}/report-snapshots/{snapshot_id}', headers=H())
+    assert snapshot_response.status_code == 200
+    snapshot = snapshot_response.json()
+    assert snapshot['reason'] == reason and len(snapshot['reason']) > 500
+    assert snapshot['beforeValue'] == entry['beforeValue']
+    assert snapshot['afterValue'] == entry['afterValue']
+    assert snapshot['auditSeq'] == entry['auditEvent']['seq']
+    assert not contracts.errors('report#/$defs/snapshot', snapshot)
     r = client.post(f"{C}/reports/{report['reportId']}:generate", headers=H())
     assert r.status_code == 201, r.text
     newer = r.json()
@@ -96,6 +107,22 @@ def test_audit_reason_full_original_new_operator_and_regenerate(client):
     assert old['sections'][0] == modified
     assert len(client.get(f"{C}/reports/{report['reportId']}/audit", headers=H()).json()) >= 3
     assert client.get(f'{C}/audit:verify', headers=H('LeadInvestigator')).json()['valid']
+
+
+def test_snapshot_http_error_codes_and_role_limits(client):
+    report = create(client)
+    entry = client.get(f"{C}/reports/{report['reportId']}/audit", headers=H()).json()[0]
+    snapshot_id = entry['snapshotRef'].split(':', 1)[1]
+    for role in ('LeadInvestigator', 'Investigator'):
+        assert client.get(f'{C}/report-snapshots/{snapshot_id}', headers=H(role)).status_code == 200
+    for role in ('ExternalExpert', 'InterestedState', 'AgentService', 'Public'):
+        rejected = client.get(f'{C}/report-snapshots/{snapshot_id}', headers=H(role))
+        assert rejected.status_code == 403 and rejected.json()['code'] == 'FORBIDDEN'
+    missing = client.get(f'{C}/report-snapshots/RA-absent', headers=H())
+    assert missing.status_code == 404 and missing.json()['code'] == 'report_snapshot_not_found'
+    for case_id in (REAL, PENDING):
+        pending = client.get(f'/api/v1/cases/{case_id}/report-snapshots/RA-absent', headers=H())
+        assert pending.status_code == 409 and pending.json()['code'] == 'report_real_data_pending'
 
 
 def test_sentence_review_keeps_section_and_sentence_generated_text(client):

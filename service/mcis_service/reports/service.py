@@ -82,7 +82,7 @@ def append_operation(s, ctx, case_id: str, *, action: str, report_id: str | None
                          action=action, category='Report', command=f'{action} {report_id or case_id}',
                          before=str(before or ''), after=str(after or ''),
                          entity_type='report' if report_id else 'gisis', entity_id=report_id or case_id,
-                         reason=reason)
+                         reason=reason, snapshot_ref='report-snapshot:' + snapshot_id)
     doc = {'reportId': report_id, 'sectionId': section_id, 'sentenceId': sentence_id,
            'reason': reason, 'beforeValue': deepcopy(before), 'afterValue': deepcopy(after),
            'summary': f'{action} · {section_id or report_id or case_id}'[:200], 'auditSeq': event.seq}
@@ -222,10 +222,20 @@ def review_section(s, ctx, report: dict, section_id: str, body: dict) -> dict:
 
 
 def report_audit(s, case_id: str, report_id: str) -> list[dict]:
-    entries = [d for d in list_docs(s, ReportAuditRow, case_id) if d['reportId'] == report_id]
-    entries.sort(key=lambda d: d['auditSeq'])
+    entries = [r for r in s.scalars(select(ReportAuditRow).where(ReportAuditRow.case_id == case_id))
+               if r.doc['reportId'] == report_id]
+    entries.sort(key=lambda r: r.doc['auditSeq'])
     out = []
-    for entry in entries:
+    for snapshot in entries:
+        entry = snapshot.doc
         row = s.scalars(select(AuditEventRow).where(AuditEventRow.case_id == case_id, AuditEventRow.seq == entry['auditSeq'])).first()
-        out.append({**{k: v for k, v in entry.items() if k != 'auditSeq'}, 'auditEvent': audit.to_doc(row)})
+        out.append({**{k: v for k, v in entry.items() if k != 'auditSeq'},
+                    'snapshotRef': 'report-snapshot:' + snapshot.key, 'auditEvent': audit.to_doc(row)})
     return out
+
+
+def get_snapshot(s, case_id: str, snapshot_id: str) -> dict:
+    snapshot = get_doc(s, ReportAuditRow, case_id, snapshot_id)
+    if snapshot is None:
+        raise problem(404, 'report_snapshot_not_found', f'报告快照不存在：{snapshot_id}')
+    return {'snapshotId': snapshot_id, **deepcopy(snapshot)}

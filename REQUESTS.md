@@ -222,3 +222,10 @@
 ## 2026-11-11 22:04 · W16 口径更新（Codex bot，按 Gemini bot 两条口径）
 - YANGZE 22 真实案例入口改用规范 caseId `CJK-2024-1230-YangZe22-VegaDream`（DEFECTS/W12.md 21:52 裁定），占位 `CASE-REAL-YANGZE22` 废弃；仍只留接口，GET 返回 pending-confirmation，生成/导出 409 `report_real_data_pending`，不读 reports/。schema/openapi 的 W16 部分原本无该占位示例，无需改动。
 - W16 样式从共享 `web/src/styles.css` 整段迁到 `web/src/styles/w16.css`，由 `main.tsx` 紧接 `./styles.css` 之后引入（层叠顺序不变）；styles.css 只删除 W16 那段，其余内容逐行未变。
+
+## 2026-11-11 22:20 · W16.1 合同变更（Codex，按 DEFECTS/W16.md 22:10 裁定；先登记后实现）
+- **audit-event 增加可选 `snapshotRef`**（裁定 4）：`contracts/schemas/audit-event.schema.json` 新增可选字符串 `snapshotRef`，指向完整快照，格式 `report-snapshot:RA-<32位十六进制>`（以后其他包可用 `<种类>-snapshot:<id>`）。落盘 JSONL 用扩展键 `snapshot_ref`（与 `reason` 一样进入哈希链；C# AuditLog.ReadAll 忽略扩展键）；`audit.service.to_doc` 只在行内有该键时输出 `snapshotRef`，旧行和别的包的行**不受影响**（不传时落盘行逐字节不变）。`reason` 键照旧。
+- **新接口** `GET /api/v1/cases/{caseId}/report-snapshots/{snapshotId}`：按 snapshotRef 取完整快照 `{snapshotId, reportId, sectionId, sentenceId, reason, beforeValue, afterValue, summary, auditSeq}`，权限与报告审计相同（仅 LeadInvestigator / Investigator）；真实案例 409 `report_real_data_pending`；不存在 404 `report_snapshot_not_found`。报告审计列表每项增加 `snapshotRef`。
+- **GISIS 字段**（裁定 1）：对照表见 `contracts/gisis-mapping.md`。`report.schema.json` 的 gisisField 增加可选 `gisisRef`（通函条目，如“附录2 1.1*”）、`mappingStatus`（exact / partial / none / pending）、`mappingNote`；必填改按通函星号（总吨、伤亡、污染、灭失、报告状态改为非必填）；新增 `numberOfShips`（附录1·一般信息 .2*）、`locationCategory`（附录1·一般事故数据 .6*，Table 3）；`severity` 取值改为 Table 5 三档，本地 Serious / LessSerious 对应哪档待核，遇到时输出缺数据。
+- **W14 来源**（裁定 2）：报告的 whatif 适配器改读 W12 分析种子（与 `GET /cases/{caseId}/analysis` 同一来源，进程内调用 `analysis.router.load_seed()`，带哈希自检）。只接受 `isFictionalDemo=true` 且 sourceRefs 不指向 `reports/` 的条目（即 Lily/Mary 虚构情景）；海力5 / YANGZE 22 条目依赖 reports/ 真实报告，在 Mark 本人确认前不读，报告侧本来也是 409。W15 继续显示缺数据。
+- **删除** `web/src/reports/ColregDraftButton.tsx`（裁定 7）。

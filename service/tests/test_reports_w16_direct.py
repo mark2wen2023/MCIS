@@ -55,7 +55,8 @@ def test_direct_all_templates_languages_and_schema(ctx, template, lang):
     assert all(s['status'] == 'Draft' for s in report['sections'])
     assert all(s['status'] == 'Draft' for section in report['sections'] for s in section['sentences'])
     assert router.get_report(CASE, report['reportId'], ctx) == report
-    assert 'W14 推演对比表未提供' in report['sections'][2]['textZh']
+    assert 'W14 推演情景 S0「原始」' in report['sections'][2]['textZh']
+    assert 'W14 推演对比表未提供' not in report['sections'][2]['textZh']
     assert 'W15 系统分析未提供' in report['sections'][2]['textZh']
 
 
@@ -296,7 +297,7 @@ def test_direct_generate_audit_failure_rolls_back_new_report(ctx, monkeypatch):
 
 
 def test_direct_w16_openapi_routes_have_no_drift(app):
-    """并发包可有待裁定接口，W16 本身的13个操作必须与公开合同逐个一致。"""
+    """并发包可有待裁定接口，W16.1 的14个操作必须与公开合同逐个一致。"""
     import re
     import yaml
     from mcis_service.config import PROJECT_ROOT
@@ -309,7 +310,7 @@ def test_direct_w16_openapi_routes_have_no_drift(app):
                 and isinstance(operation, dict) and 'reports' in operation.get('tags', [])}
     declared = routes(spec['paths'])
     actual = routes(app.openapi()['paths'])
-    assert len(declared) == 13 and declared == actual
+    assert len(declared) == 14 and declared == actual
 
 
 def test_direct_colreg_draft_data_sources_match_chapter_scope(ctx):

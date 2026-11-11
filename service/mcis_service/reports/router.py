@@ -118,6 +118,14 @@ def audit_list(case_id: str, report_id: str, ctx: Ctx = CtxDep) -> list:
         return service.report_audit(s, case_id, report_id)
 
 
+@router.get('/cases/{case_id}/report-snapshots/{snapshot_id}')
+def get_snapshot(case_id: str, snapshot_id: str, ctx: Ctx = CtxDep) -> dict:
+    with ctx.db.session() as s:
+        check_access(s, ctx, case_id, fictional=True)
+        require(ctx, s, case_id, 'audit')
+        return service.get_snapshot(s, case_id, snapshot_id)
+
+
 @router.get('/cases/{case_id}/reports/{report_id}/export')
 def export_report(case_id: str, report_id: str, format: str = 'pdf', lang: str | None = None, ctx: Ctx = CtxDep):
     from .exporter import export_report as render

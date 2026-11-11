@@ -9,6 +9,7 @@ const STATUS_CLASS: Record<ReportStatus, string> = { Draft: 'st-warn', Confirmed
 const TEMPLATE_LABEL: Record<ReportTemplateId, string> = { 'imo-cic': 'IMO 格式', maib: 'MAIB', 'cn-msa': '中国海事' }
 const LANGUAGE_LABEL: Record<ReportLanguage, string> = { zh: '中文', en: 'English', bilingual: '中英双语' }
 const ACTION_LABEL: Record<ReviewAction, string> = { confirm: '确认', dismiss: '驳回', modify: '修改' }
+const MAPPING_LABEL = { exact: '完全对应', partial: '部分对应', none: '无对应', pending: '待核' } as const
 export const REPORT_DISCLAIMER_ZH = '不作责任认定'
 export const REPORT_DISCLAIMER_EN = 'This report does not apportion blame or liability'
 
@@ -18,7 +19,7 @@ export interface ReportViewProps {
   selectedSectionId: string | null; busy: boolean; realDataStatus?: RealDataStatus; error?: string | null; notice?: string | null
   validation?: GisisValidation | null; onSelectSection: (id: string) => void; onSwitchCase: (id: string) => void
   onTemplate: (id: ReportTemplateId) => void; onLang: (lang: ReportLanguage) => void; onSelectReport: (id: string) => void
-  onCreate: () => void; onRegenerate: () => void; onReview: (action: ReviewAction, target: ReviewTarget) => void
+  onCreate: (language?: ReportLanguage) => void; onRegenerate: () => void; onReview: (action: ReviewAction, target: ReviewTarget) => void
   onExport: (format: 'pdf' | 'docx', lang: ReportLanguage) => void; onGlossary: () => void
   onGisisExport: (format: 'json' | 'csv') => void; onGisisValidate: (values: Record<string, unknown>, exportFile: boolean) => void
   onRefresh?: () => void
@@ -34,7 +35,7 @@ export function ReportView(props: ReportViewProps) {
   const draft = !report || report.sections.some((s) => s.status !== 'Confirmed')
   const citations = selected?.sentences.flatMap((s) => s.citations) ?? []
   const distinctCitations = citations.filter((c, i) => citations.findIndex((x) => x.kind === c.kind && x.id === c.id) === i)
-  const availableTemplates = templates.length ? templates : (Object.keys(TEMPLATE_LABEL) as ReportTemplateId[]).map((id) => ({ templateId: id, titleZh: TEMPLATE_LABEL[id], titleEn: id, sections: [] }))
+  const availableTemplates: ReportTemplate[] = templates.length ? templates : (Object.keys(TEMPLATE_LABEL) as ReportTemplateId[]).map((id) => ({ templateId: id, titleZh: TEMPLATE_LABEL[id], titleEn: id, sections: [] }))
   const sectionChips = report?.sections.map((s) => ({ sectionId: s.sectionId, titleZh: s.titleZh, status: s.status, missing: s.missing }))
     ?? (templates.find((t) => t.templateId === templateId)?.sections ?? []).map((s) => ({ sectionId: s.sectionId, titleZh: s.titleZh, status: null, missing: false }))
   return (
@@ -45,9 +46,10 @@ export function ReportView(props: ReportViewProps) {
           <div className="page-title">国际格式报告<span className={`p6-tag ${pending ? 'cyan' : ''}`}>{pending ? '真实案例 · 待确认' : '示例数据（虚构）'}</span><span className="p6-tag cyan">LIVE · {SERVICE_ADDR}</span></div>
           <div className="page-sub">IMO / MAIB / 中国海事 · 中英双语 · 句子级引用与人工复核 · GISIS 本地准备字段</div>
         </div>
-        <div className="rpt-toolbar">
+        <div className="rpt-toolbar rpt-heading-actions">
           <label>案件 <select className="select" aria-label="报告案件" value={caseId} disabled={busy} onChange={(e) => props.onSwitchCase(e.target.value)}>{!REPORT_CASES.some((c) => c.caseId === caseId) && <option value={caseId}>{caseId}</option>}{REPORT_CASES.map((c) => <option key={c.caseId} value={c.caseId}>{c.label}</option>)}</select></label>
           {props.onRefresh && <button className="btn btn-sm" onClick={props.onRefresh} disabled={busy}>刷新</button>}
+          <button className="btn btn-primary" disabled={busy || pending} onClick={() => props.onCreate('bilingual')}>📄 生成双语报告</button>
         </div>
       </div>
       {pending && <div className="rpt-pending" role="status"><b>待确认</b> · 真实数据使用待 Mark 本人确认</div>}
@@ -56,11 +58,11 @@ export function ReportView(props: ReportViewProps) {
       <div className="rpt-columns">
         <Panel title="报告模板与双语预览" meta={<span>{report ? `v${report.version} · ${report.reportId}` : '尚未生成'} {draft && !pending ? 'DRAFT 草稿' : ''}</span>}>
           <div className="rpt-toolbar">
-            <div className="rpt-seg" role="group" aria-label="报告模板">{availableTemplates.map((t) => <button type="button" key={t.templateId} disabled={busy} className={templateId === t.templateId ? 'rpt-on' : ''} aria-pressed={templateId === t.templateId} onClick={() => props.onTemplate(t.templateId)}>{TEMPLATE_LABEL[t.templateId] || t.titleZh}</button>)}</div>
+            <div className="rpt-seg" role="group" aria-label="报告模板">{availableTemplates.map((t) => <button type="button" key={t.templateId} disabled={busy} className={templateId === t.templateId ? 'rpt-on' : ''} aria-pressed={templateId === t.templateId} onClick={() => props.onTemplate(t.templateId)}>{TEMPLATE_LABEL[t.templateId] || t.titleZh}{t.standardRefs?.some((ref) => ref.pendingRuling) && <span className="rpt-template-pending">章节标题待裁定落实</span>}</button>)}</div>
             <div className="rpt-seg" role="group" aria-label="报告语言">{(Object.keys(LANGUAGE_LABEL) as ReportLanguage[]).map((l) => <button type="button" key={l} disabled={busy} className={lang === l ? 'rpt-on' : ''} aria-pressed={lang === l} onClick={() => props.onLang(l)}>{LANGUAGE_LABEL[l]}</button>)}</div>
           </div>
           <div className="rpt-toolbar rpt-generate">
-            <button className="btn btn-primary" disabled={busy || pending} onClick={props.onCreate}>＋ 生成报告草稿</button>
+            <button className="btn btn-primary" disabled={busy || pending} onClick={() => props.onCreate()}>＋ 生成报告草稿</button>
             <button className="btn" disabled={busy || pending || !report} onClick={props.onRegenerate}>↻ 重新生成新版本</button>
             <label>报告版本 <select className="select" aria-label="报告版本" value={report?.reportId ?? ''} disabled={busy} onChange={(e) => props.onSelectReport(e.target.value)}>
               {!report && <option value="">请选择报告</option>}
@@ -83,7 +85,7 @@ export function ReportView(props: ReportViewProps) {
             {selected.source === 'Investigator' && <details className="rpt-original"><summary>调查员修改 · 原生成文本</summary><p>{selected.generatedText.textZh}</p><p lang="en">{selected.generatedText.textEn}</p></details>}
             <div className="rpt-review-actions"><b>章节复核</b>{(Object.keys(ACTION_LABEL) as ReviewAction[]).map((action) => <button className={`btn btn-sm ${action === 'confirm' ? 'btn-primary' : action === 'dismiss' ? 'btn-danger' : ''}`} key={action} disabled={busy || pending} onClick={() => onReview(action, targetOf(selected))}>{ACTION_LABEL[action]}</button>)}{selected.reviewedBy && <span className="p6-note">{selected.reviewedBy} · {selected.reviewedAt}</span>}</div>
             <details className="rpt-source-details"><summary>章节来源与引用表（{distinctCitations.length}）</summary><p className="p6-note">数据源：{selected.dataSources.join(' / ')}</p><table className="p6-table"><thead><tr><th>引用</th><th>类型</th><th>状态</th></tr></thead><tbody>{distinctCitations.map((c) => <tr key={`${c.kind}:${c.id}`}><td><CitationLink citation={c} /></td><td>{c.kind}</td><td>{c.registration === 'unregistered' ? '未登记' : c.registration === 'missing' ? '缺数据' : c.needsReview ? '证据需复核' : '已登记'}</td></tr>)}</tbody></table></details>
-          </> : <div className="rpt-empty">{pending ? '真实案例报告功能待确认' : '选择模板和语言，生成可逐节复核的报告草稿。W14 / W15 未提供的数据将显式标为缺数据。'}</div>}
+          </> : <div className="rpt-empty">{pending ? '真实案例报告功能待确认' : '选择模板和语言，生成可逐节复核的报告草稿。W14 采用已核验的虚构案例分析种子；W15 暂以缺数据保留。'}</div>}
           <div className="rpt-export" aria-label="报告导出">
             <button className="btn btn-sm" disabled={busy || pending || !report} onClick={() => props.onExport('pdf', 'zh')}>PDF 中文</button>
             <button className="btn btn-sm" disabled={busy || pending || !report} onClick={() => props.onExport('pdf', 'en')}>PDF English</button>
@@ -159,10 +161,15 @@ function GisisPanel({ data, busy, pending, validation, onExport, onValidate }: {
     <div className="rpt-gisis-fields">{data?.fields.map((field) => {
       const options = Array.isArray(field.rules.enum) ? field.rules.enum as unknown[] : field.rules.type === 'boolean' || typeof field.value === 'boolean' ? [true, false] : null
       const text = edits[field.id] ?? fieldText(field)
-      return <label key={field.id} className="rpt-gisis-field"><span>{field.labelZh}{field.required && <b className="rpt-required"> *</b>}<small>{field.labelEn}{field.vesselId ? ` · ${field.vesselId}` : ''}</small></span>
-        {options ? <select className="select" value={text} disabled={busy || pending} onChange={(e) => setEdits((old) => ({ ...old, [field.id]: e.target.value }))}><option value="">缺数据</option>{options.map((v) => <option key={String(v)} value={String(v)}>{String(v)}</option>)}</select> : <input className="input" value={text} disabled={busy || pending} aria-label={`${field.labelZh} ${field.vesselId || ''}`} placeholder="缺数据（null）" onChange={(e) => setEdits((old) => ({ ...old, [field.id]: e.target.value }))} />}
-        {field.missing && !(field.id in edits) && <span className="rpt-missing">{field.missingLabel || '缺数据'} · null</span>}<small className="rpt-field-source">来源：{field.sourceRefs.length ? field.sourceRefs.join(' / ') : '缺数据'}<br />规则：{JSON.stringify(field.rules)}</small>
-      </label>
+      const inputId = `rpt-gisis-${field.id}`
+      const needsMappingCheck = field.mappingStatus === 'pending' || field.mappingNote?.includes('待核')
+      return <div key={field.id} className="rpt-gisis-field"><label htmlFor={inputId}>{field.labelZh}{field.required && <b className="rpt-required"> *</b>}<small>{field.labelEn}{field.vesselId ? ` · ${field.vesselId}` : ''}</small></label>
+        {options ? <select id={inputId} className="select" value={text} disabled={busy || pending} onChange={(e) => setEdits((old) => ({ ...old, [field.id]: e.target.value }))}><option value="">缺数据</option>{options.map((v) => <option key={String(v)} value={String(v)}>{String(v)}</option>)}</select> : <input id={inputId} className="input" value={text} disabled={busy || pending} aria-label={`${field.labelZh} ${field.vesselId || ''}`} placeholder="缺数据（null）" onChange={(e) => setEdits((old) => ({ ...old, [field.id]: e.target.value }))} />}
+        {field.missing && !(field.id in edits) && <span className="rpt-missing">{field.missingLabel || '缺数据'} · null</span>}
+        <div className="rpt-field-mapping">{field.gisisRef && <span>{field.gisisRef}</span>}{field.mappingStatus && <span className={`rpt-mapping-tag${field.mappingStatus === 'pending' ? ' rpt-mapping-pending' : ''}`}>{MAPPING_LABEL[field.mappingStatus]}</span>}{needsMappingCheck && field.mappingStatus !== 'pending' && <span className="rpt-mapping-tag rpt-mapping-pending">待核</span>}{field.mappingNote && <small>{field.mappingNote}</small>}</div>
+        <small className="rpt-field-source">来源：{field.sourceRefs.length ? field.sourceRefs.join(' / ') : '缺数据'}</small>
+        <details className="rpt-field-rules"><summary>校验规则</summary><pre>{JSON.stringify(field.rules, null, 2)}</pre></details>
+      </div>
     })}{!data?.fields.length && <div className="rpt-empty">{pending ? '真实案例字段待确认' : '正在载入 GISIS 字段…'}</div>}</div>
     {Object.keys(edits).length > 0 && <p className="rpt-gisis-note">编辑值只用于本次校验与导出，不写回案件。JSON / CSV 按已登记案件字段导出。</p>}
     {validation && <div className={validation.valid ? 'rpt-notice' : 'rpt-error'} role="status">{validation.valid ? '校验通过' : `校验未通过（${validation.errors.length} 项）`}{validation.errors.length > 0 && <ul>{validation.errors.map((e, i) => <li key={i}>{e.fieldId || e.field || e.id || ''} · {e.message}</li>)}</ul>}</div>}
