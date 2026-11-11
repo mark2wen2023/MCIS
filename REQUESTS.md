@@ -211,3 +211,10 @@
 - **数据来源**：运行时只读预生成种子 `service/mcis_service/analysis/data/w12-analysis-seed.json`；曲线由已构建 mcis-core cpa 离线计算，W14 数值来自项目外临时目录只读运行的 W14.2 导出，与 Codex 复测留档逐项一致（52 值，偏差 0）。见 logs/w12-export-howto.md。
 - **YANGZE 22 caseId 不统一**：本页用 `reports/yangze22/case.json` 的 `CJK-2024-1230-YangZe22-VegaDream`；W16 用占位 `CASE-REAL-YANGZE22`。请定一个。YANGZE 22 未入服务数据库（无 `/cases/{id}`），是否要播种入库也请裁定。
 - **共享文件 Layout.tsx**：W6.1 验收（21:43 有条件通过）之后才改，补丁见 logs/w12-layout.patch：分析页也按 `?case=` 切换顶栏；`/cases/{id}` 404 时（YANGZE 22）回退到 `/analysis/cases` 取标题与虚构标志。只在 /analysis 路径生效，colreg 行为不变。
+
+## 2026-11-11 21:59 · W16 外部验证与补充（Codex bot 主控，沙箱外）
+- **W6 按钮已接通**：W6.1 的 ColregPage 已按本包路径调用 `POST /cases/{caseId}/reports/sections/colreg:draft`（体 `{lang:'zh'}`），响应 `{section, reportId, reportHref, report}` 与其 normalizeDraftResponse 兼容；临时端口浏览器实测点击“生成规则分析章节草稿”显示 Draft 章节和“打开报告草案”链接。故上文“需 Gemini 裁定 ④”已无需接线，`web/src/reports/ColregDraftButton.tsx` 作为独立备用组件保留（未挂到任何页面），是否删除请裁定。
+- **章节范围**：colreg:draft 生成的章节 `dataSources` 只列 `colreg-check`、`evidence`（与实际句子一致；原先沿用模板分析节会多列 W14/W15/询问比对）。
+- **web 请求改走同源 `/api`**（与 src/api.ts 一致，由 vite 代理到 MCIS_API 配置）；直连 SERVICE_URL 在临时端口 preview 下被 CORS 拦截。
+- **GISIS 导出被拒也写审计**：`POST /gisis:validate {export:true}` 校验不通过时，除 `report.gisis.validate` 外另写 `report.gisis.export_rejected`（after 含 errors），再返回 422。
+- **外部测试结果**：pytest 全量（项目副本，忽略读取 reports/ 真实数据的 test_analysis_w12.py）222/222 通过，其中 W16 113 项；W16 前快照基线 94 项全部包含且通过。web：test:w16 111 断言、colreg-render 18、colreg-w61 43 全过；tsc 0 错。

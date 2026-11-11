@@ -1,0 +1,37 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-9.2.0, pluggy-1.7.0 -- /workspace/maritime-sim-design/service/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/maritime-sim-design/tests_acceptance/W12
+configfile: pytest.ini
+testpaths: .
+plugins: anyio-4.16.0
+collecting ... collected 18 items
+
+test_w12_cpa_recalc.py::test_independent_mcis_core_cpa_matches_seed PASSED [  5%]
+test_w12_service.py::test_list_three_cases_and_meta PASSED               [ 11%]
+test_w12_service.py::test_yangze_case_id_is_canonical_and_valid PASSED   [ 16%]
+test_w12_service.py::test_analysis_serves_canonical_yangze_id PASSED     [ 22%]
+test_w12_service.py::test_unknown_case_404 PASSED                        [ 27%]
+test_w12_service.py::test_tampered_seed_returns_500 PASSED               [ 33%]
+test_w12_service.py::test_every_key_moment_has_source PASSED             [ 38%]
+test_w12_service.py::test_fictional_flags_and_labels PASSED              [ 44%]
+test_w12_service.py::test_haili5_explains_missing_w14 PASSED             [ 50%]
+test_w12_service.py::test_yangze_baseline_notes_s0_source PASSED         [ 55%]
+test_w12_service.py::test_yangze_w14_table_matches_retest_logs_and_known_values PASSED [ 61%]
+test_w12_service.py::test_demo_w14_matches_retest_logs PASSED            [ 66%]
+test_w12_service.py::test_antenna_unmodified_row_is_control PASSED       [ 72%]
+test_w12_service.py::test_W12_D01_heading_as_cog_marked_derived FAILED   [ 77%]
+test_w12_ui.py::test_layout_patch_only_affects_analysis_route PASSED     [ 83%]
+test_w12_ui.py::test_view_renders_required_labels_and_sources PASSED     [ 88%]
+test_w12_ui.py::test_screenshots_exist_with_expected_sizes PASSED        [ 94%]
+test_w12_ui.py::test_yangze_1920_screenshot_path_recorded PASSED         [100%]
+
+=================================== FAILURES ===================================
+__________________ test_W12_D01_heading_as_cog_marked_derived __________________
+test_w12_service.py:173: in test_W12_D01_heading_as_cog_marked_derived
+    assert "【推算】" in blob, f"{cid} 将航向作对地航向处未标【推算】：{w.get('curveNote')}"
+E   AssertionError: CASE-2026-DEMO-LILY-MARY 将航向作对地航向处未标【推算】：曲线：W14 航迹每 2 s 取点（航向作对地航向）→ mcis-core cpa；碰撞情景截至碰撞时刻。
+E   assert '【推算】' in '曲线：W14 航迹每 2 s 取点（航向作对地航向）→ mcis-core cpa；碰撞情景截至碰撞时刻。 采用一阶 Nomoto K-T 操纵响应模型：T·dr/dt + r = K·(u/u_ref)·δ，K 随航速按 u/u_ref 线性缩放。 航速采用一阶响应；常规变速、停车与全速后退使用不同时间常数，后退响应更快。 舵机按固定速率限制趋近指令舵角，舵角受最大舵角约束。 不计风、流、浪、浅水、岸壁效应与船间相互作用；无流时 COG=船首向。 偏离时刻之前完全沿原航迹；偏离后由固定步长确定性积分生成，不含随机数与系统时钟。 碰撞判定使用矩形 OBB 分离轴定理；分离时净距取两矩形真实最小距离（顶点-边穷举），重叠时为负的最小穿透深度；首次接触时刻用二分细化，精度 0.05 s；接触点取 OBB 最近点对中点或穿透区形心。 最小净距取全程全局最小 OBB 真实距离：先以 0.5 s 步长粗扫全时段，再在每个局部极小处 ±0.5 s 内以 0.02 s 细扫并黄金分割收敛到 1e-3 s；最小 DCPA 同时给出全时段值与偏离后最小值（全时段值在干预前各情景相同）。 撞击船判定：两船船首到接触点的距离都小于各自 max(10 m, 0.05L) 时判为“船首对船首”，不指定单一撞击船；其余情况取船首离接触点更近的一方为撞击船（不按排水量裁定）。 对比表“临界”：未碰撞且最小净距离安全线（setup 配置，默认 0.1 nm = 185.2 m）不到 5 m，或敏感性区间跨越安全线时标“临界”，并列出敏感性区间。 应急抛锚模型（如使用）：松锚后经过 LetGoToBiteSec 才产生附加恒定减速度与单锚偏转；单锚偏转方向按抛锚舷（右舷向右、左舷向左，双锚为 0）；超过 MaxEffectiveSpeedKn 后减速度按 MaxEffectiveSpeedKn/u 折减；单锚转首率随航速线性衰减，低于 FullYawSpeedKn 时按 (u−MinSpeed)/(FullYawSpeedKn−MinSpeed) 折减，停船后为 0；不计锚链动力学、底质与锚抓力变化，锚参数均为估计。 本对比表中的输入为虚构示例数据，仅用于方法演示，不代表任何真实事故。 仅供分析参考：本结果基于简化操纵模型的反事实推演，不作责任认定。'
+=========================== short test summary info ============================
+FAILED test_w12_service.py::test_W12_D01_heading_as_cog_marked_derived - Asse...
+========================= 1 failed, 17 passed in 4.20s =========================

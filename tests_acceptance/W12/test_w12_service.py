@@ -76,8 +76,11 @@ def test_tampered_seed_returns_500(tmp_path, monkeypatch, client):
     raw = seed.read_bytes().replace(b'"isCritical":true', b'"isCritical":false', 1)
     assert raw != seed.read_bytes()
     seed.write_bytes(raw)
-    monkeypatch.setattr(ar, "SEED", seed)
-    monkeypatch.setattr(ar, "SIDECAR", side)
+    # load_seed 的默认 path/sidecar 在定义时绑定，不能只改模块常量；改走函数本身。
+    orig = ar.load_seed
+    def _load(path=seed, sidecar=side):
+        return orig(path, sidecar)
+    monkeypatch.setattr(ar, "load_seed", _load)
     ar._cache.clear()
     r = client.get("/api/v1/analysis/cases", headers=H())
     assert r.status_code == 500, r.text

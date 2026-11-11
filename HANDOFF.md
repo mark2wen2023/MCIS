@@ -223,3 +223,7 @@ Mark 要求「真实的部署可用」。架构建议：**内网联机版为正�
 8. 架构细节查 `ARCHITECTURE.md`；启动方式看 `run_dev.sh`、`web/src/config.ts`、`service/mcis_service/config.py`
 
 动手前先对将修改的路径做一次哈希或 `git status`，避免覆盖其他任务尚未提交的冻结文件。标待测时写出完整冻结清单。
+
+## 补充（2026-11-11 22:01）
+- W12 分析页：有条件通过（17/18，独立重算偏差 0），待 W12.1 补【推算】标注。详见 DEFECTS/W12.md。
+- 共享入口文件（web/src/main.tsx、web/src/routes.ts、web/src/styles.css）不进单包冻结清单。

@@ -1,0 +1,746 @@
+# W6.2 实现自跑：原样运行 W6 验收（tests_acceptance/W6，未改用例）— 2026-11-11 21:59:57 CST
+# 命令: cd tests_acceptance/W6 && ../../service/.venv/bin/python -m pytest -q -rfE
+....FF................................FFFFFFFFFFFFFF....FFFFFFFFFFFFFFF. [ 63%]
+............FFF..F........................                               [100%]
+=================================== FAILURES ===================================
+_______________ test_W61_confirm_dismiss_with_verdict_422[body2] _______________
+
+client = <starlette.testclient.TestClient object at 0x7fa01e640510>
+body = {'reviewStatus': 'Confirmed', 'verdict': 'NotComplied'}
+
+    @pytest.mark.parametrize("body", [
+        {"action": "confirm", "verdict": "NotComplied"},
+        {"action": "dismiss", "verdict": "NotComplied", "reason": "合成"},
+        {"reviewStatus": "Confirmed", "verdict": "NotComplied"},
+        {"reviewStatus": "Rejected", "verdict": "NotComplied", "note": "合成"},
+    ])
+    def test_W61_confirm_dismiss_with_verdict_422(client, body):
+        before = _check(_colreg(client), "CK-05")
+        r = _patch(client, "CK-05", body)
+        assert r.status_code == 422, r.text
+        _ok("common#/$defs/problem", r.json())
+>       assert r.json()["code"] == "colreg_review_verdict_not_allowed"
+E       AssertionError: assert 'VALIDATION_ERROR' == 'colreg_revie...t_not_allowed'
+E         
+E         - colreg_review_verdict_not_allowed
+E         + VALIDATION_ERROR
+
+test_w61_rulings.py:103: AssertionError
+_______________ test_W61_confirm_dismiss_with_verdict_422[body3] _______________
+
+client = <starlette.testclient.TestClient object at 0x7fa01e72f0b0>
+body = {'reviewStatus': 'Rejected', 'verdict': 'NotComplied', 'note': '合成'}
+
+    @pytest.mark.parametrize("body", [
+        {"action": "confirm", "verdict": "NotComplied"},
+        {"action": "dismiss", "verdict": "NotComplied", "reason": "合成"},
+        {"reviewStatus": "Confirmed", "verdict": "NotComplied"},
+        {"reviewStatus": "Rejected", "verdict": "NotComplied", "note": "合成"},
+    ])
+    def test_W61_confirm_dismiss_with_verdict_422(client, body):
+        before = _check(_colreg(client), "CK-05")
+        r = _patch(client, "CK-05", body)
+        assert r.status_code == 422, r.text
+        _ok("common#/$defs/problem", r.json())
+>       assert r.json()["code"] == "colreg_review_verdict_not_allowed"
+E       AssertionError: assert 'VALIDATION_ERROR' == 'colreg_revie...t_not_allowed'
+E         
+E         - colreg_review_verdict_not_allowed
+E         + VALIDATION_ERROR
+
+test_w61_rulings.py:103: AssertionError
+__________ test_A1_reject_modify_without_reason_is_422[Rejected-None] __________
+
+client = <starlette.testclient.TestClient object at 0x7fa01e0dead0>
+status = 'Rejected', note = None
+
+    @pytest.mark.parametrize("status,note", REASON_MISSING)
+    def test_A1_reject_modify_without_reason_is_422(client, status, note):
+        before = _check(_colreg(client), "CK-05")
+        body = {"reviewStatus": status}
+        if status == "Modified":
+            body["verdict"] = "NeedsReview"
+        if note is not None:
+            body["note"] = note
+        r = _patch(client, "CK-05", body)
+        assert r.status_code == 422, r.text
+        err = r.json()
+        _ok("common#/$defs/problem", err)
+>       assert err["code"] == "colreg_review_reason_required"
+E       AssertionError: assert 'VALIDATION_ERROR' == 'colreg_revie...ason_required'
+E         
+E         - colreg_review_reason_required
+E         + VALIDATION_ERROR
+
+test_w6_service_acceptance.py:71: AssertionError
+____________ test_A1_reject_modify_without_reason_is_422[Rejected-] ____________
+
+client = <starlette.testclient.TestClient object at 0x7fa01de57020>
+status = 'Rejected', note = ''
+
+    @pytest.mark.parametrize("status,note", REASON_MISSING)
+    def test_A1_reject_modify_without_reason_is_422(client, status, note):
+        before = _check(_colreg(client), "CK-05")
+        body = {"reviewStatus": status}
+        if status == "Modified":
+            body["verdict"] = "NeedsReview"
+        if note is not None:
+            body["note"] = note
+        r = _patch(client, "CK-05", body)
+        assert r.status_code == 422, r.text
+        err = r.json()
+        _ok("common#/$defs/problem", err)
+>       assert err["code"] == "colreg_review_reason_required"
+E       AssertionError: assert 'VALIDATION_ERROR' == 'colreg_revie...ason_required'
+E         
+E         - colreg_review_reason_required
+E         + VALIDATION_ERROR
+
+test_w6_service_acceptance.py:71: AssertionError
+__________ test_A1_reject_modify_without_reason_is_422[Rejected-   ] ___________
+
+client = <starlette.testclient.TestClient object at 0x7fa01da9fdf0>
+status = 'Rejected', note = '   '
+
+    @pytest.mark.parametrize("status,note", REASON_MISSING)
+    def test_A1_reject_modify_without_reason_is_422(client, status, note):
+        before = _check(_colreg(client), "CK-05")
+        body = {"reviewStatus": status}
+        if status == "Modified":
+            body["verdict"] = "NeedsReview"
+        if note is not None:
+            body["note"] = note
+        r = _patch(client, "CK-05", body)
+        assert r.status_code == 422, r.text
+        err = r.json()
+        _ok("common#/$defs/problem", err)
+>       assert err["code"] == "colreg_review_reason_required"
+E       AssertionError: assert 'VALIDATION_ERROR' == 'colreg_revie...ason_required'
+E         
+E         - colreg_review_reason_required
+E         + VALIDATION_ERROR
+
+test_w6_service_acceptance.py:71: AssertionError
+__________ test_A1_reject_modify_without_reason_is_422[Rejected-\t\n] __________
+
+client = <starlette.testclient.TestClient object at 0x7fa01de54380>
+status = 'Rejected', note = '\t\n'
+
+    @pytest.mark.parametrize("status,note", REASON_MISSING)
+    def test_A1_reject_modify_without_reason_is_422(client, status, note):
+        before = _check(_colreg(client), "CK-05")
+        body = {"reviewStatus": status}
+        if status == "Modified":
+            body["verdict"] = "NeedsReview"
+        if note is not None:
+            body["note"] = note
+        r = _patch(client, "CK-05", body)
+        assert r.status_code == 422, r.text
+        err = r.json()
+        _ok("common#/$defs/problem", err)
+>       assert err["code"] == "colreg_review_reason_required"
+E       AssertionError: assert 'VALIDATION_ERROR' == 'colreg_revie...ason_required'
+E         
+E         - colreg_review_reason_required
+E         + VALIDATION_ERROR
+
+test_w6_service_acceptance.py:71: AssertionError
+______ test_A1_reject_modify_without_reason_is_422[Rejected-\u3000\u3000] ______
+
+client = <starlette.testclient.TestClient object at 0x7fa01da2f130>
+status = 'Rejected', note = '\u3000\u3000'
+
+    @pytest.mark.parametrize("status,note", REASON_MISSING)
+    def test_A1_reject_modify_without_reason_is_422(client, status, note):
+        before = _check(_colreg(client), "CK-05")
+        body = {"reviewStatus": status}
+        if status == "Modified":
+            body["verdict"] = "NeedsReview"
+        if note is not None:
+            body["note"] = note
+        r = _patch(client, "CK-05", body)
+        assert r.status_code == 422, r.text
+        err = r.json()
+        _ok("common#/$defs/problem", err)
+>       assert err["code"] == "colreg_review_reason_required"
+E       AssertionError: assert 'VALIDATION_ERROR' == 'colreg_revie...ason_required'
+E         
+E         - colreg_review_reason_required
+E         + VALIDATION_ERROR
+
+test_w6_service_acceptance.py:71: AssertionError
+__________ test_A1_reject_modify_without_reason_is_422[Modified-None] __________
+
+client = <starlette.testclient.TestClient object at 0x7fa01d8d3f00>
+status = 'Modified', note = None
+
+    @pytest.mark.parametrize("status,note", REASON_MISSING)
+    def test_A1_reject_modify_without_reason_is_422(client, status, note):
+        before = _check(_colreg(client), "CK-05")
+        body = {"reviewStatus": status}
+        if status == "Modified":
+            body["verdict"] = "NeedsReview"
+        if note is not None:
+            body["note"] = note
+        r = _patch(client, "CK-05", body)
+        assert r.status_code == 422, r.text
+        err = r.json()
+        _ok("common#/$defs/problem", err)
+>       assert err["code"] == "colreg_review_reason_required"
+E       AssertionError: assert 'VALIDATION_ERROR' == 'colreg_revie...ason_required'
+E         
+E         - colreg_review_reason_required
+E         + VALIDATION_ERROR
+
+test_w6_service_acceptance.py:71: AssertionError
+____________ test_A1_reject_modify_without_reason_is_422[Modified-] ____________
+
+client = <starlette.testclient.TestClient object at 0x7fa01d7c6580>
+status = 'Modified', note = ''
+
+    @pytest.mark.parametrize("status,note", REASON_MISSING)
+    def test_A1_reject_modify_without_reason_is_422(client, status, note):
+        before = _check(_colreg(client), "CK-05")
+        body = {"reviewStatus": status}
+        if status == "Modified":
+            body["verdict"] = "NeedsReview"
+        if note is not None:
+            body["note"] = note
+        r = _patch(client, "CK-05", body)
+        assert r.status_code == 422, r.text
+        err = r.json()
+        _ok("common#/$defs/problem", err)
+>       assert err["code"] == "colreg_review_reason_required"
+E       AssertionError: assert 'VALIDATION_ERROR' == 'colreg_revie...ason_required'
+E         
+E         - colreg_review_reason_required
+E         + VALIDATION_ERROR
+
+test_w6_service_acceptance.py:71: AssertionError
+__________ test_A1_reject_modify_without_reason_is_422[Modified-   ] ___________
+
+client = <starlette.testclient.TestClient object at 0x7fa01d8d0270>
+status = 'Modified', note = '   '
+
+    @pytest.mark.parametrize("status,note", REASON_MISSING)
+    def test_A1_reject_modify_without_reason_is_422(client, status, note):
+        before = _check(_colreg(client), "CK-05")
+        body = {"reviewStatus": status}
+        if status == "Modified":
+            body["verdict"] = "NeedsReview"
+        if note is not None:
+            body["note"] = note
+        r = _patch(client, "CK-05", body)
+        assert r.status_code == 422, r.text
+        err = r.json()
+        _ok("common#/$defs/problem", err)
+>       assert err["code"] == "colreg_review_reason_required"
+E       AssertionError: assert 'VALIDATION_ERROR' == 'colreg_revie...ason_required'
+E         
+E         - colreg_review_reason_required
+E         + VALIDATION_ERROR
+
+test_w6_service_acceptance.py:71: AssertionError
+__________ test_A1_reject_modify_without_reason_is_422[Modified-\t\n] __________
+
+client = <starlette.testclient.TestClient object at 0x7fa01e055040>
+status = 'Modified', note = '\t\n'
+
+    @pytest.mark.parametrize("status,note", REASON_MISSING)
+    def test_A1_reject_modify_without_reason_is_422(client, status, note):
+        before = _check(_colreg(client), "CK-05")
+        body = {"reviewStatus": status}
+        if status == "Modified":
+            body["verdict"] = "NeedsReview"
+        if note is not None:
+            body["note"] = note
+        r = _patch(client, "CK-05", body)
+        assert r.status_code == 422, r.text
+        err = r.json()
+        _ok("common#/$defs/problem", err)
+>       assert err["code"] == "colreg_review_reason_required"
+E       AssertionError: assert 'VALIDATION_ERROR' == 'colreg_revie...ason_required'
+E         
+E         - colreg_review_reason_required
+E         + VALIDATION_ERROR
+
+test_w6_service_acceptance.py:71: AssertionError
+_________ test_A1_reject_modify_without_reason_is_422[Modified-\u3000] _________
+
+client = <starlette.testclient.TestClient object at 0x7fa01e24e360>
+status = 'Modified', note = '\u3000'
+
+    @pytest.mark.parametrize("status,note", REASON_MISSING)
+    def test_A1_reject_modify_without_reason_is_422(client, status, note):
+        before = _check(_colreg(client), "CK-05")
+        body = {"reviewStatus": status}
+        if status == "Modified":
+            body["verdict"] = "NeedsReview"
+        if note is not None:
+            body["note"] = note
+        r = _patch(client, "CK-05", body)
+        assert r.status_code == 422, r.text
+        err = r.json()
+        _ok("common#/$defs/problem", err)
+>       assert err["code"] == "colreg_review_reason_required"
+E       AssertionError: assert 'VALIDATION_ERROR' == 'colreg_revie...ason_required'
+E         
+E         - colreg_review_reason_required
+E         + VALIDATION_ERROR
+
+test_w6_service_acceptance.py:71: AssertionError
+____________________ test_A2_confirm_reason_optional[None] _____________________
+
+client = <starlette.testclient.TestClient object at 0x7fa01e54e360>, note = None
+
+    @pytest.mark.parametrize("note", [None, "", "核对合成 VDR 后确认"])
+    def test_A2_confirm_reason_optional(client, note):
+        body = {"reviewStatus": "Confirmed"}
+        if note is not None:
+            body["note"] = note
+        r = _patch(client, "CK-03", body)
+>       assert r.status_code == 200, r.text
+E       AssertionError: {"code":"VALIDATION_ERROR","message":"请求参数不合法","detail":[{"loc":["body"],"msg":"Value error, 旧字段名 reviewStatus 已删除（W6.2），请改用 action（confirm/dismiss/modify）与 reason"}]}
+E       assert 422 == 200
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+
+test_w6_service_acceptance.py:83: AssertionError
+______________________ test_A2_confirm_reason_optional[] _______________________
+
+client = <starlette.testclient.TestClient object at 0x7fa01e793f00>, note = ''
+
+    @pytest.mark.parametrize("note", [None, "", "核对合成 VDR 后确认"])
+    def test_A2_confirm_reason_optional(client, note):
+        body = {"reviewStatus": "Confirmed"}
+        if note is not None:
+            body["note"] = note
+        r = _patch(client, "CK-03", body)
+>       assert r.status_code == 200, r.text
+E       AssertionError: {"code":"VALIDATION_ERROR","message":"请求参数不合法","detail":[{"loc":["body"],"msg":"Value error, 旧字段名 reviewStatus/note 已删除（W6.2），请改用 action（confirm/dismiss/modify）与 reason"}]}
+E       assert 422 == 200
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+
+test_w6_service_acceptance.py:83: AssertionError
+_ test_A2_confirm_reason_optional[\u6838\u5bf9\u5408\u6210 VDR \u540e\u786e\u8ba4] _
+
+client = <starlette.testclient.TestClient object at 0x7fa01e568380>
+note = '核对合成 VDR 后确认'
+
+    @pytest.mark.parametrize("note", [None, "", "核对合成 VDR 后确认"])
+    def test_A2_confirm_reason_optional(client, note):
+        body = {"reviewStatus": "Confirmed"}
+        if note is not None:
+            body["note"] = note
+        r = _patch(client, "CK-03", body)
+>       assert r.status_code == 200, r.text
+E       AssertionError: {"code":"VALIDATION_ERROR","message":"请求参数不合法","detail":[{"loc":["body"],"msg":"Value error, 旧字段名 reviewStatus/note 已删除（W6.2），请改用 action（confirm/dismiss/modify）与 reason"}]}
+E       assert 422 == 200
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+
+test_w6_service_acceptance.py:83: AssertionError
+_______________________ test_A3_modify_requires_verdict ________________________
+
+client = <starlette.testclient.TestClient object at 0x7fa01e3e2470>
+
+    def test_A3_modify_requires_verdict(client):
+        r = _patch(client, "CK-05", {"reviewStatus": "Modified", "note": "合成理由"})
+        assert r.status_code == 422
+        _ok("common#/$defs/problem", r.json())
+>       assert r.json()["code"] == "colreg_review_verdict_required"
+E       AssertionError: assert 'VALIDATION_ERROR' == 'colreg_revie...dict_required'
+E         
+E         - colreg_review_verdict_required
+E         + VALIDATION_ERROR
+
+test_w6_service_acceptance.py:92: AssertionError
+______________________ test_A5_unknown_check_404_problem _______________________
+
+client = <starlette.testclient.TestClient object at 0x7fa01d59a470>
+
+    def test_A5_unknown_check_404_problem(client):
+        r = _patch(client, "CK-NOPE-999", {"reviewStatus": "Confirmed"})
+>       assert r.status_code == 404
+E       assert 422 == 404
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+
+test_w6_service_acceptance.py:110: AssertionError
+_____________ test_A6_readonly_roles_cannot_review[ExternalExpert] _____________
+
+client = <starlette.testclient.TestClient object at 0x7fa01d62b350>
+role = 'ExternalExpert'
+
+    @pytest.mark.parametrize("role", ["ExternalExpert", "InterestedState", "AgentService", "Public"])
+    def test_A6_readonly_roles_cannot_review(client, role):
+        r = _patch(client, "CK-05", {"reviewStatus": "Rejected", "note": "合成理由"}, role=role)
+>       assert r.status_code in (403, 404), r.text
+E       AssertionError: {"code":"VALIDATION_ERROR","message":"请求参数不合法","detail":[{"loc":["body"],"msg":"Value error, 旧字段名 reviewStatus/note 已删除（W6.2），请改用 action（confirm/dismiss/modify）与 reason"}]}
+E       assert 422 in (403, 404)
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+
+test_w6_service_acceptance.py:117: AssertionError
+____________ test_A6_readonly_roles_cannot_review[InterestedState] _____________
+
+client = <starlette.testclient.TestClient object at 0x7fa01d5216a0>
+role = 'InterestedState'
+
+    @pytest.mark.parametrize("role", ["ExternalExpert", "InterestedState", "AgentService", "Public"])
+    def test_A6_readonly_roles_cannot_review(client, role):
+        r = _patch(client, "CK-05", {"reviewStatus": "Rejected", "note": "合成理由"}, role=role)
+>       assert r.status_code in (403, 404), r.text
+E       AssertionError: {"code":"VALIDATION_ERROR","message":"请求参数不合法","detail":[{"loc":["body"],"msg":"Value error, 旧字段名 reviewStatus/note 已删除（W6.2），请改用 action（confirm/dismiss/modify）与 reason"}]}
+E       assert 422 in (403, 404)
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+
+test_w6_service_acceptance.py:117: AssertionError
+______________ test_A6_readonly_roles_cannot_review[AgentService] ______________
+
+client = <starlette.testclient.TestClient object at 0x7fa01d26f8a0>
+role = 'AgentService'
+
+    @pytest.mark.parametrize("role", ["ExternalExpert", "InterestedState", "AgentService", "Public"])
+    def test_A6_readonly_roles_cannot_review(client, role):
+        r = _patch(client, "CK-05", {"reviewStatus": "Rejected", "note": "合成理由"}, role=role)
+>       assert r.status_code in (403, 404), r.text
+E       AssertionError: {"code":"VALIDATION_ERROR","message":"请求参数不合法","detail":[{"loc":["body"],"msg":"Value error, 旧字段名 reviewStatus/note 已删除（W6.2），请改用 action（confirm/dismiss/modify）与 reason"}]}
+E       assert 422 in (403, 404)
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+
+test_w6_service_acceptance.py:117: AssertionError
+_________________ test_A6_readonly_roles_cannot_review[Public] _________________
+
+client = <starlette.testclient.TestClient object at 0x7fa01d1f59d0>
+role = 'Public'
+
+    @pytest.mark.parametrize("role", ["ExternalExpert", "InterestedState", "AgentService", "Public"])
+    def test_A6_readonly_roles_cannot_review(client, role):
+        r = _patch(client, "CK-05", {"reviewStatus": "Rejected", "note": "合成理由"}, role=role)
+>       assert r.status_code in (403, 404), r.text
+E       AssertionError: {"code":"VALIDATION_ERROR","message":"请求参数不合法","detail":[{"loc":["body"],"msg":"Value error, 旧字段名 reviewStatus/note 已删除（W6.2），请改用 action（confirm/dismiss/modify）与 reason"}]}
+E       assert 422 in (403, 404)
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+
+test_w6_service_acceptance.py:117: AssertionError
+___________________ test_A7_confirm_must_not_change_verdict ____________________
+
+client = <starlette.testclient.TestClient object at 0x7fa01d14bbd0>
+
+    def test_A7_confirm_must_not_change_verdict(client):
+        """确认=接受原判定。带 verdict 应 422 colreg_review_verdict_not_allowed，不得改数据。"""
+        before = _check(_colreg(client), "CK-05")
+        r = _patch(client, "CK-05", {"reviewStatus": "Confirmed", "verdict": "NotComplied"})
+        assert r.status_code == 422, r.text
+        _ok("common#/$defs/problem", r.json())
+>       assert r.json()["code"] == "colreg_review_verdict_not_allowed"
+E       AssertionError: assert 'VALIDATION_ERROR' == 'colreg_revie...t_not_allowed'
+E         
+E         - colreg_review_verdict_not_allowed
+E         + VALIDATION_ERROR
+
+test_w6_service_acceptance.py:127: AssertionError
+____________________ test_A8_reject_must_not_change_verdict ____________________
+
+client = <starlette.testclient.TestClient object at 0x7fa01ced1d00>
+
+    def test_A8_reject_must_not_change_verdict(client):
+        """驳回带 verdict 应 422 colreg_review_verdict_not_allowed，不得改判定。"""
+        before = _check(_colreg(client), "CK-05")
+        r = _patch(client, "CK-05", {"reviewStatus": "Rejected", "verdict": "NotComplied", "note": "合成理由"})
+        assert r.status_code == 422, r.text
+        _ok("common#/$defs/problem", r.json())
+>       assert r.json()["code"] == "colreg_review_verdict_not_allowed"
+E       AssertionError: assert 'VALIDATION_ERROR' == 'colreg_revie...t_not_allowed'
+E         
+E         - colreg_review_verdict_not_allowed
+E         + VALIDATION_ERROR
+
+test_w6_service_acceptance.py:138: AssertionError
+_ test_B1_audit_has_who_when_before_after_reason[Confirmed-None-\u5408\u6210\u786e\u8ba4\u7406\u7531-\u03b1] _
+
+client = <starlette.testclient.TestClient object at 0x7fa01ce23df0>
+status = 'Confirmed', verdict = None, reason = '合成确认理由-α'
+
+    @pytest.mark.parametrize("status,verdict,reason", [
+        ("Confirmed", None, "合成确认理由-α"),
+        ("Rejected", None, "合成驳回理由-β"),
+        ("Modified", "NeedsReview", "合成修改理由-γ"),
+        ("Modified", "NotAssessable", "合成修改理由-δ"),
+    ])
+    def test_B1_audit_has_who_when_before_after_reason(client, status, verdict, reason):
+        cid = "CK-07"
+        old = _check(_colreg(client), cid)
+        t0 = datetime.now(timezone.utc) - timedelta(seconds=5)
+        body = {"reviewStatus": status, "note": reason}
+        if verdict:
+            body["verdict"] = verdict
+        r = _patch(client, cid, body)
+>       assert r.status_code == 200, r.text
+E       AssertionError: {"code":"VALIDATION_ERROR","message":"请求参数不合法","detail":[{"loc":["body"],"msg":"Value error, 旧字段名 reviewStatus/note 已删除（W6.2），请改用 action（confirm/dismiss/modify）与 reason"}]}
+E       assert 422 == 200
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+
+test_w6_service_acceptance.py:159: AssertionError
+_ test_B1_audit_has_who_when_before_after_reason[Rejected-None-\u5408\u6210\u9a73\u56de\u7406\u7531-\u03b2] _
+
+client = <starlette.testclient.TestClient object at 0x7fa01d2e5040>
+status = 'Rejected', verdict = None, reason = '合成驳回理由-β'
+
+    @pytest.mark.parametrize("status,verdict,reason", [
+        ("Confirmed", None, "合成确认理由-α"),
+        ("Rejected", None, "合成驳回理由-β"),
+        ("Modified", "NeedsReview", "合成修改理由-γ"),
+        ("Modified", "NotAssessable", "合成修改理由-δ"),
+    ])
+    def test_B1_audit_has_who_when_before_after_reason(client, status, verdict, reason):
+        cid = "CK-07"
+        old = _check(_colreg(client), cid)
+        t0 = datetime.now(timezone.utc) - timedelta(seconds=5)
+        body = {"reviewStatus": status, "note": reason}
+        if verdict:
+            body["verdict"] = verdict
+        r = _patch(client, cid, body)
+>       assert r.status_code == 200, r.text
+E       AssertionError: {"code":"VALIDATION_ERROR","message":"请求参数不合法","detail":[{"loc":["body"],"msg":"Value error, 旧字段名 reviewStatus/note 已删除（W6.2），请改用 action（confirm/dismiss/modify）与 reason"}]}
+E       assert 422 == 200
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+
+test_w6_service_acceptance.py:159: AssertionError
+_ test_B1_audit_has_who_when_before_after_reason[Modified-NeedsReview-\u5408\u6210\u4fee\u6539\u7406\u7531-\u03b3] _
+
+client = <starlette.testclient.TestClient object at 0x7fa01d4eae00>
+status = 'Modified', verdict = 'NeedsReview', reason = '合成修改理由-γ'
+
+    @pytest.mark.parametrize("status,verdict,reason", [
+        ("Confirmed", None, "合成确认理由-α"),
+        ("Rejected", None, "合成驳回理由-β"),
+        ("Modified", "NeedsReview", "合成修改理由-γ"),
+        ("Modified", "NotAssessable", "合成修改理由-δ"),
+    ])
+    def test_B1_audit_has_who_when_before_after_reason(client, status, verdict, reason):
+        cid = "CK-07"
+        old = _check(_colreg(client), cid)
+        t0 = datetime.now(timezone.utc) - timedelta(seconds=5)
+        body = {"reviewStatus": status, "note": reason}
+        if verdict:
+            body["verdict"] = verdict
+        r = _patch(client, cid, body)
+>       assert r.status_code == 200, r.text
+E       AssertionError: {"code":"VALIDATION_ERROR","message":"请求参数不合法","detail":[{"loc":["body"],"msg":"Value error, 旧字段名 reviewStatus/note 已删除（W6.2），请改用 action（confirm/dismiss/modify）与 reason"}]}
+E       assert 422 == 200
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+
+test_w6_service_acceptance.py:159: AssertionError
+_ test_B1_audit_has_who_when_before_after_reason[Modified-NotAssessable-\u5408\u6210\u4fee\u6539\u7406\u7531-\u03b4] _
+
+client = <starlette.testclient.TestClient object at 0x7fa01d96c7c0>
+status = 'Modified', verdict = 'NotAssessable', reason = '合成修改理由-δ'
+
+    @pytest.mark.parametrize("status,verdict,reason", [
+        ("Confirmed", None, "合成确认理由-α"),
+        ("Rejected", None, "合成驳回理由-β"),
+        ("Modified", "NeedsReview", "合成修改理由-γ"),
+        ("Modified", "NotAssessable", "合成修改理由-δ"),
+    ])
+    def test_B1_audit_has_who_when_before_after_reason(client, status, verdict, reason):
+        cid = "CK-07"
+        old = _check(_colreg(client), cid)
+        t0 = datetime.now(timezone.utc) - timedelta(seconds=5)
+        body = {"reviewStatus": status, "note": reason}
+        if verdict:
+            body["verdict"] = verdict
+        r = _patch(client, cid, body)
+>       assert r.status_code == 200, r.text
+E       AssertionError: {"code":"VALIDATION_ERROR","message":"请求参数不合法","detail":[{"loc":["body"],"msg":"Value error, 旧字段名 reviewStatus/note 已删除（W6.2），请改用 action（confirm/dismiss/modify）与 reason"}]}
+E       assert 422 == 200
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+
+test_w6_service_acceptance.py:159: AssertionError
+___________________ test_B2_long_reason_kept_whole_in_audit ____________________
+
+client = <starlette.testclient.TestClient object at 0x7fa01e5c8160>
+
+    def test_B2_long_reason_kept_whole_in_audit(client):
+        """21:34 裁定：审计 after 摘要允许截断；落盘行 reason 键与复核历史保存全文（逐字相等）。"""
+        import json
+        reason = "合成理由" + "甲乙丙丁戊己庚辛壬癸" * 39
+        r = _patch(client, "CK-08", {"reviewStatus": "Rejected", "note": reason})
+>       assert r.status_code == 200, r.text
+E       AssertionError: {"code":"VALIDATION_ERROR","message":"请求参数不合法","detail":[{"loc":["body"],"msg":"Value error, 旧字段名 reviewStatus/note 已删除（W6.2），请改用 action（confirm/dismiss/modify）与 reason"}]}
+E       assert 422 == 200
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+
+test_w6_service_acceptance.py:182: AssertionError
+_________________ test_B3_default_operator_when_header_missing _________________
+
+client = <starlette.testclient.TestClient object at 0x7fa01e1d8270>
+
+    def test_B3_default_operator_when_header_missing(client):
+        r = client.patch(f"{L}/colreg/checks/CK-09", json={"reviewStatus": "Confirmed"}, headers={"X-MCIS-Role": "Investigator"})
+>       assert r.status_code == 200
+E       assert 422 == 200
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+
+test_w6_service_acceptance.py:193: AssertionError
+____________ test_B4_sequential_reviews_chain_and_before_after_link ____________
+
+client = <starlette.testclient.TestClient object at 0x7fa01e17fdf0>
+
+    def test_B4_sequential_reviews_chain_and_before_after_link(client):
+        cid = "CK-10"
+        steps = [({"reviewStatus": "Confirmed"}, ), ({"reviewStatus": "Modified", "verdict": "Partial", "note": "合成①"}, ),
+                 ({"reviewStatus": "Rejected", "note": "合成②"}, )]
+        for (b,) in steps:
+>           assert _patch(client, cid, b).status_code == 200
+E           AssertionError: assert 422 == 200
+E            +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+E            +    where <Response [422 Unprocessable Entity]> = _patch(<starlette.testclient.TestClient object at 0x7fa01e17fdf0>, 'CK-10', {'reviewStatus': 'Confirmed'})
+
+test_w6_service_acceptance.py:203: AssertionError
+____________________ test_B5_review_persisted_and_doc_valid ____________________
+
+client = <starlette.testclient.TestClient object at 0x7fa01e38c050>
+
+    def test_B5_review_persisted_and_doc_valid(client):
+>       assert _patch(client, "CK-11", {"reviewStatus": "Modified", "verdict": "NeedsReview", "note": "合成"}).status_code == 200
+E       AssertionError: assert 422 == 200
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+E        +    where <Response [422 Unprocessable Entity]> = _patch(<starlette.testclient.TestClient object at 0x7fa01e38c050>, 'CK-11', {'reviewStatus': 'Modified', 'verdict': 'NeedsReview', 'note': '合成'})
+
+test_w6_service_acceptance.py:216: AssertionError
+____________________ test_F1_evaluate_optional_body[nobody] ____________________
+
+client = <starlette.testclient.TestClient object at 0x7fa01d254160>
+mode = 'nobody'
+
+    @needs_core
+    @pytest.mark.parametrize("mode", ["nobody", "empty", "fields"])
+    def test_F1_evaluate_optional_body(client, mode):
+        kw = {}
+        if mode == "empty":
+            kw["json"] = {}
+        elif mode == "fields":
+            kw["json"] = {"ownVesselId": "vessel_lily", "targetVesselId": "vessel_mary", "visibilityNm": 0.4,
+                          "vesselsInSight": False, "inNarrowChannel": True}
+        r = client.post(f"{L}/colreg:evaluate", headers=H(), **kw)
+        assert r.status_code == 200, r.text
+        doc = r.json()
+        _ok("colreg", doc)
+        assert doc["caseId"] == LILY and "不作责任认定" in doc["disclaimer"]
+        assert doc["checks"] and all(c["reviewStatus"] == "Draft" and c["source"] == "RuleEngine" for c in doc["checks"])
+>       assert _colreg(client) == doc
+E       AssertionError: assert {'caseId': 'C...', ...}], ...} == {'caseId': 'C...', ...}], ...}
+E         
+E         Omitting 5 identical items, use -vv to show
+E         Right contains 1 more item:
+E         {'runId': 'R-0002'}
+E         Use -v to get more diff
+
+test_w6_service_acceptance.py:332: AssertionError
+____________________ test_F1_evaluate_optional_body[empty] _____________________
+
+client = <starlette.testclient.TestClient object at 0x7fa01d8d1bf0>
+mode = 'empty'
+
+    @needs_core
+    @pytest.mark.parametrize("mode", ["nobody", "empty", "fields"])
+    def test_F1_evaluate_optional_body(client, mode):
+        kw = {}
+        if mode == "empty":
+            kw["json"] = {}
+        elif mode == "fields":
+            kw["json"] = {"ownVesselId": "vessel_lily", "targetVesselId": "vessel_mary", "visibilityNm": 0.4,
+                          "vesselsInSight": False, "inNarrowChannel": True}
+        r = client.post(f"{L}/colreg:evaluate", headers=H(), **kw)
+        assert r.status_code == 200, r.text
+        doc = r.json()
+        _ok("colreg", doc)
+        assert doc["caseId"] == LILY and "不作责任认定" in doc["disclaimer"]
+        assert doc["checks"] and all(c["reviewStatus"] == "Draft" and c["source"] == "RuleEngine" for c in doc["checks"])
+>       assert _colreg(client) == doc
+E       AssertionError: assert {'caseId': 'C...', ...}], ...} == {'caseId': 'C...', ...}], ...}
+E         
+E         Omitting 5 identical items, use -vv to show
+E         Right contains 1 more item:
+E         {'runId': 'R-0002'}
+E         Use -v to get more diff
+
+test_w6_service_acceptance.py:332: AssertionError
+____________________ test_F1_evaluate_optional_body[fields] ____________________
+
+client = <starlette.testclient.TestClient object at 0x7fa01d8d05a0>
+mode = 'fields'
+
+    @needs_core
+    @pytest.mark.parametrize("mode", ["nobody", "empty", "fields"])
+    def test_F1_evaluate_optional_body(client, mode):
+        kw = {}
+        if mode == "empty":
+            kw["json"] = {}
+        elif mode == "fields":
+            kw["json"] = {"ownVesselId": "vessel_lily", "targetVesselId": "vessel_mary", "visibilityNm": 0.4,
+                          "vesselsInSight": False, "inNarrowChannel": True}
+        r = client.post(f"{L}/colreg:evaluate", headers=H(), **kw)
+        assert r.status_code == 200, r.text
+        doc = r.json()
+        _ok("colreg", doc)
+        assert doc["caseId"] == LILY and "不作责任认定" in doc["disclaimer"]
+        assert doc["checks"] and all(c["reviewStatus"] == "Draft" and c["source"] == "RuleEngine" for c in doc["checks"])
+>       assert _colreg(client) == doc
+E       AssertionError: assert {'caseId': 'C...', ...}], ...} == {'caseId': 'C...', ...}], ...}
+E         
+E         Omitting 5 identical items, use -vv to show
+E         Right contains 1 more item:
+E         {'runId': 'R-0002'}
+E         Use -v to get more diff
+
+test_w6_service_acceptance.py:332: AssertionError
+____________________ test_F4_evaluate_then_review_roundtrip ____________________
+
+client = <starlette.testclient.TestClient object at 0x7fa01e431480>
+
+    @needs_core
+    def test_F4_evaluate_then_review_roundtrip(client):
+        doc = client.post(f"{L}/colreg:evaluate", json={}, headers=H()).json()
+        cid = doc["checks"][0]["checkId"]
+        r = _patch(client, cid, {"reviewStatus": "Rejected", "note": "合成驳回"})
+>       assert r.status_code == 200 and r.json()["reviewStatus"] == "Rejected"
+E       assert (422 == 200)
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+
+test_w6_service_acceptance.py:365: AssertionError
+=========================== short test summary info ============================
+FAILED test_w61_rulings.py::test_W61_confirm_dismiss_with_verdict_422[body2]
+FAILED test_w61_rulings.py::test_W61_confirm_dismiss_with_verdict_422[body3]
+FAILED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Rejected-None]
+FAILED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Rejected-]
+FAILED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Rejected-   ]
+FAILED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Rejected-\t\n]
+FAILED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Rejected-\u3000\u3000]
+FAILED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Modified-None]
+FAILED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Modified-]
+FAILED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Modified-   ]
+FAILED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Modified-\t\n]
+FAILED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Modified-\u3000]
+FAILED test_w6_service_acceptance.py::test_A2_confirm_reason_optional[None]
+FAILED test_w6_service_acceptance.py::test_A2_confirm_reason_optional[] - Ass...
+FAILED test_w6_service_acceptance.py::test_A2_confirm_reason_optional[\u6838\u5bf9\u5408\u6210 VDR \u540e\u786e\u8ba4]
+FAILED test_w6_service_acceptance.py::test_A3_modify_requires_verdict - Asser...
+FAILED test_w6_service_acceptance.py::test_A5_unknown_check_404_problem - ass...
+FAILED test_w6_service_acceptance.py::test_A6_readonly_roles_cannot_review[ExternalExpert]
+FAILED test_w6_service_acceptance.py::test_A6_readonly_roles_cannot_review[InterestedState]
+FAILED test_w6_service_acceptance.py::test_A6_readonly_roles_cannot_review[AgentService]
+FAILED test_w6_service_acceptance.py::test_A6_readonly_roles_cannot_review[Public]
+FAILED test_w6_service_acceptance.py::test_A7_confirm_must_not_change_verdict
+FAILED test_w6_service_acceptance.py::test_A8_reject_must_not_change_verdict
+FAILED test_w6_service_acceptance.py::test_B1_audit_has_who_when_before_after_reason[Confirmed-None-\u5408\u6210\u786e\u8ba4\u7406\u7531-\u03b1]
+FAILED test_w6_service_acceptance.py::test_B1_audit_has_who_when_before_after_reason[Rejected-None-\u5408\u6210\u9a73\u56de\u7406\u7531-\u03b2]
+FAILED test_w6_service_acceptance.py::test_B1_audit_has_who_when_before_after_reason[Modified-NeedsReview-\u5408\u6210\u4fee\u6539\u7406\u7531-\u03b3]
+FAILED test_w6_service_acceptance.py::test_B1_audit_has_who_when_before_after_reason[Modified-NotAssessable-\u5408\u6210\u4fee\u6539\u7406\u7531-\u03b4]
+FAILED test_w6_service_acceptance.py::test_B2_long_reason_kept_whole_in_audit
+FAILED test_w6_service_acceptance.py::test_B3_default_operator_when_header_missing
+FAILED test_w6_service_acceptance.py::test_B4_sequential_reviews_chain_and_before_after_link
+FAILED test_w6_service_acceptance.py::test_B5_review_persisted_and_doc_valid
+FAILED test_w6_service_acceptance.py::test_F1_evaluate_optional_body[nobody]
+FAILED test_w6_service_acceptance.py::test_F1_evaluate_optional_body[empty]
+FAILED test_w6_service_acceptance.py::test_F1_evaluate_optional_body[fields]
+FAILED test_w6_service_acceptance.py::test_F4_evaluate_then_review_roundtrip
+35 failed, 79 passed in 27.26s

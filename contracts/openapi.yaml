@@ -25,6 +25,7 @@ tags:
   - { name: agents }
   - { name: sim }
   - { name: package }
+  - { name: analysis, description: W12 分析页只读接口（预生成种子；运行时按旁注 sha256 自检，不重算 mcis-core / W14） }
 
 components:
   parameters:
@@ -215,6 +216,217 @@ components:
           required: [runId]
           properties:
             runId: { type: string, description: "本次新建并激活的版本 id，如 R-0002。实现暂缺见 W6-D06。" }
+
+    # ----- W12 分析页（2026-11-11 21:52 裁定入合同；实现随 W6.2 将 include_in_schema=True）-----
+    AnalysisSourceRef:
+      type: object
+      required: [path, sha256]
+      properties:
+        path: { type: string }
+        sha256: { type: string, minLength: 64, maxLength: 64 }
+        role: { type: string }
+        exporter: { type: string }
+        generatedAtUtc: { type: string, format: date-time }
+    AnalysisCrossCheck:
+      type: object
+      required: [against, valuesCompared, maxAbsDiff, tolerance, ok]
+      properties:
+        against: { type: array, items: { type: string } }
+        sha256: { type: object, additionalProperties: { type: string } }
+        valuesCompared: { type: integer }
+        maxAbsDiff: { type: number }
+        tolerance: { type: number }
+        ok: { type: boolean }
+    AnalysisMeta:
+      type: object
+      required: [seedSha256, seedVerified, generatedAt, generator, coreVersion, coreDll, w14Export, w14Frozen, crossCheck, disclaimer]
+      properties:
+        seedSha256: { type: string, minLength: 64, maxLength: 64 }
+        seedVerified: { type: boolean }
+        generatedAt: { type: string }
+        generator: { type: string }
+        coreVersion: { type: string }
+        coreDll: { $ref: '#/components/schemas/AnalysisSourceRef' }
+        w14Export: { $ref: '#/components/schemas/AnalysisSourceRef' }
+        w14Frozen: { $ref: '#/components/schemas/AnalysisSourceRef' }
+        crossCheck: { $ref: '#/components/schemas/AnalysisCrossCheck' }
+        disclaimer: { type: string }
+    AnalysisCaseListItem:
+      type: object
+      required: [caseId, key, title, isFictionalDemo, sourceLabel, hasWhatIf]
+      properties:
+        caseId: { type: string, examples: [CASE-2026-DEMO-LILY-MARY, CASE-2025-HAILI5-WANA17, CJK-2024-1230-YangZe22-VegaDream] }
+        key: { type: string, enum: [lily-mary, haili5, yangze22] }
+        title: { type: string }
+        isFictionalDemo: { type: boolean }
+        sourceLabel: { type: string }
+        hasWhatIf: { type: boolean }
+    AnalysisCaseList:
+      allOf:
+        - { $ref: '#/components/schemas/AnalysisMeta' }
+        - type: object
+          required: [cases]
+          properties:
+            cases: { type: array, items: { $ref: '#/components/schemas/AnalysisCaseListItem' } }
+    AnalysisCurvePoint:
+      type: object
+      required: [t, clock, distanceNm, dcpaNm, tcpaMin, riskLevel]
+      properties:
+        t: { type: number, description: 相对案件历元的秒 }
+        clock: { type: string, description: '北京时间 HH:MM:SS[.cc]' }
+        distanceNm: { type: number }
+        dcpaNm: { type: ["number", "null"] }
+        tcpaMin: { type: ["number", "null"] }
+        riskLevel: { type: string, enum: [Safe, Warning, Danger] }
+        isDiverging: { type: boolean }
+    AnalysisKeyMoment:
+      type: object
+      required: [kind, label, t, clock, source]
+      properties:
+        kind: { type: string }
+        label: { type: string }
+        t: { type: number }
+        clock: { type: string }
+        value: { type: ["number", "null"] }
+        unit: { type: string }
+        source: { type: string, description: 必填来源标注 }
+    AnalysisBaseline:
+      type: object
+      required: [label, stepSec, cutAtSec, series, keyMoments]
+      properties:
+        label: { type: string }
+        stepSec: { type: number }
+        cutAtSec: { type: number }
+        series: { type: array, items: { $ref: '#/components/schemas/AnalysisCurvePoint' } }
+        keyMoments: { type: array, items: { $ref: '#/components/schemas/AnalysisKeyMoment' } }
+    AnalysisSourcedInput:
+      type: object
+      properties:
+        name: { type: string }
+        value: { type: number }
+        unit: { type: string }
+        source: { type: string }
+        sourceText: { type: string }
+        reference: { type: string }
+        note: { type: string }
+    AnalysisScenarioRow:
+      type: object
+      required: [id, name, verdict, displayVerdictText, isCritical, collision, minClearanceM, series, keyMoments]
+      additionalProperties: true
+      properties:
+        id: { type: string }
+        name: { type: string }
+        changeSummary: { type: string }
+        verdict: { type: string }
+        verdictText: { type: string }
+        displayVerdictText: { type: string }
+        isCritical: { type: boolean }
+        criticalReason: { type: string }
+        safeDistanceM: { type: number }
+        sensitivityRangeText: { type: string }
+        collision: { type: boolean }
+        tcSeconds: { type: ["number", "null"] }
+        tcLocal: { type: string }
+        collisionAngleText: { type: string }
+        contactPartText: { type: string }
+        minClearanceM: { type: number }
+        minClearanceTimeSeconds: { type: number }
+        minDistanceNm: { type: number }
+        minDistanceTimeSeconds: { type: number }
+        minDcpaNm: { type: number }
+        series: { type: array, items: { $ref: '#/components/schemas/AnalysisCurvePoint' } }
+        keyMoments: { type: array, items: { $ref: '#/components/schemas/AnalysisKeyMoment' } }
+        trackPlot:
+          type: object
+          additionalProperties:
+            type: array
+            items: { type: array, items: { type: number }, minItems: 3, maxItems: 3 }
+        vesselDims: { type: object, additionalProperties: true }
+        sensitivity: { type: array, items: { type: object, additionalProperties: true } }
+    AnalysisAntennaRow:
+      type: object
+      required: [label, inEstimateRange, outcomes]
+      additionalProperties: true
+      properties:
+        label: { type: string }
+        shortLabel: { type: string }
+        yangzeAftRatio: { type: number }
+        vegaAftRatio: { type: number }
+        inEstimateRange: { type: boolean, description: 'false 表示对照行（如天线不改正）' }
+        collision: { type: boolean }
+        tcLocal: { type: string }
+        delayVsReportSec: { type: ["number", "null"] }
+        collisionAngleDeg: { type: ["number", "null"] }
+        clearanceAtReportTimeM: { type: number }
+        contactText: { type: string }
+        outcomes:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              collision: { type: boolean }
+              verdict: { type: string }
+              minClearanceM: { type: number }
+    AnalysisWhatIf:
+      type: object
+      required: [label, ownVesselId, targetVesselId, safeDistanceM, criticalMarginM, stepSec, rows, curveNote]
+      properties:
+        label: { type: string }
+        epochLocal: { type: string }
+        ownVesselId: { type: string }
+        targetVesselId: { type: string }
+        safeDistanceM: { type: number }
+        criticalMarginM: { type: number }
+        stepSec: { type: number }
+        disclaimer: { type: string }
+        assumptions: { type: array, items: { type: string } }
+        inputs: { type: array, items: { $ref: '#/components/schemas/AnalysisSourcedInput' } }
+        rows: { type: array, items: { $ref: '#/components/schemas/AnalysisScenarioRow' } }
+        antennaSensitivity:
+          oneOf:
+            - { type: "null" }
+            - type: array
+              items: { $ref: '#/components/schemas/AnalysisAntennaRow' }
+        curveNote: { type: string, description: '曲线假设（航向作对地航向须标【推算】，见 W12-D01）' }
+        originalDeviation: { type: string }
+        combinedNote: { type: string }
+        reportCollisionLocal: { type: string }
+        markdown: { type: string }
+    AnalysisCase:
+      type: object
+      required: [caseId, key, title, isFictionalDemo, sourceLabel, sourceRefs, timeZone, vessels, baseline, whatif, notes, meta]
+      properties:
+        caseId: { type: string }
+        key: { type: string }
+        title: { type: string }
+        isFictionalDemo: { type: boolean }
+        sourceLabel: { type: string }
+        sourceRefs: { type: array, items: { $ref: '#/components/schemas/AnalysisSourceRef' } }
+        epochLocal: { type: string }
+        timeZone: { type: string, description: "固定 UTC+8（北京时间）" }
+        vessels:
+          type: array
+          items:
+            type: object
+            required: [vesselId, name]
+            properties:
+              vesselId: { type: string }
+              name: { type: string }
+        thresholds:
+          type: object
+          properties:
+            dangerDcpaNm: { type: number }
+            dangerTcpaMin: { type: number }
+            warningDcpaNm: { type: number }
+            warningTcpaMin: { type: number }
+            presetName: { type: string }
+        baseline: { $ref: '#/components/schemas/AnalysisBaseline' }
+        whatif:
+          oneOf:
+            - { $ref: '#/components/schemas/AnalysisWhatIf' }
+            - { type: "null" }
+        notes: { type: array, items: { type: string } }
+        meta: { $ref: '#/components/schemas/AnalysisMeta' }
 
 
 paths:
@@ -1076,3 +1288,49 @@ paths:
           enum:
           - json
           - csv
+
+  /api/v1/analysis/cases:
+    get:
+      tags: [analysis]
+      summary: 分析页可切换案例清单（只读种子）
+      description: |
+        返回预生成种子中的案例摘要与种子元数据（sha256 自检、mcis-core 版本、W14 交叉核对）。
+        种子与旁注不一致时 500 analysis_seed_tampered。角色鉴权并入 R7，本接口目前不校验权限。
+      responses:
+        '200':
+          description: 案例清单
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AnalysisCaseList' }
+        '500':
+          description: 种子被篡改（code=analysis_seed_tampered）
+          content:
+            application/json:
+              schema: { $ref: 'schemas/common.schema.json#/$defs/problem' }
+  /api/v1/cases/{caseId}/analysis:
+    parameters:
+      - $ref: '#/components/parameters/caseId'
+    get:
+      tags: [analysis]
+      summary: 单案例分析页数据（曲线、关键时刻、W14 对比表）
+      description: |
+        path 参数可以是规范 caseId，也可以是短 key（lily-mary / haili5 / yangze22）。
+        YANGZE 22 规范 caseId 为 CJK-2024-1230-YangZe22-VegaDream（与 reports/yangze22/case.json 一致，符合 EvidenceItem.IsValidCaseId）。
+        案例不在种子中时 404 analysis_case_not_found；种子被篡改时 500 analysis_seed_tampered。
+        海力5 的 whatif 为 null，notes 中说明无 W14 情景的原因。
+      responses:
+        '200':
+          description: 分析页完整数据
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AnalysisCase' }
+        '404':
+          description: 无此分析案例（code=analysis_case_not_found）
+          content:
+            application/json:
+              schema: { $ref: 'schemas/common.schema.json#/$defs/problem' }
+        '500':
+          description: 种子被篡改（code=analysis_seed_tampered）
+          content:
+            application/json:
+              schema: { $ref: 'schemas/common.schema.json#/$defs/problem' }
