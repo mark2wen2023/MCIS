@@ -1,0 +1,8 @@
+........................................................................ [ 22%]
+........................................................................ [ 45%]
+........................................................................ [ 68%]
+........................................................................ [ 91%]
+............................                                             [100%]
+316 passed in 68.48s (0:01:08)
+
+Context: current W13.1 frozen tree, official SDK8.0.428 Linux x64 in persistent workspace; MCIS_DOTNET/DOTNET_ROOT/DOTNET_CLI_HOME configured. Six new files frozen hashes and all recorded existing inputs unchanged before/after.

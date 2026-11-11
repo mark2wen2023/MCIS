@@ -1,0 +1,11 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  W13.ReplaySync.Tests -> /workspace/scratch/d5cd4f6afdb1/mcis-work/unity/Tests_W13_ReplaySync/bin/Debug/net8.0/W13.ReplaySync.Tests.dll
+Test run for /workspace/scratch/d5cd4f6afdb1/mcis-work/unity/Tests_W13_ReplaySync/bin/Debug/net8.0/W13.ReplaySync.Tests.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    35, Skipped:     0, Total:    35, Duration: 42 ms - W13.ReplaySync.Tests.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

@@ -1,0 +1,9 @@
+  Determining projects to restore...
+  Restored /workspace/scratch/d5cd4f6afdb1/mcis-work/unity/Tests_W13_ReplaySync/LibCheck/W13.LibCheck.csproj (in 54 ms).
+  W13.LibCheck -> /workspace/scratch/d5cd4f6afdb1/mcis-work/unity/Tests_W13_ReplaySync/LibCheck/bin/Debug/netstandard2.1/W13.LibCheck.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.65

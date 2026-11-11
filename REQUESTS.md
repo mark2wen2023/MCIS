@@ -291,3 +291,13 @@ W12.1独立验收发现冻结seed的notes仍写“本案未接入服务数据库
 
 ## W14.3 D06 实现登记（续作）
 按 DEFECTS/W14.md 21:12 裁定，修改已冻结的 `Simulation/WhatIf/ScenarioEvaluator.cs` 及 `WhatIfSetup.cs` 算法假设文本：净距扫描覆盖两船实际积分时刻和积分dt网格，在局部极小/高转首率区间加密，0.5°/s仅为数值加密阈值而非风险或航海规则。动力学、碰撞检测、安全距离与W12生成链保持不变。新增实施测试，原独立验收断言不由实施方修改。先记录D06红基线和当前YANGZE五情景，再检查窄谷对0.01s暴扫≤0.1m、五情景净距偏差≤0.01m及判定/碰撞/临界敏感性；超限先报告，不刷新seed/来源哈希。缺失上游文件逐Git blob核验并记持久manifest，不stage/push。
+
+## W13.1 本地回放命令适配小切片（2026-11-12）
+- 仅新增纯 C# Presentation/ReplaySync，复用 ISimClock；不改变 HTTP/JSON 合同，不声称 Unity 场景或网络接通。
+- 命令 DTO 对应 sim-state.schema.json。按 case 验证后去重；序列必须连续，构造可显式传已确认游标。批次排序，重复序列 payload 冲突预检拒绝（无副作用）。历史确认游标前未持有 payload 的命令拒绝，不能验证其一致性。
+- 成功 payload 仅本实例生命周期记忆；重启持久化、主线程调度由上层负责。缺口/非法命令停止，不推进游标；所有数值/必需参数先验证。seek 越界在调用前拒绝，同点沿用实际时钟事件语义；上层先配置案件区间。仅消费上层已授权并正确映射的命令，不替代认证或 HTTP。
+- setRate 仅现有时钟支持的八档；focusVessel 仅注入意图，不表示相机成功移动。时钟/回调异常可能已经生效，返回 FailedUnknown 并锁住实例，不可自动安全重试，不承诺 exactly-once。
+- 状态快照只读；不实现 HTTP、10Hz 网络发布或 Unity 画面。纯逻辑验收与 netstandard2.1/C#9 编译独立完成。
+
+### W13.1 独立验收登记
+新增独立 `tests_acceptance/W13`，冻结后只读引用适配器与现有真实ISimClock实现。验收按case隔离、连续序列/重复/乱序/冲突、非法参数拒绝无副作用、越界seek与不支持倍速预检拒绝、异常可能已生效时锁实例不自动重试、仅显式checkpoint边界的重启语义、focus意图回调及只读状态快照。真实Clock验证seek误差<0.1s与play/pause/rate推进，不改Clock或server合同，不将本地纯C#测试称为Unity相机/HTTP联调通过。
