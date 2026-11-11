@@ -6,6 +6,7 @@
 """
 from __future__ import annotations
 
+from math import isfinite
 from typing import Any, Literal
 
 from fastapi import APIRouter
@@ -18,6 +19,14 @@ from ..common.context import Ctx, CtxDep, problem
 from ..common.timeutil import iso, iso_ms, now_utc, sim_to_utc
 from ..db import WRITE_LOCK
 from .models import SimCommandRow
+
+# Char.IsWhiteSpace / String.IsNullOrWhiteSpace wire semantics in the C# adapter.
+# Python str.strip additionally treats U+001C..U+001F as whitespace.
+_DOTNET_WHITESPACE = frozenset(
+    "\u0009\u000a\u000b\u000c\u000d\u0020\u0085\u00a0\u1680"
+    "\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a"
+    "\u2028\u2029\u202f\u205f\u3000"
+)
 
 router = APIRouter(prefix="/api/v1/cases/{case_id}/sim", tags=["sim"])
 
@@ -100,6 +109,15 @@ def seek(case_id: str, body: SeekIn, ctx: Ctx = CtxDep) -> dict[str, Any]:
 def command(case_id: str, body: CommandIn, ctx: Ctx = CtxDep) -> dict[str, Any]:
     if body.type == "seek" and body.simTimeSec is None:
         raise problem(422, "SIMTIME_REQUIRED", "seek 需要 simTimeSec")
+    if body.rate is not None and not isfinite(body.rate):
+        raise problem(422, "NONFINITE_PARAMETER", "rate 必须是有限数")
+    if body.type == "setRate":
+        if body.rate is None:
+            raise problem(422, "RATE_REQUIRED", "setRate 需要 rate")
+        if body.rate not in (0.25, 0.5, 1, 2, 4, 8, 16, 32):
+            raise problem(422, "UNSUPPORTED_RATE", "rate 必须为 0.25、0.5、1、2、4、8、16、32")
+    if body.type == "focusVessel" and (body.vesselId is None or all(c in _DOTNET_WHITESPACE for c in body.vesselId)):
+        raise problem(422, "VESSEL_REQUIRED", "focusVessel 需要非空白 vesselId")
     return _issue(ctx, case_id, body.model_dump())
 
 

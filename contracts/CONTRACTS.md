@@ -123,3 +123,11 @@ tools/mcis-core/mcis-core.sh <子命令>  < request.json  > response.json
 ### 核心响应外壳类型防护
 
 Python 核心适配器要求 JSON 顶层为对象、ok 为真正布尔值；成功 result 必须为对象；失败 error 必须为对象，其中 code/message 若出现必须为字符串。错误空对象沿用 CORE_ERROR 与空消息默认值，合法错误的状态映射不变。类型不符报告 CORE_BAD_OUTPUT/502，不作为客户端输入422。成功对象及扩展字段不重写。此检查不是完整命令响应schema校验，也不改变 CLI 输出。
+
+### W13.2 新回放命令入队校验
+
+`POST .../sim/commands` 在写入命令或审计前验证：`setRate` 必须提供 rate，否则 422 `RATE_REQUIRED`；倍速仅允许精确值 0.25、0.5、1、2、4、8、16、32，否则 422 `UNSUPPORTED_RATE`。`focusVessel` 必须提供非空白 vesselId，否则 422 `VESSEL_REQUIRED`。任意命令提供的 rate 必须为有限数，否则 422 `NONFINITE_PARAMETER`。seek 既有必填与案件范围校验保留。拒绝不占用 seq。
+
+这是对原先过宽的新命令输入的收紧；成功载荷不重写，play/pause 的无关有限 rate 保留，`PUT sim/state` 倍速范围不变。不会修改/跳过历史命令，不改变 ACK、重启恢复或投递保证；focus 是否可用及实际副作用仍由消费者判断。
+
+勘误（W13.2 核查）：上述 §8「sim/commands 同样不持久化」是旧描述；当前 `service/mcis_service/sim/router.py::_issue` 将命令写入 SQLite `SimCommandRow`（`sim_commands` 表），`sim/state` 仍为内存态。命令持久化不代表执行 ACK，也不保证消费者重启后的可靠恢复；本切片不改变这些语义。
