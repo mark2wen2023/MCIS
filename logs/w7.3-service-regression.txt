@@ -1,0 +1,8 @@
+........................................................................ [ 21%]
+........................................................................ [ 43%]
+........................................................................ [ 64%]
+........................................................................ [ 86%]
+.............................................                            [100%]
+333 passed in 72.03s (0:01:12)
+
+Context: W7.3 current frozen tree, full service directory including newly added tests; official SDK8.0.428 Linux x64, persistent MCIS_DOTNET/DOTNET_ROOT/DOTNET_CLI_HOME. W7.3 two files and W7.2 eight frontend files verified unchanged before/after.

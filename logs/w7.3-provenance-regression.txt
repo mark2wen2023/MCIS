@@ -1,0 +1,18 @@
+BEFORE: W7.3 two-file freeze and W7.2 eight-file frontend freeze verified; core/seed/contracts equal HEAD. Authorized router change verified against W7.3 freeze, not treated as unauthorized drift.
+{
+  "service/mcis_service/recommendations/router.py": "2622e0b65ffd5b24d09acc8c0f5ce2ba503a54c45649dd47a504665bed251231",
+  "service/tests/test_consultation_input_w73.py": "b12f495e666017ce896dbda172e73c4762f1174053726cc73d634cb7d95a33c8",
+  "web/src/pages/RecommendationsPage.tsx": "cc55e2300260e1bb1360d6e57fe997c2cdb87eb9734d8aa9ca7769ce91e27fa8",
+  "web/src/consultation/ConsultationPanel.tsx": "4ad9c1b0b2e697f6c4659ca207d99ee9c515d242593bfb0bf375904256e57955",
+  "web/src/consultation/RoundLifecycle.tsx": "6ea5caefc8f357b61e4d642c7d73f1869dec3e239c50bb4e4033e2497b6a1044",
+  "web/src/consultation/model.ts": "1e84ae4d96637d77afd815826a018b3336165b8cb2d339363b17e75a91d3e060",
+  "web/src/consultation/types.ts": "85fce5ba3d600ba3091ccfc1fd20f40f6ae76dc7672eca0d854f41d1cef30ddd",
+  "web/src/styles/w7.css": "efab43782c493f46f29c593ec87fb058492c83d2e53c5d261d196ea828f3f35b",
+  "web/tests/consultation-w72.test.tsx": "0c705d486a83bf109b03bb2e1fd5d6a7836a663ded152cc3592c8274afb0a030",
+  "web/tests/run-consultation-w72.sh": "e2dad559ccf21bfc22e91e3cc284348ab1346bb90da5ff49c41ff81638268c60"
+}
+.........                                                                [100%]
+9 passed in 0.09s
+AFTER: all 201 protected inputs unchanged, including W7.3 two-file freeze and W7.2 eight-file frontend freeze.
+Snapshot SHA256: 38da02a0cd4bd51fe3b987725bb11892a408d85d025c184c043cb7814356817b
+Active DLL matches seed: f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf

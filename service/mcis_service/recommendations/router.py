@@ -279,6 +279,16 @@ def rec_history(case_id: str, rec_id: str, ctx: Ctx = CtxDep) -> list[dict[str, 
 
 # ---------------- 征求意见 ----------------
 
+# Match .NET Char.IsWhiteSpace (not Python strip, which also removes U+001C..U+001F).
+_CORE_WHITESPACE = frozenset("\u0009\u000a\u000b\u000c\u000d\u0020\u0085\u00a0\u1680"
+                             "\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a"
+                             "\u2028\u2029\u202f\u205f\u3000")
+
+
+def _core_blank(value: str) -> bool:
+    return all(ch in _CORE_WHITESPACE for ch in value)
+
+
 def _round_view(r: dict[str, Any]) -> dict[str, Any]:
     now = now_utc()
     out = dict(r)
@@ -325,9 +335,19 @@ def open_round(case_id: str, body: RoundIn, ctx: Ctx = CtxDep) -> dict[str, Any]
     with ctx.db.session() as s:
         load_case(s, case_id)
         require(ctx, s, case_id, "report_draft", write=True)
+        if _core_blank(body.draftVersion):
+            raise problem(422, "consultation_invalid_argument", "草案版本不能为空")
         rounds = list_docs(s, ConsultationRoundRow, case_id)
         if any(not r.get("isClosed") for r in rounds):
             raise problem(409, "consultation_round_open", f"第 {len(rounds)} 轮尚未关闭")
+        # Match core Ordinal identity: validate whitespace, but preserve valid IDs verbatim.
+        seen: set[str] = set()
+        for party in body.parties:
+            if _core_blank(party.partyId):
+                raise problem(422, "consultation_invalid_argument", "征求意见方编号不能为空")
+            if party.partyId in seen:
+                raise problem(422, "consultation_invalid_argument", f"征求意见方重复：{party.partyId}")
+            seen.add(party.partyId)
         n = len(rounds) + 1
         now = now_utc()
         rnd = {"roundNo": n, "caseId": case_id, "draftVersion": body.draftVersion, "openedUtc": iso(now),
@@ -426,6 +446,8 @@ def waive_reply(case_id: str, round_no: int, body: WaiveIn, ctx: Ctx = CtxDep) -
         rnd = _load_round(s, case_id, round_no)
         if rnd.get("isClosed"):
             raise problem(409, "consultation_round_closed", "已关闭")
+        if _core_blank(body.reason):
+            raise problem(422, "consultation_invalid_argument", "放弃理由不能为空")
         if not any(p["partyId"] == body.partyId for p in rnd["parties"]):
             raise problem(404, "consultation_unknown_party", f"利益相关方不在本轮：{body.partyId}")
         if any(r["partyId"] == body.partyId for r in rnd["replies"]) or \

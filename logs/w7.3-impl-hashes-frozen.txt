@@ -1,0 +1,2 @@
+2622e0b65ffd5b24d09acc8c0f5ce2ba503a54c45649dd47a504665bed251231  service/mcis_service/recommendations/router.py
+b12f495e666017ce896dbda172e73c4762f1174053726cc73d634cb7d95a33c8  service/tests/test_consultation_input_w73.py

@@ -1,0 +1,16 @@
+U+001C IsNullOrWhiteSpace=False
+U+001D IsNullOrWhiteSpace=False
+U+001E IsNullOrWhiteSpace=False
+U+001F IsNullOrWhiteSpace=False
+U+0085 IsNullOrWhiteSpace=True
+U+00A0 IsNullOrWhiteSpace=True
+U+2028 IsNullOrWhiteSpace=True
+
+Reproduction: SDK 8.0.428, net8.0, separate workspace console, packageSources cleared (offline), no external packages/core artifacts.
+DOTNET_ROOT=<workspace>/.tools/dotnet-8.0.428 DOTNET_CLI_HOME=<workspace>/.tools/dotnet-home <SDK>/dotnet run --project <isolated>/Whitespace.csproj
+Project: <Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework></PropertyGroup></Project>
+Program.cs:
+using System;
+foreach (int code in new[] {0x1c,0x1d,0x1e,0x1f,0x85,0xa0,0x2028})
+    Console.WriteLine($"U+{code:X4} IsNullOrWhiteSpace={string.IsNullOrWhiteSpace(char.ConvertFromUtf32(code))}");
+Seven actual code points, NOT exhaustive Unicode enumeration.
