@@ -1,0 +1,26 @@
+{
+  "sdk": "8.0.428",
+  "baseline_capture": "logs/w14.3-red-baseline.txt; implementation still HEAD bytes at capture",
+  "inputs_and_sources": [
+    {
+      "path": "unity/Assets/_Project/Scripts/Simulation/WhatIf/ScenarioEvaluator.cs",
+      "before_sha256": "fd0ebd4c791f0318d4f999c0ffd6ed409c5aabe69e6d73cb08d43c12bffd25e9",
+      "after_sha256": "5e62a3d040bf5f464ca02ffd8eb8ec625f6195fc173d8491be8c3ea13497cda3"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Simulation/WhatIf/WhatIfSetup.cs",
+      "before_sha256": "229c533a84849a51bf303068f499dbf866f4417a0ec14f4313969c795ee71658",
+      "after_sha256": "ef31c6f7ee21fdc6c7a4e679f06cdd0eb8567b42c72ef307e70152871d309c24"
+    },
+    {
+      "path": "reports/yangze22/case.json",
+      "before_sha256": "63aad2f28aef4f67ecaf346dea13a2004f268ad9afc4b5d7f86783fcacb5b2c2",
+      "after_sha256": "63aad2f28aef4f67ecaf346dea13a2004f268ad9afc4b5d7f86783fcacb5b2c2"
+    },
+    {
+      "path": "reports/yangze22/tracks_from_report.csv",
+      "before_sha256": "befd86667e67dd72bfe826eacde851a0283cfa522fa7e9d3b21a7d967f08a2cc",
+      "after_sha256": "befd86667e67dd72bfe826eacde851a0283cfa522fa7e9d3b21a7d967f08a2cc"
+    }
+  ]
+}

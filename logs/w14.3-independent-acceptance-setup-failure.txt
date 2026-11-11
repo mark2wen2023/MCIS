@@ -1,0 +1,248 @@
+  Determining projects to restore...
+  Restored /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14.Acceptance.csproj (in 536 ms).
+  W14.Acceptance -> /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/W14.Acceptance.dll
+Test run for /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/W14.Acceptance.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W14.KnownIssueImpactTests.Y5_TrueClearanceCrossesSafeLine_VerdictShouldBeAvoided [FAIL]
+  Failed Mcis.Acceptance.W14.KnownIssueImpactTests.Y5_TrueClearanceCrossesSafeLine_VerdictShouldBeAvoided [4 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeTrackLines() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 69
+   at Mcis.Acceptance.W14.KnownIssueImpactTests.Y5_TrueClearanceCrossesSafeLine_VerdictShouldBeAvoided() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/KnownIssueImpactTests.cs:line 85
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.31]     Mcis.Acceptance.W14.Yangze22AcceptanceTests.EvaluationIsDeterministic [FAIL]
+[xUnit.net 00:00:00.31]     Mcis.Acceptance.W14.Yangze22AcceptanceTests.Y1AndY5_QualitativeDirectionMatchesRealCases [FAIL]
+[xUnit.net 00:00:00.31]     Mcis.Acceptance.W14.Yangze22AcceptanceTests.DroppingPostCollisionPoints_ChangesS0ContactTime [FAIL]
+[xUnit.net 00:00:00.31]     Mcis.Acceptance.W14.Yangze22AcceptanceTests.S0_DeviationFromReport_IsAsDisclosed [FAIL]
+[xUnit.net 00:00:00.31]     Mcis.Acceptance.W14.Yangze22AcceptanceTests.S0_IndependentGeometry_AgreesOnAngleAndSide [FAIL]
+[xUnit.net 00:00:00.31]     Mcis.Acceptance.W14.Yangze22AcceptanceTests.ReportedScenarioNumbers_MatchAnnouncement [FAIL]
+[xUnit.net 00:00:00.31]     Mcis.Acceptance.W14.Yangze22AcceptanceTests.EveryResult_HasDisclaimerAndSourcedValues [FAIL]
+  Failed Mcis.Acceptance.W14.Yangze22AcceptanceTests.EvaluationIsDeterministic [5 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeCaseJson() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 76
+   at Mcis.Acceptance.W14.W14AccFixture.LoadYangzeInputs(Double endSeconds, Boolean truncateAfterReportedCollision) in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 85
+   at Mcis.Acceptance.W14.Yangze22AcceptanceTests.EvaluationIsDeterministic() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/Yangze22AcceptanceTests.cs:line 195
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.Yangze22AcceptanceTests.Y1AndY5_QualitativeDirectionMatchesRealCases [< 1 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeTrackLines() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 69
+   at Mcis.Acceptance.W14.Yangze22AcceptanceTests.RunDefault() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/Yangze22AcceptanceTests.cs:line 216
+   at Mcis.Acceptance.W14.Yangze22AcceptanceTests.Y1AndY5_QualitativeDirectionMatchesRealCases() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/Yangze22AcceptanceTests.cs:line 207
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.Yangze22AcceptanceTests.DroppingPostCollisionPoints_ChangesS0ContactTime [< 1 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeTrackLines() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 69
+   at Mcis.Acceptance.W14.Yangze22AcceptanceTests.DroppingPostCollisionPoints_ChangesS0ContactTime() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/Yangze22AcceptanceTests.cs:line 126
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.Yangze22AcceptanceTests.S0_DeviationFromReport_IsAsDisclosed [< 1 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeCaseJson() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 76
+   at Mcis.Acceptance.W14.W14AccFixture.LoadYangzeInputs(Double endSeconds, Boolean truncateAfterReportedCollision) in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 85
+   at Mcis.Acceptance.W14.Yangze22AcceptanceTests.S0_DeviationFromReport_IsAsDisclosed() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/Yangze22AcceptanceTests.cs:line 99
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.Yangze22AcceptanceTests.S0_IndependentGeometry_AgreesOnAngleAndSide [< 1 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeTrackLines() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 69
+   at Mcis.Acceptance.W14.Yangze22AcceptanceTests.RunDefault() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/Yangze22AcceptanceTests.cs:line 216
+   at Mcis.Acceptance.W14.Yangze22AcceptanceTests.S0_IndependentGeometry_AgreesOnAngleAndSide() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/Yangze22AcceptanceTests.cs:line 82
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.Yangze22AcceptanceTests.ReportedScenarioNumbers_MatchAnnouncement [1 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeTrackLines() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 69
+   at Mcis.Acceptance.W14.Yangze22AcceptanceTests.RunDefault() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/Yangze22AcceptanceTests.cs:line 216
+   at Mcis.Acceptance.W14.Yangze22AcceptanceTests.ReportedScenarioNumbers_MatchAnnouncement() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/Yangze22AcceptanceTests.cs:line 20
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.Yangze22AcceptanceTests.EveryResult_HasDisclaimerAndSourcedValues [< 1 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeTrackLines() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 69
+   at Mcis.Acceptance.W14.Yangze22AcceptanceTests.RunDefault() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/Yangze22AcceptanceTests.cs:line 216
+   at Mcis.Acceptance.W14.Yangze22AcceptanceTests.EveryResult_HasDisclaimerAndSourcedValues() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/Yangze22AcceptanceTests.cs:line 60
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.32]     Mcis.Acceptance.W14.Yangze22AcceptanceTests.ReasonableAntennaOffset_CanReduceReportTimeClearance [FAIL]
+[xUnit.net 00:00:00.32]     Mcis.Acceptance.W14.W14_1RetestTests.TruncationCutoff_IsRecordedInAssumptions [FAIL]
+[xUnit.net 00:00:00.32]     Mcis.Acceptance.W14.W14_1RetestTests.Ruling7c_NearSafeLineOrAntennaCross_ShouldMarkCritical [FAIL]
+  Failed Mcis.Acceptance.W14.Yangze22AcceptanceTests.ReasonableAntennaOffset_CanReduceReportTimeClearance [1 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeTrackLines() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 69
+   at Mcis.Acceptance.W14.Yangze22AcceptanceTests.RunDefault() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/Yangze22AcceptanceTests.cs:line 216
+   at Mcis.Acceptance.W14.Yangze22AcceptanceTests.ReasonableAntennaOffset_CanReduceReportTimeClearance() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/Yangze22AcceptanceTests.cs:line 150
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.W14_1RetestTests.TruncationCutoff_IsRecordedInAssumptions [< 1 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeTrackLines() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 69
+   at Mcis.Acceptance.W14.W14_1RetestTests.TruncationCutoff_IsRecordedInAssumptions() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14_1RetestTests.cs:line 188
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.W14_1RetestTests.Ruling7c_NearSafeLineOrAntennaCross_ShouldMarkCritical [< 1 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeTrackLines() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 69
+   at Mcis.Acceptance.W14.W14_1RetestTests.Ruling7c_NearSafeLineOrAntennaCross_ShouldMarkCritical() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14_1RetestTests.cs:line 328
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.61]     Mcis.Acceptance.W14.W14_2RetestTests.NarrowValleyShorterThanCoarseStep_IsDocumented [FAIL]
+[xUnit.net 00:00:00.61]     Mcis.Acceptance.W14.W14_2RetestTests.NonBowToBow_StrikingVesselIsCloserBow [FAIL]
+[xUnit.net 00:00:00.61]     Mcis.Acceptance.W14.W14_2RetestTests.UncorrectedAntennaRow_IsExcludedFromCriticalRange [FAIL]
+[xUnit.net 00:00:00.73]     Mcis.Acceptance.W14.KnownIssueImpactTests.RecordSatVersusTrueClearanceForNearMissScenarios [FAIL]
+[xUnit.net 00:00:00.75]     Mcis.Acceptance.W14.ScenarioDumpTests.DumpScenariosForIndependentCheck [FAIL]
+  Failed Mcis.Acceptance.W14.W14_2RetestTests.NarrowValleyShorterThanCoarseStep_IsDocumented [27 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_LogsDirectory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 48
+   at Mcis.Acceptance.W14.W14_2RetestTests.NarrowValleyShorterThanCoarseStep_IsDocumented() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14_2RetestTests.cs:line 201
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.W14_2RetestTests.NonBowToBow_StrikingVesselIsCloserBow [3 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeTrackLines() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 69
+   at Mcis.Acceptance.W14.W14_2RetestTests.NonBowToBow_StrikingVesselIsCloserBow() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14_2RetestTests.cs:line 55
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.W14_2RetestTests.UncorrectedAntennaRow_IsExcludedFromCriticalRange [< 1 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeTrackLines() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 69
+   at Mcis.Acceptance.W14.W14_2RetestTests.UncorrectedAntennaRow_IsExcludedFromCriticalRange() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14_2RetestTests.cs:line 122
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.KnownIssueImpactTests.RecordSatVersusTrueClearanceForNearMissScenarios [508 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeTrackLines() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 69
+   at Mcis.Acceptance.W14.KnownIssueImpactTests.RecordSatVersusTrueClearanceForNearMissScenarios() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/KnownIssueImpactTests.cs:line 28
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.ScenarioDumpTests.DumpScenariosForIndependentCheck [542 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeTrackLines() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 69
+   at Mcis.Acceptance.W14.ScenarioDumpTests.DumpScenariosForIndependentCheck() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/ScenarioDumpTests.cs:line 35
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.81]     Mcis.Acceptance.W14.W14_1RetestTests.ReportedMinClearance_VersusGlobalScan_ForDefaultScenarios [FAIL]
+[xUnit.net 00:00:01.05]     Mcis.Acceptance.W14.W14_2RetestTests.DumpAntennaSensitivityTracksForIndependentCheck [FAIL]
+  Failed Mcis.Acceptance.W14.W14_1RetestTests.ReportedMinClearance_VersusGlobalScan_ForDefaultScenarios [481 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeTrackLines() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 69
+   at Mcis.Acceptance.W14.W14_1RetestTests.ReportedMinClearance_VersusGlobalScan_ForDefaultScenarios() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14_1RetestTests.cs:line 231
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.W14_2RetestTests.DumpAntennaSensitivityTracksForIndependentCheck [1 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeTrackLines() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 69
+   at Mcis.Acceptance.W14.W14_2RetestTests.DumpAntennaSensitivityTracksForIndependentCheck() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14_2RetestTests.cs:line 223
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:01.38]     Mcis.Acceptance.W14.W14_1RetestTests.AntennaSensitivity_ThreeRowsMatchAnnouncedNumbers [FAIL]
+[xUnit.net 00:00:01.44]     Mcis.Acceptance.W14.W14_1RetestTests.Ruling7b_MinClearanceMustBeGlobalMinimum [FAIL]
+[xUnit.net 00:00:01.44]     Mcis.Acceptance.W14.W14_1RetestTests.AntennaOffsets_AreMarkedEstimated [FAIL]
+  Failed Mcis.Acceptance.W14.W14_1RetestTests.AntennaSensitivity_ThreeRowsMatchAnnouncedNumbers [1 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeTrackLines() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 69
+   at Mcis.Acceptance.W14.W14_1RetestTests.AntennaSensitivity_ThreeRowsMatchAnnouncedNumbers() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14_1RetestTests.cs:line 146
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.W14_1RetestTests.Ruling7b_MinClearanceMustBeGlobalMinimum [63 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeTrackLines() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 69
+   at Mcis.Acceptance.W14.W14_1RetestTests.Ruling7b_MinClearanceMustBeGlobalMinimum() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14_1RetestTests.cs:line 302
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.W14_1RetestTests.AntennaOffsets_AreMarkedEstimated [< 1 ms]
+  Error Message:
+   无法定位仓库根目录（需要 ROADMAP.md + unity/ + reports/）：/workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/bin/Debug/net8.0/
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14AccFixture.FindRepoRoot() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 41
+   at Mcis.Acceptance.W14.W14AccFixture.get_Yangze22Directory() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 58
+   at Mcis.Acceptance.W14.W14AccFixture.ReadYangzeTrackLines() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14AccFixture.cs:line 69
+   at Mcis.Acceptance.W14.W14_1RetestTests.AntennaOffsets_AreMarkedEstimated() in /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/tests_acceptance/W14/W14_1RetestTests.cs:line 122
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+Failed!  - Failed:    21, Passed:    60, Skipped:     0, Total:    81, Duration: 4 s - W14.Acceptance.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

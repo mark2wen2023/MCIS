@@ -1,0 +1,24 @@
+BEFORE: frozen W14.3 source hashes verified. Historical seed, sidecar, both W14 dumps and frozen manifest equal HEAD.
+{
+  "unity/Assets/_Project/Scripts/Simulation/WhatIf/ScenarioEvaluator.cs": "5e62a3d040bf5f464ca02ffd8eb8ec625f6195fc173d8491be8c3ea13497cda3",
+  "unity/Assets/_Project/Scripts/Simulation/WhatIf/WhatIfSetup.cs": "ef31c6f7ee21fdc6c7a4e679f06cdd0eb8567b42c72ef307e70152871d309c24",
+  "service/mcis_service/analysis/data/w12-analysis-seed.json": "988e9abd3b39959864f42912d8d3454dacd7821156fd8b21268631f30f4693e3",
+  "service/mcis_service/analysis/data/w12-analysis-seed.sha256": "5c6bee148641e8a2ad2af089563a242dc9c8a65ba6928d42a538362525454b48",
+  "logs/w14.2-retest-sensitivity-dump.json": "56918d97117c6866150f0d3b128b15e3d7760f006be083adf10214323b1e9dc8",
+  "logs/w14.2-retest-scenario-dump.json": "5525b40b5c9ab608f128839312d5ac2989ad08e2c2af7689a9e174e6a049399c",
+  "logs/w14.2-impl-hashes-frozen.txt": "2ed2101057459b9e5083d844c7a0fa4cc2d12fe91aa7d6f509153547408d97fa"
+}
+CLI manifest: 56 inputs; Simulation/WhatIf absent.
+.........                                                                [100%]
+9 passed in 0.07s
+AFTER full service regression: every recorded frozen source/protected historical input hash unchanged.
+{
+  "unity/Assets/_Project/Scripts/Simulation/WhatIf/ScenarioEvaluator.cs": "5e62a3d040bf5f464ca02ffd8eb8ec625f6195fc173d8491be8c3ea13497cda3",
+  "unity/Assets/_Project/Scripts/Simulation/WhatIf/WhatIfSetup.cs": "ef31c6f7ee21fdc6c7a4e679f06cdd0eb8567b42c72ef307e70152871d309c24",
+  "service/mcis_service/analysis/data/w12-analysis-seed.json": "988e9abd3b39959864f42912d8d3454dacd7821156fd8b21268631f30f4693e3",
+  "service/mcis_service/analysis/data/w12-analysis-seed.sha256": "5c6bee148641e8a2ad2af089563a242dc9c8a65ba6928d42a538362525454b48",
+  "logs/w14.2-retest-sensitivity-dump.json": "56918d97117c6866150f0d3b128b15e3d7760f006be083adf10214323b1e9dc8",
+  "logs/w14.2-retest-scenario-dump.json": "5525b40b5c9ab608f128839312d5ac2989ad08e2c2af7689a9e174e6a049399c",
+  "logs/w14.2-impl-hashes-frozen.txt": "2ed2101057459b9e5083d844c7a0fa4cc2d12fe91aa7d6f509153547408d97fa"
+}
+Active DLL matches seed: f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf

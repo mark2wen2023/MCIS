@@ -1,0 +1,222 @@
+{
+  "passed": true,
+  "reference": "Implementation-thread actual pre-change run; independently regenerated current output",
+  "beforeSha256": "5e96caa778a68902306e1a30740da21c8d6852b0ba9df9a6403e06924c849c86",
+  "independentAfterSha256": "89946138cd2b68561de407dc76867b39f81ebebb29ef728763898592fa3cc5f3",
+  "nominal": [
+    {
+      "id": "S0",
+      "beforeM": 0,
+      "afterM": 0,
+      "deltaM": 0
+    },
+    {
+      "id": "Y1",
+      "beforeM": 184.35089233465322,
+      "afterM": 184.35089233135085,
+      "deltaM": -3.3023752621375024e-09
+    },
+    {
+      "id": "Y5",
+      "beforeM": 238.75478451464647,
+      "afterM": 238.7547845137813,
+      "deltaM": -8.651852567709284e-10
+    },
+    {
+      "id": "Y1+Y5",
+      "beforeM": 292.44621564144455,
+      "afterM": 292.4462156411444,
+      "deltaM": -3.001332515850663e-10
+    },
+    {
+      "id": "Y4",
+      "beforeM": 29.814974663224728,
+      "afterM": 29.814974663171665,
+      "deltaM": -5.306333150656428e-11
+    }
+  ],
+  "changes": [
+    {
+      "path": "/rows/1/MinClearanceM",
+      "before": 184.35089233465322,
+      "after": 184.35089233135085
+    },
+    {
+      "path": "/rows/1/MinClearanceTimeSeconds",
+      "before": 197.6255728090001,
+      "after": 197.62541019662012
+    },
+    {
+      "path": "/rows/2/MinClearanceM",
+      "before": 238.75478451464647,
+      "after": 238.7547845137813
+    },
+    {
+      "path": "/rows/2/MinClearanceTimeSeconds",
+      "before": 262.0286533820502,
+      "after": 262.0284907696662
+    },
+    {
+      "path": "/rows/3/MinClearanceM",
+      "before": 292.44621564144455,
+      "after": 292.4462156411444
+    },
+    {
+      "path": "/rows/3/MinClearanceTimeSeconds",
+      "before": 175.37410196624967,
+      "after": 175.37416407864677
+    },
+    {
+      "path": "/rows/4/MinClearanceM",
+      "before": 29.814974663224728,
+      "after": 29.814974663171665
+    },
+    {
+      "path": "/rows/4/MinClearanceTimeSeconds",
+      "before": 250.06800293254975,
+      "after": 250.06790243256503
+    },
+    {
+      "path": "/comparison/1/sensitivity/0/MinClearanceM",
+      "before": 185.5311612415984,
+      "after": 185.53116124357845
+    },
+    {
+      "path": "/comparison/1/sensitivity/1/MinClearanceM",
+      "before": 184.35089233465322,
+      "after": 184.35089233135085
+    },
+    {
+      "path": "/comparison/1/sensitivity/2/MinClearanceM",
+      "before": 183.18574238559796,
+      "after": 183.18574238673756
+    },
+    {
+      "path": "/comparison/2/sensitivity/0/MinClearanceM",
+      "before": 245.21624299406872,
+      "after": 245.21624299403257
+    },
+    {
+      "path": "/comparison/2/sensitivity/1/MinClearanceM",
+      "before": 238.75478451464647,
+      "after": 238.7547845137813
+    },
+    {
+      "path": "/comparison/2/sensitivity/2/MinClearanceM",
+      "before": 232.29345442492152,
+      "after": 232.29345442526616
+    },
+    {
+      "path": "/comparison/3/sensitivity/0/MinClearanceM",
+      "before": 296.40659820518806,
+      "after": 296.4065982056014
+    },
+    {
+      "path": "/comparison/3/sensitivity/1/MinClearanceM",
+      "before": 292.44621564144455,
+      "after": 292.4462156411444
+    },
+    {
+      "path": "/comparison/3/sensitivity/2/MinClearanceM",
+      "before": 288.5268221307329,
+      "after": 288.5268221317765
+    },
+    {
+      "path": "/comparison/4/sensitivity/0/MinClearanceM",
+      "before": 29.591037187824327,
+      "after": 29.591037184633144
+    },
+    {
+      "path": "/comparison/4/sensitivity/1/MinClearanceM",
+      "before": 29.814974663224728,
+      "after": 29.814974663171665
+    },
+    {
+      "path": "/comparison/4/sensitivity/2/MinClearanceM",
+      "before": 30.044789270931147,
+      "after": 30.044789273027
+    },
+    {
+      "path": "/antenna/0/ScenarioOutcomes/Y1/MinClearanceM",
+      "before": 218.94580152506498,
+      "after": 218.94580152174404
+    },
+    {
+      "path": "/antenna/0/ScenarioOutcomes/Y5/MinClearanceM",
+      "before": 335.58993359870755,
+      "after": 335.58993359878644
+    },
+    {
+      "path": "/antenna/0/ScenarioOutcomes/Y1+Y5/MinClearanceM",
+      "before": 388.0544874406383,
+      "after": 388.05448744075574
+    },
+    {
+      "path": "/antenna/0/ScenarioOutcomes/Y4/MinClearanceM",
+      "before": 45.38486948780674,
+      "after": 45.38486948016669
+    },
+    {
+      "path": "/antenna/1/ScenarioOutcomes/Y1/MinClearanceM",
+      "before": 185.5311612415984,
+      "after": 185.53116124357845
+    },
+    {
+      "path": "/antenna/1/ScenarioOutcomes/Y5/MinClearanceM",
+      "before": 245.21624299406872,
+      "after": 245.21624299403257
+    },
+    {
+      "path": "/antenna/1/ScenarioOutcomes/Y1+Y5/MinClearanceM",
+      "before": 296.40659820518806,
+      "after": 296.4065982056014
+    },
+    {
+      "path": "/antenna/1/ScenarioOutcomes/Y4/MinClearanceM",
+      "before": 29.591037187824327,
+      "after": 29.591037184633144
+    },
+    {
+      "path": "/antenna/2/ScenarioOutcomes/Y1/MinClearanceM",
+      "before": 184.35089233465322,
+      "after": 184.35089233135085
+    },
+    {
+      "path": "/antenna/2/ScenarioOutcomes/Y5/MinClearanceM",
+      "before": 238.75478451464647,
+      "after": 238.7547845137813
+    },
+    {
+      "path": "/antenna/2/ScenarioOutcomes/Y1+Y5/MinClearanceM",
+      "before": 292.44621564144455,
+      "after": 292.4462156411444
+    },
+    {
+      "path": "/antenna/2/ScenarioOutcomes/Y4/MinClearanceM",
+      "before": 29.814974663224728,
+      "after": 29.814974663171665
+    },
+    {
+      "path": "/antenna/3/ScenarioOutcomes/Y1/MinClearanceM",
+      "before": 183.18574238559796,
+      "after": 183.18574238673756
+    },
+    {
+      "path": "/antenna/3/ScenarioOutcomes/Y5/MinClearanceM",
+      "before": 232.29345442492152,
+      "after": 232.29345442526616
+    },
+    {
+      "path": "/antenna/3/ScenarioOutcomes/Y1+Y5/MinClearanceM",
+      "before": 288.5268221307329,
+      "after": 288.5268221317765
+    },
+    {
+      "path": "/antenna/3/ScenarioOutcomes/Y4/MinClearanceM",
+      "before": 30.044789270931147,
+      "after": 30.044789273027
+    }
+  ],
+  "collisionVerdictGeometryCriticalAndSensitivityLabelsExact": true,
+  "protectedHistoricalFilesUnchanged": 18
+}

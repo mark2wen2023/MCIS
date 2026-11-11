@@ -1,0 +1,8 @@
+........................................................................ [ 22%]
+........................................................................ [ 45%]
+........................................................................ [ 68%]
+........................................................................ [ 91%]
+............................                                             [100%]
+316 passed in 68.70s (0:01:08)
+
+Context: current W14.3 frozen source tree, official persistent-workspace SDK 8.0.428 Linux x64; MCIS_DOTNET/DOTNET_ROOT/DOTNET_CLI_HOME configured. Frozen ScenarioEvaluator/WhatIfSetup and historical seed/dumps/freeze hashes verified unchanged before/after.

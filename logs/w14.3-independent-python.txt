@@ -1,0 +1,177 @@
+W14.3 separate Python checks (not included in the 82 C# test count).
+All three scripts executed on isolated newly generated dumps.
+independent_nomoto initially failed on historical absolute repo path; rerun changed only that path in memory, no source edit.
+These legacy scripts render reports and do not provide pytest-style pass counts. Old historical narrative may remain hardcoded even when current tables agree.
+W14.2 default four cases + 4x4 sensitivity agree; Y1 critical interval agrees. W14.1 nine scenario verdict/contact comparisons agree; critical safety threshold 171.11s vs C#171.25s (0.14s within original 0.5s allowance).
+The Python global scan remains 0.5s coarse/0.02s refinement on 1s dumped tracks; it is additional default-case cross-check, NOT the D06 0.01s narrow-valley proof (covered separately by tightened C# OBB scan).
+
+
+=== nomoto ===
+Path-only in-memory portability adaptation; original file unchanged.
+# W14 独立核算（Python Nomoto RK4 + 独立 OBB）
+
+模型：T·dr/dt + r = K·(u/u_ref)·δ；du/dt = (u_target−u)/τ；舵速限制；RK4；航向 PD（kP=1.2, kD=10）。
+碰撞：分离轴定理（与被测同一判据）二分定位 tc，精度 0.05 s。未碰撞时另算凸多边形真实最小距离。
+
+## Mary / Lily（独立从初值积分）
+
+| 情景 | 独立结论 | 独立 tc / 真实净距 | 实施方结论（自报） | 结论是否一致 | 数值偏差 |
+|---|---|---|---|---|---|
+| S0 | Collision | tc=539.97s（偏差 +0.01s） | Collision | 是 | tc=539.97s（偏差 +0.01s） |
+| S1 | NearMiss | 真实净距=130.5m，SAT净距=127.6m（相对自报 SAT +0.0m） | NearMiss | 是 | 真实净距=130.5m，SAT净距=127.6m（相对自报 SAT +0.0m） |
+| S2 | Collision | tc=559.38s | Collision | 是 | tc=559.38s |
+| S3 | NearMiss | 真实净距=58.8m，SAT净距=52.4m（相对自报 SAT -0.0m） | NearMiss | 是 | 真实净距=58.8m，SAT净距=52.4m（相对自报 SAT -0.0m） |
+
+## 与 C# 转储逐项对照
+
+| 案例 | 情景 | C# 结论 | 独立结论（用转储航迹重算碰撞） | tc C# | tc 独立 | 净距 C# (SAT) | 真实净距 | 结论一致 |
+|---|---|---|---|---|---|---|---|---|
+| Mary/Lily | S0 | Collision | Collision | 539.97 | 539.97 | 0.0 | 0 | 是 |
+| Mary/Lily | S1 | NearMiss | NearMiss | — | — | 130.4 | 130.5 | 是 |
+| Mary/Lily | S2 | Collision | Collision | 559.38 | 559.38 | 0.0 | 0 | 是 |
+| Mary/Lily | S3 | NearMiss | NearMiss | — | — | 58.8 | 58.8 | 是 |
+| YANGZE 22 | S0 | Collision | Collision | 210.12 | 210.12 | 0.0 | 0 | 是 |
+| YANGZE 22 | Y1 | NearMiss | NearMiss | — | — | 184.4 | 184.4 | 是 |
+| YANGZE 22 | Y5 | Avoided | Avoided | — | — | 238.8 | 239.1 | 是 |
+| YANGZE 22 | Y1+Y5 | Avoided | Avoided | — | — | 292.4 | 311.6 | 是 |
+| YANGZE 22 | Y4 | NearMiss | NearMiss | — | — | 29.8 | 31.3 | 是 |
+
+## YANGZE 22 偏差原因核验
+
+- 报告时刻 t=204 s（22:01:54）按 S0 回放航迹的 SAT 净距：**8.1 m**（未接触，与实施方说明一致）。
+- 天线相对船中心沿首尾线扫描（−0.40L…+0.10L）：最小净距 **-75.8 m**，出现在 YANGZE 天线=-0.30L、VEGA 天线=-0.40L。此时两船体在报告时刻已经接触。
+- 能使报告时刻接触的偏移组合数：60（例如前几组 [(-0.4, -0.4), (-0.4, -0.35), (-0.4, -0.3), (-0.4, -0.25), (-0.4, -0.2), (-0.4, -0.15)]）。
+- 若从 22:01:54 起两船保向保速：仍在 t=210.12s（22:01:54 之后 6.1s）接触，碰撞角 69.0°。
+- C# S0：tc=210.12s（22:02:00.12），碰撞角 69.0°，距船首 96 m。
+- 实施方偏差说明原文：S0 复现接触：tc=210.1 s（22:02:00.12），与报告 204.0 s 偏差 +6.1 s；报告时刻 t=204.0 s 的 OBB 真实净距为 30.0 m（未接触）；计算碰撞角 69.0°，与报告 70.0° 偏差 -1.0°；接触部位 右舷，距船首约 96 m（0.43 L），报告为“VEGA DREAM 船首（正中部/球鼻艏）撞入 YANGZE 22 右舷中部第5号货舱位置”（报告未给第5舱的纵向位置，接触部位只能定性比对）。已截掉报告碰撞时刻之后的航迹点，船位已按【估计】天线位置换算到船中心；未为对齐报告调整任何模型参数。
+
+独立核算结论类别与实施方一致：是。
+
+
+
+=== w141 ===
+# W14.1 独立核算（Python Nomoto RK4 + 全程真实 OBB 净距）
+
+模型与上轮 `independent_nomoto.py` 相同。本轮净距改为全程粗扫再在每个局部极小处细化，
+不再只在中心最近会遇 ±2 s 内取值。结论类别按真实净距与 0.1 nm（185.2 m）安全线判定（与 W14.1 合同一致）。
+
+## Mary / Lily（独立从初值积分）
+
+| 情景 | 独立结论 | 独立 tc / 真实净距 | 实施方自报 | 结论是否一致 | 数值偏差 |
+|---|---|---|---|---|---|
+| S0 | Collision | tc=539.97s | Collision | 是 | tc 与自报 539.97 / 559.38 s 量级一致 |
+| S1 | NearMiss | 真实净距=130.4m | NearMiss 130.4 m | 是 | 相对自报 130.4 m：-0.0 m |
+| S2 | Collision | tc=559.38s | Collision | 是 | tc 与自报 539.97 / 559.38 s 量级一致 |
+| S3 | NearMiss | 真实净距=58.8m | NearMiss 58.8 m | 是 | 相对自报 58.8 m：-0.0 m |
+
+## 与 C# 转储逐项对照（全程真实净距）
+
+| 案例 | 情景 | C# 结论 | C# 净距/tc | 独立结论 | 独立净距/tc | 结论一致 | 净距差 |
+|---|---|---|---|---|---|---|---|
+| Mary/Lily | S0 | Collision | tc=539.97s | Collision | tc=539.97s | 是 | tc差 0.00s |
+| Mary/Lily | S1 | NearMiss | 130.4 m | NearMiss | 130.4 m | 是 | -0.0 m |
+| Mary/Lily | S2 | Collision | tc=559.38s | Collision | tc=559.38s | 是 | tc差 0.00s |
+| Mary/Lily | S3 | NearMiss | 58.8 m | NearMiss | 58.8 m | 是 | +0.0 m |
+| YANGZE 22 | S0 | Collision | tc=210.12s | Collision | tc=210.12s | 是 | tc差 0.00s |
+| YANGZE 22 | Y1 | NearMiss | 184.4 m | NearMiss | 184.4 m | 是 | +0.0 m |
+| YANGZE 22 | Y5 | Avoided | 238.8 m | Avoided | 238.8 m | 是 | -0.0 m |
+| YANGZE 22 | Y4 | NearMiss | 29.8 m | NearMiss | 29.8 m | 是 | +0.0 m |
+| YANGZE 22 | Y1+Y5 | Avoided | 292.4 m | Avoided | 292.5 m | 是 | +0.0 m |
+
+说明：独立净距是全程全局最小。若独立值明显小于 C#，即实施方已知问题 3（只在中心最近会遇 ±2 s 内取值）。
+
+## 安全临界值（Mary 转向提前量，独立二分）
+
+- 独立碰撞临界（二分 hi）：**36.46 s**（实施方/C# 原窗口 34.6–38.6 s，自报 36.6 s）。
+- 独立安全临界（二分 hi，全程真实净距刚达到 185.2 m）：**171.11 s**。
+- 在该临界处：结论 Avoided，净距 185.200 m。
+- C# 报 171.25 s；独立在 171.25 s 处结论 Avoided，净距 185.317 m，已高于安全线。
+- 差值 171.25 − 171.11 = 0.14 s，小于产品默认二分容差 0.5 s，**不记缺陷**。
+- 验收窗口按独立值 ±0.5 s 调整为 170.61–171.61 s，C# 171.25 s 落在窗内。
+
+## 全程最小净距 vs C# 报出值（默认情景）
+
+见验收用例扫描日志 `logs/w14.1-retest-global-min-scan.txt`。用转储航迹再算一遍：
+
+| 案例 | 情景 | C# 净距 (m) | 独立全程最小 (m) | 差 (m) | 结论是否翻转 |
+|---|---|---:|---:|---:|---|
+| Mary/Lily | S1 | 130.38 | 130.38 | +0.00 | 否 |
+| Mary/Lily | S3 | 58.78 | 58.79 | -0.01 | 否 |
+| YANGZE 22 | Y1 | 184.35 | 184.36 | -0.01 | 否 |
+| YANGZE 22 | Y5 | 238.75 | 238.75 | +0.00 | 否 |
+| YANGZE 22 | Y4 | 29.81 | 29.82 | -0.00 | 否 |
+| YANGZE 22 | Y1+Y5 | 292.45 | 292.46 | -0.01 | 否 |
+
+要点：
+- Y1 报出 184.4 m 与全程最小一致，仍为险情，距安全线 0.8 m，**结论不翻转**。
+- Y1+Y5 报出约 310.3 m，全程最小约 292.4 m，偏大约 18 m，结论仍为无碰撞。
+- Y4 报出约 30.9 m，全程最小约 29.8 m，偏大约 1 m，结论仍为险情。
+- Y5 偏差约 0.3 m。上述偏差归因于 ±2 s 窗口，记为 W14-D04，列入 W14.2。
+
+## 数字核对（对实施方自报）
+
+虚构 Mary/Lily：S0 碰撞、S1 险情 130.4 m、S2 碰撞、S3 险情 58.8 m，与自报一致。
+
+YANGZE 22 默认设定（截断 22:01:54 + 天线 YANGZE 0.20L / VEGA 0.375L）：
+
+| 情景 | 自报 | 独立（转储航迹） | 核对 |
+|---|---|---|---|
+| S0 | 碰撞 22:02:00.12，角 69.0°，距船首约 96 m | Collision，独立 tc=210.12s，C# tc=210.12s | 结论一致 |
+| Y1 | 险情 184.4 m | NearMiss，独立全程 184.4 m / C# 184.4 m | 结论一致 |
+| Y5 | 无碰撞 239.1 m | Avoided，独立全程 238.8 m / C# 238.8 m | 结论一致 |
+| Y4 | 险情 30.9 m | NearMiss，独立全程 29.8 m / C# 29.8 m | 结论一致 |
+| Y1+Y5 | 无碰撞 310.3 m | Avoided，独立全程 292.5 m / C# 292.4 m | 结论一致 |
+
+独立核算结论类别与实施方一致：是（Y1+Y5 / Y4 净距数值因 ±2 s 窗口略有差异，结论类别不变）。
+
+
+wrote /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/logs/w14.1-retest-independent.md
+
+
+=== w142 ===
+# W14.2 独立核算（Python 全程真实 OBB 净距 + 天线敏感性 4×4）
+
+转储：`logs/w14.2-retest-sensitivity-dump.json`（验收补测写出，航迹 1 s 采样后插值）。
+最小净距：全程 0.5 s 粗扫，再在每个局部极小处 0.02 s 细化。安全线 185.2 m。
+
+## 默认设定：Y1 / Y5 / Y1+Y5 / Y4
+
+| 情景 | C# 结论 | C# 净距 (m) | 独立结论 | 独立净距 (m) | 差 (m) | 一致 |
+|---|---|---:|---|---:|---:|---|
+| Y1 | NearMiss | 184.35 | NearMiss | 184.36 | -0.01 | 是 |
+| Y5 | Avoided | 238.75 | Avoided | 238.75 | +0.00 | 是 |
+| Y1+Y5 | Avoided | 292.45 | Avoided | 292.46 | -0.01 | 是 |
+| Y4 | NearMiss | 29.81 | NearMiss | 29.82 | -0.00 | 是 |
+
+## 天线敏感性 4×4（C# 报出 / 独立全程最小）
+
+| 天线设定 | 计入临界 | Y1 | Y5 | Y1+Y5 | Y4 |
+|---|---|---|---|---|---|
+| 不改正 | 否（对照） | 218.9/218.9 | 335.6/335.6 | 388.1/388.1 | 45.4/45.4 |
+| 0.35L | 是 | 185.5/185.5 | 245.2/245.2 | 296.4/296.4 | 29.6/29.6 |
+| 0.375L | 是 | 184.4/184.4 | 238.8/238.8 | 292.4/292.5 | 29.8/29.8 |
+| 0.40L | 是 | 183.2/183.2 | 232.3/232.3 | 288.5/288.5 | 30.0/30.0 |
+
+格内为 C# 净距 / 独立净距（米）。
+
+## Y1 临界标注与区间
+
+- 对比表 Y1 标临界：是，显示结论：险情（临界）
+- 敏感性区间文字：净距 183.2–185.5 m：VEGA 0.35L 无碰撞 185.5 m；VEGA 0.375L 险情 184.4 m；VEGA 0.40L 险情 183.2 m
+- 区间是否为 183.2–185.5 m：是
+- 不改正行（218.9 m）是否被排除：是
+
+## 虚构案例抽查（独立从初值积分）
+
+- S1：NearMiss 130.4 m（自报险情 130.4 m）
+- S3：NearMiss 58.8 m（自报险情 58.8 m）
+
+## 结论
+
+- 默认 Y1/Y5/Y1+Y5/Y4 的结论类别与净距与 C#、实施方自报一致。Y1+Y5 全程最小 292.4 m，与上轮独立值一致。
+- 天线敏感性 4×4 各格结论与净距（含 0.35/0.375/0.40L 与不改正对照）核对通过。
+- Y1 已标“险情（临界）”，区间 183.2–185.5 m，不改正行未计入。
+- 独立与 C# 默认四情景全部一致：是；4×4 表一致：是。
+
+
+wrote /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/logs/w14.2-retest-independent.md

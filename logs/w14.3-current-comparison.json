@@ -1,0 +1,275 @@
+{
+  "method": "Both snapshots execute actual Yangze22Case.Run; old and new source versions, same report inputs.",
+  "scenario_clearance_tolerance_m": 0.01,
+  "sensitivity_clearance_tolerance_m": 0.01,
+  "minimizer_time_tolerance_s": 0.001,
+  "collision_verdict_geometry_critical_display_exact": true,
+  "nominal": [
+    {
+      "id": "S0",
+      "before_m": 0,
+      "after_m": 0,
+      "delta_m": 0,
+      "before_time_s": 210.125,
+      "after_time_s": 210.125,
+      "delta_time_s": 0.0
+    },
+    {
+      "id": "Y1",
+      "before_m": 184.35089233465322,
+      "after_m": 184.35089233135085,
+      "delta_m": -3.3023752621375024e-09,
+      "before_time_s": 197.6255728090001,
+      "after_time_s": 197.62541019662012,
+      "delta_time_s": -0.00016261237996673117
+    },
+    {
+      "id": "Y5",
+      "before_m": 238.75478451464647,
+      "after_m": 238.7547845137813,
+      "delta_m": -8.651852567709284e-10,
+      "before_time_s": 262.0286533820502,
+      "after_time_s": 262.0284907696662,
+      "delta_time_s": -0.00016261238403103562
+    },
+    {
+      "id": "Y1+Y5",
+      "before_m": 292.44621564144455,
+      "after_m": 292.4462156411444,
+      "delta_m": -3.001332515850663e-10,
+      "before_time_s": 175.37410196624967,
+      "after_time_s": 175.37416407864677,
+      "delta_time_s": 6.211239710296468e-05
+    },
+    {
+      "id": "Y4",
+      "before_m": 29.814974663224728,
+      "after_m": 29.814974663171665,
+      "delta_m": -5.306333150656428e-11,
+      "before_time_s": 250.06800293254975,
+      "after_time_s": 250.06790243256503,
+      "delta_time_s": -0.0001004999847111776
+    }
+  ],
+  "all_changed_fields": [
+    {
+      "path": "/antenna/0/ScenarioOutcomes/Y1+Y5/MinClearanceM",
+      "before": 388.0544874406383,
+      "after": 388.05448744075574,
+      "delta": 1.1743850336642936e-10
+    },
+    {
+      "path": "/antenna/0/ScenarioOutcomes/Y1/MinClearanceM",
+      "before": 218.94580152506498,
+      "after": 218.94580152174404,
+      "delta": -3.3209346383955562e-09
+    },
+    {
+      "path": "/antenna/0/ScenarioOutcomes/Y4/MinClearanceM",
+      "before": 45.38486948780674,
+      "after": 45.38486948016669,
+      "delta": -7.640046817414259e-09
+    },
+    {
+      "path": "/antenna/0/ScenarioOutcomes/Y5/MinClearanceM",
+      "before": 335.58993359870755,
+      "after": 335.58993359878644,
+      "delta": 7.889866537880152e-11
+    },
+    {
+      "path": "/antenna/1/ScenarioOutcomes/Y1+Y5/MinClearanceM",
+      "before": 296.40659820518806,
+      "after": 296.4065982056014,
+      "delta": 4.133653419557959e-10
+    },
+    {
+      "path": "/antenna/1/ScenarioOutcomes/Y1/MinClearanceM",
+      "before": 185.5311612415984,
+      "after": 185.53116124357845,
+      "delta": 1.980055230887956e-09
+    },
+    {
+      "path": "/antenna/1/ScenarioOutcomes/Y4/MinClearanceM",
+      "before": 29.591037187824327,
+      "after": 29.591037184633144,
+      "delta": -3.1911824294184044e-09
+    },
+    {
+      "path": "/antenna/1/ScenarioOutcomes/Y5/MinClearanceM",
+      "before": 245.21624299406872,
+      "after": 245.21624299403257,
+      "delta": -3.61524143954739e-11
+    },
+    {
+      "path": "/antenna/2/ScenarioOutcomes/Y1+Y5/MinClearanceM",
+      "before": 292.44621564144455,
+      "after": 292.4462156411444,
+      "delta": -3.001332515850663e-10
+    },
+    {
+      "path": "/antenna/2/ScenarioOutcomes/Y1/MinClearanceM",
+      "before": 184.35089233465322,
+      "after": 184.35089233135085,
+      "delta": -3.3023752621375024e-09
+    },
+    {
+      "path": "/antenna/2/ScenarioOutcomes/Y4/MinClearanceM",
+      "before": 29.814974663224728,
+      "after": 29.814974663171665,
+      "delta": -5.306333150656428e-11
+    },
+    {
+      "path": "/antenna/2/ScenarioOutcomes/Y5/MinClearanceM",
+      "before": 238.75478451464647,
+      "after": 238.7547845137813,
+      "delta": -8.651852567709284e-10
+    },
+    {
+      "path": "/antenna/3/ScenarioOutcomes/Y1+Y5/MinClearanceM",
+      "before": 288.5268221307329,
+      "after": 288.5268221317765,
+      "delta": 1.0435883268655743e-09
+    },
+    {
+      "path": "/antenna/3/ScenarioOutcomes/Y1/MinClearanceM",
+      "before": 183.18574238559796,
+      "after": 183.18574238673756,
+      "delta": 1.139596861321479e-09
+    },
+    {
+      "path": "/antenna/3/ScenarioOutcomes/Y4/MinClearanceM",
+      "before": 30.044789270931147,
+      "after": 30.044789273027,
+      "delta": 2.0958523805347795e-09
+    },
+    {
+      "path": "/antenna/3/ScenarioOutcomes/Y5/MinClearanceM",
+      "before": 232.29345442492152,
+      "after": 232.29345442526616,
+      "delta": 3.44641648553079e-10
+    },
+    {
+      "path": "/comparison/1/sensitivity/0/MinClearanceM",
+      "before": 185.5311612415984,
+      "after": 185.53116124357845,
+      "delta": 1.980055230887956e-09
+    },
+    {
+      "path": "/comparison/1/sensitivity/1/MinClearanceM",
+      "before": 184.35089233465322,
+      "after": 184.35089233135085,
+      "delta": -3.3023752621375024e-09
+    },
+    {
+      "path": "/comparison/1/sensitivity/2/MinClearanceM",
+      "before": 183.18574238559796,
+      "after": 183.18574238673756,
+      "delta": 1.139596861321479e-09
+    },
+    {
+      "path": "/comparison/2/sensitivity/0/MinClearanceM",
+      "before": 245.21624299406872,
+      "after": 245.21624299403257,
+      "delta": -3.61524143954739e-11
+    },
+    {
+      "path": "/comparison/2/sensitivity/1/MinClearanceM",
+      "before": 238.75478451464647,
+      "after": 238.7547845137813,
+      "delta": -8.651852567709284e-10
+    },
+    {
+      "path": "/comparison/2/sensitivity/2/MinClearanceM",
+      "before": 232.29345442492152,
+      "after": 232.29345442526616,
+      "delta": 3.44641648553079e-10
+    },
+    {
+      "path": "/comparison/3/sensitivity/0/MinClearanceM",
+      "before": 296.40659820518806,
+      "after": 296.4065982056014,
+      "delta": 4.133653419557959e-10
+    },
+    {
+      "path": "/comparison/3/sensitivity/1/MinClearanceM",
+      "before": 292.44621564144455,
+      "after": 292.4462156411444,
+      "delta": -3.001332515850663e-10
+    },
+    {
+      "path": "/comparison/3/sensitivity/2/MinClearanceM",
+      "before": 288.5268221307329,
+      "after": 288.5268221317765,
+      "delta": 1.0435883268655743e-09
+    },
+    {
+      "path": "/comparison/4/sensitivity/0/MinClearanceM",
+      "before": 29.591037187824327,
+      "after": 29.591037184633144,
+      "delta": -3.1911824294184044e-09
+    },
+    {
+      "path": "/comparison/4/sensitivity/1/MinClearanceM",
+      "before": 29.814974663224728,
+      "after": 29.814974663171665,
+      "delta": -5.306333150656428e-11
+    },
+    {
+      "path": "/comparison/4/sensitivity/2/MinClearanceM",
+      "before": 30.044789270931147,
+      "after": 30.044789273027,
+      "delta": 2.0958523805347795e-09
+    },
+    {
+      "path": "/rows/1/MinClearanceM",
+      "before": 184.35089233465322,
+      "after": 184.35089233135085,
+      "delta": -3.3023752621375024e-09
+    },
+    {
+      "path": "/rows/1/MinClearanceTimeSeconds",
+      "before": 197.6255728090001,
+      "after": 197.62541019662012,
+      "delta": -0.00016261237996673117
+    },
+    {
+      "path": "/rows/2/MinClearanceM",
+      "before": 238.75478451464647,
+      "after": 238.7547845137813,
+      "delta": -8.651852567709284e-10
+    },
+    {
+      "path": "/rows/2/MinClearanceTimeSeconds",
+      "before": 262.0286533820502,
+      "after": 262.0284907696662,
+      "delta": -0.00016261238403103562
+    },
+    {
+      "path": "/rows/3/MinClearanceM",
+      "before": 292.44621564144455,
+      "after": 292.4462156411444,
+      "delta": -3.001332515850663e-10
+    },
+    {
+      "path": "/rows/3/MinClearanceTimeSeconds",
+      "before": 175.37410196624967,
+      "after": 175.37416407864677,
+      "delta": 6.211239710296468e-05
+    },
+    {
+      "path": "/rows/4/MinClearanceM",
+      "before": 29.814974663224728,
+      "after": 29.814974663171665,
+      "delta": -5.306333150656428e-11
+    },
+    {
+      "path": "/rows/4/MinClearanceTimeSeconds",
+      "before": 250.06800293254975,
+      "after": 250.06790243256503,
+      "delta": -0.0001004999847111776
+    }
+  ],
+  "errors": [],
+  "passed": true,
+  "scope": "W14.3 algorithm compatibility only. Existing W12 W14 export/seed retain their versioned source identity; not refreshed."
+}

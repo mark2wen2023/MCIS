@@ -1,0 +1,33 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Tests_W14_WhatIf -> /workspace/scratch/d5cd4f6afdb1/mcis-work/unity/Tests_W14_WhatIf/bin/Debug/net8.0/Tests_W14_WhatIf.dll
+Test run for /workspace/scratch/d5cd4f6afdb1/mcis-work/unity/Tests_W14_WhatIf/bin/Debug/net8.0/Tests_W14_WhatIf.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:00.05]   Discovering: Tests_W14_WhatIf
+[xUnit.net 00:00:00.11]   Discovered:  Tests_W14_WhatIf
+[xUnit.net 00:00:00.12]   Starting:    Tests_W14_WhatIf
+  Passed Mcis.Tests.W14.W14_3Tests.ForcedTurningIntervalCatchesValleyWithoutCoarseLocalMinimum [7 ms]
+  Passed Mcis.Tests.W14.W14_3Tests.MissingRotStillDetectsWrappedHeadingRate(a: 359.98000000000002, b: 0.040000000000000001, expected: True) [3 ms]
+  Passed Mcis.Tests.W14.W14_3Tests.MissingRotStillDetectsWrappedHeadingRate(a: 359.98000000000002, b: 0.02, expected: False) [< 1 ms]
+  Passed Mcis.Tests.W14.W14_3Tests.MissingRotStillDetectsWrappedHeadingRate(a: 0.040000000000000001, b: 359.98000000000002, expected: True) [< 1 ms]
+  Passed Mcis.Tests.W14.W14_3Tests.EndpointPlateauAndMultipleValleysAreCovered(kind: 2) [< 1 ms]
+  Passed Mcis.Tests.W14.W14_3Tests.EndpointPlateauAndMultipleValleysAreCovered(kind: 1) [< 1 ms]
+  Passed Mcis.Tests.W14.W14_3Tests.EndpointPlateauAndMultipleValleysAreCovered(kind: 0) [< 1 ms]
+  Passed Mcis.Tests.W14.W14_3Tests.HighTurnThresholdUsesMagnitudeAndStrictNumericalBoundary(rate: 0.4999999, expected: False) [< 1 ms]
+  Passed Mcis.Tests.W14.W14_3Tests.HighTurnThresholdUsesMagnitudeAndStrictNumericalBoundary(rate: 0.50000009999999995, expected: True) [< 1 ms]
+  Passed Mcis.Tests.W14.W14_3Tests.HighTurnThresholdUsesMagnitudeAndStrictNumericalBoundary(rate: -0.50000009999999995, expected: True) [< 1 ms]
+  Passed Mcis.Tests.W14.W14_3Tests.HighTurnThresholdUsesMagnitudeAndStrictNumericalBoundary(rate: 0.5, expected: False) [< 1 ms]
+[xUnit.net 00:00:02.82]   Finished:    Tests_W14_WhatIf
+  Passed Mcis.Tests.W14.W14_3Tests.CaptureCurrentYangzeForBeforeAfterGate [2 s]
+  Passed Mcis.Tests.W14.W14_3Tests.GridIncludesActualOffsetKnotsAndExactEndpoints [13 ms]
+  Passed Mcis.Tests.W14.W14_3Tests.NarrowValley_AgreesWithIndependentHundredthSecondScan [23 ms]
+
+Test Run Successful.
+Total tests: 14
+     Passed: 14
+ Total time: 3.2228 Seconds
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

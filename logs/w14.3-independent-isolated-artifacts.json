@@ -1,0 +1,72 @@
+[
+  {
+    "isolatedRelativePath": "logs/w14-independent-check.json",
+    "bytes": 743,
+    "sha256": "baa3edacc7e8c138482ad78ef8124bb4be8b66ebf447debe64b91ad0db6c980b"
+  },
+  {
+    "isolatedRelativePath": "logs/w14-independent-check.md",
+    "bytes": 3294,
+    "sha256": "c129c57e7f213b6006ea7af7d72ff060ef387193698a325400fe51ccd18b920f"
+  },
+  {
+    "isolatedRelativePath": "logs/w14-scenario-dump.json",
+    "bytes": 575766,
+    "sha256": "d73ba38bb670aa5dde8e49aac0a57f2aef53facd1641273654b84a5dffbe0db9"
+  },
+  {
+    "isolatedRelativePath": "logs/w14.1-retest-independent.md",
+    "bytes": 4453,
+    "sha256": "d244b666f292938f5a93b0605cabdbfdbcc33f1ee5d38b612dba276562baeaa2"
+  },
+  {
+    "isolatedRelativePath": "logs/w14.2-retest-independent.md",
+    "bytes": 2076,
+    "sha256": "81157e466e7a726826364a1138261ddb59998c587cb97157faa4113e40f046b0"
+  },
+  {
+    "isolatedRelativePath": "logs/w14.2-retest-scenario-dump.json",
+    "bytes": 575767,
+    "sha256": "5525b40b5c9ab608f128839312d5ac2989ad08e2c2af7689a9e174e6a049399c"
+  },
+  {
+    "isolatedRelativePath": "logs/w14.2-retest-sensitivity-dump.json",
+    "bytes": 844262,
+    "sha256": "06ad30d534531b2a24cebb3c7cce2ec0acca59445714599446f494e15ec5d9c7"
+  },
+  {
+    "isolatedRelativePath": "logs/w14.3-current-after.json",
+    "bytes": 13198,
+    "sha256": "89946138cd2b68561de407dc76867b39f81ebebb29ef728763898592fa3cc5f3"
+  },
+  {
+    "isolatedRelativePath": "logs/w14.3-current-before.json",
+    "bytes": 13208,
+    "sha256": "5e96caa778a68902306e1a30740da21c8d6852b0ba9df9a6403e06924c849c86"
+  },
+  {
+    "isolatedRelativePath": "logs/w14.3-current-comparison.json",
+    "bytes": 8232,
+    "sha256": "c1613f5be128c92bb8f717726c04049a1d0b7a547173985ffcbd1b5698a8c386"
+  },
+  {
+    "isolatedRelativePath": "logs/w14.3-implementation-summary.md",
+    "bytes": 3048,
+    "sha256": "78b3edc1ee6383ae58c6ba5e8448c0e8cbf41be390eceb2912853f856c2e478e"
+  },
+  {
+    "isolatedRelativePath": "logs/w14.3-independent-current.json",
+    "bytes": 13198,
+    "sha256": "89946138cd2b68561de407dc76867b39f81ebebb29ef728763898592fa3cc5f3"
+  },
+  {
+    "isolatedRelativePath": "logs/w14.3-run-provenance.json",
+    "bytes": 1189,
+    "sha256": "7f805bbb5ecb8aae93ab9ad3c7c6c5a7f43c4e01c1875b3ad547cb5c5c392231"
+  },
+  {
+    "isolatedRelativePath": "logs/w14.3-upstream-manifest.json",
+    "bytes": 13746,
+    "sha256": "e9b21a86a76cb08d3348395263df041a0fd98c80ba289f7ff2efe58d13d99b0d"
+  }
+]
