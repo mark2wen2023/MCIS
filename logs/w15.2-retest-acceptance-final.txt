@@ -1,0 +1,9 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+/workspace/maritime-sim-design/tests_acceptance/W15/AcciMapStampAcceptanceTests.cs(101,13): warning xUnit2013: Do not use Assert.Equal() to check for collection size. Use Assert.Single instead. (https://xunit.net/xunit.analyzers/rules/xUnit2013) [/workspace/maritime-sim-design/tests_acceptance/W15/W15.Acceptance.csproj]
+  W15.Acceptance -> /workspace/maritime-sim-design/tests_acceptance/W15/bin/Debug/net8.0/W15.Acceptance.dll
+Test run for /workspace/maritime-sim-design/tests_acceptance/W15/bin/Debug/net8.0/W15.Acceptance.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:   106, Skipped:     0, Total:   106, Duration: 105 ms - W15.Acceptance.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

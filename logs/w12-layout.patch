@@ -1,0 +1,23 @@
+--- a/web/src/Layout.tsx	2026-11-11 21:23:05.899236288 +0800
++++ b/web/src/Layout.tsx	2026-11-11 21:42:54.673711574 +0800
+@@ -19,10 +19,17 @@
+   const [online, setOnline] = useState<boolean | null>(null)
+   const loc = useLocation()
+   const [params] = useSearchParams()
+-  const caseId = (loc.pathname.endsWith('/colreg') && params.get('case')) || CASE_ID
++  const onAnalysis = loc.pathname.endsWith('/analysis') // W12：分析页也按 ?case= 显示当前案件
++  const caseId = ((loc.pathname.endsWith('/colreg') || onAnalysis) && params.get('case')) || CASE_ID
+   useEffect(() => {
+-    api.get<CaseDef>(`/cases/${caseId}`).then((c) => { setCaseDef(c); setOnline(true) }).catch(() => setOnline(false))
+-  }, [caseId])
++    api.get<CaseDef>(`/cases/${caseId}`).then((c) => { setCaseDef(c); setOnline(true) }).catch(() => {
++      if (!onAnalysis) { setOnline(false); return }
++      // W12：YANGZE 22 等未入库案例，用分析页案例清单里的标题/虚构标志
++      api.get<{ cases: { caseId: string; title: string; isFictionalDemo: boolean }[] }>('/analysis/cases')
++        .then((l) => { const c = l.cases.find((x) => x.caseId === caseId); setCaseDef(c ? ({ ...c } as CaseDef) : null); setOnline(true) })
++        .catch(() => setOnline(false))
++    })
++  }, [caseId, onAnalysis])
+   const changeRole = (r: Role) => {
+     setIdentity(r, ROLES.find((x) => x.role === r)?.op)
+     setRole(r)

@@ -1,0 +1,108 @@
+W1.1 independent calculation for TimeBands_MultipleTransitions
+own: (0,0) hdg 0 deg 5 m/s constant
+tgt: (30,-1000) hdg 0 deg 10 m/s; at t=500 s turn to 180 deg at 6 deg/s, shortest path
+shortest-turn Delta(0,180) = -180.0 deg  => port
+turn duration = 30.0 s, completes at t = 530.0 s
+  tgt heading at 0 s = 0.0000 deg, pos=(30.000, -1000.000)
+  tgt heading at 500 s = 0.0000 deg, pos=(30.000, 4000.000)
+  tgt heading at 510 s = 300.0000 deg, pos=(-17.768, 4082.737)
+  tgt heading at 520 s = 240.0000 deg, pos=(-113.305, 4082.737)
+  tgt heading at 529 s = 186.0000 deg, pos=(-160.550, 4009.986)
+  tgt heading at 530 s = 180.0000 deg, pos=(-161.073, 4000.000)
+  tgt heading at 590 s = 180.0000 deg, pos=(-161.073, 3400.000)
+
+initial CPA: DCPA=30.000 m (0.0162 nm), TCPA=200.000 s
+overtaking CPA time ≈ 200 s; distance reaches 0.5 nm at t = 385.103 s (1 s first clear flag at 386)
+
+first new risk after clear (1 s truth): t = 511 s
+  at 511 s: DCPA=0.8245 nm TCPA=14.057 s dist=0.8275 nm
+  ownBrg=359.00 tgtBrg=245.00 fromRecip=114.00 class=Overtaking doubt=False
+  tgt heading=294.00  60s peak-to-peak=66.00 deg  |net|=66.00 deg  stable=False
+risk around first formation (1 s):
+  t= 506 tgtH= 324.00 DCPA=0.7324 TCPA=-105.38 R=0.824 risk=False class=Overtaking  p2p= 36.00 stable=False ownBrg=   0.4 tgtBrg= 216.4
+  t= 507 tgtH= 318.00 DCPA=0.7769 TCPA= -72.62 R=0.826 risk=False class=Overtaking  p2p= 42.00 stable=False ownBrg=   0.2 tgtBrg= 222.2
+  t= 508 tgtH= 312.00 DCPA=0.8059 TCPA= -44.78 R=0.827 risk=False class=Overtaking  p2p= 48.00 stable=False ownBrg= 359.9 tgtBrg= 227.9
+  t= 509 tgtH= 306.00 DCPA=0.8220 TCPA= -21.46 R=0.827 risk=False class=Overtaking  p2p= 54.00 stable=False ownBrg= 359.6 tgtBrg= 233.6
+  t= 510 tgtH= 300.00 DCPA=0.8276 TCPA=  -2.05 R=0.828 risk=False class=Overtaking  p2p= 60.00 stable=False ownBrg= 359.3 tgtBrg= 239.3
+  t= 511 tgtH= 294.00 DCPA=0.8245 TCPA=  14.06 R=0.827 risk=True  class=Overtaking  p2p= 66.00 stable=False ownBrg= 359.0 tgtBrg= 245.0
+  t= 512 tgtH= 288.00 DCPA=0.8142 TCPA=  27.43 R=0.827 risk=True  class=Crossing    p2p= 72.00 stable=False ownBrg= 358.7 tgtBrg= 250.7
+  t= 513 tgtH= 282.00 DCPA=0.7978 TCPA=  38.55 R=0.826 risk=True  class=Crossing    p2p= 78.00 stable=False ownBrg= 358.3 tgtBrg= 256.3
+  t= 514 tgtH= 276.00 DCPA=0.7762 TCPA=  47.83 R=0.824 risk=True  class=Crossing    p2p= 84.00 stable=False ownBrg= 357.9 tgtBrg= 261.9
+  t= 515 tgtH= 270.00 DCPA=0.7502 TCPA=  55.58 R=0.822 risk=True  class=Crossing    p2p= 90.00 stable=False ownBrg= 357.5 tgtBrg= 267.5
+  t= 516 tgtH= 264.00 DCPA=0.7202 TCPA=  62.07 R=0.819 risk=True  class=Crossing    p2p= 96.00 stable=False ownBrg= 357.1 tgtBrg= 273.1
+
+heading stability of target (1 s), around turn end and +60 s:
+  t= 520 tgtH= 240.00 p2p=120.000 net=120.000 own_p2p=0.000 both_stable=False
+  t= 529 tgtH= 186.00 p2p=174.000 net=174.000 own_p2p=0.000 both_stable=False
+  t= 530 tgtH= 180.00 p2p=180.000 net=180.000 own_p2p=0.000 both_stable=False
+  t= 531 tgtH= 180.00 p2p=180.000 net=180.000 own_p2p=0.000 both_stable=False
+  t= 540 tgtH= 180.00 p2p=180.000 net=180.000 own_p2p=0.000 both_stable=False
+  t= 560 tgtH= 180.00 p2p=180.000 net=180.000 own_p2p=0.000 both_stable=False
+  t= 580 tgtH= 180.00 p2p= 60.000 net= 60.000 own_p2p=0.000 both_stable=False
+  t= 585 tgtH= 180.00 p2p= 30.000 net= 30.000 own_p2p=0.000 both_stable=False
+  t= 588 tgtH= 180.00 p2p= 12.000 net= 12.000 own_p2p=0.000 both_stable=False
+  t= 589 tgtH= 180.00 p2p=  6.000 net=  6.000 own_p2p=0.000 both_stable=False
+  t= 590 tgtH= 180.00 p2p=  0.000 net=  0.000 own_p2p=0.000 both_stable=True
+  t= 591 tgtH= 180.00 p2p=  0.000 net=  0.000 own_p2p=0.000 both_stable=True
+  t= 600 tgtH= 180.00 p2p=  0.000 net=  0.000 own_p2p=0.000 both_stable=True
+first time both headings stable after risk (1 s): t = 590 s
+120 s timeout would be t = 631 s; lock-by-stable happens before timeout: True
+
+10 s sample grid:
+  t= 370 tgtH=   0.00 DCPA=0.0162 TCPA= -170.0 R=0.459 risk=False clear=False class=Overtaking  doubt=False p2p=  0.00 stable=True ownBrg=   2.0 tgtBrg= 182.0 recip=180.00
+  t= 380 tgtH=   0.00 DCPA=0.0162 TCPA= -180.0 R=0.486 risk=False clear=False class=Overtaking  doubt=False p2p=  0.00 stable=True ownBrg=   1.9 tgtBrg= 181.9 recip=180.00
+  t= 390 tgtH=   0.00 DCPA=0.0162 TCPA= -190.0 R=0.513 risk=False clear=True  class=Overtaking  doubt=False p2p=  0.00 stable=True ownBrg=   1.8 tgtBrg= 181.8 recip=180.00
+  t= 400 tgtH=   0.00 DCPA=0.0162 TCPA= -200.0 R=0.540 risk=False clear=True  class=Overtaking  doubt=False p2p=  0.00 stable=True ownBrg=   1.7 tgtBrg= 181.7 recip=180.00
+  t= 410 tgtH=   0.00 DCPA=0.0162 TCPA= -210.0 R=0.567 risk=False clear=True  class=Overtaking  doubt=False p2p=  0.00 stable=True ownBrg=   1.6 tgtBrg= 181.6 recip=180.00
+  t= 420 tgtH=   0.00 DCPA=0.0162 TCPA= -220.0 R=0.594 risk=False clear=True  class=Overtaking  doubt=False p2p=  0.00 stable=True ownBrg=   1.6 tgtBrg= 181.6 recip=180.00
+  t= 430 tgtH=   0.00 DCPA=0.0162 TCPA= -230.0 R=0.621 risk=False clear=True  class=Overtaking  doubt=False p2p=  0.00 stable=True ownBrg=   1.5 tgtBrg= 181.5 recip=180.00
+  t= 440 tgtH=   0.00 DCPA=0.0162 TCPA= -240.0 R=0.648 risk=False clear=True  class=Overtaking  doubt=False p2p=  0.00 stable=True ownBrg=   1.4 tgtBrg= 181.4 recip=180.00
+  t= 450 tgtH=   0.00 DCPA=0.0162 TCPA= -250.0 R=0.675 risk=False clear=True  class=Overtaking  doubt=False p2p=  0.00 stable=True ownBrg=   1.4 tgtBrg= 181.4 recip=180.00
+  t= 460 tgtH=   0.00 DCPA=0.0162 TCPA= -260.0 R=0.702 risk=False clear=True  class=Overtaking  doubt=False p2p=  0.00 stable=True ownBrg=   1.3 tgtBrg= 181.3 recip=180.00
+  t= 470 tgtH=   0.00 DCPA=0.0162 TCPA= -270.0 R=0.729 risk=False clear=True  class=Overtaking  doubt=False p2p=  0.00 stable=True ownBrg=   1.3 tgtBrg= 181.3 recip=180.00
+  t= 480 tgtH=   0.00 DCPA=0.0162 TCPA= -280.0 R=0.756 risk=False clear=True  class=Overtaking  doubt=False p2p=  0.00 stable=True ownBrg=   1.2 tgtBrg= 181.2 recip=180.00
+  t= 490 tgtH=   0.00 DCPA=0.0162 TCPA= -290.0 R=0.783 risk=False clear=True  class=Overtaking  doubt=False p2p=  0.00 stable=True ownBrg=   1.2 tgtBrg= 181.2 recip=180.00
+  t= 500 tgtH=   0.00 DCPA=0.0162 TCPA= -300.0 R=0.810 risk=False clear=True  class=Overtaking  doubt=False p2p=  0.00 stable=True ownBrg=   1.1 tgtBrg= 181.1 recip=180.00
+  t= 510 tgtH= 300.00 DCPA=0.8276 TCPA=   -2.1 R=0.828 risk=False clear=True  class=Overtaking  doubt=False p2p= 60.00 stable=False ownBrg= 359.3 tgtBrg= 239.3 recip=120.00
+  t= 520 tgtH= 240.00 DCPA=0.5704 TCPA=   79.1 R=0.803 risk=True  clear=False class=Crossing    doubt=False p2p=120.00 stable=False ownBrg= 355.6 tgtBrg= 295.6 recip=60.00
+  t= 530 tgtH= 180.00 DCPA=0.0870 TCPA=   90.0 R=0.734 risk=True  clear=False class=HeadOn      doubt=False p2p=180.00 stable=False ownBrg= 353.2 tgtBrg= 353.2 recip=0.00
+  t= 540 tgtH= 180.00 DCPA=0.0870 TCPA=   80.0 R=0.654 risk=True  clear=False class=HeadOn      doubt=False p2p=180.00 stable=False ownBrg= 352.4 tgtBrg= 352.4 recip=0.00
+  t= 550 tgtH= 180.00 DCPA=0.0870 TCPA=   70.0 R=0.574 risk=True  clear=False class=HeadOn      doubt=False p2p=180.00 stable=False ownBrg= 351.3 tgtBrg= 351.3 recip=0.00
+  t= 560 tgtH= 180.00 DCPA=0.0870 TCPA=   60.0 R=0.494 risk=True  clear=False class=HeadOn      doubt=False p2p=180.00 stable=False ownBrg= 349.9 tgtBrg= 349.9 recip=0.00
+  t= 570 tgtH= 180.00 DCPA=0.0870 TCPA=   50.0 R=0.414 risk=True  clear=False class=HeadOn      doubt=False p2p=120.00 stable=False ownBrg= 347.9 tgtBrg= 347.9 recip=0.00
+  t= 580 tgtH= 180.00 DCPA=0.0870 TCPA=   40.0 R=0.335 risk=True  clear=False class=HeadOn      doubt=True  p2p= 60.00 stable=False ownBrg= 345.0 tgtBrg= 345.0 recip=0.00
+  t= 590 tgtH= 180.00 DCPA=0.0870 TCPA=   30.0 R=0.258 risk=True  clear=False class=HeadOn      doubt=True  p2p=  0.00 stable=True ownBrg= 340.3 tgtBrg= 340.3 recip=0.00
+  t= 600 tgtH= 180.00 DCPA=0.0870 TCPA=   20.0 R=0.184 risk=True  clear=False class=Crossing    doubt=False p2p=  0.00 stable=True ownBrg= 331.8 tgtBrg= 331.8 recip=0.00
+  t= 610 tgtH= 180.00 DCPA=0.0870 TCPA=   10.0 R=0.119 risk=True  clear=False class=Crossing    doubt=False p2p=  0.00 stable=True ownBrg= 313.0 tgtBrg= 313.0 recip=0.00
+  t= 620 tgtH= 180.00 DCPA=0.0870 TCPA=    0.0 R=0.087 risk=True  clear=False class=Crossing    doubt=False p2p=  0.00 stable=True ownBrg= 270.0 tgtBrg= 270.0 recip=0.00
+  t= 630 tgtH= 180.00 DCPA=0.0870 TCPA=  -10.0 R=0.119 risk=False clear=False class=Overtaking  doubt=False p2p=  0.00 stable=True ownBrg= 227.0 tgtBrg= 227.0 recip=0.00
+  t= 640 tgtH= 180.00 DCPA=0.0870 TCPA=  -20.0 R=0.184 risk=False clear=False class=Overtaking  doubt=False p2p=  0.00 stable=True ownBrg= 208.2 tgtBrg= 208.2 recip=0.00
+
+stability from 10 s samples only (plus 1 s truth p2p already above):
+  t= 520 p2p_from_10s_samples=120.000 stable=False
+  t= 530 p2p_from_10s_samples=180.000 stable=False
+  t= 540 p2p_from_10s_samples=180.000 stable=False
+  t= 550 p2p_from_10s_samples=180.000 stable=False
+  t= 560 p2p_from_10s_samples=180.000 stable=False
+  t= 570 p2p_from_10s_samples=120.000 stable=False
+  t= 580 p2p_from_10s_samples=60.000 stable=False
+  t= 590 p2p_from_10s_samples=0.000 stable=True
+  t= 600 p2p_from_10s_samples=0.000 stable=True
+  t= 610 p2p_from_10s_samples=0.000 stable=True
+  t= 620 p2p_from_10s_samples=0.000 stable=True
+  t= 630 p2p_from_10s_samples=0.000 stable=True
+  t= 640 p2p_from_10s_samples=0.000 stable=True
+first stable on 10 s grid (1 s p2p at those instants): 590
+first stable using only 10 s sample headings: 590
+
+second-risk TCPA zero (1 s interp) t = 620.000 s; 10 s first non-risk after lock: 200
+geometry at independent lock time 590 s: class=HeadOn doubt=True ownBrg=340.31 tgtBrg=340.31 fromRecip=0.000 DCPA=0.0870 TCPA=30.00 ownH=0.00 tgtH=180.00
+
+CONCLUSION
+  turn completes at 530.0 s (port 180 deg at 6 deg/s)
+  first new risk (1 s) at 511 s; (10 s grid) at 520 s
+  both headings first stable (1 s) at 590 s
+  both headings first stable (10 s grid) at 590 s
+  120 s timeout at 631 s (1 s) / 640 s (10 s); not reached
+  lock geometry: HeadOn
+  expected bands: Overtaking until clear (~385.1 s, 10 s grid 390 s) -> NoRisk -> Undetermined [520, 590) -> HeadOn until TCPA zero (~620.0 s, 10 s grid 200 s) -> NoRisk

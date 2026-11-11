@@ -1,0 +1,10 @@
+
+> web@0.0.0 test
+> esbuild tests/colreg-render.test.tsx --bundle --platform=node --format=cjs --outfile=tests/.tmp-colreg-render.cjs --jsx=automatic && node tests/.tmp-colreg-render.cjs && esbuild tests/colreg-w61.test.tsx --bundle --platform=node --format=cjs --outfile=tests/.tmp-colreg-w61.cjs --jsx=automatic --log-level=warning && node tests/.tmp-colreg-w61.cjs
+
+
+  tests/.tmp-colreg-render.cjs  1.5mb ⚠️
+
+⚡ Done in 32ms
+ok  18 assertions (labels + render lily/mary + haili5)
+ok  43 assertions (W6.1 rulings 2–11)

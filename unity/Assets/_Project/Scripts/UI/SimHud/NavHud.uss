@@ -1,0 +1,208 @@
+/* ==========================================================================
+   NavHud 样式表 (NavHud.uss)
+   包含左翼双船遥测卡片与顶部中央 DCPA/TCPA 告警仪表盘，对齐 prototype #sim
+   ========================================================================== */
+
+.nav-hud-root {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.nav-hud-left-stack {
+    flex-direction: column;
+    width: 292px;
+    flex-shrink: 0;
+}
+
+.hud-ship-box {
+    background-color: var(--bg-glass);
+    border-color: var(--border-glass);
+    border-width: 1px;
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+    margin-bottom: 8px;
+}
+
+.hud-ship-box.own-ship {
+    border-left-width: 3px;
+    border-left-color: var(--color-primary);
+}
+
+.hud-ship-box.target-ship {
+    border-left-width: 3px;
+    border-left-color: var(--color-amber);
+}
+
+.hud-ship-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 5px;
+    margin-bottom: 6px;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--border-subtle);
+}
+
+.hud-ship-title-own {
+    font-size: 13px;
+    -unity-font-style: bold;
+    color: var(--color-primary);
+}
+
+.hud-ship-title-target {
+    font-size: 13px;
+    -unity-font-style: bold;
+    color: var(--color-amber);
+}
+
+.hud-telemetry-row {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.telemetry-cell {
+    background-color: var(--bg-cell);
+    border-color: var(--border-subtle);
+    border-width: 1px;
+    border-radius: 3px;
+    padding: 4px 6px;
+    flex-grow: 1;
+    margin-right: 4px;
+}
+
+.telemetry-cell-wide {
+    flex-grow: 2;
+}
+
+.telemetry-cell-last {
+    margin-right: 0;
+}
+
+.telemetry-key {
+    font-size: 9px;
+    color: var(--text-muted);
+    margin-bottom: 1px;
+}
+
+.telemetry-val {
+    font-size: 12px;
+    -unity-font-style: bold;
+    color: var(--text-main);
+}
+
+/* 中央 DCPA / TCPA 核心告警仪表盘 */
+.cpa-hud-panel {
+    min-width: 410px;
+    background-color: var(--bg-glass);
+    border-color: var(--border-glass);
+    border-width: 1px;
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+.cpa-hud-panel.risk-safe {
+    border-color: var(--cyan-border);
+    background-color: rgba(8, 18, 32, 0.76);
+}
+
+.cpa-hud-panel.risk-warning {
+    border-color: var(--color-amber);
+    background-color: rgba(28, 22, 12, 0.82);
+}
+
+.cpa-hud-panel.risk-danger {
+    border-color: var(--color-danger);
+    background-color: rgba(36, 12, 20, 0.86);
+}
+
+.cpa-header-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 7px;
+}
+
+.cpa-header-left {
+    flex-direction: row;
+    align-items: center;
+}
+
+.cpa-panel-title {
+    font-size: 12px;
+    -unity-font-style: bold;
+    color: var(--text-main);
+    margin-right: 6px;
+}
+
+.cpa-metrics-row {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.cpa-metric-box {
+    background-color: var(--bg-cell);
+    border-color: var(--border-subtle);
+    border-width: 1px;
+    border-radius: var(--radius-sm);
+    padding: 5px 8px;
+    flex-grow: 1;
+    flex-basis: 0;
+    margin-right: 6px;
+    align-items: center;
+}
+
+.cpa-metric-box-last {
+    margin-right: 0;
+}
+
+.cpa-metric-lbl {
+    font-size: 10px;
+    color: var(--text-sec);
+    -unity-text-align: middle-center;
+}
+
+.cpa-metric-num {
+    font-size: 15px;
+    -unity-font-style: bold;
+    color: var(--text-main);
+    margin-top: 2px;
+    -unity-text-align: middle-center;
+}
+
+.cpa-hud-panel.risk-safe .cpa-metric-accent {
+    color: var(--color-primary);
+}
+
+.cpa-hud-panel.risk-warning .cpa-metric-accent {
+    color: var(--color-amber);
+}
+
+.cpa-hud-panel.risk-danger .cpa-metric-accent {
+    color: var(--color-danger);
+}
+
+.cpa-footer-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 4px;
+    border-top-width: 1px;
+    border-top-color: var(--border-subtle);
+}
+
+.cpa-formula-text {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.cpa-clock-text {
+    font-size: 11px;
+    -unity-font-style: bold;
+    color: var(--text-main);
+}

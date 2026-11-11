@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <IsPackable>false</IsPackable>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Assets/_Project/Scripts/Core/Primitives/**/*.cs" />
+    <Compile Include="../../Assets/_Project/Scripts/Domain/Common/**/*.cs" />
+    <Compile Include="../../Assets/_Project/Scripts/Domain/Models/**/*.cs" />
+    <Compile Include="../../Assets/_Project/Scripts/Domain/Timeline/**/*.cs" />
+    <Compile Include="../../Assets/_Project/Scripts/Data/Vdr/**/*.cs" />
+    <!-- W2.3：只读引用共享 Evidence caseId 校验器，不修改 Evidence 源码。 -->
+    <Compile Include="../../Assets/_Project/Scripts/Domain/Evidence/**/*.cs" />
+  </ItemGroup>
+</Project>

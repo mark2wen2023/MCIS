@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ui="UnityEngine.UIElements"
+    xmlns:mcis="Mcis.UI.MiniMap"
+    xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd">
+
+    <Style src="../Common/ThemeVariables.uss" />
+    <Style src="MiniMap.uss" />
+
+    <ui:VisualElement name="minimap-box" class="minimap-box">
+        <ui:VisualElement class="minimap-header">
+            <ui:Label text="2D 全局航迹小地图 (MiniMap)" class="minimap-title" />
+            <ui:Label text="点击定位 · 滚轮缩放" class="minimap-hint mcis-mono" />
+        </ui:VisualElement>
+
+        <mcis:MiniMapElement name="minimap-canvas" class="minimap-canvas" />
+
+        <ui:VisualElement class="minimap-footer">
+            <ui:Label name="minimap-scale-label" text="比例尺: 自动适配" class="minimap-scale-label mcis-mono" />
+            <ui:Button name="btn-minimap-fit" text="⌖ 全景" class="mcis-btn minimap-fit-btn" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

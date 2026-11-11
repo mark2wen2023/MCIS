@@ -1,0 +1,17 @@
+{
+    "name": "Mcis.Data",
+    "rootNamespace": "Mcis.Data",
+    "references": [
+        "Mcis.Core",
+        "Mcis.Domain"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": true
+}

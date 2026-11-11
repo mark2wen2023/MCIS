@@ -1,0 +1,9 @@
+
+> web@0.0.0 test:w16
+> esbuild tests/report-render.test.tsx --bundle --platform=node --format=cjs --outfile=tests/.tmp-report-render.cjs --jsx=automatic && node tests/.tmp-report-render.cjs
+
+
+  tests/.tmp-report-render.cjs  1.5mb ⚠️
+
+⚡ Done in 29ms
+ok 111 assertions (W16 三模板×三语言、引用、复核、导出、GISIS、真实锁定与请求合同)

@@ -1,0 +1,7 @@
+你在 /workspace/maritime-sim-design 做 W1.1（COLREG 规则引擎小修）第 1 阶段：只写失败测试。
+先通读：DEFECTS/W1.md 第四节与文末「架构师复测裁定」（裁定优先）、logs/w1.1-fix-spec.md（本次规格，必须遵守范围、禁令与 API 兼容）、contracts/schemas/colreg.schema.json（只读）、tests_acceptance/W1/*.cs（只读，绝不可修改）、unity/Assets/_Project/Scripts/Domain/Colreg/*.cs、unity/Tests_W1_Colreg/*.cs。
+任务：
+1. 新增 unity/Tests_W1_Colreg/ColregW11Tests.cs：D09（R18 目录、状态序列输入、NUC/RAM 让路关系、NotApplicable、NotAssessable、状态切换精确切带、合成“海力虚构5”NUC 回归用例）、D10（双视角对遇存疑）、D11（矛盾视角 null 角色、Undetermined、NeedsReview、basis 两视角）、D10/D11 互换本船/他船不变的性质测试（确定性参数网格）、D12（延后锁定、120 s 后 locked_during_turn、推迟带 Undetermined/pending_stable_heading、不事后重判、及早起点）、合同字段（DoubtReason、VesselStatus、DangerStage 映射辅助、verdict 映射辅助）。全部合成虚构数据，不要读取真实案例文件。
+2. 为了让测试能编译、红在断言上，可在 Colreg 源码里只加最小 API 骨架（新枚举值、新类型、新属性、新可选参数、映射辅助的签名），默认返回现行为（null/default/抛 NotImplemented 都不行时用默认值），不要实现新行为，不改现有判定逻辑。
+3. 跑两个 csproj 的 `/home/box/.dotnet/dotnet build` 确认 0 错误；不要跑 dotnet test。
+最后输出：新增测试名列表与对应缺陷、加了哪些 API 骨架、build 结果。

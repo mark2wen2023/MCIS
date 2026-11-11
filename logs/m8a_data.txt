@@ -1,0 +1,21 @@
+M8a 已完成：示例数据已生成，新增的 3 个 `DemoDataTests` 全部通过，整个测试工程 63/63 通过。
+
+- **生成脚本**：[generate_demo_data.py](file:///workspace/maritime-sim-design/unity/Tools/generate_demo_data.py) 只用标准库，已运行。
+  - 轨迹按 prototype 的 Lily/Mary 关键点做三次 Hermite 插值，SOG/COG 由插值曲线推出。
+  - 起点 2026-05-18T10:00Z，共 900 秒、10 秒间隔，约 T+9 分钟碰撞。
+- **输出文件**：在 `Assets/StreamingAssets/Mcis/Demo/` 下。
+  - `lily_mary_demo.csv`：MMSI 为 999000001 / 999000002。
+  - `lily_mary_demo.nmea`：含类型 1 与两句的类型 5，校验和正确。
+  - [README.md](file:///workspace/maritime-sim-design/unity/Assets/StreamingAssets/Mcis/Demo/README.md)：写明「示例数据（虚构），改编自论文 5.4 节」。
+- **测试**：[DemoDataTests.cs](file:///workspace/maritime-sim-design/unity/DotnetTests/Tests/DemoDataTests.cs) 的 3 个用例覆盖以下几点。
+  - CSV 路径和 NMEA 路径各自能解析、清洗、插值并预计算 CPA。
+  - 两船都在，最小距离出现在 8–10 分钟内且小于 0.1 nm，碰撞前出现过 Danger。
+  - 两条路径在每个 10 秒时刻的位置差都小于 20 m。
+- **PROGRESS.md**：M8 行已更新，状态写的是「部分完成」而不是「完成」，因为该行还包含 Demo 场景和 INTEGRATION.md，这次没做。模型栏写的是 Claude Sonnet 5.5，测试栏写的是 63/63。
+
+没有改动 P1 的任何已有源码。
+
+NMEA 报文本身不带时间，时间是靠文件里的 `# epoch_utc:` 注释加每条报告的秒字段恢复的。
+
+另外，PROGRESS.md 第 42 行说 M8 的示例场景应直接采用已有的 `Fixtures/LilyMaryDemo.cs`，但按你的要求，这批数据的坐标改成了 21.78N, 113.70E，沿用了 prototype 的关键点，与 `LilyMaryDemo.cs`（22.26N, 113.705E，碰撞在 T+600 秒）不一致。后续做 Demo 场景时需要选用其中一套。
+EXIT 0

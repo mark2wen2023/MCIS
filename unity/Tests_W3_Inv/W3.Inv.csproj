@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- W3（③ 笔录比对 / ⑨ 安全建议 / ② 保管链最小版）纯逻辑库：只引入 Core/Primitives、Domain/Common、Domain/Models 与本包路径。 -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RootNamespace>Mcis</RootNamespace>
+    <AssemblyName>Mcis.W3.Inv</AssemblyName>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../Assets/_Project/Scripts/Core/Primitives/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Common/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Models/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Interview/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Recommendations/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Evidence/**/*.cs" />
+  </ItemGroup>
+</Project>

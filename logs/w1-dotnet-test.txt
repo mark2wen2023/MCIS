@@ -1,0 +1,102 @@
+Build started 11/11/2026 18:50:29.
+     1>Project "/workspace/maritime-sim-design/unity/Tests_W1_Colreg/Mcis.W1.Colreg.Tests.csproj" on node 1 (VSTest target(s)).
+     1>BuildProject:
+         Build started, please wait...
+     1>Project "/workspace/maritime-sim-design/unity/Tests_W1_Colreg/Mcis.W1.Colreg.Tests.csproj" (1) is building "/workspace/maritime-sim-design/unity/Tests_W1_Colreg/Mcis.W1.Colreg.Tests.csproj" (1:2) on node 1 (default targets).
+     1>GenerateTargetFrameworkMonikerAttribute:
+       Skipping target "GenerateTargetFrameworkMonikerAttribute" because all output files are up-to-date with respect to the input files.
+       CoreGenerateAssemblyInfo:
+       Skipping target "CoreGenerateAssemblyInfo" because all output files are up-to-date with respect to the input files.
+       _GenerateSourceLinkFile:
+         Source Link is empty, file 'obj/Debug/net8.0/Mcis.W1.Colreg.Tests.sourcelink.json' does not exist.
+       CoreCompile:
+       Skipping target "CoreCompile" because all output files are up-to-date with respect to the input files.
+       _CopyOutOfDateSourceItemsToOutputDirectory:
+       Skipping target "_CopyOutOfDateSourceItemsToOutputDirectory" because all output files are up-to-date with respect to the input files.
+       GenerateBuildDependencyFile:
+       Skipping target "GenerateBuildDependencyFile" because all output files are up-to-date with respect to the input files.
+       GenerateBuildRuntimeConfigurationFiles:
+       Skipping target "GenerateBuildRuntimeConfigurationFiles" because all output files are up-to-date with respect to the input files.
+       CopyFilesToOutputDirectory:
+         Mcis.W1.Colreg.Tests -> /workspace/maritime-sim-design/unity/Tests_W1_Colreg/bin/Debug/net8.0/Mcis.W1.Colreg.Tests.dll
+     1>Done Building Project "/workspace/maritime-sim-design/unity/Tests_W1_Colreg/Mcis.W1.Colreg.Tests.csproj" (default targets).
+     1>BuildProject:
+         Build completed.
+         
+Test run for /workspace/maritime-sim-design/unity/Tests_W1_Colreg/bin/Debug/net8.0/Mcis.W1.Colreg.Tests.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:00.05]   Discovering: Mcis.W1.Colreg.Tests
+[xUnit.net 00:00:00.10]   Discovered:  Mcis.W1.Colreg.Tests
+[xUnit.net 00:00:00.10]   Starting:    Mcis.W1.Colreg.Tests
+  Passed Mcis.Tests.W1.ColregEngineTests.Crossing_StarboardVesselDeterminesRoles(east: -1000, heading: 90, own: StandOn, target: GiveWay) [25 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.Crossing_StarboardVesselDeterminesRoles(east: 1000, heading: 270, own: GiveWay, target: StandOn) [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.HeadOnHalfAngle_IncludesSixDegreeBoundary(offset: -6) [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.HeadOnHalfAngle_IncludesSixDegreeBoundary(offset: 6) [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.StandOnCourseExcursionThenReturn_IsNotMaintainingHeading [1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.DirectionalTurnExcursion_ReachingTenDegreesHasSubstantialActionTime [3 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.HeadOnHalfAngle_ExcludesAnglesBeyondBoundary(offset: 7) [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.HeadOnHalfAngle_ExcludesAnglesBeyondBoundary(offset: 6.0999999999999996) [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.HeadOnHalfAngle_ExcludesAnglesBeyondBoundary(offset: -6.0999999999999996) [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.RestrictedVisibilityWithoutCollisionRisk_DoesNotRequireR8AvoidanceAction [4 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.OvertakingCollisionBetweenObservationTimes_IsDetectedBySegmentCpa [2 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.RestrictedVisibility_PortTurnForVesselAhead_FailsR19 [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.StandOnMayIntervene_WhenGiveWayHasNotActedAndTimeIsShort [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.StandOnLongEncounter_ReevaluatesInterventionWhenRemainingTcpaBecomesShort [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.ConfiguredOvertakingBoundary_Changes115DegreeClassification [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.HeadOnThresholdEightDegreeOffset_ChangesWithConfiguration [2 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.OutsideOvertakingSector_IsCrossing(bearing: 112.48999999999999) [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.OutsideOvertakingSector_IsCrossing(bearing: 247.50999999999999) [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.ExactHeadOn_HasBothStarboardObligationsAndNoStandOn [9 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.OvertakingPassingThroughOtherVessel_CannotBeSatisfiedBySafeFinalSeparation [1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.ObliqueOvertaking_IsReleasedAfterPassingCpaAndSeparatingClear [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.UnsortedTracks_ReturnFailedResult [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.RestrictedVisibilityBand_ReevaluatesR8WhenCollisionRiskAppearsLater [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.FarDivergingTracks_AreNotEncounterWithCollisionRisk [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.ClosingVesselInOvertakingSector_HasStableRolesIndependentOfIds [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.EarlySubstantialTurn_WithInsufficientPassingDistance_DoesNotSatisfyR8 [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.StandOnMustAct_InConfiguredEmergencyWindow [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.EvidenceDcpaAndTcpa_ReuseExistingCpaCalculator [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.StandOnContinuousTurnAcrossEmergencyBoundary_DoesNotRequireAnotherTenDegreeTurn [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.EquivalentVelocities_AreDegenerateWithoutFalseCollisionRisk [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.NarrowChannel_IncludesR9AndExplicitUnavailableGeometry [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.RestrictedVisibility_TurnTowardVesselAbaftBeam_FailsR19(bearing: 135, ownFinalHeading: 20, turn: Starboard) [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.RestrictedVisibility_TurnTowardVesselAbaftBeam_FailsR19(bearing: 225, ownFinalHeading: 340, turn: Port) [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.EmptyTracks_ReturnFailedResult [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.ValidHeadingAndEnuVelocity_DoNotRequireAvailableCog [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.OvertakingSector_IsClosedAt112Point5And247Point5(bearing: 112.5) [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.OvertakingSector_IsClosedAt112Point5And247Point5(bearing: 112.51000000000001) [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.OvertakingSector_IsClosedAt112Point5And247Point5(bearing: 247.5) [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.OvertakingSector_IsClosedAt112Point5And247Point5(bearing: 247.49000000000001) [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.CogIsUsedWhenHeadingUnavailableOrExplicitlyFromCog [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.HeadOn_PortTurnFailsThatVesselsR14 [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.ConfiguredRestrictedVisibilityThreshold_IsApplied [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.RestrictedVisibilityBecomesClear_ProducesTimeBandsAtTransition [2 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.NonOverlappingTracks_ReturnFailedResult [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.RestrictedVisibilityOrExplicitNotInSight_TakesPrecedence(visibility: 1.8999999999999999, inSight: True) [< 1 ms]
+[xUnit.net 00:00:00.22]   Finished:    Mcis.W1.Colreg.Tests
+  Passed Mcis.Tests.W1.ColregEngineTests.RestrictedVisibilityOrExplicitNotInSight_TakesPrecedence(visibility: 8, inSight: False) [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.CaseEpochUtc_IsRetainedForDisplay [1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.StandOnPrematureCourseChange_DoesNotSatisfyR17 [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.Report_HasExactDisclaimerAndEveryCoreRuleAndActionPairing [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.LateSubstantialSafeTurn_DoesNotSatisfyEarlyActionRules [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.GiveWay_EarlySubstantialSafeStarboardTurn_SatisfiesR16AndR8 [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.CrossingRolesForVesselOnStarboard_DoNotDependOnVesselIds [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.CollinearOvertaking_RemainsUntilPassedAndClear [< 1 ms]
+  Passed Mcis.Tests.W1.ColregEngineTests.HeadingWraparound_RightTurnFrom355To15_IsTwentyDegrees [< 1 ms]
+
+Test Run Successful.
+Total tests: 54
+     Passed: 54
+ Total time: 0.5793 Seconds
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.
+     1>Done Building Project "/workspace/maritime-sim-design/unity/Tests_W1_Colreg/Mcis.W1.Colreg.Tests.csproj" (VSTest target(s)).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.21

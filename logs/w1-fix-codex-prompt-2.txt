@@ -1,0 +1,9 @@
+你在 /workspace/maritime-sim-design 做 W1（COLREG 规则引擎）返修第 2 阶段：实现修复，让测试变绿。
+先通读：DEFECTS/W1.md 全文（文末架构师裁定优先）、logs/w1-fix-spec.md（返修规格，必须遵守可改范围、API 兼容和“已知冲突”说明）、tests_acceptance/W1/*.cs（只读，绝对不可修改，目标是其中除规格所列 3 个冲突用例外全部通过，含 8 个 KnownDefect）、unity/Tests_W1_Colreg/ColregFixRegressionTests.cs（第 1 阶段写的失败测试，当前 50 项红；见 logs/w1-fix-red-selftest.txt 的失败输出）、unity/Tests_W1_Colreg/ColregEngineTests.cs、unity/Assets/_Project/Scripts/Domain/Colreg/*.cs。
+任务：在 unity/Assets/_Project/Scripts/Domain/Colreg/ 内实现规格第 1–9 项（局面/角色锁定、直航阶段单调、互见时间序列与距离推导、R19(d) 前提、论文默认阈值与 60 s 滑窗、R6/R19(b) NeedsReview、A3/A4 Doubt、R5/R6/R7/R9/R34_35 目录与 NotAssessable、InSight/BandId/CheckId/ReviewStatus=Draft/EvidenceIds/DangerStage/DangerStages）。
+- 保持确定性；保持现有 API；ColregEngine.cs 过大时可把新逻辑拆到 Colreg/ 下新文件，但不要做与本返修无关的重构。
+- 第 1 阶段的新测试若有确实与裁定或验收测试相矛盾之处，可以修改该自测并在注释写原因；但不得为了变绿而削弱对裁定的检查。现有自测里因默认阈值变化失效的，按裁定改期望或显式传阈值，注释写原因。
+- 自己逐个推演验收测试 tests_acceptance/W1 中每个用例在新逻辑下的结果（尤其 TimeBands_*、R13_*、R14_*、R16_*、R17_*、NoRisk_NoRolesAssigned、Determinism_*、Input_SingleSampleEach_SucceedsWithPartial、Thresholds_CollisionRiskDcpa_Configurable），避免回归。
+- 用 `/home/box/.dotnet/dotnet build unity/Tests_W1_Colreg/Mcis.W1.Colreg.Tests.csproj` 和 `/home/box/.dotnet/dotnet build tests_acceptance/W1/W1.Acceptance.csproj` 确认编译 0 错误。不要跑 dotnet test（沙箱 socket 失败，外部会跑并把失败反馈给你）。
+- 不改 tests_acceptance/、DEFECTS/、contracts/、Colreg 以外的源码；不打印密钥或环境变量。
+最后输出：每个缺陷 D01–D08 与裁定 A3/A4/A5 的实现说明（各一两句）、改动/新增文件列表、你预期仍会失败的验收用例及原因、任何未解决项。

@@ -1,0 +1,582 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Mcis.W1.Colreg.Tests -> /workspace/maritime-sim-design/unity/Tests_W1_Colreg/bin/Debug/net8.0/Mcis.W1.Colreg.Tests.dll
+Test run for /workspace/maritime-sim-design/unity/Tests_W1_Colreg/bin/Debug/net8.0/Mcis.W1.Colreg.Tests.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.23]     Mcis.Tests.W1.ColregEngineTests.RestrictedVisibilityOrExplicitNotInSight_TakesPrecedence(visibility: 1.8999999999999999, inSight: True, expected: HeadOn) [FAIL]
+[xUnit.net 00:00:00.24]     Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultSpeedChange_UsesThirtyPercentOfInitialSpeed(initialSpeed: 10, reduction: 2, substantial: False) [FAIL]
+[xUnit.net 00:00:00.24]     Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultSpeedChange_UsesThirtyPercentOfInitialSpeed(initialSpeed: 5, reduction: 1, substantial: False) [FAIL]
+  Failed Mcis.Tests.W1.ColregEngineTests.RestrictedVisibilityOrExplicitNotInSight_TakesPrecedence(visibility: 1.8999999999999999, inSight: True, expected: HeadOn) [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: HeadOn
+Actual:   RestrictedVisibility
+  Stack Trace:
+     at Mcis.Tests.W1.ColregEngineTests.RestrictedVisibilityOrExplicitNotInSight_TakesPrecedence(Double visibility, Boolean inSight, EncounterSituation expected) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregEngineTests.cs:line 98
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultSpeedChange_UsesThirtyPercentOfInitialSpeed(initialSpeed: 10, reduction: 2, substantial: False) [42 ms]
+  Error Message:
+   Assert.All() Failure: 1 out of 1 items in the collection did not pass.
+[0]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R8", EndTime = 80.000s, ··· }
+     Error: Assert.Contains() Failure: Sub-string not found
+            String:    "及早=True；明显行动=True；安全驶过代理=False；按本阶段全部观测段的"···
+            Not found: "明显行动=False"
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.AssertSubstantial(ColregAnalysisReport report, Boolean expected) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 524
+   at Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultSpeedChange_UsesThirtyPercentOfInitialSpeed(Double initialSpeed, Double reduction, Boolean substantial) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 228
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultSpeedChange_UsesThirtyPercentOfInitialSpeed(initialSpeed: 5, reduction: 1, substantial: False) [1 ms]
+  Error Message:
+   Assert.All() Failure: 1 out of 1 items in the collection did not pass.
+[0]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R8", EndTime = 80.000s, ··· }
+     Error: Assert.Contains() Failure: Sub-string not found
+            String:    "及早=True；明显行动=True；安全驶过代理=False；按本阶段全部观测段的"···
+            Not found: "明显行动=False"
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.AssertSubstantial(ColregAnalysisReport report, Boolean expected) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 524
+   at Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultSpeedChange_UsesThirtyPercentOfInitialSpeed(Double initialSpeed, Double reduction, Boolean substantial) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 228
+   at InvokeStub_ColregFixRegressionTests.A5_DefaultSpeedChange_UsesThirtyPercentOfInitialSpeed(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.24]     Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultSpeedChange_UsesThirtyPercentOfInitialSpeed(initialSpeed: 2, reduction: 0.59999999999999998, substantial: True) [FAIL]
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultSpeedChange_UsesThirtyPercentOfInitialSpeed(initialSpeed: 2, reduction: 0.59999999999999998, substantial: True) [1 ms]
+  Error Message:
+   Assert.Contains() Failure: Filter not matched in collection
+Collection: [ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R8", EndTime = 80.000s, ··· }]
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.AssertSubstantial(ColregAnalysisReport report, Boolean expected) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 522
+   at Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultSpeedChange_UsesThirtyPercentOfInitialSpeed(Double initialSpeed, Double reduction, Boolean substantial) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 228
+   at InvokeStub_ColregFixRegressionTests.A5_DefaultSpeedChange_UsesThirtyPercentOfInitialSpeed(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.24]     Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultRisk_UsesOneNmAndTwelveMinuteLimits(dcpaNm: 0.75, tcpa: 600, risk: True) [FAIL]
+[xUnit.net 00:00:00.24]     Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultRisk_UsesOneNmAndTwelveMinuteLimits(dcpaNm: 0.20000000000000001, tcpa: 721, risk: False) [FAIL]
+[xUnit.net 00:00:00.24]     Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultRisk_UsesOneNmAndTwelveMinuteLimits(dcpaNm: 0.999, tcpa: 720, risk: True) [FAIL]
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultRisk_UsesOneNmAndTwelveMinuteLimits(dcpaNm: 0.75, tcpa: 600, risk: True) [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: True
+Actual:   False
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultRisk_UsesOneNmAndTwelveMinuteLimits(Double dcpaNm, Double tcpa, Boolean risk) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 184
+   at InvokeStub_ColregFixRegressionTests.A5_DefaultRisk_UsesOneNmAndTwelveMinuteLimits(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultRisk_UsesOneNmAndTwelveMinuteLimits(dcpaNm: 0.20000000000000001, tcpa: 721, risk: False) [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: False
+Actual:   True
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultRisk_UsesOneNmAndTwelveMinuteLimits(Double dcpaNm, Double tcpa, Boolean risk) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 184
+   at InvokeStub_ColregFixRegressionTests.A5_DefaultRisk_UsesOneNmAndTwelveMinuteLimits(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultRisk_UsesOneNmAndTwelveMinuteLimits(dcpaNm: 0.999, tcpa: 720, risk: True) [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: True
+Actual:   False
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultRisk_UsesOneNmAndTwelveMinuteLimits(Double dcpaNm, Double tcpa, Boolean risk) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 184
+   at InvokeStub_ColregFixRegressionTests.A5_DefaultRisk_UsesOneNmAndTwelveMinuteLimits(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.24]     Mcis.Tests.W1.ColregFixRegressionTests.A5_R19b_IsNeedsReviewWithObservedSpeedAndVisibility(speed: 7, hint: 8) [FAIL]
+[xUnit.net 00:00:00.24]     Mcis.Tests.W1.ColregFixRegressionTests.A5_R19b_IsNeedsReviewWithObservedSpeedAndVisibility(speed: 4, hint: 5) [FAIL]
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_R19b_IsNeedsReviewWithObservedSpeedAndVisibility(speed: 7, hint: 8) [1 ms]
+  Error Message:
+   Assert.All() Failure: 1 out of 1 items in the collection did not pass.
+[0]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R19(b)", EndTime = 30.000s, ··· }
+     Error: Assert.Equal() Failure: Values differ
+            Expected: NeedsReview
+            Actual:   Satisfied
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.AssertReviewEvidence(ColregRuleCheck[] checks, Double speed, Double visibility) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 508
+   at Mcis.Tests.W1.ColregFixRegressionTests.A5_R19b_IsNeedsReviewWithObservedSpeedAndVisibility(Double speed, Double hint) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 274
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_R19b_IsNeedsReviewWithObservedSpeedAndVisibility(speed: 4, hint: 5) [< 1 ms]
+  Error Message:
+   Assert.All() Failure: 1 out of 1 items in the collection did not pass.
+[0]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R19(b)", EndTime = 30.000s, ··· }
+     Error: Assert.Equal() Failure: Values differ
+            Expected: NeedsReview
+            Actual:   Satisfied
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.AssertReviewEvidence(ColregRuleCheck[] checks, Double speed, Double visibility) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 508
+   at Mcis.Tests.W1.ColregFixRegressionTests.A5_R19b_IsNeedsReviewWithObservedSpeedAndVisibility(Double speed, Double hint) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 274
+   at InvokeStub_ColregFixRegressionTests.A5_R19b_IsNeedsReviewWithObservedSpeedAndVisibility(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.24]     Mcis.Tests.W1.ColregFixRegressionTests.A5_R19b_IsNeedsReviewWithObservedSpeedAndVisibility(speed: 7, hint: 5) [FAIL]
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_R19b_IsNeedsReviewWithObservedSpeedAndVisibility(speed: 7, hint: 5) [< 1 ms]
+  Error Message:
+   Assert.All() Failure: 1 out of 1 items in the collection did not pass.
+[0]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R19(b)", EndTime = 30.000s, ··· }
+     Error: Assert.Equal() Failure: Values differ
+            Expected: NeedsReview
+            Actual:   NotSatisfied
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.AssertReviewEvidence(ColregRuleCheck[] checks, Double speed, Double visibility) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 508
+   at Mcis.Tests.W1.ColregFixRegressionTests.A5_R19b_IsNeedsReviewWithObservedSpeedAndVisibility(Double speed, Double hint) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 274
+   at InvokeStub_ColregFixRegressionTests.A5_R19b_IsNeedsReviewWithObservedSpeedAndVisibility(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.24]     Mcis.Tests.W1.ColregFixRegressionTests.A5_CloseQuarters_UsesPointThreeNmAndSixMinuteLimits(dcpaNm: 0.29899999999999999, tcpa: 61, stage: CloseQuarters) [FAIL]
+[xUnit.net 00:00:00.24]     Mcis.Tests.W1.ColregFixRegressionTests.A5_CloseQuarters_UsesPointThreeNmAndSixMinuteLimits(dcpaNm: 0.29899999999999999, tcpa: 360, stage: CloseQuarters) [FAIL]
+[xUnit.net 00:00:00.24]     Mcis.Tests.W1.ColregFixRegressionTests.A5_CloseQuarters_UsesPointThreeNmAndSixMinuteLimits(dcpaNm: 0.29999999999999999, tcpa: 360, stage: CollisionRisk) [FAIL]
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.A5_CloseQuarters_UsesPointThreeNmAndSixMinuteLimits(dcpaNm: 0.29899999999999999, tcpa: 60, stage: ImmediateDanger) [FAIL]
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.A5_CloseQuarters_UsesPointThreeNmAndSixMinuteLimits(dcpaNm: 0.29899999999999999, tcpa: 361, stage: CollisionRisk) [FAIL]
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_CloseQuarters_UsesPointThreeNmAndSixMinuteLimits(dcpaNm: 0.29899999999999999, tcpa: 61, stage: CloseQuarters) [2 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: CloseQuarters
+Actual:   None
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.A5_CloseQuarters_UsesPointThreeNmAndSixMinuteLimits(Double dcpaNm, Double tcpa, ColregDangerStage stage) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 203
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_CloseQuarters_UsesPointThreeNmAndSixMinuteLimits(dcpaNm: 0.29899999999999999, tcpa: 360, stage: CloseQuarters) [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: CloseQuarters
+Actual:   None
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.A5_CloseQuarters_UsesPointThreeNmAndSixMinuteLimits(Double dcpaNm, Double tcpa, ColregDangerStage stage) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 203
+   at InvokeStub_ColregFixRegressionTests.A5_CloseQuarters_UsesPointThreeNmAndSixMinuteLimits(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_CloseQuarters_UsesPointThreeNmAndSixMinuteLimits(dcpaNm: 0.29999999999999999, tcpa: 360, stage: CollisionRisk) [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: CollisionRisk
+Actual:   None
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.A5_CloseQuarters_UsesPointThreeNmAndSixMinuteLimits(Double dcpaNm, Double tcpa, ColregDangerStage stage) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 203
+   at InvokeStub_ColregFixRegressionTests.A5_CloseQuarters_UsesPointThreeNmAndSixMinuteLimits(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_CloseQuarters_UsesPointThreeNmAndSixMinuteLimits(dcpaNm: 0.29899999999999999, tcpa: 60, stage: ImmediateDanger) [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: ImmediateDanger
+Actual:   None
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.A5_CloseQuarters_UsesPointThreeNmAndSixMinuteLimits(Double dcpaNm, Double tcpa, ColregDangerStage stage) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 203
+   at InvokeStub_ColregFixRegressionTests.A5_CloseQuarters_UsesPointThreeNmAndSixMinuteLimits(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_CloseQuarters_UsesPointThreeNmAndSixMinuteLimits(dcpaNm: 0.29899999999999999, tcpa: 361, stage: CollisionRisk) [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: CollisionRisk
+Actual:   None
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.A5_CloseQuarters_UsesPointThreeNmAndSixMinuteLimits(Double dcpaNm, Double tcpa, ColregDangerStage stage) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 203
+   at InvokeStub_ColregFixRegressionTests.A5_CloseQuarters_UsesPointThreeNmAndSixMinuteLimits(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.D08_Ids_AreNonEmptyUniqueStableAndCaseScoped [FAIL]
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.A5_D07_R6_IsNeedsReviewWithObservedSpeedAndVisibility(speed: 7, hint: 5) [FAIL]
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.A5_D07_R6_IsNeedsReviewWithObservedSpeedAndVisibility(speed: 7, hint: 8) [FAIL]
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.A5_D07_R6_IsNeedsReviewWithObservedSpeedAndVisibility(speed: 4, hint: 5) [FAIL]
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D08_Ids_AreNonEmptyUniqueStableAndCaseScoped [3 ms]
+  Error Message:
+   Assert.All() Failure: 2 out of 2 items in the collection did not pass.
+[0]: Item:  null
+     Error: Assert.False() Failure
+            Expected: False
+            Actual:   True
+[1]: Item:  null
+     Error: Assert.False() Failure
+            Expected: False
+            Actual:   True
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.AssertIds(IEnumerable`1 ids) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 535
+   at Mcis.Tests.W1.ColregFixRegressionTests.D08_Ids_AreNonEmptyUniqueStableAndCaseScoped() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 449
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_D07_R6_IsNeedsReviewWithObservedSpeedAndVisibility(speed: 7, hint: 5) [< 1 ms]
+  Error Message:
+   Assert.NotEmpty() Failure: Collection was empty
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.AssertReviewEvidence(ColregRuleCheck[] checks, Double speed, Double visibility) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 507
+   at Mcis.Tests.W1.ColregFixRegressionTests.A5_D07_R6_IsNeedsReviewWithObservedSpeedAndVisibility(Double speed, Double hint) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 369
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_D07_R6_IsNeedsReviewWithObservedSpeedAndVisibility(speed: 7, hint: 8) [< 1 ms]
+  Error Message:
+   Assert.NotEmpty() Failure: Collection was empty
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.AssertReviewEvidence(ColregRuleCheck[] checks, Double speed, Double visibility) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 507
+   at Mcis.Tests.W1.ColregFixRegressionTests.A5_D07_R6_IsNeedsReviewWithObservedSpeedAndVisibility(Double speed, Double hint) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 369
+   at InvokeStub_ColregFixRegressionTests.A5_D07_R6_IsNeedsReviewWithObservedSpeedAndVisibility(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_D07_R6_IsNeedsReviewWithObservedSpeedAndVisibility(speed: 4, hint: 5) [< 1 ms]
+  Error Message:
+   Assert.NotEmpty() Failure: Collection was empty
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.AssertReviewEvidence(ColregRuleCheck[] checks, Double speed, Double visibility) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 507
+   at Mcis.Tests.W1.ColregFixRegressionTests.A5_D07_R6_IsNeedsReviewWithObservedSpeedAndVisibility(Double speed, Double hint) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 369
+   at InvokeStub_ColregFixRegressionTests.A5_D07_R6_IsNeedsReviewWithObservedSpeedAndVisibility(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.A4_ReciprocalWithinDoubtSector_IsHeadOnWithDoubt(bearing: 22.5) [FAIL]
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.A4_ReciprocalWithinDoubtSector_IsHeadOnWithDoubt(bearing: -22.5) [FAIL]
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.A4_ReciprocalWithinDoubtSector_IsHeadOnWithDoubt(bearing: -20) [FAIL]
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.A4_ReciprocalWithinDoubtSector_IsHeadOnWithDoubt(bearing: 20) [FAIL]
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.D07_R9_NarrowWithoutCenterline_IsNotAssessable [FAIL]
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A4_ReciprocalWithinDoubtSector_IsHeadOnWithDoubt(bearing: 22.5) [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: HeadOn
+Actual:   Crossing
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.A4_ReciprocalWithinDoubtSector_IsHeadOnWithDoubt(Double bearing) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 310
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A4_ReciprocalWithinDoubtSector_IsHeadOnWithDoubt(bearing: -22.5) [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: HeadOn
+Actual:   Crossing
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.A4_ReciprocalWithinDoubtSector_IsHeadOnWithDoubt(Double bearing) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 310
+   at InvokeStub_ColregFixRegressionTests.A4_ReciprocalWithinDoubtSector_IsHeadOnWithDoubt(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A4_ReciprocalWithinDoubtSector_IsHeadOnWithDoubt(bearing: -20) [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: HeadOn
+Actual:   Crossing
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.A4_ReciprocalWithinDoubtSector_IsHeadOnWithDoubt(Double bearing) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 310
+   at InvokeStub_ColregFixRegressionTests.A4_ReciprocalWithinDoubtSector_IsHeadOnWithDoubt(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A4_ReciprocalWithinDoubtSector_IsHeadOnWithDoubt(bearing: 20) [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: HeadOn
+Actual:   Crossing
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.A4_ReciprocalWithinDoubtSector_IsHeadOnWithDoubt(Double bearing) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 310
+   at InvokeStub_ColregFixRegressionTests.A4_ReciprocalWithinDoubtSector_IsHeadOnWithDoubt(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D07_R9_NarrowWithoutCenterline_IsNotAssessable [< 1 ms]
+  Error Message:
+   Assert.All() Failure: 1 out of 1 items in the collection did not pass.
+[0]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R9(a)", EndTime = 10.000s, ··· }
+     Error: Assert.Equal() Failure: Values differ
+            Expected: NotAssessable
+            Actual:   NotApplicable
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D07_R9_NarrowWithoutCenterline_IsNotAssessable() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 394
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.D07_R7_UsesCpaSequenceAtFirstRiskTime [FAIL]
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultSubstantialTurn_RequiresThirtyDegrees(turn: 29, substantial: False) [FAIL]
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.D07_R9_ChannelPolyline_JudgesRightSideAlongLocalTravelDirection(east: 1000, north: 1100, heading: 90, expected: NotSatisfied) [FAIL]
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.D07_R9_ChannelPolyline_JudgesRightSideAlongLocalTravelDirection(east: -100, north: 0, heading: 0, expected: NotSatisfied) [FAIL]
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.D07_R9_ChannelPolyline_JudgesRightSideAlongLocalTravelDirection(east: 1000, north: 900, heading: 90, expected: Satisfied) [FAIL]
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D07_R7_UsesCpaSequenceAtFirstRiskTime [< 1 ms]
+  Error Message:
+   Assert.NotEmpty() Failure: Collection was empty
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D07_R7_UsesCpaSequenceAtFirstRiskTime() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 378
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultSubstantialTurn_RequiresThirtyDegrees(turn: 29, substantial: False) [< 1 ms]
+  Error Message:
+   Assert.All() Failure: 1 out of 1 items in the collection did not pass.
+[0]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R8", EndTime = 80.000s, ··· }
+     Error: Assert.Contains() Failure: Sub-string not found
+            String:    "及早=True；明显行动=True；安全驶过代理=False；按本阶段全部观测段的"···
+            Not found: "明显行动=False"
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.AssertSubstantial(ColregAnalysisReport report, Boolean expected) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 524
+   at Mcis.Tests.W1.ColregFixRegressionTests.A5_DefaultSubstantialTurn_RequiresThirtyDegrees(Double turn, Boolean substantial) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 214
+   at InvokeStub_ColregFixRegressionTests.A5_DefaultSubstantialTurn_RequiresThirtyDegrees(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D07_R9_ChannelPolyline_JudgesRightSideAlongLocalTravelDirection(east: 1000, north: 1100, heading: 90, expected: NotSatisfied) [1 ms]
+  Error Message:
+   Assert.All() Failure: 1 out of 1 items in the collection did not pass.
+[0]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R9(a)", EndTime = 10.000s, ··· }
+     Error: Assert.Equal() Failure: Values differ
+            Expected: NotSatisfied
+            Actual:   NotApplicable
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D07_R9_ChannelPolyline_JudgesRightSideAlongLocalTravelDirection(Double east, Double north, Double heading, RuleCheckStatus expected) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 418
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D07_R9_ChannelPolyline_JudgesRightSideAlongLocalTravelDirection(east: -100, north: 0, heading: 0, expected: NotSatisfied) [< 1 ms]
+  Error Message:
+   Assert.All() Failure: 1 out of 1 items in the collection did not pass.
+[0]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R9(a)", EndTime = 10.000s, ··· }
+     Error: Assert.Equal() Failure: Values differ
+            Expected: NotSatisfied
+            Actual:   NotApplicable
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D07_R9_ChannelPolyline_JudgesRightSideAlongLocalTravelDirection(Double east, Double north, Double heading, RuleCheckStatus expected) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 418
+   at InvokeStub_ColregFixRegressionTests.D07_R9_ChannelPolyline_JudgesRightSideAlongLocalTravelDirection(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D07_R9_ChannelPolyline_JudgesRightSideAlongLocalTravelDirection(east: 1000, north: 900, heading: 90, expected: Satisfied) [< 1 ms]
+  Error Message:
+   Assert.All() Failure: 1 out of 1 items in the collection did not pass.
+[0]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R9(a)", EndTime = 10.000s, ··· }
+     Error: Assert.Equal() Failure: Values differ
+            Expected: Satisfied
+            Actual:   NotApplicable
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D07_R9_ChannelPolyline_JudgesRightSideAlongLocalTravelDirection(Double east, Double north, Double heading, RuleCheckStatus expected) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 418
+   at InvokeStub_ColregFixRegressionTests.D07_R9_ChannelPolyline_JudgesRightSideAlongLocalTravelDirection(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.D07_R9_ChannelPolyline_JudgesRightSideAlongLocalTravelDirection(east: 100, north: 0, heading: 0, expected: Satisfied) [FAIL]
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.D04_DistanceWithinVisibility_DerivesHeadOnIncludingEquality [FAIL]
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.D06_StandOnIndependentAction_IsNotFragmentedIntoViolations [FAIL]
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.D05_R19d_WithoutRiskOrCloseQuarters_IsNotApplicable(east: 4000, north: 4000, heading: 180, turnTo: 340) [FAIL]
+[xUnit.net 00:00:00.25]     Mcis.Tests.W1.ColregFixRegressionTests.D05_R19d_WithoutRiskOrCloseQuarters_IsNotApplicable(east: 4000, north: -4000, heading: 0, turnTo: 20) [FAIL]
+[xUnit.net 00:00:00.26]     Mcis.Tests.W1.ColregFixRegressionTests.D04_InSightSeries_SplitsExactlyAndOverridesScalar [FAIL]
+[xUnit.net 00:00:00.26]     Mcis.Tests.W1.ColregFixRegressionTests.A5_TurnWindow_DoesNotAccumulateSmallTurnsAcrossSixtySeconds [FAIL]
+[xUnit.net 00:00:00.26]     Mcis.Tests.W1.ColregFixRegressionTests.D07_LookoutAndSignals_AreNotAssessableWithRequiredEvidence [FAIL]
+[xUnit.net 00:00:00.26]     Mcis.Tests.W1.ColregFixRegressionTests.D08_Bands_ExposeInSightRolesAndBasis [FAIL]
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D07_R9_ChannelPolyline_JudgesRightSideAlongLocalTravelDirection(east: 100, north: 0, heading: 0, expected: Satisfied) [< 1 ms]
+  Error Message:
+   Assert.All() Failure: 1 out of 1 items in the collection did not pass.
+[0]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R9(a)", EndTime = 10.000s, ··· }
+     Error: Assert.Equal() Failure: Values differ
+            Expected: Satisfied
+            Actual:   NotApplicable
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D07_R9_ChannelPolyline_JudgesRightSideAlongLocalTravelDirection(Double east, Double north, Double heading, RuleCheckStatus expected) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 418
+   at InvokeStub_ColregFixRegressionTests.D07_R9_ChannelPolyline_JudgesRightSideAlongLocalTravelDirection(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D04_DistanceWithinVisibility_DerivesHeadOnIncludingEquality [3 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: False
+Actual:   null
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D04_DistanceWithinVisibility_DerivesHeadOnIncludingEquality() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 143
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D06_StandOnIndependentAction_IsNotFragmentedIntoViolations [3 ms]
+  Error Message:
+   Assert.DoesNotContain() Failure: Filter matched in collection
+             ↓ (pos 0)
+Collection: [ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R17(a)(ii)", EndTime = 230.000s, ··· }, ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R17(a)(i)", EndTime = 240.000s, ··· }]
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D06_StandOnIndependentAction_IsNotFragmentedIntoViolations() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 81
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D05_R19d_WithoutRiskOrCloseQuarters_IsNotApplicable(east: 4000, north: 4000, heading: 180, turnTo: 340) [1 ms]
+  Error Message:
+   Assert.All() Failure: 1 out of 2 items in the collection did not pass.
+[0]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R19(d)(i)", EndTime = 200.000s, ··· }
+     Error: Assert.Equal() Failure: Values differ
+            Expected: NotApplicable
+            Actual:   NotSatisfied
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D05_R19d_WithoutRiskOrCloseQuarters_IsNotApplicable(Double east, Double north, Double heading, Double turnTo) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 170
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D05_R19d_WithoutRiskOrCloseQuarters_IsNotApplicable(east: 4000, north: -4000, heading: 0, turnTo: 20) [< 1 ms]
+  Error Message:
+   Assert.All() Failure: 1 out of 2 items in the collection did not pass.
+[1]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R19(d)(ii)", EndTime = 200.000s, ··· }
+     Error: Assert.Equal() Failure: Values differ
+            Expected: NotApplicable
+            Actual:   NotSatisfied
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D05_R19d_WithoutRiskOrCloseQuarters_IsNotApplicable(Double east, Double north, Double heading, Double turnTo) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 170
+   at InvokeStub_ColregFixRegressionTests.D05_R19d_WithoutRiskOrCloseQuarters_IsNotApplicable(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D04_InSightSeries_SplitsExactlyAndOverridesScalar [13 ms]
+  Error Message:
+   Assert.Equal() Failure: Collections differ
+                                 ↓ (pos 1)
+Expected: [RestrictedVisibility, HeadOn, RestrictedVisibility, HeadOn]
+Actual:   [RestrictedVisibility]
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D04_InSightSeries_SplitsExactlyAndOverridesScalar() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 108
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_TurnWindow_DoesNotAccumulateSmallTurnsAcrossSixtySeconds [1 ms]
+  Error Message:
+   Assert.All() Failure: 1 out of 1 items in the collection did not pass.
+[0]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R8", EndTime = 260.000s, ··· }
+     Error: Assert.Contains() Failure: Sub-string not found
+            String:    "及早=True；明显行动=True；安全驶过代理=False；按本阶段全部观测段的"···
+            Not found: "明显行动=False"
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.AssertSubstantial(ColregAnalysisReport report, Boolean expected) in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 524
+   at Mcis.Tests.W1.ColregFixRegressionTests.A5_TurnWindow_DoesNotAccumulateSmallTurnsAcrossSixtySeconds() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 238
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D07_LookoutAndSignals_AreNotAssessableWithRequiredEvidence [< 1 ms]
+  Error Message:
+   Assert.NotEmpty() Failure: Collection was empty
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D07_LookoutAndSignals_AreNotAssessableWithRequiredEvidence() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 349
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D08_Bands_ExposeInSightRolesAndBasis [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: True
+Actual:   null
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D08_Bands_ExposeInSightRolesAndBasis() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 426
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.26]     Mcis.Tests.W1.ColregFixRegressionTests.D04_BecomingInSight_ReclassifiesOnceThenLocks [FAIL]
+[xUnit.net 00:00:00.26]     Mcis.Tests.W1.ColregFixRegressionTests.A4_DoubtBearing_IsConfigurableAndExcludesThirtyDegreesByDefault [FAIL]
+[xUnit.net 00:00:00.26]     Mcis.Tests.W1.ColregFixRegressionTests.D07_Catalog_IncludesAllRequiredRules [FAIL]
+[xUnit.net 00:00:00.27]     Mcis.Tests.W1.ColregFixRegressionTests.D01_CrossingRoles_RemainLockedDuringGiveWayTurn [FAIL]
+[xUnit.net 00:00:00.27]     Mcis.Tests.W1.ColregFixRegressionTests.A3_ConflictingCrossingPerspectives_MarksDoubtAndBasis [FAIL]
+[xUnit.net 00:00:00.27]     Mcis.Tests.W1.ColregFixRegressionTests.A3_BowAxisCrossing_UsesOtherVesselPerspective [FAIL]
+[xUnit.net 00:00:00.27]     Mcis.Tests.W1.ColregFixRegressionTests.D08_Checks_AreDraftAndPreserveEvidenceIdsVerbatim [FAIL]
+[xUnit.net 00:00:00.27]     Mcis.Tests.W1.ColregFixRegressionTests.D03_ExplicitInSight_AppliesR14InPoorVisibility [FAIL]
+[xUnit.net 00:00:00.28]     Mcis.Tests.W1.ColregFixRegressionTests.A5_NewThresholds_ChangeRiskStageAndActionAndAppearInAssumptions [FAIL]
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D04_BecomingInSight_ReclassifiesOnceThenLocks [1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values are not within 6 decimal places
+Expected: 103 (rounded from 103)
+Actual:   0 (rounded from 0)
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D04_BecomingInSight_ReclassifiesOnceThenLocks() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 124
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A4_DoubtBearing_IsConfigurableAndExcludesThirtyDegreesByDefault [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: HeadOn
+Actual:   Crossing
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.A4_DoubtBearing_IsConfigurableAndExcludesThirtyDegreesByDefault() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 324
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D07_Catalog_IncludesAllRequiredRules [1 ms]
+  Error Message:
+   Assert.Contains() Failure: Filter not matched in collection
+Collection: [ColregRuleDefinition { Id = R8, Summary = "行动应及早、明显，并使船舶在安全距离驶过；须核查行动效果。", Title = "避免碰撞的行动" }, ColregRuleDefinition { Id = R9, Summary = "尽量靠近本船右舷的航道外缘行驶；缺少航道几何时保留核查项并说明限制。", Title = "狭水道" }, ColregRuleDefinition { Id = R13, Summary = "追越船应让清被追越船；存疑按追越处理，并保持至驶过让清。", Title = "追越" }, ColregRuleDefinition { Id = R14, Summary = "有碰撞危险的互见机动船对遇时，双方均应向右转向。", Title = "对遇" }, ColregRuleDefinition { Id = R15, Summary = "他船在本船右舷时本船应让路，并避免横越他船前方。", Title = "交叉相遇" }, ···]
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D07_Catalog_IncludesAllRequiredRules() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 335
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D01_CrossingRoles_RemainLockedDuringGiveWayTurn [2 ms]
+  Error Message:
+   Assert.All() Failure: 1 out of 2 items in the collection did not pass.
+[1]: Item:  ColregTimeBand { ApplicableRules = [R8, R15, R16, R17], BandId = null, Basis = null, DangerStage = None, Doubt = False, ··· }
+     Error: Assert.Equal() Failure: Values differ
+            Expected: GiveWay
+            Actual:   StandOn
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D01_CrossingRoles_RemainLockedDuringGiveWayTurn() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 32
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A3_ConflictingCrossingPerspectives_MarksDoubtAndBasis [< 1 ms]
+  Error Message:
+   Assert.True() Failure
+Expected: True
+Actual:   False
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.A3_ConflictingCrossingPerspectives_MarksDoubtAndBasis() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 297
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A3_BowAxisCrossing_UsesOtherVesselPerspective [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: GiveWay
+Actual:   StandOn
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.A3_BowAxisCrossing_UsesOtherVesselPerspective() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 286
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D08_Checks_AreDraftAndPreserveEvidenceIdsVerbatim [4 ms]
+  Error Message:
+   Assert.All() Failure: 16 out of 16 items in the collection did not pass.
+[0]:  Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R8", EndTime = 100.000s, ··· }
+      Error: Assert.NotNull() Failure: Value is null
+[1]:  Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R9(a)", EndTime = 100.000s, ··· }
+      Error: Assert.NotNull() Failure: Value is null
+[2]:  Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R13", EndTime = 100.000s, ··· }
+      Error: Assert.NotNull() Failure: Value is null
+[3]:  Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R14", EndTime = 100.000s, ··· }
+      Error: Assert.NotNull() Failure: Value is null
+[4]:  Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R15", EndTime = 100.000s, ··· }
+      Error: Assert.NotNull() Failure: Value is null
+[5]:  Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R16", EndTime = 100.000s, ··· }
+      Error: Assert.NotNull() Failure: Value is null
+[6]:  Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R17", EndTime = 100.000s, ··· }
+      Error: Assert.NotNull() Failure: Value is null
+[7]:  Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R19", EndTime = 100.000s, ··· }
+      Error: Assert.NotNull() Failure: Value is null
+[8]:  Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R8", EndTime = 100.000s, ··· }
+      Error: Assert.NotNull() Failure: Value is null
+[9]:  Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R9(a)", EndTime = 100.000s, ··· }
+      Error: Assert.NotNull() Failure: Value is null
+[10]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R13", EndTime = 100.000s, ··· }
+      Error: Assert.NotNull() Failure: Value is null
+[11]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R14", EndTime = 100.000s, ··· }
+      Error: Assert.NotNull() Failure: Value is null
+[12]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R15", EndTime = 100.000s, ··· }
+      Error: Assert.NotNull() Failure: Value is null
+[13]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R16", EndTime = 100.000s, ··· }
+      Error: Assert.NotNull() Failure: Value is null
+[14]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R17(a)(i)", EndTime = 100.000s, ··· }
+      Error: Assert.NotNull() Failure: Value is null
+[15]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = null, CheckId = null, Clause = "R19", EndTime = 100.000s, ··· }
+      Error: Assert.NotNull() Failure: Value is null
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D08_Checks_AreDraftAndPreserveEvidenceIdsVerbatim() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 475
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D03_ExplicitInSight_AppliesR14InPoorVisibility [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: HeadOn
+Actual:   RestrictedVisibility
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D03_ExplicitInSight_AppliesR14InPoorVisibility() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 95
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.A5_NewThresholds_ChangeRiskStageAndActionAndAppearInAssumptions [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: NoCollisionRisk
+Actual:   HeadOn
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.A5_NewThresholds_ChangeRiskStageAndActionAndAppearInAssumptions() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 250
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.28]     Mcis.Tests.W1.ColregFixRegressionTests.D02_HeadOnStarboardTurn_KeepsBothActionRolesUntilRiskClears [FAIL]
+[xUnit.net 00:00:00.28]     Mcis.Tests.W1.ColregFixRegressionTests.D01_StandOnTurn_DoesNotCreateOvertakingBeforeRiskClears [FAIL]
+[xUnit.net 00:00:00.28]     Mcis.Tests.W1.ColregFixRegressionTests.D08_DangerStages_ProgressWithoutSplittingLockedSituation [FAIL]
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D02_HeadOnStarboardTurn_KeepsBothActionRolesUntilRiskClears [2 ms]
+  Error Message:
+   Assert.All() Failure: 1 out of 2 items in the collection did not pass.
+[1]: Item:  ColregTimeBand { ApplicableRules = [R8, R15, R16, R17], BandId = null, Basis = null, DangerStage = None, Doubt = False, ··· }
+     Error: Assert.Equal() Failure: Values differ
+            Expected: HeadOn
+            Actual:   Crossing
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D02_HeadOnStarboardTurn_KeepsBothActionRolesUntilRiskClears() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 63
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D01_StandOnTurn_DoesNotCreateOvertakingBeforeRiskClears [1 ms]
+  Error Message:
+   Assert.All() Failure: 1 out of 2 items in the collection did not pass.
+[1]: Item:  ColregTimeBand { ApplicableRules = [R8, R13, R16, R17], BandId = null, Basis = null, DangerStage = None, Doubt = False, ··· }
+     Error: Assert.Equal() Failure: Values differ
+            Expected: Crossing
+            Actual:   Overtaking
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D01_StandOnTurn_DoesNotCreateOvertakingBeforeRiskClears() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 49
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Tests.W1.ColregFixRegressionTests.D08_DangerStages_ProgressWithoutSplittingLockedSituation [1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: ImmediateDanger
+Actual:   None
+  Stack Trace:
+     at Mcis.Tests.W1.ColregFixRegressionTests.D08_DangerStages_ProgressWithoutSplittingLockedSituation() in /workspace/maritime-sim-design/unity/Tests_W1_Colreg/ColregFixRegressionTests.cs:line 491
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+Failed!  - Failed:    50, Passed:    61, Skipped:     0, Total:   111, Duration: 99 ms - Mcis.W1.Colreg.Tests.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

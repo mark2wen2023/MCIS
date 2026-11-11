@@ -1,0 +1,30 @@
+        for fmt in ('json', 'csv'):
+            response = client.get(f'{C}/gisis/export?format={fmt}', headers=H())
+            assert response.status_code == 200
+            assert response.headers['x-sha256'] == hashlib.sha256(response.content).hexdigest()
+            if fmt == 'json':
+                assert response.json()['fields'] == doc['fields']
+            else:
+                rows = list(csv.DictReader(io.StringIO(response.content.decode('utf-8-sig'))))
+                deaths = next(row for row in rows if row['id'] == 'deaths')
+                assert deaths['value'] == 'null' and deaths['missing'] == 'true'
+        events = client.get(f'{C}/audit', headers=H('LeadInvestigator'), params={'category': 'Report'}).json()
+>       assert len(events) >= 5
+E       AssertionError: assert 4 >= 5
+E        +  where 4 = len([{'seq': 57, 'caseId': 'CASE-2026-DEMO-LILY-MARY', 'utc': '2026-11-11T13:46:56Z', 'operator': '调查员', ...}, {'seq': 58,... '调查员', ...}, {'seq': 60, 'caseId': 'CASE-2026-DEMO-LILY-MARY', 'utc': '2026-11-11T13:46:56Z', 'operator': '调查员', ...}])
+
+tests/test_reports_w16.py:213: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_contracts.py::test_openapi_yaml_matches_routes - AssertionE...
+FAILED tests/test_evidence.py::test_custody_jsonl_accepted_by_csharp_ledger
+FAILED tests/test_interview_compare_w5.py::test_roster_lists_records_with_contract_counts
+FAILED tests/test_interview_compare_w5.py::test_page_rows_summary_segments_and_chart
+FAILED tests/test_interview_compare_w5.py::test_records_without_statements_show_crosscheck_rows
+FAILED tests/test_interview_compare_w5.py::test_revise_marks_stale_and_confirm_is_refused
+FAILED tests/test_interview_compare_w5.py::test_revise_only_open_statements
+FAILED tests/test_interview_compare_w5.py::test_recheck_stale_pending_dismisses_then_resubmits_and_keeps_superseded
+FAILED tests/test_interview_compare_w5.py::test_recheck_rules - assert (404 =...
+FAILED tests/test_interview_compare_w5.py::test_confirm_and_reject_rows - ass...
+FAILED tests/test_interview_compare_w5.py::test_external_roles_get_redacted_page_and_cannot_write
+FAILED tests/test_reports_w16.py::test_gisis_api_missing_validation_exports_and_audit
+12 failed, 205 passed in 48.93s

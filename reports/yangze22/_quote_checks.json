@@ -1,0 +1,2781 @@
+{
+  "method": "report.txt 去掉页脚页码行与全部空白后逐字子串匹配（_qsrc.Locator）",
+  "total": 308,
+  "matched": 308,
+  "passRate": 1.0,
+  "figureQuotes": 33,
+  "checks": [
+    {
+      "path": "case.reportDateSource",
+      "page": "封面/目录",
+      "line": "8-9",
+      "figure": null,
+      "quote": "“12·30”事故调查组2025年4月",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.summarySource",
+      "page": 1,
+      "line": "59-63",
+      "figure": null,
+      "quote": "2024年12月30日约2202时，NEBULA SHIPPING PTE LTD.所属的新加坡籍散货船“YANGZE 22”轮与Mitsui O.S.K. Lines,Ltd.所属的日本籍散货船“VEGA DREAM”轮在长江口深水航道39号灯浮下游水域发生碰撞",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.investigationMethodsSource",
+      "page": 1,
+      "line": "72-75",
+      "figure": null,
+      "quote": "调查组调取了吴淞VTS监控记录以及“YANGZE 22”轮与“VEGA DREAM”轮的VDR数据、AIS数据；实施了船舶现场勘验和水下探摸；检查和测试了“YANGZE 22”轮的舵系统及相关设备；调查询问了双方船舶相关船员和引航员；",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.imoNumber",
+      "page": 2,
+      "line": 97,
+      "figure": null,
+      "quote": "IMO:9958212",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.callSign",
+      "page": 2,
+      "line": 98,
+      "figure": null,
+      "quote": "船舶呼号：9V9860",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.mmsi",
+      "page": 15,
+      "line": 404,
+      "figure": "图6",
+      "quote": "图6：碰撞时间和位置图",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.portOfRegistry",
+      "page": 2,
+      "line": 98,
+      "figure": null,
+      "quote": "船籍港：新加坡",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.flagState",
+      "page": 1,
+      "line": "60-61",
+      "figure": null,
+      "quote": "NEBULA SHIPPING PTE LTD.所属的新加坡籍散货船“YANGZE 22”轮",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.vesselType",
+      "page": 2,
+      "line": 97,
+      "figure": null,
+      "quote": "船舶种类：散货船IMO:9958212",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.grossTonnage",
+      "page": 2,
+      "line": 99,
+      "figure": null,
+      "quote": "总吨：44479",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.netTonnage",
+      "page": 2,
+      "line": 99,
+      "figure": null,
+      "quote": "净吨：27553",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.loaM",
+      "page": 2,
+      "line": 100,
+      "figure": null,
+      "quote": "船长：225.29米",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.beamM",
+      "page": 2,
+      "line": 100,
+      "figure": null,
+      "quote": "型宽：32.26米",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.moldedDepthM",
+      "page": 2,
+      "line": 101,
+      "figure": null,
+      "quote": "型深：20.01米",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.mainEnginePowerKw",
+      "page": 2,
+      "line": 101,
+      "figure": null,
+      "quote": "主机功率9000kW",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.summerDraftM",
+      "page": 2,
+      "line": 102,
+      "figure": null,
+      "quote": "夏季满载吃水：14.467米",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.builtDate",
+      "page": 2,
+      "line": 102,
+      "figure": null,
+      "quote": "建造日期：2022年11月",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.owner",
+      "page": 2,
+      "line": 103,
+      "figure": null,
+      "quote": "船舶所有人：NEBULA SHIPPING PTE LTD.",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.managerOperator",
+      "page": 9,
+      "line": "271-272",
+      "figure": null,
+      "quote": "该轮管理人、经营人均为Shanghai Run Yuan Shipping management Co, Ltd.。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.lastAnnualSurvey",
+      "page": 4,
+      "line": "133-134",
+      "figure": null,
+      "quote": "该轮最近一次年度检验由劳氏船级社于2024年11月21日在韩国光阳港实施，检验结果合格。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.lastPsc",
+      "page": 4,
+      "line": "151-152",
+      "figure": null,
+      "quote": "该轮最近一次PSC检查于2024年11月30日在菲律宾伊利甘港实施，发现缺陷0项。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.crew",
+      "page": 5,
+      "line": "178-180",
+      "figure": null,
+      "quote": "该轮船上共有船员21人，均为中国籍，其配员情况满足最低安全配员证书要求。事故发生前，三副、实习三副、值班水手及1名上海港引航员共4人在驾驶台。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.voyageSection",
+      "page": 11,
+      "line": "313-315",
+      "figure": null,
+      "quote": "2024年12月30日约0900时，“YANGZE 22”轮从南通新世界通用码头开航，开航时最大吃水约11.98米，计划先去新加坡加装燃油后驶往巴西。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.cargo",
+      "page": 11,
+      "line": "315-317",
+      "figure": null,
+      "quote": "该轮共有7个货舱，装载化肥60250吨，其中，装载散装粒状硫酸铵51195吨，散装过磷酸钙9055吨。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.narrativeDeparture",
+      "page": 27,
+      "line": "678-679",
+      "figure": null,
+      "quote": "2024年12月30日约0830时，该轮从南通新世界通用码头开航。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.steeringGear",
+      "page": 16,
+      "line": "418-420",
+      "figure": null,
+      "quote": "该轮使用的是日本YDK Technologies公司生产的PT900-A-P型操舵系统，生产日期为2022年5月，年度检验合格。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.steeringModes",
+      "page": 16,
+      "line": "420-423",
+      "figure": null,
+      "quote": "该操舵系统提供2套控制系统（No.1/No.2），可选择其中一套操舵系统使用自动舵（AUTO）、随动操舵（FU）或非随动操舵（NFU）。此外，该轮操舵系统还配备了越控操舵（NFU OVERRIDE）操舵模式",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.helmScale",
+      "page": 17,
+      "line": "436-438",
+      "figure": null,
+      "quote": "操舵时，刻度盘随手轮转动，指针固定不动，指针指示的刻度与操舵方向相反。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.rudderIndicators",
+      "page": 18,
+      "line": 445,
+      "figure": null,
+      "quote": "该轮共配有6个舵角指示器，均独立于操舵系统",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.steeringConclusion",
+      "page": 22,
+      "line": "559-560",
+      "figure": null,
+      "quote": "经综合分析，认定事故发生前“YANGZE 22”轮操舵系统工况正常。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[0].fieldSources.aisStatic",
+      "page": 15,
+      "line": 404,
+      "figure": "图6",
+      "quote": "图6：碰撞时间和位置图",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.imoNumber",
+      "page": 3,
+      "line": 115,
+      "figure": null,
+      "quote": "IMO:9532094",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.callSign",
+      "page": 3,
+      "line": 116,
+      "figure": null,
+      "quote": "船舶呼号：7KNE",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.portOfRegistry",
+      "page": 3,
+      "line": 116,
+      "figure": null,
+      "quote": "船籍港：东京",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.flagState",
+      "page": 1,
+      "line": 62,
+      "figure": null,
+      "quote": "Lines,Ltd.所属的日本籍散货船“VEGA DREAM”轮",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.mmsi",
+      "page": 15,
+      "line": 404,
+      "figure": "图6",
+      "quote": "图6：碰撞时间和位置图",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.grossTonnage",
+      "page": 3,
+      "line": 117,
+      "figure": null,
+      "quote": "总吨：91468",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.netTonnage",
+      "page": 3,
+      "line": 117,
+      "figure": null,
+      "quote": "净吨：57660",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.loaM",
+      "page": 3,
+      "line": 118,
+      "figure": null,
+      "quote": "船长：283.3米",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.beamM",
+      "page": 3,
+      "line": 118,
+      "figure": null,
+      "quote": "型宽：45米",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.moldedDepthM",
+      "page": 3,
+      "line": 119,
+      "figure": null,
+      "quote": "型深：24.7米",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.mainEnginePowerKw",
+      "page": 3,
+      "line": 119,
+      "figure": null,
+      "quote": "主机功率16860kW",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.summerDraftM",
+      "page": 3,
+      "line": 120,
+      "figure": null,
+      "quote": "夏季满载吃水：18.03米",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.builtDate",
+      "page": 3,
+      "line": 120,
+      "figure": null,
+      "quote": "建造日期：2010年4月",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.owner",
+      "page": 3,
+      "line": 122,
+      "figure": null,
+      "quote": "船舶所有人：Mitsui O.S.K. Lines, Ltd.",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.managerOperator",
+      "page": 3,
+      "line": "123-124",
+      "figure": null,
+      "quote": "船舶经营人/管理人：MASGSAYSAY MOL SHIP MANAGEMENT INC.",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.lastAnnualSurvey",
+      "page": 5,
+      "line": "155-156",
+      "figure": null,
+      "quote": "该轮最近一次年度检验由日本船级社于2024年3月26日在土耳其伊斯肯德伦湾实施，检验结果合格。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.lastPsc",
+      "page": 5,
+      "line": "173-174",
+      "figure": null,
+      "quote": "该轮最近一次PSC检查于2023年12月13日在澳大利亚丹皮尔港实施，发现缺陷0项。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.crew",
+      "page": 7,
+      "line": 232,
+      "figure": null,
+      "quote": "该轮船上共有船员20人，均为菲律宾籍",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.bridgeTeam",
+      "page": 8,
+      "line": "235-236",
+      "figure": null,
+      "quote": "事故发生前，船长、三副、值班水手及1名上海港引航员共4人在驾驶台。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.voyage",
+      "page": 11,
+      "line": "319-320",
+      "figure": null,
+      "quote": "2024年12月24日约2215时，“VEGA DREAM”轮从湛江开航，开航时最大吃水约11.98米，计划驶往张家港。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.cargo",
+      "page": 11,
+      "line": 321,
+      "figure": null,
+      "quote": "轮共9有个货舱，装载铁矿97035吨。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.vessels[1].fieldSources.aisStatic",
+      "page": 41,
+      "line": 881,
+      "figure": "图28",
+      "quote": "图28：2200时38秒吴淞VTS监控",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.personnel.yangze22[0].source",
+      "page": 6,
+      "line": "189-191",
+      "figure": null,
+      "quote": "邹**于2024年12月27日在南通上“YANGZE 22”轮任职船长。事故发生前约10分钟离开驾驶台，在碰撞发生时回到驾驶台。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.personnel.yangze22[1].source",
+      "page": 6,
+      "line": "198-200",
+      "figure": null,
+      "quote": "2024年12月27日，辛**在南通上“YANGZE 22”轮任职三副。事故发生时其在驾驶台值班，负责操纵车钟和协助瞭望。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.personnel.yangze22[2].source",
+      "page": 7,
+      "line": "212-214",
+      "figure": null,
+      "quote": "上船后被安排为白班水手，白天工作晚上休息（海上工作时间0800-1200/1300-1700，港内工作时间0400-0800/1600-2000），未在驾驶台值过班。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.personnel.yangze22[2].sourceExperience",
+      "page": 6,
+      "line": "204-206",
+      "figure": null,
+      "quote": "丁**于2022年3月首次上船任职见习水手，2023年1月正式任职值班水手，之前共在3艘船舶上任职",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.personnel.yangze22[2].sourceDuty",
+      "page": 7,
+      "line": "214-216",
+      "figure": null,
+      "quote": "事故当日，丁**根据大副安排上驾驶台接替水手李**。事故发生时其在驾驶台操舵。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.personnel.yangze22[3].source",
+      "page": 7,
+      "line": "222-223",
+      "figure": null,
+      "quote": "事故发生前其在驾驶台跟班学习，碰撞前离开驾驶台去船长房间通知船长后未再上驾驶台。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.personnel.yangze22[4].source",
+      "page": 7,
+      "line": "228-230",
+      "figure": null,
+      "quote": "周**于2024年12月30日约2001时在宝山航道68号浮至70号浮之间水域登上“YANGZE 22”轮。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.personnel.yangze22[5].source",
+      "page": 27,
+      "line": "681-682",
+      "figure": null,
+      "quote": "船长邹**发现操舵水手李**出现操反舵的情况，遂通知大副更换操舵水手。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.personnel.vega_dream[0].source",
+      "page": 8,
+      "line": "240-242",
+      "figure": null,
+      "quote": "HERMAN MURODA****于2024年3月22日在土耳其上“VEGA DREAM”轮任职船长。事故发生时其在驾驶台监航。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.personnel.vega_dream[1].source",
+      "page": 8,
+      "line": "247-248",
+      "figure": null,
+      "quote": "事故发生时其在驾驶台值班，负责协助瞭望和操纵车钟。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.personnel.vega_dream[2].source",
+      "page": 8,
+      "line": "252-253",
+      "figure": null,
+      "quote": "于2024年3月22日在土耳其上“VEGA DREAM”轮任职水手。事故发生时其在驾驶台操舵。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.personnel.vega_dream[3].source",
+      "page": 9,
+      "line": "260-261",
+      "figure": null,
+      "quote": "杜**于2024年12月30日约1830时在长江口深水航道5号灯浮北侧登轮。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.environment.narrativeAtIncident.source",
+      "page": 11,
+      "line": "326-328",
+      "figure": null,
+      "quote": "天气：晴能见距离：5海里以上风向：偏北风风力：2~3级流向：西北流流速：约1.5节",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.environment.narrativeAtIncident.tideSource",
+      "page": 11,
+      "line": "329-331",
+      "figure": null,
+      "quote": "事故发生当天为农历十一月三十，当日横沙水文站潮汐情况：1850时/潮高86cm，2336时/潮高297cm。事故发生时间约为2202时，正值涨水。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.environment.waterway.source",
+      "page": 12,
+      "line": "337-339",
+      "figure": null,
+      "quote": "该水域的长江口深水航道底宽约350米，两侧有宽约100米的边坡水域，维护水深为12.5米。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.environment.waterway.controlSource",
+      "page": 12,
+      "line": "341-344",
+      "figure": null,
+      "quote": "31日长兴高潮为0016时，长江口深水航道管制时段为30日2016时至2316时，本起事故发生时正处于长江口深水航道交通管制时段，进出深水航道船舶密度较大。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.environment.waterway.locationSource",
+      "page": 12,
+      "line": "336-337",
+      "figure": null,
+      "quote": "事故发生在长江口深水航道39号灯浮下游水域，位于横沙东锚地南侧、横沙通道交汇口附近",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.collision.timeSource",
+      "page": 14,
+      "line": "387-389",
+      "figure": null,
+      "quote": "回放吴淞VTS监控，两船雷达回波及AIS信号发生接触的时间为2024年12月30日2201时54秒，且此时两船的VDR中可以听到船舶碰撞时发出的声响",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.collision.summaryTimeSource",
+      "page": 1,
+      "line": 59,
+      "figure": null,
+      "quote": "2024年12月30日约2202时，",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.collision.locationSource",
+      "page": 15,
+      "line": "396-399",
+      "figure": null,
+      "quote": "以事故发生时“YANG ZE 22”轮的AIS船位为碰撞位置，即长江口深水航道39号灯浮下游进口航道内，概位：31°16.9′N121°49.7′E。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.collision.aisFigureSource",
+      "page": 15,
+      "line": 404,
+      "figure": "图6",
+      "quote": "图6：碰撞时间和位置图",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.collision.angleSource",
+      "page": 15,
+      "line": "407-409",
+      "figure": null,
+      "quote": "碰撞发生时，“VEGA DREAM”轮艏向约为297°，“YANG ZE 22”轮艏向约为047°，计算可得两船碰撞角度约为70°（取锐角）",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.collision.speedSources[0]",
+      "page": 38,
+      "line": 827,
+      "figure": null,
+      "quote": "2201时54秒，该轮航向约047°，航速约8.0节。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.collision.speedSources[1]",
+      "page": 42,
+      "line": 897,
+      "figure": null,
+      "quote": "2201分54秒，该轮航向约297°，航速约10.2节。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.collision.contactSource",
+      "page": 15,
+      "line": "406-407",
+      "figure": null,
+      "quote": "“VEGA DREAM”轮船首与“YANG ZE 22”轮右舷中部第5号货舱位置船体发生碰撞。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.hullDamage.yangze22.source",
+      "page": 12,
+      "line": "357-359",
+      "figure": null,
+      "quote": "该轮右舷肋位Fr102至Fr131之间的船壳破损，破口前端距船首约115米，破口宽度约12米（12～20米位置凹陷变形），破口高度约16米（离主甲板4米处严重变形）；",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.hullDamage.yangze22.compartmentSource",
+      "page": 13,
+      "line": "361-362",
+      "figure": null,
+      "quote": "破洞形状：椭圆形（中间略窄）。第5号货舱和1号右燃油舱破损。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.hullDamage.vega_dream.source",
+      "page": 13,
+      "line": "369-370",
+      "figure": null,
+      "quote": "该轮艏尖舱和球鼻艏水线以下有三处破洞，艏尖舱水线以上有一处破洞。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.hullDamage.vega_dream.holeSources[0]",
+      "page": 13,
+      "line": "371-372",
+      "figure": null,
+      "quote": "破洞1：水下2米左右，在球鼻艏前部偏左位置。破洞宽度约1米，高度约0.3米。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.hullDamage.vega_dream.holeSources[1]",
+      "page": 13,
+      "line": "373-374",
+      "figure": null,
+      "quote": "破洞2：水下4米左右，在球鼻艏前部破洞1下方偏左位置。宽度约1.5米，高度约0.5米。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.hullDamage.vega_dream.holeSources[2]",
+      "page": 13,
+      "line": "375-377",
+      "figure": null,
+      "quote": "破洞3：水下1米左右开始，在球鼻艏根部连接船体位置，一直延续至底部，呈窄三角形。底部最大宽度约2.5米，高度约12米。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.hullDamage.vega_dream.holeSources[3]",
+      "page": 13,
+      "line": "378-379",
+      "figure": null,
+      "quote": "破洞4：水上破洞，在艏尖舱右前重载水线以上，宽度约0.5～1米不等，高度约6米。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.steeringInvestigation.source",
+      "page": 22,
+      "line": "559-560",
+      "figure": null,
+      "quote": "经综合分析，认定事故发生前“YANGZE 22”轮操舵系统工况正常。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.steeringInvestigation.helmSource",
+      "page": 22,
+      "line": "565-569",
+      "figure": null,
+      "quote": "认定事故的发生系操舵水手错误地执行了引航员指令，反向操舵导致。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.rudderOrders.tableSource",
+      "page": 25,
+      "line": 612,
+      "figure": null,
+      "quote": "表3：2200时~2207时操舵情况",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.rudderOrders.sdCardSource",
+      "page": 21,
+      "line": "540-541",
+      "figure": null,
+      "quote": "YDK厂家读取了操舵系统内部的SD数据卡中时间段为2024年12月30日21:50:00至22:10:00的数据",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.rudderOrders.rows[r-220014].source",
+      "page": 25,
+      "line": 614,
+      "figure": null,
+      "quote": "2200时14秒109°右满舵左舵29°左舵30°",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.rudderOrders.rows[r-220045].source",
+      "page": 25,
+      "line": 615,
+      "figure": null,
+      "quote": "2200时45秒092°左舵35°左舵35°",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.rudderOrders.rows[r-220109].source",
+      "page": 25,
+      "line": 616,
+      "figure": null,
+      "quote": "2201时09秒073°左舵35°左舵35°",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.rudderOrders.rows[r-220121].source",
+      "page": 25,
+      "line": 617,
+      "figure": null,
+      "quote": "2201时21秒063°左满舵左舵35°左舵35°",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.rudderOrders.rows[r-220123].source",
+      "page": 25,
+      "line": 618,
+      "figure": null,
+      "quote": "2201时23秒062°右舵18°左舵33°",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.rudderOrders.rows[r-220130].source",
+      "page": 25,
+      "line": 619,
+      "figure": null,
+      "quote": "2201时30秒057°右舵30°右舵4°",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.rudderOrders.rows[r-220154].source",
+      "page": 25,
+      "line": 620,
+      "figure": null,
+      "quote": "2201时54秒047°右舵35°右舵35°",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.rudderOrders.rows[r-220252].source",
+      "page": 25,
+      "line": 621,
+      "figure": null,
+      "quote": "2202时52秒061°右满舵右舵30°右舵31°",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.rudderOrders.rows[r-220256].source",
+      "page": 25,
+      "line": 622,
+      "figure": null,
+      "quote": "2202时56秒061°左舵20°右舵22°",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.rudderOrders.rows[r-220306].source",
+      "page": 25,
+      "line": 623,
+      "figure": null,
+      "quote": "2203时06秒062°左舵30°左舵30°",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.rudderOrders.rows[r-220621].source",
+      "page": 25,
+      "line": 624,
+      "figure": null,
+      "quote": "2206时21秒071°右满舵左舵30°左舵31°",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.rudderOrders.rows[r-220723].source",
+      "page": 25,
+      "line": 625,
+      "figure": null,
+      "quote": "2207时23秒076°正舵左舵32°左舵32°",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.rudderOrders.rows[r-220730].source",
+      "page": 25,
+      "line": 627,
+      "figure": null,
+      "quote": "2207时30秒077°正舵正舵",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.consequences.gradeSource",
+      "page": 1,
+      "line": "67-68",
+      "figure": null,
+      "quote": "事故未造成人员伤亡，构成较大等级水上交通事故。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.consequences.yangze22.source",
+      "page": 44,
+      "line": "942-944",
+      "figure": null,
+      "quote": "舱内共计约8750吨散装粒状硫酸铵全部损失；1号右油舱内共计约171.053吨燃油泄漏入江。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.consequences.vega_dream.source",
+      "page": 44,
+      "line": "946-947",
+      "figure": null,
+      "quote": "该轮球鼻艏及球鼻艏上方船体有破损，其中艏尖舱水线以上有1处破口，水线以下3处破口，艏尖舱内进水。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.consequences.oilSpill.source",
+      "page": 26,
+      "line": "636-639",
+      "figure": null,
+      "quote": "该轮于2024年12月17日在日本加装燃油（油品：LSFO380）共计约359.990吨，其中该轮1号右燃油舱（泄漏舱）内共加注燃油约264.798吨，加注燃油后1号右燃油舱实际共存有燃油约267.197吨。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.consequences.oilSpill.formulaSource",
+      "page": 26,
+      "line": 650,
+      "figure": null,
+      "quote": "267.197-83.4-8.5-4.244=171.053吨。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.consequences.oilSpill.surfaceSource",
+      "page": 27,
+      "line": "662-664",
+      "figure": null,
+      "quote": "油污主要分布在横沙通道603灯浮、长江口深水航道37灯浮至35灯浮之间、31灯浮至25灯浮之间等区域。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.consequences.oilSpill.shoreSource",
+      "page": 27,
+      "line": "668-671",
+      "figure": null,
+      "quote": "油污对事故发生地附近横沙通道东侧（横沙岛西岸）长约1.5海里岸滩（芦苇地）造成了污染，油污主要集中在新民港至红星港之间的沿岸芦苇地，面积约9000平方米，通过收割回收了芦苇及油污混合物约116.2吨。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.consequences.oilSpill.sensitiveSource",
+      "page": 26,
+      "line": "654-655",
+      "figure": null,
+      "quote": "未对长江口水域周边饮用水源及湿地、自然保护区等敏感区域造成损害。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.consequences.oilSpill.recoveredSource",
+      "page": 43,
+      "line": "931-932",
+      "figure": null,
+      "quote": "2025年1月2日约1720时，事故现场共已回收含油污水约811吨",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.directCauses[DC1].source",
+      "page": 44,
+      "line": "955-958",
+      "figure": null,
+      "quote": "“YANGZE 22”轮操舵水手错误执行引航员指令。事故发生前，“YANGZE 22”轮沿长江口深水航道下行通航分道航行。操舵水手在执行引航员把定航向的指令时，发现船首有向左偏转趋势，错误采取向左压舵措施；",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.directCauses[DC1].violatesSource",
+      "page": 45,
+      "line": "966-967",
+      "figure": null,
+      "quote": "该行为违反了《中华人民共和国船员条例》第十六条第三款1的规定。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.directCauses[DC2].source",
+      "page": 45,
+      "line": "969-970",
+      "figure": null,
+      "quote": "操舵水手错误地执行了引航员指令，反向操舵，但值班三副未对操舵水手舵令执行情况进行有效检查，并及时纠正。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.directCauses[DC2].violatesSource",
+      "page": 45,
+      "line": "971-972",
+      "figure": null,
+      "quote": "该行为违反了《1978年海员培训、发证和值班标准国际公约》第A-Ⅷ/2节第34条第1款2的规定。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.directCauses[DC3].source",
+      "page": 45,
+      "line": "977-978",
+      "figure": null,
+      "quote": "但未采取非随动操舵或越控操舵操纵本船，也未采取停车、倒车等应急措施。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.directCauses[DC3].violatesSource",
+      "page": 45,
+      "line": "978-980",
+      "figure": null,
+      "quote": "该行为违反了《1972年国际海上避碰规则》第八条第五款3的规定。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.directCauses[DC4].source",
+      "page": 46,
+      "line": "995-997",
+      "figure": null,
+      "quote": "“YANGZE 22”轮船首越过航道分隔线侵入进口航道时，两船已经构成紧迫危险局面，“VEGA DREAM”轮未采取应急抛锚等有效措施。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.indirectCauses[IC1].source",
+      "page": 46,
+      "line": "1000-1002",
+      "figure": null,
+      "quote": "事故发生前，“YANGZE 22”轮船长临时离开驾驶台，未告知当时在驾驶台值班的三副代履行其职责，也未告知引航员",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.indirectCauses[IC2].source",
+      "page": 46,
+      "line": "1006-1009",
+      "figure": null,
+      "quote": "“YANGZE 22”轮通过VHF CH06频道多次呼叫“VEGA DREAM”轮引航员姓名，“VEGA DREAM”轮虽然在VHF CH06频道收到上述呼叫，但两船未建立有效通信联系。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.indirectCauses[IC3].source",
+      "page": 46,
+      "line": "1012-1015",
+      "figure": null,
+      "quote": "与进口船“VEGA DREAM”轮之间的船首距离不到0.5海里，两船相对速度约19.8节、会遇时间不到2分钟，给事故双方船舶采取避免碰撞行动的时间和空间有限。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.liability.source",
+      "page": 47,
+      "line": "1028-1029",
+      "figure": null,
+      "quote": "“YANGZE 22”轮承担本起碰撞事故主要责任，“VEGA DREAM”轮承担次要责任。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.liability.pollutionSource",
+      "page": 47,
+      "line": "1032-1033",
+      "figure": null,
+      "quote": "两船均对该起污染事故负有责任。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.findings[F1].source",
+      "page": 47,
+      "line": "1036-1039",
+      "figure": null,
+      "quote": "管理公司未对该轮操舵系统进行针对性培训和指导，尤其是越控操舵模式的指导，致使驾驶台人员对该模式操作和应用场景均不熟悉。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.findings[F2].source",
+      "page": 47,
+      "line": "1043-1044",
+      "figure": null,
+      "quote": "没有引起重视，虽然采取了更换操舵水手的措施，但未对接替的操舵水手进行针对操舵培训。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.findings[F3].source",
+      "page": 48,
+      "line": "1053-1055",
+      "figure": null,
+      "quote": "虽然引航员之间呼叫对方姓名能被对方引航员直接清晰地接收，但无法被对方船舶的其他驾驶值班人员接收，尤其是外籍船员；",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.enforcementRecommendations[0].source",
+      "page": 48,
+      "line": "1063-1064",
+      "figure": null,
+      "quote": "“YANGZE 22”轮操舵水手丁**错误执行引航员指令、反向操舵，是本起事故的直接责任人",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.enforcementRecommendations[1].source",
+      "page": 48,
+      "line": "1067-1068",
+      "figure": null,
+      "quote": "“YANGZE 22”轮三副辛**未进行有效监舵，紧急情况下采取措施不当，是本起事故的间接责任人",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.enforcementRecommendations[2].source",
+      "page": 48,
+      "line": "1071-1073",
+      "figure": null,
+      "quote": "“YANGZE 22”轮引航员周**未能结合当时的情况进行充分评估，错误判断为舵效差，未下达应急操舵指令",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.enforcementRecommendations[3].source",
+      "page": 49,
+      "line": "1085-1086",
+      "figure": null,
+      "quote": "“YANGZE 22”轮船长未在驾驶台值班，临时离开驾驶台未指定代职驾驶员，也未告知引航员",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.enforcementRecommendations[4].source",
+      "page": 49,
+      "line": "1096-1097",
+      "figure": null,
+      "quote": "建议吴淞海事局对船长HERMAN MURODA****、引航员杜**免予处罚。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.enforcementRecommendations[5].source",
+      "page": 49,
+      "line": 1102,
+      "figure": null,
+      "quote": "的规定，建议吴淞海事局对两船实施行政处罚。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.enforcementRecommendations[6].source",
+      "page": 50,
+      "line": 1115,
+      "figure": null,
+      "quote": "建议将本起碰撞事故情况通报两船船旗国政府。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.safetyRecommendations[SR-YZ-01].source",
+      "page": 50,
+      "line": "1119-1121",
+      "figure": null,
+      "quote": "加强驾驶台资源管理。督促船舶严格落实驾驶台航行值班相关规定，特别是引航员操纵期间，要确保航行安全信息的交流和共享，船长和驾驶员要切实履行监舵职责",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.safetyRecommendations[SR-YZ-02].source",
+      "page": 50,
+      "line": "1127-1129",
+      "figure": null,
+      "quote": "加强船员操作培训和应急演练。强化对操舵时刻度盘随手轮转动，指针固定不动，指针指示的刻度与操舵方向相反情况的操作培训；",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.safetyRecommendations[SR-YZ-03].source",
+      "page": 51,
+      "line": "1142-1144",
+      "figure": null,
+      "quote": "提升引航员应变反应能力。要督促引航员对航行安全信息进行充分的评估和验证，确保操纵和避碰决策及时、正确；",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.safetyRecommendations[SR-YZ-04].source",
+      "page": 51,
+      "line": "1149-1150",
+      "figure": null,
+      "quote": "建议对上海港引航员之间通信方式开展分析研究，优化和规范引航员之间的通信。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-0830-depart].source",
+      "page": 27,
+      "line": "678-679",
+      "figure": null,
+      "quote": "2024年12月30日约0830时，该轮从南通新世界通用码头开航。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-0914-reverse-helm].source",
+      "page": 27,
+      "line": "680-682",
+      "figure": null,
+      "quote": "约0914时，该轮在码头前沿完成调头，船位即将进入主航道，船长邹**发现操舵水手李**出现操反舵的情况，遂通知大副更换操舵水手。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-1320-anchor].source",
+      "page": 28,
+      "line": 686,
+      "figure": null,
+      "quote": "约1320时，该轮在太仓L4锚地抛锚。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-1810-heave].source",
+      "page": 28,
+      "line": 687,
+      "figure": null,
+      "quote": "约1810时，该轮起锚开航。船长邹**在驾驶台值班。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-1936-helm].source",
+      "page": 28,
+      "line": 688,
+      "figure": null,
+      "quote": "约1936时，水手丁**到驾驶台接班操舵。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-1945-3o].source",
+      "page": 28,
+      "line": 689,
+      "figure": null,
+      "quote": "约1945时，三副辛**到驾驶台接班。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-2001-pilot].source",
+      "page": 28,
+      "line": "690-691",
+      "figure": null,
+      "quote": "约2001时，长江引航员与上海港引航员周**在宝山航道68~70号灯浮水域交接",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-2120-enter].source",
+      "page": 28,
+      "line": "693-695",
+      "figure": null,
+      "quote": "约2120时，该轮船位经过圆圆沙灯船进入长江口深水航道出口，航向约111°，航速约8.8节，双锚备妥，VHF CH09和CH06值守，驾驶台各助航设备工况均正常。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-2141-order113].source",
+      "page": 28,
+      "line": "696-698",
+      "figure": null,
+      "quote": "约2141时，该轮船位位于深水航道41号灯浮上游，航速约8.6节，引航员下达航向指令“113°”，随后，水手丁**回复舵令“113°到”。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-214345].source",
+      "page": 28,
+      "line": "699-701",
+      "figure": null,
+      "quote": "2143时45秒，该轮船位正横41号灯浮，航向为114°，航速约8.6节，ROT:S1.8°/min。水手丁**意图用左舵微调航向至113°，但压舵后发现船首继续右偏。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-214415].source",
+      "page": 28,
+      "line": "702-705",
+      "figure": null,
+      "quote": "2144时15秒，该轮航向约117°，航速约8.5节，ROT:S13.2°/min。引航员周**发现船首异常向右偏转，下令“把定航向（113°）”，水手丁**查看舵轮后意识到压了右舵，立即使用正舵、左满舵把定航向。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-214429].source",
+      "page": 28,
+      "line": "706-710",
+      "figure": null,
+      "quote": "2144时29秒，该轮航向约120°，航速约8.5节，ROT:S6.8°/min。引航员周**下令“左满舵”。水手丁**操左舵30°，但未回复。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-214444].source",
+      "page": 29,
+      "line": "711-713",
+      "figure": null,
+      "quote": "2144时44秒，该轮船位刚过41号灯浮，航向约120°，航速约8.4节，ROT:P1.6°/min。引航员周**下令“117°”。水手丁**操左舵30°，但未回复。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-214637].source",
+      "page": 29,
+      "line": "719-723",
+      "figure": null,
+      "quote": "2146时37秒，该轮航向约116°，航速约8.4节，ROT:P0.6°/min。引航员周**下令“113°”。水手丁**回复“113°”，并操左舵调整航向。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-214720].source",
+      "page": 30,
+      "line": "724-726",
+      "figure": null,
+      "quote": "2147时20秒，该轮航向约114°，航速约8.4节，ROT:P1.6°/min。引航员周**下令“112°”。水手丁**回复“112°”，并操左舵调整航向至112°。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-2151-master-leaves].source",
+      "page": 30,
+      "line": "727-729",
+      "figure": null,
+      "quote": "约2151时，船长邹**对三副辛**说“到房间上个厕所，有什么事对讲机叫我”。随后船长邹**离开驾驶台，未告知引航员周**。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-215442].source",
+      "page": 30,
+      "line": "730-731",
+      "figure": null,
+      "quote": "2154时42秒，该轮航向约113°，航速约8.3节，ROT:0°/min。引航员周**下令“114°”。水手丁**回复“114°”。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-215504].source",
+      "page": 30,
+      "line": "732-734",
+      "figure": null,
+      "quote": "2155时04秒，该轮船位位于39号灯浮上游，航向约114°，航速约8.3节，ROT:1.8°/min，水手丁**回复“114°到”。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-215830].source",
+      "page": 30,
+      "line": "735-740",
+      "figure": null,
+      "quote": "约2158时30秒，该轮船位正横39号灯浮出口，航向约114°，航速约9.0节，ROT:0.0°/min。此时，“VEGA DREAM”轮位于41号灯浮上游进口航道内正常航行，航向约294°，航速约10.5节，两船相距约1.1海里。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-215907].source",
+      "page": 31,
+      "line": "747-750",
+      "figure": null,
+      "quote": "2159时07秒，该轮船位正横39号灯浮出口，航向约114°，航速约9.0节，ROT:P0.9°/min。船首略有向左的趋势，水手丁**意图使用右舵把定航向，但在此之后约30秒时间内，其实际操左舵5°~10°压舵，导致船首开始向左偏转。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-215945].source",
+      "page": 32,
+      "line": "757-761",
+      "figure": null,
+      "quote": "2159时45秒，该轮航向约113°，航速约9.1节，ROT:P2.8°/min，水手丁**随后操左舵15°至左满舵的大舵角压舵，船首随之加快向左偏转。此时，“VEGA DREAM”轮位于38号灯浮下游进口航道内正常航行，航向约294°，航速约10.6节，两船相距约0.7海里。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-220004].source",
+      "page": 33,
+      "line": "768-770",
+      "figure": null,
+      "quote": "2200时04秒，该轮航向约111°，航速约9.2节，ROT:P9.6°/min，水手丁**告知引航员周**“现在舵效很差”。此时，水手丁**操左舵28°。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-220014].source",
+      "page": 33,
+      "line": "771-774",
+      "figure": null,
+      "quote": "2200时14秒，该轮航向约109°，航速约9.3节，ROT:P16.8°/min，船首继续向左偏转。引航员周**下令“右满舵”，水手丁**回复“右满舵”，但实际操左舵29°，实际操舵与引航员舵令相反。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-220014].source2",
+      "page": 33,
+      "line": "774-777",
+      "figure": null,
+      "quote": "此时，“VEGA DREAM”轮航向约295°，航速约10.6节，两船相距约0.5海里，CPA约0.1海里，TCPA约1.6分钟。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-220024-vhf].source",
+      "page": 34,
+      "line": "783-786",
+      "figure": null,
+      "quote": "2200时24秒，该轮航向约105°，航速约9.2节，ROT：P24.9°/min，持续左转中。引航员周**使用VHF CH06频道呼叫“VEGA DREAM”轮引航员名字“杜**，杜**，往右转，我右满舵没舵效”。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-220045].source",
+      "page": 35,
+      "line": "791-793",
+      "figure": null,
+      "quote": "2200时45秒，该轮航向约092°，航速约9.2节，ROT：P40.4°/min，快速向左偏转，船首已越过航道分隔线侵入进口航道。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-220045].source2",
+      "page": 35,
+      "line": "795-796",
+      "figure": null,
+      "quote": "同时要求船上备锚（双锚一直处于备锚状态）；三副辛**给机舱打电话告知本船无舵效。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-220045].source3",
+      "page": 36,
+      "line": 800,
+      "figure": null,
+      "quote": "船相距约0.3海里，已构成紧迫危险局面。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-220109].source",
+      "page": 36,
+      "line": "807-810",
+      "figure": null,
+      "quote": "2201时09秒，该轮航向约073°，航速约9.0节。大部分船体已越过航道分隔线侵入进口航道。此时，“VEGA DREAM”轮航向约295°，航速约10.5节，两船相距约0.2海里。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-220121].source",
+      "page": 37,
+      "line": "816-819",
+      "figure": null,
+      "quote": "2201时21秒，该轮航向约063°，航速约8.6节，ROT:P47.8°/min，引航员周**认为碰撞已不可避免，下令“左满舵”意图减小碰撞角度，水手丁**回复“左满舵”，但实际操右舵35°，与引航员舵令相反。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-collision].source",
+      "page": 38,
+      "line": "827-829",
+      "figure": null,
+      "quote": "2201时54秒，该轮航向约047°，航速约8.0节。该轮右舷5舱部位与“VEGA DREAM”轮正船首发生碰撞，碰撞概位31°16.9′N121°49.7′E。此时，船长邹**上驾驶台。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-220252].source",
+      "page": 39,
+      "line": "836-837",
+      "figure": null,
+      "quote": "2202时52秒，引航员周**下舵令“右满舵”。水手丁**回复“右满舵”，实际操左舵30°，与引航员舵令相反。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-220252].source2",
+      "page": 24,
+      "line": "591-592",
+      "figure": null,
+      "quote": "2202时52秒（碰撞后），“YANGZE 22”轮航向约061°，航速约5.0节，ROT:S8°/min，该轮引航员下令“右满舵”，",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-2203-vts].source",
+      "page": 39,
+      "line": "838-839",
+      "figure": null,
+      "quote": "约2203时，该轮向吴淞VTS报告，本船与“VEGA DREAM”轮发生碰撞，右舷1号燃油舱破损，有燃油泄漏。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-220621].source",
+      "page": 39,
+      "line": "842-846",
+      "figure": null,
+      "quote": "2206时21秒，引航员周**下舵令“右满舵”，水手丁**回复“对，右满舵”，实际依然操左舵30°，与引航员舵令相反。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-220621].source2",
+      "page": 24,
+      "line": "601-602",
+      "figure": null,
+      "quote": "2206时21秒（碰撞后），“YANGZE 22”轮航向约071°，航速约5.0节，ROT:S3.8°/min，该轮引航员下令“右满舵”，",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-220723].source",
+      "page": 25,
+      "line": 625,
+      "figure": null,
+      "quote": "2207时23秒076°正舵左舵32°左舵32°",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-220723].source2",
+      "page": 25,
+      "line": 627,
+      "figure": null,
+      "quote": "2207时30秒077°正舵正舵",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-2210].source",
+      "page": 40,
+      "line": "847-848",
+      "figure": null,
+      "quote": "约2210时，吴淞VTS指示该轮按照应变部署要求，做好救生准备。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-2235].source",
+      "page": 40,
+      "line": "851-853",
+      "figure": null,
+      "quote": "约2235时，该轮配合“VEGA DREAM”轮将本船移至横沙东锚地10米等深线内；核算储备浮力无倾覆沉没危险，与“VEGA DREAM”轮脱开。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-y-2348-anchor].source",
+      "page": 40,
+      "line": "854-855",
+      "figure": null,
+      "quote": "约2348时，该轮在拖轮的协助下，在横沙东锚地抛锚，锚位：31°17.94′N121°48.47′E。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-v-1224-depart].source",
+      "page": 40,
+      "line": 858,
+      "figure": null,
+      "quote": "2024年12月24日约2215时，该轮从湛江开航。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-v-1830-pilot].source",
+      "page": 40,
+      "line": "859-860",
+      "figure": null,
+      "quote": "30日约1830时，上海港引航员杜**在长江口深水航道5号灯浮北侧引航员登离点登轮，开始为该轮提供引航服务。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-v-1845-enter].source",
+      "page": 40,
+      "line": "861-862",
+      "figure": null,
+      "quote": "约1845时，该轮从航道北侧进入长江口深水航道正常航行进口，双锚备妥，VHF CH09和CH06值守。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-v-215945].source",
+      "page": 40,
+      "line": "863-865",
+      "figure": null,
+      "quote": "2159时45秒，该轮位于38号灯浮下游进口航道内正常航行，航向约294°，航速约10.6节。此时，“YANGZE 22”轮航向约113°，航速约9.1节，两船相距约0.7海里。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-v-220024].source",
+      "page": 40,
+      "line": "866-867",
+      "figure": null,
+      "quote": "2200时24秒，该轮航向约294°，航速约10.6节，两船相距约0.4海里。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-v-220024].source2",
+      "page": 41,
+      "line": "871-872",
+      "figure": null,
+      "quote": "但引航员杜**未听到其呼叫，两船未建立起联系。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-v-220038].source",
+      "page": 41,
+      "line": "873-876",
+      "figure": null,
+      "quote": "2200时38秒，该轮船位31°16.8′N121°50.1′E，航向约294°，航速约10.6节，车钟位于“前进二”位置。此时，该轮引航员发现本船左前方约0.35海里的出口船“YANGZE 22”轮正向左转向。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-v-220042-orders].source",
+      "page": 41,
+      "line": "882-886",
+      "figure": null,
+      "quote": "2200时42秒，该轮航向约294°，航速约10.6节，引航员杜**看到对方船在本船船首加速左转并且船位开始侵入进口航道，意识到两船有碰撞危险，便立即下令前进二（已在前进二位置）和右满舵，发出一长声警示声号，紧接着引航员杜**又连续下令前进一、微速进、停车、正舵和后退三。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-v-220042-orders].source2",
+      "page": 41,
+      "line": "887-891",
+      "figure": null,
+      "quote": "此时，“YANGZE 22”轮航向约098°，航速约9.3节，船首快速向左偏转，两船相距约0.3海里，CPA约0.1海里，TCPA约1分钟。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-v-collision].source",
+      "page": 42,
+      "line": "897-899",
+      "figure": null,
+      "quote": "2201分54秒，该轮航向约297°，航速约10.2节。该轮船首正中部与“YANGZE 22”轮右舷中部No.5舱附近位置发生碰撞。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-v-2203].source",
+      "page": 42,
+      "line": "900-901",
+      "figure": null,
+      "quote": "约2203时，该轮停车，引航员杜**向吴淞VTS报告与“YANGZE 22”轮发生碰撞。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-v-2204].source",
+      "page": 42,
+      "line": 902,
+      "figure": null,
+      "quote": "约2204时，该轮开始微速进车顶住“YANGZE 22”轮。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-v-2218].source",
+      "page": 42,
+      "line": 903,
+      "figure": null,
+      "quote": "约2218时，该轮将“YANGZE 22”顶推至浅水区。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-v-2235].source",
+      "page": 42,
+      "line": "904-905",
+      "figure": null,
+      "quote": "约2235时，该轮将“YANGZE 22”轮顶推至横沙东锚地10米等深线内后两船脱开。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-v-0345-anchor].source",
+      "page": 42,
+      "line": "906-907",
+      "figure": null,
+      "quote": "31日约0345时，该轮在宝山北锚地抛锚，锚位31°31.9′N121°23.3′E。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-vts-2203].source",
+      "page": 43,
+      "line": "913-915",
+      "figure": null,
+      "quote": "2024年12月30日2203时左右，吴淞VTS接到事故信息后立即播发安全信息广播，指派巡逻艇“海巡0103”轮前往现场处置",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-resp-0100].source",
+      "page": 43,
+      "line": "919-920",
+      "figure": null,
+      "quote": "31日约0100时，“东雷希望”轮抵达现场，开始对“YANGZE 22”轮堵漏，铺设围油栏。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-resp-0350].source",
+      "page": 43,
+      "line": "921-922",
+      "figure": null,
+      "quote": "约0350时，“VEGA DREAM”轮在拖轮“东雷50”轮、“兴晟201”轮伴航下抵达宝北锚地抛锚",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-resp-1230].source",
+      "page": 43,
+      "line": "924-925",
+      "figure": null,
+      "quote": "约1230时，对“YANGZE 22”轮现场进行现场探摸和堵漏工作。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-resp-1250].source",
+      "page": 43,
+      "line": "928-929",
+      "figure": null,
+      "quote": "1250时~1525时，对长江口深水航道、长兴岛、横沙岛等水域开展空中油污监测",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-resp-0102].source",
+      "page": 43,
+      "line": "931-932",
+      "figure": null,
+      "quote": "2025年1月2日约1720时，事故现场共已回收含油污水约811吨，江面油污已清除完毕",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.timeline[e-resp-0103].source",
+      "page": 44,
+      "line": 936,
+      "figure": null,
+      "quote": "3日约1700时，现场油污已全部清除完毕。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-2120].source",
+      "page": 28,
+      "line": "693-694",
+      "figure": null,
+      "quote": "约2120时，该轮船位经过圆圆沙灯船进入长江口深水航道出口，航向约111°，航速约8.8节",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-214345].source",
+      "page": 28,
+      "line": "699-700",
+      "figure": null,
+      "quote": "2143时45秒，该轮船位正横41号灯浮，航向为114°，航速约8.6节，ROT:S1.8°/min。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-214415].source",
+      "page": 28,
+      "line": "702-703",
+      "figure": null,
+      "quote": "2144时15秒，该轮航向约117°，航速约8.5节，ROT:S13.2°/min。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-214429].source",
+      "page": 28,
+      "line": "706-709",
+      "figure": null,
+      "quote": "2144时29秒，该轮航向约120°，航速约8.5节，ROT:S6.8°/min。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-214444].source",
+      "page": 29,
+      "line": "711-712",
+      "figure": null,
+      "quote": "2144时44秒，该轮船位刚过41号灯浮，航向约120°，航速约8.4节，ROT:P1.6°/min。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-214637].source",
+      "page": 29,
+      "line": "719-722",
+      "figure": null,
+      "quote": "2146时37秒，该轮航向约116°，航速约8.4节，ROT:P0.6°/min。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-214720].source",
+      "page": 30,
+      "line": "724-725",
+      "figure": null,
+      "quote": "2147时20秒，该轮航向约114°，航速约8.4节，ROT:P1.6°/min。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-215442].source",
+      "page": 30,
+      "line": "730-731",
+      "figure": null,
+      "quote": "2154时42秒，该轮航向约113°，航速约8.3节，ROT:0°/min。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-215504].source",
+      "page": 30,
+      "line": "732-733",
+      "figure": null,
+      "quote": "2155时04秒，该轮船位位于39号灯浮上游，航向约114°，航速约8.3节，ROT:1.8°/min",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-215830].source",
+      "page": 30,
+      "line": "735-737",
+      "figure": null,
+      "quote": "约2158时30秒，该轮船位正横39号灯浮出口，航向约114°，航速约9.0节，ROT:0.0°/min。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-215907].source",
+      "page": 31,
+      "line": "747-748",
+      "figure": null,
+      "quote": "2159时07秒，该轮船位正横39号灯浮出口，航向约114°，航速约9.0节，ROT:P0.9°/min。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-215945].source",
+      "page": 32,
+      "line": "757-758",
+      "figure": null,
+      "quote": "2159时45秒，该轮航向约113°，航速约9.1节，ROT:P2.8°/min",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-220004].source",
+      "page": 33,
+      "line": "768-769",
+      "figure": null,
+      "quote": "2200时04秒，该轮航向约111°，航速约9.2节，ROT:P9.6°/min",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-220014].source",
+      "page": 33,
+      "line": "771-772",
+      "figure": null,
+      "quote": "2200时14秒，该轮航向约109°，航速约9.3节，ROT:P16.8°/min",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-220024].source",
+      "page": 34,
+      "line": "783-784",
+      "figure": null,
+      "quote": "2200时24秒，该轮航向约105°，航速约9.2节，ROT：P24.9°/min",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-220042].source",
+      "page": 41,
+      "line": "887-890",
+      "figure": null,
+      "quote": "此时，“YANGZE 22”轮航向约098°，航速约9.3节，船首快速向左偏转",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-220045].source",
+      "page": 35,
+      "line": "791-792",
+      "figure": null,
+      "quote": "2200时45秒，该轮航向约092°，航速约9.2节，ROT：P40.4°/min",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-220109].source",
+      "page": 36,
+      "line": 807,
+      "figure": null,
+      "quote": "2201时09秒，该轮航向约073°，航速约9.0节。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-220121].source",
+      "page": 37,
+      "line": "816-817",
+      "figure": null,
+      "quote": "2201时21秒，该轮航向约063°，航速约8.6节，ROT:P47.8°/min",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-220154].source",
+      "page": 38,
+      "line": "827-829",
+      "figure": null,
+      "quote": "2201时54秒，该轮航向约047°，航速约8.0节。该轮右舷5舱部位与“VEGA DREAM”轮正船首发生碰撞，碰撞概位31°16.9′N121°49.7′E。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-220252].source",
+      "page": 24,
+      "line": "591-592",
+      "figure": null,
+      "quote": "2202时52秒（碰撞后），“YANGZE 22”轮航向约061°，航速约5.0节，ROT:S8°/min",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-220621].source",
+      "page": 24,
+      "line": "601-602",
+      "figure": null,
+      "quote": "2206时21秒（碰撞后），“YANGZE 22”轮航向约071°，航速约5.0节，ROT:S3.8°/min",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-220723].source",
+      "page": 25,
+      "line": 625,
+      "figure": null,
+      "quote": "2207时23秒076°正舵左舵32°左舵32°",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-220730].source",
+      "page": 25,
+      "line": 627,
+      "figure": null,
+      "quote": "2207时30秒077°正舵正舵",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-vdr-图18].source",
+      "page": 29,
+      "line": 718,
+      "figure": "图18",
+      "quote": "图18：2144时44秒“YANGZE 22”轮VDR记录和吴淞VTS监控",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-vdr-图19].source",
+      "page": 31,
+      "line": 746,
+      "figure": "图19",
+      "quote": "图19：2158时30秒“YANGZE 22”轮VDR记录和吴淞VTS监控",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-vdr-图20].source",
+      "page": 32,
+      "line": 756,
+      "figure": "图20",
+      "quote": "图20：2159时07秒“YANGZE 22”轮VDR记录和吴淞VTS监控",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-vdr-图21].source",
+      "page": 33,
+      "line": 767,
+      "figure": "图21",
+      "quote": "图21：2159时45秒“YANGZE 22”轮VDR记录和吴淞VTS监控",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-vdr-图14].source",
+      "page": 23,
+      "line": 579,
+      "figure": "图14",
+      "quote": "图14：2200时14秒“YANGZE 22”轮VDR记录情况",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-vdr-图22].source",
+      "page": 34,
+      "line": 782,
+      "figure": "图22",
+      "quote": "图22：2200时14秒“YANGZE 22”轮VDR记录和吴淞VTS监控",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-vdr-图23].source",
+      "page": 35,
+      "line": 789,
+      "figure": "图23",
+      "quote": "图23：2200时24秒“YANGZE 22”轮VDR记录和吴淞VTS监控",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-vdr-图24].source",
+      "page": 36,
+      "line": 805,
+      "figure": "图24",
+      "quote": "图24：2200时45秒“YANGZE 22”轮VDR记录和吴淞VTS监控",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-vdr-图25].source",
+      "page": 37,
+      "line": 814,
+      "figure": "图25",
+      "quote": "图25：2201时09秒“YANGZE 22”轮VDR记录和吴淞VTS监控",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-vdr-图15].source",
+      "page": 24,
+      "line": 590,
+      "figure": "图15",
+      "quote": "图15：2201时21秒“YANGZE 22”轮VDR记录情况",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-vdr-图26].source",
+      "page": 38,
+      "line": 825,
+      "figure": "图26",
+      "quote": "图26：2201时21秒“YANGZE 22”轮VDR记录和吴淞VTS监控",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-vdr-图27].source",
+      "page": 39,
+      "line": 835,
+      "figure": "图27",
+      "quote": "图27：2201时54秒“YANGZE 22”轮VDR记录和吴淞VTS监控",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-vdr-图16].source",
+      "page": 24,
+      "line": 600,
+      "figure": "图16",
+      "quote": "图16：2202时52秒“YANGZE 22”轮VDR记录情况",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-vdr-图17].source",
+      "page": 25,
+      "line": 611,
+      "figure": "图17",
+      "quote": "图17：2206时21秒“YANGZE 22”轮VDR记录情况",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-ais-fig28].source",
+      "page": 41,
+      "line": 881,
+      "figure": "图28",
+      "quote": "图28：2200时38秒吴淞VTS监控",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-ais-fig29].source",
+      "page": 42,
+      "line": 896,
+      "figure": "图29",
+      "quote": "图29：2200时42秒吴淞VTS监控",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-y-ais-fig6].source",
+      "page": 15,
+      "line": 404,
+      "figure": "图6",
+      "quote": "图6：碰撞时间和位置图",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-v-215830].source",
+      "page": 30,
+      "line": "738-740",
+      "figure": null,
+      "quote": "此时，“VEGA DREAM”轮位于41号灯浮上游进口航道内正常航行，航向约294°，航速约10.5节，两船相距约1.1海里。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-v-215945].source",
+      "page": 40,
+      "line": "863-864",
+      "figure": null,
+      "quote": "2159时45秒，该轮位于38号灯浮下游进口航道内正常航行，航向约294°，航速约10.6节。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-v-220014].source",
+      "page": 33,
+      "line": "774-776",
+      "figure": null,
+      "quote": "此时，“VEGA DREAM”轮航向约295°，航速约10.6节，两船相距约0.5海里",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-v-220024].source",
+      "page": 40,
+      "line": "866-867",
+      "figure": null,
+      "quote": "2200时24秒，该轮航向约294°，航速约10.6节，两船相距约0.4海里。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-v-220038].source",
+      "page": 41,
+      "line": "873-874",
+      "figure": null,
+      "quote": "2200时38秒，该轮船位31°16.8′N121°50.1′E，航向约294°，航速约10.6节",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-v-220042].source",
+      "page": 41,
+      "line": 882,
+      "figure": null,
+      "quote": "2200时42秒，该轮航向约294°，航速约10.6节，",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-v-220045].source",
+      "page": 36,
+      "line": 799,
+      "figure": null,
+      "quote": "进口船“VEGA DREAM”轮航向约295°，航速约10.6节",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-v-220109].source",
+      "page": 36,
+      "line": "808-810",
+      "figure": null,
+      "quote": "此时，“VEGA DREAM”轮航向约295°，航速约10.5节，两船相距约0.2海里。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-v-220121].source",
+      "page": 37,
+      "line": "819-820",
+      "figure": null,
+      "quote": "此时，“VEGA DREAM”轮航向约295°，航速约10.5节，两船相距约0.1海里。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-v-220154].source",
+      "page": 42,
+      "line": 897,
+      "figure": null,
+      "quote": "2201分54秒，该轮航向约297°，航速约10.2节。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-v-ais-fig28].source",
+      "page": 41,
+      "line": 881,
+      "figure": "图28",
+      "quote": "图28：2200时38秒吴淞VTS监控",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-v-ais-fig29].source",
+      "page": 42,
+      "line": 896,
+      "figure": "图29",
+      "quote": "图29：2200时42秒吴淞VTS监控",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.trackPoints[t-v-ais-fig6].source",
+      "page": 15,
+      "line": 404,
+      "figure": "图6",
+      "quote": "图6：碰撞时间和位置图",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X01].sources[0]",
+      "page": 11,
+      "line": "313-314",
+      "figure": null,
+      "quote": "2024年12月30日约0900时，“YANGZE 22”轮从南通新世界通用码头开航",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X01].sources[1]",
+      "page": 27,
+      "line": "678-679",
+      "figure": null,
+      "quote": "2024年12月30日约0830时，该轮从南通新世界通用码头开航。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X02].sources[0]",
+      "page": 11,
+      "line": "330-331",
+      "figure": null,
+      "quote": "事故发生时间约为2202时，正值涨水。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X02].sources[1]",
+      "page": 14,
+      "line": 390,
+      "figure": null,
+      "quote": "认定本起碰撞事故发生的时间为2024年12月",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X03].sources[0]",
+      "page": 23,
+      "line": 579,
+      "figure": "图14",
+      "quote": "图14：2200时14秒“YANGZE 22”轮VDR记录情况",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X03].sources[1]",
+      "page": 36,
+      "line": 805,
+      "figure": "图24",
+      "quote": "图24：2200时45秒“YANGZE 22”轮VDR记录和吴淞VTS监控",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X04].sources[0]",
+      "page": 33,
+      "line": "771-772",
+      "figure": null,
+      "quote": "2200时14秒，该轮航向约109°，航速约9.3节，ROT:P16.8°/min",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X04].sources[1]",
+      "page": 29,
+      "line": 718,
+      "figure": "图18",
+      "quote": "图18：2144时44秒“YANGZE 22”轮VDR记录和吴淞VTS监控",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X05].sources[0]",
+      "page": 30,
+      "line": "738-739",
+      "figure": null,
+      "quote": "“VEGA DREAM”轮位于41号灯浮上游进口航道内正常航行",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X05].sources[1]",
+      "page": 40,
+      "line": "863-864",
+      "figure": null,
+      "quote": "2159时45秒，该轮位于38号灯浮下游进口航道内正常航行",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X06].sources[0]",
+      "page": 25,
+      "line": 614,
+      "figure": null,
+      "quote": "2200时14秒109°右满舵左舵29°左舵30°",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X06].sources[1]",
+      "page": 34,
+      "line": 782,
+      "figure": "图22",
+      "quote": "图22：2200时14秒“YANGZE 22”轮VDR记录和吴淞VTS监控",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X07].sources[0]",
+      "page": 41,
+      "line": "871-872",
+      "figure": null,
+      "quote": "但引航员杜**未听到其呼叫，两船未建立起联系。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X07].sources[1]",
+      "page": 46,
+      "line": "1007-1009",
+      "figure": null,
+      "quote": "“VEGA DREAM”轮虽然在VHF CH06频道收到上述呼叫，但两船未建立有效通信联系。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X08].sources[0]",
+      "page": 42,
+      "line": 906,
+      "figure": null,
+      "quote": "31日约0345时，该轮在宝山北锚地抛锚",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X08].sources[1]",
+      "page": 43,
+      "line": "921-922",
+      "figure": null,
+      "quote": "约0350时，“VEGA DREAM”轮在拖轮“东雷50”轮、“兴晟201”轮伴航下抵达宝北锚地抛锚",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X09].sources[0]",
+      "page": 38,
+      "line": 827,
+      "figure": null,
+      "quote": "2201时54秒，该轮航向约047°，航速约8.0节。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X09].sources[1]",
+      "page": 15,
+      "line": 404,
+      "figure": "图6",
+      "quote": "图6：碰撞时间和位置图",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X10].sources[0]",
+      "page": 42,
+      "line": "890-891",
+      "figure": null,
+      "quote": "两船相距约0.3海里，CPA约0.1海里，TCPA约1分钟。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X10].sources[1]",
+      "page": 42,
+      "line": 896,
+      "figure": "图29",
+      "quote": "图29：2200时42秒吴淞VTS监控",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X11].sources[0]",
+      "page": 21,
+      "line": 541,
+      "figure": null,
+      "quote": "2024年12月30日21:50:00至22:10:00的数据",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X11].sources[1]",
+      "page": 22,
+      "line": 553,
+      "figure": "图13",
+      "quote": "图13：“YANGZE 22”轮事发时段船首向和转率SD数据卡记录情况",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X12].sources[0]",
+      "page": 2,
+      "line": 100,
+      "figure": null,
+      "quote": "船长：225.29米",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X12].sources[1]",
+      "page": 3,
+      "line": 118,
+      "figure": null,
+      "quote": "船长：283.3米",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X12].sources[2]",
+      "page": 15,
+      "line": 404,
+      "figure": "图6",
+      "quote": "图6：碰撞时间和位置图",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X13].sources[0]",
+      "page": 27,
+      "line": 665,
+      "figure": null,
+      "quote": "至2025年1月2日，各相关水域水面油污已清除完毕",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "case.discrepancies[X13].sources[1]",
+      "page": 44,
+      "line": 936,
+      "figure": null,
+      "quote": "3日约1700时，现场油污已全部清除完毕。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[E01].source",
+      "page": 31,
+      "line": "749-750",
+      "figure": null,
+      "quote": "水手丁**意图使用右舵把定航向，但在此之后约30秒时间内，其实际操左舵5°~10°压舵，导致船首开始向左偏转。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[E02].source",
+      "page": 32,
+      "line": "758-759",
+      "figure": null,
+      "quote": "水手丁**随后操左舵15°至左满舵的大舵角压舵，船首随之加快向左偏转。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[E03].source",
+      "page": 33,
+      "line": "772-774",
+      "figure": null,
+      "quote": "引航员周**下令“右满舵”，水手丁**回复“右满舵”，但实际操左舵29°，实际操舵与引航员舵令相反。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[E04].source",
+      "page": 35,
+      "line": "792-793",
+      "figure": null,
+      "quote": "船首已越过航道分隔线侵入进口航道。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[E05].source",
+      "page": 37,
+      "line": "817-819",
+      "figure": null,
+      "quote": "下令“左满舵”意图减小碰撞角度，水手丁**回复“左满舵”，但实际操右舵35°，与引航员舵令相反。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[E06].source",
+      "page": 14,
+      "line": 390,
+      "figure": null,
+      "quote": "认定本起碰撞事故发生的时间为2024年12月",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[E07].source",
+      "page": 13,
+      "line": "361-362",
+      "figure": null,
+      "quote": "第5号货舱和1号右燃油舱破损。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[E08].source",
+      "page": 44,
+      "line": "943-944",
+      "figure": null,
+      "quote": "1号右油舱内共计约171.053吨燃油泄漏入江。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[E11].source",
+      "page": 28,
+      "line": "704-705",
+      "figure": null,
+      "quote": "水手丁**查看舵轮后意识到压了右舵，立即使用正舵、左满舵把定航向。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[E12].source",
+      "page": 30,
+      "line": "728-729",
+      "figure": null,
+      "quote": "随后船长邹**离开驾驶台，未告知引航员周**。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[E13].source",
+      "page": 33,
+      "line": 769,
+      "figure": null,
+      "quote": "水手丁**告知引航员周**“现在舵效很差”。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[C11].source",
+      "page": 45,
+      "line": "969-970",
+      "figure": null,
+      "quote": "值班三副未对操舵水手舵令执行情况进行有效检查，并及时纠正。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[C12].source",
+      "page": 45,
+      "line": "975-976",
+      "figure": null,
+      "quote": "驾驶台人员未能结合当时的情况进行充分评估，错误判断为舵效差。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[C13].source",
+      "page": 45,
+      "line": "977-978",
+      "figure": null,
+      "quote": "但未采取非随动操舵或越控操舵操纵本船，也未采取停车、倒车等应急措施。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[E15].source",
+      "page": 27,
+      "line": "681-682",
+      "figure": null,
+      "quote": "船长邹**发现操舵水手李**出现操反舵的情况，遂通知大副更换操舵水手。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[E16].source",
+      "page": 28,
+      "line": 688,
+      "figure": null,
+      "quote": "约1936时，水手丁**到驾驶台接班操舵。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[C14].source",
+      "page": 7,
+      "line": 214,
+      "figure": null,
+      "quote": "未在驾驶台值过班。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[C15].source",
+      "page": 47,
+      "line": "1043-1044",
+      "figure": null,
+      "quote": "但未对接替的操舵水手进行针对操舵培训。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[C16].source",
+      "page": 17,
+      "line": "437-438",
+      "figure": null,
+      "quote": "指针指示的刻度与操舵方向相反。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[C17].source",
+      "page": 47,
+      "line": "1036-1038",
+      "figure": null,
+      "quote": "管理公司未对该轮操舵系统进行针对性培训和指导，尤其是越控操舵模式的指导",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[E21].source",
+      "page": 34,
+      "line": "784-786",
+      "figure": null,
+      "quote": "引航员周**使用VHF CH06频道呼叫“VEGA DREAM”轮引航员名字“杜**，杜**，往右转，我右满舵没舵效”。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[C21].source",
+      "page": 46,
+      "line": "1008-1009",
+      "figure": null,
+      "quote": "但两船未建立有效通信联系。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[E22].source",
+      "page": 41,
+      "line": "884-885",
+      "figure": null,
+      "quote": "便立即下令前进二（已在前进二位置）和右满舵，发出一长声警示声号",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[C23].source",
+      "page": 45,
+      "line": 981,
+      "figure": null,
+      "quote": "“VEGA DREAM”轮未采取应急抛锚等有效措施。",
+      "matched": true,
+      "occurrences": 2
+    },
+    {
+      "path": "ecfc.nodes[C22].source",
+      "page": 51,
+      "line": "1148-1149",
+      "figure": null,
+      "quote": "未呼叫对方船名和呼号，导致无法被对方船舶的其他驾驶值班人员接收的情形",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[C31].source",
+      "page": 12,
+      "line": "343-344",
+      "figure": null,
+      "quote": "本起事故发生时正处于长江口深水航道交通管制时段，进出深水航道船舶密度较大。",
+      "matched": true,
+      "occurrences": 1
+    },
+    {
+      "path": "ecfc.nodes[C32].source",
+      "page": 46,
+      "line": "1013-1014",
+      "figure": null,
+      "quote": "两船相对速度约19.8节、会遇时间不到2分钟",
+      "matched": true,
+      "occurrences": 1
+    }
+  ]
+}

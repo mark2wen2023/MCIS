@@ -1,0 +1,13 @@
+Test run for /workspace/maritime-sim-design/tests_acceptance/W18/bin/Debug/net8.0/W18.Acceptance.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+  Failed Mcis.Acceptance.W18.RetestW181AcceptanceTests.W18_D08_EdgeWindow_AbsorbedIntoAdjacentViolationGroup [28 ms]
+  Error Message:
+   Assert.Contains() Failure: Filter not matched in collection
+Collection: []
+  Stack Trace:
+     at Mcis.Acceptance.W18.RetestW181AcceptanceTests.W18_D08_EdgeWindow_AbsorbedIntoAdjacentViolationGroup() in /workspace/maritime-sim-design/tests_acceptance/W18/RetestW181AcceptanceTests.cs:line 70
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+Failed!  - Failed:     1, Passed:     0, Skipped:     0, Total:     1, Duration: < 1 ms - W18.Acceptance.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

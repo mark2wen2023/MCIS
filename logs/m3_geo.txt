@@ -1,0 +1,8 @@
+已完成 **M3 `Mcis.Domain.Geo`** 模块与单元测试，并更新进度表：
+
+### 新增文件
+- [`GeoMath`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Geo/GeoMath.cs#L10-L185)：纯 C# 9 双精度实现 WGS84 椭球常量、`Wgs84ToEcef`、`EcefToWgs84`（Bowring 迭代法，兼容南北极点奇异区与任意高程）、`EcefToEnu`、`EnuToEcef`、`Wgs84ToEnu`、`EnuToWgs84` 以及 Unity 左手系映射 `EnuToUnity` / `UnityToEnu`（`x=East, y=Up+SeaLevelOffset, z=North`）。
+- [`IGeoConverter`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Geo/IGeoConverter.cs#L13-L52) 与 [`LocalEnuGeoConverter`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Geo/IGeoConverter.cs#L58-L169)：纯计算局部切平面坐标转换接口与实现（复用 [`Double3`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Common/GeoPrimitives.cs#L107-L179)、[`GeoCoord`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Common/GeoPrimitives.cs#L184-L232)、[`EnuPosition`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Common/EnuAndEnums.cs#L9-L80)，缓存原点 ECEF 及旋转矩阵三角函数分量）。
+- [`GeoMathTests`](file:///workspace/maritime-sim-design/unity/DotnetTests/Tests/GeoMathTests.cs#L11-L161)：覆盖已知点 ECEF 精确值校验、多区域（肇庆/珠江口、赤道、两极附近高纬、高程 -100m~8000m）往返精度（角度误差 `< 1e-9°` 且位置误差 `< 1 mm`）、ENU 方向物理一致性以及 ENU/Unity 往返测试。
+- 已更新 [PROGRESS.md](file:///workspace/maritime-sim-design/unity/PROGRESS.md#L9)：`M3 Geo` 状态设为 `完成`，测试通过 `16/16`。
+EXIT 0

@@ -1,0 +1,8 @@
+# 示例数据（虚构）：Mary 轮驾驶台音频、雷达与 ECDIS 媒体清单。
+id,kind,channel,file,start_utc,duration_s,sha256,note
+AUD-CH1-001,audio,CH1,audio_ch1_0615.wav,2026-05-18T06:15:00.000Z,720,8f14e45fceea167a5a36dedd4bea2543,驾驶台音频
+AUD-CH16-001,audio,CH16,audio_ch16_0615.wav,2026-05-18T06:15:00.000Z,720,c9f0f895fb98ab9159f51fd0297e236d,VHF16
+RAD-X-001,radar,X-BAND,radar_xband_0615.png,2026-05-18T06:15:00.000Z,360,45c48cce2e2d7fbdea1afc51c7c6ad26,雷达截图
+RAD-X-002,radar,X-BAND,radar_xband_0621.png,2026-05-18T06:21:00.000Z,360,d3d9446802a44259755d38e6d163e820,雷达截图
+ECDIS-001,ecdis,ECDIS,ecdis_0615.png,2026-05-18T06:15:00.000Z,720,6512bd43d9caa6e02c990b0a82652dca,ECDIS截屏
+AUD-CH1-002,audio,CH1,audio_ch1_0623.wav,2026-05-18T06:23:00.000Z,180,c20ad4d76fe97759aa27a0c99bff6710,驾驶台音频

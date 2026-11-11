@@ -1,0 +1,4 @@
+W18 final: 92 total, 90 pass, 2 KnownDefect fail
+W15 final: 112 total, 111 pass, 1 KnownDefect fail
+self-test W18 73/73 W15 113/113
+hashes identical

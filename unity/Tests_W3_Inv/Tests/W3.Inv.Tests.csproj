@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../W3.Inv.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="*.cs" />
+    <!-- 仅用于格式兼容性测试：只读引入现有案件包审计日志实现（不修改）。 -->
+    <Compile Include="../../Assets/_Project/Scripts/Core/Commands/**/*.cs" Link="Compat/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../Assets/_Project/Scripts/Data/Audit/AuditLog.cs" Link="Compat/AuditLog.cs" />
+    <Compile Include="../../Assets/_Project/Scripts/Data/CasePackage/SimpleJson.cs" Link="Compat/SimpleJson.cs" />
+    <Compile Include="../../Assets/_Project/Scripts/Data/CasePackage/CasePackageLayout.cs" Link="Compat/CasePackageLayout.cs" />
+    <Compile Include="../../Assets/_Project/Scripts/Data/CasePackage/Sha256Util.cs" Link="Compat/Sha256Util.cs" />
+  </ItemGroup>
+</Project>

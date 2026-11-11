@@ -1,0 +1,12 @@
+已在 [ARCHITECTURE.md](file:///workspace/maritime-sim-design/ARCHITECTURE.md) 文件末尾分 2 次小块追加完成了目录所列出的全部缺失章节（未改动原有第 0–12 章内容，严格保持模块名、接口名与数据类型一致）：
+
+1. **[13. 风险与注意事项](file:///workspace/maritime-sim-design/ARCHITECTURE.md#L2762-L2776)**
+   - 以结构化表格覆盖全部 9 项风险点及架构缓解措施：`R-01` 大坐标双精度与 `CesiumGeoreferenceAdapter` 受控原点平移、`R-02` AIS 时间缺口/跳点剔除与 UTC/UTC+8 时区显式确认、`R-03` 证据只读隔离/SHA-256 校验/`AuditLog` 审计与虚构案例硬水印隔离、`R-04` 插值与真实轨迹偏差的 `SampleProvenance` 溯源与免责声明、`R-05` Enviro 3 / DWP2 版本锁定与 URP 防腐层适配、`R-06` 倾斜摄影瓦片/水面/FFmpeg 离线固定步长录制性能保障、`R-07` 碰撞时刻 $t_c$ 离线二分搜索与 10 Hz `DamageTrack` 确定性烘焙回放、`R-08` 思源黑体生僻字覆盖与 `JetBrains Mono` 等宽数字可用性、`R-09` FFmpeg 进程隔离与开源字体/库许可证合规。
+2. **[14. 测试与质量保障](file:///workspace/maritime-sim-design/ARCHITECTURE.md#L2780-L2825)**
+   - **14.1 领域层单元测试（EditMode）**：覆盖 [`CpaCalculator`](file:///workspace/maritime-sim-design/ARCHITECTURE.md#L2788)（向量法与论文 3.4 节三角公式交叉验证、退化/远离边界、1s 滞回）、[`TrackInterpolator`](file:///workspace/maritime-sim-design/ARCHITECTURE.md#L2789)（直线/等速圆弧 Hermite 精度、$0^\circ/360^\circ$ 跨界、天线偏移修正、7 步异常剔除）、[`GeoMath`](file:///workspace/maritime-sim-design/ARCHITECTURE.md#L2790)（WGS84⇄ECEF⇄ENU 往返误差 $< 0.1\text{ mm}$）及 AIS/ECFC 规则校验。
+   - **14.2 PlayMode 集成测试、确定性回放与性能基线**：包含 `SimClock.Seek` 100 次随机跳转幂等性验证、倍速无关性测试、证据篡改告警测试，以及帧率（$\ge 60\text{ FPS}$）、单帧求值耗时（$\le 0.5\text{ ms}$）与稳态回放 `0 B/Frame` GC 分配基线表。
+   - **14.3 对应论文 5.3 节 8 步流程的端到端验收用例**：逐一映射 `ACC-5.3-01` 至 `ACC-5.3-08` 的输入与验收判据。
+3. **[附录 A 术语与单位](file:///workspace/maritime-sim-design/ARCHITECTURE.md#L2830-L2848)** 与 **[附录 B 默认参数表](file:///workspace/maritime-sim-design/ARCHITECTURE.md#L2852-L2874)**
+   - 汇总全系统 SI 内部计算单位与界面显示单位换算关系，以及坐标、AIS 清洗、CPA 阈值、时间轴、ECFC 与导出的默认参数配置。
+4. **[附录 C 示例案件 Lily / Mary（虚构）](file:///workspace/maritime-sim-design/ARCHITECTURE.md#L2878-L2917)**
+   - 显著标注虚构演示属性（`isFictionalDemo = true`），通过对比表格给出散货船 **Lily**（卸货离港）与集装箱船 **Mary**（满载进港）的船舶静态/操纵/分舱参数，以及 `T0`–`T7`（含碰撞时刻 $t_c = 298.4\text{ s}$ 及碰撞后右倾下沉烘焙阶段）的经纬度、SOG/COG/HDG、实时 DCPA/TCPA 和 ECFC 关联节点对照表。

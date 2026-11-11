@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/track-point.schema.json",
+  "title": "TrackPoint（航迹点）",
+  "description": "TrackSample 的交换形式（C# Mcis.Domain.Models.TrackSample）。速度用节、角度用度（真北顺时针），与 AIS 习惯一致；Unity 侧自行换算为 m/s 与 ENU。",
+  "type": "object",
+  "required": ["vesselId", "timeSec", "utc", "latDeg", "lonDeg", "sogKn", "cogDeg"],
+  "properties": {
+    "vesselId": { "$ref": "common.schema.json#/$defs/vesselId" },
+    "timeSec": { "$ref": "common.schema.json#/$defs/simTimeSec" },
+    "utc": { "$ref": "common.schema.json#/$defs/utc" },
+    "latDeg": { "type": "number" },
+    "lonDeg": { "type": "number" },
+    "sogKn": { "type": "number", "minimum": 0 },
+    "cogDeg": { "type": "number", "minimum": 0, "maximum": 360 },
+    "hdgDeg": { "type": ["number", "null"], "minimum": 0, "maximum": 360 },
+    "rotDegPerMin": { "type": ["number", "null"] },
+    "provenance": { "type": "string", "enum": ["Measured", "Interpolated", "ManualDrawn", "Simulated"], "description": "对应 SampleProvenance" },
+    "source": { "type": "string", "description": "数据来源标签，如 AIS-VTS / VDR-Mary" }
+  },
+  "additionalProperties": false
+}

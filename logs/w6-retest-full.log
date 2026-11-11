@@ -1,0 +1,291 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-9.2.0, pluggy-1.7.0 -- /workspace/maritime-sim-design/tests_acceptance/W6/../../service/.venv/bin/python
+rootdir: /workspace/maritime-sim-design/tests_acceptance/W6
+configfile: pytest.ini
+testpaths: .
+plugins: anyio-4.16.0
+collecting ... collected 88 items
+
+test_w6_e2e_browser.py::test_G1_backend_listens_loopback_only PASSED     [  1%]
+test_w6_e2e_browser.py::test_G2_frontend_listens_loopback_only PASSED    [  2%]
+test_w6_e2e_browser.py::test_G3_backend_not_reachable_on_other_interfaces PASSED [  3%]
+test_w6_e2e_browser.py::test_G4_existing_8765_untouched_and_loopback PASSED [  4%]
+test_w6_e2e_browser.py::test_H1_page_renders_disclaimer[fict] PASSED     [  5%]
+test_w6_e2e_browser.py::test_H1_page_renders_disclaimer[pub] PASSED      [  6%]
+test_w6_e2e_browser.py::test_H2_switcher_has_both_modes[fict] PASSED     [  7%]
+test_w6_e2e_browser.py::test_H2_switcher_has_both_modes[pub] PASSED      [  9%]
+test_w6_e2e_browser.py::test_H3_mode_tags PASSED                         [ 10%]
+test_w6_e2e_browser.py::test_H4_public_mode_bands_and_tags PASSED        [ 11%]
+test_w6_e2e_browser.py::test_H5_public_mode_needsreview_and_notassessable PASSED [ 12%]
+test_w6_e2e_browser.py::test_H6_fict_mode_bands_and_evidence PASSED      [ 13%]
+test_w6_e2e_browser.py::test_I1_screenshots[1440-1440-900-fict] PASSED   [ 14%]
+test_w6_e2e_browser.py::test_I1_screenshots[1440-1440-900-pub] PASSED    [ 15%]
+test_w6_e2e_browser.py::test_I1_screenshots[1920-1920-1080-fict] PASSED  [ 17%]
+test_w6_e2e_browser.py::test_I1_screenshots[1920-1920-1080-pub] PASSED   [ 18%]
+test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Rejected-None] PASSED [ 19%]
+test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Rejected-] PASSED [ 20%]
+test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Rejected-   ] PASSED [ 21%]
+test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Rejected-\t\n] PASSED [ 22%]
+test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Rejected-\u3000\u3000] PASSED [ 23%]
+test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Modified-None] PASSED [ 25%]
+test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Modified-] PASSED [ 26%]
+test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Modified-   ] PASSED [ 27%]
+test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Modified-\t\n] PASSED [ 28%]
+test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Modified-\u3000] PASSED [ 29%]
+test_w6_service_acceptance.py::test_A2_confirm_reason_optional[None] PASSED [ 30%]
+test_w6_service_acceptance.py::test_A2_confirm_reason_optional[] PASSED  [ 31%]
+test_w6_service_acceptance.py::test_A2_confirm_reason_optional[\u6838\u5bf9\u5408\u6210 VDR \u540e\u786e\u8ba4] PASSED [ 32%]
+test_w6_service_acceptance.py::test_A3_modify_requires_verdict PASSED    [ 34%]
+test_w6_service_acceptance.py::test_A4_bad_body_is_422_problem[body0] PASSED [ 35%]
+test_w6_service_acceptance.py::test_A4_bad_body_is_422_problem[body1] PASSED [ 36%]
+test_w6_service_acceptance.py::test_A4_bad_body_is_422_problem[body2] PASSED [ 37%]
+test_w6_service_acceptance.py::test_A4_bad_body_is_422_problem[body3] PASSED [ 38%]
+test_w6_service_acceptance.py::test_A5_unknown_check_404_problem PASSED  [ 39%]
+test_w6_service_acceptance.py::test_A6_readonly_roles_cannot_review[ExternalExpert] PASSED [ 40%]
+test_w6_service_acceptance.py::test_A6_readonly_roles_cannot_review[InterestedState] PASSED [ 42%]
+test_w6_service_acceptance.py::test_A6_readonly_roles_cannot_review[AgentService] PASSED [ 43%]
+test_w6_service_acceptance.py::test_A6_readonly_roles_cannot_review[Public] PASSED [ 44%]
+test_w6_service_acceptance.py::test_A7_confirm_must_not_change_verdict FAILED [ 45%]
+test_w6_service_acceptance.py::test_A8_reject_must_not_change_verdict FAILED [ 46%]
+test_w6_service_acceptance.py::test_B1_audit_has_who_when_before_after_reason[Confirmed-None-\u5408\u6210\u786e\u8ba4\u7406\u7531-\u03b1] PASSED [ 47%]
+test_w6_service_acceptance.py::test_B1_audit_has_who_when_before_after_reason[Rejected-None-\u5408\u6210\u9a73\u56de\u7406\u7531-\u03b2] PASSED [ 48%]
+test_w6_service_acceptance.py::test_B1_audit_has_who_when_before_after_reason[Modified-NeedsReview-\u5408\u6210\u4fee\u6539\u7406\u7531-\u03b3] PASSED [ 50%]
+test_w6_service_acceptance.py::test_B1_audit_has_who_when_before_after_reason[Modified-NotAssessable-\u5408\u6210\u4fee\u6539\u7406\u7531-\u03b4] PASSED [ 51%]
+test_w6_service_acceptance.py::test_B2_long_reason_kept_whole_in_audit FAILED [ 52%]
+test_w6_service_acceptance.py::test_B3_default_operator_when_header_missing PASSED [ 53%]
+test_w6_service_acceptance.py::test_B4_sequential_reviews_chain_and_before_after_link PASSED [ 54%]
+test_w6_service_acceptance.py::test_B5_review_persisted_and_doc_valid PASSED [ 55%]
+test_w6_service_acceptance.py::test_C1_get_colreg_contract_valid[CASE-2026-DEMO-LILY-MARY] PASSED [ 56%]
+test_w6_service_acceptance.py::test_C1_get_colreg_contract_valid[CASE-2025-HAILI5-WANA17] PASSED [ 57%]
+test_w6_service_acceptance.py::test_C2_bands_have_stage_doubt_status[CASE-2026-DEMO-LILY-MARY] PASSED [ 59%]
+test_w6_service_acceptance.py::test_C2_bands_have_stage_doubt_status[CASE-2025-HAILI5-WANA17] PASSED [ 60%]
+test_w6_service_acceptance.py::test_C3_every_check_links_registered_evidence[CASE-2026-DEMO-LILY-MARY] PASSED [ 61%]
+test_w6_service_acceptance.py::test_C3_every_check_links_registered_evidence[CASE-2025-HAILI5-WANA17] PASSED [ 62%]
+test_w6_service_acceptance.py::test_C4_get_colreg_forbidden_for_public PASSED [ 63%]
+test_w6_service_acceptance.py::test_D1_haili5_is_public_report_case PASSED [ 64%]
+test_w6_service_acceptance.py::test_D2_haili5_bands_tagged PASSED        [ 65%]
+test_w6_service_acceptance.py::test_D3_haili5_checks_tagged_and_sourced PASSED [ 67%]
+test_w6_service_acceptance.py::test_D4_haili5_tracks_tagged PASSED       [ 68%]
+test_w6_service_acceptance.py::test_D5_haili5_evidence_tagged FAILED     [ 69%]
+test_w6_service_acceptance.py::test_E1_entrypoint_binds_loopback_only PASSED [ 70%]
+test_w6_service_acceptance.py::test_F1_evaluate_optional_body[nobody] PASSED [ 71%]
+test_w6_service_acceptance.py::test_F1_evaluate_optional_body[empty] PASSED [ 72%]
+test_w6_service_acceptance.py::test_F1_evaluate_optional_body[fields] PASSED [ 73%]
+test_w6_service_acceptance.py::test_F2_evaluate_vessel_status_object_form_per_openapi FAILED [ 75%]
+test_w6_service_acceptance.py::test_F3_evaluate_checks_link_evidence PASSED [ 76%]
+test_w6_service_acceptance.py::test_F4_evaluate_then_review_roundtrip PASSED [ 77%]
+test_w6_service_acceptance.py::test_F5_evaluate_forbidden_for_readonly[ExternalExpert] PASSED [ 78%]
+test_w6_service_acceptance.py::test_F5_evaluate_forbidden_for_readonly[Public] PASSED [ 79%]
+test_w6_service_acceptance.py::test_F6_evaluate_bad_body_422_problem PASSED [ 80%]
+test_w6_service_acceptance.py::test_F7_evaluate_vessel_status_list_form_impl PASSED [ 81%]
+test_w6_web_view.py::test_web_view[W01_disclaimer_banner_fixed] PASSED   [ 82%]
+test_w6_web_view.py::test_web_view[W02_band_dangerStage_shown] PASSED    [ 84%]
+test_w6_web_view.py::test_web_view[W03_band_doubt_shown_with_reason] PASSED [ 85%]
+test_w6_web_view.py::test_web_view[W04_band_vesselStatus_shown] PASSED   [ 86%]
+test_w6_web_view.py::test_web_view[W05_needsreview_vs_notassessable_distinct] PASSED [ 87%]
+test_w6_web_view.py::test_web_view[W06_notassessable_vs_undetermined_distinct] PASSED [ 88%]
+test_w6_web_view.py::test_web_view[W07_legend_explains_both] PASSED      [ 89%]
+test_w6_web_view.py::test_web_view[W08_every_check_row_shows_evidence] PASSED [ 90%]
+test_w6_web_view.py::test_web_view[W09_selected_check_has_evidence_link] PASSED [ 92%]
+test_w6_web_view.py::test_web_view[W10_dangling_evidence_flagged] FAILED [ 93%]
+test_w6_web_view.py::test_web_view[W11_audit_panel_who_when_before_after_reason] PASSED [ 94%]
+test_w6_web_view.py::test_web_view[W12_review_controls_present] PASSED   [ 95%]
+test_w6_web_view.py::test_web_view[W13_switcher_fictional_and_public] PASSED [ 96%]
+test_w6_web_view.py::test_web_view[W14_mode_tag_fictional_vs_public] PASSED [ 97%]
+test_w6_web_view.py::test_web_view[W15_public_mode_source_tags_visible] PASSED [ 98%]
+test_w6_web_view.py::test_web_view[W16_selected_check_shows_source] PASSED [100%]
+
+=================================== FAILURES ===================================
+___________________ test_A7_confirm_must_not_change_verdict ____________________
+
+client = <starlette.testclient.TestClient object at 0x7f6f438bacf0>
+
+    @pytest.mark.knowndefect  # W6-D01
+    def test_A7_confirm_must_not_change_verdict(client):
+        """确认=接受原判定。带 verdict 的“确认”实际是无理由的修改，绕过理由必填。"""
+        old = _check(_colreg(client), "CK-05")["verdict"]
+        r = _patch(client, "CK-05", {"reviewStatus": "Confirmed", "verdict": "NotComplied"})
+        if r.status_code == 200:
+>           assert r.json()["verdict"] == old, "确认时判定被静默改写（未填理由）"
+E           AssertionError: 确认时判定被静默改写（未填理由）
+E           assert 'NotComplied' == 'Complies'
+E             
+E             - Complies
+E             + NotComplied
+
+test_w6_service_acceptance.py:127: AssertionError
+____________________ test_A8_reject_must_not_change_verdict ____________________
+
+client = <starlette.testclient.TestClient object at 0x7f6f436806b0>
+
+    @pytest.mark.knowndefect  # W6-D01
+    def test_A8_reject_must_not_change_verdict(client):
+        old = _check(_colreg(client), "CK-05")["verdict"]
+        r = _patch(client, "CK-05", {"reviewStatus": "Rejected", "verdict": "NotComplied", "note": "合成理由"})
+        if r.status_code == 200:
+>           assert r.json()["verdict"] == old, "驳回时判定被改写（应走“修改”）"
+E           AssertionError: 驳回时判定被改写（应走“修改”）
+E           assert 'NotComplied' == 'Complies'
+E             
+E             - Complies
+E             + NotComplied
+
+test_w6_service_acceptance.py:137: AssertionError
+___________________ test_B2_long_reason_kept_whole_in_audit ____________________
+
+client = <starlette.testclient.TestClient object at 0x7f6f437d7350>
+
+    @pytest.mark.knowndefect  # W6-D02
+    def test_B2_long_reason_kept_whole_in_audit(client):
+        """理由是审计必记项；长理由（~390 字）不得被截断丢失。"""
+        reason = "合成理由" + "甲乙丙丁戊己庚辛壬癸" * 39
+        r = _patch(client, "CK-08", {"reviewStatus": "Rejected", "note": reason})
+        assert r.status_code == 200
+        e = _reviews(client, "CK-08")[-1]
+>       assert reason in e["after"], f"理由被截断：after 长 {len(e['after'])}"
+E       AssertionError: 理由被截断：after 长 400
+E       assert '合成理由甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸' in 'verdict=NotComplied; reviewStatus=Rejected; reason=合成理由甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁…'
+
+test_w6_service_acceptance.py:183: AssertionError
+________________________ test_D5_haili5_evidence_tagged ________________________
+
+client = <starlette.testclient.TestClient object at 0x7f6f43492030>
+
+    @pytest.mark.knowndefect  # W6-D03
+    def test_D5_haili5_evidence_tagged(client):
+        for e in client.get(f"{H5}/evidence", headers=H()).json():
+            assert (e.get("source") or "").strip(), f"{e['evidenceId']} 无来源"
+>           assert TAG.search((e.get("note") or "") + (e.get("source") or "")), f"{e['evidenceId']} 无【直接】/【推算】"
+E           AssertionError: EV-101 无【直接】/【推算】
+E           assert None
+E            +  where None = <built-in method search of re.Pattern object at 0x7f6f49c3ce50>((('来源：reports/haili5/（公开资料）。页码以正文页脚为准。') + ('交通运输部海事调查公开报告')))
+E            +    where <built-in method search of re.Pattern object at 0x7f6f49c3ce50> = re.compile('【(直接|推算)').search
+E            +    and   '来源：reports/haili5/（公开资料）。页码以正文页脚为准。' = <built-in method get of dict object at 0x7f6f435f26c0>('note')
+E            +      where <built-in method get of dict object at 0x7f6f435f26c0> = {'evidenceId': 'EV-101', 'caseId': 'CASE-2025-HAILI5-WANA17', 'title': '公开事故调查报告（海力5 / WAN HAI A17）', 'source': '交通运输部海事调查公开报告', ...}.get
+E            +    and   '交通运输部海事调查公开报告' = <built-in method get of dict object at 0x7f6f435f26c0>('source')
+E            +      where <built-in method get of dict object at 0x7f6f435f26c0> = {'evidenceId': 'EV-101', 'caseId': 'CASE-2025-HAILI5-WANA17', 'title': '公开事故调查报告（海力5 / WAN HAI A17）', 'source': '交通运输部海事调查公开报告', ...}.get
+
+test_w6_service_acceptance.py:297: AssertionError
+____________ test_F2_evaluate_vessel_status_object_form_per_openapi ____________
+
+client = <starlette.testclient.TestClient object at 0x7f6f482a2030>
+
+    @needs_core
+    @pytest.mark.knowndefect  # W6-D04
+    def test_F2_evaluate_vessel_status_object_form_per_openapi(client):
+        """openapi：vesselStatus 为 object（按船 id 的状态序列 [{fromUtc,status}]）。"""
+        body = {"vesselStatus": {"vessel_mary": [{"fromUtc": "2026-05-18T06:15:00Z", "status": "PowerDriven"},
+                                                 {"fromUtc": "2026-05-18T06:20:00Z", "status": "NotUnderCommand"}],
+                                 "vessel_lily": [{"fromUtc": "2026-05-18T06:15:00Z", "status": "PowerDriven"}]}}
+        r = client.post(f"{L}/colreg:evaluate", json=body, headers=H())
+>       assert r.status_code == 200, f"按 openapi 形态提交被拒：{r.status_code} {r.text[:300]}"
+E       AssertionError: 按 openapi 形态提交被拒：422 {"code":"VALIDATION_ERROR","message":"请求参数不合法","detail":[{"loc":["body","vesselStatus"],"msg":"Input should be a valid list"}]}
+E       assert 422 == 200
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+
+test_w6_service_acceptance.py:341: AssertionError
+_________________ test_web_view[W10_dangling_evidence_flagged] _________________
+
+web_results = {'W01_disclaimer_banner_fixed': {'ok': True, 'msg': ''}, 'W02_band_dangerStage_shown': {'ok': True, 'msg': ''}, 'W03_band_doubt_shown_with_reason': {'ok': True, 'msg': ''}, 'W04_band_vesselStatus_shown': {'ok': True, 'msg': ''}, ...}
+name = 'W10_dangling_evidence_flagged'
+
+    @pytest.mark.parametrize("name", [pytest.param(n, marks=pytest.mark.knowndefect) if n in KNOWN else n for n in CASES])
+    def test_web_view(web_results, name):
+        assert name in web_results, f"web 用例未执行：{name}"
+        r = web_results[name]
+>       assert r["ok"], r["msg"]
+E       AssertionError: 链到未登记证据时无任何提示（点击无反应）
+E       assert False
+
+test_w6_web_view.py:32: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED test_w6_e2e_browser.py::test_G1_backend_listens_loopback_only
+PASSED test_w6_e2e_browser.py::test_G2_frontend_listens_loopback_only
+PASSED test_w6_e2e_browser.py::test_G3_backend_not_reachable_on_other_interfaces
+PASSED test_w6_e2e_browser.py::test_G4_existing_8765_untouched_and_loopback
+PASSED test_w6_e2e_browser.py::test_H1_page_renders_disclaimer[fict]
+PASSED test_w6_e2e_browser.py::test_H1_page_renders_disclaimer[pub]
+PASSED test_w6_e2e_browser.py::test_H2_switcher_has_both_modes[fict]
+PASSED test_w6_e2e_browser.py::test_H2_switcher_has_both_modes[pub]
+PASSED test_w6_e2e_browser.py::test_H3_mode_tags
+PASSED test_w6_e2e_browser.py::test_H4_public_mode_bands_and_tags
+PASSED test_w6_e2e_browser.py::test_H5_public_mode_needsreview_and_notassessable
+PASSED test_w6_e2e_browser.py::test_H6_fict_mode_bands_and_evidence
+PASSED test_w6_e2e_browser.py::test_I1_screenshots[1440-1440-900-fict]
+PASSED test_w6_e2e_browser.py::test_I1_screenshots[1440-1440-900-pub]
+PASSED test_w6_e2e_browser.py::test_I1_screenshots[1920-1920-1080-fict]
+PASSED test_w6_e2e_browser.py::test_I1_screenshots[1920-1920-1080-pub]
+PASSED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Rejected-None]
+PASSED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Rejected-]
+PASSED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Rejected-   ]
+PASSED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Rejected-\t\n]
+PASSED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Rejected-\u3000\u3000]
+PASSED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Modified-None]
+PASSED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Modified-]
+PASSED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Modified-   ]
+PASSED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Modified-\t\n]
+PASSED test_w6_service_acceptance.py::test_A1_reject_modify_without_reason_is_422[Modified-\u3000]
+PASSED test_w6_service_acceptance.py::test_A2_confirm_reason_optional[None]
+PASSED test_w6_service_acceptance.py::test_A2_confirm_reason_optional[]
+PASSED test_w6_service_acceptance.py::test_A2_confirm_reason_optional[\u6838\u5bf9\u5408\u6210 VDR \u540e\u786e\u8ba4]
+PASSED test_w6_service_acceptance.py::test_A3_modify_requires_verdict
+PASSED test_w6_service_acceptance.py::test_A4_bad_body_is_422_problem[body0]
+PASSED test_w6_service_acceptance.py::test_A4_bad_body_is_422_problem[body1]
+PASSED test_w6_service_acceptance.py::test_A4_bad_body_is_422_problem[body2]
+PASSED test_w6_service_acceptance.py::test_A4_bad_body_is_422_problem[body3]
+PASSED test_w6_service_acceptance.py::test_A5_unknown_check_404_problem
+PASSED test_w6_service_acceptance.py::test_A6_readonly_roles_cannot_review[ExternalExpert]
+PASSED test_w6_service_acceptance.py::test_A6_readonly_roles_cannot_review[InterestedState]
+PASSED test_w6_service_acceptance.py::test_A6_readonly_roles_cannot_review[AgentService]
+PASSED test_w6_service_acceptance.py::test_A6_readonly_roles_cannot_review[Public]
+PASSED test_w6_service_acceptance.py::test_B1_audit_has_who_when_before_after_reason[Confirmed-None-\u5408\u6210\u786e\u8ba4\u7406\u7531-\u03b1]
+PASSED test_w6_service_acceptance.py::test_B1_audit_has_who_when_before_after_reason[Rejected-None-\u5408\u6210\u9a73\u56de\u7406\u7531-\u03b2]
+PASSED test_w6_service_acceptance.py::test_B1_audit_has_who_when_before_after_reason[Modified-NeedsReview-\u5408\u6210\u4fee\u6539\u7406\u7531-\u03b3]
+PASSED test_w6_service_acceptance.py::test_B1_audit_has_who_when_before_after_reason[Modified-NotAssessable-\u5408\u6210\u4fee\u6539\u7406\u7531-\u03b4]
+PASSED test_w6_service_acceptance.py::test_B3_default_operator_when_header_missing
+PASSED test_w6_service_acceptance.py::test_B4_sequential_reviews_chain_and_before_after_link
+PASSED test_w6_service_acceptance.py::test_B5_review_persisted_and_doc_valid
+PASSED test_w6_service_acceptance.py::test_C1_get_colreg_contract_valid[CASE-2026-DEMO-LILY-MARY]
+PASSED test_w6_service_acceptance.py::test_C1_get_colreg_contract_valid[CASE-2025-HAILI5-WANA17]
+PASSED test_w6_service_acceptance.py::test_C2_bands_have_stage_doubt_status[CASE-2026-DEMO-LILY-MARY]
+PASSED test_w6_service_acceptance.py::test_C2_bands_have_stage_doubt_status[CASE-2025-HAILI5-WANA17]
+PASSED test_w6_service_acceptance.py::test_C3_every_check_links_registered_evidence[CASE-2026-DEMO-LILY-MARY]
+PASSED test_w6_service_acceptance.py::test_C3_every_check_links_registered_evidence[CASE-2025-HAILI5-WANA17]
+PASSED test_w6_service_acceptance.py::test_C4_get_colreg_forbidden_for_public
+PASSED test_w6_service_acceptance.py::test_D1_haili5_is_public_report_case
+PASSED test_w6_service_acceptance.py::test_D2_haili5_bands_tagged
+PASSED test_w6_service_acceptance.py::test_D3_haili5_checks_tagged_and_sourced
+PASSED test_w6_service_acceptance.py::test_D4_haili5_tracks_tagged
+PASSED test_w6_service_acceptance.py::test_E1_entrypoint_binds_loopback_only
+PASSED test_w6_service_acceptance.py::test_F1_evaluate_optional_body[nobody]
+PASSED test_w6_service_acceptance.py::test_F1_evaluate_optional_body[empty]
+PASSED test_w6_service_acceptance.py::test_F1_evaluate_optional_body[fields]
+PASSED test_w6_service_acceptance.py::test_F3_evaluate_checks_link_evidence
+PASSED test_w6_service_acceptance.py::test_F4_evaluate_then_review_roundtrip
+PASSED test_w6_service_acceptance.py::test_F5_evaluate_forbidden_for_readonly[ExternalExpert]
+PASSED test_w6_service_acceptance.py::test_F5_evaluate_forbidden_for_readonly[Public]
+PASSED test_w6_service_acceptance.py::test_F6_evaluate_bad_body_422_problem
+PASSED test_w6_service_acceptance.py::test_F7_evaluate_vessel_status_list_form_impl
+PASSED test_w6_web_view.py::test_web_view[W01_disclaimer_banner_fixed]
+PASSED test_w6_web_view.py::test_web_view[W02_band_dangerStage_shown]
+PASSED test_w6_web_view.py::test_web_view[W03_band_doubt_shown_with_reason]
+PASSED test_w6_web_view.py::test_web_view[W04_band_vesselStatus_shown]
+PASSED test_w6_web_view.py::test_web_view[W05_needsreview_vs_notassessable_distinct]
+PASSED test_w6_web_view.py::test_web_view[W06_notassessable_vs_undetermined_distinct]
+PASSED test_w6_web_view.py::test_web_view[W07_legend_explains_both]
+PASSED test_w6_web_view.py::test_web_view[W08_every_check_row_shows_evidence]
+PASSED test_w6_web_view.py::test_web_view[W09_selected_check_has_evidence_link]
+PASSED test_w6_web_view.py::test_web_view[W11_audit_panel_who_when_before_after_reason]
+PASSED test_w6_web_view.py::test_web_view[W12_review_controls_present]
+PASSED test_w6_web_view.py::test_web_view[W13_switcher_fictional_and_public]
+PASSED test_w6_web_view.py::test_web_view[W14_mode_tag_fictional_vs_public]
+PASSED test_w6_web_view.py::test_web_view[W15_public_mode_source_tags_visible]
+PASSED test_w6_web_view.py::test_web_view[W16_selected_check_shows_source]
+FAILED test_w6_service_acceptance.py::test_A7_confirm_must_not_change_verdict
+FAILED test_w6_service_acceptance.py::test_A8_reject_must_not_change_verdict
+FAILED test_w6_service_acceptance.py::test_B2_long_reason_kept_whole_in_audit
+FAILED test_w6_service_acceptance.py::test_D5_haili5_evidence_tagged - Assert...
+FAILED test_w6_service_acceptance.py::test_F2_evaluate_vessel_status_object_form_per_openapi
+FAILED test_w6_web_view.py::test_web_view[W10_dangling_evidence_flagged] - As...
+======================== 6 failed, 82 passed in 19.31s =========================

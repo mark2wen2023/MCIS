@@ -1,0 +1,14 @@
+已严格按照 [PART3_TASK.md](file:///workspace/maritime-sim-design/PART3_TASK.md)、[BRIEF.md](file:///workspace/maritime-sim-design/BRIEF.md) 与 [thesis.txt](file:///workspace/maritime-sim-design/thesis.txt)（2.5、3.4、5.3、5.4 节）完成 [prototype/index.html](file:///workspace/maritime-sim-design/prototype/index.html) 第三部分 JS 的补完与校验：
+
+1. **主仿真视口 (`#screen-sim`)**
+   - 实现 [`resizeSimCanvas`](file:///workspace/maritime-sim-design/prototype/index.html#L3552-L3565)、[`projectSimPoint`](file:///workspace/maritime-sim-design/prototype/index.html#L3568-L3612)、[`drawSimEnvironment`](file:///workspace/maritime-sim-design/prototype/index.html#L3656-L3815)、[`drawSimVessel`](file:///workspace/maritime-sim-design/prototype/index.html#L3818-L3961)、[`renderSimViewport`](file:///workspace/maritime-sim-design/prototype/index.html#L3964-L4049)、[`renderMinimap`](file:///workspace/maritime-sim-design/prototype/index.html#L4052-L4104)、[`updateSimHud`](file:///workspace/maritime-sim-design/prototype/index.html#L4107-L4205)、[`updateSimEcfcPopups`](file:///workspace/maritime-sim-design/prototype/index.html#L4208-L4244) 与 [`initSimScreen`](file:///workspace/maritime-sim-design/prototype/index.html#L4246-L4401)。
+   - 支持动态海面波纹高光、窄航道与岸线/东咀灯塔、Lily 与 Mary 按时间插值运动及尾迹、碰撞瞬间（`T=09:00 / 14:24:00`）冲击波特效及碰撞后 Lily 左倾进水下沉示意。
+   - 实时计算并刷新双船经纬度、SOG、COG、HDG、舵角/横倾、风浪流及真实公式 DCPA/TCPA 与三级风险变色（危险红 / 警告琥珀 / 安全青）、2D 全局小地图、随时间弹出的 ECFC 卡片、四种摄像机视角切换（驾驶台/跟随/俯视/自由环绕）及时间轴播放/暂停/倍速（0.5x–16x）/拖动/关键事件跳转。
+
+2. **ECFC 因果图编辑器 (`#screen-ecfc`)**
+   - 实现 [`renderEcfcSvg`](file:///workspace/maritime-sim-design/prototype/index.html#L4438-L4537)、[`renderEcfcInspector`](file:///workspace/maritime-sim-design/prototype/index.html#L4539-L4627) 与 [`initEcfcScreen`](file:///workspace/maritime-sim-design/prototype/index.html#L4629-L4695)。
+   - 严格遵循论文 2.5 节 Table 4 画法：事件=矩形、条件=椭圆、事件间实线箭头、条件虚线箭头、推定项虚线边框、主序列水平居中加粗箭头、次序列分列上下；支持点选、拖拽、属性编辑、新增推定节点及居中重置。
+
+3. **量化分析与报告导出 (`#screen-analysis`) 及全局启动**
+   - 实现 [`renderAnalysisChart`](file:///workspace/maritime-sim-design/prototype/index.html#L4701-L4848)、[`renderCollisionReplay`](file:///workspace/maritime-sim-design/prototype/index.html#L4851-L4954)、[`renderPdfReportPreview`](file:///workspace/maritime-sim-design/prototype/index.html#L4956-L5002)、[`renderAnalysisScreen`](file:///workspace/maritime-sim-design/prototype/index.html#L5004-L5008)、[`initAnalysisScreen`](file:///workspace/maritime-sim-design/prototype/index.html#L5010-L5087) 与主循环 [`tickMainLoop`](file:///workspace/maritime-sim-design/prototype/index.html#L5094-L5121)。
+   - 末尾完成全量 8 个屏幕 `init*Screen()` 调用、`hashchange` 路由监听与初始 `handleRouteChange()` 启动；已通过 `/tmp/p3check.js` 的 `node --check` 语法检查且无残留占位符。

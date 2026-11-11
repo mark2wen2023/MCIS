@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/audit-event.schema.json",
+  "title": "AuditEvent（审计事件，只追加）",
+  "description": "前 7 个字段与 C# Mcis.Data.Audit.AuditRecord.ToJsonLine 对齐（utc/operator/action/category/command/before/after），因此 .mcase/audit/audit.jsonl 可被 AuditLog.ReadAll 原样读取（扩展键被忽略）。扩展键落盘时用 snake_case（seq/role/entity_type/entity_id/prev），与 W3 custody.jsonl 一致。数据库层用触发器禁止 UPDATE/DELETE。",
+  "type": "object",
+  "required": [
+    "seq",
+    "utc",
+    "operator",
+    "action",
+    "category",
+    "command",
+    "before",
+    "after",
+    "prevHash"
+  ],
+  "properties": {
+    "seq": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "caseId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "utc": {
+      "$ref": "common.schema.json#/$defs/utc"
+    },
+    "operator": {
+      "type": "string"
+    },
+    "role": {
+      "$ref": "common.schema.json#/$defs/role"
+    },
+    "action": {
+      "type": "string",
+      "description": "点分动作名，如 evidence.register / recommendation.status / agent.review"
+    },
+    "category": {
+      "type": "string",
+      "description": "Case / Custody / Interview / SafetyRec / Consultation / Timeline / Colreg / Agent / Sim / Package（与 InvestigationAuditCategories 对齐）"
+    },
+    "command": {
+      "type": "string",
+      "description": "人类可读描述"
+    },
+    "before": {
+      "type": "string",
+      "description": "变更前摘要"
+    },
+    "after": {
+      "type": "string",
+      "description": "变更后摘要（显示用，允许截断到约 400 字）"
+    },
+    "entityType": {
+      "type": "string"
+    },
+    "entityId": {
+      "type": "string"
+    },
+    "prevHash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "上一行 JSONL 文本 SHA-256，首行 64 个 0"
+    },
+    "line": {
+      "type": "string",
+      "description": "（只读）落盘行文本"
+    },
+    "x-batchId": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$",
+      "description": "合同扩展键（可选，W5.1 按 DEFECTS/W3.md 21:32 裁定）：批量确认两阶段提交的批次号，仅 interview.crosscheck.batch_confirm / batch_commit / batch_abort 行带。C# InvestigationAuditEntry.BatchId 落盘为同名键；command 末尾的 “[batch=…]” 标记保留，供只认 7 个标准键的旧读取方重放"
+    },
+    "reason": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "理由全文，不截断。写入落盘 JSONL 扩展键 reason（进入哈希链）；HTTP 文档的 line 字段可解析出该键。after 仅为显示摘要。"
+    }
+  },
+  "additionalProperties": false
+}

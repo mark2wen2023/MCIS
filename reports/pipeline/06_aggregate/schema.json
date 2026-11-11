@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AggregateReport",
+  "type": "object",
+  "required": ["case", "ecfc", "conflicts", "gaps", "quoteAudit", "reviewStatus"],
+  "properties": {
+    "case": { "type": "object", "description": "合并后的案件草稿，结构对齐 haili5/case.json" },
+    "ecfc": { "type": "object", "description": "合并后的 ECFC 草稿，须含 validation.issues" },
+    "conflicts": { "type": "array", "items": { "type": "object" } },
+    "gaps": { "type": "array", "items": { "type": "string" } },
+    "quoteAudit": {
+      "type": "object",
+      "properties": {
+        "sampled": { "type": "integer" },
+        "matched": { "type": "integer" },
+        "failed": { "type": "array" }
+      }
+    },
+    "reviewStatus": { "enum": ["pending"] }
+  }
+}

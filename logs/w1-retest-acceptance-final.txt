@@ -1,0 +1,42 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  W1.Acceptance -> /workspace/maritime-sim-design/tests_acceptance/W1/bin/Debug/net8.0/W1.Acceptance.dll
+Test run for /workspace/maritime-sim-design/tests_acceptance/W1/bin/Debug/net8.0/W1.Acceptance.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.27]     Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D11_ContradictoryViews_RolesIndependentOfOrder [FAIL]
+  Failed Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D11_ContradictoryViews_RolesIndependentOfOrder [3 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "A"
+Actual:   "B"
+           ↑ (pos 0)
+  Stack Trace:
+     at Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D11_ContradictoryViews_RolesIndependentOfOrder() in /workspace/maritime-sim-design/tests_acceptance/W1/RetestAcceptanceTests.cs:line 424
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.28]     Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D09_CatalogContainsR18 [FAIL]
+[xUnit.net 00:00:00.28]     Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D10_HeadOnDoubt_SymmetricUnderSwap [FAIL]
+  Failed Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D09_CatalogContainsR18 [3 ms]
+  Error Message:
+   Assert.Contains() Failure: Filter not matched in collection
+Collection: [ColregRuleDefinition { Id = R5, Summary = "须结合 VDR 音频、驾驶台值班和雷达/ARPA 记录核查持续正规瞭望；仅凭航迹不能评估。", Title = "瞭望" }, ColregRuleDefinition { Id = R6, Summary = "结合观测航速、能见度、水域与操纵性能人工研判；配置航速仅作提示。", Title = "安全航速" }, ColregRuleDefinition { Id = R7, Summary = "依据航迹 CPA 序列识别首次碰撞危险及 DCPA/TCPA 演变；实际雷达标绘使用情况须另有记录。", Title = "碰撞危险判断" }, ColregRuleDefinition { Id = R8, Summary = "行动应及早、明显，并使船舶在安全距离驶过；须核查行动效果。", Title = "避免碰撞的行动" }, ColregRuleDefinition { Id = R9, Summary = "尽量靠近本船右舷的航道外缘行驶；缺少航道几何时保留核查项并说明限制。", Title = "狭水道" }, ···]
+  Stack Trace:
+     at Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D09_CatalogContainsR18() in /workspace/maritime-sim-design/tests_acceptance/W1/RetestAcceptanceTests.cs:line 301
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D10_HeadOnDoubt_SymmetricUnderSwap [1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: HeadOn
+Actual:   Crossing
+  Stack Trace:
+     at Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D10_HeadOnDoubt_SymmetricUnderSwap() in /workspace/maritime-sim-design/tests_acceptance/W1/RetestAcceptanceTests.cs:line 412
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+Failed!  - Failed:     3, Passed:   128, Skipped:     0, Total:   131, Duration: 87 ms - W1.Acceptance.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

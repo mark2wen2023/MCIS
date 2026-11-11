@@ -1,0 +1,10 @@
+已完成 **M4 `Mcis.Simulation` (`SimClock`)** 模块实现与单元测试：
+
+### 新增文件
+- [SimClockContracts.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Simulation/Clock/SimClockContracts.cs)：定义 [`TimelineMarker`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Simulation/Clock/SimClockContracts.cs#L12-L81)、[`SimClockState`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Simulation/Clock/SimClockContracts.cs#L89-L103)、[`ITimeDriven`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Simulation/Clock/SimClockContracts.cs#L108-L115)、[`ITimelineMarkerProvider`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Simulation/Clock/SimClockContracts.cs#L120-L127) 及 [`ISimClock`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Simulation/Clock/SimClockContracts.cs#L132-L216) 接口。
+- [SimClock.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Simulation/Clock/SimClock.cs)：实现 [`SimClock`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Simulation/Clock/SimClock.cs#L11-L185) 核心属性、64 位整数微秒 Tick（`1 tick = 1 μs`）换算与起止区间配置 `ConfigureRange`。
+- [SimClockOperations.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Simulation/Clock/SimClockOperations.cs)：实现播放/暂停/停止、倍速（`0.5x / 1x / 2x / 4x / 8x / 16x`）、`Seek`、`StepForward` / `StepBackward`、`StepFrames` 及 `Tick(unscaledDeltaSeconds)` 区间钳制与循环逻辑。
+- [SimClockPipeline.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Simulation/Clock/SimClockPipeline.cs)：实现 `ITimeDriven` 按优先级升序确定性调度、时间轴标记跳转（`JumpToNextMarker` / `JumpToPreviousMarker`）及 `TimeChanged` / `StateChanged` 事件触发。
+- [SimClockTests.cs](file:///workspace/maritime-sim-design/unity/DotnetTests/Tests/SimClockTests.cs)：覆盖 50 组随机步长序列从 0 连续 `Tick` 到 `t` 与直接 `Seek(t)` 逐位一致性断言、6 档倍速、正反步进、暂停/停止不前进、上下界钳制、`ITimeDriven` 优先级顺序及事件触发次数验证（13/13 通过，全套测试 29/29 通过）。
+- 已更新 [PROGRESS.md](file:///workspace/maritime-sim-design/unity/PROGRESS.md#L10)。
+EXIT 0

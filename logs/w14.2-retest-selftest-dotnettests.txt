@@ -1,0 +1,9 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Mcis.Pure -> /workspace/maritime-sim-design/unity/DotnetTests/bin/Debug/netstandard2.1/Mcis.Pure.dll
+  Mcis.Pure.Tests -> /workspace/maritime-sim-design/unity/DotnetTests/Tests/bin/Debug/net8.0/Mcis.Pure.Tests.dll
+Test run for /workspace/maritime-sim-design/unity/DotnetTests/Tests/bin/Debug/net8.0/Mcis.Pure.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    63, Skipped:     0, Total:    63, Duration: 48 ms - Mcis.Pure.Tests.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

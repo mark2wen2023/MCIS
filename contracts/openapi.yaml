@@ -1,0 +1,1078 @@
+openapi: 3.1.0
+info:
+  title: MCIS 调查业务服务 REST 接口
+  version: 0.1.0
+  description: |
+    模块③（Python 服务）对 ②Unity 与 ④网页工作台提供的本地接口。只监听 127.0.0.1:8765。
+    - 数据结构见 schemas/*.schema.json（JSON Schema 2020-12），字段与 C# 计算核心对齐（camelCase）。
+    - 角色与操作者：请求头 X-MCIS-Role（默认 Investigator）、X-MCIS-Operator（URL 编码）。脱敏网关按角色在出口处理。
+    - 所有写操作写只追加审计（GET /cases/{caseId}/audit）；例外：PUT /sim/state 是瞬态遥测，不入审计。
+    - 错误体统一为 {code, message, detail?}（schemas/common.schema.json#/$defs/problem）。
+    - 冒号路径（如 /evidence:verify-all）是“自定义动作”，与资源路径并列，不是路径参数。
+servers:
+  - url: http://127.0.0.1:8765
+security: []
+tags:
+  - { name: unity, description: Unity 主仿真需要的接口（取案件、取时间线/航迹、推送 SimTime、取跳转命令） }
+  - { name: cases }
+  - { name: evidence }
+  - { name: timeline }
+  - { name: interviews }
+  - { name: recommendations }
+  - { name: colreg }
+  - { name: audit }
+  - { name: redaction }
+  - { name: agents }
+  - { name: sim }
+  - { name: package }
+
+components:
+  parameters:
+    caseId: { name: caseId, in: path, required: true, schema: { type: string }, example: CASE-2026-DEMO-LILY-MARY }
+    evidenceId: { name: evidenceId, in: path, required: true, schema: { type: string, pattern: '^EV-[0-9]{3,}$' } }
+    recordId: { name: recordId, in: path, required: true, schema: { type: string, pattern: '^IR-[0-9]{2,}$' } }
+    statementId: { name: statementId, in: path, required: true, schema: { type: string } }
+    recId: { name: recId, in: path, required: true, schema: { type: string, pattern: '^SR-[0-9]{4}-[0-9]{2,}$' } }
+    roundNo: { name: roundNo, in: path, required: true, schema: { type: integer, minimum: 1 } }
+    role: { name: X-MCIS-Role, in: header, required: false, schema: { $ref: 'schemas/common.schema.json#/$defs/role' } }
+    operator: { name: X-MCIS-Operator, in: header, required: false, schema: { type: string } }
+  responses:
+    Problem:
+      description: 错误（400/403/404/409/422/501/502/503）
+      content: { application/json: { schema: { $ref: 'schemas/common.schema.json#/$defs/problem' } } }
+  schemas:
+    Case: { $ref: 'schemas/case.schema.json' }
+    Vessel: { $ref: 'schemas/vessel.schema.json' }
+    TrackPoint: { $ref: 'schemas/track-point.schema.json' }
+    EvidenceItem: { $ref: 'schemas/evidence-item.schema.json' }
+    CustodyEvent: { $ref: 'schemas/custody-event.schema.json' }
+    TimelineEvent: { $ref: 'schemas/timeline-event.schema.json' }
+    Conflict: { $ref: 'schemas/conflict.schema.json' }
+    Interview: { $ref: 'schemas/interview.schema.json' }
+    Colreg: { $ref: 'schemas/colreg.schema.json' }
+    Recommendation: { $ref: 'schemas/recommendation.schema.json' }
+    ConsultationRound: { $ref: 'schemas/consultation-round.schema.json' }
+    AuditEvent: { $ref: 'schemas/audit-event.schema.json' }
+    AgentDraft: { $ref: 'schemas/agent-draft.schema.json' }
+    AccessPolicy: { $ref: 'schemas/access-policy.schema.json' }
+    SimState: { $ref: 'schemas/sim-state.schema.json#/$defs/state' }
+    SimCommand: { $ref: 'schemas/sim-state.schema.json#/$defs/command' }
+    CpaRequest: { $ref: 'schemas/core-cpa.schema.json#/$defs/request' }
+    CpaResult: { $ref: 'schemas/core-cpa.schema.json#/$defs/result' }
+    Report: { $ref: 'schemas/report.schema.json#/$defs/report' }
+    ReportSection: { $ref: 'schemas/report.schema.json#/$defs/section' }
+    ReportReview: { $ref: 'schemas/report.schema.json#/$defs/review' }
+    ReportGisis: { $ref: 'schemas/report.schema.json#/$defs/gisis' }
+    ReportPending: { $ref: 'schemas/report.schema.json#/$defs/pending' }
+    ReportAudit: { $ref: 'schemas/report.schema.json#/$defs/auditRecord' }
+    IntegrityReport:
+      type: object
+      description: 与 C# IntegrityCheckReport 对应
+      properties:
+        isValid: { type: boolean }
+        tamperedFiles: { type: array, items: { type: string } }
+        missingFiles: { type: array, items: { type: string } }
+        extraFiles: { type: array, items: { type: string } }
+
+
+    ColregRunMeta:
+      type: object
+      required: [runId, version, kind]
+      properties:
+        runId: { type: string, description: "版本 id，如 R-0001；路径参数也可写 active 表示当前版本" }
+        version: { type: integer, minimum: 1 }
+        kind: { type: string, enum: [Seed, Initial, RuleEngine, External] }
+        label: { type: string }
+        createdUtc: { type: string, format: date-time }
+        createdBy: { type: string }
+        parentRunId: { type: ["string", "null"] }
+        engineVersion: { type: string }
+        note: { type: string }
+        bandCount: { type: integer }
+        checkCount: { type: integer }
+        reviewedCount: { type: integer }
+        active: { type: boolean }
+    ColregEvidenceLink:
+      type: object
+      required: [evidenceId, registered]
+      properties:
+        evidenceId: { type: string }
+        registered: { type: boolean }
+    ColregBandAnnotation:
+      type: object
+      properties:
+        evidenceIds: { type: array, items: { type: string }, description: "时间带上让路/直航结论所链证据；空则 missingEvidence=true，页面显示「缺证据」" }
+        links: { type: array, items: { $ref: '#/components/schemas/ColregEvidenceLink' } }
+        missingEvidence: { type: boolean }
+    ColregReviewHistoryItem:
+      type: object
+      properties:
+        action: { type: string, enum: [confirm, dismiss, modify] }
+        reviewStatus: { type: string, enum: [Confirmed, Rejected, Modified] }
+        verdictBefore: { type: string }
+        verdictAfter: { type: string }
+        sourceBefore: { type: string }
+        sourceAfter: { type: string }
+        reason: { type: string, description: "理由全文，不截断" }
+        evidenceIds: { type: array, items: { type: string } }
+        operator: { type: string }
+        utc: { type: string, format: date-time }
+        auditSeq: { type: integer }
+        runId: { type: string }
+    ColregCheckAnnotation:
+      type: object
+      properties:
+        reviewStatus: { type: string, enum: [Draft, Confirmed, Rejected, Modified], description: "也出现在 colreg 文档 checks[].reviewStatus" }
+        reviewedBy: { type: string }
+        reviewedAt: { type: string, format: date-time }
+        engineVerdict: { type: string, description: "modify 前引擎/种子原判定；confirm 时不写此字段" }
+        engineSource: { type: string }
+        lastAction: { type: string, enum: [confirm, dismiss, modify] }
+        reason: { type: string, description: "最近一次复核理由全文" }
+        reviewEvidenceIds: { type: array, items: { type: string } }
+        history: { type: array, items: { $ref: '#/components/schemas/ColregReviewHistoryItem' } }
+        links: { type: array, items: { $ref: '#/components/schemas/ColregEvidenceLink' } }
+        missingEvidence: { type: boolean }
+    ColregRunList:
+      type: object
+      required: [caseId, runs]
+      properties:
+        caseId: { type: string }
+        activeRunId: { type: ["string", "null"] }
+        isFictionalDemo: { type: boolean }
+        runs: { type: array, items: { $ref: '#/components/schemas/ColregRunMeta' } }
+    ColregRun:
+      type: object
+      description: "单个分析版本。analysis 符合 colreg.schema.json；时间带 evidenceIds、复核人/时间、engineVerdict、理由全文在 annotations（因 colreg.schema additionalProperties=false，不写入分析文档本体）。"
+      required: [runId, analysis, annotations]
+      properties:
+        runId: { type: string }
+        version: { type: integer }
+        kind: { type: string, enum: [Seed, Initial, RuleEngine, External] }
+        label: { type: string }
+        createdUtc: { type: string, format: date-time }
+        createdBy: { type: string }
+        parentRunId: { type: ["string", "null"] }
+        engineVersion: { type: string }
+        note: { type: string }
+        active: { type: boolean }
+        analysis: { $ref: '#/components/schemas/Colreg' }
+        annotations:
+          type: object
+          properties:
+            bands: { type: object, additionalProperties: { $ref: '#/components/schemas/ColregBandAnnotation' } }
+            checks: { type: object, additionalProperties: { $ref: '#/components/schemas/ColregCheckAnnotation' } }
+    ColregCompareBrief:
+      type: object
+      properties:
+        checkId: { type: string }
+        verdict: { type: string }
+        reviewStatus: { type: string }
+        source: { type: string }
+        title: { type: string }
+    ColregCompare:
+      type: object
+      required: [baseRunId, otherRunId, checks, bands]
+      properties:
+        baseRunId: { type: string }
+        otherRunId: { type: string }
+        checks:
+          type: array
+          items:
+            type: object
+            properties:
+              rule: { type: string }
+              vesselId: { type: string }
+              base: { type: ["object", "null"], allOf: [{ $ref: '#/components/schemas/ColregCompareBrief' }] }
+              other: { type: ["object", "null"], allOf: [{ $ref: '#/components/schemas/ColregCompareBrief' }] }
+              verdictChanged: { type: boolean }
+        bands:
+          type: array
+          items:
+            type: object
+            properties:
+              base: { type: ["object", "null"] }
+              other: { type: ["object", "null"] }
+              changed: { type: boolean }
+        changedCheckCount: { type: integer }
+        changedBandCount: { type: integer }
+    ColregCheckReviews:
+      type: object
+      required: [caseId, runId, checkId, history]
+      properties:
+        caseId: { type: string }
+        runId: { type: string }
+        checkId: { type: string }
+        engineVerdict: { type: ["string", "null"] }
+        reviewedBy: { type: ["string", "null"] }
+        reviewedAt: { type: ["string", "null"], format: date-time }
+        history: { type: array, items: { $ref: '#/components/schemas/ColregReviewHistoryItem' } }
+    ColregEvaluateResult:
+      description: "evaluate 成功响应：colreg 文档 + 本次新建并激活的版本 id"
+      allOf:
+        - { $ref: '#/components/schemas/Colreg' }
+        - type: object
+          required: [runId]
+          properties:
+            runId: { type: string, description: "本次新建并激活的版本 id，如 R-0002。实现暂缺见 W6-D06。" }
+
+
+paths:
+  /api/v1/health:
+    get: { tags: [cases], summary: 健康检查, responses: { '200': { description: ok } } }
+
+  /api/v1/cases:
+    get:
+      tags: [cases, unity]
+      summary: 案件列表（大厅卡片）
+      responses: { '200': { description: 摘要列表 } }
+    post:
+      tags: [cases]
+      summary: 新建案件（审计 case.create）
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/Case' } } } }
+      responses: { '201': { description: 已创建 }, '409': { $ref: '#/components/responses/Problem' } }
+  /api/v1/cases/{caseId}:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    get:
+      tags: [cases, unity]
+      summary: 取案件（Unity 启动时调用；caseEpochUtc 决定 SimTime 0 点）
+      responses: { '200': { description: 案件, content: { application/json: { schema: { $ref: '#/components/schemas/Case' } } } } }
+  /api/v1/cases/{caseId}/overview:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    get: { tags: [cases], summary: 案件概览计数, responses: { '200': { description: ok } } }
+  /api/v1/cases/{caseId}/vessels:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    get:
+      tags: [cases, unity]
+      summary: 船舶静态参数
+      responses: { '200': { description: ok, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/Vessel' } } } } } }
+  /api/v1/cases/{caseId}/tracks:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+      - { name: vesselId, in: query, schema: { type: string } }
+      - { name: fromSec, in: query, schema: { type: number } }
+      - { name: toSec, in: query, schema: { type: number } }
+      - { name: stepSec, in: query, schema: { type: number, exclusiveMinimum: 0 }, description: 给出时服务端线性重采样 }
+    get:
+      tags: [cases, unity]
+      summary: 航迹点（按船分组）
+      responses: { '200': { description: '{caseId, tracks:[{vesselId, points:TrackPoint[]}]}' } }
+
+  /api/v1/cases/{caseId}/evidence:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    get:
+      tags: [evidence]
+      summary: 证据列表（含保管链推导字段；保密证据按角色过滤）
+      responses: { '200': { description: ok, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/EvidenceItem' } } } } } }
+    post:
+      tags: [evidence]
+      summary: 登记证据（写保管链 Register + 审计）
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title, source, extractedBy]
+              properties:
+                title: { type: string }
+                source: { type: string }
+                extractedBy: { type: string }
+                extractedUtc: { type: string, format: date-time }
+                category: { type: string }
+                confidentiality: { type: string, enum: [Normal, Restricted] }
+                relativePath: { type: string, description: 'raw/ 下为只读，不可覆盖' }
+                fileName: { type: string }
+                contentBase64: { type: string }
+                sha256: { type: string, description: 无内容时必填 }
+                note: { type: string }
+      responses: { '201': { description: 已登记 }, '409': { $ref: '#/components/responses/Problem' } }
+  /api/v1/cases/{caseId}/evidence/{evidenceId}:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/evidenceId' }]
+    get: { tags: [evidence], summary: 单条证据, responses: { '200': { description: ok } } }
+    patch:
+      tags: [evidence]
+      summary: 设置/解除需复核（写保管链 Review 事件，reason 必填）/ 修改备注；登记快照字段（含 confidentiality）不可改
+      requestBody: { content: { application/json: { schema: { type: object, properties: { needsReview: { type: boolean }, reason: { type: string }, note: { type: string } } } } } }
+      responses: { '200': { description: ok }, '409': { $ref: '#/components/responses/Problem' }, '422': { $ref: '#/components/responses/Problem' } }
+  /api/v1/cases/{caseId}/evidence/{evidenceId}/custody:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/evidenceId' }]
+    get:
+      tags: [evidence]
+      summary: 该证据的保管链事件
+      responses: { '200': { description: ok, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/CustodyEvent' } } } } } }
+  /api/v1/cases/{caseId}/evidence/{evidenceId}/access:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/evidenceId' }]
+    post:
+      tags: [evidence, unity]
+      summary: 记录一次访问（Unity 打开 VDR 回放时调用）
+      requestBody: { required: true, content: { application/json: { schema: { type: object, required: [purpose], properties: { purpose: { type: string } } } } } }
+      responses: { '201': { description: 'CustodyEvent' } }
+  /api/v1/cases/{caseId}/evidence/{evidenceId}/verify:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/evidenceId' }]
+    post: { tags: [evidence], summary: 重新计算 SHA-256（写 Verify 事件）, responses: { '200': { description: 'CustodyEvent' } } }
+  /api/v1/cases/{caseId}/evidence:verify-all:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    post: { tags: [evidence], summary: 全部重新校验哈希, responses: { '200': { description: '{checked, mismatched, results}' } } }
+  /api/v1/cases/{caseId}/evidence/{evidenceId}/content:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+      - { $ref: '#/components/parameters/evidenceId' }
+      - { name: purpose, in: query, schema: { type: string } }
+    get: { tags: [evidence, unity], summary: 下载原件（同时写 Access 事件）, responses: { '200': { description: octet-stream } } }
+  /api/v1/cases/{caseId}/custody:verify-chain:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    get: { tags: [evidence], summary: 校验保管链 prev 哈希链, responses: { '200': { description: '{valid, count, brokenAt}' } } }
+
+  /api/v1/cases/{caseId}/timeline:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+      - { name: fromSec, in: query, schema: { type: number } }
+      - { name: toSec, in: query, schema: { type: number } }
+      - { name: includeDrafts, in: query, schema: { type: boolean, default: true } }
+    get:
+      tags: [timeline, unity]
+      summary: 取时间线（Unity 回放轴标记 + 网页时间线）
+      responses: { '200': { description: '{caseId, caseEpochUtc, displayTimeZoneOffsetMinutes, durationSec, events: TimelineEvent[]}' } }
+  /api/v1/cases/{caseId}/timeline/events:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    post:
+      tags: [timeline]
+      summary: 新增时间线事件（utc 由 timeSec 推导）
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/TimelineEvent' } } } }
+      responses: { '201': { description: ok } }
+  /api/v1/cases/{caseId}/conflicts:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { name: status, in: query, schema: { type: string } }]
+    get:
+      tags: [timeline]
+      summary: 多源冲突列表
+      responses: { '200': { description: ok, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/Conflict' } } } } } }
+    post:
+      tags: [timeline]
+      summary: 登记冲突（W2 钟差/冲突检测结果入库）
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/Conflict' } } } }
+      responses: { '201': { description: ok } }
+  /api/v1/cases/{caseId}/conflicts/{conflictId}:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { name: conflictId, in: path, required: true, schema: { type: string } }]
+    patch:
+      tags: [timeline]
+      summary: 更新冲突处理状态
+      requestBody: { content: { application/json: { schema: { type: object, properties: { status: { type: string }, resolution: { type: string } } } } } }
+      responses: { '200': { description: ok } }
+
+  /api/v1/cases/{caseId}/interviews:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    get: { tags: [interviews], summary: 笔录摘要列表（已按角色脱敏）, responses: { '200': { description: ok } } }
+    post:
+      tags: [interviews]
+      summary: 新建笔录
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/Interview' } } } }
+      responses: { '201': { description: ok } }
+  /api/v1/cases/{caseId}/interviews/{recordId}:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }]
+    get:
+      tags: [interviews]
+      summary: 笔录全文（按角色脱敏；响应头 X-MCIS-Redaction 列出生效规则；外部角色调阅写审计）
+      responses: { '200': { description: ok, content: { application/json: { schema: { $ref: '#/components/schemas/Interview' } } } }, '403': { $ref: '#/components/responses/Problem' } }
+  /api/v1/cases/{caseId}/interviews/{recordId}/turns:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }]
+    post: { tags: [interviews], summary: 追加一轮问答, responses: { '201': { description: ok } } }
+  /api/v1/cases/{caseId}/interviews/{recordId}/statements:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }]
+    post: { tags: [interviews], summary: 登记陈述（quote 由 span 按 UTF-16 下标截取；Agent 抽取的为 Draft）, responses: { '201': { description: ok } } }
+  /api/v1/cases/{caseId}/interviews/{recordId}/statements/{statementId}:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }, { $ref: '#/components/parameters/statementId' }]
+    patch: { tags: [interviews], summary: 调查员确认/驳回/修改陈述, responses: { '200': { description: ok } } }
+  /api/v1/cases/{caseId}/interviews/{recordId}/crosscheck:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }]
+    get: { tags: [interviews], summary: 陈述↔数据比对结果（只有 state=Confirmed 生效）, responses: { '200': { description: ok } } }
+  /api/v1/cases/{caseId}/interviews/{recordId}/crosscheck/{statementId}:confirm:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }, { $ref: '#/components/parameters/statementId' }]
+    post: { tags: [interviews], summary: 确认一条比对结果（审计 interview.contradiction.confirm）, responses: { '200': { description: ok }, '409': { $ref: '#/components/responses/Problem' } } }
+  /api/v1/cases/{caseId}/interviews/{recordId}/crosscheck/{statementId}:dismiss:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }, { $ref: '#/components/parameters/statementId' }]
+    post: { tags: [interviews], summary: 驳回一条比对结果（必须写理由 note）, responses: { '200': { description: ok } } }
+  /api/v1/cases/{caseId}/interviews/{recordId}/crosscheck:confirm-consistent:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }]
+    post: { tags: [interviews], summary: 一致项批量确认（矛盾项必须逐条确认）, responses: { '200': { description: ok } } }
+  # ---- W5 询问笔录比对页（#interview，原型第 10 页）；W5.1：statementVersion / 过期（stale）/ Resubmit 仅从 Dismissed、旧条目 Superseded ----
+  /api/v1/cases/{caseId}/interview-compare:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    get: { tags: [interviews], summary: 受询问人名单（矛盾只计 Confirmed；N 条待确认 / N 条需重新比对；按角色脱敏）, responses: { '200': { description: ok } } }
+  /api/v1/cases/{caseId}/interview-compare/{recordId}:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }]
+    get: { tags: [interviews], summary: 比对页视图（逐轮高亮片段 UTF-16 下标、比对表行含 statementVersion/statementRevision/isStale、页眉计数、时间对照、Superseded 留痕；外部角色调阅写 testimony.read 审计）, responses: { '200': { description: ok }, '404': { $ref: '#/components/responses/Problem' } } }
+  /api/v1/cases/{caseId}/interview-compare/{recordId}/rows/{statementId}:confirm:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }, { $ref: '#/components/parameters/statementId' }]
+    post:
+      tags: [interviews]
+      summary: ✓确认并写入审计（陈述复核 + 待确认比对结论；过期结论 409 icmp_entry_stale；无待复核项 409 icmp_not_reviewable）
+      requestBody: { content: { application/json: { schema: { type: object, properties: { note: { type: string } } } } } }
+      responses: { '200': { description: ok }, '409': { $ref: '#/components/responses/Problem' } }
+  /api/v1/cases/{caseId}/interview-compare/{recordId}/rows/{statementId}:reject:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }, { $ref: '#/components/parameters/statementId' }]
+    post:
+      tags: [interviews]
+      summary: ✕驳回（陈述 → Rejected，待确认结论 → Dismissed；理由必填；已确认结论 409 icmp_entry_not_pending）
+      requestBody: { required: true, content: { application/json: { schema: { type: object, required: [reason], properties: { reason: { type: string, minLength: 1 } } } } } }
+      responses: { '200': { description: ok }, '409': { $ref: '#/components/responses/Problem' }, '422': { $ref: '#/components/responses/Problem' } }
+  /api/v1/cases/{caseId}/interview-compare/{recordId}/statements/{statementId}:revise:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }, { $ref: '#/components/parameters/statementId' }]
+    post:
+      tags: [interviews]
+      summary: ✎修改陈述（仅 Draft/Modified；revision + 1、状态 Modified、写 statement.modify 审计；旧比对结论随即过期）
+      requestBody: { required: true, content: { application/json: { schema: { type: object, required: [summary, reason], properties: { summary: { type: string }, claim: { $ref: 'schemas/interview.schema.json#/$defs/claim' }, referenceUtc: { type: [string, 'null'] }, reason: { type: string, minLength: 1 } } } } } }
+      responses: { '200': { description: ok }, '409': { $ref: '#/components/responses/Problem' }, '422': { $ref: '#/components/responses/Problem' } }
+  /api/v1/cases/{caseId}/interview-compare/{recordId}/rows/{statementId}:recheck:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }, { $ref: '#/components/parameters/statementId' }]
+    post:
+      tags: [interviews]
+      summary: 重新比对（结论带当前 statementVersion；未比对 → submit；Dismissed → resubmit，旧条目 Superseded；过期待确认 → 先 dismiss 再 resubmit；其余 409 icmp_recheck_not_allowed）
+      requestBody: { required: true, content: { application/json: { schema: { type: object, required: [outcome, observedText], properties: { outcome: { type: string, enum: [Consistent, Contradictory, Unverifiable] }, observedText: { type: string }, sourceLabel: { type: string }, delta: { type: [number, 'null'] }, deltaUnit: { type: string }, rule: { type: string }, reason: { type: string } } } } } }
+      responses: { '200': { description: ok }, '409': { $ref: '#/components/responses/Problem' }, '422': { $ref: '#/components/responses/Problem' } }
+
+  /api/v1/cases/{caseId}/recommendations:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { name: status, in: query, schema: { $ref: 'schemas/recommendation.schema.json#/$defs/status' } }]
+    get:
+      tags: [recommendations]
+      summary: 安全建议列表
+      responses: { '200': { description: ok, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/Recommendation' } } } } } }
+    post:
+      tags: [recommendations]
+      summary: 新建安全建议（Draft；causeNodeIds 至少一个；dueUtc 晚于创建时间）
+      responses: { '201': { description: ok } }
+  /api/v1/cases/{caseId}/recommendations:board:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    get: { tags: [recommendations], summary: '看板四栏：草拟=Draft、已发布=Issued、落实中=Responded、已关闭=Implemented/NotAdopted/Closed', responses: { '200': { description: '{allowed, columns}' } } }
+  /api/v1/cases/{caseId}/recommendations/{recId}:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recId' }]
+    get: { tags: [recommendations], summary: 单条建议, responses: { '200': { description: ok } } }
+    patch: { tags: [recommendations], summary: progressPct（仅 Responded，= SetProgress）/ 内容字段（仅 Draft）；不改状态, responses: { '200': { description: ok } } }
+  /api/v1/cases/{caseId}/recommendations/{recId}:transition:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recId' }]
+    post:
+      tags: [recommendations]
+      summary: 状态转换（= SafetyRecommendationBoard.Transition；非法 409 safetyrec_illegal_transition；NotAdopted 需 note；Responded 只能经 responses）
+      requestBody: { required: true, content: { application/json: { schema: { type: object, required: [to], properties: { to: { $ref: 'schemas/recommendation.schema.json#/$defs/status' }, note: { type: string } } } } } }
+      responses: { '200': { description: ok }, '409': { $ref: '#/components/responses/Problem' } }
+  /api/v1/cases/{caseId}/recommendations/{recId}/responses:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recId' }]
+    post: { tags: [recommendations], summary: 登记书面回复（= RecordResponse；Issued 自动转 Responded）, responses: { '201': { description: ok } } }
+  /api/v1/cases/{caseId}/recommendations/{recId}/history:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recId' }]
+    get: { tags: [recommendations], summary: 该建议的审计记录, responses: { '200': { description: 'AuditEvent[]' } } }
+  /api/v1/cases/{caseId}/consultation/rounds:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    get:
+      tags: [recommendations]
+      summary: 征求意见轮次（含 partyStatus / daysRemaining 推导）
+      responses: { '200': { description: ok, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/ConsultationRound' } } } } } }
+    post: { tags: [recommendations], summary: 开启新一轮（上一轮须已关闭）, responses: { '201': { description: ok } } }
+  /api/v1/cases/{caseId}/consultation/rounds/{roundNo}/replies:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/roundNo' }]
+    post: { tags: [recommendations], summary: 登记一方回复及其意见条目, responses: { '201': { description: ok } } }
+  /api/v1/cases/{caseId}/consultation/rounds/{roundNo}/comments/{commentId}:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/roundNo' }, { name: commentId, in: path, required: true, schema: { type: string } }]
+    patch: { tags: [recommendations], summary: 采纳决定（非 Adopted 需 feedback）, responses: { '200': { description: ok } } }
+  /api/v1/cases/{caseId}/consultation/rounds/{roundNo}:close:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/roundNo' }]
+    post: { tags: [recommendations], summary: 关闭本轮（各方均已回复/放弃或已过期限，否则 409 consultation_cannot_close）, responses: { '200': { description: ok } } }
+  /api/v1/cases/{caseId}/consultation/rounds/{roundNo}/waivers:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/roundNo' }]
+    post: { tags: [recommendations], summary: 登记一方放弃回复（reason 必填，= WaiveReply）, responses: { '201': { description: ok } } }
+
+  /api/v1/core/cpa:
+    post:
+      tags: [colreg]
+      summary: 直通 mcis-core cpa
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/CpaRequest' } } } }
+      responses: { '200': { description: mcis-core envelope }, '503': { $ref: '#/components/responses/Problem' } }
+  /api/v1/core/version:
+    get: { tags: [colreg], summary: mcis-core 版本与可用子命令, responses: { '200': { description: ok } } }
+  /api/v1/core/align:
+    post:
+      tags: [colreg]
+      summary: 直通 mcis-core align（VDR 导入 + 时钟对齐 + 冲突检测）
+      requestBody: { required: true, content: { application/json: { schema: { type: object } } } }
+      responses:
+        '200': { description: 'mcis-core envelope；result.conflicts 符合 Conflict' }
+        '422': { $ref: '#/components/responses/Problem' }
+        '503': { $ref: '#/components/responses/Problem' }
+  /api/v1/cases/{caseId}/cpa:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+      - { name: fromSec, in: query, schema: { type: number, default: 0 } }
+      - { name: toSec, in: query, schema: { type: number } }
+      - { name: stepSec, in: query, schema: { type: number, default: 15 } }
+      - { name: ownVesselId, in: query, schema: { type: string } }
+      - { name: targetVesselId, in: query, schema: { type: string } }
+    get: { tags: [colreg], summary: 两船 DCPA/TCPA 序列（mcis-core 批量计算）, responses: { '200': { description: '{thresholds, results: CpaResult[]}' } } }
+  /api/v1/cases/{caseId}/colreg:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    get:
+      tags: [colreg]
+      summary: 当前 COLREG 分析（时间带 + 核查项）
+      responses: { '200': { description: ok, content: { application/json: { schema: { $ref: '#/components/schemas/Colreg' } } } } }
+  /api/v1/cases/{caseId}/colreg:evaluate:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+      - { name: confirmToken, in: query, required: false, schema: { type: string }, description: "非虚构案件二次确认的一次性令牌" }
+    post:
+      tags: [colreg]
+      summary: 运行规则引擎（mcis-core colreg）；结果为 Draft，需调查员复核
+      requestBody:
+        required: false
+        description: 可选；未给字段回退到案件存档的 colreg inputs
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ownVesselId: { type: string }
+                targetVesselId: { type: string }
+                visibilityNm: { type: number }
+                vesselsInSight: { type: boolean }
+                inNarrowChannel: { type: boolean }
+                vesselStatus: { type: object, description: "以船 id 为键，值为按时间排序的列表 [{fromUtc (ISO 8601 UTC), status}]；status 取 colreg.schema.json 中 vesselStatus 的枚举值", additionalProperties: { type: array, items: { type: object, required: [fromUtc, status], properties: { fromUtc: { type: string, format: date-time }, status: { type: string } } } } }
+                inSightSamples: { type: array, items: { type: object } }
+                evidenceIds: { type: array, items: { type: string } }
+                thresholds: { type: object }
+      responses:
+        '200':
+          description: Colreg 文档，须带本次新建版本的 runId
+          content: { application/json: { schema: { $ref: '#/components/schemas/ColregEvaluateResult' } } }
+        '409':
+          description: |
+            非虚构案件（isFictionalDemo=false）运行 evaluate 必须二次确认。
+            首次不带 confirmToken：409 colreg_evaluate_confirm_required，detail 为
+            {caseId, isFictionalDemo:false, confirmToken, expiresInSec:300, nextVersion}。
+            令牌绑定案件与操作员、一次性、5 分钟有效；错误/复用/他人/过期/跨案令牌返回
+            409 colreg_evaluate_confirm_invalid。409 时不写版本、不跑引擎、不写 evaluate 审计。
+          content: { application/json: { schema: { $ref: 'schemas/common.schema.json#/$defs/problem' } } }
+        '422': { $ref: '#/components/responses/Problem' }
+        '501': { $ref: '#/components/responses/Problem' }
+  /api/v1/cases/{caseId}/colreg/checks/{checkId}:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+      - { name: checkId, in: path, required: true, schema: { type: string } }
+      - { name: runId, in: query, required: false, schema: { type: string }, description: "目标版本；省略或 active 表示当前激活版本。旧字段名 reviewStatus/note 本阶段兼容但不入合同" }
+    patch:
+      tags: [colreg]
+      summary: 调查员复核核查项；审计记为 colreg.review，理由全文保存，不截断
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [action]
+              properties:
+                action: { type: string, enum: [confirm, dismiss, modify] }
+                verdict: { type: string, description: "仅在 modify 时允许传，取 colreg.schema.json 的 verdict 枚举（可以是 Undetermined）。confirm/dismiss 时传了返回 422 colreg_review_verdict_not_allowed；与原判定相同返回 422 colreg_review_no_change" }
+                reason: { type: string, description: "dismiss 和 modify 时必填，不能为空白" }
+                evidenceIds: { type: array, items: { type: string }, description: "用共享 Evidence 校验器检查；编号未登记返回 422 evidence_not_registered" }
+      responses:
+        '200': { description: ok }
+        '422': { $ref: '#/components/responses/Problem' }
+
+  /api/v1/cases/{caseId}/colreg/runs:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    get:
+      tags: [colreg]
+      summary: COLREG 分析版本列表（种子 / 各次规则引擎 / 外部导入），标出当前激活版本
+      responses:
+        '200': { description: ok, content: { application/json: { schema: { $ref: '#/components/schemas/ColregRunList' } } } }
+  /api/v1/cases/{caseId}/colreg/runs/{runId}:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+      - { name: runId, in: path, required: true, schema: { type: string }, description: "版本 id，或 active" }
+    get:
+      tags: [colreg]
+      summary: 单个分析版本（analysis + annotations：时间带 evidenceIds、复核人/时间、engineVerdict、理由全文）
+      responses:
+        '200': { description: ok, content: { application/json: { schema: { $ref: '#/components/schemas/ColregRun' } } } }
+        '404': { $ref: '#/components/responses/Problem' }
+  /api/v1/cases/{caseId}/colreg/runs/{runId}:activate:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+      - { name: runId, in: path, required: true, schema: { type: string } }
+    post:
+      tags: [colreg]
+      summary: 将指定版本设为当前（只换指针，不改版本内容）；写审计 colreg.activate
+      responses:
+        '200': { description: 激活后的版本视图, content: { application/json: { schema: { $ref: '#/components/schemas/ColregRun' } } } }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+  /api/v1/cases/{caseId}/colreg/compare:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+      - { name: base, in: query, required: true, schema: { type: string }, description: "基准版本 id 或 active" }
+      - { name: other, in: query, required: false, schema: { type: string, default: active }, description: "对比版本 id，默认当前激活版本" }
+    get:
+      tags: [colreg]
+      summary: 两版本对比（核查项按规则+船舶配对，时间带按序号对齐）
+      responses:
+        '200': { description: ok, content: { application/json: { schema: { $ref: '#/components/schemas/ColregCompare' } } } }
+        '404': { $ref: '#/components/responses/Problem' }
+  /api/v1/cases/{caseId}/colreg/checks/{checkId}/reviews:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+      - { name: checkId, in: path, required: true, schema: { type: string } }
+      - { name: runId, in: query, required: false, schema: { type: string }, description: "目标版本；省略或 active 表示当前激活版本" }
+    get:
+      tags: [colreg]
+      summary: 某版本某核查项的复核历史（理由全文，不截断）
+      responses:
+        '200': { description: ok, content: { application/json: { schema: { $ref: '#/components/schemas/ColregCheckReviews' } } } }
+        '404': { $ref: '#/components/responses/Problem' }
+
+  /api/v1/cases/{caseId}/audit:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+      - { name: category, in: query, schema: { type: string } }
+      - { name: entityId, in: query, schema: { type: string } }
+      - { name: action, in: query, schema: { type: string }, description: "如 custody.access / safetyrec.transition" }
+      - { name: entityType, in: query, schema: { type: string } }
+      - { name: afterSeq, in: query, schema: { type: integer, default: 0 } }
+      - { name: limit, in: query, schema: { type: integer, default: 200 } }
+      - { name: order, in: query, schema: { type: string, enum: [asc, desc] } }
+    get:
+      tags: [audit]
+      summary: 审计流（只追加）
+      responses: { '200': { description: ok, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/AuditEvent' } } } } } }
+  /api/v1/cases/{caseId}/audit:verify:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    get: { tags: [audit], summary: 校验审计 prev 哈希链, responses: { '200': { description: '{valid, count, brokenAt}' } } }
+
+  /api/v1/cases/{caseId}/access-policy:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    get:
+      tags: [redaction]
+      summary: 权限矩阵与字段脱敏规则
+      responses: { '200': { description: ok, content: { application/json: { schema: { $ref: '#/components/schemas/AccessPolicy' } } } } }
+    put: { tags: [redaction], summary: 修改策略（仅首席调查官，审计）, responses: { '200': { description: ok } } }
+  /api/v1/cases/{caseId}/redaction/preview:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    post: { tags: [redaction], summary: 导出预览：某笔录在指定角色下的脱敏结果, responses: { '200': { description: ok } } }
+
+  /api/v1/agents:
+    get: { tags: [agents], summary: 六个智能体登记表（骨架：status=not_connected）, responses: { '200': { description: ok } } }
+  /api/v1/cases/{caseId}/agents/drafts:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { name: status, in: query, schema: { type: string } }]
+    get:
+      tags: [agents]
+      summary: 人工确认队列
+      responses: { '200': { description: ok, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/AgentDraft' } } } } } }
+    post: { tags: [agents], summary: 智能体提交草稿（必须带 citations）, responses: { '201': { description: ok } } }
+  /api/v1/cases/{caseId}/agents/drafts/{draftId}/review:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { name: draftId, in: path, required: true, schema: { type: string } }]
+    post: { tags: [agents], summary: 调查员确认/修改/驳回（确认后写回目标实体）, responses: { '200': { description: ok } } }
+  /api/v1/cases/{caseId}/agents/inputs/interviews/{recordId}:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }]
+    get: { tags: [agents], summary: 智能体可见的笔录（强制按 AgentService 脱敏）, responses: { '200': { description: ok } } }
+
+  /api/v1/cases/{caseId}/sim/state:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    get:
+      tags: [sim, unity]
+      summary: 当前回放状态（网页读）
+      responses: { '200': { description: ok, content: { application/json: { schema: { $ref: '#/components/schemas/SimState' } } } } }
+    put:
+      tags: [sim, unity]
+      summary: Unity 推送当前 SimTime（≤10 Hz，瞬态，不入审计）
+      requestBody: { required: true, content: { application/json: { schema: { type: object, required: [simTimeSec], properties: { simTimeSec: { type: number }, playing: { type: boolean }, rate: { type: number }, source: { type: string } } } } } }
+      responses: { '200': { description: SimState } }
+  /api/v1/cases/{caseId}/sim/seek:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    post:
+      tags: [sim, unity]
+      summary: 请求跳转到时刻（网页→Unity；入审计）
+      requestBody: { required: true, content: { application/json: { schema: { type: object, required: [simTimeSec], properties: { simTimeSec: { type: number }, reason: { type: string } } } } } }
+      responses: { '201': { description: SimCommand } }
+  /api/v1/cases/{caseId}/sim/commands:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { name: afterSeq, in: query, schema: { type: integer, default: 0 } }]
+    get:
+      tags: [sim, unity]
+      summary: Unity 轮询回放命令（seek/play/pause/setRate/focusVessel）
+      responses: { '200': { description: '{commands: SimCommand[], lastSeq}' } }
+    post: { tags: [sim], summary: 发出通用回放命令, responses: { '201': { description: SimCommand } } }
+
+  /api/v1/cases/{caseId}/export:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    get: { tags: [package, unity], summary: 导出 .mcase（ZIP + manifest SHA-256；审计 package.export）, responses: { '200': { description: application/zip } } }
+  /api/v1/cases:import:
+    post:
+      tags: [package, unity]
+      summary: 导入 .mcase（application/zip 原始字节或 multipart file；校验 manifest 与哈希链）
+      responses: { '201': { description: '{caseId, integrity, imported}' }, '409': { $ref: '#/components/responses/Problem' }, '422': { $ref: '#/components/responses/Problem' } }
+  /api/v1/packages:verify:
+    post: { tags: [package], summary: 只校验不导入, responses: { '200': { description: ok, content: { application/json: { schema: { $ref: '#/components/schemas/IntegrityReport' } } } } } }
+
+  # W16：仅追加新路径，不改变既有路径语义。
+  /api/v1/report-templates:
+    get:
+      tags:
+      - reports
+      summary: 三模板、中英章节及数据源；真实案例仅待确认
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+        '403': &id001
+          $ref: '#/components/responses/Problem'
+        '404': *id001
+        '409': *id001
+        '422': *id001
+      parameters:
+      - name: caseId
+        in: query
+        schema:
+          type: string
+  /api/v1/report-glossary:
+    get:
+      tags:
+      - reports
+      summary: IMO SMCP 少量术语（中文为项目译文）
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '422': *id001
+  /api/v1/cases/{caseId}/reports:
+    parameters:
+    - &id002
+      $ref: '#/components/parameters/caseId'
+    get:
+      tags:
+      - reports
+      summary: 报告版本列表；真实案例返回 pending-confirmation
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '422': *id001
+    post:
+      tags:
+      - reports
+      summary: 生成新 Draft 报告并审计
+      responses:
+        '201':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report'
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '422': *id001
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+              - templateId
+              - lang
+              properties:
+                templateId:
+                  enum:
+                  - imo-cic
+                  - maib
+                  - cn-msa
+                lang:
+                  enum:
+                  - zh
+                  - en
+                  - bilingual
+  /api/v1/cases/{caseId}/reports/{reportId}:
+    parameters:
+    - *id002
+    - name: reportId
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - reports
+      summary: 读取报告完整版本；保留人工复核
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/Report'
+                - $ref: '#/components/schemas/ReportPending'
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '422': *id001
+  /api/v1/cases/{caseId}/reports/{reportId}:generate:
+    parameters:
+    - *id002
+    - name: reportId
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      tags:
+      - reports
+      summary: 另存 familyId 相同的新版本，旧章节与复核不覆盖
+      responses:
+        '201':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report'
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '422': *id001
+  /api/v1/cases/{caseId}/reports/{reportId}/sections/{sectionId}:
+    parameters:
+    - *id002
+    - name: reportId
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: sectionId
+      in: path
+      required: true
+      schema:
+        type: string
+    patch:
+      tags:
+      - reports
+      summary: 确认/驳回/修改章节；sentenceId 可选。confirm/dismiss 禁新值，理由全文保存
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportSection'
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '422': *id001
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportReview'
+  /api/v1/cases/{caseId}/reports/{reportId}/audit:
+    parameters:
+    - *id002
+    - name: reportId
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - reports
+      summary: 报告审计包装：auditEvent 合同+完整 beforeValue/afterValue/reason
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReportAudit'
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '422': *id001
+  /api/v1/cases/{caseId}/reports/{reportId}/export:
+    parameters:
+    - *id002
+    - name: reportId
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - reports
+      summary: PDF/DOCX 流：DRAFT状态、虚构标记、声明、引用表；写审计
+      responses:
+        '200':
+          description: 文件流；Content-Disposition 与 X-Sha256
+          headers:
+            Content-Disposition:
+              schema:
+                type: string
+            X-Sha256:
+              schema:
+                type: string
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+            application/vnd.openxmlformats-officedocument.wordprocessingml.document:
+              schema:
+                type: string
+                format: binary
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '422': *id001
+      parameters:
+      - name: format
+        in: query
+        schema:
+          type: string
+          enum:
+          - pdf
+          - docx
+      - name: lang
+        in: query
+        schema:
+          type: string
+          enum:
+          - zh
+          - en
+          - bilingual
+  /api/v1/cases/{caseId}/reports/sections/colreg:draft:
+    parameters:
+    - *id002
+    post:
+      tags:
+      - reports
+      summary: W6入口：避碰规则分析 Draft 章节与 reportHref；不运行 evaluate
+      responses:
+        '201':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '422': *id001
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                templateId:
+                  enum:
+                  - imo-cic
+                  - maib
+                  - cn-msa
+                lang:
+                  enum:
+                  - zh
+                  - en
+                  - bilingual
+              additionalProperties: false
+  /api/v1/cases/{caseId}/gisis:
+    parameters:
+    - *id002
+    get:
+      tags:
+      - reports
+      summary: GISIS 本地字段与规则；缺值 null+missing；非正式上报
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportGisis'
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '422': *id001
+  /api/v1/cases/{caseId}/gisis:validate:
+    parameters:
+    - *id002
+    post:
+      tags:
+      - reports
+      summary: 校验临时 values，写审计；export=true成功返回流，失败422；未请求导出时错误列表200
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '422': *id001
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                values:
+                  type: object
+                export:
+                  type: boolean
+                format:
+                  enum:
+                  - json
+                  - csv
+  /api/v1/cases/{caseId}/gisis/export:
+    parameters:
+    - *id002
+    get:
+      tags:
+      - reports
+      summary: GISIS JSON/CSV 草稿文件；保留缺值与数据来源并审计
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '422': *id001
+      parameters:
+      - name: format
+        in: query
+        schema:
+          type: string
+          enum:
+          - json
+          - csv

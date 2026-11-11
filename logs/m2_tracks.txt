@@ -1,0 +1,22 @@
+已完成 **M2 `Mcis.Domain.Tracks`** 模块实现与单元测试，并更新了进度表。
+
+### 实现内容
+
+1. **接口与配置约定**：
+   - [TrackContracts.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/TrackContracts.cs)：定义 [`TrackCleaningConfig`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/TrackContracts.cs#L12-L106)、[`IShipTrack`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/TrackContracts.cs#L111-L141) 与 [`ITrackInterpolator`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/TrackContracts.cs#L146-L163)。
+
+2. **异常点剔除与缺口检测（`TrackCleaner`）**：
+   - [TrackCleaningReport.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/TrackCleaningReport.cs)：[`TrackCleaningReport`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/TrackCleaningReport.cs#L11-L75) 汇总保留样本、剔除清单、按原因码分类计数及时间缺口列表。
+   - [TrackCleaner.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/TrackCleaner.cs) 与 [TrackCleanerRules.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/TrackCleanerRules.cs)：[`TrackCleaner.CleanAisRecords`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/TrackCleaner.cs#L37-L120) 与 [`TrackCleaner.DetectTimeGaps`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/TrackCleaner.cs#L139-L164) 支持 `Unavailable`、`OutOfRange`、`DuplicateTimestamp`、`OutOfOrder`、`PositionJump`/`SpeedGate`、`SpeedJump`、`CourseJump` 等原因码剔除、按行号人工恢复，以及 AIS 天线偏移修正（`AntennaOffset.ToEnuOffset`）。
+
+3. **三次 Hermite / Catmull-Rom / 线性插值与缺口策略**：
+   - [HermiteMath.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/HermiteMath.cs)：[`HermiteMath`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/HermiteMath.cs#L12-L168) 提供基于 SOG/COG 速度向量的三次 Hermite 位置与速度求值、缺失 SOG/COG 时的 Catmull-Rom 中心有限差分切线估算，以及跨越 $0^\circ/360^\circ$ 的最短角插值。
+   - [ShipTrack.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/ShipTrack.cs)、[ShipTrackEvaluation.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/ShipTrackEvaluation.cs) 与 [TrackInterpolator.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/TrackInterpolator.cs)：[`ShipTrack`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/ShipTrack.cs#L13-L168) 与 [`TrackInterpolator`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/TrackInterpolator.cs#L14-L115) 支持节点精确通过、缺口内标记 `LowConfidence` / `DeadReckoned`（`IsInterpolatedAcrossGap == true`）或 `HideVessel` 拒绝外推。
+
+4. **双船统一时间轴对齐与重采样**：
+   - [TrackTimeAligner.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/TrackTimeAligner.cs)：[`TrackTimeAligner.AlignTwoTracks`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/TrackTimeAligner.cs#L82-L129) 与 [`TrackTimeAligner.ResampleTrack`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Tracks/TrackTimeAligner.cs#L132-L150)。
+
+5. **单元测试与进度更新**：
+   - [TrackCleanerTests.cs](file:///workspace/maritime-sim-design/unity/DotnetTests/Tests/TrackCleanerTests.cs) 与 [TrackInterpolatorTests.cs](file:///workspace/maritime-sim-design/unity/DotnetTests/Tests/TrackInterpolatorTests.cs)：本模块 **11/11** 测试通过（全工程 **59/59** 测试通过）。
+   - 已更新 [PROGRESS.md](file:///workspace/maritime-sim-design/unity/PROGRESS.md#L8) 中 `M2 Tracks` 行状态。
+EXIT 0

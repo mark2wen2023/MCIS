@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- 独立验收工程：只引用被测代码，不修改 Data/Vdr、Domain/Timeline 或开发自测。 -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <RootNamespace>Mcis.Acceptance.W2</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="*.cs" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Core/Primitives/**/*.cs" Link="Impl/Core/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Domain/Common/**/*.cs" Link="Impl/Common/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Domain/Models/**/*.cs" Link="Impl/Models/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Domain/Timeline/**/*.cs" Link="Impl/Timeline/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Data/Vdr/**/*.cs" Link="Impl/Vdr/%(RecursiveDir)%(Filename)%(Extension)" />
+    <!-- W2.3 预写（2026-11-11）：共享 caseId 校验器 EvidenceItem.IsValidCaseId 位于 Domain/Evidence；只读引用。 -->
+    <Compile Include="../../unity/Assets/_Project/Scripts/Domain/Evidence/**/*.cs" Link="Impl/Evidence/%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- 只读引用虚构样例，不改原文件。 -->
+    <None Include="../../unity/Tests_W2_Vdr/Samples/**" Link="Samples/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

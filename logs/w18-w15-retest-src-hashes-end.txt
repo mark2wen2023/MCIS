@@ -1,0 +1,26 @@
+=== W18+W15 source-only freeze END 2026-11-11T20:33:14+08:00 ===
+--- W18 Domain ---
+2a9a3f71de445e20f7b424436c88e6e2b2bcfbc62aebf21d0d441d6bf41efa79  /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/HumanFactors/Brm.cs
+f04fc6faafbeecd3dd4c0aefe5d5746e643a452a16b0e641e59a4c7b40c73e00  /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/HumanFactors/Fatigue.cs
+2a5bdc997495b222c1a6c416c863345e6666d45c1fcc2eaa8bb4c1086d3af396  /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/HumanFactors/Hfacs.cs
+9987fca8fc330fb908298ca93d25873cb761479b197f3eb2e8387d0c4a5b7e7e  /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/HumanFactors/RestHours.cs
+--- W18 self-test sources ---
+66fb0a5e19d6fe0b132eb536aa49638aafab5a4a7c1d4f4002c6ffd16a48e6de  /workspace/maritime-sim-design/unity/Tests_W18_HF/Tests/FatigueHfacsBrmTests.cs
+748fac451a6fea5cb73c5bc746ecc9bcaca593d7b1b111858e3454629141640f  /workspace/maritime-sim-design/unity/Tests_W18_HF/Tests/RestHourTests.cs
+7e3eeb368785bb2628b43d5d8c71923e180f948efe2012016a32646706e3054e  /workspace/maritime-sim-design/unity/Tests_W18_HF/Tests/W18.HF.Tests.csproj
+3424f724c4ed39b2ce267ae0b16eb98aa40deb2c0ab0b2d39f07e77fcf14c429  /workspace/maritime-sim-design/unity/Tests_W18_HF/Tests/W18FixTests.cs
+664c08335290cd9587b69b9f80416e38924a22fe6882f3fc0e6d2062a05f79f1  /workspace/maritime-sim-design/unity/Tests_W18_HF/W18.HF.csproj
+--- W15 Domain ---
+b23595749c2f0b0f190085c95c4db9dccfa4ebdd29dacd5859c649efc7b62d3d  /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Systemic/AcciMap.cs
+577e56a3d8195fa3bcd2c24a407e3a66c35f9076eff1ec292d15b32a6a1e9011  /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Systemic/BowTie.cs
+fd749e55586ac06267bf27bf9f7bda6be03faff43080a068b35eb3def5f78978  /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Systemic/StampCast.cs
+f51d5f28c9c113f1e0097e87389df72ddfebba1e83605262b24e274383c9d2ed  /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Systemic/SystemicCommon.cs
+d00e418dcd4922c3c564b21560e7eb4f6befdbdf479bc830474b4c97bdbf3457  /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Systemic/SystemicDemoData.cs
+70b8a4316f0066db55be79e1bc0b6adb8af0f761e25dc3e9a9c54e5cbf73f3b4  /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Systemic/SystemicDocument.cs
+bc67c5e7996959195cbc42cfccab51ecb378f2bfed97a3f477e769136e775816  /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Systemic/SystemicEcfcImport.cs
+d6b40df1480c6a8f03ab425a234630d7a1613afa030263ec9b0db9a21da3dad7  /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Systemic/SystemicJson.cs
+--- W15 self-test sources ---
+476829b5c0705bd6d3932cbfe4cc70e32c4090768374ad0fbce3ce9d8a430be8  /workspace/maritime-sim-design/unity/Tests_W15_Sys/Tests/SystemicTests.cs
+312ffd9c5e98c22bc2f3918f1c2bcd428d49ebacd78c803fa37388f130d75776  /workspace/maritime-sim-design/unity/Tests_W15_Sys/Tests/W15.Sys.Tests.csproj
+e926cbfb12c70316cade758bb1c40c5a2d0f357e50846b4dde5f74842b6fad13  /workspace/maritime-sim-design/unity/Tests_W15_Sys/Tests/W151FixTests.cs
+4f25c5ea39b4f82fd5c0bc0dbdfe99324756311709e1096e773a99cdd2a99d9e  /workspace/maritime-sim-design/unity/Tests_W15_Sys/W15.Sys.csproj

@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/custody-event.schema.json",
+  "title": "CustodyEvent（保管链事件）",
+  "description": "对应 C# Mcis.Domain.Evidence.CustodyEvent。REST 用 camelCase；落盘 .mcase/audit/custody.jsonl 时使用 C# CustodyEvent.ToJsonLine 的原始行格式（7 个标准键 + seq/evidence_id/sha256/detail/result/prev，Register 另有 title/source/extracted_by/extracted_utc/path/case_id/confidentiality 等 snake_case 扩展键），服务原样保存行文本，以便 CustodyLedger.Load 校验 prev 链。",
+  "type": "object",
+  "required": [
+    "seq",
+    "utc",
+    "operator",
+    "kind",
+    "evidenceId",
+    "sha256",
+    "prevLineHash"
+  ],
+  "properties": {
+    "seq": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "案件内连续编号"
+    },
+    "utc": {
+      "$ref": "common.schema.json#/$defs/utc",
+      "description": "截断到秒（AuditJson.TruncateToSecond）"
+    },
+    "operator": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "Register",
+        "Access",
+        "Change",
+        "Verify",
+        "Review"
+      ]
+    },
+    "evidenceId": {
+      "$ref": "common.schema.json#/$defs/evidenceRef"
+    },
+    "sha256": {
+      "type": "string",
+      "description": "Register：登记哈希；Access：当前哈希；Change：新哈希；Verify：实测哈希"
+    },
+    "previousSha256": {
+      "type": "string",
+      "description": "Change：变更前；Verify：期望哈希"
+    },
+    "detail": {
+      "type": "string",
+      "description": "访问目的 / 变更原因 / 备注"
+    },
+    "verifyMatched": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "prevLineHash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "上一行 UTF-8 文本的 SHA-256，首行 64 个 0"
+    },
+    "line": {
+      "type": "string",
+      "description": "（只读）落盘的原始 JSONL 行"
+    },
+    "needsReview": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "仅 Review：true=标注需复核，false=解除（行内 result=needs_review/cleared）"
+    }
+  },
+  "additionalProperties": false
+}

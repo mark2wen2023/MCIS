@@ -1,0 +1,4 @@
+# 示例数据（虚构）：调查员确认的跨源事件锚点（车钟 FULL ASTERN、VHF 开始）。
+event_key,source_a,time_a_utc,source_b,time_b_utc,note,investigator
+BRIDGE-FULL-ASTERN,MARY-BRIDGE,2026-05-18T06:23:30.000Z,MARY-VDR,2026-05-18T06:23:33.200Z,调查员甲确认：车钟 FULL ASTERN 时刻,调查员甲
+MEDIA-VHF-CH16-START,MARY-MEDIA,2026-05-18T06:15:00.000Z,MARY-VDR,2026-05-18T06:15:03.200Z,调查员乙确认：VHF CH16 录音开始,调查员乙

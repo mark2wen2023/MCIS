@@ -1,0 +1,13 @@
+# W18.1 freeze hash check START 2026-11-11 21:35 Asia/Shanghai
+# source: ROADMAP.md 21:32 W18.1
+OK	unity/Assets/_Project/Scripts/Domain/HumanFactors/Brm.cs	39649079cb690680b3f486b79ee58d63b14705f0c3fd9d1a04fe9b5e78de6e99
+OK	unity/Assets/_Project/Scripts/Domain/HumanFactors/Fatigue.cs	f04fc6faafbeecd3dd4c0aefe5d5746e643a452a16b0e641e59a4c7b40c73e00
+OK	unity/Assets/_Project/Scripts/Domain/HumanFactors/Hfacs.cs	4411823490ecc16f8ef95856e5000750f587bc8c2752a6ead282367cc1db22e9
+OK	unity/Assets/_Project/Scripts/Domain/HumanFactors/RestHours.cs	2765717b64ebb50f421d22aa44dc2175f1ade70a63020cb7537b89985768dc90
+OK	unity/Tests_W18_HF/Tests/FatigueHfacsBrmTests.cs	66fb0a5e19d6fe0b132eb536aa49638aafab5a4a7c1d4f4002c6ffd16a48e6de
+OK	unity/Tests_W18_HF/Tests/RestHourTests.cs	dee20f8f69e1016b931da9b2ac6b64c15ec6257a6b361d1312480d676ab5ed1a
+OK	unity/Tests_W18_HF/Tests/W18.HF.Tests.csproj	7e3eeb368785bb2628b43d5d8c71923e180f948efe2012016a32646706e3054e
+OK	unity/Tests_W18_HF/Tests/W18FixTests.cs	ea72ad227dd5fa8019ccea4ec0b0af27ec71853ad7b8e55cca5d6e58875f72f8
+OK	unity/Tests_W18_HF/Tests/W18_1Tests.cs	dc2e61c5b1a9464fa7b8b885497d3f1c83a5ad2ffba51d801ff3a52b9b4e1cdf
+OK	unity/Tests_W18_HF/W18.HF.csproj	664c08335290cd9587b69b9f80416e38924a22fe6882f3fc0e6d2062a05f79f1
+RESULT=PASS  count=10

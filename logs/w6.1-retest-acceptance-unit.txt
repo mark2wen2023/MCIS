@@ -1,0 +1,20 @@
+# W6.1 验收（不含 e2e 截图）— 2026-11-11 21:39:58 CST
+.......................................................................F [ 75%]
+F......................                                                  [100%]
+=================================== FAILURES ===================================
+__________________ test_W61_evaluate_response_includes_runId ___________________
+test_w61_rulings.py:223: in test_W61_evaluate_response_includes_runId
+    assert doc.get("runId"), "evaluate 响应缺少 runId（21:34 裁定：须带本次新建版本 id）"
+E   AssertionError: evaluate 响应缺少 runId（21:34 裁定：须带本次新建版本 id）
+E   assert None
+E    +  where None = <built-in method get of dict object at 0x7f8aa9951c00>('runId')
+E    +    where <built-in method get of dict object at 0x7f8aa9951c00> = {'caseId': 'CASE-2026-DEMO-LILY-MARY', 'engineVersion': 'mcis-core/0.1.0', 'disclaimer': '仅作安全调查技术分析，不作责任认定。', 'bands'...ary:band:NoCollisionRisk:None:None:560-720', 'startTimeSec': 560, 'endTimeSec': 720, 'situation': 'NoRisk', ...}], ...}.get
+_______________ test_W61_extension_routes_appear_in_app_openapi ________________
+test_w61_rulings.py:251: in test_W61_extension_routes_appear_in_app_openapi
+    assert not missing, f"app.openapi() 未包含已写入合同的扩展路由：{sorted(missing)}"
+E   AssertionError: app.openapi() 未包含已写入合同的扩展路由：['/api/v1/cases/{}/colreg/checks/{}/reviews', '/api/v1/cases/{}/colreg/compare', '/api/v1/cases/{}/colreg/runs', '/api/v1/cases/{}/colreg/runs/{}', '/api/v1/cases/{}/colreg/runs/{}:activate']
+E   assert not {'/api/v1/cases/{}/colreg/checks/{}/reviews', '/api/v1/cases/{}/colreg/compare', '/api/v1/cases/{}/colreg/runs', '/api/v1/cases/{}/colreg/runs/{}', '/api/v1/cases/{}/colreg/runs/{}:activate'}
+=========================== short test summary info ============================
+FAILED test_w61_rulings.py::test_W61_evaluate_response_includes_runId - Asser...
+FAILED test_w61_rulings.py::test_W61_extension_routes_appear_in_app_openapi
+2 failed, 93 passed in 16.42s

@@ -1,0 +1,175 @@
+      <!-- ==================== 12. #whatif 反事实仿真 ==================== -->
+      <section class="screen" id="screen-whatif" data-screen="whatif">
+        <div class="screen-header">
+          <div class="screen-header-left">
+            <h1>What-if 反事实仿真 <span class="badge badge-amber">示例数据（虚构）</span> <span class="p6-tag">P6+ 国际对标 ⑦</span></h1>
+            <p>修改一个或多个参数后重跑运动学与碰撞判定（OBB 二分求 tc，步长 0.05 s），比较原始与反事实轨迹，量化“是否可避免”及临界条件。结果仅在所列模型假设下成立。</p>
+          </div>
+          <div class="screen-actions">
+            <button class="btn">＋ 新建情景</button>
+            <button class="btn btn-amber">🎬 导出对比视频</button>
+            <button class="btn btn-primary">⟳ 重新计算</button>
+          </div>
+        </div>
+
+        <div class="p6-row" style="grid-template-columns: 300px 1fr 318px; flex:1;">
+          <div class="glass-panel p6-panel">
+            <div class="panel-header"><div class="panel-title">情景参数 · S1</div><span class="panel-subtitle">红线 = 原始值</span></div>
+            <div class="panel-body" style="display:flex;flex-direction:column;gap:13px;">
+              <div class="p6-seg" style="align-self:flex-start;"><span>S0 原始</span><span class="on">S1</span><span>S2</span><span>S3</span></div>
+              <div class="p6-slider"><div class="top">Mary 转向时机 <b>提前 120 s</b></div><div class="bar"><div class="fill" style="width:66%"></div><div class="orig" style="left:0%"></div><div class="knob" style="left:66%"></div></div><div class="scale"><span>0</span><span>90 s</span><span>180 s</span></div></div>
+              <div class="p6-slider"><div class="top">Mary 转向方向 / 舵角 <b>右 15°</b></div><div class="bar"><div class="fill" style="width:68%"></div><div class="orig" style="left:17%"></div><div class="knob" style="left:68%"></div></div><div class="scale"><span>左 35°</span><span>0</span><span>右 35°</span></div></div>
+              <div class="p6-slider"><div class="top">Mary 航速 <b>8.0 kn</b></div><div class="bar"><div class="fill" style="width:40%"></div><div class="orig" style="left:60%"></div><div class="knob" style="left:40%"></div></div><div class="scale"><span>0</span><span>10</span><span>20 kn</span></div></div>
+              <div class="p6-slider"><div class="top">Lily 转向时机 <b>原始</b></div><div class="bar"><div class="fill" style="width:0%"></div><div class="orig" style="left:0%"></div><div class="knob" style="left:0%"></div></div><div class="scale"><span>0</span><span>90 s</span><span>180 s</span></div></div>
+              <div class="p6-slider"><div class="top">横流（东向） <b>1.2 kn</b></div><div class="bar"><div class="fill" style="width:40%"></div><div class="orig" style="left:40%"></div><div class="knob" style="left:40%"></div></div><div class="scale"><span>0</span><span>1.5</span><span>3 kn</span></div></div>
+              <div class="p6-slider"><div class="top">能见度 <b>1.5 nm</b></div><div class="bar"><div class="fill" style="width:30%"></div><div class="orig" style="left:30%"></div><div class="knob" style="left:30%"></div></div><div class="scale"><span>0</span><span>2.5</span><span>5 nm</span></div></div>
+              <div class="p6-note" style="margin-top:auto;border-top:1px dashed var(--border-subtle);padding-top:8px;">模型假设：Nomoto 一阶操纵模型（K/T 取自船模库）、横流恒定、不计浅水/岸壁效应；船体按 OBB 包围盒判定接触。</div>
+            </div>
+          </div>
+
+          <div class="glass-panel p6-panel">
+            <div class="panel-header"><div class="panel-title">原始 vs 反事实 轨迹对比（俯视 · 3#–4# 浮标航段）</div><span class="badge badge-amber">示例数据（虚构）</span></div>
+            <div class="panel-body" style="display:flex;flex-direction:column;gap:8px;">
+              <div class="p6-svgbox" id="wi-track-svg"></div>
+              <div class="p6-legend"><span><i style="background:var(--cyan)"></i>Lily（原始，各情景相同）</span><span><i style="background:var(--red)"></i>Mary 原始 S0（碰撞）</span><span><i style="background:var(--green)"></i>Mary 反事实 S1</span><span><i style="background:rgba(255,176,32,.6)"></i>最近会遇连线</span></div>
+            </div>
+          </div>
+
+          <div class="p6-col">
+            <div class="glass-panel p6-panel">
+              <div class="panel-header"><div class="panel-title">结果</div><span class="st st-ok">S1 可避免</span></div>
+              <div class="panel-body" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <div class="p6-metric red"><div class="lbl">S0 原始</div><div class="val">碰撞</div><div class="p6-note">tc = 14:24:00.35</div></div>
+                <div class="p6-metric green"><div class="lbl">S1 反事实</div><div class="val">无碰撞</div><div class="p6-note">通过距离 0.21 nm</div></div>
+                <div class="p6-metric"><div class="lbl">最小 DCPA</div><div class="val">0.21<span style="font-size:11px"> nm</span></div></div>
+                <div class="p6-metric amber"><div class="lbl">临界提前量</div><div class="val">≥ 52<span style="font-size:11px"> s</span></div></div>
+              </div>
+            </div>
+            <div class="glass-panel p6-panel">
+              <div class="panel-header"><div class="panel-title">敏感性：转向提前量 → 最小会遇距离</div></div>
+              <div class="panel-body"><div class="p6-svgbox" id="wi-sens-svg"></div></div>
+            </div>
+            <div class="glass-panel p6-panel" style="flex:1;">
+              <div class="panel-header"><div class="panel-title">情景对比</div></div>
+              <div class="panel-body" style="padding:4px 10px;">
+                <table class="p6-table">
+                  <thead><tr><th>情景</th><th>改动</th><th>最小距离</th><th>结论</th></tr></thead>
+                  <tbody>
+                    <tr><td class="mono">S0</td><td>原始</td><td class="mono">0 m</td><td><span class="st st-bad">碰撞</span></td></tr>
+                    <tr class="sel"><td class="mono">S1</td><td>提前 2 min 右转</td><td class="mono">0.21 nm</td><td><span class="st st-ok">避免</span></td></tr>
+                    <tr><td class="mono">S2</td><td>Mary 减速至 6 kn</td><td class="mono">0.03 nm</td><td><span class="st st-warn">擦碰</span></td></tr>
+                    <tr><td class="mono">S3</td><td>Lily 早 1 min 右满舵</td><td class="mono">0.08 nm</td><td><span class="st st-warn">险情</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 13. #hf 人为因素 ==================== -->
+      <section class="screen" id="screen-hf" data-screen="hf">
+        <div class="screen-header">
+          <div class="screen-header-left">
+            <h1>人为因素分析 · HFACS-MA / 疲劳 / BRM <span class="badge badge-amber">示例数据（虚构）</span> <span class="p6-tag">P6+ 国际对标 ⑤</span></h1>
+            <p>依据 IMO A.1075(28) 人为因素调查导则：按 HFACS 海事版四层归类每个因素并挂接证据；按 STCW / MLC 2006 校验工作与休息时间；评估驾驶台资源管理与瞭望。</p>
+          </div>
+          <div class="screen-actions">
+            <button class="btn">⇄ 同步到 ECFC 条件节点</button>
+            <button class="btn btn-primary">📑 生成人为因素章节草稿</button>
+          </div>
+        </div>
+
+        <div class="p6-row" style="grid-template-columns: 1.12fr 1fr; flex:1;">
+          <div class="glass-panel p6-panel">
+            <div class="panel-header"><div class="panel-title">HFACS-MA 四层分类 · Mary 轮</div>
+              <div class="p6-legend"><span><i style="background:var(--red)"></i>强证据</span><span><i style="background:var(--amber)"></i>中</span><span><i style="background:rgba(141,164,196,.6)"></i>待查</span></div>
+            </div>
+            <div class="panel-body" style="display:flex;flex-direction:column;gap:8px;">
+              <div class="hfacs">
+                <div class="hf-layer" style="border-color:rgba(167,139,250,.4)"><div class="hd" style="background:rgba(167,139,250,.10)"><b>外部因素</b><span>EXTERNAL · 扩展层</span></div><div class="bd"><span class="hf-chip s2">VTS 交通组织未提示会遇<i>IR-06</i></span><span class="hf-chip s1">航道浮标间距偏大<i>待查</i></span></div></div>
+                <div class="hf-layer"><div class="hd"><b>① 组织影响</b><span>ORGANIZATIONAL</span></div><div class="bd"><span class="hf-chip s3">SMS 无狭水道/雾航专项程序<i>EV-007</i></span><span class="hf-chip s2">船期压力 · 靠泊窗口<i>IR-01</i></span><span class="hf-chip s1">驾驶员 BRM 培训过期<i>待查</i></span></div></div>
+                <div class="hf-layer"><div class="hd"><b>② 不安全的监督</b><span>UNSAFE SUPERVISION</span></div><div class="bd"><span class="hf-chip s3">雾航进港船长未在驾驶台<i>VDR 音频</i></span><span class="hf-chip s2">未增派专职瞭望<i>IR-04</i></span><span class="hf-chip s2">船长常规命令簿未写叫船条件<i>EV-008</i></span></div></div>
+                <div class="hf-layer"><div class="hd"><b>③ 不安全行为的前提</b><span>PRECONDITIONS</span></div><div class="bd"><span class="hf-chip s3">疲劳：前 24 h 休息 6.5 h<i>工休记录</i></span><span class="hf-chip s2">能见度 1.5 nm + 横流<i>EV-003</i></span><span class="hf-chip s2">驾驶台沟通未闭环<i>VDR 音频</i></span><span class="hf-chip s1">ARPA 矢量设置不当<i>EV-004</i></span></div></div>
+                <div class="hf-layer"><div class="hd"><b>④ 不安全行为</b><span>UNSAFE ACTS</span></div><div class="bd"><span class="hf-chip s3">决策差错：判断对方右侧通过而左转<i>IR-03</i></span><span class="hf-chip s3">违规：未保持安全航速<i>VDR</i></span><span class="hf-chip s2">技能差错：未鸣放声号<i>VDR 音频</i></span></div></div>
+              </div>
+              <div class="p6-agent">◆ 人员/作业智能体给出分类建议并引用笔录原文页码 · 4 条待确认 · 已确认 9 条</div>
+              <div class="p6-svgbox" id="hf-flow-svg"></div>
+            </div>
+          </div>
+
+          <div class="p6-col">
+            <div class="glass-panel p6-panel">
+              <div class="panel-header"><div class="panel-title">工作 / 休息时间 · Mary 轮二副（事发前 7 天）</div><span class="st st-bad">3 项不符合</span></div>
+              <div class="panel-body" style="display:flex;flex-direction:column;gap:8px;">
+                <div class="p6-svgbox" id="hf-rest-svg"></div>
+                <div class="p6-legend"><span><i style="background:#0e7490"></i>值班</span><span><i style="background:#7c5cff"></i>其他工作（装卸/演习）</span><span><i style="background:rgba(141,164,196,.18)"></i>休息</span><span><i style="background:var(--red)"></i>不符合 STCW A-VIII/1</span></div>
+              </div>
+            </div>
+            <div class="p6-row" style="grid-template-columns:1fr 1fr;flex:1;">
+              <div class="glass-panel p6-panel">
+                <div class="panel-header"><div class="panel-title">疲劳指标</div></div>
+                <div class="panel-body" style="display:flex;flex-direction:column;gap:7px;">
+                  <div class="p6-metric red"><div class="lbl">事发前 24 h 休息（≥10 h）</div><div class="val">6.5 h</div></div>
+                  <div class="p6-metric red"><div class="lbl">7 天累计休息（≥77 h）</div><div class="val">69.5 h</div></div>
+                  <div class="p6-metric red"><div class="lbl">24 h 内最长连续休息（≥6 h）</div><div class="val">2.0 h</div></div>
+                </div>
+              </div>
+              <div class="glass-panel p6-panel">
+                <div class="panel-header"><div class="panel-title">BRM / 瞭望核查</div></div>
+                <div class="panel-body" style="padding:4px 12px;">
+                  <div class="p6-chk"><span class="box n">✕</span><div>雾航叫船长上驾驶台</div></div>
+                  <div class="p6-chk"><span class="box n">✕</span><div>专职瞭望（视觉+听觉）</div></div>
+                  <div class="p6-chk"><span class="box q">?</span><div>ARPA 系统标绘</div></div>
+                  <div class="p6-chk"><span class="box n">✕</span><div>舵令复诵 / 闭环沟通</div></div>
+                  <div class="p6-chk"><span class="box y">✓</span><div>VTS 报告与守听</div></div>
+                  <div class="p6-chk" style="border:none;"><span class="box y">✓</span><div>雷达双机运行</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 14. #systemic 系统分析 ==================== -->
+      <section class="screen" id="screen-systemic" data-screen="systemic">
+        <div class="screen-header">
+          <div class="screen-header-left">
+            <h1>系统性分析 · Bow-tie / AcciMap / STAMP-CAST <span class="badge badge-amber">示例数据（虚构）</span> <span class="p6-tag">P6+ 国际对标 ⑧</span></h1>
+            <p>在论文 ECFC 事件链之外，从屏障失效（Bow-tie）、社会-技术系统层级（AcciMap）与控制结构（STAMP/CAST）三个视角追溯 ISM 体系、公司、主管机关层面的原因。节点可回链至 ECFC 与证据。</p>
+          </div>
+          <div class="screen-actions">
+            <button class="btn">⇄ 从 ECFC 导入节点</button>
+            <button class="btn btn-primary">⤓ 导出 SVG / PNG</button>
+          </div>
+        </div>
+
+        <div class="p6-tabs"><span class="on">Bow-tie 领结图</span><span>AcciMap 层级图</span><span>STAMP / CAST 控制结构</span><span style="margin-left:auto;color:var(--text-muted);font-size:11px;">屏障状态：<b style="color:var(--red)">■ 失效</b> <b style="color:var(--amber)">■ 部分</b> <b style="color:var(--green)">■ 有效</b></span></div>
+
+        <div class="glass-panel p6-panel" style="margin-top:-6px;">
+          <div class="panel-body"><div class="p6-svgbox" id="sy-bowtie-svg"></div></div>
+        </div>
+
+        <div class="p6-row" style="grid-template-columns: 1.5fr 1fr; flex:1;">
+          <div class="glass-panel p6-panel">
+            <div class="panel-header"><div class="panel-title">AcciMap 缩略视图（切换至“AcciMap 层级图”查看全图）</div><span class="badge badge-amber">示例数据（虚构）</span></div>
+            <div class="panel-body"><div class="p6-svgbox" id="sy-accimap-svg"></div></div>
+          </div>
+          <div class="glass-panel p6-panel">
+            <div class="panel-header"><div class="panel-title">屏障失效统计与回链</div></div>
+            <div class="panel-body" style="padding:4px 10px;">
+              <table class="p6-table">
+                <thead><tr><th>屏障</th><th>状态</th><th>回链</th></tr></thead>
+                <tbody>
+                  <tr><td>VTS 交通组织与警告</td><td><span class="st st-warn">部分</span></td><td class="mono">ECFC C4 · IR-06</td></tr>
+                  <tr><td>ARPA 碰撞报警</td><td><span class="st st-bad">失效</span></td><td class="mono">ECFC C2 · EV-004</td></tr>
+                  <tr><td>驾驶台资源管理</td><td><span class="st st-bad">失效</span></td><td class="mono">HFACS ② ③</td></tr>
+                  <tr><td>安全航速</td><td><span class="st st-bad">失效</span></td><td class="mono">COLREG R6</td></tr>
+                  <tr><td>水密分舱</td><td><span class="st st-warn">部分</span></td><td class="mono">DamageTrack</td></tr>
+                  <tr><td>应急拖带 / 抢滩</td><td><span class="st st-ok">有效</span></td><td class="mono">E7</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/timeline-event.schema.json",
+  "title": "TimelineEvent（时间线事件）",
+  "description": "调查时间线上的事件/条件（ECFC 的 E/C 节点来源之一）。Unity 回放轴与网页时间线共用。timeSec 与 utc 必须一致（utc = caseEpochUtc + timeSec）。",
+  "type": "object",
+  "required": ["eventId", "caseId", "timeSec", "utc", "title", "kind"],
+  "properties": {
+    "eventId": { "type": "string", "pattern": "^TE-[0-9]{2,}$" },
+    "caseId": { "$ref": "common.schema.json#/$defs/caseId" },
+    "timeSec": { "$ref": "common.schema.json#/$defs/simTimeSec" },
+    "utc": { "$ref": "common.schema.json#/$defs/utc" },
+    "endTimeSec": { "type": ["number", "null"], "description": "区间型条件的结束时刻；瞬时事件为 null" },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "kind": { "type": "string", "enum": ["Event", "Condition", "Action", "Communication", "Observation"] },
+    "vesselId": { "type": ["string", "null"] },
+    "presumptive": { "type": "boolean", "default": false, "description": "推定项（ECFC 虚线框）" },
+    "evidenceIds": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/evidenceRef" } },
+    "sourceLabel": { "type": "string", "description": "如 Mary 轮 VDR 舵角记录" },
+    "confirmed": { "type": "boolean", "default": true, "description": "false = 智能体草稿尚未确认" }
+  },
+  "additionalProperties": false
+}

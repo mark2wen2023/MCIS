@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mcis.report.source",
+  "title": "SourceCitation",
+  "type": "object",
+  "required": ["page", "quote"],
+  "additionalProperties": false,
+  "properties": {
+    "page": {
+      "description": "报告正文页码（如“第26页共61页”中的26）。封面/简介无正文页码时用 null，并在 pdfPage 填写。",
+      "type": ["integer", "null"],
+      "minimum": 1
+    },
+    "pdfPage": { "type": ["integer", "null"], "minimum": 1 },
+    "figure": { "type": ["string", "null"], "description": "如图18、表1" },
+    "quote": { "type": "string", "minLength": 8, "maxLength": 240, "description": "原文短引文，尽量连续不断行" },
+    "note": { "type": ["string", "null"] }
+  }
+}

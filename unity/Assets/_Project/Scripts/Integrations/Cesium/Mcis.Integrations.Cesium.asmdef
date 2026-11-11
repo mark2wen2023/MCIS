@@ -1,0 +1,26 @@
+{
+    "name": "Mcis.Integrations.Cesium",
+    "rootNamespace": "Mcis.Integrations.Cesium",
+    "references": [
+        "Mcis.Core",
+        "Mcis.Domain",
+        "Mcis.Presentation",
+        "CesiumRuntime",
+        "Unity.Mathematics"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.cesium.unity",
+            "expression": "1.0.0",
+            "define": "MCIS_CESIUM"
+        }
+    ],
+    "noEngineReferences": false
+}

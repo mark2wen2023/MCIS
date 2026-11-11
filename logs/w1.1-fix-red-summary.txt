@@ -1,0 +1,30 @@
+      1   Failed Mcis.Tests.W1.ColregEngineTests.CrossingRolesForVesselOnStarboard_DoNotDependOnVesselIds [< 1 ms]
+      1   Failed Mcis.Tests.W1.ColregFixRegressionTests.D04_BecomingInSight_ReclassifiesOnceThenLocks [1 ms]
+      1   Failed Mcis.Tests.W1.ColregW11Tests.Contract_BandFields_ExposeBothStatusesAndNullReasonWhenNotInDoubt [< 1 ms]
+      1   Failed Mcis.Tests.W1.ColregW11Tests.Contract_DangerStageNames_MapCollisionRiskToNone
+      2   Failed Mcis.Tests.W1.ColregW11Tests.Contract_VerdictNames_PreserveReviewAndEvidenceDistinction
+      1   Failed Mcis.Tests.W1.ColregW11Tests.D09_NucInRestrictedVisibility_R19AndGeneralChecksRemain [< 1 ms]
+      4   Failed Mcis.Tests.W1.ColregW11Tests.D09_NucOrRam_HasNoStandOnDutyAndOtherVesselGivesWay
+      1   Failed Mcis.Tests.W1.ColregW11Tests.D09_OvertakingNuc_R13KeepsOtherVesselAsGiveWay [< 1 ms]
+      1   Failed Mcis.Tests.W1.ColregW11Tests.D09_R18_IsInCatalogWithResponsibilityTitle [1 ms]
+      1   Failed Mcis.Tests.W1.ColregW11Tests.D09_StatusChangeWhilePending_EstablishesR18ResponsibilityImmediately [< 1 ms]
+      1   Failed Mcis.Tests.W1.ColregW11Tests.D09_StatusSamples_InterleavingStepHoldAndRequestSnapshot [< 1 ms]
+      2   Failed Mcis.Tests.W1.ColregW11Tests.D09_StatusSamples_MustIncreaseStrictlyPerVessel
+      1   Failed Mcis.Tests.W1.ColregW11Tests.D09_StatusTransitions_SplitExactlyAndReclassifyOnRecovery [4 ms]
+      1   Failed Mcis.Tests.W1.ColregW11Tests.D09_SyntheticHailiFiction5_NucThenPortTurnIsNotAnR14Violation [1 ms]
+      3   Failed Mcis.Tests.W1.ColregW11Tests.D09_UnknownStatus_R18NeedsEvidenceWhileR14StillApplies
+      6   Failed Mcis.Tests.W1.ColregW11Tests.D09_UnsupportedStatusPairs_R18NeedsReviewWithNullResponsibilities
+    552   Failed Mcis.Tests.W1.ColregW11Tests.D10_D11_SwapGrid_PreservesBandsVesselRolesAndCheckStatusMultiset
+      2   Failed Mcis.Tests.W1.ColregW11Tests.D10_DoubtBoundariesAndHeadingPrerequisite_ArePreserved
+      2   Failed Mcis.Tests.W1.ColregW11Tests.D10_EitherDoubtView_IsHeadOnInBothOrders
+      1   Failed Mcis.Tests.W1.ColregW11Tests.D10_EitherForwardView_IsHeadOnWithoutDoubt [< 1 ms]
+      2   Failed Mcis.Tests.W1.ColregW11Tests.D11_BothVesselsR15R16R17_NeedReviewWhileR8StillRuns
+      2   Failed Mcis.Tests.W1.ColregW11Tests.D11_ContradictoryViews_HaveNullIdsUndeterminedRolesAndBothBases
+      1   Failed Mcis.Tests.W1.ColregW11Tests.D12_BecomingVisibleDuringTurn_DefersAtTheExactSightBoundary [1 ms]
+      1   Failed Mcis.Tests.W1.ColregW11Tests.D12_EarlyActionOrigin_IsFirstRiskAndKeepsActionsTakenWhilePending [2 ms]
+      1   Failed Mcis.Tests.W1.ColregW11Tests.D12_PendingHistory_IsNotRewrittenByLaterStableSamples [1 ms]
+      1   Failed Mcis.Tests.W1.ColregW11Tests.D12_RiskReformsDuringTurn_DefersTheNewEncounter [2 ms]
+      1   Failed Mcis.Tests.W1.ColregW11Tests.D12_StableLock_IsNotReclassifiedWhenTurningResumes [1 ms]
+      4   Failed Mcis.Tests.W1.ColregW11Tests.D12_StableWindowChangeAndMaximumDeferral_AreConfigurable
+      1   Failed Mcis.Tests.W1.ColregW11Tests.D12_StillTurningAfter120Seconds_LocksWithLockedDuringTurnAndStaysLocked [1 ms]
+      2   Failed Mcis.Tests.W1.ColregW11Tests.D12_TurningEitherVessel_DefersUntilBothHeadingsAreStable

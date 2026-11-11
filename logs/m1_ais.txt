@@ -1,0 +1,17 @@
+已完成 **M1 `Mcis.Domain.Ais`** 模块（NMEA 0183 `!AIVDM`/`!AIVDO` 解码器与可配置 CSV 导入）及对应的单元测试，所有测试均已通过，并已更新 [PROGRESS.md](file:///workspace/maritime-sim-design/unity/PROGRESS.md)。
+
+### 实现文件清单
+
+- [AisContracts.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Ais/AisContracts.cs)：定义 [`CsvMappingProfile`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Ais/AisContracts.cs#L12-L96)、[`AisImportBatchResult`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Ais/AisContracts.cs#L101-L132) 与 [`IAisDecoder`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Ais/AisContracts.cs#L137-L154) 接口，遵循 C# 9 与 `ARCHITECTURE.md` 5.3.2 节签名。
+- [AisBitBuffer.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Ais/AisBitBuffer.cs)：实现 [`AisBitBuffer`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Ais/AisBitBuffer.cs#L10-L185) 6-bit 解装甲/装甲、填充位截断、无符号与二进制补码有符号整数读写、6-bit ASCII 文本读写与尾部 `@`/空格清理。
+- [NmeaSentenceParser.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Ais/NmeaSentenceParser.cs)：实现 [`NmeaSentenceParser`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Ais/NmeaSentenceParser.cs#L65-L212) 异或校验和验证、Tag Block（`c:` UNIX 秒时间戳）与日志前缀时间提取、语句拆分与构造。
+- [NmeaMultiSentenceAssembler.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Ais/NmeaMultiSentenceAssembler.cs)：实现 [`NmeaMultiSentenceAssembler`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Ais/NmeaMultiSentenceAssembler.cs#L48-L234) 按 `(Channel, SequentialMessageId, FragmentCount)` 缓存重组多片段报文，支持乱序片段到齐拼接、5 秒超时淘汰、容量上限与流尾残缺片段记入拒绝报告。
+- [AisMessageParser.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Ais/AisMessageParser.cs)：实现 [`AisMessageParser`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Ais/AisMessageParser.cs#L12-L263) 消息类型 1/2/3、5、18、19、24（Part A/B）解码、1/600000 度有符号经纬度、ROT 公式换算、不可用值标记及静态船舶参数合并。
+- [AisMessageEncoder.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Ais/AisMessageEncoder.cs)：实现 [`AisMessageEncoder`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Ais/AisMessageEncoder.cs#L10-L157)，用于生成类型 1/2/3、19、24 Part A/B 报文做往返验证。
+- [AisCsvParser.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Ais/AisCsvParser.cs)：实现 [`AisCsvParser`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Ais/AisCsvParser.cs#L15-L269)，支持自定义列名映射、多格式 UTC 时间解析、时区偏移与速度单位（`kn`/`mps`/`kmh`）换算。
+- [AisDecoder.cs](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Ais/AisDecoder.cs)：实现 [`AisDecoder`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/Ais/AisDecoder.cs#L13-L202) 主入口。
+
+### 测试覆盖与验证
+
+- [AisDecoderTests.cs](file:///workspace/maritime-sim-design/unity/DotnetTests/Tests/AisDecoderTests.cs) 与 [AisCsvTests.cs](file:///workspace/maritime-sim-design/unity/DotnetTests/Tests/AisCsvTests.cs)：共 9 项测试（9/9 通过），覆盖真实 NMEA 样例（类型 1、5 两句拼接、18、24A）、类型 19 与 24B 编码往返解码、不可用值、校验和错误拒绝、Tag Block 超时淘汰及 CSV 自定义列映射。
+EXIT 0

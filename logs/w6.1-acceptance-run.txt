@@ -1,0 +1,42 @@
+# W6 验收用例原样重跑 @ W6.1 — 2026-11-11 21:29:48 CST
+# 命令: cd tests_acceptance/W6 && service/.venv/bin/python -m pytest -q -rfE
+.............................................F.........................F [ 81%]
+................                                                         [100%]
+=================================== FAILURES ===================================
+___________________ test_B2_long_reason_kept_whole_in_audit ____________________
+
+client = <starlette.testclient.TestClient object at 0x7f0a0cfa7020>
+
+    @pytest.mark.knowndefect  # W6-D02
+    def test_B2_long_reason_kept_whole_in_audit(client):
+        """理由是审计必记项；长理由（~390 字）不得被截断丢失。"""
+        reason = "合成理由" + "甲乙丙丁戊己庚辛壬癸" * 39
+        r = _patch(client, "CK-08", {"reviewStatus": "Rejected", "note": reason})
+        assert r.status_code == 200
+        e = _reviews(client, "CK-08")[-1]
+>       assert reason in e["after"], f"理由被截断：after 长 {len(e['after'])}"
+E       AssertionError: 理由被截断：after 长 400
+E       assert '合成理由甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙...丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸' in 'verdict=NotComplied; reviewStatus=Rejected; source=Seed; reason=合成理由甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬...戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲…'
+
+test_w6_service_acceptance.py:183: AssertionError
+________________ test_F7_evaluate_vessel_status_list_form_impl _________________
+
+client = <starlette.testclient.TestClient object at 0x7f0a0cdc09e0>
+
+    @needs_core
+    def test_F7_evaluate_vessel_status_list_form_impl(client):
+        """实现方形态（list[{vesselId,timeSec,status}]，与海力5 inputs 同形）：记录现状，供合同裁定参考。"""
+        body = {"vesselStatus": [{"vesselId": "vessel_mary", "timeSec": 0, "status": "PowerDriven"},
+                                 {"vesselId": "vessel_mary", "timeSec": 300, "status": "NotUnderCommand"},
+                                 {"vesselId": "vessel_lily", "timeSec": 0, "status": "PowerDriven"}]}
+        r = client.post(f"{L}/colreg:evaluate", json=body, headers=H())
+>       assert r.status_code == 200, r.text
+E       AssertionError: {"code":"VALIDATION_ERROR","message":"请求参数不合法","detail":[{"loc":["body","vesselStatus"],"msg":"Input should be a valid dictionary"}]}
+E       assert 422 == 200
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+
+test_w6_service_acceptance.py:386: AssertionError
+=========================== short test summary info ============================
+FAILED test_w6_service_acceptance.py::test_B2_long_reason_kept_whole_in_audit
+FAILED test_w6_service_acceptance.py::test_F7_evaluate_vessel_status_list_form_impl
+2 failed, 86 passed in 21.66s

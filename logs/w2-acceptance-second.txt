@@ -1,0 +1,353 @@
+Build started 11/11/2026 18:58:13.
+     1>Project "/workspace/maritime-sim-design/tests_acceptance/W2/W2.Acceptance.csproj" on node 1 (Restore target(s)).
+     1>_GetAllRestoreProjectPathItems:
+         Determining projects to restore...
+       Restore:
+         X.509 certificate chain validation will use the fallback certificate bundle at '/home/box/.dotnet/sdk/8.0.428/trustedroots/codesignctl.pem'.
+         X.509 certificate chain validation will use the fallback certificate bundle at '/home/box/.dotnet/sdk/8.0.428/trustedroots/timestampctl.pem'.
+         Assets file has not changed. Skipping assets file writing. Path: /workspace/maritime-sim-design/tests_acceptance/W2/obj/project.assets.json
+         Restored /workspace/maritime-sim-design/tests_acceptance/W2/W2.Acceptance.csproj (in 28 ms).
+         
+         NuGet Config files used:
+             /home/box/.nuget/NuGet/NuGet.Config
+         
+         Feeds used:
+             https://api.nuget.org/v3/index.json
+         All projects are up-to-date for restore.
+     1>Done Building Project "/workspace/maritime-sim-design/tests_acceptance/W2/W2.Acceptance.csproj" (Restore target(s)).
+   1:7>Project "/workspace/maritime-sim-design/tests_acceptance/W2/W2.Acceptance.csproj" on node 1 (VSTest target(s)).
+     1>BuildProject:
+         Build started, please wait...
+   1:7>Project "/workspace/maritime-sim-design/tests_acceptance/W2/W2.Acceptance.csproj" (1:7) is building "/workspace/maritime-sim-design/tests_acceptance/W2/W2.Acceptance.csproj" (1:8) on node 1 (default targets).
+     1>GenerateTargetFrameworkMonikerAttribute:
+       Skipping target "GenerateTargetFrameworkMonikerAttribute" because all output files are up-to-date with respect to the input files.
+       CoreGenerateAssemblyInfo:
+       Skipping target "CoreGenerateAssemblyInfo" because all output files are up-to-date with respect to the input files.
+       _GenerateSourceLinkFile:
+         Source Link is empty, file 'obj/Debug/net8.0/W2.Acceptance.sourcelink.json' does not exist.
+       CoreCompile:
+         /home/box/.dotnet/dotnet exec "/home/box/.dotnet/sdk/8.0.428/Roslyn/bincore/csc.dll" /noconfig /unsafe- /checked- /nowarn:1701,1702,1701,1702 /fullpaths /nostdlib+ /errorreport:prompt /warn:8 /define:TRACE;DEBUG;NET;NET8_0;NETCOREAPP;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP1_0_OR_GREATER;NETCOREAPP1_1_OR_GREATER;NETCOREAPP2_0_OR_GREATER;NETCOREAPP2_1_OR_GREATER;NETCOREAPP2_2_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER /highentropyva+ /nullable:disable /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/Microsoft.CSharp.dll /reference:/home/box/.nuget/packages/microsoft.testplatform.testhost/17.11.1/lib/netcoreapp3.1/Microsoft.TestPlatform.CommunicationUtilities.dll /reference:/home/box/.nuget/packages/microsoft.testplatform.testhost/17.11.1/lib/netcoreapp3.1/Microsoft.TestPlatform.CoreUtilities.dll /reference:/home/box/.nuget/packages/microsoft.testplatform.testhost/17.11.1/lib/netcoreapp3.1/Microsoft.TestPlatform.CrossPlatEngine.dll /reference:/home/box/.nuget/packages/microsoft.testplatform.testhost/17.11.1/lib/netcoreapp3.1/Microsoft.TestPlatform.PlatformAbstractions.dll /reference:/home/box/.nuget/packages/microsoft.testplatform.testhost/17.11.1/lib/netcoreapp3.1/Microsoft.TestPlatform.Utilities.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/Microsoft.VisualBasic.Core.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/Microsoft.VisualBasic.dll /reference:/home/box/.nuget/packages/microsoft.codecoverage/17.11.1/lib/netcoreapp3.1/Microsoft.VisualStudio.CodeCoverage.Shim.dll /reference:/home/box/.nuget/packages/microsoft.testplatform.testhost/17.11.1/lib/netcoreapp3.1/Microsoft.VisualStudio.TestPlatform.Common.dll /reference:/home/box/.nuget/packages/microsoft.testplatform.testhost/17.11.1/lib/netcoreapp3.1/Microsoft.VisualStudio.TestPlatform.ObjectModel.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/Microsoft.Win32.Primitives.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/Microsoft.Win32.Registry.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/mscorlib.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/netstandard.dll /reference:/home/box/.nuget/packages/newtonsoft.json/13.0.1/lib/netstandard2.0/Newtonsoft.Json.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.AppContext.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Buffers.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Collections.Concurrent.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Collections.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Collections.Immutable.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Collections.NonGeneric.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Collections.Specialized.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.ComponentModel.Annotations.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.ComponentModel.DataAnnotations.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.ComponentModel.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.ComponentModel.EventBasedAsync.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.ComponentModel.Primitives.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.ComponentModel.TypeConverter.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Configuration.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Console.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Core.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Data.Common.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Data.DataSetExtensions.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Data.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Diagnostics.Contracts.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Diagnostics.Debug.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Diagnostics.DiagnosticSource.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Diagnostics.FileVersionInfo.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Diagnostics.Process.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Diagnostics.StackTrace.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Diagnostics.TextWriterTraceListener.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Diagnostics.Tools.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Diagnostics.TraceSource.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Diagnostics.Tracing.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Drawing.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Drawing.Primitives.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Dynamic.Runtime.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Formats.Asn1.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Formats.Tar.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Globalization.Calendars.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Globalization.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Globalization.Extensions.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.IO.Compression.Brotli.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.IO.Compression.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.IO.Compression.FileSystem.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.IO.Compression.ZipFile.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.IO.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.IO.FileSystem.AccessControl.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.IO.FileSystem.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.IO.FileSystem.DriveInfo.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.IO.FileSystem.Primitives.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.IO.FileSystem.Watcher.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.IO.IsolatedStorage.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.IO.MemoryMappedFiles.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.IO.Pipes.AccessControl.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.IO.Pipes.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.IO.UnmanagedMemoryStream.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Linq.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Linq.Expressions.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Linq.Parallel.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Linq.Queryable.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Memory.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Net.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Net.Http.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Net.Http.Json.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Net.HttpListener.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Net.Mail.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Net.NameResolution.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Net.NetworkInformation.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Net.Ping.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Net.Primitives.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Net.Quic.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Net.Requests.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Net.Security.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Net.ServicePoint.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Net.Sockets.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Net.WebClient.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Net.WebHeaderCollection.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Net.WebProxy.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Net.WebSockets.Client.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Net.WebSockets.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Numerics.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Numerics.Vectors.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.ObjectModel.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Reflection.DispatchProxy.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Reflection.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Reflection.Emit.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Reflection.Emit.ILGeneration.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Reflection.Emit.Lightweight.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Reflection.Extensions.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Reflection.Metadata.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Reflection.Primitives.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Reflection.TypeExtensions.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Resources.Reader.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Resources.ResourceManager.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Resources.Writer.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Runtime.CompilerServices.Unsafe.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Runtime.CompilerServices.VisualC.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Runtime.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Runtime.Extensions.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Runtime.Handles.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Runtime.InteropServices.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Runtime.InteropServices.JavaScript.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Runtime.InteropServices.RuntimeInformation.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Runtime.Intrinsics.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Runtime.Loader.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Runtime.Numerics.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Runtime.Serialization.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Runtime.Serialization.Formatters.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Runtime.Serialization.Json.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Runtime.Serialization.Primitives.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Runtime.Serialization.Xml.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Security.AccessControl.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Security.Claims.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Security.Cryptography.Algorithms.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Security.Cryptography.Cng.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Security.Cryptography.Csp.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Security.Cryptography.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Security.Cryptography.Encoding.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Security.Cryptography.OpenSsl.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Security.Cryptography.Primitives.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Security.Cryptography.X509Certificates.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Security.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Security.Principal.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Security.Principal.Windows.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Security.SecureString.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.ServiceModel.Web.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.ServiceProcess.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Text.Encoding.CodePages.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Text.Encoding.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Text.Encoding.Extensions.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Text.Encodings.Web.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Text.Json.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Text.RegularExpressions.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Threading.Channels.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Threading.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Threading.Overlapped.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Threading.Tasks.Dataflow.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Threading.Tasks.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Threading.Tasks.Extensions.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Threading.Tasks.Parallel.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Threading.Thread.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Threading.ThreadPool.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Threading.Timer.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Transactions.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Transactions.Local.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.ValueTuple.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Web.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Web.HttpUtility.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Windows.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Xml.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Xml.Linq.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Xml.ReaderWriter.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Xml.Serialization.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Xml.XDocument.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Xml.XmlDocument.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Xml.XmlSerializer.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Xml.XPath.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/System.Xml.XPath.XDocument.dll /reference:/home/box/.nuget/packages/microsoft.testplatform.testhost/17.11.1/lib/netcoreapp3.1/testhost.dll /reference:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/ref/net8.0/WindowsBase.dll /reference:/home/box/.nuget/packages/xunit.abstractions/2.0.3/lib/netstandard2.0/xunit.abstractions.dll /reference:/home/box/.nuget/packages/xunit.assert/2.9.2/lib/net6.0/xunit.assert.dll /reference:/home/box/.nuget/packages/xunit.extensibility.core/2.9.2/lib/netstandard1.1/xunit.core.dll /reference:/home/box/.nuget/packages/xunit.extensibility.execution/2.9.2/lib/netstandard1.1/xunit.execution.dotnet.dll /debug+ /debug:portable /filealign:512 /optimize- /out:obj/Debug/net8.0/W2.Acceptance.dll /refout:obj/Debug/net8.0/refint/W2.Acceptance.dll /target:exe /warnaserror- /utf8output /deterministic+ /langversion:9.0 /analyzerconfig:obj/Debug/net8.0/W2.Acceptance.GeneratedMSBuildEditorConfig.editorconfig /analyzerconfig:/home/box/.dotnet/sdk/8.0.428/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_8_default.globalconfig /analyzer:/home/box/.dotnet/sdk/8.0.428/Sdks/Microsoft.NET.Sdk/targets/../analyzers/Microsoft.CodeAnalysis.CSharp.NetAnalyzers.dll /analyzer:/home/box/.dotnet/sdk/8.0.428/Sdks/Microsoft.NET.Sdk/targets/../analyzers/Microsoft.CodeAnalysis.NetAnalyzers.dll /analyzer:/home/box/.nuget/packages/xunit.analyzers/1.16.0/analyzers/dotnet/cs/xunit.analyzers.dll /analyzer:/home/box/.nuget/packages/xunit.analyzers/1.16.0/analyzers/dotnet/cs/xunit.analyzers.fixes.dll /analyzer:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/analyzers/dotnet/cs/Microsoft.Interop.ComInterfaceGenerator.dll /analyzer:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/analyzers/dotnet/cs/Microsoft.Interop.JavaScript.JSImportGenerator.dll /analyzer:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/analyzers/dotnet/cs/Microsoft.Interop.LibraryImportGenerator.dll /analyzer:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/analyzers/dotnet/cs/Microsoft.Interop.SourceGeneration.dll /analyzer:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/analyzers/dotnet/cs/System.Text.Json.SourceGeneration.dll /analyzer:/home/box/.dotnet/packs/Microsoft.NETCore.App.Ref/8.0.34/analyzers/dotnet/cs/System.Text.RegularExpressions.Generator.dll ClockOffsetAcceptanceTests.cs ConflictAcceptanceTests.cs InterpolationAcceptanceTests.cs NmeaAcceptanceTests.cs PrototypeSupportTests.cs W2AccFixture.cs ../../unity/Assets/_Project/Scripts/Core/Primitives/Result.cs ../../unity/Assets/_Project/Scripts/Core/Primitives/SimTime.cs ../../unity/Assets/_Project/Scripts/Domain/Common/EcfcAndDamageEnums.cs ../../unity/Assets/_Project/Scripts/Domain/Common/EnuAndEnums.cs ../../unity/Assets/_Project/Scripts/Domain/Common/GeoPrimitives.cs ../../unity/Assets/_Project/Scripts/Domain/Models/CaseMetadata.cs ../../unity/Assets/_Project/Scripts/Domain/Models/CollisionModels.cs ../../unity/Assets/_Project/Scripts/Domain/Models/EcfcModels.cs ../../unity/Assets/_Project/Scripts/Domain/Models/EnvironmentModels.cs ../../unity/Assets/_Project/Scripts/Domain/Models/TrackAndCpaModels.cs ../../unity/Assets/_Project/Scripts/Domain/Models/VesselAndAisModels.cs ../../unity/Assets/_Project/Scripts/Domain/Timeline/AngleMath.cs ../../unity/Assets/_Project/Scripts/Domain/Timeline/Calibration.cs ../../unity/Assets/_Project/Scripts/Domain/Timeline/ClockOffsets.cs ../../unity/Assets/_Project/Scripts/Domain/Timeline/ConflictDetection.cs ../../unity/Assets/_Project/Scripts/Domain/Timeline/EventMarker.cs ../../unity/Assets/_Project/Scripts/Domain/Timeline/ManualAnchors.cs ../../unity/Assets/_Project/Scripts/Domain/Timeline/MediaItem.cs ../../unity/Assets/_Project/Scripts/Domain/Timeline/MultiTrackTimeline.cs ../../unity/Assets/_Project/Scripts/Domain/Timeline/TimelineSample.cs ../../unity/Assets/_Project/Scripts/Domain/Timeline/TimeRange.cs ../../unity/Assets/_Project/Scripts/Domain/Timeline/Track.cs ../../unity/Assets/_Project/Scripts/Domain/Timeline/TrackKind.cs ../../unity/Assets/_Project/Scripts/Data/Vdr/ManualAnchorCsvImporter.cs ../../unity/Assets/_Project/Scripts/Data/Vdr/NmeaParser.cs ../../unity/Assets/_Project/Scripts/Data/Vdr/VdrCsvImporter.cs ../../unity/Assets/_Project/Scripts/Data/Vdr/VdrCsvMapping.cs ../../unity/Assets/_Project/Scripts/Data/Vdr/VdrImporter.cs ../../unity/Assets/_Project/Scripts/Data/Vdr/VdrMediaManifestImporter.cs ../../unity/Assets/_Project/Scripts/Data/Vdr/VdrNmeaImporter.cs ../../unity/Assets/_Project/Scripts/Data/Vdr/VdrOptions.cs /home/box/.nuget/packages/microsoft.net.test.sdk/17.11.1/build/netcoreapp3.1/Microsoft.NET.Test.Sdk.Program.cs "obj/Debug/net8.0/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs" obj/Debug/net8.0/W2.Acceptance.AssemblyInfo.cs /warnaserror+:NU1605,SYSLIB0011
+     1>/workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs(214,13): warning xUnit2029: Do not use Assert.Empty to check if a value does not exist in a collection. Use Assert.DoesNotContain instead. (https://xunit.net/xunit.analyzers/rules/xUnit2029) [/workspace/maritime-sim-design/tests_acceptance/W2/W2.Acceptance.csproj]
+     1>/workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs(274,13): warning xUnit2031: Do not use a Where clause to filter before calling Assert.Single. Use the overload of Assert.Single that accepts a filtering function. (https://xunit.net/xunit.analyzers/rules/xUnit2031) [/workspace/maritime-sim-design/tests_acceptance/W2/W2.Acceptance.csproj]
+         CompilerServer: server - server processed compilation - W2.Acceptance (net8.0)
+       _CopyOutOfDateSourceItemsToOutputDirectory:
+       Skipping target "_CopyOutOfDateSourceItemsToOutputDirectory" because all output files are up-to-date with respect to the input files.
+       GenerateBuildDependencyFile:
+       Skipping target "GenerateBuildDependencyFile" because all output files are up-to-date with respect to the input files.
+       GenerateBuildRuntimeConfigurationFiles:
+       Skipping target "GenerateBuildRuntimeConfigurationFiles" because all output files are up-to-date with respect to the input files.
+       CopyFilesToOutputDirectory:
+         Copying file from "/workspace/maritime-sim-design/tests_acceptance/W2/obj/Debug/net8.0/W2.Acceptance.dll" to "/workspace/maritime-sim-design/tests_acceptance/W2/bin/Debug/net8.0/W2.Acceptance.dll".
+         Copying reference assembly from "obj/Debug/net8.0/refint/W2.Acceptance.dll" to "/workspace/maritime-sim-design/tests_acceptance/W2/obj/Debug/net8.0/ref/W2.Acceptance.dll".
+         W2.Acceptance -> /workspace/maritime-sim-design/tests_acceptance/W2/bin/Debug/net8.0/W2.Acceptance.dll
+         Copying file from "/workspace/maritime-sim-design/tests_acceptance/W2/obj/Debug/net8.0/W2.Acceptance.pdb" to "/workspace/maritime-sim-design/tests_acceptance/W2/bin/Debug/net8.0/W2.Acceptance.pdb".
+     1>Done Building Project "/workspace/maritime-sim-design/tests_acceptance/W2/W2.Acceptance.csproj" (default targets).
+     1>BuildProject:
+         Build completed.
+         
+Test run for /workspace/maritime-sim-design/tests_acceptance/W2/bin/Debug/net8.0/W2.Acceptance.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+/workspace/maritime-sim-design/tests_acceptance/W2/bin/Debug/net8.0/W2.Acceptance.dll
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:00.05]   Discovering: W2.Acceptance
+[xUnit.net 00:00:00.10]   Discovered:  W2.Acceptance
+[xUnit.net 00:00:00.10]   Starting:    W2.Acceptance
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.TrackKind_CoversScreenshotEightTracks [5 ms]
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.ClockOffsetEstimate_HasOffsetAndUncertainty [< 1 ms]
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.MediaItem_SupportsChannelRangeAndShaMetadata [2 ms]
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.EventMarker_CanRepresentScreenshotFlags [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.IllegalNumericCharacters_DoNotThrow_AndAreIgnored [18 ms]
+[xUnit.net 00:00:00.22]     Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "!AIV") [FAIL]
+[xUnit.net 00:00:00.22]       Assert.Null() Failure: Value is not null
+[xUnit.net 00:00:00.22]       Expected: null
+[xUnit.net 00:00:00.22]       Actual:   System.ArgumentOutOfRangeException: Index and length must refer to a location within the string. (Parameter 'length')
+[xUnit.net 00:00:00.22]          at System.String.ThrowSubstringArgumentOutOfRange(Int32 startIndex, Int32 length)
+[xUnit.net 00:00:00.22]          at System.String.Substring(Int32 startIndex, Int32 length)
+[xUnit.net 00:00:00.22]          at Mcis.Data.Vdr.NmeaParser.TryParse(String line, NmeaSentence& sentence, String& error) in /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Data/Vdr/NmeaParser.cs:line 217
+[xUnit.net 00:00:00.22]          at Mcis.Acceptance.W2.NmeaAcceptanceTests.<>c__DisplayClass7_0.<TruncatedAddress_DoesNotThrow_AndReturnsFalse>b__0() in /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs:line 123
+[xUnit.net 00:00:00.22]          at Xunit.Record.Exception(Func`1 testCode) in /_/src/xunit.core/Record.cs:line 47
+[xUnit.net 00:00:00.22]       Stack Trace:
+[xUnit.net 00:00:00.22]         /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs(124,0): at Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(String line)
+[xUnit.net 00:00:00.22]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.22]            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Heading_179To181_DoesNotTakeLongWay [19 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.CourseOverGround_AlsoUsesShortestArc [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Speed_IsLinearlyInterpolated [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Heading_359To1_InterpolatesAcrossZeroByShortestArc [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Heading_181To179_DoesNotTakeLongWay [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Heading_1To359_InterpolatesAcrossZeroByShortestArc [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.EngineTelegraph_ChangesOnlyAtSampleInstant [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.EngineTelegraph_IsStepped_NotInterpolated [3 ms]
+  Failed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "!AIV") [13 ms]
+  Error Message:
+   Assert.Null() Failure: Value is not null
+Expected: null
+Actual:   System.ArgumentOutOfRangeException: Index and length must refer to a location within the string. (Parameter 'length')
+   at System.String.ThrowSubstringArgumentOutOfRange(Int32 startIndex, Int32 length)
+   at System.String.Substring(Int32 startIndex, Int32 length)
+   at Mcis.Data.Vdr.NmeaParser.TryParse(String line, NmeaSentence& sentence, String& error) in /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Data/Vdr/NmeaParser.cs:line 217
+   at Mcis.Acceptance.W2.NmeaAcceptanceTests.<>c__DisplayClass7_0.<TruncatedAddress_DoesNotThrow_AndReturnsFalse>b__0() in /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs:line 123
+   at Xunit.Record.Exception(Func`1 testCode) in /_/src/xunit.core/Record.cs:line 47
+  Stack Trace:
+     at Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(String line) in /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs:line 124
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.22]     Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "!AIVD") [FAIL]
+[xUnit.net 00:00:00.22]       Assert.Null() Failure: Value is not null
+[xUnit.net 00:00:00.22]       Expected: null
+[xUnit.net 00:00:00.22]       Actual:   System.ArgumentOutOfRangeException: Index and length must refer to a location within the string. (Parameter 'length')
+[xUnit.net 00:00:00.22]          at System.String.ThrowSubstringArgumentOutOfRange(Int32 startIndex, Int32 length)
+[xUnit.net 00:00:00.22]          at System.String.Substring(Int32 startIndex, Int32 length)
+[xUnit.net 00:00:00.22]          at Mcis.Data.Vdr.NmeaParser.TryParse(String line, NmeaSentence& sentence, String& error) in /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Data/Vdr/NmeaParser.cs:line 217
+[xUnit.net 00:00:00.22]          at Mcis.Acceptance.W2.NmeaAcceptanceTests.<>c__DisplayClass7_0.<TruncatedAddress_DoesNotThrow_AndReturnsFalse>b__0() in /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs:line 123
+[xUnit.net 00:00:00.22]          at Xunit.Record.Exception(Func`1 testCode) in /_/src/xunit.core/Record.cs:line 47
+[xUnit.net 00:00:00.22]       Stack Trace:
+[xUnit.net 00:00:00.22]         /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs(124,0): at Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(String line)
+[xUnit.net 00:00:00.22]            at InvokeStub_NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(Object, Span`1)
+[xUnit.net 00:00:00.22]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.22]     Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "$GPRM") [FAIL]
+[xUnit.net 00:00:00.22]       Assert.Null() Failure: Value is not null
+[xUnit.net 00:00:00.22]       Expected: null
+[xUnit.net 00:00:00.22]       Actual:   System.ArgumentOutOfRangeException: Index and length must refer to a location within the string. (Parameter 'length')
+[xUnit.net 00:00:00.22]          at System.String.ThrowSubstringArgumentOutOfRange(Int32 startIndex, Int32 length)
+[xUnit.net 00:00:00.22]          at System.String.Substring(Int32 startIndex, Int32 length)
+[xUnit.net 00:00:00.22]          at Mcis.Data.Vdr.NmeaParser.TryParse(String line, NmeaSentence& sentence, String& error) in /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Data/Vdr/NmeaParser.cs:line 217
+[xUnit.net 00:00:00.22]          at Mcis.Acceptance.W2.NmeaAcceptanceTests.<>c__DisplayClass7_0.<TruncatedAddress_DoesNotThrow_AndReturnsFalse>b__0() in /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs:line 123
+[xUnit.net 00:00:00.22]          at Xunit.Record.Exception(Func`1 testCode) in /_/src/xunit.core/Record.cs:line 47
+[xUnit.net 00:00:00.22]       Stack Trace:
+[xUnit.net 00:00:00.22]         /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs(124,0): at Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(String line)
+[xUnit.net 00:00:00.22]            at InvokeStub_NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(Object, Span`1)
+[xUnit.net 00:00:00.22]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.22]     Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "$GPR") [FAIL]
+[xUnit.net 00:00:00.22]       Assert.Null() Failure: Value is not null
+[xUnit.net 00:00:00.22]       Expected: null
+[xUnit.net 00:00:00.22]       Actual:   System.ArgumentOutOfRangeException: Index and length must refer to a location within the string. (Parameter 'length')
+[xUnit.net 00:00:00.22]          at System.String.ThrowSubstringArgumentOutOfRange(Int32 startIndex, Int32 length)
+[xUnit.net 00:00:00.22]          at System.String.Substring(Int32 startIndex, Int32 length)
+[xUnit.net 00:00:00.22]          at Mcis.Data.Vdr.NmeaParser.TryParse(String line, NmeaSentence& sentence, String& error) in /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Data/Vdr/NmeaParser.cs:line 217
+[xUnit.net 00:00:00.22]          at Mcis.Acceptance.W2.NmeaAcceptanceTests.<>c__DisplayClass7_0.<TruncatedAddress_DoesNotThrow_AndReturnsFalse>b__0() in /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs:line 123
+[xUnit.net 00:00:00.22]          at Xunit.Record.Exception(Func`1 testCode) in /_/src/xunit.core/Record.cs:line 47
+[xUnit.net 00:00:00.22]       Stack Trace:
+[xUnit.net 00:00:00.22]         /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs(124,0): at Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(String line)
+[xUnit.net 00:00:00.22]            at InvokeStub_NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(Object, Span`1)
+[xUnit.net 00:00:00.22]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "$AI") [< 1 ms]
+  Failed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "!AIVD") [< 1 ms]
+  Error Message:
+   Assert.Null() Failure: Value is not null
+Expected: null
+Actual:   System.ArgumentOutOfRangeException: Index and length must refer to a location within the string. (Parameter 'length')
+   at System.String.ThrowSubstringArgumentOutOfRange(Int32 startIndex, Int32 length)
+   at System.String.Substring(Int32 startIndex, Int32 length)
+   at Mcis.Data.Vdr.NmeaParser.TryParse(String line, NmeaSentence& sentence, String& error) in /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Data/Vdr/NmeaParser.cs:line 217
+   at Mcis.Acceptance.W2.NmeaAcceptanceTests.<>c__DisplayClass7_0.<TruncatedAddress_DoesNotThrow_AndReturnsFalse>b__0() in /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs:line 123
+   at Xunit.Record.Exception(Func`1 testCode) in /_/src/xunit.core/Record.cs:line 47
+  Stack Trace:
+     at Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(String line) in /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs:line 124
+   at InvokeStub_NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "$GPRM") [< 1 ms]
+  Error Message:
+   Assert.Null() Failure: Value is not null
+Expected: null
+Actual:   System.ArgumentOutOfRangeException: Index and length must refer to a location within the string. (Parameter 'length')
+   at System.String.ThrowSubstringArgumentOutOfRange(Int32 startIndex, Int32 length)
+   at System.String.Substring(Int32 startIndex, Int32 length)
+   at Mcis.Data.Vdr.NmeaParser.TryParse(String line, NmeaSentence& sentence, String& error) in /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Data/Vdr/NmeaParser.cs:line 217
+   at Mcis.Acceptance.W2.NmeaAcceptanceTests.<>c__DisplayClass7_0.<TruncatedAddress_DoesNotThrow_AndReturnsFalse>b__0() in /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs:line 123
+   at Xunit.Record.Exception(Func`1 testCode) in /_/src/xunit.core/Record.cs:line 47
+  Stack Trace:
+     at Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(String line) in /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs:line 124
+   at InvokeStub_NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "$GPR") [< 1 ms]
+  Error Message:
+   Assert.Null() Failure: Value is not null
+Expected: null
+Actual:   System.ArgumentOutOfRangeException: Index and length must refer to a location within the string. (Parameter 'length')
+   at System.String.ThrowSubstringArgumentOutOfRange(Int32 startIndex, Int32 length)
+   at System.String.Substring(Int32 startIndex, Int32 length)
+   at Mcis.Data.Vdr.NmeaParser.TryParse(String line, NmeaSentence& sentence, String& error) in /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Data/Vdr/NmeaParser.cs:line 217
+   at Mcis.Acceptance.W2.NmeaAcceptanceTests.<>c__DisplayClass7_0.<TruncatedAddress_DoesNotThrow_AndReturnsFalse>b__0() in /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs:line 123
+   at Xunit.Record.Exception(Func`1 testCode) in /_/src/xunit.core/Record.cs:line 47
+  Stack Trace:
+     at Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(String line) in /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs:line 124
+   at InvokeStub_NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.CompletelyMalformed_ReturnsFalse(line: "") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.CompletelyMalformed_ReturnsFalse(line: "$GP") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.CompletelyMalformed_ReturnsFalse(line: "no dollar sign") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Checksum_WrongValue_ParsesButMarkedInvalid [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.RmcWithNewDateAfterMidnight_UsesSentenceDate [< 1 ms]
+[xUnit.net 00:00:00.22]     Mcis.Acceptance.W2.NmeaAcceptanceTests.Importer_TruncatedAddressInFile_DoesNotAbortImport [FAIL]
+[xUnit.net 00:00:00.22]       Assert.Null() Failure: Value is not null
+[xUnit.net 00:00:00.22]       Expected: null
+[xUnit.net 00:00:00.22]       Actual:   System.ArgumentOutOfRangeException: Index and length must refer to a location within the string. (Parameter 'length')
+[xUnit.net 00:00:00.22]          at System.String.ThrowSubstringArgumentOutOfRange(Int32 startIndex, Int32 length)
+[xUnit.net 00:00:00.22]          at System.String.Substring(Int32 startIndex, Int32 length)
+[xUnit.net 00:00:00.22]          at Mcis.Data.Vdr.NmeaParser.TryParse(String line, NmeaSentence& sentence, String& error) in /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Data/Vdr/NmeaParser.cs:line 217
+[xUnit.net 00:00:00.22]          at Mcis.Data.Vdr.VdrNmeaImporter.Import(IEnumerable`1 lines, VdrImportOptions options) in /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Data/Vdr/VdrNmeaImporter.cs:line 56
+[xUnit.net 00:00:00.22]          at Mcis.Acceptance.W2.NmeaAcceptanceTests.<>c__DisplayClass8_0.<Importer_TruncatedAddressInFile_DoesNotAbortImport>b__0() in /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs:line 143
+[xUnit.net 00:00:00.22]          at Xunit.Record.Exception(Action testCode) in /_/src/xunit.core/Record.cs:line 25
+[xUnit.net 00:00:00.22]       Stack Trace:
+[xUnit.net 00:00:00.22]         /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs(150,0): at Mcis.Acceptance.W2.NmeaAcceptanceTests.Importer_TruncatedAddressInFile_DoesNotAbortImport()
+[xUnit.net 00:00:00.22]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.22]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.EmptyFields_DoNotThrow_AndSkipIncompleteSamples [< 1 ms]
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.Calibrator_ShiftsFiniteOffsetsOnly_LeavesNaNUnchanged [39 ms]
+  Failed Mcis.Acceptance.W2.NmeaAcceptanceTests.Importer_TruncatedAddressInFile_DoesNotAbortImport [< 1 ms]
+  Error Message:
+   Assert.Null() Failure: Value is not null
+Expected: null
+Actual:   System.ArgumentOutOfRangeException: Index and length must refer to a location within the string. (Parameter 'length')
+   at System.String.ThrowSubstringArgumentOutOfRange(Int32 startIndex, Int32 length)
+   at System.String.Substring(Int32 startIndex, Int32 length)
+   at Mcis.Data.Vdr.NmeaParser.TryParse(String line, NmeaSentence& sentence, String& error) in /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Data/Vdr/NmeaParser.cs:line 217
+   at Mcis.Data.Vdr.VdrNmeaImporter.Import(IEnumerable`1 lines, VdrImportOptions options) in /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Data/Vdr/VdrNmeaImporter.cs:line 56
+   at Mcis.Acceptance.W2.NmeaAcceptanceTests.<>c__DisplayClass8_0.<Importer_TruncatedAddressInFile_DoesNotAbortImport>b__0() in /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs:line 143
+   at Xunit.Record.Exception(Action testCode) in /_/src/xunit.core/Record.cs:line 25
+  Stack Trace:
+     at Mcis.Acceptance.W2.NmeaAcceptanceTests.Importer_TruncatedAddressInFile_DoesNotAbortImport() in /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs:line 150
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.OverlongLine_DoesNotThrow [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Checksum_Missing_IsNotValid [< 1 ms]
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.FictionalSamples_AreLabeledAndImportable [32 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.SupportedSentenceTypes_CanBeImported [2 ms]
+[xUnit.net 00:00:00.22]     Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.Median_OutlierMustNotZeroUncertaintyOrStayInCountUnremarked [FAIL]
+[xUnit.net 00:00:00.22]       离群锚点未剔除（AnchorCount=4）且不确定度为 0，会把 90s 残差掩盖为 0。
+[xUnit.net 00:00:00.22]       Stack Trace:
+[xUnit.net 00:00:00.22]         /workspace/maritime-sim-design/tests_acceptance/W2/ClockOffsetAcceptanceTests.cs(60,0): at Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.Median_OutlierMustNotZeroUncertaintyOrStayInCountUnremarked()
+[xUnit.net 00:00:00.22]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.22]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.22]     Mcis.Acceptance.W2.NmeaAcceptanceTests.TagBlock_InvalidChecksum_MustNotYieldTime [FAIL]
+[xUnit.net 00:00:00.22]       标签块校验和错误时不应采信 TagBlockTimeUtc，实际=05/18/2026 06:15:00 +00:00
+[xUnit.net 00:00:00.22]       Stack Trace:
+[xUnit.net 00:00:00.22]         /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs(95,0): at Mcis.Acceptance.W2.NmeaAcceptanceTests.TagBlock_InvalidChecksum_MustNotYieldTime()
+[xUnit.net 00:00:00.22]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.22]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.Median_OutlierMustNotZeroUncertaintyOrStayInCountUnremarked [6 ms]
+  Error Message:
+   离群锚点未剔除（AnchorCount=4）且不确定度为 0，会把 90s 残差掩盖为 0。
+  Stack Trace:
+     at Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.Median_OutlierMustNotZeroUncertaintyOrStayInCountUnremarked() in /workspace/maritime-sim-design/tests_acceptance/W2/ClockOffsetAcceptanceTests.cs:line 60
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.NoCommonAnchors_ReturnsNaNAndZeroCount [1 ms]
+  Failed Mcis.Acceptance.W2.NmeaAcceptanceTests.TagBlock_InvalidChecksum_MustNotYieldTime [3 ms]
+  Error Message:
+   标签块校验和错误时不应采信 TagBlockTimeUtc，实际=05/18/2026 06:15:00 +00:00
+  Stack Trace:
+     at Mcis.Acceptance.W2.NmeaAcceptanceTests.TagBlock_InvalidChecksum_MustNotYieldTime() in /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs:line 95
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.LeastSquares_MatchesMeanAndStandardError [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Checksum_ValidUppercase_IsAccepted [< 1 ms]
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.Median_ResistsSingleOutlier_OffsetStaysAtCluster [< 1 ms]
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.MissingReference_Fails [< 1 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.Heading_EqualToThreshold_IsNotConflict_SlightlyOverIs [52 ms]
+[xUnit.net 00:00:00.23]     Mcis.Acceptance.W2.NmeaAcceptanceTests.TagBlock_MissingChecksum_MustNotYieldTime [FAIL]
+[xUnit.net 00:00:00.23]       标签块缺少自身校验和时不应采信 TagBlockTimeUtc，实际=05/18/2026 06:15:00 +00:00
+[xUnit.net 00:00:00.23]       Stack Trace:
+[xUnit.net 00:00:00.23]         /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs(108,0): at Mcis.Acceptance.W2.NmeaAcceptanceTests.TagBlock_MissingChecksum_MustNotYieldTime()
+[xUnit.net 00:00:00.23]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.23]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.23]     Mcis.Acceptance.W2.ConflictAcceptanceTests.Speed_EqualToThreshold_IsNotConflict [FAIL]
+[xUnit.net 00:00:00.23]       Assert.Empty() Failure: Collection was not empty
+[xUnit.net 00:00:00.23]       Collection: [C-01 0.000s..10.000s SpeedOverGround: A 12.000kn vs B 12.300kn，差 0.300kn > 0.3kn（含未校准来源：A、B，差异可能由钟差引起）]
+[xUnit.net 00:00:00.23]       Stack Trace:
+[xUnit.net 00:00:00.23]         /workspace/maritime-sim-design/tests_acceptance/W2/ConflictAcceptanceTests.cs(27,0): at Mcis.Acceptance.W2.ConflictAcceptanceTests.Speed_EqualToThreshold_IsNotConflict()
+[xUnit.net 00:00:00.23]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.23]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.23]     Mcis.Acceptance.W2.NmeaAcceptanceTests.GgaAfterMidnight_RollsDateForward [FAIL]
+[xUnit.net 00:00:00.23]       跨午夜 GGA 应记为 2026-05-19 00:00:10 UTC（相对纪元 64810.000 s），实际样本时刻=[-21590.000, 64790.000]。
+[xUnit.net 00:00:00.23]       Stack Trace:
+[xUnit.net 00:00:00.23]         /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs(178,0): at Mcis.Acceptance.W2.NmeaAcceptanceTests.GgaAfterMidnight_RollsDateForward()
+[xUnit.net 00:00:00.23]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.23]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Importer_DropsBadAndMissingChecksum_ByDefault [5 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.GgaWithoutDateOrDefault_WritesDiagnosticAndDrops [2 ms]
+  Failed Mcis.Acceptance.W2.NmeaAcceptanceTests.TagBlock_MissingChecksum_MustNotYieldTime [< 1 ms]
+  Error Message:
+   标签块缺少自身校验和时不应采信 TagBlockTimeUtc，实际=05/18/2026 06:15:00 +00:00
+  Stack Trace:
+     at Mcis.Acceptance.W2.NmeaAcceptanceTests.TagBlock_MissingChecksum_MustNotYieldTime() in /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs:line 108
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.UnknownSentenceType_IsReportedOnce [< 1 ms]
+  Failed Mcis.Acceptance.W2.ConflictAcceptanceTests.Speed_EqualToThreshold_IsNotConflict [5 ms]
+  Error Message:
+   Assert.Empty() Failure: Collection was not empty
+Collection: [C-01 0.000s..10.000s SpeedOverGround: A 12.000kn vs B 12.300kn，差 0.300kn > 0.3kn（含未校准来源：A、B，差异可能由钟差引起）]
+  Stack Trace:
+     at Mcis.Acceptance.W2.ConflictAcceptanceTests.Speed_EqualToThreshold_IsNotConflict() in /workspace/maritime-sim-design/tests_acceptance/W2/ConflictAcceptanceTests.cs:line 27
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.Speed_SlightlyOverThreshold_IsConflict [< 1 ms]
+  Failed Mcis.Acceptance.W2.NmeaAcceptanceTests.GgaAfterMidnight_RollsDateForward [3 ms]
+  Error Message:
+   跨午夜 GGA 应记为 2026-05-19 00:00:10 UTC（相对纪元 64810.000 s），实际样本时刻=[-21590.000, 64790.000]。
+  Stack Trace:
+     at Mcis.Acceptance.W2.NmeaAcceptanceTests.GgaAfterMidnight_RollsDateForward() in /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs:line 178
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TagBlock_ValidChecksum_YieldsUnixTime [< 1 ms]
+[xUnit.net 00:00:00.23]     Mcis.Acceptance.W2.ConflictAcceptanceTests.DefaultThresholds_AreNotASharedMutableSingleton [FAIL]
+[xUnit.net 00:00:00.23]       ConflictThresholds.Default 返回共享可变单例，调用方改阈值会污染后续 Detect(null) 结果。
+[xUnit.net 00:00:00.23]       Stack Trace:
+[xUnit.net 00:00:00.23]         /workspace/maritime-sim-design/tests_acceptance/W2/ConflictAcceptanceTests.cs(202,0): at Mcis.Acceptance.W2.ConflictAcceptanceTests.DefaultThresholds_AreNotASharedMutableSingleton()
+[xUnit.net 00:00:00.23]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.23]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.23]     Mcis.Acceptance.W2.ConflictAcceptanceTests.TimelineConflict_ExposesContractAndScreenshotFields [FAIL]
+[xUnit.net 00:00:00.23]       TimelineConflict 缺少合同必填 caseId，无法写入 analysis/time-alignment.json。
+[xUnit.net 00:00:00.23]       Stack Trace:
+[xUnit.net 00:00:00.23]         /workspace/maritime-sim-design/tests_acceptance/W2/ConflictAcceptanceTests.cs(186,0): at Mcis.Acceptance.W2.ConflictAcceptanceTests.TimelineConflict_ExposesContractAndScreenshotFields()
+[xUnit.net 00:00:00.23]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.23]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.23]   Finished:    W2.Acceptance
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Checksum_ValidLowercase_IsAccepted [< 1 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.ConflictIds_MatchContractPattern_AreUniqueAndContiguous [5 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.MinDuration_EqualToLimit_IsKept_SlightlyUnderIsDropped [< 1 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.Heading_AcrossZero_UsesShortestArcForThreshold [< 1 ms]
+  Failed Mcis.Acceptance.W2.ConflictAcceptanceTests.DefaultThresholds_AreNotASharedMutableSingleton [< 1 ms]
+  Error Message:
+   ConflictThresholds.Default 返回共享可变单例，调用方改阈值会污染后续 Detect(null) 结果。
+  Stack Trace:
+     at Mcis.Acceptance.W2.ConflictAcceptanceTests.DefaultThresholds_AreNotASharedMutableSingleton() in /workspace/maritime-sim-design/tests_acceptance/W2/ConflictAcceptanceTests.cs:line 202
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.ConflictIds_ContinueToTwoDigitsBeyondNine [1 ms]
+  Failed Mcis.Acceptance.W2.ConflictAcceptanceTests.TimelineConflict_ExposesContractAndScreenshotFields [< 1 ms]
+  Error Message:
+   TimelineConflict 缺少合同必填 caseId，无法写入 analysis/time-alignment.json。
+  Stack Trace:
+     at Mcis.Acceptance.W2.ConflictAcceptanceTests.TimelineConflict_ExposesContractAndScreenshotFields() in /workspace/maritime-sim-design/tests_acceptance/W2/ConflictAcceptanceTests.cs:line 186
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.ImportedEightTracks_CanBeQueriedOnSharedTimeline [26 ms]
+
+Test Run Failed.
+Total tests: 54
+     Passed: 42
+     Failed: 12
+ Total time: 0.6598 Seconds
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.
+       _VSTestConsole:
+         MSB4181: The "VSTestTask" task returned false but did not log an error.
+     1>Done Building Project "/workspace/maritime-sim-design/tests_acceptance/W2/W2.Acceptance.csproj" (VSTest target(s)) -- FAILED.
+
+Build FAILED.
+
+       "/workspace/maritime-sim-design/tests_acceptance/W2/W2.Acceptance.csproj" (VSTest target) (1:7) ->
+       "/workspace/maritime-sim-design/tests_acceptance/W2/W2.Acceptance.csproj" (default target) (1:8) ->
+       (CoreCompile target) -> 
+         /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs(214,13): warning xUnit2029: Do not use Assert.Empty to check if a value does not exist in a collection. Use Assert.DoesNotContain instead. (https://xunit.net/xunit.analyzers/rules/xUnit2029) [/workspace/maritime-sim-design/tests_acceptance/W2/W2.Acceptance.csproj]
+         /workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs(274,13): warning xUnit2031: Do not use a Where clause to filter before calling Assert.Single. Use the overload of Assert.Single that accepts a filtering function. (https://xunit.net/xunit.analyzers/rules/xUnit2031) [/workspace/maritime-sim-design/tests_acceptance/W2/W2.Acceptance.csproj]
+
+    2 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.29

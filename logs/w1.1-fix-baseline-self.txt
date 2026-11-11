@@ -1,0 +1,1 @@
+Passed!  - Failed:     0, Passed:   117, Skipped:     0, Total:   117, Duration: 99 ms - Mcis.W1.Colreg.Tests.dll (net8.0)

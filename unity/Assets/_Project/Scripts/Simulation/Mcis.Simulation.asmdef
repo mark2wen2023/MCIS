@@ -1,0 +1,17 @@
+{
+    "name": "Mcis.Simulation",
+    "rootNamespace": "Mcis.Simulation",
+    "references": [
+        "Mcis.Core",
+        "Mcis.Domain"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

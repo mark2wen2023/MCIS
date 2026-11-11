@@ -1,0 +1,208 @@
+      <!-- ==================== 9. #evidence 证据中心 ==================== -->
+      <section class="screen" id="screen-evidence" data-screen="evidence">
+        <div class="screen-header">
+          <div class="screen-header-left">
+            <h1>证据中心 · VDR 多轨同步回放 <span class="badge badge-amber">示例数据（虚构）</span> <span class="p6-tag">P6+ 国际对标 ①②④</span></h1>
+            <p>对标 IMO MSC.255(84) 与 MAIB/NTSB 做法：VDR 音频/雷达/ECDIS/车钟/舵角与 AIS 同一时间轴回放；证据保管链（来源·提取人·SHA-256·访问记录）；多源时钟对齐与冲突自动标注。</p>
+          </div>
+          <div class="screen-actions">
+            <button class="btn">📥 导入 VDR / S-VDR 数据包</button>
+            <button class="btn btn-primary">⇄ 发送当前时刻到主仿真</button>
+          </div>
+        </div>
+
+        <div class="glass-panel p6-panel">
+          <div class="panel-header">
+            <div class="panel-title">VDR 多轨同步时间轴 · Mary 轮 VDR + Lily 轮 VDR + VTS 岸基 AIS（统一 UTC+8，已做钟差校正）</div>
+            <div class="p6-toolbar">
+              <button class="btn btn-sm">⏮</button><button class="btn btn-sm btn-primary">▶ 播放</button><button class="btn btn-sm">⏭</button>
+              <span class="p6-seg"><span>×1</span><span class="on">×4</span><span>×16</span></span>
+              <span class="mono" style="color:var(--cyan);font-size:13px;">14:22:15.0</span>
+              <span class="st st-ok">8/8 轨已同步</span>
+              <span class="badge badge-amber">示例数据（虚构）</span>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="p6-svgbox" id="ev-vdr-svg"></div>
+          </div>
+        </div>
+
+        <div class="p6-row" style="grid-template-columns: 1.32fr 1fr;">
+          <div class="glass-panel p6-panel">
+            <div class="panel-header">
+              <div class="panel-title">证据保管链 (Chain of Custody)</div>
+              <div class="p6-toolbar"><span class="panel-subtitle">写入 audit/custody.jsonl · 只追加</span><button class="btn btn-sm">🔒 全部重新校验哈希</button></div>
+            </div>
+            <div class="panel-body" style="padding:6px 10px;">
+              <table class="p6-table">
+                <thead><tr><th>编号</th><th>证据</th><th>来源 / 提取人</th><th>提取时间</th><th>SHA-256</th><th>访问</th><th>状态</th></tr></thead>
+                <tbody>
+                  <tr class="sel"><td class="mono">EV-001</td><td>Mary 轮 VDR 数据包（12 h）</td><td>Mary 轮 VDR 舱 / 调查员 A</td><td class="mono">05-18 18:40</td><td class="mono">9f3a…c21e</td><td class="mono">7 次</td><td><span class="st st-ok">✓ 一致</span></td></tr>
+                  <tr><td class="mono">EV-002</td><td>Lily 轮 S-VDR 数据包</td><td>救助现场 / 调查员 B</td><td class="mono">05-19 10:05</td><td class="mono">41be…07d9</td><td class="mono">4 次</td><td><span class="st st-ok">✓ 一致</span></td></tr>
+                  <tr><td class="mono">EV-003</td><td>VTS 岸基 AIS 记录</td><td>星屿 VTS 中心 / 调取函</td><td class="mono">05-18 20:12</td><td class="mono">d07c…9a40</td><td class="mono">5 次</td><td><span class="st st-ok">✓ 一致</span></td></tr>
+                  <tr><td class="mono">EV-004</td><td>Mary 轮 ECDIS 截屏 ×38</td><td>Mary 轮驾驶台 / 调查员 A</td><td class="mono">05-18 19:02</td><td class="mono">7a21…e6f3</td><td class="mono">3 次</td><td><span class="st st-ok">✓ 一致</span></td></tr>
+                  <tr><td class="mono">EV-005</td><td>车钟/舵角记录纸扫描</td><td>Mary 轮机舱 / 调查员 C</td><td class="mono">05-19 08:30</td><td class="mono">b5e0…113a</td><td class="mono">2 次</td><td><span class="st st-warn">需复核纸本</span></td></tr>
+                  <tr><td class="mono">EV-006</td><td>询问笔录 IR-01 ~ IR-06</td><td>询问室 / 调查员 A、B</td><td class="mono">05-19 ~ 05-21</td><td class="mono">c88d…5b72</td><td class="mono">9 次</td><td><span class="st st-info">保密 · 受限</span></td></tr>
+                </tbody>
+              </table>
+              <div class="p6-note" style="margin-top:6px;">EV-001 最近访问：2026-05-22 15:31 调查员 B（只读回放）· 原件封存于 raw/，派生数据位于 derived/，任何修改都会生成新哈希版本。</div>
+            </div>
+          </div>
+
+          <div class="glass-panel p6-panel">
+            <div class="panel-header">
+              <div class="panel-title">多源时间对齐与冲突标注</div>
+              <span class="panel-subtitle">基准：GPS/UTC（Lily S-VDR）</span>
+            </div>
+            <div class="panel-body" style="display:flex;flex-direction:column;gap:8px;padding:8px 12px;">
+              <div class="p6-svgbox" id="ev-clock-svg"></div>
+              <table class="p6-table">
+                <thead><tr><th>冲突</th><th>内容</th><th>差值</th><th>处理</th></tr></thead>
+                <tbody>
+                  <tr><td class="mono">C-01</td><td>Mary 左舵 20°：VDR 14:22:15 ／ 笔录称“14:23 才转”</td><td class="mono" style="color:var(--red);">45 s</td><td><span class="st st-bad">待询问核实</span></td></tr>
+                  <tr><td class="mono">C-02</td><td>车钟记录纸停车时刻比 VDR 晚</td><td class="mono" style="color:var(--amber);">65 s</td><td><span class="st st-ok">钟差已校正</span></td></tr>
+                  <tr><td class="mono">C-03</td><td>Lily 航速：ECDIS 9.8 kn ／ AIS 10.6 kn</td><td class="mono" style="color:var(--amber);">0.8 kn</td><td><span class="st st-warn">标注·采信 AIS</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 10. #interview 询问笔录 ==================== -->
+      <section class="screen" id="screen-interview" data-screen="interview">
+        <div class="screen-header">
+          <div class="screen-header-left">
+            <h1>询问笔录管理与数据交叉比对 <span class="badge badge-amber">示例数据（虚构）</span> <span class="p6-tag">P6+ 国际对标 ③</span></h1>
+            <p>记录受询问人、角色、问答原文；智能体抽取“时间 / 位置 / 操作”陈述，与 VDR、AIS 自动比对，矛盾处高亮。抽取结果为草稿，须调查员逐条确认后才进入分析。</p>
+          </div>
+          <div class="screen-actions">
+            <button class="btn">🎙 录音转写导入</button>
+            <button class="btn">📄 PDF 笔录导入</button>
+            <button class="btn btn-primary">＋ 新建询问</button>
+          </div>
+        </div>
+
+        <div class="p6-row" style="grid-template-columns: 236px 1fr 404px; flex:1;">
+          <div class="glass-panel p6-panel">
+            <div class="panel-header"><div class="panel-title">受询问人员</div><span class="panel-subtitle">6 份笔录</span></div>
+            <div class="panel-body" style="display:flex;flex-direction:column;gap:7px;">
+              <div class="p6-card"><div class="p6-card-title">Mary 轮 船长 <span class="st st-warn">1 处矛盾</span></div><div class="p6-card-sub">IR-01 · 05-19 14:00 · 52 min</div></div>
+              <div class="p6-card sel"><div class="p6-card-title">Mary 轮 二副 (OOW) <span class="st st-bad">3 处矛盾</span></div><div class="p6-card-sub">IR-03 · 05-19 09:30 · 68 min · 已签字</div></div>
+              <div class="p6-card"><div class="p6-card-title">Mary 轮 舵工 <span class="st st-ok">一致</span></div><div class="p6-card-sub">IR-04 · 05-20 10:10 · 35 min</div></div>
+              <div class="p6-card"><div class="p6-card-title">Lily 轮 船长 <span class="st st-ok">一致</span></div><div class="p6-card-sub">IR-02 · 05-19 16:20 · 47 min</div></div>
+              <div class="p6-card"><div class="p6-card-title">Lily 轮 大副（值班） <span class="st st-warn">1 处矛盾</span></div><div class="p6-card-sub">IR-05 · 05-20 15:00 · 41 min</div></div>
+              <div class="p6-card"><div class="p6-card-title">星屿 VTS 值班员 <span class="st st-ok">一致</span></div><div class="p6-card-sub">IR-06 · 05-21 09:00 · 29 min</div></div>
+              <div class="p6-note" style="margin-top:auto;">人物均为虚构演示角色。笔录属 MSC.255(84) 第 23 章保密资料，默认仅调查组可见。</div>
+            </div>
+          </div>
+
+          <div class="glass-panel p6-panel">
+            <div class="panel-header">
+              <div class="panel-title">IR-03 · Mary 轮二副询问笔录（节选）</div>
+              <span class="badge badge-amber">虚构演示</span>
+            </div>
+            <div class="panel-body" style="overflow:hidden;">
+              <div class="p6-note mono" style="margin-bottom:6px;">询问人 调查员 A · 记录人 调查员 B · 地点 星屿海事局询问室 · 录音 68:12 · SHA-256 c88d…5b72</div>
+              <div class="p6-legend" style="margin-bottom:8px;"><span><i style="background:var(--cyan)"></i>时间陈述</span><span><i style="background:var(--purple)"></i>位置陈述</span><span><i style="background:var(--amber)"></i>操作陈述</span><span><i style="background:var(--red)"></i>与数据矛盾</span></div>
+              <div class="qa">
+                <div class="q"><b>问</b>你什么时候第一次在雷达上看到 Lily 轮？</div>
+                <div class="a"><b>答</b>大概 <span class="hl-t">14:17 左右</span>，在 <span class="hl-p">3 号浮标北面</span>，距离差不多 <span class="hl-x">3 海里</span>，当时看它是出港的。</div>
+                <div class="q"><b>问</b>当时能见度怎么样？你有没有减速？</div>
+                <div class="a"><b>答</b>有雾，能见度大约 1.5 海里。我 <span class="hl-a">把车钟拉到了半速</span>，<span class="hl-t">14:19 前后</span>。</div>
+                <div class="q"><b>问</b>两船距离接近时你采取了什么行动？</div>
+                <div class="a"><b>答</b>我觉得它会从我右边过，就 <span class="hl-x">在 14:23 才开始左舵</span>，<span class="hl-a">左舵 20 度</span>，同时 <span class="hl-x">鸣了一长声</span>。</div>
+                <div class="q"><b>问</b>当时船长在驾驶台吗？</div>
+                <div class="a"><b>答</b>船长 <span class="hl-t">14:23 半</span> 才上来，之前在房间，我 <span class="hl-a">没有叫他</span>。</div>
+                <div class="q"><b>问</b>你和 Lily 轮或 VTS 有没有 VHF 联系？</div>
+                <div class="a"><b>答</b>VTS 在 <span class="hl-t">14:20</span> 叫过我们，我 <span class="hl-a">回答了“保持航向”</span>，没有直接呼叫 Lily。</div>
+                <div class="q"><b>问</b>你上一次连续休息是什么时候，睡了多久？</div>
+                <div class="a"><b>答</b>前一天下午一直在装卸，晚上 <span class="hl-t">22 点</span> 才下来，<span class="hl-t">0 点</span> 又接班，中间大概 <span class="hl-a">睡了不到两个小时</span>。</div>
+                <div class="q"><b>问</b>碰撞前你有没有用 ARPA 录取 Lily 轮？</div>
+                <div class="a"><b>答</b>录取了，但 <span class="hl-a">矢量设成了 3 分钟</span>，报警响过一次我 <span class="hl-a">按掉了</span>。</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-panel p6-panel">
+            <div class="panel-header"><div class="panel-title">陈述 ⇄ 数据 交叉比对</div><span class="panel-subtitle">7 条陈述 · 3 条矛盾</span></div>
+            <div class="panel-body" style="display:flex;flex-direction:column;gap:8px;">
+              <div class="p6-agent">◆ 笔录智能体抽取 · 每条附原文出处（IR-03 第 x 问）· 草稿状态，待调查员确认</div>
+              <table class="p6-table">
+                <thead><tr><th>陈述</th><th>数据 (来源)</th><th>结论</th></tr></thead>
+                <tbody>
+                  <tr><td>首次发现距离 3 nm</td><td class="mono">5.1 nm (AIS 14:17)</td><td><span class="st st-bad">矛盾</span></td></tr>
+                  <tr><td>14:19 车钟半速</td><td class="mono">14:19:08 (VDR)</td><td><span class="st st-ok">一致</span></td></tr>
+                  <tr><td>14:23 才开始左舵</td><td class="mono">14:22:15 (VDR 舵角)</td><td><span class="st st-bad">矛盾</span></td></tr>
+                  <tr><td>左舵 20°</td><td class="mono">左 20° (VDR)</td><td><span class="st st-ok">一致</span></td></tr>
+                  <tr><td>鸣放一长声</td><td class="mono">无声号 (VDR 音频)</td><td><span class="st st-bad">矛盾</span></td></tr>
+                  <tr><td>VTS 14:20 呼叫</td><td class="mono">14:20:12 (VHF16)</td><td><span class="st st-ok">一致</span></td></tr>
+                  <tr><td>船长 14:23:30 上驾驶台</td><td class="mono">音频 14:23:34</td><td><span class="st st-ok">一致</span></td></tr>
+                </tbody>
+              </table>
+              <div class="p6-svgbox" id="iv-timeline-svg"></div>
+              <div class="p6-toolbar" style="justify-content:flex-end;margin-top:auto;">
+                <button class="btn btn-sm">✕ 驳回</button><button class="btn btn-sm">✎ 修改</button><button class="btn btn-sm btn-primary">✓ 确认并写入审计</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 11. #colreg 避碰规则分析 ==================== -->
+      <section class="screen" id="screen-colreg" data-screen="colreg">
+        <div class="screen-header">
+          <div class="screen-header-left">
+            <h1>避碰规则逐条对照 (COLREGs 1972) <span class="badge badge-amber">示例数据（虚构）</span> <span class="p6-tag">P6+ 国际对标 ⑥</span></h1>
+            <p>按时间段自动判定会遇局面（对遇 / 交叉 / 追越 / 狭水道）、让路船与直航船、各时刻“应采取的行动”与“实际行动”的偏差。仅作安全调查技术分析，不作责任认定。</p>
+          </div>
+          <div class="screen-actions">
+            <span class="p6-seg"><span class="on">Lily 视角</span><span>Mary 视角</span><span>双船</span></span>
+            <button class="btn btn-primary">📑 生成规则分析章节草稿</button>
+          </div>
+        </div>
+
+        <div class="glass-panel p6-panel">
+          <div class="panel-header"><div class="panel-title">会遇局面时间带 · 让路/直航责任 · DCPA 演变（14:15 – 14:24）</div><span class="badge badge-amber">示例数据（虚构）</span></div>
+          <div class="panel-body"><div class="p6-svgbox" id="cr-band-svg"></div></div>
+        </div>
+
+        <div class="p6-row" style="grid-template-columns: 1.35fr 1fr;">
+          <div class="glass-panel p6-panel">
+            <div class="panel-header"><div class="panel-title">规则逐条对照</div><span class="panel-subtitle">✓ 符合 · △ 部分 · ✕ 未符合 · — 不适用</span></div>
+            <div class="panel-body" style="padding:4px 10px;">
+              <table class="p6-table">
+                <thead><tr><th>规则</th><th>要点</th><th>Lily</th><th>Mary</th><th>证据</th></tr></thead>
+                <tbody>
+                  <tr><td class="mono">R5</td><td>正规瞭望（视觉+雷达+听觉）</td><td><span class="st st-warn">△</span></td><td><span class="st st-bad">✕</span></td><td class="mono">EV-001 IR-03</td></tr>
+                  <tr><td class="mono">R6</td><td>安全航速（能见度 1.5 nm）</td><td><span class="st st-ok">✓</span></td><td><span class="st st-warn">△</span></td><td class="mono">EV-003</td></tr>
+                  <tr><td class="mono">R7</td><td>判断碰撞危险（ARPA 系统观测）</td><td><span class="st st-ok">✓</span></td><td><span class="st st-bad">✕</span></td><td class="mono">EV-001</td></tr>
+                  <tr><td class="mono">R8</td><td>及早、大幅度的避让行动</td><td><span class="st st-warn">△</span></td><td><span class="st st-bad">✕</span></td><td class="mono">EV-001/002</td></tr>
+                  <tr class="sel"><td class="mono">R9</td><td>狭水道靠右航行</td><td><span class="st st-ok">✓</span></td><td><span class="st st-bad">✕</span></td><td class="mono">EV-003</td></tr>
+                  <tr><td class="mono">R14</td><td>对遇局面：各自向右转向</td><td><span class="st st-ok">✓</span></td><td><span class="st st-bad">✕</span></td><td class="mono">EV-001</td></tr>
+                  <tr><td class="mono">R17/2(b)</td><td>紧迫危险时的最有助避碰行动</td><td><span class="st st-ok">✓</span></td><td><span class="st st-warn">△</span></td><td class="mono">EV-002</td></tr>
+                  <tr><td class="mono">R19</td><td>能见度不良中的行动</td><td><span class="st st-warn">△</span></td><td><span class="st st-bad">✕</span></td><td class="mono">EV-001</td></tr>
+                  <tr><td class="mono">R34/35</td><td>操纵声号 / 雾号</td><td><span class="st st-warn">△</span></td><td><span class="st st-bad">✕</span></td><td class="mono">VDR 音频</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="glass-panel p6-panel">
+            <div class="panel-header"><div class="panel-title">应采取 vs 实际行动 · Mary 轮</div><span class="panel-subtitle">对遇段 14:18:30 起</span></div>
+            <div class="panel-body" style="padding:4px 10px;">
+              <table class="p6-table">
+                <thead><tr><th>时刻</th><th>规则要求</th><th>实际</th><th></th></tr></thead>
+                <tbody>
+                  <tr><td class="mono">14:18:30</td><td>靠航道右侧 (R9)</td><td>偏航道中线左 40 m</td><td><span class="st st-bad">偏差</span></td></tr>
+                  <tr><td class="mono">14:19:00</td><td>降至安全航速 (R6/19)</td><td>半速 12.0 → 9.5 kn</td><td><span class="st st-warn">不足</span></td></tr>
+                  <tr><td class="mono">14:20:40</td><td>大幅右转 (R14/8)</td><td>保持航向 008°</td><td><span class="st st-bad">未行动</span></td></tr>
+                  <tr><td class="mono">14:21:30</td><td>右转并鸣一短声 (R34)</td><td>无声号</td><td><span class="st st-bad">未行动</span></td></tr>
+                  <tr><td class="mono">14:22:15</td><td>不得向左转 (R14(a))</td><td>左舵 20°</td><td><span class="st st-bad">违反</span></td></tr>
+                  <tr><td class="mono">14:23:00</td><td>停车 / 全速倒车 (R8(e))</td><td>14:23:20 停车</td><td><span class="st st-warn">迟</span></td></tr>
+                </tbody>
+              </table>
+              <div class="p6-agent" style="margin-top:8px;">◆ 规则引擎 + 智能体草稿：局面判定基于 AIS/VDR 相对方位与航向差（对遇 ±6°）· 待调查员确认</div>
+            </div>
+          </div>
+        </div>
+      </section>

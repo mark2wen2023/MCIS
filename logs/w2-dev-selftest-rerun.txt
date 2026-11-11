@@ -1,0 +1,170 @@
+Build started 11/11/2026 18:53:04.
+     1>Project "/workspace/maritime-sim-design/unity/Tests_W2_Vdr/Tests_W2_Vdr.csproj" on node 1 (Restore target(s)).
+     1>_GetAllRestoreProjectPathItems:
+         Determining projects to restore...
+       Restore:
+         X.509 certificate chain validation will use the fallback certificate bundle at '/home/box/.dotnet/sdk/8.0.428/trustedroots/codesignctl.pem'.
+         X.509 certificate chain validation will use the fallback certificate bundle at '/home/box/.dotnet/sdk/8.0.428/trustedroots/timestampctl.pem'.
+         Assets file has not changed. Skipping assets file writing. Path: /workspace/maritime-sim-design/unity/Tests_W2_Vdr/obj/project.assets.json
+         Restored /workspace/maritime-sim-design/unity/Tests_W2_Vdr/Tests_W2_Vdr.csproj (in 20 ms).
+         
+         NuGet Config files used:
+             /home/box/.nuget/NuGet/NuGet.Config
+         
+         Feeds used:
+             https://api.nuget.org/v3/index.json
+         All projects are up-to-date for restore.
+     1>Done Building Project "/workspace/maritime-sim-design/unity/Tests_W2_Vdr/Tests_W2_Vdr.csproj" (Restore target(s)).
+   1:7>Project "/workspace/maritime-sim-design/unity/Tests_W2_Vdr/Tests_W2_Vdr.csproj" on node 1 (VSTest target(s)).
+     1>BuildProject:
+         Build started, please wait...
+   1:7>Project "/workspace/maritime-sim-design/unity/Tests_W2_Vdr/Tests_W2_Vdr.csproj" (1:7) is building "/workspace/maritime-sim-design/unity/Tests_W2_Vdr/Tests_W2_Vdr.csproj" (1:8) on node 1 (default targets).
+     1>GenerateTargetFrameworkMonikerAttribute:
+       Skipping target "GenerateTargetFrameworkMonikerAttribute" because all output files are up-to-date with respect to the input files.
+       CoreGenerateAssemblyInfo:
+       Skipping target "CoreGenerateAssemblyInfo" because all output files are up-to-date with respect to the input files.
+       _GenerateSourceLinkFile:
+         Source Link is empty, file 'obj/Debug/net8.0/Tests_W2_Vdr.sourcelink.json' does not exist.
+       CoreCompile:
+       Skipping target "CoreCompile" because all output files are up-to-date with respect to the input files.
+       _CopyOutOfDateSourceItemsToOutputDirectory:
+       Skipping target "_CopyOutOfDateSourceItemsToOutputDirectory" because all output files are up-to-date with respect to the input files.
+       GenerateBuildDependencyFile:
+       Skipping target "GenerateBuildDependencyFile" because all output files are up-to-date with respect to the input files.
+       GenerateBuildRuntimeConfigurationFiles:
+       Skipping target "GenerateBuildRuntimeConfigurationFiles" because all output files are up-to-date with respect to the input files.
+       CopyFilesToOutputDirectory:
+         Tests_W2_Vdr -> /workspace/maritime-sim-design/unity/Tests_W2_Vdr/bin/Debug/net8.0/Tests_W2_Vdr.dll
+     1>Done Building Project "/workspace/maritime-sim-design/unity/Tests_W2_Vdr/Tests_W2_Vdr.csproj" (default targets).
+     1>BuildProject:
+         Build completed.
+         
+Test run for /workspace/maritime-sim-design/unity/Tests_W2_Vdr/bin/Debug/net8.0/Tests_W2_Vdr.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:00.05]   Discovering: Tests_W2_Vdr
+[xUnit.net 00:00:00.09]   Discovered:  Tests_W2_Vdr
+[xUnit.net 00:00:00.10]   Starting:    Tests_W2_Vdr
+  Passed Mcis.Tests.W2.NmeaParserTests.AisBangSentence_ParsesAsVdm [10 ms]
+  Passed Mcis.Tests.W2.MultiTrackTimelineTests.Range_IsUnionOfTracks [12 ms]
+  Passed Mcis.Tests.W2.ClockOffsetTests.Result_ReferenceFirst_ThenOrdinal [16 ms]
+  Passed Mcis.Tests.W2.ClockOffsetTests.Median_SingleAnchor_UncertaintyIsNaN [< 1 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.UtcTime_Invalid_ReturnsFalse(value: "256000") [< 1 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.UtcTime_Invalid_ReturnsFalse(value: "") [< 1 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.UtcTime_Invalid_ReturnsFalse(value: "126099") [< 1 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.UtcTime_Invalid_ReturnsFalse(value: "12") [< 1 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.LatLon_ParsesHemispheres(value: "2606.2742", hemi: "S", isLat: True, expected: -26.104569999999999) [< 1 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.LatLon_ParsesHemispheres(value: "2606.2742", hemi: "N", isLat: True, expected: 26.104569999999999) [< 1 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.LatLon_ParsesHemispheres(value: "01131.0000", hemi: "E", isLat: False, expected: 11.5166667) [< 1 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.LatLon_ParsesHemispheres(value: "01131.0000", hemi: "W", isLat: False, expected: -11.5166667) [< 1 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.Malformed_ReturnsFalse(line: "no dollar sign") [< 1 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.Malformed_ReturnsFalse(line: "$GP") [< 1 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.Malformed_ReturnsFalse(line: "") [< 1 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.Checksum_MissingChecksum_IsNotValid [< 1 ms]
+  Passed Mcis.Tests.W2.CsvImporterTests.Import_ScaleAndOffset_Applied [19 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.TagBlock_ParsesUnixSeconds [1 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.LatLon_InvalidInput_ReturnsFalse(value: "", hemi: "N", isLat: True) [< 1 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.LatLon_InvalidInput_ReturnsFalse(value: "2606.2742", hemi: "X", isLat: True) [< 1 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.LatLon_InvalidInput_ReturnsFalse(value: "abcd", hemi: "N", isLat: True) [< 1 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.LatLon_InvalidInput_ReturnsFalse(value: "2606.2742", hemi: "", isLat: True) [< 1 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.LogPrefix_CommaSeparated_ParsesUtc [< 1 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.UtcTime_ParsesWithFraction [< 1 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.Checksum_ValidSentence_IsValid [< 1 ms]
+  Passed Mcis.Tests.W2.MultiTrackTimelineTests.QueryAt_OutsideRange_HasNoValue [4 ms]
+  Passed Mcis.Tests.W2.MultiTrackTimelineTests.Find_OfKind_FromSource_Work [< 1 ms]
+  Passed Mcis.Tests.W2.CsvImporterTests.Import_BadTime_WritesDiagnostic [4 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.LogPrefix_SpaceSeparatedAndOffset_ConvertsToUtc [3 ms]
+  Passed Mcis.Tests.W2.NmeaParserTests.Checksum_InvalidSentence_ParsesButMarksInvalid [< 1 ms]
+  Passed Mcis.Tests.W2.VdrImporterFacadeTests.ImportAll_MergesTracksAnchorsDiagnosticsAndCsv [26 ms]
+  Passed Mcis.Tests.W2.VdrImporterFacadeTests.ImportAll_WithoutOptionalParts_Works [1 ms]
+  Passed Mcis.Tests.W2.MediaImporterTests.SampleManifest_ImportsChannelsMediaAndMarkers [28 ms]
+  Passed Mcis.Tests.W2.MediaImporterTests.MissingRequiredColumn_Fails [< 1 ms]
+  Passed Mcis.Tests.W2.VdrImporterFacadeTests.ImportAll_PropagatesCsvFailure [1 ms]
+  Passed Mcis.Tests.W2.MultiTrackTimelineTests.MarkersIn_MergesAndSorts [6 ms]
+  Passed Mcis.Tests.W2.MediaImporterTests.UnknownKind_WritesDiagnosticOnce [< 1 ms]
+  Passed Mcis.Tests.W2.VdrNmeaImporterTests.BadChecksum_IsSkippedByDefault_AndKeptWhenRequested [1 ms]
+  Passed Mcis.Tests.W2.VdrNmeaImporterTests.Rsa_RightIsPositive_PortIsNegative [< 1 ms]
+  Passed Mcis.Tests.W2.TrackTests.TimeRange_InvalidOrder_Throws [< 1 ms]
+  Passed Mcis.Tests.W2.VdrNmeaImporterTests.GgaQualityZero_IsDiscarded [< 1 ms]
+  Passed Mcis.Tests.W2.MultiTrackTimelineTests.QueryAt_ReturnsScalarPositionTextAndMedia [2 ms]
+  Passed Mcis.Tests.W2.VdrNmeaImporterTests.MissingSourceId_Fails [< 1 ms]
+  Passed Mcis.Tests.W2.TrackTests.TimeRange_DisjointIntersect_ReturnsFalse [< 1 ms]
+  Passed Mcis.Tests.W2.VdrNmeaImporterTests.GgaWithoutDate_UsesDefaultDate [< 1 ms]
+  Passed Mcis.Tests.W2.TrackTests.TargetPosition_IsPositionKind [< 1 ms]
+  Passed Mcis.Tests.W2.VdrNmeaImporterTests.GgaWithoutDateOrDefault_WritesNoTimeDiagnostic [< 1 ms]
+  Passed Mcis.Tests.W2.VdrNmeaImporterTests.RotWithStatusV_IsIgnored [< 1 ms]
+  Passed Mcis.Tests.W2.ClockOffsetTests.Calibrator_ShiftsFiniteOffsetsOnly [16 ms]
+  Passed Mcis.Tests.W2.ClockOffsetTests.NoCommonAnchors_ReturnsNaNEstimate [< 1 ms]
+  Passed Mcis.Tests.W2.CsvImporterTests.Import_MapsTextTimezoneChangesAndEvents [10 ms]
+  Passed Mcis.Tests.W2.VdrNmeaImporterTests.EmitGnssAnchors_CreatesSourceAndGnssObservations [2 ms]
+  Passed Mcis.Tests.W2.TrackTests.Track_WithTimeShift_ShiftsSamplesMarkersMedia [2 ms]
+  Passed Mcis.Tests.W2.CsvImporterTests.Import_EmptyFile_Fails [< 1 ms]
+  Passed Mcis.Tests.W2.CsvImporterTests.Import_MissingTimeColumn_Fails [< 1 ms]
+  Passed Mcis.Tests.W2.TrackTests.Track_Samples_AreStablySorted [< 1 ms]
+  Passed Mcis.Tests.W2.VdrNmeaImporterTests.RmcDate_UpdatesDateForFollowingGga [< 1 ms]
+  Passed Mcis.Tests.W2.CsvImporterTests.Import_IsoTimeWithoutFormat_ParsesOffset [< 1 ms]
+  Passed Mcis.Tests.W2.CsvImporterTests.Import_BadNumericValue_WritesDiagnostic [< 1 ms]
+  Passed Mcis.Tests.W2.VdrNmeaImporterTests.MissingPrefix_FallsBackToLastGnssTime [< 1 ms]
+  Passed Mcis.Tests.W2.CsvImporterTests.Import_MissingColumn_Fails [< 1 ms]
+  Passed Mcis.Tests.W2.VdrNmeaImporterTests.Ttm_TargetNumberAndName_AreMapped [< 1 ms]
+  Passed Mcis.Tests.W2.TrackTests.Track_MarkersAndMedia_QueryByRange [1 ms]
+  Passed Mcis.Tests.W2.VdrNmeaImporterTests.Vtg_MapsCourseAndSpeed [< 1 ms]
+  Passed Mcis.Tests.W2.VdrNmeaImporterTests.ImportText_SplitsLines [< 1 ms]
+  Passed Mcis.Tests.W2.TrackTests.Track_Position_InterpolatesAndScalarQueryFails [1 ms]
+  Passed Mcis.Tests.W2.VdrNmeaImporterTests.TimeBasis_LogPrefix_And_GnssSentenceTime [< 1 ms]
+  Passed Mcis.Tests.W2.TrackTests.Track_Angular_CrossesZeroByShortestArc [< 1 ms]
+  Passed Mcis.Tests.W2.VdrNmeaImporterTests.Tll_TargetNumberAndPosition_AreMapped [< 1 ms]
+  Passed Mcis.Tests.W2.VdrNmeaImporterTests.UnsupportedType_IsReportedOnlyOnce [< 1 ms]
+  Passed Mcis.Tests.W2.TrackTests.TimeRange_BasicOperations [< 1 ms]
+  Passed Mcis.Tests.W2.ClockOffsetTests.LeastSquares_MeanAndStandardError [4 ms]
+  Passed Mcis.Tests.W2.TrackTests.TrackKindInfo_ClassifiesKinds [< 1 ms]
+  Passed Mcis.Tests.W2.TrackTests.Track_Scalar_LinearInterpolation [< 1 ms]
+  Passed Mcis.Tests.W2.ClockOffsetTests.DuplicateAnchor_UsesFirstOccurrence [< 1 ms]
+  Passed Mcis.Tests.W2.ClockOffsetTests.MissingReference_ReturnsFail [< 1 ms]
+  Passed Mcis.Tests.W2.ClockOffsetTests.Median_RejectsOutlier [< 1 ms]
+  Passed Mcis.Tests.W2.ClockOffsetTests.LeastSquares_SingleAnchor_UncertaintyIsNaN [< 1 ms]
+  Passed Mcis.Tests.W2.TrackTests.Track_Step_KeepsPreviousValueAndText [< 1 ms]
+  Passed Mcis.Tests.W2.TrackTests.Track_Empty_RangeAndHasData [< 1 ms]
+  Passed Mcis.Tests.W2.VdrNmeaImporterTests.SampleMary_ImportsAllSupportedSentenceTypes [2 ms]
+  Passed Mcis.Tests.W2.ConflictDetectorTests.ContinuousExceedance_MergesIntoOneRange [12 ms]
+  Passed Mcis.Tests.W2.ConflictDetectorTests.Heading_AcrossZero_UsesShortestArc(bValue: 1, expected: False) [< 1 ms]
+  Passed Mcis.Tests.W2.EndToEndTests.CalibratedTimeline_DetectsCourseAndSpeedConflicts [41 ms]
+  Passed Mcis.Tests.W2.ConflictDetectorTests.Heading_AcrossZero_UsesShortestArc(bValue: 1.5, expected: True) [< 1 ms]
+  Passed Mcis.Tests.W2.ConflictDetectorTests.MinDuration_FiltersShortConflict [< 1 ms]
+  Passed Mcis.Tests.W2.EndToEndTests.TimelineMarkers_IncludeTelegraphChangesAndMedia [1 ms]
+  Passed Mcis.Tests.W2.ConflictDetectorTests.TargetKinds_AndMedia_AreNotCompared [1 ms]
+  Passed Mcis.Tests.W2.ConflictDetectorTests.For_ReturnsNullForUnsupportedKinds [< 1 ms]
+  Passed Mcis.Tests.W2.ConflictDetectorTests.Position_UsesHaversineMeters [1 ms]
+  Passed Mcis.Tests.W2.EndToEndTests.TimelineScrub_ManyTracksHaveValueOrMedia(seconds: 1440) [2 ms]
+  Passed Mcis.Tests.W2.ConflictDetectorTests.Heading_2Point5Degrees_IsConflict [< 1 ms]
+  Passed Mcis.Tests.W2.ConflictDetectorTests.SameSourceTracks_AreNotCompared [< 1 ms]
+  Passed Mcis.Tests.W2.ConflictDetectorTests.Results_AreNumberedInStartTimeOrder [< 1 ms]
+  Passed Mcis.Tests.W2.ConflictDetectorTests.Speed_ThresholIsStrict(bValue: 12.4, expected: True) [< 1 ms]
+  Passed Mcis.Tests.W2.ConflictDetectorTests.Speed_ThresholIsStrict(bValue: 12.199999999999999, expected: False) [< 1 ms]
+  Passed Mcis.Tests.W2.EndToEndTests.TimelineScrub_ManyTracksHaveValueOrMedia(seconds: 1560) [1 ms]
+[xUnit.net 00:00:00.20]   Finished:    Tests_W2_Vdr
+  Passed Mcis.Tests.W2.ConflictDetectorTests.CustomThreshold_OverridesDefault [< 1 ms]
+  Passed Mcis.Tests.W2.ConflictDetectorTests.Heading_1Point5Degrees_IsNotConflict [< 1 ms]
+  Passed Mcis.Tests.W2.ConflictDetectorTests.Position_WithinThreshold_NoConflict [< 1 ms]
+  Passed Mcis.Tests.W2.EndToEndTests.TimelineScrub_ManyTracksHaveValueOrMedia(seconds: 1200) [1 ms]
+  Passed Mcis.Tests.W2.EndToEndTests.TimelineScrub_ManyTracksHaveValueOrMedia(seconds: 900) [1 ms]
+  Passed Mcis.Tests.W2.EndToEndTests.TimelineScrub_ManyTracksHaveValueOrMedia(seconds: 1320) [1 ms]
+  Passed Mcis.Tests.W2.EndToEndTests.GnssAnchors_EstimateExpectedClockOffsets [4 ms]
+  Passed Mcis.Tests.W2.EndToEndTests.Calibration_AlignsMaryAndLilyToTrueTime [1 ms]
+  Passed Mcis.Tests.W2.EndToEndTests.Samples_HaveFictionalHeader [< 1 ms]
+
+Test Run Successful.
+Total tests: 106
+     Passed: 106
+ Total time: 0.5686 Seconds
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.
+     1>Done Building Project "/workspace/maritime-sim-design/unity/Tests_W2_Vdr/Tests_W2_Vdr.csproj" (VSTest target(s)).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.43

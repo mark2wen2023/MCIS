@@ -1,0 +1,53 @@
+Test run for /workspace/maritime-sim-design/tests_acceptance/W14/bin/Debug/net8.0/W14.Acceptance.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.41]     Mcis.Acceptance.W14.W14_1RetestTests.Ruling7c_NearSafeLineOrAntennaCross_ShouldMarkCritical [FAIL]
+[xUnit.net 00:00:00.42]     Mcis.Acceptance.W14.W14_1RetestTests.Ruling7a_HeadOnBothBowsClose_ShouldBeBowToBow [FAIL]
+[xUnit.net 00:00:00.64]     Mcis.Acceptance.W14.W14_1RetestTests.Ruling7b_MinClearanceMustBeGlobalMinimum [FAIL]
+  Failed Mcis.Acceptance.W14.W14_1RetestTests.Ruling7c_NearSafeLineOrAntennaCross_ShouldMarkCritical [265 ms]
+  Error Message:
+   W14-D05：Y1 净距 184.4 m，距安全线 0.8 m，且天线敏感性在险情/无碰撞之间跨越安全线；对比表应标“临界”并给出敏感性区间。当前表：
+| 情景 | 改动 | 最小距离(nm) | 最小净距(m) | 最小DCPA(nm) | 碰撞时刻 | 结论 | 碰撞角 | 接触部位 | 偏离后最小DCPA(nm) |
+|---|---|---|---|---|---|---|---|---|---|
+| S0 | 原始航迹，无改动 | 0.053 | 0.0 | 0.001 | 22:02:00.12 | 碰撞 | 69° | 右舷 距船首 96 m | — |
+| Y1 | YANGZE 22 于 t=104 s（22:00:14）偏离原航迹，右满舵 +35°，舵速 4°/s | 0.154 | 184.4 | 0.000 | — | 险情 | — | — | 0.000 |
+| Y5 | VEGA DREAM 于 t=132 s（22:00:42）向右舷应急抛锚，并保留实际右满舵 + 后退三 | 0.215 | 239.1 | 0.001 | — | 无碰撞 | — | — | 0.001 |
+| Y1+Y5 | YANGZE 22 于 t=104 s 正确右满舵；VEGA DREAM 于 t=132 s 向右舷应急抛锚并保留实际右满舵/后退三 | 0.209 | 310.3 | 0.002 | — | 无碰撞 | — | — | 0.002 |
+| Y4 | YANGZE 22 于 t=135 s（22:00:45）偏离原航迹并全速倒车 | 0.063 | 30.9 | 0.016 | — | 险情 | — | — | 0.016 |
+
+注：最小DCPA(nm) 为全时段最小值，干预前各情景相同，不宜用于比较干预效果；请看「偏离后最小DCPA(nm)」（原始情景无偏离，记“—”）。
+
+**模型假设：**
+- 采用一阶 Nomoto K-T 操纵响应模型：T·dr/dt + r = K·(u/u_ref)·δ，K 随航速按 u/u_ref 线性缩放。
+- 航速采用一阶响应；常规变速、停车与全速后退使用不同时间常数，后退响应更快。
+- 舵机按固定速率限制趋近指令舵角，舵角受最大舵角约束。
+- 不计风、流、浪、浅水、岸壁效应与船间相互作用；无流时 COG=船首向。
+- 偏离时刻之前完全沿原航迹；偏离后由固定步长确定性积分生成，不含随机数与系统时钟。
+- 碰撞判定使用矩形 OBB 分离轴定理；分离时净距取两矩形真实最小距离（顶点-边穷举），重叠时为负的最小穿透深度；首次接触时刻用二分细化，精度 0.05 s；接触点取 OBB 最近点对中点或穿透区形心。
+- 最小净距在船中心最近会遇点 ±2 s 邻域内按 OBB 真实最小距离统计；最小 DCPA 同时给出全时段值与偏离后最小值（全时段值在干预前各情景相同）。
+- 应急抛锚模型（如使用）：松锚后经过 LetGoToBiteSec 才产生附加恒定减速度与单锚偏转；单锚偏转方向按抛锚舷（右舷向右、左舷向左，双锚为 0）；超过 MaxEffectiveSpeedKn 后减速度按 MaxEffectiveSpeedKn/u 折减；单锚转首率随航速线性衰减，低于 FullYawSpeedKn 时按 (u−MinSpeed)/(FullYawSpeedKn−MinSpeed) 折减，停船后为 0；不计锚链动力学、底质与锚抓力变化，锚参数均为估计。
+- 真实案例航迹截断：只用报告认定碰撞时刻 22:01:54（t=204 s）及以前的航迹行；去掉其后的 YANGZE 22 行 6 条、VEGA DREAM 行 0 条（含位置、航向、航速样本），截断点之后按最后航向/航速直线延伸（可通过 Yangze22Inputs.TruncateAfterReportedCollision 关闭）。
+- 船位改正：报告 VDR/AIS 船位为 GNSS 天线位置，已沿船首向换算到船中心（OBB 中心）。YANGZE 22 天线距船首 157.7 m（中点后 0.200L）、距中线 0.0 m；VEGA DREAM 天线距船首 247.9 m（中点后 0.375L）、距中线 0.0 m。报告未给的取值均为【估计】，偏差照实列出，不为对齐报告调参。
+
+**免责声明：** 仅供分析参考：本结果基于简化操纵模型的反事实推演，不作责任认定。
+
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14_1RetestTests.Ruling7c_NearSafeLineOrAntennaCross_ShouldMarkCritical() in /workspace/maritime-sim-design/tests_acceptance/W14/W14_1RetestTests.cs:line 377
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.W14_1RetestTests.Ruling7a_HeadOnBothBowsClose_ShouldBeBowToBow [14 ms]
+  Error Message:
+   W14-D03：虚构 S0 两船船首距接触点 Mary 8.8 m、Lily 6.8 m，均小于 max(10 m, 0.05L)，应按裁定判为船首对船首、不指定单一撞击船；实现指定 Lily（Lily 船首撞 Mary 左舷，距船首约 0 m（0.00 L），碰撞角约 0°）
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14_1RetestTests.Ruling7a_HeadOnBothBowsClose_ShouldBeBowToBow() in /workspace/maritime-sim-design/tests_acceptance/W14/W14_1RetestTests.cs:line 283
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.W14_1RetestTests.Ruling7b_MinClearanceMustBeGlobalMinimum [215 ms]
+  Error Message:
+   W14-D04：最小净距只在中心最近会遇 ±2 s 内查找。合成用例报出 NearMiss / 182.5 m（t=71.0），全程全局最小 NearMiss / 175.8 m（t=50.9）。默认 Y1+Y5 报出 310.3 m（t=208.0），全程全局最小 292.4 m（t=175.4），差值 17.9 m。Y1 本身报出与全局一致，结论未翻转。
+  Stack Trace:
+     at Mcis.Acceptance.W14.W14_1RetestTests.Ruling7b_MinClearanceMustBeGlobalMinimum() in /workspace/maritime-sim-design/tests_acceptance/W14/W14_1RetestTests.cs:line 327
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+Failed!  - Failed:     3, Passed:     1, Skipped:     0, Total:     4, Duration: 458 ms - W14.Acceptance.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

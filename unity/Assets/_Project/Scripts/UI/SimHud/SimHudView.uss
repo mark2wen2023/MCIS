@@ -1,0 +1,38 @@
+/* ==========================================================================
+   SimHudView 样式表 (SimHudView.uss)
+   主仿真视口全屏 HUD 浮层布局：顶部左/中（NavHud）+ 顶部右（MiniMap）+ 底部（TimelineBar）
+   ========================================================================== */
+
+.sim-hud-screen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding: 12px 14px;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sim-hud-top-bar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.sim-hud-nav-region {
+    flex-grow: 1;
+    margin-right: 12px;
+}
+
+.sim-hud-right-region {
+    flex-direction: column;
+    align-items: flex-end;
+    flex-shrink: 0;
+}
+
+.sim-hud-bottom-bar {
+    width: 100%;
+    margin-top: 8px;
+}

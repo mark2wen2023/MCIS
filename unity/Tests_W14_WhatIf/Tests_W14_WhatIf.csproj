@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultItems>false</EnableDefaultItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../Assets/_Project/Scripts/Core/Primitives/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Common/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Models/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Geo/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Cpa/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Tracks/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Simulation/Clock/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Simulation/Cpa/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Simulation/Damage/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Simulation/WhatIf/**/*.cs" />
+    <Compile Include="Tests/**/*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+  </ItemGroup>
+</Project>

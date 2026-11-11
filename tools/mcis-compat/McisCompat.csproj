@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- 仅测试用：用 Unity 侧原样 C#（只读引用）校验服务写出的 audit/custody.jsonl 能被 CustodyLedger.Load 接受且逐字节等同 ToJsonLine。 -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>mcis-compat</AssemblyName>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <NoWarn>$(NoWarn);CS8632</NoWarn>
+    <McisScripts>$(MSBuildThisFileDirectory)../../unity/Assets/_Project/Scripts</McisScripts>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(McisScripts)/Core/Primitives/**/*.cs" />
+    <Compile Include="$(McisScripts)/Domain/Evidence/**/*.cs" />
+    <Compile Include="src/**/*.cs" />
+  </ItemGroup>
+</Project>

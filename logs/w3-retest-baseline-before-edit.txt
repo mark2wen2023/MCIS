@@ -1,0 +1,115 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  W3.Inv -> /workspace/maritime-sim-design/unity/Tests_W3_Inv/bin/Debug/netstandard2.1/Mcis.W3.Inv.dll
+  W3.Acceptance -> /workspace/maritime-sim-design/tests_acceptance/W3/bin/Debug/net8.0/W3.Acceptance.dll
+Test run for /workspace/maritime-sim-design/tests_acceptance/W3/bin/Debug/net8.0/W3.Acceptance.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:00.07]   Discovering: W3.Acceptance
+[xUnit.net 00:00:00.11]   Discovered:  W3.Acceptance
+[xUnit.net 00:00:00.12]   Starting:    W3.Acceptance
+  Passed Mcis.Acceptance.W3.ConsultationAcceptanceTests.AgreedDeadline_IsHonored [7 ms]
+  Passed Mcis.Acceptance.W3.ContractAndPrototypeSupportTests.Interview_SupportsScreenshotCoreFields [11 ms]
+  Passed Mcis.Acceptance.W3.ContractAndPrototypeSupportTests.W3_D03_Evidence_SupportsConfidentialityAndNeedsReview [< 1 ms]
+  Passed Mcis.Acceptance.W3.RecommendationAcceptanceTests.Overdue_IsExclusiveOfDueInstant_AndOnlyForOpenIssuedOrResponded [13 ms]
+  Passed Mcis.Acceptance.W3.ConsultationAcceptanceTests.Adoption_RequiresWrittenFeedback_IsFinal_AndTallied [4 ms]
+  Passed Mcis.Acceptance.W3.ContractAndPrototypeSupportTests.W3_D05_EvidenceId_MustMatchEVPattern [2 ms]
+  Passed Mcis.Acceptance.W3.ContractAndPrototypeSupportTests.W3_D03_EvidenceItem_HasContractRequiredCaseId [< 1 ms]
+  Passed Mcis.Acceptance.W3.CustodyAcceptanceTests.InvestigationAuditEntry_IsByteIdenticalToExistingAuditRecord [14 ms]
+  Passed Mcis.Acceptance.W3.ConsultationAcceptanceTests.DeadlineBoundary_StatusAndDaysRemaining [2 ms]
+  Passed Mcis.Acceptance.W3.ConsultationAcceptanceTests.OpenRound_DefaultDeadlineIs30Days [< 1 ms]
+  Passed Mcis.Acceptance.W3.ContractAndPrototypeSupportTests.Recommendation_SupportsScreenshotCoreFields_ExceptKnownGaps [2 ms]
+  Passed Mcis.Acceptance.W3.RecommendationAcceptanceTests.IllegalTransition_IsRejected_WithoutStateChangeOrAudit [3 ms]
+  Passed Mcis.Acceptance.W3.RecommendationAcceptanceTests.InterimMeasure_Flag_IsRecorded [< 1 ms]
+  Passed Mcis.Acceptance.W3.InterviewAcceptanceTests.W3_D01_ConsistentAndUnverifiable_MustRemainPendingUntilConfirmed [18 ms]
+  Passed Mcis.Acceptance.W3.InterviewAcceptanceTests.Contradiction_RequiresHumanConfirm_WritesAudit_AndDismissNeedsReason [1 ms]
+  Passed Mcis.Acceptance.W3.InterviewAcceptanceTests.Occurrence_Mismatch_IsContradictory [< 1 ms]
+  Passed Mcis.Acceptance.W3.InterviewAcceptanceTests.W3_D04_Statement_HasReviewStatusAndModifyPath [< 1 ms]
+  Passed Mcis.Acceptance.W3.ContractAndPrototypeSupportTests.Evidence_AccessAndVerify_CoverScreenshotOperationalFields [4 ms]
+  Passed Mcis.Acceptance.W3.InterviewAcceptanceTests.Scalar_SlightlyOverTolerance_IsContradictory [< 1 ms]
+  Passed Mcis.Acceptance.W3.CustodyAcceptanceTests.Load_DetectsEditedLine [7 ms]
+[xUnit.net 00:00:00.22]     Mcis.Acceptance.W3.ConsultationAcceptanceTests.Close_RequiresAllRepliedOrPastDeadline [FAIL]
+[xUnit.net 00:00:00.22]       Assert.False() Failure
+[xUnit.net 00:00:00.22]       Expected: False
+[xUnit.net 00:00:00.22]       Actual:   True
+[xUnit.net 00:00:00.22]       Stack Trace:
+[xUnit.net 00:00:00.22]         /workspace/maritime-sim-design/tests_acceptance/W3/ConsultationAcceptanceTests.cs(110,0): at Mcis.Acceptance.W3.ConsultationAcceptanceTests.Close_RequiresAllRepliedOrPastDeadline()
+[xUnit.net 00:00:00.22]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.22]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.22]     Mcis.Acceptance.W3.RecommendationAcceptanceTests.W3_D02_StatusModel_MatchesContractAndPrototypeKanban [FAIL]
+[xUnit.net 00:00:00.22]       Assert.Contains() Failure: Item not found in collection
+[xUnit.net 00:00:00.22]       Collection: ["Draft", "Issued", "Responded", "Implemented", "NotAdopted", ···]
+[xUnit.net 00:00:00.22]       Not found:  "InProgress"
+[xUnit.net 00:00:00.22]       Stack Trace:
+[xUnit.net 00:00:00.22]         /workspace/maritime-sim-design/tests_acceptance/W3/RecommendationAcceptanceTests.cs(144,0): at Mcis.Acceptance.W3.RecommendationAcceptanceTests.W3_D02_StatusModel_MatchesContractAndPrototypeKanban()
+[xUnit.net 00:00:00.22]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.22]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W3.InterviewAcceptanceTests.EventTime_ExactlyAtTolerance_IsConsistent [3 ms]
+  Failed Mcis.Acceptance.W3.ConsultationAcceptanceTests.Close_RequiresAllRepliedOrPastDeadline [1 ms]
+  Error Message:
+   Assert.False() Failure
+Expected: False
+Actual:   True
+  Stack Trace:
+     at Mcis.Acceptance.W3.ConsultationAcceptanceTests.Close_RequiresAllRepliedOrPastDeadline() in /workspace/maritime-sim-design/tests_acceptance/W3/ConsultationAcceptanceTests.cs:line 110
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W3.RecommendationAcceptanceTests.W3_D02_StatusModel_MatchesContractAndPrototypeKanban [3 ms]
+  Error Message:
+   Assert.Contains() Failure: Item not found in collection
+Collection: ["Draft", "Issued", "Responded", "Implemented", "NotAdopted", ···]
+Not found:  "InProgress"
+  Stack Trace:
+     at Mcis.Acceptance.W3.RecommendationAcceptanceTests.W3_D02_StatusModel_MatchesContractAndPrototypeKanban() in /workspace/maritime-sim-design/tests_acceptance/W3/RecommendationAcceptanceTests.cs:line 144
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W3.ConsultationAcceptanceTests.Close_AllowedWhenAllRepliedBeforeDeadline [< 1 ms]
+  Passed Mcis.Acceptance.W3.RecommendationAcceptanceTests.CauseLink_IsRequired_AndQueryable [< 1 ms]
+  Passed Mcis.Acceptance.W3.InterviewAcceptanceTests.Position_ExactlyAtTolerance_IsConsistent_SlightlyOverIsNot [2 ms]
+[xUnit.net 00:00:00.22]     Mcis.Acceptance.W3.RecommendationAcceptanceTests.W3_D02_ContractTransition_DraftIssuedInProgressClosed_AndRejectFromAny [FAIL]
+[xUnit.net 00:00:00.22]       Assert.NotNull() Failure: Value is null
+[xUnit.net 00:00:00.22]       Stack Trace:
+[xUnit.net 00:00:00.22]         /workspace/maritime-sim-design/tests_acceptance/W3/RecommendationAcceptanceTests.cs(171,0): at Mcis.Acceptance.W3.RecommendationAcceptanceTests.W3_D02_ContractTransition_DraftIssuedInProgressClosed_AndRejectFromAny()
+[xUnit.net 00:00:00.22]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.22]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W3.ConsultationAcceptanceTests.Reply_OnDeadlineInstant_IsOnTime_AfterDeadline_IsLate [< 1 ms]
+  Passed Mcis.Acceptance.W3.ConsultationAcceptanceTests.W3_D06_Consultation_SupportsContractCaseIdWaivedAndDraftHash [< 1 ms]
+  Passed Mcis.Acceptance.W3.InterviewAcceptanceTests.Scalar_ExactlyAtTolerance_IsConsistent [< 1 ms]
+  Passed Mcis.Acceptance.W3.InterviewAcceptanceTests.W3_D04_InterviewRecord_SupportsSignedAndCaseId [< 1 ms]
+  Passed Mcis.Acceptance.W3.ConsultationAcceptanceTests.EachParty_MayReplyOncePerRound [< 1 ms]
+  Passed Mcis.Acceptance.W3.ConsultationAcceptanceTests.CannotOpenNextRound_UntilCurrentClosed [< 1 ms]
+  Failed Mcis.Acceptance.W3.RecommendationAcceptanceTests.W3_D02_ContractTransition_DraftIssuedInProgressClosed_AndRejectFromAny [1 ms]
+  Error Message:
+   Assert.NotNull() Failure: Value is null
+  Stack Trace:
+     at Mcis.Acceptance.W3.RecommendationAcceptanceTests.W3_D02_ContractTransition_DraftIssuedInProgressClosed_AndRejectFromAny() in /workspace/maritime-sim-design/tests_acceptance/W3/RecommendationAcceptanceTests.cs:line 171
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W3.InterviewAcceptanceTests.DurationMinutes_SupportsScreenshotDuration [< 1 ms]
+  Passed Mcis.Acceptance.W3.RecommendationAcceptanceTests.Transitions_WriteAudit [< 1 ms]
+  Passed Mcis.Acceptance.W3.InterviewAcceptanceTests.Statement_WithoutSourceSpan_IsRejected [< 1 ms]
+  Passed Mcis.Acceptance.W3.InterviewAcceptanceTests.W3_D05_InterviewRecordId_MustMatchIRPattern [< 1 ms]
+  Passed Mcis.Acceptance.W3.InterviewAcceptanceTests.EventTime_SlightlyOverTolerance_IsContradictory [< 1 ms]
+  Passed Mcis.Acceptance.W3.RecommendationAcceptanceTests.Id_FormatUniquenessAndNextIdAreSequential [1 ms]
+  Passed Mcis.Acceptance.W3.InterviewAcceptanceTests.EventTime_EquivalentAcrossTimeZones_IsConsistent [< 1 ms]
+  Passed Mcis.Acceptance.W3.CustodyAcceptanceTests.Load_RoundTrips_AndContinuesPrevChain [10 ms]
+  Passed Mcis.Acceptance.W3.CustodyAcceptanceTests.Verify_RecordsMatchAndMismatch_WithoutRewritingHistory [< 1 ms]
+  Passed Mcis.Acceptance.W3.CustodyAcceptanceTests.CustodyJsonl_IsReadableByExistingAuditRecordAndAuditLog [1 ms]
+[xUnit.net 00:00:00.22]   Finished:    W3.Acceptance
+  Passed Mcis.Acceptance.W3.CustodyAcceptanceTests.Load_DetectsReorderedLines [< 1 ms]
+  Passed Mcis.Acceptance.W3.CustodyAcceptanceTests.Load_DetectsCanonicalWhitespaceTamper_OnLastLine [< 1 ms]
+  Passed Mcis.Acceptance.W3.CustodyAcceptanceTests.PublicApi_HasNoDeleteOrInPlaceUpdate [< 1 ms]
+  Passed Mcis.Acceptance.W3.CustodyAcceptanceTests.AccessCount_AndHistory_SupportScreenshotColumns [2 ms]
+  Passed Mcis.Acceptance.W3.CustodyAcceptanceTests.Register_RecordsSourceExtractorTimeHash_AndIsAppendOnly [< 1 ms]
+  Passed Mcis.Acceptance.W3.CustodyAcceptanceTests.FirstLinePrevHash_Is64Zeros [< 1 ms]
+  Passed Mcis.Acceptance.W3.CustodyAcceptanceTests.Load_DetectsDeletedLine [< 1 ms]
+
+Test Run Failed.
+Total tests: 50
+     Passed: 47
+     Failed: 3
+ Total time: 0.7060 Seconds
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

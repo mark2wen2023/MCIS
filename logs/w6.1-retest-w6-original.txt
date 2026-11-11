@@ -1,0 +1,16 @@
+# W6 原验收用例复现（改写前）— 2026-11-11 21:36:38 CST
+# 命令: service/.venv/bin/python -m pytest -q -rfE
+.............................................F.........................F [ 81%]
+................                                                         [100%]
+=================================== FAILURES ===================================
+E   AssertionError: 理由被截断：after 长 400
+    assert '合成理由甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙...丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸' in 'verdict=NotComplied; reviewStatus=Rejected; source=Seed; reason=合成理由甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬...戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲乙丙丁戊己庚辛壬癸甲…'
+/workspace/maritime-sim-design/tests_acceptance/W6/test_w6_service_acceptance.py:183: AssertionError: 理由被截断：after 长 400
+E   AssertionError: {"code":"VALIDATION_ERROR","message":"请求参数不合法","detail":[{"loc":["body","vesselStatus"],"msg":"Input should be a valid dictionary"}]}
+    assert 422 == 200
+     +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+/workspace/maritime-sim-design/tests_acceptance/W6/test_w6_service_acceptance.py:386: AssertionError: {"code":"VALIDATION_ERROR","message":"请求参数不合法","detail":[{"loc":["body","vesselStatus"],"msg":"Input should be a valid dictionary"}]}
+=========================== short test summary info ============================
+FAILED test_w6_service_acceptance.py::test_B2_long_reason_kept_whole_in_audit
+FAILED test_w6_service_acceptance.py::test_F7_evaluate_vessel_status_list_form_impl
+2 failed, 86 passed in 21.11s

@@ -1,0 +1,219 @@
+      <!-- ==================== 15. #recs 安全建议与报告 ==================== -->
+      <section class="screen" id="screen-recs" data-screen="recs">
+        <div class="screen-header">
+          <div class="screen-header-left">
+            <h1>安全建议跟踪 · 报告草案征求意见 · 国际格式报告 <span class="badge badge-amber">示例数据（虚构）</span> <span class="p6-tag">P6+ 国际对标 ⑨⑩⑪</span></h1>
+            <p>每条安全建议对应原因、责任对象、期限与落实状态；报告草案按 MSC.255(84) 第 13 章发送实质利益国征求意见（30 天）；按 IMO / MAIB 模板生成中英双语报告并导出 GISIS 上报字段。</p>
+          </div>
+          <div class="screen-actions">
+            <button class="btn">＋ 新建安全建议</button>
+            <button class="btn btn-primary">📄 生成双语报告</button>
+          </div>
+        </div>
+
+        <div class="glass-panel p6-panel">
+          <div class="panel-header"><div class="panel-title">安全建议看板（7 条）</div><div class="p6-toolbar"><span class="panel-subtitle">拖拽卡片改变状态 · 每次变更写审计</span><span class="badge badge-amber">示例数据（虚构）</span></div></div>
+          <div class="panel-body">
+            <div class="kanban">
+              <div class="kb-col"><div class="kb-col-h">草拟 <span class="st st-info">2</span></div>
+                <div class="kb-card"><div class="id">SR-2026-06</div><div class="t">星屿 VTS 对雾航双向通航实施单向交通管制</div><div class="links"><span>ECFC C4</span><span>Bow-tie B1</span></div><div class="m"><span>→ 星屿 VTS（虚构）</span><span>—</span></div></div>
+                <div class="kb-card"><div class="id">SR-2026-07</div><div class="t">航道 3#–4# 浮标增设 AIS 虚拟航标</div><div class="links"><span>HFACS 外部</span></div><div class="m"><span>→ 航标处（虚构）</span><span>—</span></div></div>
+              </div>
+              <div class="kb-col"><div class="kb-col-h">已发出 <span class="st st-info">2</span></div>
+                <div class="kb-card" style="border-left-color:var(--amber)"><div class="id">SR-2026-01</div><div class="t">Mary 轮公司 SMS 增加狭水道与雾航专项程序</div><div class="links"><span>HFACS ①</span><span>R9/R19</span></div><div class="m"><span>→ Mary 船公司</span><span class="mono">08-30 前回复</span></div></div>
+                <div class="kb-card" style="border-left-color:var(--amber)"><div class="id">SR-2026-02</div><div class="t">船长常规命令中明确雾航叫船条件</div><div class="links"><span>HFACS ②</span></div><div class="m"><span>→ Mary 船公司</span><span class="mono">08-30 前回复</span></div></div>
+              </div>
+              <div class="kb-col"><div class="kb-col-h">落实中 <span class="st st-warn">2</span></div>
+                <div class="kb-card" style="border-left-color:var(--purple)"><div class="id">SR-2026-03</div><div class="t">全船队驾驶员 BRM 复训并考核闭环沟通</div><div class="links"><span>HFACS ③</span><span>ECFC E4</span></div><div class="m"><span>进度 60%</span><span class="mono">12-31</span></div></div>
+                <div class="kb-card" style="border-left-color:var(--purple)"><div class="id">SR-2026-04</div><div class="t">工休时间电子记录与超时自动报警</div><div class="links"><span>疲劳</span></div><div class="m"><span>进度 35%</span><span class="mono">2027-03-31</span></div></div>
+              </div>
+              <div class="kb-col"><div class="kb-col-h">已关闭 <span class="st st-ok">1</span></div>
+                <div class="kb-card" style="border-left-color:var(--green)"><div class="id">SR-2026-05</div><div class="t">临时措施：雾航限速 8 kn（MSC.255 §25.5 临时安全措施）</div><div class="links"><span>R6</span></div><div class="m"><span>已核实落实</span><span class="mono">06-02</span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p6-row" style="grid-template-columns: 1fr 1.05fr 0.95fr; flex:1;">
+          <div class="glass-panel p6-panel">
+            <div class="panel-header"><div class="panel-title">报告草案征求意见</div><span class="panel-subtitle">第 2 轮 · 剩余 12 天</span></div>
+            <div class="panel-body" style="display:flex;flex-direction:column;gap:8px;">
+              <div class="p6-svgbox" id="rc-round-svg"></div>
+              <table class="p6-table">
+                <thead><tr><th>利益相关方</th><th>第1轮</th><th>第2轮</th><th>采纳</th></tr></thead>
+                <tbody>
+                  <tr><td>船旗国 A（Lily）</td><td><span class="st st-ok">已复</span></td><td><span class="st st-ok">已复</span></td><td class="mono">3/4</td></tr>
+                  <tr><td>船旗国 B（Mary）</td><td><span class="st st-ok">已复</span></td><td><span class="st st-warn">待复</span></td><td class="mono">2/5</td></tr>
+                  <tr><td>Lily 船公司</td><td><span class="st st-ok">已复</span></td><td><span class="st st-ok">已复</span></td><td class="mono">1/1</td></tr>
+                  <tr><td>Mary 船公司</td><td><span class="st st-bad">逾期</span></td><td><span class="st st-warn">待复</span></td><td class="mono">—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="glass-panel p6-panel">
+            <div class="panel-header"><div class="panel-title">报告模板与双语预览</div><span class="panel-subtitle">MigraDoc · Noto Sans SC</span></div>
+            <div class="panel-body" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px;line-height:1.6;align-content:start;">
+              <div style="grid-column:span 2;display:flex;gap:8px;"><span class="p6-seg"><span class="on">IMO 格式</span><span>MAIB</span><span>中国海事</span></span><span class="p6-seg"><span>中文</span><span>English</span><span class="on">中英双语</span></span></div>
+              <div class="p6-card"><div class="p6-card-title" style="font-size:11.5px;">3 分析 · 3.2 避碰行动</div><div class="p6-card-sub" style="color:var(--text-main);">雾中能见度约 1.5 海里，Mary 轮在对遇局面下未按规则向右转向，于 14:22:15 向左转向，导致两船形成紧迫危险。【虚构示例】</div></div>
+              <div class="p6-card"><div class="p6-card-title" style="font-size:11.5px;">3 Analysis · 3.2 Collision avoidance</div><div class="p6-card-sub" style="color:var(--text-main);">In fog with visibility of about 1.5 nm, Mary did not alter course to starboard in the head-on situation and turned to port at 14:22:15, creating immediate danger. [Fictional]</div></div>
+              <div style="grid-column:span 2;display:flex;gap:5px;flex-wrap:wrap;align-items:flex-start;">
+                <span class="st st-ok">1 概要 ✓</span><span class="st st-ok">2 事实 ✓</span><span class="st st-warn">3 分析 草稿</span><span class="st st-warn">4 结论 草稿</span><span class="st st-info">5 已采取措施</span><span class="st st-info">6 安全建议</span><span class="st st-info">附录</span>
+              </div>
+              <div style="grid-column:span 2;display:flex;gap:6px;margin-top:4px;"><button class="btn btn-sm">PDF 中文</button><button class="btn btn-sm">PDF English</button><button class="btn btn-sm btn-primary">PDF 中英对照</button><button class="btn btn-sm">术语表 (IMO 标准航海用语)</button></div>
+            </div>
+          </div>
+          <div class="glass-panel p6-panel">
+            <div class="panel-header"><div class="panel-title">GISIS 上报字段</div><span class="panel-subtitle">Marine Casualties</span></div>
+            <div class="panel-body" style="display:flex;flex-direction:column;gap:6px;">
+              <dl class="p6-kv">
+                <dt>船名 / IMO</dt><dd>Lily / 9000001*</dd>
+                <dt>事故类别</dt><dd>Very serious</dd>
+                <dt>事件类型</dt><dd>Collision</dd>
+                <dt>日期 (UTC)</dt><dd>2026-05-18 06:24</dd>
+                <dt>位置</dt><dd>21°47.8'N 113°42.0'E</dd>
+                <dt>船舶灭失</dt><dd>是（坐沉）</dd>
+                <dt>伤亡 / 污染</dt><dd>0 / 少量燃油</dd>
+              </dl>
+              <div class="p6-note">* 虚构 IMO 号，仅演示。</div>
+              <div class="p6-toolbar" style="margin-top:auto;"><button class="btn btn-sm">JSON</button><button class="btn btn-sm">CSV</button><button class="btn btn-sm btn-primary">校验并导出</button></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 16. #knowledge 知识库 ==================== -->
+      <section class="screen" id="screen-knowledge" data-screen="knowledge">
+        <div class="screen-header">
+          <div class="screen-header-left">
+            <h1>知识库 · 相似案例检索与事故分级判定 <span class="badge badge-amber">示例数据（虚构）</span> <span class="p6-tag">P6+ 国际对标 ⑫⑬</span></h1>
+            <p>历史报告切片入库（pgvector 向量 + 结构化标签），按事故类型、水域、原因检索相似案例及其安全建议；按 MSC.255(84) 分级与第 5/6 章判定调查义务与通知对象。</p>
+          </div>
+          <div class="screen-actions">
+            <button class="btn">📚 报告入库</button>
+            <button class="btn btn-primary">⇄ 引用到本案分析</button>
+          </div>
+        </div>
+
+        <div class="p6-row" style="grid-template-columns: 1.45fr 1fr; flex:1;">
+          <div class="glass-panel p6-panel">
+            <div class="panel-header"><div class="panel-title">相似案例检索</div><span class="panel-subtitle">库内 1,284 份报告（演示库）</span></div>
+            <div class="panel-body" style="display:flex;flex-direction:column;gap:9px;">
+              <div style="display:flex;gap:8px;">
+                <input class="form-control" style="flex:1;" value="狭水道 雾航 对遇 一船违规左转 碰撞 进水沉没" />
+                <button class="btn btn-primary">🔍 检索</button>
+              </div>
+              <div class="p6-toolbar">
+                <span class="st st-info">类型：碰撞</span><span class="st st-info">水域：狭水道/港内</span><span class="st st-info">能见度：不良</span><span class="st st-pur">原因：R14 / R19</span><span class="st st-pur">HFACS：疲劳</span><span class="p6-muted" style="font-size:11px;">＋ 添加条件</span>
+              </div>
+              <div class="p6-res sel"><div class="sim-ring" style="border-color:var(--green)">0.91</div><div><div class="p6-card-title">【虚构】“晨星”轮与“海鸥”轮雾中对遇碰撞（2021，演示库） <span class="st st-ok">高度相似</span></div><div class="p6-card-sub">相同点：狭水道 · 能见度 &lt; 2 nm · 一船向左转向 · 未鸣声号 · 船长不在驾驶台。建议 3 条：雾航叫船条件、单向通航、BRM。</div></div></div>
+              <div class="p6-res"><div class="sim-ring">0.84</div><div><div class="p6-card-title">【虚构】“北辰 7”与“远帆”港池出口碰撞（2019，演示库） <span class="st st-info">相似</span></div><div class="p6-card-sub">相同点：出港船 vs 进港船 · 横流 · VTS 未预警。差异：能见度良好。</div></div></div>
+              <div class="p6-res"><div class="sim-ring">0.77</div><div><div class="p6-card-title">【虚构】“蓝湾”轮夜间狭水道碰撞后沉没（2017，演示库）</div><div class="p6-card-sub">相同点：被撞船首部破损快速进水 · 抢滩处置。可参考 DamageTrack 对比。</div></div></div>
+              <div class="p6-res"><div class="sim-ring">0.71</div><div><div class="p6-card-title">【虚构】“东极”轮驾驶员疲劳致碰撞（2022，演示库）</div><div class="p6-card-sub">相同点：值班驾驶员连续清醒 &gt; 16 h · 工休记录不实。</div></div></div>
+              <div class="p6-res"><div class="sim-ring">0.66</div><div><div class="p6-card-title">【虚构】“银河 3”雾中进港与渔船碰撞（2020，演示库）</div><div class="p6-card-sub">相同点：雾中未鸣放雾号 · ARPA 报警被人为关闭。</div></div></div>
+              <div class="p6-card"><div class="p6-card-title" style="font-size:11.5px;">Top-20 相似案例的原因分布</div><div id="kn-dist-svg" class="p6-svgbox" style="margin-top:6px;"></div></div>
+              <div class="p6-agent" style="margin-top:auto;">◆ 检索智能体：语义相似 0.6 + 结构标签 0.4 加权 · 引用均附原报告页码 · 演示库全部为虚构案例</div>
+            </div>
+          </div>
+
+          <div class="p6-col">
+            <div class="glass-panel p6-panel">
+              <div class="panel-header"><div class="panel-title">事故分级判定（MSC.255(84) 第 2 章定义）</div></div>
+              <div class="panel-body" style="padding:6px 12px;">
+                <div class="p6-chk"><span class="box y">✓</span><div><b>船舶全损</b> — Lily 轮坐沉，经评估推定全损 <span class="p6-muted">EV-009</span></div></div>
+                <div class="p6-chk"><span class="box n">✕</span><div>人员死亡 — 无</div></div>
+                <div class="p6-chk"><span class="box q">?</span><div>严重污染 — 少量燃油外溢，评估中</div></div>
+                <div style="display:flex;align-items:center;gap:10px;margin-top:8px;">
+                  <div class="p6-svgbox" id="kn-level-svg" style="flex:1;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="glass-panel p6-panel" style="flex:1;">
+              <div class="panel-header"><div class="panel-title">调查义务与通知对象</div><span class="st st-bad">强制调查</span></div>
+              <div class="panel-body" style="padding:6px 12px;">
+                <div class="p6-chk"><span class="box y">✓</span><div>非常严重事故须开展海上安全调查（第 6 章）</div></div>
+                <div class="p6-chk"><span class="box y">✓</span><div>通知船旗国 A、B（第 5 章）<span class="p6-muted mono"> 05-18 16:10 已发</span></div></div>
+                <div class="p6-chk"><span class="box y">✓</span><div>通知沿岸国（事发于其领海）</div></div>
+                <div class="p6-chk"><span class="box q">?</span><div>实质利益国：船员国籍国 C — 待确认</div></div>
+                <div class="p6-chk"><span class="box n">—</span><div>结案后向 IMO 提交报告并录入 GISIS（第 14 章）</div></div>
+                <div class="p6-chk"><span class="box q">?</span><div>是否请求实质利益国派员参与联合调查（第 10 章）</div></div>
+                <div class="p6-chk" style="border:none;"><span class="box y">✓</span><div>海员公平待遇告知已送达（第 21 章）</div></div>
+                <div class="p6-toolbar" style="margin-top:8px;"><button class="btn btn-sm">✉ 生成通知函草稿（中/英）</button><button class="btn btn-sm">📋 导出义务清单</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 17. #access 权限与脱敏 ==================== -->
+      <section class="screen" id="screen-access" data-screen="access">
+        <div class="screen-header">
+          <div class="screen-header-left">
+            <h1>权限与脱敏设置 <span class="badge badge-amber">示例数据（虚构）</span> <span class="p6-tag">P6+ 国际对标 ⑭</span></h1>
+            <p>按 MSC.255(84) 第 23 章：询问笔录、VDR 录音等安全调查记录只用于安全目的。按角色 × 数据类别控制可见范围，按导出对象自动脱敏；每次访问与导出写入审计日志。</p>
+          </div>
+          <div class="screen-actions">
+            <button class="btn">📜 查看访问审计</button>
+            <button class="btn btn-primary">💾 保存策略</button>
+          </div>
+        </div>
+
+        <div class="p6-row" style="grid-template-columns: 1.25fr 1fr; flex:1;">
+          <div class="p6-col">
+            <div class="glass-panel p6-panel">
+              <div class="panel-header"><div class="panel-title">角色 × 数据类别 权限矩阵</div><div class="p6-legend"><span><span class="pm pm-f">读写</span></span><span><span class="pm pm-r">只读</span></span><span><span class="pm pm-m">脱敏</span></span><span><span class="pm pm-n">禁止</span></span></div></div>
+              <div class="panel-body">
+                <table class="perm">
+                  <thead><tr><th>角色</th><th>AIS / 仿真</th><th>VDR 音频</th><th>询问笔录</th><th>个人信息</th><th>医疗 / 酒精</th><th>报告草案</th></tr></thead>
+                  <tbody>
+                    <tr><td>首席调查官</td><td><span class="pm pm-f">读写</span></td><td><span class="pm pm-f">读写</span></td><td><span class="pm pm-f">读写</span></td><td><span class="pm pm-f">读写</span></td><td><span class="pm pm-r">只读</span></td><td><span class="pm pm-f">读写</span></td></tr>
+                    <tr><td>调查员</td><td><span class="pm pm-f">读写</span></td><td><span class="pm pm-r">只读</span></td><td><span class="pm pm-f">读写</span></td><td><span class="pm pm-r">只读</span></td><td><span class="pm pm-n">禁止</span></td><td><span class="pm pm-f">读写</span></td></tr>
+                    <tr><td>外部专家</td><td><span class="pm pm-r">只读</span></td><td><span class="pm pm-m">脱敏</span></td><td><span class="pm pm-m">脱敏</span></td><td><span class="pm pm-n">禁止</span></td><td><span class="pm pm-n">禁止</span></td><td><span class="pm pm-n">禁止</span></td></tr>
+                    <tr><td>实质利益国</td><td><span class="pm pm-r">只读</span></td><td><span class="pm pm-n">禁止</span></td><td><span class="pm pm-m">脱敏</span></td><td><span class="pm pm-n">禁止</span></td><td><span class="pm pm-n">禁止</span></td><td><span class="pm pm-r">只读</span></td></tr>
+                    <tr><td>LLM 智能体服务</td><td><span class="pm pm-r">只读</span></td><td><span class="pm pm-m">脱敏</span></td><td><span class="pm pm-m">脱敏</span></td><td><span class="pm pm-n">禁止</span></td><td><span class="pm pm-n">禁止</span></td><td><span class="pm pm-r">只读</span></td></tr>
+                    <tr><td>公众（最终报告）</td><td><span class="pm pm-r">只读</span></td><td><span class="pm pm-n">禁止</span></td><td><span class="pm pm-n">禁止</span></td><td><span class="pm pm-n">禁止</span></td><td><span class="pm pm-n">禁止</span></td><td><span class="pm pm-n">禁止</span></td></tr>
+                  </tbody>
+                </table>
+                <div class="p6-note" style="margin-top:8px;">LLM 智能体默认使用本地模型；如需调用外部 API，只发送脱敏后的文本，原始笔录与 VDR 音频不出本机。</div>
+              </div>
+            </div>
+            <div class="glass-panel p6-panel" style="flex:1;">
+              <div class="panel-header"><div class="panel-title">字段级脱敏规则</div><span class="panel-subtitle">导出时自动应用</span></div>
+              <div class="panel-body" style="padding:4px 10px;">
+                <table class="p6-table">
+                  <thead><tr><th>字段</th><th>规则</th><th>示例</th><th>适用对象</th></tr></thead>
+                  <tbody>
+                    <tr><td>人员姓名</td><td>替换为角色代号</td><td class="mono">张某 → 二副(OOW)</td><td>专家 · 利益国 · 公众</td></tr>
+                    <tr><td>证件号 / 电话</td><td>全部遮盖</td><td class="mono">██████</td><td>除首席外全部</td></tr>
+                    <tr><td>VDR 驾驶台对话</td><td>仅保留与分析相关的片段（§23.3）</td><td class="mono">14:22:00–14:24:10</td><td>报告附录</td></tr>
+                    <tr><td>医疗 / 酒精检测</td><td>只给结论</td><td class="mono">“未见异常”</td><td>报告</td></tr>
+                    <tr><td>船员国籍 / 年龄</td><td>泛化为区间</td><td class="mono">35 岁 → 30–40</td><td>公众</td></tr>
+                    <tr><td>公司商业信息</td><td>运价、合同条款遮盖</td><td class="mono">租约 ██</td><td>利益国 · 公众</td></tr>
+                    <tr><td>发给 LLM 的文本</td><td>姓名/证件/电话先替换再发送</td><td class="mono">PII → &lt;ROLE_03&gt;</td><td>智能体服务</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-panel p6-panel">
+            <div class="panel-header"><div class="panel-title">导出预览 · IR-03 笔录（面向外部专家）</div><span class="p6-seg"><span>原文</span><span class="on">脱敏后</span></span></div>
+            <div class="panel-body" style="display:flex;flex-direction:column;gap:10px;">
+              <div class="p6-card" style="font-size:12px;line-height:1.85;">
+                <div class="p6-muted mono" style="font-size:10.5px;margin-bottom:4px;">IR-03 · 2026-05-19 · 受询问人：<span class="redact-tag">二副(OOW)</span> · 证件号 <span class="redact">000000000000</span></div>
+                <div><b style="color:var(--cyan)">问</b> 你什么时候第一次在雷达上看到 Lily 轮？</div>
+                <div><b style="color:var(--amber)">答</b> 大概 14:17 左右，在 3 号浮标北面……</div>
+                <div><b style="color:var(--cyan)">问</b> 当时船长在驾驶台吗？</div>
+                <div><b style="color:var(--amber)">答</b> <span class="redact-tag">船长</span> 14:23 半才上来，之前在房间。我前一晚因为 <span class="redact">家里有事没睡好</span><span class="redact-tag">已遮盖</span></div>
+                <div><b style="color:var(--cyan)">问</b> 你的手机号码？</div>
+                <div><b style="color:var(--amber)">答</b> <span class="redact">138 0000 0000</span></div>
+              </div>
+              <div class="p6-svgbox" id="ac-audit-svg"></div>
+              <div class="p6-card" style="display:flex;justify-content:space-between;align-items:center;">
+                <div><div class="p6-card-title" style="font-size:11.5px;">导出水印</div><div class="p6-card-sub">“仅供安全调查使用 · 外部专家 E-02 · 2026-06-03 · 不得用于诉讼”</div></div>
+                <span class="st st-ok">已启用</span>
+              </div>
+              <div class="p6-toolbar" style="justify-content:flex-end;margin-top:auto;"><button class="btn btn-sm">取消</button><button class="btn btn-sm btn-primary">🔒 加密导出（AES-256 · 一次性链接）</button></div>
+            </div>
+          </div>
+        </div>
+      </section>

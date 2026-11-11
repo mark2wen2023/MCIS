@@ -1,0 +1,3 @@
+OK /workspace/maritime-sim-design/logs/w1.1-retest-contract-crossing.json
+OK /workspace/maritime-sim-design/logs/w1.1-retest-contract-nuc.json
+OK /workspace/maritime-sim-design/logs/w1.1-retest-contract-review.json

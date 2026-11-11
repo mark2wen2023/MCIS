@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    mcis-core：计算核心命令行外壳。stdin 读一个 JSON 请求，stdout 写一个 JSON 响应。
+    计算代码以源码 glob 引用 unity/Assets/_Project/Scripts（不复制、不修改）。
+    只引用已稳定的目录。W2 Domain/Timeline + Data/Vdr 已接入 align；W1 Domain/Colreg 已接入 colreg。
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <AssemblyName>mcis-core</AssemblyName>
+    <RootNamespace>Mcis.Cli</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <McisScripts>../../unity/Assets/_Project/Scripts</McisScripts>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(McisScripts)/Core/Primitives/**/*.cs" />
+    <Compile Include="$(McisScripts)/Domain/Common/**/*.cs" />
+    <Compile Include="$(McisScripts)/Domain/Models/**/*.cs" />
+    <Compile Include="$(McisScripts)/Domain/Geo/**/*.cs" />
+    <Compile Include="$(McisScripts)/Domain/Cpa/**/*.cs" />
+    <Compile Include="$(McisScripts)/Domain/Colreg/**/*.cs" />
+    <Compile Include="$(McisScripts)/Domain/Evidence/**/*.cs" />
+    <Compile Include="$(McisScripts)/Domain/Timeline/**/*.cs" />
+    <Compile Include="$(McisScripts)/Data/Vdr/**/*.cs" />
+    <Compile Include="src/**/*.cs" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,9 @@
+
+> web@0.0.0 test
+> esbuild tests/colreg-render.test.tsx --bundle --platform=node --format=cjs --outfile=tests/.tmp-colreg-render.cjs --jsx=automatic && node tests/.tmp-colreg-render.cjs
+
+
+  tests/.tmp-colreg-render.cjs  1.5mb ⚠️
+
+⚡ Done in 34ms
+ok  18 assertions (labels + render lily/mary + haili5)

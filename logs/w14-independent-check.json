@@ -1,0 +1,33 @@
+{
+  "demo": {
+    "S0": {
+      "verdict": "Collision",
+      "tc": 539.96875,
+      "clearance_true": 0.0,
+      "clearance_sat_cpa": 0.0
+    },
+    "S1": {
+      "verdict": "NearMiss",
+      "verdict_sat": "NearMiss",
+      "tc": null,
+      "cpa_t": 552.3399999999868,
+      "clearance_true": 130.54996744222737,
+      "clearance_sat_cpa": 127.60324151536102
+    },
+    "S2": {
+      "verdict": "Collision",
+      "tc": 559.375,
+      "clearance_true": 0.0,
+      "clearance_sat_cpa": 0.0
+    },
+    "S3": {
+      "verdict": "NearMiss",
+      "verdict_sat": "NearMiss",
+      "tc": null,
+      "cpa_t": 548.5999999999877,
+      "clearance_true": 58.78457130962541,
+      "clearance_sat_cpa": 52.357864752924264
+    }
+  },
+  "all_ok": true
+}

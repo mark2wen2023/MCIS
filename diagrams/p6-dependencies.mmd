@@ -1,0 +1,24 @@
+flowchart LR
+    F4a["④ 钟差校正（最小）"] --> F1["① VDR 回放 ★"]
+    F2a["② 哈希登记（最小）"] --> F1
+    F1 --> F3["③ 笔录比对 ★"]
+    F14a["⑭ 脱敏网关"] --> F3
+    CPA["CpaService（P1）"] --> F6["⑥ COLREG 对照 ★"]
+    F6 --> F9["⑨ 安全建议 ★"]
+    F3 --> F9
+    F1 --> F7["⑦ What-if"]
+    F9 --> F11["⑪ 双语报告 + GISIS"]
+    F11 --> F10["⑩ 征求意见"]
+    F14a --> F14["⑭ 权限矩阵/导出"]
+    F14 --> F10
+    F3 --> F5["⑤ 人为因素"]
+    F5 --> F8["⑧ 系统分析"]
+    PG["PostgreSQL + pgvector"] --> F12["⑫ 相似案例"]
+    CASE["案件信息（P1）"] --> F13["⑬ 分级与通知"]
+
+    classDef a fill:#2a1f08,stroke:#ffb020,color:#ffe2a6
+    classDef b fill:#0d1a2e,stroke:#3be3ff,color:#e6f1ff
+    classDef c fill:#1c1636,stroke:#a78bfa,color:#e9e3ff
+    class F1,F3,F6,F9,F4a,F2a,F14a a
+    class F7,F11,F14 b
+    class F5,F8,F10,F12,F13 c

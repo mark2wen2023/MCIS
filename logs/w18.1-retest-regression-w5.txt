@@ -1,0 +1,9 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  W5.Interview -> /workspace/maritime-sim-design/unity/Tests_W5_Interview/bin/Debug/netstandard2.1/Mcis.W5.Interview.dll
+  W5.Interview.Tests -> /workspace/maritime-sim-design/unity/Tests_W5_Interview/Tests/bin/Debug/net8.0/W5.Interview.Tests.dll
+Test run for /workspace/maritime-sim-design/unity/Tests_W5_Interview/Tests/bin/Debug/net8.0/W5.Interview.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    73, Skipped:     0, Total:    73, Duration: 86 ms - W5.Interview.Tests.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

@@ -1,0 +1,337 @@
+""".mcase 导入/导出（兼容 Unity 侧 Mcis.Data.CasePackage：ZIP + manifest.json + 小写 SHA-256）。
+
+导出布局 = ARCHITECTURE §11.1 + §15.4（只增不改）：
+  manifest.json / case.json（CaseJson 字段与顺序）/ case.ext.json（服务扩展字段）/ vessels.json
+  derived/tracks/<vesselId>.track.json / evidence/index.json / raw/** 与 evidence/** 原件
+  analysis/timeline.json / analysis/time-alignment.json / analysis/colreg.json
+  testimony/IR-xx.json / recommendations.json / consultation/rounds.json / agents/drafts.json / access-policy.json
+  audit/audit.jsonl / audit/custody.jsonl（C# CustodyEvent 行格式）/ audit/agent.jsonl
+"""
+from __future__ import annotations
+
+import io
+import json
+import zipfile
+from pathlib import Path
+from typing import Any
+
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+
+from .. import __version__
+from ..agents.models import AgentDraftRow
+from ..audit import service as audit
+from ..audit.models import AuditEventRow
+from ..cases.models import CaseRow, TrackPointRow, VesselRow
+from ..colreg.models import ColregAnalysisRow
+from ..common.context import problem
+from ..common.csjson import quote, sha256_hex
+from ..common.timeutil import iso, now_utc, parse_iso
+from ..db import get_doc, list_docs, put_doc
+from ..evidence.models import CustodyEventRow, EvidenceRow
+from ..evidence import service as evidence_service
+from ..interviews.models import InterviewRow
+from ..recommendations.models import ConsultationRoundRow, RecommendationRow
+from ..redaction.models import AccessPolicyRow
+from ..redaction.policy import default_policy
+from ..timeline.models import ConflictRow, TimelineEventRow
+
+PACKAGE_FORMAT = "MCIS-MCASE"
+PACKAGE_VERSION = "1.0.0"
+GENERATOR = f"MCIS-Service-{__version__}"
+REQUIRED_DIRS = ["raw", "raw/ais", "raw/charts", "derived", "derived/tracks", "derived/cpa", "derived/damage_bake",
+                 "evidence", "audit", "exports", "thumbnails"]
+CASE_FIELDS = ["caseId", "schemaVersion", "title", "accidentCode", "accidentType", "accidentGrade", "incidentTimeUtc",
+               "caseEpochUtc", "displayTimeZoneOffsetMinutes", "incidentLocation", "seaLevelOffsetM", "leadInvestigator",
+               "agencyName", "isFictionalDemo", "summaryNotes"]
+CASE_EXT_FIELDS = ["durationSec", "placeName"]
+
+
+def _num(v: float | int) -> str:
+    if isinstance(v, bool):
+        return "true" if v else "false"
+    if isinstance(v, int):
+        return str(v)
+    return repr(float(v))
+
+
+def case_json(c: dict[str, Any]) -> str:
+    """与 C# CaseJson.ToJson 相同的键顺序与缩进。"""
+    loc = c.get("incidentLocation", {})
+    L = ["{",
+         f'  "caseId": {quote(c["caseId"])},',
+         f'  "schemaVersion": {quote(c.get("schemaVersion", "1.0.0"))},',
+         f'  "title": {quote(c.get("title", ""))},',
+         f'  "accidentCode": {quote(c.get("accidentCode", ""))},',
+         f'  "accidentType": {quote(c.get("accidentType", ""))},',
+         f'  "accidentGrade": {quote(c.get("accidentGrade", ""))},',
+         f'  "incidentTimeUtc": {quote(iso(parse_iso(c["incidentTimeUtc"])))},',
+         f'  "caseEpochUtc": {quote(iso(parse_iso(c["caseEpochUtc"])))},',
+         f'  "displayTimeZoneOffsetMinutes": {int(c.get("displayTimeZoneOffsetMinutes", 480))},',
+         '  "incidentLocation": {',
+         f'    "lonDeg": {_num(loc.get("lonDeg", 0.0))},',
+         f'    "latDeg": {_num(loc.get("latDeg", 0.0))},',
+         f'    "heightM": {_num(loc.get("heightM", 0.0))}',
+         "  },",
+         f'  "seaLevelOffsetM": {_num(c.get("seaLevelOffsetM", 0.0))},',
+         f'  "leadInvestigator": {quote(c.get("leadInvestigator", ""))},',
+         f'  "agencyName": {quote(c.get("agencyName", ""))},',
+         f'  "isFictionalDemo": {"true" if c.get("isFictionalDemo") else "false"},',
+         f'  "summaryNotes": {quote(c.get("summaryNotes", ""))}',
+         "}"]
+    return "\n".join(L) + "\n"
+
+
+def infer_role(rel: str) -> str:
+    """与 C# PackageManifest.InferRole 一致。"""
+    n = rel.replace("\\", "/")
+    low = n.lower()
+    if low == "case.json":
+        return "CaseDefinition"
+    if n.startswith("raw/") or n == "raw" or low.startswith("evidence/"):
+        return "RawEvidence"
+    if low.startswith("audit/"):
+        return "Audit"
+    if low.startswith("exports/"):
+        return "Export"
+    if low.startswith("thumbnails/"):
+        return "Thumbnail"
+    return "Derived"
+
+
+def manifest_json(case_id: str, files: dict[str, bytes], created: str) -> str:
+    """与 C# PackageManifest.ToJson 相同的格式。"""
+    L = ["{",
+         f'  "packageFormat": {quote(PACKAGE_FORMAT)},',
+         f'  "packageVersion": {quote(PACKAGE_VERSION)},',
+         f'  "caseId": {quote(case_id)},',
+         f'  "createdAtUtc": {quote(created)},',
+         f'  "lastModifiedAtUtc": {quote(iso(now_utc()))},',
+         f'  "generatorVersion": {quote(GENERATOR)},',
+         '  "files": [']
+    names = sorted(files)
+    for i, rel in enumerate(names):
+        data = files[rel]
+        L += ["    {",
+              f'      "relativePath": {quote(rel)},',
+              f'      "role": {quote(infer_role(rel))},',
+              f'      "sizeBytes": {len(data)},',
+              f'      "sha256": {quote(sha256_hex(data))}',
+              "    }" + ("," if i < len(names) - 1 else "")]
+    L += ["  ]", "}"]
+    return "\n".join(L) + "\n"
+
+
+def _j(obj: Any) -> bytes:
+    return (json.dumps(obj, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+
+
+def _lines(lines: list[str]) -> bytes:
+    return ("".join(l + "\n" for l in lines)).encode("utf-8")
+
+
+def build_files(s: Session, blob_root: Path, case_id: str) -> dict[str, bytes]:
+    case = get_doc(s, CaseRow, case_id, case_id)
+    files: dict[str, bytes] = {}
+    for d in REQUIRED_DIRS:
+        files[f"{d}/.keep"] = b""
+    files["case.json"] = case_json(case).encode("utf-8")
+    files["case.ext.json"] = _j({k: case[k] for k in CASE_EXT_FIELDS if k in case})
+    files["vessels.json"] = _j(list_docs(s, VesselRow, case_id))
+    pts = s.scalars(select(TrackPointRow).where(TrackPointRow.case_id == case_id).order_by(TrackPointRow.vessel_id, TrackPointRow.time_sec)).all()
+    by_v: dict[str, list] = {}
+    for p in pts:
+        by_v.setdefault(p.vessel_id, []).append(p.doc)
+    for vid, lst in by_v.items():
+        files[f"derived/tracks/{vid}.track.json"] = _j({"vesselId": vid, "points": lst})
+    ev = list_docs(s, EvidenceRow, case_id)
+    files["evidence/index.json"] = _j(ev)
+    for item in ev:
+        rel = item.get("relativePath") or ""
+        if rel:
+            p = evidence_service.blob_path(blob_root, case_id, rel)
+            if p.exists():
+                files[rel] = p.read_bytes()
+    files["analysis/timeline.json"] = _j({"events": list_docs(s, TimelineEventRow, case_id)})
+    files["analysis/time-alignment.json"] = _j({"conflicts": list_docs(s, ConflictRow, case_id)})
+    col = get_doc(s, ColregAnalysisRow, case_id, "current")
+    if col:
+        files["analysis/colreg.json"] = _j(col)
+    for iv in list_docs(s, InterviewRow, case_id):
+        files[f"testimony/{iv['recordId']}.json"] = _j(iv)
+    files["recommendations.json"] = _j(list_docs(s, RecommendationRow, case_id))
+    files["consultation/rounds.json"] = _j(list_docs(s, ConsultationRoundRow, case_id))
+    files["agents/drafts.json"] = _j(list_docs(s, AgentDraftRow, case_id))
+    files["access-policy.json"] = _j(get_doc(s, AccessPolicyRow, case_id, "policy") or default_policy())
+    files["audit/custody.jsonl"] = _lines([r.line for r in evidence_service.custody_events(s, case_id)])
+    rows = s.scalars(select(AuditEventRow).where(AuditEventRow.case_id == case_id).order_by(AuditEventRow.seq)).all()
+    files["audit/audit.jsonl"] = _lines([r.line for r in rows])
+    files["audit/agent.jsonl"] = _lines([r.line for r in rows if r.category == "Agent"])
+    return files
+
+
+def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: str) -> bytes:
+    row = s.scalars(select(CaseRow).where(CaseRow.case_id == case_id)).first()
+    if row is None:
+        raise problem(404, "CASE_NOT_FOUND", f"案件不存在：{case_id}")
+    audit.append(s, case_id=case_id, operator=operator, role=role, action="package.export", category="Package",
+                 command=f"导出案件包 {case_id}.mcase", after=GENERATOR, entity_type="case", entity_id=case_id)
+    files = build_files(s, blob_root, case_id)
+    files["manifest.json"] = manifest_json(case_id, files, iso(parse_iso(row.created_utc))).encode("utf-8")
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
+        for rel in sorted(files):
+            z.writestr(rel, files[rel])
+    return buf.getvalue()
+
+
+# ---------------- 导入 ----------------
+
+def read_zip(data: bytes) -> dict[str, bytes]:
+    try:
+        z = zipfile.ZipFile(io.BytesIO(data))
+    except zipfile.BadZipFile as e:
+        raise problem(422, "BAD_PACKAGE", "不是有效的 .mcase（ZIP）文件") from e
+    out = {}
+    for info in z.infolist():
+        if info.is_dir():
+            continue
+        name = info.filename.replace("\\", "/")
+        if name.startswith("/") or ".." in name.split("/"):
+            raise problem(422, "BAD_PACKAGE", f"非法路径：{name}")
+        out[name] = z.read(info)
+    return out
+
+
+def verify_files(files: dict[str, bytes]) -> dict[str, Any]:
+    """与 C# IntegrityChecker.VerifyWorkspace 相同的判定：缺失或篡改即无效；多余文件只报告。"""
+    if "manifest.json" not in files:
+        return {"isValid": False, "tamperedFiles": [], "missingFiles": ["manifest.json"], "extraFiles": []}
+    m = json.loads(files["manifest.json"].decode("utf-8-sig"))
+    listed = {}
+    for f in m.get("files", []):
+        listed[f["relativePath"].replace("\\", "/")] = f
+    lower = {k.lower(): k for k in files}
+    tampered, missing = [], []
+    for rel, f in listed.items():
+        real = files.get(rel) if rel in files else files.get(lower.get(rel.lower(), ""), None)
+        if real is None:
+            missing.append(rel)
+        elif sha256_hex(real).lower() != (f.get("sha256") or "").lower():
+            tampered.append(rel)
+    listed_low = {k.lower() for k in listed}
+    extra = [k for k in files if k != "manifest.json" and k.lower() not in listed_low]
+    return {"isValid": not tampered and not missing, "tamperedFiles": tampered, "missingFiles": missing,
+            "extraFiles": extra, "caseId": m.get("caseId"), "packageFormat": m.get("packageFormat"),
+            "createdAtUtc": m.get("createdAtUtc"),
+            "generatorVersion": m.get("generatorVersion")}
+
+
+def _load_json(files: dict[str, bytes], rel: str, default: Any) -> Any:
+    return json.loads(files[rel].decode("utf-8-sig")) if rel in files else default
+
+
+def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: str) -> dict[str, Any]:
+    files = read_zip(data)
+    report = verify_files(files)
+    if not report["isValid"]:
+        raise problem(422, "INTEGRITY_FAILED", "案件包完整性校验失败", report)
+    if report.get("packageFormat") not in (None, PACKAGE_FORMAT):
+        raise problem(422, "BAD_PACKAGE", f"未知包格式 {report.get('packageFormat')}")
+    if "case.json" not in files:
+        raise problem(422, "BAD_PACKAGE", "案件包缺少 case.json")
+    raw_case = json.loads(files["case.json"].decode("utf-8-sig"))
+    case = {k: raw_case[k] for k in CASE_FIELDS if k in raw_case}
+    case.update(_load_json(files, "case.ext.json", {}))
+    # 缺省值与 C# CaseDefinition 默认一致（Unity 侧最小包可能只写部分字段）
+    created = report.get("createdAtUtc") or "1970-01-01T00:00:00Z"
+    case.setdefault("schemaVersion", "1.0.0")
+    case.setdefault("title", case.get("caseId", ""))
+    case.setdefault("accidentType", "")
+    case.setdefault("incidentTimeUtc", case.get("caseEpochUtc", created))
+    case.setdefault("caseEpochUtc", case["incidentTimeUtc"])
+    case.setdefault("displayTimeZoneOffsetMinutes", 480)
+    case.setdefault("incidentLocation", {"lonDeg": 0.0, "latDeg": 0.0, "heightM": 0.0})
+    case.setdefault("isFictionalDemo", False)
+    for k in ("incidentTimeUtc", "caseEpochUtc"):
+        case[k] = iso(parse_iso(case[k]))
+    case_id = case["caseId"]
+    if s.scalars(select(CaseRow).where(CaseRow.case_id == case_id)).first():
+        raise problem(409, "CASE_EXISTS", f"案件已存在：{case_id}（请先换库或改名）")
+
+    # 审计链与保管链先校验再落库
+    audit_lines = [l for l in files.get("audit/audit.jsonl", b"").decode("utf-8").splitlines() if l.strip()]
+    custody_lines = [l for l in files.get("audit/custody.jsonl", b"").decode("utf-8").splitlines() if l.strip()]
+    for name, lines in (("audit.jsonl", audit_lines), ("custody.jsonl", custody_lines)):
+        chk = audit.verify_chain(lines)
+        if not chk["valid"]:
+            raise problem(422, "CHAIN_BROKEN", f"{name} 哈希链断裂", chk)
+
+    put_doc(s, CaseRow, case_id, case_id, case)
+    for v in _load_json(files, "vessels.json", []):
+        put_doc(s, VesselRow, case_id, v["vesselId"], v)
+    for rel, blob in files.items():
+        if rel.startswith("derived/tracks/") and rel.endswith(".track.json"):
+            t = json.loads(blob.decode("utf-8"))
+            for p in t.get("points", []):
+                s.add(TrackPointRow(case_id=case_id, vessel_id=t["vesselId"], time_sec=p["timeSec"], doc=p))
+    ev_index = _load_json(files, "evidence/index.json", [])
+    if not ev_index:
+        # Unity 侧包没有 evidence/index.json：从 custody.jsonl 的 Register 行还原登记快照
+        for line in custody_lines:
+            rec = json.loads(line)
+            if rec.get("action") == "custody.register":
+                ev_index.append({"evidenceId": rec["evidence_id"], "caseId": rec.get("case_id") or case_id,
+                                 "title": rec.get("title", ""), "source": rec.get("source", ""),
+                                 "extractedBy": rec.get("extracted_by", ""), "extractedUtc": rec.get("extracted_utc", ""),
+                                 "sha256": rec.get("sha256", ""), "relativePath": rec.get("path", ""),
+                                 "confidentiality": rec.get("confidentiality", "Normal"), "category": "Other", "note": ""})
+    for item in ev_index:
+        put_doc(s, EvidenceRow, case_id, item["evidenceId"], item)
+    for rel, blob in files.items():
+        if (rel.startswith("raw/") or rel.startswith("evidence/")) and not rel.endswith("/.keep") and rel != "evidence/index.json":
+            p = evidence_service.blob_path(blob_root, case_id, rel)
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_bytes(blob)
+    for e in _load_json(files, "analysis/timeline.json", {}).get("events", []):
+        put_doc(s, TimelineEventRow, case_id, e["eventId"], e)
+    for c in _load_json(files, "analysis/time-alignment.json", {}).get("conflicts", []):
+        put_doc(s, ConflictRow, case_id, c["conflictId"], c)
+    if "analysis/colreg.json" in files:
+        put_doc(s, ColregAnalysisRow, case_id, "current", _load_json(files, "analysis/colreg.json", {}))
+    for rel in files:
+        if rel.startswith("testimony/") and rel.endswith(".json"):
+            iv = _load_json(files, rel, {})
+            put_doc(s, InterviewRow, case_id, iv["recordId"], iv)
+    for r in _load_json(files, "recommendations.json", []):
+        put_doc(s, RecommendationRow, case_id, r["id"], r)
+    for r in _load_json(files, "consultation/rounds.json", []):
+        put_doc(s, ConsultationRoundRow, case_id, str(r["roundNo"]), r)
+    for d in _load_json(files, "agents/drafts.json", []):
+        put_doc(s, AgentDraftRow, case_id, d["draftId"], d)
+    if "access-policy.json" in files:
+        put_doc(s, AccessPolicyRow, case_id, "policy", _load_json(files, "access-policy.json", {}))
+
+    from ..common.csjson import ZERO_HASH, sha256_utf8
+    prev = ZERO_HASH
+    for i, line in enumerate(custody_lines):
+        rec = json.loads(line)
+        kind = evidence_service.KIND_BY_ACTION.get(rec.get("action"), "Access")
+        s.add(CustodyEventRow(case_id=case_id, seq=int(rec.get("seq", i + 1)), evidence_id=rec.get("evidence_id", ""), kind=kind,
+                              utc=rec.get("utc", ""), operator=rec.get("operator", ""), sha256=rec.get("sha256", ""),
+                              previous_sha256=rec.get("before", "") if kind in ("Change", "Verify") else "",
+                              detail=rec.get("detail", ""),
+                              verify_matched=(rec.get("result") == "match") if kind == "Verify"
+                              else (rec.get("result") == "needs_review") if kind == "Review" else None,
+                              prev_line_hash=rec.get("prev", prev), line=line))
+        prev = sha256_utf8(line)
+    prev = ZERO_HASH
+    for i, line in enumerate(audit_lines):
+        audit.append_raw_line(s, case_id, json.loads(line), line, i + 1, prev)
+        prev = sha256_utf8(line)
+    s.flush()
+    audit.append(s, case_id=case_id, operator=operator, role=role, action="package.import", category="Package",
+                 command=f"导入案件包 {case_id}", after=f"{report.get('generatorVersion')}；文件 {len(files)} 个；额外 {len(report['extraFiles'])} 个",
+                 entity_type="case", entity_id=case_id)
+    return {"caseId": case_id, "integrity": report, "imported": {
+        "evidence": len(ev_index), "custodyEvents": len(custody_lines), "auditEvents": len(audit_lines) + 1}}

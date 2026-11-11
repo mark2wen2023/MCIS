@@ -1,0 +1,94 @@
+你是本仓库的实现代理。在 /workspace/maritime-sim-design 完成 P6a 任务 W1：COLREG 逐条对照规则引擎（功能⑥）。
+
+【硬性约束】
+- 严格遵守 P6A_PLAN.md。若与本提示其他句子冲突，以 P6A_PLAN.md 为准，并在最终汇报里指出冲突点。
+- 写入范围仅限：
+  1) unity/Assets/_Project/Scripts/Domain/Colreg/**（新建）
+  2) unity/Tests_W1_Colreg/（新建 xUnit 测试工程）
+- 禁止修改任何其他已有源文件（包括但不限于 Domain 其他目录、Simulation、UI、DotnetTests2、PROGRESS.md、ARCHITECTURE.md、REQUESTS.md）。P6A_PLAN.md 的状态行不要你改，由外部代理人在验证通过后追加。
+- 不 git 操作、不 commit、不 push。
+- 不打印、不外发任何密钥。
+- 只用合成/虚构数据；禁止读取 /cursor/stores、attachments、reports/ 下真实报告内容。
+- 演示情节若用 Lily/Mary，必须标注虚构，时间线以原型为准（14:15–14:27，星屿港，Mary 撞 Lily 左舷）。
+- 纯逻辑：C# 9、Domain 代码目标框架按测试工程引用编译即可（与现有 Domain 一致：不引用 UnityEngine，不用 file-scoped namespace，nullable disable，块命名空间，中文 XML 注释，readonly struct / sealed class + 构造函数，风格对齐现有 Domain）。
+- 确定性规则用代码实现，禁止调用 LLM 做判定。
+- 需要改现有类型时不要改，把需求写在最终汇报的「已知问题」里（外部会考虑写入 REQUESTS.md）。
+- 先写失败测试，再实现；不要削弱断言来换绿灯。
+
+【测试工程】
+- 路径：unity/Tests_W1_Colreg/
+- 参照 unity/DotnetTests2 的写法：xUnit，net8.0，LangVersion 9.0，Nullable disable。
+- 用 ~/.dotnet/dotnet（即 /home/box/.dotnet/dotnet）。
+- 按 P6A_PLAN：glob 引入
+  - unity/Assets/_Project/Scripts/Core/Primitives/**/*.cs
+  - unity/Assets/_Project/Scripts/Domain/Common/**/*.cs
+  - unity/Assets/_Project/Scripts/Domain/Models/**/*.cs
+  - 本包 unity/Assets/_Project/Scripts/Domain/Colreg/**/*.cs
+- 另外必须 glob 引入 Domain/Cpa/**/*.cs（复用现有 CpaCalculator / VesselMotionState，禁止重写 DCPA/TCPA）。不要引入 Simulation、UI、Integrations。
+- 不要引入 Domain/Tracks、Domain/Geo，除非你有充分理由；主 API 直接接收 IReadOnlyList<TrackSample>（TrackSample 已在 Domain/Models），测试里用合成 TrackSample 即可（Geo 可用占位 GeoCoord，ENU/航向/航速必须正确）。
+- 可做成单个测试 csproj（把上述源文件 Compile Include 进测试工程），或「源码 csproj + 测试 csproj」。不要改 DotnetTests2。
+- 若沙箱里 dotnet 无法运行，跳过测试并在汇报里说明；不要为此改代码结构。
+
+【要读的现有类型（只读）】
+- Mcis.Core.SimTime、Result<T>
+- Mcis.Domain.Common.EnuPosition、Double2
+- Mcis.Domain.Models.TrackSample、EnvironmentState、CpaResult、CpaPairKey、RiskLevel、SampleProvenance
+- Mcis.Domain.Cpa.CpaCalculator.CalculateFromSamples / CalculateFromStates、VesselMotionState
+航向优先用 TrackSample.HdgDeg，若 HeadingFromCog 或船首向不可用则用 CogDeg。速度用 VelocityEnuMps / SogMps（可转节：1 kn = 1852/3600 m/s，1 nm = 1852 m）。
+
+【功能需求】
+实现按时间判定会遇局面、两船让路/直航责任、应采取行动 vs 实际操纵，并输出时间带 + 逐条核查结果。
+
+1) 会遇局面（在「存在碰撞危险」时判定；危险判据可配置，默认可用 DCPA 低于阈值且 TCPA>0，或距离正在接近）：
+   - R13 追越：他船从本船正横后大于 22.5° 的方向赶上，即他船相对本船船首向的相对方位落在 [112.5°, 247.5°] 扇区（边界角 112.5° 必须可配，默认 112.5）。追上的船为让路船，被追越船为直航船。一旦成立，在驶过让清前保持追越局面（R13 存疑视为追越）。
+   - R14 对遇：互见的机动船航向相反或接近相反以致有碰撞危险。默认「接近相反」= 航向差与 180° 之差的绝对值 ≤ 6°（对遇半角 6° 可配），且他船大致在前方。双方均应向右转向，无单方直航。
+   - R15 交叉：互见且非追越、非对遇。他船在本船右舷者为让路船，另一艘为直航船；让路船应避免横越他船前方。
+   - R19 能见度不良/未互见：能见度 < 可配置阈值（默认建议 2.0 nm，可配）或请求显式标明未互见时适用。此时不适用 R13–R18 的让路/直航划分（双方都有行动义务）。应核查：以安全航速行驶；对正横以前的他船避免向左转向（被追越除外）；对正横或正横以后的他船避免朝其转向。
+   判定优先级：未互见/能见度不良 → R19；否则追越优先于对遇/交叉；再对遇；再交叉。
+   架构验收还提到狭水道：请求里用布尔 InNarrowChannel（本阶段没有航道几何）。当标志为真时，规则清单应出现 R9；若无航道几何，R9 几何项（尽量靠航道右侧外缘行驶）可为 NotApplicable 并注明缺少航道几何，但时间带/清单必须覆盖狭水道场景。不要因为缺少 ENC 而静默忽略 R9。
+
+2) 应采取 vs 实际行动（R8 / R16 / R17，并与局面规则结合）：
+   - 实际操纵从航向、航速随时间的变化检测：右转/左转、加速/减速、保向保速。阈值可配（例如「大幅度」转向默认 10°，「保向」容差、「保速」容差、提早行动的剩余 TCPA 或距离门限）。
+   - R8：行动应及早、明显（大幅度）、能导致在安全距离驶过。
+   - R16：让路船应及早地大幅度行动以便他船明确让清。
+   - R17：直航船应保向保速；当看出让路船显然未采取适当行动时可采取行动；若单凭让路船已无法避碰则应采取最有助于避碰的行动；交叉局面下采取行动的机动船，在环境允许时不应朝本船左舷的来船向左转向。本规则不解除让路船义务。
+   - R14：双方应向右转向；向左转应判为不满足。
+   每个「应采取」条目对应同一时段的「实际」操纵，并给出符合/不符合/不适用（如 UI 也可有「部分符合」）+ 依据数值（相对方位、航向差、DCPA、TCPA、航向变化、航速变化、能见度等）。
+
+3) 输出：
+   - 按时间合并的会遇局面时间带（局面 + 适用规则 + 两船角色在带内保持不变则合并）。
+   - 逐条规则核查表（至少覆盖 R8、R13、R14、R15、R16、R17、R19，以及有狭水标志时的 R9）。
+   - 每条核查：Satisfied / NotSatisfied / NotApplicable（可用 Partial），针对各船或双方，并附依据数值。
+   - 整份报告必须固定带免责声明原文：「仅作安全调查技术分析，不作责任认定。」不得输出责任认定表述。
+
+4) 所有阈值可配置，并有 Default。至少包括：对遇半角（6°）、追越正横后角（22.5°，即相对方位边界 112.5°）、能见度不良阈值、碰撞危险 DCPA、安全驶过 DCPA、大幅度转向角、大幅度变速、保向/保速容差、采样间隔、提早行动时限。阈值必须进入报告（便于审计）。
+
+【建议公开 API（可微调命名，但要稳定、可被 UI/仿真层调用）】
+命名空间 Mcis.Domain.Colreg。架构把 ColregRules 放 Domain、ColregEngine 放 Simulation，但本包写入范围只允许 Domain/Colreg，因此 ColregEngine 也放在 Mcis.Domain.Colreg。
+
+建议：
+- ColregThresholds
+- enumerations: EncounterSituation, TrafficRole, RuleCheckStatus, ColregRuleId
+- ColregAnalysisRequest（两船 Id、各自按时间排序的 TrackSample、可选 EnvironmentState 序列或能见度、可选 VesselsInSight、InNarrowChannel、Thresholds、可选 CaseEpochUtc 用于把 SimTime 格式化成钟面时间）
+- ColregAnalysisReport（时间带、规则核查、应采取 vs 实际行动列表、免责声明、所用阈值）
+- ColregEngine.Analyze(...) -> Result<ColregAnalysisReport>
+- ColregRules：规则目录/条文要点（供清单），判定逻辑可放在 Engine/Classifier 内部
+
+【必须覆盖的测试（合成航迹，不要用真实报告）】
+- 正对遇（航向差 180°）→ HeadOn，双方义务为向右转向。
+- 对遇边界：±6° 仍为对遇；略大于 6°（例如 6.1° 或 7°）不再判对遇（在有碰撞危险时应变为交叉）。
+- 追越边界：相对方位刚好进入 >112.5°（或默认闭开区间需在测试中写清并与实现一致，推荐：大于 112.5° 且小于 247.5° 为追越扇区；正好 112.5° 的归属要在测试里固定一种并实现与之一致）判追越；略小于 112.5° 在互见且非对遇时判交叉。
+- 交叉：他船在右舷 → 本船让路；他船在左舷 → 本船直航。
+- 能见度不良/未互见 → R19，不套用 R14/R15 让路直航。
+- R19：对正横以前来船向左转向 → 该条不满足。
+- 对遇中一船向左转向 → 该船 R14 不满足。
+- 让路船及早大幅度右转 → R16/R8 满足；直航船保向保速 → R17 满足。
+- 时间带：能见度由不良转为互见（或局面由追越转为驶过让清）时，应出现分段而非单一局面贯穿全程。
+- 阈值可配：把对遇半角从 6° 改为 10° 后，8° 航向偏差应从交叉变为对遇。
+- 报告含免责声明全文。
+- 狭水道标志为真时，清单含 R9。
+每种会遇局面至少一例，边界角必须测到。
+
+【完成标准】
+- ~/.dotnet/dotnet test 该测试工程全部通过。
+- 最终汇报用中文写清：文件清单、公开接口签名（类型与方法）、测试数（通过/失败）、已知问题、如何运行测试。不要提密钥。

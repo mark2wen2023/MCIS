@@ -1,0 +1,4 @@
+  Failed Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D11_ContradictoryViews_RolesIndependentOfOrder [3 ms]
+  Failed Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D09_CatalogContainsR18 [3 ms]
+  Failed Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D10_HeadOnDoubt_SymmetricUnderSwap [1 ms]
+Failed!  - Failed:     3, Passed:   128, Skipped:     0, Total:   131, Duration: 77 ms - W1.Acceptance.dll (net8.0)

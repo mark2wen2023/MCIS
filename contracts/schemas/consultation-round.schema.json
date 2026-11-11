@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/consultation-round.schema.json",
+  "title": "ConsultationRound（报告草案征求意见轮次）",
+  "description": "字段与 C# Mcis.Domain.Recommendations.ConsultationRound / ConsultationParty / ConsultationReply / ConsultationComment 对齐。MSC.255(84) 第 13 章：默认 30 天。partyStatus / daysRemaining / allReplied 为只读推导字段（StatusOf / TallyFor / DaysRemaining）。 关闭条件同 C# CloseRound：各方均已回复/放弃，或已过期限。",
+  "type": "object",
+  "required": [
+    "roundNo",
+    "caseId",
+    "draftVersion",
+    "openedUtc",
+    "deadlineUtc",
+    "parties",
+    "replies",
+    "comments"
+  ],
+  "$defs": {
+    "party": {
+      "type": "object",
+      "required": [
+        "partyId",
+        "name"
+      ],
+      "properties": {
+        "partyId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "comment": {
+      "type": "object",
+      "required": [
+        "commentId",
+        "round",
+        "partyId",
+        "text",
+        "decision"
+      ],
+      "properties": {
+        "commentId": {
+          "type": "string"
+        },
+        "round": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "partyId": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "decision": {
+          "type": "string",
+          "enum": [
+            "Pending",
+            "Adopted",
+            "PartiallyAdopted",
+            "NotAdopted"
+          ]
+        },
+        "feedback": {
+          "type": "string"
+        },
+        "decidedBy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "decidedUtc": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/utc"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "reply": {
+      "type": "object",
+      "required": [
+        "partyId",
+        "utc",
+        "text"
+      ],
+      "properties": {
+        "partyId": {
+          "type": "string"
+        },
+        "utc": {
+          "$ref": "common.schema.json#/$defs/utc"
+        },
+        "text": {
+          "type": "string"
+        },
+        "commentIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "roundNo": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "caseId": {
+      "$ref": "common.schema.json#/$defs/caseId"
+    },
+    "draftVersion": {
+      "type": "string"
+    },
+    "openedUtc": {
+      "$ref": "common.schema.json#/$defs/utc"
+    },
+    "deadlineUtc": {
+      "$ref": "common.schema.json#/$defs/utc"
+    },
+    "isAgreedDeadline": {
+      "type": "boolean"
+    },
+    "draftSha256": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/sha256"
+        },
+        {
+          "type": "string",
+          "maxLength": 0
+        }
+      ],
+      "description": "草案文件 SHA-256（可空）"
+    },
+    "isClosed": {
+      "type": "boolean"
+    },
+    "closedUtc": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/utc"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "parties": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/party"
+      }
+    },
+    "replies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/reply"
+      }
+    },
+    "waivers": {
+      "type": "array",
+      "description": "放弃回复登记（C# WaiveReply）",
+      "items": {
+        "type": "object",
+        "required": [
+          "partyId",
+          "reason",
+          "utc"
+        ],
+        "properties": {
+          "partyId": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "utc": {
+            "$ref": "common.schema.json#/$defs/utc"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "comments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/comment"
+      }
+    },
+    "daysRemaining": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "（只读）"
+    },
+    "partyStatus": {
+      "type": "array",
+      "description": "（只读）每方 ReplyStatus + AdoptionTally",
+      "items": {
+        "type": "object",
+        "properties": {
+          "partyId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Replied",
+              "RepliedLate",
+              "Overdue",
+              "Waived"
+            ]
+          },
+          "adopted": {
+            "type": "integer"
+          },
+          "partiallyAdopted": {
+            "type": "integer"
+          },
+          "notAdopted": {
+            "type": "integer"
+          },
+          "pending": {
+            "type": "integer"
+          },
+          "total": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "allReplied": {
+      "type": "boolean",
+      "description": "（只读）各方均已回复或放弃"
+    }
+  },
+  "additionalProperties": false
+}

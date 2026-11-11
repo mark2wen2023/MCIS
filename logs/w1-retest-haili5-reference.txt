@@ -1,0 +1,12 @@
+[19:42:00-19:42:10] NoCollisionRisk H5=None A17=None doubt=False stage=None | 当前不满足碰撞危险判据，且没有持续至驶过让清的追越义务。
+[19:42:10-19:54:32] HeadOn H5=BothActionRequired A17=BothActionRequired doubt=False stage=ImmediateDanger | R14：接近反向且双方位于船首附近，有碰撞危险；锁定对遇和双方行动义务。
+  stage 19:42:00-19:42:10 None
+  stage 19:42:10-19:48:50 CollisionRisk
+  stage 19:48:50-19:54:10 CloseQuarters
+  stage 19:54:10-19:54:32 ImmediateDanger
+   19:42:10-19:54:32 R8 HAILI5 NotSatisfied brg=358.1 DCPA=52m TCPA=718s | 及早=False；明显行动=True；安全驶过代理=False；按本阶段全部观测段的CPA核查最小实际中心间距。
+   19:42:10-19:54:32 R7 HAILI5 Partial brg=358.1 DCPA=52m TCPA=718s | 航迹 CPA 序列可识别碰撞危险：本区段首次危险时刻=10.000s；DCPA 51.867→28.161m；TCPA 717.621→32.962s。这是航迹推算的技术事实；是否
+   19:42:10-19:54:32 R14 HAILI5 NotSatisfied brg=358.1 DCPA=52m TCPA=718s | 按船首向差和双方前方扇区识别；任何超出噪声容差的左转均不满足。
+   19:42:10-19:54:32 R8 WANHAI_A17 NotSatisfied brg=2.2 DCPA=52m TCPA=718s | 及早=False；明显行动=False；安全驶过代理=False；按本阶段全部观测段的CPA核查最小实际中心间距。
+   19:42:10-19:54:32 R7 WANHAI_A17 Partial brg=2.2 DCPA=52m TCPA=718s | 航迹 CPA 序列可识别碰撞危险：本区段首次危险时刻=10.000s；DCPA 51.867→28.161m；TCPA 717.621→32.962s。这是航迹推算的技术事实；是否
+   19:42:10-19:54:32 R14 WANHAI_A17 NotSatisfied brg=2.2 DCPA=52m TCPA=718s | 按船首向差和双方前方扇区识别；任何超出噪声容差的左转均不满足。

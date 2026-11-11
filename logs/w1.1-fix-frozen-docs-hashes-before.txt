@@ -1,0 +1,2 @@
+15a865ea4319a40a4d532b42d93a7696546096c5d5d65e37ecb6862bc5b809d7  DEFECTS/W1.md
+c87aaed06271456d5faa3295c657b2dbe1c0f60c28b24c09be3996fd40b7e6b6  contracts/schemas/colreg.schema.json

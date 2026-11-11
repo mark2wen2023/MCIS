@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EcfcDraftExtraction",
+  "type": "object",
+  "required": ["nodes", "edges", "liabilityMapping", "selfCheck"],
+  "properties": {
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["nodeId", "kind", "text", "lane", "isPrimaryIncident", "isPresumptive", "source"],
+        "properties": {
+          "nodeId": { "type": "string" },
+          "kind": { "enum": ["Event", "Condition"] },
+          "text": { "type": "string", "maxLength": 80 },
+          "lane": { "type": "integer" },
+          "time": { "type": ["object", "null"] },
+          "isPrimaryIncident": { "type": "boolean" },
+          "isPresumptive": { "type": "boolean" },
+          "actorVesselId": { "type": ["string", "null"] },
+          "quantities": { "type": "object" },
+          "causeRole": { "enum": ["direct", "indirect", "consequence", "context", "none"] },
+          "source": { "$ref": "../schemas/source.schema.json" }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["edgeId", "from", "to", "kind"],
+        "properties": {
+          "edgeId": { "type": "string" },
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "kind": { "enum": ["Sequence", "Influence"] },
+          "isPrimarySequenceBold": { "type": "boolean" }
+        }
+      }
+    },
+    "liabilityMapping": { "type": "object" },
+    "selfCheck": {
+      "type": "object",
+      "required": ["issues"],
+      "properties": {
+        "issues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["ruleCode", "isError", "message"],
+            "properties": {
+              "ruleCode": { "type": "string" },
+              "isError": { "type": "boolean" },
+              "message": { "type": "string" },
+              "relatedNodeId": { "type": ["string", "null"] },
+              "relatedEdgeId": { "type": ["string", "null"] }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  W2.Acceptance -> /workspace/maritime-sim-design/tests_acceptance/W2/bin/Debug/net8.0/W2.Acceptance.dll
+Test run for /workspace/maritime-sim-design/tests_acceptance/W2/bin/Debug/net8.0/W2.Acceptance.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:   167, Skipped:     0, Total:   167, Duration: 107 ms - W2.Acceptance.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

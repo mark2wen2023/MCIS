@@ -1,0 +1,1 @@
+Failed!  - Failed:     6, Passed:    75, Skipped:     0, Total:    81, Duration: 58 ms - W1.Acceptance.dll (net8.0)

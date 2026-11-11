@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- W15（系统分析：Bow-tie / AcciMap / STAMP-CAST）纯逻辑库。Systemic 只读引用 Evidence、HumanFactors、Recommendations 的类型（W3/W18 已冻结，只引用不修改）。 -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RootNamespace>Mcis</RootNamespace>
+    <AssemblyName>Mcis.W15.Sys</AssemblyName>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../Assets/_Project/Scripts/Core/Primitives/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Common/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Models/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Evidence/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/HumanFactors/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Recommendations/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Systemic/**/*.cs" />
+  </ItemGroup>
+</Project>

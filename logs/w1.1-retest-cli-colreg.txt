@@ -1,0 +1,3 @@
+DEMO OK  bands 2 checks 52 situations ['HeadOn', 'NoRisk']
+HAILI5 FRAGMENT OK  bands 2 post-NUC give-way ['wanhai_a17']
+BAD_REQUEST OK

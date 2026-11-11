@@ -1,0 +1,1308 @@
+{
+  "schemaVersion": "1.0.0",
+  "caseId": "GZ-2025-1025-Haili5-WanHaiA17",
+  "standard": "论文2.5节 / 表4（Buys 1995, Sklet 2002）；架构4.9节 EcfcValidator",
+  "isDraft": true,
+  "isFictionalDemo": false,
+  "nodes": [
+    {
+      "nodeId": "E01",
+      "kind": "Event",
+      "text": "海力5发电柴油机高温停车致全船失电",
+      "time": {
+        "beijing": "2025-10-25T19:51:15+08:00",
+        "utc": "2025-10-25T11:51:15Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": 0,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {
+        "相距": "约0.8海里",
+        "航向": "169°",
+        "航速": "6.5节"
+      },
+      "evidenceIds": [
+        "report:p32"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 32,
+        "quote": "此时该轮1 号和2 号发电机组突然停止工作，全船失电，主机停车，舵机失灵",
+        "pdfPage": 37
+      },
+      "layoutHint": [
+        0,
+        0
+      ]
+    },
+    {
+      "nodeId": "E02",
+      "kind": "Event",
+      "text": "海力5舵机失灵后船首向左偏转",
+      "time": {
+        "beijing": "2025-10-25T19:52:00+08:00",
+        "utc": "2025-10-25T11:52:00Z",
+        "approximate": true
+      },
+      "endTime": null,
+      "lane": 0,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {
+        "1952:52航向": "163°",
+        "航速": "5.6节"
+      },
+      "evidenceIds": [
+        "report:p32"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 32,
+        "quote": "该轮船首开始逐步向左偏转。",
+        "pdfPage": 37
+      },
+      "layoutHint": [
+        1,
+        0
+      ]
+    },
+    {
+      "nodeId": "E03",
+      "kind": "Event",
+      "text": "海力5偏转入进口航路形成紧迫危险",
+      "time": {
+        "beijing": "2025-10-25T19:53:26+08:00",
+        "utc": "2025-10-25T11:53:26Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": 0,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {
+        "相距": "约0.3海里",
+        "航向": "156°"
+      },
+      "evidenceIds": [
+        "report:p41"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 41,
+        "quote": "该轮失电时，两船相距0.8 海里，随后开始向左偏转进入进口航路与沿航道进港的“WAN HAI A17”轮形成紧迫危险。",
+        "pdfPage": 46
+      },
+      "layoutHint": [
+        2,
+        0
+      ]
+    },
+    {
+      "nodeId": "E04",
+      "kind": "Event",
+      "text": "两船在马友石灯船东北侧发生碰撞",
+      "time": {
+        "beijing": "2025-10-25T19:54:32+08:00",
+        "utc": "2025-10-25T11:54:32Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": 0,
+      "isPrimaryIncident": true,
+      "isPresumptive": false,
+      "actorVesselId": null,
+      "quantities": {
+        "地点": "22°16.71′N/113°48.41′E",
+        "夹角": "约35°",
+        "碰撞角": "约30–40°",
+        "海力5": "133°/4.3节",
+        "WAN HAI A17": "348°/9.7节"
+      },
+      "evidenceIds": [
+        "report:p26"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 26,
+        "quote": "认定碰撞时间为2025 年10 月25 日1954 时32 秒。",
+        "pdfPage": 31
+      },
+      "layoutHint": [
+        3,
+        0
+      ]
+    },
+    {
+      "nodeId": "E05",
+      "kind": "Event",
+      "text": "海力5右舷破口进水并向左倾斜",
+      "time": {
+        "beijing": "2025-10-25T19:54:40+08:00",
+        "utc": "2025-10-25T11:54:40Z",
+        "approximate": true
+      },
+      "endTime": null,
+      "lane": 0,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {
+        "破口": "高约3.5m、最宽约80cm"
+      },
+      "evidenceIds": [
+        "report:p36"
+      ],
+      "causeRole": "consequence",
+      "source": {
+        "page": 36,
+        "quote": "碰撞事故发生后，该轮恢复供电，船身向左倾斜进水，并被“WAN HAI A17”轮持续顶推向北侧水域移动。",
+        "pdfPage": 41
+      },
+      "layoutHint": [
+        4,
+        0
+      ]
+    },
+    {
+      "nodeId": "E06",
+      "kind": "Event",
+      "text": "海力5沉没造成15人落水2人死亡",
+      "time": {
+        "beijing": "2025-10-25T20:01:00+08:00",
+        "utc": "2025-10-25T12:01:00Z",
+        "approximate": true
+      },
+      "endTime": null,
+      "lane": 0,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {
+        "落水": "15人",
+        "获救": "13人",
+        "死亡": "2人"
+      },
+      "evidenceIds": [
+        "report:p37"
+      ],
+      "causeRole": "consequence",
+      "source": {
+        "page": 37,
+        "quote": "约2001 时，该轮沉没，15 名船员落水。",
+        "pdfPage": 42
+      },
+      "layoutHint": [
+        5,
+        0
+      ]
+    },
+    {
+      "nodeId": "E11",
+      "kind": "Event",
+      "text": "海力5避台途中发生发电机高温停车",
+      "time": {
+        "beijing": "2025-09-22T17:00:00+08:00",
+        "utc": "2025-09-22T09:00:00Z",
+        "approximate": true
+      },
+      "endTime": null,
+      "lane": 2,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {
+        "淡水温度": "约90℃"
+      },
+      "evidenceIds": [
+        "report:p29"
+      ],
+      "causeRole": "indirect",
+      "source": {
+        "page": 29,
+        "quote": "2025 年9 月22 日约1700 时，该轮在从珠江口驶往海南避台风过程中，曾发生过发电柴油机淡水温度过高（约90℃）",
+        "pdfPage": 34
+      },
+      "layoutHint": [
+        0,
+        2
+      ]
+    },
+    {
+      "nodeId": "C11",
+      "kind": "Condition",
+      "text": "9月22日失电后未清洗海底门滤器",
+      "time": null,
+      "endTime": null,
+      "lane": 2,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p29"
+      ],
+      "causeRole": "indirect",
+      "source": {
+        "page": 29,
+        "quote": "但事后该轮轮机员未组织对海底门滤器进行清洗。",
+        "pdfPage": 34
+      },
+      "layoutHint": [
+        1,
+        2
+      ]
+    },
+    {
+      "nodeId": "C12",
+      "kind": "Condition",
+      "text": "进出港一直使用右舷低位海底门且富裕水深约2米",
+      "time": null,
+      "endTime": null,
+      "lane": 2,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p44"
+      ],
+      "causeRole": "indirect",
+      "source": {
+        "page": 44,
+        "quote": "该轮进出广州番禺龙沙码头期间，一直使用低位海底门，航经水域水深最浅处富裕水深约2 米",
+        "pdfPage": 49
+      },
+      "layoutHint": [
+        2,
+        2
+      ]
+    },
+    {
+      "nodeId": "C13",
+      "kind": "Condition",
+      "text": "右舷低位海底门滤器堵塞",
+      "time": null,
+      "endTime": null,
+      "lane": 2,
+      "isPrimaryIncident": false,
+      "isPresumptive": true,
+      "actorVesselId": "haili5",
+      "quantities": {
+        "说明": "调查结论；残骸滤器无法确认为当时在用管路，吸入泥沙加重堵塞属推断"
+      },
+      "evidenceIds": [
+        "report:p30"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 30,
+        "quote": "因此认定，该轮正在使用的右侧低位海底门滤器堵塞，冷却海水供应不足",
+        "pdfPage": 35
+      },
+      "layoutHint": [
+        3,
+        2
+      ]
+    },
+    {
+      "nodeId": "C14",
+      "kind": "Condition",
+      "text": "冷却海水供应不足使发电柴油机淡水温度升高",
+      "time": null,
+      "endTime": null,
+      "lane": 2,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p28"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 28,
+        "quote": "冷却海水供水不足可导致发电柴油机冷却淡水温度快速升高，最终高温保护停车。",
+        "pdfPage": 33
+      },
+      "layoutHint": [
+        4,
+        2
+      ]
+    },
+    {
+      "nodeId": "E12",
+      "kind": "Event",
+      "text": "大管轮发现主机滑油温度升至77至78℃",
+      "time": {
+        "beijing": "2025-10-25T17:00:00+08:00",
+        "utc": "2025-10-25T09:00:00Z",
+        "approximate": true
+      },
+      "endTime": null,
+      "lane": 1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {
+        "滑油温度": "77~78℃",
+        "报警值": "82℃"
+      },
+      "evidenceIds": [
+        "report:p31"
+      ],
+      "causeRole": "indirect",
+      "source": {
+        "page": 31,
+        "quote": "值班轮机员大管轮发现主机滑油温度偏高（77~78℃，尚未达到报警值82℃）",
+        "pdfPage": 36
+      },
+      "layoutHint": [
+        0,
+        1
+      ]
+    },
+    {
+      "nodeId": "C15",
+      "kind": "Condition",
+      "text": "轮机员注意力集中于主机温度未监控发电机",
+      "time": null,
+      "endTime": null,
+      "lane": 1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p28"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 28,
+        "quote": "事故发生前在机舱值班的轮机长和刚交完班的大管轮注意力主要放在主机滑油温度异常升高的处理，均未注意发电机组的参数和报警情况。",
+        "pdfPage": 33
+      },
+      "layoutHint": [
+        1,
+        1
+      ]
+    },
+    {
+      "nodeId": "E13",
+      "kind": "Event",
+      "text": "接岸电时船员将应急发电机开关转至手动",
+      "time": null,
+      "endTime": null,
+      "lane": 3,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p30"
+      ],
+      "causeRole": "indirect",
+      "source": {
+        "page": 30,
+        "quote": "该轮在广州龙沙码头接岸电前，船员将应急发电机启动开关转至手动位置",
+        "pdfPage": 35
+      },
+      "layoutHint": [
+        0,
+        3
+      ]
+    },
+    {
+      "nodeId": "E14",
+      "kind": "Event",
+      "text": "轮机长解除岸电后未将开关转回自动",
+      "time": null,
+      "endTime": null,
+      "lane": 3,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p30"
+      ],
+      "causeRole": "indirect",
+      "source": {
+        "page": 30,
+        "quote": "离港前轮机长值班期间解除岸电，解除岸电后未将应急发电机启动开关转至自动",
+        "pdfPage": 35
+      },
+      "layoutHint": [
+        1,
+        3
+      ]
+    },
+    {
+      "nodeId": "E15",
+      "kind": "Event",
+      "text": "二管轮开航前未检查应急发电机开关",
+      "time": {
+        "beijing": "2025-10-25T13:25:00+08:00",
+        "utc": "2025-10-25T05:25:00Z",
+        "approximate": true
+      },
+      "endTime": null,
+      "lane": 3,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p30"
+      ],
+      "causeRole": "indirect",
+      "source": {
+        "page": 30,
+        "quote": "二管轮负责该轮该航次开航前备车，其在开航前未前往应急发电机间检查应急发电机启动开关状态。",
+        "pdfPage": 35
+      },
+      "layoutHint": [
+        2,
+        3
+      ]
+    },
+    {
+      "nodeId": "C16",
+      "kind": "Condition",
+      "text": "应急发电机启动开关处于手动模式",
+      "time": null,
+      "endTime": null,
+      "lane": 3,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p15"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 15,
+        "quote": "发现该轮应急发电机开关处于手动模式。",
+        "pdfPage": 20
+      },
+      "layoutHint": [
+        3,
+        3
+      ]
+    },
+    {
+      "nodeId": "C17",
+      "kind": "Condition",
+      "text": "驾驶台与机舱未能建立有效联系",
+      "time": null,
+      "endTime": null,
+      "lane": 1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p21"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 21,
+        "quote": "驾驶台未与机舱建立有效联系，未安排人员前往舵机间进行手动应急操舵。",
+        "pdfPage": 26
+      },
+      "layoutHint": [
+        3,
+        1
+      ]
+    },
+    {
+      "nodeId": "E16",
+      "kind": "Event",
+      "text": "海力5船长未及时用VHF通报失控",
+      "time": {
+        "beijing": "2025-10-25T19:51:30+08:00",
+        "utc": "2025-10-25T11:51:30Z",
+        "approximate": true
+      },
+      "endTime": null,
+      "lane": 1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p41"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 41,
+        "quote": "船长没有第一时间通过甚高频播报本船失电、船舶失控并向左偏转的动态",
+        "pdfPage": 46
+      },
+      "layoutHint": [
+        2,
+        1
+      ]
+    },
+    {
+      "nodeId": "E17",
+      "kind": "Event",
+      "text": "海力5在VHF回应刚断电并要求让路",
+      "time": {
+        "beijing": "2025-10-25T19:52:52+08:00",
+        "utc": "2025-10-25T11:52:52Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": 1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p32"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 32,
+        "quote": "通过VHF回应“‘海力5’刚才断电了，让我让我”",
+        "pdfPage": 37
+      },
+      "layoutHint": [
+        4,
+        1
+      ]
+    },
+    {
+      "nodeId": "E18",
+      "kind": "Event",
+      "text": "机舱启动1号发电机并恢复供电",
+      "time": {
+        "beijing": "2025-10-25T19:54:38+08:00",
+        "utc": "2025-10-25T11:54:38Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": 1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p25"
+      ],
+      "causeRole": "consequence",
+      "source": {
+        "page": 25,
+        "quote": "认定“海力5”轮电力恢复时间为2025 年10 月25 日1954 时38 秒。",
+        "pdfPage": 30
+      },
+      "layoutHint": [
+        5,
+        1
+      ]
+    },
+    {
+      "nodeId": "E21",
+      "kind": "Event",
+      "text": "WAN HAI A17在桂山登上引航员沿进口航路进港",
+      "time": {
+        "beijing": "2025-10-25T19:00:00+08:00",
+        "utc": "2025-10-25T11:00:00Z",
+        "approximate": true
+      },
+      "endTime": null,
+      "lane": -2,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "wanhai_a17",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p33"
+      ],
+      "causeRole": "context",
+      "source": {
+        "page": 33,
+        "quote": "约1900 时，新加坡籍集装箱船“WAN HAI A17”轮在桂山上引航员",
+        "pdfPage": 38
+      },
+      "layoutHint": [
+        0,
+        -2
+      ]
+    },
+    {
+      "nodeId": "E22",
+      "kind": "Event",
+      "text": "二副上驾驶台与三副交接班",
+      "time": {
+        "beijing": "2025-10-25T19:50:20+08:00",
+        "utc": "2025-10-25T11:50:20Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": -1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "wanhai_a17",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p34"
+      ],
+      "causeRole": "indirect",
+      "source": {
+        "page": 34,
+        "quote": "1950 时20 秒，该轮二副上驾驶台与三副进行交接班。",
+        "pdfPage": 39
+      },
+      "layoutHint": [
+        1,
+        -1
+      ]
+    },
+    {
+      "nodeId": "C21",
+      "kind": "Condition",
+      "text": "驾驶台6人处于交接班且瞭望未有效履行",
+      "time": null,
+      "endTime": null,
+      "lane": -1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "wanhai_a17",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p44"
+      ],
+      "causeRole": "indirect",
+      "source": {
+        "page": 44,
+        "quote": "“海力5”轮失电时，该轮驾驶台值班驾驶员和值班水手处于交接班时间，包括船长、引航员在内共有6 人在驾驶台，但瞭望未得到有效履行。",
+        "pdfPage": 49
+      },
+      "layoutHint": [
+        2,
+        -1
+      ]
+    },
+    {
+      "nodeId": "E23",
+      "kind": "Event",
+      "text": "船长赴海图室后用望远镜观察仍未发现失电",
+      "time": {
+        "beijing": "2025-10-25T19:52:08+08:00",
+        "utc": "2025-10-25T11:52:08Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": -2,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "wanhai_a17",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p34"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 34,
+        "quote": "并于1952 时08 秒拿起望远镜对前方进行观察，但未发现“海力5”轮全船失电失控的异常情况。",
+        "pdfPage": 39
+      },
+      "layoutHint": [
+        2,
+        -2
+      ]
+    },
+    {
+      "nodeId": "E24",
+      "kind": "Event",
+      "text": "引航员两次鸣一长声提醒前方正海3",
+      "time": {
+        "beijing": "2025-10-25T19:51:18+08:00",
+        "utc": "2025-10-25T11:51:18Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": -2,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "wanhai_a17",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p34"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 34,
+        "quote": "该轮引航员下令鸣汽笛一长声。",
+        "pdfPage": 39
+      },
+      "layoutHint": [
+        1,
+        -2
+      ]
+    },
+    {
+      "nodeId": "C22",
+      "kind": "Condition",
+      "text": "海力5失电后航行灯熄灭增大他船发现难度",
+      "time": null,
+      "endTime": null,
+      "lane": -1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "haili5",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p41"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 41,
+        "quote": "客观上增大了“WAN HAI A17”轮发现该轮失控状态及其动态的难度，贻误了“WAN HAI A17”轮采取避让行动的时机。",
+        "pdfPage": 46
+      },
+      "layoutHint": [
+        3,
+        -1
+      ]
+    },
+    {
+      "nodeId": "E25",
+      "kind": "Event",
+      "text": "引航员发现海力5未点灯并呼叫动态",
+      "time": {
+        "beijing": "2025-10-25T19:52:50+08:00",
+        "utc": "2025-10-25T11:52:50Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": -1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "wanhai_a17",
+      "quantities": {
+        "相距": "约0.4海里",
+        "滞后": "失电后约90秒"
+      },
+      "evidenceIds": [
+        "report:p34"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 34,
+        "quote": "1952 时50 秒，该轮引航员发现“海力5”异常，问船长“这艘船没点灯，怎么回事？”",
+        "pdfPage": 39
+      },
+      "layoutHint": [
+        4,
+        -1
+      ]
+    },
+    {
+      "nodeId": "E26",
+      "kind": "Event",
+      "text": "船长与引航员交替下达相反舵令",
+      "time": {
+        "beijing": "2025-10-25T19:53:30+08:00",
+        "utc": "2025-10-25T11:53:30Z",
+        "approximate": true
+      },
+      "endTime": null,
+      "lane": -2,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "wanhai_a17",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p35"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 35,
+        "quote": "船长先下令往右转，引航员说“我敢往右转吗？”随后船长下令往左转，引航员说“不不不”",
+        "pdfPage": 40
+      },
+      "layoutHint": [
+        4,
+        -2
+      ]
+    },
+    {
+      "nodeId": "C23",
+      "kind": "Condition",
+      "text": "紧急情况下引航员与船长指挥权不明确",
+      "time": null,
+      "endTime": null,
+      "lane": -2,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "wanhai_a17",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p45"
+      ],
+      "causeRole": "indirect",
+      "source": {
+        "page": 45,
+        "quote": "在紧急情况下，引航员和船长的指挥权不明确，驾驶台资源管理不当。",
+        "pdfPage": 50
+      },
+      "layoutHint": [
+        3,
+        -2
+      ]
+    },
+    {
+      "nodeId": "E27",
+      "kind": "Event",
+      "text": "WAN HAI A17临近碰撞前停车",
+      "time": {
+        "beijing": "2025-10-25T19:54:00+08:00",
+        "utc": "2025-10-25T11:54:00Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": -1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "wanhai_a17",
+      "quantities": {
+        "碰撞时航向": "348°",
+        "航速": "9.7节"
+      },
+      "evidenceIds": [
+        "report:p35"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 35,
+        "quote": "1954 时，该轮停车。",
+        "pdfPage": 40
+      },
+      "layoutHint": [
+        5,
+        -1
+      ]
+    },
+    {
+      "nodeId": "C24",
+      "kind": "Condition",
+      "text": "碰撞时该轮航速航向未发生明显变化",
+      "time": null,
+      "endTime": null,
+      "lane": -1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "wanhai_a17",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p43"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 43,
+        "quote": "两船发生碰撞时该轮航速、航向未发生明显变化。",
+        "pdfPage": 48
+      },
+      "layoutHint": [
+        5,
+        -2
+      ]
+    },
+    {
+      "nodeId": "C31",
+      "kind": "Condition",
+      "text": "两船在主航道进出口对遇",
+      "time": null,
+      "endTime": null,
+      "lane": 4,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": null,
+      "quantities": {},
+      "evidenceIds": [
+        "report:p22"
+      ],
+      "causeRole": "context",
+      "source": {
+        "page": 22,
+        "quote": "事发前出口航路附近水域有出口船舶“海力5”轮，进口航路船舶有“正海3”轮和“WAN HAI A17”轮",
+        "pdfPage": 27
+      },
+      "layoutHint": [
+        2,
+        4
+      ]
+    },
+    {
+      "nodeId": "C32",
+      "kind": "Condition",
+      "text": "能见度良好东北风4级涨潮流偏北约1.7节",
+      "time": null,
+      "endTime": null,
+      "lane": -3,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": null,
+      "quantities": {},
+      "evidenceIds": [
+        "report:p21"
+      ],
+      "causeRole": "context",
+      "source": {
+        "page": 21,
+        "quote": "事发前事发水域晴到多云，能见度良好，东北风4 级，轻浪，浪高约0.5 米，涨潮，潮高约2m，涨潮流，流向偏北，流速约1.7 节。",
+        "pdfPage": 26
+      },
+      "layoutHint": [
+        3,
+        -3
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "edgeId": "s01",
+      "from": "E01",
+      "to": "E02",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": true
+    },
+    {
+      "edgeId": "s02",
+      "from": "E02",
+      "to": "E03",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": true
+    },
+    {
+      "edgeId": "s03",
+      "from": "E03",
+      "to": "E04",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": true
+    },
+    {
+      "edgeId": "s04",
+      "from": "E04",
+      "to": "E05",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": true
+    },
+    {
+      "edgeId": "s05",
+      "from": "E05",
+      "to": "E06",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": true
+    },
+    {
+      "edgeId": "i11",
+      "from": "C11",
+      "to": "C13",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i12",
+      "from": "C12",
+      "to": "C13",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i13",
+      "from": "C13",
+      "to": "C14",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i14",
+      "from": "C14",
+      "to": "E01",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s12",
+      "from": "E11",
+      "to": "E01",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s13",
+      "from": "E12",
+      "to": "E01",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i15",
+      "from": "C15",
+      "to": "E01",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s14",
+      "from": "E13",
+      "to": "E14",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s15",
+      "from": "E14",
+      "to": "E15",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i16",
+      "from": "C16",
+      "to": "E02",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s16",
+      "from": "E15",
+      "to": "E02",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i17",
+      "from": "C17",
+      "to": "E02",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s17",
+      "from": "E01",
+      "to": "E16",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i19",
+      "from": "C22",
+      "to": "E25",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i34",
+      "from": "C22",
+      "to": "E16",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s18",
+      "from": "E16",
+      "to": "E25",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s20",
+      "from": "E02",
+      "to": "E17",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s19",
+      "from": "E17",
+      "to": "E03",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s21",
+      "from": "E04",
+      "to": "E18",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s22",
+      "from": "E21",
+      "to": "E22",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s23",
+      "from": "E22",
+      "to": "E23",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s24",
+      "from": "E22",
+      "to": "E24",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i21",
+      "from": "C21",
+      "to": "E23",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i22",
+      "from": "C21",
+      "to": "E24",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i33",
+      "from": "C21",
+      "to": "E25",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s25",
+      "from": "E23",
+      "to": "E25",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s26",
+      "from": "E24",
+      "to": "E25",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s27",
+      "from": "E25",
+      "to": "E26",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s28",
+      "from": "E26",
+      "to": "E27",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s29",
+      "from": "E27",
+      "to": "E04",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i23",
+      "from": "C23",
+      "to": "E26",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i24",
+      "from": "C24",
+      "to": "E04",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i31",
+      "from": "C31",
+      "to": "E03",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i32",
+      "from": "C32",
+      "to": "E04",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    }
+  ],
+  "liabilityMapping": {
+    "primaryCauseNodeIds": [
+      "E01",
+      "C16",
+      "E02",
+      "E03"
+    ],
+    "directCauseNodeIds": [
+      "E01",
+      "C16",
+      "E02",
+      "E03",
+      "E16",
+      "C22",
+      "C21",
+      "E23",
+      "E24",
+      "E25",
+      "E26",
+      "E27",
+      "C24"
+    ],
+    "indirectCauseNodeIds": [
+      "E11",
+      "C11",
+      "C12",
+      "E12",
+      "C15",
+      "E13",
+      "E14",
+      "E15",
+      "C21",
+      "C23"
+    ],
+    "haili5PrimaryResponsibility": "主要责任（发电机组停车且应急发电机未自动启动，导致失控并形成紧迫危险）",
+    "wanhaiA17SecondaryResponsibility": "次要责任（疏忽瞭望、未采取最有助于避碰的行动，以及驾驶台资源管理不当）"
+  },
+  "notes": [
+    "主序列从全船失电起笔，向前用次序列和条件倒推，向后写进水沉没。",
+    "C13（滤器堵塞）为调查认定，但残骸滤器无法确认为当时在用管路，且“吸入泥沙加重堵塞”为推断，故标为推定节点。",
+    "C32环境条件能见度良好，并非碰撞的促成因素，仅作情境条件挂到事故节点。"
+  ],
+  "validation": {
+    "issueCount": 2,
+    "errorCount": 0,
+    "warningCount": 2,
+    "issues": [
+      {
+        "ruleCode": "ECFC-W02",
+        "isError": false,
+        "message": "事件没有时间",
+        "relatedNodeId": "E13",
+        "relatedEdgeId": null
+      },
+      {
+        "ruleCode": "ECFC-W02",
+        "isError": false,
+        "message": "事件没有时间",
+        "relatedNodeId": "E14",
+        "relatedEdgeId": null
+      }
+    ]
+  }
+}

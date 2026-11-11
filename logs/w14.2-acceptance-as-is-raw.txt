@@ -1,0 +1,113 @@
+# W14.2 验收工程原样运行（tests_acceptance/W14 未改） 2026-11-11 21:03:13 CST
+## build --no-incremental
+    0 Error(s)
+    0 Warning(s)
+## test
+Test run for /workspace/maritime-sim-design/tests_acceptance/W14/bin/Debug/net8.0/W14.Acceptance.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:00.05]   Discovering: W14.Acceptance
+[xUnit.net 00:00:00.09]   Discovered:  W14.Acceptance
+[xUnit.net 00:00:00.10]   Starting:    W14.Acceptance
+  Passed Mcis.Acceptance.W14.ValidationAcceptanceTests.SourcedValue_RejectsEmptyNameReferenceAndNonFinite [4 ms]
+  Passed Mcis.Acceptance.W14.NomotoPhysicsAcceptanceTests.SpeedChange_FollowsFirstOrderTimeConstant [9 ms]
+  Passed Mcis.Acceptance.W14.ValidationAcceptanceTests.AnchorParams_RejectsNaNAndNonPositiveLimits [4 ms]
+  Passed Mcis.Acceptance.W14.ValidationAcceptanceTests.ManeuverParams_RejectsNaNNegativeAndOutOfRange [11 ms]
+  Passed Mcis.Acceptance.W14.ValidationAcceptanceTests.CounterfactualBuilder_RejectsNonPositiveStep [< 1 ms]
+  Passed Mcis.Acceptance.W14.ValidationAcceptanceTests.SensitivitySweep_RejectsBadRange [1 ms]
+  Passed Mcis.Acceptance.W14.InterventionAcceptanceTests.BeforeDivergence_TrackFollowsOriginalExactly [25 ms]
+  Passed Mcis.Acceptance.W14.NomotoPhysicsAcceptanceTests.Simulation_IsBitwiseDeterministic [16 ms]
+  Passed Mcis.Acceptance.W14.ValidationAcceptanceTests.Evaluate_UnknownVesselThrows [< 1 ms]
+  Passed Mcis.Acceptance.W14.InterventionAcceptanceTests.EmergencyAnchor_HighSpeed_ReducesDeceleration [1 ms]
+  Passed Mcis.Acceptance.W14.ValidationAcceptanceTests.WhatIfSetup_RejectsBadRangeAndSameVessel [< 1 ms]
+  Passed Mcis.Acceptance.W14.ValidationAcceptanceTests.ChangeSpeed_RejectsNegativeOrNaNTarget [< 1 ms]
+  Passed Mcis.Acceptance.W14.ValidationAcceptanceTests.NomotoSimulator_RejectsInvalidStepAndInvalidParams [< 1 ms]
+  Passed Mcis.Acceptance.W14.NomotoPhysicsAcceptanceTests.SteadyTurnRate_Equals_K_Times_SpeedRatio_Times_Rudder [2 ms]
+  Passed Mcis.Acceptance.W14.InterventionAcceptanceTests.EmergencyAnchor_KnownIssue_YawContinuesNearZeroSpeed [2 ms]
+  Passed Mcis.Acceptance.W14.InterventionAcceptanceTests.ReactionDelay_DefersExecution [< 1 ms]
+  Passed Mcis.Acceptance.W14.NomotoPhysicsAcceptanceTests.StepResponse_AtTimeConstant_IsAbout63PercentOfSteadyRate [1 ms]
+  Passed Mcis.Acceptance.W14.InterventionAcceptanceTests.EmergencyAnchor_AfterBite_DeceleratesAndStarboardYawsRight [1 ms]
+  Passed Mcis.Acceptance.W14.InterventionAcceptanceTests.EmergencyAnchor_NoEffectBeforeBiteDelay [< 1 ms]
+  Passed Mcis.Acceptance.W14.InterventionAcceptanceTests.EarlierExplicitDiverge_HoldsCourseUntilIntervention [4 ms]
+  Passed Mcis.Acceptance.W14.NomotoPhysicsAcceptanceTests.SteadyTurnRate_ScalesLinearlyWithSpeed [6 ms]
+  Passed Mcis.Acceptance.W14.NomotoPhysicsAcceptanceTests.RudderRateLimit_CapsRudderMovement [< 1 ms]
+  Passed Mcis.Acceptance.W14.InterventionAcceptanceTests.SixInterventionKinds_EachChangesTheExpectedState [6 ms]
+  Passed Mcis.Acceptance.W14.NomotoPhysicsAcceptanceTests.SpeedNeverFallsBelowMinimum [6 ms]
+  Passed Mcis.Acceptance.W14.NomotoPhysicsAcceptanceTests.FullAstern_DecaysFasterThanStop [< 1 ms]
+[xUnit.net 00:00:00.21]     Mcis.Acceptance.W14.CollisionGeometryAcceptanceTests.DemoS0_IndependentGeometry_AgreesOnSide [FAIL]
+[xUnit.net 00:00:00.21]       System.Collections.Generic.KeyNotFoundException : The given key '' was not present in the dictionary.
+[xUnit.net 00:00:00.21]       Stack Trace:
+[xUnit.net 00:00:00.21]            at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+[xUnit.net 00:00:00.21]         /workspace/maritime-sim-design/tests_acceptance/W14/CollisionGeometryAcceptanceTests.cs(119,0): at Mcis.Acceptance.W14.CollisionGeometryAcceptanceTests.DemoS0_IndependentGeometry_AgreesOnSide()
+[xUnit.net 00:00:00.21]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.21]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W14.W14_1RetestTests.ObbOverlap_ClearanceIsNegativePenetration [< 1 ms]
+  Passed Mcis.Acceptance.W14.CollisionGeometryAcceptanceTests.ApproximateContact_MidpointMayDivergeFromTrueContact [48 ms]
+  Passed Mcis.Acceptance.W14.CollisionGeometryAcceptanceTests.HeadOnCollisionTime_MatchesAnalyticWithinPrecision [5 ms]
+  Failed Mcis.Acceptance.W14.CollisionGeometryAcceptanceTests.DemoS0_IndependentGeometry_AgreesOnSide [15 ms]
+  Error Message:
+   System.Collections.Generic.KeyNotFoundException : The given key '' was not present in the dictionary.
+  Stack Trace:
+     at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at Mcis.Acceptance.W14.CollisionGeometryAcceptanceTests.DemoS0_IndependentGeometry_AgreesOnSide() in /workspace/maritime-sim-design/tests_acceptance/W14/CollisionGeometryAcceptanceTests.cs:line 119
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W14.CollisionGeometryAcceptanceTests.IndependentGeometry_AgreesOnAngleSideAndBowDistance_ForTBone [5 ms]
+  Passed Mcis.Acceptance.W14.CollisionGeometryAcceptanceTests.SatClearance_CanUnderestimateTrueSeparation [2 ms]
+  Passed Mcis.Acceptance.W14.DemoBoundaryAcceptanceTests.DemoReportedNumbers_MatchImplementerAnnouncement [102 ms]
+  Passed Mcis.Acceptance.W14.SensitivityComparisonAcceptanceTests.EveryDemoResult_CarriesDisclaimerAssumptionsAndSourcedInputs [148 ms]
+  Passed Mcis.Acceptance.W14.DemoBoundaryAcceptanceTests.Evaluation_IsBitwiseDeterministic [56 ms]
+  Passed Mcis.Acceptance.W14.DemoBoundaryAcceptanceTests.ParallelSameDirection_NoCollision [12 ms]
+  Passed Mcis.Acceptance.W14.DemoBoundaryAcceptanceTests.Dt_0_1_And_0_05_SameVerdictForDemoScenarios [145 ms]
+  Passed Mcis.Acceptance.W14.DemoBoundaryAcceptanceTests.NullScenario_EvaluatesAsOriginal [33 ms]
+  Passed Mcis.Acceptance.W14.DemoBoundaryAcceptanceTests.NoEncounter_DivergingCourses_Avoided [16 ms]
+  Passed Mcis.Acceptance.W14.KnownIssueImpactTests.Y5_TrueClearanceCrossesSafeLine_VerdictShouldBeAvoided [431 ms]
+  Passed Mcis.Acceptance.W14.ScenarioDumpTests.DumpScenariosForIndependentCheck [395 ms]
+  Passed Mcis.Acceptance.W14.Yangze22AcceptanceTests.EvaluationIsDeterministic [608 ms]
+  Passed Mcis.Acceptance.W14.W14_1RetestTests.TruncationCutoff_IsRecordedInAssumptions [568 ms]
+  Passed Mcis.Acceptance.W14.W14_1RetestTests.ContactPoint_IsReasonableForSeparatedAndTBone [1 ms]
+  Passed Mcis.Acceptance.W14.KnownIssueImpactTests.RecordSatVersusTrueClearanceForNearMissScenarios [359 ms]
+  Passed Mcis.Acceptance.W14.Yangze22AcceptanceTests.Y1AndY5_QualitativeDirectionMatchesRealCases [252 ms]
+  Passed Mcis.Acceptance.W14.W14_1RetestTests.Ruling7c_NearSafeLineOrAntennaCross_ShouldMarkCritical [254 ms]
+  Passed Mcis.Acceptance.W14.W14_1RetestTests.Ruling7a_HeadOnBothBowsClose_ShouldBeBowToBow [11 ms]
+  Passed Mcis.Acceptance.W14.SensitivityComparisonAcceptanceTests.TurnAdvanceSweep_IsMonotonicAndBisectionConverges [877 ms]
+  Passed Mcis.Acceptance.W14.SensitivityComparisonAcceptanceTests.MinDcpa_IsGlobalMinimum_SameBeforeIntervention [73 ms]
+  Passed Mcis.Acceptance.W14.SensitivityComparisonAcceptanceTests.ComparisonRequiresS0 [24 ms]
+  Passed Mcis.Acceptance.W14.SensitivityComparisonAcceptanceTests.ComparisonTable_HasAllColumnsSourcesAndDisclaimer [76 ms]
+  Passed Mcis.Acceptance.W14.W14_1RetestTests.ReportedMinClearance_VersusGlobalScan_ForDefaultScenarios [356 ms]
+  Passed Mcis.Acceptance.W14.W14_1RetestTests.MinDcpaAfterDeviation_ColumnExistsAndIsPopulatedForInterventions [76 ms]
+  Passed Mcis.Acceptance.W14.Yangze22AcceptanceTests.DroppingPostCollisionPoints_ChangesS0ContactTime [490 ms]
+  Passed Mcis.Acceptance.W14.W14_1RetestTests.ObbSeparatedDistance_MatchesBruteForce_IncludingRotatedAndParallel [113 ms]
+  Passed Mcis.Acceptance.W14.Yangze22AcceptanceTests.S0_DeviationFromReport_IsAsDisclosed [247 ms]
+[xUnit.net 00:00:02.22]     Mcis.Acceptance.W14.Yangze22AcceptanceTests.ReportedScenarioNumbers_MatchAnnouncement [FAIL]
+[xUnit.net 00:00:02.22]       Assert.InRange() Failure: Value not in range
+[xUnit.net 00:00:02.22]       Range:  (300 - 320)
+[xUnit.net 00:00:02.22]       Actual: 292.44621564144455
+[xUnit.net 00:00:02.22]       Stack Trace:
+[xUnit.net 00:00:02.22]         /workspace/maritime-sim-design/tests_acceptance/W14/Yangze22AcceptanceTests.cs(49,0): at Mcis.Acceptance.W14.Yangze22AcceptanceTests.ReportedScenarioNumbers_MatchAnnouncement()
+[xUnit.net 00:00:02.22]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:02.22]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:02.70]   Finished:    W14.Acceptance
+  Passed Mcis.Acceptance.W14.W14_1RetestTests.AntennaSensitivity_ThreeRowsMatchAnnouncedNumbers [250 ms]
+  Passed Mcis.Acceptance.W14.Yangze22AcceptanceTests.S0_IndependentGeometry_AgreesOnAngleAndSide [247 ms]
+  Passed Mcis.Acceptance.W14.W14_1RetestTests.Ruling7b_MinClearanceMustBeGlobalMinimum [264 ms]
+  Failed Mcis.Acceptance.W14.Yangze22AcceptanceTests.ReportedScenarioNumbers_MatchAnnouncement [241 ms]
+  Error Message:
+   Assert.InRange() Failure: Value not in range
+Range:  (300 - 320)
+Actual: 292.44621564144455
+  Stack Trace:
+     at Mcis.Acceptance.W14.Yangze22AcceptanceTests.ReportedScenarioNumbers_MatchAnnouncement() in /workspace/maritime-sim-design/tests_acceptance/W14/Yangze22AcceptanceTests.cs:line 49
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W14.W14_1RetestTests.AntennaOffsets_AreMarkedEstimated [244 ms]
+  Passed Mcis.Acceptance.W14.Yangze22AcceptanceTests.EveryResult_HasDisclaimerAndSourcedValues [237 ms]
+  Passed Mcis.Acceptance.W14.Yangze22AcceptanceTests.ReasonableAntennaOffset_CanReduceReportTimeClearance [240 ms]
+Test Run Failed.
+Total tests: 63
+     Passed: 61
+     Failed: 2
+ Total time: 3.0716 Seconds
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

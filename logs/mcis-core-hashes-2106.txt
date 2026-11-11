@@ -1,0 +1,6 @@
+4ce13b7fec0898f01d3157b99278561a1ea391d0f4ce3140c1bc9f79fda99b58  tools/mcis-core/src/AlignCommand.cs
+8f2deb399ef80d42cd7fcc355ea8ec507f417635e43cdb57e41dc3a201ef954a  tools/mcis-core/src/ColregCommand.cs
+54de148e91e27a4ca39c693410722e42caf88fcb58e339dc3907161dc9210d6c  tools/mcis-core/src/CpaCommand.cs
+2b348aee19982b7b6db4556cdd7e4ba311c7d77b3ebfaba9e096e1985b6fab1f  tools/mcis-core/src/Program.cs
+48c84a1a6f2ee4f580e04bd9cc59189023b054303e7a2603a41aab0c55d6fa75  tools/mcis-core/McisCore.csproj
+b774f1b9178611fac1c68d0a88679baf019d680f56c3b1f2ed3525c06d158b83  tools/mcis-core/mcis-core.sh

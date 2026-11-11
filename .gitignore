@@ -1,0 +1,84 @@
+# Dependencies
+node_modules/
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# Web build products and generated test bundles
+web/dist/
+web/build/
+web/tests/.tmp-*.cjs
+dist/
+build/
+*.local
+
+# .NET / C# build output
+bin/
+obj/
+tools/mcis-core/out/
+*.user
+*.suo
+*.userosscache
+
+# Unity generated folders (do not ignore repo-root logs/)
+unity/**/Library/
+unity/**/Temp/
+unity/**/Logs/
+unity/**/UserSettings/
+unity/**/MemoryCaptures/
+unity/**/Recordings/
+unity/**/Build/
+unity/**/Builds/
+
+# Runtime databases (keep seed JSON / sha256 under service/mcis_service/)
+service/data/
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Secrets and credentials — never commit
+.env
+.env.*
+*.env
+!.env.example
+*.pem
+*.p12
+*.pfx
+*.key
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+credentials.json
+.netrc
+*.token
+
+# Local agent / cloud tool dirs
+.aws/
+.codex/
+.agents/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
+
+# Test result directories (keep logs/*.trx acceptance records)
+TestResults/

@@ -1,0 +1,22 @@
+# W12 自测 2026-11-11 21:47:11 北京时间
+## service: pytest tests/test_analysis_w12.py
+...............                                                          [100%]
+15 passed in 3.12s
+## service: 全量 pytest（回归）
+FAILED tests/test_interview_compare_w5.py::test_confirm_and_reject_rows - ass...
+FAILED tests/test_interview_compare_w5.py::test_external_roles_get_redacted_page_and_cannot_write
+FAILED tests/test_reports_w16.py::test_gisis_api_missing_validation_exports_and_audit
+11 failed, 221 passed in 53.66s
+## web: bash tests/run-analysis-w12.sh
+W12 analysis tests: 93 passed
+## web: npm test（W6/W6.1 回归）
+ok  18 assertions (labels + render lily/mary + haili5)
+ok  43 assertions (W6.1 rulings 2–11)
+## web: npm run test:w16（回归）
+ok 111 assertions (W16 三模板×三语言、引用、复核、导出、GISIS、真实锁定与请求合同)
+## web: tsc -b --force
+tsc exit=0
+## 说明
+- 全量 pytest 的失败都不在 W12 范围：test_contracts（openapi 已声明 W6.1 colreg 扩展路由，但冻结的 colreg/router.py 仍 PENDING_CONTRACT=True，W12 前已存在）、
+  test_interview_compare_w5 / test_reports_w16（W5 / W16 其他执行方正在改写，21:45 前后文件仍在变化；两次运行失败数 11 → 2 不稳定）。
+- 复跑一次（21:49）：仅 test_contracts::test_openapi_yaml_matches_routes 与 test_interview_compare_w5::test_page_rows_summary_segments_and_chart 失败；W12 15/15 通过。

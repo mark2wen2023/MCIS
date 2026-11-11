@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PersonnelExtraction",
+  "type": "object",
+  "required": ["personnel", "actions", "unresolvedIdentities", "gaps"],
+  "properties": {
+    "personnel": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["vesselId", "role", "name", "source"],
+        "properties": {
+          "vesselId": { "type": "string" },
+          "role": { "type": "string" },
+          "name": { "type": "string" },
+          "nationality": { "type": ["string", "null"] },
+          "certificate": { "type": ["string", "null"] },
+          "joinedOn": { "type": ["string", "null"] },
+          "onDutyAtIncident": { "type": ["string", "null"] },
+          "source": { "$ref": "../schemas/source.schema.json" }
+        }
+      }
+    },
+    "actions": { "type": "array" },
+    "unresolvedIdentities": { "type": "array", "items": { "type": "string" } },
+    "gaps": { "type": "array", "items": { "type": "string" } }
+  }
+}

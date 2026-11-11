@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ui="UnityEngine.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd">
+
+    <Style src="../Common/ThemeVariables.uss" />
+    <Style src="TimelineBar.uss" />
+
+    <ui:VisualElement name="timeline-dock" class="timeline-dock">
+        <!-- 顶部：关键事件标记层 + 可拖动进度条 -->
+        <ui:VisualElement name="timeline-track-wrap" class="timeline-track-wrap">
+            <ui:VisualElement name="tl-markers-layer" class="timeline-markers-layer" />
+            <ui:Slider name="tl-scrubber" low-value="0" high-value="900" value="0" class="timeline-slider" />
+        </ui:VisualElement>
+
+        <!-- 底部：播放/步进控制 + 等宽时间显示 + 0.5x~16x 倍速按钮组 -->
+        <ui:VisualElement name="timeline-controls-row" class="timeline-controls-row">
+            <ui:VisualElement class="timeline-left-buttons">
+                <ui:Button name="btn-tl-play" text="▶ 播放" class="mcis-btn mcis-btn-primary" />
+                <ui:Button name="btn-tl-step-back" text="« -10s" class="mcis-btn" />
+                <ui:Button name="btn-tl-step-fwd" text="+10s »" class="mcis-btn" />
+                <ui:Button name="btn-tl-jump-cpa" text="💥 最小会遇点" class="mcis-btn mcis-btn-danger" />
+                <ui:Button name="btn-tl-reset" text="↺ 重置" class="mcis-btn" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="timeline-center-time">
+                <ui:Label text="仿真进度:" class="tl-time-caption" />
+                <ui:Label name="tl-elapsed-label" text="00:00.0" class="tl-elapsed-num mcis-mono" />
+                <ui:Label text=" / " class="tl-duration-num mcis-mono" />
+                <ui:Label name="tl-duration-label" text="15:00.0" class="tl-duration-num mcis-mono" />
+                <ui:Label text="|" class="tl-divider" />
+                <ui:Label name="tl-utc-label" text="14:15:00" class="tl-utc-num mcis-mono" />
+            </ui:VisualElement>
+
+            <ui:VisualElement name="speed-group" class="speed-group">
+                <ui:Label text="倍速:" class="speed-caption" />
+                <ui:Button name="btn-speed-0_5" text="0.5x" class="speed-btn mcis-mono" />
+                <ui:Button name="btn-speed-1" text="1x" class="speed-btn mcis-mono active" />
+                <ui:Button name="btn-speed-2" text="2x" class="speed-btn mcis-mono" />
+                <ui:Button name="btn-speed-4" text="4x" class="speed-btn mcis-mono" />
+                <ui:Button name="btn-speed-8" text="8x" class="speed-btn mcis-mono" />
+                <ui:Button name="btn-speed-16" text="16x" class="speed-btn mcis-mono" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

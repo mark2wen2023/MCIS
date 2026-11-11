@@ -1,0 +1,54 @@
+flowchart LR
+    subgraph SRC["外部数据源"]
+        S1["AIS NMEA/CSV"]
+        S2["VDR / S-VDR ①"]
+        S3["ECDIS 截屏 ①"]
+        S4["询问笔录 ③"]
+        S5["调查报告 PDF ⑫"]
+        S6["Cesium 倾斜摄影"]
+    end
+
+    subgraph UNITY["Unity 6 客户端"]
+        direction TB
+        UI["UI 层<br/>证据中心①②④ · 笔录③ · COLREG⑥ · What-if⑦<br/>人为因素⑤ · 系统分析⑧ · 建议与报告⑨⑩⑪ · 知识库⑫⑬ · 权限⑭"]
+        PR["Presentation 层<br/>VdrPlaybackView① · WhatIfCompareView⑦<br/>BilingualReport/GISIS⑪ · RedactedExporter⑭ · ReviewPack⑩"]
+        SI["Simulation 层<br/>SimClock · CpaService · CollisionDamage<br/>VdrTrackSync① · ColregEngine⑥ · CounterfactualRunner⑦ · TestimonyLocator③"]
+        DO["Domain 层<br/>TimeAlignment④ · Testimony③ · HumanFactors⑤ · ColregRules⑥<br/>SystemicModels⑧ · SafetyRec⑨⑩ · Classification⑬"]
+        DA["Data 层<br/>CaseRepository · AuditLog · VdrImporter① · CustodyLedger②<br/>TestimonyImporter③ · AccessPolicy⑭ · KnowledgeRepo⑫ · AgentClient"]
+        UI --> PR --> SI --> DO
+        DA --> DO
+    end
+
+    subgraph PY["Python 智能体服务（本机）"]
+        direction TB
+        OR["编排层 Orchestrator"]
+        AG["6 个智能体<br/>船舶 · 时间线①④ · 环境<br/>人员/作业③⑤ · 原因→ECFC⑥⑧ · 汇总/校验⑪"]
+        TL["证据引用器 · RAG⑫ · 脱敏网关⑭"]
+        HC["人工确认队列 + audit/agent.jsonl"]
+        OR --> AG --> TL
+        AG --> HC
+    end
+
+    subgraph ST["存储"]
+        M1[".mcase 包（P1）"]
+        M2["SQLite（P1）"]
+        M3["PostgreSQL + PostGIS"]
+        M4["MinIO"]
+        M5["pgvector ⑫"]
+    end
+
+    subgraph OUT["输出"]
+        O1["PDF 中文/双语报告 ⑪"]
+        O2["MP4 仿真/对比视频 ⑦"]
+        O3["GISIS 字段 ⑪"]
+        O4["建议跟踪表 ⑨ / 征求意见包 ⑩⑭"]
+    end
+
+    S1 & S2 & S3 & S4 & S5 --> DA
+    S6 --> PR
+    DA <-->|"本地 HTTP · 仅脱敏文本"| OR
+    HC -.->|"草稿待确认"| UI
+    DA <--> M1 & M2
+    DA <--> M3 & M4
+    TL <--> M5
+    PR --> O1 & O2 & O3 & O4

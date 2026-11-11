@@ -1,0 +1,150 @@
+/* ==========================================================================
+   TimelineBar 样式表 (TimelineBar.uss)
+   底部时间轴控制坞：可拖动进度条、关键事件标记旗标、播放/步进、0.5x-16x 倍速组
+   ========================================================================== */
+
+.timeline-dock {
+    background-color: var(--bg-glass);
+    border-color: var(--border-glass);
+    border-width: 1px;
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    flex-direction: column;
+    width: 100%;
+}
+
+.timeline-track-wrap {
+    flex-direction: column;
+    position: relative;
+    padding-top: 18px;
+    margin-bottom: 6px;
+}
+
+.timeline-markers-layer {
+    position: absolute;
+    top: 0;
+    left: 6px;
+    right: 6px;
+    height: 18px;
+}
+
+.tl-marker {
+    position: absolute;
+    top: 0;
+    padding: 1px 5px;
+    border-radius: 3px;
+    border-width: 1px;
+    font-size: 9px;
+    -unity-font-style: bold;
+    background-color: var(--cyan-dim);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    translate: -50% 0px;
+}
+
+.tl-marker:hover {
+    background-color: var(--color-primary);
+    color: var(--text-dark);
+}
+
+.tl-marker-safe {
+    background-color: var(--cyan-dim);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.tl-marker-warning {
+    background-color: var(--amber-dim);
+    border-color: var(--color-amber);
+    color: #ffd166;
+}
+
+.tl-marker-danger {
+    background-color: var(--danger-dim);
+    border-color: var(--color-danger);
+    color: #ff8fa3;
+}
+
+.timeline-slider {
+    margin: 2px 0;
+}
+
+.timeline-controls-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.timeline-left-buttons {
+    flex-direction: row;
+    align-items: center;
+}
+
+.timeline-center-time {
+    flex-direction: row;
+    align-items: center;
+}
+
+.tl-time-caption {
+    font-size: 11px;
+    color: var(--text-sec);
+    margin-right: 4px;
+}
+
+.tl-elapsed-num {
+    font-size: 13px;
+    -unity-font-style: bold;
+    color: var(--color-primary);
+}
+
+.tl-duration-num {
+    font-size: 12px;
+    -unity-font-style: bold;
+    color: var(--text-sec);
+}
+
+.tl-divider {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin: 0 8px;
+}
+
+.tl-utc-num {
+    font-size: 12px;
+    -unity-font-style: bold;
+    color: var(--color-amber);
+}
+
+.speed-group {
+    flex-direction: row;
+    align-items: center;
+}
+
+.speed-caption {
+    font-size: 11px;
+    color: var(--text-sec);
+    margin-right: 4px;
+}
+
+.speed-btn {
+    padding: 3px 7px;
+    margin-left: 3px;
+    border-radius: 3px;
+    border-width: 1px;
+    border-color: var(--border-subtle);
+    background-color: rgba(13, 25, 43, 0.82);
+    color: var(--text-sec);
+    font-size: 11px;
+    -unity-font-style: bold;
+}
+
+.speed-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--text-main);
+}
+
+.speed-btn.active {
+    background-color: var(--cyan-dim);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}

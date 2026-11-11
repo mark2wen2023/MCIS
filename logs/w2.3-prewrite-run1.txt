@@ -1,0 +1,900 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+/workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs(214,13): warning xUnit2029: Do not use Assert.Empty to check if a value does not exist in a collection. Use Assert.DoesNotContain instead. (https://xunit.net/xunit.analyzers/rules/xUnit2029) [/workspace/maritime-sim-design/tests_acceptance/W2/W2.Acceptance.csproj]
+/workspace/maritime-sim-design/tests_acceptance/W2/NmeaAcceptanceTests.cs(274,13): warning xUnit2031: Do not use a Where clause to filter before calling Assert.Single. Use the overload of Assert.Single that accepts a filtering function. (https://xunit.net/xunit.analyzers/rules/xUnit2031) [/workspace/maritime-sim-design/tests_acceptance/W2/W2.Acceptance.csproj]
+/workspace/maritime-sim-design/tests_acceptance/W2/RetestRulingsAcceptanceTests.cs(522,13): warning xUnit2029: Do not use Assert.Empty to check if a value does not exist in a collection. Use Assert.DoesNotContain instead. (https://xunit.net/xunit.analyzers/rules/xUnit2029) [/workspace/maritime-sim-design/tests_acceptance/W2/W2.Acceptance.csproj]
+  W2.Acceptance -> /workspace/maritime-sim-design/tests_acceptance/W2/bin/Debug/net8.0/W2.Acceptance.dll
+Test run for /workspace/maritime-sim-design/tests_acceptance/W2/bin/Debug/net8.0/W2.Acceptance.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:00.06]   Discovering: W2.Acceptance
+[xUnit.net 00:00:00.17]   Discovered:  W2.Acceptance
+[xUnit.net 00:00:00.17]   Starting:    W2.Acceptance
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.TrackKind_CoversScreenshotEightTracks [3 ms]
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.ClockOffsetEstimate_HasOffsetAndUncertainty [< 1 ms]
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.MediaItem_SupportsChannelRangeAndShaMetadata [< 1 ms]
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.EventMarker_CanRepresentScreenshotFlags [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.IllegalNumericCharacters_DoNotThrow_AndAreIgnored [13 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "!AIV") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "$AI") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "!AIVD") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "$GPRM") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "$GPR") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.CompletelyMalformed_ReturnsFalse(line: "") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.CompletelyMalformed_ReturnsFalse(line: "$GP") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.CompletelyMalformed_ReturnsFalse(line: "no dollar sign") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Checksum_WrongValue_ParsesButMarkedInvalid [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestOutlierTests.TinyMad_UsesOneSecondFloor_BothSides(method: Median) [16 ms]
+  Passed Mcis.Acceptance.W2.RetestOutlierTests.TinyMad_UsesOneSecondFloor_BothSides(method: LeastSquares) [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestOutlierTests.AbsoluteFloor_IsConfigurable [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.RmcWithNewDateAfterMidnight_UsesSentenceDate [2 ms]
+  Passed Mcis.Acceptance.W2.RetestManualAnchorCalibrationTests.Csv_BadRow_FailsWithCodeAndLine(row: "K1,CCTV,不是时间,GNSS,2026-05-18T06:15:00Z,,", code: "vdr_manual_anchor_bad_time") [17 ms]
+  Passed Mcis.Acceptance.W2.RetestOutlierTests.ClassicOutlierSet_FlagsAndGivesNonZeroUncertainty(method: Median) [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.EmptyFields_DoNotThrow_AndSkipIncompleteSamples [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestOutlierTests.ClassicOutlierSet_FlagsAndGivesNonZeroUncertainty(method: LeastSquares) [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestManualAnchorCalibrationTests.Csv_BadRow_FailsWithCodeAndLine(row: ",CCTV,2026-05-18T06:15:00Z,GNSS,2026-05-18T06:15:0"···, code: "vdr_manual_anchor_invalid") [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestManualAnchorCalibrationTests.Csv_BadRow_FailsWithCodeAndLine(row: "K1,CCTV,2026-05-18T06:15:00Z,CCTV,2026-05-18T06:15"···, code: "vdr_manual_anchor_invalid") [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestOutlierTests.LargeMad_UsesScaledMadGate_BothSides [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestManualAnchorCalibrationTests.Csv_MissingHeaderOrColumn_FailsWithCode(header: "", code: "vdr_manual_anchor_missing_header") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Importer_TruncatedAddressInFile_DoesNotAbortImport [1 ms]
+  Passed Mcis.Acceptance.W2.RetestManualAnchorCalibrationTests.Csv_MissingHeaderOrColumn_FailsWithCode(header: "event_key,source_a,time_a_utc,source_b", code: "vdr_manual_anchor_missing_column") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.OverlongLine_DoesNotThrow [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestManualAnchorCalibrationTests.Csv_QuotedNoteWithComma_IsKept [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Checksum_Missing_IsNotValid [< 1 ms]
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.FictionalSamples_AreLabeledAndImportable [12 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.SupportedSentenceTypes_CanBeImported [2 ms]
+  Passed Mcis.Acceptance.W2.W21RelativeBearingTests.D09_RelativeWithoutHeading_KeptAsRelative_NoBackfill_ThenConvertsAfterHeading [22 ms]
+  Passed Mcis.Acceptance.W2.W22CaseIdTests.DetectionAllowsBlankCaseId_ButTryToJsonRejects(caseId: "") [24 ms]
+  Passed Mcis.Acceptance.W2.W22TimeSourceMismatchTests.Mismatch_ThresholdBothDirections_TagStillWins(prefixTime: "06:14:58.000Z", expectInfo: False) [23 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TagBlock_InvalidChecksum_MustNotYieldTime [1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Checksum_ValidUppercase_IsAccepted [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22CaseIdTests.DetectionAllowsBlankCaseId_ButTryToJsonRejects(caseId: "\r\n\t ") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22CaseIdTests.DetectionAllowsBlankCaseId_ButTryToJsonRejects(caseId: null) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22CaseIdTests.DetectionAllowsBlankCaseId_ButTryToJsonRejects(caseId: "\t") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22CaseIdTests.DetectionAllowsBlankCaseId_ButTryToJsonRejects(caseId: "　") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Importer_DropsBadAndMissingChecksum_ByDefault [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22CaseIdTests.DetectionAllowsBlankCaseId_ButTryToJsonRejects(caseId: "\n") [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestManualAnchorCalibrationTests.ConflictWithUncalibratedSource_IsMarked [5 ms]
+  Passed Mcis.Acceptance.W2.W22CaseIdTests.DetectionAllowsBlankCaseId_ButTryToJsonRejects(caseId: "   ") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21RelativeBearingTests.D09_RelativeTrack_NotComparedWithOtherSourceTrueBearing_EmitsNotAvailable [2 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.GgaWithoutDateOrDefault_WritesDiagnosticAndDrops [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TagBlock_MissingChecksum_MustNotYieldTime [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22TimeSourceMismatchTests.Mismatch_ThresholdBothDirections_TagStillWins(prefixTime: "06:14:00.000Z", expectInfo: True) [1 ms]
+  Passed Mcis.Acceptance.W2.W22TimeSourceMismatchTests.Mismatch_ThresholdBothDirections_TagStillWins(prefixTime: "07:15:00.000Z", expectInfo: True) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22TimeSourceMismatchTests.Mismatch_ThresholdBothDirections_TagStillWins(prefixTime: "06:15:01.999Z", expectInfo: False) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22TimeSourceMismatchTests.Mismatch_ThresholdBothDirections_TagStillWins(prefixTime: "06:15:00.000Z", expectInfo: False) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22TimeSourceMismatchTests.Mismatch_ThresholdBothDirections_TagStillWins(prefixTime: "06:15:02.000Z", expectInfo: False) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22TimeSourceMismatchTests.Mismatch_ThresholdBothDirections_TagStillWins(prefixTime: "06:15:02.001Z", expectInfo: True) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22TimeSourceMismatchTests.Mismatch_ThresholdBothDirections_TagStillWins(prefixTime: "06:14:57.9999990Z", expectInfo: True) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22TimeSourceMismatchTests.Mismatch_ThresholdBothDirections_TagStillWins(prefixTime: "06:15:02.0000010Z", expectInfo: True) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22TimeSourceMismatchTests.Mismatch_ThresholdBothDirections_TagStillWins(prefixTime: "06:16:00.000Z", expectInfo: True) [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.UnknownSentenceType_IsReportedOnce [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22CaseIdTests.TryWrite_Rejects_LeavesNoFile(caseId: null) [1 ms]
+  Passed Mcis.Acceptance.W2.W22TimeSourceMismatchTests.PlainLines_NoExtraDiagnostics_MultiLineFile [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22CaseIdTests.TryWrite_Rejects_LeavesNoFile(caseId: "　") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22CaseIdTests.TryWrite_Rejects_LeavesNoFile(caseId: "\r\n\t ") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22CaseIdTests.TryWrite_Rejects_LeavesNoFile(caseId: "\t") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22CaseIdTests.TryWrite_Rejects_LeavesNoFile(caseId: "   ") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22TimeSourceMismatchTests.OnlyOneSideValid_NoMismatch [1 ms]
+  Passed Mcis.Acceptance.W2.W21RelativeBearingTests.D09_TrueBearingTtm_Unaffected [2 ms]
+  Passed Mcis.Acceptance.W2.W22CaseIdTests.TryWrite_Rejects_LeavesNoFile(caseId: "") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22CaseIdTests.TryWrite_Rejects_LeavesNoFile(caseId: "\n") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22TimeSourceMismatchTests.Mismatch_AlsoOnNonGnssSentence_OncePerLine [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22CaseIdTests.MixedArray_OneBlank_RejectsWholeArray [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.GgaAfterMidnight_RollsDateForward [2 ms]
+  Passed Mcis.Acceptance.W2.W22TimeSourceMismatchTests.FractionalTagBlock_ComparedPrecisely [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TagBlock_ValidChecksum_YieldsUnixTime [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Checksum_ValidLowercase_IsAccepted [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestNmeaTests.Over82Chars_StillParsed_WithWarning(length: 79, expectWarning: False) [2 ms]
+  Passed Mcis.Acceptance.W2.W22CaseIdTests.TryWrite_Rejected_DoesNotTouchExistingFile [1 ms]
+  Passed Mcis.Acceptance.W2.RetestNmeaTests.Over82Chars_StillParsed_WithWarning(length: 80, expectWarning: False) [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestNmeaTests.Over82Chars_StillParsed_WithWarning(length: 83, expectWarning: True) [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestNmeaTests.Over82Chars_StillParsed_WithWarning(length: 82, expectWarning: True) [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestNmeaTests.Over82Chars_StillParsed_WithWarning(length: 81, expectWarning: True) [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestNmeaTests.Over82Chars_StillParsed_WithWarning(length: 200, expectWarning: True) [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestContractTests.TerminalStatus_RequiresResolvedByAndAt(status: AcceptedAsIs) [2 ms]
+  Passed Mcis.Acceptance.W2.RetestNmeaTests.D01_EveryPrefixOfValidLine_NeverThrows [1 ms]
+  Passed Mcis.Acceptance.W2.RetestContractTests.TerminalStatus_RequiresResolvedByAndAt(status: Resolved) [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestNmeaTests.LogPrefixPlusInvalidTagBlock_FallsBackToPrefix_WithWarning [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestNmeaTests.D02_SmallBackwardJitter_DoesNotRollDate [1 ms]
+  Passed Mcis.Acceptance.W2.RetestNmeaTests.LogPrefixPlusValidTagBlock_TagBlockWins [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestNmeaTests.ValidTagBlock_LowercaseHex_IsAccepted [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestNmeaTests.D02_GgaOnlyStream_RollsOnce_AndDatedRmcDoesNotDoubleRoll [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestContractTests.ConflictStatus_HasEachContractValue(name: "Resolved") [4 ms]
+  Passed Mcis.Acceptance.W2.RetestNmeaTests.LogPrefix_BeatsSentenceTime [1 ms]
+  Passed Mcis.Acceptance.W2.RetestContractTests.ConflictStatus_HasEachContractValue(name: "Annotated") [< 1 ms]
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.ImportedEightTracks_CanBeQueriedOnSharedTimeline [17 ms]
+  Passed Mcis.Acceptance.W2.RetestContractTests.ConflictStatus_HasEachContractValue(name: "AcceptedAsIs") [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestContractTests.ConflictStatus_HasEachContractValue(name: "ClockCorrected") [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestContractTests.ConflictStatus_HasEachContractValue(name: "Open") [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestNmeaTests.TtmRelativeBearing_WithoutHeading_IsNotStoredAsTrueBearing [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestContractTests.ConflictStatus_HasEachContractValue(name: "PendingInterview") [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestToleranceTests.Threshold_IsStrictlyGreater_WithTolerance1e6(kind: RateOfTurn, a: 10, b: 15, expectConflict: False) [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestContractTests.StatusText_MatchesPrototypeColumn [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestManualAnchorCalibrationTests.ManualAnchor_EnablesCalibration_ForSourceWithoutAutoAnchors [15 ms]
+  Passed Mcis.Acceptance.W2.RetestToleranceTests.Threshold_IsStrictlyGreater_WithTolerance1e6(kind: CourseOverGround, a: 0.10000000000000001, b: 358.10000000000002, expectConflict: False) [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Heading_179To181_DoesNotTakeLongWay [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestToleranceTests.Threshold_IsStrictlyGreater_WithTolerance1e6(kind: Heading, a: 359, b: 1.0000015, expectConflict: True) [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.CourseOverGround_AlsoUsesShortestArc [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestNmeaTests.TargetRange_FromTwoVdrs_PairedByName_ConflictDetected [1 ms]
+  Passed Mcis.Acceptance.W2.RetestToleranceTests.Threshold_IsStrictlyGreater_WithTolerance1e6(kind: SpeedOverGround, a: 12, b: 12.3000015, expectConflict: True) [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Speed_IsLinearlyInterpolated [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestToleranceTests.Threshold_IsStrictlyGreater_WithTolerance1e6(kind: RudderAngle, a: -1, b: 1.0000015, expectConflict: True) [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Heading_359To1_InterpolatesAcrossZeroByShortestArc [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestToleranceTests.Threshold_IsStrictlyGreater_WithTolerance1e6(kind: SpeedOverGround, a: 12, b: 12.300000900000001, expectConflict: False) [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestToleranceTests.Threshold_IsStrictlyGreater_WithTolerance1e6(kind: SpeedOverGround, a: 12, b: 12.300000000000001, expectConflict: False) [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Heading_181To179_DoesNotTakeLongWay [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestToleranceTests.Threshold_IsStrictlyGreater_WithTolerance1e6(kind: SpeedOverGround, a: 12.300000000000001, b: 12, expectConflict: False) [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestNmeaTests.InvalidTagBlock_FallsBackToSentenceTime_WithWarning [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestToleranceTests.Threshold_IsStrictlyGreater_WithTolerance1e6(kind: Heading, a: 359, b: 1.0000005000000001, expectConflict: False) [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Heading_1To359_InterpolatesAcrossZeroByShortestArc [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestContractTests.TrackKind_EnumEqualsContractTrackKindSet [1 ms]
+  Passed Mcis.Acceptance.W2.RetestToleranceTests.Threshold_IsStrictlyGreater_WithTolerance1e6(kind: RateOfTurn, a: 10, b: 15.0000015, expectConflict: True) [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.EngineTelegraph_ChangesOnlyAtSampleInstant [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestToleranceTests.Threshold_IsStrictlyGreater_WithTolerance1e6(kind: RudderAngle, a: -1, b: 1.0000009000000001, expectConflict: False) [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.EngineTelegraph_IsStepped_NotInterpolated [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestToleranceTests.DefaultThresholds_MutationDoesNotLeakIntoDetectNull [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestNmeaTests.D01_TruncatedLine_OnlyThatLineDropped_WithDiagnostic [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestNmeaTests.ValidTagBlock_BeatsSentenceTime_ByDefault [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestToleranceTests.DefaultTolerance_Is1e6_AndConfigurable [< 1 ms]
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.Calibrator_ShiftsFiniteOffsetsOnly_LeavesNaNUnchanged [1 ms]
+  Passed Mcis.Acceptance.W2.W22CaseIdTests.ValidCaseId_TryWrite_WritesUtf8NoBom_ContractValid [12 ms]
+  Passed Mcis.Acceptance.W2.W22DegreeUnitTests.WholeJsonOnDisk_HasNoDegreeSign(kind: TargetBearing, expectedUnit: "deg") [1 ms]
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.Median_OutlierMustNotZeroUncertaintyOrStayInCountUnremarked [1 ms]
+  Passed Mcis.Acceptance.W2.W22DegreeUnitTests.WholeJsonOnDisk_HasNoDegreeSign(kind: Heading, expectedUnit: "deg") [1 ms]
+  Passed Mcis.Acceptance.W2.W22DegreeUnitTests.WholeJsonOnDisk_HasNoDegreeSign(kind: RateOfTurn, expectedUnit: "deg/min") [< 1 ms]
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.NoCommonAnchors_ReturnsNaNAndZeroCount [< 1 ms]
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.LeastSquares_MatchesMeanAndStandardError [< 1 ms]
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.Median_ResistsSingleOutlier_OffsetStaysAtCluster [< 1 ms]
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.MissingReference_Fails [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22CaseIdTests.ToJson_InMemoryDebug_StillAllowsNullCaseId [3 ms]
+[xUnit.net 00:00:00.29]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "CASÉ-01") [FAIL]
+[xUnit.net 00:00:00.29]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.29]       Expected: "conflict_case_id_invalid"
+[xUnit.net 00:00:00.29]       Actual:   null
+[xUnit.net 00:00:00.29]       Stack Trace:
+[xUnit.net 00:00:00.29]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(188,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId)
+[xUnit.net 00:00:00.29]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.29]            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W2.W22DegreeUnitTests.DeltaUnit_OnDisk_IsAscii(kind: CourseOverGround, a: 10, b: 20, expected: "deg") [1 ms]
+  Passed Mcis.Acceptance.W2.W23PositionUnitTests.SpeedAndEventUnits_OnDisk_KnAndS [23 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "CASÉ-01") [4 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "conflict_case_id_invalid"
+Actual:   null
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 188
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W2.W23TimeSourceToleranceTests.BeyondTolerance_ReportsInfo_TagWins(prefixTime: "06:14:57.9999980Z") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23TimeSourceToleranceTests.BeyondTolerance_ReportsInfo_TagWins(prefixTime: "06:15:02.0000020Z") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22DegreeUnitTests.DeltaUnit_OnDisk_IsAscii(kind: Heading, a: 359, b: 5, expected: "deg") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22DegreeUnitTests.DeltaUnit_OnDisk_IsAscii(kind: TargetRange, a: 1, b: 2, expected: "nm") [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestContractTests.Conflict_DefaultsOpen_CarriesCaseId_AndResolutionIsImmutableCopy [7 ms]
+  Passed Mcis.Acceptance.W2.W22DegreeUnitTests.DeltaUnit_OnDisk_IsAscii(kind: SpeedOverGround, a: 12, b: 13, expected: "kn") [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestContractTests.ConflictStatus_EnumEqualsContractSet [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22DegreeUnitTests.DeltaUnit_OnDisk_IsAscii(kind: RudderAngle, a: -5, b: 5, expected: "deg") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21TimeSourceTests.D08_ValidTagWithoutTimeField_FallsBackToPrefix [3 ms]
+  Passed Mcis.Acceptance.W2.W21TimeSourceTests.D08_ValidPrefix_ValidTag_UsesTag_NoFallbackDiagnostic [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22DegreeUnitTests.DeltaUnit_OnDisk_IsAscii(kind: RateOfTurn, a: 0, b: 10, expected: "deg/min") [< 1 ms]
+[xUnit.net 00:00:00.29]     Mcis.Acceptance.W2.W23PositionUnitTests.NoEmptyDeltaUnit_ForAnyComparableKind [FAIL]
+[xUnit.net 00:00:00.29]       deltaUnit 为空串的种类：Position,TargetPosition
+[xUnit.net 00:00:00.29]       Stack Trace:
+[xUnit.net 00:00:00.29]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(339,0): at Mcis.Acceptance.W2.W23PositionUnitTests.NoEmptyDeltaUnit_ForAnyComparableKind()
+[xUnit.net 00:00:00.29]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.29]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.29]     Mcis.Acceptance.W2.W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(prefixTime: "06:15:02.0004Z", expected: "2.000") [FAIL]
+[xUnit.net 00:00:00.29]       诊断文字应含 3 位小数时间差「2.000」：日志前缀时间 2026-05-18T06:15:02.000+00:00 与标签块时间 2026-05-18T06:15:00.000+00:00 相差 2 s，超过 2 s。
+[xUnit.net 00:00:00.29]       Stack Trace:
+[xUnit.net 00:00:00.29]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(81,0): at Mcis.Acceptance.W2.W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(String prefixTime, String expected)
+[xUnit.net 00:00:00.29]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.29]            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.29]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "a") [FAIL]
+[xUnit.net 00:00:00.29]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.29]       Expected: "conflict_case_id_invalid"
+[xUnit.net 00:00:00.29]       Actual:   null
+[xUnit.net 00:00:00.29]       Stack Trace:
+[xUnit.net 00:00:00.29]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(188,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId)
+[xUnit.net 00:00:00.29]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+[xUnit.net 00:00:00.29]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Acceptance.W2.W23PositionUnitTests.NoEmptyDeltaUnit_ForAnyComparableKind [2 ms]
+  Error Message:
+   deltaUnit 为空串的种类：Position,TargetPosition
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23PositionUnitTests.NoEmptyDeltaUnit_ForAnyComparableKind() in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 339
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W2.W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(prefixTime: "06:15:02.0004Z", expected: "2.000") [2 ms]
+  Error Message:
+   诊断文字应含 3 位小数时间差「2.000」：日志前缀时间 2026-05-18T06:15:02.000+00:00 与标签块时间 2026-05-18T06:15:00.000+00:00 相差 2 s，超过 2 s。
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(String prefixTime, String expected) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 81
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W2.W21TimeSourceTests.D08_PlainLines_StillNoSpuriousTimeDiagnostics [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "a") [1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "conflict_case_id_invalid"
+Actual:   null
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 188
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.W22DegreeUnitTests.DeltaUnit_OnDisk_IsAscii(kind: TargetBearing, a: 10, b: 20, expected: "deg") [< 1 ms]
+[xUnit.net 00:00:00.29]     Mcis.Acceptance.W2.W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(prefixTime: "06:16:00.000Z", expected: "60.000") [FAIL]
+[xUnit.net 00:00:00.29]       诊断文字应含 3 位小数时间差「60.000」：日志前缀时间 2026-05-18T06:16:00.000+00:00 与标签块时间 2026-05-18T06:15:00.000+00:00 相差 60 s，超过 2 s。
+[xUnit.net 00:00:00.29]       Stack Trace:
+[xUnit.net 00:00:00.29]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(81,0): at Mcis.Acceptance.W2.W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(String prefixTime, String expected)
+[xUnit.net 00:00:00.29]            at InvokeStub_W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(Object, Span`1)
+[xUnit.net 00:00:00.29]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.W21TimeSourceTests.D08_InvalidPrefix_InvalidTag_FallsBackToSentence_WithBothDiagnostics [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21TimeSourceTests.D08_InvalidPrefixOnly_FallsBackToSentence_WithDiagnostic [< 1 ms]
+  Passed Mcis.Acceptance.W2.W22DegreeUnitTests.EventTime_DeltaUnit_IsSeconds [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(prefixTime: "06:16:00.000Z", expected: "60.000") [< 1 ms]
+  Error Message:
+   诊断文字应含 3 位小数时间差「60.000」：日志前缀时间 2026-05-18T06:16:00.000+00:00 与标签块时间 2026-05-18T06:15:00.000+00:00 相差 60 s，超过 2 s。
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(String prefixTime, String expected) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 81
+   at InvokeStub_W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.W22DegreeUnitTests.InMemoryUnit_StaysDegreeSign [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21TimeSourceTests.D08_ValidPrefix_InvalidTag_FallsBackToPrefix_WithWarningNamingPrefix [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21TimeSourceTests.D08_InvalidPrefix_ValidTag_UsesTag [< 1 ms]
+[xUnit.net 00:00:00.29]     Mcis.Acceptance.W2.W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(prefixTime: "06:15:02.500Z", expected: "2.500") [FAIL]
+[xUnit.net 00:00:00.29]       诊断文字应含 3 位小数时间差「2.500」：日志前缀时间 2026-05-18T06:15:02.500+00:00 与标签块时间 2026-05-18T06:15:00.000+00:00 相差 2.5 s，超过 2 s。
+[xUnit.net 00:00:00.29]       Stack Trace:
+[xUnit.net 00:00:00.29]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(81,0): at Mcis.Acceptance.W2.W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(String prefixTime, String expected)
+[xUnit.net 00:00:00.29]            at InvokeStub_W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(Object, Span`1)
+[xUnit.net 00:00:00.29]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.29]     Mcis.Acceptance.W2.W23PositionUnitTests.PositionDeltaUnit_OnDisk_IsMeters_AndFilePassesContract(kind: Position) [FAIL]
+[xUnit.net 00:00:00.29]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.29]                  ↓ (pos 0)
+[xUnit.net 00:00:00.29]       Expected: "m"
+[xUnit.net 00:00:00.29]       Actual:   ""
+[xUnit.net 00:00:00.29]       Stack Trace:
+[xUnit.net 00:00:00.29]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(295,0): at Mcis.Acceptance.W2.W23PositionUnitTests.PositionDeltaUnit_OnDisk_IsMeters_AndFilePassesContract(TrackKind kind)
+[xUnit.net 00:00:00.29]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.29]            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.29]     Mcis.Acceptance.W2.W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(prefixTime: "06:14:57.500Z", expected: "2.500") [FAIL]
+[xUnit.net 00:00:00.29]       诊断文字应含 3 位小数时间差「2.500」：日志前缀时间 2026-05-18T06:14:57.500+00:00 与标签块时间 2026-05-18T06:15:00.000+00:00 相差 2.5 s，超过 2 s。
+[xUnit.net 00:00:00.29]       Stack Trace:
+[xUnit.net 00:00:00.29]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(81,0): at Mcis.Acceptance.W2.W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(String prefixTime, String expected)
+[xUnit.net 00:00:00.29]            at InvokeStub_W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(Object, Span`1)
+[xUnit.net 00:00:00.29]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Acceptance.W2.W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(prefixTime: "06:15:02.500Z", expected: "2.500") [< 1 ms]
+  Error Message:
+   诊断文字应含 3 位小数时间差「2.500」：日志前缀时间 2026-05-18T06:15:02.500+00:00 与标签块时间 2026-05-18T06:15:00.000+00:00 相差 2.5 s，超过 2 s。
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(String prefixTime, String expected) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 81
+   at InvokeStub_W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Acceptance.W2.W23PositionUnitTests.PositionDeltaUnit_OnDisk_IsMeters_AndFilePassesContract(kind: Position) [1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "m"
+Actual:   ""
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23PositionUnitTests.PositionDeltaUnit_OnDisk_IsMeters_AndFilePassesContract(TrackKind kind) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 295
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W2.W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(prefixTime: "06:15:02.0006Z", expected: "2.001") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21TimeSourceTests.LineLength_CrLfNotCounted_InImportText(len: 80, warn: False) [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestTargetAndEventTests.TargetRangeBearing_AreCompared_WithThresholdAndTolerance(kind: TargetRange, a: 1.2, b: 1.3000015, expect: True) [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(prefixTime: "06:14:57.500Z", expected: "2.500") [< 1 ms]
+  Error Message:
+   诊断文字应含 3 位小数时间差「2.500」：日志前缀时间 2026-05-18T06:14:57.500+00:00 与标签块时间 2026-05-18T06:15:00.000+00:00 相差 2.5 s，超过 2 s。
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(String prefixTime, String expected) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 81
+   at InvokeStub_W23TimeSourceToleranceTests.MessageDelta_HasThreeDecimals(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.W21TimeSourceTests.LineLength_CrLfNotCounted_InImportText(len: 81, warn: True) [< 1 ms]
+[xUnit.net 00:00:00.29]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "CASE-01​") [FAIL]
+[xUnit.net 00:00:00.29]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.29]       Expected: "conflict_case_id_invalid"
+[xUnit.net 00:00:00.29]       Actual:   null
+[xUnit.net 00:00:00.29]       Stack Trace:
+[xUnit.net 00:00:00.29]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(188,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId)
+[xUnit.net 00:00:00.29]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+[xUnit.net 00:00:00.29]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.29]     Mcis.Acceptance.W2.W23PositionUnitTests.PositionDeltaUnit_OnDisk_IsMeters_AndFilePassesContract(kind: TargetPosition) [FAIL]
+[xUnit.net 00:00:00.29]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.29]                  ↓ (pos 0)
+[xUnit.net 00:00:00.29]       Expected: "m"
+[xUnit.net 00:00:00.29]       Actual:   ""
+[xUnit.net 00:00:00.29]       Stack Trace:
+[xUnit.net 00:00:00.29]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(295,0): at Mcis.Acceptance.W2.W23PositionUnitTests.PositionDeltaUnit_OnDisk_IsMeters_AndFilePassesContract(TrackKind kind)
+[xUnit.net 00:00:00.29]            at InvokeStub_W23PositionUnitTests.PositionDeltaUnit_OnDisk_IsMeters_AndFilePassesContract(Object, Span`1)
+[xUnit.net 00:00:00.29]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.RetestTargetAndEventTests.TargetRangeBearing_AreCompared_WithThresholdAndTolerance(kind: TargetRange, a: 1.2, b: 1.3, expect: False) [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestTargetAndEventTests.TargetRangeBearing_AreCompared_WithThresholdAndTolerance(kind: TargetBearing, a: 359, b: 1, expect: False) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21TimeSourceTests.D08_GnssSentenceTimeBasis_Unchanged [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestTargetAndEventTests.TargetRangeBearing_AreCompared_WithThresholdAndTolerance(kind: TargetBearing, a: 359, b: 1.5, expect: True) [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "CASE-01​") [2 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "conflict_case_id_invalid"
+Actual:   null
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 188
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Acceptance.W2.W23PositionUnitTests.PositionDeltaUnit_OnDisk_IsMeters_AndFilePassesContract(kind: TargetPosition) [1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "m"
+Actual:   ""
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23PositionUnitTests.PositionDeltaUnit_OnDisk_IsMeters_AndFilePassesContract(TrackKind kind) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 295
+   at InvokeStub_W23PositionUnitTests.PositionDeltaUnit_OnDisk_IsMeters_AndFilePassesContract(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.29]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "CASE-01\n") [FAIL]
+[xUnit.net 00:00:00.29]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.29]       Expected: "conflict_case_id_invalid"
+[xUnit.net 00:00:00.30]       Actual:   null
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(188,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "CASE/01") [FAIL]
+[xUnit.net 00:00:00.30]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.30]       Expected: "conflict_case_id_invalid"
+[xUnit.net 00:00:00.30]       Actual:   null
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(188,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.W21TimeSourceTests.D08_PrefixWithSpaceSeparator_AndTag_UsesTag [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "CASE-01\n") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "conflict_case_id_invalid"
+Actual:   null
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 188
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.W21InvalidNumberTests.D10_InvalidValueInMiddle_NotAvailableWithReasonAndRange_ValidPartsStillCompared(bad: -Infinity) [4 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.Heading_EqualToThreshold_IsNotConflict_SlightlyOverIs [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "CASE/01") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "conflict_case_id_invalid"
+Actual:   null
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 188
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.Speed_EqualToThreshold_IsNotConflict [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21InvalidNumberTests.D10_InvalidValueInMiddle_NotAvailableWithReasonAndRange_ValidPartsStillCompared(bad: Infinity) [1 ms]
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "ＣＡＳＥ01") [FAIL]
+[xUnit.net 00:00:00.30]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.30]       Expected: "conflict_case_id_invalid"
+[xUnit.net 00:00:00.30]       Actual:   null
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(188,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23TimeSourceToleranceTests.WithinTolerance_NoMismatch(prefixTime: "06:14:57.9999995Z") [FAIL]
+[xUnit.net 00:00:00.30]       Assert.DoesNotContain() Failure: Filter matched in collection
+[xUnit.net 00:00:00.30]                    ↓ (pos 0)
+[xUnit.net 00:00:00.30]       Collection: [L1 vdr_timesource_mismatch: 日志前缀时间 2026-05-18T06:14:57.999+00:00 与标签块时间 2026-05-18T06:15:00.000+00:00 相差 2 s，超过 2 s。]
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(44,0): at Mcis.Acceptance.W2.W23TimeSourceToleranceTests.WithinTolerance_NoMismatch(String prefixTime)
+[xUnit.net 00:00:00.30]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W2.W21InvalidNumberTests.D10_InvalidValueInMiddle_NotAvailableWithReasonAndRange_ValidPartsStillCompared(bad: NaN) [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "ＣＡＳＥ01") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "conflict_case_id_invalid"
+Actual:   null
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 188
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.W21InvalidNumberTests.D10_AllFinite_NoInvalidNumberDiagnostic [< 1 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.Speed_SlightlyOverThreshold_IsConflict [1 ms]
+  Failed Mcis.Acceptance.W2.W23TimeSourceToleranceTests.WithinTolerance_NoMismatch(prefixTime: "06:14:57.9999995Z") [4 ms]
+  Error Message:
+   Assert.DoesNotContain() Failure: Filter matched in collection
+             ↓ (pos 0)
+Collection: [L1 vdr_timesource_mismatch: 日志前缀时间 2026-05-18T06:14:57.999+00:00 与标签块时间 2026-05-18T06:15:00.000+00:00 相差 2 s，超过 2 s。]
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23TimeSourceToleranceTests.WithinTolerance_NoMismatch(String prefixTime) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 44
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W2.W21InvalidNumberTests.D10_InvalidInBothSources_AngularKind_AlsoReported [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestTargetAndEventTests.EventTime_DefaultThreshold2s(tB: 102.5, expect: True) [4 ms]
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: " CASE-01") [FAIL]
+[xUnit.net 00:00:00.30]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.30]       Expected: "conflict_case_id_invalid"
+[xUnit.net 00:00:00.30]       Actual:   null
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(188,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23TimeSourceToleranceTests.WithinTolerance_NoMismatch(prefixTime: "06:15:02.0000005Z") [FAIL]
+[xUnit.net 00:00:00.30]       Assert.DoesNotContain() Failure: Filter matched in collection
+[xUnit.net 00:00:00.30]                    ↓ (pos 0)
+[xUnit.net 00:00:00.30]       Collection: [L1 vdr_timesource_mismatch: 日志前缀时间 2026-05-18T06:15:02.000+00:00 与标签块时间 2026-05-18T06:15:00.000+00:00 相差 2 s，超过 2 s。]
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(44,0): at Mcis.Acceptance.W2.W23TimeSourceToleranceTests.WithinTolerance_NoMismatch(String prefixTime)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23TimeSourceToleranceTests.WithinTolerance_NoMismatch(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "案件01") [FAIL]
+[xUnit.net 00:00:00.30]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.30]       Expected: "conflict_case_id_invalid"
+[xUnit.net 00:00:00.30]       Actual:   null
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(188,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: " CASE-01") [1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "conflict_case_id_invalid"
+Actual:   null
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 188
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.RetestTargetAndEventTests.EventTime_DefaultThreshold2s(tB: 102, expect: False) [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23TimeSourceToleranceTests.WithinTolerance_NoMismatch(prefixTime: "06:15:02.0000005Z") [< 1 ms]
+  Error Message:
+   Assert.DoesNotContain() Failure: Filter matched in collection
+             ↓ (pos 0)
+Collection: [L1 vdr_timesource_mismatch: 日志前缀时间 2026-05-18T06:15:02.000+00:00 与标签块时间 2026-05-18T06:15:00.000+00:00 相差 2 s，超过 2 s。]
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23TimeSourceToleranceTests.WithinTolerance_NoMismatch(String prefixTime) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 44
+   at InvokeStub_W23TimeSourceToleranceTests.WithinTolerance_NoMismatch(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.RetestTargetAndEventTests.EventTime_DefaultThreshold2s(tB: 101.90000000000001, expect: False) [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestTargetAndEventTests.EventTime_DefaultThreshold2s(tB: 102.0000005, expect: False) [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "案件01") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "conflict_case_id_invalid"
+Actual:   null
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 188
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.RetestTargetAndEventTests.EventTime_DefaultThreshold2s(tB: 102.0000015, expect: True) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23TimeSourceToleranceTests.ExactlyTwoSeconds_StillNoMismatch(prefixTime: "06:14:58.000Z") [< 1 ms]
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "AB") [FAIL]
+[xUnit.net 00:00:00.30]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.30]       Expected: "conflict_case_id_invalid"
+[xUnit.net 00:00:00.30]       Actual:   null
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(188,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.RetestTargetAndEventTests.EventTime_DefaultThreshold2s(tB: 97.5, expect: True) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23TimeSourceToleranceTests.ExactlyTwoSeconds_StillNoMismatch(prefixTime: "06:15:02.000Z") [< 1 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.ConflictIds_MatchContractPattern_AreUniqueAndContiguous [1 ms]
+  Passed Mcis.Acceptance.W2.RetestTargetAndEventTests.TargetWithoutCounterpart_EmitsNotAvailable_NotSilentlySkipped [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "AB") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "conflict_case_id_invalid"
+Actual:   null
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 188
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.MinDuration_EqualToLimit_IsKept_SlightlyUnderIsDropped [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestTargetAndEventTests.PairedTargets_NoTimeOverlap_EmitsNotAvailable [< 1 ms]
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "CASE#01") [FAIL]
+[xUnit.net 00:00:00.30]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.30]       Expected: "conflict_case_id_invalid"
+[xUnit.net 00:00:00.30]       Actual:   null
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(188,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "CASE:01") [FAIL]
+[xUnit.net 00:00:00.30]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.30]       Expected: "conflict_case_id_invalid"
+[xUnit.net 00:00:00.30]       Actual:   null
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(188,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.Heading_AcrossZero_UsesShortestArcForThreshold [< 1 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.DefaultThresholds_AreNotASharedMutableSingleton [< 1 ms]
+  Passed Mcis.Acceptance.W2.RetestTargetAndEventTests.EventTime_IsJudgedAfterCalibration [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "CASE#01") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "conflict_case_id_invalid"
+Actual:   null
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 188
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.RetestTargetAndEventTests.PairedTargets_NaNValuesInOneSource_EmitsNotAvailable [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "CASE:01") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "conflict_case_id_invalid"
+Actual:   null
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 188
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.ConflictIds_ContinueToTwoDigitsBeyondNine [1 ms]
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "\tCASE-01") [FAIL]
+[xUnit.net 00:00:00.30]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.30]       Expected: "conflict_case_id_invalid"
+[xUnit.net 00:00:00.30]       Actual:   null
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(188,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "CASE-01 ") [FAIL]
+[xUnit.net 00:00:00.30]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.30]       Expected: "conflict_case_id_invalid"
+[xUnit.net 00:00:00.30]       Actual:   null
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(188,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "CASE 01") [FAIL]
+[xUnit.net 00:00:00.30]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.30]       Expected: "conflict_case_id_invalid"
+[xUnit.net 00:00:00.30]       Actual:   null
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(188,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "CASE-0１") [FAIL]
+[xUnit.net 00:00:00.30]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.30]       Expected: "conflict_case_id_invalid"
+[xUnit.net 00:00:00.30]       Actual:   null
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(188,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.RetestTargetAndEventTests.EventTime_ThresholdConfigurable_AndAliasPairs [< 1 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.TimelineConflict_ExposesContractAndScreenshotFields [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "\tCASE-01") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "conflict_case_id_invalid"
+Actual:   null
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 188
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "CASE-01 ") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "conflict_case_id_invalid"
+Actual:   null
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 188
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "CASE 01") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "conflict_case_id_invalid"
+Actual:   null
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 188
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(caseId: "CASE-0１") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "conflict_case_id_invalid"
+Actual:   null
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 188
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryWrite_NoFileNoDirectory(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_ValidSamples_AcceptedBySharedValidatorAndContract(caseId: "a.b_c-1") [9 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_ValidSamples_AcceptedBySharedValidatorAndContract(caseId: "123") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.MiniSchema_RejectsViolations(mutation: "badStatus", expectedFragment: "enum") [32 ms]
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "CASÉ-01") [FAIL]
+[xUnit.net 00:00:00.30]       不合格 caseId 不应序列化成功：CASÉ-01
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(171,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId)
+[xUnit.net 00:00:00.30]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "ＣＡＳＥ01") [FAIL]
+[xUnit.net 00:00:00.30]       不合格 caseId 不应序列化成功：ＣＡＳＥ01
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(171,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_ValidSamples_AcceptedBySharedValidatorAndContract(caseId: "---") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_ValidSamples_AcceptedBySharedValidatorAndContract(caseId: "CASE-2026-LN01") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_ValidSamples_AcceptedBySharedValidatorAndContract(caseId: "YANGZE22.2026_01") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_ValidSamples_AcceptedBySharedValidatorAndContract(caseId: "abc") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_ValidSamples_AcceptedBySharedValidatorAndContract(caseId: "...") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_ValidSamples_AcceptedBySharedValidatorAndContract(caseId: "ABC") [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "CASÉ-01") [< 1 ms]
+  Error Message:
+   不合格 caseId 不应序列化成功：CASÉ-01
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 171
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "ＣＡＳＥ01") [< 1 ms]
+  Error Message:
+   不合格 caseId 不应序列化成功：ＣＡＳＥ01
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 171
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "CASE:01") [FAIL]
+[xUnit.net 00:00:00.30]       不合格 caseId 不应序列化成功：CASE:01
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(171,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "CASE 01") [FAIL]
+[xUnit.net 00:00:00.30]       不合格 caseId 不应序列化成功：CASE 01
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(171,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: " CASE-01") [FAIL]
+[xUnit.net 00:00:00.30]       不合格 caseId 不应序列化成功： CASE-01
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(171,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "案件01") [FAIL]
+[xUnit.net 00:00:00.30]       不合格 caseId 不应序列化成功：案件01
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(171,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "a") [FAIL]
+[xUnit.net 00:00:00.30]       不合格 caseId 不应序列化成功：a
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(171,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.MiniSchema_RejectsViolations(mutation: "extra", expectedFragment: "additionalProperties") [4 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "CASE:01") [< 1 ms]
+  Error Message:
+   不合格 caseId 不应序列化成功：CASE:01
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 171
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "CASE 01") [< 1 ms]
+  Error Message:
+   不合格 caseId 不应序列化成功：CASE 01
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 171
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.MiniSchema_RejectsViolations(mutation: "resolvedByNumber", expectedFragment: "类型") [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: " CASE-01") [< 1 ms]
+  Error Message:
+   不合格 caseId 不应序列化成功： CASE-01
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 171
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "案件01") [< 1 ms]
+  Error Message:
+   不合格 caseId 不应序列化成功：案件01
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 171
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.MiniSchema_RejectsViolations(mutation: "missingStatus", expectedFragment: "缺必填") [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "a") [< 1 ms]
+  Error Message:
+   不合格 caseId 不应序列化成功：a
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 171
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "CASE-01 ") [FAIL]
+[xUnit.net 00:00:00.30]       不合格 caseId 不应序列化成功：CASE-01 
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(171,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId)
+[xUnit.net 00:00:00.30]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.30]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "CASE-01​") [FAIL]
+[xUnit.net 00:00:00.30]       不合格 caseId 不应序列化成功：CASE-01​
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(171,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId)
+[xUnit.net 00:00:00.31]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+[xUnit.net 00:00:00.31]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.31]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "CASE/01") [FAIL]
+[xUnit.net 00:00:00.31]       不合格 caseId 不应序列化成功：CASE/01
+[xUnit.net 00:00:00.31]       Stack Trace:
+[xUnit.net 00:00:00.31]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(171,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId)
+[xUnit.net 00:00:00.31]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+[xUnit.net 00:00:00.31]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.31]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "\tCASE-01") [FAIL]
+[xUnit.net 00:00:00.31]       不合格 caseId 不应序列化成功：	CASE-01
+[xUnit.net 00:00:00.31]       Stack Trace:
+[xUnit.net 00:00:00.31]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(171,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId)
+[xUnit.net 00:00:00.31]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+[xUnit.net 00:00:00.31]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.31]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "CASE-01\n") [FAIL]
+[xUnit.net 00:00:00.31]       不合格 caseId 不应序列化成功：CASE-01
+[xUnit.net 00:00:00.31]       
+[xUnit.net 00:00:00.31]       Stack Trace:
+[xUnit.net 00:00:00.31]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(171,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId)
+[xUnit.net 00:00:00.31]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+[xUnit.net 00:00:00.31]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.31]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "CASE-0１") [FAIL]
+[xUnit.net 00:00:00.31]       不合格 caseId 不应序列化成功：CASE-0１
+[xUnit.net 00:00:00.31]       Stack Trace:
+[xUnit.net 00:00:00.31]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(171,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId)
+[xUnit.net 00:00:00.31]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+[xUnit.net 00:00:00.31]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "CASE-01 ") [< 1 ms]
+  Error Message:
+   不合格 caseId 不应序列化成功：CASE-01 
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 171
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "CASE-01​") [< 1 ms]
+  Error Message:
+   不合格 caseId 不应序列化成功：CASE-01​
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 171
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.MiniSchema_RejectsViolations(mutation: "badId", expectedFragment: "pattern") [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "CASE/01") [< 1 ms]
+  Error Message:
+   不合格 caseId 不应序列化成功：CASE/01
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 171
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "\tCASE-01") [< 1 ms]
+  Error Message:
+   不合格 caseId 不应序列化成功：	CASE-01
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 171
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.MiniSchema_RejectsViolations(mutation: "badCase", expectedFragment: "pattern") [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "CASE-01\n") [< 1 ms]
+  Error Message:
+   不合格 caseId 不应序列化成功：CASE-01
+
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 171
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "CASE-0１") [< 1 ms]
+  Error Message:
+   不合格 caseId 不应序列化成功：CASE-0１
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 171
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.31]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "AB") [FAIL]
+[xUnit.net 00:00:00.31]       不合格 caseId 不应序列化成功：AB
+[xUnit.net 00:00:00.31]       Stack Trace:
+[xUnit.net 00:00:00.31]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(171,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId)
+[xUnit.net 00:00:00.31]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+[xUnit.net 00:00:00.31]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.31]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "CASE#01") [FAIL]
+[xUnit.net 00:00:00.31]       不合格 caseId 不应序列化成功：CASE#01
+[xUnit.net 00:00:00.31]       Stack Trace:
+[xUnit.net 00:00:00.31]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(171,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId)
+[xUnit.net 00:00:00.31]            at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+[xUnit.net 00:00:00.31]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.31]     Mcis.Acceptance.W2.W23CaseIdFormatTests.MixedArray_OneInvalid_RejectsWhole [FAIL]
+[xUnit.net 00:00:00.31]       Assert.False() Failure
+[xUnit.net 00:00:00.31]       Expected: False
+[xUnit.net 00:00:00.31]       Actual:   True
+[xUnit.net 00:00:00.31]       Stack Trace:
+[xUnit.net 00:00:00.31]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(217,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.MixedArray_OneInvalid_RejectsWhole()
+[xUnit.net 00:00:00.31]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.31]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.MiniSchema_RejectsViolations(mutation: "badDate", expectedFragment: "date-time") [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "AB") [< 1 ms]
+  Error Message:
+   不合格 caseId 不应序列化成功：AB
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 171
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(caseId: "CASE#01") [< 1 ms]
+  Error Message:
+   不合格 caseId 不应序列化成功：CASE#01
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 171
+   at InvokeStub_W23CaseIdFormatTests.InvalidFormat_TryToJsonAndArray_ReturnInvalidCode(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.MiniSchema_RejectsViolations(mutation: "dateNoZone", expectedFragment: "date-time") [< 1 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.MixedArray_OneInvalid_RejectsWhole [< 1 ms]
+  Error Message:
+   Assert.False() Failure
+Expected: False
+Actual:   True
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.MixedArray_OneInvalid_RejectsWhole() in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 217
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_InvalidSamples_RejectedBySharedValidatorAndContract(caseId: "CASE:01") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_InvalidSamples_RejectedBySharedValidatorAndContract(caseId: "a") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_InvalidSamples_RejectedBySharedValidatorAndContract(caseId: "CASE-01\n") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_InvalidSamples_RejectedBySharedValidatorAndContract(caseId: "CASE 01") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_InvalidSamples_RejectedBySharedValidatorAndContract(caseId: "CASE-01​") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.MiniSchema_RejectsViolations(mutation: "obsExtra", expectedFragment: "additionalProperties") [4 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_InvalidSamples_RejectedBySharedValidatorAndContract(caseId: "CASÉ-01") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_InvalidSamples_RejectedBySharedValidatorAndContract(caseId: "CASE-01 ") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_InvalidSamples_RejectedBySharedValidatorAndContract(caseId: "案件01") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_InvalidSamples_RejectedBySharedValidatorAndContract(caseId: "AB") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_InvalidSamples_RejectedBySharedValidatorAndContract(caseId: "ＣＡＳＥ01") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.EachStatus_WithResolver_PassesContract_AndRoundTrips(status: Annotated) [3 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_InvalidSamples_RejectedBySharedValidatorAndContract(caseId: "CASE-0１") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.EachStatus_WithResolver_PassesContract_AndRoundTrips(status: PendingInterview) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_InvalidSamples_RejectedBySharedValidatorAndContract(caseId: "CASE#01") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.EachStatus_WithResolver_PassesContract_AndRoundTrips(status: Resolved) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_InvalidSamples_RejectedBySharedValidatorAndContract(caseId: " CASE-01") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.EachStatus_WithResolver_PassesContract_AndRoundTrips(status: ClockCorrected) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_InvalidSamples_RejectedBySharedValidatorAndContract(caseId: "\tCASE-01") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.EachStatus_WithResolver_PassesContract_AndRoundTrips(status: AcceptedAsIs) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Oracle_InvalidSamples_RejectedBySharedValidatorAndContract(caseId: "CASE/01") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.EachStatus_WithResolver_PassesContract_AndRoundTrips(status: Open) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Blank_StillMissingCode(caseId: "   ") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Blank_StillMissingCode(caseId: null) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Blank_StillMissingCode(caseId: "") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Blank_StillMissingCode(caseId: "\n") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Blank_StillMissingCode(caseId: "　") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.NonTerminalStatus_WithoutResolver_KeepsNullResolvedFields_AndPasses(status: Open) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.Blank_StillMissingCode(caseId: "\t") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.NonTerminalStatus_WithoutResolver_KeepsNullResolvedFields_AndPasses(status: PendingInterview) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.NonTerminalStatus_WithoutResolver_KeepsNullResolvedFields_AndPasses(status: ClockCorrected) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.NonTerminalStatus_WithoutResolver_KeepsNullResolvedFields_AndPasses(status: Annotated) [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.ValidFormat_TryWrite_FilePassesContract(caseId: "...") [1 ms]
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.OutputKeys_AreSubsetOfContract_AndIncludeResolvedFields [< 1 ms]
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.ToJsonArray_EmptyAndNull_AreValidJsonArrays [< 1 ms]
+[xUnit.net 00:00:00.32]     Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_ExistingFileUntouched [FAIL]
+[xUnit.net 00:00:00.32]       Assert.False() Failure
+[xUnit.net 00:00:00.32]       Expected: False
+[xUnit.net 00:00:00.32]       Actual:   True
+[xUnit.net 00:00:00.32]       Stack Trace:
+[xUnit.net 00:00:00.32]         /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs(203,0): at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_ExistingFileUntouched()
+[xUnit.net 00:00:00.32]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.32]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.33]   Finished:    W2.Acceptance
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.ValidFormat_TryWrite_FilePassesContract(caseId: "---") [1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.ValidFormat_TryWrite_FilePassesContract(caseId: "abc") [1 ms]
+  Passed Mcis.Acceptance.W2.W21ConflictJsonContractTests.AllConflictKinds_FromRealDetection_PassContract_AsArray [2 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.ValidFormat_TryWrite_FilePassesContract(caseId: "CASE-2026-LN01") [1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.ValidFormat_TryWrite_FilePassesContract(caseId: "123") [1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.ValidFormat_TryWrite_FilePassesContract(caseId: "a.b_c-1") [1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.ValidFormat_TryWrite_FilePassesContract(caseId: "ABC") [< 1 ms]
+  Passed Mcis.Acceptance.W2.W23CaseIdFormatTests.ValidFormat_TryWrite_FilePassesContract(caseId: "YANGZE22.2026_01") [1 ms]
+  Failed Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_ExistingFileUntouched [< 1 ms]
+  Error Message:
+   Assert.False() Failure
+Expected: False
+Actual:   True
+  Stack Trace:
+     at Mcis.Acceptance.W2.W23CaseIdFormatTests.InvalidFormat_ExistingFileUntouched() in /workspace/maritime-sim-design/tests_acceptance/W2/RetestW23AcceptanceTests.cs:line 203
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+Test Run Failed.
+Total tests: 295
+     Passed: 254
+     Failed: 41
+ Total time: 0.7399 Seconds
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

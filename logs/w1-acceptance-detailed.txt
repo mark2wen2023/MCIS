@@ -1,0 +1,226 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  W1.Acceptance -> /workspace/maritime-sim-design/tests_acceptance/W1/bin/Debug/net8.0/W1.Acceptance.dll
+Test run for /workspace/maritime-sim-design/tests_acceptance/W1/bin/Debug/net8.0/W1.Acceptance.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+/workspace/maritime-sim-design/tests_acceptance/W1/bin/Debug/net8.0/W1.Acceptance.dll
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:00.04]   Discovering: W1.Acceptance
+[xUnit.net 00:00:00.09]   Discovered:  W1.Acceptance
+[xUnit.net 00:00:00.09]   Starting:    W1.Acceptance
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R19_VisibilityThreshold(vis: 1.99, expected: RestrictedVisibility) [24 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Thresholds_SnapshotEchoedInReport [24 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R19_VisibilityThreshold(vis: 2, expected: HeadOn) [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold(turn: 10, substantial: True) [30 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_UnsynchronisedSampling_UsesOverlapAndMatchesSynced [6 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NullTrack_Fails [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_EmptyTrack_FailsWithCode [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold(turn: 9.5, substantial: False) [3 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNInSample_Fails(field: "hdgAndCog") [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNInSample_Fails(field: "vel") [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNInSample_Fails(field: "sog") [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNInSample_Fails(field: "pos") [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNInSample_Fails(field: "time") [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold(turn: 25, substantial: True) [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.TimeBands_ContiguousAndCoverOverlap [< 1 ms]
+[xUnit.net 00:00:00.19]     Mcis.Acceptance.W1.ActionAcceptanceTests.W1_D06_R17_StandOnIndependentAction_NotFragmentedIntoViolations [FAIL]
+[xUnit.net 00:00:00.19]       Assert.DoesNotContain() Failure: Filter matched in collection
+[xUnit.net 00:00:00.19]                    ↓ (pos 0)
+[xUnit.net 00:00:00.19]       Collection: [ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, Clause = "R17(a)(ii)", EndTime = 230.000s, Evidence = ColregEvidence { DcpaM = 1.850687635408088E-12, DistanceM = 1272.7799999999727, EarlyActionDistanceM = 1250.982055556663, EarlyActionRemainingTcpaSeconds = 176.66666666666279, EndDcpaM = 316.09884506434616, ··· }, ExpectedAction = "他船明显未适当行动时可采取避碰行动；避免向左舷来船左转。", ··· }, ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, Clause = "R17(a)(i)", EndTime = 240.000s, Evidence = ColregEvidence { DcpaM = 316.09884506434616, DistanceM = 1207.3900876267157, EarlyActionDistanceM = 1203.5650834423777, EarlyActionRemainingTcpaSeconds = 231.39194583297402, EndDcpaM = 1184.4816509181751, ··· }, ExpectedAction = "直航船应保向保速，并持续观察让路船行动。", ··· }]
+[xUnit.net 00:00:00.19]       Stack Trace:
+[xUnit.net 00:00:00.19]         /workspace/maritime-sim-design/tests_acceptance/W1/ActionAcceptanceTests.cs(89,0): at Mcis.Acceptance.W1.ActionAcceptanceTests.W1_D06_R17_StandOnIndependentAction_NotFragmentedIntoViolations()
+[xUnit.net 00:00:00.19]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.19]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.19]     Mcis.Acceptance.W1.RobustnessAcceptanceTests.W1_D08_TimeBandModelMatchesContract [FAIL]
+[xUnit.net 00:00:00.19]       Assert.Contains() Failure: Item not found in collection
+[xUnit.net 00:00:00.19]       Collection: ["NoCollisionRisk", "HeadOn", "Crossing", "Overtaking", "RestrictedVisibility"]
+[xUnit.net 00:00:00.19]       Not found:  "ImmediateDanger"
+[xUnit.net 00:00:00.19]       Stack Trace:
+[xUnit.net 00:00:00.19]         /workspace/maritime-sim-design/tests_acceptance/W1/RobustnessAcceptanceTests.cs(303,0): at Mcis.Acceptance.W1.RobustnessAcceptanceTests.W1_D08_TimeBandModelMatchesContract()
+[xUnit.net 00:00:00.19]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.19]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.19]     Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D01_Crossing_RolesMustNotFlipAfterGiveWayStarboardTurn [FAIL]
+[xUnit.net 00:00:00.19]       Assert.DoesNotContain() Failure: Filter matched in collection
+[xUnit.net 00:00:00.19]                                                                                                                                                                    ↓ (pos 1)
+[xUnit.net 00:00:00.19]       Collection: [ColregTimeBand { ApplicableRules = [R8, R15, R16, R17], EndTime = 260.000s, OwnRole = GiveWay, Situation = Crossing, StartTime = 0.000s, ··· }, ColregTimeBand { ApplicableRules = [R8, R15, R16, R17], EndTime = 350.000s, OwnRole = StandOn, Situation = Crossing, StartTime = 260.000s, ··· }, ColregTimeBand { ApplicableRules = [], EndTime = 450.000s, OwnRole = None, Situation = NoCollisionRisk, StartTime = 350.000s, ··· }]
+[xUnit.net 00:00:00.19]       Stack Trace:
+[xUnit.net 00:00:00.19]         /workspace/maritime-sim-design/tests_acceptance/W1/SituationAcceptanceTests.cs(109,0): at Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D01_Crossing_RolesMustNotFlipAfterGiveWayStarboardTurn()
+[xUnit.net 00:00:00.19]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.19]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingSectorBoundaries(bearing: 112.51000000000001, expected: Overtaking) [10 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingSectorBoundaries(bearing: 112.48999999999999, expected: Crossing) [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingSectorBoundaries(bearing: 150, expected: Overtaking) [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingSectorBoundaries(bearing: 247.49000000000001, expected: Overtaking) [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingSectorBoundaries(bearing: 247.50999999999999, expected: Crossing) [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingSectorBoundaries(bearing: 180, expected: Overtaking) [< 1 ms]
+  Failed Mcis.Acceptance.W1.ActionAcceptanceTests.W1_D06_R17_StandOnIndependentAction_NotFragmentedIntoViolations [8 ms]
+  Error Message:
+   Assert.DoesNotContain() Failure: Filter matched in collection
+             ↓ (pos 0)
+Collection: [ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, Clause = "R17(a)(ii)", EndTime = 230.000s, Evidence = ColregEvidence { DcpaM = 1.850687635408088E-12, DistanceM = 1272.7799999999727, EarlyActionDistanceM = 1250.982055556663, EarlyActionRemainingTcpaSeconds = 176.66666666666279, EndDcpaM = 316.09884506434616, ··· }, ExpectedAction = "他船明显未适当行动时可采取避碰行动；避免向左舷来船左转。", ··· }, ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, Clause = "R17(a)(i)", EndTime = 240.000s, Evidence = ColregEvidence { DcpaM = 316.09884506434616, DistanceM = 1207.3900876267157, EarlyActionDistanceM = 1203.5650834423777, EarlyActionRemainingTcpaSeconds = 231.39194583297402, EndDcpaM = 1184.4816509181751, ··· }, ExpectedAction = "直航船应保向保速，并持续观察让路船行动。", ··· }]
+  Stack Trace:
+     at Mcis.Acceptance.W1.ActionAcceptanceTests.W1_D06_R17_StandOnIndependentAction_NotFragmentedIntoViolations() in /workspace/maritime-sim-design/tests_acceptance/W1/ActionAcceptanceTests.cs:line 89
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W1.RobustnessAcceptanceTests.W1_D08_TimeBandModelMatchesContract [3 ms]
+  Error Message:
+   Assert.Contains() Failure: Item not found in collection
+Collection: ["NoCollisionRisk", "HeadOn", "Crossing", "Overtaking", "RestrictedVisibility"]
+Not found:  "ImmediateDanger"
+  Stack Trace:
+     at Mcis.Acceptance.W1.RobustnessAcceptanceTests.W1_D08_TimeBandModelMatchesContract() in /workspace/maritime-sim-design/tests_acceptance/W1/RobustnessAcceptanceTests.cs:line 303
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D01_Crossing_RolesMustNotFlipAfterGiveWayStarboardTurn [4 ms]
+  Error Message:
+   Assert.DoesNotContain() Failure: Filter matched in collection
+                                                                                                                                                             ↓ (pos 1)
+Collection: [ColregTimeBand { ApplicableRules = [R8, R15, R16, R17], EndTime = 260.000s, OwnRole = GiveWay, Situation = Crossing, StartTime = 0.000s, ··· }, ColregTimeBand { ApplicableRules = [R8, R15, R16, R17], EndTime = 350.000s, OwnRole = StandOn, Situation = Crossing, StartTime = 260.000s, ··· }, ColregTimeBand { ApplicableRules = [], EndTime = 450.000s, OwnRole = None, Situation = NoCollisionRisk, StartTime = 350.000s, ··· }]
+  Stack Trace:
+     at Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D01_Crossing_RolesMustNotFlipAfterGiveWayStarboardTurn() in /workspace/maritime-sim-design/tests_acceptance/W1/SituationAcceptanceTests.cs:line 109
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: 0, headOn: True) [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold_IsConfigurable [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: 10, headOn: False) [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: 5.9000000000000004, headOn: True) [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: 6.0999999999999996, headOn: False) [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Thresholds_RestrictedVisibility_Configurable [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: -6.0999999999999996, headOn: False) [< 1 ms]
+[xUnit.net 00:00:00.20]     Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D03_RestrictedVisibilityButExplicitlyInSight_AppliesSectionII [FAIL]
+[xUnit.net 00:00:00.20]       Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:00.20]       Expected: HeadOn
+[xUnit.net 00:00:00.20]       Actual:   RestrictedVisibility
+[xUnit.net 00:00:00.20]       Stack Trace:
+[xUnit.net 00:00:00.20]         /workspace/maritime-sim-design/tests_acceptance/W1/SituationAcceptanceTests.cs(219,0): at Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D03_RestrictedVisibilityButExplicitlyInSight_AppliesSectionII()
+[xUnit.net 00:00:00.20]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.20]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.20]     Mcis.Acceptance.W1.ActionAcceptanceTests.W1_D05_R19d_NotApplicableWithoutCloseQuartersOrRisk [FAIL]
+[xUnit.net 00:00:00.20]       Assert.DoesNotContain() Failure: Filter matched in collection
+[xUnit.net 00:00:00.20]                                                                                                                                                                                                                                                                                                                                                                                                ↓ (pos 1)
+[xUnit.net 00:00:00.20]       Collection: [ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, Clause = "R19(b)", EndTime = 200.000s, Evidence = ColregEvidence { DcpaM = 4000, DistanceM = 5656.8542494923795, EarlyActionDistanceM = 5421.0632729858553, EarlyActionRemainingTcpaSeconds = 364.99999999999994, EndDcpaM = 4578.7776481528635, ··· }, ExpectedAction = "以适合能见度不良环境的安全航速行驶。", ··· }, ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, Clause = "R19(d)(i)", EndTime = 200.000s, Evidence = ColregEvidence { DcpaM = 4000, DistanceM = 5656.8542494923795, EarlyActionDistanceM = 5421.0632729858553, EarlyActionRemainingTcpaSeconds = 364.99999999999994, EndDcpaM = 4578.7776481528635, ··· }, ExpectedAction = "对正横以前他船避免向左转向，正在被本船追越的目标除外。", ··· }, ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, Clause = "R19(d)(ii)", EndTime = 200.000s, Evidence = ColregEvidence { DcpaM = 4000, DistanceM = 5656.8542494923795, EarlyActionDistanceM = 5421.0632729858553, EarlyActionRemainingTcpaSeconds = 364.99999999999994, EndDcpaM = 4578.7776481528635, ··· }, ExpectedAction = "对正横或正横以后他船避免朝其转向。", ··· }]
+[xUnit.net 00:00:00.20]       Stack Trace:
+[xUnit.net 00:00:00.20]         /workspace/maritime-sim-design/tests_acceptance/W1/ActionAcceptanceTests.cs(194,0): at Mcis.Acceptance.W1.ActionAcceptanceTests.W1_D05_R19d_NotApplicableWithoutCloseQuartersOrRisk()
+[xUnit.net 00:00:00.20]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.20]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: 6, headOn: True) [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: -6, headOn: True) [< 1 ms]
+  Failed Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D03_RestrictedVisibilityButExplicitlyInSight_AppliesSectionII [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: HeadOn
+Actual:   RestrictedVisibility
+  Stack Trace:
+     at Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D03_RestrictedVisibilityButExplicitlyInSight_AppliesSectionII() in /workspace/maritime-sim-design/tests_acceptance/W1/SituationAcceptanceTests.cs:line 219
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingWrapAroundZero_359vs179_IsHeadOn [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.HeadingWrap_TurnAcrossNorth_IsStarboard20 [5 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R15_TargetOnPort_OwnStandsOn [2 ms]
+  Failed Mcis.Acceptance.W1.ActionAcceptanceTests.W1_D05_R19d_NotApplicableWithoutCloseQuartersOrRisk [< 1 ms]
+  Error Message:
+   Assert.DoesNotContain() Failure: Filter matched in collection
+                                                                                                                                                                                                                                                                                                                                                                                         ↓ (pos 1)
+Collection: [ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, Clause = "R19(b)", EndTime = 200.000s, Evidence = ColregEvidence { DcpaM = 4000, DistanceM = 5656.8542494923795, EarlyActionDistanceM = 5421.0632729858553, EarlyActionRemainingTcpaSeconds = 364.99999999999994, EndDcpaM = 4578.7776481528635, ··· }, ExpectedAction = "以适合能见度不良环境的安全航速行驶。", ··· }, ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, Clause = "R19(d)(i)", EndTime = 200.000s, Evidence = ColregEvidence { DcpaM = 4000, DistanceM = 5656.8542494923795, EarlyActionDistanceM = 5421.0632729858553, EarlyActionRemainingTcpaSeconds = 364.99999999999994, EndDcpaM = 4578.7776481528635, ··· }, ExpectedAction = "对正横以前他船避免向左转向，正在被本船追越的目标除外。", ··· }, ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, Clause = "R19(d)(ii)", EndTime = 200.000s, Evidence = ColregEvidence { DcpaM = 4000, DistanceM = 5656.8542494923795, EarlyActionDistanceM = 5421.0632729858553, EarlyActionRemainingTcpaSeconds = 364.99999999999994, EndDcpaM = 4578.7776481528635, ··· }, ExpectedAction = "对正横或正横以后他船避免朝其转向。", ··· }]
+  Stack Trace:
+     at Mcis.Acceptance.W1.ActionAcceptanceTests.W1_D05_R19d_NotApplicableWithoutCloseQuartersOrRisk() in /workspace/maritime-sim-design/tests_acceptance/W1/ActionAcceptanceTests.cs:line 194
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R16_SmallAlteration_NotSatisfied [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R19_NotInSight_OverridesHeadOn [1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R17_StandOnPortTurnTowardPortVessel_NotSatisfied [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R15_TargetOnStarboard_OwnGivesWay [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.NoRisk_NoRolesAssigned [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R19d_i_StarboardTurnForVesselAhead_Satisfied [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R13_OvertakenVesselAlteration_R13AndR17Agree [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingPersistsUntilPastAndClear [1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R19_NotInSight_OverridesOvertaking [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R17_StandOnPrematureAlteration_NotSatisfied [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R19d_i_PortTurnForVesselForwardOfBeam_NotSatisfied [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingReleasedAfterClear [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R16_NoAction_NotSatisfied [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_ReciprocalButWellOffBow_IsNotHeadOn [1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialSpeedReduction [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Determinism_SameInputSameOutput [11 ms]
+[xUnit.net 00:00:00.20]     Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D04_InSightMustBeAbleToChangeOverTime_PrototypeBandSequence [FAIL]
+[xUnit.net 00:00:00.20]       Assert.Contains() Failure: Filter not matched in collection
+[xUnit.net 00:00:00.20]       Collection: [ColregTimeBand { ApplicableRules = [R8, R19], EndTime = 380.000s, OwnRole = BothActionRequired, Situation = RestrictedVisibility, StartTime = 0.000s, ··· }]
+[xUnit.net 00:00:00.20]       Stack Trace:
+[xUnit.net 00:00:00.20]         /workspace/maritime-sim-design/tests_acceptance/W1/SituationAcceptanceTests.cs(233,0): at Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D04_InSightMustBeAbleToChangeOverTime_PrototypeBandSequence()
+[xUnit.net 00:00:00.20]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.20]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_ExactReciprocal_IsHeadOn_BothMustAlterToStarboard [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R19b_SafeSpeedProxy_ConfigurableThreshold [1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNHeadingWithValidCog_FallsBackToCog [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_SameVesselId_Fails [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R19d_ii_TurnTowardVesselAbaftBeam_NotSatisfied [< 1 ms]
+  Failed Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D04_InSightMustBeAbleToChangeOverTime_PrototypeBandSequence [< 1 ms]
+  Error Message:
+   Assert.Contains() Failure: Filter not matched in collection
+Collection: [ColregTimeBand { ApplicableRules = [R8, R19], EndTime = 380.000s, OwnRole = BothActionRequired, Situation = RestrictedVisibility, StartTime = 0.000s, ··· }]
+  Stack Trace:
+     at Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D04_InSightMustBeAbleToChangeOverTime_PrototypeBandSequence() in /workspace/maritime-sim-design/tests_acceptance/W1/SituationAcceptanceTests.cs:line 233
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Thresholds_CollisionRiskDcpa_Configurable [< 1 ms]
+[xUnit.net 00:00:00.20]     Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D02_HeadOn_ProperStarboardTurnMustNotReclassifyToCrossingWithSwappedRoles [FAIL]
+[xUnit.net 00:00:00.20]       Assert.DoesNotContain() Failure: Filter matched in collection
+[xUnit.net 00:00:00.20]                                                                                                                                                                   ↓ (pos 1)
+[xUnit.net 00:00:00.20]       Collection: [ColregTimeBand { ApplicableRules = [R8, R14], EndTime = 110.000s, OwnRole = BothActionRequired, Situation = HeadOn, StartTime = 0.000s, ··· }, ColregTimeBand { ApplicableRules = [R8, R15, R16, R17], EndTime = 400.000s, OwnRole = StandOn, Situation = Crossing, StartTime = 110.000s, ··· }, ColregTimeBand { ApplicableRules = [], EndTime = 450.000s, OwnRole = None, Situation = NoCollisionRisk, StartTime = 400.000s, ··· }]
+[xUnit.net 00:00:00.20]       Stack Trace:
+[xUnit.net 00:00:00.20]         /workspace/maritime-sim-design/tests_acceptance/W1/SituationAcceptanceTests.cs(122,0): at Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D02_HeadOn_ProperStarboardTurnMustNotReclassifyToCrossingWithSwappedRoles()
+[xUnit.net 00:00:00.20]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.20]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_SingleSampleEach_SucceedsWithPartial [< 1 ms]
+  Failed Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D02_HeadOn_ProperStarboardTurnMustNotReclassifyToCrossingWithSwappedRoles [< 1 ms]
+  Error Message:
+   Assert.DoesNotContain() Failure: Filter matched in collection
+                                                                                                                                                            ↓ (pos 1)
+Collection: [ColregTimeBand { ApplicableRules = [R8, R14], EndTime = 110.000s, OwnRole = BothActionRequired, Situation = HeadOn, StartTime = 0.000s, ··· }, ColregTimeBand { ApplicableRules = [R8, R15, R16, R17], EndTime = 400.000s, OwnRole = StandOn, Situation = Crossing, StartTime = 110.000s, ··· }, ColregTimeBand { ApplicableRules = [], EndTime = 450.000s, OwnRole = None, Situation = NoCollisionRisk, StartTime = 400.000s, ··· }]
+  Stack Trace:
+     at Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D02_HeadOn_ProperStarboardTurnMustNotReclassifyToCrossingWithSwappedRoles() in /workspace/maritime-sim-design/tests_acceptance/W1/SituationAcceptanceTests.cs:line 122
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R16_EarlySubstantialStarboardTurn_Satisfied [1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingFromStarboardQuarter_OverridesCrossing [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Thresholds_HeadOnHalfAngle_Configurable [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Thresholds_OvertakingSector_Configurable [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R17_StandOnHolds_ThenFailsToActInExtremis [1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Disclaimer_Present [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R16_LateAction_NotSatisfied [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NonIncreasingTime_Fails [2 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_HugeGrid_FailsGracefully [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.TimeBands_SplitWhenRiskEnds [7 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNVisibility_Fails [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.TimeBands_SplitExactlyAtVisibilityChange [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNThreshold_Fails [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.TimeBands_MultipleTransitions [2 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_Null_Fails [< 1 ms]
+[xUnit.net 00:00:00.20]     Mcis.Acceptance.W1.RobustnessAcceptanceTests.W1_D07_RuleCatalogCoversSpecRules [FAIL]
+[xUnit.net 00:00:00.20]       Assert.Contains() Failure: Filter not matched in collection
+[xUnit.net 00:00:00.20]       Collection: ["R8", "R9", "R13", "R14", "R15", ···]
+[xUnit.net 00:00:00.20]       Stack Trace:
+[xUnit.net 00:00:00.20]         /workspace/maritime-sim-design/tests_acceptance/W1/RobustnessAcceptanceTests.cs(292,0): at Mcis.Acceptance.W1.RobustnessAcceptanceTests.W1_D07_RuleCatalogCoversSpecRules()
+[xUnit.net 00:00:00.20]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.20]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.21]   Finished:    W1.Acceptance
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NoOverlap_FailsWithCode [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Determinism_RequestSnapshotsInput [< 1 ms]
+  Failed Mcis.Acceptance.W1.RobustnessAcceptanceTests.W1_D07_RuleCatalogCoversSpecRules [< 1 ms]
+  Error Message:
+   Assert.Contains() Failure: Filter not matched in collection
+Collection: ["R8", "R9", "R13", "R14", "R15", ···]
+  Stack Trace:
+     at Mcis.Acceptance.W1.RobustnessAcceptanceTests.W1_D07_RuleCatalogCoversSpecRules() in /workspace/maritime-sim-design/tests_acceptance/W1/RobustnessAcceptanceTests.cs:line 292
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+Test Run Failed.
+Total tests: 81
+     Passed: 73
+     Failed: 8
+ Total time: 0.5630 Seconds
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

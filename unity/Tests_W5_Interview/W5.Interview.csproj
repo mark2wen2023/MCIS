@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- W5（询问笔录比对页）纯逻辑库：Core/Primitives、Domain/Common、Domain/Models + 只读引用已冻结的 W3（Interview/Evidence）+ 本包 Domain/InterviewCompare。 -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RootNamespace>Mcis</RootNamespace>
+    <AssemblyName>Mcis.W5.Interview</AssemblyName>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../Assets/_Project/Scripts/Core/Primitives/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Common/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Models/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Interview/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Evidence/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/InterviewCompare/**/*.cs" />
+  </ItemGroup>
+</Project>

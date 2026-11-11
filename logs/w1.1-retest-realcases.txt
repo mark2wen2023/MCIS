@@ -1,0 +1,45 @@
+=== 海力5 / WAN HAI A17 参考运行（推算航迹，自 19:51:15 起海力5=NUC）===
+[19:42:00-19:42:10] NoCollisionRisk H5=None A17=None gw=null so=null doubt=False reason= stage=None | 当前不满足碰撞危险判据，且没有持续至驶过让清的追越义务。
+[19:42:10-19:51:15] HeadOn H5=BothActionRequired A17=BothActionRequired gw=null so=null doubt=False reason= stage=CloseQuarters | R14：接近反向且任一视角位于船首附近，有碰撞危险；锁定对遇和双方行动义务。
+[19:51:15-19:54:32] HeadOn H5=None A17=GiveWay gw=WANHAI_A17 so=null doubt=False reason= stage=ImmediateDanger | R14：接近反向且任一视角位于船首附近，有碰撞危险；锁定对遇和双方行动义务。R18：船舶状态为失控/操限，他船让路；失控/操限船无直航义务，直航船号为空。
+  stage 19:42:00-19:42:10 None
+  stage 19:42:10-19:48:50 CollisionRisk
+  stage 19:48:50-19:54:10 CloseQuarters
+  stage 19:54:10-19:54:32 ImmediateDanger
+   19:42:10-19:51:15 R8 HAILI5 NotSatisfied brg=358.1 DCPA=52m TCPA=718s | 及早=False；明显行动=False；安全驶过代理=False；按本阶段及继承的延后期全部观测段的CPA核查最小实际中心间距。
+   19:42:10-19:51:15 R5 HAILI5 NotAssessable brg=358.1 DCPA=52m TCPA=718s | 缺少 VDR 音频、驾驶台值班记录及视觉/听觉瞭望记录，无法核查是否保持正规瞭望。
+   19:42:10-19:51:15 R7 HAILI5 Partial brg=358.1 DCPA=52m TCPA=718s | 航迹 CPA 序列可识别碰撞危险：本区段首次危险时刻=10.000s；DCPA 51.810→169.691m；TCPA 717.620→207.703s。这是航迹推算的技术事实；是否实际使用雷达/ARPA 标绘与连续观察仍需雷达/ARPA、VDR 和驾驶台记录。
+   19:42:10-19:51:15 R14 HAILI5 NotSatisfied brg=358.1 DCPA=52m TCPA=718s | 按船首向差和双方前方扇区识别；任何超出噪声容差的左转均不满足。
+   19:42:10-19:51:15 R8 WANHAI_A17 NotSatisfied brg=2.2 DCPA=52m TCPA=718s | 及早=False；明显行动=False；安全驶过代理=False；按本阶段及继承的延后期全部观测段的CPA核查最小实际中心间距。
+   19:42:10-19:51:15 R5 WANHAI_A17 NotAssessable brg=2.2 DCPA=52m TCPA=718s | 缺少 VDR 音频、驾驶台值班记录及视觉/听觉瞭望记录，无法核查是否保持正规瞭望。
+   19:42:10-19:51:15 R7 WANHAI_A17 Partial brg=2.2 DCPA=52m TCPA=718s | 航迹 CPA 序列可识别碰撞危险：本区段首次危险时刻=10.000s；DCPA 51.810→169.691m；TCPA 717.620→207.703s。这是航迹推算的技术事实；是否实际使用雷达/ARPA 标绘与连续观察仍需雷达/ARPA、VDR 和驾驶台记录。
+   19:42:10-19:51:15 R14 WANHAI_A17 NotSatisfied brg=2.2 DCPA=52m TCPA=718s | 按船首向差和双方前方扇区识别；任何超出噪声容差的左转均不满足。
+   19:51:15-19:54:32 R8 HAILI5 NotSatisfied brg=353.8 DCPA=170m TCPA=208s | 及早=False；明显行动=True；安全驶过代理=False；按本阶段及继承的延后期全部观测段的CPA核查最小实际中心间距。
+   19:51:15-19:54:32 R5 HAILI5 NotAssessable brg=353.8 DCPA=170m TCPA=208s | 缺少 VDR 音频、驾驶台值班记录及视觉/听觉瞭望记录，无法核查是否保持正规瞭望。
+   19:51:15-19:54:32 R7 HAILI5 Partial brg=353.8 DCPA=170m TCPA=208s | 航迹 CPA 序列可识别碰撞危险：本区段首次危险时刻=555.000s；DCPA 169.691→28.162m；TCPA 207.703→32.961s。这是航迹推算的技术事实；是否实际使用雷达/ARPA 标绘与连续观察仍需雷达/ARPA、VDR 和驾驶台记录。
+   19:51:15-19:54:32 R8 WANHAI_A17 NotSatisfied brg=354.8 DCPA=170m TCPA=208s | 及早=False；明显行动=False；安全驶过代理=False；按本阶段及继承的延后期全部观测段的CPA核查最小实际中心间距。
+   19:51:15-19:54:32 R5 WANHAI_A17 NotAssessable brg=354.8 DCPA=170m TCPA=208s | 缺少 VDR 音频、驾驶台值班记录及视觉/听觉瞭望记录，无法核查是否保持正规瞭望。
+   19:51:15-19:54:32 R7 WANHAI_A17 Partial brg=354.8 DCPA=170m TCPA=208s | 航迹 CPA 序列可识别碰撞危险：本区段首次危险时刻=555.000s；DCPA 169.691→28.162m；TCPA 207.703→32.961s。这是航迹推算的技术事实；是否实际使用雷达/ARPA 标绘与连续观察仍需雷达/ARPA、VDR 和驾驶台记录。
+   19:51:15-19:54:32 R18(a) WANHAI_A17 NotSatisfied brg=354.8 DCPA=170m TCPA=208s | R18(a)：本船应让清失控/操限船；R13追越义务优先；及早=False；明显行动=False；安全驶过代理=False。
+   19:51:15-19:54:32 R16 WANHAI_A17 NotSatisfied brg=354.8 DCPA=170m TCPA=208s | 及早=False；明显行动=False；安全驶过代理=False；保留同次风险延后判定期间的行动和最小间距。
+CHECK R14(HAILI5 after 19:51:15) has NotSatisfied? False  (expect False)
+CHECK A17 is give-way after 19:51:15? True  (expect True)
+VERDICT haili5-NUC: MATCHES benchmark
+
+=== YANGZE 22 / VEGA DREAM 参考运行（推算航迹，HDG 优先否则 COG）===
+[21:58:30-22:01:50] HeadOn Y22=BothActionRequired VEGA=BothActionRequired gw=null so=null doubt=False reason= stage=ImmediateDanger | R14：接近反向且任一视角位于船首附近，有碰撞危险；锁定对遇和双方行动义务。
+  stage 21:58:30-22:01:30 CloseQuarters
+  stage 22:01:30-22:01:50 ImmediateDanger
+   21:58:30-22:01:50 R8 YANGZE22 NotSatisfied brg=354.1 DCPA=229m TCPA=230s | 及早=False；明显行动=True；安全驶过代理=False；按本阶段及继承的延后期全部观测段的CPA核查最小实际中心间距。
+   21:58:30-22:01:50 R5 YANGZE22 NotAssessable brg=354.1 DCPA=229m TCPA=230s | 缺少 VDR 音频、驾驶台值班记录及视觉/听觉瞭望记录，无法核查是否保持正规瞭望。
+   21:58:30-22:01:50 R7 YANGZE22 Partial brg=354.1 DCPA=229m TCPA=230s | 航迹 CPA 序列可识别碰撞危险：本区段首次危险时刻=0.000s；DCPA 229.269→47.759m；TCPA 230.247→36.966s。这是航迹推算的技术事实；是否实际使用雷达/ARPA 标绘与连续观察仍需雷达/ARPA、VDR 和驾驶台记录。
+   21:58:30-22:01:50 R18 YANGZE22 NotAssessable brg=354.1 DCPA=229m TCPA=230s | 缺少船舶状态证据：需要号灯、号型、VHF通报、VDR音频和轮机日志，才能核查R18船舶之间的责任；Unknown暂按机动船进行R13–R17几何核查。
+   21:58:30-22:01:50 R14 YANGZE22 NotSatisfied brg=354.1 DCPA=229m TCPA=230s | 按船首向差和双方前方扇区识别；任何超出噪声容差的左转均不满足。
+   21:58:30-22:01:50 R8 VEGA_DREAM NotSatisfied brg=354.5 DCPA=229m TCPA=230s | 及早=False；明显行动=False；安全驶过代理=False；按本阶段及继承的延后期全部观测段的CPA核查最小实际中心间距。
+   21:58:30-22:01:50 R5 VEGA_DREAM NotAssessable brg=354.5 DCPA=229m TCPA=230s | 缺少 VDR 音频、驾驶台值班记录及视觉/听觉瞭望记录，无法核查是否保持正规瞭望。
+   21:58:30-22:01:50 R7 VEGA_DREAM Partial brg=354.5 DCPA=229m TCPA=230s | 航迹 CPA 序列可识别碰撞危险：本区段首次危险时刻=0.000s；DCPA 229.269→47.759m；TCPA 230.247→36.966s。这是航迹推算的技术事实；是否实际使用雷达/ARPA 标绘与连续观察仍需雷达/ARPA、VDR 和驾驶台记录。
+   21:58:30-22:01:50 R18 VEGA_DREAM NotAssessable brg=354.5 DCPA=229m TCPA=230s | 缺少船舶状态证据：需要号灯、号型、VHF通报、VDR音频和轮机日志，才能核查R18船舶之间的责任；Unknown暂按机动船进行R13–R17几何核查。
+   21:58:30-22:01:50 R14 VEGA_DREAM NotSatisfied brg=354.5 DCPA=229m TCPA=230s | 按船首向差和双方前方扇区识别；任何超出噪声容差的左转均不满足。
+situations: HeadOn
+CHECK VEGA DREAM is give-way on any risk band? False  (expect False)
+VERDICT yangze22: ACCEPTABLE (VEGA not give-way)

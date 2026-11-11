@@ -1,0 +1,7 @@
+你在 /workspace/maritime-sim-design 做 W1.1（COLREG 规则引擎小修）第 2 阶段：实现修复让测试变绿。
+先通读：DEFECTS/W1.md 第四节与文末「架构师复测裁定」（裁定优先）、logs/w1.1-fix-spec.md（必须遵守范围、禁令、API 兼容、已知冲突说明）、contracts/schemas/colreg.schema.json（只读）、tests_acceptance/W1/*.cs（只读，绝不可修改；目标：除规格所列已知冲突外全部通过，含 W1_D09/W1_D10/W1_D11）、unity/Tests_W1_Colreg/ColregW11Tests.cs（第 1 阶段失败测试；失败汇总见 logs/w1.1-fix-red-summary.txt，详情 logs/w1.1-fix-red-selftest.txt）、其它自测、unity/Assets/_Project/Scripts/Domain/Colreg/*.cs。
+任务：在 Colreg/ 内实现 D09（R18 + 船舶状态序列）、D10（对遇存疑双视角）、D11（矛盾视角 null 角色 + NeedsReview）、D12（延后锁定）、合同字段（DoubtReason、VesselStatus、映射辅助）。保持确定性与现有 API；不做无关重构。
+- 第 1 阶段自测若确与裁定或验收测试矛盾，可改该自测并注释原因，但不得削弱对裁定的检查。
+- 逐个推演 tests_acceptance/W1 每个用例在新逻辑下结果，尤其 TimeBands_*、A1_*、A3_*、A4_*、A5_*、A6_*、A7_*、R13_*–R17_*、NoRisk_NoRolesAssigned、Determinism_*、Input_SingleSampleEach_SucceedsWithPartial，避免回归；预期失败的写明原因（与裁定冲突才可接受）。
+- 跑两个 csproj 的 `/home/box/.dotnet/dotnet build` 确认 0 错误；不要跑 dotnet test。不改 tests_acceptance/、DEFECTS/、contracts/、Colreg 以外源码；不读真实案例数据；不打印密钥。
+最后输出：D09–D12 与合同字段各自实现说明（一两句）、改动/新增文件列表、预计仍失败的验收用例及原因、未解决项。

@@ -1,0 +1,1094 @@
+{
+  "schemaVersion": "1.0.0",
+  "caseId": "CJK-2024-1230-YangZe22-VegaDream",
+  "standard": "论文2.5节 / 表4（Buys 1995, Sklet 2002）；架构4.9节 EcfcValidator（复用 haili5/build_extract.py 的 validate_ecfc）",
+  "isDraft": true,
+  "isFictionalDemo": false,
+  "isPublicReport": true,
+  "nodes": [
+    {
+      "nodeId": "E01",
+      "kind": "Event",
+      "text": "水手意图用右舵却操左舵压舵",
+      "time": {
+        "beijing": "2024-12-30T21:59:07+08:00",
+        "utc": "2024-12-30T13:59:07Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": 0,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "yangze22",
+      "quantities": {
+        "航向": "114°",
+        "舵角": "左5°~10°",
+        "持续": "约30秒"
+      },
+      "evidenceIds": [
+        "report:p31",
+        "report:line749-750"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 31,
+        "pdfPage": 33,
+        "line": "749-750",
+        "quote": "水手丁**意图使用右舵把定航向，但在此之后约30秒时间内，其实际操左舵5°~10°压舵，导致船首开始向左偏转。"
+      },
+      "layoutHint": [
+        0,
+        0
+      ]
+    },
+    {
+      "nodeId": "E02",
+      "kind": "Event",
+      "text": "水手操左舵至左满舵致船首加速左偏",
+      "time": {
+        "beijing": "2024-12-30T21:59:45+08:00",
+        "utc": "2024-12-30T13:59:45Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": 0,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "yangze22",
+      "quantities": {
+        "ROT": "P2.8°/min",
+        "相距": "约0.7海里"
+      },
+      "evidenceIds": [
+        "report:p32",
+        "report:line758-759"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 32,
+        "pdfPage": 34,
+        "line": "758-759",
+        "quote": "水手丁**随后操左舵15°至左满舵的大舵角压舵，船首随之加快向左偏转。"
+      },
+      "layoutHint": [
+        1,
+        0
+      ]
+    },
+    {
+      "nodeId": "E03",
+      "kind": "Event",
+      "text": "引航员下令右满舵水手反向操左舵",
+      "time": {
+        "beijing": "2024-12-30T22:00:14+08:00",
+        "utc": "2024-12-30T14:00:14Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": 0,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "yangze22",
+      "quantities": {
+        "舵令": "右满舵",
+        "实际": "左舵29°",
+        "CPA": "约0.1海里",
+        "TCPA": "约1.6分钟"
+      },
+      "evidenceIds": [
+        "report:p33",
+        "report:line772-774"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 33,
+        "pdfPage": 35,
+        "line": "772-774",
+        "quote": "引航员周**下令“右满舵”，水手丁**回复“右满舵”，但实际操左舵29°，实际操舵与引航员舵令相反。"
+      },
+      "layoutHint": [
+        2,
+        0
+      ]
+    },
+    {
+      "nodeId": "E04",
+      "kind": "Event",
+      "text": "船首越过分隔线侵入进口航道形成紧迫危险",
+      "time": {
+        "beijing": "2024-12-30T22:00:45+08:00",
+        "utc": "2024-12-30T14:00:45Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": 0,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "yangze22",
+      "quantities": {
+        "航向": "092°",
+        "ROT": "P40.4°/min",
+        "相距": "约0.3海里"
+      },
+      "evidenceIds": [
+        "report:p35",
+        "report:line792-793"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 35,
+        "pdfPage": 37,
+        "line": "792-793",
+        "quote": "船首已越过航道分隔线侵入进口航道。"
+      },
+      "layoutHint": [
+        3,
+        0
+      ]
+    },
+    {
+      "nodeId": "E05",
+      "kind": "Event",
+      "text": "引航员下令左满舵水手反向操右舵",
+      "time": {
+        "beijing": "2024-12-30T22:01:21+08:00",
+        "utc": "2024-12-30T14:01:21Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": 0,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "yangze22",
+      "quantities": {
+        "舵令": "左满舵",
+        "实际": "右舵35°",
+        "相距": "约0.1海里"
+      },
+      "evidenceIds": [
+        "report:p37",
+        "report:line817-819"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 37,
+        "pdfPage": 39,
+        "line": "817-819",
+        "quote": "下令“左满舵”意图减小碰撞角度，水手丁**回复“左满舵”，但实际操右舵35°，与引航员舵令相反。"
+      },
+      "layoutHint": [
+        4,
+        0
+      ]
+    },
+    {
+      "nodeId": "E06",
+      "kind": "Event",
+      "text": "VEGA DREAM船首与YANGZE 22右舷5舱碰撞",
+      "time": {
+        "beijing": "2024-12-30T22:01:54+08:00",
+        "utc": "2024-12-30T14:01:54Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": 0,
+      "isPrimaryIncident": true,
+      "isPresumptive": false,
+      "actorVesselId": null,
+      "quantities": {
+        "地点": "31°16.9′N 121°49.7′E",
+        "碰撞角": "约70°",
+        "YANGZE 22": "047°/8.0节",
+        "VEGA DREAM": "297°/10.2节"
+      },
+      "evidenceIds": [
+        "report:p14",
+        "report:line390"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 14,
+        "pdfPage": 16,
+        "line": 390,
+        "quote": "认定本起碰撞事故发生的时间为2024年12月"
+      },
+      "layoutHint": [
+        5,
+        0
+      ]
+    },
+    {
+      "nodeId": "E07",
+      "kind": "Event",
+      "text": "YANGZE 22第5货舱和1号右燃油舱破损进水",
+      "time": {
+        "beijing": "2024-12-30T22:01:54+08:00",
+        "utc": "2024-12-30T14:01:54Z",
+        "approximate": true
+      },
+      "endTime": null,
+      "lane": 0,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "yangze22",
+      "quantities": {
+        "破口": "约12×16米",
+        "货损": "硫酸铵约8750吨"
+      },
+      "evidenceIds": [
+        "report:p13",
+        "report:line361-362"
+      ],
+      "causeRole": "consequence",
+      "source": {
+        "page": 13,
+        "pdfPage": 15,
+        "line": "361-362",
+        "quote": "第5号货舱和1号右燃油舱破损。"
+      },
+      "layoutHint": [
+        6,
+        0
+      ]
+    },
+    {
+      "nodeId": "E08",
+      "kind": "Event",
+      "text": "约171吨燃油泄漏造成水面和岸滩污染",
+      "time": {
+        "beijing": "2024-12-30T22:03:00+08:00",
+        "utc": "2024-12-30T14:03:00Z",
+        "approximate": true
+      },
+      "endTime": null,
+      "lane": 0,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "yangze22",
+      "quantities": {
+        "溢油": "约171.053吨",
+        "岸滩": "约1.5海里、约9000平方米"
+      },
+      "evidenceIds": [
+        "report:p44",
+        "report:line943-944"
+      ],
+      "causeRole": "consequence",
+      "source": {
+        "page": 44,
+        "pdfPage": 46,
+        "line": "943-944",
+        "quote": "1号右油舱内共计约171.053吨燃油泄漏入江。"
+      },
+      "layoutHint": [
+        7,
+        0
+      ]
+    },
+    {
+      "nodeId": "E11",
+      "kind": "Event",
+      "text": "水手误压右舵致船首异常右偏",
+      "time": {
+        "beijing": "2024-12-30T21:44:15+08:00",
+        "utc": "2024-12-30T13:44:15Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": 1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "yangze22",
+      "quantities": {
+        "航向": "117°",
+        "ROT": "S13.2°/min"
+      },
+      "evidenceIds": [
+        "report:p28",
+        "report:line704-705"
+      ],
+      "causeRole": "context",
+      "source": {
+        "page": 28,
+        "pdfPage": 30,
+        "line": "704-705",
+        "quote": "水手丁**查看舵轮后意识到压了右舵，立即使用正舵、左满舵把定航向。"
+      },
+      "layoutHint": [
+        -2,
+        1
+      ]
+    },
+    {
+      "nodeId": "E12",
+      "kind": "Event",
+      "text": "船长离开驾驶台未告知引航员",
+      "time": {
+        "beijing": "2024-12-30T21:51:00+08:00",
+        "utc": "2024-12-30T13:51:00Z",
+        "approximate": true
+      },
+      "endTime": null,
+      "lane": 1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "yangze22",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p30",
+        "report:line728-729"
+      ],
+      "causeRole": "indirect",
+      "source": {
+        "page": 30,
+        "pdfPage": 32,
+        "line": "728-729",
+        "quote": "随后船长邹**离开驾驶台，未告知引航员周**。"
+      },
+      "layoutHint": [
+        -1,
+        1
+      ]
+    },
+    {
+      "nodeId": "E13",
+      "kind": "Event",
+      "text": "水手报告引航员舵效很差",
+      "time": {
+        "beijing": "2024-12-30T22:00:04+08:00",
+        "utc": "2024-12-30T14:00:04Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": 1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "yangze22",
+      "quantities": {
+        "实际舵角": "左28°"
+      },
+      "evidenceIds": [
+        "report:p33",
+        "report:line769"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 33,
+        "pdfPage": 35,
+        "line": 769,
+        "quote": "水手丁**告知引航员周**“现在舵效很差”。"
+      },
+      "layoutHint": [
+        1.4,
+        1
+      ]
+    },
+    {
+      "nodeId": "C11",
+      "kind": "Condition",
+      "text": "三副未对舵令执行进行有效检查",
+      "time": null,
+      "endTime": null,
+      "lane": 1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "yangze22",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p45",
+        "report:line969-970"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 45,
+        "pdfPage": 47,
+        "line": "969-970",
+        "quote": "值班三副未对操舵水手舵令执行情况进行有效检查，并及时纠正。"
+      },
+      "layoutHint": [
+        2.6,
+        1
+      ]
+    },
+    {
+      "nodeId": "C12",
+      "kind": "Condition",
+      "text": "驾驶台人员误判为舵效差",
+      "time": null,
+      "endTime": null,
+      "lane": 1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "yangze22",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p45",
+        "report:line975-976"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 45,
+        "pdfPage": 47,
+        "line": "975-976",
+        "quote": "驾驶台人员未能结合当时的情况进行充分评估，错误判断为舵效差。"
+      },
+      "layoutHint": [
+        3.7,
+        1
+      ]
+    },
+    {
+      "nodeId": "C13",
+      "kind": "Condition",
+      "text": "未用非随动或越控操舵也未停车倒车",
+      "time": null,
+      "endTime": null,
+      "lane": 1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "yangze22",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p45",
+        "report:line977-978"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 45,
+        "pdfPage": 47,
+        "line": "977-978",
+        "quote": "但未采取非随动操舵或越控操舵操纵本船，也未采取停车、倒车等应急措施。"
+      },
+      "layoutHint": [
+        4.8,
+        1
+      ]
+    },
+    {
+      "nodeId": "E15",
+      "kind": "Event",
+      "text": "船长发现原操舵水手操反舵并更换",
+      "time": {
+        "beijing": "2024-12-30T09:14:00+08:00",
+        "utc": "2024-12-30T01:14:00Z",
+        "approximate": true
+      },
+      "endTime": null,
+      "lane": 2,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "yangze22",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p27",
+        "report:line681-682"
+      ],
+      "causeRole": "indirect",
+      "source": {
+        "page": 27,
+        "pdfPage": 29,
+        "line": "681-682",
+        "quote": "船长邹**发现操舵水手李**出现操反舵的情况，遂通知大副更换操舵水手。"
+      },
+      "layoutHint": [
+        -2,
+        2
+      ]
+    },
+    {
+      "nodeId": "E16",
+      "kind": "Event",
+      "text": "白班水手丁接班操舵",
+      "time": {
+        "beijing": "2024-12-30T19:36:00+08:00",
+        "utc": "2024-12-30T11:36:00Z",
+        "approximate": true
+      },
+      "endTime": null,
+      "lane": 2,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "yangze22",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p28",
+        "report:line688"
+      ],
+      "causeRole": "context",
+      "source": {
+        "page": 28,
+        "pdfPage": 30,
+        "line": 688,
+        "quote": "约1936时，水手丁**到驾驶台接班操舵。"
+      },
+      "layoutHint": [
+        -1,
+        2
+      ]
+    },
+    {
+      "nodeId": "C14",
+      "kind": "Condition",
+      "text": "丁为白班水手未在本船驾驶台值过班",
+      "time": null,
+      "endTime": null,
+      "lane": 2,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "yangze22",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p7",
+        "report:line214"
+      ],
+      "causeRole": "context",
+      "source": {
+        "page": 7,
+        "pdfPage": 9,
+        "line": 214,
+        "quote": "未在驾驶台值过班。"
+      },
+      "layoutHint": [
+        0.2,
+        2
+      ]
+    },
+    {
+      "nodeId": "C15",
+      "kind": "Condition",
+      "text": "未对接替操舵水手进行针对性培训",
+      "time": null,
+      "endTime": null,
+      "lane": 2,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "yangze22",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p47",
+        "report:line1043-1044"
+      ],
+      "causeRole": "indirect",
+      "source": {
+        "page": 47,
+        "pdfPage": 49,
+        "line": "1043-1044",
+        "quote": "但未对接替的操舵水手进行针对操舵培训。"
+      },
+      "layoutHint": [
+        1.4,
+        2
+      ]
+    },
+    {
+      "nodeId": "C16",
+      "kind": "Condition",
+      "text": "手轮刻度盘与操舵方向相反",
+      "time": null,
+      "endTime": null,
+      "lane": 2,
+      "isPrimaryIncident": false,
+      "isPresumptive": true,
+      "actorVesselId": "yangze22",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p17",
+        "report:line437-438"
+      ],
+      "causeRole": "context",
+      "source": {
+        "page": 17,
+        "pdfPage": 19,
+        "line": "437-438",
+        "quote": "指针指示的刻度与操舵方向相反。",
+        "note": "报告在操舵系统描述与安全建议中提及，未明确认定为原因，故标推定"
+      },
+      "layoutHint": [
+        2.6,
+        2
+      ]
+    },
+    {
+      "nodeId": "C17",
+      "kind": "Condition",
+      "text": "公司未培训越控操舵模式",
+      "time": null,
+      "endTime": null,
+      "lane": 2,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "yangze22",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p47",
+        "report:line1036-1038"
+      ],
+      "causeRole": "indirect",
+      "source": {
+        "page": 47,
+        "pdfPage": 49,
+        "line": "1036-1038",
+        "quote": "管理公司未对该轮操舵系统进行针对性培训和指导，尤其是越控操舵模式的指导"
+      },
+      "layoutHint": [
+        4.8,
+        2
+      ]
+    },
+    {
+      "nodeId": "E21",
+      "kind": "Event",
+      "text": "引航员在CH06呼叫对方引航员姓名",
+      "time": {
+        "beijing": "2024-12-30T22:00:24+08:00",
+        "utc": "2024-12-30T14:00:24Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": -1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "yangze22",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p34",
+        "report:line784-786"
+      ],
+      "causeRole": "indirect",
+      "source": {
+        "page": 34,
+        "pdfPage": 36,
+        "line": "784-786",
+        "quote": "引航员周**使用VHF CH06频道呼叫“VEGA DREAM”轮引航员名字“杜**，杜**，往右转，我右满舵没舵效”。"
+      },
+      "layoutHint": [
+        2.4,
+        -1
+      ]
+    },
+    {
+      "nodeId": "C21",
+      "kind": "Condition",
+      "text": "两船未建立有效联系",
+      "time": null,
+      "endTime": null,
+      "lane": -1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": null,
+      "quantities": {},
+      "evidenceIds": [
+        "report:p46",
+        "report:line1008-1009"
+      ],
+      "causeRole": "indirect",
+      "source": {
+        "page": 46,
+        "pdfPage": 48,
+        "line": "1008-1009",
+        "quote": "但两船未建立有效通信联系。"
+      },
+      "layoutHint": [
+        3.5,
+        -1
+      ]
+    },
+    {
+      "nodeId": "E22",
+      "kind": "Event",
+      "text": "VEGA DREAM引航员下令右满舵并连续改车至后退三",
+      "time": {
+        "beijing": "2024-12-30T22:00:42+08:00",
+        "utc": "2024-12-30T14:00:42Z",
+        "approximate": false
+      },
+      "endTime": null,
+      "lane": -1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "vega_dream",
+      "quantities": {
+        "相距": "约0.3海里",
+        "TCPA": "约1分钟"
+      },
+      "evidenceIds": [
+        "report:p41",
+        "report:line884-885"
+      ],
+      "causeRole": "context",
+      "source": {
+        "page": 41,
+        "pdfPage": 43,
+        "line": "884-885",
+        "quote": "便立即下令前进二（已在前进二位置）和右满舵，发出一长声警示声号"
+      },
+      "layoutHint": [
+        4.6,
+        -1
+      ]
+    },
+    {
+      "nodeId": "C23",
+      "kind": "Condition",
+      "text": "VEGA DREAM未采取应急抛锚",
+      "time": null,
+      "endTime": null,
+      "lane": -1,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": "vega_dream",
+      "quantities": {},
+      "evidenceIds": [
+        "report:p45",
+        "report:line981"
+      ],
+      "causeRole": "direct",
+      "source": {
+        "page": 45,
+        "pdfPage": 47,
+        "line": 981,
+        "quote": "“VEGA DREAM”轮未采取应急抛锚等有效措施。"
+      },
+      "layoutHint": [
+        5.7,
+        -1
+      ]
+    },
+    {
+      "nodeId": "C22",
+      "kind": "Condition",
+      "text": "引航员间直呼姓名不呼船名呼号",
+      "time": null,
+      "endTime": null,
+      "lane": -2,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": null,
+      "quantities": {},
+      "evidenceIds": [
+        "report:p51",
+        "report:line1148-1149"
+      ],
+      "causeRole": "indirect",
+      "source": {
+        "page": 51,
+        "pdfPage": 53,
+        "line": "1148-1149",
+        "quote": "未呼叫对方船名和呼号，导致无法被对方船舶的其他驾驶值班人员接收的情形"
+      },
+      "layoutHint": [
+        2.4,
+        -2
+      ]
+    },
+    {
+      "nodeId": "C31",
+      "kind": "Condition",
+      "text": "管制时段进出深水航道船舶密度大",
+      "time": null,
+      "endTime": null,
+      "lane": -2,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": null,
+      "quantities": {},
+      "evidenceIds": [
+        "report:p12",
+        "report:line343-344"
+      ],
+      "causeRole": "context",
+      "source": {
+        "page": 12,
+        "pdfPage": 14,
+        "line": "343-344",
+        "quote": "本起事故发生时正处于长江口深水航道交通管制时段，进出深水航道船舶密度较大。"
+      },
+      "layoutHint": [
+        3.6,
+        -2
+      ]
+    },
+    {
+      "nodeId": "C32",
+      "kind": "Condition",
+      "text": "航道宽约350米会遇时间不到2分钟",
+      "time": null,
+      "endTime": null,
+      "lane": -2,
+      "isPrimaryIncident": false,
+      "isPresumptive": false,
+      "actorVesselId": null,
+      "quantities": {},
+      "evidenceIds": [
+        "report:p46",
+        "report:line1013-1014"
+      ],
+      "causeRole": "indirect",
+      "source": {
+        "page": 46,
+        "pdfPage": 48,
+        "line": "1013-1014",
+        "quote": "两船相对速度约19.8节、会遇时间不到2分钟"
+      },
+      "layoutHint": [
+        5.0,
+        -2
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "edgeId": "s01",
+      "from": "E01",
+      "to": "E02",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": true
+    },
+    {
+      "edgeId": "s02",
+      "from": "E02",
+      "to": "E03",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": true
+    },
+    {
+      "edgeId": "s03",
+      "from": "E03",
+      "to": "E04",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": true
+    },
+    {
+      "edgeId": "s04",
+      "from": "E04",
+      "to": "E05",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": true
+    },
+    {
+      "edgeId": "s05",
+      "from": "E05",
+      "to": "E06",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": true
+    },
+    {
+      "edgeId": "s06",
+      "from": "E06",
+      "to": "E07",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": true
+    },
+    {
+      "edgeId": "s07",
+      "from": "E07",
+      "to": "E08",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": true
+    },
+    {
+      "edgeId": "s11",
+      "from": "E15",
+      "to": "E16",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s12",
+      "from": "E16",
+      "to": "E11",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s13",
+      "from": "E11",
+      "to": "E01",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s14",
+      "from": "E12",
+      "to": "E01",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s15",
+      "from": "E13",
+      "to": "E03",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s16",
+      "from": "E21",
+      "to": "E22",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "s17",
+      "from": "E22",
+      "to": "E06",
+      "kind": "Sequence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i01",
+      "from": "C14",
+      "to": "E01",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i02",
+      "from": "C15",
+      "to": "E01",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i03",
+      "from": "C16",
+      "to": "E01",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i04",
+      "from": "C11",
+      "to": "E03",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i05",
+      "from": "C11",
+      "to": "E05",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i06",
+      "from": "C12",
+      "to": "C13",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i07",
+      "from": "C13",
+      "to": "E04",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i08",
+      "from": "C17",
+      "to": "C13",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i09",
+      "from": "C22",
+      "to": "C21",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i10",
+      "from": "C21",
+      "to": "E04",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i11",
+      "from": "C23",
+      "to": "E06",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i12",
+      "from": "C31",
+      "to": "E04",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i13",
+      "from": "C32",
+      "to": "E06",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    },
+    {
+      "edgeId": "i14",
+      "from": "C12",
+      "to": "E03",
+      "kind": "Influence",
+      "isPrimarySequenceBold": false
+    }
+  ],
+  "liabilityMapping": {
+    "directCauseNodeIds": {
+      "DC1": [
+        "E01",
+        "E02",
+        "E03",
+        "E05"
+      ],
+      "DC2": [
+        "C11"
+      ],
+      "DC3": [
+        "C12",
+        "C13"
+      ],
+      "DC4": [
+        "C23"
+      ]
+    },
+    "indirectCauseNodeIds": {
+      "IC1": [
+        "E12"
+      ],
+      "IC2": [
+        "E21",
+        "C21"
+      ],
+      "IC3": [
+        "C32"
+      ]
+    },
+    "findingNodeIds": {
+      "F1": [
+        "C17"
+      ],
+      "F2": [
+        "E15",
+        "C15"
+      ],
+      "F3": [
+        "C22"
+      ]
+    },
+    "yangze22": "主要责任（操舵水手错误执行引航员指令、三副未有效监舵、紧急情况下措施不当）",
+    "vegaDream": "次要责任（未采取应急抛锚等有效措施）"
+  },
+  "notes": [
+    "主序列从 21:59:07 误操左舵起笔，到碰撞和溢油污染；21:44 那次误压右舵是同一水手的前兆事件，报告未把它列为原因，标 context。",
+    "操舵系统经测试工况正常，属于排除项，没有画成条件节点，记录在 case.json steeringGear.conclusion。",
+    "C16（手轮刻度盘与操舵方向相反）报告只在设备描述和安全建议里出现，未直接认定为原因，按推定节点（虚线）处理。"
+  ],
+  "validation": {
+    "issueCount": 0,
+    "errorCount": 0,
+    "warningCount": 0,
+    "issues": []
+  }
+}

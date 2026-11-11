@@ -1,0 +1,25 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  W18.Acceptance -> /workspace/maritime-sim-design/tests_acceptance/W18/bin/Debug/net8.0/W18.Acceptance.dll
+Test run for /workspace/maritime-sim-design/tests_acceptance/W18/bin/Debug/net8.0/W18.Acceptance.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+  Failed Mcis.Acceptance.W18.RetestW18RulingsAcceptanceTests.B1_Any24h_TruncatedRestCounts_AndPythonBruteForceAgrees [14 ms]
+  Error Message:
+   Assert.Single() Failure: The collection did not contain any matching items
+Expected:   (predicate expression)
+Collection: [RestHourViolation { Actual = 06:00:00, Clause = "STCW A-VIII/1 §2.1 / MLC A2.3 §5(b)(i)", Detail = "最差窗口 2026-05-10 16:00Z ~ 2026-05-11 16:00Z 休息 6h00"···, Limit = 10:00:00, Rule = Rest24h, ··· }]
+  Stack Trace:
+     at Mcis.Acceptance.W18.RetestW18RulingsAcceptanceTests.B1_Any24h_TruncatedRestCounts_AndPythonBruteForceAgrees() in /workspace/maritime-sim-design/tests_acceptance/W18/RetestW18RulingsAcceptanceTests.cs:line 126
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W18.RetestW18RulingsAcceptanceTests.W18_D06_B1_WindowsJustAfterRestStart_AreCaught [< 1 ms]
+  Error Message:
+   Assert.Contains() Failure: Filter not matched in collection
+Collection: []
+  Stack Trace:
+     at Mcis.Acceptance.W18.RetestW18RulingsAcceptanceTests.W18_D06_B1_WindowsJustAfterRestStart_AreCaught() in /workspace/maritime-sim-design/tests_acceptance/W18/RetestW18RulingsAcceptanceTests.cs:line 180
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+Failed!  - Failed:     2, Passed:    88, Skipped:     0, Total:    90, Duration: 115 ms - W18.Acceptance.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

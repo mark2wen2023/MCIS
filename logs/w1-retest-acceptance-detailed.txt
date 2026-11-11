@@ -1,0 +1,202 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  W1.Acceptance -> /workspace/maritime-sim-design/tests_acceptance/W1/bin/Debug/net8.0/W1.Acceptance.dll
+Test run for /workspace/maritime-sim-design/tests_acceptance/W1/bin/Debug/net8.0/W1.Acceptance.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+/workspace/maritime-sim-design/tests_acceptance/W1/bin/Debug/net8.0/W1.Acceptance.dll
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:00.08]   Discovering: W1.Acceptance
+[xUnit.net 00:00:00.17]   Discovered:  W1.Acceptance
+[xUnit.net 00:00:00.18]   Starting:    W1.Acceptance
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R19_VisibilityThreshold(vis: 1.99, expected: RestrictedVisibility) [35 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Thresholds_SnapshotEchoedInReport [35 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A5_CloseQuarters_StagesAndBoundaries [37 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R19_VisibilityThreshold(vis: 2, expected: HeadOn) [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold_ConfiguredTo10(turn: 25, substantial: True) [40 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A5_CollisionRisk_Dcpa1nm(offsetNm: 1.05, noRisk: True) [3 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A5_CollisionRisk_Dcpa1nm(offsetNm: 0.94999999999999996, noRisk: False) [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold_ConfiguredTo10(turn: 9.5, substantial: False) [1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R14") [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R6") [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R13") [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R5") [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R16") [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R17") [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R9") [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R7") [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R15") [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R8") [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R34_35") [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R19") [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold_ConfiguredTo10(turn: 10, substantial: True) [1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingSectorBoundaries(bearing: 112.51000000000001, expected: Overtaking) [5 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingSectorBoundaries(bearing: 112.48999999999999, expected: Crossing) [1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingSectorBoundaries(bearing: 150, expected: Overtaking) [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingSectorBoundaries(bearing: 247.49000000000001, expected: Overtaking) [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.W1_D06_R17_StandOnIndependentAction_NotFragmentedIntoViolations [2 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingSectorBoundaries(bearing: 247.50999999999999, expected: Crossing) [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingSectorBoundaries(bearing: 180, expected: Overtaking) [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.D04_DerivedInSight_DistanceWithinVisibility [3 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_UnsynchronisedSampling_UsesOverlapAndMatchesSynced [10 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold_IsConfigurable [1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NullTrack_Fails [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A4_HeadOnDoubtSector(bearing: 25, expected: Crossing, doubt: True) [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_EmptyTrack_FailsWithCode [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A4_HeadOnDoubtSector(bearing: 20, expected: HeadOn, doubt: True) [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D01_Crossing_RolesMustNotFlipAfterGiveWayStarboardTurn [1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold(turn: 30, substantial: True) [1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A4_HeadOnDoubtSector(bearing: 22.5, expected: HeadOn, doubt: True) [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A4_HeadOnDoubtSector(bearing: 15, expected: HeadOn, doubt: False) [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNInSample_Fails(field: "hdgAndCog") [1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: 0, headOn: True) [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNInSample_Fails(field: "vel") [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNInSample_Fails(field: "sog") [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNInSample_Fails(field: "pos") [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNInSample_Fails(field: "time") [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold(turn: 25, substantial: False) [1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: 10, headOn: False) [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: 5.9000000000000004, headOn: True) [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold(turn: 9.5, substantial: False) [1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.TimeBands_ContiguousAndCoverOverlap [2 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold(turn: 10, substantial: False) [1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: 6.0999999999999996, headOn: False) [1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: -6.0999999999999996, headOn: False) [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.D05_R19d_NotApplicableWithoutRisk [4 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: 6, headOn: True) [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.W1_D08_TimeBandModelMatchesContract [2 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: -6, headOn: True) [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A3_TargetDeadAhead_UsesTargetView [1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D03_RestrictedVisibilityButExplicitlyInSight_AppliesSectionII [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingWrapAroundZero_359vs179_IsHeadOn [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Thresholds_RestrictedVisibility_Configurable [2 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R15_TargetOnPort_OwnStandsOn [1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.HeadingWrap_TurnAcrossNorth_IsStarboard20 [5 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.W1_D05_R19d_NotApplicableWithoutCloseQuartersOrRisk [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R19_NotInSight_OverridesHeadOn [1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R15_TargetOnStarboard_OwnGivesWay [1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R16_SmallAlteration_NotSatisfied [1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.NoRisk_NoRolesAssigned [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R17_StandOnPortTurnTowardPortVessel_NotSatisfied [1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingPersistsUntilPastAndClear [2 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R19d_i_StarboardTurnForVesselAhead_Satisfied [1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R19_NotInSight_OverridesOvertaking [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A1_RiskReformsAfterRelease_IsReclassified [11 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingReleasedAfterClear [2 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R13_OvertakenVesselAlteration_R13AndR17Agree [2 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_ReciprocalButWellOffBow_IsNotHeadOn [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Determinism_SameInputSameOutput [11 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R14_ExactReciprocal_IsHeadOn_BothMustAlterToStarboard [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A5_TurnWindow60s(rate: 0.40000000000000002, substantial: False) [2 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R17_StandOnPrematureAlteration_NotSatisfied [1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNHeadingWithValidCog_FallsBackToCog [1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_SameVesselId_Fails [< 1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D04_InSightMustBeAbleToChangeOverTime_PrototypeBandSequence [1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Thresholds_CollisionRiskDcpa_Configurable [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R19d_i_PortTurnForVesselForwardOfBeam_NotSatisfied [1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A5_TurnWindow60s(rate: 1, substantial: True) [1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D02_HeadOn_ProperStarboardTurnMustNotReclassifyToCrossingWithSwappedRoles [1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_SingleSampleEach_SucceedsWithPartial [1 ms]
+  Passed Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingFromStarboardQuarter_OverridesCrossing [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R16_NoAction_NotSatisfied [2 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Thresholds_HeadOnHalfAngle_Configurable [1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Thresholds_OvertakingSector_Configurable [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialSpeedReduction [1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Disclaimer_Present [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NonIncreasingTime_Fails [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_HugeGrid_FailsGracefully [< 1 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R19b_SafeSpeedProxy_ConfigurableThreshold [2 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A6_R9_CenterlineKeepRight [6 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R19d_ii_TurnTowardVesselAbaftBeam_NotSatisfied [1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A5_SeriesOfSmallTurns_NotCumulated [2 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R16_EarlySubstantialStarboardTurn_Satisfied [2 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R17_StandOnHolds_ThenFailsToActInExtremis [1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A7_IdsDependOnVesselOrder [4 ms]
+  Passed Mcis.Acceptance.W1.ActionAcceptanceTests.R16_LateAction_NotSatisfied [1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.D05_R19d_AppliesWithRisk [1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A5_SpeedChange30Percent(newSpeed: 3.3999999999999999, substantial: True) [1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.TimeBands_SplitWhenRiskEnds [13 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A5_SpeedChange30Percent(newSpeed: 3.6000000000000001, substantial: False) [1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNVisibility_Fails [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.TimeBands_SplitExactlyAtVisibilityChange [1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNThreshold_Fails [1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.TimeBands_MultipleTransitions [4 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_Null_Fails [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NoOverlap_FailsWithCode [< 1 ms]
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.Determinism_RequestSnapshotsInput [1 ms]
+[xUnit.net 00:00:00.31]     Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D11_ContradictoryViews_RolesIndependentOfOrder [FAIL]
+[xUnit.net 00:00:00.31]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.31]                  ↓ (pos 0)
+[xUnit.net 00:00:00.31]       Expected: "A"
+[xUnit.net 00:00:00.31]       Actual:   "B"
+[xUnit.net 00:00:00.31]                  ↑ (pos 0)
+[xUnit.net 00:00:00.31]       Stack Trace:
+[xUnit.net 00:00:00.31]         /workspace/maritime-sim-design/tests_acceptance/W1/RetestAcceptanceTests.cs(424,0): at Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D11_ContradictoryViews_RolesIndependentOfOrder()
+[xUnit.net 00:00:00.32]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.32]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.32]     Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D09_CatalogContainsR18 [FAIL]
+[xUnit.net 00:00:00.32]       Assert.Contains() Failure: Filter not matched in collection
+[xUnit.net 00:00:00.32]       Collection: [ColregRuleDefinition { Id = R5, Summary = "须结合 VDR 音频、驾驶台值班和雷达/ARPA 记录核查持续正规瞭望；仅凭航迹不能评估。", Title = "瞭望" }, ColregRuleDefinition { Id = R6, Summary = "结合观测航速、能见度、水域与操纵性能人工研判；配置航速仅作提示。", Title = "安全航速" }, ColregRuleDefinition { Id = R7, Summary = "依据航迹 CPA 序列识别首次碰撞危险及 DCPA/TCPA 演变；实际雷达标绘使用情况须另有记录。", Title = "碰撞危险判断" }, ColregRuleDefinition { Id = R8, Summary = "行动应及早、明显，并使船舶在安全距离驶过；须核查行动效果。", Title = "避免碰撞的行动" }, ColregRuleDefinition { Id = R9, Summary = "尽量靠近本船右舷的航道外缘行驶；缺少航道几何时保留核查项并说明限制。", Title = "狭水道" }, ···]
+[xUnit.net 00:00:00.32]       Stack Trace:
+[xUnit.net 00:00:00.32]         /workspace/maritime-sim-design/tests_acceptance/W1/RetestAcceptanceTests.cs(301,0): at Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D09_CatalogContainsR18()
+[xUnit.net 00:00:00.32]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.32]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.33]     Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D10_HeadOnDoubt_SymmetricUnderSwap [FAIL]
+[xUnit.net 00:00:00.33]       Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:00.33]       Expected: HeadOn
+[xUnit.net 00:00:00.33]       Actual:   Crossing
+[xUnit.net 00:00:00.33]       Stack Trace:
+[xUnit.net 00:00:00.33]         /workspace/maritime-sim-design/tests_acceptance/W1/RetestAcceptanceTests.cs(412,0): at Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D10_HeadOnDoubt_SymmetricUnderSwap()
+[xUnit.net 00:00:00.33]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.33]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W1.RobustnessAcceptanceTests.W1_D07_RuleCatalogCoversSpecRules [< 1 ms]
+  Failed Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D11_ContradictoryViews_RolesIndependentOfOrder [3 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "A"
+Actual:   "B"
+           ↑ (pos 0)
+  Stack Trace:
+     at Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D11_ContradictoryViews_RolesIndependentOfOrder() in /workspace/maritime-sim-design/tests_acceptance/W1/RetestAcceptanceTests.cs:line 424
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A1_CrossingDoesNotBecomeOvertaking_WhileRiskPersists [2 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A4_DoubtSector_Configurable [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A1_GiveWayTurn_RolesLockedUntilRiskEnds [2 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A6_NoData_NotAssessableWithRequiredEvidence [1 ms]
+  Failed Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D09_CatalogContainsR18 [4 ms]
+  Error Message:
+   Assert.Contains() Failure: Filter not matched in collection
+Collection: [ColregRuleDefinition { Id = R5, Summary = "须结合 VDR 音频、驾驶台值班和雷达/ARPA 记录核查持续正规瞭望；仅凭航迹不能评估。", Title = "瞭望" }, ColregRuleDefinition { Id = R6, Summary = "结合观测航速、能见度、水域与操纵性能人工研判；配置航速仅作提示。", Title = "安全航速" }, ColregRuleDefinition { Id = R7, Summary = "依据航迹 CPA 序列识别首次碰撞危险及 DCPA/TCPA 演变；实际雷达标绘使用情况须另有记录。", Title = "碰撞危险判断" }, ColregRuleDefinition { Id = R8, Summary = "行动应及早、明显，并使船舶在安全距离驶过；须核查行动效果。", Title = "避免碰撞的行动" }, ColregRuleDefinition { Id = R9, Summary = "尽量靠近本船右舷的航道外缘行驶；缺少航道几何时保留核查项并说明限制。", Title = "狭水道" }, ···]
+  Stack Trace:
+     at Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D09_CatalogContainsR18() in /workspace/maritime-sim-design/tests_acceptance/W1/RetestAcceptanceTests.cs:line 301
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A1_NotInSightToInSight_OpensNewBandAtExactTime [4 ms]
+  Failed Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D10_HeadOnDoubt_SymmetricUnderSwap [1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: HeadOn
+Actual:   Crossing
+  Stack Trace:
+     at Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D10_HeadOnDoubt_SymmetricUnderSwap() in /workspace/maritime-sim-design/tests_acceptance/W1/RetestAcceptanceTests.cs:line 412
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.35]   Finished:    W1.Acceptance
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.D03_ExplicitInSight_InRestrictedVisibility_UsesSectionII [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A7_DeterministicIds_DraftStatus_EvidencePassThrough [10 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A4_HeadingDifferenceAbove6_NotHeadOn [< 1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A3_ContradictoryViews_FlaggedDoubt [1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A5_CollisionRisk_TcpaUpperBound720 [1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A3_OwnDeadAheadOfTarget_UsesOwnView [1 ms]
+  Passed Mcis.Acceptance.W1.RetestAcceptanceTests.A5_DefaultThresholds [< 1 ms]
+
+Test Run Failed.
+Total tests: 131
+     Passed: 128
+     Failed: 3
+ Total time: 0.7885 Seconds
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

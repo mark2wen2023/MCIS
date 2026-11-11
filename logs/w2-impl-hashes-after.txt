@@ -1,0 +1,25 @@
+# W2 implementation SHA-256 after acceptance tests
+# time: 2026-11-11 18:59:25 CST
+# paths: unity/Assets/_Project/Scripts/Data/Vdr and Domain/Timeline
+# note: tester did not modify these files; any diff vs before is from the implementer during the test window.
+
+e384263c781a33394528de846e3ba225d682488abf3ef559e02afb19643dee40  unity/Assets/_Project/Scripts/Data/Vdr/ManualAnchorCsvImporter.cs
+3d0943a78cf2c0fb5f7332bf54e3d5dbab385d4b3be80e2976f529bde080cc38  unity/Assets/_Project/Scripts/Data/Vdr/NmeaParser.cs
+fbdcec3c8956d7d55b13f99c6ec5c0227aa87c23272df6176c9ca6a95ccbb4ce  unity/Assets/_Project/Scripts/Data/Vdr/VdrCsvImporter.cs
+6846eb8bec94833ad2fc0d567e2358b20dee76a5965bf1e60b5b15e5d84acb08  unity/Assets/_Project/Scripts/Data/Vdr/VdrCsvMapping.cs
+a1fa107d1f11faeb9eb4e366ee5f47e8eb62488656e672d71f3a514be9e5cbd0  unity/Assets/_Project/Scripts/Data/Vdr/VdrImporter.cs
+626508816982baea3792147fb40f7ebb6212248f3ae83386ebc17dc9200a8b40  unity/Assets/_Project/Scripts/Data/Vdr/VdrMediaManifestImporter.cs
+2a0049c35f555a17ef7c9fa21c005b3cb32087f5bcaeac1613fe4274a30c32e9  unity/Assets/_Project/Scripts/Data/Vdr/VdrNmeaImporter.cs
+c6d3a8688223f2e83ff0b0ad4892e8abcd8be6c0f8a78d6fe389c4c25968cda7  unity/Assets/_Project/Scripts/Data/Vdr/VdrOptions.cs
+ef08f8b8f003807976bcb012abdc25af9cd90b4e0a1f4279fac58aa1bab584a8  unity/Assets/_Project/Scripts/Domain/Timeline/AngleMath.cs
+46b0aae77adf2b429bc1f9025af0072c7002ef3e94d1d55804304aae42fafaf6  unity/Assets/_Project/Scripts/Domain/Timeline/Calibration.cs
+387812d6e0914f6c5aaafd557fdf9b0777f0493327b4b40645c4a15ec1bc6141  unity/Assets/_Project/Scripts/Domain/Timeline/ClockOffsets.cs
+82f09b0311f77e232fd8f43de5f2b884981b225766b32ba4e23214399cb9f3af  unity/Assets/_Project/Scripts/Domain/Timeline/ConflictDetection.cs
+6cc0341f0c71077d9313da1ab9838a73333156eaf98675ceb928b4e6cc6ec768  unity/Assets/_Project/Scripts/Domain/Timeline/EventMarker.cs
+57c97d05d17887377f1e66c00dece9aecfa5a7b07758a05f7cf0730447691dcc  unity/Assets/_Project/Scripts/Domain/Timeline/ManualAnchors.cs
+709660343cbd03fd25484c64e19239b5331b4475a8f93c62a17894377bb48e2c  unity/Assets/_Project/Scripts/Domain/Timeline/MediaItem.cs
+10c58629533a3172b1ca910bf39e36cbcd5c5741072ab4a1f175a9bcb07dc0ac  unity/Assets/_Project/Scripts/Domain/Timeline/MultiTrackTimeline.cs
+c3938896e99545686aeeaaeb52a4c6ce2c63b2a17de25db195e8723c8bd8979d  unity/Assets/_Project/Scripts/Domain/Timeline/TimeRange.cs
+5e63d30e821b21db493a134744174f4375d2edf88a4dfd521d4f997332b3c882  unity/Assets/_Project/Scripts/Domain/Timeline/TimelineSample.cs
+3a83df0a2efd77ecb023d6e95f082e57ac1df8c7c30fa6c08eb5a9fe20b48cd9  unity/Assets/_Project/Scripts/Domain/Timeline/Track.cs
+1a71f000191a88281aadc97cd3aad027d402b9613f2b15c9b3bca170c9f7041d  unity/Assets/_Project/Scripts/Domain/Timeline/TrackKind.cs

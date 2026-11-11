@@ -1,0 +1,70 @@
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.TrackKind_CoversScreenshotEightTracks [2 ms]
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.ClockOffsetEstimate_HasOffsetAndUncertainty [1 ms]
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.MediaItem_SupportsChannelRangeAndShaMetadata [2 ms]
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.EventMarker_CanRepresentScreenshotFlags [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Heading_179To181_DoesNotTakeLongWay [10 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.CourseOverGround_AlsoUsesShortestArc [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Speed_IsLinearlyInterpolated [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Heading_359To1_InterpolatesAcrossZeroByShortestArc [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Heading_181To179_DoesNotTakeLongWay [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Heading_1To359_InterpolatesAcrossZeroByShortestArc [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.EngineTelegraph_ChangesOnlyAtSampleInstant [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.EngineTelegraph_IsStepped_NotInterpolated [1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.IllegalNumericCharacters_DoNotThrow_AndAreIgnored [22 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.Heading_EqualToThreshold_IsNotConflict_SlightlyOverIs [30 ms]
+  Failed Mcis.Acceptance.W2.ConflictAcceptanceTests.Speed_EqualToThreshold_IsNotConflict [1 ms]
+  Error Message:
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.Speed_SlightlyOverThreshold_IsConflict [< 1 ms]
+  Failed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "!AIV") [9 ms]
+  Error Message:
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "$AI") [< 1 ms]
+  Failed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "!AIVD") [< 1 ms]
+  Error Message:
+  Failed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "$GPRM") [< 1 ms]
+  Error Message:
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.Calibrator_ShiftsFiniteOffsetsOnly_LeavesNaNUnchanged [36 ms]
+  Failed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "$GPR") [< 1 ms]
+  Error Message:
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.CompletelyMalformed_ReturnsFalse(line: "") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.CompletelyMalformed_ReturnsFalse(line: "$GP") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.CompletelyMalformed_ReturnsFalse(line: "no dollar sign") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Checksum_WrongValue_ParsesButMarkedInvalid [< 1 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.ConflictIds_MatchContractPattern_AreUniqueAndContiguous [4 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.MinDuration_EqualToLimit_IsKept_SlightlyUnderIsDropped [< 1 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.Heading_AcrossZero_UsesShortestArcForThreshold [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.RmcWithNewDateAfterMidnight_UsesSentenceDate [3 ms]
+  Failed Mcis.Acceptance.W2.ConflictAcceptanceTests.DefaultThresholds_AreNotASharedMutableSingleton [1 ms]
+  Error Message:
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.EmptyFields_DoNotThrow_AndSkipIncompleteSamples [< 1 ms]
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.FictionalSamples_AreLabeledAndImportable [34 ms]
+  Failed Mcis.Acceptance.W2.NmeaAcceptanceTests.Importer_TruncatedAddressInFile_DoesNotAbortImport [2 ms]
+  Error Message:
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.OverlongLine_DoesNotThrow [1 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.ConflictIds_ContinueToTwoDigitsBeyondNine [3 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Checksum_Missing_IsNotValid [< 1 ms]
+  Failed Mcis.Acceptance.W2.ConflictAcceptanceTests.TimelineConflict_ExposesContractAndScreenshotFields [1 ms]
+  Error Message:
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.SupportedSentenceTypes_CanBeImported [2 ms]
+  Failed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.Median_OutlierMustNotZeroUncertaintyOrStayInCountUnremarked [11 ms]
+  Error Message:
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.NoCommonAnchors_ReturnsNaNAndZeroCount [< 1 ms]
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.LeastSquares_MatchesMeanAndStandardError [< 1 ms]
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.Median_ResistsSingleOutlier_OffsetStaysAtCluster [< 1 ms]
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.MissingReference_Fails [< 1 ms]
+  Failed Mcis.Acceptance.W2.NmeaAcceptanceTests.TagBlock_InvalidChecksum_MustNotYieldTime [2 ms]
+  Error Message:
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Checksum_ValidUppercase_IsAccepted [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Importer_DropsBadAndMissingChecksum_ByDefault [1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.GgaWithoutDateOrDefault_WritesDiagnosticAndDrops [< 1 ms]
+  Failed Mcis.Acceptance.W2.NmeaAcceptanceTests.TagBlock_MissingChecksum_MustNotYieldTime [< 1 ms]
+  Error Message:
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.UnknownSentenceType_IsReportedOnce [< 1 ms]
+  Failed Mcis.Acceptance.W2.NmeaAcceptanceTests.GgaAfterMidnight_RollsDateForward [1 ms]
+  Error Message:
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TagBlock_ValidChecksum_YieldsUnixTime [< 1 ms]
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.ImportedEightTracks_CanBeQueriedOnSharedTimeline [13 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Checksum_ValidLowercase_IsAccepted [< 1 ms]
+Test Run Failed.
+Total tests: 54
+     Passed: 42
+     Failed: 12

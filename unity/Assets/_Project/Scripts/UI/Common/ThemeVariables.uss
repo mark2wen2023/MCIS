@@ -1,0 +1,150 @@
+/* ==========================================================================
+   MCIS-3D 通用主题变量与基础样式 (ThemeVariables.uss)
+   视觉基准：深色舰桥/ECDIS 玻璃拟态风格，对齐 prototype/index.html 与 ARCHITECTURE 9.3
+   ========================================================================== */
+
+:root {
+    /* 深色玻璃背景与层级底色 */
+    --bg-void: #050a12;
+    --bg-deep: #060b14;
+    --bg-glass: rgba(8, 18, 32, 0.72);
+    --bg-panel: rgba(8, 18, 32, 0.72);
+    --bg-panel-elevated: rgba(12, 25, 44, 0.86);
+    --bg-card: rgba(6, 14, 26, 0.82);
+    --bg-cell: rgba(3, 8, 16, 0.68);
+    --bg-input: rgba(6, 13, 24, 0.85);
+    --bg-minimap: #040d19;
+
+    /* 描边与分割线 */
+    --border-glass: rgba(59, 227, 255, 0.35);
+    --border-line: rgba(59, 227, 255, 0.35);
+    --border-subtle: rgba(141, 164, 196, 0.16);
+
+    /* 主色与风险状态色 */
+    --color-primary: #3be3ff;
+    --accent-cyan: #3be3ff;
+    --cyan-dim: rgba(59, 227, 255, 0.18);
+    --cyan-border: rgba(59, 227, 255, 0.50);
+
+    --color-amber: #ffb020;
+    --status-warning: #ffb020;
+    --amber-dim: rgba(255, 176, 32, 0.18);
+    --amber-border: rgba(255, 176, 32, 0.65);
+
+    --color-danger: #ff4d5e;
+    --status-danger: #ff4d5e;
+    --danger-dim: rgba(255, 77, 94, 0.20);
+    --danger-border: rgba(255, 77, 94, 0.75);
+
+    --color-safe: #10b981;
+    --safe-dim: rgba(16, 185, 129, 0.18);
+
+    /* 船方区分色 */
+    --vessel-own-color: #3be3ff;
+    --vessel-target-color: #ffb020;
+
+    /* 文本颜色 */
+    --text-main: #e6f1ff;
+    --text-sec: #8da4c4;
+    --text-muted: #526987;
+    --text-dark: #03101d;
+
+    /* 圆角与间距 */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+}
+
+/* 通用玻璃面板 */
+.mcis-glass-panel {
+    background-color: var(--bg-glass);
+    border-color: var(--border-glass);
+    border-width: 1px;
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+}
+
+/* 等宽数字文本类（用于经纬度、SOG、COG、HDG、DCPA、TCPA、时间戳） */
+.mcis-mono {
+    -unity-font-style: bold;
+    letter-spacing: 0.5px;
+    color: var(--text-main);
+}
+
+/* 通用按钮 */
+.mcis-btn {
+    background-color: rgba(18, 35, 60, 0.85);
+    border-color: var(--border-glass);
+    border-width: 1px;
+    border-radius: var(--radius-sm);
+    color: var(--text-main);
+    font-size: 12px;
+    -unity-font-style: bold;
+    padding: 4px 10px;
+    margin: 0 2px;
+    -unity-text-align: middle-center;
+}
+
+.mcis-btn:hover {
+    background-color: rgba(59, 227, 255, 0.22);
+    border-color: var(--color-primary);
+    color: #ffffff;
+}
+
+.mcis-btn:active {
+    background-color: var(--color-primary);
+    color: var(--text-dark);
+}
+
+.mcis-btn-primary {
+    background-color: rgba(59, 227, 255, 0.28);
+    border-color: var(--color-primary);
+    color: #ffffff;
+}
+
+.mcis-btn-danger {
+    background-color: var(--danger-dim);
+    border-color: var(--color-danger);
+    color: #ff8fa3;
+}
+
+/* 通用徽章 */
+.mcis-badge {
+    padding: 2px 7px;
+    border-radius: 3px;
+    border-width: 1px;
+    font-size: 10px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.mcis-badge-cyan {
+    background-color: var(--cyan-dim);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.mcis-badge-amber {
+    background-color: var(--amber-dim);
+    border-color: var(--color-amber);
+    color: #ffd166;
+}
+
+.mcis-badge-danger {
+    background-color: var(--danger-dim);
+    border-color: var(--color-danger);
+    color: #ff8fa3;
+}
+
+/* 三级碰撞风险状态通用样式类 */
+.risk-safe {
+    border-color: var(--cyan-border);
+}
+
+.risk-warning {
+    border-color: var(--color-amber);
+}
+
+.risk-danger {
+    border-color: var(--color-danger);
+}

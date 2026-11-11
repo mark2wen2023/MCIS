@@ -1,0 +1,19 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+/workspace/maritime-sim-design/tests_acceptance/W15/AcciMapStampAcceptanceTests.cs(101,13): warning xUnit2013: Do not use Assert.Equal() to check for collection size. Use Assert.Single instead. (https://xunit.net/xunit.analyzers/rules/xUnit2013) [/workspace/maritime-sim-design/tests_acceptance/W15/W15.Acceptance.csproj]
+  W15.Acceptance -> /workspace/maritime-sim-design/tests_acceptance/W15/bin/Debug/net8.0/W15.Acceptance.dll
+Test run for /workspace/maritime-sim-design/tests_acceptance/W15/bin/Debug/net8.0/W15.Acceptance.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+  Failed Mcis.Acceptance.W15.RefsAcceptanceTests.EachKindCheckedOnlyWhenProvided [69 ms]
+  Error Message:
+   Assert.Equal() Failure: Collections differ
+Expected: string[]                                   ["sys_unknown_evidence"]
+Actual:   SelectIListIterator<SystemicIssue, string> ["sys_unknown_evidence", "sys_ref_not_checked", "sys_ref_not_checked", "sys_ref_not_checked"]
+                                                                              ↑ (pos 1)
+  Stack Trace:
+     at Mcis.Acceptance.W15.RefsAcceptanceTests.EachKindCheckedOnlyWhenProvided() in /workspace/maritime-sim-design/tests_acceptance/W15/RefsJsonAcceptanceTests.cs:line 52
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+Failed!  - Failed:     1, Passed:   105, Skipped:     0, Total:   106, Duration: 109 ms - W15.Acceptance.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

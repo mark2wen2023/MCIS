@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ui="UnityEngine.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd">
+
+    <Style src="../Common/ThemeVariables.uss" />
+    <Style src="NavHud.uss" />
+
+    <ui:VisualElement name="nav-hud-container" class="nav-hud-root">
+        <!-- 左侧：本船与目标船遥测卡片堆栈 -->
+        <ui:VisualElement name="nav-hud-left" class="nav-hud-left-stack">
+            <!-- 本船卡片 (Own Vessel - Lily) -->
+            <ui:VisualElement name="own-ship-card" class="hud-ship-box own-ship">
+                <ui:VisualElement class="hud-ship-header">
+                    <ui:Label name="own-ship-title" text="LILY 轮 (本船 / 散货船)" class="hud-ship-title-own" />
+                    <ui:Label name="own-ship-badge" text="压载出港" class="mcis-badge mcis-badge-cyan" />
+                </ui:VisualElement>
+
+                <ui:VisualElement class="hud-telemetry-row">
+                    <ui:VisualElement class="telemetry-cell telemetry-cell-wide">
+                        <ui:Label text="GPS 位置 (WGS-84 度分)" class="telemetry-key" />
+                        <ui:Label name="own-pos-val" text="21°48.30'N 113°41.20'E" class="telemetry-val mcis-mono" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="telemetry-cell telemetry-cell-last">
+                        <ui:Label text="SOG 对地航速" class="telemetry-key" />
+                        <ui:Label name="own-sog-val" text="9.2 kn" class="telemetry-val mcis-mono" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <ui:VisualElement class="hud-telemetry-row">
+                    <ui:VisualElement class="telemetry-cell">
+                        <ui:Label text="COG 对地航向" class="telemetry-key" />
+                        <ui:Label name="own-cog-val" text="104.0°" class="telemetry-val mcis-mono" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="telemetry-cell">
+                        <ui:Label text="HDG 船首向" class="telemetry-key" />
+                        <ui:Label name="own-hdg-val" text="104.0°" class="telemetry-val mcis-mono" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="telemetry-cell telemetry-cell-last">
+                        <ui:Label text="数据来源" class="telemetry-key" />
+                        <ui:Label name="own-prov-val" text="AIS 实测" class="telemetry-val mcis-mono" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- 目标船卡片 (Target Vessel - Mary) -->
+            <ui:VisualElement name="target-ship-card" class="hud-ship-box target-ship">
+                <ui:VisualElement class="hud-ship-header">
+                    <ui:Label name="target-ship-title" text="MARY 轮 (他船 / 集装箱船)" class="hud-ship-title-target" />
+                    <ui:Label name="target-ship-badge" text="满载进港" class="mcis-badge mcis-badge-amber" />
+                </ui:VisualElement>
+
+                <ui:VisualElement class="hud-telemetry-row">
+                    <ui:VisualElement class="telemetry-cell telemetry-cell-wide">
+                        <ui:Label text="GPS 位置 (WGS-84 度分)" class="telemetry-key" />
+                        <ui:Label name="target-pos-val" text="21°47.05'N 113°43.77'E" class="telemetry-val mcis-mono" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="telemetry-cell telemetry-cell-last">
+                        <ui:Label text="SOG 对地航速" class="telemetry-key" />
+                        <ui:Label name="target-sog-val" text="13.8 kn" class="telemetry-val mcis-mono" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <ui:VisualElement class="hud-telemetry-row">
+                    <ui:VisualElement class="telemetry-cell">
+                        <ui:Label text="COG 对地航向" class="telemetry-key" />
+                        <ui:Label name="target-cog-val" text="304.0°" class="telemetry-val mcis-mono" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="telemetry-cell">
+                        <ui:Label text="HDG 船首向" class="telemetry-key" />
+                        <ui:Label name="target-hdg-val" text="304.0°" class="telemetry-val mcis-mono" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="telemetry-cell telemetry-cell-last">
+                        <ui:Label text="数据来源" class="telemetry-key" />
+                        <ui:Label name="target-prov-val" text="AIS 实测" class="telemetry-val mcis-mono" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- 中央：ARPA / DCPA / TCPA 实时风险仪表盘 -->
+        <ui:VisualElement name="cpa-hud-panel" class="cpa-hud-panel risk-safe">
+            <ui:VisualElement class="cpa-header-row">
+                <ui:VisualElement class="cpa-header-left">
+                    <ui:Label text="ARPA / 会遇风险实时解算 (论文 3.4 节)" class="cpa-panel-title" />
+                    <ui:Label text="示例数据（虚构）" class="mcis-badge mcis-badge-amber" />
+                </ui:VisualElement>
+                <ui:Label name="cpa-risk-badge" text="SAFE · 安全态势" class="mcis-badge mcis-badge-cyan" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="cpa-metrics-row">
+                <ui:VisualElement class="cpa-metric-box">
+                    <ui:Label text="DCPA (最近会遇距离)" class="cpa-metric-lbl" />
+                    <ui:Label name="hud-dcpa-val" text="1.12 nm" class="cpa-metric-num cpa-metric-accent mcis-mono" />
+                </ui:VisualElement>
+                <ui:VisualElement class="cpa-metric-box">
+                    <ui:Label text="TCPA (最近会遇时间)" class="cpa-metric-lbl" />
+                    <ui:Label name="hud-tcpa-val" text="8.85 min" class="cpa-metric-num cpa-metric-accent mcis-mono" />
+                </ui:VisualElement>
+                <ui:VisualElement class="cpa-metric-box">
+                    <ui:Label text="当前间距 |r|" class="cpa-metric-lbl" />
+                    <ui:Label name="hud-dist-val" text="3.41 nm" class="cpa-metric-num mcis-mono" />
+                </ui:VisualElement>
+                <ui:VisualElement class="cpa-metric-box cpa-metric-box-last">
+                    <ui:Label text="相对速度 |v| / 方位" class="cpa-metric-lbl" />
+                    <ui:Label name="hud-relv-val" text="22.8kn / 118°" class="cpa-metric-num mcis-mono" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="cpa-footer-row">
+                <ui:Label name="hud-formula-label" text="r=P_t-P_o, v=V_t-V_o, TCPA=-(r·v)/|v|², DCPA=|r+v·TCPA|" class="cpa-formula-text mcis-mono" />
+                <ui:Label name="hud-sim-clock" text="2026-05-18 14:15:00" class="cpa-clock-text mcis-mono" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

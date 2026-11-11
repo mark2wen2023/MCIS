@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- W18（人为因素：HFACS-MA / 工休校验 / 疲劳指标 / BRM 核查单）纯逻辑库：只引入 Core/Primitives、Domain/Common、Domain/Models、Domain/Evidence 与本包路径。 -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RootNamespace>Mcis</RootNamespace>
+    <AssemblyName>Mcis.W18.HF</AssemblyName>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../Assets/_Project/Scripts/Core/Primitives/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Common/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Models/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/Evidence/**/*.cs" />
+    <Compile Include="../Assets/_Project/Scripts/Domain/HumanFactors/**/*.cs" />
+  </ItemGroup>
+</Project>

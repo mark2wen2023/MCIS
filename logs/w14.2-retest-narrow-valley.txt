@@ -1,0 +1,1 @@
+narrow valley: reported=32.00 m @ t=20.00; brute=9.60 m @ t=6.30; missed=True

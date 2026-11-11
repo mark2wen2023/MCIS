@@ -1,0 +1,180 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  W18.Acceptance -> /workspace/maritime-sim-design/tests_acceptance/W18/bin/Debug/net8.0/W18.Acceptance.dll
+Test run for /workspace/maritime-sim-design/tests_acceptance/W18/bin/Debug/net8.0/W18.Acceptance.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+/workspace/maritime-sim-design/tests_acceptance/W18/bin/Debug/net8.0/W18.Acceptance.dll
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:00.06]   Discovering: W18.Acceptance
+[xUnit.net 00:00:00.14]   Discovered:  W18.Acceptance
+[xUnit.net 00:00:00.14]   Starting:    W18.Acceptance
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HfacsMaCategoriesPresent(code: "UA-ERR-DEC") [4 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HfacsMaCategoriesPresent(code: "US-PLAN") [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HfacsMaCategoriesPresent(code: "PC-ENV-TEC") [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HfacsMaCategoriesPresent(code: "UA-VIO-EXC") [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HfacsMaCategoriesPresent(code: "US-FAIL-CORR") [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HfacsMaCategoriesPresent(code: "PC-OPR-PHY") [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HfacsMaCategoriesPresent(code: "OI-PROC") [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HfacsMaCategoriesPresent(code: "OI-RES") [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HfacsMaCategoriesPresent(code: "UA-ERR-PER") [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HfacsMaCategoriesPresent(code: "US-VIO") [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HfacsMaCategoriesPresent(code: "PC-ENV-PHY") [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HfacsMaCategoriesPresent(code: "PC-OPR-LIM") [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HfacsMaCategoriesPresent(code: "PC-PER-RDY") [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HfacsMaCategoriesPresent(code: "PC-OPR-MEN") [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HfacsMaCategoriesPresent(code: "UA-ERR-SKL") [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HfacsMaCategoriesPresent(code: "PC-PER-BRM") [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HfacsMaCategoriesPresent(code: "UA-VIO-ROU") [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HfacsMaCategoriesPresent(code: "OI-CLIM") [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HfacsMaCategoriesPresent(code: "US-INADEQ") [< 1 ms]
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.Input_Overlap_Fails_hf_overlap [13 ms]
+  Passed Mcis.Acceptance.W18.FatigueAcceptanceTests.ContinuousAwake_SleepEndsExactlyAtIncident_IsZero [15 ms]
+  Passed Mcis.Acceptance.W18.FatigueAcceptanceTests.Input_Errors [< 1 ms]
+  Passed Mcis.Acceptance.W18.FatigueAcceptanceTests.TimeZone_OffsetRange [< 1 ms]
+[xUnit.net 00:00:00.23]     Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.W18_D05_Finding_HasDraftConfirmWorkflow [FAIL]
+[xUnit.net 00:00:00.23]       HfacsFinding 无复核状态
+[xUnit.net 00:00:00.23]       Stack Trace:
+[xUnit.net 00:00:00.23]         /workspace/maritime-sim-design/tests_acceptance/W18/HfacsBrmAcceptanceTests.cs(158,0): at Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.W18_D05_Finding_HasDraftConfirmWorkflow()
+[xUnit.net 00:00:00.23]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.23]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.23]     Mcis.Acceptance.W18.FatigueAcceptanceTests.W18_D03_UnrecordedTimeNotCountedAsAwake_OrCoverageFlagged [FAIL]
+[xUnit.net 00:00:00.23]       AwakeLast24h=20:00:00
+[xUnit.net 00:00:00.23]       Stack Trace:
+[xUnit.net 00:00:00.23]         /workspace/maritime-sim-design/tests_acceptance/W18/FatigueAcceptanceTests.cs(193,0): at Mcis.Acceptance.W18.FatigueAcceptanceTests.W18_D03_UnrecordedTimeNotCountedAsAwake_OrCoverageFlagged()
+[xUnit.net 00:00:00.23]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.23]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.W18_D05_Finding_HasDraftConfirmWorkflow [1 ms]
+  Error Message:
+   HfacsFinding 无复核状态
+  Stack Trace:
+     at Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.W18_D05_Finding_HasDraftConfirmWorkflow() in /workspace/maritime-sim-design/tests_acceptance/W18/HfacsBrmAcceptanceTests.cs:line 158
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W18.FatigueAcceptanceTests.W18_D03_UnrecordedTimeNotCountedAsAwake_OrCoverageFlagged [1 ms]
+  Error Message:
+   AwakeLast24h=20:00:00
+  Stack Trace:
+     at Mcis.Acceptance.W18.FatigueAcceptanceTests.W18_D03_UnrecordedTimeNotCountedAsAwake_OrCoverageFlagged() in /workspace/maritime-sim-design/tests_acceptance/W18/FatigueAcceptanceTests.cs:line 193
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Finding_Validation_Codes [3 ms]
+  Passed Mcis.Acceptance.W18.FatigueAcceptanceTests.Input_UnorderedSleep_SameAsOrdered [2 ms]
+  Passed Mcis.Acceptance.W18.FatigueAcceptanceTests.TimeZone_PassedOffsetTakesPrecedence [< 1 ms]
+  Passed Mcis.Acceptance.W18.FatigueAcceptanceTests.Determinism [3 ms]
+  Passed Mcis.Acceptance.W18.FatigueAcceptanceTests.NoSleepAtAll_ContinuousAwakeNull [< 1 ms]
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.Interval_14h01m_Violation [13 ms]
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.Rest24h_9h59m_Violation [< 1 ms]
+  Passed Mcis.Acceptance.W18.FatigueAcceptanceTests.CircadianLow_HalfOpenBoundaries(h: 1, m: 59, low: False) [2 ms]
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.Input_InvalidRules_Fails_hf_invalid_rules [< 1 ms]
+  Passed Mcis.Acceptance.W18.FatigueAcceptanceTests.CircadianLow_HalfOpenBoundaries(h: 5, m: 59, low: True) [< 1 ms]
+  Passed Mcis.Acceptance.W18.FatigueAcceptanceTests.CircadianLow_HalfOpenBoundaries(h: 2, m: 0, low: True) [< 1 ms]
+  Passed Mcis.Acceptance.W18.FatigueAcceptanceTests.CircadianLow_HalfOpenBoundaries(h: 14, m: 24, low: False) [< 1 ms]
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.Totals_UnknownTimeReported [< 1 ms]
+  Passed Mcis.Acceptance.W18.FatigueAcceptanceTests.CircadianLow_HalfOpenBoundaries(h: 6, m: 0, low: False) [< 1 ms]
+  Passed Mcis.Acceptance.W18.FatigueAcceptanceTests.ContinuousAwake_UsesLatestSleep_And24hClipsAtWindowStart [< 1 ms]
+  Passed Mcis.Acceptance.W18.FatigueAcceptanceTests.TimeZone_FallsBackToIncidentOffset [< 1 ms]
+  Passed Mcis.Acceptance.W18.FatigueAcceptanceTests.RestLast7d_FullRecord [2 ms]
+  Passed Mcis.Acceptance.W18.FatigueAcceptanceTests.ContinuousAwake_AsleepAtIncident_IsZero [< 1 ms]
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.Input_Unordered_IsSortedAndSameAsOrdered [3 ms]
+  Passed Mcis.Acceptance.W18.FatigueAcceptanceTests.ContinuousAwake_And_24hAwake_Basic [< 1 ms]
+  Passed Mcis.Acceptance.W18.FatigueAcceptanceTests.Proxy_NoSleep_UsesScheduleRest [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Finding_Ledger_RegisteredEvidenceRequired [14 ms]
+[xUnit.net 00:00:00.24]     Mcis.Acceptance.W18.FatigueAcceptanceTests.W18_D02_SubMinuteOffset_ReturnsErrorNotThrow [FAIL]
+[xUnit.net 00:00:00.24]       Assert.Null() Failure: Value is not null
+[xUnit.net 00:00:00.24]       Expected: null
+[xUnit.net 00:00:00.24]       Actual:   System.ArgumentException: Offset must be specified in whole minutes. (Parameter 'offset')
+[xUnit.net 00:00:00.24]          at System.DateTimeOffset.ValidateOffset(TimeSpan offset)
+[xUnit.net 00:00:00.24]          at System.DateTimeOffset.ToOffset(TimeSpan offset)
+[xUnit.net 00:00:00.24]          at Mcis.Domain.HumanFactors.FatigueCalculator.Compute(DateTimeOffset incident, Nullable`1 shipLocalOffset, IEnumerable`1 sleepPeriods, WorkRestSchedule schedule, FatigueRules rules) in /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/HumanFactors/Fatigue.cs:line 233
+[xUnit.net 00:00:00.24]          at Mcis.Acceptance.W18.FatigueAcceptanceTests.<>c.<W18_D02_SubMinuteOffset_ReturnsErrorNotThrow>b__12_0() in /workspace/maritime-sim-design/tests_acceptance/W18/FatigueAcceptanceTests.cs:line 134
+[xUnit.net 00:00:00.24]          at Xunit.Record.Exception(Func`1 testCode) in /_/src/xunit.core/Record.cs:line 47
+[xUnit.net 00:00:00.24]       Stack Trace:
+[xUnit.net 00:00:00.24]         /workspace/maritime-sim-design/tests_acceptance/W18/FatigueAcceptanceTests.cs(135,0): at Mcis.Acceptance.W18.FatigueAcceptanceTests.W18_D02_SubMinuteOffset_ReturnsErrorNotThrow()
+[xUnit.net 00:00:00.24]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.24]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.24]     Mcis.Acceptance.W18.FatigueAcceptanceTests.W18_D01_ContinuousAwakeBeyondLookback_IsKnownNotNull [FAIL]
+[xUnit.net 00:00:00.24]       Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:00.24]       Expected: 1.06:00:00
+[xUnit.net 00:00:00.24]       Actual:   null
+[xUnit.net 00:00:00.24]       Stack Trace:
+[xUnit.net 00:00:00.24]         /workspace/maritime-sim-design/tests_acceptance/W18/FatigueAcceptanceTests.cs(68,0): at Mcis.Acceptance.W18.FatigueAcceptanceTests.W18_D01_ContinuousAwakeBeyondLookback_IsKnownNotNull()
+[xUnit.net 00:00:00.24]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.24]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.Rest7d_RollingAcrossWeekBoundary [2 ms]
+  Failed Mcis.Acceptance.W18.FatigueAcceptanceTests.W18_D02_SubMinuteOffset_ReturnsErrorNotThrow [2 ms]
+  Error Message:
+   Assert.Null() Failure: Value is not null
+Expected: null
+Actual:   System.ArgumentException: Offset must be specified in whole minutes. (Parameter 'offset')
+   at System.DateTimeOffset.ValidateOffset(TimeSpan offset)
+   at System.DateTimeOffset.ToOffset(TimeSpan offset)
+   at Mcis.Domain.HumanFactors.FatigueCalculator.Compute(DateTimeOffset incident, Nullable`1 shipLocalOffset, IEnumerable`1 sleepPeriods, WorkRestSchedule schedule, FatigueRules rules) in /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/HumanFactors/Fatigue.cs:line 233
+   at Mcis.Acceptance.W18.FatigueAcceptanceTests.<>c.<W18_D02_SubMinuteOffset_ReturnsErrorNotThrow>b__12_0() in /workspace/maritime-sim-design/tests_acceptance/W18/FatigueAcceptanceTests.cs:line 134
+   at Xunit.Record.Exception(Func`1 testCode) in /_/src/xunit.core/Record.cs:line 47
+  Stack Trace:
+     at Mcis.Acceptance.W18.FatigueAcceptanceTests.W18_D02_SubMinuteOffset_ReturnsErrorNotThrow() in /workspace/maritime-sim-design/tests_acceptance/W18/FatigueAcceptanceTests.cs:line 135
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.Rest7d_76h59m_Violation [1 ms]
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.Work24h_Exactly14h_Compliant_14h01m_Violation [< 1 ms]
+  Failed Mcis.Acceptance.W18.FatigueAcceptanceTests.W18_D01_ContinuousAwakeBeyondLookback_IsKnownNotNull [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 1.06:00:00
+Actual:   null
+  Stack Trace:
+     at Mcis.Acceptance.W18.FatigueAcceptanceTests.W18_D01_ContinuousAwakeBeyondLookback_IsKnownNotNull() in /workspace/maritime-sim-design/tests_acceptance/W18/FatigueAcceptanceTests.cs:line 68
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.Split_5h59mLongest_LongestRestViolation [2 ms]
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.TimeZone_SameInstantsDifferentOffsets_SameReport [3 ms]
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.Interval_Exactly14h_Compliant [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_Has32UniqueCodes_5Roots [10 ms]
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.Input_Empty_Null_Invalid [1 ms]
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.Rest24h_Exactly10h_Compliant [< 1 ms]
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.Determinism_SameInputSameReport [1 ms]
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.Rest7d_Exactly77h_Compliant [< 1 ms]
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.Split_6hPlus4h_Compliant [< 1 ms]
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.Work7d_Exactly72h_Compliant_72h01m_Violation [< 1 ms]
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.Rest24h_RollingWindowAcrossCalendarDays [2 ms]
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.Split_AdjacentRestMergedIntoOnePeriod [< 1 ms]
+  Passed Mcis.Acceptance.W18.RestHourAcceptanceTests.WorkLimits_CanBeDisabled [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Brm_Validation_Codes [8 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Taxonomy_HierarchyConsistent [9 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.ErrorCodes_AllHfPrefixed [1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Brm_Default6Items_MatchPrototype [12 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.NoUnityEngineReference [4 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Finding_StrongModerate_RequireEvidenceAndEcfc(s: Moderate) [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Finding_StrongModerate_RequireEvidenceAndEcfc(s: Strong) [< 1 ms]
+[xUnit.net 00:00:00.26]     Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.W18_D04_Finding_UndefinedStrength_Rejected [FAIL]
+[xUnit.net 00:00:00.26]       Assert.False() Failure
+[xUnit.net 00:00:00.26]       Expected: False
+[xUnit.net 00:00:00.26]       Actual:   True
+[xUnit.net 00:00:00.26]       Stack Trace:
+[xUnit.net 00:00:00.26]         /workspace/maritime-sim-design/tests_acceptance/W18/HfacsBrmAcceptanceTests.cs(146,0): at Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.W18_D04_Finding_UndefinedStrength_Rejected()
+[xUnit.net 00:00:00.26]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.26]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.27]   Finished:    W18.Acceptance
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Finding_ToBeVerified_MayHaveNoEvidence [< 1 ms]
+  Failed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.W18_D04_Finding_UndefinedStrength_Rejected [< 1 ms]
+  Error Message:
+   Assert.False() Failure
+Expected: False
+Actual:   True
+  Stack Trace:
+     at Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.W18_D04_Finding_UndefinedStrength_Rejected() in /workspace/maritime-sim-design/tests_acceptance/W18/HfacsBrmAcceptanceTests.cs:line 146
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Brm_SetResult_SummaryAndReassess [< 1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Analysis_ByLayer_CountByLayer [1 ms]
+  Passed Mcis.Acceptance.W18.HfacsBrmAcceptanceTests.Determinism_HfacsAndBrm [3 ms]
+
+Test Run Failed.
+Total tests: 77
+     Passed: 72
+     Failed: 5
+ Total time: 0.6912 Seconds
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

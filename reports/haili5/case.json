@@ -1,0 +1,2092 @@
+{
+  "schemaVersion": "1.0.0",
+  "caseId": "GZ-2025-1025-Haili5-WanHaiA17",
+  "title": "广州“10·25”“海力5”轮与“WAN HAI A17”轮碰撞事故",
+  "accidentCode": "广州10·25",
+  "accidentType": "碰撞",
+  "accidentGrade": "一般",
+  "isFictionalDemo": false,
+  "incidentTimeBeijing": "2025-10-25T19:54:32+08:00",
+  "incidentTimeUtc": "2025-10-25T11:54:32Z",
+  "displayTimeZoneOffsetMinutes": 480,
+  "incidentLocation": {
+    "latDeg": 22.2785,
+    "lonDeg": 113.806833,
+    "latDm": "22°16.71′N",
+    "lonDm": "113°48.41′E",
+    "original": "22°16.710′N/113°48.410′E"
+  },
+  "incidentLocationText": "广州港主航道马友石灯船东北侧水域",
+  "investigatingBody": "广州“10·25”事故调查组（广东海事局提级调查）",
+  "reportTitle": "广州“10·25”“海力5”轮与“WAN HAI A17”轮碰撞事故调查报告",
+  "reportDate": "2026年2月",
+  "summary": "2025年10月25日19:54:32（北京时间），南京海力海运有限公司所属散货船“海力5”轮与新加坡万海航运所属集装箱船“WAN HAI A17”轮在广州港主航道马友石灯船东北侧水域发生碰撞。海力5在会遇前全船失电失控并向左偏转进入进口航路；碰撞后海力5沉没，15人落水，13人获救、2人死亡；WAN HAI A17球鼻艏破损。调查认定为双方互有过失的碰撞责任事故，海力5负主要责任。",
+  "summarySource": {
+    "page": 1,
+    "quote": "2025 年10 月25 日1954 时32 秒，南京海力海运有限公司所属的散货船“海力5”轮与新加坡万海航运股份有限公司所属的“WAN HAI A17”轮在广州港主航道马友石灯船东北侧水域（概位：22°16´.71N/113°48´.41E）发生碰撞",
+    "pdfPage": 6
+  },
+  "vessels": [
+    {
+      "vesselId": "haili5",
+      "name": "HAI LI 5",
+      "nameCn": "海力5",
+      "mmsi": "412356350",
+      "mmsiSource": {
+        "page": 23,
+        "quote": "MMSI: 412356350",
+        "pdfPage": 28,
+        "figure": "图18",
+        "note": "仅出现在事发前广州VTS雷达截图的AIS信息框，船舶概况表未列MMSI"
+      },
+      "imoNumber": null,
+      "chineseShipId": "CN20078835230",
+      "callSign": "BHYU",
+      "callSignSource": {
+        "page": 23,
+        "quote": "呼号: BHYU",
+        "pdfPage": 28,
+        "figure": "图18",
+        "note": "仅出现在图18 AIS信息框，船舶概况表未列呼号"
+      },
+      "flagState": "中国",
+      "portOfRegistry": "南京",
+      "vesselType": "散货船",
+      "vesselTypeCode": "BulkCarrier",
+      "hullMaterial": "钢质",
+      "navigationArea": "近海航区",
+      "grossTonnage": 8317,
+      "netTonnage": 4657,
+      "referenceDeadweightT": 13582,
+      "loaM": 133.2,
+      "beamM": 22.0,
+      "moldedDepthM": 9.6,
+      "mainEnginePowerKw": 2941.0,
+      "builtDate": "2008-06-06",
+      "builder": "南京航顺船舶修造厂",
+      "owner": "南京海力海运有限公司",
+      "ownerAddress": "南京市高淳区阳江镇东湖新村72号",
+      "manager": "唐山言鼎海运有限公司",
+      "operator": "南京海力海运有限公司",
+      "cargo": "型钢11728吨",
+      "draftForeM": 6.7,
+      "draftAftM": 7.1,
+      "aisDraftM": 7.2,
+      "aisDraftSource": {
+        "page": 23,
+        "quote": "吃水: 7.2米",
+        "pdfPage": 28,
+        "figure": "图18"
+      },
+      "crewOnBoard": 15,
+      "pilotOnBoard": false,
+      "voyage": {
+        "from": "广州番禺龙沙码头",
+        "to": "上海",
+        "departureBeijing": {
+          "beijing": "2025-10-25T13:25:00+08:00",
+          "utc": "2025-10-25T05:25:00Z",
+          "approximate": true
+        },
+        "aisDestinationInVtsSnapshot": "GUANGZHOU",
+        "aisEtaInVtsSnapshot": "2025-10-25 21:00（图18，与计划驶往上海不符，疑似AIS目的港未更新）"
+      },
+      "certificates": {
+        "inspection": "江苏省交通运输综合行政执法监督局2025年4月13日在上海年度检验，2025年5月30日远程临时检验；《国内航行海船安全与环保证书》有效期至2028年6月5日，证书齐全有效",
+        "lastFsc": "2025年10月22日在广州番禺船旗国监督检查（2025年入沪船舶专项安检），发现7项缺陷，均已复查纠正"
+      },
+      "source": {
+        "page": 2,
+        "quote": "表1：“海力5”轮船舶概况 船名 海力5 船籍港 南京 船舶识别码 CN20078835230 船舶种类 散货船 总吨 8317 净吨 4657 参考载货量 13582 吨 总长 133.20 米 型宽 22.00 米 型深 9.60 米",
+        "pdfPage": 7
+      },
+      "sourceContinued": {
+        "page": 3,
+        "quote": "船舶建造厂 南京航顺船舶修造厂 船舶管理公司 唐山言鼎海运有限公司 船舶所有人 南京海力海运有限公司",
+        "pdfPage": 8
+      },
+      "voyageSource": {
+        "page": 6,
+        "quote": "该轮事故航次从广州番禺龙沙码头驶往上海。事故发生时该轮装载型钢11728 吨，艏吃水约6.7 米，艉吃水约7.1 米。",
+        "pdfPage": 11
+      },
+      "crewSource": {
+        "page": 7,
+        "quote": "事故航次，该轮在船船员15 人，均持有有效船员适任证书",
+        "pdfPage": 12
+      },
+      "notes": [
+        "国内航行船舶，概况表未列IMO号；图18 AIS信息框IMO为0",
+        "图18 AIS船长显示133.0米，与证书总长133.20米略有差别"
+      ]
+    },
+    {
+      "vesselId": "wanhai_a17",
+      "name": "WAN HAI A17",
+      "nameCn": "WAN HAI A17",
+      "mmsi": "563234300",
+      "mmsiSource": {
+        "page": 23,
+        "quote": "563234300",
+        "pdfPage": 28,
+        "figure": "图18",
+        "note": "仅出现在事发前广州VTS雷达截图的AIS信息框，船舶概况表未列MMSI"
+      },
+      "imoNumber": "9968528",
+      "chineseShipId": null,
+      "callSign": "9V8938",
+      "flagState": "新加坡",
+      "portOfRegistry": "新加坡",
+      "vesselType": "集装箱船",
+      "vesselTypeCode": "ContainerShip",
+      "hullMaterial": "钢质",
+      "navigationArea": "无限航区",
+      "grossTonnage": 122045,
+      "netTonnage": 79701,
+      "referenceDeadweightT": null,
+      "loaM": 334.96,
+      "beamM": 51.0,
+      "moldedDepthM": 20.32,
+      "mainEnginePowerKw": 37800.0,
+      "builtDate": "2024-08-26",
+      "builder": "SAMSUNG HEAVY INDUSTRIES CO.,LTD. KOREA, REPUBLIC OF",
+      "owner": "WAN HAI LINES (SINGAPORE) PTE LTD.",
+      "ownerAddress": "WAN HAI LINES (SINGAPORE) PTE LTD 79 ANSON ROAD #10-01",
+      "manager": "WAN HAI LINES (SINGAPORE) PTE LTD.",
+      "operator": "WAN HAI LINES (SINGAPORE) PTE LTD.",
+      "cargo": "3962个集装箱",
+      "draftForeM": 11.9,
+      "draftAftM": 12.4,
+      "aisDraftM": 12.7,
+      "aisDraftSource": {
+        "page": 23,
+        "quote": "吃水: 12.7米",
+        "pdfPage": 28,
+        "figure": "图18",
+        "note": "AIS框显示12.7米，正文事故发生时艏吃水11.9米、艉吃水12.4米，二者不完全一致"
+      },
+      "crewOnBoard": 23,
+      "pilotOnBoard": true,
+      "pilot": {
+        "name": "梁某林",
+        "grade": "海港一级引航员",
+        "certificateIssuer": "广州海事局",
+        "certificateValidTo": "2026-08-02",
+        "boarding": "2025-10-25约1900时在桂山上引航员，计划于2200时靠泊南沙三期码头",
+        "source": {
+          "page": 9,
+          "quote": "引航员梁某林，男，广东湛江人，持有广州海事局签发的海港一级引航员适任证书，有效期至2026 年8 月2 日。事发时在驾驶台引领船舶进港。",
+          "pdfPage": 14
+        }
+      },
+      "voyage": {
+        "from": "宁波",
+        "to": "广州南沙（南沙三期码头）",
+        "departureBeijing": null,
+        "aisDestinationInVtsSnapshot": "CNNSS",
+        "aisEtaInVtsSnapshot": "图18 AIS框显示“10月25日10时00分”（数字略密，小时首位更像1；正文计划2200时靠泊，该字段存疑）"
+      },
+      "certificates": {
+        "inspection": "2025年7月16日在深圳蛇口由美国船级社年度检验；《货船设备安全证书》《货船构造安全证书》《国际载重线证书》等有效期至2029年8月25日，证书齐全有效",
+        "lastPsc": "2025年9月11日在深圳港港口国监督检查，发现3项缺陷，均已复查纠正",
+        "smc": "美国船级社2024年12月1日签发SMC，有效期至2029年11月30日",
+        "doc": "美国船级社2023年6月7日签发《符合证明》，适用其他货船（集装箱船），有效期至2028年6月30日"
+      },
+      "source": {
+        "page": 3,
+        "quote": "表2：“WAN HAI A17”轮船舶概况 船名 WAN HAI A17 船籍港 新加坡 IMO 号 9968528 呼号 9V8938 船舶种类 集装箱船",
+        "pdfPage": 8
+      },
+      "sourceContinued": {
+        "page": 4,
+        "quote": "总吨 122045 净吨 79701 总长 334.96 米 型宽 51.00 米 型深 20.32 米 主机功率 37800.0 千瓦 船舶建成日期 2024 年8 月26 日",
+        "pdfPage": 9
+      },
+      "voyageSource": {
+        "page": 7,
+        "quote": "该轮事故航次从宁波驶往广州南沙。该轮装载3962 个集装箱，事故发生时艏吃水11.9 米，艉吃水12.4 米。",
+        "pdfPage": 12
+      },
+      "crewSource": {
+        "page": 9,
+        "quote": "事故航次该轮在船船员23 人，均持有有效船员适任证书和船旗国承认签证",
+        "pdfPage": 14
+      },
+      "notes": [
+        "图18 AIS船长显示335.0米，与证书总长334.96米一致（圆整）",
+        "呼号在概况表与图18均为9V8938，互相印证"
+      ]
+    }
+  ],
+  "environment": {
+    "narrativeAtIncident": {
+      "weather": "晴到多云",
+      "weatherPresetId": "PartlyCloudy",
+      "visibilityDescription": "能见度良好",
+      "visibilityNm": null,
+      "windFrom": "东北",
+      "windFromDirDeg": 45,
+      "windBeaufort": 4,
+      "windSpeedMps": null,
+      "windSpeedNote": "报告仅写东北风4级，未给风速数值；蒲福4级约5.5–7.9 m/s，仿真时勿当作精确实测",
+      "seaState": "轻浪",
+      "waveSignificantHeightM": 0.5,
+      "tidePhase": "涨潮",
+      "tideHeightM": 2.0,
+      "tideHeightNote": "正文写潮高约2m；与图16在19:54处于16:32–23:00涨潮段、由127cm涨向244cm的插值约1.9m相符（基准面为理论深度基准面）",
+      "currentType": "涨潮流",
+      "currentToDir": "偏北",
+      "currentToDirDeg": 0,
+      "currentSpeedKn": 1.7,
+      "source": {
+        "page": 21,
+        "quote": "事发前事发水域晴到多云，能见度良好，东北风4 级，轻浪，浪高约0.5 米，涨潮，潮高约2m，涨潮流，流向偏北，流速约1.7 节。",
+        "pdfPage": 26
+      }
+    },
+    "tideStation": {
+      "name": "桂山岛/桂山水域",
+      "date": "2025-10-25",
+      "lunar": "农历九月初五",
+      "tideType": "小潮",
+      "datum": "潮高基准面在平均海面下140cm，采用理论深度基准面",
+      "source": {
+        "page": 21,
+        "quote": "图16：桂山水域当日潮汐表",
+        "pdfPage": 26,
+        "figure": "图16"
+      },
+      "windows": [
+        {
+          "kind": "退潮",
+          "from": "00:00",
+          "to": "06:03"
+        },
+        {
+          "kind": "涨潮",
+          "from": "06:03",
+          "to": "12:22"
+        },
+        {
+          "kind": "退潮",
+          "from": "12:22",
+          "to": "16:32"
+        },
+        {
+          "kind": "涨潮",
+          "from": "16:32",
+          "to": "23:00"
+        }
+      ],
+      "extrema": [
+        {
+          "kind": "干潮",
+          "timeBeijing": "2025-10-25T06:03:00+08:00",
+          "heightCm": 60
+        },
+        {
+          "kind": "满潮",
+          "timeBeijing": "2025-10-25T12:22:00+08:00",
+          "heightCm": 159
+        },
+        {
+          "kind": "干潮",
+          "timeBeijing": "2025-10-25T16:32:00+08:00",
+          "heightCm": 127
+        },
+        {
+          "kind": "满潮",
+          "timeBeijing": "2025-10-25T23:00:00+08:00",
+          "heightCm": 244
+        }
+      ],
+      "readNote": "潮时与潮高从第21页图16表格读取：06:03/60cm，12:22/159cm，16:32/127cm，23:00/244cm。图表为栅格，未嵌入可选中文字。"
+    },
+    "waterway": {
+      "name": "广州港主航道马友石灯船附近",
+      "channelOrientation": "168°30′—348°30′",
+      "bottomWidthM": 385,
+      "channelDepthM": 17,
+      "westChartDepthM": [
+        12,
+        19
+      ],
+      "westActualDepthM": [
+        14,
+        21
+      ],
+      "eastChartDepthM": [
+        12,
+        13
+      ],
+      "eastActualDepthM": [
+        14,
+        15
+      ],
+      "hazards": [
+        "航道西侧有马友石礁石和马友石灯船"
+      ],
+      "nearbyVesselsBeforeIncident": [
+        "出口：海力5",
+        "进口：正海3（已与海力5安全会遇通过）、WAN HAI A17",
+        "东北侧深圳龙鼓西航道：大湾区二号",
+        "周围无渔船等其他碍航船舶"
+      ],
+      "source": {
+        "page": 22,
+        "quote": "事发水域位于广州港主航道马友石灯船附近，航道走向168°30´—348°30´，底宽385 米，水深17 米。",
+        "pdfPage": 27
+      }
+    },
+    "timeline": [
+      {
+        "time": {
+          "beijing": "2025-10-25T19:54:32+08:00",
+          "utc": "2025-10-25T11:54:32Z",
+          "approximate": false
+        },
+        "weatherPresetId": "PartlyCloudy",
+        "visibilityNm": null,
+        "visibilityDescription": "能见度良好",
+        "windSpeedMps": null,
+        "windBeaufort": 4,
+        "windFromDirDeg": 45,
+        "waveSignificantHeightM": 0.5,
+        "currentSpeedKn": 1.7,
+        "currentToDirDeg": 0,
+        "tideHeightM": 2.0,
+        "source": {
+          "page": 21,
+          "quote": "事发前事发水域晴到多云，能见度良好，东北风4 级，轻浪，浪高约0.5 米，涨潮，潮高约2m，涨潮流，流向偏北，流速约1.7 节。",
+          "pdfPage": 26
+        }
+      }
+    ]
+  },
+  "personnel": {
+    "haili5": [
+      {
+        "role": "船长",
+        "name": "蔡某飞",
+        "onDutyAtIncident": "事故发生时在驾驶台指挥船舶",
+        "responsibility": "事故次要责任人",
+        "src": {
+          "page": 7,
+          "quote": "船长蔡某飞",
+          "pdfPage": 12
+        }
+      },
+      {
+        "role": "三副",
+        "name": "周某",
+        "onDutyAtIncident": "事故发生时在驾驶台操舵（接替身体不适的值班水手）",
+        "responsibility": null,
+        "src": {
+          "page": 8,
+          "quote": "三副周某",
+          "pdfPage": 13
+        }
+      },
+      {
+        "role": "值班水手",
+        "name": "翁某",
+        "onDutyAtIncident": "事故发生前因身体不舒服离开驾驶台，由三副接替操舵",
+        "responsibility": null,
+        "src": {
+          "page": 8,
+          "quote": "事故发生前因身体不舒服离开驾驶台",
+          "pdfPage": 13
+        }
+      },
+      {
+        "role": "轮机长",
+        "name": "陈某胜",
+        "onDutyAtIncident": "事故发生时在机舱值班",
+        "responsibility": "事故主要责任人",
+        "src": {
+          "page": 8,
+          "quote": "轮机长陈某胜",
+          "pdfPage": 13
+        }
+      },
+      {
+        "role": "大管轮",
+        "name": "任某海",
+        "onDutyAtIncident": "事故发生时在机舱参与船舶失电后的应急处置工作",
+        "responsibility": null,
+        "src": {
+          "page": 8,
+          "quote": "大管轮任某海",
+          "pdfPage": 13
+        }
+      },
+      {
+        "role": "二管轮",
+        "name": "王某础",
+        "onDutyAtIncident": "事故发生时在机舱参与船舶失电后的应急处置工作",
+        "responsibility": "事故主要责任人",
+        "src": {
+          "page": 8,
+          "quote": "二管轮王某础",
+          "pdfPage": 13
+        }
+      },
+      {
+        "role": "值班机工",
+        "name": "余某",
+        "onDutyAtIncident": "事发时在机舱集控室协助处置船舶失电后的应急处置工作",
+        "responsibility": null,
+        "src": {
+          "page": 9,
+          "quote": "值班机工余某",
+          "pdfPage": 14
+        }
+      },
+      {
+        "role": "值班机工",
+        "name": "焦某",
+        "onDutyAtIncident": "事故发生时在机舱底层协助大管轮启动主机，事故发生后死亡",
+        "responsibility": null,
+        "src": {
+          "page": 9,
+          "quote": "事故发生时在机舱底层协助大管轮启动主机，事故发生后死亡",
+          "pdfPage": 14
+        }
+      },
+      {
+        "role": "水手",
+        "name": "雷某逢",
+        "onDutyAtIncident": "事故发生时在房间休息，事故发生后死亡",
+        "responsibility": null,
+        "src": {
+          "page": 9,
+          "quote": "事故发生时在房间休息，事故发生后死亡",
+          "pdfPage": 14
+        }
+      }
+    ],
+    "wanhai_a17": [
+      {
+        "role": "船长",
+        "name": "闫某",
+        "onDutyAtIncident": "事发时在驾驶台指挥船舶",
+        "responsibility": "事故次要责任人",
+        "src": {
+          "page": 9,
+          "quote": "船长闫某",
+          "pdfPage": 14
+        }
+      },
+      {
+        "role": "引航员",
+        "name": "梁某林",
+        "onDutyAtIncident": "事发时在驾驶台引领船舶进港",
+        "responsibility": "事故次要责任人",
+        "src": {
+          "page": 9,
+          "quote": "事发时在驾驶台引领船舶进港",
+          "pdfPage": 14
+        }
+      },
+      {
+        "role": "二副",
+        "name": "李某晨",
+        "onDutyAtIncident": "事发时在驾驶台，尚未完成与三副陆某昆之间的交接班",
+        "responsibility": null,
+        "src": {
+          "page": 10,
+          "quote": "事发时在驾驶台，尚未完成与三副陆某昆之间的交接班",
+          "pdfPage": 15
+        }
+      },
+      {
+        "role": "三副（值班驾驶员）",
+        "name": "陆某昆",
+        "onDutyAtIncident": "事发时在驾驶台值班，尚未完成与二副之间的交接班",
+        "responsibility": "事故次要责任人",
+        "src": {
+          "page": 10,
+          "quote": "事发时在驾驶台值班，尚未完成与二副之间的交接班",
+          "pdfPage": 15
+        }
+      },
+      {
+        "role": "值班水手",
+        "name": "田某",
+        "onDutyAtIncident": "事发时已完成与缅甸籍水手Z*Y*M*T交接班，尚未离开驾驶台",
+        "responsibility": null,
+        "src": {
+          "page": 10,
+          "quote": "事发时已完成与缅甸籍水手Z*Y*M*T 之间交接班工作，尚未离开驾驶台",
+          "pdfPage": 15
+        }
+      },
+      {
+        "role": "值班水手（操舵）",
+        "name": "Z*Y*M*T",
+        "nationality": "缅甸",
+        "onDutyAtIncident": "事发时正在操舵",
+        "responsibility": null,
+        "src": {
+          "page": 10,
+          "quote": "他于2025 年3 月31 日到该轮任职值班水手，事发时正在操舵。",
+          "pdfPage": 15
+        }
+      }
+    ],
+    "note": "报告对其余船员及部分姓名作了脱敏。第十节另出现水手长郭学群、轮机长陈道群等表述，与事发在船职务表未逐一对应，不自行合并。"
+  },
+  "consequences": {
+    "grade": "一般等级水上交通事故",
+    "gradeSource": {
+      "page": 1,
+      "quote": "根据《水上交通事故统计办法》相关规定，构成一般等级水上交通事故。",
+      "pdfPage": 6
+    },
+    "haili5": "破损进水沉没；右舷120#肋位附近（NO.1与NO.2货舱之间）不规则破口，高度约3.5m，最大宽度约80cm，破口最高点距主甲板约5m；15人落水，13人获救，2人死亡（机工焦某、水手雷某逢）。报告在损失部分注明“省略部分内容”。",
+    "haili5Source": {
+      "page": 40,
+      "quote": "事故造成该轮破损进水沉没，船上15 人落水，13 人获救，2 人死亡。（省略部分内容）",
+      "pdfPage": 45
+    },
+    "breachSource": {
+      "page": 14,
+      "quote": "该轮右舷120#肋位附近（NO.1 货舱与NO.2 货舱之间）有一高度约3.5m，最大宽度约80cm 的不规则破口，破口最高点距离主甲板约5m",
+      "pdfPage": 19
+    },
+    "wanhai_a17": "球鼻艏（约380#至386#肋位，另述船首和377#肋位之间）左右舷船壳板撕裂、弯曲、凹陷、褶皱和破损；艏尖舱进水，水位约12.28米，其他舱室正常。",
+    "wanhai_a17Source": {
+      "page": 40,
+      "quote": "事故造成该轮船首和377#肋位之间，左舷和右舷球鼻艏船壳板不同程度的弯曲、凹陷、褶皱和破损。",
+      "pdfPage": 45
+    },
+    "collision": {
+      "time": {
+        "beijing": "2025-10-25T19:54:32+08:00",
+        "utc": "2025-10-25T11:54:32Z",
+        "approximate": false
+      },
+      "location": {
+        "latDeg": 22.2785,
+        "lonDeg": 113.806833,
+        "latDm": "22°16.71′N",
+        "lonDm": "113°48.41′E",
+        "original": "22°16.710′N/113°48.410′E"
+      },
+      "haili5Ais": {
+        "latDeg": 22.279,
+        "lonDeg": 113.806167,
+        "latDm": "22°16.74′N",
+        "lonDm": "113°48.37′E",
+        "original": "22°16.740′N/113°48.370′E"
+      },
+      "wanhaiA17Ais": {
+        "latDeg": 22.277667,
+        "lonDeg": 113.807,
+        "latDm": "22°16.66′N",
+        "lonDm": "113°48.42′E",
+        "original": "22°16.660′N/113°48.420′E"
+      },
+      "haili5HeadingDeg": 133,
+      "wanhaiA17HeadingDeg": 348,
+      "headingIntersectionDeg": 35,
+      "collisionAngleDegRange": [
+        30,
+        40
+      ],
+      "contact": "WAN HAI A17球鼻艏与海力5右舷NO.1与NO.2货舱交界/之间",
+      "timeSource": {
+        "page": 26,
+        "quote": "综上，认定碰撞时间为2025 年10 月25 日1954 时32 秒。",
+        "pdfPage": 31
+      },
+      "locationSource": {
+        "page": 26,
+        "quote": "根据两船的AIS 航向和船位，经作图，确定碰撞地点为22°16´.71N/113°48´.41E。",
+        "pdfPage": 31
+      },
+      "angleSource": {
+        "page": 27,
+        "quote": "碰撞时，“WAN HAI A17”轮航向约348°，“海力5”轮航向约133°，两船航向夹角约35°，结合船员陈述，认定两船碰撞时，碰撞角度约为30 至40 度之间。",
+        "pdfPage": 32
+      }
+    },
+    "sinkingTime": {
+      "beijing": "2025-10-25T20:01:00+08:00",
+      "utc": "2025-10-25T12:01:00Z",
+      "approximate": true
+    },
+    "sinkingSource": {
+      "page": 37,
+      "quote": "约2001 时，该轮沉没，15 名船员落水。",
+      "pdfPage": 42
+    },
+    "omittedContent": "简介、事故概况和损失部分均标注“省略部分内容”；正文页码为第1–58页，页脚为“共61页”，第59–61页未包含在本PDF中。"
+  },
+  "liability": {
+    "nature": "双方互有过失的碰撞责任事故",
+    "primaryCause": "海力5轮发电机组停车，应急发电机组未能自动启动供电，导致船舶失控，与WAN HAI A17轮形成紧迫危险是事故发生的主要原因",
+    "haili5": {
+      "share": "主要责任",
+      "primaryPersons": [
+        "轮机长陈某胜",
+        "二管轮王某础"
+      ],
+      "secondaryPersons": [
+        "船长蔡某飞"
+      ]
+    },
+    "wanhai_a17": {
+      "share": "次要责任",
+      "primaryPersons": [],
+      "secondaryPersons": [
+        "船长闫某",
+        "三副陆某昆",
+        "引航员梁某林"
+      ]
+    },
+    "directCauses": [
+      "海力5发电机组停车，应急发电机未能自动启动供电，导致船舶失控并形成紧迫危险",
+      "海力5失控后驾驶台值班人员未及时向附近船舶通报失控动态，贻误避让时机",
+      "WAN HAI A17疏忽瞭望，未及早发现海力5全船失电及失控；发现后未尽快了解动态并果断采取最有助于避碰的行动"
+    ],
+    "indirectCauses": [
+      "海力5在发生发电机高温保护停车险情后未排查原因，进出港航行使用低位海底门留下隐患",
+      "海力5轮机部门未确保应急电源处于正常状态",
+      "WAN HAI A17驾驶台资源管理不当"
+    ],
+    "source": {
+      "page": 45,
+      "quote": "“海力5”轮应负事故主要责任，该轮轮机长和二管轮均是事故主要责任人，船长是事故次要责任人；“WAN HAI A17”轮负事故次要责任，船长、三副和引航员均是事故次要责任人。",
+      "pdfPage": 50
+    }
+  },
+  "timeline": [
+    {
+      "id": "e-20250806-seachest-clean",
+      "time": {
+        "beijing": "2025-08-06T00:00:00+08:00",
+        "utc": "2025-08-05T16:00:00Z",
+        "approximate": true
+      },
+      "vesselId": "haili5",
+      "description": "海力5最近一次清洗海底门滤器（2025-08-06，具体钟点未给出）",
+      "category": "设备",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 29,
+        "quote": "根据船员陈述和该轮的维护保养记录，该轮海底门滤器最近一次清洗是2025 年8 月6 日。",
+        "pdfPage": 34
+      }
+    },
+    {
+      "id": "e-20250922-prior-blackout",
+      "time": {
+        "beijing": "2025-09-22T17:00:00+08:00",
+        "utc": "2025-09-22T09:00:00Z",
+        "approximate": true
+      },
+      "vesselId": "haili5",
+      "description": "海力5从珠江口驶往海南避台途中，发电柴油机淡水温度过高（约90℃）导致发电机组停车、全船失电；当时开启右侧低位海底门并用消防泵冲洗甲板，事后未组织清洗海底门滤器",
+      "category": "设备",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 29,
+        "quote": "2025 年9 月22 日约1700 时，该轮在从珠江口驶往海南避台风过程中，曾发生过发电柴油机淡水温度过高（约90℃），轮机员还未来得及处理就发生了发电机组停车导致全船失电。",
+        "pdfPage": 34
+      }
+    },
+    {
+      "id": "e-emerg-sw-manual",
+      "time": null,
+      "vesselId": "haili5",
+      "description": "在广州龙沙码头接岸电前，船员将应急发电机启动开关转至手动；离港前轮机长解除岸电后未转回自动，二管轮开航前未检查开关状态",
+      "category": "设备",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 30,
+        "quote": "该轮在广州龙沙码头接岸电前，船员将应急发电机启动开关转至手动位置，避免应急发电机自动启动。离港前轮机长值班期间解除岸电，解除岸电后未将应急发电机启动开关转至自动",
+        "pdfPage": 35
+      }
+    },
+    {
+      "id": "e-h5-depart",
+      "time": {
+        "beijing": "2025-10-25T13:25:00+08:00",
+        "utc": "2025-10-25T05:25:00Z",
+        "approximate": true
+      },
+      "vesselId": "haili5",
+      "description": "海力5装载11728吨型钢从广州番禺龙沙码头开出，计划驶往上海；机舱1号、2号发电机组并联供电",
+      "category": "操作",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 30,
+        "quote": "2025 年10 月25 日约1325 时，该轮装载11728 吨型钢从广州番禺龙沙码头开出，计划驶往上海。",
+        "pdfPage": 35
+      }
+    },
+    {
+      "id": "e-h5-1600",
+      "time": {
+        "beijing": "2025-10-25T16:00:00+08:00",
+        "utc": "2025-10-25T08:00:00Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "description": "海力5沿主航道航行至广州港55#浮附近",
+      "category": "位置",
+      "location": {
+        "latDeg": 22.809517,
+        "lonDeg": 113.605867,
+        "latDm": "22°48.571′N",
+        "lonDm": "113°36.352′E",
+        "original": "22°48.571′N/113°36.352′E"
+      },
+      "courseDeg": 141,
+      "speedKn": 9.1,
+      "source": {
+        "page": 30,
+        "quote": "1600 时，该轮航速9.1 节，航向141°，沿主航道航行至广州港55#浮附近水域，船位22°48´.571N/113°36´.352E。",
+        "pdfPage": 35
+      }
+    },
+    {
+      "id": "e-h5-1700-pos",
+      "time": {
+        "beijing": "2025-10-25T17:00:00+08:00",
+        "utc": "2025-10-25T09:00:00Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "description": "海力5航行至广州港48#浮附近",
+      "category": "位置",
+      "location": {
+        "latDeg": 22.676483,
+        "lonDeg": 113.685067,
+        "latDm": "22°40.589′N",
+        "lonDm": "113°41.104′E",
+        "original": "22°40.589′N/113°41.104′E"
+      },
+      "courseDeg": 165,
+      "speedKn": 9.8,
+      "source": {
+        "page": 31,
+        "quote": "1700 时，该轮航速9.8 节，航向165°，沿主航道航行至广州港48#浮附近水域，船位22°40´.589N/113°41´.104E。",
+        "pdfPage": 36
+      }
+    },
+    {
+      "id": "e-h5-1700-oiltemp",
+      "time": {
+        "beijing": "2025-10-25T17:00:00+08:00",
+        "utc": "2025-10-25T09:00:00Z",
+        "approximate": true
+      },
+      "vesselId": "haili5",
+      "description": "值班大管轮发现主机滑油温度偏高（77~78℃，未达报警值82℃），晚餐时报告轮机长；主机转速约420–430转。此后大管轮调节滑油调温阀，至事故前温度偏高未有效解决",
+      "category": "设备",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 27,
+        "quote": "10 月25 日约1700 时，该轮正出港航行，主机转速保持稳定（主机转速在420 至430 转之间），主机滑油温度出现偏高（船员陈述温度为77~78℃，未达到报警值82℃）",
+        "pdfPage": 32
+      }
+    },
+    {
+      "id": "e-h5-1800",
+      "time": {
+        "beijing": "2025-10-25T18:00:00+08:00",
+        "utc": "2025-10-25T10:00:00Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "description": "海力5航行至广州港28#浮附近",
+      "category": "位置",
+      "location": {
+        "latDeg": 22.517167,
+        "lonDeg": 113.73905,
+        "latDm": "22°31.03′N",
+        "lonDm": "113°44.343′E",
+        "original": "22°31.030′N/113°44.343′E"
+      },
+      "courseDeg": 162,
+      "speedKn": 8.8,
+      "source": {
+        "page": 31,
+        "quote": "1800 时，该轮航速8.8节，航向162°，沿主航道航行至广州港28#浮附近水域，船位22°31´.03N/113°44´.343E。",
+        "pdfPage": 36
+      }
+    },
+    {
+      "id": "e-h5-193240-vts",
+      "time": {
+        "beijing": "2025-10-25T19:32:40+08:00",
+        "utc": "2025-10-25T11:32:40Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "description": "海力5航行至广州港4号灯浮附近；广州交管中心呼叫提醒注意铜鼓航道出口船舶，海力5回复“收到，不影响，他在我前面走”。此时大管轮与轮机长已完成交接班并讨论主机滑油温度偏高",
+      "category": "通信",
+      "location": null,
+      "courseDeg": 166,
+      "speedKn": 7.4,
+      "source": {
+        "page": 31,
+        "quote": "1932 时40 秒，“海力5”轮航行至广州港4 号灯浮附近水域，航向166°，航速7.4 节，广州交管中心呼叫该轮，提醒注意铜鼓航道出口船舶，该轮回复“收到，不影响，他在我前面走”。",
+        "pdfPage": 36
+      }
+    },
+    {
+      "id": "e-h5-1942",
+      "time": {
+        "beijing": "2025-10-25T19:42:00+08:00",
+        "utc": "2025-10-25T11:42:00Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "description": "WAN HAI A17引航员呼叫海力5，要求尽可能靠右、会红灯；海力5回复“尽量靠右行驶”并继续向右调整航向。两船相距约3.5海里",
+      "category": "通信",
+      "location": {
+        "latDeg": 22.300833,
+        "lonDeg": 113.801167,
+        "latDm": "22°18.05′N",
+        "lonDm": "113°48.07′E",
+        "original": "22°18.050′N/113°48.070′E"
+      },
+      "courseDeg": 169,
+      "speedKn": 7.2,
+      "source": {
+        "page": 31,
+        "quote": "1942 时，该轮船位22°18′.05N/113°48′.07E，航向169°，航速7.2 节，与“WAN HAI A17”轮相距约3.5 海里，“WAN HAI A17”轮引航员呼叫该轮，要求尽可能靠右，会红灯，该轮回复“尽量靠右行驶”",
+        "pdfPage": 36
+      }
+    },
+    {
+      "id": "e-h5-1945-helm",
+      "time": {
+        "beijing": "2025-10-25T19:45:00+08:00",
+        "utc": "2025-10-25T11:45:00Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "description": "值班水手翁某因肚子不舒服离开驾驶台，三副周某接替操舵；海力5沿主航道右舷一侧航行。随后大管轮第二次调节主机滑油调温阀后回到集控室",
+      "category": "操作",
+      "location": null,
+      "courseDeg": 172,
+      "speedKn": 6.7,
+      "source": {
+        "page": 31,
+        "quote": "1945 时，该轮航向172°，航速6.7 节，值班水手翁某肚子不舒服去了卫生间，三副周某接替水手操舵。该轮沿主航道右舷一侧航行。",
+        "pdfPage": 36
+      }
+    },
+    {
+      "id": "e-h5-blackout",
+      "time": {
+        "beijing": "2025-10-25T19:51:15+08:00",
+        "utc": "2025-10-25T11:51:15Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "description": "1号和2号发电机组突然停止工作，全船失电，主机停车，舵机失灵，随动及非随动操舵均无反应。失电时两船相距约0.8海里。认定依据为港珠澳大桥“西岛岛头北侧”CCTV灯光熄灭",
+      "category": "设备",
+      "location": {
+        "latDeg": 22.283667,
+        "lonDeg": 113.804167,
+        "latDm": "22°17.02′N",
+        "lonDm": "113°48.25′E",
+        "original": "22°17.020′N/113°48.250′E"
+      },
+      "courseDeg": 169,
+      "speedKn": 6.5,
+      "source": {
+        "page": 32,
+        "quote": "1951 时15 秒，该轮船位22°17′.02N/113°48′.25E，航向169°，航速6.5 节，与“WAN HAI A17”轮相距约0.8 海里；此时该轮1 号和2 号发电机组突然停止工作，全船失电，主机停车，舵机失灵",
+        "pdfPage": 37
+      },
+      "alsoSource": {
+        "page": 23,
+        "quote": "2025 年10 月25 日1951 时15 秒（经校对的北京时间），“海力5”轮驾驶台生活区灯光消失，航行灯熄灭。由此判断此时“海力5”轮发生全船失电。",
+        "pdfPage": 28
+      }
+    },
+    {
+      "id": "e-h5-blackout-response",
+      "time": {
+        "beijing": "2025-10-25T19:51:15+08:00",
+        "utc": "2025-10-25T11:51:15Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "description": "船长立即指令大副和水手长到船首准备应急抛锚，同时给机舱打电话但无人接听；机舱人员在轮机长组织下离开集控室前往启动发电机组；船首开始逐步向左偏转。驾驶台未安排人员前往舵机间手动应急操舵",
+      "category": "操作",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 32,
+        "quote": "船长立即指令大副和水手长到船首准备应急抛锚，同时给机舱打电话，但机舱无人接听。",
+        "pdfPage": 37
+      }
+    },
+    {
+      "id": "e-h5-195252-vhf",
+      "time": {
+        "beijing": "2025-10-25T19:52:52+08:00",
+        "utc": "2025-10-25T11:52:52Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "description": "海力5听到WAN HAI A17呼叫后，通过VHF回应“‘海力5’刚才断电了，让我让我”，随后不断要求对方赶紧避让；船首持续向左偏转。两船相距0.4海里",
+      "category": "通信",
+      "location": {
+        "latDeg": 22.281,
+        "lonDeg": 113.804833,
+        "latDm": "22°16.86′N",
+        "lonDm": "113°48.29′E",
+        "original": "22°16.860′N/113°48.290′E"
+      },
+      "courseDeg": 163,
+      "speedKn": 5.6,
+      "source": {
+        "page": 32,
+        "quote": "1952 时52 秒，该轮船位22°16′.86N/113°48′.29E，该轮航向163°，航速5.6 节，与“WAN HAI A17”轮相距0.4 海里，听到“WAN HAI A17”轮呼叫后，通过VHF回应“‘海力5’刚才断电了，让我让我”",
+        "pdfPage": 37
+      }
+    },
+    {
+      "id": "e-h5-195326-vhf",
+      "time": {
+        "beijing": "2025-10-25T19:53:26+08:00",
+        "utc": "2025-10-25T11:53:26Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "description": "海力5在甚高频反复大声呼喊“‘海力5’断电，赶快让我让我”，WAN HAI A17回复无法避让；广州交管中心提醒WAN HAI A17对方全船失电、赶紧避让。两船相距约0.3海里",
+      "category": "通信",
+      "location": null,
+      "courseDeg": 156,
+      "speedKn": 5.1,
+      "source": {
+        "page": 32,
+        "quote": "1953 时26 秒，该轮航向156°，航速5.1 节，与“WAN HAI A17”轮相距约0.3 海里。该轮在甚高频反复大声呼喊“‘海力5ʼ断电，赶快让我让我”，“WAN HAI A17”轮回复无法避让。",
+        "pdfPage": 37
+      }
+    },
+    {
+      "id": "e-h5-1954-yaw",
+      "time": {
+        "beijing": "2025-10-25T19:54:00+08:00",
+        "utc": "2025-10-25T11:54:00Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "description": "海力5航向145°、航速4.8节，与WAN HAI A17相距约0.2海里，船首持续向左偏转",
+      "category": "位置",
+      "location": null,
+      "courseDeg": 145,
+      "speedKn": 4.8,
+      "source": {
+        "page": 32,
+        "quote": "1954 时，该轮航向145°，航速4.8 节，与“WAN HAI A17”轮相距约0.2 海里，船首持续向左偏转。",
+        "pdfPage": 37
+      }
+    },
+    {
+      "id": "e-collision",
+      "time": {
+        "beijing": "2025-10-25T19:54:32+08:00",
+        "utc": "2025-10-25T11:54:32Z",
+        "approximate": false
+      },
+      "vesselId": null,
+      "description": "两船碰撞：WAN HAI A17球鼻艏与海力5右舷NO.1货舱与NO.2货舱之间部位接触。碰撞后两轮连在一起往偏北方向移动。碰撞地点22°16′.71N/113°48′.41E",
+      "category": "后果",
+      "location": {
+        "latDeg": 22.2785,
+        "lonDeg": 113.806833,
+        "latDm": "22°16.71′N",
+        "lonDm": "113°48.41′E",
+        "original": "22°16.710′N/113°48.410′E"
+      },
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 32,
+        "quote": "1954 时32 秒，该轮船位22°16′.74N/113°48′.37E，航向133°，航速4.3 节。该轮右舷NO.1 货舱与NO.2 货舱之间部位与“WAN HAI A17”轮球鼻艏发生碰撞。",
+        "pdfPage": 37
+      },
+      "isPrimaryIncident": true,
+      "haili5": {
+        "location": {
+          "latDeg": 22.279,
+          "lonDeg": 113.806167,
+          "latDm": "22°16.74′N",
+          "lonDm": "113°48.37′E",
+          "original": "22°16.740′N/113°48.370′E"
+        },
+        "cog": 133,
+        "sog": 4.3
+      },
+      "wanhai_a17": {
+        "location": {
+          "latDeg": 22.277667,
+          "lonDeg": 113.807,
+          "latDm": "22°16.66′N",
+          "lonDm": "113°48.42′E",
+          "original": "22°16.660′N/113°48.420′E"
+        },
+        "cog": 348,
+        "sog": 9.7
+      }
+    },
+    {
+      "id": "e-h5-power-restore",
+      "time": {
+        "beijing": "2025-10-25T19:54:38+08:00",
+        "utc": "2025-10-25T11:54:38Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "description": "海力5成功启动1号发电机组并合上主开关，全船恢复供电（CCTV见驾驶台生活区照明灯和航行灯于此时重新亮起）。恢复供电时操舵手柄在右舵，舵叶随后从左舵向右摆动",
+      "category": "设备",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 25,
+        "quote": "认定“海力5”轮电力恢复时间为2025 年10 月25 日1954 时38 秒。",
+        "pdfPage": 30
+      },
+      "alsoSource": {
+        "page": 32,
+        "quote": "该轮成功启动1 号发电机组，二管轮发现1 号发电机组已经启动且电压和频率稳定，随即合上1 号发电机组主开关，全船恢复供电。",
+        "pdfPage": 37
+      }
+    },
+    {
+      "id": "e-h5-1955-distress",
+      "time": {
+        "beijing": "2025-10-25T19:55:00+08:00",
+        "utc": "2025-10-25T11:55:00Z",
+        "approximate": true
+      },
+      "vesselId": "haili5",
+      "description": "碰撞后海力5恢复供电，船身向左倾斜进水，被WAN HAI A17持续顶推向北。约1955时三副通过高频向广州交管中心报告两船相撞并请求救助；船长下令全体弃船",
+      "category": "通信",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 36,
+        "quote": "约1955 时，该轮三副通过高频向广州交管中心报告两船相撞，请求救助",
+        "pdfPage": 41
+      }
+    },
+    {
+      "id": "e-h5-sink",
+      "time": {
+        "beijing": "2025-10-25T20:01:00+08:00",
+        "utc": "2025-10-25T12:01:00Z",
+        "approximate": true
+      },
+      "vesselId": "haili5",
+      "description": "海力5持续进水，海水逐渐漫过生活区甲板，无法释放救生艇，部分船员直接落水或跳水；约2001时该轮沉没，15名船员落水",
+      "category": "后果",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 37,
+        "quote": "约2001 时，该轮沉没，15 名船员落水。",
+        "pdfPage": 42
+      }
+    },
+    {
+      "id": "e-a17-pilot",
+      "time": {
+        "beijing": "2025-10-25T19:00:00+08:00",
+        "utc": "2025-10-25T11:00:00Z",
+        "approximate": true
+      },
+      "vesselId": "wanhai_a17",
+      "description": "WAN HAI A17在桂山上引航员，计划于2200时靠泊南沙三期码头",
+      "category": "操作",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 33,
+        "quote": "2025 年10 月25 日约1900 时，新加坡籍集装箱船“WAN HAI A17”轮在桂山上引航员，计划于2200 时靠泊南沙三期码头。",
+        "pdfPage": 38
+      }
+    },
+    {
+      "id": "e-a17-1902",
+      "time": {
+        "beijing": "2025-10-25T19:02:00+08:00",
+        "utc": "2025-10-25T11:02:00Z",
+        "approximate": true
+      },
+      "vesselId": "wanhai_a17",
+      "description": "行驶至第三分隔带端口，航向358°、航速10.3节，HALF AHEAD，向交管中心报告引航员登轮，随后车钟加至FULL AHEAD",
+      "category": "操作",
+      "location": null,
+      "courseDeg": 358,
+      "speedKn": 10.3,
+      "source": {
+        "page": 33,
+        "quote": "1902 时左右，该轮行驶至第三分隔带端口，航向358°，航速10.3 节，HALF AHEAD，该轮向交管中心报告引航员登轮。随后车钟加至FULL AHEAD。",
+        "pdfPage": 38
+      }
+    },
+    {
+      "id": "e-a17-1920-abandon-overtake",
+      "time": {
+        "beijing": "2025-10-25T19:20:06+08:00",
+        "utc": "2025-10-25T11:20:06Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "description": "该轮多次联系前方计划进铜鼓航道的“正海3”轮请求把绿浮放左舷通过或加点车被拒后，于1920时06秒放弃追越，减车至SLOW AHEAD；1921时19秒再减至DEAD SLOW AHEAD",
+      "category": "操作",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 33,
+        "quote": "1920 时06 秒，该轮放弃追越，减车至SLOW AHEAD。",
+        "pdfPage": 38
+      }
+    },
+    {
+      "id": "e-a17-193402",
+      "time": {
+        "beijing": "2025-10-25T19:34:02+08:00",
+        "utc": "2025-10-25T11:34:02Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "description": "WAN HAI A17加车至SLOW AHEAD",
+      "category": "操作",
+      "location": null,
+      "courseDeg": 346,
+      "speedKn": 10.4,
+      "source": {
+        "page": 33,
+        "quote": "1934 时02 秒，该轮加车至SLOW AHEAD，航向346°，航速10.4 节。",
+        "pdfPage": 38
+      }
+    },
+    {
+      "id": "e-a17-1938",
+      "time": {
+        "beijing": "2025-10-25T19:38:00+08:00",
+        "utc": "2025-10-25T11:38:00Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "description": "航行至广州港定线制1号灯浮，减车至DEAD SLOW AHEAD",
+      "category": "位置",
+      "location": null,
+      "courseDeg": 343,
+      "speedKn": 11.2,
+      "source": {
+        "page": 33,
+        "quote": "1938 时，该轮航行至广州港定线制1 号灯浮，航向343°，航速11.2 节，该轮减车至DEAD SLOW AHEAD。",
+        "pdfPage": 38
+      }
+    },
+    {
+      "id": "e-a17-1942-call",
+      "time": {
+        "beijing": "2025-10-25T19:42:00+08:00",
+        "utc": "2025-10-25T11:42:00Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "description": "航行至广州港A1南侧水域；引航员联系出口船海力5，请求角度大点往右边去，并提醒本轮为大型船舶无法靠右太多，要求会红灯",
+      "category": "通信",
+      "location": null,
+      "courseDeg": 345,
+      "speedKn": 10.2,
+      "source": {
+        "page": 33,
+        "quote": "1942 时，该轮航行至广州港A1 南侧水域，航向345°，航速10.2 节，引航员联系出口船“海力5”轮，请求角度大点往右边去",
+        "pdfPage": 38
+      }
+    },
+    {
+      "id": "e-a17-195020-handover",
+      "time": {
+        "beijing": "2025-10-25T19:50:20+08:00",
+        "utc": "2025-10-25T11:50:20Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "description": "二副上驾驶台与三副进行交接班；两名驾驶员沟通值班事宜，两名值班水手注意力在操舵上，均未关注前方船舶情况",
+      "category": "操作",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 34,
+        "quote": "1950 时20 秒，该轮二副上驾驶台与三副进行交接班。",
+        "pdfPage": 39
+      }
+    },
+    {
+      "id": "e-a17-195115",
+      "time": {
+        "beijing": "2025-10-25T19:51:15+08:00",
+        "utc": "2025-10-25T11:51:15Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "description": "WAN HAI A17航行至广州港A3西北侧水域，距海力5约0.8海里；此时海力5全船失电，航行号灯和照明灯全部熄灭",
+      "category": "位置",
+      "location": null,
+      "courseDeg": 348,
+      "speedKn": 9.9,
+      "source": {
+        "page": 34,
+        "quote": "1951 时15 秒，该轮航行至广州港A3 西北侧水域，航向348°，航速9.9 节，距“海力5”轮约0.8 海里，此时“海力5”轮全船失电，船舶航行号灯和照明灯全部熄灭。",
+        "pdfPage": 39
+      },
+      "figureConflict": "图24同为1951时15秒，标注航向346°、航速9.5Kn、两船相距约1500米（0.8海里约1482米，距离相符，航向航速与正文不一致）"
+    },
+    {
+      "id": "e-a17-195118-whistle",
+      "time": {
+        "beijing": "2025-10-25T19:51:18+08:00",
+        "utc": "2025-10-25T11:51:18Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "description": "船长前往海图室；引航员为提醒前方正海3尽快转向进入铜鼓航道，下令鸣汽笛一长声",
+      "category": "操作",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 34,
+        "quote": "1951 时18 秒，该轮船长前往海图室。为提醒航道前方“正海3”轮尽快转向进入铜鼓航道并让出主航道，该轮引航员下令鸣汽笛一长声。",
+        "pdfPage": 39
+      }
+    },
+    {
+      "id": "e-a17-195208-binoculars",
+      "time": {
+        "beijing": "2025-10-25T19:52:08+08:00",
+        "utc": "2025-10-25T11:52:08Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "description": "船长于1951时55秒返回驾驶室操纵台附近，1952时08秒拿起望远镜对前方观察，但未发现海力5全船失电失控；期间引航员使用手机、多次抬头观察，亦未发现异常",
+      "category": "操作",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 34,
+        "quote": "1951 时55 秒，该轮船长返回驾驶室操纵台附近，并于1952 时08 秒拿起望远镜对前方进行观察，但未发现“海力5”轮全船失电失控的异常情况。",
+        "pdfPage": 39
+      }
+    },
+    {
+      "id": "e-a17-195236-whistle2",
+      "time": {
+        "beijing": "2025-10-25T19:52:36+08:00",
+        "utc": "2025-10-25T11:52:36Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "description": "引航员为提醒前方正海3，再次下令鸣汽笛一长声",
+      "category": "操作",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 34,
+        "quote": "1952 时36 秒，该轮引航员为提醒前方“正海3”轮，再次下令鸣汽笛一长声。",
+        "pdfPage": 39
+      }
+    },
+    {
+      "id": "e-a17-195250-detect",
+      "time": {
+        "beijing": "2025-10-25T19:52:50+08:00",
+        "utc": "2025-10-25T11:52:50Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "description": "引航员发现海力5异常，问船长“这艘船没点灯，怎么回事？”，随即呼叫“‘海力5’号，怎么回事，你失控了，撞我船头？”。此时两船相距约0.4海里（图24作约740米）",
+      "category": "通信",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 34,
+        "quote": "1952 时50 秒，该轮引航员发现“海力5”异常，问船长“这艘船没点灯，怎么回事？”，随即呼叫：“‘海力5ʼ号，怎么回事，你失控了，撞我船头？”此时，两船相距约0.4 海里。",
+        "pdfPage": 39
+      },
+      "cctvUtc": "图23驾驶台侧翼CCTV叠字2025-10-25 11:52:48（UTC），与发现时刻相近"
+    },
+    {
+      "id": "e-a17-1953-vhf",
+      "time": {
+        "beijing": "2025-10-25T19:53:00+08:00",
+        "utc": "2025-10-25T11:53:00Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "description": "引航员不断通过VHF09频道呼叫海力5问其动态；海力5回复“让我、让我”；该轮随后回复“无法避让”。交管中心提醒对方全船失电、赶紧避让",
+      "category": "通信",
+      "location": null,
+      "courseDeg": 347,
+      "speedKn": 9.8,
+      "source": {
+        "page": 35,
+        "quote": "1953 时，该轮航向347°，航速9.8 节，引航员不断通过VHF09 频道呼叫“海力5”轮问其动态",
+        "pdfPage": 40
+      }
+    },
+    {
+      "id": "e-a17-helm-conflict",
+      "time": {
+        "beijing": "2025-10-25T19:53:30+08:00",
+        "utc": "2025-10-25T11:53:30Z",
+        "approximate": true
+      },
+      "vesselId": "wanhai_a17",
+      "description": "1953～1954时，船长先下令往右转，引航员说“我敢往右转吗？”；船长下令往左转，引航员说“不不不”；船长下令左满舵，舵未到左满舵时引航员下令右舵，船长说“右舵就右满舵”；舵刚到右满舵，引航员下令停车，随后船长再下令左满舵并执行，引航员又下令正舵。期间引航员在VHF09多次呼叫交管称海力5失控横越船头",
+      "category": "操作",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 35,
+        "quote": "1953～1954 时，船长先下令往右转，引航员说“我敢往右转吗？”随后船长下令往左转，引航员说“不不不”，船长下令左满舵",
+        "pdfPage": 40
+      }
+    },
+    {
+      "id": "e-a17-1954-stop",
+      "time": {
+        "beijing": "2025-10-25T19:54:00+08:00",
+        "utc": "2025-10-25T11:54:00Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "description": "WAN HAI A17停车。调查认定：碰撞时该轮航速、航向未发生明显变化",
+      "category": "操作",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 35,
+        "quote": "1954 时，该轮停车。",
+        "pdfPage": 40
+      }
+    },
+    {
+      "id": "e-a17-195436-report",
+      "time": {
+        "beijing": "2025-10-25T19:54:36+08:00",
+        "utc": "2025-10-25T11:54:36Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "description": "该轮正舵，引航员向交管中心报告发生碰撞、需要赶紧救人，之后开始施救",
+      "category": "通信",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 36,
+        "quote": "1954 时36 秒，该轮正舵，引航员向交管中心报告发生碰撞，需要赶紧救人，之后该轮开始施救。",
+        "pdfPage": 41
+      }
+    },
+    {
+      "id": "e-a17-astern",
+      "time": {
+        "beijing": "2025-10-25T19:55:00+08:00",
+        "utc": "2025-10-25T11:55:00Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "description": "1955时航速8节，船长下令倒车减速，后切换至“后退二”，持续约2分钟，船速降至约3节；1957时停车，发现海力5在左舷下方即将沉没，下令倒车并开启前侧推；约1958时在离沉船约50米处停住；确认艏尖舱进水（水位约12.28米），其他舱室正常",
+      "category": "操作",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": 8,
+      "source": {
+        "page": 37,
+        "quote": "25 日1955 时，该轮航速8 节，船长下令倒车减速，后切换至“后退二”，持续约2 分钟，船速降至约3 节。",
+        "pdfPage": 42
+      }
+    },
+    {
+      "id": "e-a17-1959-muster",
+      "time": {
+        "beijing": "2025-10-25T19:59:00+08:00",
+        "utc": "2025-10-25T11:59:00Z",
+        "approximate": true
+      },
+      "vesselId": "wanhai_a17",
+      "description": "该轮拉响全船紧急集合警报并广播；通知二副准备释放左舷救助艇，三副向左舷外投放1个SART，大副在船头抛投3个救生圈",
+      "category": "操作",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 37,
+        "quote": "约1959 时，该轮拉响全船紧急集合警报并广播",
+        "pdfPage": 42
+      }
+    },
+    {
+      "id": "e-rescue-boats",
+      "time": {
+        "beijing": "2025-10-25T21:25:00+08:00",
+        "utc": "2025-10-25T13:25:00Z",
+        "approximate": true
+      },
+      "vesselId": null,
+      "description": "搜救力量陆续救起13人：约2125时“广州港引航6号”救起2人，约2131时“立诚528”救起4人，约2136时“珠海水警129”救起5人，约2146时“广州港引航5号”救起2人。2名失踪人员遗体于2025年12月12日03:24和13:50在打捞现场发现",
+      "category": "后果",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 38,
+        "quote": "约2125 时，“广州港引航6 号”轮救起2 人。",
+        "pdfPage": 43
+      }
+    },
+    {
+      "id": "e-finding-blackout-cause",
+      "time": null,
+      "vesselId": "haili5",
+      "description": "调查认定：正在使用的右侧低位海底门滤器堵塞，冷却海水供应不足，最终冷却淡水温度过高致使两台发电柴油机停车。打捞发现的变形滤器因破坏严重，无法判断是否为当时使用的右舷低位海底门部件（部分推定）",
+      "category": "认定",
+      "location": null,
+      "courseDeg": null,
+      "speedKn": null,
+      "source": {
+        "page": 30,
+        "quote": "最终冷却淡水温度过高致使两台发电柴油机停车。",
+        "pdfPage": 35
+      }
+    }
+  ],
+  "trackPoints": [
+    {
+      "id": "t-h5-1600",
+      "time": {
+        "beijing": "2025-10-25T16:00:00+08:00",
+        "utc": "2025-10-25T08:00:00Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "location": {
+        "latDeg": 22.809517,
+        "lonDeg": 113.605867,
+        "latDm": "22°48.571′N",
+        "lonDm": "113°36.352′E",
+        "original": "22°48.571′N/113°36.352′E"
+      },
+      "courseDeg": 141,
+      "speedKn": 9.1,
+      "provenance": "ReportNarrative",
+      "source": {
+        "page": 30,
+        "quote": "1600 时，该轮航速9.1 节，航向141°，沿主航道航行至广州港55#浮附近水域，船位22°48´.571N/113°36´.352E。",
+        "pdfPage": 35
+      }
+    },
+    {
+      "id": "t-h5-1700",
+      "time": {
+        "beijing": "2025-10-25T17:00:00+08:00",
+        "utc": "2025-10-25T09:00:00Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "location": {
+        "latDeg": 22.676483,
+        "lonDeg": 113.685067,
+        "latDm": "22°40.589′N",
+        "lonDm": "113°41.104′E",
+        "original": "22°40.589′N/113°41.104′E"
+      },
+      "courseDeg": 165,
+      "speedKn": 9.8,
+      "provenance": "ReportNarrative",
+      "source": {
+        "page": 31,
+        "quote": "1700 时，该轮航速9.8 节，航向165°，沿主航道航行至广州港48#浮附近水域，船位22°40´.589N/113°41´.104E。",
+        "pdfPage": 36
+      }
+    },
+    {
+      "id": "t-h5-1800",
+      "time": {
+        "beijing": "2025-10-25T18:00:00+08:00",
+        "utc": "2025-10-25T10:00:00Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "location": {
+        "latDeg": 22.517167,
+        "lonDeg": 113.73905,
+        "latDm": "22°31.03′N",
+        "lonDm": "113°44.343′E",
+        "original": "22°31.030′N/113°44.343′E"
+      },
+      "courseDeg": 162,
+      "speedKn": 8.8,
+      "provenance": "ReportNarrative",
+      "source": {
+        "page": 31,
+        "quote": "1800 时，该轮航速8.8节，航向162°，沿主航道航行至广州港28#浮附近水域，船位22°31´.03N/113°44´.343E。",
+        "pdfPage": 36
+      }
+    },
+    {
+      "id": "t-h5-193240",
+      "time": {
+        "beijing": "2025-10-25T19:32:40+08:00",
+        "utc": "2025-10-25T11:32:40Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "location": null,
+      "courseDeg": 166,
+      "speedKn": 7.4,
+      "provenance": "ReportNarrative",
+      "source": {
+        "page": 31,
+        "quote": "1932 时40 秒，“海力5”轮航行至广州港4 号灯浮附近水域，航向166°，航速7.4 节",
+        "pdfPage": 36
+      },
+      "note": "仅有概位描述（4号灯浮附近），无经纬度"
+    },
+    {
+      "id": "t-h5-1942",
+      "time": {
+        "beijing": "2025-10-25T19:42:00+08:00",
+        "utc": "2025-10-25T11:42:00Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "location": {
+        "latDeg": 22.300833,
+        "lonDeg": 113.801167,
+        "latDm": "22°18.05′N",
+        "lonDm": "113°48.07′E",
+        "original": "22°18.050′N/113°48.070′E"
+      },
+      "courseDeg": 169,
+      "speedKn": 7.2,
+      "provenance": "ReportNarrative",
+      "source": {
+        "page": 31,
+        "quote": "1942 时，该轮船位22°18′.05N/113°48′.07E，航向169°，航速7.2 节，与“WAN HAI A17”轮相距约3.5 海里",
+        "pdfPage": 36
+      }
+    },
+    {
+      "id": "t-h5-1945",
+      "time": {
+        "beijing": "2025-10-25T19:45:00+08:00",
+        "utc": "2025-10-25T11:45:00Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "location": null,
+      "courseDeg": 172,
+      "speedKn": 6.7,
+      "provenance": "ReportNarrative",
+      "source": {
+        "page": 31,
+        "quote": "1945 时，该轮航向172°，航速6.7 节",
+        "pdfPage": 36
+      }
+    },
+    {
+      "id": "t-h5-1948",
+      "time": {
+        "beijing": "2025-10-25T19:48:00+08:00",
+        "utc": "2025-10-25T11:48:00Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "location": null,
+      "courseDeg": 174,
+      "speedKn": 6.6,
+      "provenance": "ReportFigure",
+      "source": {
+        "page": 36,
+        "quote": "1948时，航向174°，航速6.6Kn",
+        "pdfPage": 41,
+        "figure": "图24"
+      },
+      "note": "仅见图24事故经过图标注，正文未列该时刻"
+    },
+    {
+      "id": "t-h5-1949",
+      "time": {
+        "beijing": "2025-10-25T19:49:00+08:00",
+        "utc": "2025-10-25T11:49:00Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "location": null,
+      "courseDeg": 172,
+      "speedKn": 6.5,
+      "provenance": "ReportFigure",
+      "source": {
+        "page": 36,
+        "quote": "1949时，航向172°，航速6.5Kn",
+        "pdfPage": 41,
+        "figure": "图24"
+      },
+      "note": "仅见图24"
+    },
+    {
+      "id": "t-h5-195115",
+      "time": {
+        "beijing": "2025-10-25T19:51:15+08:00",
+        "utc": "2025-10-25T11:51:15Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "location": {
+        "latDeg": 22.283667,
+        "lonDeg": 113.804167,
+        "latDm": "22°17.02′N",
+        "lonDm": "113°48.25′E",
+        "original": "22°17.020′N/113°48.250′E"
+      },
+      "courseDeg": 169,
+      "speedKn": 6.5,
+      "provenance": "ReportNarrative",
+      "source": {
+        "page": 31,
+        "quote": "1951 时15 秒，该轮船位22°17′.02N/113°48′.25E，航向169°，航速6.5 节，与“WAN HAI A17”轮相距约0.8 海里",
+        "pdfPage": 36
+      }
+    },
+    {
+      "id": "t-h5-1952",
+      "time": {
+        "beijing": "2025-10-25T19:52:00+08:00",
+        "utc": "2025-10-25T11:52:00Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "location": null,
+      "courseDeg": 168,
+      "speedKn": 6.1,
+      "provenance": "ReportFigure",
+      "source": {
+        "page": 36,
+        "quote": "1952时，航向168°，航速6.1Kn",
+        "pdfPage": 41,
+        "figure": "图24"
+      },
+      "note": "仅见图24"
+    },
+    {
+      "id": "t-h5-195252",
+      "time": {
+        "beijing": "2025-10-25T19:52:52+08:00",
+        "utc": "2025-10-25T11:52:52Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "location": {
+        "latDeg": 22.281,
+        "lonDeg": 113.804833,
+        "latDm": "22°16.86′N",
+        "lonDm": "113°48.29′E",
+        "original": "22°16.860′N/113°48.290′E"
+      },
+      "courseDeg": 163,
+      "speedKn": 5.6,
+      "provenance": "ReportNarrative",
+      "source": {
+        "page": 32,
+        "quote": "1952 时52 秒，该轮船位22°16′.86N/113°48′.29E，该轮航向163°，航速5.6 节",
+        "pdfPage": 37
+      }
+    },
+    {
+      "id": "t-h5-195308-vts",
+      "time": {
+        "beijing": "2025-10-25T19:53:08+08:00",
+        "utc": "2025-10-25T11:53:08Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "location": {
+        "latDeg": 22.2807333,
+        "lonDeg": 113.8049333,
+        "latDm": "22°16.844′N",
+        "lonDm": "113°48.296′E",
+        "original": "22°16′50.640″N 113°48′17.760″E"
+      },
+      "courseDeg": 161.0,
+      "speedKn": 5.6,
+      "provenance": "ReportFigure",
+      "source": {
+        "page": 23,
+        "quote": "航速: 5.6节 航向: 161.0度 经纬度: 22° 16′ 50.640″ N 113° 48′ 17.760″ E",
+        "pdfPage": 28,
+        "figure": "图18"
+      },
+      "note": "图18 VTS截图时钟19:53:08的AIS瞬时值，与前后正文点连续"
+    },
+    {
+      "id": "t-h5-195326",
+      "time": {
+        "beijing": "2025-10-25T19:53:26+08:00",
+        "utc": "2025-10-25T11:53:26Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "location": null,
+      "courseDeg": 156,
+      "speedKn": 5.1,
+      "provenance": "ReportNarrative",
+      "source": {
+        "page": 32,
+        "quote": "1953 时26 秒，该轮航向156°，航速5.1 节，与“WAN HAI A17”轮相距约0.3 海里",
+        "pdfPage": 37
+      }
+    },
+    {
+      "id": "t-h5-195400",
+      "time": {
+        "beijing": "2025-10-25T19:54:00+08:00",
+        "utc": "2025-10-25T11:54:00Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "location": null,
+      "courseDeg": 145,
+      "speedKn": 4.8,
+      "provenance": "ReportNarrative",
+      "source": {
+        "page": 32,
+        "quote": "1954 时，该轮航向145°，航速4.8 节，与“WAN HAI A17”轮相距约0.2 海里",
+        "pdfPage": 37
+      }
+    },
+    {
+      "id": "t-h5-195432",
+      "time": {
+        "beijing": "2025-10-25T19:54:32+08:00",
+        "utc": "2025-10-25T11:54:32Z",
+        "approximate": false
+      },
+      "vesselId": "haili5",
+      "location": {
+        "latDeg": 22.279,
+        "lonDeg": 113.806167,
+        "latDm": "22°16.74′N",
+        "lonDm": "113°48.37′E",
+        "original": "22°16.740′N/113°48.370′E"
+      },
+      "courseDeg": 133,
+      "speedKn": 4.3,
+      "provenance": "ReportNarrative",
+      "source": {
+        "page": 26,
+        "quote": "此时“海力5”轮AIS 船位为22°16´.74N/113°48´.37E",
+        "pdfPage": 31
+      },
+      "note": "碰撞时刻AIS船位；航向航速见第32页正文"
+    },
+    {
+      "id": "t-a17-1902",
+      "time": {
+        "beijing": "2025-10-25T19:02:00+08:00",
+        "utc": "2025-10-25T11:02:00Z",
+        "approximate": true
+      },
+      "vesselId": "wanhai_a17",
+      "location": null,
+      "courseDeg": 358,
+      "speedKn": 10.3,
+      "provenance": "ReportNarrative",
+      "source": {
+        "page": 33,
+        "quote": "1902 时左右，该轮行驶至第三分隔带端口，航向358°，航速10.3 节",
+        "pdfPage": 38
+      }
+    },
+    {
+      "id": "t-a17-193402",
+      "time": {
+        "beijing": "2025-10-25T19:34:02+08:00",
+        "utc": "2025-10-25T11:34:02Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "location": null,
+      "courseDeg": 346,
+      "speedKn": 10.4,
+      "provenance": "ReportNarrative",
+      "source": {
+        "page": 33,
+        "quote": "1934 时02 秒，该轮加车至SLOW AHEAD，航向346°，航速10.4 节。",
+        "pdfPage": 38
+      }
+    },
+    {
+      "id": "t-a17-1938",
+      "time": {
+        "beijing": "2025-10-25T19:38:00+08:00",
+        "utc": "2025-10-25T11:38:00Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "location": null,
+      "courseDeg": 343,
+      "speedKn": 11.2,
+      "provenance": "ReportNarrative",
+      "source": {
+        "page": 33,
+        "quote": "1938 时，该轮航行至广州港定线制1 号灯浮，航向343°，航速11.2 节",
+        "pdfPage": 38
+      }
+    },
+    {
+      "id": "t-a17-1942",
+      "time": {
+        "beijing": "2025-10-25T19:42:00+08:00",
+        "utc": "2025-10-25T11:42:00Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "location": null,
+      "courseDeg": 345,
+      "speedKn": 10.2,
+      "provenance": "ReportNarrative",
+      "source": {
+        "page": 33,
+        "quote": "1942 时，该轮航行至广州港A1 南侧水域，航向345°，航速10.2 节",
+        "pdfPage": 38
+      }
+    },
+    {
+      "id": "t-a17-1948",
+      "time": {
+        "beijing": "2025-10-25T19:48:00+08:00",
+        "utc": "2025-10-25T11:48:00Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "location": null,
+      "courseDeg": 348,
+      "speedKn": 9.9,
+      "provenance": "ReportFigure",
+      "source": {
+        "page": 36,
+        "quote": "1948时，航向348°，航速9.9Kn",
+        "pdfPage": 41,
+        "figure": "图24"
+      },
+      "note": "仅见图24"
+    },
+    {
+      "id": "t-a17-1950",
+      "time": {
+        "beijing": "2025-10-25T19:50:00+08:00",
+        "utc": "2025-10-25T11:50:00Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "location": null,
+      "courseDeg": 348,
+      "speedKn": 9.6,
+      "provenance": "ReportFigure",
+      "source": {
+        "page": 36,
+        "quote": "1950时，航向348°，航速9.6Kn",
+        "pdfPage": 41,
+        "figure": "图24"
+      },
+      "note": "仅见图24"
+    },
+    {
+      "id": "t-a17-195115-text",
+      "time": {
+        "beijing": "2025-10-25T19:51:15+08:00",
+        "utc": "2025-10-25T11:51:15Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "location": null,
+      "courseDeg": 348,
+      "speedKn": 9.9,
+      "provenance": "ReportNarrative",
+      "source": {
+        "page": 34,
+        "quote": "1951 时15 秒，该轮航行至广州港A3 西北侧水域，航向348°，航速9.9 节，距“海力5”轮约0.8 海里",
+        "pdfPage": 39
+      },
+      "note": "正文值；与图24同时刻标注冲突，见下一条"
+    },
+    {
+      "id": "t-a17-195115-fig24",
+      "time": {
+        "beijing": "2025-10-25T19:51:15+08:00",
+        "utc": "2025-10-25T11:51:15Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "location": null,
+      "courseDeg": 346,
+      "speedKn": 9.5,
+      "provenance": "ReportFigure",
+      "source": {
+        "page": 36,
+        "quote": "1951时15秒，两船相距约1500米 航向346°，航速9.5Kn",
+        "pdfPage": 41,
+        "figure": "图24"
+      },
+      "note": "图24值；与正文348°/9.9节冲突，距离约1500米与正文0.8海里相符"
+    },
+    {
+      "id": "t-a17-1952",
+      "time": {
+        "beijing": "2025-10-25T19:52:00+08:00",
+        "utc": "2025-10-25T11:52:00Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "location": null,
+      "courseDeg": 348,
+      "speedKn": 9.6,
+      "provenance": "ReportFigure",
+      "source": {
+        "page": 36,
+        "quote": "1952时，航向348°，航速9.6Kn",
+        "pdfPage": 41,
+        "figure": "图24"
+      },
+      "note": "仅见图24"
+    },
+    {
+      "id": "t-a17-1953",
+      "time": {
+        "beijing": "2025-10-25T19:53:00+08:00",
+        "utc": "2025-10-25T11:53:00Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "location": null,
+      "courseDeg": 347,
+      "speedKn": 9.8,
+      "provenance": "ReportNarrative",
+      "source": {
+        "page": 35,
+        "quote": "1953 时，该轮航向347°，航速9.8 节",
+        "pdfPage": 40
+      }
+    },
+    {
+      "id": "t-a17-195308-vts",
+      "time": {
+        "beijing": "2025-10-25T19:53:08+08:00",
+        "utc": "2025-10-25T11:53:08Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "location": {
+        "latDeg": 22.2736183,
+        "lonDeg": 113.8079883,
+        "latDm": "22°16.4171′N",
+        "lonDm": "113°48.4793′E",
+        "original": "22°16′25.026″N 113°48′28.758″E"
+      },
+      "courseDeg": 347.6,
+      "speedKn": 9.7,
+      "provenance": "ReportFigure",
+      "source": {
+        "page": 23,
+        "quote": "9.7节 航向: 347.6度 22° 16′ 25.026″ N 113° 48′ 28.758″ E",
+        "pdfPage": 28,
+        "figure": "图18"
+      },
+      "note": "图18 VTS截图时钟19:53:08的AIS瞬时值"
+    },
+    {
+      "id": "t-a17-1954-fig24",
+      "time": {
+        "beijing": "2025-10-25T19:54:00+08:00",
+        "utc": "2025-10-25T11:54:00Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "location": null,
+      "courseDeg": 347,
+      "speedKn": 9.7,
+      "provenance": "ReportFigure",
+      "source": {
+        "page": 36,
+        "quote": "1954时，两船相距约170米，航向347°，航速9.7Kn",
+        "pdfPage": 41,
+        "figure": "图24"
+      },
+      "note": "图24；正文1954时仅写停车，未给该时刻航向航速"
+    },
+    {
+      "id": "t-a17-195432",
+      "time": {
+        "beijing": "2025-10-25T19:54:32+08:00",
+        "utc": "2025-10-25T11:54:32Z",
+        "approximate": false
+      },
+      "vesselId": "wanhai_a17",
+      "location": {
+        "latDeg": 22.277667,
+        "lonDeg": 113.807,
+        "latDm": "22°16.66′N",
+        "lonDm": "113°48.42′E",
+        "original": "22°16.660′N/113°48.420′E"
+      },
+      "courseDeg": 348,
+      "speedKn": 9.7,
+      "provenance": "ReportNarrative",
+      "source": {
+        "page": 26,
+        "quote": "“WAN HAI A17”轮AIS 船位为22°16´.66N/113°48´.42E。",
+        "pdfPage": 31
+      },
+      "note": "碰撞时刻AIS船位；航向航速见第36页：航向348°，航速9.7节"
+    }
+  ],
+  "extractionNotes": [
+    "所有时间除另行说明外均为经校对的北京时间（UTC+8）。图23驾驶台CCTV叠字为2025-10-25 11:52:48，与正文19:52:50发现异常相差约2秒，该叠字为UTC。",
+    "正文与图24对WAN HAI A17在19:51:15的航向航速不一致（正文348°/9.9节，图24写346°/9.5节、相距约1500米）；两处均予保留并标注来源，不自行取舍。",
+    "完整AIS/VDR原始记录未附于报告，仅有叙述性航迹点、碰撞时刻AIS船位和图18瞬时AIS框。",
+    "MMSI、海力5呼号仅从图18读出，概况表未列，已单独标注来源。",
+    "提取不到的字段为null，未编造排水量、能见度海里数、风速米每秒、NOMOTO参数等。"
+  ]
+}

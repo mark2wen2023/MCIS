@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VesselExtraction",
+  "type": "object",
+  "required": ["vessels", "otherVessels", "conflicts", "gaps"],
+  "properties": {
+    "vessels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["vesselId", "name", "nameCn", "flagState", "vesselType", "source"],
+        "properties": {
+          "vesselId": { "type": "string" },
+          "name": { "type": ["string", "null"] },
+          "nameCn": { "type": ["string", "null"] },
+          "mmsi": { "type": ["string", "null"] },
+          "imoNumber": { "type": ["string", "null"] },
+          "callSign": { "type": ["string", "null"] },
+          "chineseShipId": { "type": ["string", "null"] },
+          "flagState": { "type": ["string", "null"] },
+          "portOfRegistry": { "type": ["string", "null"] },
+          "vesselType": { "type": ["string", "null"] },
+          "grossTonnage": { "type": ["number", "null"] },
+          "netTonnage": { "type": ["number", "null"] },
+          "loaM": { "type": ["number", "null"] },
+          "beamM": { "type": ["number", "null"] },
+          "moldedDepthM": { "type": ["number", "null"] },
+          "draftForeM": { "type": ["number", "null"] },
+          "draftAftM": { "type": ["number", "null"] },
+          "aisDraftM": { "type": ["number", "null"] },
+          "displacementTons": { "type": ["number", "null"] },
+          "mainEnginePowerKw": { "type": ["number", "null"] },
+          "crewOnBoard": { "type": ["integer", "null"] },
+          "pilotOnBoard": { "type": ["boolean", "null"] },
+          "cargo": { "type": ["string", "null"] },
+          "owner": { "type": ["string", "null"] },
+          "manager": { "type": ["string", "null"] },
+          "voyage": { "type": ["object", "null"] },
+          "source": { "$ref": "../schemas/source.schema.json" }
+        }
+      }
+    },
+    "otherVessels": { "type": "array" },
+    "conflicts": { "type": "array", "items": { "type": "object" } },
+    "gaps": { "type": "array", "items": { "type": "string" } }
+  }
+}

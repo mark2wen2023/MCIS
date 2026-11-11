@@ -1,0 +1,48 @@
+已完成 **M6 Ships + Cesium** 模块的实现与自查，全部符合 C# 9、Unity 6 LTS 与无跨层反向依赖规范。
+
+### 一、实现内容清单
+
+1. **[`ShipController.cs`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Simulation/Ships/ShipController.cs) 与 [`IShipController.cs`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Simulation/Ships/IShipController.cs)**
+   - 纯 C# 实现（位于 `Mcis.Simulation.Ships`，无 UnityEngine 依赖）。
+   - 实现 `ITimeDriven`（优先级 20）与 `IShipController`，订阅 `ISimClock` 时间推进。
+   - 从 `IShipTrack` 采样瞬时运动学状态（`TrackSample`），经 `IGeoConverter` 求解 Unity 世界坐标。
+   - 提供 `BindTrack`、`SetTrack`、`SampleStatePure` 及缺口与可见性检测。
+
+2. **[`ShipStateSourceAdapter.cs`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Presentation/Ships/ShipStateSourceAdapter.cs)**
+   - 位于 `Mcis.Presentation.Ships`。
+   - 包装 `ShipController` 并实现 `Mcis.UI.SimHud.IShipStateSource`，确保 `Mcis.Simulation` 不反向依赖 `Mcis.UI`。
+
+3. **[`SimulationLoopRunner.cs`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Presentation/Bootstrap/SimulationLoopRunner.cs)**
+   - 位于 `Mcis.Presentation.Bootstrap`，MonoBehaviour 生命周期驱动。
+   - 在 `Update` 中按 `Time.unscaledDeltaTime` 调用 `clock.Tick(dt)`，带单帧步长上限保护。
+
+4. **[`ShipView.cs`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Presentation/Ships/ShipView.cs)**
+   - 位于 `Mcis.Presentation.Ships`，MonoBehaviour。
+   - 通过 `IGeoConverter`（或 `ShipController.CurrentUnityPosition`）将 ENU 坐标转为 Unity 场景世界坐标。
+   - 船首向映射：Unity 左手系 $Yaw = \text{Quaternion.Euler}(0, \text{hdg}, 0)$。
+   - 支持平滑位置/旋转插值（Seek 或突变时瞬时 Snap 并清理尾迹）。
+   - 支持可选 `TrailRenderer` 与按船舶实际总长（LOA）等比缩放 3D 船模。
+
+5. **[`CesiumGeoreferenceAdapter.cs`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Integrations/Cesium/CesiumGeoreferenceAdapter.cs) 与 [`Mcis.Integrations.Cesium.asmdef`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Integrations/Cesium/Mcis.Integrations.Cesium.asmdef)**
+   - 实现 `IGeoConverter` 接口。
+   - `asmdef` 引用 `Mcis.Core`、`Mcis.Domain`、`Mcis.Presentation`、`CesiumRuntime`、`Unity.Mathematics`；配置 `versionDefines` 将 `com.cesium.unity` 映射为 `MCIS_CESIUM` 宏。
+   - 使用 `#if MCIS_CESIUM` 调用 Cesium for Unity 1.13+ API（`CesiumGeoreference.TransformEarthCenteredEarthFixedPositionToUnityPosition(double3)` 等），未安装 Cesium 时自动回退至纯 C# `LocalEnuGeoConverter`，保证工程无报错。
+
+6. **[`Mcis.Presentation.asmdef`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Presentation/Mcis.Presentation.asmdef)**
+   - 配置程序集引用：`Mcis.Core`、`Mcis.Domain`、`Mcis.Simulation`、`Mcis.UI`、`Mcis.Export`。
+
+7. **USS 规范性自查与修复**
+   - 扫描了 `Scripts/UI/` 下全部 5 个 `.uss` 文件，确认未包含 `box-shadow`、`backdrop-filter`、`gap`、`display:grid` 等不支持属性。
+   - 对 [`TimelineBar.uss`](file:///workspace/maritime-sim-design/unity/Assets/_Project/Scripts/UI/SimHud/TimelineBar.uss#L42) 中的 `translate: -50% 0;` 规范化为显式单位 `translate: -50% 0px;`。
+
+---
+
+### 二、测试验证与进度记录
+
+- 运行测试：`cd unity/DotnetTests/Tests && ~/.dotnet/dotnet test`
+  - 结果：**Passed! Total: 63, Passed: 63, Failed: 0**
+- 更新 [`PROGRESS.md`](file:///workspace/maritime-sim-design/unity/PROGRESS.md#L12)：
+  - 状态：`完成（Unity 部分未编译验证）`
+  - 模型：`Gemini 3.8 Flash（agy）`
+  - 测试：`63/63`
+EXIT 0

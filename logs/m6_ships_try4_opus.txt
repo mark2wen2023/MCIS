@@ -1,0 +1,4 @@
+Let me read the UI C# files.
+error: Individual quota reached. Please upgrade your subscription to increase your limits. Resets in 156h22m5s. (response may be truncated)
+AGY_ERROR: {"short_error":"RESOURCE_EXHAUSTED (code 429): Individual quota reached. Please upgrade your subscription to increase your limits. Resets in 156h22m5s.","status":"RESOURCE_EXHAUSTED","error_code":429,"code_kind":"http","retryable":true,"error_id":"363d3967-cd0e-4d61-b4c7-9eb6b851f0ce-57"}
+EXIT 3

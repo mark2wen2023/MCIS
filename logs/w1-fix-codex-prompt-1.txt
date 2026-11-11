@@ -1,0 +1,9 @@
+你在 /workspace/maritime-sim-design 做 W1（COLREG 规则引擎）返修的第 1 阶段：只写失败测试。
+先通读：DEFECTS/W1.md 全文（文末架构师裁定优先）、logs/w1-fix-spec.md（返修规格，必须遵守其中的可改范围与 API 兼容要求）、tests_acceptance/W1/*.cs（只读，绝对不可修改）、unity/Assets/_Project/Scripts/Domain/Colreg/*.cs、unity/Tests_W1_Colreg/ColregEngineTests.cs。
+任务：
+1. 在 unity/Tests_W1_Colreg/ 新增 ColregFixRegressionTests.cs，为规格第 1–9 项各写至少一个行为测试（D01 交叉锁定角色、D02 对遇右转不改判、D06 直航船独自行动不碎段、D03 显式互见走 R14、D04 互见时间序列/距离≤能见度推导、D05 R19(d) 无危险不判、A5 新默认阈值（1nm/12min 危险、0.3nm/6min 紧迫阶段、30° 转向、30% 变速、60 s 滑窗不累计、R6/R19(b) NeedsReview）、A3、A4 Doubt、D07 目录与 NotAssessable、R9 航道折线、D08 InSight/BandId/CheckId 确定性/ReviewStatus=Draft/EvidenceIds 原样引用/DangerStage）。全部用合成虚构数据。
+2. 修改自测 RestrictedVisibilityOrExplicitNotInSight_TakesPrecedence，去掉把 D03 当预期的 (1.9,true) 用例，改为符合裁定的期望。
+3. 测试会引用尚不存在的新 API。为了让测试工程能编译从而“红”在断言上，可以在 Colreg 源码里只加最小的 API 骨架（新枚举值、新属性/新参数、新类型），默认值保持现行为（例如属性返回 null/默认值），不要实现任何新行为，也不要改现有判定逻辑和现有默认阈值。
+4. 尝试 `/home/box/.dotnet/dotnet build unity/Tests_W1_Colreg/Mcis.W1.Colreg.Tests.csproj` 确认能编译；不要跑 dotnet test（沙箱 socket 会失败，外部会跑）。
+5. 不要修改 tests_acceptance/、DEFECTS/、contracts/ 及 Colreg 以外的任何源码；不打印密钥/环境变量。
+最后输出：新增的测试名列表（每个对应哪个缺陷/裁定）、加了哪些 API 骨架、build 结果。

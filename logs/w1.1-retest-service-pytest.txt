@@ -1,0 +1,23 @@
+.......................F.F.........................                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_openapi_yaml_matches_routes _______________________
+tests/test_contracts.py:70: in test_openapi_yaml_matches_routes
+    assert actual - declared == set(), f"服务有、契约没写：{sorted(actual - declared)}"
+E   AssertionError: 服务有、契约没写：[('POST', '/api/v1/core/align')]
+E   assert {('POST', '/a.../core/align')} == set()
+E     
+E     Extra items in the left set:
+E     ('POST', '/api/v1/core/align')
+E     Use -v to get more diff
+___________________ test_core_align_detects_course_conflict ____________________
+tests/test_core_align.py:35: in test_core_align_detects_course_conflict
+    assert r.status_code == 200, r.text
+E   AssertionError: {"code":"INTERNAL","message":"InvalidOperationException: JsonSerializerOptions instance must specify a TypeInfoResolver setting before being marked as read-only."}
+E   assert 502 == 200
+E    +  where 502 = <Response [502 Bad Gateway]>.status_code
+=========================== short test summary info ============================
+FAILED tests/test_contracts.py::test_openapi_yaml_matches_routes - AssertionE...
+FAILED tests/test_core_align.py::test_core_align_detects_course_conflict - As...
+2 failed, 49 passed in 18.73s
+...                                                                      [100%]
+3 passed in 0.99s

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- W1 独立验收工程：只读 glob 引用被测源码（与 unity/Tests_W1_Colreg 同法），不修改 unity/ 下任何文件。 -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RootNamespace>Mcis.Acceptance.W1</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="../../unity/Assets/_Project/Scripts/Core/Primitives/**/*.cs" Link="Sut/Core/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Domain/Common/**/*.cs" Link="Sut/Common/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Domain/Models/**/*.cs" Link="Sut/Models/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Domain/Cpa/**/*.cs" Link="Sut/Cpa/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Domain/Colreg/**/*.cs" Link="Sut/Colreg/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="*.cs" />
+  </ItemGroup>
+</Project>

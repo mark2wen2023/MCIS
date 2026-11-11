@@ -1,0 +1,7 @@
+  Mcis.W1.Colreg.Tests -> /workspace/maritime-sim-design/unity/Tests_W1_Colreg/bin/Debug/net8.0/Mcis.W1.Colreg.Tests.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.38

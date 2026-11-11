@@ -1,0 +1,73 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  W2.Acceptance -> /workspace/maritime-sim-design/tests_acceptance/W2/bin/Debug/net8.0/W2.Acceptance.dll
+Test run for /workspace/maritime-sim-design/tests_acceptance/W2/bin/Debug/net8.0/W2.Acceptance.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:00.05]   Discovering: W2.Acceptance
+[xUnit.net 00:00:00.11]   Discovered:  W2.Acceptance
+[xUnit.net 00:00:00.11]   Starting:    W2.Acceptance
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.TrackKind_CoversScreenshotEightTracks [3 ms]
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.ClockOffsetEstimate_HasOffsetAndUncertainty [< 1 ms]
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.MediaItem_SupportsChannelRangeAndShaMetadata [1 ms]
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.EventMarker_CanRepresentScreenshotFlags [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Heading_179To181_DoesNotTakeLongWay [9 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.CourseOverGround_AlsoUsesShortestArc [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Speed_IsLinearlyInterpolated [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Heading_359To1_InterpolatesAcrossZeroByShortestArc [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Heading_181To179_DoesNotTakeLongWay [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.Heading_1To359_InterpolatesAcrossZeroByShortestArc [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.EngineTelegraph_ChangesOnlyAtSampleInstant [< 1 ms]
+  Passed Mcis.Acceptance.W2.InterpolationAcceptanceTests.EngineTelegraph_IsStepped_NotInterpolated [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.IllegalNumericCharacters_DoNotThrow_AndAreIgnored [13 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "!AIV") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "$AI") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "!AIVD") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "$GPRM") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TruncatedAddress_DoesNotThrow_AndReturnsFalse(line: "$GPR") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.CompletelyMalformed_ReturnsFalse(line: "") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.CompletelyMalformed_ReturnsFalse(line: "$GP") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.CompletelyMalformed_ReturnsFalse(line: "no dollar sign") [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Checksum_WrongValue_ParsesButMarkedInvalid [< 1 ms]
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.Calibrator_ShiftsFiniteOffsetsOnly_LeavesNaNUnchanged [20 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.RmcWithNewDateAfterMidnight_UsesSentenceDate [6 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.EmptyFields_DoNotThrow_AndSkipIncompleteSamples [< 1 ms]
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.Median_OutlierMustNotZeroUncertaintyOrStayInCountUnremarked [4 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.Heading_EqualToThreshold_IsNotConflict_SlightlyOverIs [25 ms]
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.NoCommonAnchors_ReturnsNaNAndZeroCount [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Importer_TruncatedAddressInFile_DoesNotAbortImport [2 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.Speed_EqualToThreshold_IsNotConflict [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.OverlongLine_DoesNotThrow [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Checksum_Missing_IsNotValid [< 1 ms]
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.LeastSquares_MatchesMeanAndStandardError [< 1 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.Speed_SlightlyOverThreshold_IsConflict [< 1 ms]
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.FictionalSamples_AreLabeledAndImportable [18 ms]
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.Median_ResistsSingleOutlier_OffsetStaysAtCluster [< 1 ms]
+  Passed Mcis.Acceptance.W2.ClockOffsetAcceptanceTests.MissingReference_Fails [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.SupportedSentenceTypes_CanBeImported [1 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.ConflictIds_MatchContractPattern_AreUniqueAndContiguous [3 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TagBlock_InvalidChecksum_MustNotYieldTime [1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Checksum_ValidUppercase_IsAccepted [< 1 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.MinDuration_EqualToLimit_IsKept_SlightlyUnderIsDropped [< 1 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.Heading_AcrossZero_UsesShortestArcForThreshold [< 1 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.DefaultThresholds_AreNotASharedMutableSingleton [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Importer_DropsBadAndMissingChecksum_ByDefault [1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.GgaWithoutDateOrDefault_WritesDiagnosticAndDrops [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TagBlock_MissingChecksum_MustNotYieldTime [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.UnknownSentenceType_IsReportedOnce [< 1 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.ConflictIds_ContinueToTwoDigitsBeyondNine [2 ms]
+  Passed Mcis.Acceptance.W2.ConflictAcceptanceTests.TimelineConflict_ExposesContractAndScreenshotFields [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.GgaAfterMidnight_RollsDateForward [2 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.TagBlock_ValidChecksum_YieldsUnixTime [< 1 ms]
+  Passed Mcis.Acceptance.W2.NmeaAcceptanceTests.Checksum_ValidLowercase_IsAccepted [< 1 ms]
+  Passed Mcis.Acceptance.W2.PrototypeSupportTests.ImportedEightTracks_CanBeQueriedOnSharedTimeline [15 ms]
+[xUnit.net 00:00:00.20]   Finished:    W2.Acceptance
+
+Test Run Successful.
+Total tests: 54
+     Passed: 54
+ Total time: 0.6254 Seconds
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EnvironmentExtraction",
+  "type": "object",
+  "required": ["atIncident", "tide", "waterway", "timeline", "gaps"],
+  "properties": {
+    "atIncident": {
+      "type": "object",
+      "properties": {
+        "weather": { "type": ["string", "null"] },
+        "visibilityDescription": { "type": ["string", "null"] },
+        "visibilityNm": { "type": ["number", "null"] },
+        "windFrom": { "type": ["string", "null"] },
+        "windFromDirDeg": { "type": ["number", "null"] },
+        "windBeaufort": { "type": ["integer", "null"] },
+        "windSpeedMps": { "type": ["number", "null"] },
+        "waveSignificantHeightM": { "type": ["number", "null"] },
+        "currentSpeedKn": { "type": ["number", "null"] },
+        "currentToDirDeg": { "type": ["number", "null"] },
+        "tideHeightM": { "type": ["number", "null"] },
+        "source": { "$ref": "../schemas/source.schema.json" }
+      }
+    },
+    "tide": { "type": ["object", "null"] },
+    "waterway": { "type": ["object", "null"] },
+    "timeline": { "type": "array" },
+    "gaps": { "type": "array", "items": { "type": "string" } }
+  }
+}

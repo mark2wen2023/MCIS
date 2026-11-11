@@ -1,0 +1,2 @@
+W3 selftest: 242/242
+W3 acceptance baseline: 164/168 (4 expected failures)

@@ -1,0 +1,10 @@
+﻿scenario,verdict,satClearanceM,trueClearanceM,safeM,satWouldFlip
+demo-S0,Collision,0,0,,false
+demo-S1,NearMiss,130.38,130.38,185.20,false
+demo-S2,Collision,0,0,,false
+demo-S3,NearMiss,58.78,58.78,185.20,false
+yangze-S0,Collision,0,0,,false
+yangze-Y1,NearMiss,184.35,184.35,185.20,false
+yangze-Y5,Avoided,238.75,239.09,185.20,false
+yangze-Y1+Y5,Avoided,292.45,310.54,185.20,false
+yangze-Y4,NearMiss,29.81,30.98,185.20,false

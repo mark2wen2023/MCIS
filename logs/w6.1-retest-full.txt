@@ -1,0 +1,17 @@
+# W6.1 独立验收全量 — 2026-11-11 21:41:27 CST
+# 命令: cd tests_acceptance/W6 && service/.venv/bin/python -m pytest -q -rfE
+...............FF....................................................... [ 63%]
+..........................................                               [100%]
+=================================== FAILURES ===================================
+E   AssertionError: evaluate 响应缺少 runId（21:34 裁定：须带本次新建版本 id）
+    assert None
+     +  where None = <built-in method get of dict object at 0x7f2b39eba5c0>('runId')
+     +    where <built-in method get of dict object at 0x7f2b39eba5c0> = {'caseId': 'CASE-2026-DEMO-LILY-MARY', 'engineVersion': 'mcis-core/0.1.0', 'disclaimer': '仅作安全调查技术分析，不作责任认定。', 'bands'...ary:band:NoCollisionRisk:None:None:560-720', 'startTimeSec': 560, 'endTimeSec': 720, 'situation': 'NoRisk', ...}], ...}.get
+/workspace/maritime-sim-design/tests_acceptance/W6/test_w61_rulings.py:223: AssertionError: evaluate 响应缺少 runId（21:34 裁定：须带本次新建版本 id）
+E   AssertionError: app.openapi() 未包含已写入合同的扩展路由：['/api/v1/cases/{}/colreg/checks/{}/reviews', '/api/v1/cases/{}/colreg/compare', '/api/v1/cases/{}/colreg/runs', '/api/v1/cases/{}/colreg/runs/{}', '/api/v1/cases/{}/colreg/runs/{}:activate']
+    assert not {'/api/v1/cases/{}/colreg/checks/{}/reviews', '/api/v1/cases/{}/colreg/compare', '/api/v1/cases/{}/colreg/runs', '/api/v1/cases/{}/colreg/runs/{}', '/api/v1/cases/{}/colreg/runs/{}:activate'}
+/workspace/maritime-sim-design/tests_acceptance/W6/test_w61_rulings.py:251: AssertionError: app.openapi() 未包含已写入合同的扩展路由：['/api/v1/cases/{}/colreg/checks/{}/reviews', '/api/v1/cases/{}/colreg/compare', '/api/v1/cases/{}/colreg/runs', '/api/v1/cases/{}/colreg/runs/{}', '/api/v1/cases/{}/colreg/runs/{}:activate']
+=========================== short test summary info ============================
+FAILED test_w61_rulings.py::test_W61_evaluate_response_includes_runId - Asser...
+FAILED test_w61_rulings.py::test_W61_extension_routes_appear_in_app_openapi
+2 failed, 112 passed in 26.56s

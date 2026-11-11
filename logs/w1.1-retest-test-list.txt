@@ -1,0 +1,156 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  W1.Acceptance -> /workspace/maritime-sim-design/tests_acceptance/W1/bin/Debug/net8.0/W1.Acceptance.dll
+Test run for /workspace/maritime-sim-design/tests_acceptance/W1/bin/Debug/net8.0/W1.Acceptance.dll (.NETCoreApp,Version=v8.0)
+The following Tests are available:
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R16_EarlySubstantialStarboardTurn_Satisfied
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R16_LateAction_NotSatisfied
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R16_NoAction_NotSatisfied
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R16_SmallAlteration_NotSatisfied
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R17_StandOnHolds_ThenFailsToActInExtremis
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R17_StandOnPrematureAlteration_NotSatisfied
+    Mcis.Acceptance.W1.ActionAcceptanceTests.W1_D06_R17_StandOnIndependentAction_NotFragmentedIntoViolations
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R17_StandOnPortTurnTowardPortVessel_NotSatisfied
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R13_OvertakenVesselAlteration_R13AndR17Agree
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold(turn: 9.5, substantial: False)
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold(turn: 10, substantial: False)
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold(turn: 25, substantial: False)
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold(turn: 30, substantial: True)
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold_ConfiguredTo10(turn: 9.5, substantial: False)
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold_ConfiguredTo10(turn: 10, substantial: True)
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold_ConfiguredTo10(turn: 25, substantial: True)
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialTurnThreshold_IsConfigurable
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R8_SubstantialSpeedReduction
+    Mcis.Acceptance.W1.ActionAcceptanceTests.HeadingWrap_TurnAcrossNorth_IsStarboard20
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R19d_i_PortTurnForVesselForwardOfBeam_NotSatisfied
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R19d_i_StarboardTurnForVesselAhead_Satisfied
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R19d_ii_TurnTowardVesselAbaftBeam_NotSatisfied
+    Mcis.Acceptance.W1.ActionAcceptanceTests.W1_D05_R19d_NotApplicableWithoutCloseQuartersOrRisk
+    Mcis.Acceptance.W1.ActionAcceptanceTests.R19b_SafeSpeedProxy_ConfigurableThreshold
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.D09_NucOwn_OtherGivesWay_R14ToR17NotApplicable
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.D09_RamTarget_OwnGivesWay
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.D09_BothPrivileged_R18NeedsReview(a: NotUnderCommand, b: NotUnderCommand)
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.D09_BothPrivileged_R18NeedsReview(a: RestrictedManoeuvrability, b: RestrictedManoeuvrability)
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.D09_BothPrivileged_R18NeedsReview(a: NotUnderCommand, b: RestrictedManoeuvrability)
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.D09_SpecialStatus_R18NeedsReview(special: ConstrainedByDraught)
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.D09_SpecialStatus_R18NeedsReview(special: Fishing)
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.D09_SpecialStatus_R18NeedsReview(special: Sailing)
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.D09_NoVesselStatus_R18NotAssessable
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.D09_OvertakingNuc_OvertakerGivesWayByR13
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.SwapOwnTarget_ConclusionsInvariant(scene: "headon")
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.SwapOwnTarget_ConclusionsInvariant(scene: "crossing")
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.SwapOwnTarget_ConclusionsInvariant(scene: "headon-doubt")
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.SwapOwnTarget_ConclusionsInvariant(scene: "contradictory")
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.SwapOwnTarget_ConclusionsInvariant(scene: "overtaking")
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.SwapOwnTarget_ConclusionsInvariant(scene: "nuc-target")
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.D12_LockAfter120sTimeout_DoubtLockedDuringTurn
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.DangerStage_BandUsesMaximum_ContractMapsCollisionRiskToNone
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.EarlyAction_CountsManeuverDuringPendingLock
+    Mcis.Acceptance.W1.Fix11AcceptanceTests.ContractMapping_AdapterOutputValidatesAgainstSchema
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A1_CrossingDoesNotBecomeOvertaking_WhileRiskPersists
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A1_GiveWayTurn_RolesLockedUntilRiskEnds
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A1_RiskReformsAfterRelease_IsReclassified
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A1_NotInSightToInSight_OpensNewBandAtExactTime
+    Mcis.Acceptance.W1.RetestAcceptanceTests.D04_DerivedInSight_DistanceWithinVisibility
+    Mcis.Acceptance.W1.RetestAcceptanceTests.D03_ExplicitInSight_InRestrictedVisibility_UsesSectionII
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A3_TargetDeadAhead_UsesTargetView
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A3_OwnDeadAheadOfTarget_UsesOwnView
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A3_ContradictoryViews_FlaggedDoubt
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A4_HeadOnDoubtSector(bearing: 15, expected: HeadOn, doubt: False)
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A4_HeadOnDoubtSector(bearing: 20, expected: HeadOn, doubt: True)
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A4_HeadOnDoubtSector(bearing: 22.5, expected: HeadOn, doubt: True)
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A4_HeadOnDoubtSector(bearing: 25, expected: Crossing, doubt: True)
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A4_DoubtSector_Configurable
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A4_HeadingDifferenceAbove6_NotHeadOn
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A5_CollisionRisk_TcpaUpperBound720
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A5_CollisionRisk_Dcpa1nm(offsetNm: 0.94999999999999996, noRisk: False)
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A5_CollisionRisk_Dcpa1nm(offsetNm: 1.05, noRisk: True)
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A5_CloseQuarters_StagesAndBoundaries
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A5_TurnWindow60s(rate: 0.40000000000000002, substantial: False)
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A5_TurnWindow60s(rate: 1, substantial: True)
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A5_SeriesOfSmallTurns_NotCumulated
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A5_SpeedChange30Percent(newSpeed: 3.6000000000000001, substantial: False)
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A5_SpeedChange30Percent(newSpeed: 3.3999999999999999, substantial: True)
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A5_DefaultThresholds
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R5")
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R6")
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R7")
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R8")
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R9")
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R13")
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R14")
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R15")
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R16")
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R17")
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R19")
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A6_CatalogContainsRule(rule: "R34_35")
+    Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D09_CatalogContainsR18
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A6_NoData_NotAssessableWithRequiredEvidence
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A6_R9_CenterlineKeepRight
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A7_DeterministicIds_DraftStatus_EvidencePassThrough
+    Mcis.Acceptance.W1.RetestAcceptanceTests.A7_IdsDependOnVesselOrder
+    Mcis.Acceptance.W1.RetestAcceptanceTests.D05_R19d_NotApplicableWithoutRisk
+    Mcis.Acceptance.W1.RetestAcceptanceTests.D05_R19d_AppliesWithRisk
+    Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D10_HeadOnDoubt_SymmetricUnderSwap
+    Mcis.Acceptance.W1.RetestAcceptanceTests.W1_D11_ContradictoryViews_RolesIndependentOfOrder
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.TimeBands_ContiguousAndCoverOverlap
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.TimeBands_SplitWhenRiskEnds
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.TimeBands_SplitExactlyAtVisibilityChange
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.TimeBands_MultipleTransitions
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_Null_Fails
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_EmptyTrack_FailsWithCode
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NullTrack_Fails
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_SameVesselId_Fails
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_SingleSampleEach_SucceedsWithPartial
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NoOverlap_FailsWithCode
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_UnsynchronisedSampling_UsesOverlapAndMatchesSynced
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NonIncreasingTime_Fails
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNInSample_Fails(field: "pos")
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNInSample_Fails(field: "vel")
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNInSample_Fails(field: "sog")
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNInSample_Fails(field: "time")
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNInSample_Fails(field: "hdgAndCog")
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNHeadingWithValidCog_FallsBackToCog
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNVisibility_Fails
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_NaNThreshold_Fails
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Input_HugeGrid_FailsGracefully
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Thresholds_HeadOnHalfAngle_Configurable
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Thresholds_OvertakingSector_Configurable
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Thresholds_RestrictedVisibility_Configurable
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Thresholds_CollisionRiskDcpa_Configurable
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Thresholds_SnapshotEchoedInReport
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Disclaimer_Present
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Determinism_SameInputSameOutput
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.Determinism_RequestSnapshotsInput
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.W1_D07_RuleCatalogCoversSpecRules
+    Mcis.Acceptance.W1.RobustnessAcceptanceTests.W1_D08_TimeBandModelMatchesContract
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R14_ExactReciprocal_IsHeadOn_BothMustAlterToStarboard
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: 0, headOn: True)
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: 5.9000000000000004, headOn: True)
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: 6, headOn: True)
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: -6, headOn: True)
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: 6.0999999999999996, headOn: False)
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: -6.0999999999999996, headOn: False)
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingDifferenceBoundary_SixDegrees(offset: 10, headOn: False)
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R14_ReciprocalButWellOffBow_IsNotHeadOn
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R14_HeadingWrapAroundZero_359vs179_IsHeadOn
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R15_TargetOnStarboard_OwnGivesWay
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R15_TargetOnPort_OwnStandsOn
+    Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D01_Crossing_RolesMustNotFlipAfterGiveWayStarboardTurn
+    Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D02_HeadOn_ProperStarboardTurnMustNotReclassifyToCrossingWithSwappedRoles
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingSectorBoundaries(bearing: 112.48999999999999, expected: Crossing)
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingSectorBoundaries(bearing: 112.51000000000001, expected: Overtaking)
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingSectorBoundaries(bearing: 150, expected: Overtaking)
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingSectorBoundaries(bearing: 180, expected: Overtaking)
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingSectorBoundaries(bearing: 247.49000000000001, expected: Overtaking)
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingSectorBoundaries(bearing: 247.50999999999999, expected: Crossing)
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingFromStarboardQuarter_OverridesCrossing
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingPersistsUntilPastAndClear
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R13_OvertakingReleasedAfterClear
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R19_NotInSight_OverridesHeadOn
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R19_NotInSight_OverridesOvertaking
+    Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D03_RestrictedVisibilityButExplicitlyInSight_AppliesSectionII
+    Mcis.Acceptance.W1.SituationAcceptanceTests.W1_D04_InSightMustBeAbleToChangeOverTime_PrototypeBandSequence
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R19_VisibilityThreshold(vis: 1.99, expected: RestrictedVisibility)
+    Mcis.Acceptance.W1.SituationAcceptanceTests.R19_VisibilityThreshold(vis: 2, expected: HeadOn)
+    Mcis.Acceptance.W1.SituationAcceptanceTests.NoRisk_NoRolesAssigned

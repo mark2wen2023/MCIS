@@ -1,0 +1,11 @@
+/* W6.2 避碰规则对照页专用样式（按 21:43 裁定，单包样式写在独立文件，不改共享 styles.css）。由 pages/ColregPage.tsx 引入。 */
+
+/* 1440×900 等中等宽度：判定表区（分船判定 + 应采取 vs 实际）排到时间带/曲线区之前，进首屏。
+   只改视觉顺序（CSS order），DOM 顺序不变；1920 宽度两者本来都在首屏，保持原顺序。 */
+@media (min-width: 1200px) and (max-width: 1679px) {
+  .colreg-page { display: flex; flex-direction: column; }
+  .colreg-page > * { order: 0; }
+  .colreg-page > .colreg-grid { order: 1; margin-bottom: 12px; }
+  .colreg-page > .colreg-bands-wrap { order: 2; }
+  .colreg-page > .colreg-grid ~ * { order: 3; }
+}

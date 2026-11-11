@@ -1,0 +1,16 @@
+/workspace/maritime-sim-design/tests_acceptance/W3/InterviewAcceptanceTests.cs(242,17): warning xUnit2020: Do not use Assert.True(false, message) to fail a test. Use Assert.Fail(message) instead. (https://xunit.net/xunit.analyzers/rules/xUnit2020) [/workspace/maritime-sim-design/tests_acceptance/W3/W3.Acceptance.csproj]
+Test run for /workspace/maritime-sim-design/tests_acceptance/W3/bin/Debug/net8.0/W3.Acceptance.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.18]     Mcis.Acceptance.W3.InterviewAcceptanceTests.W3_D01_ConsistentAndUnverifiable_MustRemainPendingUntilConfirmed [FAIL]
+[xUnit.net 00:00:00.18]     Mcis.Acceptance.W3.ConsultationAcceptanceTests.W3_D07_Consultation_SupportsContractCaseIdWaivedAndDraftHash [FAIL]
+[xUnit.net 00:00:00.18]     Mcis.Acceptance.W3.ContractAndPrototypeSupportTests.W3_D03_Evidence_SupportsConfidentialityAndNeedsReview [FAIL]
+[xUnit.net 00:00:00.18]     Mcis.Acceptance.W3.ContractAndPrototypeSupportTests.W3_D05_EvidenceId_MustMatchEVPattern [FAIL]
+[xUnit.net 00:00:00.18]     Mcis.Acceptance.W3.ContractAndPrototypeSupportTests.W3_D03_EvidenceItem_HasContractRequiredCaseId [FAIL]
+[xUnit.net 00:00:00.18]     Mcis.Acceptance.W3.RecommendationAcceptanceTests.W3_D02_StatusModel_MatchesContractAndPrototypeKanban [FAIL]
+[xUnit.net 00:00:00.18]     Mcis.Acceptance.W3.RecommendationAcceptanceTests.W3_D02_ContractTransition_DraftIssuedInProgressClosed_AndRejectFromAny [FAIL]
+[xUnit.net 00:00:00.18]     Mcis.Acceptance.W3.InterviewAcceptanceTests.W3_D04_Statement_HasReviewStatusAndModifyPath [FAIL]
+[xUnit.net 00:00:00.18]     Mcis.Acceptance.W3.InterviewAcceptanceTests.W3_D04_InterviewRecord_SupportsSignedAndCaseId [FAIL]
+[xUnit.net 00:00:00.18]     Mcis.Acceptance.W3.InterviewAcceptanceTests.W3_D05_InterviewRecordId_MustMatchIRPattern [FAIL]
+
+Failed!  - Failed:    10, Passed:    40, Skipped:     0, Total:    50, Duration: 59 ms - W3.Acceptance.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

@@ -1,0 +1,75 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  W14.Acceptance -> /workspace/maritime-sim-design/tests_acceptance/W14/bin/Debug/net8.0/W14.Acceptance.dll
+Test run for /workspace/maritime-sim-design/tests_acceptance/W14/bin/Debug/net8.0/W14.Acceptance.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.22]     Mcis.Acceptance.W14.InterventionAcceptanceTests.EmergencyAnchor_KnownIssue_YawContinuesNearZeroSpeed [FAIL]
+  Failed Mcis.Acceptance.W14.InterventionAcceptanceTests.EmergencyAnchor_KnownIssue_YawContinuesNearZeroSpeed [3 ms]
+  Error Message:
+   确认已知问题：停船后航向仍继续增加 6.551244279795476E-05°（t_stop=6.199999999999994）
+  Stack Trace:
+     at Mcis.Acceptance.W14.InterventionAcceptanceTests.EmergencyAnchor_KnownIssue_YawContinuesNearZeroSpeed() in /workspace/maritime-sim-design/tests_acceptance/W14/InterventionAcceptanceTests.cs:line 190
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.24]     Mcis.Acceptance.W14.CollisionGeometryAcceptanceTests.SatClearance_CanUnderestimateTrueSeparation [FAIL]
+[xUnit.net 00:00:00.43]     Mcis.Acceptance.W14.KnownIssueImpactTests.Y5_TrueClearanceCrossesSafeLine_VerdictShouldBeAvoided [FAIL]
+  Failed Mcis.Acceptance.W14.CollisionGeometryAcceptanceTests.SatClearance_CanUnderestimateTrueSeparation [3 ms]
+  Error Message:
+   应能复现 SAT 低估（已知问题）。最大低估=0 m（SAT=0 真实=0）
+  Stack Trace:
+     at Mcis.Acceptance.W14.CollisionGeometryAcceptanceTests.SatClearance_CanUnderestimateTrueSeparation() in /workspace/maritime-sim-design/tests_acceptance/W14/CollisionGeometryAcceptanceTests.cs:line 175
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.KnownIssueImpactTests.Y5_TrueClearanceCrossesSafeLine_VerdictShouldBeAvoided [278 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: NearMiss
+Actual:   Avoided
+  Stack Trace:
+     at Mcis.Acceptance.W14.KnownIssueImpactTests.Y5_TrueClearanceCrossesSafeLine_VerdictShouldBeAvoided() in /workspace/maritime-sim-design/tests_acceptance/W14/KnownIssueImpactTests.cs:line 89
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.80]     Mcis.Acceptance.W14.SensitivityComparisonAcceptanceTests.TurnAdvanceSweep_IsMonotonicAndBisectionConverges [FAIL]
+  Failed Mcis.Acceptance.W14.SensitivityComparisonAcceptanceTests.TurnAdvanceSweep_IsMonotonicAndBisectionConverges [532 ms]
+  Error Message:
+   Assert.InRange() Failure: Value not in range
+Range:  (171.40000000000001 - 175.40000000000001)
+Actual: 171.25
+  Stack Trace:
+     at Mcis.Acceptance.W14.SensitivityComparisonAcceptanceTests.TurnAdvanceSweep_IsMonotonicAndBisectionConverges() in /workspace/maritime-sim-design/tests_acceptance/W14/SensitivityComparisonAcceptanceTests.cs:line 44
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:01.18]     Mcis.Acceptance.W14.Yangze22AcceptanceTests.DroppingPostCollisionPoints_ChangesS0ContactTime [FAIL]
+[xUnit.net 00:00:01.37]     Mcis.Acceptance.W14.Yangze22AcceptanceTests.S0_DeviationFromReport_IsAsDisclosed [FAIL]
+[xUnit.net 00:00:01.73]     Mcis.Acceptance.W14.Yangze22AcceptanceTests.ReportedScenarioNumbers_MatchAnnouncement [FAIL]
+  Failed Mcis.Acceptance.W14.Yangze22AcceptanceTests.DroppingPostCollisionPoints_ChangesS0ContactTime [355 ms]
+  Error Message:
+   去掉碰撞后 VDR 点后，t=230 s 的 YANGZE 22 位置应改变，实际位移差 0.0 m
+  Stack Trace:
+     at Mcis.Acceptance.W14.Yangze22AcceptanceTests.DroppingPostCollisionPoints_ChangesS0ContactTime() in /workspace/maritime-sim-design/tests_acceptance/W14/Yangze22AcceptanceTests.cs:line 133
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.Yangze22AcceptanceTests.S0_DeviationFromReport_IsAsDisclosed [189 ms]
+  Error Message:
+   Assert.InRange() Failure: Value not in range
+Range:  (37 - 40)
+Actual: 6.125
+  Stack Trace:
+     at Mcis.Acceptance.W14.Yangze22AcceptanceTests.S0_DeviationFromReport_IsAsDisclosed() in /workspace/maritime-sim-design/tests_acceptance/W14/Yangze22AcceptanceTests.cs:line 105
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W14.Yangze22AcceptanceTests.ReportedScenarioNumbers_MatchAnnouncement [176 ms]
+  Error Message:
+   Assert.InRange() Failure: Value not in range
+Range:  (242 - 243)
+Actual: 210.125
+  Stack Trace:
+     at Mcis.Acceptance.W14.Yangze22AcceptanceTests.ReportedScenarioNumbers_MatchAnnouncement() in /workspace/maritime-sim-design/tests_acceptance/W14/Yangze22AcceptanceTests.cs:line 30
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+Failed!  - Failed:     7, Passed:    45, Skipped:     0, Total:    52, Duration: 1 s - W14.Acceptance.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

@@ -1,0 +1,27 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  W18.Acceptance -> /workspace/maritime-sim-design/tests_acceptance/W18/bin/Debug/net8.0/W18.Acceptance.dll
+Test run for /workspace/maritime-sim-design/tests_acceptance/W18/bin/Debug/net8.0/W18.Acceptance.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.31]     Mcis.Acceptance.W18.RetestW18RulingsAcceptanceTests.W18_D07_FindingsAndItems_AreReadOnlyViews [FAIL]
+  Failed Mcis.Acceptance.W18.RetestW18RulingsAcceptanceTests.W18_D07_FindingsAndItems_AreReadOnlyViews [< 1 ms]
+  Error Message:
+   公开集合可被绕过：Findings mutable=True Items mutable=True
+  Stack Trace:
+     at Mcis.Acceptance.W18.RetestW18RulingsAcceptanceTests.W18_D07_FindingsAndItems_AreReadOnlyViews() in /workspace/maritime-sim-design/tests_acceptance/W18/RetestW18RulingsAcceptanceTests.cs:line 341
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.32]     Mcis.Acceptance.W18.RetestW18RulingsAcceptanceTests.W18_D06_B1_WindowsJustAfterRestStart_AreCaught [FAIL]
+  Failed Mcis.Acceptance.W18.RetestW18RulingsAcceptanceTests.W18_D06_B1_WindowsJustAfterRestStart_AreCaught [4 ms]
+  Error Message:
+   Assert.Contains() Failure: Filter not matched in collection
+Collection: [RestHourViolation { Actual = 05:00:00, Clause = "STCW A-VIII/1 §3 / MLC A2.3 §6", Detail = "窗口 2026-05-11 19:00Z ~ 2026-05-12 19:00Z：最长休息段 5h0"···, Limit = 06:00:00, Rule = LongestRest, ··· }]
+  Stack Trace:
+     at Mcis.Acceptance.W18.RetestW18RulingsAcceptanceTests.W18_D06_B1_WindowsJustAfterRestStart_AreCaught() in /workspace/maritime-sim-design/tests_acceptance/W18/RetestW18RulingsAcceptanceTests.cs:line 180
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+WARNING: Overwriting results file: /workspace/maritime-sim-design/tests_acceptance/W18/TestResults/w18-retest.trx
+Results File: /workspace/maritime-sim-design/tests_acceptance/W18/TestResults/w18-retest.trx
+
+Failed!  - Failed:     2, Passed:    90, Skipped:     0, Total:    92, Duration: 155 ms - W18.Acceptance.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

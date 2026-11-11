@@ -1,0 +1,21 @@
+# W14.2 复测：实施方自测复跑 2026-11-11 21:11:38 CST
+
+## Tests_W14_WhatIf
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:   115, Skipped:     0, Total:   115, Duration: 2 s - Tests_W14_WhatIf.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.
+
+## DotnetTests
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    63, Skipped:     0, Total:    63, Duration: 48 ms - Mcis.Pure.Tests.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.
+
+## DotnetTests2
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    84, Skipped:     0, Total:    84, Duration: 141 ms - Mcis.Pure.Tests.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.
+
+与自报一致：115/115、63/63、84/84。

@@ -1,0 +1,41 @@
+W18+W15 freeze snapshot start 20261111-202438
+Wed Nov 11 20:24:38 CST 2026
+======= W18 Domain =======
+2a9a3f71de445e20f7b424436c88e6e2b2bcfbc62aebf21d0d441d6bf41efa79  /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/HumanFactors/Brm.cs
+f04fc6faafbeecd3dd4c0aefe5d5746e643a452a16b0e641e59a4c7b40c73e00  /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/HumanFactors/Fatigue.cs
+2a5bdc997495b222c1a6c416c863345e6666d45c1fcc2eaa8bb4c1086d3af396  /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/HumanFactors/Hfacs.cs
+9987fca8fc330fb908298ca93d25873cb761479b197f3eb2e8387d0c4a5b7e7e  /workspace/maritime-sim-design/unity/Assets/_Project/Scripts/Domain/HumanFactors/RestHours.cs
+======= W18 self-tests =======
+66fb0a5e19d6fe0b132eb536aa49638aafab5a4a7c1d4f4002c6ffd16a48e6de  /workspace/maritime-sim-design/unity/Tests_W18_HF/Tests/FatigueHfacsBrmTests.cs
+748fac451a6fea5cb73c5bc746ecc9bcaca593d7b1b111858e3454629141640f  /workspace/maritime-sim-design/unity/Tests_W18_HF/Tests/RestHourTests.cs
+7e3eeb368785bb2628b43d5d8c71923e180f948efe2012016a32646706e3054e  /workspace/maritime-sim-design/unity/Tests_W18_HF/Tests/W18.HF.Tests.csproj
+3424f724c4ed39b2ce267ae0b16eb98aa40deb2c0ab0b2d39f07e77fcf14c429  /workspace/maritime-sim-design/unity/Tests_W18_HF/Tests/W18FixTests.cs
+d365568721894b129e5c50a0f52077685a25d4fb00728d62cc7193658bd5a209  /workspace/maritime-sim-design/unity/Tests_W18_HF/Tests/bin/Debug/net8.0/W18.HF.Tests.deps.json
+088bcc1a867d80d3923a812855f7ae9297fc8ac3d844cf9a83510bd8d1352af8  /workspace/maritime-sim-design/unity/Tests_W18_HF/Tests/bin/Debug/net8.0/W18.HF.Tests.runtimeconfig.json
+3509c0134d01417e72dac88c9162978a33a28868b5b416aa946cabdf0d822198  /workspace/maritime-sim-design/unity/Tests_W18_HF/Tests/obj/Debug/net8.0/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs
+cd4e5d5d78db25d41c7658b207c129ad27ca832bc39678b72c38b9a9339b258d  /workspace/maritime-sim-design/unity/Tests_W18_HF/Tests/obj/Debug/net8.0/W18.HF.Tests.AssemblyInfo.cs
+30c61cdf6a75cc2a78ce3f2650bd4c6aee207adeb10902b781a6ce635dc93745  /workspace/maritime-sim-design/unity/Tests_W18_HF/Tests/obj/W18.HF.Tests.csproj.nuget.dgspec.json
+3a77da56e9eb9207cf69478dfb6bef79bd9434f508714ed89667c543fe3c2c15  /workspace/maritime-sim-design/unity/Tests_W18_HF/Tests/obj/project.assets.json
+664c08335290cd9587b69b9f80416e38924a22fe6882f3fc0e6d2062a05f79f1  /workspace/maritime-sim-design/unity/Tests_W18_HF/W18.HF.csproj
+c45ed6718b4f52b8924bfebbbfebd5b3990358d9037ca63a8bd0cf8db96ce30d  /workspace/maritime-sim-design/unity/Tests_W18_HF/bin/Debug/netstandard2.1/Mcis.W18.HF.deps.json
+2709798141b676ec191594806a723869b9925fbe61ab5ec7feaf6285028ba812  /workspace/maritime-sim-design/unity/Tests_W18_HF/obj/Debug/netstandard2.1/.NETStandard,Version=v2.1.AssemblyAttributes.cs
+5f149ba93de121d24746380a23d504e7f0848237b56c322ae8278261a40c4f45  /workspace/maritime-sim-design/unity/Tests_W18_HF/obj/Debug/netstandard2.1/W18.HF.AssemblyInfo.cs
+aac6a9a149f3dcd1f942ae3c8d02d1f6804cbf3f4959153d18c9b71786cc9b3c  /workspace/maritime-sim-design/unity/Tests_W18_HF/obj/W18.HF.csproj.nuget.dgspec.json
+1532d1a656f3a25b2bf726d31e59c0cac7a73711e1e615cabf91784b37f742ea  /workspace/maritime-sim-design/unity/Tests_W18_HF/obj/project.assets.json
+======= W15 Domain =======
+======= W15 self-tests =======
+476829b5c0705bd6d3932cbfe4cc70e32c4090768374ad0fbce3ce9d8a430be8  /workspace/maritime-sim-design/unity/Tests_W15_Sys/Tests/SystemicTests.cs
+312ffd9c5e98c22bc2f3918f1c2bcd428d49ebacd78c803fa37388f130d75776  /workspace/maritime-sim-design/unity/Tests_W15_Sys/Tests/W15.Sys.Tests.csproj
+e926cbfb12c70316cade758bb1c40c5a2d0f357e50846b4dde5f74842b6fad13  /workspace/maritime-sim-design/unity/Tests_W15_Sys/Tests/W151FixTests.cs
+a322228069db35ad986b114a2fc540f4ef99210d4b73b93efe3b3532748673f1  /workspace/maritime-sim-design/unity/Tests_W15_Sys/Tests/bin/Debug/net8.0/W15.Sys.Tests.deps.json
+088bcc1a867d80d3923a812855f7ae9297fc8ac3d844cf9a83510bd8d1352af8  /workspace/maritime-sim-design/unity/Tests_W15_Sys/Tests/bin/Debug/net8.0/W15.Sys.Tests.runtimeconfig.json
+3509c0134d01417e72dac88c9162978a33a28868b5b416aa946cabdf0d822198  /workspace/maritime-sim-design/unity/Tests_W15_Sys/Tests/obj/Debug/net8.0/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs
+cfa248c0e20177d4bbd161edfcd718c761ff8b466b5588c2a52809b944242f54  /workspace/maritime-sim-design/unity/Tests_W15_Sys/Tests/obj/Debug/net8.0/W15.Sys.Tests.AssemblyInfo.cs
+13add46f1f97719273494665764d13094d1414f8a48a2d9d1cabcabd6b79125a  /workspace/maritime-sim-design/unity/Tests_W15_Sys/Tests/obj/W15.Sys.Tests.csproj.nuget.dgspec.json
+1ead942c5cc7f57c4e1aaca2bb85f2c96e035daba82319ac4d1fca8bc8918e8d  /workspace/maritime-sim-design/unity/Tests_W15_Sys/Tests/obj/project.assets.json
+4f25c5ea39b4f82fd5c0bc0dbdfe99324756311709e1096e773a99cdd2a99d9e  /workspace/maritime-sim-design/unity/Tests_W15_Sys/W15.Sys.csproj
+05999d16912d635061cb5e513d6d5689f40fda7ebaf84cba96b02062fe3617bd  /workspace/maritime-sim-design/unity/Tests_W15_Sys/bin/Debug/netstandard2.1/Mcis.W15.Sys.deps.json
+2709798141b676ec191594806a723869b9925fbe61ab5ec7feaf6285028ba812  /workspace/maritime-sim-design/unity/Tests_W15_Sys/obj/Debug/netstandard2.1/.NETStandard,Version=v2.1.AssemblyAttributes.cs
+8092baaf83080d496aab4dfc399d434f2d011000737c78c83a359aa22d69d0dd  /workspace/maritime-sim-design/unity/Tests_W15_Sys/obj/Debug/netstandard2.1/W15.Sys.AssemblyInfo.cs
+fd85c8e8fb88f2e35179640a6e05e2779edb43869afa814b1a47b1678ea9e2d0  /workspace/maritime-sim-design/unity/Tests_W15_Sys/obj/W15.Sys.csproj.nuget.dgspec.json
+a6fce349eee0b749d6931d074085ac14d7c4400da11279a41c7697beb8f8f22e  /workspace/maritime-sim-design/unity/Tests_W15_Sys/obj/project.assets.json

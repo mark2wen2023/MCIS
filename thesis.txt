@@ -1,0 +1,831 @@
+﻿
+Design and application research of maritime casualty investigation simulation base on Unity 3D
+
+ABSTRACT
+3D simulation as a tool of maritime casualty investigation technology is to visualize the accident environment conditions for any maritime investigator. This paper proposes a 3D accident visualization method that can be released a simulation animation in a short time and with low cost by using the Unity 3D engine. 
+
+The 3D simulation system requires maritime investigation technology and ship movement theory as a basis. Further more to improve the accident investigation simulation accurate, it also needs to build 3D objects including light tower, buildings, port crane, bridges and ships. 
+
+Keywords: Accident simulation, 3D visualization, Maritime investigation technology, Unity 3D
+
+
+
+
+
+
+
+
+
+
+
+
+
+TABLE OF CONTENTS
+WORLD MARITIME UNIVERSITY	i
+DECLARATION	iii
+ACKNOWLEDGMENTS	iv
+ABSTRACT	v
+TABLE OF CONTENTS	vi
+LIST OF FIGURES	viii
+LIST OF TABLE	ix
+LIST OF ABBREVIATIONS	x
+CHAPTER 1  INTRODUCTION	1
+1.1  Background information	1
+1.2  Related research work	3
+1.3  Objectives of research	4
+1.4  Methodology	5
+1.5  Structure of dissertation	5
+CHAPTER 2:  MARITIME ACCIDENT INVESTIGATION TECHNOLOGY	7
+2.1  What is maritime accident investigation	7
+2.1.1 Definition of maritime accident	7
+2.1.2 Definition of maritime accident investigation	7
+2.1.3 Purpose of accident investigation	8
+2.2  The maritime accident investigation process	8
+2.3  The mainstream investigation analysis methods	11
+2.3.1 Core analytical techniques	12
+2.3.2 Specific analytical techniques	13
+2.4  Collecting evidence and facts	13
+2.5  Events and casual factors charting and analysis	14
+CHAPTER 3: RESEARCH ON SHIP MOTION THEORY	18
+3.1  Ship maneuverability theory	18
+3.2  The force of Wind, Wave, Current	20
+3.2.1  Wind force	20
+3.2.2  Wave force	20
+3.2.3  Current force	21
+3.3  Ship Collision theory	22
+3.3.1  Introduction	22
+3.3.2  The process of ship collision	24
+3.4  DCPA and TCPA	25
+3.5  Summary	27
+CHAPTER 4: DESIGN THE SIMULATION APPLICATION IN UNITY 3D	28
+4.1  Introduction of Unity 3D	28
+4.1.1  Unity 3D	28
+4.1.2  Advantages of Unity 3D	29
+4.1.3  The relate productions based on Unity 3D	30
+4.2  The basic views and functions of Unity 3D engine	32
+4.2.1  The basic views of Unity	32
+4.2.2  The basic functions of Unity 3D	34
+4.2.3  Common game mechanics	35
+4.3  Terrain virtualization	36
+4.3.1  Generation of bathymetric terrain	37
+Elevation refers to the mean sea level. The elevation information was acquired from NASA’s digital elevation map database of SRTM by using Unity 3D Terraland Downloader Asset.	38
+4.3.2  Combination of bathymetric terrain and elevation	38
+4.4  Ship modeling	39
+4.4.1  Download Official model store	39
+4.4.2  Build from blue print	41
+4.4.3  Build accident models library	42
+4.5  Special requirements for accident investigation simulation application	43
+4.5.1  Ship model choosing and terrain setting	43
+4.5.2  Weather condition setting	43
+4.5.3  Ship moving and collision path setting	43
+4.5.4  ECFC	43
+4.5.5  2D mini map	43
+4.5.6  Navigation data display	44
+CHAPTER 5: IMPLEMENTATION	45
+5.1  The develop process of application	45
+5.1.1  Build model library	45
+5.1.2  Develop the physics engine	45
+5.1.3  Design the UI system	45
+5.1.4  Design the interaction for simulation experiment module	46
+5.1.5  Export files	46
+5.2  Scene construction	47
+5.3  The using procedure of application	49
+5.4  The result of simulation	50
+CHAPTER 6: CONCLUSION	53
+REFERENCES	54
+
+LIST OF FIGURES
+Figure 1 DOE’s process for accident investigation	9
+Figure 2 Events and causal factors chart	11
+Figure 3 Basic steps in a barrier analysis	12
+Figure 4 Events and causal factors analysis	16
+Figure 5 Ship collision process	24
+Figure 6 Vector triangle of ship encounter	25
+Figure 7 8 steps for creating 3D scene of accident in Unity 3D	35
+Figure 8 Generation of bathymetric terrain	36
+Figure 9 Generation of elevation terrain	37
+Figure 10 Combination of bathymetric terrain and elevation	38
+Figure 11 Official model store—3D warehouse	39
+Figure 12 A ship model download from 3D warehouse	39
+Figure 13 A ship model download from website	40
+Figure 14 Build ship model according to blue prints	40
+Figure 15 Build bridge model according to relevant data	41
+Figure 16 Ship model library	41
+Figure 17 The develop process of application	46
+Figure 18 Generate an island terrain	47
+Figure 19 Modeling port facility	47
+Figure 20 Modeling light tower	47
+Figure 21 Modeling ships and put them in right position	48
+Figure 22 The operational procedure simulation application	48
+Figure 23 Ships collision accident investigation simulation	50
+Figure 24 Design of ECFC cards in accident simulation	51
+Figure 25 One ship collider with another one case damaged and sunk	51
+
+
+
+LIST OF TABLE
+Table  1 1974 to 1984 the shipwreck statistics	1
+Table  2 Major types of maritime accident	6
+Table  3 Accident investigation methods	12
+Table  4 How to draw an Event and casual factors chart	14
+Table  5 Three basic parts in Unity 3D	27
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+LIST OF ABBREVIATIONS
+
+AIS 	Automatic Identification System 
+ARPA		Automatic radar plotting
+DCPA	Distance Close Apoint of Approach
+ECFC	Event and casual factors chart
+GIS	Geographic Information System
+IDE	Integrated Development Environment
+IMO	International Maritime Organization
+IMC	International Maritime Committee
+MAI	Marine Accident Investigation
+MAIB	Marine Accident Investigation Bureau
+MORT	Management Oversight and Risk Tree
+NASA	National Aeronautics and Space administration
+NTSB	National Transportation Safety Board
+TCPA	Time Close Appoint of Approach
+UI	User Interface
+UNCLOS	United Nations Convention on the Law of the Sea
+USCG	United State Coast Guard
+VDR	Voyage Data Recorder
+VR	Visual Reality
+
+CHAPTER 1  INTRODUCTION
+
+1.1  Background information
+With the rapid development of international trade, maritime transportation started to play a very important role in promoting economic development in the world. However, a range of maritime accidents still occurred one after another for various reasons, and resulted in environmental damages, personal casualties and other safety problems, which arose great attention of most shipping countries around the world. In the last century, amounts of human resource has been put into improving shipbuilding technology, navigation technology and management level and other means of preventing maritime accidents. Every major sea accidents prompted the international community to make appropriate designation and to amend relative conventions for the sake of improving the safe navigation of the ship.
+
+In Lloyd’s Register annual statistical reports, the shipwreck statistics are available to the public. From 1974 to 1984, the total number of accidents shows that the 45% of shipwreck accidents relates to the seamanship, which causes the ship sank, grounding, collision, capsize and so on. 
+
+Table  1 1974 to 1984 the shipwreck statistics
+Year	Merchant ship in operation	Sinking and missing	Fire and explosion	Collision against rock
+1976	65887	117	60	168
+1977	67945	132	57	147
+1978	69020	178	85	210
+1979	71129	168	83	214
+1980	73832	160	55	172
+1981	73864	130	67	162
+1982	75151	145	79	178
+1983	76106	128	58	154
+1984	76432	135	57	135
+1985	75421	110	48	149
+Ten years aveage	140	65	169
+The average total loss / year	374（0.52%）
+Sailing loss / year	169%（0.23%）
+Ship defect loss / year	205（0.28%）
+Source: (Pu Kangbao, 2009)
+
+After the accident, the main mission of maritime casualty accident investigation agencies is to find out the direct reason of the accident objectively and scientifically. Further, the investigation agencies should analyze the accident in detail and find out the root cause of accident in order to prevent similar accidents in the future.
+
+The maritime accidents usually occurred instantly, while the marine environment was always constantly changing. Thus in the process of the maritime casualty investigation, many details of the accident may lose, the evidences may be difficult to preserve, the crews and witness may be uncompromising, etc. These will lead to difficulties for the maritime casualty investigators to restore a complete real accident scene in the subsequent investigation. Many of present investigation tools and methods are based on traditional ways, which have a lot of technical limitations. Although Automatic Identification System (AIS), Voyage Data Recorder (VDR) and other navigation equipment are increasingly used to assist the accident investigation, some other advanced technologies, such as the Internet technology, 3D visualization technology, VR, big data analysis technology, are still underused. Therefore, using computer technology to improve investigation and analysis performance has become a real need.
+1.2  Related research work 
+In airline industries, safety problems are the primary issue of relevant companies. In the paper <Study of a 3D simulation system for analyzing flying safety and accidents>, Lu Huijuan, Gao Hongbo, Zhou Guoyu and Shenjun (2005) realized the simulation of the moving process of multiple aircrafts from various perspectives in combination with 3D GIS by reading moving trace data based on 3ds Max platform. Then a 3D simulation system for analyzing flying safety and accidents has been developed. That system could expedite the analysis of accidents and improve the accuracy of accident analysis.
+
+Automobile accidents are one of today’s world disasters. Simulation of road traffic accidents is based on the animation for more intuitional analysis and reconstruction of car traffic accident. Lv Tao (2009) studied the basic theory and the three-dimensional reconstruction system to realize the concrete development of the road traffic accidents in his paper of <Design and development of road traffic accident three-dimensional reconstruction system>. According to simple physics theory, the methods for calculating the speed of the vehicles that before and after collision is given from one-dimensional and two-dimensional collision. Further, the methods of reading, displaying, controlling three-dimensional model through OpenGL procedure and constructing the traffic accident scene based on object model is investigated in the paper. 
+
+In the paper <Computer simulation in the application of the maritime accident analysis>, Liu Chao (2014) put forward a new method of investigating and analyzing the accident, which can directly reproduces the process of ship collision. Compared with the traditional method, it simply relies on the testimony of crews and the record of deck log. 
+
+In the paper <3D visualization information Management system of channel and ship based on OSG> by He Kunjin (2015), a 3D visualization information management system was studied, which combines with the real time presentation of dynamic 3D scene. 
+
+Yang Shenhua,(2008) in their paper <Study of dynamic simulation system for vessel’s collision process and its application> presented a dynamic simulation system for vessel’s collision process based on the technology of ship handling simulator, and then expounded the framework and key technology of the system, as well as the procedure of dynamic simulation. The study of the system and its application may offer a new approach for authorities of maritime safety to investigate and analyze the accidents of vessel collision.
+
+Above accident simulation systems extremely promoted the level of accident investigation, increased the accuracy of analysis, and provided useful tools for preparing investigation report and accidents prediction.
+
+1.3  Objectives of research
+The major objective of this paper is to design and generate a simulation application for maritime casualty investigation based on mainstream maritime investigation technology and Unity 3D game engine. It would reappear and visualize the real terrain, locate the accurate position of ships in accident, and it is available to be revised by investigator according to the real conditions. And it makes the accidents more intuitive from the perspectives of the investigators by visualized the 3D objects such as buildings, vehicles, cranes and containers. The most important thing is to simulate accident environment conditions (including 3D objects, rain, fog, wind and wave) according to realistic physic theory and simulate ships' collision movements in system. Subsequent, the author studied kinds of the investigation analysis methods (such as “Event and casualty factors chart”), then designed relevant programs to analysis the accident data in system. Meanwhile, it will keep updating the ships dynamic data on screen such as GPS, Speed, DCPA etc. Finally, an open source 3D simulation tool is created that can be used for maritime investigation agencies to improve their investigation reports.
+
+1.4  Methodology
+The primary methodology the author followed and provided foundation of the system is the Unity 3D working as a graphic engine. By collecting information and data from maritime casualty accident reports and studying maritime casualty investigation technologies, 3D ship and terrain are put into the system which will reappear the accident scene to the investigators and produce the timetable of event and casualty facts at the same time.
+
+1.5  Structure of dissertation
+The dissertation consists of six chapters followed by one appendix. Chapter one introduces the accident investigation research status, objectives of research, methodology and structure of this dissertation. Chapter two discusses the process of maritime accident investigation and mainstream technology, finally highlights the Event and factors charts. Chapter three provides the information about ship movements, collision theory and technology, discusses how the ships move under the influence of wave, wind and flow. Chapter four makes an overview of Unity 3D platform and introduces kinds of success examples. Chapter five mainly concentrates on developing a 3D simulation application and tries to simulate a ship collision accident. Finally the chapter six discourses the overall summaries and conclusions.
+
+CHAPTER 2:  MARITIME ACCIDENT INVESTIGATION TECHNOLOGY
+
+2.1  What is maritime accident investigation
+To generate an investigation simulation application, that should be fully understand the maritime accident investigation definition, types and process.
+
+   2.1.1 Definition of maritime accident
+A maritime accident means an event, or sequence of events, other than a marine casualty, which has occurred directly in connection with the operations of a ship that endangered, or, if not corrected, would endanger the safety of the ship, its occupants or any other person or the environment（MSC 84/3 ANNEX 4）.
+
+Table  2 Major types of maritime accident
+Capsizing	Collisions	Explosions or fire	Cargo shift
+Crushing	Grounding	Foundering or sinking	Oil spills
+Source: Made by author
+
+    2.1.2 Definition of maritime accident investigation
+A maritime accident investigation means an investigation or inquiry (however referred to by a State), into a marine casualty or marine incident, conducted with the objective of preventing marine casualties and marine incidents in the future. The investigation includes the collection of, and analysis of, evidence, the identification of causal factors and the making of safety recommendations as necessary（MSC 84/3 ANNEX 4）.
+
+Under SOLAS regulation I/21 and MARPOL articles 8 and 12, each Administration undertakes to conduct an investigation into any casualty occurring to ships under its flag subject to those conventions and to supply the Organization with pertinent information concerning the findings of such investigations. Article 23 of the Load Lines Convention also requires the investigation of casualties ​(IMO 1997d). 
+
+Marine Accident Investigation (MAI) is the process of detailed and systematically examining and investigating marine accidents relating to ships or other marine crafts, in order to determine the causes of the accident (collision, fire/explosion, grounding, foundering, and other) and suggest recommendations to avoid accidents in the future.
+
+2.1.3 Purpose of accident investigation
+    • Identify and describe the real courses of events (What, where, when)
+    • Identify risk reducing measures to prevent future, comparable accidents (learning)
+    • Investigate and evaluate the basis for potential criminal prosecution (blame)
+    • Evaluate the question of guilt in order to assess the liability for compensation (pay)
+
+2.2  The maritime accident investigation process
+Regularly, after received the accident report, the authorized maritime agencies will according to the accident’s area, types and scales to appoint appropriate level of maritime investigator to field investigation and deep investigation, who will analyze the cause of the accident, write the accident report and propose the safety recommendations. 
+
+Britain's maritime investigation is usually conducted by maritime bureau (MAIB) to organize. After receiving maritime report, if just a few small accidentS, MAIB usually only need conduct an informal survey. If the maritime accident is serious, MAIB will appoint an investigator to be part to check the permissions of forensic investigation. For more serious maritime accident, MAIB will conduct preliminary investigation, should collect the relevant facts and evidence to determine the accident, and finally submit a comprehensive report after the investigation. If the secretary of State deems it necessary, that could also appoint a shipwreck commissioner host the hearing for an official investigation.
+
+In the United States, for a small accident, USCG will conduct a preliminary survey investigation to determine the cause of the accident and sign on the relevant table. After the preliminary investigation, the governor will decide to conduct regular survey or formal investigation. In regular survey, investigators usually need to interview witnesses but don’t have to swear. They often can use telephone, take notes, sign on a written statement, recordings and other methods to collect evidence. For a serious maritime accident, investigators will hold a hearing for an official investigation. For more serious maritime accident, the NTSB will participate in the investigation of it and then will propose safety recommendations.
+
+Figure 1 DOE’s process for accident investigation
+Source: DOE,1999
+    
+From the practice of maritime accident investigation in China, most accident will be conducted by China maritime safety administration, which will appoint investigators to do their work in accordance with the <Regulations for the investigation and handling of maritime traffic accidents>. Further more if the accident is very serious, the State council or the Ministry of Communications will appoint a special accident investigation committee for investigation and handling.
+
+Regularly, in China maritime investigation agencies’ workflow is as follows:
+    1) Maritime accident information sources. After the accident happens, the MSA received a report from crews, witness and so on, would immediately start an investigation, try to minimize the delay time.
+
+    2) Data and information collection. Including the crews’ fact statement of offending ship about the accident, the witness’s testimony, the legacy of related articles, inquest, exploration, and recordings, etc...
+
+    3) Cause analysis. By using various analytical tools, and creates connections between facts and conclusions of the accident, to explore the cause of the accident process.
+
+    4) Accident handling. According to the relevant regulations of maritime traffic accident investigation in China, on the basis of preliminary investigation, there are three aspects of accident handling by the maritime safety administration: first, write maritime traffic accident investigation report; second, to determine whether the parties have the illegal responsibility and punishment; third, propose safety recommendations to prevent similar accidents happen again.
+
+
+    5) Case closure and file organize. On one hand, the accident investigation agency should complete the whole process of investigation, find out the reason, submit the report, propose the suggestions to strengthen the safety management, get to carrier out the end of the procedure. On the other hand, after finishing the case closure, the investigator shall timely organize the relevant investigation materials. Usually should be organizing them according to the materials’ importance, time order and the real situation in a certain sequence.
+
+2.3  The mainstream investigation analysis methods
+A number of methods for accident investigation have been developed, with their own strengths and weaknesses. Some methods of great importance are selected for further examination in this chapter. The selection of methods for further description is not based on any scientific selection criteria.  But the methods are widely used in practice, well acknowledged, well described in the literature and some methods that are relatively recently developed.
+
+    2.3.1 Core analytical techniques
+Events and causal factors charting and analysis: It is an important component in the accident investigation repertoire of methods. It can be used not only to analyze the accident and evaluate the evidence during investigation, but also can help validate the accuracy of pre-accident systems analyses.
+
+Figure 2 Events and causal factors chart
+Source:DOE,1999
+
+Barrier Analysis: An incident can be thought of as the end result of a number of failures in various types of barrier (risk control systems). That barriers- also referred to as safeguards or defenses could be physical barriers or procedures that act as a barrier against sub-standard human performance.
+
+Figure 3 Basic steps in a barrier analysis
+Source:DOE,1999
+
+In this paper, the analysis tool of barrier will not make further discussion. Only event and casual factors will be put into the simulation application due to time limitation. 
+
+ 2.3.2 Specific analytical techniques
+Table  3 Accident investigation methods
+Fault Tree Analysis	MORT (Management Oversight and risk tree)	Integrated Accident Event matrix	Storybuilder
+Fish bone tree	PET (Project Evaluation Tree analysis)	Software Hazards Analysis	5why
+
+Root Cause Analysis	Human Factors Analysis	HSYS-Human system interactions	Why tree
+
+Source: CCPS,1992
+
+2.4  Collecting evidence and facts
+In maritime accident investigation, collecting data and information is a core part of the investigation process. There are three key types of evidence should be collected during the investigation, which are as follows:
+
+First, human or testamentary evidence, which includes witness statements and observations; Second, physical evidence is matter related to the accident; Third, Documentary evidence, which includes paper and electronic information, such as records reports, procedures and documentation.
+   
+Collecting evidence is a time consuming work, also need enough patience and skills. Witness may tell you sketchy or conflicting accounts of the accident (Snore sklet, 2002). Documentary evidence may be hard to collected or very less. Physical evidence may be destroyed or damaged already. However, the investigation need that board members are diligent in pursuing evidence and adequately explore leads, lines of inquiry, and potential causal factors until they gain a sufficiently complete understanding of the accident.
+   
+For generating an accident investigation simulation, the major steps for design the application are to understand the evidence gathering parts. Collecting human, physical and documentary evidence, examining organizational concerns, management systems, and line management oversight and at last preserving and controlling the collected evidence. 
+
+2.5  Events and casual factors charting and analysis
+As above-mentioned, events and casual factors charting and analysis could be a very useful technology tools for maritime accident investigation. Therefore, the author tries to insert the ECFA into the simulation application as a function.
+   
+ECFA is a part of the MORT method. The crucial element of ECFA is the event and causal factors chart. This is the ‘picture’ that the investigator constructs from the information gathered in their investigation. The chart shows ’events’-what happened-in rectangles- and ‘conditions’ in ovals. Event boxes are linked by arrows showing the sequence of the incident. Conditions that affected the event are also linked to the boxes by arrow.
+    
+Normally, analysis-using ECFA should typically use a paper wall chart and draw on event boxes. They should start with the incident itself then work backwards putting in further boxes to describe the sequence that led up to the event. They should also work forward describing what happened after the event. The main event sequence should be shown in the middle of the chart with any contributory or secondary events shown in separate sequences above or below this. Sticks on notes are often used to allow the analysis to change the sequence or add elements quickly.
+    
+Table  4 How to draw an Event and casual factors chart
+Symbols	
+	Event
+	
+	Conditions
+	               	Events should be connected by solid arrows
+	            	Conditions should be connected to each other and to events by dashed arrows
+	          	Each events and condition  be based upon valid factual evidence or be clearly indicated as presumptive by dashed line rectangles and ovals.
+	        	The primary sequence of events should be depicted in a straight horizontal line with events joined by bold printed connecting arrows.
+Events	Are active (crane strikes building)
+Should be stated using ine noun and one active verb
+Should be quantified as much as possible and where applicable
+Should be indicate the date and time, when they are known
+Should be derived from the event or events and conditions immediately preceding it
+Conditions	Are passive (fog in the area)
+Describe states or circumstances rather than occurrences or events
+As practical, should be quantified
+Should be indicate date and time if practical/ applicable
+Are associated with the corresponding event
+Primary event sequence	Encompasses the main events of the accident and those that form the main events line of the chart
+Secondary event sequence	Encompasses the events that are secondary or contributing events and those that form the secondary line of the chart
+Sourch: Snore Sklet,2002
+
+Accurate ECFA can help satisfy these general purposes in the following ways (J.R. Buys, 1995):
+    1) Offer a cause-oriented accident explanation;
+    2) Could help to make some changes to prevent future accidents and operational errors;
+    3) To clarify the responsibility boundary;
+    4) To make sure conduct the investigation objectively;
+    5) Well organizes quantitative information and data;
+    6) Acts as an operational training tool;
+    7) Provides an effective aid to future systems design.
+
+Figure 4 Events and causal factors analysis
+Source: DOE,1999
+
+Conclusion, in accident investigation, especially in the process of the accident simulation, if could put the accident events and relevant conditions as picture cards into the accident simulation scenes by events order, that should be more convenient to understand and review the whole process of the accident.
+
+
+
+
+
+
+CHAPTER 3: RESEARCH ON SHIP MOTION THEORY
+
+Most of the simulation software’s principle is based on the physical operation theory in real world. It is essential to research on the relate ship physics theory in order to generate the application of an accident simulation.
+
+The contents of ship maneuverability include the sport performance, the place of the natural environment and geographic environment (wind, wave, current, shallow water and maneuverability requirement), and all of these factors are the primary tasks of research on ship maneuverability. When in the actual voyage, ships will be affected by wind, wave and current. Many maritime accidents happened in rough sea conditions, and often were accompanied by high winds and torrential rain. Therefore, in ship maneuvering, not only ship’s physical force such as propeller and rudder should be considered, but also interference of hull by wind flow or other the external forces (Tian Chao, 2003). 
+	
+3.1  Ship maneuverability theory
+In the past decades, great progress has been made in study of ship maneuverability. Internationally, ship maneuvering simulation began in the 1860s; since the late 1960s and early 1970s, people have been able to calculate maneuvering motion in the initial stages of ship design for ships in Z formation, rotary and spiral. In the mid-1970s, a few of scientists started to consider environmental forces’ influence such as wind, wave and current. In the early 1980s, a scientist put forward a practical method for calculating the ship maneuvering motion, except for considering rolling, he added the  propeller speed equation(Tian Chao, 2003). In the meantime, Biancardi considered the influence of the narrow channel and shallow water, and then he put forward the two ships design initial phase estimation method of ship maneuverability. 
+
+For the sake of convenient and practical simulation calculation, ship control movements under comprehensive and various factors, the introduction of assumptions are listed as follows: 
+1) Ship sailing in infinite broad waters;
+2) The free surface is the static water; hull is regarded as rigid body;
+3) Ignore the ship roll, pitch and lifting effect on the manipulation of movement;
+4) Disturbance force of paddle rudder force flow can be linear superposed, the wind and waves don’t need to consider the coupling nonlinear factors.
+
+The motion equation of the ship is established on the basis of the static mathematical model, the manipulation of the movement in the water joint with the interference of wind, wave and current force are added to the right end of the equation.
+
+This equation has two coordinate systems, a fixed coordinate system is fixed in the earth , the other coordinate system is with hull movement O-xyz, coordinated with the origin center of the ship’s gravity.
+
+
+
+Among them, the subscript H, P, R, Wind, Wave and Current stand for the hull, propeller, rudder and the force of Wind, Wave and current respectively. Therefore, in the discussion of ship maneuvering under environmental conditions, the key is to determine the motion interference by force of wind, wave and current. The discussion will be separated as following.
+
+3.2  The force of Wind, Wave, Current
+3.2.1  Wind force
+Among research on maneuvering of ship under the action of wind pressure, the most important step is to estimate wind pressure force and moment accurately.
+Wind forces can be expressed as: 
+
+
+
+Among them, is air density,  and  are relative wind speed and wind angle, are orthographic projection area and lateral projection area above the ship’s water line,  is the ship’s over long, are respectively in the xy axis direction of the wind pressure coefficient and wind pressure torque coefficient of z axis.
+
+3.2.2  Wave force
+The interference to ship maneuvering caused by wave force is one of the significant technology problems for both Chinese and abroad scholars. 
+
+Research on wave influence of maneuverability is usually based on MMG manipulation of the equations of motion, and considers the hydrodynamic derivatives of roll. However, the expression of wave force is different. In 2001, Fan Yuming used dispatched coordinate system to establish the sixth degree motion equations and manipulation of ship in waves, which forecasted the movement of manipulation of ship in waves, and analyzed the influence of the waves on the ship maneuvering performance.
+
+First order of wave interference force is of high frequency of small amplitude with shock waves features. It will mainly cause pitch and heave motion for the ship, and litter effects for ship rolling. And the second order of wave disturbing force itself is nonlinear, and related to the frequency of the wave. Not only just change the course of ship navigation and trajectory, but also influence the position of ship movement at anchorage situation; and even influence the dynamic positioning system of drilling platform. 
+
+In order to calculate the wave drift force, after considering the influence of the wave on the ship maneuvering performance, Daidola puts forward the calculation formula of wave drift force and moment of the following:
+
+
+
+Among them, is average wave amplitude，) is x,y axis direction wave drift force coefficient and around the z axis direction of the wave drift moment coefficient. is wavelength，x is encounter angle.
+
+3.2.3  Current force
+Current studies often adopt the assumption of constant and uniformity, but this model is only applicable to the ship maneuvering in the sea. For unifying current force to ship, relative speed concept is usually considered in the strength calculation of ship.
+
+Research on current force from time aspect consideration is divided into steady and unsteady; from geographically aspect consideration is divided into uniform current and non-uniform current. Considering ship maneuvering performance calculation under current interfere force, there are two solutions: one is in hydrostatic manipulation motion mathematical model, on the basis that the flow will join the force and moment equation of the right side, then solve the equations of motion, but the reaction coefficient of current need to be tested and determined; the other way is to use the velocity vector synthesis method, then the trajectory calculation need coordinate transformation between the relative velocity and absolute velocity.
+
+In general, similar to the calculation method of wind pressure force, current force can be expressed as: 
+
+
+In the case of lacking of experimental data, the second processing method can be used, therefore, in the equation of ship motion, the motion parameters are processed into the relative motion parameters of current.
+
+After accurate calculation, the movement parameters of ship maneuvering motion equation in static water is converted to the relative motion of water motion parameters, namely, considering the influence of current.
+
+3.3  Ship Collision theory
+3.3.1  Introduction
+With the development of shipping industry and the diversity of activities at sea, the traditional concept of collision does not adapt the development of new situation. The International Maritime Committee (IMC) drafted <Preliminary Draft International Convention on the Assessment of Damages in Maritime Collisions> in 1987.
+
+The draft 's first article is a new definition of a collision:
+1) “Collision” means any accident occurring between vessels which causes loss or damage even if no actual contact has taken place.
+2) “Collision” means any interaction between two or more vessels caused by the fault of one or more of them resulting in loss or damage whether or not contact between the vessel has occurred. 
+3) “Vessel” means any ship, craft, machine, rig or platform whether capable of navigation or not, which is involved in a collision.
+
+A new concept of collision only applies to the damages calculation method principal regulation; the determination of ship collision liability between ships does not apply to this regulation. At present, ship collision liability is still determined by the Collision Convention in 1910.
+
+Ships collision is very common in maritime traffic accident, so that many experts try to find out kinds of solutions to avoid the tragedy happening again. Collision is a kind of complex nonlinear dynamic response process under a huge impact load in a short period of time. There are a lot of nonlinear problems in collision, such as geometric nonlinearity, material nonlinearity, nonlinear contact and nonlinear movement, etc. All of these characteristics make the research of ship collision quite complex.
+
+The current research methods mainly include: empirical formula method, real ship experiment method and the finite element simulation analysis method. Empirical formula methods calculate is very rough, usually used in study of the ship's two-dimensional motion in a plane; although real ship experiment method could get reliable data, the "destructive experiment" is extremely expensive. By comparison, the finite element simulation analysis has a lot of advantages, such as operation ability, low cost, and using computer image-processing function which could be reproduced the collision process intuitively (Liu Chao, 2014).
+
+In this paper, a collision has several key points (Sun Shugang,2010):
+    1) Ship hulls should have physic contact. If two ships have some kinds of interaction caused damage to a ship, but no contact between the two ships, that is not a collision.
+    2) Damage caused. If the ships have not encounter damage, therefore no compensation involved due to no damage, and it is unnecessary to conduct accident investigation. 
+    3) Collision happened between ships or ships with other objects. Ship navigation environment is complicated, besides collisions between ships, ship may collide with breakwater, bridge, port facility, terminal, lighthouse or other fixed constructions.
+
+3.3.2  The process of ship collision
+Ships often encounter with other ships during the voyage, especially in the coastal, narrow waterways, fishing area, port area with high ships density, etc. In the process of encountering with other ships, if one ship cannot keep them from a safe distance, ship’s pilot must take actions to avoid collision. If these actions totally failed, the ship collision will occur. 
+
+The process of ship collision including several steps such as pilot find a ship in his vision, judge the risk, take avoidance actions and etc..
+
+
+Figure 5 Ship collision process
+Source: Made by author
+
+Above figure reflects the detailed process of ship collision accident, different operation lead to a divided collision path.
+
+3.4  DCPA and TCPA
+DCPA means distance of close point of approach, TCPA means time to close point of approaching. Both of the two indexes can directly reflect two ships in one of the most dangerous moment keep distance between them, the value more less the situation more risk?. 
+
+At present, the automatic radar plotting aids (ARPA), has played a great role in the judgment of the simulation whether there is a risk of collision, which is also mainly according to the two indicators: DCPA and TCPA. Recently, the DCPA and TCPA are two important indicators to judge risks of ship collision by international organization（Tang Fengwen, 2011）.
+
+Set the speed of the vessel and heading course as and ，the speed of coming vessel and heading course are abbreviated，Azimuth Angle is q，distance is D。According to the principle of radar plotting, a vector triangle of ship should be encounter. If coming ship’s speed relative to the own ship’s speed is , Heading course is , then there will be a vector triangle has shown in figure as follows.
+
+Figure 6 Vector triangle of ship encounter
+Source: Tang Fengwen, 2011
+
+As the vector triangle ABC shows, according to the relationship of trigonometric functions are:
+
+
+
+
+
+If take speed ratio:   
+Because the course relative to coming ship: ，the value within 0°~180°，therefore：
+
+Thus，The distance of close point of approach is：
+
+and the time of close point of approach：
+
+
+3.5  Summary 
+In this chapter, the author discusses the basic physical principle of ship motions, including the influences of environmental condition, such as wind, wave and current interference force. However, the influences of environmental condition just show as visualization elements in the accident simulation base on Unity 3D, scholars will keep researching and generating fully weather condition system in such simulation in near future. After discussing the process of ship collision, the DCPA and TCPA are introduced and explained. In this simulation, DCPA and TCPA data will keep updating and showing on the screen throughout the whole collision simulation process to help investigator find out the root cause of accident.
+
+
+
+
+
+
+
+CHAPTER 4: DESIGN THE SIMULATION APPLICATION IN UNITY 3D
+
+4.1  Introduction of Unity 3D 
+4.1.1  Unity 3D 
+Unity is a cross-platform game engine developed by Unity technologies, provided 2D/3D engine and framework that gives you a system for designing game or app scenes for 2D, 2.5D and 3D. Unity allows you to interact with them via not only code, but also visual components, and export them to every major mobile platform such as Android, iOS. However, Unity is not just a game engine only can produce 3D game, many engineers create training simulators, first-responder applications and other business-focused applications with Unity that need to interact with 2D/3D space. Further more, Unity support many major 3D applications and many audio formats, and even more you could drop a .psd file into a Unity project. However, Unity not support you design 3D or 2D assets and 3D models. Users are allowed to import 3D model made by 3DSMAX or Maya or other software into system, and then write code to interact with objects, create or import animations for use with an advanced animation system. It is important to note that there are many powerful plu-ins right inside of the unity, such as Terrainland or Terrainworld, and you also could design terrains with trees, grass, and mountains by Unity terrain tool (Adam Tuliper, August 2014).
+
+Table  5  Three basic parts in Unity 3D
+A game engine	This allows the games to be created, tested and played in different environments.
+An application 	The design or the user interface is put together with a graphics preview option and control play function.
+A code editor	The IDE provides a text editor to write code. 
+
+Source: Made by author
+
+4.1.2  Advantages of Unity 3D
+Unity 3D have a lot of advantages for developing a game or a simulator. This paper will discuss the details as follows:
+    1) Design environment: The Unity editor is fully integrated. The Unity graphical editor allows users to design and layout Unity scenes with ease, being able to insert objects, scripts, light effects, physical effects, etc. This is achieved by dragging components and modifying parameters. Hence, it greatly reduces development time compared to other game develop tools.
+    2) Programming language: Unity3D lets you use C # or Javascript. Both C # and Javascript are a lot more powerful languages than C ++, which allow you to program actions and algorithms with less difficulty than C ++. Code is very much stable in comparison to other languages and consists of a great architecture for good performance and reduced errors. 
+    3) Physics & Rendering: By using physics properties, objects can be given mass, drag, springiness, bounciness, and collision detection as well as be assembled using a variety of joints. The physics properties are simulated by nVidia’s PhysX engine, which is used in many AAA commercial games. The rendering properties include shader and texture assignment which affect the appearance of visible objects. 
+    4) Multiplatform: Great support for a wide variety of platforms, about 95% work is shared to almost every gaming technologies market: mobile and tablets (iOS, Android, Windows Phone and BlackBerry), browser (with Unity Web Player and HTML 5 soon) console (Xbox, PlayStation and Wii) and desktop (PC, Mac and Linux).
+    5) Documentation and Learning time: The support of experienced developers and detail documentation on minute details of topics is an added advantage. The support is relatively quick and concise. The Unity learning time is much faster than others: the graphical editor, C # / Javascript and copious information and support make it an enjoyable learning experience.
+    6) Community and Extras: Unity3D is already a very powerful development tool. But this power is enhanced more with the contributions of others through its Asset Store. Hundreds of developers sell their plugins, resources and improvements through this store. Some of these plugins are so powerful that they are a must buy: 3D models, 2D textures, animations, applications, extensions editor, scripts, materials are just some of the extras you can buy or free download at Unity´s official store.
+
+4.1.3  The relate productions based on Unity 3D 
+Using Unity can develop almost all kinds of games. For example: MMRPS (multiplayer online role playing game), racing games, action games, shooting games, warships simulation games, and so on. At present in the mobile platform, the Unity of the development of 3D game is playing a more important role. According to a statistics report, in Apple platform, the 60% 3D game were developed by Unity 3D. The number in Android platform should be bigger. Such as the Czech republic game producer MADINGER GAMES develop a game “ The shadow of the gun” is based on the Unity engine, and the IMAGINE STUDIO developed an amazing game “Temple run” were warmly welcomed by the vast number of game fans due to its excellent images of expression.
+
+Besides the traditional entertainment games area have its great effective, the Unity engine has been widely used in military, aerospace, defense, industrial simulation, education training, building roaming, medical simulation field and so on. For example, NASA launched a trip to Mars exploration application, which based on Unity engine development; The US Oceanic and atmospheric administration based on Unity engine to development a Big data 3D visualization tools. Further more, some hospital develop medical training simulation system, some campus and museum develop roaming system based on Unity engine. Similarly, in recent years the application of virtual reality can also be developed based on Unity engine. In a word, People could develop and customize special requirements applications based on Unity 3D.
+
+In addition, even if there are the ship collision avoidance simulation platform based on HLA (Wang Yuanhui,2007), the auto-preventing collision simulation platform for ships based on MSA and marine simulator (Yang Shenhua,2006), ship model and real-time simulation based on OpenGVS/Creator (Jia Cuiling ,2008), etc.. However, the above platforms have modeling complex, operation complicate, high requirements for hardware, simulation produce time too long and so on disadvantages, can’t not satisfy the need of the common maritime investigator for real-time demonstration.
+
+To generate an accident investigation simulation platform based on Unity is essentially to create a highly customizable maritime accident investigation simulation game. If the accident investigator could accord a standard procedure: collects the data and information, make certain terrain, picks ship and construction model, input basic accident information, adjust the environment variables, etc.. Then it will process a accident simulation animation automatically. Finally, output the animation or PDF file for investigation report or case study.
+
+4.2  The basic views and functions of Unity 3D engine
+4.2.1  The basic views of Unity
+There are five main views used in the Unity editor to get all the work done, the project view, scene view, game view, hierarchy view and inspector view, all of which are explained in more detail below. 
+    1) The Scene View 
+
+The scene view is one of the most used views as this is where all the game objects are placed and scenes for the game are built. 
+    2) The Game View 
+
+The game view is what user will see when the game is started. There are several op- tions for this window. Across the top of the window there are several button/drop down menus which can change things from the perspective, full screen, and gizmos shown in the game view. 
+
+    3) The Hierarchy View 
+
+The hierarchy view is where all the objects in the game can be created, accessed, grouped and manipulated to make the game. When the project is saved, the objects are saved in a scene file. 
+    4) The Project View 
+
+The project view is where all the scripts and scenes are accessible from. This view is exactly like the file explorer on Windows or Mac and allows creating files and folders to help organize the projects assets. 
+
+    5) The Inspector View 
+
+The inspector view is where all the physics and properties of the objects are stored and accessed from. Every game object has a transform; this is what holds properties of the object such as rotation, position and scale. Other properties are the physics affecting the object, textures to load on the object and sound. 
+
+4.2.2  The basic functions of Unity 3D
+    1) Assets store
+Unity's Asset Store is home to a growing library of free and commercial assets created both by Unity Technologies and also members of the community. A wide variety of assets are available, covering kinds of things from textures, models and animations to whole project examples, tutorials and Editor extensions.
+
+    2) UI
+The UI system allows users to create user interfaces fast and intuitively. The menu, window and other object onto the screen all make by UI system.
+
+    3) Navigation
+The navigation system allows user to build characters that can intelligently move around the game world, using navigation meshes that are created automatically from the scene geometry. Dynamic obstacles allow user to alter the navigation of the characters at runtime, while off-mesh links let you build specific actions like opening doors or jumping down from a ledge.
+
+    4) Physics
+To have convincing physical behaviour, an object in a game must accelerate correctly and be affected by collisions, gravity and other forces. Unity’s built-in physics engines provide components that handle the physical simulation for user. By controlling the physics from scripts, user can give an object the dynamics of a vehicle, a machine, or even a piece of fabric. 
+
+4.2.3  Common game mechanics
+    1) Collision detection
+The simplest definition of collision detection in relation to games is to determine if two rectangles in the same 2D or 3D space are overlapping. In Unity there is a method already created to help any game enthusiast create a game involving collision detection. The method is called OnCollisionEnter (Collision). In order for this method to work both objects in Unity need to have either a collider attached or a rigidbody on the object.  
+2) Finite state machine
+A finite state machine at the simplest form is a model of how a system or a game will behave. Depending on the input from the player the state of the game can change. Each of the games described in the thesis project use a finite state machine to some extent. 
+3) Timers
+There are many uses for timers in a game. It would be very surprising to find a game that does not use a timer or time in some fashion. There are countdown timers, count up timers, cool down timers, duration timers and timer based score. 
+In Unity a timer is constructed by using a local or global variable set to the desired time in seconds. Then just subtract Time.deltaTime from the variable which will decrease it by 1 second. 
+
+4) Path finding
+The general definition of path finding is plotting a path from a start point to an end point, done by a computer program or algorithm, which is applied to a graph. In many cases the shortest path is the subject of interest to find. 
+
+4.3  Terrain virtualization 
+Virtualization of real terrain is the precondition of the accident simulation. Virtual accident scene usually includes the basic elements of surface topography, for example, bridges, ports, waterways, rivers, vegetation gate, buildings,etc..
+
+According to the feature of Unity 3D, there are 8 steps for creating 3D scene of accident. 
+Source: Made by author
+
+Generally, creating terrain have two main methods, one is using Unity basic tool terrain to draw in scene view; another one is using relevant terrain assets to import maps into Unity. If want to make real terrain for further research, the bathymetric terrain and elevation terrain are needed.
+
+4.3.1  Generation of bathymetric terrain
+Using Global Mapper could get the bathymetric information from the ENC file. The ENC is vector-based electronic map generally used in electronic chart display and information system for safer navigation. The acquired bathymetric information is converted to the RAW file to be used in Unity 3D, and make a visualization part (II-SIK Shin, 2015).
+
+Figure 8 Generation of bathymetric terrain
+Source: Made by author
+
+            4.1.1 Generation of elevation terrain
+Elevation refers to the mean sea level. The elevation information was acquired from NASA’s digital elevation map database of SRTM by using Unity 3D Terraland Downloader Asset. 
+
+Figure 9 Generation of elevation terrain
+Source: Made by author
+
+4.3.2  Combination of bathymetric terrain and elevation
+Terrains generated using bathymetric and elevation data need to be matched, and this is done using terrain editing tool on Unity 3D.
+
+Figure 10 Combination of bathymetric terrain and elevation
+Source: Made by author
+
+4.4  Ship modeling
+In 3D modeling area, there are a lot of model build software, such as: 3DMAX, AutoCAD, MAYA, PRO/E, Sketh Up and so on. And specially for virtual reality, visual simulation, sound simulation and some kinds of modeling tools.
+
+In this paper, the Google company’s production Sketch Up is use as a modeling tools to build ships, bridges, buildings, port facilities and so on. Usually, there are two ways to do the work:
+
+4.4.1  Download Official model store
+First way is downloading existing models from the official model store—3D warehouse, or searching the target models from relevant industry website. Due to Sketch Up support many types of files such as .dwg, .3ds, so that user can customs the models as needed.
+
+Figure 11 Official model store—3D warehouse
+Source: Snapt from Sketch Up by author
+
+Figure 12 A ship model download from 3D warehouse
+Source: Snapt from Sketch Up by author
+
+Figure 13 A ship model download from website
+Source: Snapt from Sketch Up by author
+
+4.4.2  Build from blue print
+The second way is modeling ships and buildings bit by bit in accordance with the relevant data and blue prints.
+
+Figure 14 Build ship model according to blue prints
+Source: Snapt from Sketch Up by author
+
+Figure 15 Build bridge model according to relevant data
+Source: Snapt from Sketch Up by author
+
+4.4.3  Build accident models library
+According to statistics report and accident investigation experience, create typical ship models to build an accident model library.
+
+Figure 16  Ship model library
+Source: Made by author
+
+4.5  Special requirements for accident investigation simulation application
+On the basis of above research, the author will create Maritime casualty study simulation application in the next chapter. Before start to developing, some special requirements should be propose and clarify.
+
+4.5.1  Ship model choosing and terrain setting
+Before simulation process start, the investigator could choose relevant ship models and set terrain according to the real accident situation from the model library. 
+
+4.5.2  Weather condition setting
+According to the real weather condition at the time of the accident happening, investigator should set the wind, wave, current, light, frog, rain and so on.
+
+4.5.3  Ship moving and collision path setting
+Ships motion trajectory can be added according to the GPS data, or draw by the investigator.
+
+4.5.4  ECFC
+In order to better analyze the cause of the accident, event and causal factors chart should be insert into the Unity 3D.
+
+4.5.5  2D mini map 
+In the main screen displays 3D animation of ship motion and collision details, in the meanwhile, opening a mini map to shows the full trajectory of ships.
+
+4.5.6  Navigation data display
+When the simulation process running, the screen could display the relevant data of ship GPS, ship speed and angle, wind speed and direction, and DCPA and TCPA should be update in time.
+
+
+
+
+CHAPTER 5: IMPLEMENTATION
+
+5.1  The develop process of application 
+For building the Maritime casualty investigation simulation application, an appropriate development process can make half a working times but excellent work.
+
+5.1.1  Build model library
+First of all, making ship models and terrain. Then import them into unity and store them in a model library.  
+
+5.1.2  Develop the physics engine
+In order to let the ship motions more close to realistic, the developer should research relevant physic theory carefully. Then through editing the script code, to write the object running regulations to direct control ship, wind, water or port facilities. The more you understand the real world physic theory, the more you familiar with the script code, the more accurate you could simulate the virtual world running by generate a complicate physics engine. 
+
+5.1.3  Design the UI system
+The User interface is very important part for an application. In this paper, not only generate a menu or model library, but also relation to investigator how to conduct the investigation procedure. What kind of data need showing on the screen? And how to input information and process? All should consider carefully in this part.
+
+5.1.4  Design the interaction for simulation experiment module
+In this step, add the Box Collider physics model to those ship models, to achieve physical effects of collision in Unity. Then add the Rigibody property to ships models, so that the model has a rigid physical property. For bridges and other buildings model were added Collider properties also, so after starting the Unity engine will be able to simulate the effects of a collision with bridge and ship. 
+
+5.1.5  Export files
+After complete system design, then you can export an application as EXE file in windows or release an iOS application for mobile device as needed.
+
+Figure 17 The develop process of application
+Source: Made by author
+
+5.2  Scene construction  
+According to the above design concept，the author attempts to build a certain scene to simulate ship collision accident. 
+
+
+Figure 18 Generate an island terrain
+Source: Made by author
+
+Figure 19 Modeling port facility
+Source: Made by author
+
+Figure 20 Modeling light tower
+Source: Made by author
+
+Figure 21 Modeling ships and put them in right position
+Source: Made by author
+
+5.3  The using procedure of application
+ 
+Figure 22 The operational procedure simulation application
+Source:Made by author
+
+1) The maritime accident investigator should start investigate earlier and collect extensive data and information to prepare the Marine report. The report includes data of the vessel, voyage and crews details, weather, sea and tidal conditions of the accident, further more they need to record the position information, aid operations after the accident, the cabin order, steering automatically record data, etc; 
+
+Open the basic information page and fill the relevant information of the accident, such as ship particular, location information and so on. Then, open the ECFC page start to fill the accident information step by step. 
+
+    2) Access to the ship model settings page, select the model ship in accident, and set the length and width parameters and cargo loading condition; 
+
+    3) The relevant ship models to the starting position, and set the path of movement and speed, and set the weather, water conditions.
+
+    4) Click Start button, the ship began sailing in accordance with established track while the status bar will display ship speed, GPS, DCPA and other information.
+
+
+    5) ECFC ship sailing in chronological order in a different location in the pop-up window and displays the contents.
+
+    6)  Collision occur, showing the effect of the collision. 
+
+
+    7) End of the simulation, playback simulation animation, analysis of the results. If the results unreasonable, then adjust the simulation process, until satisfied.
+
+8)  Output accident simulation animation and PDF documents.
+
+5.4  The result of simulation
+On an island, there is a port facility busy running all the days for one small costal city. A dry bulk cargo ship named Lily starts her new voyage after finish discharging cargo, when a container ship named Mary which full load of containers sailing from another countries. They are encountering in a narrow chanel. 
+
+Figure 23 Ships collision accident investigation simulation
+Source: Made by author
+
+Two ships all trying to avoid collision, however, one of them made operational mistakes. In the mean time, the small window appear right up the ships and showing the contents of events and casual factors chart.
+
+Figure 24 Design of ECFC cards in accident simulation
+Source: Made by author
+
+Figure 25 One ship collider with another one case damaged and sunk
+Source: Made by author
+
+Finally, two ships are too late to take actions to avoid the collision. Lily encounters heavily damage and start sinking.
+
+
+
+
+CHAPTER 6: CONCLUSION
+
+This paper discussed the method to develop a maritime casualty investigation simulation. For this purpose, the author generated terrain, created ship models, located 3D objects and designed the ECFC card. According to the design idea and implementation method, the maritime casualty investigation simulation application prototype has been created based on Unity 3D. 
+
+Unity is an extremely powerful and versatile tool that can create simulators as good as any commercial product on the market. In fact, unity has been used to make many successful commercial games and project simulator. Unity’s ability to quickly render 3D scenes and execute code makes it ideal for simulators as well as games (Sergio Perez-Gruszkiewicz). 
+
+In next development steps, the simulation application also need consider navigation tools such as radar, ECDIS, AIS and VDR, which could provide the accurate information of ship position and relevant data for accident investigation.
+
+At the time to submit of this paper, due to time consuming limitation and technique restrictions, the fully functions of simulation application is still in development.
+
+. 
+
+
+
+
+
+
+
+REFERENCES
+
+Adam Tuliper, (August 2014). Unity : Developing Your First Game with Unity and C#, Developer Network. Vol.29(8). Retrieved from: https://msdn.microsoft.com/en-us/magazine/dn759441.aspx
+
+Pu Kangbao,(2009). Maritime casualty investigation. Dalian Maritime University Express 2rd edition.
+
+Lu Huijuan, Gao Hongbo , Zhou Guoyu and Shenjun,(2005). Study of a 3D simulation system for analyzing flying security and accidents, Computer application. 25(8):1959-1961.
+
+Lv Tao ,(2009).Design and development of road traffic accident three-dimensional reconstruction system (Master dissertation, Chengdu, Sichuan province, Sichuan Shifan University). 
+
+Liu Chao, Li Fanchun, Li Xiang ,(2014). Computer simulation in the application of the maritime accident analysis,  Journal of Wuhan University of Technology. Vol 38(6):18-20.
+
+He Kunjin, Zhang Lijun, Li Qiang, Liu Jianxin,(2015). 3D visualization information Management system of channel and ship based on OSG, JISUANJI YU XIAN DAI HUA.p.243.
+
+Yang Shenhua, Li Lian, and Suoyongfeng,(2008). Study of dynamic simulation system for vessel’s collision process and its application, Journal of Jimei University(nature science),13(3):227-231.	
+
+Snore Sklet,(2002).Methods for accident investigation, Norwegian University of Science and technology.45-50.
+
+IMO website: http://www.imo.org/en/OurWork/MSAS/Casualties/Pages/Default.aspx
+
+Wikipedia: Marine accident investigation https://en.wikipedia.org/wiki/Marine_accident_investigation
+
+UNCLOS:United Nations Convention on the Law of the Sea. United Nations, 1982
+
+SOLAS: the International Convention for the Safety of Life at Sea. IMO, 1974
+
+MARPOL: the International Convention for the Prevention of pollution from Ships. IMO,1973.
+
+IMO(1997d). Resolution A.849(20):Code for the Investigation of Marine Casualties and Incidents.
+
+MAIF (the Marine Accident Investigation International Forum) 
+Retrieved from::http://www.maiif.net/
+
+CFR(the Code of federal regulations, U.S.) 
+Retrieved from::http://www.access.gpo/gov/
+
+NTSB (the National Transportation safety board, U.S.) 
+Retrieved from::http://www.ntsb.gov/
+
+USCG(the United State Coast Guard) 
+Retrieved from::http://www.uscg.mil/
+
+DOE, (1999). Conducting Accident Investigations DOE Workbook, Revision 2, U.S. Department of Energy, Washington D.C, USA.
+
+Wang Yuanhui, Bian Xinqian, Shi Xiaocheng, Xia Guoqing,(2007). Design of a ship collision avoidance simulation platform based on high level architecture, Journal of Harbin Engineering University.Vol28(7):768-772.
+
+Yang Shenhua, Shi Chaojian, Li Lina, Guan Keping, (2006).Construction of simulation platform for vessel automatic collision avoidance with technologies of MAS and navigational simulator, Journal of System simulation.18(2):686-690.
+
+Jia Cuiling, Li Weiguo, Li Zongxue,( 2008). Ship modelling and realtime simulation based on OpenGVS/Creator, World Chinese Entrepreneur Economic Yearbook Gaoxiao Jiaoyu Yanjiu.7:153-155.
+
+J.R. Buys, J.L. Clark. (Aug,1995).Events and causal factors analysis, technical research and analysis center.
+
+Chen Yongke, Yang Arjun, Wang Hua, He Wei,(7,2014). Building of virtual battlefield geographic environment based on unity, Ordnance industry automation.33(7):20-23.
+
+Tian Chao,(March,2003).Numerical simulation of ship’s manoeuvring motion in the wind, wave and current (Master dissertation,Wuhan, Hubei province, Wuhan science technology university.) p.42-54.
+
+J.R. Buys, INEL J.L. Clark, INEL,(1995). Events and Causal Factors Analysis, Technical Research and Analysis Center.p.8.
+
+
+Tang Fengwen,Xiao Yingjie, Zhou Wei, Yu Fei,(Oct,2011).Application of simulation technology in ship accident reconstruction, Port & Water Engineering.459(10):42-45.
+
+Wu Hushing,(2004).Analysis of causing factors for maritime collision and liability establishment (Master Dissertation, Shanghai, Shanghai Maritime University.)
+
+II-SIK Shin, Mohammadamin Beirami,Seok-Je Cho, Yung-Ho,(April, 2015).Development of 3D terrain bisalization for navigation simulation using a Unity 3D development tool, Journal of the Korea Society of marine engineering.Vol39(5):570-576.
+
+Sergio Perez-Gruszkiewicz, Elwood Baumgart,(). Three-dimensional engine simulators with unity 3D game software, The 13th Annual general assembly of the IAMU: Expanding frontiers challenges and opportunities in maritime education and training. p:53-61.
+
+Lehui Huang, Bin Gui,(2015).Research on the application of products based on Unity 3D,International Symposium on computers& informatics. Published by Atlantis Press.1213-1217.
+
+Res. MSC.255(84) Casualty Investigation Code，MSC 84/3 ANNEX 4 RESOLUTION MSC.255(84) adopted on 16 May 2008
+
+Zheng Zhong yi; Wu Zhao,(2002).New model of collision risk between vessels, Journal of Dalian Maritime University.vol28(2):1-5.
+
+Sun Shugang,(2010).Accident causation chain analysis of vessel collision (Master dissertation, Dalian, Liaoning province, Dalian Maritime University.) p14.
+
+
+Luis Picurelli,(2014).Comparison Between Unity and Cocos2D Platforms for 2D game development, Retrieved from: https://en.yeeply.com/blog/comparison-between-unity-and-cocos2d-platforms-for-2d-game-developments/
+
+JENNIFER MARSH,(2014).Advantages of the Unity Game Engine – The Ultimate Tool for Game Development, Udemy Blog.
+Retrieved from: https://blog.udemy.com/unity-game-engine/
+
+作者信息：文明忠，1986年10月出生，现任肇庆港口海事处副处长，广东海事局高端人才库第二梯队海事信息方向。

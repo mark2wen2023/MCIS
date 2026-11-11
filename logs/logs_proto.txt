@@ -1,0 +1,2 @@
+Now I have the full picture. Let me write the prototype in parts (CSS → HTML → JS core → screens).
+error: interrupted

@@ -1,0 +1,178 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  W1.Acceptance -> /workspace/maritime-sim-design/tests_acceptance/W1/bin/Debug/net8.0/W1.Acceptance.dll
+Test run for /workspace/maritime-sim-design/tests_acceptance/W1/bin/Debug/net8.0/W1.Acceptance.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.25]     Mcis.Acceptance.W1.RobustnessAcceptanceTests.TimeBands_MultipleTransitions [FAIL]
+  Failed Mcis.Acceptance.W1.RobustnessAcceptanceTests.TimeBands_MultipleTransitions [4 ms]
+  Error Message:
+   [0.0-390.0] Overtaking own=StandOn tgt=GiveWay rules=R5,R6,R7,R8,R34_35,R18,R13,R16,R17
+[390.0-520.0] NoCollisionRisk own=None tgt=None rules=
+[520.0-590.0] Undetermined own=Undetermined tgt=Undetermined rules=R5,R6,R7,R8,R34_35,R18,R13,R14,R15,R16,R17
+[590.0-630.0] HeadOn own=BothActionRequired tgt=BothActionRequired rules=R5,R6,R7,R8,R34_35,R18,R14
+[630.0-900.0] NoCollisionRisk own=None tgt=None rules=
+  0.0-390.0 R8 R8 虚构甲船 NotSatisfied hdgΔ=0.00 spdΔ=0.00 turn=None | 及早=False；明显行动=False；安全驶过代理=False；按本阶段及继承的延后期全部观测段的CPA核查最小实际中心间距。
+  0.0-200.0 R5 R5 虚构甲船 NotAssessable hdgΔ=0.00 spdΔ=0.00 turn=None | 缺少 VDR 音频、驾驶台值班记录及视觉/听觉瞭望记录，无法核查是否保持正规瞭望。
+  0.0-200.0 R6 R6 虚构甲船 NeedsReview hdgΔ=0.00 spdΔ=0.00 turn=None | 需研判：观察最大航速=5.000m/s；能见度=8.000nm；航速提示值=5.000m/s；需要操纵性能、停船距离、交通密度、海况和驾驶台/雷达记录，提示值不作安全航速硬判。
+  0.0-200.0 R7 R7 虚构甲船 Partial hdgΔ=0.00 spdΔ=0.00 turn=None | 航迹 CPA 序列可识别碰撞危险：本区段首次危险时刻=0.000s；DCPA 30.000→30.000m；TCPA 200.000→-0.000s。这是航迹推算的技术事实；是否实际使用雷达/ARPA 标绘与连续观察仍需雷达/ARPA、VDR 和驾驶台记录。
+  0.0-200.0 R34_35 R34/35 虚构甲船 NotAssessable hdgΔ=0.00 spdΔ=0.00 turn=None | 缺少 VDR 音频、汽笛/声号记录、灯号记录及驾驶台值班记录，无法核查操纵、警告和能见度不良声号。
+  200.0-390.0 R5 R5 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段无碰撞危险。
+  200.0-390.0 R6 R6 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段无碰撞危险。
+  200.0-390.0 R7 R7 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段 CPA 序列未形成碰撞危险。
+  200.0-390.0 R34_35 R34/35 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段无碰撞危险。
+  0.0-390.0 R9 R9(a) 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 请求未标记狭水道。
+  0.0-200.0 R18 R18 虚构甲船 NotAssessable hdgΔ=0.00 spdΔ=0.00 turn=None | 缺少船舶状态证据：需要号灯、号型、VHF通报、VDR音频和轮机日志，才能核查R18船舶之间的责任；Unknown暂按机动船进行R13–R17几何核查。
+  200.0-390.0 R18 R18 虚构甲船 NotAssessable hdgΔ=0.00 spdΔ=0.00 turn=None | 缺少船舶状态证据：需要号灯、号型、VHF通报、VDR音频和轮机日志，才能核查R18船舶之间的责任；Unknown暂按机动船进行R13–R17几何核查。
+  0.0-390.0 R13 R13 虚构甲船 Satisfied hdgΔ=0.00 spdΔ=0.00 turn=None | 闭边界追越判据；追越身份持续至驶过、达到让清距离且正在远离。及早=False；明显行动=False；安全驶过代理=False；终点DCPA=30.000m，TCPA=-190.000s，间距=950.474m；观测最小中心间距=30.000m。
+  0.0-390.0 R14 R14 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  0.0-390.0 R15 R15 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  0.0-390.0 R16 R16 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  0.0-20.0 R17 R17(a)(i) 虚构甲船 Satisfied hdgΔ=0.00 spdΔ=0.00 turn=None | 本次危险期内R17阶段单调推进；安全效果按整个危险期结束核查；保向保速=True；安全驶过代理=False；连续操纵=False；朝左舷来船左转=False。R17不解除让路船义务。
+  20.0-140.0 R17 R17(a)(ii) 虚构甲船 Satisfied hdgΔ=0.00 spdΔ=0.00 turn=None | 本次危险期内R17阶段单调推进；安全效果按整个危险期结束核查；保向保速=True；安全驶过代理=False；连续操纵=False；朝左舷来船左转=False。R17不解除让路船义务。
+  140.0-390.0 R17 R17(b) 虚构甲船 NotSatisfied hdgΔ=0.00 spdΔ=0.00 turn=None | 本次危险期内R17阶段单调推进；安全效果按整个危险期结束核查；保向保速=True；安全驶过代理=False；连续操纵=False；朝左舷来船左转=False。缺少操纵性能与停船距离，无法证实单凭让路船已不能避碰；即使动作有效亦仅部分核查。R17不解除让路船义务。
+  0.0-390.0 R19 R19 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  0.0-390.0 R8 R8 虚构乙船 NotSatisfied hdgΔ=0.00 spdΔ=0.00 turn=None | 及早=False；明显行动=False；安全驶过代理=False；按本阶段及继承的延后期全部观测段的CPA核查最小实际中心间距。
+  0.0-200.0 R5 R5 虚构乙船 NotAssessable hdgΔ=0.00 spdΔ=0.00 turn=None | 缺少 VDR 音频、驾驶台值班记录及视觉/听觉瞭望记录，无法核查是否保持正规瞭望。
+  0.0-200.0 R6 R6 虚构乙船 NeedsReview hdgΔ=0.00 spdΔ=0.00 turn=None | 需研判：观察最大航速=10.000m/s；能见度=8.000nm；航速提示值=5.000m/s，超过提示值；需要操纵性能、停船距离、交通密度、海况和驾驶台/雷达记录，提示值不作安全航速硬判。
+  0.0-200.0 R7 R7 虚构乙船 Partial hdgΔ=0.00 spdΔ=0.00 turn=None | 航迹 CPA 序列可识别碰撞危险：本区段首次危险时刻=0.000s；DCPA 30.000→30.000m；TCPA 200.000→-0.000s。这是航迹推算的技术事实；是否实际使用雷达/ARPA 标绘与连续观察仍需雷达/ARPA、VDR 和驾驶台记录。
+  0.0-200.0 R34_35 R34/35 虚构乙船 NotAssessable hdgΔ=0.00 spdΔ=0.00 turn=None | 缺少 VDR 音频、汽笛/声号记录、灯号记录及驾驶台值班记录，无法核查操纵、警告和能见度不良声号。
+  200.0-390.0 R5 R5 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段无碰撞危险。
+  200.0-390.0 R6 R6 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段无碰撞危险。
+  200.0-390.0 R7 R7 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段 CPA 序列未形成碰撞危险。
+  200.0-390.0 R34_35 R34/35 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段无碰撞危险。
+  0.0-390.0 R9 R9(a) 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 请求未标记狭水道。
+  0.0-200.0 R18 R18 虚构乙船 NotAssessable hdgΔ=0.00 spdΔ=0.00 turn=None | 缺少船舶状态证据：需要号灯、号型、VHF通报、VDR音频和轮机日志，才能核查R18船舶之间的责任；Unknown暂按机动船进行R13–R17几何核查。
+  200.0-390.0 R18 R18 虚构乙船 NotAssessable hdgΔ=0.00 spdΔ=0.00 turn=None | 缺少船舶状态证据：需要号灯、号型、VHF通报、VDR音频和轮机日志，才能核查R18船舶之间的责任；Unknown暂按机动船进行R13–R17几何核查。
+  0.0-390.0 R13 R13 虚构乙船 NotSatisfied hdgΔ=0.00 spdΔ=0.00 turn=None | 闭边界追越判据；追越身份持续至驶过、达到让清距离且正在远离。及早=False；明显行动=False；安全驶过代理=False；终点DCPA=30.000m，TCPA=-190.000s，间距=950.474m；观测最小中心间距=30.000m。
+  0.0-390.0 R14 R14 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  0.0-390.0 R15 R15 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  0.0-390.0 R16 R16 虚构乙船 NotSatisfied hdgΔ=0.00 spdΔ=0.00 turn=None | 及早=False；明显行动=False；安全驶过代理=False；保留同次风险延后判定期间的行动和最小间距。
+  0.0-390.0 R17 R17 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  0.0-390.0 R19 R19 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  390.0-520.0 R8 R8 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本阶段无碰撞危险，或直航船在正常保向保速阶段。
+  390.0-520.0 R5 R5 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段无碰撞危险。
+  390.0-520.0 R6 R6 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段无碰撞危险。
+  390.0-520.0 R7 R7 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段 CPA 序列未形成碰撞危险。
+  390.0-520.0 R34_35 R34/35 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段无碰撞危险。
+  390.0-520.0 R9 R9(a) 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 请求未标记狭水道。
+  390.0-520.0 R18 R18 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段无碰撞危险或持续追越义务。
+  390.0-520.0 R13 R13 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  390.0-520.0 R14 R14 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  390.0-520.0 R15 R15 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  390.0-520.0 R16 R16 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  390.0-520.0 R17 R17 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  390.0-520.0 R19 R19 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  390.0-520.0 R8 R8 虚构乙船 NotApplicable hdgΔ=-120.00 spdΔ=0.00 turn=Port | 本阶段无碰撞危险，或直航船在正常保向保速阶段。
+  390.0-520.0 R5 R5 虚构乙船 NotApplicable hdgΔ=-120.00 spdΔ=0.00 turn=Port | 本区段无碰撞危险。
+  390.0-520.0 R6 R6 虚构乙船 NotApplicable hdgΔ=-120.00 spdΔ=0.00 turn=Port | 本区段无碰撞危险。
+  390.0-520.0 R7 R7 虚构乙船 NotApplicable hdgΔ=-120.00 spdΔ=0.00 turn=Port | 本区段 CPA 序列未形成碰撞危险。
+  390.0-520.0 R34_35 R34/35 虚构乙船 NotApplicable hdgΔ=-120.00 spdΔ=0.00 turn=Port | 本区段无碰撞危险。
+  390.0-520.0 R9 R9(a) 虚构乙船 NotApplicable hdgΔ=-120.00 spdΔ=0.00 turn=Port | 请求未标记狭水道。
+  390.0-520.0 R18 R18 虚构乙船 NotApplicable hdgΔ=-120.00 spdΔ=0.00 turn=Port | 本区段无碰撞危险或持续追越义务。
+  390.0-520.0 R13 R13 虚构乙船 NotApplicable hdgΔ=-120.00 spdΔ=0.00 turn=Port | 本时间带的会遇局面或船舶角色不适用该项。
+  390.0-520.0 R14 R14 虚构乙船 NotApplicable hdgΔ=-120.00 spdΔ=0.00 turn=Port | 本时间带的会遇局面或船舶角色不适用该项。
+  390.0-520.0 R15 R15 虚构乙船 NotApplicable hdgΔ=-120.00 spdΔ=0.00 turn=Port | 本时间带的会遇局面或船舶角色不适用该项。
+  390.0-520.0 R16 R16 虚构乙船 NotApplicable hdgΔ=-120.00 spdΔ=0.00 turn=Port | 本时间带的会遇局面或船舶角色不适用该项。
+  390.0-520.0 R17 R17 虚构乙船 NotApplicable hdgΔ=-120.00 spdΔ=0.00 turn=Port | 本时间带的会遇局面或船舶角色不适用该项。
+  390.0-520.0 R19 R19 虚构乙船 NotApplicable hdgΔ=-120.00 spdΔ=0.00 turn=Port | 本时间带的会遇局面或船舶角色不适用该项。
+  520.0-590.0 R8 R8 虚构甲船 NotSatisfied hdgΔ=0.00 spdΔ=0.00 turn=None | 及早=False；明显行动=False；安全驶过代理=False；按本阶段及继承的延后期全部观测段的CPA核查最小实际中心间距。
+  520.0-590.0 R5 R5 虚构甲船 NotAssessable hdgΔ=0.00 spdΔ=0.00 turn=None | 缺少 VDR 音频、驾驶台值班记录及视觉/听觉瞭望记录，无法核查是否保持正规瞭望。
+  520.0-590.0 R6 R6 虚构甲船 NeedsReview hdgΔ=0.00 spdΔ=0.00 turn=None | 需研判：观察最大航速=5.000m/s；能见度=8.000nm；航速提示值=5.000m/s；需要操纵性能、停船距离、交通密度、海况和驾驶台/雷达记录，提示值不作安全航速硬判。
+  520.0-590.0 R7 R7 虚构甲船 Partial hdgΔ=0.00 spdΔ=0.00 turn=None | 航迹 CPA 序列可识别碰撞危险：本区段首次危险时刻=520.000s；DCPA 1056.330→161.073m；TCPA 79.121→30.000s。这是航迹推算的技术事实；是否实际使用雷达/ARPA 标绘与连续观察仍需雷达/ARPA、VDR 和驾驶台记录。
+  520.0-590.0 R34_35 R34/35 虚构甲船 NotAssessable hdgΔ=0.00 spdΔ=0.00 turn=None | 缺少 VDR 音频、汽笛/声号记录、灯号记录及驾驶台值班记录，无法核查操纵、警告和能见度不良声号。
+  520.0-590.0 R9 R9(a) 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 请求未标记狭水道。
+  520.0-590.0 R18 R18 虚构甲船 NotAssessable hdgΔ=0.00 spdΔ=0.00 turn=None | 缺少船舶状态证据：需要号灯、号型、VHF通报、VDR音频和轮机日志，才能核查R18船舶之间的责任；Unknown暂按机动船进行R13–R17几何核查。
+  520.0-590.0 R13 R13 虚构甲船 NeedsReview hdgΔ=0.00 spdΔ=0.00 turn=None | 转向中，延后判定；稳定航向或达到最大延后时长前不确定会遇角色。
+  520.0-590.0 R14 R14 虚构甲船 NeedsReview hdgΔ=0.00 spdΔ=0.00 turn=None | 转向中，延后判定；稳定航向或达到最大延后时长前不确定会遇角色。
+  520.0-590.0 R15 R15 虚构甲船 NeedsReview hdgΔ=0.00 spdΔ=0.00 turn=None | 转向中，延后判定；稳定航向或达到最大延后时长前不确定会遇角色。
+  520.0-590.0 R16 R16 虚构甲船 NeedsReview hdgΔ=0.00 spdΔ=0.00 turn=None | 转向中，延后判定；稳定航向或达到最大延后时长前不确定会遇角色。
+  520.0-590.0 R17 R17 虚构甲船 NeedsReview hdgΔ=0.00 spdΔ=0.00 turn=None | 转向中，延后判定；稳定航向或达到最大延后时长前不确定会遇角色。
+  520.0-590.0 R19 R19 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  520.0-590.0 R8 R8 虚构乙船 NotSatisfied hdgΔ=-60.00 spdΔ=0.00 turn=Port | 及早=False；明显行动=True；安全驶过代理=False；按本阶段及继承的延后期全部观测段的CPA核查最小实际中心间距。
+  520.0-590.0 R5 R5 虚构乙船 NotAssessable hdgΔ=-60.00 spdΔ=0.00 turn=Port | 缺少 VDR 音频、驾驶台值班记录及视觉/听觉瞭望记录，无法核查是否保持正规瞭望。
+  520.0-590.0 R6 R6 虚构乙船 NeedsReview hdgΔ=-60.00 spdΔ=0.00 turn=Port | 需研判：观察最大航速=10.000m/s；能见度=8.000nm；航速提示值=5.000m/s，超过提示值；需要操纵性能、停船距离、交通密度、海况和驾驶台/雷达记录，提示值不作安全航速硬判。
+  520.0-590.0 R7 R7 虚构乙船 Partial hdgΔ=-60.00 spdΔ=0.00 turn=Port | 航迹 CPA 序列可识别碰撞危险：本区段首次危险时刻=520.000s；DCPA 1056.330→161.073m；TCPA 79.121→30.000s。这是航迹推算的技术事实；是否实际使用雷达/ARPA 标绘与连续观察仍需雷达/ARPA、VDR 和驾驶台记录。
+  520.0-590.0 R34_35 R34/35 虚构乙船 NotAssessable hdgΔ=-60.00 spdΔ=0.00 turn=Port | 缺少 VDR 音频、汽笛/声号记录、灯号记录及驾驶台值班记录，无法核查操纵、警告和能见度不良声号。
+  520.0-590.0 R9 R9(a) 虚构乙船 NotApplicable hdgΔ=-60.00 spdΔ=0.00 turn=Port | 请求未标记狭水道。
+  520.0-590.0 R18 R18 虚构乙船 NotAssessable hdgΔ=-60.00 spdΔ=0.00 turn=Port | 缺少船舶状态证据：需要号灯、号型、VHF通报、VDR音频和轮机日志，才能核查R18船舶之间的责任；Unknown暂按机动船进行R13–R17几何核查。
+  520.0-590.0 R13 R13 虚构乙船 NeedsReview hdgΔ=-60.00 spdΔ=0.00 turn=Port | 转向中，延后判定；稳定航向或达到最大延后时长前不确定会遇角色。
+  520.0-590.0 R14 R14 虚构乙船 NeedsReview hdgΔ=-60.00 spdΔ=0.00 turn=Port | 转向中，延后判定；稳定航向或达到最大延后时长前不确定会遇角色。
+  520.0-590.0 R15 R15 虚构乙船 NeedsReview hdgΔ=-60.00 spdΔ=0.00 turn=Port | 转向中，延后判定；稳定航向或达到最大延后时长前不确定会遇角色。
+  520.0-590.0 R16 R16 虚构乙船 NeedsReview hdgΔ=-60.00 spdΔ=0.00 turn=Port | 转向中，延后判定；稳定航向或达到最大延后时长前不确定会遇角色。
+  520.0-590.0 R17 R17 虚构乙船 NeedsReview hdgΔ=-60.00 spdΔ=0.00 turn=Port | 转向中，延后判定；稳定航向或达到最大延后时长前不确定会遇角色。
+  520.0-590.0 R19 R19 虚构乙船 NotApplicable hdgΔ=-60.00 spdΔ=0.00 turn=Port | 本时间带的会遇局面或船舶角色不适用该项。
+  590.0-630.0 R8 R8 虚构甲船 NotSatisfied hdgΔ=0.00 spdΔ=0.00 turn=None | 及早=False；明显行动=False；安全驶过代理=False；按本阶段及继承的延后期全部观测段的CPA核查最小实际中心间距。
+  590.0-630.0 R5 R5 虚构甲船 NotAssessable hdgΔ=0.00 spdΔ=0.00 turn=None | 缺少 VDR 音频、驾驶台值班记录及视觉/听觉瞭望记录，无法核查是否保持正规瞭望。
+  590.0-630.0 R6 R6 虚构甲船 NeedsReview hdgΔ=0.00 spdΔ=0.00 turn=None | 需研判：观察最大航速=5.000m/s；能见度=8.000nm；航速提示值=5.000m/s；需要操纵性能、停船距离、交通密度、海况和驾驶台/雷达记录，提示值不作安全航速硬判。
+  590.0-630.0 R7 R7 虚构甲船 Partial hdgΔ=0.00 spdΔ=0.00 turn=None | 航迹 CPA 序列可识别碰撞危险：本区段首次危险时刻=590.000s；DCPA 161.073→161.073m；TCPA 30.000→-10.000s。这是航迹推算的技术事实；是否实际使用雷达/ARPA 标绘与连续观察仍需雷达/ARPA、VDR 和驾驶台记录。
+  590.0-630.0 R34_35 R34/35 虚构甲船 NotAssessable hdgΔ=0.00 spdΔ=0.00 turn=None | 缺少 VDR 音频、汽笛/声号记录、灯号记录及驾驶台值班记录，无法核查操纵、警告和能见度不良声号。
+  590.0-630.0 R9 R9(a) 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 请求未标记狭水道。
+  590.0-630.0 R18 R18 虚构甲船 NotAssessable hdgΔ=0.00 spdΔ=0.00 turn=None | 缺少船舶状态证据：需要号灯、号型、VHF通报、VDR音频和轮机日志，才能核查R18船舶之间的责任；Unknown暂按机动船进行R13–R17几何核查。
+  590.0-630.0 R13 R13 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  590.0-630.0 R14 R14 虚构甲船 NotSatisfied hdgΔ=0.00 spdΔ=0.00 turn=None | 按船首向差和双方前方扇区识别；任何超出噪声容差的左转均不满足。
+  590.0-630.0 R15 R15 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  590.0-630.0 R16 R16 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  590.0-630.0 R17 R17 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  590.0-630.0 R19 R19 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  590.0-630.0 R8 R8 虚构乙船 NotSatisfied hdgΔ=-60.00 spdΔ=0.00 turn=Port | 及早=False；明显行动=True；安全驶过代理=False；按本阶段及继承的延后期全部观测段的CPA核查最小实际中心间距。
+  590.0-630.0 R5 R5 虚构乙船 NotAssessable hdgΔ=0.00 spdΔ=0.00 turn=None | 缺少 VDR 音频、驾驶台值班记录及视觉/听觉瞭望记录，无法核查是否保持正规瞭望。
+  590.0-630.0 R6 R6 虚构乙船 NeedsReview hdgΔ=0.00 spdΔ=0.00 turn=None | 需研判：观察最大航速=10.000m/s；能见度=8.000nm；航速提示值=5.000m/s，超过提示值；需要操纵性能、停船距离、交通密度、海况和驾驶台/雷达记录，提示值不作安全航速硬判。
+  590.0-630.0 R7 R7 虚构乙船 Partial hdgΔ=0.00 spdΔ=0.00 turn=None | 航迹 CPA 序列可识别碰撞危险：本区段首次危险时刻=590.000s；DCPA 161.073→161.073m；TCPA 30.000→-10.000s。这是航迹推算的技术事实；是否实际使用雷达/ARPA 标绘与连续观察仍需雷达/ARPA、VDR 和驾驶台记录。
+  590.0-630.0 R34_35 R34/35 虚构乙船 NotAssessable hdgΔ=0.00 spdΔ=0.00 turn=None | 缺少 VDR 音频、汽笛/声号记录、灯号记录及驾驶台值班记录，无法核查操纵、警告和能见度不良声号。
+  590.0-630.0 R9 R9(a) 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 请求未标记狭水道。
+  590.0-630.0 R18 R18 虚构乙船 NotAssessable hdgΔ=-60.00 spdΔ=0.00 turn=Port | 缺少船舶状态证据：需要号灯、号型、VHF通报、VDR音频和轮机日志，才能核查R18船舶之间的责任；Unknown暂按机动船进行R13–R17几何核查。
+  590.0-630.0 R13 R13 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  590.0-630.0 R14 R14 虚构乙船 NotSatisfied hdgΔ=0.00 spdΔ=0.00 turn=None | 按船首向差和双方前方扇区识别；任何超出噪声容差的左转均不满足。
+  590.0-630.0 R15 R15 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  590.0-630.0 R16 R16 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  590.0-630.0 R17 R17 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  590.0-630.0 R19 R19 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  630.0-900.0 R8 R8 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本阶段无碰撞危险，或直航船在正常保向保速阶段。
+  630.0-900.0 R5 R5 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段无碰撞危险。
+  630.0-900.0 R6 R6 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段无碰撞危险。
+  630.0-900.0 R7 R7 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段 CPA 序列未形成碰撞危险。
+  630.0-900.0 R34_35 R34/35 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段无碰撞危险。
+  630.0-900.0 R9 R9(a) 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 请求未标记狭水道。
+  630.0-900.0 R18 R18 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段无碰撞危险或持续追越义务。
+  630.0-900.0 R13 R13 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  630.0-900.0 R14 R14 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  630.0-900.0 R15 R15 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  630.0-900.0 R16 R16 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  630.0-900.0 R17 R17 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  630.0-900.0 R19 R19 虚构甲船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  630.0-900.0 R8 R8 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本阶段无碰撞危险，或直航船在正常保向保速阶段。
+  630.0-900.0 R5 R5 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段无碰撞危险。
+  630.0-900.0 R6 R6 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段无碰撞危险。
+  630.0-900.0 R7 R7 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段 CPA 序列未形成碰撞危险。
+  630.0-900.0 R34_35 R34/35 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段无碰撞危险。
+  630.0-900.0 R9 R9(a) 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 请求未标记狭水道。
+  630.0-900.0 R18 R18 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本区段无碰撞危险或持续追越义务。
+  630.0-900.0 R13 R13 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  630.0-900.0 R14 R14 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  630.0-900.0 R15 R15 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  630.0-900.0 R16 R16 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  630.0-900.0 R17 R17 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+  630.0-900.0 R19 R19 虚构乙船 NotApplicable hdgΔ=0.00 spdΔ=0.00 turn=None | 本时间带的会遇局面或船舶角色不适用该项。
+
+  Stack Trace:
+     at Mcis.Acceptance.W1.RobustnessAcceptanceTests.TimeBands_MultipleTransitions() in /workspace/maritime-sim-design/tests_acceptance/W1/RobustnessAcceptanceTests.cs:line 77
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.26]     Mcis.Acceptance.W1.RetestAcceptanceTests.A3_ContradictoryViews_FlaggedDoubt [FAIL]
+  Failed Mcis.Acceptance.W1.RetestAcceptanceTests.A3_ContradictoryViews_FlaggedDoubt [6 ms]
+  Error Message:
+   Assert.All() Failure: 1 out of 1 items in the collection did not pass.
+[0]: Item:  ColregRuleCheck { ActualAction = Mcis.Domain.Colreg.ObservedManeuver, AtTimeSec = 0, CheckId = "case:%E8%99%9A%E6%9E%84%E7%94%B2%E8%88%B9:%E8%99%9"···, Clause = "R15", EndTime = 200.000s, ··· }
+     Error: Assert.Equal() Failure: Values differ
+            Expected: Partial
+            Actual:   NeedsReview
+  Stack Trace:
+     at Mcis.Acceptance.W1.RetestAcceptanceTests.A3_ContradictoryViews_FlaggedDoubt() in /workspace/maritime-sim-design/tests_acceptance/W1/RetestAcceptanceTests.cs:line 146
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+Failed!  - Failed:     2, Passed:   129, Skipped:     0, Total:   131, Duration: 70 ms - W1.Acceptance.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/core-cpa.schema.json",
+  "title": "mcis-core cpa 子命令请求/响应",
+  "description": "stdin 写 request，stdout 读 envelope。计算由 C# Domain/Cpa.CpaCalculator.CalculateByVector + EvaluateInstantRisk 完成。",
+  "$defs": {
+    "vesselState": {
+      "type": "object",
+      "required": ["speedKn", "courseDeg"],
+      "properties": {
+        "vesselId": { "type": "string" },
+        "eastNm": { "type": "number" }, "northNm": { "type": "number" },
+        "latDeg": { "type": "number" }, "lonDeg": { "type": "number" },
+        "speedKn": { "type": "number" }, "courseDeg": { "type": "number" }
+      }
+    },
+    "request": {
+      "type": "object",
+      "required": ["pairs"],
+      "properties": {
+        "origin": { "type": "object", "properties": { "latDeg": { "type": "number" }, "lonDeg": { "type": "number" } } },
+        "thresholds": { "type": "object", "properties": { "dangerDcpaNm": { "type": "number" }, "dangerTcpaMin": { "type": "number" }, "warningDcpaNm": { "type": "number" }, "warningTcpaMin": { "type": "number" } } },
+        "pairs": { "type": "array", "items": { "type": "object", "required": ["own", "target"], "properties": { "pairId": { "type": "string" }, "timeSec": { "type": "number" }, "own": { "$ref": "#/$defs/vesselState" }, "target": { "$ref": "#/$defs/vesselState" } } } }
+      }
+    },
+    "result": {
+      "type": "object",
+      "required": ["pairId", "dcpaNm", "tcpaMin", "riskLevel"],
+      "properties": {
+        "pairId": { "type": "string" }, "ownVesselId": { "type": "string" }, "targetVesselId": { "type": "string" },
+        "timeSec": { "type": "number" }, "currentDistanceNm": { "type": "number" }, "trueBearingDeg": { "type": "number" },
+        "relativeCourseDeg": { "type": "number" }, "relativeSpeedKn": { "type": "number" },
+        "dcpaNm": { "type": ["number", "null"] }, "tcpaMin": { "type": ["number", "null"], "description": "退化（相对静止）时为 null" },
+        "isDiverging": { "type": "boolean" }, "isDegenerate": { "type": "boolean" },
+        "riskLevel": { "type": "string", "enum": ["Safe", "Warning", "Danger"] }
+      }
+    },
+    "envelope": {
+      "type": "object",
+      "required": ["ok", "command", "coreVersion"],
+      "properties": {
+        "ok": { "type": "boolean" }, "command": { "type": "string" }, "coreVersion": { "type": "string" },
+        "result": {}, "error": { "$ref": "common.schema.json#/$defs/problem" }
+      }
+    }
+  }
+}

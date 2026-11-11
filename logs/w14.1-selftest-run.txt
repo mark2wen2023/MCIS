@@ -1,0 +1,13 @@
+Passed!  - Failed:     0, Passed:    97, Skipped:     0, Total:    97, Duration: 1 s - Tests_W14_WhatIf.dll (net8.0)
+Passed!  - Failed:     0, Passed:    63, Skipped:     0, Total:    63, Duration: 56 ms - Mcis.Pure.Tests.dll (net8.0)
+Passed!  - Failed:     0, Passed:    84, Skipped:     0, Total:    84, Duration: 126 ms - Mcis.Pure.Tests.dll (net8.0)
+  Failed Mcis.Acceptance.W14.InterventionAcceptanceTests.EmergencyAnchor_KnownIssue_YawContinuesNearZeroSpeed [2 ms]
+  Failed Mcis.Acceptance.W14.CollisionGeometryAcceptanceTests.SatClearance_CanUnderestimateTrueSeparation [2 ms]
+  Failed Mcis.Acceptance.W14.KnownIssueImpactTests.Y5_TrueClearanceCrossesSafeLine_VerdictShouldBeAvoided [273 ms]
+  Failed Mcis.Acceptance.W14.SensitivityComparisonAcceptanceTests.TurnAdvanceSweep_IsMonotonicAndBisectionConverges [539 ms]
+  Failed Mcis.Acceptance.W14.Yangze22AcceptanceTests.DroppingPostCollisionPoints_ChangesS0ContactTime [353 ms]
+  Failed Mcis.Acceptance.W14.Yangze22AcceptanceTests.S0_DeviationFromReport_IsAsDisclosed [176 ms]
+  Failed Mcis.Acceptance.W14.Yangze22AcceptanceTests.ReportedScenarioNumbers_MatchAnnouncement [185 ms]
+Failed!  - Failed:     7, Passed:    45, Skipped:     0, Total:    52, Duration: 1 s - W14.Acceptance.dll (net8.0)
+  Failed Mcis.Acceptance.W14.KnownIssueImpactTests.Y5_TrueClearanceCrossesSafeLine_VerdictShouldBeAvoided [260 ms]
+Failed!  - Failed:     1, Passed:     1, Skipped:     0, Total:     2, Duration: 233 ms - W14.Acceptance.dll (net8.0)

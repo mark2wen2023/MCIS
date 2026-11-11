@@ -1,0 +1,3 @@
+
+Passed!  - Failed:     0, Passed:    54, Skipped:     0, Total:    54, Duration: 47 ms - Mcis.W1.Colreg.Tests.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

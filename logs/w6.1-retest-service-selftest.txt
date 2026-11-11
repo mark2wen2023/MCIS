@@ -1,0 +1,5 @@
+# W6.1 验收复现 service 自测 — 2026-11-11 21:36:35 CST
+# 命令: .venv/bin/python -m pytest tests --ignore=tests/test_reports_w16.py --ignore=tests/test_reports_w16_direct.py --ignore=tests/test_reports_w16_export.py --ignore=tests/test_reports_w16_sources.py -q -rfE
+........................................................................ [ 75%]
+.......................                                                  [100%]
+95 passed in 21.79s

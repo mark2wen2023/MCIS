@@ -1,0 +1,53 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+/workspace/maritime-sim-design/tests_acceptance/W15/AcciMapStampAcceptanceTests.cs(101,13): warning xUnit2013: Do not use Assert.Equal() to check for collection size. Use Assert.Single instead. (https://xunit.net/xunit.analyzers/rules/xUnit2013) [/workspace/maritime-sim-design/tests_acceptance/W15/W15.Acceptance.csproj]
+  W15.Acceptance -> /workspace/maritime-sim-design/tests_acceptance/W15/bin/Debug/net8.0/W15.Acceptance.dll
+Test run for /workspace/maritime-sim-design/tests_acceptance/W15/bin/Debug/net8.0/W15.Acceptance.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.20]     Mcis.Acceptance.W15.KnownDefectTests.W15_D03_Document_InvalidCaseId_Flagged(caseId: "") [FAIL]
+[xUnit.net 00:00:00.20]     Mcis.Acceptance.W15.KnownDefectTests.W15_D03_Document_InvalidCaseId_Flagged(caseId: null) [FAIL]
+  Failed Mcis.Acceptance.W15.KnownDefectTests.W15_D03_Document_InvalidCaseId_Flagged(caseId: "") [10 ms]
+  Error Message:
+   caseId= 未被报告
+  Stack Trace:
+     at Mcis.Acceptance.W15.KnownDefectTests.W15_D03_Document_InvalidCaseId_Flagged(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W15/KnownDefectTests.cs:line 48
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed Mcis.Acceptance.W15.KnownDefectTests.W15_D03_Document_InvalidCaseId_Flagged(caseId: null) [< 1 ms]
+  Error Message:
+   caseId=(null) 未被报告
+  Stack Trace:
+     at Mcis.Acceptance.W15.KnownDefectTests.W15_D03_Document_InvalidCaseId_Flagged(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W15/KnownDefectTests.cs:line 48
+   at InvokeStub_KnownDefectTests.W15_D03_Document_InvalidCaseId_Flagged(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.20]     Mcis.Acceptance.W15.KnownDefectTests.W15_D03_Document_InvalidCaseId_Flagged(caseId: "  bad id \n") [FAIL]
+[xUnit.net 00:00:00.20]     Mcis.Acceptance.W15.KnownDefectTests.W15_D02_HfacsContext_IsLiveQuery_LikeLedgerAndBoard [FAIL]
+  Failed Mcis.Acceptance.W15.KnownDefectTests.W15_D03_Document_InvalidCaseId_Flagged(caseId: "  bad id \n") [< 1 ms]
+  Error Message:
+   caseId=  bad id 
+ 未被报告
+  Stack Trace:
+     at Mcis.Acceptance.W15.KnownDefectTests.W15_D03_Document_InvalidCaseId_Flagged(String caseId) in /workspace/maritime-sim-design/tests_acceptance/W15/KnownDefectTests.cs:line 48
+   at InvokeStub_KnownDefectTests.W15_D03_Document_InvalidCaseId_Flagged(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Mcis.Acceptance.W15.KnownDefectTests.W15_D02_HfacsContext_IsLiveQuery_LikeLedgerAndBoard [< 1 ms]
+  Error Message:
+   HFACS 快照导致误报：sys_unknown_hfacs [A] HFACS 发现不存在：HF-F02
+  Stack Trace:
+     at Mcis.Acceptance.W15.KnownDefectTests.W15_D02_HfacsContext_IsLiveQuery_LikeLedgerAndBoard() in /workspace/maritime-sim-design/tests_acceptance/W15/KnownDefectTests.cs:line 34
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.24]     Mcis.Acceptance.W15.JsonAcceptanceTests.W15_D01_ExposedCollections_CannotBypassStructuralRules [FAIL]
+  Failed Mcis.Acceptance.W15.JsonAcceptanceTests.W15_D01_ExposedCollections_CannotBypassStructuralRules [< 1 ms]
+  Error Message:
+   可被篡改：BowTie.Edges.Add(后果→威胁)；BowTie.Elements.RemoveAt(顶事件)；AcciMap.Edges.Add(上行边)；Refs.EvidenceIds[0]=" "(Strong 去证据)；写出的 JSON 读回结果：sys_invalid_edge
+  Stack Trace:
+     at Mcis.Acceptance.W15.JsonAcceptanceTests.W15_D01_ExposedCollections_CannotBypassStructuralRules() in /workspace/maritime-sim-design/tests_acceptance/W15/RefsJsonAcceptanceTests.cs:line 405
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+Failed!  - Failed:     5, Passed:    91, Skipped:     0, Total:    96, Duration: 84 ms - W15.Acceptance.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

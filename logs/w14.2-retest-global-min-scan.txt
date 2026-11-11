@@ -1,0 +1,6 @@
+demo-S1: reported NearMiss 130.38 m @ t=552.00; global NearMiss 130.38 m @ t=553.08; delta=-0.00 m
+demo-S3: reported NearMiss 58.78 m @ t=549.00; global NearMiss 58.78 m @ t=548.50; delta=-0.00 m
+yangze-Y1: reported NearMiss 184.35 m @ t=198.00; global NearMiss 184.35 m @ t=197.62; delta=-0.00 m
+yangze-Y5: reported Avoided 238.75 m @ t=241.00; global Avoided 238.75 m @ t=262.02; delta=-0.00 m
+yangze-Y1+Y5: reported Avoided 292.45 m @ t=208.00; global Avoided 292.45 m @ t=175.38; delta=-0.00 m
+yangze-Y4: reported NearMiss 29.81 m @ t=242.00; global NearMiss 29.82 m @ t=250.06; delta=-0.00 m

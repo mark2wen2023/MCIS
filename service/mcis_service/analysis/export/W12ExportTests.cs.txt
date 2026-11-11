@@ -1,0 +1,154 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Text;
+using Mcis.Simulation.WhatIf;
+using Mcis.Simulation.WhatIf.Cases;
+using Mcis.Simulation.WhatIf.Demo;
+using Xunit;
+
+namespace Mcis.Acceptance.W14
+{
+    /// <summary>W12 导出：只读调用已冻结的 W14.2 代码，导出对比表/临界/敏感性/航迹（项目外临时目录）。</summary>
+    public class W12ExportTests
+    {
+        [Fact]
+        public void ExportForW12()
+        {
+            var sb = new StringBuilder();
+            sb.Append("{\"exporter\":\"W12Export (tests_acceptance/W14 fixture copy, read-only W14.2 sources)\"");
+            sb.Append(",\"generatedAtUtc\":").Append(Q(DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")));
+
+            WhatIfSetup demoSetup = WhatIfDemoFixture.CreateSetup();
+            IReadOnlyList<ScenarioResult> demo = ScenarioEvaluator.EvaluateAll(demoSetup, WhatIfDemoFixture.Scenarios());
+            ComparisonTable demoTable = ScenarioComparison.Build(demo);
+            sb.Append(",\"demo\":{\"epochLocal\":").Append(Q(WhatIfDemoFixture.CaseEpochLocal.ToString("yyyy-MM-ddTHH:mm:sszzz")));
+            AppendStudy(sb, demo, demoTable, null);
+            sb.Append("}");
+
+            Yangze22Result y = Yangze22Case.Run(W14AccFixture.ReadYangzeTrackLines(), W14AccFixture.LoadYangzeInputs());
+            Yangze22Inputs inputs = W14AccFixture.LoadYangzeInputs();
+            sb.Append(",\"yangze22\":{\"epochLocal\":").Append(Q(inputs.SimEpochLocal.ToString("yyyy-MM-ddTHH:mm:sszzz")));
+            sb.Append(",\"reportCollisionLocal\":").Append(Q(inputs.CollisionTimeBeijing.ToString("yyyy-MM-ddTHH:mm:sszzz")));
+            sb.Append(",\"originalDeviation\":").Append(Q(y.OriginalDeviation));
+            sb.Append(",\"combinedNote\":").Append(Q(y.CombinedScenarioNote));
+            AppendStudy(sb, y.Results, y.Comparison, y.AntennaSensitivity);
+            sb.Append("}}");
+            string path = Path.Combine(W14AccFixture.LogsDirectory, "w12-w14-export.json");
+            File.WriteAllText(path, sb.ToString(), new UTF8Encoding(false));
+        }
+
+        static void AppendStudy(StringBuilder sb, IReadOnlyList<ScenarioResult> results, ComparisonTable table, IReadOnlyList<AntennaSensitivityRow> sens)
+        {
+            sb.Append(",\"criticalMarginM\":").Append(F(table.CriticalMarginM));
+            sb.Append(",\"disclaimer\":").Append(Q(table.Disclaimer));
+            sb.Append(",\"markdown\":").Append(Q(table.ToMarkdown()));
+            sb.Append(",\"assumptions\":[");
+            for (int i = 0; i < table.Assumptions.Count; i++) { if (i > 0) sb.Append(","); sb.Append(Q(table.Assumptions[i])); }
+            sb.Append("],\"inputs\":[");
+            for (int i = 0; i < table.Inputs.Count; i++)
+            {
+                SourcedValue v = table.Inputs[i];
+                if (i > 0) sb.Append(",");
+                sb.Append("{\"name\":").Append(Q(v.Name)).Append(",\"value\":").Append(F(v.Value)).Append(",\"unit\":").Append(Q(v.Unit))
+                  .Append(",\"source\":").Append(Q(v.Source.ToString())).Append(",\"sourceText\":").Append(Q(v.SourceText))
+                  .Append(",\"reference\":").Append(Q(v.Reference)).Append(",\"note\":").Append(Q(v.Note)).Append("}");
+            }
+            sb.Append("],\"rows\":[");
+            for (int i = 0; i < table.Rows.Count; i++)
+            {
+                ComparisonRow r = table.Rows[i];
+                ScenarioResult res = null;
+                foreach (var x in results) if (x.ScenarioId == r.ScenarioId) res = x;
+                if (i > 0) sb.Append(",");
+                sb.Append("{\"id\":").Append(Q(r.ScenarioId)).Append(",\"name\":").Append(Q(r.Name)).Append(",\"changeSummary\":").Append(Q(r.ChangeSummary))
+                  .Append(",\"verdict\":").Append(Q(res.Verdict.ToString()))
+                  .Append(",\"verdictText\":").Append(Q(r.VerdictText)).Append(",\"displayVerdictText\":").Append(Q(r.DisplayVerdictText))
+                  .Append(",\"isCritical\":").Append(r.IsCritical ? "true" : "false").Append(",\"criticalReason\":").Append(Q(r.CriticalReason))
+                  .Append(",\"safeDistanceM\":").Append(F(r.SafeDistanceM)).Append(",\"sensitivityRangeText\":").Append(Q(r.SensitivityRangeText))
+                  .Append(",\"collision\":").Append(r.Collision ? "true" : "false")
+                  .Append(",\"tcSeconds\":").Append(res.TcSeconds.HasValue ? F(res.TcSeconds.Value) : "null")
+                  .Append(",\"tcLocal\":").Append(Q(r.TcLocalText))
+                  .Append(",\"collisionAngleText\":").Append(Q(r.CollisionAngleText)).Append(",\"contactPartText\":").Append(Q(r.ContactPartText))
+                  .Append(",\"minClearanceM\":").Append(F(r.MinClearanceM)).Append(",\"minClearanceTimeSeconds\":").Append(F(res.MinClearanceTimeSeconds))
+                  .Append(",\"minDistanceNm\":").Append(F(r.MinDistanceNm)).Append(",\"minDistanceTimeSeconds\":").Append(F(res.MinDistanceTimeSeconds))
+                  .Append(",\"minDcpaNm\":").Append(F(r.MinDcpaNm))
+                  .Append(",\"minDcpaAfterDeviationNm\":").Append(r.MinDcpaAfterDeviationNm.HasValue ? F(r.MinDcpaAfterDeviationNm.Value) : "null")
+                  .Append(",\"deltaMinDistanceNm\":").Append(F(r.DeltaMinDistanceNm));
+                sb.Append(",\"sensitivity\":[");
+                if (r.Sensitivity != null)
+                    for (int k = 0; k < r.Sensitivity.Count; k++)
+                    {
+                        var s = r.Sensitivity[k]; if (k > 0) sb.Append(",");
+                        sb.Append("{\"label\":").Append(Q(s.Label)).Append(",\"collision\":").Append(s.Collision ? "true" : "false")
+                          .Append(",\"verdict\":").Append(Q(s.Verdict.ToString())).Append(",\"minClearanceM\":").Append(F(s.MinClearanceM)).Append("}");
+                    }
+                sb.Append("],\"tracks\":{");
+                bool firstT = true;
+                foreach (var kv in res.Tracks)
+                {
+                    if (!firstT) sb.Append(","); firstT = false;
+                    sb.Append(Q(kv.Key)).Append(":{\"loaM\":").Append(F(kv.Value.LoaM)).Append(",\"beamM\":").Append(F(kv.Value.BeamM)).Append(",\"samples\":[");
+                    double start = kv.Value.States[0].TimeSeconds, end = kv.Value.States[kv.Value.States.Count - 1].TimeSeconds;
+                    bool first = true;
+                    for (double t = start; t <= end + 1e-9; t += 1.0)
+                    {
+                        var s = kv.Value.SampleAt(t);
+                        if (!first) sb.Append(","); first = false;
+                        sb.Append("[").Append(F(s.TimeSeconds)).Append(",").Append(F(s.EastM)).Append(",").Append(F(s.NorthM)).Append(",")
+                          .Append(F(s.HeadingDeg)).Append(",").Append(F(s.SpeedKn)).Append("]");
+                    }
+                    sb.Append("]}");
+                }
+                sb.Append("}}");
+            }
+            sb.Append("],\"antennaSensitivity\":");
+            if (sens == null) { sb.Append("null"); return; }
+            sb.Append("[");
+            for (int i = 0; i < sens.Count; i++)
+            {
+                var a = sens[i]; if (i > 0) sb.Append(",");
+                sb.Append("{\"label\":").Append(Q(a.Label)).Append(",\"shortLabel\":").Append(Q(a.ShortLabel))
+                  .Append(",\"yangzeAftRatio\":").Append(F(a.YangzeAftOfMidshipRatio)).Append(",\"vegaAftRatio\":").Append(F(a.VegaAftOfMidshipRatio))
+                  .Append(",\"inEstimateRange\":").Append(a.InEstimateRange ? "true" : "false")
+                  .Append(",\"collision\":").Append(a.Collision ? "true" : "false")
+                  .Append(",\"tcLocal\":").Append(Q(a.TcLocalText))
+                  .Append(",\"delayVsReportSec\":").Append(a.DelayVsReportSec.HasValue ? F(a.DelayVsReportSec.Value) : "null")
+                  .Append(",\"collisionAngleDeg\":").Append(a.CollisionAngleDeg.HasValue ? F(a.CollisionAngleDeg.Value) : "null")
+                  .Append(",\"clearanceAtReportTimeM\":").Append(F(a.ClearanceAtReportTimeM))
+                  .Append(",\"contactText\":").Append(Q(a.ContactText)).Append(",\"outcomes\":{");
+                bool f2 = true;
+                if (a.ScenarioOutcomes != null)
+                    foreach (var kv in a.ScenarioOutcomes)
+                    {
+                        if (!f2) sb.Append(","); f2 = false;
+                        sb.Append(Q(kv.Key)).Append(":{\"collision\":").Append(kv.Value.Collision ? "true" : "false")
+                          .Append(",\"verdict\":").Append(Q(kv.Value.Verdict.ToString())).Append(",\"minClearanceM\":").Append(F(kv.Value.MinClearanceM)).Append("}");
+                    }
+                sb.Append("}}");
+            }
+            sb.Append("]");
+        }
+
+        static string F(double v) { return double.IsNaN(v) || double.IsInfinity(v) ? "null" : v.ToString("R", CultureInfo.InvariantCulture); }
+        static string Q(string s)
+        {
+            if (s == null) return "null";
+            var b = new StringBuilder("\"");
+            foreach (char c in s)
+            {
+                switch (c)
+                {
+                    case '"': b.Append("\\\""); break;
+                    case '\\': b.Append("\\\\"); break;
+                    case '\n': b.Append("\\n"); break;
+                    case '\r': b.Append("\\r"); break;
+                    case '\t': b.Append("\\t"); break;
+                    default: if (c < 0x20) b.Append("\\u").Append(((int)c).ToString("x4")); else b.Append(c); break;
+                }
+            }
+            return b.Append("\"").ToString();
+        }
+    }
+}
