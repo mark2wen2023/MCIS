@@ -91,7 +91,19 @@ def _core(ctx: Ctx, command: str, payload: dict[str, Any]) -> dict[str, Any]:
     try:
         return core_run(ctx.settings.core_cmd, command, payload, ctx.settings.core_timeout_s)
     except CoreError as e:
-        raise problem(e.http_status, e.code, e.message)
+        # HTTP is not a diagnostic transport: core messages may contain local
+        # paths, stderr or arbitrary text from a failed core envelope.
+        status, code, message = {
+            "BAD_REQUEST": (422, "BAD_REQUEST", "核心请求无效，请检查输入。"),
+            "BAD_JSON": (422, "BAD_JSON", "核心请求 JSON 无效。"),
+            "NOT_IMPLEMENTED": (501, "NOT_IMPLEMENTED", "核心尚未实现此功能。"),
+            "UNKNOWN_COMMAND": (501, "UNKNOWN_COMMAND", "核心不支持此命令。"),
+            "CORE_UNAVAILABLE": (503, "CORE_UNAVAILABLE", "计算核心暂不可用。"),
+            "CORE_TIMEOUT": (504, "CORE_TIMEOUT", "计算核心超时，请稍后重试。"),
+            "CORE_NO_OUTPUT": (502, "CORE_NO_OUTPUT", "计算核心未返回有效结果。"),
+            "CORE_BAD_OUTPUT": (502, "CORE_BAD_OUTPUT", "计算核心返回无效结果。"),
+        }.get(e.code, (502, "CORE_ERROR", "计算核心执行失败。"))
+        raise problem(status, code, message) from None
 
 
 @router.post("/core/cpa")

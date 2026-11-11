@@ -352,3 +352,8 @@ W12.1独立验收发现冻结seed的notes仍写“本案未接入服务数据库
 - 唯一canonical：reports/yangze22/report.txt，commit c6113bee85d25bf97d805fb2d264fb6ab138b2e2，62607bytes，gitblob d5a6b5fc79ad0371c8ccc372b40ca9110d5c30c4，sha256 bca8f8b8ba04a5d0669a121bc6c9380c8cd6f8397f67be2d0b30b38871c22ef2。修seed/public_text/templates三pin，严格拒旧多LF副本，不normalize或双hash兼容。
 - 独立hardcoded SHA/size/blob回归及freshDB验证；既有DB的错误EV-201/原始blob/保管链不自动重写，不伪造来源一致。历史DB修复需要另立合法证据更正/迁移流程。
 - 历史日志/冻结原样保留，但其中以错误多LF物化文件通过的来源校验、freshstartup及引用验证不能证明canonical可用；本次生成新manifest与独立重跑。manifest含canonical原文仅验证输入，不作为远端文件改动项。
+
+
+## HTTP core error redaction (2026-11-12)
+
+Scope: colreg.router._core error responses only; documented in contracts/CONTRACTS.md. Known error codes/statuses remain stable with fixed safe messages; unknown CoreError codes collapse to CORE_ERROR/502. CLI and successful HTTP responses are unchanged. No source files frozen by W4.1 are modified. This does NOT remove the old /core/align path-reading capability or implement authentication; disabling/restricting that documented route remains a separate compatibility proposal. No database migration, merge or deployment.

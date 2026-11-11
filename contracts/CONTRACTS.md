@@ -113,3 +113,9 @@ tools/mcis-core/mcis-core.sh <子命令>  < request.json  > response.json
 - 导入失败时已写入的证据文件不会回滚（数据库事务会回滚）。
 - `sim/state` 为内存态，服务重启后丢失；`sim/commands` 同样不持久化。
 - 契约校验在服务端用 jsonschema 运行时执行（422 `CONTRACT_VIOLATION`）；Unity 侧尚未接入 schema 校验。
+
+## HTTP 核心错误边界（安全兼容切片，2026-11-12）
+
+使用 colreg.router._core 的 HTTP 路由不透传 CLI 错误正文或未知错误码。BAD_REQUEST/BAD_JSON 仍为 422，NOT_IMPLEMENTED/UNKNOWN_COMMAND 仍为 501；CORE_UNAVAILABLE 为 503、CORE_TIMEOUT 为 504、CORE_NO_OUTPUT/CORE_BAD_OUTPUT 为 502；其余 CoreError 映射 CORE_ERROR/502。消息为固定提示，不包含本地路径、stderr 或核心返回的自由文本。成功响应与 CLI 行为不变。
+
+这不是旧 `/core/align` 文件读取或身份问题的修复：旧路径入口仍在，仅适合既有回环单用户演示。停用或限制旧入口须单独记录兼容取舍；不得据本切片宣称可正式多用户部署。
