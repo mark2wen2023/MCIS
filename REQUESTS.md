@@ -229,3 +229,27 @@
 - **GISIS 字段**（裁定 1）：对照表见 `contracts/gisis-mapping.md`。`report.schema.json` 的 gisisField 增加可选 `gisisRef`（通函条目，如“附录2 1.1*”）、`mappingStatus`（exact / partial / none / pending）、`mappingNote`；必填改按通函星号（总吨、伤亡、污染、灭失、报告状态改为非必填）；新增 `numberOfShips`（附录1·一般信息 .2*）、`locationCategory`（附录1·一般事故数据 .6*，Table 3）；`severity` 取值改为 Table 5 三档，本地 Serious / LessSerious 对应哪档待核，遇到时输出缺数据。
 - **W14 来源**（裁定 2）：报告的 whatif 适配器改读 W12 分析种子（与 `GET /cases/{caseId}/analysis` 同一来源，进程内调用 `analysis.router.load_seed()`，带哈希自检）。只接受 `isFictionalDemo=true` 且 sourceRefs 不指向 `reports/` 的条目（即 Lily/Mary 虚构情景）；海力5 / YANGZE 22 条目依赖 reports/ 真实报告，在 Mark 本人确认前不读，报告侧本来也是 409。W15 继续显示缺数据。
 - **删除** `web/src/reports/ColregDraftButton.tsx`（裁定 7）。
+
+### W16.1 实现说明（Codex，2026-11-11）
+- GISIS 按 `contracts/gisis-mapping.md` 逐字段提供 `gisisRef` / `mappingStatus` / `mappingNote`，按本地必填列校验；新增案件船舶数和显式 Table 3 水域类型，未填不推断。Table 5 仅映射已确认的两个本地等级，其余输出缺数据并保留待核说明；JSON / CSV 均保留映射信息。页面突出待核，规则 JSON 只放在默认收起的 `<details>`。
+- 审计 `build_line` / `append` 新增可选 `snapshot_ref`，不传时固定输入字节回归保持不变；`to_doc` 仅在原行解析出该键时输出 `snapshotRef`。报告操作将 `report-snapshot:RA-…` 写入哈希链，报告审计每项带引用；旧快照也可取回，不改写旧审计行。
+- 已实现 `GET /api/v1/cases/{caseId}/report-snapshots/{snapshotId}`，返回登记的完整快照（含 `snapshotId`、`auditSeq`、理由全文、前后值）；仅 LeadInvestigator / Investigator，沿用报告审计权限；真实案例 409 `report_real_data_pending`，不存在或非本案件的快照 404 `report_snapshot_not_found`，其它角色 403 `FORBIDDEN`。OpenAPI 增加路径与 `ReportSnapshot` 组件，报告 schema 增加快照定义和审计引用。
+- W14 仅通过 `analysis.router.load_seed` 读取带哈希自检的 W12 种子，按 caseId 精确匹配并先检查虚构标志及 sourceRefs，真实或 `reports/` 来源只显示待 Mark 确认；种子异常降级为缺数据。逐行情景句包含原字段值和可解析的分析页情景引用，另列免责声明与假设数量；英文结构中的情景名、说明和免责声明保留种子原文。W15 继续缺数据。
+- 独立 `#/report` 页头增加使用当前模板的双语生成按钮；安全建议页头增加携带当前 `CASE_ID` 的报告入口；删除未引用的 `ColregDraftButton.tsx`。中国海事模板只增加指定 TODO 与 `standardRefs[].pendingRuling` 页面标签，原章节保留；YANGZE 22 不入库，角色限制不变。
+- 测试先红后绿：GISIS 新增 15 项初次失败、快照新增 13 项初次失败、W14 来源初次 8 败 / 4 过，web 新断言初次失败。实现及旧断言按裁定改写后，服务端无 socket 定向回归 108/108 通过（`test_reports_w16_direct.py`、`test_reports_w16_export.py`、`test_reports_w16_sources.py`、新增 `test_reports_w161_gisis.py` / `test_reports_w161_snapshot.py`）；web `npm run test:w16` 140 断言通过，`npx tsc --noEmit -p tsconfig.app.json` 通过。
+- `timeout 30s .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_reports_w16.py` 在沙箱无输出超时，exit 124；该文件已补 HTTP 快照往返与权限/错误码用例，需外部环境补跑。未读取根 `reports/`、未导入 `analysis/build_seed.py`，未修改 ROADMAP、未生成冻结清单或哈希、未启动服务或截图。
+
+## 2026-11-11 22:25 · W16 进度（Codex bot，收尾停点）
+按 Mark 收尾要求停在此处，W16.1 不再继续。
+- **状态**：W16（22:04 冻结版）已交付待验收，冻结清单 `logs/w16-impl-hashes-frozen.txt`（26 项）。之后按 DEFECTS/W16.md 22:10 裁定开工的 W16.1 已改动代码，**未标待测、未冻结**，所以 W16 冻结清单里的部分文件已经变了，验收时请以 W16.1 为准，或重新冻结。
+- **W16.1 已完成**（见上一节实现说明）：裁定 1 GISIS 对照表 `contracts/gisis-mapping.md`、gisisRef/mappingStatus、校验 JSON 收进折叠区；裁定 2 W14 读 W12 分析种子（只取虚构条目），W15 仍为缺数据；裁定 4 audit-event 可选 `snapshotRef` + `GET /cases/{caseId}/report-snapshots/{snapshotId}`；裁定 7 删除 ColregDraftButton.tsx；裁定 8 `#/report` 页头加生成按钮，`#/recs` 加报告入口。
+- **W16.1 已验证**：无 socket 的服务端定向测试 108/108（test_reports_w16_direct/_export/_sources、test_reports_w161_gisis/_snapshot），web `test:w16` 140 条断言，tsc 通过。
+- **还差**：
+  1. 在沙箱外补跑 `service/tests/test_reports_w16.py`（HTTP 用例，含快照往返）和 pytest 全量。
+  2. 重拍 `screenshots/w16/` 1440/1920。
+  3. 重算冻结哈希（上一版另存 v2），在 ROADMAP 标 W16.1 待测。
+  4. 裁定 3：中国海事模板章节标题逐字采用 reports/ 原文。**未做**，只加了 TODO 和 pendingRuling 标签。原因是 Mark 本人还没确认真实报告可用。
+  5. W14 的海力5/YANGZE 22 条目、YANGZE 22 入库（下一包）也都等 Mark 确认。
+  6. GISIS 里 Table 5 本地等级对应和部分字段仍标「待核」。
+- **W16.1 改过的文件**：contracts/schemas/audit-event.schema.json、contracts/schemas/report.schema.json、contracts/openapi.yaml、contracts/gisis-mapping.md（新）；service/mcis_service/audit/service.py、service/mcis_service/reports/{templates,gisis,sources,service,router}.py；service/tests/test_reports_w16.py、test_reports_w16_direct.py、test_reports_w16_export.py、test_reports_w16_sources.py、test_reports_w161_gisis.py（新）、test_reports_w161_snapshot.py（新）；web/src/reports/{ReportView.tsx,types.ts}、web/src/pages/{ReportPage.tsx,RecommendationsPage.tsx}、web/src/styles/w16.css、web/tests/report-render.test.tsx；删除 web/src/reports/ColregDraftButton.tsx；REQUESTS.md。改动前备份在 /workspace/w16-backup/。日志 logs/w16.1-codex-*。
+- 未做任何 GitHub 操作，未 push。

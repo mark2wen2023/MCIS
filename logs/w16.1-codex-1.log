@@ -7741,3 +7741,778 @@ export const REPORT_CASES = [
 
 exec
 /bin/bash -lc 'timeout 30s .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_reports_w16.py' in /workspace/maritime-sim-design/service
+ exited 124 in 29899ms:
+codex
+合并后的无 socket 服务端回归已通过：108 项；前端 140 条断言和 TypeScript 检查也通过。正在尝试运行 HTTP TestClient 测试，设置了 30 秒超时；若沙箱仍阻塞，会明确列为需外部补跑。同时在复核页面改动，并补充旧快照兼容测试。
+
+exec
+/bin/bash -lc "tail -n 115 service/tests/test_reports_w16_sources.py && sed -n '435,512p' contracts/schemas/report.schema.json && head -n 15 web/src/styles/w16.css" in /workspace/maritime-sim-design
+ succeeded in 0ms:
+    assert pending and '待确认' in pending[0]['textZh']
+    assert pending[0]['sourceStatus'] == 'PendingConfirmation'
+
+
+def test_missing_adapters_can_be_replaced_without_fabrication(app, monkeypatch):
+    from mcis_service.reports import sources
+    monkeypatch.setitem(sources.SOURCE_ADAPTERS, 'whatif', lambda s, case: {
+        'missing': False, 'items': [{'id': 'WF-TEST-01', 'textZh': '合成试验对比记录。',
+                                   'textEn': 'Synthetic comparison record.', 'evidenceIds': ['EV-001']}]})
+    sections = _sections(app)
+    analysis = next(x for x in sections if x['sectionId'] == 'analysis')
+    assert '合成试验对比记录。' in analysis['textZh']
+    assert 'W14 推演对比表未提供' not in analysis['textZh']
+    assert 'W15 系统分析未提供' in analysis['textZh']
+    sentence = next(x for x in analysis['sentences'] if x['textZh'] == '合成试验对比记录。')
+    assert {'whatif', 'evidence'} <= {x['kind'] for x in sentence['citations']}
+
+
+def test_stored_colreg_review_metadata_and_evidence_review_flags_are_preserved(app):
+    from mcis_service.reports.sources import build_sections
+    with app.state.db.session() as s:
+        doc = deepcopy(get_doc(s, ColregAnalysisRow, CASE, 'current'))
+        doc['checks'][0]['reviewStatus'] = 'Confirmed'
+        doc['checks'][0]['evidenceIds'] = ['EV-005']
+        cid = doc['checks'][0]['checkId']
+        put_doc(s, ColregAnalysisRow, CASE, 'current', doc)
+        put_doc(s, ColregAnalysisRow, CASE, 'runs', {'activeRunId': 'R-TEST'})
+        put_doc(s, ColregAnalysisRow, CASE, 'run:R-TEST', {
+            'analysis': doc, 'annotations': {'checks': {cid: {
+                'reviewedBy': '复核测试员', 'reviewedAt': '2026-11-11T00:00:00Z'}}}})
+        sections = build_sections(s, load_case(s, CASE), _template())
+    analysis = next(x for x in sections if x['sectionId'] == 'analysis')
+    sentence = next(x for x in analysis['sentences'] if x['sentenceId'] == 'analysis-colreg-' + cid)
+    assert '复核测试员' in sentence['textZh'] and sentence['sourceStatus'] == 'Confirmed'
+    assert sentence['status'] == 'Draft'
+    assert any(x['kind'] == 'evidence' and x['id'] == 'EV-005' and x['needsReview']
+               for x in sentence['citations'])
+    conclusions = next(x for x in sections if x['sectionId'] == 'conclusions')
+    assert any(x['sentenceId'] == 'conclusions-colreg-' + cid for x in conclusions['sentences'])
+
+
+def test_w14_all_seed_rows_and_assumptions_have_bilingual_source_sentences(app):
+    from mcis_service.analysis.router import load_seed
+    seed, _digest = load_seed()
+    source = next(case for case in seed['cases'] if case['caseId'] == CASE)['whatif']
+    sentences = next(section for section in _sections(app) if section['sectionId'] == 'analysis')['sentences']
+    for row in source['rows']:
+        sentence = next(sentence for sentence in sentences if any(
+            citation['kind'] == 'whatif' and citation['id'] == row['id']
+            for citation in sentence['citations']))
+        assert f'W14 推演情景 {row["id"]}「{row["name"]}」' in sentence['textZh']
+        assert row['verdictText'] in sentence['textZh'] and row['verdict'] in sentence['textEn']
+        assert row['changeSummary'] in sentence['textZh'] and row['changeSummary'] in sentence['textEn']
+        assert str(float(row['minClearanceM'])) + ' m' in sentence['textZh']
+        assert str(float(row['minClearanceM'])) + ' m' in sentence['textEn']
+        assert '【推算，仅供分析参考】' in sentence['textZh']
+        assert 'Derived; for analysis reference only' in sentence['textEn']
+        assert not sentence['missing']
+    explanation = next(sentence for sentence in sentences if sentence['sentenceId'].endswith('W14-notes'))
+    assert source['disclaimer'] in explanation['textZh'] and source['disclaimer'] in explanation['textEn']
+    assert f'假设数量={len(source["assumptions"])}' in explanation['textZh']
+    assert f'assumptions count={len(source["assumptions"])}' in explanation['textEn']
+
+
+class _UnreadWhatIf(dict):
+    def get(self, *_args, **_kwargs):
+        raise AssertionError('拒绝来源前不得访问其 W14 payload')
+
+
+@pytest.mark.parametrize('fictional,refs', [
+    (False, [{'path': 'service/mcis_service/seed/lily_mary.py'}]),
+    (True, [{'path': 'reports/haili5/case.json'}]),
+    (True, [{'path': 'service/mcis_service/seed/lily_mary.py'}, {'path': 'reports/yangze22/case.json'}]),
+])
+def test_w14_real_or_report_backed_seed_is_not_consumed(app, monkeypatch, fictional, refs):
+    from mcis_service.reports import sources
+    seed = {'cases': [{'caseId': CASE, 'isFictionalDemo': fictional,
+                       'sourceRefs': refs, 'whatif': _UnreadWhatIf({'rows': []})}]}
+    monkeypatch.setattr(sources, 'load_seed', lambda: (seed, 'test-sha'), raising=False)
+    analysis = next(section for section in _sections(app) if section['sectionId'] == 'analysis')
+    assert '缺数据：真实案例 W14 数据待 Mark 确认' in analysis['textZh']
+    assert 'Missing data: real-case W14 data awaits Mark' in analysis['textEn']
+    assert not any(citation['kind'] == 'whatif' and citation['registration'] == 'registered'
+                   for sentence in analysis['sentences'] for citation in sentence['citations'])
+
+
+def test_w14_seed_verification_failure_degrades_to_missing(app, monkeypatch):
+    from mcis_service.reports import sources
+    def unavailable():
+        raise RuntimeError('模拟种子哈希自检失败')
+    monkeypatch.setattr(sources, 'load_seed', unavailable, raising=False)
+    analysis = next(section for section in _sections(app) if section['sectionId'] == 'analysis')
+    assert '缺数据：W14 分析种子不可用' in analysis['textZh']
+    assert 'Missing data: W14 analysis seed is unavailable' in analysis['textEn']
+    assert 'W15 系统分析未提供' in analysis['textZh']
+
+
+def test_w14_only_exact_case_id_matches_and_missing_row_fields_are_not_fabricated(app, monkeypatch):
+    from mcis_service.reports import sources
+    seed = {'cases': [
+        {'caseId': 'another-case', 'key': CASE, 'isFictionalDemo': True, 'sourceRefs': [],
+         'whatif': {'rows': [{'id': 'wrong', 'name': '不应采用'}]}},
+        {'caseId': CASE, 'isFictionalDemo': True, 'sourceRefs': [],
+         'whatif': {'rows': [{'id': 'S9'}]}},
+    ]}
+    monkeypatch.setattr(sources, 'load_seed', lambda: (seed, 'test-sha'), raising=False)
+    analysis = next(section for section in _sections(app) if section['sectionId'] == 'analysis')
+    assert '不应采用' not in analysis['textZh']
+    row = next(sentence for sentence in analysis['sentences'] if any(
+        citation['kind'] == 'whatif' and citation['id'] == 'S9' for citation in sentence['citations']))
+    assert 'W14 推演情景 S9「缺数据」：判定=缺数据；最小净距=缺数据；情景说明=缺数据。' in row['textZh']
+    assert 'verdict=Missing data; minimum clearance=Missing data; scenario description (source text)=Missing data.' in row['textEn']
+    assert row['missing']
+    notes = next(sentence for sentence in analysis['sentences'] if sentence['sentenceId'].endswith('W14-notes'))
+    assert '假设数量=缺数据' in notes['textZh'] and 'assumptions count=Missing data' in notes['textEn']
+    "gisisField": {
+      "type": "object",
+      "required": [
+        "id",
+        "labelZh",
+        "labelEn",
+        "required",
+        "sourceRefs",
+        "rules",
+        "value",
+        "missing",
+        "missingLabel",
+        "vesselId"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "labelZh": {
+          "type": "string"
+        },
+        "labelEn": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "sourceRefs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rules": {
+          "type": "object"
+        },
+        "gisisRef": {
+          "type": "string",
+          "description": "MSC-MEPC.3/Circ.4/Rev.1 通函条目；本地字段无对应时为 —。"
+        },
+        "mappingStatus": {
+          "enum": ["exact", "partial", "none", "pending"]
+        },
+        "mappingNote": {
+          "type": "string",
+          "description": "对应差异、待核事项与取值来源限制。"
+        },
+        "value": {},
+        "missing": {
+          "type": "boolean"
+        },
+        "missingLabel": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vesselId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "gisis": {
+      "type": "object",
+      "required": [
+        "caseId",
+        "isFictionalDemo",
+        "realDataStatus",
+        "fields",
+        "notice"
+      ],
+      "properties": {
+        "caseId": {
+          "type": "string"
+/* W16 国际格式报告样式（自 src/styles.css 迁出，原样保留；由 main.tsx 在 styles.css 之后引入，层叠顺序不变）。仅 rpt- 前缀。 */
+.rpt-page { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.rpt-disclaimer { border: 1px solid rgba(255,176,32,.5); background: var(--amber-dim); color: #ffd166; padding: 9px 12px; border-radius: 5px; font-weight: 700; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.rpt-disclaimer span { font-size: 11px; font-weight: 500; }
+.rpt-heading { margin-bottom: 0; }
+.rpt-heading .page-title { flex-wrap: wrap; }
+.rpt-heading-actions { margin-left: auto; justify-content: flex-end; }
+.rpt-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; }
+.rpt-toolbar label { display: flex; align-items: center; gap: 5px; color: var(--text-sec); font-size: 11px; }
+.rpt-toolbar select { max-width: 100%; }
+.rpt-columns { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(310px, 1fr); gap: 12px; align-items: start; }
+.rpt-columns > .panel > .panel-body { overflow: visible; }
+.rpt-seg { display: inline-flex; border: 1px solid var(--border-line); border-radius: 4px; overflow: hidden; }
+.rpt-seg button { background: var(--bg-input); border: 0; border-right: 1px solid var(--border-line); color: var(--text-sec); padding: 6px 9px; font-size: 11px; cursor: pointer; }
+.rpt-seg button:last-child { border-right: 0; }
+
+apply patch
+patch: completed
+/workspace/maritime-sim-design/REQUESTS.md
+diff --git a/REQUESTS.md b/REQUESTS.md
+index 68cbfb77e52665a8a494857b0d3d762747e4174a..9e466a22f93f90372edb7bb19a2084e189b8179c
+--- a/REQUESTS.md
++++ b/REQUESTS.md
+@@ -229,3 +229,12 @@
+ - **GISIS 字段**（裁定 1）：对照表见 `contracts/gisis-mapping.md`。`report.schema.json` 的 gisisField 增加可选 `gisisRef`（通函条目，如“附录2 1.1*”）、`mappingStatus`（exact / partial / none / pending）、`mappingNote`；必填改按通函星号（总吨、伤亡、污染、灭失、报告状态改为非必填）；新增 `numberOfShips`（附录1·一般信息 .2*）、`locationCategory`（附录1·一般事故数据 .6*，Table 3）；`severity` 取值改为 Table 5 三档，本地 Serious / LessSerious 对应哪档待核，遇到时输出缺数据。
+ - **W14 来源**（裁定 2）：报告的 whatif 适配器改读 W12 分析种子（与 `GET /cases/{caseId}/analysis` 同一来源，进程内调用 `analysis.router.load_seed()`，带哈希自检）。只接受 `isFictionalDemo=true` 且 sourceRefs 不指向 `reports/` 的条目（即 Lily/Mary 虚构情景）；海力5 / YANGZE 22 条目依赖 reports/ 真实报告，在 Mark 本人确认前不读，报告侧本来也是 409。W15 继续显示缺数据。
+ - **删除** `web/src/reports/ColregDraftButton.tsx`（裁定 7）。
++
++### W16.1 实现说明（Codex，2026-11-11）
++- GISIS 按 `contracts/gisis-mapping.md` 逐字段提供 `gisisRef` / `mappingStatus` / `mappingNote`，按本地必填列校验；新增案件船舶数和显式 Table 3 水域类型，未填不推断。Table 5 仅映射已确认的两个本地等级，其余输出缺数据并保留待核说明；JSON / CSV 均保留映射信息。页面突出待核，规则 JSON 只放在默认收起的 `<details>`。
++- 审计 `build_line` / `append` 新增可选 `snapshot_ref`，不传时固定输入字节回归保持不变；`to_doc` 仅在原行解析出该键时输出 `snapshotRef`。报告操作将 `report-snapshot:RA-…` 写入哈希链，报告审计每项带引用；旧快照也可取回，不改写旧审计行。
++- 已实现 `GET /api/v1/cases/{caseId}/report-snapshots/{snapshotId}`，返回登记的完整快照（含 `snapshotId`、`auditSeq`、理由全文、前后值）；仅 LeadInvestigator / Investigator，沿用报告审计权限；真实案例 409 `report_real_data_pending`，不存在或非本案件的快照 404 `report_snapshot_not_found`，其它角色 403 `FORBIDDEN`。OpenAPI 增加路径与 `ReportSnapshot` 组件，报告 schema 增加快照定义和审计引用。
++- W14 仅通过 `analysis.router.load_seed` 读取带哈希自检的 W12 种子，按 caseId 精确匹配并先检查虚构标志及 sourceRefs，真实或 `reports/` 来源只显示待 Mark 确认；种子异常降级为缺数据。逐行情景句包含原字段值和可解析的分析页情景引用，另列免责声明与假设数量；英文结构中的情景名、说明和免责声明保留种子原文。W15 继续缺数据。
++- 独立 `#/report` 页头增加使用当前模板的双语生成按钮；安全建议页头增加携带当前 `CASE_ID` 的报告入口；删除未引用的 `ColregDraftButton.tsx`。中国海事模板只增加指定 TODO 与 `standardRefs[].pendingRuling` 页面标签，原章节保留；YANGZE 22 不入库，角色限制不变。
++- 测试先红后绿：GISIS 新增 15 项初次失败、快照新增 13 项初次失败、W14 来源初次 8 败 / 4 过，web 新断言初次失败。实现及旧断言按裁定改写后，服务端无 socket 定向回归 108/108 通过（`test_reports_w16_direct.py`、`test_reports_w16_export.py`、`test_reports_w16_sources.py`、新增 `test_reports_w161_gisis.py` / `test_reports_w161_snapshot.py`）；web `npm run test:w16` 140 断言通过，`npx tsc --noEmit -p tsconfig.app.json` 通过。
++- `timeout 30s .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_reports_w16.py` 在沙箱无输出超时，exit 124；该文件已补 HTTP 快照往返与权限/错误码用例，需外部环境补跑。未读取根 `reports/`、未导入 `analysis/build_seed.py`，未修改 ROADMAP、未生成冻结清单或哈希、未启动服务或截图。
+diff --git a/contracts/openapi.yaml b/contracts/openapi.yaml
+index 201721a4d24f2319f91fcb18c21da511ff5267ed..d59b5daeee211ae6cd4cec7b3a6920ee79e6b957
+--- a/contracts/openapi.yaml
++++ b/contracts/openapi.yaml
+@@ -66,6 +66,7 @@
+     ReportGisis: { $ref: 'schemas/report.schema.json#/$defs/gisis' }
+     ReportPending: { $ref: 'schemas/report.schema.json#/$defs/pending' }
+     ReportAudit: { $ref: 'schemas/report.schema.json#/$defs/auditRecord' }
++    ReportSnapshot: { $ref: 'schemas/report.schema.json#/$defs/snapshot' }
+     IntegrityReport:
+       type: object
+       description: 与 C# IntegrityCheckReport 对应
+@@ -1123,6 +1124,30 @@
+         '404': *id001
+         '409': *id001
+         '422': *id001
++  /api/v1/cases/{caseId}/report-snapshots/{snapshotId}:
++    parameters:
++    - *id002
++    - name: snapshotId
++      in: path
++      required: true
++      schema:
++        type: string
++    get:
++      tags:
++      - reports
++      summary: 按 snapshotRef 获取报告完整操作快照
++      description: 仅 LeadInvestigator / Investigator，权限与报告审计相同；理由及前后值全文保留。真实案例返回 409 report_real_data_pending，不存在返回 404 report_snapshot_not_found。
++      responses:
++        '200':
++          description: 完整操作快照
++          content:
++            application/json:
++              schema:
++                $ref: '#/components/schemas/ReportSnapshot'
++        '403': *id001
++        '404': *id001
++        '409': *id001
++        '422': *id001
+   /api/v1/cases/{caseId}/reports/{reportId}/export:
+     parameters:
+     - *id002
+diff --git a/contracts/schemas/audit-event.schema.json b/contracts/schemas/audit-event.schema.json
+index a1a7bc29bd3b8b5ff4c65fb72c9f8ea59ee49057..532ee4b026103904df896e5176e52e2abb314757
+--- a/contracts/schemas/audit-event.schema.json
++++ b/contracts/schemas/audit-event.schema.json
+@@ -75,6 +75,11 @@
+       "pattern": "^[0-9a-f]{32}$",
+       "description": "合同扩展键（可选，W5.1 按 DEFECTS/W3.md 21:32 裁定）：批量确认两阶段提交的批次号，仅 interview.crosscheck.batch_confirm / batch_commit / batch_abort 行带。C# InvestigationAuditEntry.BatchId 落盘为同名键；command 末尾的 “[batch=…]” 标记保留，供只认 7 个标准键的旧读取方重放"
+     },
++    "snapshotRef": {
++      "type": "string",
++      "pattern": "^[a-z][a-z0-9-]*-snapshot:[A-Za-z0-9_-]+$",
++      "description": "可选完整快照引用，如 report-snapshot:RA-<32位十六进制>；落盘扩展键 snapshot_ref 进入审计哈希链，不传时旧行文本不变。"
++    },
+     "reason": {
+       "type": [
+         "string",
+diff --git a/contracts/schemas/report.schema.json b/contracts/schemas/report.schema.json
+index 4673562008585e3f1b9982a9e47c56ac431d0482..8e63cbedb0cb376699d64b305eddca8e68e62603
+--- a/contracts/schemas/report.schema.json
++++ b/contracts/schemas/report.schema.json
+@@ -578,10 +578,27 @@
+       },
+       "additionalProperties": false
+     },
++    "snapshot": {
++      "type": "object",
++      "required": ["snapshotId", "reportId", "sectionId", "sentenceId", "reason", "beforeValue", "afterValue", "summary", "auditSeq"],
++      "properties": {
++        "snapshotId": {"type": "string", "pattern": "^RA-[0-9a-f]{32}$"},
++        "reportId": {"type": ["string", "null"]},
++        "sectionId": {"type": ["string", "null"]},
++        "sentenceId": {"type": ["string", "null"]},
++        "reason": {"type": "string"},
++        "beforeValue": {},
++        "afterValue": {},
++        "summary": {"type": "string"},
++        "auditSeq": {"type": "integer", "minimum": 1}
++      },
++      "additionalProperties": false
++    },
+     "auditRecord": {
+       "type": "object",
+       "required": [
+         "auditEvent",
++        "snapshotRef",
+         "reportId",
+         "sectionId",
+         "sentenceId",
+@@ -594,6 +611,10 @@
+         "auditEvent": {
+           "$ref": "audit-event.schema.json"
+         },
++        "snapshotRef": {
++          "type": "string",
++          "pattern": "^report-snapshot:RA-[0-9a-f]{32}$"
++        },
+         "reportId": {
+           "type": [
+             "string",
+diff --git a/service/mcis_service/audit/service.py b/service/mcis_service/audit/service.py
+index 01067fcf1c6ecbc524653fd653be490088c45f7e..02eec0d01ae0b3e10ed3e1ec45e361af07729df0
+--- a/service/mcis_service/audit/service.py
++++ b/service/mcis_service/audit/service.py
+@@ -2,6 +2,7 @@
+ from __future__ import annotations
+ 
+ from datetime import datetime
++import json
+ from typing import Any
+ 
+ from sqlalchemy import func, select
+@@ -21,7 +22,8 @@
+ 
+ 
+ def build_line(*, utc: str, operator: str, action: str, category: str, command: str, before: str, after: str,
+-               seq: int, role: str, entity_type: str, entity_id: str, prev: str, reason: str | None = None) -> str:
++               seq: int, role: str, entity_type: str, entity_id: str, prev: str, reason: str | None = None,
++               snapshot_ref: str | None = None) -> str:
+     pairs: list[tuple[str, object]] = [
+         ("utc", utc), ("operator", operator), ("action", action), ("category", category),
+         ("command", command), ("before", before), ("after", after),
+@@ -30,12 +32,15 @@
+     if reason is not None:
+         # 扩展键：理由全文（不截断），进入哈希链；C# AuditLog.ReadAll 忽略扩展键
+         pairs.append(("reason", reason))
++    if snapshot_ref is not None:
++        pairs.append(("snapshot_ref", snapshot_ref))
+     return flat_line(pairs)
+ 
+ 
+ def append(s: Session, *, case_id: str, operator: str, role: str, action: str, category: str, command: str,
+            before: Any = "", after: Any = "", entity_type: str = "", entity_id: str = "",
+-           utc: datetime | str | None = None, reason: str | None = None) -> AuditEventRow:
++           utc: datetime | str | None = None, reason: str | None = None,
++           snapshot_ref: str | None = None) -> AuditEventRow:
+     with WRITE_LOCK:
+         last = s.scalars(select(AuditEventRow).where(AuditEventRow.case_id == case_id)
+                          .order_by(AuditEventRow.seq.desc()).limit(1)).first()
+@@ -50,7 +55,7 @@
+         b, a = _summ(before), _summ(after)
+         line = build_line(utc=utc_s, operator=operator, action=action, category=category, command=command,
+                           before=b, after=a, seq=seq, role=role, entity_type=entity_type, entity_id=entity_id, prev=prev,
+-                          reason=reason)
++                          reason=reason, snapshot_ref=snapshot_ref)
+         row = AuditEventRow(case_id=case_id, seq=seq, utc=utc_s, operator=operator, role=role, action=action,
+                             category=category, command=command, before=b, after=a, entity_type=entity_type,
+                             entity_id=entity_id, prev_hash=prev, line=line)
+@@ -70,9 +75,16 @@
+ 
+ 
+ def to_doc(r: AuditEventRow) -> dict[str, Any]:
+-    return {"seq": r.seq, "caseId": r.case_id, "utc": r.utc, "operator": r.operator, "role": r.role or "Investigator",
++    doc = {"seq": r.seq, "caseId": r.case_id, "utc": r.utc, "operator": r.operator, "role": r.role or "Investigator",
+             "action": r.action, "category": r.category, "command": r.command, "before": r.before, "after": r.after,
+             "entityType": r.entity_type, "entityId": r.entity_id, "prevHash": r.prev_hash, "line": r.line}
++    try:
++        line = json.loads(r.line)
++    except (TypeError, ValueError):
++        line = {}
++    if isinstance(line, dict) and "snapshot_ref" in line:
++        doc["snapshotRef"] = line["snapshot_ref"]
++    return doc
+ 
+ 
+ def list_events(s: Session, case_id: str, *, category: str | None = None, entity_id: str | None = None,
+diff --git a/service/mcis_service/reports/router.py b/service/mcis_service/reports/router.py
+index 8916bd0778d1aa822f3752a90b8ba70bcc85e81d..bcd5024c8bb8bddff65993d114248d09a47fd895
+--- a/service/mcis_service/reports/router.py
++++ b/service/mcis_service/reports/router.py
+@@ -118,6 +118,14 @@
+         return service.report_audit(s, case_id, report_id)
+ 
+ 
++@router.get('/cases/{case_id}/report-snapshots/{snapshot_id}')
++def get_snapshot(case_id: str, snapshot_id: str, ctx: Ctx = CtxDep) -> dict:
++    with ctx.db.session() as s:
++        check_access(s, ctx, case_id, fictional=True)
++        require(ctx, s, case_id, 'audit')
++        return service.get_snapshot(s, case_id, snapshot_id)
++
++
+ @router.get('/cases/{case_id}/reports/{report_id}/export')
+ def export_report(case_id: str, report_id: str, format: str = 'pdf', lang: str | None = None, ctx: Ctx = CtxDep):
+     from .exporter import export_report as render
+diff --git a/service/mcis_service/reports/service.py b/service/mcis_service/reports/service.py
+index 3cc15c178e12049744e7223a9d741e8eba58244d..396db09c76770060737078f6a8c72a2119176ad8
+--- a/service/mcis_service/reports/service.py
++++ b/service/mcis_service/reports/service.py
+@@ -82,7 +82,7 @@
+                          action=action, category='Report', command=f'{action} {report_id or case_id}',
+                          before=str(before or ''), after=str(after or ''),
+                          entity_type='report' if report_id else 'gisis', entity_id=report_id or case_id,
+-                         reason=reason)
++                         reason=reason, snapshot_ref='report-snapshot:' + snapshot_id)
+     doc = {'reportId': report_id, 'sectionId': section_id, 'sentenceId': sentence_id,
+            'reason': reason, 'beforeValue': deepcopy(before), 'afterValue': deepcopy(after),
+            'summary': f'{action} · {section_id or report_id or case_id}'[:200], 'auditSeq': event.seq}
+@@ -222,10 +222,20 @@
+ 
+ 
+ def report_audit(s, case_id: str, report_id: str) -> list[dict]:
+-    entries = [d for d in list_docs(s, ReportAuditRow, case_id) if d['reportId'] == report_id]
+-    entries.sort(key=lambda d: d['auditSeq'])
++    entries = [r for r in s.scalars(select(ReportAuditRow).where(ReportAuditRow.case_id == case_id))
++               if r.doc['reportId'] == report_id]
++    entries.sort(key=lambda r: r.doc['auditSeq'])
+     out = []
+-    for entry in entries:
++    for snapshot in entries:
++        entry = snapshot.doc
+         row = s.scalars(select(AuditEventRow).where(AuditEventRow.case_id == case_id, AuditEventRow.seq == entry['auditSeq'])).first()
+-        out.append({**{k: v for k, v in entry.items() if k != 'auditSeq'}, 'auditEvent': audit.to_doc(row)})
++        out.append({**{k: v for k, v in entry.items() if k != 'auditSeq'},
++                    'snapshotRef': 'report-snapshot:' + snapshot.key, 'auditEvent': audit.to_doc(row)})
+     return out
++
++
++def get_snapshot(s, case_id: str, snapshot_id: str) -> dict:
++    snapshot = get_doc(s, ReportAuditRow, case_id, snapshot_id)
++    if snapshot is None:
++        raise problem(404, 'report_snapshot_not_found', f'报告快照不存在：{snapshot_id}')
++    return {'snapshotId': snapshot_id, **deepcopy(snapshot)}
+diff --git a/service/tests/test_reports_w16.py b/service/tests/test_reports_w16.py
+index c6941c472bcc48f1f6d575813b4c29c6ea28fbdf..9f7a1eeda7956e5a193e8c6b4a3edcb8a0e92a3e
+--- a/service/tests/test_reports_w16.py
++++ b/service/tests/test_reports_w16.py
+@@ -88,6 +88,16 @@
+     assert entry['auditEvent']['operator'] == '复核调查员'
+     assert json.loads(entry['auditEvent']['line'])['reason'] == reason
+     assert not contracts.errors('audit-event', entry['auditEvent'])
++    assert entry['auditEvent']['snapshotRef'] == entry['snapshotRef']
++    snapshot_id = entry['snapshotRef'].split(':', 1)[1]
++    snapshot_response = client.get(f'{C}/report-snapshots/{snapshot_id}', headers=H())
++    assert snapshot_response.status_code == 200
++    snapshot = snapshot_response.json()
++    assert snapshot['reason'] == reason and len(snapshot['reason']) > 500
++    assert snapshot['beforeValue'] == entry['beforeValue']
++    assert snapshot['afterValue'] == entry['afterValue']
++    assert snapshot['auditSeq'] == entry['auditEvent']['seq']
++    assert not contracts.errors('report#/$defs/snapshot', snapshot)
+     r = client.post(f"{C}/reports/{report['reportId']}:generate", headers=H())
+     assert r.status_code == 201, r.text
+     newer = r.json()
+@@ -99,6 +109,22 @@
+     assert client.get(f'{C}/audit:verify', headers=H('LeadInvestigator')).json()['valid']
+ 
+ 
++def test_snapshot_http_error_codes_and_role_limits(client):
++    report = create(client)
++    entry = client.get(f"{C}/reports/{report['reportId']}/audit", headers=H()).json()[0]
++    snapshot_id = entry['snapshotRef'].split(':', 1)[1]
++    for role in ('LeadInvestigator', 'Investigator'):
++        assert client.get(f'{C}/report-snapshots/{snapshot_id}', headers=H(role)).status_code == 200
++    for role in ('ExternalExpert', 'InterestedState', 'AgentService', 'Public'):
++        rejected = client.get(f'{C}/report-snapshots/{snapshot_id}', headers=H(role))
++        assert rejected.status_code == 403 and rejected.json()['code'] == 'FORBIDDEN'
++    missing = client.get(f'{C}/report-snapshots/RA-absent', headers=H())
++    assert missing.status_code == 404 and missing.json()['code'] == 'report_snapshot_not_found'
++    for case_id in (REAL, PENDING):
++        pending = client.get(f'/api/v1/cases/{case_id}/report-snapshots/RA-absent', headers=H())
++        assert pending.status_code == 409 and pending.json()['code'] == 'report_real_data_pending'
++
++
+ def test_sentence_review_keeps_section_and_sentence_generated_text(client):
+     report = create(client)
+     section = report['sections'][2]
+diff --git a/service/tests/test_reports_w161_snapshot.py b/service/tests/test_reports_w161_snapshot.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..c69c38f5c5e4a4fe70e02b09e4bef6beebc8e538
+--- /dev/null
++++ b/service/tests/test_reports_w161_snapshot.py
+@@ -0,0 +1,155 @@
++"""W16.1 完整快照引用与审计兼容性；直接调用 handler，不建立 socket。"""
++from copy import deepcopy
++import json
++import re
++from types import SimpleNamespace
++
++from fastapi import HTTPException
++import pytest
++
++from mcis_service.audit import service as audit
++from mcis_service.audit.models import AuditEventRow
++from mcis_service.common import contracts
++from mcis_service.db import list_docs
++from mcis_service.reports import router, service
++from mcis_service.reports.models import ReportAuditRow
++
++from .conftest import CASE
++
++
++@pytest.fixture()
++def ctx(app):
++    return SimpleNamespace(db=app.state.db, role='Investigator', operator='快照调查员',
++                           settings=app.state.settings, request=SimpleNamespace(app=app))
++
++
++def create(ctx):
++    return router.create_report(CASE, {'templateId': 'imo-cic', 'lang': 'bilingual'}, ctx)
++
++
++def assert_error(status, code, callback):
++    with pytest.raises(HTTPException) as caught:
++        callback()
++    assert caught.value.status_code == status
++    assert caught.value.detail['code'] == code
++
++
++@pytest.mark.parametrize('reason', [None, '理由全文\n不截断'])
++def test_build_line_without_snapshot_ref_is_byte_identical(reason):
++    inputs = dict(utc='2026-11-11T14:10:00.000Z', operator='调查员', action='report.review.modify',
++                  category='Report', command='复核 "章节"', before='原文\n一', after='新文\t二', seq=7,
++                  role='Investigator', entity_type='report', entity_id='RPT-fixed', prev='0' * 64,
++                  reason=reason)
++    expected = ('{"utc":"2026-11-11T14:10:00.000Z","operator":"调查员",'
++                '"action":"report.review.modify","category":"Report","command":"复核 \\"章节\\"",'
++                '"before":"原文\\n一","after":"新文\\t二","seq":7,"role":"Investigator",'
++                '"entity_type":"report","entity_id":"RPT-fixed","prev":"' + '0' * 64 + '"')
++    if reason is not None:
++        expected += ',"reason":"理由全文\\n不截断"'
++    expected += '}'
++    assert audit.build_line(**inputs).encode('utf-8') == expected.encode('utf-8')
++    assert audit.build_line(**inputs, snapshot_ref=None).encode('utf-8') == expected.encode('utf-8')
++
++
++def test_snapshot_ref_round_trip_retains_full_reason_values_and_chain(ctx):
++    report = create(ctx)
++    original = deepcopy(report['sections'][0])
++    reason = '  理由起点' + '核对证据后保留完整调查理由，不得截断。' * 80 + '理由终点  '
++    assert len(reason) > 500
++    router.review(CASE, report['reportId'], original['sectionId'],
++                  {'action': 'modify', 'textZh': '经复核的新表述。', 'reason': reason}, ctx)
++    entries = router.audit_list(CASE, report['reportId'], ctx)
++    assert all(re.fullmatch(r'report-snapshot:RA-[0-9a-f]{32}', e['snapshotRef']) for e in entries)
++    entry = entries[-1]
++    assert entry['auditEvent']['snapshotRef'] == entry['snapshotRef']
++    assert json.loads(entry['auditEvent']['line'])['snapshot_ref'] == entry['snapshotRef']
++    assert not contracts.errors('audit-event', entry['auditEvent'])
++    assert not contracts.errors('report#/$defs/auditRecord', entry)
++    snapshot_id = entry['snapshotRef'].split(':', 1)[1]
++    snapshot = router.get_snapshot(CASE, snapshot_id, ctx)
++    assert set(snapshot) == {'snapshotId', 'reportId', 'sectionId', 'sentenceId', 'reason',
++                             'beforeValue', 'afterValue', 'summary', 'auditSeq'}
++    assert snapshot['snapshotId'] == snapshot_id
++    assert snapshot['reportId'] == report['reportId'] and snapshot['sectionId'] == original['sectionId']
++    assert snapshot['sentenceId'] is None
++    assert snapshot['reason'] == reason
++    assert snapshot['beforeValue']['textZh'] == original['textZh']
++    assert snapshot['afterValue']['textZh'] == '经复核的新表述。'
++    assert snapshot['auditSeq'] == entry['auditEvent']['seq']
++    assert not contracts.errors('report#/$defs/snapshot', snapshot)
++    with ctx.db.session() as s:
++        assert audit.verify_chain(audit.all_lines(s, CASE))['valid'] is True
++        before = len(list_docs(s, ReportAuditRow, CASE))
++    assert router.get_snapshot(CASE, snapshot_id, ctx) == snapshot
++    with ctx.db.session() as s:
++        assert len(list_docs(s, ReportAuditRow, CASE)) == before
++
++
++def test_snapshot_missing_is_404_and_case_scoped(ctx):
++    create(ctx)
++    assert_error(404, 'report_snapshot_not_found', lambda: router.get_snapshot(CASE, 'RA-absent', ctx))
++    with ctx.db.session() as s:
++        from mcis_service.db import put_doc
++        put_doc(s, ReportAuditRow, 'CASE-OTHER', 'RA-other-case', {'reason': '别的案件'})
++    assert_error(404, 'report_snapshot_not_found', lambda: router.get_snapshot(CASE, 'RA-other-case', ctx))
++
++
++@pytest.mark.parametrize('role', ['ExternalExpert', 'InterestedState', 'AgentService', 'Public'])
++def test_snapshot_restricted_roles_are_403(ctx, role):
++    report = create(ctx)
++    reference = router.audit_list(CASE, report['reportId'], ctx)[0]['snapshotRef']
++    ctx.role = role
++    assert_error(403, 'FORBIDDEN', lambda: router.get_snapshot(CASE, reference.split(':', 1)[1], ctx))
++
++
++@pytest.mark.parametrize('role', ['LeadInvestigator', 'Investigator'])
++def test_snapshot_investigator_roles_allowed(ctx, role):
++    report = create(ctx)
++    reference = router.audit_list(CASE, report['reportId'], ctx)[0]['snapshotRef']
++    ctx.role = role
++    assert router.get_snapshot(CASE, reference.split(':', 1)[1], ctx)['afterValue'] == report
++
++
++@pytest.mark.parametrize('case_id', sorted(service.REAL_CASE_IDS))
++def test_real_snapshot_pending_409_without_any_database_change(ctx, case_id):
++    from .test_reports_w16_direct import snapshot_db
++    before = snapshot_db(ctx)
++    assert_error(409, 'report_real_data_pending', lambda: router.get_snapshot(case_id, 'RA-absent', ctx))
++    assert snapshot_db(ctx) == before
++
++
++def test_to_doc_only_adds_snapshot_ref_when_line_contains_key():
++    base = dict(seq=1, case_id=CASE, utc='2026-11-11T14:10:00.000Z', operator='调查员',
++                role='Investigator', action='report.generate', category='Report', command='生成',
++                before='', after='', entity_type='report', entity_id='RPT-fixed', prev_hash='0' * 64)
++    old = AuditEventRow(**base, line='{}')
++    assert 'snapshotRef' not in audit.to_doc(old)
++    ref = 'report-snapshot:RA-' + 'a' * 32
++    new = AuditEventRow(**base, line=json.dumps({'snapshot_ref': ref}))
++    doc = audit.to_doc(new)
++    assert doc['snapshotRef'] == ref
++    assert not contracts.errors('audit-event', doc)
++    invalid = {**doc, 'snapshotRef': 'report snapshot:invalid'}
++    assert contracts.errors('audit-event', invalid)
++
++
++def test_legacy_report_snapshot_gets_reference_without_rewriting_audit_line(ctx):
++    from mcis_service.db import put_doc
++    report = create(ctx)
++    snapshot_id = 'RA-' + 'b' * 32
++    with ctx.db.session() as s:
++        event = audit.append(s, case_id=CASE, operator=ctx.operator, role=ctx.role,
++                             action='report.export', category='Report', command='旧版导出')
++        original_line = event.line
++        put_doc(s, ReportAuditRow, CASE, snapshot_id,
++                {'reportId': report['reportId'], 'sectionId': None, 'sentenceId': None,
++                 'reason': '', 'beforeValue': None, 'afterValue': {'legacy': True},
++                 'summary': '旧版快照', 'auditSeq': event.seq})
++    entry = router.audit_list(CASE, report['reportId'], ctx)[-1]
++    assert entry['snapshotRef'] == 'report-snapshot:' + snapshot_id
++    assert 'snapshotRef' not in entry['auditEvent']
++    assert entry['auditEvent']['line'] == original_line
++    assert not contracts.errors('report#/$defs/auditRecord', entry)
++    assert router.get_snapshot(CASE, snapshot_id, ctx)['afterValue'] == {'legacy': True}
++    with ctx.db.session() as s:
++        assert audit.verify_chain(audit.all_lines(s, CASE))['valid'] is True
+diff --git a/service/tests/test_reports_w16_direct.py b/service/tests/test_reports_w16_direct.py
+index 4269ca69730839e3f88d0668624863630271e022..66a889c9cf33d3f91b0a7bd3508a22009f04d3ef
+--- a/service/tests/test_reports_w16_direct.py
++++ b/service/tests/test_reports_w16_direct.py
+@@ -296,7 +296,7 @@
+ 
+ 
+ def test_direct_w16_openapi_routes_have_no_drift(app):
+-    """并发包可有待裁定接口，W16 本身的13个操作必须与公开合同逐个一致。"""
++    """并发包可有待裁定接口，W16.1 的14个操作必须与公开合同逐个一致。"""
+     import re
+     import yaml
+     from mcis_service.config import PROJECT_ROOT
+@@ -309,7 +309,7 @@
+                 and isinstance(operation, dict) and 'reports' in operation.get('tags', [])}
+     declared = routes(spec['paths'])
+     actual = routes(app.openapi()['paths'])
+-    assert len(declared) == 13 and declared == actual
++    assert len(declared) == 14 and declared == actual
+ 
+ 
+ def test_direct_colreg_draft_data_sources_match_chapter_scope(ctx):
+diff --git a/service/tests/test_reports_w16_export.py b/service/tests/test_reports_w16_export.py
+index e5f8cd509961236c5c05bec0802905da7f09e387..e96bf2f1c1740820eaf6e0fed38455b0ecad049c
+--- a/service/tests/test_reports_w16_export.py
++++ b/service/tests/test_reports_w16_export.py
+@@ -92,7 +92,7 @@
+     assert fields["vessels.lily.grossTonnage"]["value"] is None
+     assert fields["vessels.lily.grossTonnage"]["missing"] is True
+     assert fields["deaths"]["value"] is None and fields["deaths"]["missingLabel"] == "缺数据 / Missing data"
+-    assert fields["severity"]["value"] == "Very serious"
++    assert fields["severity"]["value"] == "Very serious marine casualty"
+     assert fields["vessels.lily.imoNumber"]["value"] == "9074729"
+     assert all(f["sourceRefs"] and f["rules"] and f["labelZh"] and f["labelEn"] for f in doc["fields"])
+     assert doc["isFictionalDemo"] is True
+@@ -131,7 +131,7 @@
+ 
+ def test_gisis_valid_complete_projection_preserves_zero_and_false():
+     case = {"caseId": "CASE-2026-DEMO-LILY-MARY", "isFictionalDemo": True,
+-            "incidentTimeUtc": "2026-05-18T06:24:00Z", "incidentLocation": {"latDeg": 0, "lonDeg": 0},
++            "incidentTimeUtc": "2026-05-18T06:24:00Z", "incidentLocation": {"latDeg": 0, "lonDeg": 0, "locationCategory": "Unknown"},
+             "accidentGrade": "VerySerious", "accidentType": "Collision", "deaths": 0, "missingPersons": 0,
+             "injuries": 0, "pollution": False, "shipLoss": False, "investigatingState": "示例调查国（虚构）", "reportStatus": "Draft"}
+     vessel = {"vesselId": "lily", "name": "Lily", "imoNumber": "9074729", "flagState": "虚构船旗国",
+
+exec
+/bin/bash -lc 'npm run test:w16 && npx tsc --noEmit -p tsconfig.app.json' in /workspace/maritime-sim-design/web
+ succeeded in 708ms:
+
+> web@0.0.0 test:w16
+> esbuild tests/report-render.test.tsx --bundle --platform=node --format=cjs --outfile=tests/.tmp-report-render.cjs --jsx=automatic && node tests/.tmp-report-render.cjs
+
+
+  tests/.tmp-report-render.cjs  1.5mb ⚠️
+
+⚡ Done in 34ms
+ok 140 assertions (W16 三模板×三语言、引用、复核、导出、GISIS、真实锁定与请求合同)
+
+codex
+W16.1 已实现，先补测试确认红灯，再实现转绿。
+
+改动文件：
+
+- 合同：[audit-event.schema.json](/workspace/maritime-sim-design/contracts/schemas/audit-event.schema.json)、[report.schema.json](/workspace/maritime-sim-design/contracts/schemas/report.schema.json)、[openapi.yaml](/workspace/maritime-sim-design/contracts/openapi.yaml)
+- 服务端：[audit/service.py](/workspace/maritime-sim-design/service/mcis_service/audit/service.py)；报告包的 [templates.py](/workspace/maritime-sim-design/service/mcis_service/reports/templates.py)、[gisis.py](/workspace/maritime-sim-design/service/mcis_service/reports/gisis.py)、[sources.py](/workspace/maritime-sim-design/service/mcis_service/reports/sources.py)、[service.py](/workspace/maritime-sim-design/service/mcis_service/reports/service.py)、[router.py](/workspace/maritime-sim-design/service/mcis_service/reports/router.py)
+- 前端：[ReportView.tsx](/workspace/maritime-sim-design/web/src/reports/ReportView.tsx)、[types.ts](/workspace/maritime-sim-design/web/src/reports/types.ts)、[ReportPage.tsx](/workspace/maritime-sim-design/web/src/pages/ReportPage.tsx)、[RecommendationsPage.tsx](/workspace/maritime-sim-design/web/src/pages/RecommendationsPage.tsx)、[w16.css](/workspace/maritime-sim-design/web/src/styles/w16.css)
+- 测试：[test_reports_w16.py](/workspace/maritime-sim-design/service/tests/test_reports_w16.py)、[test_reports_w16_direct.py](/workspace/maritime-sim-design/service/tests/test_reports_w16_direct.py)、[test_reports_w16_export.py](/workspace/maritime-sim-design/service/tests/test_reports_w16_export.py)、[test_reports_w16_sources.py](/workspace/maritime-sim-design/service/tests/test_reports_w16_sources.py)、[report-render.test.tsx](/workspace/maritime-sim-design/web/tests/report-render.test.tsx)
+- 末尾追加实现说明：[REQUESTS.md](/workspace/maritime-sim-design/REQUESTS.md)
+
+新增：[test_reports_w161_gisis.py](/workspace/maritime-sim-design/service/tests/test_reports_w161_gisis.py)、[test_reports_w161_snapshot.py](/workspace/maritime-sim-design/service/tests/test_reports_w161_snapshot.py)。
+
+删除：`web/src/reports/ColregDraftButton.tsx`，并清理引用。
+
+新接口：`GET /api/v1/cases/{caseId}/report-snapshots/{snapshotId}`。错误码为 **403 `FORBIDDEN`**、**409 `report_real_data_pending`**、**404 `report_snapshot_not_found`**。快照保留理由全文及完整前后值，旧审计行保持兼容。
+
+验证结果：
+
+- 服务端上述五个非 HTTP 测试文件：**108 passed**。
+- `npm run test:w16`：**140 条断言通过**。
+- TypeScript 检查：通过。
+- `test_reports_w16.py`：沙箱中 **30 秒无输出超时，exit 124**；已补 HTTP 快照用例，需外部补跑。
+
+待确认事项仍按裁定保留：GISIS 待核映射、中国海事原文章节标题。英文情景说明保留种子原文并标注来源文本。未读取根 `reports/`，未改 ROADMAP，未生成冻结哈希。
+tokens used
+125,645
+W16.1 已实现，先补测试确认红灯，再实现转绿。
+
+改动文件：
+
+- 合同：[audit-event.schema.json](/workspace/maritime-sim-design/contracts/schemas/audit-event.schema.json)、[report.schema.json](/workspace/maritime-sim-design/contracts/schemas/report.schema.json)、[openapi.yaml](/workspace/maritime-sim-design/contracts/openapi.yaml)
+- 服务端：[audit/service.py](/workspace/maritime-sim-design/service/mcis_service/audit/service.py)；报告包的 [templates.py](/workspace/maritime-sim-design/service/mcis_service/reports/templates.py)、[gisis.py](/workspace/maritime-sim-design/service/mcis_service/reports/gisis.py)、[sources.py](/workspace/maritime-sim-design/service/mcis_service/reports/sources.py)、[service.py](/workspace/maritime-sim-design/service/mcis_service/reports/service.py)、[router.py](/workspace/maritime-sim-design/service/mcis_service/reports/router.py)
+- 前端：[ReportView.tsx](/workspace/maritime-sim-design/web/src/reports/ReportView.tsx)、[types.ts](/workspace/maritime-sim-design/web/src/reports/types.ts)、[ReportPage.tsx](/workspace/maritime-sim-design/web/src/pages/ReportPage.tsx)、[RecommendationsPage.tsx](/workspace/maritime-sim-design/web/src/pages/RecommendationsPage.tsx)、[w16.css](/workspace/maritime-sim-design/web/src/styles/w16.css)
+- 测试：[test_reports_w16.py](/workspace/maritime-sim-design/service/tests/test_reports_w16.py)、[test_reports_w16_direct.py](/workspace/maritime-sim-design/service/tests/test_reports_w16_direct.py)、[test_reports_w16_export.py](/workspace/maritime-sim-design/service/tests/test_reports_w16_export.py)、[test_reports_w16_sources.py](/workspace/maritime-sim-design/service/tests/test_reports_w16_sources.py)、[report-render.test.tsx](/workspace/maritime-sim-design/web/tests/report-render.test.tsx)
+- 末尾追加实现说明：[REQUESTS.md](/workspace/maritime-sim-design/REQUESTS.md)
+
+新增：[test_reports_w161_gisis.py](/workspace/maritime-sim-design/service/tests/test_reports_w161_gisis.py)、[test_reports_w161_snapshot.py](/workspace/maritime-sim-design/service/tests/test_reports_w161_snapshot.py)。
+
+删除：`web/src/reports/ColregDraftButton.tsx`，并清理引用。
+
+新接口：`GET /api/v1/cases/{caseId}/report-snapshots/{snapshotId}`。错误码为 **403 `FORBIDDEN`**、**409 `report_real_data_pending`**、**404 `report_snapshot_not_found`**。快照保留理由全文及完整前后值，旧审计行保持兼容。
+
+验证结果：
+
+- 服务端上述五个非 HTTP 测试文件：**108 passed**。
+- `npm run test:w16`：**140 条断言通过**。
+- TypeScript 检查：通过。
+- `test_reports_w16.py`：沙箱中 **30 秒无输出超时，exit 124**；已补 HTTP 快照用例，需外部补跑。
+
+待确认事项仍按裁定保留：GISIS 待核映射、中国海事原文章节标题。英文情景说明保留种子原文并标注来源文本。未读取根 `reports/`，未改 ROADMAP，未生成冻结哈希。

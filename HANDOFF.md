@@ -1,3 +1,5 @@
+> **已过时：最新的阶段性交接见 [docs/HANDOFF-STAGE1.md](docs/HANDOFF-STAGE1.md)（2026-11-11 22:30）。本文件仅作历史保留。**
+
 # MCIS 交接说明（2026-11-11 快照，Asia/Shanghai）
 
 给后续在 Codex（或其他环境）继续开发的接手文档。更细的状态以 `ROADMAP.md` 最新行和 `DEFECTS/*.md` 文末裁定为准；本文件是当时的汇总，不替代那些原始记录。

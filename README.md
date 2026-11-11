@@ -1,8 +1,37 @@
-# 海事事故调查三维仿真系统（MCIS-3D）· UI 原型与架构设计
+# MCIS · 海事事故调查仿真系统
 
-> 依据 Mark Wen 硕士论文《Design and application research of maritime casualty investigation simulation based on Unity 3D》。原型里的 Lily / Mary 案例全部为**示例数据（虚构）**，改编自论文 5.4 节。
+Mark Wen（WMU）硕士论文项目，依据论文《Design and application research of maritime casualty investigation simulation based on Unity 3D》。目标是做一套完整、接近游戏体验、高端 UI 的海事事故调查仿真系统：Unity 6 + URP 三维回放与推演（Cesium、Dynamic Water 2、Enviro 3、AIS/VDR），加调查工作台（证据、询问比对、COLREG、分析、What-if、系统分析、人为因素、报告）。原型里的每个 UI 功能都要实现。正式产品定位为内网联机版，另有离线单机现场版，同一代码库。
 
-## 如何打开原型
+> **接手开发请先读 [docs/HANDOFF-STAGE1.md](docs/HANDOFF-STAGE1.md)**（阶段性交接），再读 [AGENTS.md](AGENTS.md) 和 [ROADMAP.md](ROADMAP.md)。
+
+## 组成
+
+| 部分 | 位置 | 技术 |
+|---|---|---|
+| 纯 C# 计算核心 | `unity/Assets/_Project/Scripts/` | C# 9、netstandard2.1、无 UnityEngine |
+| 计算核心 CLI | `tools/mcis-core/` | `cpa` / `align` / `colreg`，stdin/stdout JSON |
+| 调查服务 | `service/` | FastAPI + SQLite，只监听 127.0.0.1:8765 |
+| Web 工作台 | `web/` | Vite + React + TypeScript + ECharts |
+| 接口合同 | `contracts/` | OpenAPI + JSON Schema |
+| 原型与截图 | `prototype/`、`screenshots/` | 17 页高保真 HTML 原型 |
+| 真实案例数据 | `reports/` | 海力5、YANGZE 22 公开报告（结构化，标来源与【直接】/【推算】/【估计】） |
+| 验收与缺陷 | `tests_acceptance/`、`DEFECTS/`、`logs/` | 独立验收测试、缺陷与裁定、冻结哈希 |
+
+## 快速开始
+
+```bash
+cd service && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt && cd ..
+cd web && npm install --no-audit --no-fund && cd ..
+./run_dev.sh          # 后端 127.0.0.1:8765 + 前端 127.0.0.1:5173
+```
+
+.NET 8 SDK（`~/.dotnet/dotnet`）用于纯 C# 测试和 mcis-core。完整的测试命令和交接时的基线数字见 `docs/HANDOFF-STAGE1.md` §3。
+
+## UI 原型
+
+原型里的 Lily / Mary 案例全部为**示例数据（虚构）**，改编自论文 5.4 节。
+
+### 打开原型
 直接用 Chrome / Edge 打开 `prototype/index.html`，双击即可。单文件，离线可用，没有外部依赖。推荐分辨率 1920×1080。
 
 地址后面的 hash 对应各屏幕，也可以用左侧导航或顶部步骤条切换。
@@ -28,13 +57,14 @@ DCPA/TCPA 按示例轨迹实时计算。r 是目标船相对本船的位置，v 
 - 琥珀（警告）：DCPA < 1 nm 且 0 < TCPA < 12 min
 - 青（安全）：其余情况
 
-## 文件
-- `prototype/index.html`：高保真交互原型
-- `ARCHITECTURE.md`：Unity 工程架构，包括：
-  - 分层、模块、C# 接口草案
-  - 状态机、目录结构
-  - `.mcase` JSON Schema
-  - 路线图、风险、测试
-  - 7 张 mermaid 图
-- `screenshots/`：1920×1080 截图；`screenshots/1440/` 是 1440×900 截图
-- `BRIEF.md`：设计需求说明；`thesis.txt`：论文文本；`logs/`：生成过程日志
+原型 09–17 页（证据中心、询问比对、COLREG、What-if、人为因素、系统分析、安全建议/报告、知识库、权限）在 `prototype/p6/`，截图见 `screenshots/1440/09-*.png` 至 `17-*.png`。
+
+## 主要文档
+
+- `docs/HANDOFF-STAGE1.md`：阶段性交接（当前状态、接手顺序）
+- `AGENTS.md`：给代理的仓库规则
+- `ROADMAP.md`：工作包与状态表
+- `ARCHITECTURE.md`：Unity 工程架构，含分层、模块、C# 接口草案、状态机、`.mcase` JSON Schema、mermaid 图
+- `contracts/CONTRACTS.md`：模块接口约定
+- `reports/REAL_CASES.md`：真实案例基准
+- `BRIEF.md`：设计需求说明；`thesis.txt`：论文文本
