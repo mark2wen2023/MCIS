@@ -1,0 +1,48 @@
+=== tests/case-context.test.ts ===
+case context: 28 assertions passed
+EXIT=0
+=== tests/analysis-w12.test.tsx ===
+W12 analysis tests: 94 passed
+EXIT=0
+=== tests/case-linked-pages.test.tsx ===
+Error: RecommendationsPage: route boundary unmounts stale loaders and forms
+    at assert2 (/tmp/w71-case-linked-pages.test.tsx.cjs:133887:18)
+    at main (/tmp/w71-case-linked-pages.test.tsx.cjs:133952:5)
+EXIT=1
+=== tests/colreg-render.test.tsx ===
+ok  18 assertions (labels + render lily/mary + haili5)
+EXIT=0
+=== tests/colreg-w61.test.tsx ===
+ok  58 assertions (W6.1 rulings 2–11 + W6.2)
+EXIT=0
+=== tests/consultation-w7.test.tsx ===
+W7.1 41 model/static-render checks passed (not browser interaction).
+EXIT=0
+=== tests/interview-render.test.tsx ===
+interview-render: 38 项断言通过
+EXIT=0
+=== tests/report-render.test.tsx ===
+ok 148 assertions (W16 三模板×三语言、引用、复核、导出、GISIS、真实锁定与请求合同)
+EXIT=0
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> web@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 652 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                     0.42 kB │ gzip:   0.32 kB
+dist/assets/index-Bo2ozNCx.css     31.64 kB │ gzip:   6.86 kB
+dist/assets/index-CuadM5y1.js   1,516.03 kB │ gzip: 495.79 kB
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 1500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 595ms
+BUILD_EXIT=0
+OVERALL_EXIT=1

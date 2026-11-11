@@ -301,3 +301,18 @@ W12.1独立验收发现冻结seed的notes仍写“本案未接入服务数据库
 
 ### W13.1 独立验收登记
 新增独立 `tests_acceptance/W13`，冻结后只读引用适配器与现有真实ISimClock实现。验收按case隔离、连续序列/重复/乱序/冲突、非法参数拒绝无副作用、越界seek与不支持倍速预检拒绝、异常可能已生效时锁实例不自动重试、仅显式checkpoint边界的重启语义、focus意图回调及只读状态快照。真实Clock验证seek误差<0.1s与play/pause/rate推进，不改Clock或server合同，不将本地纯C#测试称为Unity相机/HTTP联调通过。
+
+## W7.1 既有征求意见轮次 UI（2026-11-12）
+- 登记跨冻结修改 RecommendationsPage：保留建议看板、原轮次矩阵与报告入口，仅接入独立 consultation 组件与局部 w7.css。
+- 范围：既有轮次选择、登记回复/意见、Pending 意见采纳决定、服务器汇总与审计刷新。不新增/关闭/放弃轮次，不外发消息，不改服务合同或实现。
+- 实际案件 report_draft 策略决定读写，失败/未知 fail closed；关闭轮次不能收回复，但按现服务语义仍能处理 Pending 意见。部分/未采纳必须非空反馈。
+- 切案件/身份清空数据与表单，失效异步结果不回填；提交锁防双击。403/409明示并只重载读取，不自动重试写操作。结果不确定时保留错误，不假称写审计成功。
+- 组件/模型自测与全web/build由实施方执行；真实HTTP与浏览器流程由独立验收执行，静态渲染不冒充交互完成。
+
+### W7.1 独立验收准备
+新增tests_acceptance/W7真实回环HTTP验收，使用临时SQLite与独立服务进程，不写生产数据库。按现有report_draft权限及closed规则验证回复/采纳、重复与失败不增审计、RO/Deny隔离、审计链及跨案数据不变；closed禁止新回复但Pending意见仍可决定，保持服务既有合同。冻结后执行并另记UI源码/浏览器与回归结果，不改后端接口。
+- W7.1 冻结后重开修复：父级 RecommendationsCasePage 也按 role/operator 身份加入 key 重挂载，清空审计（含反馈）、看板与旧表单；既有 useLoad cleanup 将旧请求 alive=false，不允许旧身份读取异步回填。新增静态接线回归，实际切角色由浏览器验收。
+
+### W7.1 身份隔离修复后的旧断言适配
+整页Recommendations key由case/id增加role/operator身份，旧case-linked-pages测试固定字符串因此失败。保留原测试及断言数量，Recommendations分支改查更严格的case/id/who key和身份订阅，Evidence分支保留原case/id key；未放宽卸载旧数据/表单要求，不改实现。
+- W7.1 浏览器返工：768px文档横向溢出（实际37检查中唯一失败）。局部w7-page栅格折叠、看板/操作行换行；w7.css仅对.app:has(.w7-page)修正顶栏最小内容撑宽与行高，保留侧栏/按钮/内容，不以overflow:hidden掩盖。全局styles与Layout不变。

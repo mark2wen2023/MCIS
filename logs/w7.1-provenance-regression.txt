@@ -1,0 +1,16 @@
+BEFORE: HTTP contracts, service source/seed and core existing source equal HEAD. Refrozen W7.1 implementation hashes verified.
+{
+  "web/src/pages/RecommendationsPage.tsx": "ae6716c4267dc5444897e822968c5c01441bee7bf50eab7efa1e5476d20b5e99",
+  "web/src/consultation/ConsultationPanel.tsx": "6f3d07703009175b51674df67c3ae7295aa5ce2f6488c2743d18bf96bfce2990",
+  "web/src/consultation/model.ts": "38be675fa0b25dff601cf607d72cf7618e7f8920d62a9c521640c34138529f28",
+  "web/src/consultation/types.ts": "85fce5ba3d600ba3091ccfc1fd20f40f6ae76dc7672eca0d854f41d1cef30ddd",
+  "web/src/styles/w7.css": "40f1f35e20a9a86fd2d8a23e3f2b83643ce9d55ec6e631d7c45379fa327624e5",
+  "web/tests/consultation-w7.test.tsx": "b058b9b24d08c20ef16a225b3a7dea0b5c7d47031184a10a09454faa8d469d54",
+  "web/tests/run-consultation-w7.sh": "921609c79069c7d2e23b74a65821f495968d71175d056a4e996df99265fb300d"
+}
+.........                                                                [100%]
+9 passed in 0.20s
+AFTER: all 276 recorded source/contract/seed/refrozen inputs unchanged.
+Snapshot digest: 2fecdc3b02e7da685f956d4b7ac7e830f1169d02c04c0e06000796ea8c862d3c
+Active DLL matches seed: f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf
+Scope excludes intentional independent-test adaptation in web/tests/case-linked-pages.test.tsx.

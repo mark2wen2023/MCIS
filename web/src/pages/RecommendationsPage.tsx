@@ -1,6 +1,7 @@
-import { useState, type DragEvent } from 'react'
+import { useState, useSyncExternalStore, type DragEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { api, casePath, CASE_ID } from '../api'
+import { api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
+import { ConsultationPanel } from '../consultation/ConsultationPanel'
 import { SERVICE_ADDR } from '../config'
 import { Metric, Panel } from '../components/Panel'
 import { useToast } from '../components/Toast'
@@ -28,18 +29,20 @@ async function loadAudit(caseId: string): Promise<AuditEvent[]> {
   return [...a, ...b].sort((x, y) => y.seq - x.seq).slice(0, 14)
 }
 
+const recommendationsIdentity = () => `${getRole()}\n${getOperator()}`
+
 export function RecommendationsPage() {
+  const who = useSyncExternalStore(onIdentityChange, recommendationsIdentity, recommendationsIdentity)
   const [params] = useSearchParams()
   const caseId = params.get('case') || CASE_ID
   const requestedId = params.get('id') || ''
-  return <RecommendationsCasePage key={`${caseId}:${requestedId}`} caseId={caseId} requestedId={requestedId} />
+  return <RecommendationsCasePage key={`${caseId}:${requestedId}:${who}`} caseId={caseId} requestedId={requestedId} />
 }
 
 function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requestedId: string }) {
   const { run, show } = useToast()
   const caseRes = useLoad(() => api.get<CaseDef>(casePath('', caseId)))
   const board = useLoad(() => api.get<Board>(casePath('/recommendations:board', caseId)))
-  const rounds = useLoad(() => api.get<ConsultationRound[]>(casePath('/consultation/rounds', caseId)))
   const audit = useLoad(() => loadAudit(caseId))
   const [selId, setSelId] = useState<string>(requestedId || 'SR-2026-03')
   const [dropCol, setDropCol] = useState<string | null>(null)
@@ -79,10 +82,9 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
     closed: all.filter((r) => r.column === 'Closed').length,
   }
   const avg = totals.inProgress.length ? Math.round(totals.inProgress.reduce((s, r) => s + r.progressPct, 0) / totals.inProgress.length) : 0
-  const cur = rounds.data?.find((r) => !r.isClosed) ?? rounds.data?.[rounds.data.length - 1]
 
   return (
-    <div>
+    <div className="w7-page">
       <div className="page-head">
         <div>
           <div className="page-title">安全建议跟踪 · 报告草案征求意见 <span className="p6-tag">{caseRes.data ? (caseRes.data.isFictionalDemo ? '示例数据（虚构）' : '真实案例（公开报告）') : '案件信息加载中'}</span><span className="p6-tag cyan">LIVE · {SERVICE_ADDR}</span></div>
@@ -100,7 +102,7 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
       {board.error && <div className="p6-card" style={{ borderColor: 'var(--red)', marginBottom: 12 }}>后端错误：{board.error}</div>}
       {creating && <CreateForm caseId={caseId} onDone={(id) => { setCreating(false); if (id) { setSelId(id); refresh() } }} />}
 
-      <div className="grid" style={{ gridTemplateColumns: 'repeat(5, 1fr)', marginBottom: 12 }}>
+      <div className="grid w7-metrics" style={{ marginBottom: 12 }}>
         <Metric label="安全建议" value={totals.total} unit="条" />
         <Metric label="已发布 · 待回复" value={totals.awaiting} unit="条" tone="amber" />
         <Metric label="落实中 · 平均进度" value={avg} unit={`% · ${totals.inProgress.length} 条`} tone="pur" />
@@ -120,14 +122,12 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
         </div>
       </Panel>
 
-      <div className="grid" style={{ gridTemplateColumns: '5fr 4fr 4fr' }}>
+      <div className="grid w7-columns">
         {sel ? (
           <Detail key={sel.id} caseId={caseId} rec={sel} allowed={board.data?.allowed[sel.status] ?? []} pending={pending?.id === sel.id ? pending.to : null}
             onTransition={transition} onChanged={refresh} onCancel={() => setPending(null)} />
         ) : <Panel title="建议详情"><div className="empty">选择一张卡片</div></Panel>}
-        <Panel title="报告草案征求意见" meta={cur && <span>第 {cur.roundNo} 轮 · {cur.isClosed ? '已关闭' : `剩余 ${cur.daysRemaining} 天`}</span>} bodyStyle={{ padding: 0 }}>
-          <ConsultationTable rounds={rounds.data ?? []} />
-        </Panel>
+        <ConsultationPanel caseId={caseId} renderMatrix={(rounds) => <ConsultationTable rounds={rounds} />} onChanged={() => audit.reload()} />
         <Panel title="审计记录（安全建议 / 征求意见）" meta={<span>append-only · SHA-256 链</span>} bodyStyle={{ padding: 0, maxHeight: 330 }}>
           <table className="p6-table">
             <thead><tr><th>时间 · #</th><th>操作 / 变更</th></tr></thead>

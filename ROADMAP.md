@@ -151,3 +151,4 @@
 | 2026-11-12 UTC+8 | W18.2 D08 | 独立验收通过 | 逐窗口分类后归组，共同候选点防Unknown分组穿越；指定Assumptions已补。独立101/101（原97+4，220随机严格去掉旧容错），自测100/100含120强制Unknown；原D08保留通过后移除KnownDefect。见logs/w18.2-independent-review.md及冻结清单。仅核心，不代表UI/部署验收。 |
 | 2026-11-12 UTC+8 | W14.3 D06 | 独立验收通过 | 实际积分节点+dt网格，局部极小与高转率加密；原D06保留并收紧绝对≤0.1m。独立82/82、自测129/129、3份Python另核；五情景净距最大差3.3e-9m、极小时刻0.0001626s，碰撞/判定/临界不变。新树service316、来源工具9通过。历史seed/dump/freeze原样，W12快照未自动升级。见logs/w14.3-independent-review.md。无合并部署。 |
 | 2026-11-12 UTC+8 | W13.1本地命令适配 | 独立小切片通过 | 新增Presentation/ReplaySync复用ISimClock；case/seq隔离、拒绝/去重、异常可能已生效锁实例、只读快照。独立20/20、自测35/35、netstandard0警告；当前树service316/来源9通过，197项保护输入不变。HTTP/主线程/Unity场景/相机/10Hz状态发布未做，不称W13整包完成。见logs/w13.1-independent-review.md。 |
+| 2026-11-12 UTC+8 | W7.1已有轮次回复/采纳UI | 独立切片验收通过 | 权限失败关闭、案件/身份隔离、双击防重、403/409无写重试；独立HTTP5/相关服务18（布局返工前），最终Web455、真浏览器37、service316、来源9；七项最终冻结匹配。768横溢出独立发现并修复，旧失败保留。新建/关闭/豁免轮次UI和外部消息未做；截图只本地。见logs/w7.1-independent-review.md及w7.1-browser-review.md。 |

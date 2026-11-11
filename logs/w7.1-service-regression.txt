@@ -1,0 +1,8 @@
+........................................................................ [ 22%]
+........................................................................ [ 45%]
+........................................................................ [ 68%]
+........................................................................ [ 91%]
+............................                                             [100%]
+316 passed in 76.35s (0:01:16)
+
+Context: W7.1 refrozen frontend tree; complete service tests only (not tests_acceptance/W7); official SDK8.0.428 Linux x64, persistent MCIS_DOTNET/DOTNET_ROOT/DOTNET_CLI_HOME. All seven refrozen inputs and existing service/contracts/core source verified unchanged before/after.

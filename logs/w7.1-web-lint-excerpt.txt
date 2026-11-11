@@ -1,0 +1,34 @@
+Full local log retained, not published (generated bundles dominate). SHA256 d4d94d0dc252d379dba593a6d138fa882cf5d7dbb67ea63c9eddae0e6b2c9bbe
+Bytes 2389286
+EXCERPT ONLY; lint failed.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> web@0.0.0 lint
+> oxlint
+
+src/components/Toast.tsx:21:17: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/Layout.tsx:27:5: warning react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+src/reports/ReportView.tsx:116:17: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/reports/ReportView.tsx:127:17: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/pages/EvidencePage.tsx:33:23: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/pages/ReportPage.tsx:31:13: warning react(refs): Cannot access refs during render help: React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected
+src/pages/ReportPage.tsx:39:5: warning react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+tests/.tmp-interview-render.cjs:537:18: warning eslint(no-unused-vars): Catch parameter 'e' is caught but never used. help: Consider handling this error.
+tests/.tmp-interview-render.cjs:595:24: warning eslint(no-unused-vars): Catch parameter 'x' is caught but never used. help: Consider handling this error.
+tests/.tmp-interview-render.cjs:607:18: warning eslint(no-unused-vars): Catch parameter 'x' is caught but never used. help: Consider handling this error.
+tests/.tmp-interview-render.cjs:925:20: warning eslint(no-unused-vars): Catch parameter '_err' is caught but never used. help: Consider handling this error.
+tests/.tmp-interview-render.cjs:1667:20: warning eslint(no-unused-vars): Catch parameter 'e' is caught but never used. help: Consider handling this error.
+tests/.tmp-interview-render.cjs:4202:22: warning eslint(no-unused-vars): Catch parameter 'x' is caught but never used. help: Consider handling this error.
+... omitted ...
+tests/.tmp-case-linked-pages.cjs:132534:15: warning eslint(no-unused-expressions): Expected expression to be used help: Consider using this expression or removing it
+tests/.tmp-case-linked-pages.cjs:132546:11: warning eslint(no-unused-expressions): Expected expression to be used help: Consider using this expression or removing it
+tests/.tmp-case-linked-pages.cjs:132555:9: warning eslint(no-unused-expressions): Expected expression to be used help: Consider using this expression or removing it
+tests/.tmp-case-linked-pages.cjs:132556:9: warning eslint(no-unused-expressions): Expected expression to be used help: Consider using this expression or removing it
+tests/.tmp-case-linked-pages.cjs:132560:13: warning eslint(no-unused-expressions): Expected expression to be used help: Consider using this expression or removing it
+tests/.tmp-case-linked-pages.cjs:132562:9: warning eslint(no-unused-expressions): Expected expression to be used help: Consider using this expression or removing it
+tests/.tmp-case-linked-pages.cjs:132576:9: warning eslint(no-unused-expressions): Expected expression to be used help: Consider using this expression or removing it
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
