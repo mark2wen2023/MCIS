@@ -1,0 +1,26 @@
+{
+  "checks": [
+    "real fresh SQLite service returns three canonical seeded cases",
+    "actual proxy GET /cases parses and renders default lobby",
+    "all real summaries rendered",
+    "only fictional demo marked fictional",
+    "two public report cases marked non-fictional",
+    "real refresh completes",
+    "correct selected URL CASE-2026-DEMO-LILY-MARY",
+    "actual case metadata header CASE-2026-DEMO-LILY-MARY",
+    "downstream navigation case CASE-2026-DEMO-LILY-MARY",
+    "real evidence response CASE-2026-DEMO-LILY-MARY",
+    "correct selected URL CASE-2025-HAILI5-WANA17",
+    "actual case metadata header CASE-2025-HAILI5-WANA17",
+    "downstream navigation case CASE-2025-HAILI5-WANA17",
+    "real evidence response CASE-2025-HAILI5-WANA17",
+    "correct selected URL CJK-2024-1230-YangZe22-VegaDream",
+    "actual case metadata header CJK-2024-1230-YangZe22-VegaDream",
+    "downstream navigation case CJK-2024-1230-YangZe22-VegaDream",
+    "real evidence response CJK-2024-1230-YangZe22-VegaDream",
+    "Public role switch fetches real case summaries",
+    "no browser runtime errors",
+    "implementation unchanged"
+  ],
+  "passed": 21
+}

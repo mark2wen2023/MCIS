@@ -20,9 +20,11 @@ export function Layout() {
   const [online, setOnline] = useState<boolean | null>(null)
   const loc = useLocation()
   const [params] = useSearchParams()
+  const onLobby = loc.pathname.endsWith('/lobby')
   const onAnalysis = loc.pathname.endsWith('/analysis') // W12：分析页也按 ?case= 显示当前案件
   const caseId = caseForLocation(loc.pathname, params.toString(), CASE_ID)
   useEffect(() => {
+    if (onLobby) { setCaseDef(null); setOnline(null); return }
     let cancelled = false
     setCaseDef(null); setOnline(null)
     api.get<CaseDef>(`/cases/${encodeURIComponent(caseId)}`).then((c) => {
@@ -39,7 +41,7 @@ export function Layout() {
         }).catch(() => { if (!cancelled) setOnline(false) })
     })
     return () => { cancelled = true }
-  }, [caseId, onAnalysis])
+  }, [caseId, onAnalysis, onLobby])
   const changeRole = (r: Role) => {
     setIdentity(r, ROLES.find((x) => x.role === r)?.op)
     setRole(r)
@@ -47,7 +49,7 @@ export function Layout() {
   const currentCase = caseDef?.caseId === caseId ? caseDef : null
   const fictional = currentCase?.isFictionalDemo === true
   const unknown = !currentCase
-  const unknownLabel = online === false ? '案件信息不可用' : '案件信息载入中'
+  const unknownLabel = onLobby ? '请选择案件' : online === false ? '案件信息不可用' : '案件信息载入中'
   return (
     <div className="app">
       <aside className="sidebar">
@@ -59,7 +61,7 @@ export function Layout() {
           </div>
         </div>
         <div className={`demo-banner ${fictional || unknown ? '' : 'real'}`}>
-          {unknown ? <>{unknownLabel}<br />{caseId}</> : fictional
+          {unknown ? <>{unknownLabel}<br />{onLobby ? '案件大厅' : caseId}</> : fictional
             ? <>⚠ 示例数据（虚构）<br />Lily × Mary 星屿港碰撞演示案，与任何真实事故无关</>
             : <>⚠ 真实案例（公开报告）<br />{currentCase?.title || '公开事故报告数据'}，仅作技术分析，不作责任认定</>}
         </div>
@@ -77,7 +79,7 @@ export function Layout() {
       <header className="topbar">
         <div className="topbar-left">
           <span className={`watermark ${fictional || unknown ? '' : 'real'}`}>{unknown ? unknownLabel : fictional ? '⚠ 示例数据（虚构）' : '⚠ 真实案例（公开报告）'}</span>
-          <span className="case-chip">当前案件<b>{caseId}</b>{currentCase ? currentCase.title.replace('【虚构演示】', '') : '—'}</span>
+          <span className="case-chip">{onLobby ? '案件大厅' : '当前案件'}<b>{onLobby ? '尚未选择' : caseId}</b>{currentCase ? currentCase.title.replace('【虚构演示】', '') : '—'}</span>
         </div>
         <div className="topbar-right">
           <span className="ident">操作人：{getOperator()}</span>
@@ -86,7 +88,7 @@ export function Layout() {
           </select>
         </div>
       </header>
-      <main className="main"><Outlet /></main>
+      <main className="main"><Outlet key={`${caseId}:${role}`} /></main>
     </div>
   )
 }

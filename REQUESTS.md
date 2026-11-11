@@ -361,3 +361,6 @@ Scope: colreg.router._core error responses only; documented in contracts/CONTRAC
 ## Core envelope type validation (2026-11-12)
 
 Follow-up to HTTP error redaction: validate only the envelope types consumed by Python core_client (object, boolean ok, object result/error, string error code/message). Malformed output becomes CORE_BAD_OUTPUT/502 rather than incidental AttributeError/TypeError/500. Valid success envelopes and domain error mappings are preserved, including default fields in an empty error object. CLI, case authorization, filesystem path capability and authentication are unchanged. No broad exception catch, migration, merge or deployment.
+
+## W8.1 案件大厅最小闭环（2026-11-12）
+复用 GET /cases 摘要合同；不新增后端接口。不包含新建、编辑或 .mcase 导入导出。修改共享 Layout/caseContext/main/routes 接入列表与案件切换；仅已支持案件上下文的页面保留 case 参数，Outlet 按案件与身份隔离重新挂载，防止旧页面状态跨案残留。未知/未加载的案件不标为真实报告来源。独立验收前标记待测。

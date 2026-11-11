@@ -1,0 +1,4 @@
+378dec4a9b3cddec05282e37798bbded4588d11538cfd0a3269d8d3c564a7b4f  web/src/pages/LobbyPage.tsx
+2ee7aaf85942bff851dd5081ff87e0413c1b130748d553a353affb05c34e2c56  web/src/cases/model.ts
+d3426aaa44f862e20f1210c97d0da473f0479da768ec752b6e7975532430f7a2  web/src/styles/w8.css
+d737d82140479edbec41365620263bf18911ad65b89f4fde2aa9df96288f6da4  web/src/Layout.tsx

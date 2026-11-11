@@ -1,0 +1,22 @@
+[
+  "default route opens lobby",
+  "list entry rendered",
+  "lobby no selected case",
+  "malformed payload clears old rows and errors",
+  "empty state",
+  "error state",
+  "retry recovers",
+  "late refresh does not replace newer state",
+  "enter correct case",
+  "header correct case",
+  "report link keeps case",
+  "back to lobby clears case header",
+  "forward retains case",
+  "identity switch rejects prior list",
+  "enter different case A after B",
+  "late case A metadata cannot refill case B header",
+  "768px no horizontal overflow",
+  "keyboard focus has visible 3px outline",
+  "refresh has explicit light-on-dark contrast colors",
+  "implementation unchanged during acceptance"
+]

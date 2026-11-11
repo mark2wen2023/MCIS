@@ -1,0 +1,262 @@
+[
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY/access-policy",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY/timeline",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY/access-policy",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY/conflicts",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY/custody:verify-chain",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY/tracks",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY/conflicts",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY/evidence",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY/timeline",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY/tracks",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY/custody:verify-chain",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY/evidence",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY/cpa?stepSec=15",
+    "status": 502
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY/cpa?stepSec=15",
+    "status": 502
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2026-DEMO-LILY-MARY/evidence/EV-001/custody",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2025-HAILI5-WANA17",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2025-HAILI5-WANA17/access-policy",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2025-HAILI5-WANA17/conflicts",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2025-HAILI5-WANA17/timeline",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2025-HAILI5-WANA17/evidence",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2025-HAILI5-WANA17/custody:verify-chain",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2025-HAILI5-WANA17/tracks",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2025-HAILI5-WANA17",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2025-HAILI5-WANA17/conflicts",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2025-HAILI5-WANA17/timeline",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2025-HAILI5-WANA17/access-policy",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2025-HAILI5-WANA17/tracks",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2025-HAILI5-WANA17",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2025-HAILI5-WANA17/custody:verify-chain",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2025-HAILI5-WANA17/evidence",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2025-HAILI5-WANA17/cpa?stepSec=15",
+    "status": 502
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2025-HAILI5-WANA17/evidence/EV-101/custody",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CASE-2025-HAILI5-WANA17/cpa?stepSec=15",
+    "status": 502
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/custody:verify-chain",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/conflicts",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/timeline",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/evidence",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/tracks",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/custody:verify-chain",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/conflicts",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/access-policy",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/timeline",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/evidence",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/tracks",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/access-policy",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/evidence/EV-201/custody",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases",
+    "status": 200
+  },
+  {
+    "url": "http://127.0.0.1:5193/api/v1/cases",
+    "status": 200
+  }
+]

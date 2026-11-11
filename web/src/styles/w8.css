@@ -1,0 +1,11 @@
+.w8-lobby { max-width: 1200px; margin: 0 auto; padding: 24px; }
+.w8-lobby > p { color: var(--muted, #a5b1c2); }
+.w8-cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 20px; padding: 0; list-style: none; }
+.w8-cases li { background: #162333; border: 1px solid #35475c; border-radius: 12px; padding: 22px; overflow-wrap: anywhere; }
+.w8-cases h2 { font-size: 19px; }
+.w8-cases a { display: inline-block; padding: 10px 0; color: #76c9ff; }
+.w8-kind { color: #e6bf74; font-size: 13px; }
+.w8-id { font-family: monospace; }
+.w8-lobby button { color: #f0f6ff; background: #234965; border: 1px solid #76c9ff; border-radius: 6px; padding: 9px 16px; font: inherit; cursor: pointer; }
+.w8-lobby button:hover { background: #2c5c80; }
+.w8-lobby button:focus-visible, .w8-cases a:focus-visible { outline: 3px solid #ffd580; outline-offset: 3px; }
