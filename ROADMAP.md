@@ -146,3 +146,4 @@
 | 2026-11-11 | W6.2 | 服务/合同验收通过；浏览器受阻 | 真实CLI原95+新增4项99/99，网络4项过；D06/D07关闭条件通过。原114项保留，总118项中15浏览器项因Chromium socket EPERM无法实测，不计通过；见tests_acceptance/W6/RETEST-20261111.md及logs/continued-browser-blocker.md。 |
 | 2026-11-11 | W12.1 | 原独立套件通过 | 原18项全部通过，加3回归共21；12组2348点真实CLI重算三指标最大偏差0，14539数值与前版全同；Web94。D01关闭，main/router后续登记漂移另记，归档图非新视觉。见logs/w12.1-continued-independent.md。 |
 | 2026-11-11 | 续作整体验证 | 可审查，非全绿 | 真实.NET恢复，最终service315过/1败/0跳；唯一败为历史seed DLL hash与同源重建DLL元信息差异，原断言保留。W3 186、W5 49、W6核心99+网络4、W12 21通过；浏览器15项启动环境阻塞，Web生产构建通过。完整范围/风险见docs/CONTINUATION-STATUS-20261111.md，验证见logs/continued-final-validation.md，最新冻结39项。独立分支PR，不合并/部署。 |
+| 2026-11-12 UTC+8 | 浏览器与来源追溯续验 | 本地浏览器通过；来源新基线待建立 | 官方headless原W6 19/19、核心99共118/118；跨页35/35与19张截图；修复真实案件上下文及缺轨迹CPA。历史DLL按旧源码精确重建，确认W5.1编译输入漂移，未改生产DLL/seed/断言，旧service315/1仍保留。见logs/continued-browser-validation.md及logs/core-dll-provenance-investigation.md。不合并/部署。 |

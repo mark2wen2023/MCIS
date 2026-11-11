@@ -1,0 +1,63 @@
+Independent web validation (all seven test source files, no browser E2E)
+Wed Nov 11 16:15:22 UTC 2026
+bc2898d1c60eee39bf8c7268a7683308056d43ed
+=== tests/case-context.test.ts ===
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+case context: 28 assertions passed
+EXIT=0
+=== tests/analysis-w12.test.tsx ===
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+W12 analysis tests: 94 passed
+EXIT=0
+=== tests/case-linked-pages.test.tsx ===
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+case-linked-pages: 30 assertions passed
+EXIT=0
+=== tests/colreg-render.test.tsx ===
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+ok  18 assertions (labels + render lily/mary + haili5)
+EXIT=0
+=== tests/colreg-w61.test.tsx ===
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+ok  58 assertions (W6.1 rulings 2–11 + W6.2)
+EXIT=0
+=== tests/interview-render.test.tsx ===
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+interview-render: 38 项断言通过
+EXIT=0
+=== tests/report-render.test.tsx ===
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+ok 148 assertions (W16 三模板×三语言、引用、复核、导出、GISIS、真实锁定与请求合同)
+EXIT=0
+=== npm run build ===
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> web@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 649 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                     0.42 kB │ gzip:   0.32 kB
+dist/assets/index-C4iXoQX4.css     31.09 kB │ gzip:   6.74 kB
+dist/assets/index-B1LBLGSb.js   1,509.43 kB │ gzip: 493.89 kB
+
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 1500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 1.18s
+BUILD_EXIT=0
+OVERALL_EXIT=0
+
+Independent read-only review:
+- CPA preflight is scoped to active case, requires two distinct nonempty vessel tracks, skips CPA otherwise, and does not disguise failures as successful empty data.
+- Tracks response shape and permission match current backend. No blocking defect found in this narrow change.
+- case-linked-pages has 30 assertions total: 19 prior routing/SSR assertions plus 11 added CPA helper assertions. This is not 30 independent CPA scenarios.
+- All 7 current web test sources passed: 28 + 94 + 30 + 18 + 58 + 38 + 148 = 414 assertions.
+- Build passed; Vite reports >1500 kB chunk warning; npm reports unknown http-proxy environment config warning. Neither is a test failure.
+- This run covers helper/static/SSR tests and production compilation, NOT browser E2E, mobile, or user-machine acceptance.
+- No implementation changes made by this reviewer. Test bundles emitted to /tmp; build emitted ignored dist artifacts.

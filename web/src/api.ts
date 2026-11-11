@@ -55,4 +55,4 @@ export const api = {
   put: <T,>(p: string, b: unknown) => request<T>('PUT', p, b),
 }
 
-export const casePath = (p: string) => `/cases/${CASE_ID}${p}`
+export const casePath = (p: string, caseId: string = CASE_ID) => `/cases/${encodeURIComponent(caseId)}${p}`

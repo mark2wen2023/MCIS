@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import type { EChartsOption } from 'echarts'
-import { api, casePath } from '../api'
+import { api, casePath, CASE_ID } from '../api'
 import { SERVICE_ADDR } from '../config'
 import { EChart } from '../components/EChart'
 import { Metric, Panel } from '../components/Panel'
@@ -26,25 +27,43 @@ const CONFLICT_STATUS: Record<ConflictStatus, [string, string]> = {
 
 interface TimelineResp { caseEpochUtc: string; durationSec: number; events: TimelineEvent[] }
 interface CpaResp { results: CpaPoint[] }
+interface TracksResp { tracks: { vesselId: string; points: unknown[] }[] }
+
+/** Do not request a calculation when the case lacks two vessel tracks. */
+export async function loadEvidenceCpa(caseId: string) {
+  const tracks = await api.get<TracksResp>(casePath('/tracks', caseId))
+  const vessels = new Set(tracks.tracks.filter((track) => track.points.length > 0).map((track) => track.vesselId))
+  if (vessels.size < 2) return { results: [], status: 'missing-tracks' as const }
+  const result = await api.get<CpaResp>(casePath('/cpa?stepSec=15', caseId))
+  return { ...result, status: 'calculated' as const }
+}
 
 export function EvidencePage() {
+  const [params] = useSearchParams()
+  const caseId = params.get('case') || CASE_ID
+  const requestedId = params.get('id') || ''
+  // A case/query boundary unmounts the old loaders and all mutation forms.
+  return <EvidenceCasePage key={`${caseId}:${requestedId}`} caseId={caseId} requestedId={requestedId} />
+}
+
+function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId: string }) {
   const { run } = useToast()
-  const caseRes = useLoad(() => api.get<CaseDef>(casePath('')))
-  const ev = useLoad(() => api.get<EvidenceItem[]>(casePath('/evidence')))
-  const chain = useLoad(() => api.get<ChainCheck>(casePath('/custody:verify-chain')))
-  const tl = useLoad(() => api.get<TimelineResp>(casePath('/timeline')))
-  const conflicts = useLoad(() => api.get<Conflict[]>(casePath('/conflicts')))
-  const cpa = useLoad(() => api.get<CpaResp>(casePath('/cpa?stepSec=15')).catch(() => ({ results: [] })))
-  const [selId, setSelId] = useState<string>('EV-001')
+  const caseRes = useLoad(() => api.get<CaseDef>(casePath('', caseId)))
+  const ev = useLoad(() => api.get<EvidenceItem[]>(casePath('/evidence', caseId)))
+  const chain = useLoad(() => api.get<ChainCheck>(casePath('/custody:verify-chain', caseId)))
+  const tl = useLoad(() => api.get<TimelineResp>(casePath('/timeline', caseId)))
+  const conflicts = useLoad(() => api.get<Conflict[]>(casePath('/conflicts', caseId)))
+  const cpa = useLoad(() => loadEvidenceCpa(caseId))
+  const [selId, setSelId] = useState<string>(requestedId || 'EV-001')
   const items = ev.data ?? []
-  const sel = items.find((e) => e.evidenceId === selId) ?? items[0]
-  const custody = useLoad(() => (sel ? api.get<CustodyEvent[]>(casePath(`/evidence/${sel.evidenceId}/custody`)) : Promise.resolve([])), [sel?.evidenceId])
+  const sel = items.find((e) => e.evidenceId === selId) ?? (requestedId ? undefined : items[0])
+  const custody = useLoad(async () => ({ evidenceId: sel?.evidenceId, events: sel ? await api.get<CustodyEvent[]>(casePath(`/evidence/${sel.evidenceId}/custody`, caseId)) : [] }), [sel?.evidenceId])
 
   const refreshEvidence = () => { ev.reload(); custody.reload(); chain.reload() }
 
   const verifyAll = () =>
     run(async () => {
-      const r = await api.post<{ checked: number; mismatched: number }>(casePath('/evidence:verify-all'))
+      const r = await api.post<{ checked: number; mismatched: number }>(casePath('/evidence:verify-all', caseId))
       refreshEvidence()
       return r
     }, '已重新校验全部证据哈希（每条写入保管链 Verify 事件）')
@@ -62,7 +81,7 @@ export function EvidencePage() {
     <div>
       <div className="page-head">
         <div>
-          <div className="page-title">证据中心 · 保管链与时间冲突 <span className="p6-tag">示例数据（虚构）</span><span className="p6-tag cyan">LIVE · {SERVICE_ADDR}</span></div>
+          <div className="page-title">证据中心 · 保管链与时间冲突 <span className="p6-tag">{caseRes.data ? (caseRes.data.isFictionalDemo ? '示例数据（虚构）' : '真实案例（公开报告）') : '案件信息加载中'}</span><span className="p6-tag cyan">LIVE · {SERVICE_ADDR}</span></div>
           <div className="page-sub">
             证据登记快照不可改，之后的访问、校验、派生、复核标注只以保管链事件追加（audit/custody.jsonl，与 C# CustodyLedger 逐字节兼容）；
             多源时间冲突由调查员处理，每次变更写审计。
@@ -74,6 +93,7 @@ export function EvidencePage() {
         </div>
       </div>
 
+      {requestedId && ev.data && !sel && <div className="p6-note">当前案件未找到指定证据 {requestedId}，未替换为其他证据。</div>}
       {(ev.error || tl.error) && <div className="p6-card" style={{ borderColor: 'var(--red)', marginBottom: 12 }}>后端错误：{ev.error ?? tl.error}</div>}
 
       <div className="grid" style={{ gridTemplateColumns: 'repeat(6, 1fr)', marginBottom: 12 }}>
@@ -111,22 +131,26 @@ export function EvidencePage() {
             </tbody>
           </table>
         </Panel>
-        <CustodyPanel item={sel} events={custody.data ?? []} onChanged={refreshEvidence} />
+        <CustodyPanel key={sel?.evidenceId || 'missing'} caseId={caseId} item={sel} events={custody.data?.evidenceId === sel?.evidenceId ? custody.data?.events ?? [] : []} onChanged={refreshEvidence} />
       </div>
 
       <div className="grid" style={{ gridTemplateColumns: '7fr 5fr' }}>
         <Panel title="事件时间线 · 冲突标注 · 两船距离" meta={<span>北京时间 UTC+8 · 源：/timeline + mcis-core cpa</span>} bodyStyle={{ padding: '4px 6px' }}>
+          {cpa.data?.status === 'missing-tracks' && <div className="empty">轨迹数据不足：尚无两艘船的非空轨迹，CPA / 两船距离未运行。</div>}
+          {cpa.error && <div className="empty">轨迹或 CPA 加载失败：{cpa.error}</div>}
+          {!cpa.data && !cpa.error && <div className="empty">正在检查轨迹数据…</div>}
+          {tl.data && tl.data.events.length === 0 && <div className="empty">尚无事件时间线数据。</div>}
           {caseRes.data && tl.data ? (
-            <TimelineChart epoch={caseRes.data.caseEpochUtc} events={tl.data.events} conflicts={conflicts.data ?? []} cpa={cpa.data?.results ?? []} />
+            <TimelineChart fictional={caseRes.data.isFictionalDemo} epoch={caseRes.data.caseEpochUtc} events={tl.data.events} conflicts={conflicts.data ?? []} cpa={cpa.data?.results ?? []} />
           ) : <div className="empty">加载中…</div>}
         </Panel>
-        <ConflictPanel conflicts={conflicts.data ?? []} epoch={caseRes.data?.caseEpochUtc} onChanged={conflicts.reload} />
+        <ConflictPanel caseId={caseId} conflicts={conflicts.data ?? []} epoch={caseRes.data?.caseEpochUtc} onChanged={conflicts.reload} />
       </div>
     </div>
   )
 }
 
-function CustodyPanel({ item, events, onChanged }: { item?: EvidenceItem; events: CustodyEvent[]; onChanged: () => void }) {
+function CustodyPanel({ caseId, item, events, onChanged }: { caseId: string; item?: EvidenceItem; events: CustodyEvent[]; onChanged: () => void }) {
   const { run } = useToast()
   const [reason, setReason] = useState('')
   if (!item) return <Panel title="保管链"><div className="empty">请选择证据</div></Panel>
@@ -145,11 +169,11 @@ function CustodyPanel({ item, events, onChanged }: { item?: EvidenceItem; events
         </dd>
       </dl>
       <div className="row-actions" style={{ margin: '8px 0' }}>
-        <button className="btn btn-sm" onClick={() => act(() => api.post(casePath(`/evidence/${id}/verify`)), `${id} 已校验哈希`)}>校验哈希</button>
+        <button className="btn btn-sm" onClick={() => act(() => api.post(casePath(`/evidence/${id}/verify`, caseId)), `${id} 已校验哈希`)}>校验哈希</button>
         <input className="input" style={{ flex: 1, minWidth: 120 }} placeholder="理由 / 访问目的（必填）" value={reason} onChange={(e) => setReason(e.target.value)} />
-        <button className="btn btn-sm" disabled={!reason.trim()} onClick={() => act(() => api.post(casePath(`/evidence/${id}/access`), { purpose: reason }), `${id} 已记录访问`)}>记录访问</button>
+        <button className="btn btn-sm" disabled={!reason.trim()} onClick={() => act(() => api.post(casePath(`/evidence/${id}/access`, caseId), { purpose: reason }), `${id} 已记录访问`)}>记录访问</button>
         <button className="btn btn-sm btn-warn" disabled={!reason.trim()}
-          onClick={() => act(() => api.patch(casePath(`/evidence/${id}`), { needsReview: !item.needsReview, reason }), item.needsReview ? `${id} 已解除需复核` : `${id} 已标注需复核`)}>
+          onClick={() => act(() => api.patch(casePath(`/evidence/${id}`, caseId), { needsReview: !item.needsReview, reason }), item.needsReview ? `${id} 已解除需复核` : `${id} 已标注需复核`)}>
           {item.needsReview ? '解除需复核' : '标注需复核'}
         </button>
       </div>
@@ -175,12 +199,12 @@ function CustodyPanel({ item, events, onChanged }: { item?: EvidenceItem; events
   )
 }
 
-function ConflictPanel({ conflicts, epoch, onChanged }: { conflicts: Conflict[]; epoch?: string; onChanged: () => void }) {
+function ConflictPanel({ caseId, conflicts, epoch, onChanged }: { caseId: string; conflicts: Conflict[]; epoch?: string; onChanged: () => void }) {
   const { run } = useToast()
   const [editing, setEditing] = useState<string | null>(null)
   const [note, setNote] = useState('')
   const patch = (c: Conflict, body: Partial<Conflict>, ok: string) =>
-    run(async () => { const r = await api.patch(casePath(`/conflicts/${c.conflictId}`), body); onChanged(); return r }, ok)
+    run(async () => { const r = await api.patch(casePath(`/conflicts/${c.conflictId}`, caseId), body); onChanged(); return r }, ok)
   return (
     <Panel title="多源时间对齐 · 冲突清单" meta={<span>状态变更写审计 conflict.update</span>} bodyStyle={{ padding: 0, maxHeight: 272 }}>
       <table className="p6-table">
@@ -230,9 +254,11 @@ const KIND_STYLE: Record<TimelineEvent['kind'], { color: string; symbol: string;
   Observation: { color: '#10b981', symbol: 'roundRect', name: '观测' },
 }
 
-function TimelineChart({ epoch, events, conflicts, cpa }: { epoch: string; events: TimelineEvent[]; conflicts: Conflict[]; cpa: CpaPoint[] }) {
+function TimelineChart({ fictional, epoch, events, conflicts, cpa }: { fictional: boolean; epoch: string; events: TimelineEvent[]; conflicts: Conflict[]; cpa: CpaPoint[] }) {
   const option = useMemo<EChartsOption>(() => {
-    const lane = (e: TimelineEvent) => (e.vesselId === 'vessel_lily' ? 2 : e.vesselId === 'vessel_mary' ? 1 : 0)
+    const vesselIds = [...new Set(events.map((e) => e.vesselId).filter((id): id is string => Boolean(id)))]
+    const lanes = fictional ? LANES : ['双方 / 环境', ...vesselIds]
+    const lane = (e: TimelineEvent) => fictional ? (e.vesselId === 'vessel_lily' ? 2 : e.vesselId === 'vessel_mary' ? 1 : 0) : (e.vesselId ? vesselIds.indexOf(e.vesselId) + 1 : 0)
     const kinds = Object.keys(KIND_STYLE) as TimelineEvent['kind'][]
     const evSeries = kinds
       .filter((k) => events.some((e) => e.kind === k))
@@ -265,13 +291,13 @@ function TimelineChart({ epoch, events, conflicts, cpa }: { epoch: string; event
         },
       },
       xAxis: {
-        type: 'value', min: 0, max: 780, interval: 60,
+        type: 'value', min: 0, max: fictional ? 780 : Math.max(60, ...events.map((e) => e.timeSec), ...cpa.map((p) => p.timeSec)), interval: 60,
         axisLabel: { color: '#8da4c4', fontSize: 10, formatter: (v: number) => simToClock(epoch, v, false) },
         axisLine: { lineStyle: { color: 'rgba(59,227,255,.3)' } },
         splitLine: { lineStyle: { color: 'rgba(141,164,196,.08)' } },
       },
       yAxis: [
-        { type: 'category', data: LANES, axisLabel: { color: '#c9d8ee', fontSize: 10.5 }, axisLine: { lineStyle: { color: 'rgba(59,227,255,.3)' } },
+        { type: 'category', data: lanes, axisLabel: { color: '#c9d8ee', fontSize: 10.5 }, axisLine: { lineStyle: { color: 'rgba(59,227,255,.3)' } },
           splitLine: { show: true, lineStyle: { color: 'rgba(141,164,196,.1)' } } },
         { type: 'value', name: 'nm', min: 0, max: 3.5, nameTextStyle: { color: '#526987', fontSize: 9.5 }, axisLabel: { color: '#526987', fontSize: 9.5 }, splitLine: { show: false } },
       ],
@@ -283,12 +309,12 @@ function TimelineChart({ epoch, events, conflicts, cpa }: { epoch: string; event
           data: cpa.map((p) => [p.timeSec, p.currentDistanceNm]),
           markLine: {
             symbol: 'none', silent: true,
-            data: [{ xAxis: 540, lineStyle: { color: '#ff3b5c', width: 1.5 }, label: { formatter: '碰撞 14:24', color: '#ff3b5c', fontSize: 10 } }, ...conflictLines],
+            data: [...(fictional ? [{ xAxis: 540, lineStyle: { color: '#ff3b5c', width: 1.5 }, label: { formatter: '碰撞 14:24', color: '#ff3b5c', fontSize: 10 } }] : []), ...conflictLines],
           },
         },
         ...evSeries,
       ],
     }
-  }, [epoch, events, conflicts, cpa])
+  }, [fictional, epoch, events, conflicts, cpa])
   return <EChart option={option} height={262} />
 }

@@ -273,3 +273,6 @@ W12.1独立验收发现冻结seed的notes仍写“本案未接入服务数据库
 - W6/W12验收launcher从原机硬编码路径改为仓库相对路径，支持MCIS_DOTNET；服务测试conftest也按MCIS_DOTNET识别真实SDK，防止SDK已存在却误跳过。没有改引擎结果或删除验收用例。
 - W6旧PATCH/F1用例、W3可选statementVersion断言按既有架构裁定改写；新增严格回归见各独立验收记录。
 - 本次对话用户明确允许完成后提交独立分支并创建PR，不允许直接合并main或部署。此前“未push”记录为阶段事实，最新远端操作以PR记录为准。
+
+## 2026-11-11 真实浏览器发现的案件上下文缺陷
+本轮实际报告页面验证发现：报告内容为YANGZE真实案，但共享Layout仍显示固定Lily虚构案；证据/建议引用链接也可能进入固定默认案。登记修改共享Layout.tsx（另记本轮哈希，不覆盖其他包历史清单）、新增caseContext.ts、api.casePath兼容可选caseId及EvidencePage/RecommendationsPage读取/写入上下文。仅对已支持按案工作的report/colreg/analysis/evidence/recs保留case查询，未支持页面仍用默认案；切案清旧状态/忽略过期响应，不允许旧案操作落入新案。角色和服务权限不变。源码/浏览器回归后另行冻结，不改既有已冻结历史清单。

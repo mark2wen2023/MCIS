@@ -1,11 +1,12 @@
 import { useState, type DragEvent } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { api, casePath, CASE_ID } from '../api'
 import { SERVICE_ADDR } from '../config'
 import { Metric, Panel } from '../components/Panel'
 import { useToast } from '../components/Toast'
 import { daysUntil, toLocal } from '../format'
 import { useLoad } from '../hooks'
-import type { AuditEvent, Board, ConsultationRound, PartyStatus, Recommendation, RecStatus } from '../types'
+import type { AuditEvent, CaseDef, Board, ConsultationRound, PartyStatus, Recommendation, RecStatus } from '../types'
 
 const STATUS_LABEL: Record<RecStatus, string> = {
   Draft: '草拟', Issued: '已发布', Responded: '已回复·落实中', Implemented: '已落实', NotAdopted: '未采纳', Closed: '已关闭',
@@ -19,20 +20,28 @@ const PARTY_ST: Record<PartyStatus['status'], [string, string]> = {
 // 看板列 → 拖入时默认的目标状态
 const COLUMN_TARGET: Record<string, RecStatus> = { Draft: 'Draft', Issued: 'Issued', InProgress: 'Responded', Closed: 'Implemented' }
 
-async function loadAudit(): Promise<AuditEvent[]> {
+async function loadAudit(caseId: string): Promise<AuditEvent[]> {
   const [a, b] = await Promise.all([
-    api.get<AuditEvent[]>(casePath('/audit?category=SafetyRec&order=desc&limit=14')),
-    api.get<AuditEvent[]>(casePath('/audit?category=Consultation&order=desc&limit=6')),
+    api.get<AuditEvent[]>(casePath('/audit?category=SafetyRec&order=desc&limit=14', caseId)),
+    api.get<AuditEvent[]>(casePath('/audit?category=Consultation&order=desc&limit=6', caseId)),
   ])
   return [...a, ...b].sort((x, y) => y.seq - x.seq).slice(0, 14)
 }
 
 export function RecommendationsPage() {
+  const [params] = useSearchParams()
+  const caseId = params.get('case') || CASE_ID
+  const requestedId = params.get('id') || ''
+  return <RecommendationsCasePage key={`${caseId}:${requestedId}`} caseId={caseId} requestedId={requestedId} />
+}
+
+function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requestedId: string }) {
   const { run, show } = useToast()
-  const board = useLoad(() => api.get<Board>(casePath('/recommendations:board')))
-  const rounds = useLoad(() => api.get<ConsultationRound[]>(casePath('/consultation/rounds')))
-  const audit = useLoad(loadAudit)
-  const [selId, setSelId] = useState<string>('SR-2026-03')
+  const caseRes = useLoad(() => api.get<CaseDef>(casePath('', caseId)))
+  const board = useLoad(() => api.get<Board>(casePath('/recommendations:board', caseId)))
+  const rounds = useLoad(() => api.get<ConsultationRound[]>(casePath('/consultation/rounds', caseId)))
+  const audit = useLoad(() => loadAudit(caseId))
+  const [selId, setSelId] = useState<string>(requestedId || 'SR-2026-03')
   const [dropCol, setDropCol] = useState<string | null>(null)
   const [pending, setPending] = useState<{ id: string; to: RecStatus } | null>(null)
   const [creating, setCreating] = useState(false)
@@ -42,7 +51,7 @@ export function RecommendationsPage() {
   const refresh = () => { board.reload(); audit.reload() }
 
   const transition = (id: string, to: RecStatus, note = '') =>
-    run(async () => { const r = await api.post<Recommendation>(casePath(`/recommendations/${id}:transition`), { to, note }); refresh(); setPending(null); return r },
+    run(async () => { const r = await api.post<Recommendation>(casePath(`/recommendations/${id}:transition`, caseId), { to, note }); refresh(); setPending(null); return r },
       `${id} → ${STATUS_LABEL[to]}（已写审计 safetyrec.transition）`)
 
   const onDrop = (colKey: string, e: DragEvent) => {
@@ -76,20 +85,20 @@ export function RecommendationsPage() {
     <div>
       <div className="page-head">
         <div>
-          <div className="page-title">安全建议跟踪 · 报告草案征求意见 <span className="p6-tag">示例数据（虚构）</span><span className="p6-tag cyan">LIVE · {SERVICE_ADDR}</span></div>
+          <div className="page-title">安全建议跟踪 · 报告草案征求意见 <span className="p6-tag">{caseRes.data ? (caseRes.data.isFictionalDemo ? '示例数据（虚构）' : '真实案例（公开报告）') : '案件信息加载中'}</span><span className="p6-tag cyan">LIVE · {SERVICE_ADDR}</span></div>
           <div className="page-sub">
             状态机与 C# SafetyRecommendationBoard 一致：草拟 → 已发布 → 已回复（只能经登记回复）→ 已落实 / 未采纳（须理由）/ 已关闭。
             拖动卡片或在详情中操作；每次变更写入不可改的审计链（audit/audit.jsonl）。
           </div>
         </div>
         <div className="page-actions">
-          <a className="btn" href={`#/report?case=${encodeURIComponent(CASE_ID)}`}>📄 国际格式报告 →</a>
+          <a className="btn" href={`#/report?case=${encodeURIComponent(caseId)}`}>📄 国际格式报告 →</a>
           <button className="btn btn-primary" onClick={() => setCreating((v) => !v)}>＋ 新建安全建议</button>
         </div>
       </div>
 
       {board.error && <div className="p6-card" style={{ borderColor: 'var(--red)', marginBottom: 12 }}>后端错误：{board.error}</div>}
-      {creating && <CreateForm onDone={(id) => { setCreating(false); if (id) { setSelId(id); refresh() } }} />}
+      {creating && <CreateForm caseId={caseId} onDone={(id) => { setCreating(false); if (id) { setSelId(id); refresh() } }} />}
 
       <div className="grid" style={{ gridTemplateColumns: 'repeat(5, 1fr)', marginBottom: 12 }}>
         <Metric label="安全建议" value={totals.total} unit="条" />
@@ -113,7 +122,7 @@ export function RecommendationsPage() {
 
       <div className="grid" style={{ gridTemplateColumns: '5fr 4fr 4fr' }}>
         {sel ? (
-          <Detail rec={sel} allowed={board.data?.allowed[sel.status] ?? []} pending={pending?.id === sel.id ? pending.to : null}
+          <Detail key={sel.id} caseId={caseId} rec={sel} allowed={board.data?.allowed[sel.status] ?? []} pending={pending?.id === sel.id ? pending.to : null}
             onTransition={transition} onChanged={refresh} onCancel={() => setPending(null)} />
         ) : <Panel title="建议详情"><div className="empty">选择一张卡片</div></Panel>}
         <Panel title="报告草案征求意见" meta={cur && <span>第 {cur.roundNo} 轮 · {cur.isClosed ? '已关闭' : `剩余 ${cur.daysRemaining} 天`}</span>} bodyStyle={{ padding: 0 }}>
@@ -160,8 +169,8 @@ function Card({ rec, selected, onClick }: { rec: Recommendation; selected: boole
   )
 }
 
-function Detail(props: { rec: Recommendation; allowed: RecStatus[]; pending: RecStatus | null; onTransition: (id: string, to: RecStatus, note?: string) => Promise<unknown>; onChanged: () => void; onCancel: () => void }) {
-  const { rec, allowed } = props
+function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus[]; pending: RecStatus | null; onTransition: (id: string, to: RecStatus, note?: string) => Promise<unknown>; onChanged: () => void; onCancel: () => void }) {
+  const { caseId, rec, allowed } = props
   const { run } = useToast()
   const [note, setNote] = useState('')
   const [party, setParty] = useState(rec.addressee)
@@ -171,11 +180,11 @@ function Detail(props: { rec: Recommendation; allowed: RecStatus[]; pending: Rec
   if (lastId !== rec.id) { setLastId(rec.id); setPct(rec.progressPct); setParty(rec.addressee); setNote(''); setText('') }
 
   const respond = () => run(async () => {
-    const r = await api.post(casePath(`/recommendations/${rec.id}/responses`), { party, text })
+    const r = await api.post(casePath(`/recommendations/${rec.id}/responses`, caseId), { party, text })
     setText(''); props.onChanged(); props.onCancel(); return r
   }, `${rec.id} 已登记回复${rec.status === 'Issued' ? '，状态 → 已回复' : ''}`)
   const saveProgress = () => run(async () => {
-    const r = await api.patch(casePath(`/recommendations/${rec.id}`), { progressPct: pct, note }); setNote(''); props.onChanged(); return r
+    const r = await api.patch(casePath(`/recommendations/${rec.id}`, caseId), { progressPct: pct, note }); setNote(''); props.onChanged(); return r
   }, `${rec.id} 落实进度 → ${pct}%（审计 safetyrec.progress）`)
   const closeTargets = allowed.filter((s) => s !== 'Responded')
   const showResponse = rec.status === 'Issued' || rec.status === 'Responded'
@@ -274,11 +283,11 @@ function ConsultationTable({ rounds }: { rounds: ConsultationRound[] }) {
   )
 }
 
-function CreateForm({ onDone }: { onDone: (id?: string) => void }) {
+function CreateForm({ caseId, onDone }: { caseId: string; onDone: (id?: string) => void }) {
   const { run } = useToast()
   const [f, setF] = useState({ title: '', addressee: '', causeNodeIds: 'COLREG-R19', dueUtc: '2027-06-30', isInterim: false })
   const submit = () => run(async () => {
-    const r = await api.post<Recommendation>(casePath('/recommendations'), {
+    const r = await api.post<Recommendation>(casePath('/recommendations', caseId), {
       title: f.title, addressee: f.addressee, body: '', isInterim: f.isInterim,
       causeNodeIds: f.causeNodeIds.split(/[,，\s]+/).filter(Boolean), dueUtc: `${f.dueUtc}T15:59:59Z`,
     })
