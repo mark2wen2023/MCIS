@@ -1,0 +1,7 @@
+{
+  "activeSeedSha256": "988e9abd3b39959864f42912d8d3454dacd7821156fd8b21268631f30f4693e3",
+  "archivedSeedPath": "service/mcis_service/analysis/data/history/w12-original-20261111/w12-analysis-seed.json",
+  "archivedSeedSha256": "3ccc329f375de404993b65dfb1c22c3d467057bc57f376a958a22336ffb28cb5",
+  "activeDllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+  "buildManifest": "tools/mcis-core/out/build-manifest.json"
+}

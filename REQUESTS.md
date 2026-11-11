@@ -276,3 +276,12 @@ W12.1独立验收发现冻结seed的notes仍写“本案未接入服务数据库
 
 ## 2026-11-11 真实浏览器发现的案件上下文缺陷
 本轮实际报告页面验证发现：报告内容为YANGZE真实案，但共享Layout仍显示固定Lily虚构案；证据/建议引用链接也可能进入固定默认案。登记修改共享Layout.tsx（另记本轮哈希，不覆盖其他包历史清单）、新增caseContext.ts、api.casePath兼容可选caseId及EvidencePage/RecommendationsPage读取/写入上下文。仅对已支持按案工作的report/colreg/analysis/evidence/recs保留case查询，未支持页面仍用默认案；切案清旧状态/忽略过期响应，不允许旧案操作落入新案。角色和服务权限不变。源码/浏览器回归后另行冻结，不改既有已冻结历史清单。
+
+## 2026-11-11 当前 CLI 可重现构建与候选分析基线（实现登记）
+历史 DLL 已在隔离副本精确恢复，确认 W5.1 Evidence 输入与历史生成输入不同。经本次续作授权，新增内容寻址、固定 SDK 8.0.428/PathMap/无 Git 后缀的隔离 CLI 构建器，wrapper 从时间戳改为所有 Compile 输入哈希校验（包含 Evidence）。不修改 csproj、历史源码/seed/断言。先在项目外隔离副本运行原 build_seed 完整生成候选，并比较全部 14539 数值与历史固定指纹；经独立审查后才能纳入当前基线。历史来源与恢复脚本保留，不以替换哈希伪造重算。
+
+## 2026-11-12 W12 历史 Layout 架构断言适配（独立验收）
+已授权的案件上下文修复把路由选择移至 caseContext helper，原 W12 用例硬编码 `colreg || onAnalysis` 字符串不再对应实现。保留原测试名称和分析页专属 `/analysis/cases` 回退要求，改为验证当前 helper 接线，并实际执行 Layout 加载 effect：仅 analysis 在案件读取失败时访问分析清单，colreg/report/evidence/recs/其他页不得回退。此处仅改验收，不改实现、不删除用例、不放宽 fallback 独占性或数值断言。
+
+### 当前 CLI 基线纳入与完整复验完成
+独立审查确认当前 Linux / SDK 8.0.428 多临时路径构建一致，原 build_seed 真正重算，14539 数值逐项相同且仅时间/DLL SHA变化。将原 seed+旁注逐字节归档至 service/mcis_service/analysis/data/history/w12-original-20261111/（附恢复说明），安装已审查候选并由新 wrapper 重建 DLL；不改历史冻结清单/数值断言。完整服务首次315过1败为mcis-compat依赖DOTNET_ROOT未配置，保留日志；正确配置同一SDK重跑316/316通过。W12+provenance30/30、独立W12 21/21、报告前端148断言通过。详见 logs/current-core-seed-candidate.md 及 installed-provenance.json。未部署、未合并，提交由主控处理。

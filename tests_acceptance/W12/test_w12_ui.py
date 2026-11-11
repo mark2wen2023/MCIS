@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import re
+import subprocess
+import os
 from pathlib import Path
 
 from conftest import ROOT
@@ -12,17 +14,65 @@ PAGE = (ROOT / "web/src/pages/AnalysisPage.tsx").read_text(encoding="utf-8")
 PATCH = (ROOT / "logs/w12-layout.patch").read_text(encoding="utf-8")
 
 
-def test_layout_patch_only_affects_analysis_route():
+def test_layout_patch_only_affects_analysis_route(tmp_path):
     """21:52：Layout.tsx 补丁保留，且只在 /analysis 上回退到分析案例清单。"""
     assert "const onAnalysis = loc.pathname.endsWith('/analysis')" in LAYOUT
-    assert "loc.pathname.endsWith('/colreg') || onAnalysis" in LAYOUT
+    assert "caseForLocation(loc.pathname, params.toString(), CASE_ID)" in LAYOUT
+    assert "from './caseContext'" in LAYOUT
     # 404 回退到 /analysis/cases 必须受 onAnalysis 保护，colreg 等其它页不得走这条路径
     assert "if (!onAnalysis)" in LAYOUT
     assert "api.get" in LAYOUT and "/analysis/cases" in LAYOUT
     # 补丁本身声明只改 /analysis
     assert "W12：分析页也按 ?case= 显示当前案件" in PATCH
     # colreg 仍按 ?case= 取案件（原逻辑保留）
-    assert "loc.pathname.endsWith('/colreg')" in LAYOUT
+    # Execute the real Layout effect with deterministic hook/router stubs and mocked
+    # fetch. This is a routing unit test, not a browser rendering claim.
+    bundle = tmp_path / "layout.cjs"
+    subprocess.run([
+        str(ROOT / "web/node_modules/.bin/esbuild"), "src/Layout.tsx", "--bundle",
+        "--platform=node", "--format=cjs", "--packages=external", "--jsx=automatic",
+        "--log-level=warning", f"--outfile={bundle}",
+    ], cwd=ROOT / "web", check=True, timeout=30)
+    script = r"""
+const assert = require('node:assert/strict');
+const Module = require('node:module');
+const original = Module._load;
+let pathname, effects = [], calls = [], caseFails = true;
+Module._load = function(name, ...args) {
+  if (name === 'react') return { ...original.call(this, name, ...args),
+    useState: x => [x, () => {}], useEffect: fn => effects.push(fn) };
+  if (name === 'react-router-dom') return {
+    useLocation: () => ({pathname}),
+    useSearchParams: () => [new URLSearchParams('case=PUBLIC-CASE')],
+    NavLink: () => null, Outlet: () => null };
+  return original.call(this, name, ...args);
+};
+global.localStorage = {getItem: () => null};
+global.fetch = async url => {
+  calls.push(url);
+  if (url.endsWith('/analysis/cases')) return new Response(JSON.stringify({cases: []}));
+  return new Response(JSON.stringify({caseId:'PUBLIC-CASE',title:'Public',isFictionalDemo:false}), {status: caseFails ? 404 : 200});
+};
+const {Layout} = require(process.argv[1]);
+(async () => {
+  for (const fail of [true, false]) {
+    caseFails = fail;
+    for (const route of ['analysis','colreg','report','evidence','recs','interview','overview']) {
+      pathname = '/' + route; effects = []; calls = [];
+      Layout(); const cleanup = effects.map(fn => fn());
+      await new Promise(resolve => setTimeout(resolve, 0));
+      const bound = ['analysis','colreg','report','evidence','recs'].includes(route);
+      const expected = ['/api/v1/cases/' + (bound ? 'PUBLIC-CASE' : 'CASE-2026-DEMO-LILY-MARY')];
+      if (fail && route === 'analysis') expected.push('/api/v1/analysis/cases');
+      assert.deepEqual(calls, expected, route + ' failure=' + fail);
+      cleanup.forEach(fn => fn && fn());
+    }
+  }
+  console.log('Layout case-context / exclusive analysis fallback: 14 scenarios passed');
+})().catch(e => {console.error(e); process.exitCode = 1});
+"""
+    subprocess.run(["node", "-e", script, str(bundle)], cwd=ROOT / "web",
+                   env={**os.environ, "NODE_PATH": str(ROOT / "web/node_modules")}, check=True, timeout=30)
     # 分析页切案走 ?case=
     assert "params.get('case')" in PAGE
     assert "onSwitchCase" in VIEW

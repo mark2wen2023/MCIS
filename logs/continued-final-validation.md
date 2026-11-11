@@ -1,4 +1,6 @@
-# 续作最终验证摘要
+# 续作验证摘要
+
+最新状态：2026-11-12 UTC+8 当前可复现核心与真实再生成seed已纳入，完整service **316/316通过**。下方旧315/1记录保留为历史，不是当前未解决失败。
 
 源基线：c6113bee85d25bf97d805fb2d264fb6ab138b2e2。真实.NET8.0.428、Python3.12、Node24环境。被测数值引擎实际构建运行，不是替身。
 
@@ -34,3 +36,13 @@
 浏览器限制已通过官方Chrome for Testing headless shell解除，见 continued-browser-validation.md。实际修复了全局案名、证据/建议跨案链接和写入目标，以及缺轨迹误请求CPA的问题。独立审查与回归覆盖案件切换、异步加载、请求目标。
 
 截图交付限制：19张新截图已本地留档；上传审批未获许可，未重试或绕过。此PR仅包含代码及无图测试记录，截图待用户明确授权后另交付。
+
+
+## 当前基线最终回归（2026-11-12 UTC+8）
+- 原 seed 与 SHA 旁注逐字节保存在 service/mcis_service/analysis/data/history/w12-original-20261111/。
+- 当前 CLI 固定 SDK 8.0.428、所有55个Compile源码+项目文件及recipe指纹、固定路径映射；多个独立Linux临时根构建DLL字节一致。不是跨OS/SDK保证。
+- 既有 build_seed 实际生成新seed，14539数值逐项全同；W14 52值差异0，完整JSON仅时间戳与DLL哈希变化，独立审查后纳入。
+- 完整service **316 passed，0 failed，0 skipped，131.91s**，原来源断言未放宽。首次因compat缺DOTNET_ROOT的315/1另留日志，正确环境全套重跑不是拼接结果。
+- W6核心/静态99/99重跑；W12独立21/21，来源工具9项；报告Web148断言；当前新seed跨页浏览器35/35无JS/console/HTTP错误。
+- W12旧Layout硬编码架构断言改为实际effect的14路由/失败场景，保留原用例及analysis专属fallback要求；未改数值断言。
+详见 current-core-seed-candidate.md、current-core-independent-review.md、current-core-service-configured-pytest.txt、current-core-browser-summary.md。
