@@ -13,7 +13,7 @@ from mcis_service.db import Base
 from .conftest import C, CASE, H
 
 REAL = 'CASE-2025-HAILI5-WANA17'
-PENDING = 'CASE-REAL-YANGZE22'
+PENDING = 'CJK-2024-1230-YangZe22-VegaDream'  # 规范 caseId：DEFECTS/W12.md 21:52 裁定
 
 
 def create(client, template='imo-cic', lang='bilingual'):

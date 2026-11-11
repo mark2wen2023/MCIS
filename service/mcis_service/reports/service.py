@@ -17,7 +17,7 @@ from ..common.timeutil import iso, now_utc
 from ..db import get_doc, list_docs, put_doc
 from .models import ReportAuditRow, ReportRow
 
-YANGZE22_CASE_ID = 'CASE-REAL-YANGZE22'  # 尚无服务种子，仅作真实案例选择占位。
+YANGZE22_CASE_ID = 'CJK-2024-1230-YangZe22-VegaDream'  # 规范 caseId（DEFECTS/W12.md 21:52 裁定）；仍仅作真实案例入口，不读 reports/。
 REAL_CASE_IDS = {HAILI5_CASE_ID, YANGZE22_CASE_ID}
 DISCLAIMER_ZH = '不作责任认定'
 DISCLAIMER_EN = 'This report does not apportion blame or liability'

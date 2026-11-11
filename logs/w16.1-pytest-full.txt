@@ -1,0 +1,3 @@
+FAILED tests/test_contracts.py::test_openapi_yaml_matches_routes - AssertionE...
+1 failed, 230 passed in 52.91s
+114 passed in 24.02s

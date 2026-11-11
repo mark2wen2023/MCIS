@@ -54,7 +54,7 @@ export interface ColregDraftResult { section: ReportSection; reportId: string; r
 export const DEMO_CASE_ID = 'CASE-2026-DEMO-LILY-MARY'
 export const HAILI_CASE_ID = 'CASE-2025-HAILI5-WANA17'
 /** 尚无已登记编号时使用合同明确的占位符，不读取真实报告。 */
-export const YANGZE_CASE_ID = 'CASE-REAL-YANGZE22'
+export const YANGZE_CASE_ID = 'CJK-2024-1230-YangZe22-VegaDream' // 规范 caseId（DEFECTS/W12.md 21:52 裁定）
 export const REPORT_CASES = [
   { caseId: DEMO_CASE_ID, label: 'Lily / Mary（虚构）' },
   { caseId: HAILI_CASE_ID, label: '海力5（真实 · 待确认）' },

@@ -1,0 +1,3 @@
+# W12.1 自测 — 2026-11-11 22:08:17 CST（实施 A）
+## build_seed 重跑：crossCheck 52 值 maxdiff=0.0；新旧种子 14539 个数值逐个相等（偏差 0），文本差异仅 【推算】 与 generatedAt
+## service 全量 pytest

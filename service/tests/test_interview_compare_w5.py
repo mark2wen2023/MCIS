@@ -161,6 +161,15 @@ def test_confirm_and_reject_rows(client):
     assert r.status_code == 404 and r.json()["code"] == "icmp_statement_not_found"
 
 
+def test_reject_refuses_confirmed_entry(client):
+    # S08 陈述仍为草稿，但比对结论先被确认：驳回陈述时不能连带撤销已确认结论
+    assert client.post(f"{C}/interviews/IR-03/crosscheck/IR-03-S08:confirm", headers=INV, json={"note": "已核对（虚构）"}).status_code == 200
+    r = client.post(f"{P}/IR-03/rows/IR-03-S08:reject", headers=INV, json={"reason": "x"})
+    assert r.status_code == 409 and r.json()["code"] == "icmp_entry_not_pending"
+    r = client.post(f"{P}/IR-03/rows/IR-03-S99:confirm", headers=INV, json={})
+    assert r.status_code == 404 and r.json()["code"] == "icmp_statement_not_found"
+
+
 def test_external_roles_get_redacted_page_and_cannot_write(client):
     h = H("ExternalExpert", "外部专家")
     r = client.get(f"{P}/IR-03", headers=h)

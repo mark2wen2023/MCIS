@@ -85,6 +85,9 @@ namespace Mcis.W3.Tests
 
             ir.ModifyStatement("S-r", "左舵 15°（虚构）", StatementClaim.ScalarValue(15, "deg"), st.Span, st.ReferenceUtc, Inv, W3Demo.Day(5, 19, 11), new InMemoryInvestigationAuditSink());
             Assert.True(e.IsStale(ir));
+            // 属于别的笔录的结论，即使本笔录有同编号且已改版的陈述，也不算过期
+            CrossCheckEntry foreign = new CrossCheckRegister(new InMemoryInvestigationAuditSink()).Submit(R("S-r", record: "IR-04"), Agent, W3Demo.Day(5, 19, 10)).Value;
+            Assert.False(foreign.IsStale(ir));
 
             // 别的笔录（同陈述编号）不算；本笔录没有该陈述也不算（无从比较）
             InterviewRecord other = new InterviewRecord("IR-07", new Interviewee("P", "n", "r", "a"), W3Demo.Day(5, 19));
@@ -287,6 +290,12 @@ namespace Mcis.W3.Tests
 
             var badKey = new InvestigationAuditEntry(W3Demo.Day(5, 19), Inv, CrossCheckRegister.ActionBatchConfirm, "Interview", "批量确认一致 S-1 [batch=xyz]", "", "Confirmed", "NOT-HEX");
             Assert.Equal("xyz", CrossCheckRegister.BatchIdOf(badKey));
+            // 长度不是 32、或含 a–f 以外字母的键都不认，退回标记
+            foreach (string bad in new[] { new string('a', 31), new string('a', 33), new string('g', 32), new string('z', 32) })
+            {
+                var e2 = new InvestigationAuditEntry(W3Demo.Day(5, 19), Inv, CrossCheckRegister.ActionBatchConfirm, "Interview", "批量确认一致 S-1 [batch=xyz]", "", "Confirmed", bad);
+                Assert.Equal("xyz", CrossCheckRegister.BatchIdOf(e2));
+            }
 
             var nonBatch = new InvestigationAuditEntry(W3Demo.Day(5, 19), Inv, CrossCheckRegister.ActionConfirm, "Interview", "确认", "", "Confirmed", key);
             Assert.Null(CrossCheckRegister.BatchIdOf(nonBatch));

@@ -177,7 +177,7 @@
 - GISIS 为本地准备字段，**不表示已提交或已正式接通 IMO GISIS**。字段含中英标签、必填性、sourceRefs（案件字段路径/证据编号）、rules、value（缺值 null）、missing、missingLabel。多船字段按 `vessels.<vesselId>.<字段>` 展平，绝不用排水量替代总吨；事故等级做显式枚举映射，不从自然语言补造伤亡、污染、灭失或调查国。
 - 校验体 `{values?: {字段id: 值}, export?: boolean, format?: json|csv}`；覆盖值仅本次校验/导出，不写案件。普通校验返回 `{valid, errors, fields}`（有错仍200）；export=true 且校验通过返回文件流，否则422。GET JSON/CSV 允许缺数据，但必须保留 null/missing。文件响应 Content-Disposition + X-Sha256，每次生成、复核、导出与 GISIS 校验导出均写审计。
 - 错误码：409 `report_real_data_pending`（真实数据使用待 Mark 本人确认）；404 `report_not_found` / `report_section_not_found` / `report_sentence_not_found`；422 `report_invalid_argument` / `report_review_reason_required` / `report_review_no_change` / `report_review_field_not_allowed` / `report_review_text_required` / `report_gisis_validation_failed`；沿用权限 FORBIDDEN / READ_ONLY 与 CASE_NOT_FOUND / CONTRACT_VIOLATION。
-- 真实/虚构：仅 isFictionalDemo=true 开放生成/导出；海力5 `CASE-2025-HAILI5-WANA17`、YANGZE22 占位 `CASE-REAL-YANGZE22` 返回 realDataStatus=pending-confirmation，任何生成/导出409且不写库；不读真实报告目录、不调用 colreg evaluate。未知非虚构案件同样关闭。
+- 真实/虚构：仅 isFictionalDemo=true 开放生成/导出；海力5 `CASE-2025-HAILI5-WANA17`、YANGZE 22 `CJK-2024-1230-YangZe22-VegaDream`（规范 caseId，按 DEFECTS/W12.md 21:52 裁定，原占位 CASE-REAL-YANGZE22 已废弃） 返回 realDataStatus=pending-confirmation，任何生成/导出409且不写库；不读真实报告目录、不调用 colreg evaluate。未知非虚构案件同样关闭。
 - 标准依据：IMO MSC.255(84) 第14章规定调查报告提交/公开，**具体报告要素清单在2.12**，IMO模板同时映射两处；MAIB 六部分结构；中国海事模板用“原因分析与教训”，本系统不作责任认定。SMCP中文为项目译文。参考：https://wwwcdn.imo.org/localresources/en/KnowledgeCentre/IndexofIMOResolutions/MSCResolutions/MSC.255(84).pdf 、https://www.imo.org/en/ourwork/iiis/pages/reporting.aspx 。
 - 需 Gemini 裁定：① 本地 GISIS 字段到正式 MSC-MEPC.3/Circ.4/Rev.1/平台字段映射及必填条件；② W14/W15 服务尚未提供，保留可插拔 missing 适配器，未来来源接口/合同；③ 中文海事模板以安全调查教训替代责任节的正式名称；④ W6 外部接线到独立 ColregDraftButton（不改并发文件）；⑤ 报告审计完整快照独立存储、audit-event维持现合同，是否后续统一扩展。
 
@@ -218,3 +218,7 @@
 - **web 请求改走同源 `/api`**（与 src/api.ts 一致，由 vite 代理到 MCIS_API 配置）；直连 SERVICE_URL 在临时端口 preview 下被 CORS 拦截。
 - **GISIS 导出被拒也写审计**：`POST /gisis:validate {export:true}` 校验不通过时，除 `report.gisis.validate` 外另写 `report.gisis.export_rejected`（after 含 errors），再返回 422。
 - **外部测试结果**：pytest 全量（项目副本，忽略读取 reports/ 真实数据的 test_analysis_w12.py）222/222 通过，其中 W16 113 项；W16 前快照基线 94 项全部包含且通过。web：test:w16 111 断言、colreg-render 18、colreg-w61 43 全过；tsc 0 错。
+
+## 2026-11-11 22:04 · W16 口径更新（Codex bot，按 Gemini bot 两条口径）
+- YANGZE 22 真实案例入口改用规范 caseId `CJK-2024-1230-YangZe22-VegaDream`（DEFECTS/W12.md 21:52 裁定），占位 `CASE-REAL-YANGZE22` 废弃；仍只留接口，GET 返回 pending-confirmation，生成/导出 409 `report_real_data_pending`，不读 reports/。schema/openapi 的 W16 部分原本无该占位示例，无需改动。
+- W16 样式从共享 `web/src/styles.css` 整段迁到 `web/src/styles/w16.css`，由 `main.tsx` 紧接 `./styles.css` 之后引入（层叠顺序不变）；styles.css 只删除 W16 那段，其余内容逐行未变。

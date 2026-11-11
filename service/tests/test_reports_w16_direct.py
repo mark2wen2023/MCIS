@@ -318,3 +318,11 @@ def test_direct_colreg_draft_data_sources_match_chapter_scope(ctx):
     assert section['dataSources'] == ['colreg-check', 'evidence']
     kinds = {c['kind'] for x in section['sentences'] for c in x['citations']}
     assert kinds <= {'colreg-check', 'evidence'}
+
+
+
+def test_direct_yangze22_canonical_case_id():
+    """DEFECTS/W12.md 21:52 裁定：YANGZE 22 规范 caseId；占位 ID 不再使用。"""
+    assert service.YANGZE22_CASE_ID == 'CJK-2024-1230-YangZe22-VegaDream'
+    assert service.YANGZE22_CASE_ID in service.REAL_CASE_IDS
+    assert 'CASE-REAL-YANGZE22' not in service.REAL_CASE_IDS

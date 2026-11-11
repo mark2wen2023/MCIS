@@ -8,7 +8,9 @@
   （导出工程见 logs/w12-export-howto.md；未改 unity/ 与 tools/mcis-core）。
 - 曲线：全部由已构建的 mcis-core `cpa` 计算。
   · 虚构 Lily/Mary、海力5：沿用服务 GET /cases/{id}/cpa（案件航迹线性插值 → mcis-core cpa）。
-  · W14 各情景（含 YANGZE 22 S0 报告航迹重建）：导出航迹每 STEP_S 秒取一点（东/北 m → 海里，航向作对地航向）→ mcis-core cpa。
+  · W14 各情景（含 YANGZE 22 S0 报告航迹重建）：导出航迹每 STEP_S 秒取一点（东/北 m → 海里，航向作对地航向【推算】）→ mcis-core cpa。
+  W12.1（W12-D01）：凡把航向当对地航向的说明（curveNote、YANGZE 22 基线标签、W14 assumptions/markdown 里的「COG=船首向」）
+  一律标【推算】；只改文案，曲线与表格数值不变。
 - 交叉核对：W14 数值与 logs/w14.2-retest-sensitivity-dump.json / w14.2-retest-scenario-dump.json 逐项比较，不一致即中止。
 输出种子内含全部输入文件的 sha256、mcis-core 版本与 dll sha256；同目录写 .sha256 旁注供运行时自检。
 """
@@ -128,6 +130,17 @@ def track_plot(row: dict[str, Any]) -> dict[str, list[list[float]]]:
     return out
 
 
+DERIVED = "【推算】"
+COG_PHRASES = ("COG=船首向", "航向作对地航向")
+
+
+def mark_cog_derived(text: str) -> str:
+    """W12-D01：把航向当对地航向的说明后补【推算】（已标的不重复）。只改文案。"""
+    for ph in COG_PHRASES:
+        text = text.replace(ph + DERIVED, ph).replace(ph, ph + DERIVED)
+    return text
+
+
 def whatif_block(core_cmd: str, study: dict[str, Any], vessels: list[dict[str, str]], epoch: datetime, label: str) -> tuple[dict, str]:
     own, target = vessels[0]["vesselId"], vessels[1]["vesselId"]
     rows, ver = [], ""
@@ -152,9 +165,11 @@ def whatif_block(core_cmd: str, study: dict[str, Any], vessels: list[dict[str, s
                     "vesselDims": {vid: {"loaM": tr["loaM"], "beamM": tr["beamM"]} for vid, tr in r["tracks"].items()}})
         rows.append(out)
     block = {k: study[k] for k in ("criticalMarginM", "disclaimer", "markdown", "assumptions", "inputs", "antennaSensitivity")}
+    block["assumptions"] = [mark_cog_derived(a) for a in block["assumptions"]]
+    block["markdown"] = mark_cog_derived(block["markdown"])
     block.update({"label": label, "epochLocal": study["epochLocal"], "ownVesselId": own, "targetVesselId": target,
                   "safeDistanceM": rows[0]["safeDistanceM"], "stepSec": STEP_S, "rows": rows,
-                  "curveNote": f"曲线：W14 航迹每 {STEP_S:g} s 取点（航向作对地航向）→ mcis-core cpa；碰撞情景截至碰撞时刻。"})
+                  "curveNote": f"曲线：W14 航迹每 {STEP_S:g} s 取点（航向作对地航向{DERIVED}）→ mcis-core cpa；碰撞情景截至碰撞时刻。"})
     for k in ("originalDeviation", "combinedNote", "reportCollisionLocal"):
         if k in study:
             block[k] = study[k]
@@ -289,7 +304,8 @@ def build(export_path: Path = EXPORT) -> dict[str, Any]:
         "sourceRefs": [src(YANGZE_CASE_JSON, "报告结构化字段（船型/舵令/碰撞）"),
                        src(PROJECT_ROOT / "reports/yangze22/tracks_from_report.csv", "报告航迹点")],
         "epochLocal": y_epoch.isoformat(), "timeZone": "UTC+8", "vessels": y_vessels, "thresholds": lily["thresholds"],
-        "baseline": {"label": "W14 S0 原始航迹回放（报告航迹重建，天线改正 YANGZE 0.20L / VEGA 0.375L【估计】）→ mcis-core cpa",
+        "baseline": {"label": "W14 S0 原始航迹回放（报告航迹重建，天线改正 YANGZE 0.20L / VEGA 0.375L【估计】；"
+                              f"航向作对地航向{DERIVED}）→ mcis-core cpa",
                      "stepSec": STEP_S, "cutAtSec": s0["tcSeconds"], "series": s0["series"], "keyMoments": base_moments},
         "whatif": y_block,
         "notes": ["本案未接入服务数据库（无 /cases/{id}），基线曲线取 W14 S0 报告航迹重建。", export["yangze22"]["originalDeviation"]],

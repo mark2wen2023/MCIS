@@ -1,0 +1,42 @@
+# W6.2 实现冻结哈希 — 2026-11-11 22:03:53 CST（实施 A）
+# 格式：sha256  路径（相对仓库根）。[改] = W6.2 改动；[原] = W6.1 起未改、随包冻结的 colreg 文件。
+# 共享文件：service/tests/test_agents_colreg_sim.py（仅 1 行改为合同字段）。按 21:43 裁定，共享 web/src/styles.css 不进清单（本包未改）；Layout.tsx/main.tsx/routes.ts/package.json/types.ts 本包未改。
+# [改]
+a644471f50929f5f4e22eb536ea98db1888d505af65938ad71bd8aa557730ae6  service/mcis_service/colreg/router.py
+5f64be87cb252ee0f219b2eb09e28428f4fabd023d1ff3e4980193d4f16c1c52  service/mcis_service/colreg/review.py
+1489f4c2b6160b3772a20c9a99b74e762c0c84d209f527c13d8b5fc80045cd7f  service/tests/test_colreg_w6.py
+1d159e44e8d7555c21cc6688f9ff7b56b2b957ac844afb7479f4c291bf4ac0f0  service/tests/test_colreg_w61.py
+21682e9a356c70078a1a278015e0213aef3f95fd8b4ce21d3ba2a12c4c60e4dc  service/tests/test_agents_colreg_sim.py
+f7ece3d0b9f2de932e4409617d17ed8de47d0f76d88a8be290ccbe6f2f7bcdd5  web/src/colreg/derive.ts
+530a801291e7ed7fc87af4665d326d15e1878711d4dbcfaa21f7c69dbc042a58  web/src/colreg/ColregView.tsx
+2fee1889d9347b7ac3ac380a021439444e8636d7c860b65332c32d146874c97d  web/src/pages/ColregPage.tsx
+acb6f2acca240496e375b9d8f4dcb0b74aa5c047dabc9793b2b1d810222b5373  web/src/pages/EvidencePage.tsx
+47d12583e222616335f2c11023fe9aba64b5de5dec55a99a142650a6165b5ee2  web/src/pages/RecommendationsPage.tsx
+f838f30d79d3b4c9677da9a93990b29afbfd9c6a31b782d2a28c7a1e65214004  web/src/styles/w6.css
+0f20a9e69d54794e315b7866e96a33c7f0488c98b062db004acc5059d8e6b0f0  web/tests/colreg-w61.test.tsx
+fda6526632b4e284ab3b719e832563547ed239075f91464f22ea25735d4e3af1  logs/w6.2-fix-summary.md
+5ed571056adaa6286eb58e83e940d2c0a9542601511db3515d72a86a67136a07  logs/w6.2-selftest-run.txt
+2b6f5f3ef52b4b9a77a87bfaac96a3314f49a99c60c03ab552c27cc675a00031  logs/w6.2-acceptance-run.txt
+# [原]
+8af9ab7b8e5415051ee9c96dcfbea6a07ee58d455691f768d61c44329b3f4b62  service/mcis_service/colreg/runs.py
+3115ded0a09af5527e3cf0325987936bde02a3f46400859ad24e5fbb39e8fd50  service/mcis_service/colreg/inputs.py
+6c9641b5f6b24cefe98b59d1ef9343745ec9b5d4ba4e59c402bb2fa2593792a7  service/mcis_service/colreg/evidence_refs.py
+bb7fdd7cbe6fdffc29c36ecc10f34b7dfcfe621b625e65c69373ed80ab044f19  service/mcis_service/colreg/seed_annotations.py
+414499aa4be407f9a22dd28c322a6a6e07c5de9264962e2cb49b7f3455493af4  service/mcis_service/colreg/haili5_seed.py
+19b90a42fee5f54e1e34cd89d561eda38b98c883fdcbd8dd694d7e81bffee619  service/mcis_service/colreg/core_client.py
+1b702cb2ef0ef71ee21c4b9e56e9b9030dd2eb42ce5860a95b40576f8aab624c  service/mcis_service/colreg/models.py
+8cac0b4a971f79b5378df0699bc5d75634211e4409fd6980b56e3ee88ad31314  service/tests/fake_core_colreg.py
+8b4cd7740a10d0f1cdc264bebca3cd90ea42d2d2f5babd99094102c128c6a705  web/src/config.ts
+084375acd701a8d4ef3ce3c96be64297e616be597da18e7085814935ceebea9c  web/src/colreg/ColregMatrix.tsx
+c9fd1ac9d751f16cba4ecedd749a91b8b0a8649d714654973183075c3b83757d  web/src/colreg/ColregRuns.tsx
+aa7ce474926965c917ac0827e34fb539ffb9a49fc4ef55cc40a3f39508cf86cd  web/src/colreg/labels.ts
+12873f2b4e216e128fefd1efcaec5353ae49dcfcdcb6a34fd9a4ba9352d2c9a3  web/tests/colreg-render.test.tsx
+# 截图（1440×900、1440×2400 整页、1920×1080、1920×2200 整页）
+244e5ed33d131f8e70b430b75d0785c1ff72749c65dcde19cd6b9c0a6e880f02  screenshots/20-colreg.png
+f84a1d4dfc92331f5d46ed534263012d17a3aa875b380ac5f70921f4f7ae7638  screenshots/20-colreg-full.png
+287ac9c2170cceadcb860b9dc35f7a9f61963ed5f7adf974f026d79e550a6585  screenshots/20-colreg-haili5.png
+70a1aaf261644d179160cbbb732382543367b1f1f0665defdc9f0fe7166479e9  screenshots/20-colreg-haili5-full.png
+bf9f55e4b40e0794a12ebbb2ff9068802438304c8ea8ff6e13d2dfbfbd8e3dbb  screenshots/1440/20-colreg-1440.png
+7721370909a2c98b0bc31e3be15745c8004cea5276222654006da2727b019996  screenshots/1440/20-colreg-1440-full.png
+51b9fd33cde8b2e42b4fd9879ee6f9f07eb7fb66e3a5d55b4fba975d991ed773  screenshots/1440/20-colreg-haili5-1440.png
+7a7d3bc494e57a6e67bb1aa9bfd1c413b099abd6d8e3ca26d179a70204a344a6  screenshots/1440/20-colreg-haili5-1440-full.png

@@ -21,8 +21,8 @@ SIDECAR = SEED.with_suffix(".sha256")
 
 router = APIRouter(prefix="/api/v1", tags=["analysis"])
 
-# 合同（openapi）尚未声明这两条路由，已追加到 REQUESTS.md；在架构师补齐前不进自动生成的 schema。
-PENDING_CONTRACT = True
+# 两条路由已由验收方写入 contracts/openapi.yaml（21:52 裁定 1），W12.1 起进入 app.openapi()。
+PENDING_CONTRACT = False
 EXT = {"include_in_schema": not PENDING_CONTRACT}
 EXTENSION_ROUTES = [
     ("GET", "/api/v1/analysis/cases"),

@@ -767,7 +767,7 @@ paths:
     parameters:
       - { $ref: '#/components/parameters/caseId' }
       - { name: checkId, in: path, required: true, schema: { type: string } }
-      - { name: runId, in: query, required: false, schema: { type: string }, description: "目标版本；省略或 active 表示当前激活版本。旧字段名 reviewStatus/note 本阶段兼容但不入合同" }
+      - { name: runId, in: query, required: false, schema: { type: string }, description: "目标版本；省略或 active 表示当前激活版本。请求体只接受 action、verdict、reason、evidenceIds，其他字段（含旧名 reviewStatus/note）返回 422" }
     patch:
       tags: [colreg]
       summary: 调查员复核核查项；审计记为 colreg.review，理由全文保存，不截断

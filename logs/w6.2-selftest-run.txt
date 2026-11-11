@@ -1,0 +1,23 @@
+# W6.2 自测 — 2026-11-11 22:01:54 CST（实施 A）
+## service: pytest -q（全量）
+tests/test_contracts.py:69: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_contracts.py::test_openapi_yaml_matches_routes - AssertionE...
+1 failed, 245 passed in 55.47s
+## service: colreg 相关
+55 passed in 12.05s
+## service: test_contracts（test_openapi_yaml_matches_routes 余下差异只剩 W12 analysis 两条，colreg 差异为空）
+E       AssertionError: 契约有、服务没有：[('GET', '/api/v1/analysis/cases'), ('GET', '/api/v1/cases/{}/analysis')]
+1 failed, 3 passed in 1.18s
+## service: test_analysis_w12.py
+15 passed in 2.97s
+## web: npm test
+ok  18 assertions (labels + render lily/mary + haili5)
+ok  58 assertions (W6.1 rulings 2–11 + W6.2)
+## web: tsc -b --force
+tsc exit=0
+## web: run-analysis-w12.sh
+W12 analysis tests: 93 passed
+## web: test:w16 / test:w5
+ok 115 assertions (W16 三模板×三语言、引用、复核、导出、GISIS、真实锁定与请求合同)
+interview-render: 38 项断言通过

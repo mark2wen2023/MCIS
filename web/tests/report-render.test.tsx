@@ -3,10 +3,23 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { ReportView, ReviewDialog, reviewProblem, reviewPayload } from '../src/reports/ReportView'
 import { ColregDraftButton } from '../src/reports/ColregDraftButton'
 import { ReportApiError, reportApi } from '../src/reports/api'
+import { YANGZE_CASE_ID } from '../src/reports/types'
+import { readFileSync, existsSync } from 'node:fs'
 import type { GisisDocument, Report, ReportSection, ReportTemplate, ReviewTarget } from '../src/reports/types'
 
 function assert(value: unknown, message: string) { if (!value) throw new Error(message); assertions++ }
 let assertions = 0
+// DEFECTS/W12.md 21:52 裁定：YANGZE 22 规范 caseId
+assert(YANGZE_CASE_ID === 'CJK-2024-1230-YangZe22-VegaDream', 'YANGZE 22 规范 caseId')
+// W16 样式独立为 src/styles/w16.css，由 main.tsx 在 styles.css 之后引入；共享 styles.css 不再含 rpt- 样式
+{
+  const shared = readFileSync('src/styles.css', 'utf8')
+  assert(!/\.rpt-/.test(shared), '共享 styles.css 不含 W16 rpt- 样式')
+  assert(existsSync('src/styles/w16.css') && /\.rpt-page/.test(readFileSync('src/styles/w16.css', 'utf8')), 'w16.css 存在且含 rpt- 样式')
+  const entry = readFileSync('src/main.tsx', 'utf8')
+  const iShared = entry.indexOf("import './styles.css'"), iW16 = entry.indexOf("import './styles/w16.css'")
+  assert(iShared >= 0 && iW16 > iShared, 'main.tsx 在 styles.css 之后引入 w16.css')
+}
 const caseId = 'CASE-2026-DEMO-LILY-MARY'
 const section: ReportSection = {
   sectionId: 'analysis', titleZh: '避碰规则分析', titleEn: 'Analysis', dataSources: ['colreg', 'whatif', 'systemic'],
@@ -69,7 +82,7 @@ const longReason = '合成理由全文。'.repeat(110)
 const aud = html({ audit: [{ auditEvent: { seq: 7, utc: '2026-11-11T12:00:00Z', operator: '调查员甲', action: 'report.review.modify', category: 'Report', command: '修改', before: '', after: '' }, reportId: report.reportId, sectionId: section.sectionId, sentenceId: null, reason: longReason, beforeValue: { textZh: '旧值' }, afterValue: { textZh: '新值' }, summary: '简述' }] })
 assert(aud.includes(longReason) && aud.includes('调查员甲') && aud.includes('旧值') && aud.includes('新值'), '审计全文与原新值')
 assert(renderToStaticMarkup(createElement(ColregDraftButton, { caseId })).includes('生成规则分析章节草稿'), '独立规则章节草稿按钮')
-assert(renderToStaticMarkup(createElement(ColregDraftButton, { caseId: 'CASE-REAL-YANGZE22' })).includes('待确认'), '真实草稿按钮待确认')
+assert(renderToStaticMarkup(createElement(ColregDraftButton, { caseId: 'CJK-2024-1230-YangZe22-VegaDream' })).includes('待确认'), '真实草稿按钮待确认')
 async function clientContractTests() {
   const originalFetch = globalThis.fetch
   let lastUrl = ''
@@ -116,7 +129,7 @@ async function clientContractTests() {
       URL.createObjectURL = createUrl; URL.revokeObjectURL = revokeUrl
     }
     globalThis.fetch = async () => new Response(JSON.stringify({ code: 'report_real_data_pending', message: '真实数据使用待 Mark 本人确认' }), { status: 409, headers: { 'Content-Type': 'application/json' } })
-    try { await reportApi.colregDraft('CASE-REAL-YANGZE22'); assert(false, '真实案例应失败') }
+    try { await reportApi.colregDraft('CJK-2024-1230-YangZe22-VegaDream'); assert(false, '真实案例应失败') }
     catch (e) { assert(e instanceof ReportApiError && e.status === 409 && e.code === 'report_real_data_pending', '真实409保留错误码') }
   } finally { globalThis.fetch = originalFetch }
   console.log(`ok ${assertions} assertions (W16 三模板×三语言、引用、复核、导出、GISIS、真实锁定与请求合同)`)

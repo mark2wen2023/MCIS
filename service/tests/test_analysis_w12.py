@@ -134,13 +134,29 @@ def test_seed_sources_not_stale():
         assert hashlib.sha256(p.read_bytes()).hexdigest() == r["sha256"], f"种子已过期：{r['path']} 已变化，请重跑 build_seed"
 
 
-def test_extension_routes_hidden_until_contract(app, client):
+def test_extension_routes_in_openapi(app, client):
+    """W12.1：两条接口已入合同，PENDING_CONTRACT=False，出现在 app.openapi()。"""
+    assert ar.PENDING_CONTRACT is False
     paths = app.openapi()["paths"]
-    for _m, p in ar.EXTENSION_ROUTES:
-        assert p.replace("{case_id}", "{caseId}") not in paths and p not in paths
+    for m, p in ar.EXTENSION_ROUTES:
+        assert m.lower() in paths.get(p, {}), p
     actual = {(m.upper(), r.path) for r in ar.router.routes for m in r.methods}
     assert actual == set(ar.EXTENSION_ROUTES)
+    assert all(getattr(r, "include_in_schema", True) for r in ar.router.routes)
     assert client.get("/api/v1/analysis/cases", headers=H()).status_code == 200
+
+
+def test_heading_as_cog_marked_derived(client):
+    """W12.1（W12-D01）：凡把航向当对地航向的说明都标【推算】（curveNote、assumptions、YANGZE 22 基线标签）。"""
+    for cid in (EXPECTED_IDS[0], EXPECTED_IDS[2]):
+        d = _get(client, cid)
+        w = d["whatif"]
+        assert "对地航向【推算】" in w["curveNote"], w["curveNote"]
+        cog = [a for a in w["assumptions"] if "COG=船首向" in a]
+        assert cog and all("COG=船首向【推算】" in a for a in cog)
+        assert "【推算】【推算】" not in json.dumps(d, ensure_ascii=False)
+    y = _get(client, EXPECTED_IDS[2])["baseline"]["label"]
+    assert "对地航向【推算】" in y, y
 
 
 @pytest.mark.skipif(not HAS_DOTNET, reason="需要 dotnet + mcis-core")

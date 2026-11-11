@@ -94,6 +94,13 @@ assert(verdictTone({ collision: true, isCritical: false, verdict: 'Collision' })
 assert(sensitivitySpan([{ inEstimateRange: false, outcomes: { A: { minClearanceM: 1 } } }, { inEstimateRange: true, outcomes: { A: { minClearanceM: 5 } } }], 'A')!.join() === '5,5', '对照行不计入区间')
 for (const c of cases) for (const r of c.whatif?.rows ?? []) if (r.collision) assert(r.series[r.series.length - 1].t <= (r.tcSeconds ?? 0) + 1e-9, `${c.key} ${r.id} 曲线截至碰撞`)
 
+// 7. W12.1（W12-D01）：页面上凡把航向当对地航向处都标【推算】（W14 情景 curveNote、YANGZE 22 S0 重建基线）
+{
+  const shown = [html(byKey('lily-mary'), byKey('lily-mary').whatif!.rows[0].id), html(byKey('yangze22')), html(byKey('yangze22'), 'Y1')].map(text)
+  const unmarked = shown.flatMap((t) => t.match(/对地航向(?!【推算】)|COG=船首向(?!【推算】)/g) ?? [])
+  assert(shown.every((t) => t.includes('航向作对地航向【推算】')) && unmarked.length === 0, `航向作对地航向须标【推算】：${unmarked.join(',')}`)
+}
+
 // 6. 不写死服务地址
 const files = [...readdirSync('src/analysis').map((f) => join('src/analysis', f)), 'src/pages/AnalysisPage.tsx']
 for (const f of files) {
