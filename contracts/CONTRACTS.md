@@ -119,3 +119,7 @@ tools/mcis-core/mcis-core.sh <子命令>  < request.json  > response.json
 使用 colreg.router._core 的 HTTP 路由不透传 CLI 错误正文或未知错误码。BAD_REQUEST/BAD_JSON 仍为 422，NOT_IMPLEMENTED/UNKNOWN_COMMAND 仍为 501；CORE_UNAVAILABLE 为 503、CORE_TIMEOUT 为 504、CORE_NO_OUTPUT/CORE_BAD_OUTPUT 为 502；其余 CoreError 映射 CORE_ERROR/502。消息为固定提示，不包含本地路径、stderr 或核心返回的自由文本。成功响应与 CLI 行为不变。
 
 这不是旧 `/core/align` 文件读取或身份问题的修复：旧路径入口仍在，仅适合既有回环单用户演示。停用或限制旧入口须单独记录兼容取舍；不得据本切片宣称可正式多用户部署。
+
+### 核心响应外壳类型防护
+
+Python 核心适配器要求 JSON 顶层为对象、ok 为真正布尔值；成功 result 必须为对象；失败 error 必须为对象，其中 code/message 若出现必须为字符串。错误空对象沿用 CORE_ERROR 与空消息默认值，合法错误的状态映射不变。类型不符报告 CORE_BAD_OUTPUT/502，不作为客户端输入422。成功对象及扩展字段不重写。此检查不是完整命令响应schema校验，也不改变 CLI 输出。

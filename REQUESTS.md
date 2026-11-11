@@ -357,3 +357,7 @@ W12.1独立验收发现冻结seed的notes仍写“本案未接入服务数据库
 ## HTTP core error redaction (2026-11-12)
 
 Scope: colreg.router._core error responses only; documented in contracts/CONTRACTS.md. Known error codes/statuses remain stable with fixed safe messages; unknown CoreError codes collapse to CORE_ERROR/502. CLI and successful HTTP responses are unchanged. No source files frozen by W4.1 are modified. This does NOT remove the old /core/align path-reading capability or implement authentication; disabling/restricting that documented route remains a separate compatibility proposal. No database migration, merge or deployment.
+
+## Core envelope type validation (2026-11-12)
+
+Follow-up to HTTP error redaction: validate only the envelope types consumed by Python core_client (object, boolean ok, object result/error, string error code/message). Malformed output becomes CORE_BAD_OUTPUT/502 rather than incidental AttributeError/TypeError/500. Valid success envelopes and domain error mappings are preserved, including default fields in an empty error object. CLI, case authorization, filesystem path capability and authentication are unchanged. No broad exception catch, migration, merge or deployment.
