@@ -1,3 +1,18 @@
 # W12.1 自测 — 2026-11-11 22:08:17 CST（实施 A）
 ## build_seed 重跑：crossCheck 52 值 maxdiff=0.0；新旧种子 14539 个数值逐个相等（偏差 0），文本差异仅 【推算】 与 generatedAt
 ## service 全量 pytest
+247 passed in 57.53s
+## service test_analysis_w12.py
+16 passed in 3.45s
+## tests_acceptance/W12（原样）
+18 passed in 4.41s
+## web run-analysis-w12.sh
+W12 analysis tests: 94 passed
+## web npm test（W6/W6.1/W6.2）
+ok  18 assertions (labels + render lily/mary + haili5)
+ok  58 assertions (W6.1 rulings 2–11 + W6.2)
+## tsc -b --force
+tsc exit=0
+## W16 / W5 web
+ok 115 assertions (W16 三模板×三语言、引用、复核、导出、GISIS、真实锁定与请求合同)
+interview-render: 38 项断言通过
