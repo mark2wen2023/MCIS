@@ -1,0 +1,11 @@
+  Determining projects to restore...
+  Restored /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/unity/Tests_W14_WhatIf/Tests_W14_WhatIf.csproj (in 249 ms).
+  Tests_W14_WhatIf -> /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/unity/Tests_W14_WhatIf/bin/Debug/net8.0/Tests_W14_WhatIf.dll
+Test run for /workspace/scratch/d5cd4f6afdb1/w143-independent-isolated/unity/Tests_W14_WhatIf/bin/Debug/net8.0/Tests_W14_WhatIf.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:   129, Skipped:     0, Total:   129, Duration: 19 s - Tests_W14_WhatIf.dll (net8.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

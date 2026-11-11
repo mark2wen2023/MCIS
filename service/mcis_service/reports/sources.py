@@ -1,9 +1,9 @@
 """报告只读来源适配：每个结论句引用原始业务条目，不补造缺失数据。
 
-W14 只读 W12 已校验分析种子中的虚构条目，W15 保留缺数据。可替换
+W14 只读 W12 已校验分析种子中的虚构条目及已授权公开报告案例，W15 保留缺数据。可替换
 SOURCE_ADAPTERS 中对应 callable；协议是 (session, case) ->
 {missing: bool, items: [...]}，每个 item 必须带 id、textZh、textEn，
-可带 evidenceIds。适配器不得写数据库、读取真实报告或运行引擎。
+可带 evidenceIds。适配器不得写数据库或运行引擎；公开原文仅按显式授权及固定哈希读取。
 """
 from __future__ import annotations
 
@@ -26,6 +26,13 @@ from ..interviews.models import InterviewRow
 from ..recommendations.models import ConsultationRoundRow, RecommendationRow
 
 
+# 本次用户授权只覆盖仓库内这两份公开报告；不把它扩大为任意真实案件。
+PUBLIC_REPORT_SOURCES = {
+    'CASE-2025-HAILI5-WANA17': 'reports/haili5/case.json',
+    'CJK-2024-1230-YangZe22-VegaDream': 'reports/yangze22/case.json',
+}
+
+
 SourceAdapter = Callable[[Session, dict[str, Any]], dict[str, Any]]
 
 
@@ -36,7 +43,7 @@ def _unavailable(_s: Session, _case: dict[str, Any]) -> dict[str, Any]:
 def _whatif(_s: Session, case: dict[str, Any]) -> dict[str, Any]:
     """只用种子的字段生成句子；来源许可先于访问 whatif 正文。"""
     try:
-        seed, _digest = load_seed()
+        seed, digest = load_seed()
     except Exception:
         # 包括 analysis_seed_tampered；上游种子故障不阻断其它章节生成。
         return {'missing': True, 'items': [],
@@ -47,12 +54,25 @@ def _whatif(_s: Session, case: dict[str, Any]) -> dict[str, Any]:
     if entry is None:
         return _unavailable(_s, case)
     refs = entry.get('sourceRefs') or []
-    if entry.get('isFictionalDemo') is not True or any(
-            not isinstance(ref, dict) or not isinstance(ref.get('path'), str)
-            or ref['path'].startswith('reports/') for ref in refs):
+    valid_refs = isinstance(refs, list) and all(
+        isinstance(ref, dict) and isinstance(ref.get('path'), str) for ref in refs)
+    real = entry.get('isFictionalDemo') is False
+    expected_report = PUBLIC_REPORT_SOURCES.get(case['caseId'])
+    allowed_real = real and expected_report and valid_refs and any(
+        ref['path'] == expected_report and isinstance(ref.get('sha256'), str)
+        and len(ref['sha256']) == 64
+        and all(c in '0123456789abcdef' for c in ref['sha256']) for ref in refs)
+    allowed_demo = (entry.get('isFictionalDemo') is True and not expected_report
+                    and valid_refs and not any(
+        ref['path'].startswith('reports/') for ref in refs))
+    if not (allowed_real or allowed_demo):
         return {'missing': True, 'items': [],
-                'missingZh': '真实案例 W14 数据待 Mark 确认',
-                'missingEn': "real-case W14 data awaits Mark's confirmation"}
+                'missingZh': 'W14 案例来源未获许可或虚构/真实标记不一致',
+                'missingEn': 'W14 case provenance is not authorized or its fictional/real flag is inconsistent'}
+    seed_ref = ('service/mcis_service/analysis/data/w12-analysis-seed.json'
+                + '#caseId=' + case['caseId'] + '/whatif; SHA256=' + digest)
+    provenance = '; '.join(ref['path'] + ' SHA256=' + str(ref.get('sha256') or '缺数据')
+                           + ' (' + str(ref.get('role') or '缺数据') + ')' for ref in refs)
     whatif = entry.get('whatif') or {}
     rows = whatif.get('rows') or []
     if not rows:
@@ -73,11 +93,21 @@ def _whatif(_s: Session, case: dict[str, Any]) -> dict[str, Any]:
                   and not isinstance(clearance, bool) and isfinite(clearance) else None)
         supplied.append({
             'id': identifier, 'scenarioId': identifier,
+            'sourceRef': seed_ref + '/rows/' + identifier + '; inputs: ' + provenance,
             'textZh': f'W14 推演情景 {identifier}「{name or "缺数据"}」：判定={verdict_zh or "缺数据"}；最小净距={number or "缺数据"}；情景说明={description or "缺数据"}。【推算，仅供分析参考】',
             'textEn': f'W14 what-if scenario {identifier} "{name or "Missing data"}": verdict={verdict_en or "Missing data"}; minimum clearance={number or "Missing data"}; scenario description (source text)={description or "Missing data"}. [Derived; for analysis reference only]',
             'missing': any(value is None for value in (name, verdict_zh, verdict_en, description, number)),
             'reviewStatus': 'Derived',
         })
+        if real:
+            sensitivity = text(row.get('sensitivityRangeText'))
+            critical_reason = text(row.get('criticalReason'))
+            if sensitivity and sensitivity != '—':
+                supplied[-1]['textZh'] += ' 敏感性区间=' + sensitivity + '【推算】。'
+                supplied[-1]['textEn'] += ' Sensitivity interval (source text)=' + sensitivity + ' [Derived].'
+            if critical_reason:
+                supplied[-1]['textZh'] += ' 临界说明=' + critical_reason + '。'
+                supplied[-1]['textEn'] += ' Critical assessment (source text)=' + critical_reason + '.'
     disclaimer = text(whatif.get('disclaimer'))
     assumptions = whatif.get('assumptions')
     count = str(len(assumptions)) if isinstance(assumptions, list) else None
@@ -88,6 +118,23 @@ def _whatif(_s: Session, case: dict[str, Any]) -> dict[str, Any]:
         'missing': disclaimer is None or count is None,
         'reviewStatus': 'Derived',
     })
+    if real:
+        for item in supplied:
+            item['sourceRef'] = item.get('sourceRef') or seed_ref + '/notes; inputs: ' + provenance
+            item['textZh'] += ' 来源：W12 已校验分析种子，案例=' + case['caseId'] + '；输入=' + provenance + '。'
+            item['textEn'] += ' Source: verified W12 analysis seed; case=' + case['caseId'] + '; inputs=' + provenance + '.'
+        # 输入估计、模型假设必须随真实案例结果保留，不能只呈现看似精确的净距。
+        if isinstance(assumptions, list):
+            for i, assumption in enumerate(assumptions):
+                if not isinstance(assumption, str) or not assumption.strip():
+                    continue
+                supplied.append({
+                    'id': f'W14-assumption-{i + 1}', 'scenarioId': None,
+                    'textZh': 'W14 模型假设（来源原文）：' + assumption + '【推算，仅供分析参考】',
+                    'textEn': 'W14 model assumption (source text): ' + assumption + ' [Derived; for analysis reference only]',
+                    'sourceRef': seed_ref + f'/assumptions/{i}',
+                    'missing': False, 'reviewStatus': 'Derived',
+                })
     return {'missing': False, 'items': supplied}
 
 
@@ -328,7 +375,7 @@ def build_sections(s: Session, case: dict[str, Any], template: dict[str, Any]) -
             href = (_url('analysis', case=case_id, scenario=value.get('scenarioId', identifier))
                     if kind == 'whatif' else _url(kind, case=case_id, id=identifier))
             refs = [_citation(kind, identifier, href,
-                              source_ref=f'{number}/{identifier}')]
+                              source_ref=str(value.get('sourceRef') or f'{number}/{identifier}'))]
             refs.extend(ev_citations(value.get('evidenceIds')))
             grouped['analysis'].append(_sentence(
                 f'analysis-{kind}-{i}-{identifier}', value['textZh'], value['textEn'], refs,
@@ -381,15 +428,42 @@ def build_sections(s: Session, case: dict[str, Any], template: dict[str, Any]) -
         if not grouped[name]:
             grouped[name].append(_missing(name + '-missing', zh, en))
 
+    from . import public_text
+    public_excerpts = public_text.excerpts(case, template)
     sections = []
     for spec in template['sections']:
         identifier = spec['sectionId']
         sentences = grouped.get(identifier) or [_missing(identifier + '-missing', '章节来源未提供。',
                                                          'section sources have not been provided.')]
+        excerpt = public_excerpts.get(identifier)
+        if excerpt:
+            citation = ev_citation(public_text.EVIDENCE_ID)
+            if evidence_by_id.get(public_text.EVIDENCE_ID, {}).get('sha256') != public_text.SOURCE_SHA256:
+                citation['registration'] = 'unregistered'
+                citation['unregistered'] = True
+            citation['sourceRef'] = excerpt['sourceRef']
+            citation['needsReview'] = True
+            display_quote = public_text.display_quote(excerpt['quote'])
+            quoted = _sentence(
+                identifier + '-public-report-excerpt',
+                '【直接】原公开报告记载（引用，有限摘录，非完整章节；仅分页及控制字符排版正规化；不代表系统重新作出责任认定）：\n'
+                + display_quote,
+                'Direct quotation from the published investigation report (limited excerpt, not the full section; '
+                'original Chinese retained, page breaks and control characters normalized for display; '
+                'not an official English translation; '
+                'not a new determination of responsibility by this system):\n' + display_quote,
+                [citation], source_status='PublicReportExcerpt')
+            # Only replace the generic placeholder for an otherwise unadapted section.
+            coverage = _missing(
+                identifier + '-public-report-coverage',
+                '本章仅引用原报告有限节选，完整章节尚未适配，须查阅原报告并人工复核。',
+                'Only a bounded excerpt is included; full chapter coverage is not implemented. '
+                'Consult the original report and review manually.')
+            sentences = ([quoted, coverage] if identifier not in grouped else [*sentences, quoted, coverage])
         zh = '\n'.join(x['textZh'] for x in sentences)
         en = '\n'.join(x['textEn'] for x in sentences)
         section = {'sectionId': identifier, 'titleZh': spec['titleZh'], 'titleEn': spec['titleEn'],
-                   'dataSources': list(spec.get('dataSources') or []), 'status': 'Draft', 'source': 'Generated',
+                   'dataSources': list(dict.fromkeys([*(spec.get('dataSources') or []), *(['evidence'] if excerpt else [])])), 'status': 'Draft', 'source': 'Generated',
                    'textZh': zh, 'textEn': en, 'generatedText': {'textZh': zh, 'textEn': en},
                    'reviewedBy': None, 'reviewedAt': None, 'reviews': [],
                    'missing': any(x['missing'] for x in sentences), 'sentences': sentences}

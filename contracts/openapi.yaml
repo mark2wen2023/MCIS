@@ -547,6 +547,29 @@ paths:
       tags: [timeline, unity]
       summary: 取时间线（Unity 回放轴标记 + 网页时间线）
       responses: { '200': { description: '{caseId, caseEpochUtc, displayTimeZoneOffsetMinutes, durationSec, events: TimelineEvent[]}' } }
+  /api/v1/cases/{caseId}/timeline/align-preview:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    post:
+      tags: [timeline]
+      summary: Inline CSV 临时对齐预览（timeline读取权限，不写库不审计）
+      description: 最多4源，每源256KiB UTF8/总1MiB，每源16列，sourceId唯一。UTC时间，逗号CSV，固定align/calibrate=true；无锚点可能未校准。拒绝全部path、manualAnchors及未知字段。仅此新路由受限；旧裸core/align行为不变。
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: 'schemas/align-preview.schema.json#/$defs/request' }
+      responses:
+        '200':
+          description: 未入库临时结果，不改变人工复核
+          content:
+            application/json:
+              schema: { $ref: 'schemas/align-preview.schema.json#/$defs/response' }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }
+        '502': { $ref: '#/components/responses/Problem' }
+        '503': { $ref: '#/components/responses/Problem' }
+        '504': { $ref: '#/components/responses/Problem' }
   /api/v1/cases/{caseId}/timeline/events:
     parameters: [{ $ref: '#/components/parameters/caseId' }]
     post:
@@ -926,7 +949,7 @@ paths:
     get:
       tags:
       - reports
-      summary: 三模板、中英章节及数据源；真实案例仅待确认
+      summary: 三模板、中英章节及数据源；已授权公开案例采用原文章节并标 authorized-public
       responses:
         '200':
           description: 成功
@@ -969,7 +992,8 @@ paths:
     get:
       tags:
       - reports
-      summary: 报告版本列表；真实案例返回 pending-confirmation
+      summary: 报告版本列表；已授权公开案例 authorized-public，未授权真实案例 pending-confirmation
+      description: YANGZE 22 缺少已入库案件时 reports 为空并返回 blockedReason=report_case_not_imported；生成、GISIS、快照与导出返回409同名错误。授权状态不代表数据完整或报告已复核。
       responses:
         '200':
           description: 成功
@@ -1136,7 +1160,7 @@ paths:
       tags:
       - reports
       summary: 按 snapshotRef 获取报告完整操作快照
-      description: 仅 LeadInvestigator / Investigator，权限与报告审计相同；理由及前后值全文保留。真实案例返回 409 report_real_data_pending，不存在返回 404 report_snapshot_not_found。
+      description: 仅 LeadInvestigator / Investigator，权限与报告审计相同；理由及前后值全文保留。海力5已授权并入库，可正常访问；未授权真实案例返回 409 report_real_data_pending；YANGZE 22 缺少已入库案件时返回 409 report_case_not_imported；不存在返回 404 report_snapshot_not_found。
       responses:
         '200':
           description: 完整操作快照

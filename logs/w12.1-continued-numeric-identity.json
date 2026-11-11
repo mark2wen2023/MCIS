@@ -1,0 +1,49 @@
+{
+  "oldCommit": "ddb9dffaa7e2d0e2c7ee82ff28b95c45cd4224d8",
+  "newSeedSha256": "3ccc329f375de404993b65dfb1c22c3d467057bc57f376a958a22336ffb28cb5",
+  "numericLeaves": 14539,
+  "differences": [
+    {
+      "path": "/cases/0/whatif/markdown",
+      "kind": "text",
+      "newExcerpt": "| 情景 | 改动 | 最小距离(nm) | 最小净距(m) | 最小DCPA(nm) | 碰撞时刻 | 结论 | 碰撞角 | 接触部位 | 偏离后最小DCPA(nm) | 敏感性区间 |\n|---|"
+    },
+    {
+      "path": "/cases/0/whatif/curveNote",
+      "kind": "text",
+      "newExcerpt": "曲线：W14 航迹每 2 s 取点（航向作对地航向【推算】）→ mcis-core cpa；碰撞情景截至碰撞时刻。"
+    },
+    {
+      "path": "/cases/0/whatif/assumptions/3",
+      "kind": "text",
+      "newExcerpt": "不计风、流、浪、浅水、岸壁效应与船间相互作用；无流时 COG=船首向【推算】。"
+    },
+    {
+      "path": "/cases/2/baseline/label",
+      "kind": "text",
+      "newExcerpt": "W14 S0 原始航迹回放（报告航迹重建，天线改正 YANGZE 0.20L / VEGA 0.375L【估计】；航向作对地航向【推算】）→ mcis-core cpa"
+    },
+    {
+      "path": "/cases/2/whatif/markdown",
+      "kind": "text",
+      "newExcerpt": "| 情景 | 改动 | 最小距离(nm) | 最小净距(m) | 最小DCPA(nm) | 碰撞时刻 | 结论 | 碰撞角 | 接触部位 | 偏离后最小DCPA(nm) | 敏感性区间 |\n|---|"
+    },
+    {
+      "path": "/cases/2/whatif/curveNote",
+      "kind": "text",
+      "newExcerpt": "曲线：W14 航迹每 2 s 取点（航向作对地航向【推算】）→ mcis-core cpa；碰撞情景截至碰撞时刻。"
+    },
+    {
+      "path": "/cases/2/whatif/assumptions/3",
+      "kind": "text",
+      "newExcerpt": "不计风、流、浪、浅水、岸壁效应与船间相互作用；无流时 COG=船首向【推算】。"
+    },
+    {
+      "path": "/generatedAt",
+      "kind": "text",
+      "newExcerpt": "2026-11-11T22:05:47+08:00"
+    }
+  ],
+  "numericDifferences": 0,
+  "numericFingerprint": "b1d98497ef4c5cf7181557d0481f49d484d56242b9198a5b12ae67dec723fd0e"
+}

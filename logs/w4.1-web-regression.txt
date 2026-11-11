@@ -1,0 +1,53 @@
+W4.1 30 model/static-render checks passed (not browser interaction).
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> web@0.0.0 test
+> esbuild tests/colreg-render.test.tsx --bundle --platform=node --format=cjs --outfile=tests/.tmp-colreg-render.cjs --jsx=automatic && node tests/.tmp-colreg-render.cjs && esbuild tests/colreg-w61.test.tsx --bundle --platform=node --format=cjs --outfile=tests/.tmp-colreg-w61.cjs --jsx=automatic --log-level=warning && node tests/.tmp-colreg-w61.cjs
+
+
+  tests/.tmp-colreg-render.cjs  1.5mb ⚠️
+
+⚡ Done in 43ms
+ok  18 assertions (labels + render lily/mary + haili5)
+ok  58 assertions (W6.1 rulings 2–11 + W6.2)
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> web@0.0.0 test:w5
+> esbuild tests/interview-render.test.tsx --bundle --platform=node --format=cjs --outfile=tests/.tmp-interview-render.cjs --jsx=automatic --log-level=warning && node tests/.tmp-interview-render.cjs
+
+interview-render: 38 项断言通过
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> web@0.0.0 test:w16
+> esbuild tests/report-render.test.tsx --bundle --platform=node --format=cjs --outfile=tests/.tmp-report-render.cjs --jsx=automatic && node tests/.tmp-report-render.cjs
+
+
+  tests/.tmp-report-render.cjs  1.5mb ⚠️
+
+⚡ Done in 26ms
+ok 148 assertions (W16 三模板×三语言、引用、复核、导出、GISIS、真实锁定与请求合同)
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+W12 analysis tests: 94 passed
+W7.1 41 model/static-render checks passed (not browser interaction).
+W7.2 30 model/static-render checks passed (not browser interaction).
+case-linked-pages: 30 assertions passed
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> web@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 656 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                     0.42 kB │ gzip:   0.32 kB
+dist/assets/index-De-pi5oU.css     35.12 kB │ gzip:   7.37 kB
+dist/assets/index-CqggF9sP.js   1,531.03 kB │ gzip: 500.68 kB
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 1500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 578ms

@@ -1,0 +1,10 @@
+service/mcis_service/recommendations/router.py: OK
+service/tests/test_consultation_input_w73.py: OK
+web/src/pages/RecommendationsPage.tsx: OK
+web/src/consultation/ConsultationPanel.tsx: OK
+web/src/consultation/RoundLifecycle.tsx: OK
+web/src/consultation/model.ts: OK
+web/src/consultation/types.ts: OK
+web/src/styles/w7.css: OK
+web/tests/consultation-w72.test.tsx: OK
+web/tests/run-consultation-w72.sh: OK

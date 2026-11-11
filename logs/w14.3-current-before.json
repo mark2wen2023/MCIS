@@ -1,0 +1,423 @@
+{
+  "origin": "Actual Yangze22Case.Run from current compiled sources, not fixture/seed readback",
+  "rows": [
+    {
+      "ScenarioId": "S0",
+      "MinClearanceM": 0,
+      "MinClearanceTimeSeconds": 210.125,
+      "Collision": true,
+      "TcSeconds": 210.125,
+      "TcLocalText": "22:02:00.12",
+      "Verdict": "Collision",
+      "MinDistanceNm": 0.053258918857739056,
+      "MinDcpaNm": 0.0011097928125539582,
+      "geometry": {
+        "CollisionAngleDeg": 69,
+        "StrikingVesselId": "vega_dream",
+        "StruckVesselId": "yangze22",
+        "StruckSide": "\u53F3\u8237",
+        "ContactFromStruckBowM": 96.19331573761508,
+        "IsBowToBow": false
+      }
+    },
+    {
+      "ScenarioId": "Y1",
+      "MinClearanceM": 184.35089233465322,
+      "MinClearanceTimeSeconds": 197.6255728090001,
+      "Collision": false,
+      "TcSeconds": null,
+      "TcLocalText": "\u2014",
+      "Verdict": "NearMiss",
+      "MinDistanceNm": 0.1535299924457936,
+      "MinDcpaNm": 0.00020260796301906252,
+      "geometry": null
+    },
+    {
+      "ScenarioId": "Y5",
+      "MinClearanceM": 238.75478451464647,
+      "MinClearanceTimeSeconds": 262.0286533820502,
+      "Collision": false,
+      "TcSeconds": null,
+      "TcLocalText": "\u2014",
+      "Verdict": "Avoided",
+      "MinDistanceNm": 0.21466758257871815,
+      "MinDcpaNm": 0.0012226543925901766,
+      "geometry": null
+    },
+    {
+      "ScenarioId": "Y1\u002BY5",
+      "MinClearanceM": 292.44621564144455,
+      "MinClearanceTimeSeconds": 175.37410196624967,
+      "Collision": false,
+      "TcSeconds": null,
+      "TcLocalText": "\u2014",
+      "Verdict": "Avoided",
+      "MinDistanceNm": 0.20927025641850458,
+      "MinDcpaNm": 0.0021951272392885554,
+      "geometry": null
+    },
+    {
+      "ScenarioId": "Y4",
+      "MinClearanceM": 29.814974663224728,
+      "MinClearanceTimeSeconds": 250.06800293254975,
+      "Collision": false,
+      "TcSeconds": null,
+      "TcLocalText": "\u2014",
+      "Verdict": "NearMiss",
+      "MinDistanceNm": 0.06295772253889065,
+      "MinDcpaNm": 0.016378825976661782,
+      "geometry": null
+    }
+  ],
+  "comparison": [
+    {
+      "ScenarioId": "S0",
+      "IsCritical": false,
+      "CriticalReason": "",
+      "DisplayVerdictText": "\u78B0\u649E",
+      "SensitivityRangeText": "\u51C0\u8DDD 0.0\u20130.0 m\uFF1AVEGA 0.35L \u78B0\u649E\uFF1BVEGA 0.375L \u78B0\u649E\uFF1BVEGA 0.40L \u78B0\u649E",
+      "sensitivity": [
+        {
+          "Label": "VEGA 0.35L",
+          "Collision": true,
+          "Verdict": "Collision",
+          "MinClearanceM": 0
+        },
+        {
+          "Label": "VEGA 0.375L",
+          "Collision": true,
+          "Verdict": "Collision",
+          "MinClearanceM": 0
+        },
+        {
+          "Label": "VEGA 0.40L",
+          "Collision": true,
+          "Verdict": "Collision",
+          "MinClearanceM": 0
+        }
+      ]
+    },
+    {
+      "ScenarioId": "Y1",
+      "IsCritical": true,
+      "CriticalReason": "\u6700\u5C0F\u51C0\u8DDD 184.4 m \u8DDD\u5B89\u5168\u7EBF 185.2 m \u4EC5 0.8 m\uFF08\u003C 5.0 m\uFF09\uFF1B\u654F\u611F\u6027\u533A\u95F4 183.2\u2013185.5 m \u8DE8\u8D8A\u5B89\u5168\u7EBF 185.2 m\uFF08VEGA 0.35L \u65E0\u78B0\u649E 185.5 m\uFF1BVEGA 0.375L \u9669\u60C5 184.4 m\uFF1BVEGA 0.40L \u9669\u60C5 183.2 m\uFF09",
+      "DisplayVerdictText": "\u9669\u60C5\uFF08\u4E34\u754C\uFF09",
+      "SensitivityRangeText": "\u51C0\u8DDD 183.2\u2013185.5 m\uFF1AVEGA 0.35L \u65E0\u78B0\u649E 185.5 m\uFF1BVEGA 0.375L \u9669\u60C5 184.4 m\uFF1BVEGA 0.40L \u9669\u60C5 183.2 m",
+      "sensitivity": [
+        {
+          "Label": "VEGA 0.35L",
+          "Collision": false,
+          "Verdict": "Avoided",
+          "MinClearanceM": 185.5311612415984
+        },
+        {
+          "Label": "VEGA 0.375L",
+          "Collision": false,
+          "Verdict": "NearMiss",
+          "MinClearanceM": 184.35089233465322
+        },
+        {
+          "Label": "VEGA 0.40L",
+          "Collision": false,
+          "Verdict": "NearMiss",
+          "MinClearanceM": 183.18574238559796
+        }
+      ]
+    },
+    {
+      "ScenarioId": "Y5",
+      "IsCritical": false,
+      "CriticalReason": "",
+      "DisplayVerdictText": "\u65E0\u78B0\u649E",
+      "SensitivityRangeText": "\u51C0\u8DDD 232.3\u2013245.2 m\uFF1AVEGA 0.35L \u65E0\u78B0\u649E 245.2 m\uFF1BVEGA 0.375L \u65E0\u78B0\u649E 238.8 m\uFF1BVEGA 0.40L \u65E0\u78B0\u649E 232.3 m",
+      "sensitivity": [
+        {
+          "Label": "VEGA 0.35L",
+          "Collision": false,
+          "Verdict": "Avoided",
+          "MinClearanceM": 245.21624299406872
+        },
+        {
+          "Label": "VEGA 0.375L",
+          "Collision": false,
+          "Verdict": "Avoided",
+          "MinClearanceM": 238.75478451464647
+        },
+        {
+          "Label": "VEGA 0.40L",
+          "Collision": false,
+          "Verdict": "Avoided",
+          "MinClearanceM": 232.29345442492152
+        }
+      ]
+    },
+    {
+      "ScenarioId": "Y1\u002BY5",
+      "IsCritical": false,
+      "CriticalReason": "",
+      "DisplayVerdictText": "\u65E0\u78B0\u649E",
+      "SensitivityRangeText": "\u51C0\u8DDD 288.5\u2013296.4 m\uFF1AVEGA 0.35L \u65E0\u78B0\u649E 296.4 m\uFF1BVEGA 0.375L \u65E0\u78B0\u649E 292.4 m\uFF1BVEGA 0.40L \u65E0\u78B0\u649E 288.5 m",
+      "sensitivity": [
+        {
+          "Label": "VEGA 0.35L",
+          "Collision": false,
+          "Verdict": "Avoided",
+          "MinClearanceM": 296.40659820518806
+        },
+        {
+          "Label": "VEGA 0.375L",
+          "Collision": false,
+          "Verdict": "Avoided",
+          "MinClearanceM": 292.44621564144455
+        },
+        {
+          "Label": "VEGA 0.40L",
+          "Collision": false,
+          "Verdict": "Avoided",
+          "MinClearanceM": 288.5268221307329
+        }
+      ]
+    },
+    {
+      "ScenarioId": "Y4",
+      "IsCritical": false,
+      "CriticalReason": "",
+      "DisplayVerdictText": "\u9669\u60C5",
+      "SensitivityRangeText": "\u51C0\u8DDD 29.6\u201330.0 m\uFF1AVEGA 0.35L \u9669\u60C5 29.6 m\uFF1BVEGA 0.375L \u9669\u60C5 29.8 m\uFF1BVEGA 0.40L \u9669\u60C5 30.0 m",
+      "sensitivity": [
+        {
+          "Label": "VEGA 0.35L",
+          "Collision": false,
+          "Verdict": "NearMiss",
+          "MinClearanceM": 29.591037187824327
+        },
+        {
+          "Label": "VEGA 0.375L",
+          "Collision": false,
+          "Verdict": "NearMiss",
+          "MinClearanceM": 29.814974663224728
+        },
+        {
+          "Label": "VEGA 0.40L",
+          "Collision": false,
+          "Verdict": "NearMiss",
+          "MinClearanceM": 30.044789270931147
+        }
+      ]
+    }
+  ],
+  "antenna": [
+    {
+      "Label": "\u4E0D\u6539\u6B63\u5929\u7EBF\uFF08\u5929\u7EBF\u89C6\u4E3A\u8239\u4E2D\uFF09",
+      "YangzeAftOfMidshipRatio": 0,
+      "VegaAftOfMidshipRatio": 0,
+      "Collision": true,
+      "TcSeconds": 230.375,
+      "TcLocalText": "22:02:20.37",
+      "DelayVsReportSec": 26.375,
+      "CollisionAngleDeg": 69,
+      "ClearanceAtReportTimeM": 132.09833055943454,
+      "ContactText": "\u53F3\u8237 \u8DDD\u8239\u9996 148 m\uFF080.66 L\uFF09",
+      "ScenarioSummaries": {
+        "S0": "\u78B0\u649E 22:02:20.37",
+        "Y1": "\u65E0\u78B0\u649E 218.9 m",
+        "Y5": "\u65E0\u78B0\u649E 335.6 m",
+        "Y1\u002BY5": "\u65E0\u78B0\u649E 388.1 m",
+        "Y4": "\u9669\u60C5 45.4 m"
+      },
+      "ScenarioOutcomes": {
+        "S0": {
+          "Label": "\u5929\u7EBF\u4E0D\u6539\u6B63",
+          "Collision": true,
+          "Verdict": 0,
+          "MinClearanceM": 0
+        },
+        "Y1": {
+          "Label": "\u5929\u7EBF\u4E0D\u6539\u6B63",
+          "Collision": false,
+          "Verdict": 2,
+          "MinClearanceM": 218.94580152506498
+        },
+        "Y5": {
+          "Label": "\u5929\u7EBF\u4E0D\u6539\u6B63",
+          "Collision": false,
+          "Verdict": 2,
+          "MinClearanceM": 335.58993359870755
+        },
+        "Y1\u002BY5": {
+          "Label": "\u5929\u7EBF\u4E0D\u6539\u6B63",
+          "Collision": false,
+          "Verdict": 2,
+          "MinClearanceM": 388.0544874406383
+        },
+        "Y4": {
+          "Label": "\u5929\u7EBF\u4E0D\u6539\u6B63",
+          "Collision": false,
+          "Verdict": 1,
+          "MinClearanceM": 45.38486948780674
+        }
+      },
+      "InEstimateRange": false,
+      "ShortLabel": "\u5929\u7EBF\u4E0D\u6539\u6B63"
+    },
+    {
+      "Label": "YANGZE \u4E2D\u70B9\u540E 0.20L \u002B VEGA \u4E2D\u70B9\u540E 0.35L",
+      "YangzeAftOfMidshipRatio": 0.2,
+      "VegaAftOfMidshipRatio": 0.35,
+      "Collision": true,
+      "TcSeconds": 211.46875,
+      "TcLocalText": "22:02:01.46",
+      "DelayVsReportSec": 7.46875,
+      "CollisionAngleDeg": 69,
+      "ClearanceAtReportTimeM": 36.572537424683844,
+      "ContactText": "\u53F3\u8237 \u8DDD\u8239\u9996 103 m\uFF080.46 L\uFF09",
+      "ScenarioSummaries": {
+        "S0": "\u78B0\u649E 22:02:01.46",
+        "Y1": "\u65E0\u78B0\u649E 185.5 m",
+        "Y5": "\u65E0\u78B0\u649E 245.2 m",
+        "Y1\u002BY5": "\u65E0\u78B0\u649E 296.4 m",
+        "Y4": "\u9669\u60C5 29.6 m"
+      },
+      "ScenarioOutcomes": {
+        "S0": {
+          "Label": "VEGA 0.35L",
+          "Collision": true,
+          "Verdict": 0,
+          "MinClearanceM": 0
+        },
+        "Y1": {
+          "Label": "VEGA 0.35L",
+          "Collision": false,
+          "Verdict": 2,
+          "MinClearanceM": 185.5311612415984
+        },
+        "Y5": {
+          "Label": "VEGA 0.35L",
+          "Collision": false,
+          "Verdict": 2,
+          "MinClearanceM": 245.21624299406872
+        },
+        "Y1\u002BY5": {
+          "Label": "VEGA 0.35L",
+          "Collision": false,
+          "Verdict": 2,
+          "MinClearanceM": 296.40659820518806
+        },
+        "Y4": {
+          "Label": "VEGA 0.35L",
+          "Collision": false,
+          "Verdict": 1,
+          "MinClearanceM": 29.591037187824327
+        }
+      },
+      "InEstimateRange": true,
+      "ShortLabel": "VEGA 0.35L"
+    },
+    {
+      "Label": "YANGZE \u4E2D\u70B9\u540E 0.20L \u002B VEGA \u4E2D\u70B9\u540E 0.375L\uFF08\u540D\u4E49\uFF09",
+      "YangzeAftOfMidshipRatio": 0.2,
+      "VegaAftOfMidshipRatio": 0.375,
+      "Collision": true,
+      "TcSeconds": 210.125,
+      "TcLocalText": "22:02:00.12",
+      "DelayVsReportSec": 6.125,
+      "CollisionAngleDeg": 69,
+      "ClearanceAtReportTimeM": 29.96045405401739,
+      "ContactText": "\u53F3\u8237 \u8DDD\u8239\u9996 96 m\uFF080.43 L\uFF09",
+      "ScenarioSummaries": {
+        "S0": "\u78B0\u649E 22:02:00.12",
+        "Y1": "\u9669\u60C5 184.4 m",
+        "Y5": "\u65E0\u78B0\u649E 238.8 m",
+        "Y1\u002BY5": "\u65E0\u78B0\u649E 292.4 m",
+        "Y4": "\u9669\u60C5 29.8 m"
+      },
+      "ScenarioOutcomes": {
+        "S0": {
+          "Label": "VEGA 0.375L",
+          "Collision": true,
+          "Verdict": 0,
+          "MinClearanceM": 0
+        },
+        "Y1": {
+          "Label": "VEGA 0.375L",
+          "Collision": false,
+          "Verdict": 1,
+          "MinClearanceM": 184.35089233465322
+        },
+        "Y5": {
+          "Label": "VEGA 0.375L",
+          "Collision": false,
+          "Verdict": 2,
+          "MinClearanceM": 238.75478451464647
+        },
+        "Y1\u002BY5": {
+          "Label": "VEGA 0.375L",
+          "Collision": false,
+          "Verdict": 2,
+          "MinClearanceM": 292.44621564144455
+        },
+        "Y4": {
+          "Label": "VEGA 0.375L",
+          "Collision": false,
+          "Verdict": 1,
+          "MinClearanceM": 29.814974663224728
+        }
+      },
+      "InEstimateRange": true,
+      "ShortLabel": "VEGA 0.375L"
+    },
+    {
+      "Label": "YANGZE \u4E2D\u70B9\u540E 0.20L \u002B VEGA \u4E2D\u70B9\u540E 0.40L",
+      "YangzeAftOfMidshipRatio": 0.2,
+      "VegaAftOfMidshipRatio": 0.4,
+      "Collision": true,
+      "TcSeconds": 208.78125,
+      "TcLocalText": "22:01:58.78",
+      "DelayVsReportSec": 4.78125,
+      "CollisionAngleDeg": 69,
+      "ClearanceAtReportTimeM": 23.34837068335095,
+      "ContactText": "\u53F3\u8237 \u8DDD\u8239\u9996 90 m\uFF080.40 L\uFF09",
+      "ScenarioSummaries": {
+        "S0": "\u78B0\u649E 22:01:58.78",
+        "Y1": "\u9669\u60C5 183.2 m",
+        "Y5": "\u65E0\u78B0\u649E 232.3 m",
+        "Y1\u002BY5": "\u65E0\u78B0\u649E 288.5 m",
+        "Y4": "\u9669\u60C5 30.0 m"
+      },
+      "ScenarioOutcomes": {
+        "S0": {
+          "Label": "VEGA 0.40L",
+          "Collision": true,
+          "Verdict": 0,
+          "MinClearanceM": 0
+        },
+        "Y1": {
+          "Label": "VEGA 0.40L",
+          "Collision": false,
+          "Verdict": 1,
+          "MinClearanceM": 183.18574238559796
+        },
+        "Y5": {
+          "Label": "VEGA 0.40L",
+          "Collision": false,
+          "Verdict": 2,
+          "MinClearanceM": 232.29345442492152
+        },
+        "Y1\u002BY5": {
+          "Label": "VEGA 0.40L",
+          "Collision": false,
+          "Verdict": 2,
+          "MinClearanceM": 288.5268221307329
+        },
+        "Y4": {
+          "Label": "VEGA 0.40L",
+          "Collision": false,
+          "Verdict": 1,
+          "MinClearanceM": 30.044789270931147
+        }
+      },
+      "InEstimateRange": true,
+      "ShortLabel": "VEGA 0.40L"
+    }
+  ]
+}

@@ -10,14 +10,13 @@ using static Mcis.Acceptance.W5.W5AccFixture;
 namespace Mcis.Acceptance.W5
 {
     /// <summary>
-    /// 已接受但尚未落实的两条提案（REQUESTS.md 21:25 裁定），先写成 KnownDefect：
+    /// W5.1 已实现裁定的独立回归，保留原两项用例并复核实际状态：
     /// 1. 比对结果带陈述版本 statementVersion / StatementRevision，修改后可识别过期结论；
-    /// 2. 台账增加 Resubmit，只能从 Rejected 发起，并写审计。
+    /// 2. 台账增加 Resubmit，只能从 Dismissed 发起，并写审计。
     /// </summary>
     public class KnownDefectTests
     {
         [Fact]
-        [Trait("Category", "KnownDefect")]
         public void W5_D01_ComparisonResult_CarriesStatementVersion_AndFlagsStaleAfterModify()
         {
             InterviewRecord rec = NewRecord();
@@ -54,7 +53,6 @@ namespace Mcis.Acceptance.W5
         }
 
         [Fact]
-        [Trait("Category", "KnownDefect")]
         public void W5_D02_Resubmit_OnlyFromRejected_WritesAudit_AndSupersedesOldEntry()
         {
             InterviewRecord rec = NewRecord();
@@ -71,7 +69,7 @@ namespace Mcis.Acceptance.W5
 
             var retry = new CrossCheckResult("S-r", rec.RecordId, CrossCheckOutcome.Consistent, 0, "deg", "20°", "20°", "VDR（虚构）", "|Δ|≤1");
 
-            // 待确认不得直接 Resubmit（裁定：只能从 Rejected 发起）
+            // 待确认不得直接 Resubmit（裁定：只能从 Dismissed 发起）
             object pendingAttempt = resubmit.Invoke(reg, Bind(resubmit, retry, Investigator, At(5, 19, 10, 5), "想重提（虚构）"));
             Assert.False(IsSuccess(pendingAttempt), "Pending 条目不能 Resubmit。");
 
@@ -88,7 +86,8 @@ namespace Mcis.Acceptance.W5
             var reg2 = new CrossCheckRegister(audit2);
             Ok(reg2.Submit(first, Agent, At(5, 19, 10, 0)));
             Ok(reg2.Dismiss("S-r", Investigator, At(5, 19, 10, 5), "第一次比对有误（虚构）"));
-            // 裁定用词是 Rejected；现 CrossCheckState 只有 Dismissed。本用例把 Dismissed 视为可发起的驳回态，请架构师确认用词。
+            // 21:32 裁定：仅 Dismissed 可重提，旧条目保留为 Superseded。
+            CrossCheckEntry previous = reg2.Get("S-r");
             int n = audit2.Entries.Count;
             object ok = resubmit.Invoke(reg2, Bind(resubmit, retry, Investigator, At(5, 19, 11, 0), "更正后重新提交（虚构）"));
             Assert.True(IsSuccess(ok), "已驳回（Dismissed/Rejected）的条目应允许 Resubmit。");
@@ -100,7 +99,12 @@ namespace Mcis.Acceptance.W5
             // 旧条目应进入 Superseded（若状态枚举已扩展）或至少不再作为当前有效结论
             Type stateType = typeof(CrossCheckState);
             bool hasSuperseded = Enum.GetNames(stateType).Contains("Superseded");
-            Assert.True(hasSuperseded, "建议增加 CrossCheckState.Superseded，供旧条目作废后保留痕迹。");
+            Assert.True(hasSuperseded, "必须提供 Superseded 状态。");
+            Assert.Equal(CrossCheckState.Superseded, previous.State);
+            Assert.Contains(previous, reg2.Entries);
+            Assert.NotSame(previous, current);
+            Assert.False(previous.IsEffective);
+            Assert.Contains(audit2.Entries.Skip(n), e => e.Action == CrossCheckRegister.ActionResubmit);
         }
 
         private static object[] Bind(MethodInfo m, params object[] args)

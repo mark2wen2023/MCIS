@@ -1,0 +1,20 @@
+{
+  "service/mcis_service/analysis/data/w12-w14-export.json": "9b46303ee550a532570c872f793c4aa9855c88930efb831dd7b34cf8ba97437c",
+  "service/mcis_service/analysis/data/w12-analysis-seed.json": "988e9abd3b39959864f42912d8d3454dacd7821156fd8b21268631f30f4693e3",
+  "service/mcis_service/analysis/data/w12-analysis-seed.sha256": "5c6bee148641e8a2ad2af089563a242dc9c8a65ba6928d42a538362525454b48",
+  "service/mcis_service/analysis/data/history/w12-original-20261111/w12-analysis-seed.json": "3ccc329f375de404993b65dfb1c22c3d467057bc57f376a958a22336ffb28cb5",
+  "service/mcis_service/analysis/data/history/w12-original-20261111/w12-analysis-seed.sha256": "021c1aeb9b363d7359e8e1e2611303827e48f690ce2272d6de03bd1e4b19479b",
+  "service/mcis_service/analysis/data/history/w12-original-20261111/README.md": "40fad42e9ab284b45f9b7a1d42707d4bc6e89eee524d990935f05a85be4a15b1",
+  "reports/REAL_CASES.md": "a71e87ac7333fe831013baf8320a9be42009c373f376969e0ccfe988e976c919",
+  "reports/haili5/tracks_from_report.csv": "ecb111f84cde8dfa2073bc0953b629cee766b5dd38da3fb07603358dc18c9988",
+  "reports/haili5/case.json": "130926c44069d681a6f7b692d3cc082afc59d4e1f45141c5e64036a74870fe3a",
+  "reports/haili5/_report_clean.txt": "00bbf711cd7418633d586567c69d0d009f68b1bc1fe5c2bd01107bc11493a0d0",
+  "reports/haili5/SUMMARY.md": "6a5a5d2ffade638f866802ef1ccd92c146689db8d97f5aa108ca3c548d916866",
+  "reports/yangze22/tracks_from_report.csv": "befd86667e67dd72bfe826eacde851a0283cfa522fa7e9d3b21a7d967f08a2cc",
+  "reports/yangze22/case.json": "63aad2f28aef4f67ecaf346dea13a2004f268ad9afc4b5d7f86783fcacb5b2c2",
+  "reports/yangze22/report.txt": "7adad5bb499c28eb3985b79411c61dad593797e0d2a8aa64feb203077e43ee2b",
+  "reports/yangze22/SUMMARY.md": "8b98b42bfe5bbf49dbc27fe4e97732af22961195f9514de93dc3bebd29bb2a27",
+  "logs/w14.2-retest-scenario-dump.json": "5525b40b5c9ab608f128839312d5ac2989ad08e2c2af7689a9e174e6a049399c",
+  "logs/w14.2-retest-sensitivity-dump.json": "56918d97117c6866150f0d3b128b15e3d7760f006be083adf10214323b1e9dc8",
+  "logs/w14.2-impl-hashes-frozen.txt": "2ed2101057459b9e5083d844c7a0fa4cc2d12fe91aa7d6f509153547408d97fa"
+}

@@ -1,0 +1,395 @@
+FFFFFFFFFFFFFFF.........                                                 [100%]
+=================================== FAILURES ===================================
+________________ test_malformed_output_is_core_bad_output[None] ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3772f67440>
+env = None
+
+    @pytest.mark.parametrize('env',INVALID)
+    def test_malformed_output_is_core_bad_output(monkeypatch,env):
+        monkeypatch.setattr(core_client.subprocess,'run',lambda *a,**kw:SimpleNamespace(stdout=json.dumps(env).encode(),stderr=b'',returncode=0))
+>       with pytest.raises(core_client.CoreError) as exc:core_client.run('/synthetic','align',{})
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+core_cmd = '/synthetic', command = 'align', payload = {}, timeout_s = 60.0
+
+    def run(core_cmd: str, command: str, payload: dict[str, Any], timeout_s: float = 60.0) -> dict[str, Any]:
+        try:
+            proc = subprocess.run([core_cmd, command], input=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+                                  capture_output=True, timeout=timeout_s, check=False)
+        except FileNotFoundError as e:
+            raise CoreError("CORE_UNAVAILABLE", f"找不到 mcis-core：{core_cmd}", 503) from e
+        except subprocess.TimeoutExpired as e:
+            raise CoreError("CORE_TIMEOUT", f"mcis-core {command} 超时", 504) from e
+        out = proc.stdout.decode("utf-8", "replace").strip().splitlines()
+        if not out:
+            raise CoreError("CORE_NO_OUTPUT", f"mcis-core 无输出（exit={proc.returncode}）：{proc.stderr.decode('utf-8', 'replace')[-400:]}", 502)
+        try:
+            env = json.loads(out[-1])
+        except ValueError as e:
+            raise CoreError("CORE_BAD_OUTPUT", out[-1][:400], 502) from e
+>       if not env.get("ok"):
+               ^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'get'
+
+../../shared/mcis-security-work/service/mcis_service/colreg/core_client.py:35: AttributeError
+________________ test_malformed_output_is_core_bad_output[env1] ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3772f67fe0>
+env = []
+
+    @pytest.mark.parametrize('env',INVALID)
+    def test_malformed_output_is_core_bad_output(monkeypatch,env):
+        monkeypatch.setattr(core_client.subprocess,'run',lambda *a,**kw:SimpleNamespace(stdout=json.dumps(env).encode(),stderr=b'',returncode=0))
+>       with pytest.raises(core_client.CoreError) as exc:core_client.run('/synthetic','align',{})
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+core_cmd = '/synthetic', command = 'align', payload = {}, timeout_s = 60.0
+
+    def run(core_cmd: str, command: str, payload: dict[str, Any], timeout_s: float = 60.0) -> dict[str, Any]:
+        try:
+            proc = subprocess.run([core_cmd, command], input=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+                                  capture_output=True, timeout=timeout_s, check=False)
+        except FileNotFoundError as e:
+            raise CoreError("CORE_UNAVAILABLE", f"找不到 mcis-core：{core_cmd}", 503) from e
+        except subprocess.TimeoutExpired as e:
+            raise CoreError("CORE_TIMEOUT", f"mcis-core {command} 超时", 504) from e
+        out = proc.stdout.decode("utf-8", "replace").strip().splitlines()
+        if not out:
+            raise CoreError("CORE_NO_OUTPUT", f"mcis-core 无输出（exit={proc.returncode}）：{proc.stderr.decode('utf-8', 'replace')[-400:]}", 502)
+        try:
+            env = json.loads(out[-1])
+        except ValueError as e:
+            raise CoreError("CORE_BAD_OUTPUT", out[-1][:400], 502) from e
+>       if not env.get("ok"):
+               ^^^^^^^
+E       AttributeError: 'list' object has no attribute 'get'
+
+../../shared/mcis-security-work/service/mcis_service/colreg/core_client.py:35: AttributeError
+_________________ test_malformed_output_is_core_bad_output[1] __________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3772f7aab0>
+env = 1
+
+    @pytest.mark.parametrize('env',INVALID)
+    def test_malformed_output_is_core_bad_output(monkeypatch,env):
+        monkeypatch.setattr(core_client.subprocess,'run',lambda *a,**kw:SimpleNamespace(stdout=json.dumps(env).encode(),stderr=b'',returncode=0))
+>       with pytest.raises(core_client.CoreError) as exc:core_client.run('/synthetic','align',{})
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+core_cmd = '/synthetic', command = 'align', payload = {}, timeout_s = 60.0
+
+    def run(core_cmd: str, command: str, payload: dict[str, Any], timeout_s: float = 60.0) -> dict[str, Any]:
+        try:
+            proc = subprocess.run([core_cmd, command], input=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+                                  capture_output=True, timeout=timeout_s, check=False)
+        except FileNotFoundError as e:
+            raise CoreError("CORE_UNAVAILABLE", f"找不到 mcis-core：{core_cmd}", 503) from e
+        except subprocess.TimeoutExpired as e:
+            raise CoreError("CORE_TIMEOUT", f"mcis-core {command} 超时", 504) from e
+        out = proc.stdout.decode("utf-8", "replace").strip().splitlines()
+        if not out:
+            raise CoreError("CORE_NO_OUTPUT", f"mcis-core 无输出（exit={proc.returncode}）：{proc.stderr.decode('utf-8', 'replace')[-400:]}", 502)
+        try:
+            env = json.loads(out[-1])
+        except ValueError as e:
+            raise CoreError("CORE_BAD_OUTPUT", out[-1][:400], 502) from e
+>       if not env.get("ok"):
+               ^^^^^^^
+E       AttributeError: 'int' object has no attribute 'get'
+
+../../shared/mcis-security-work/service/mcis_service/colreg/core_client.py:35: AttributeError
+________________ test_malformed_output_is_core_bad_output[text] ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3772f7a990>
+env = 'text'
+
+    @pytest.mark.parametrize('env',INVALID)
+    def test_malformed_output_is_core_bad_output(monkeypatch,env):
+        monkeypatch.setattr(core_client.subprocess,'run',lambda *a,**kw:SimpleNamespace(stdout=json.dumps(env).encode(),stderr=b'',returncode=0))
+>       with pytest.raises(core_client.CoreError) as exc:core_client.run('/synthetic','align',{})
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+core_cmd = '/synthetic', command = 'align', payload = {}, timeout_s = 60.0
+
+    def run(core_cmd: str, command: str, payload: dict[str, Any], timeout_s: float = 60.0) -> dict[str, Any]:
+        try:
+            proc = subprocess.run([core_cmd, command], input=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+                                  capture_output=True, timeout=timeout_s, check=False)
+        except FileNotFoundError as e:
+            raise CoreError("CORE_UNAVAILABLE", f"找不到 mcis-core：{core_cmd}", 503) from e
+        except subprocess.TimeoutExpired as e:
+            raise CoreError("CORE_TIMEOUT", f"mcis-core {command} 超时", 504) from e
+        out = proc.stdout.decode("utf-8", "replace").strip().splitlines()
+        if not out:
+            raise CoreError("CORE_NO_OUTPUT", f"mcis-core 无输出（exit={proc.returncode}）：{proc.stderr.decode('utf-8', 'replace')[-400:]}", 502)
+        try:
+            env = json.loads(out[-1])
+        except ValueError as e:
+            raise CoreError("CORE_BAD_OUTPUT", out[-1][:400], 502) from e
+>       if not env.get("ok"):
+               ^^^^^^^
+E       AttributeError: 'str' object has no attribute 'get'
+
+../../shared/mcis-security-work/service/mcis_service/colreg/core_client.py:35: AttributeError
+________________ test_malformed_output_is_core_bad_output[env4] ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3772f79460>
+env = {}
+
+    @pytest.mark.parametrize('env',INVALID)
+    def test_malformed_output_is_core_bad_output(monkeypatch,env):
+        monkeypatch.setattr(core_client.subprocess,'run',lambda *a,**kw:SimpleNamespace(stdout=json.dumps(env).encode(),stderr=b'',returncode=0))
+        with pytest.raises(core_client.CoreError) as exc:core_client.run('/synthetic','align',{})
+>       assert exc.value.code=='CORE_BAD_OUTPUT'
+E       AssertionError: assert 'CORE_ERROR' == 'CORE_BAD_OUTPUT'
+E         
+E         - CORE_BAD_OUTPUT
+E         + CORE_ERROR
+
+../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py:17: AssertionError
+________________ test_malformed_output_is_core_bad_output[env5] ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3772f7a450>
+env = {'ok': None}
+
+    @pytest.mark.parametrize('env',INVALID)
+    def test_malformed_output_is_core_bad_output(monkeypatch,env):
+        monkeypatch.setattr(core_client.subprocess,'run',lambda *a,**kw:SimpleNamespace(stdout=json.dumps(env).encode(),stderr=b'',returncode=0))
+        with pytest.raises(core_client.CoreError) as exc:core_client.run('/synthetic','align',{})
+>       assert exc.value.code=='CORE_BAD_OUTPUT'
+E       AssertionError: assert 'CORE_ERROR' == 'CORE_BAD_OUTPUT'
+E         
+E         - CORE_BAD_OUTPUT
+E         + CORE_ERROR
+
+../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py:17: AssertionError
+________________ test_malformed_output_is_core_bad_output[env6] ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3772f7b830>
+env = {'ok': 1}
+
+    @pytest.mark.parametrize('env',INVALID)
+    def test_malformed_output_is_core_bad_output(monkeypatch,env):
+        monkeypatch.setattr(core_client.subprocess,'run',lambda *a,**kw:SimpleNamespace(stdout=json.dumps(env).encode(),stderr=b'',returncode=0))
+>       with pytest.raises(core_client.CoreError) as exc:core_client.run('/synthetic','align',{})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE CoreError
+
+../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py:16: Failed
+________________ test_malformed_output_is_core_bad_output[env7] ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3772f7e150>
+env = {'ok': 'true'}
+
+    @pytest.mark.parametrize('env',INVALID)
+    def test_malformed_output_is_core_bad_output(monkeypatch,env):
+        monkeypatch.setattr(core_client.subprocess,'run',lambda *a,**kw:SimpleNamespace(stdout=json.dumps(env).encode(),stderr=b'',returncode=0))
+>       with pytest.raises(core_client.CoreError) as exc:core_client.run('/synthetic','align',{})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE CoreError
+
+../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py:16: Failed
+________________ test_malformed_output_is_core_bad_output[env8] ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3772f7a210>
+env = {'ok': False, 'error': []}
+
+    @pytest.mark.parametrize('env',INVALID)
+    def test_malformed_output_is_core_bad_output(monkeypatch,env):
+        monkeypatch.setattr(core_client.subprocess,'run',lambda *a,**kw:SimpleNamespace(stdout=json.dumps(env).encode(),stderr=b'',returncode=0))
+        with pytest.raises(core_client.CoreError) as exc:core_client.run('/synthetic','align',{})
+>       assert exc.value.code=='CORE_BAD_OUTPUT'
+E       AssertionError: assert 'CORE_ERROR' == 'CORE_BAD_OUTPUT'
+E         
+E         - CORE_BAD_OUTPUT
+E         + CORE_ERROR
+
+../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py:17: AssertionError
+________________ test_malformed_output_is_core_bad_output[env9] ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3772f7b770>
+env = {'ok': False, 'error': 'text'}
+
+    @pytest.mark.parametrize('env',INVALID)
+    def test_malformed_output_is_core_bad_output(monkeypatch,env):
+        monkeypatch.setattr(core_client.subprocess,'run',lambda *a,**kw:SimpleNamespace(stdout=json.dumps(env).encode(),stderr=b'',returncode=0))
+>       with pytest.raises(core_client.CoreError) as exc:core_client.run('/synthetic','align',{})
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+core_cmd = '/synthetic', command = 'align', payload = {}, timeout_s = 60.0
+
+    def run(core_cmd: str, command: str, payload: dict[str, Any], timeout_s: float = 60.0) -> dict[str, Any]:
+        try:
+            proc = subprocess.run([core_cmd, command], input=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+                                  capture_output=True, timeout=timeout_s, check=False)
+        except FileNotFoundError as e:
+            raise CoreError("CORE_UNAVAILABLE", f"找不到 mcis-core：{core_cmd}", 503) from e
+        except subprocess.TimeoutExpired as e:
+            raise CoreError("CORE_TIMEOUT", f"mcis-core {command} 超时", 504) from e
+        out = proc.stdout.decode("utf-8", "replace").strip().splitlines()
+        if not out:
+            raise CoreError("CORE_NO_OUTPUT", f"mcis-core 无输出（exit={proc.returncode}）：{proc.stderr.decode('utf-8', 'replace')[-400:]}", 502)
+        try:
+            env = json.loads(out[-1])
+        except ValueError as e:
+            raise CoreError("CORE_BAD_OUTPUT", out[-1][:400], 502) from e
+        if not env.get("ok"):
+            err = env.get("error") or {}
+>           code = err.get("code", "CORE_ERROR")
+                   ^^^^^^^
+E           AttributeError: 'str' object has no attribute 'get'
+
+../../shared/mcis-security-work/service/mcis_service/colreg/core_client.py:37: AttributeError
+_______________ test_malformed_output_is_core_bad_output[env10] ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3772f78980>
+env = {'ok': False, 'error': {'code': []}}
+
+    @pytest.mark.parametrize('env',INVALID)
+    def test_malformed_output_is_core_bad_output(monkeypatch,env):
+        monkeypatch.setattr(core_client.subprocess,'run',lambda *a,**kw:SimpleNamespace(stdout=json.dumps(env).encode(),stderr=b'',returncode=0))
+>       with pytest.raises(core_client.CoreError) as exc:core_client.run('/synthetic','align',{})
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+core_cmd = '/synthetic', command = 'align', payload = {}, timeout_s = 60.0
+
+    def run(core_cmd: str, command: str, payload: dict[str, Any], timeout_s: float = 60.0) -> dict[str, Any]:
+        try:
+            proc = subprocess.run([core_cmd, command], input=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+                                  capture_output=True, timeout=timeout_s, check=False)
+        except FileNotFoundError as e:
+            raise CoreError("CORE_UNAVAILABLE", f"找不到 mcis-core：{core_cmd}", 503) from e
+        except subprocess.TimeoutExpired as e:
+            raise CoreError("CORE_TIMEOUT", f"mcis-core {command} 超时", 504) from e
+        out = proc.stdout.decode("utf-8", "replace").strip().splitlines()
+        if not out:
+            raise CoreError("CORE_NO_OUTPUT", f"mcis-core 无输出（exit={proc.returncode}）：{proc.stderr.decode('utf-8', 'replace')[-400:]}", 502)
+        try:
+            env = json.loads(out[-1])
+        except ValueError as e:
+            raise CoreError("CORE_BAD_OUTPUT", out[-1][:400], 502) from e
+        if not env.get("ok"):
+            err = env.get("error") or {}
+            code = err.get("code", "CORE_ERROR")
+>           raise CoreError(code, err.get("message", ""), _STATUS.get(code, 502))
+                                                          ^^^^^^^^^^^^^^^^^^^^^^
+E           TypeError: unhashable type: 'list'
+
+../../shared/mcis-security-work/service/mcis_service/colreg/core_client.py:38: TypeError
+_______________ test_malformed_output_is_core_bad_output[env11] ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3772f7acc0>
+env = {'ok': False, 'error': {'code': {}, 'message': 'x'}}
+
+    @pytest.mark.parametrize('env',INVALID)
+    def test_malformed_output_is_core_bad_output(monkeypatch,env):
+        monkeypatch.setattr(core_client.subprocess,'run',lambda *a,**kw:SimpleNamespace(stdout=json.dumps(env).encode(),stderr=b'',returncode=0))
+>       with pytest.raises(core_client.CoreError) as exc:core_client.run('/synthetic','align',{})
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+core_cmd = '/synthetic', command = 'align', payload = {}, timeout_s = 60.0
+
+    def run(core_cmd: str, command: str, payload: dict[str, Any], timeout_s: float = 60.0) -> dict[str, Any]:
+        try:
+            proc = subprocess.run([core_cmd, command], input=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+                                  capture_output=True, timeout=timeout_s, check=False)
+        except FileNotFoundError as e:
+            raise CoreError("CORE_UNAVAILABLE", f"找不到 mcis-core：{core_cmd}", 503) from e
+        except subprocess.TimeoutExpired as e:
+            raise CoreError("CORE_TIMEOUT", f"mcis-core {command} 超时", 504) from e
+        out = proc.stdout.decode("utf-8", "replace").strip().splitlines()
+        if not out:
+            raise CoreError("CORE_NO_OUTPUT", f"mcis-core 无输出（exit={proc.returncode}）：{proc.stderr.decode('utf-8', 'replace')[-400:]}", 502)
+        try:
+            env = json.loads(out[-1])
+        except ValueError as e:
+            raise CoreError("CORE_BAD_OUTPUT", out[-1][:400], 502) from e
+        if not env.get("ok"):
+            err = env.get("error") or {}
+            code = err.get("code", "CORE_ERROR")
+>           raise CoreError(code, err.get("message", ""), _STATUS.get(code, 502))
+                                                          ^^^^^^^^^^^^^^^^^^^^^^
+E           TypeError: unhashable type: 'dict'
+
+../../shared/mcis-security-work/service/mcis_service/colreg/core_client.py:38: TypeError
+_______________ test_malformed_output_is_core_bad_output[env12] ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3772f676e0>
+env = {'ok': False, 'error': {'code': 'BAD_REQUEST', 'message': []}}
+
+    @pytest.mark.parametrize('env',INVALID)
+    def test_malformed_output_is_core_bad_output(monkeypatch,env):
+        monkeypatch.setattr(core_client.subprocess,'run',lambda *a,**kw:SimpleNamespace(stdout=json.dumps(env).encode(),stderr=b'',returncode=0))
+        with pytest.raises(core_client.CoreError) as exc:core_client.run('/synthetic','align',{})
+>       assert exc.value.code=='CORE_BAD_OUTPUT'
+E       AssertionError: assert 'BAD_REQUEST' == 'CORE_BAD_OUTPUT'
+E         
+E         - CORE_BAD_OUTPUT
+E         + BAD_REQUEST
+
+../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py:17: AssertionError
+_______________ test_malformed_output_is_core_bad_output[env13] ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3772f7fce0>
+env = {'ok': True, 'result': []}
+
+    @pytest.mark.parametrize('env',INVALID)
+    def test_malformed_output_is_core_bad_output(monkeypatch,env):
+        monkeypatch.setattr(core_client.subprocess,'run',lambda *a,**kw:SimpleNamespace(stdout=json.dumps(env).encode(),stderr=b'',returncode=0))
+>       with pytest.raises(core_client.CoreError) as exc:core_client.run('/synthetic','align',{})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE CoreError
+
+../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py:16: Failed
+_______________ test_malformed_output_is_core_bad_output[env14] ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3772f7e0f0>
+env = {'ok': True, 'result': None}
+
+    @pytest.mark.parametrize('env',INVALID)
+    def test_malformed_output_is_core_bad_output(monkeypatch,env):
+        monkeypatch.setattr(core_client.subprocess,'run',lambda *a,**kw:SimpleNamespace(stdout=json.dumps(env).encode(),stderr=b'',returncode=0))
+>       with pytest.raises(core_client.CoreError) as exc:core_client.run('/synthetic','align',{})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE CoreError
+
+../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py:16: Failed
+=========================== short test summary info ============================
+FAILED ../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py::test_malformed_output_is_core_bad_output[None]
+FAILED ../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py::test_malformed_output_is_core_bad_output[env1]
+FAILED ../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py::test_malformed_output_is_core_bad_output[1]
+FAILED ../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py::test_malformed_output_is_core_bad_output[text]
+FAILED ../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py::test_malformed_output_is_core_bad_output[env4]
+FAILED ../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py::test_malformed_output_is_core_bad_output[env5]
+FAILED ../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py::test_malformed_output_is_core_bad_output[env6]
+FAILED ../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py::test_malformed_output_is_core_bad_output[env7]
+FAILED ../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py::test_malformed_output_is_core_bad_output[env8]
+FAILED ../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py::test_malformed_output_is_core_bad_output[env9]
+FAILED ../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py::test_malformed_output_is_core_bad_output[env10]
+FAILED ../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py::test_malformed_output_is_core_bad_output[env11]
+FAILED ../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py::test_malformed_output_is_core_bad_output[env12]
+FAILED ../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py::test_malformed_output_is_core_bad_output[env13]
+FAILED ../../shared/mcis-security-work/tests_acceptance/HTTP_CORE_ERRORS/test_core_envelope.py::test_malformed_output_is_core_bad_output[env14]
+15 failed, 9 passed in 0.08s

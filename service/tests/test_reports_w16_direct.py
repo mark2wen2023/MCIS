@@ -148,12 +148,12 @@ def snapshot_db(ctx):
     return hashlib.sha256(json.dumps(snapshot, ensure_ascii=False, sort_keys=True, default=str).encode()).hexdigest()
 
 
-@pytest.mark.parametrize('case_id', [REAL, service.YANGZE22_CASE_ID])
-def test_direct_real_case_read_pending_generate_export_no_database_writes(ctx, case_id):
+def test_direct_unknown_real_case_stays_pending_without_writes(ctx, monkeypatch):
+    case_id = 'unapproved-real-case'
+    monkeypatch.setattr(service, 'case_info', lambda s, cid: {'caseId': cid, 'isFictionalDemo': False})
     before = snapshot_db(ctx)
     assert router.get_templates(case_id, ctx)['realDataStatus'] == 'pending-confirmation'
     assert router.list_reports(case_id, ctx)['realDataStatus'] == 'pending-confirmation'
-    assert router.get_report(case_id, 'absent', ctx)['realDataStatus'] == 'pending-confirmation'
     assert not contracts.errors('report#/$defs/pending', router.get_report(case_id, 'absent', ctx))
     assert router.get_gisis(case_id, ctx)['realDataStatus'] == 'pending-confirmation'
     operations = [
@@ -165,8 +165,7 @@ def test_direct_real_case_read_pending_generate_export_no_database_writes(ctx, c
         lambda: router.validate_gisis(case_id, {'export': True}, ctx),
     ]
     for operation in operations:
-        error = fails('report_real_data_pending', operation, status=409)
-        assert error.detail['message'] == '真实数据使用待 Mark 本人确认'
+        fails('report_real_data_pending', operation, status=409)
     assert snapshot_db(ctx) == before
 
 
@@ -273,12 +272,12 @@ def test_direct_external_roles_cannot_read_restricted_report_content(ctx, role):
 
 
 @pytest.mark.parametrize('role', ['ExternalExpert', 'InterestedState', 'AgentService', 'Public'])
-def test_direct_real_generation_pending_takes_precedence_over_role_rejection(ctx, role):
+def test_direct_authorized_real_case_still_requires_role(ctx, role):
     ctx.role = role
     before = snapshot_db(ctx)
-    fails('report_real_data_pending', lambda: router.create_report(
-        REAL, {'templateId': 'imo-cic', 'lang': 'zh'}, ctx), status=409)
-    fails('report_real_data_pending', lambda: router.export_report(REAL, 'absent', 'pdf', 'zh', ctx), status=409)
+    fails('FORBIDDEN', lambda: router.create_report(
+        REAL, {'templateId': 'imo-cic', 'lang': 'zh'}, ctx), status=403)
+    fails('FORBIDDEN', lambda: router.export_report(REAL, 'absent', 'pdf', 'zh', ctx), status=403)
     assert snapshot_db(ctx) == before
 
 

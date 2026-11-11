@@ -1,0 +1,237 @@
+FFFFFFFFFF..                                                             [100%]
+=================================== FAILURES ===================================
+_______________ test_http_error_is_allowlisted[BAD_REQUEST-422] ________________
+
+client = <starlette.testclient.TestClient object at 0x7fc6b97212e0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fc6ba6808f0>
+code = 'BAD_REQUEST', status = 422
+
+    @pytest.mark.parametrize('code,status', [('BAD_REQUEST',422),('BAD_JSON',422),('NOT_IMPLEMENTED',501),('UNKNOWN_COMMAND',501),('CORE_UNAVAILABLE',503),('CORE_TIMEOUT',504),('CORE_NO_OUTPUT',502),('CORE_BAD_OUTPUT',502),('CORE_ERROR',502),(SECRET,502)])
+    def test_http_error_is_allowlisted(client,monkeypatch,code,status):
+        def fail(*args): raise CoreError(code,SECRET,status)
+        monkeypatch.setattr(module,'core_run',fail)
+        r=client.post('/api/v1/core/align',json={'sources':[]})
+        assert r.status_code==status
+        body=r.json()['detail']
+        assert body['code']==('CORE_ERROR' if code==SECRET else code)
+>       assert SECRET not in r.text
+E       assert '/private/sy...hetic-secret' not in '{"detail":{...ic-secret"}}'
+E         
+E         '/private/synthetic...rr=synthetic-secret' is contained here:
+E           message":"/private/synthetic-only/token.txt stderr=synthetic-secret"}}
+
+../../shared/mcis-security-work/security_tests/test_http_core_errors.py:28: AssertionError
+_________________ test_http_error_is_allowlisted[BAD_JSON-422] _________________
+
+client = <starlette.testclient.TestClient object at 0x7fc6b9722360>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fc6b9721880>
+code = 'BAD_JSON', status = 422
+
+    @pytest.mark.parametrize('code,status', [('BAD_REQUEST',422),('BAD_JSON',422),('NOT_IMPLEMENTED',501),('UNKNOWN_COMMAND',501),('CORE_UNAVAILABLE',503),('CORE_TIMEOUT',504),('CORE_NO_OUTPUT',502),('CORE_BAD_OUTPUT',502),('CORE_ERROR',502),(SECRET,502)])
+    def test_http_error_is_allowlisted(client,monkeypatch,code,status):
+        def fail(*args): raise CoreError(code,SECRET,status)
+        monkeypatch.setattr(module,'core_run',fail)
+        r=client.post('/api/v1/core/align',json={'sources':[]})
+        assert r.status_code==status
+        body=r.json()['detail']
+        assert body['code']==('CORE_ERROR' if code==SECRET else code)
+>       assert SECRET not in r.text
+E       assert '/private/sy...hetic-secret' not in '{"detail":{...ic-secret"}}'
+E         
+E         '/private/synthetic...rr=synthetic-secret' is contained here:
+E           {"detail":{"code":"BAD_JSON","message":"/private/synthetic-only/token.txt stderr=synthetic-secret"}}
+
+../../shared/mcis-security-work/security_tests/test_http_core_errors.py:28: AssertionError
+_____________ test_http_error_is_allowlisted[NOT_IMPLEMENTED-501] ______________
+
+client = <starlette.testclient.TestClient object at 0x7fc6b9750d40>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fc6b9750560>
+code = 'NOT_IMPLEMENTED', status = 501
+
+    @pytest.mark.parametrize('code,status', [('BAD_REQUEST',422),('BAD_JSON',422),('NOT_IMPLEMENTED',501),('UNKNOWN_COMMAND',501),('CORE_UNAVAILABLE',503),('CORE_TIMEOUT',504),('CORE_NO_OUTPUT',502),('CORE_BAD_OUTPUT',502),('CORE_ERROR',502),(SECRET,502)])
+    def test_http_error_is_allowlisted(client,monkeypatch,code,status):
+        def fail(*args): raise CoreError(code,SECRET,status)
+        monkeypatch.setattr(module,'core_run',fail)
+        r=client.post('/api/v1/core/align',json={'sources':[]})
+        assert r.status_code==status
+        body=r.json()['detail']
+        assert body['code']==('CORE_ERROR' if code==SECRET else code)
+>       assert SECRET not in r.text
+E       assert '/private/sy...hetic-secret' not in '{"detail":{...ic-secret"}}'
+E         
+E         '/private/synthetic...rr=synthetic-secret' is contained here:
+E           message":"/private/synthetic-only/token.txt stderr=synthetic-secret"}}
+
+../../shared/mcis-security-work/security_tests/test_http_core_errors.py:28: AssertionError
+_____________ test_http_error_is_allowlisted[UNKNOWN_COMMAND-501] ______________
+
+client = <starlette.testclient.TestClient object at 0x7fc6b9753020>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fc6b9751880>
+code = 'UNKNOWN_COMMAND', status = 501
+
+    @pytest.mark.parametrize('code,status', [('BAD_REQUEST',422),('BAD_JSON',422),('NOT_IMPLEMENTED',501),('UNKNOWN_COMMAND',501),('CORE_UNAVAILABLE',503),('CORE_TIMEOUT',504),('CORE_NO_OUTPUT',502),('CORE_BAD_OUTPUT',502),('CORE_ERROR',502),(SECRET,502)])
+    def test_http_error_is_allowlisted(client,monkeypatch,code,status):
+        def fail(*args): raise CoreError(code,SECRET,status)
+        monkeypatch.setattr(module,'core_run',fail)
+        r=client.post('/api/v1/core/align',json={'sources':[]})
+        assert r.status_code==status
+        body=r.json()['detail']
+        assert body['code']==('CORE_ERROR' if code==SECRET else code)
+>       assert SECRET not in r.text
+E       assert '/private/sy...hetic-secret' not in '{"detail":{...ic-secret"}}'
+E         
+E         '/private/synthetic...rr=synthetic-secret' is contained here:
+E           message":"/private/synthetic-only/token.txt stderr=synthetic-secret"}}
+
+../../shared/mcis-security-work/security_tests/test_http_core_errors.py:28: AssertionError
+_____________ test_http_error_is_allowlisted[CORE_UNAVAILABLE-503] _____________
+
+client = <starlette.testclient.TestClient object at 0x7fc6b97f9460>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fc6b9753890>
+code = 'CORE_UNAVAILABLE', status = 503
+
+    @pytest.mark.parametrize('code,status', [('BAD_REQUEST',422),('BAD_JSON',422),('NOT_IMPLEMENTED',501),('UNKNOWN_COMMAND',501),('CORE_UNAVAILABLE',503),('CORE_TIMEOUT',504),('CORE_NO_OUTPUT',502),('CORE_BAD_OUTPUT',502),('CORE_ERROR',502),(SECRET,502)])
+    def test_http_error_is_allowlisted(client,monkeypatch,code,status):
+        def fail(*args): raise CoreError(code,SECRET,status)
+        monkeypatch.setattr(module,'core_run',fail)
+        r=client.post('/api/v1/core/align',json={'sources':[]})
+        assert r.status_code==status
+        body=r.json()['detail']
+        assert body['code']==('CORE_ERROR' if code==SECRET else code)
+>       assert SECRET not in r.text
+E       assert '/private/sy...hetic-secret' not in '{"detail":{...ic-secret"}}'
+E         
+E         '/private/synthetic...rr=synthetic-secret' is contained here:
+E           message":"/private/synthetic-only/token.txt stderr=synthetic-secret"}}
+
+../../shared/mcis-security-work/security_tests/test_http_core_errors.py:28: AssertionError
+_______________ test_http_error_is_allowlisted[CORE_TIMEOUT-504] _______________
+
+client = <starlette.testclient.TestClient object at 0x7fc6b861cec0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fc6b97fa0f0>
+code = 'CORE_TIMEOUT', status = 504
+
+    @pytest.mark.parametrize('code,status', [('BAD_REQUEST',422),('BAD_JSON',422),('NOT_IMPLEMENTED',501),('UNKNOWN_COMMAND',501),('CORE_UNAVAILABLE',503),('CORE_TIMEOUT',504),('CORE_NO_OUTPUT',502),('CORE_BAD_OUTPUT',502),('CORE_ERROR',502),(SECRET,502)])
+    def test_http_error_is_allowlisted(client,monkeypatch,code,status):
+        def fail(*args): raise CoreError(code,SECRET,status)
+        monkeypatch.setattr(module,'core_run',fail)
+        r=client.post('/api/v1/core/align',json={'sources':[]})
+        assert r.status_code==status
+        body=r.json()['detail']
+        assert body['code']==('CORE_ERROR' if code==SECRET else code)
+>       assert SECRET not in r.text
+E       assert '/private/sy...hetic-secret' not in '{"detail":{...ic-secret"}}'
+E         
+E         '/private/synthetic...rr=synthetic-secret' is contained here:
+E           message":"/private/synthetic-only/token.txt stderr=synthetic-secret"}}
+
+../../shared/mcis-security-work/security_tests/test_http_core_errors.py:28: AssertionError
+______________ test_http_error_is_allowlisted[CORE_NO_OUTPUT-502] ______________
+
+client = <starlette.testclient.TestClient object at 0x7fc6b861fb90>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fc6b861cd10>
+code = 'CORE_NO_OUTPUT', status = 502
+
+    @pytest.mark.parametrize('code,status', [('BAD_REQUEST',422),('BAD_JSON',422),('NOT_IMPLEMENTED',501),('UNKNOWN_COMMAND',501),('CORE_UNAVAILABLE',503),('CORE_TIMEOUT',504),('CORE_NO_OUTPUT',502),('CORE_BAD_OUTPUT',502),('CORE_ERROR',502),(SECRET,502)])
+    def test_http_error_is_allowlisted(client,monkeypatch,code,status):
+        def fail(*args): raise CoreError(code,SECRET,status)
+        monkeypatch.setattr(module,'core_run',fail)
+        r=client.post('/api/v1/core/align',json={'sources':[]})
+        assert r.status_code==status
+        body=r.json()['detail']
+        assert body['code']==('CORE_ERROR' if code==SECRET else code)
+>       assert SECRET not in r.text
+E       assert '/private/sy...hetic-secret' not in '{"detail":{...ic-secret"}}'
+E         
+E         '/private/synthetic...rr=synthetic-secret' is contained here:
+E           message":"/private/synthetic-only/token.txt stderr=synthetic-secret"}}
+
+../../shared/mcis-security-work/security_tests/test_http_core_errors.py:28: AssertionError
+_____________ test_http_error_is_allowlisted[CORE_BAD_OUTPUT-502] ______________
+
+client = <starlette.testclient.TestClient object at 0x7fc6b861ef60>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fc6b861ccb0>
+code = 'CORE_BAD_OUTPUT', status = 502
+
+    @pytest.mark.parametrize('code,status', [('BAD_REQUEST',422),('BAD_JSON',422),('NOT_IMPLEMENTED',501),('UNKNOWN_COMMAND',501),('CORE_UNAVAILABLE',503),('CORE_TIMEOUT',504),('CORE_NO_OUTPUT',502),('CORE_BAD_OUTPUT',502),('CORE_ERROR',502),(SECRET,502)])
+    def test_http_error_is_allowlisted(client,monkeypatch,code,status):
+        def fail(*args): raise CoreError(code,SECRET,status)
+        monkeypatch.setattr(module,'core_run',fail)
+        r=client.post('/api/v1/core/align',json={'sources':[]})
+        assert r.status_code==status
+        body=r.json()['detail']
+        assert body['code']==('CORE_ERROR' if code==SECRET else code)
+>       assert SECRET not in r.text
+E       assert '/private/sy...hetic-secret' not in '{"detail":{...ic-secret"}}'
+E         
+E         '/private/synthetic...rr=synthetic-secret' is contained here:
+E           message":"/private/synthetic-only/token.txt stderr=synthetic-secret"}}
+
+../../shared/mcis-security-work/security_tests/test_http_core_errors.py:28: AssertionError
+________________ test_http_error_is_allowlisted[CORE_ERROR-502] ________________
+
+client = <starlette.testclient.TestClient object at 0x7fc6b861eae0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fc6b976de20>
+code = 'CORE_ERROR', status = 502
+
+    @pytest.mark.parametrize('code,status', [('BAD_REQUEST',422),('BAD_JSON',422),('NOT_IMPLEMENTED',501),('UNKNOWN_COMMAND',501),('CORE_UNAVAILABLE',503),('CORE_TIMEOUT',504),('CORE_NO_OUTPUT',502),('CORE_BAD_OUTPUT',502),('CORE_ERROR',502),(SECRET,502)])
+    def test_http_error_is_allowlisted(client,monkeypatch,code,status):
+        def fail(*args): raise CoreError(code,SECRET,status)
+        monkeypatch.setattr(module,'core_run',fail)
+        r=client.post('/api/v1/core/align',json={'sources':[]})
+        assert r.status_code==status
+        body=r.json()['detail']
+        assert body['code']==('CORE_ERROR' if code==SECRET else code)
+>       assert SECRET not in r.text
+E       assert '/private/sy...hetic-secret' not in '{"detail":{...ic-secret"}}'
+E         
+E         '/private/synthetic...rr=synthetic-secret' is contained here:
+E           {"detail":{"code":"CORE_ERROR","message":"/private/synthetic-only/token.txt stderr=synthetic-secret"}}
+
+../../shared/mcis-security-work/security_tests/test_http_core_errors.py:28: AssertionError
+_ test_http_error_is_allowlisted[/private/synthetic-only/token.txt stderr=synthetic-secret-502] _
+
+client = <starlette.testclient.TestClient object at 0x7fc6b97db4d0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fc6b97aba10>
+code = '/private/synthetic-only/token.txt stderr=synthetic-secret', status = 502
+
+    @pytest.mark.parametrize('code,status', [('BAD_REQUEST',422),('BAD_JSON',422),('NOT_IMPLEMENTED',501),('UNKNOWN_COMMAND',501),('CORE_UNAVAILABLE',503),('CORE_TIMEOUT',504),('CORE_NO_OUTPUT',502),('CORE_BAD_OUTPUT',502),('CORE_ERROR',502),(SECRET,502)])
+    def test_http_error_is_allowlisted(client,monkeypatch,code,status):
+        def fail(*args): raise CoreError(code,SECRET,status)
+        monkeypatch.setattr(module,'core_run',fail)
+        r=client.post('/api/v1/core/align',json={'sources':[]})
+        assert r.status_code==status
+        body=r.json()['detail']
+>       assert body['code']==('CORE_ERROR' if code==SECRET else code)
+E       AssertionError: assert '/private/syn...thetic-secret' == 'CORE_ERROR'
+E         
+E         - CORE_ERROR
+E         + /private/synthetic-only/token.txt stderr=synthetic-secret
+
+../../shared/mcis-security-work/security_tests/test_http_core_errors.py:27: AssertionError
+=============================== warnings summary ===============================
+mcis-work/service/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /workspace/scratch/d5cd4f6afdb1/mcis-work/service/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+mcis-work/service/.venv/lib/python3.12/site-packages/_pytest/cacheprovider.py:487
+  /workspace/scratch/d5cd4f6afdb1/mcis-work/service/.venv/lib/python3.12/site-packages/_pytest/cacheprovider.py:487: PytestCacheWarning: could not create cache path /workspace/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/workspace/pytest-cache-files-wxky0839'
+    config.cache.set("cache/nodeids", sorted(str(n) for n in self.cached_nodeids))
+
+mcis-work/service/.venv/lib/python3.12/site-packages/_pytest/cacheprovider.py:439
+  /workspace/scratch/d5cd4f6afdb1/mcis-work/service/.venv/lib/python3.12/site-packages/_pytest/cacheprovider.py:439: PytestCacheWarning: could not create cache path /workspace/.pytest_cache/v/cache/lastfailed: [Errno 30] Read-only file system: '/workspace/pytest-cache-files-d80g_mh_'
+    config.cache.set("cache/lastfailed", current_lastfailed)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED ../../shared/mcis-security-work/security_tests/test_http_core_errors.py::test_http_error_is_allowlisted[BAD_REQUEST-422]
+FAILED ../../shared/mcis-security-work/security_tests/test_http_core_errors.py::test_http_error_is_allowlisted[BAD_JSON-422]
+FAILED ../../shared/mcis-security-work/security_tests/test_http_core_errors.py::test_http_error_is_allowlisted[NOT_IMPLEMENTED-501]
+FAILED ../../shared/mcis-security-work/security_tests/test_http_core_errors.py::test_http_error_is_allowlisted[UNKNOWN_COMMAND-501]
+FAILED ../../shared/mcis-security-work/security_tests/test_http_core_errors.py::test_http_error_is_allowlisted[CORE_UNAVAILABLE-503]
+FAILED ../../shared/mcis-security-work/security_tests/test_http_core_errors.py::test_http_error_is_allowlisted[CORE_TIMEOUT-504]
+FAILED ../../shared/mcis-security-work/security_tests/test_http_core_errors.py::test_http_error_is_allowlisted[CORE_NO_OUTPUT-502]
+FAILED ../../shared/mcis-security-work/security_tests/test_http_core_errors.py::test_http_error_is_allowlisted[CORE_BAD_OUTPUT-502]
+FAILED ../../shared/mcis-security-work/security_tests/test_http_core_errors.py::test_http_error_is_allowlisted[CORE_ERROR-502]
+FAILED ../../shared/mcis-security-work/security_tests/test_http_core_errors.py::test_http_error_is_allowlisted[/private/synthetic-only/token.txt stderr=synthetic-secret-502]
+10 failed, 2 passed, 3 warnings in 1.00s

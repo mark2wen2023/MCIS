@@ -1,0 +1,38 @@
+.w4-preview { min-width: 0; overflow-wrap: anywhere; }
+.w4-preview fieldset { min-width: 0; margin: 12px 0; border: 1px solid var(--border-line); }
+.w4-preview label { display: flex; flex-direction: column; gap: 4px; margin: 8px 0; }
+.w4-preview .input { width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; }
+.w4-preview .w4-csv { min-height: 130px; font-family: monospace; resize: vertical; }
+.w4-mapping { display: flex; align-items: end; flex-wrap: wrap; gap: 8px; }
+.w4-mapping label { flex: 1 1 180px; }
+.w4-preview .w4-ack { flex-direction: row; align-items: start; }
+.w4-preview pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+.w4-preview .w4-table { overflow-x: auto; max-width: 100%; }
+.w4-error { color: var(--red); }
+.w4-page > .panel { margin-bottom: 12px; }
+/* Route-local sizing: retain visible content rather than hiding page overflow. */
+.app:has(.w4-page) { grid-template-columns: var(--sidebar-w) minmax(0, 1fr); }
+.w4-page { min-width: 0; overflow-wrap: anywhere; }
+.w4-metrics { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.w4-columns { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+@media (max-width: 1100px) {
+  .app:has(.w4-page) { grid-template-rows: auto minmax(0, 1fr); }
+  .app:has(.w4-page) .topbar { min-width: 0; flex-wrap: wrap; padding: 10px 12px; }
+  .app:has(.w4-page) .topbar-left, .app:has(.w4-page) .topbar-right { min-width: 0; max-width: 100%; flex-wrap: wrap; }
+  .app:has(.w4-page) .case-chip { white-space: normal; overflow-wrap: anywhere; }
+  .app:has(.w4-page) .role-select { max-width: 100%; }
+  .w4-columns { grid-template-columns: minmax(0, 1fr); }
+  .w4-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .w4-page .page-head, .w4-page .page-actions, .w4-page .panel-header, .w4-page .row-actions { flex-wrap: wrap; }
+  .w4-page .page-actions { display: flex; gap: 8px; }
+  .w4-page .page-head > div { min-width: 0; }
+  .w4-page .panel-title { white-space: normal; }
+}
+@media (max-width: 600px) {
+  .app:has(.w4-page) { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto minmax(0, 1fr); height: auto; min-height: 100vh; }
+  .app:has(.w4-page) .sidebar { grid-row: auto; max-height: 240px; overflow-y: auto; }
+  .app:has(.w4-page) .main { padding: 12px; }
+}
+.w4-preview-disclosure { margin-bottom: 12px; }
+.w4-preview-disclosure > summary { cursor: pointer; padding: 10px 12px; border: 1px solid var(--border-line); border-radius: 6px; color: var(--cyan); }
+.w4-preview-disclosure[open] > summary { margin-bottom: 8px; }

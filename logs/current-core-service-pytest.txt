@@ -1,0 +1,27 @@
+........................................................................ [ 22%]
+.........................F.............................................. [ 45%]
+........................................................................ [ 68%]
+........................................................................ [ 91%]
+............................                                             [100%]
+=================================== FAILURES ===================================
+_________________ test_custody_jsonl_accepted_by_csharp_ledger _________________
+
+client = <starlette.testclient.TestClient object at 0x7fbd1b29a570>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-53/test_custody_jsonl_accepted_by0')
+
+    @pytest.mark.skipif(not HAS_DOTNET or not COMPAT.exists(), reason="需要 ~/.dotnet")
+    def test_custody_jsonl_accepted_by_csharp_ledger(client, tmp_path):
+        """用 Unity 侧原样 C#（CustodyLedger.Load）校验导出的 custody.jsonl：链完整 + 每行与 ToJsonLine 逐字节一致。"""
+        client.patch(f"{C}/evidence/EV-002", json={"needsReview": True, "reason": "含引号\"与换行\n的理由"}, headers=H())
+        z = zipfile.ZipFile(io.BytesIO(client.get(f"{C}/export", headers=H("LeadInvestigator")).content))
+        p = tmp_path / "custody.jsonl"
+        p.write_bytes(z.read("audit/custody.jsonl"))
+        out = subprocess.run([str(COMPAT), "custody", str(p)], capture_output=True, text=True, timeout=300)
+>       res = json.loads(out.stdout.strip().splitlines()[-1])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+tests/test_evidence.py:103: IndexError
+=========================== short test summary info ============================
+FAILED tests/test_evidence.py::test_custody_jsonl_accepted_by_csharp_ledger
+1 failed, 315 passed in 127.03s (0:02:07)

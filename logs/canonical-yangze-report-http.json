@@ -1,0 +1,69 @@
+{
+  "checks": [
+    {
+      "name": "source canonical sha",
+      "passed": true
+    },
+    {
+      "name": "fresh evidence canonical sha",
+      "passed": true
+    },
+    {
+      "name": "report create HTTP201",
+      "passed": true
+    },
+    {
+      "name": "canonical sha in generated report",
+      "passed": true
+    },
+    {
+      "name": "public report has source sections",
+      "passed": true
+    },
+    {
+      "name": "pdf export HTTP200",
+      "passed": true
+    },
+    {
+      "name": "pdf signature",
+      "passed": true
+    },
+    {
+      "name": "pdf response sha matches bytes",
+      "passed": true
+    },
+    {
+      "name": "docx export HTTP200",
+      "passed": true
+    },
+    {
+      "name": "docx signature",
+      "passed": true
+    },
+    {
+      "name": "docx response sha matches bytes",
+      "passed": true
+    },
+    {
+      "name": "DOCX embeds canonical source sha",
+      "passed": true
+    },
+    {
+      "name": "PDF readable source excerpt",
+      "passed": true
+    }
+  ],
+  "exports": {
+    "pdf": {
+      "bytes": 187557,
+      "sha256": "945d301c6d2733192061157769b548f887085c7440e4452924afbd0f31ab861a"
+    },
+    "docx": {
+      "bytes": 49852,
+      "sha256": "6af91fabb37ad46f78d2c990c4db24066bfb142182aee3d2bc01583b00b9aabe"
+    }
+  },
+  "sourceSha": "bca8f8b8ba04a5d0669a121bc6c9380c8cd6f8397f67be2d0b30b38871c22ef2",
+  "root": "/workspace/scratch/d5cd4f6afdb1/canonical-source-snapshot-8680",
+  "dataDir": "/tmp/canonical-report-http-xc536y7y"
+}

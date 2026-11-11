@@ -1,0 +1,192 @@
+FFFFFF..                                                                 [100%]
+=================================== FAILURES ===================================
+_____________________ test_blank_draft_version_rejected[] ______________________
+
+client = <starlette.testclient.TestClient object at 0x7febfaecf4d0>, value = ''
+
+    @pytest.mark.parametrize('value',['',' \t\n'])
+    def test_blank_draft_version_rejected(client,value):
+>       reject_unchanged(client,C,'/consultation/rounds',{'draftVersion':value,'parties':[{'partyId':'A','name':'a'}]})
+
+tests_acceptance/W7/test_input_parity_w73.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <starlette.testclient.TestClient object at 0x7febfaecf4d0>
+base = '/api/v1/cases/CASE-2025-HAILI5-WANA17', path = '/consultation/rounds'
+payload = {'draftVersion': '', 'parties': [{'partyId': 'A', 'name': 'a'}]}
+code = 'consultation_invalid_argument'
+
+    def reject_unchanged(c,base,path,payload,code='consultation_invalid_argument'):
+        before=snapshot(c,base)
+        r=c.post(base+path,headers=H,json=payload)
+        after=snapshot(c,base)
+        # Report both contract and mutation drift when reproducing the original bug.
+>       assert (r.status_code,r.json().get('code'),after==before)==(422,code,True), (r.status_code,r.json(),after==before)
+E       AssertionError: (201, {'roundNo': 1, 'caseId': 'CASE-2025-HAILI5-WANA17', 'draftVersion': '', 'openedUtc': '2026-11-11T20:14:34Z', ...}, False)
+E       assert (201, None, False) == (422, 'consul...gument', True)
+E         
+E         At index 0 diff: 201 != 422
+E         Use -v to get more diff
+
+tests_acceptance/W7/test_input_parity_w73.py:30: AssertionError
+___________________ test_blank_draft_version_rejected[ \t\n] ___________________
+
+client = <starlette.testclient.TestClient object at 0x7febfaad0050>
+value = ' \t\n'
+
+    @pytest.mark.parametrize('value',['',' \t\n'])
+    def test_blank_draft_version_rejected(client,value):
+>       reject_unchanged(client,C,'/consultation/rounds',{'draftVersion':value,'parties':[{'partyId':'A','name':'a'}]})
+
+tests_acceptance/W7/test_input_parity_w73.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <starlette.testclient.TestClient object at 0x7febfaad0050>
+base = '/api/v1/cases/CASE-2025-HAILI5-WANA17', path = '/consultation/rounds'
+payload = {'draftVersion': ' \t\n', 'parties': [{'partyId': 'A', 'name': 'a'}]}
+code = 'consultation_invalid_argument'
+
+    def reject_unchanged(c,base,path,payload,code='consultation_invalid_argument'):
+        before=snapshot(c,base)
+        r=c.post(base+path,headers=H,json=payload)
+        after=snapshot(c,base)
+        # Report both contract and mutation drift when reproducing the original bug.
+>       assert (r.status_code,r.json().get('code'),after==before)==(422,code,True), (r.status_code,r.json(),after==before)
+E       AssertionError: (201, {'roundNo': 1, 'caseId': 'CASE-2025-HAILI5-WANA17', 'draftVersion': ' \t
+E         ', 'openedUtc': '2026-11-11T20:14:34Z', ...}, False)
+E       assert (201, None, False) == (422, 'consul...gument', True)
+E         
+E         At index 0 diff: 201 != 422
+E         Use -v to get more diff
+
+tests_acceptance/W7/test_input_parity_w73.py:30: AssertionError
+________________________ test_blank_party_id_rejected[] ________________________
+
+client = <starlette.testclient.TestClient object at 0x7febf976ad50>, value = ''
+
+    @pytest.mark.parametrize('value',['',' \t\n'])
+    def test_blank_party_id_rejected(client,value):
+>       reject_unchanged(client,C,'/consultation/rounds',{'draftVersion':'v1','parties':[{'partyId':value,'name':'a'}]})
+
+tests_acceptance/W7/test_input_parity_w73.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <starlette.testclient.TestClient object at 0x7febf976ad50>
+base = '/api/v1/cases/CASE-2025-HAILI5-WANA17', path = '/consultation/rounds'
+payload = {'draftVersion': 'v1', 'parties': [{'partyId': '', 'name': 'a'}]}
+code = 'consultation_invalid_argument'
+
+    def reject_unchanged(c,base,path,payload,code='consultation_invalid_argument'):
+        before=snapshot(c,base)
+        r=c.post(base+path,headers=H,json=payload)
+        after=snapshot(c,base)
+        # Report both contract and mutation drift when reproducing the original bug.
+>       assert (r.status_code,r.json().get('code'),after==before)==(422,code,True), (r.status_code,r.json(),after==before)
+E       AssertionError: (201, {'roundNo': 1, 'caseId': 'CASE-2025-HAILI5-WANA17', 'draftVersion': 'v1', 'openedUtc': '2026-11-11T20:14:34Z', ...}, False)
+E       assert (201, None, False) == (422, 'consul...gument', True)
+E         
+E         At index 0 diff: 201 != 422
+E         Use -v to get more diff
+
+tests_acceptance/W7/test_input_parity_w73.py:30: AssertionError
+_____________________ test_blank_party_id_rejected[ \t\n] ______________________
+
+client = <starlette.testclient.TestClient object at 0x7febf967a150>
+value = ' \t\n'
+
+    @pytest.mark.parametrize('value',['',' \t\n'])
+    def test_blank_party_id_rejected(client,value):
+>       reject_unchanged(client,C,'/consultation/rounds',{'draftVersion':'v1','parties':[{'partyId':value,'name':'a'}]})
+
+tests_acceptance/W7/test_input_parity_w73.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <starlette.testclient.TestClient object at 0x7febf967a150>
+base = '/api/v1/cases/CASE-2025-HAILI5-WANA17', path = '/consultation/rounds'
+payload = {'draftVersion': 'v1', 'parties': [{'partyId': ' \t\n', 'name': 'a'}]}
+code = 'consultation_invalid_argument'
+
+    def reject_unchanged(c,base,path,payload,code='consultation_invalid_argument'):
+        before=snapshot(c,base)
+        r=c.post(base+path,headers=H,json=payload)
+        after=snapshot(c,base)
+        # Report both contract and mutation drift when reproducing the original bug.
+>       assert (r.status_code,r.json().get('code'),after==before)==(422,code,True), (r.status_code,r.json(),after==before)
+E       AssertionError: (201, {'roundNo': 1, 'caseId': 'CASE-2025-HAILI5-WANA17', 'draftVersion': 'v1', 'openedUtc': '2026-11-11T20:14:34Z', ...}, False)
+E       assert (201, None, False) == (422, 'consul...gument', True)
+E         
+E         At index 0 diff: 201 != 422
+E         Use -v to get more diff
+
+tests_acceptance/W7/test_input_parity_w73.py:30: AssertionError
+____________________ test_exact_duplicate_party_id_rejected ____________________
+
+client = <starlette.testclient.TestClient object at 0x7febf9496150>
+
+    def test_exact_duplicate_party_id_rejected(client):
+>       reject_unchanged(client,C,'/consultation/rounds',{'draftVersion':'v1','parties':[{'partyId':'A','name':'first'},{'partyId':'A','name':'second'}]})
+
+tests_acceptance/W7/test_input_parity_w73.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <starlette.testclient.TestClient object at 0x7febf9496150>
+base = '/api/v1/cases/CASE-2025-HAILI5-WANA17', path = '/consultation/rounds'
+payload = {'draftVersion': 'v1', 'parties': [{'partyId': 'A', 'name': 'first'}, {'partyId': 'A', 'name': 'second'}]}
+code = 'consultation_invalid_argument'
+
+    def reject_unchanged(c,base,path,payload,code='consultation_invalid_argument'):
+        before=snapshot(c,base)
+        r=c.post(base+path,headers=H,json=payload)
+        after=snapshot(c,base)
+        # Report both contract and mutation drift when reproducing the original bug.
+>       assert (r.status_code,r.json().get('code'),after==before)==(422,code,True), (r.status_code,r.json(),after==before)
+E       AssertionError: (201, {'roundNo': 1, 'caseId': 'CASE-2025-HAILI5-WANA17', 'draftVersion': 'v1', 'openedUtc': '2026-11-11T20:14:35Z', ...}, False)
+E       assert (201, None, False) == (422, 'consul...gument', True)
+E         
+E         At index 0 diff: 201 != 422
+E         Use -v to get more diff
+
+tests_acceptance/W7/test_input_parity_w73.py:30: AssertionError
+____________________ test_whitespace_waiver_reason_rejected ____________________
+
+client = <starlette.testclient.TestClient object at 0x7febf9520d70>
+
+    def test_whitespace_waiver_reason_rejected(client):
+>       reject_unchanged(client,DEMO,'/consultation/rounds/2/waivers',{'partyId':'FLAG-B','reason':' \t\n'})
+
+tests_acceptance/W7/test_input_parity_w73.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <starlette.testclient.TestClient object at 0x7febf9520d70>
+base = '/api/v1/cases/CASE-2026-DEMO-LILY-MARY'
+path = '/consultation/rounds/2/waivers'
+payload = {'partyId': 'FLAG-B', 'reason': ' \t\n'}
+code = 'consultation_invalid_argument'
+
+    def reject_unchanged(c,base,path,payload,code='consultation_invalid_argument'):
+        before=snapshot(c,base)
+        r=c.post(base+path,headers=H,json=payload)
+        after=snapshot(c,base)
+        # Report both contract and mutation drift when reproducing the original bug.
+>       assert (r.status_code,r.json().get('code'),after==before)==(422,code,True), (r.status_code,r.json(),after==before)
+E       AssertionError: (201, {'roundNo': 2, 'caseId': 'CASE-2026-DEMO-LILY-MARY', 'draftVersion': '草案 v1.2（虚构）', 'openedUtc': '2026-10-24T20:14:35Z', ...}, False)
+E       assert (201, None, False) == (422, 'consul...gument', True)
+E         
+E         At index 0 diff: 201 != 422
+E         Use -v to get more diff
+
+tests_acceptance/W7/test_input_parity_w73.py:30: AssertionError
+=============================== warnings summary ===============================
+service/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /workspace/scratch/d5cd4f6afdb1/mcis-work/service/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests_acceptance/W7/test_input_parity_w73.py::test_blank_draft_version_rejected[]
+FAILED tests_acceptance/W7/test_input_parity_w73.py::test_blank_draft_version_rejected[ \t\n]
+FAILED tests_acceptance/W7/test_input_parity_w73.py::test_blank_party_id_rejected[]
+FAILED tests_acceptance/W7/test_input_parity_w73.py::test_blank_party_id_rejected[ \t\n]
+FAILED tests_acceptance/W7/test_input_parity_w73.py::test_exact_duplicate_party_id_rejected
+FAILED tests_acceptance/W7/test_input_parity_w73.py::test_whitespace_waiver_reason_rejected
+6 failed, 2 passed, 1 warning in 2.68s

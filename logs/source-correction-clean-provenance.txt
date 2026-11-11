@@ -1,0 +1,49 @@
+.........                                                                [100%]
+9 passed in 0.10s
+Post-test compat rebuild source confirmation (canonical snapshot csproj, same local out):
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.95
+224e6c4514893aaedde01bf81586f30b245a4f6d9d070ed3615bf2901a788895  tools/mcis-compat/out/mcis-compat.dll
+c008893d885876ef0ea9d487bdf8c7dd301462a82962830afd3f5dc88dad639b  tools/mcis-compat/out/mcis-compat.pdb
+
+After all tests/builds, full manifest plus five correction-freeze entries reverified:
+{
+  "snapshotRoot": "/workspace/scratch/d5cd4f6afdb1/canonical-source-snapshot-8680",
+  "baseCommit": "8680d68afeaf1e2201963101cdf20c92680d1cb5",
+  "materializedManifestCount": 722,
+  "unchangedManifestCount": 720,
+  "changedOnlyGeneratedCompatOutputs": [
+    {
+      "path": "tools/mcis-compat/out/mcis-compat.dll",
+      "before": "17f17527cd12eb4e5fde0960ee6cfc6c9fc3a761ff4bc06d142531dff514a746",
+      "after": "224e6c4514893aaedde01bf81586f30b245a4f6d9d070ed3615bf2901a788895"
+    },
+    {
+      "path": "tools/mcis-compat/out/mcis-compat.pdb",
+      "before": "1764147b86284621510c678d3417b9444c6355ceae8820bc1b489c17f7595c62",
+      "after": "c008893d885876ef0ea9d487bdf8c7dd301462a82962830afd3f5dc88dad639b"
+    }
+  ],
+  "sourceFilesUnchanged": true,
+  "correctionFrozenFilesUnchanged": 5,
+  "coreFreshBuiltSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+  "seedCoreShaMatches": true,
+  "compatCompileInputs": {
+    "tools/mcis-compat/McisCompat.csproj": "006f5a2e19c33f4f1606cd07d82cfe902524beb38e0958832cd0ca3d37014059",
+    "tools/mcis-compat/src/Program.cs": "2731497f3ed06b640cf5febbf97d040baf8f3bc37df011add9de06eb9b0c51bf",
+    "unity/Assets/_Project/Scripts/Core/Primitives/Result.cs": "15f9b52af048291c69e4a0ebd9959e679414c9abe67c02daf35ad7b6c9c73145",
+    "unity/Assets/_Project/Scripts/Core/Primitives/SimTime.cs": "b5bad3e00608549ee6a3d99616c32a26e0ae0d7d051c1c76540f7c165e09de3d",
+    "unity/Assets/_Project/Scripts/Domain/Evidence/CustodyEvent.cs": "ffe7a06d86ec2d698cf23e61484d1e0117eebdaea9fc41a3cc9ea4fc585b7f26",
+    "unity/Assets/_Project/Scripts/Domain/Evidence/CustodyLedger.cs": "618af0e414ed0a70e52a712d9702249512922d3ce08528530927d7020ae837d8",
+    "unity/Assets/_Project/Scripts/Domain/Evidence/EvidenceItem.cs": "9116d127128155f5d1ebd0491e66a95042989bdbf97c9b687f2577c024813a5c",
+    "unity/Assets/_Project/Scripts/Domain/Evidence/InvestigationAudit.cs": "07aa67c779169490de2697569519b25fc122bc2473b4a0e31660c1b4c5026d2a",
+    "unity/Assets/_Project/Scripts/Domain/Evidence/Sha256Hex.cs": "ad9478e84a7b947a16145cfc9407f21aaf14a62b3e99379ae729829015bd93be"
+  },
+  "compatRebuildReason": "existing wrapper source-newer-than-DLL check in newly materialized snapshot; local csproj rebuilt, never used old worktree/out",
+  "canonicalReportSha256": "bca8f8b8ba04a5d0669a121bc6c9380c8cd6f8397f67be2d0b30b38871c22ef2",
+  "canonicalReportBytes": 62607
+}

@@ -21,7 +21,7 @@ L = f"/api/v1/cases/{LILY}"
 H5 = f"/api/v1/cases/{HAILI}"
 OP = "验收员·合成甲"
 OP2 = "验收员·合成乙"
-needs_core = pytest.mark.skipif(not HAS_CORE, reason="需要 ~/.dotnet 与 tools/mcis-core/out/mcis-core.dll")
+needs_core = pytest.mark.skipif(not HAS_CORE, reason="需要真实 dotnet 与预构建 mcis-core.dll（支持 MCIS_DOTNET/MCIS_CORE_DLL）")
 ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -92,8 +92,8 @@ def test_W61_reason_verbatim_on_disk_and_history(client):
 @pytest.mark.parametrize("body", [
     {"action": "confirm", "verdict": "NotComplied"},
     {"action": "dismiss", "verdict": "NotComplied", "reason": "合成"},
-    {"reviewStatus": "Confirmed", "verdict": "NotComplied"},
-    {"reviewStatus": "Rejected", "verdict": "NotComplied", "note": "合成"},
+    {"action": "confirm", "verdict": "NotComplied", "evidenceIds": ["EV-001"]},
+    {"action": "dismiss", "verdict": "NotComplied", "reason": "合成", "evidenceIds": ["EV-001"]},
 ])
 def test_W61_confirm_dismiss_with_verdict_422(client, body):
     before = _check(_colreg(client), "CK-05")
@@ -212,10 +212,9 @@ def test_W61_new_run_does_not_overwrite_seed_or_reviews(client):
     assert _colreg(client) == reviewed
 
 
-# ---------------- evaluate 响应 runId（合同已写，实现暂缺） ----------------
+# ---------------- W6.2 evaluate 响应 runId（缺.NET时不宣称验证通过） ----------------
 
 @needs_core
-@pytest.mark.knowndefect  # W6-D06
 def test_W61_evaluate_response_includes_runId(client):
     r = client.post(f"{L}/colreg:evaluate", json={}, headers=H())
     assert r.status_code == 200, r.text
@@ -225,11 +224,10 @@ def test_W61_evaluate_response_includes_runId(client):
     assert doc["runId"] == runs["activeRunId"]
 
 
-# ---------------- 扩展路由已入合同，实现仍 include_in_schema=False ----------------
+# ---------------- W6.2 扩展路由进入自动生成合同 ----------------
 
-@pytest.mark.knowndefect  # W6-D07
 def test_W61_extension_routes_appear_in_app_openapi(client):
-    """HTTP 路由已实现；因 PENDING_CONTRACT=True，app.openapi() 仍隐藏这五条。"""
+    """W6-D07：合同与自动生成schema均包含五条扩展路由。"""
     import re
     def _norm(p):
         return re.sub(r"\{[^}]+\}", "{}", p)
@@ -245,7 +243,7 @@ def test_W61_extension_routes_appear_in_app_openapi(client):
     assert client.get(f"{L}/colreg/runs/active", headers=H()).status_code == 200
     cid = _colreg(client)["checks"][0]["checkId"]
     assert client.get(f"{L}/colreg/checks/{cid}/reviews", headers=H()).status_code == 200
-    # 自动生成 schema 应包含（当前失败，见 W6-D07）
+    # 自动生成 schema 应包含，复测 W6-D07
     paths = {_norm(p) for p in client.app.openapi()["paths"]}
     missing = declared - paths
     assert not missing, f"app.openapi() 未包含已写入合同的扩展路由：{sorted(missing)}"

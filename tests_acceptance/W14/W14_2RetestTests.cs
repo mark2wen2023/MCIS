@@ -163,12 +163,11 @@ namespace Mcis.Acceptance.W14
         }
 
         [Fact]
-        [Trait("Category", "KnownDefect")]
         [Trait("Defect", "W14-D06")]
         public void NarrowValleyShorterThanCoarseStep_IsDocumented()
         {
             // 在持续接近的背景上叠一个宽约 0.2 s 的窄谷，检验 0.5 s 粗扫是否漏检。
-            // 若漏检，记为 KnownDefect 的证据（本项本身会失败并在缺陷单说明影响）。
+            // W14.3：保留原构造，按裁定要求与0.01秒暴扫的绝对差不超过0.1米。
             List<KinematicState> ownStates = new List<KinematicState>();
             List<KinematicState> tgtStates = new List<KinematicState>();
             const double end = 20.0;
@@ -202,11 +201,11 @@ namespace Mcis.Acceptance.W14
             File.WriteAllText(path, string.Format(
                 CultureInfo.InvariantCulture,
                 "narrow valley: reported={0:F2} m @ t={1:F2}; brute={2:F2} m @ t={3:F2}; missed={4}\n",
-                reported, result.MinClearanceTimeSeconds, truth, truthT, reported > truth + 1.0));
+                reported, result.MinClearanceTimeSeconds, truth, truthT, Math.Abs(reported - truth) > 0.1));
 
             // 暴力扫描应能看到窄谷明显低于背景（背景并排时东西间距 80 m 量级）。
             Assert.True(truth < 20.0, "构造的窄谷应明显低于背景平台（约 32 m），暴力最小=" + truth.ToString("F1"));
-            if (reported > truth + 1.0)
+            if (Math.Abs(reported - truth) > 0.1)
             {
                 Assert.Fail(
                     "W14-D06：粗扫 0.5 s 漏掉了宽度约 0.2 s 的净距低谷。报出 " +

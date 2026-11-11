@@ -1,0 +1,626 @@
+{
+  "checks": [
+    {
+      "name": "frozen implementation hashes before",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "temporary case initially empty",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "invalid hash prevents confirmation and write",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "trimmed duplicate party blocks",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "preview warns local only irreversible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "cancel creates no writes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "RO clears new confirmation and forms",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "case switch clears confirmation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTTP 201 /consultation/rounds",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "single mutation /consultation/rounds",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "open trims and normalizes payload",
+      "passed": true,
+      "detail": {
+        "roundNo": 1,
+        "caseId": "CJK-2024-1230-YangZe22-VegaDream",
+        "draftVersion": "W72-v1",
+        "openedUtc": "2026-11-11T20:08:44Z",
+        "deadlineUtc": "2026-12-11T20:08:44Z",
+        "isAgreedDeadline": false,
+        "draftSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "isClosed": false,
+        "closedUtc": null,
+        "parties": [
+          {
+            "partyId": "A",
+            "name": "Fictional A"
+          },
+          {
+            "partyId": "B",
+            "name": "Fictional B"
+          }
+        ],
+        "replies": [],
+        "waivers": [],
+        "comments": [],
+        "daysRemaining": 30,
+        "partyStatus": [
+          {
+            "partyId": "A",
+            "name": "Fictional A",
+            "status": "Pending",
+            "adopted": 0,
+            "partiallyAdopted": 0,
+            "notAdopted": 0,
+            "pending": 0,
+            "total": 0
+          },
+          {
+            "partyId": "B",
+            "name": "Fictional B",
+            "status": "Pending",
+            "adopted": 0,
+            "partiallyAdopted": 0,
+            "notAdopted": 0,
+            "pending": 0,
+            "total": 0
+          }
+        ],
+        "allReplied": false
+      }
+    },
+    {
+      "name": "fixed default thirty days",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTTP 409 /rounds/1:close",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "single mutation /rounds/1:close",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "early close not persisted",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "blank waiver reason blocks",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "waiver preview consequence explicit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "waiver cancel no mutation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTTP 201 /rounds/1/waivers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "single mutation /rounds/1/waivers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "waiver persisted and all replied",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTTP 200 /rounds/1:close",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "single mutation /rounds/1:close",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "close permits Pending opinions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "decision HTTP R1-C01",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "first cycle persists",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual create committed before response lost",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "lost committed response reconciles via reads not retry",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "expired fixture still unanswered",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTTP 200 /rounds/2:close",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "single mutation /rounds/2:close",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "expired allows close with unanswered party",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTTP 409 /consultation/rounds",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "single mutation /consultation/rounds",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stale open does not duplicate round",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTTP 409 /rounds/3/waivers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "single mutation /rounds/3/waivers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTTP 403 /rounds/3:close",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "single mutation /rounds/3:close",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "403 leaves round open and clears lifecycle",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTTP 409 /rounds/3:close",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "single mutation /rounds/3:close",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stale close conflict preserves closed state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fourth create actually committed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "failed reconcile fail closed no mutation retry",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manual read recovers fourth committed round",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Deny clears lifecycle confirmation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no layout overflow 1440",
+      "passed": true,
+      "detail": {
+        "document": 1440,
+        "main": 1216,
+        "scroll": 1216
+      }
+    },
+    {
+      "name": "no layout overflow 768",
+      "passed": true,
+      "detail": {
+        "document": 768,
+        "main": 544,
+        "scroll": 544
+      }
+    },
+    {
+      "name": "no external requests",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "no JS errors",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "HTTP errors explained",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "console errors only controlled network failures",
+      "passed": true,
+      "detail": [
+        {
+          "phase": "normal",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        },
+        {
+          "phase": "normal",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        },
+        {
+          "phase": "expected-conflict",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+        },
+        {
+          "phase": "expected-lost-response",
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_FAILED"
+        },
+        {
+          "phase": "expected-conflict",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+        },
+        {
+          "phase": "expected-conflict",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+        },
+        {
+          "phase": "expected-permission",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        },
+        {
+          "phase": "expected-conflict",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+        },
+        {
+          "phase": "expected-reconcile-failure",
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_FAILED"
+        },
+        {
+          "phase": "expected-reconcile-failure",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+        },
+        {
+          "phase": "role-denied",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        },
+        {
+          "phase": "role-denied",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        }
+      ]
+    },
+    {
+      "name": "audit hash valid",
+      "passed": true,
+      "detail": {
+        "valid": true,
+        "count": 17,
+        "brokenAt": null,
+        "reason": "",
+        "headHash": "3a6a13e4fbfa2c51a484290daea2bdb003fb656d83f3fee3822049e22d5e1919"
+      }
+    },
+    {
+      "name": "exact successful audit counts",
+      "passed": true,
+      "detail": {
+        "consultation.open": 4,
+        "consultation.reply": 1,
+        "consultation.waive": 2,
+        "consultation.close": 3,
+        "consultation.decide": 1
+      }
+    },
+    {
+      "name": "all browser writes scoped to temporary case",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "frozen implementation hashes after",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "errors": [],
+  "console": [
+    {
+      "phase": "normal",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "phase": "normal",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "phase": "expected-conflict",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+    },
+    {
+      "phase": "expected-lost-response",
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_FAILED"
+    },
+    {
+      "phase": "expected-conflict",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+    },
+    {
+      "phase": "expected-conflict",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+    },
+    {
+      "phase": "expected-permission",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "phase": "expected-conflict",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+    },
+    {
+      "phase": "expected-reconcile-failure",
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_FAILED"
+    },
+    {
+      "phase": "expected-reconcile-failure",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "phase": "role-denied",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "phase": "role-denied",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    }
+  ],
+  "httpErrors": [
+    {
+      "phase": "normal",
+      "status": 403,
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/audit?category=SafetyRec&order=desc&limit=14",
+      "role": "InterestedState"
+    },
+    {
+      "phase": "normal",
+      "status": 403,
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/audit?category=Consultation&order=desc&limit=6",
+      "role": "InterestedState"
+    },
+    {
+      "phase": "expected-conflict",
+      "status": 409,
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/consultation/rounds/1:close",
+      "role": "Investigator"
+    },
+    {
+      "phase": "expected-conflict",
+      "status": 409,
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/consultation/rounds",
+      "role": "Investigator"
+    },
+    {
+      "phase": "expected-conflict",
+      "status": 409,
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/consultation/rounds/3/waivers",
+      "role": "Investigator"
+    },
+    {
+      "phase": "expected-permission",
+      "status": 403,
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/consultation/rounds/3:close",
+      "role": "Investigator"
+    },
+    {
+      "phase": "expected-conflict",
+      "status": 409,
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/consultation/rounds/3:close",
+      "role": "Investigator"
+    },
+    {
+      "phase": "expected-reconcile-failure",
+      "status": 503,
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/consultation/rounds",
+      "role": "Investigator"
+    },
+    {
+      "phase": "role-denied",
+      "status": 403,
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/audit?category=Consultation&order=desc&limit=6",
+      "role": "Public"
+    },
+    {
+      "phase": "role-denied",
+      "status": 403,
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/audit?category=SafetyRec&order=desc&limit=14",
+      "role": "Public"
+    }
+  ],
+  "mutations": [
+    {
+      "phase": "normal",
+      "method": "POST",
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/consultation/rounds",
+      "body": "{\"draftVersion\":\"W72-v1\",\"parties\":[{\"partyId\":\"A\",\"name\":\"Fictional A\"},{\"partyId\":\"B\",\"name\":\"Fictional B\"}],\"draftSha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"days\":30,\"isAgreedDeadline\":false}"
+    },
+    {
+      "phase": "expected-conflict",
+      "method": "POST",
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/consultation/rounds/1:close",
+      "body": "{}"
+    },
+    {
+      "phase": "normal",
+      "method": "POST",
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/consultation/rounds/1/replies",
+      "body": "{\"partyId\":\"A\",\"text\":\"Fictional received response\",\"comments\":[\"Pending survives close\"]}"
+    },
+    {
+      "phase": "normal",
+      "method": "POST",
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/consultation/rounds/1/waivers",
+      "body": "{\"partyId\":\"B\",\"reason\":\"Fictional written waiver received\"}"
+    },
+    {
+      "phase": "normal",
+      "method": "POST",
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/consultation/rounds/1:close",
+      "body": "{}"
+    },
+    {
+      "phase": "normal",
+      "method": "PATCH",
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/consultation/rounds/1/comments/R1-C01",
+      "body": "{\"decision\":\"Adopted\",\"feedback\":\"\"}"
+    },
+    {
+      "phase": "expected-lost-response",
+      "method": "POST",
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/consultation/rounds",
+      "body": "{\"draftVersion\":\"W72-v2\",\"parties\":[{\"partyId\":\"A\",\"name\":\"Fictional A\"}],\"draftSha256\":\"\",\"days\":30,\"isAgreedDeadline\":false}"
+    },
+    {
+      "phase": "normal",
+      "method": "POST",
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/consultation/rounds/2:close",
+      "body": "{}"
+    },
+    {
+      "phase": "expected-conflict",
+      "method": "POST",
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/consultation/rounds",
+      "body": "{\"draftVersion\":\"Stale v3\",\"parties\":[{\"partyId\":\"A\",\"name\":\"Fictional A\"}],\"draftSha256\":\"\",\"days\":30,\"isAgreedDeadline\":false}"
+    },
+    {
+      "phase": "expected-conflict",
+      "method": "POST",
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/consultation/rounds/3/waivers",
+      "body": "{\"partyId\":\"C\",\"reason\":\"stale waiver\"}"
+    },
+    {
+      "phase": "expected-permission",
+      "method": "POST",
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/consultation/rounds/3:close",
+      "body": "{}"
+    },
+    {
+      "phase": "expected-conflict",
+      "method": "POST",
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/consultation/rounds/3:close",
+      "body": "{}"
+    },
+    {
+      "phase": "expected-reconcile-failure",
+      "method": "POST",
+      "url": "http://127.0.0.1:42433/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/consultation/rounds",
+      "body": "{\"draftVersion\":\"W72-v4 recovery\",\"parties\":[{\"partyId\":\"A\",\"name\":\"Fictional A\"}],\"draftSha256\":\"\",\"days\":30,\"isAgreedDeadline\":false}"
+    }
+  ],
+  "screenshotsLocalOnly": [
+    "lifecycle-1440.png",
+    "lifecycle-768.png"
+  ]
+}

@@ -25,7 +25,8 @@ YANGZE = "CJK-2024-1230-YangZe22-VegaDream"
 CASE_IDS = [LILY, HAILI, YANGZE]
 # EvidenceItem.CaseIdPattern（unity Domain）：至少 3 位，字母数字与 . _ -
 CASE_ID_RE = r"\A[A-Za-z0-9._-]{3,}\Z"  # Python \Z 等价于 C# EvidenceItem.CaseIdPattern 的 \z
-HAS_CORE = (Path.home() / ".dotnet" / "dotnet").exists() and (ROOT / "tools/mcis-core/out/mcis-core.dll").exists()
+DOTNET = Path(os.environ.get("MCIS_DOTNET", str(Path.home() / ".dotnet" / "dotnet")))
+HAS_CORE = DOTNET.is_file() and os.access(DOTNET, os.X_OK) and (ROOT / "tools/mcis-core/out/mcis-core.dll").exists()
 CORE_CMD = os.environ["MCIS_CORE"]
 NM = 1852.0
 

@@ -127,6 +127,62 @@ GISIS_FIELDS = [
 ]
 
 
-def get_template(template_id: str):
-    """调用方可编辑副本，不会污染后续案件的模板。"""
-    return next((deepcopy(t) for t in TEMPLATES if t["templateId"] == template_id), None)
+# 中文标题逐字取自公开报告目录；英文为项目译文，不冒称官方译文。
+# 仅结构映射，不复制调查结论；未适配的章节由 sources.build_sections 标缺数据。
+_PUBLIC_CN_SECTIONS = {
+    "CASE-2025-HAILI5-WANA17": [
+        ("summary", "一、事故概况", "Overview"),
+        ("terms", "二、专业术语和标准用语标示", "Technical terms and standard expressions"),
+        ("facts", "三、事故调查取证情况", "Investigation and evidence collection"),
+        ("key-factors", "四、事故重要因素认定", "Determination of significant factors"),
+        ("sequence", "五、事故经过", "Sequence of events"),
+        ("emergency", "六、应急处置情况", "Emergency response"),
+        ("losses", "七、事故损失情况", "Casualty losses"),
+        ("analysis", "八、事故原因分析", "Analysis of causes"),
+        ("official-conclusions", "九、事故结论", "Casualty conclusions"),
+        ("issues", "十、调查发现的问题", "Issues identified during investigation"),
+        ("disposition", "十一、处理建议", "Recommendations for disposition"),
+        ("recommendations", "十二、安全管理建议", "Safety management recommendations"),
+    ],
+    "CJK-2024-1230-YangZe22-VegaDream": [
+        ("summary", "一、事故简况及调查情况", "Casualty overview and investigation"),
+        ("terms", "二、专业术语和标准用语", "Technical terms and standard expressions"),
+        ("facts", "三、船舶、船员、公司基本情况", "Ship, crew and company particulars"),
+        ("environment", "四、气象水文和通航环境情况", "Weather, hydrology and navigation environment"),
+        ("survey", "五、船体勘验情况", "Hull inspection"),
+        ("collision", "六、碰撞时间、地点和部位", "Time, location and point of collision"),
+        ("steering-system", "七、“YANGZE 22”轮操舵系统状况综合分析", "Analysis of YANGZE 22 steering system"),
+        ("helm-orders", "八、“YANGZE 22”轮操舵水手执行舵令情况", "Execution of helm orders on YANGZE 22"),
+        ("pollution", "九、溢油和油污损害情况", "Oil spill and pollution damage"),
+        ("sequence", "十、事故经过", "Sequence of events"),
+        ("emergency", "十一、应急处置情况", "Emergency response"),
+        ("losses", "十二、事故损失情况", "Casualty losses"),
+        ("analysis", "十三、事故原因分析", "Analysis of causes"),
+        ("liability", "十四、事故责任认定", "Determination of responsibility"),
+        ("issues", "十五、调查发现的问题", "Issues identified during investigation"),
+        ("disposition", "十六、事故处理建议", "Recommendations for casualty disposition"),
+        ("recommendations", "十七、安全管理建议", "Safety management recommendations"),
+    ],
+}
+
+_PUBLIC_CN_REFS = {
+    'CASE-2025-HAILI5-WANA17': {"title": '原文目录：reports/haili5/_report_clean.txt；PDF 第4–5页目录；文本行53–101；SHA256=00bbf711cd7418633d586567c69d0d009f68b1bc1fe5c2bd01107bc11493a0d0；英文标题为项目译文', "href": 'https://github.com/mark2wen2023/MCIS/blob/c6113bee85d25bf97d805fb2d264fb6ab138b2e2/reports/haili5/_report_clean.txt'},
+    'CJK-2024-1230-YangZe22-VegaDream': {"title": '原文目录：reports/yangze22/report.txt；PDF 第2页目录；文本行11–53；SHA256=bca8f8b8ba04a5d0669a121bc6c9380c8cd6f8397f67be2d0b30b38871c22ef2；英文标题为项目译文', "href": 'https://github.com/mark2wen2023/MCIS/blob/c6113bee85d25bf97d805fb2d264fb6ab138b2e2/reports/yangze22/report.txt'},
+}
+
+
+def get_template(template_id: str, case_id: str | None = None):
+    """返回案件专属副本；只有两份已授权公开报告采用原文目录。"""
+    template = next((deepcopy(t) for t in TEMPLATES if t["templateId"] == template_id), None)
+    if template and template_id == "cn-msa" and case_id in _PUBLIC_CN_SECTIONS:
+        template["sections"] = [
+            {"sectionId": sid, "titleZh": zh, "titleEn": en,
+             "dataSources": list(_SOURCES.get(sid, []))}
+            for sid, zh, en in _PUBLIC_CN_SECTIONS[case_id]
+        ]
+        template["standardRefs"] = [deepcopy(_PUBLIC_CN_REFS[case_id])]
+    return template
+
+
+def templates_for_case(case_id: str | None = None):
+    return [get_template(t["templateId"], case_id) for t in TEMPLATES]

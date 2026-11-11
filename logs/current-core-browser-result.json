@@ -1,0 +1,206 @@
+{
+  "browser": "Google Chrome for Testing 157.0.8103.50",
+  "base": "http://127.0.0.1:56231",
+  "backend": "127.0.0.1:47921",
+  "checks": [
+    {
+      "name": "YANGZE Chinese template 17 sections",
+      "passed": true
+    },
+    {
+      "name": "bounded excerpt/no new liability disclaimer",
+      "passed": true
+    },
+    {
+      "name": "precise source visible",
+      "passed": true
+    },
+    {
+      "name": "authorized public global label consistent",
+      "passed": true
+    },
+    {
+      "name": "report-yangze-liability-1440-layout",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "passed": true
+    },
+    {
+      "name": "report-yangze-liability-1920-layout",
+      "viewport": 1920,
+      "scrollWidth": 1920,
+      "passed": true
+    },
+    {
+      "name": "report EV-201 link preserves YANGZE",
+      "passed": true
+    },
+    {
+      "name": "evidence verify writes YANGZE only",
+      "passed": true
+    },
+    {
+      "name": "evidence-yangze-1440-layout",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "passed": true
+    },
+    {
+      "name": "evidence-yangze-1920-layout",
+      "viewport": 1920,
+      "scrollWidth": 1920,
+      "passed": true
+    },
+    {
+      "name": "evidence cross-case clears YANGZE selection",
+      "passed": true
+    },
+    {
+      "name": "evidence cross-case write targets Haili",
+      "passed": true
+    },
+    {
+      "name": "Haili Chinese template 12 sections",
+      "passed": true
+    },
+    {
+      "name": "report-haili-1440-layout",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "passed": true
+    },
+    {
+      "name": "report-haili-1920-layout",
+      "viewport": 1920,
+      "scrollWidth": 1920,
+      "passed": true
+    },
+    {
+      "name": "recommendations report entry preserves YANGZE",
+      "passed": true
+    },
+    {
+      "name": "recommendation create targets YANGZE",
+      "passed": true
+    },
+    {
+      "name": "recommendations-yangze-1440-layout",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "passed": true
+    },
+    {
+      "name": "recommendations-yangze-1920-layout",
+      "viewport": 1920,
+      "scrollWidth": 1920,
+      "passed": true
+    },
+    {
+      "name": "recommendations actual report navigation preserves YANGZE",
+      "passed": true
+    },
+    {
+      "name": "analysis series derived label",
+      "passed": true
+    },
+    {
+      "name": "analysis Y1 critical",
+      "passed": true
+    },
+    {
+      "name": "analysis-yangze-1440-layout",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "passed": true
+    },
+    {
+      "name": "analysis-yangze-1920-layout",
+      "viewport": 1920,
+      "scrollWidth": 1920,
+      "passed": true
+    },
+    {
+      "name": "interview fictional badge",
+      "passed": true
+    },
+    {
+      "name": "interview nonempty transcript",
+      "passed": true
+    },
+    {
+      "name": "interview-demo-1440-layout",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "passed": true
+    },
+    {
+      "name": "interview-demo-1920-layout",
+      "viewport": 1920,
+      "scrollWidth": 1920,
+      "passed": true
+    },
+    {
+      "name": "colreg public disclaimer",
+      "passed": true
+    },
+    {
+      "name": "colreg public data",
+      "passed": true
+    },
+    {
+      "name": "colreg-haili-1440-layout",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "passed": true
+    },
+    {
+      "name": "colreg-haili-1920-layout",
+      "viewport": 1920,
+      "scrollWidth": 1920,
+      "passed": true
+    },
+    {
+      "name": "no Vite/framework overlays",
+      "passed": true
+    },
+    {
+      "name": "no JS or console errors",
+      "passed": true
+    },
+    {
+      "name": "no HTTP errors",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "httpErrors": [],
+  "mutations": [
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:56231/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/reports"
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:56231/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/evidence/EV-201/verify"
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:56231/api/v1/cases/CASE-2025-HAILI5-WANA17/evidence/EV-101/verify"
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:56231/api/v1/cases/CASE-2025-HAILI5-WANA17/reports"
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:56231/api/v1/cases/CJK-2024-1230-YangZe22-VegaDream/recommendations"
+    }
+  ],
+  "artifactPolicy": "Text-only results. Screenshots remain local; no image copied or uploaded for this run.",
+  "verifiedAt": "2026-11-12T00:25:36.618220+08:00",
+  "inputs": {
+    "tools/mcis-core/out/mcis-core.dll": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+    "service/mcis_service/analysis/data/w12-analysis-seed.json": "988e9abd3b39959864f42912d8d3454dacd7821156fd8b21268631f30f4693e3"
+  }
+}

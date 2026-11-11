@@ -111,10 +111,11 @@ def test_snapshot_investigator_roles_allowed(ctx, role):
 
 
 @pytest.mark.parametrize('case_id', sorted(service.REAL_CASE_IDS))
-def test_real_snapshot_pending_409_without_any_database_change(ctx, case_id):
+def test_real_snapshot_missing_or_not_imported_without_any_database_change(ctx, case_id):
     from .test_reports_w16_direct import snapshot_db
     before = snapshot_db(ctx)
-    assert_error(409, 'report_real_data_pending', lambda: router.get_snapshot(case_id, 'RA-absent', ctx))
+    assert_error(404, 'report_snapshot_not_found',
+                 lambda: router.get_snapshot(case_id, 'RA-absent', ctx))
     assert snapshot_db(ctx) == before
 
 

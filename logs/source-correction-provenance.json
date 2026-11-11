@@ -1,0 +1,14 @@
+{
+  "sourcePath": "reports/yangze22/report.txt",
+  "upstreamCommit": "c6113bee85d25bf97d805fb2d264fb6ab138b2e2",
+  "gitBlobSha1": "d5a6b5fc79ad0371c8ccc372b40ca9110d5c30c4",
+  "sizeBytes": 62607,
+  "sha256": "bca8f8b8ba04a5d0669a121bc6c9380c8cd6f8397f67be2d0b30b38871c22ef2",
+  "sourceRole": "canonical verification input, not a remote modification",
+  "incorrectLocalMaterialization": {
+    "sizeBytes": 62608,
+    "sha256": "7adad5bb499c28eb3985b79411c61dad593797e0d2a8aa64feb203077e43ee2b",
+    "difference": "one appended LF"
+  },
+  "oldDatabasePolicy": "no automatic rewrite of EV-201, blobs, custody or audit; separate reviewed correction required"
+}

@@ -2,7 +2,7 @@
 export type ReportLanguage = 'zh' | 'en' | 'bilingual'
 export type ReportTemplateId = 'imo-cic' | 'maib' | 'cn-msa'
 export type ReportStatus = 'Draft' | 'Confirmed' | 'Modified' | 'Dismissed'
-export type RealDataStatus = 'fictional' | 'pending-confirmation'
+export type RealDataStatus = 'fictional' | 'authorized-public' | 'pending-confirmation'
 export type ReviewAction = 'confirm' | 'dismiss' | 'modify'
 export interface BilingualText { textZh: string; textEn: string }
 export interface Citation {
@@ -36,7 +36,7 @@ export interface ReportTemplate {
   standardRefs?: { title: string; href: string; pendingRuling?: string }[]
 }
 export interface ReportTemplateList { templates: ReportTemplate[]; realDataStatus: RealDataStatus; caseId?: string }
-export interface ReportList { reports: Report[]; realDataStatus: RealDataStatus; caseId: string }
+export interface ReportList { blockedReason?: 'report_case_not_imported'; reports: Report[]; realDataStatus: RealDataStatus; caseId: string }
 export interface ReportAudit {
   auditEvent: { seq: number; utc: string; operator: string; action: string; category: string; command: string; before: string; after: string; snapshotRef?: string }
   reportId: string | null; sectionId: string | null; sentenceId: string | null; reason: string
@@ -56,10 +56,10 @@ export interface ColregDraftResult { section: ReportSection; reportId: string; r
 
 export const DEMO_CASE_ID = 'CASE-2026-DEMO-LILY-MARY'
 export const HAILI_CASE_ID = 'CASE-2025-HAILI5-WANA17'
-/** 尚无已登记编号时使用合同明确的占位符，不读取真实报告。 */
+/** 已授权公开报告；是否可生成由服务返回的入库状态决定。 */
 export const YANGZE_CASE_ID = 'CJK-2024-1230-YangZe22-VegaDream' // 规范 caseId（DEFECTS/W12.md 21:52 裁定）
 export const REPORT_CASES = [
   { caseId: DEMO_CASE_ID, label: 'Lily / Mary（虚构）' },
-  { caseId: HAILI_CASE_ID, label: '海力5（真实 · 待确认）' },
-  { caseId: YANGZE_CASE_ID, label: 'YANGZE 22（真实 · 待确认）' },
+  { caseId: HAILI_CASE_ID, label: '海力5（公开报告）' },
+  { caseId: YANGZE_CASE_ID, label: 'YANGZE 22（公开报告）' },
 ]

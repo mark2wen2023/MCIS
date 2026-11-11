@@ -200,11 +200,14 @@ namespace Mcis.Simulation.WhatIf
             }
         }
 
-        /// <summary>全程净距粗扫步长（秒）。</summary>
+        /// <summary>兼容旧调用者保留的 W14.2 粗扫常量（秒）；W14.3 实际净距扫描改用航迹积分步长与全部积分点，不再使用本常量。</summary>
         public const double ClearanceCoarseStepSec = 0.5;
 
-        /// <summary>局部极小处细化扫描步长（秒）；之后再做黄金分割到 1e-3 s。</summary>
+        /// <summary>细化步长的兼容上限（秒）；实际使用 min(本值, dt/10)，再做黄金分割到 1e-3 s。</summary>
         public const double ClearanceFineStepSec = 0.02;
+
+        /// <summary>数值加密触发阈值（度/秒），不是危险判定或航海规则阈值。</summary>
+        public const double ClearanceTurnRefinementDegPerSec = 0.5;
 
         private static double ComputeMinClearance(
             WhatIfSetup setup,
@@ -212,108 +215,124 @@ namespace Mcis.Simulation.WhatIf
             CounterfactualTrack target,
             out double timeSeconds)
         {
-            // W14.2 裁定 7b：全程全局最小 OBB 真实净距——先在 [Start, End] 粗扫，
-            // 再在每个局部极小处细化（±1 个粗步长细扫 + 黄金分割），取所有局部极小中的最小值。
-            double best = GlobalMinimum(
-                setup.StartSeconds,
-                setup.EndSeconds,
+            double dt = Math.Min(own.StepSeconds, target.StepSeconds);
+            List<double> times = ClearanceSamplingTimes(setup.StartSeconds, setup.EndSeconds, own, target);
+            double best = MinimumOnGrid(times,
                 t => OrientedBoundingBox.Clearance(ToBox(own.SampleAt(t), own), ToBox(target.SampleAt(t), target)),
-                ClearanceCoarseStepSec,
-                ClearanceFineStepSec,
+                Math.Min(ClearanceFineStepSec, dt / 10.0),
+                (a, b) => HighTurnInterval(own.SampleAt(a), own.SampleAt(b)) ||
+                          HighTurnInterval(target.SampleAt(a), target.SampleAt(b)),
                 out timeSeconds);
             return best > 0.0 ? best : 0.0;
         }
 
-        /// <summary>
-        /// 一维函数在 [from, to] 上的全局最小：粗扫找全部局部极小（含端点），每个极小在 ±coarse 内按 fine 步长细扫，
-        /// 再在最优细扫点 ±fine 内黄金分割收敛到 1e-3 s。返回最小值，并输出对应时刻。
-        /// </summary>
-        internal static double GlobalMinimum(
-            double from,
-            double to,
-            Func<double, double> f,
-            double coarse,
-            double fine,
-            out double argMin)
+        /// <summary>两船所有真实积分节点、dt 网格与首尾的有序并集；容差内重复时间只保留一次。</summary>
+        internal static List<double> ClearanceSamplingTimes(double from, double to,
+            CounterfactualTrack own, CounterfactualTrack target)
         {
-            if (f == null)
-            {
-                throw new ArgumentNullException(nameof(f));
-            }
-            if (!(coarse > 0.0) || !(fine > 0.0))
-            {
-                throw new ArgumentOutOfRangeException(nameof(coarse), "步长必须为正。");
-            }
-            if (to < from)
-            {
-                double tmp = to;
-                to = from;
-                from = tmp;
-            }
+            double dt = Math.Min(own.StepSeconds, target.StepSeconds);
+            var points = new SortedSet<double>(UniformTimes(from, to, dt));
+            foreach (KinematicState state in own.States)
+                if (state.TimeSeconds >= from && state.TimeSeconds <= to) points.Add(state.TimeSeconds);
+            foreach (KinematicState state in target.States)
+                if (state.TimeSeconds >= from && state.TimeSeconds <= to) points.Add(state.TimeSeconds);
+            var times = new List<double>();
+            foreach (double t in points)
+                if (times.Count == 0 || t - times[times.Count - 1] > 1e-9 || t == to) times.Add(t);
+            return times;
+        }
 
-            List<double> times = new List<double>();
-            List<double> values = new List<double>();
-            int n = (int)Math.Floor((to - from) / coarse + 1e-9);
-            for (int i = 0; i <= n; i++)
-            {
-                double t = Math.Min(to, from + i * coarse);
-                times.Add(t);
-                values.Add(f(t));
-            }
-            if (times[times.Count - 1] < to - 1e-9)
-            {
-                times.Add(to);
-                values.Add(f(to));
-            }
+        /// <summary>原始轨迹的 ROT 可缺省为零，因此同时检查相邻实际航向的最短角差。</summary>
+        internal static bool HighTurnInterval(KinematicState a, KinematicState b)
+        {
+            double span = b.TimeSeconds - a.TimeSeconds;
+            if (!(span > 0.0)) return false;
+            double headingRate = Math.Abs(KinematicState.NormalizeDeg180(b.HeadingDeg - a.HeadingDeg)) / span;
+            return Math.Abs(a.RotDegPerSec) > ClearanceTurnRefinementDegPerSec ||
+                   Math.Abs(b.RotDegPerSec) > ClearanceTurnRefinementDegPerSec ||
+                   headingRate > ClearanceTurnRefinementDegPerSec;
+        }
 
-            double bestValue = double.PositiveInfinity;
-            double bestTime = from;
-            for (int i = 0; i < values.Count; i++)
+        private static List<double> UniformTimes(double from, double to, double step)
+        {
+            if (double.IsNaN(step) || double.IsInfinity(step) || !(step > 0.0))
+                throw new ArgumentOutOfRangeException(nameof(step));
+            var times = new List<double>();
+            int n = checked((int)Math.Floor((to - from) / step + 1e-9));
+            for (int i = 0; i <= n; i++) times.Add(Math.Min(to, from + i * step));
+            if (times[times.Count - 1] < to) times.Add(to);
+            return times;
+        }
+
+        /// <summary>保留原内部入口；使用规则网格搜索全部局部极小。</summary>
+        internal static double GlobalMinimum(double from, double to, Func<double, double> f,
+            double coarse, double fine, out double argMin)
+        {
+            if (to < from) { double swap = from; from = to; to = swap; }
+            return MinimumOnGrid(UniformTimes(from, to, coarse), f, fine, null, out argMin);
+        }
+
+        /// <summary>全网格逐点比较；局部极小及触发区间细扫，再在每个细网格极小附近细化。</summary>
+        internal static double MinimumOnGrid(IReadOnlyList<double> times, Func<double, double> f,
+            double fine, Func<double, double, bool> refineInterval, out double argMin)
+        {
+            if (f == null) throw new ArgumentNullException(nameof(f));
+            if (times == null || times.Count == 0) throw new ArgumentException("采样时间不能为空。", nameof(times));
+            if (double.IsNaN(fine) || double.IsInfinity(fine) || !(fine > 0.0))
+                throw new ArgumentOutOfRangeException(nameof(fine));
+            var values = new List<double>(times.Count);
+            double best = double.PositiveInfinity, bestTime = times[0];
+            for (int i = 0; i < times.Count; i++)
             {
-                double v = values[i];
-                // 局部极小（含端点）：不大于左邻、严格小于右邻；平台段只取最后一点，最后一点只比左邻。
-                bool leftOk = i == 0 || v <= values[i - 1];
-                bool rightOk = i == values.Count - 1 || v < values[i + 1];
-                if (!(leftOk && rightOk))
+                double v = f(times[i]);
+                values.Add(v);
+                if (v < best) { best = v; bestTime = times[i]; }
+            }
+            var windows = new List<Tuple<double, double>>();
+            for (int i = 0; i < times.Count; i++)
+            {
+                bool left = i == 0 || values[i] <= values[i - 1];
+                bool right = i == times.Count - 1 || values[i] < values[i + 1];
+                if (left && right)
+                    windows.Add(Tuple.Create(times[Math.Max(0, i - 1)], times[Math.Min(times.Count - 1, i + 1)]));
+                if (i > 0 && refineInterval != null && refineInterval(times[i - 1], times[i]))
+                    windows.Add(Tuple.Create(times[i - 1], times[i]));
+            }
+            windows.Sort((a, b) => a.Item1.CompareTo(b.Item1));
+            var merged = new List<Tuple<double, double>>();
+            foreach (var window in windows)
+            {
+                if (merged.Count > 0 && window.Item1 <= merged[merged.Count - 1].Item2 + 1e-9)
                 {
-                    continue;
+                    var last = merged[merged.Count - 1];
+                    merged[merged.Count - 1] = Tuple.Create(last.Item1, Math.Max(last.Item2, window.Item2));
                 }
-
-                double lo = Math.Max(from, times[i] - coarse);
-                double hi = Math.Min(to, times[i] + coarse);
-                double localTime = times[i];
-                double localValue = v;
-                int steps = (int)Math.Ceiling((hi - lo) / fine - 1e-9);
-                for (int k = 0; k <= steps; k++)
+                else merged.Add(window);
+            }
+            foreach (var window in merged)
+            {
+                var fineTimes = UniformTimes(window.Item1, window.Item2, fine);
+                var fineValues = new List<double>(fineTimes.Count);
+                foreach (double t in fineTimes)
                 {
-                    double t = Math.Min(hi, lo + k * fine);
-                    double ft = f(t);
-                    if (ft < localValue)
-                    {
-                        localValue = ft;
-                        localTime = t;
-                    }
+                    double v = f(t);
+                    fineValues.Add(v);
+                    if (v < best) { best = v; bestTime = t; }
                 }
-
-                double ga = Math.Max(from, localTime - fine);
-                double gb = Math.Min(to, localTime + fine);
-                double gt;
-                double gv = GoldenSection(f, ga, gb, 1e-3, out gt);
-                if (gv < localValue)
+                for (int i = 0; i < fineTimes.Count; i++)
                 {
-                    localValue = gv;
-                    localTime = gt;
-                }
-
-                if (localValue < bestValue)
-                {
-                    bestValue = localValue;
-                    bestTime = localTime;
+                    bool left = i == 0 || fineValues[i] <= fineValues[i - 1];
+                    bool right = i == fineTimes.Count - 1 || fineValues[i] < fineValues[i + 1];
+                    if (!(left && right)) continue;
+                    double a = fineTimes[Math.Max(0, i - 1)], b = fineTimes[Math.Min(fineTimes.Count - 1, i + 1)];
+                    if (b - a <= 1e-9) continue;
+                    double t;
+                    double v = GoldenSection(f, a, b, 1e-3, out t);
+                    if (v < best) { best = v; bestTime = t; }
                 }
             }
-
             argMin = bestTime;
-            return bestValue;
+            return best;
         }
 
         private static double GoldenSection(Func<double, double> f, double a, double b, double tol, out double argMin)

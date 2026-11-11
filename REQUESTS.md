@@ -253,3 +253,111 @@
   6. GISIS 里 Table 5 本地等级对应和部分字段仍标「待核」。
 - **W16.1 改过的文件**：contracts/schemas/audit-event.schema.json、contracts/schemas/report.schema.json、contracts/openapi.yaml、contracts/gisis-mapping.md（新）；service/mcis_service/audit/service.py、service/mcis_service/reports/{templates,gisis,sources,service,router}.py；service/tests/test_reports_w16.py、test_reports_w16_direct.py、test_reports_w16_export.py、test_reports_w16_sources.py、test_reports_w161_gisis.py（新）、test_reports_w161_snapshot.py（新）；web/src/reports/{ReportView.tsx,types.ts}、web/src/pages/{ReportPage.tsx,RecommendationsPage.tsx}、web/src/styles/w16.css、web/tests/report-render.test.tsx；删除 web/src/reports/ColregDraftButton.tsx；REQUESTS.md。改动前备份在 /workspace/w16-backup/。日志 logs/w16.1-codex-*。
 - 未做任何 GitHub 操作，未 push。
+
+## 2026-11-11 W16.1 继续开发：公开报告来源适配切片
+
+用户在本次续作对话明确说明「里面没有敏感资料 都是公开发布的报告 都可以用」。该许可仅用于项目内部开发/测试，不扩展为对外发布许可。
+本切片修改 reports/sources.py（既有 W16 冻结范围）及自测：允许海力5、YANGZE 22 的 W14 条目从已做 SHA256 校验的 W12 seed 进入报告来源适配，逐条保留 seed 定位、来源文件/哈希与【推算】标注。不重算、不修改 W12 seed；无 W14 结果仍显示缺数据。未解锁报告 HTTP 入口、未导入 YANGZE 22 数据库，未修改模板或共享合同。完整 W16.1 的上述后续工作仍待完成。
+
+## 2026-11-11 W16.1 公开报告链路续作登记（实现前）
+沿用本次用户公开报告使用许可，修改既有 reports/service/router/gisis/exporter、templates 及报告前端、report schema/OpenAPI 的冻结范围。新增 realDataStatus=`authorized-public`（仅明确允许的公开案例），未知真实案例仍 pending-confirmation。海力5已入库，开放原有调查员权限下生成/复核/审计/导出；YANGZE 22 尚未入库，不用占位案生成，列表额外 blockedReason=`report_case_not_imported`，相关操作409同名错误，导入仍为下一包。中国海事模板按两个原文逐字标题，IMO/MAIB不变，缺少映射的章节明确缺数据，不把推算冒充责任认定。不改变访问角色、不外网监听、不推送或部署。
+
+## 2026-11-11 YANGZE 22 入库与原文摘录续作（实现前登记）
+按本次继续开发及公开报告使用许可，修改已冻结 service/main.py、reports/service.py/router.py/sources.py、相关测试和前端案件文案，新增幂等公开种子与原文摘录模块。仅使用 reports/yangze22/case.json/report.txt 已有来源；不制造航迹、不将国内事故等级未经确认映射IMO等级、不把原报告责任认定当本系统的新认定。入库不覆盖已有用户案件；原文摘录保留来源/hash/页码，仍是Draft。原W16.1-public-flow冻结清单保留历史，本轮另行冻结。对正常入库YANGZE开放现有调查员链路；缺失案件仍保留not_imported检查，不改安全角色或对外发布范围。
+正文续作附加：修改reports/exporter.py与ReportView引用表，保留同一证据不同sourceRef的条目并显示出处，避免17章引用折叠为一个不含页码的引用。新增PDF/DOCX来源定位回读测试，不改变引用schema。
+
+## 2026-11-11 验收续作发现：YANGZE分析页过时入库提示
+W12.1独立验收发现冻结seed的notes仍写“本案未接入服务数据库”。本轮YANGZE已入库，该文案已过时。登记修改已冻结analysis/router.py：仅响应副本改为“基线曲线来自W14 S0报告航迹重建；入库状态以案件管理为准”，不改seed字节/哈希/缓存，不重算任何数值，不增加数据库写入或权限范围。新增独立回归确认数值/来源完整保留；此改动独立于W12.1原冻结验收结论。
+
+## 2026-11-11 验收工装可移植性与提交授权
+- W6/W12验收launcher从原机硬编码路径改为仓库相对路径，支持MCIS_DOTNET；服务测试conftest也按MCIS_DOTNET识别真实SDK，防止SDK已存在却误跳过。没有改引擎结果或删除验收用例。
+- W6旧PATCH/F1用例、W3可选statementVersion断言按既有架构裁定改写；新增严格回归见各独立验收记录。
+- 本次对话用户明确允许完成后提交独立分支并创建PR，不允许直接合并main或部署。此前“未push”记录为阶段事实，最新远端操作以PR记录为准。
+
+## 2026-11-11 真实浏览器发现的案件上下文缺陷
+本轮实际报告页面验证发现：报告内容为YANGZE真实案，但共享Layout仍显示固定Lily虚构案；证据/建议引用链接也可能进入固定默认案。登记修改共享Layout.tsx（另记本轮哈希，不覆盖其他包历史清单）、新增caseContext.ts、api.casePath兼容可选caseId及EvidencePage/RecommendationsPage读取/写入上下文。仅对已支持按案工作的report/colreg/analysis/evidence/recs保留case查询，未支持页面仍用默认案；切案清旧状态/忽略过期响应，不允许旧案操作落入新案。角色和服务权限不变。源码/浏览器回归后另行冻结，不改既有已冻结历史清单。
+
+## 2026-11-11 当前 CLI 可重现构建与候选分析基线（实现登记）
+历史 DLL 已在隔离副本精确恢复，确认 W5.1 Evidence 输入与历史生成输入不同。经本次续作授权，新增内容寻址、固定 SDK 8.0.428/PathMap/无 Git 后缀的隔离 CLI 构建器，wrapper 从时间戳改为所有 Compile 输入哈希校验（包含 Evidence）。不修改 csproj、历史源码/seed/断言。先在项目外隔离副本运行原 build_seed 完整生成候选，并比较全部 14539 数值与历史固定指纹；经独立审查后才能纳入当前基线。历史来源与恢复脚本保留，不以替换哈希伪造重算。
+
+## 2026-11-12 W12 历史 Layout 架构断言适配（独立验收）
+已授权的案件上下文修复把路由选择移至 caseContext helper，原 W12 用例硬编码 `colreg || onAnalysis` 字符串不再对应实现。保留原测试名称和分析页专属 `/analysis/cases` 回退要求，改为验证当前 helper 接线，并实际执行 Layout 加载 effect：仅 analysis 在案件读取失败时访问分析清单，colreg/report/evidence/recs/其他页不得回退。此处仅改验收，不改实现、不删除用例、不放宽 fallback 独占性或数值断言。
+
+### 当前 CLI 基线纳入与完整复验完成
+独立审查确认当前 Linux / SDK 8.0.428 多临时路径构建一致，原 build_seed 真正重算，14539 数值逐项相同且仅时间/DLL SHA变化。将原 seed+旁注逐字节归档至 service/mcis_service/analysis/data/history/w12-original-20261111/（附恢复说明），安装已审查候选并由新 wrapper 重建 DLL；不改历史冻结清单/数值断言。完整服务首次315过1败为mcis-compat依赖DOTNET_ROOT未配置，保留日志；正确配置同一SDK重跑316/316通过。W12+provenance30/30、独立W12 21/21、报告前端148断言通过。详见 logs/current-core-seed-candidate.md 及 installed-provenance.json。未部署、未合并，提交由主控处理。
+
+## W18.2 D08 实现登记（续作）
+按 DEFECTS/W18.md 21:49 裁定，修改已冻结的 `Domain/HumanFactors/RestHours.cs`：拆分规则的乐观/悲观视图按相同候选窗口先分类，再分别归组，避免边界截断导致的数据不足窗口被相邻确定违规组吞掉。总量/间隔规则不改变。Assumptions补齐指定记录首/尾窗口说明；新增实施自测，保留既有D08及220组独立参考、真实案例回归。无公共API/schema变化，不修改W14/W12来源链；实现后另冻结并交独立验收。
+
+## W14.3 D06 实现登记（续作）
+按 DEFECTS/W14.md 21:12 裁定，修改已冻结的 `Simulation/WhatIf/ScenarioEvaluator.cs` 及 `WhatIfSetup.cs` 算法假设文本：净距扫描覆盖两船实际积分时刻和积分dt网格，在局部极小/高转首率区间加密，0.5°/s仅为数值加密阈值而非风险或航海规则。动力学、碰撞检测、安全距离与W12生成链保持不变。新增实施测试，原独立验收断言不由实施方修改。先记录D06红基线和当前YANGZE五情景，再检查窄谷对0.01s暴扫≤0.1m、五情景净距偏差≤0.01m及判定/碰撞/临界敏感性；超限先报告，不刷新seed/来源哈希。缺失上游文件逐Git blob核验并记持久manifest，不stage/push。
+
+## W13.1 本地回放命令适配小切片（2026-11-12）
+- 仅新增纯 C# Presentation/ReplaySync，复用 ISimClock；不改变 HTTP/JSON 合同，不声称 Unity 场景或网络接通。
+- 命令 DTO 对应 sim-state.schema.json。按 case 验证后去重；序列必须连续，构造可显式传已确认游标。批次排序，重复序列 payload 冲突预检拒绝（无副作用）。历史确认游标前未持有 payload 的命令拒绝，不能验证其一致性。
+- 成功 payload 仅本实例生命周期记忆；重启持久化、主线程调度由上层负责。缺口/非法命令停止，不推进游标；所有数值/必需参数先验证。seek 越界在调用前拒绝，同点沿用实际时钟事件语义；上层先配置案件区间。仅消费上层已授权并正确映射的命令，不替代认证或 HTTP。
+- setRate 仅现有时钟支持的八档；focusVessel 仅注入意图，不表示相机成功移动。时钟/回调异常可能已经生效，返回 FailedUnknown 并锁住实例，不可自动安全重试，不承诺 exactly-once。
+- 状态快照只读；不实现 HTTP、10Hz 网络发布或 Unity 画面。纯逻辑验收与 netstandard2.1/C#9 编译独立完成。
+
+### W13.1 独立验收登记
+新增独立 `tests_acceptance/W13`，冻结后只读引用适配器与现有真实ISimClock实现。验收按case隔离、连续序列/重复/乱序/冲突、非法参数拒绝无副作用、越界seek与不支持倍速预检拒绝、异常可能已生效时锁实例不自动重试、仅显式checkpoint边界的重启语义、focus意图回调及只读状态快照。真实Clock验证seek误差<0.1s与play/pause/rate推进，不改Clock或server合同，不将本地纯C#测试称为Unity相机/HTTP联调通过。
+
+## W7.1 既有征求意见轮次 UI（2026-11-12）
+- 登记跨冻结修改 RecommendationsPage：保留建议看板、原轮次矩阵与报告入口，仅接入独立 consultation 组件与局部 w7.css。
+- 范围：既有轮次选择、登记回复/意见、Pending 意见采纳决定、服务器汇总与审计刷新。不新增/关闭/放弃轮次，不外发消息，不改服务合同或实现。
+- 实际案件 report_draft 策略决定读写，失败/未知 fail closed；关闭轮次不能收回复，但按现服务语义仍能处理 Pending 意见。部分/未采纳必须非空反馈。
+- 切案件/身份清空数据与表单，失效异步结果不回填；提交锁防双击。403/409明示并只重载读取，不自动重试写操作。结果不确定时保留错误，不假称写审计成功。
+- 组件/模型自测与全web/build由实施方执行；真实HTTP与浏览器流程由独立验收执行，静态渲染不冒充交互完成。
+
+### W7.1 独立验收准备
+新增tests_acceptance/W7真实回环HTTP验收，使用临时SQLite与独立服务进程，不写生产数据库。按现有report_draft权限及closed规则验证回复/采纳、重复与失败不增审计、RO/Deny隔离、审计链及跨案数据不变；closed禁止新回复但Pending意见仍可决定，保持服务既有合同。冻结后执行并另记UI源码/浏览器与回归结果，不改后端接口。
+- W7.1 冻结后重开修复：父级 RecommendationsCasePage 也按 role/operator 身份加入 key 重挂载，清空审计（含反馈）、看板与旧表单；既有 useLoad cleanup 将旧请求 alive=false，不允许旧身份读取异步回填。新增静态接线回归，实际切角色由浏览器验收。
+
+### W7.1 身份隔离修复后的旧断言适配
+整页Recommendations key由case/id增加role/operator身份，旧case-linked-pages测试固定字符串因此失败。保留原测试及断言数量，Recommendations分支改查更严格的case/id/who key和身份订阅，Evidence分支保留原case/id key；未放宽卸载旧数据/表单要求，不改实现。
+- W7.1 浏览器返工：768px文档横向溢出（实际37检查中唯一失败）。局部w7-page栅格折叠、看板/操作行换行；w7.css仅对.app:has(.w7-page)修正顶栏最小内容撑宽与行高，保留侧栏/按钮/内容，不以overflow:hidden掩盖。全局styles与Layout不变。
+
+### W7.2 独立验收准备
+新增独立test_round_lifecycle_w72_http.py，复用未改W7.1真实回环临时数据库fixture，不覆盖W7.1用例。覆盖默认固定days=30/isAgreedDeadline=false、新建/已确认放弃/关闭的审计与持久化、重复和非法失败无增审计、RO/Deny权限、跨案数据不变、关闭时仍有Pending意见可合法决定。UI冻结后另验身份/异步/防双击与全web；无外部发送。后端空串/重复party及跨客户端并发open既有风险明确记录，不在本UI验收中悄悄修改合同或实现。
+
+## W7.2 轮次生命周期 UI（2026-11-12）
+- 登记修改W7.1冻结的consultation组件/model/types并新增RoundLifecycle组件与测试；W7.1冻结记录不覆盖。
+- 新建仅固定默认30天，版本/各方ID与名称trim必填，ID按大小写敏感去重，草案哈希可空或规范化64位小写hex；不上传附件、不发送草案。
+- 登记已确认的放弃回复事实，非替相关方作出放弃；理由trim必填。关闭前提示无重开接口且Pending意见仍可决定，客户端时间仅提示，最终由服务判断allReplied或到期。
+- 三操作本地二次确认、沿用同步gate/案件身份隔离/无自动写重试。网络失败后只读核对，不声称未生效。
+- 不改服务合同/实现；后端仍有空白/重复输入弱校验及跨客户端新建竞态，本UI校验不等于后端安全补齐。固定30天避免days非30却标默认30天的既有审计语义问题。
+- W7.2追加受控截止时间独立验收：新增test_round_deadline_w72.py，每项独立临时DB，TestClient仅monkeypatch本轮router now_utc，deadline−1μs/等于/+1μs验证关闭规则与审计，不修改生产时钟或伪称真实浏览器时间测试；与6项真实HTTP分开计数。
+- W7.2 根源码审查返工：mutation catch必须同时重读父级审计。已落库但响应丢失时仅重读rounds会保留旧审计；新增onChanged只读刷新，不重试写。首版冻结清单已按仅此一行修复前内容恢复归档before-audit-reconcile-fix（从当前文本移除明确新增行重建其SHA256，未声称是独立验收产物），更新正式冻结并重跑实现方Web套件427条/build；完整九套件由独立验收另跑。
+
+## W7.3 征求意见输入与核心对齐（2026-11-12）
+- 独立红基线8项6失败2通过，实施仅4规则：拒空白草案版本、空白相关方ID、原样Ordinal精确重复ID、纯空白放弃理由，新增handler校验在权限校验之后；错误consultation_invalid_argument/422。
+- 保持核心错误优先级：版本先于开放状态检查；ID/重复检查在开放状态检查之后；放弃理由在轮次存在/关闭检查之后、相关方检查之前。有效值原样存储，不trim规范化，' A '与'A'、a与A不同；名称可空；空reason继续既有Pydantic min_length结构422。
+- 不改API字段、合同、操作人/期限规则、历史数据和任何锁。撤回此前仅加外层WRITE_LOCK的建议：未外锁路由可能先持SQLite写事务再等审计RLock，与外锁路由形成逆序循环等待。reports现有外锁不是安全证明，跨路由事务锁协议另审。
+- 独立验收文件不修改；实现新增自身回归测试，冻结后再独立复验。
+- W7.3独立补充验收登记：另增优先级/Unicode边界测试，不改8项红基线；未知/关闭轮次先于空白放弃理由、已有开放轮先于party错误、权限先于域空白校验，空reason仍结构422。仓库外离线net8 console实际核对IsNullOrWhiteSpace，与Python验收独立，锁风险仍仅源码评审且本片不修。
+- W7.3 Unicode边界：采用显式.NET Char.IsWhiteSpace字符集合，不用Python strip/isspace（后者还把U+001C..001F归空白）；加入合法控制字符与零宽空格原样保留的HTTP测试，不扩展拒绝范围。
+- W4.1独立验收准备：新tests_acceptance/W4覆盖case-scoped inline CSV预览安全边界；临时SQLite、自己创建的非敏感canary、调用spy及真实本地DLL分层记录，不修改实现。冻结前仅准备，真实执行结果另记；不把旧/core/align入口风险称为已修复。
+
+## W4.1 案件级 inline-only align 临时预览（2026-11-12）
+- 先新增typed schema/OpenAPI再实现新POST /cases/{caseId}/timeline/align-preview。仅内联CSV及显式列映射，逐层strict/extra forbid；固定align命令，不接受caseId/epoch/command/path/manualAnchors/未知参数。案件与纪元由服务load_case读取，timeline read权限足够，关闭只读session后计算。
+- 工程预算：最多4源，每源文本256KiB UTF8、总1MiB，每源16列，源ID64字符、列名128；非空/源ID唯一。kind限Heading/CourseOverGround/SpeedOverGround。CSV逗号、UTC（无offset按UTC）、scale1/offset0；使用者明确保证时间为UTC，不猜本地时区。calibrate=true，无锚点/未校准状态及错误必须显示，不承诺成功校准。
+- 响应明确previewOnly/persisted:false/current case与epoch，校验结果案件和全部冲突schema。未知基础设施错误不回显路径/stderr。无持久化、审计、冲突采纳或人工复核覆盖；旧裸/core/align完全不改，不能把新代理说成整个服务路径漏洞已修。
+- Evidence整页身份/案件重挂载失效旧数据、表单和响应；独立局部预览面板读取实际policy，失败禁用，RO可预览。修改已冻EvidencePage需后续全web/关联页回归；如静态断言与新身份key冲突仅强化改写，不删测试。
+- W4.1关联页静态断言按原规则强化：Evidence和Recommendations均要求case/id/identity key，不删除原断言；相应test文件纳入新冻结。此为新增整页权限隔离接线，不改变原报告引用目标逻辑。
+- W4.1局部响应式：Evidence原两列/六指标改局部class，w4.css只对当前路由折叠及顶栏换行，保留所有内容；不改共享styles或旧写操作。
+- W4.1根布局审查返工：预览长表单不能默认挤走原证据KPI/清单。Evidence仅将新增工具包在原生details默认收起，summary『临时CSV预览，未入库』；展开后原计算/权限状态不变。原13项冻结保留before-collapse，重跑web/build后重新冻结。
+
+## YANGZE canonical source pin correction（2026-11-12）
+- 独立红基线已确认：本地首次物化原文末尾误多一个LF，使错误62608byte/7adad5bb…被误pin三处；远端原文从未改变。父已保留错误副本并恢复canonical，实施不再改原文。
+- 唯一canonical：reports/yangze22/report.txt，commit c6113bee85d25bf97d805fb2d264fb6ab138b2e2，62607bytes，gitblob d5a6b5fc79ad0371c8ccc372b40ca9110d5c30c4，sha256 bca8f8b8ba04a5d0669a121bc6c9380c8cd6f8397f67be2d0b30b38871c22ef2。修seed/public_text/templates三pin，严格拒旧多LF副本，不normalize或双hash兼容。
+- 独立hardcoded SHA/size/blob回归及freshDB验证；既有DB的错误EV-201/原始blob/保管链不自动重写，不伪造来源一致。历史DB修复需要另立合法证据更正/迁移流程。
+- 历史日志/冻结原样保留，但其中以错误多LF物化文件通过的来源校验、freshstartup及引用验证不能证明canonical可用；本次生成新manifest与独立重跑。manifest含canonical原文仅验证输入，不作为远端文件改动项。
+
+
+## HTTP core error redaction (2026-11-12)
+
+Scope: colreg.router._core error responses only; documented in contracts/CONTRACTS.md. Known error codes/statuses remain stable with fixed safe messages; unknown CoreError codes collapse to CORE_ERROR/502. CLI and successful HTTP responses are unchanged. No source files frozen by W4.1 are modified. This does NOT remove the old /core/align path-reading capability or implement authentication; disabling/restricting that documented route remains a separate compatibility proposal. No database migration, merge or deployment.
+
+## Core envelope type validation (2026-11-12)
+
+Follow-up to HTTP error redaction: validate only the envelope types consumed by Python core_client (object, boolean ok, object result/error, string error code/message). Malformed output becomes CORE_BAD_OUTPUT/502 rather than incidental AttributeError/TypeError/500. Valid success envelopes and domain error mappings are preserved, including default fields in an empty error object. CLI, case authorization, filesystem path capability and authentication are unchanged. No broad exception catch, migration, merge or deployment.

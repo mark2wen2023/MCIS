@@ -57,9 +57,10 @@ def build_gisis(case: dict, vessels: list) -> dict:
         if definition["id"] == "severity":
             value = _SEVERITY.get(value) if isinstance(value, str) else None
         fields.append(_materialize(definition, value))
-    fictional = case.get("isFictionalDemo") is True
+    from .service import data_status, is_fictional
+    fictional = is_fictional(case)
     return {"caseId": case["caseId"], "isFictionalDemo": fictional,
-            "realDataStatus": "fictional" if fictional else "pending-confirmation", "fields": fields,
+            "realDataStatus": data_status(case), "fields": fields,
             "notice": f"GISIS 本地准备字段，未向 IMO 提交；{'虚构示例 / Fictional；' if fictional else ''}{DISCLAIMER_ZH} / {DISCLAIMER_EN}"}
 
 

@@ -1,0 +1,81 @@
+{
+  "baselineCommit": "c6113bee85d25bf97d805fb2d264fb6ab138b2e2",
+  "historicalDllSha256": "b0e507b80b41f2d3a5de0dd73adac2b070dd7310e2f9c52b65a6ab44b9b652f3",
+  "isolatedReconstruction": {
+    "sdk": "8.0.428",
+    "compiledInputCount": 56,
+    "compiledInputSha256": "7d425566e65e53ef6d7c35a8d5c26b96f3c500008c29fe5adc0a702c880273a8",
+    "restoredSourceSha256": "ec56cbfe1ae6c81be28e31844fd77462d60c3a67d42d13e68416b7b8e65bbf75",
+    "dllSha256": "b0e507b80b41f2d3a5de0dd73adac2b070dd7310e2f9c52b65a6ab44b9b652f3",
+    "matchesHistoricalSeed": true,
+    "productionDllUnchanged": true,
+    "productionDllSha256": "e24783c5baa9f16d6e1142369c0564733c51d1a6c570ec53be66378beeed6e8d",
+    "historicalRootPathMap": "/workspace/maritime-sim-design",
+    "includeSourceRevisionInInformationalVersion": false,
+    "note": "Recovered generating artifact only; not a replacement for the current W5.1 source/runtime."
+  },
+  "controlledBuildMatrix": [
+    {
+      "name": "a-default",
+      "sha256": "8014fe88464322fd00d470ca63377c334b149d14024c1c6e8ed1116a4499560d",
+      "bytes": 250368,
+      "informationalVersion": "[assembly: System.Reflection.AssemblyInformationalVersionAttribute(\"1.0.0\")]",
+      "sourceRevisionId": null,
+      "pathMapTarget": null
+    },
+    {
+      "name": "a-revision-a",
+      "sha256": "43def71b2044975f3bae933a2da015c2b57ccf5904e2b4d6127074b672660782",
+      "bytes": 250368,
+      "informationalVersion": "[assembly: System.Reflection.AssemblyInformationalVersionAttribute(\"1.0.0+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\")]",
+      "sourceRevisionId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "pathMapTarget": null
+    },
+    {
+      "name": "a-revision-b",
+      "sha256": "ee7c483c2eef109fd7abe58a3df4457e649600479caf4e0ef6f64b9d97b0ae86",
+      "bytes": 250368,
+      "informationalVersion": "[assembly: System.Reflection.AssemblyInformationalVersionAttribute(\"1.0.0+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\")]",
+      "sourceRevisionId": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "pathMapTarget": null
+    },
+    {
+      "name": "b-default",
+      "sha256": "807315f88cf19db2c2acaa7e0aa0699a5773287d58f639f569c09f8ce833d5db",
+      "bytes": 250368,
+      "informationalVersion": "[assembly: System.Reflection.AssemblyInformationalVersionAttribute(\"1.0.0\")]",
+      "sourceRevisionId": null,
+      "pathMapTarget": null
+    },
+    {
+      "name": "a-mapped",
+      "sha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+      "bytes": 250368,
+      "informationalVersion": "[assembly: System.Reflection.AssemblyInformationalVersionAttribute(\"1.0.0\")]",
+      "sourceRevisionId": null,
+      "pathMapTarget": "/workspace/maritime-sim-design"
+    },
+    {
+      "name": "b-mapped",
+      "sha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+      "bytes": 250368,
+      "informationalVersion": "[assembly: System.Reflection.AssemblyInformationalVersionAttribute(\"1.0.0\")]",
+      "sourceRevisionId": null,
+      "pathMapTarget": "/workspace/maritime-sim-design"
+    }
+  ],
+  "upstreamEvidence": {
+    "w3.2StartAndEndBlob": "1b2f3a3330bdfc2a3c694421a9f49549e24ba399",
+    "w5.1FrozenBlob": "e6d62a42e04b5a6ef4f0f6b6e0c0256ebf9c4cdb",
+    "historicalAuditSourceSha256": "ec56cbfe1ae6c81be28e31844fd77462d60c3a67d42d13e68416b7b8e65bbf75",
+    "currentAuditSourceSha256": "07aa67c779169490de2697569519b25fc122bc2473b4a0e31660c1b4c5026d2a"
+  },
+  "artifactSearch": {
+    "releases": 0,
+    "workflowRuns": 0,
+    "dllPathCommitHistory": 0,
+    "allArtifactsEndpoint": "not allowed by connector; no runs available to inspect",
+    "gitignore": "tools/mcis-core/out/ explicitly ignored"
+  },
+  "productionAndTestsModified": false
+}

@@ -73,6 +73,7 @@
         "realDataStatus": {
           "enum": [
             "fictional",
+            "authorized-public",
             "pending-confirmation"
           ]
         },
@@ -517,6 +518,7 @@
         "realDataStatus": {
           "enum": [
             "fictional",
+            "authorized-public",
             "pending-confirmation"
           ]
         },

@@ -17,7 +17,7 @@ from schema_check import check as schema
 L = f"/api/v1/cases/{LILY}"
 H5 = f"/api/v1/cases/{HAILI}"
 OP = "验收员·合成甲"
-needs_core = pytest.mark.skipif(not HAS_CORE, reason="需要 ~/.dotnet 与 tools/mcis-core/out/mcis-core.dll")
+needs_core = pytest.mark.skipif(not HAS_CORE, reason="需要真实 dotnet 与预构建 mcis-core.dll（支持 MCIS_DOTNET/MCIS_CORE_DLL）")
 
 
 def _ok(ref, doc):
@@ -59,11 +59,11 @@ REASON_MISSING = [
 @pytest.mark.parametrize("status,note", REASON_MISSING)
 def test_A1_reject_modify_without_reason_is_422(client, status, note):
     before = _check(_colreg(client), "CK-05")
-    body = {"reviewStatus": status}
+    body = {"action": {"Confirmed": "confirm", "Rejected": "dismiss", "Modified": "modify"}[status]}
     if status == "Modified":
         body["verdict"] = "NeedsReview"
     if note is not None:
-        body["note"] = note
+        body["reason"] = note
     r = _patch(client, "CK-05", body)
     assert r.status_code == 422, r.text
     err = r.json()
@@ -76,9 +76,9 @@ def test_A1_reject_modify_without_reason_is_422(client, status, note):
 
 @pytest.mark.parametrize("note", [None, "", "核对合成 VDR 后确认"])
 def test_A2_confirm_reason_optional(client, note):
-    body = {"reviewStatus": "Confirmed"}
+    body = {"action": "confirm"}
     if note is not None:
-        body["note"] = note
+        body["reason"] = note
     r = _patch(client, "CK-03", body)
     assert r.status_code == 200, r.text
     assert r.json()["reviewStatus"] == "Confirmed"
@@ -86,7 +86,7 @@ def test_A2_confirm_reason_optional(client, note):
 
 
 def test_A3_modify_requires_verdict(client):
-    r = _patch(client, "CK-05", {"reviewStatus": "Modified", "note": "合成理由"})
+    r = _patch(client, "CK-05", {"action": "modify", "reason": "合成理由"})
     assert r.status_code == 422
     _ok("common#/$defs/problem", r.json())
     assert r.json()["code"] == "colreg_review_verdict_required"
@@ -94,9 +94,9 @@ def test_A3_modify_requires_verdict(client):
 
 
 @pytest.mark.parametrize("body", [
-    {"reviewStatus": "Draft", "note": "x"},
-    {"reviewStatus": "Approved", "note": "x"},
-    {"reviewStatus": "Modified", "verdict": "Bogus", "note": "x"},
+    {"action": "draft", "reason": "x"},
+    {"action": "approved", "reason": "x"},
+    {"action": "modify", "verdict": "Bogus", "reason": "x"},
     {},
 ])
 def test_A4_bad_body_is_422_problem(client, body):
@@ -106,22 +106,22 @@ def test_A4_bad_body_is_422_problem(client, body):
 
 
 def test_A5_unknown_check_404_problem(client):
-    r = _patch(client, "CK-NOPE-999", {"reviewStatus": "Confirmed"})
+    r = _patch(client, "CK-NOPE-999", {"action": "confirm"})
     assert r.status_code == 404
     _ok("common#/$defs/problem", r.json())
 
 
 @pytest.mark.parametrize("role", ["ExternalExpert", "InterestedState", "AgentService", "Public"])
 def test_A6_readonly_roles_cannot_review(client, role):
-    r = _patch(client, "CK-05", {"reviewStatus": "Rejected", "note": "合成理由"}, role=role)
-    assert r.status_code in (403, 404), r.text
+    r = _patch(client, "CK-05", {"action": "dismiss", "reason": "合成理由"}, role=role)
+    assert r.status_code == 403, r.text
     assert _check(_colreg(client), "CK-05")["reviewStatus"] == "Draft"
 
 
 def test_A7_confirm_must_not_change_verdict(client):
     """确认=接受原判定。带 verdict 应 422 colreg_review_verdict_not_allowed，不得改数据。"""
     before = _check(_colreg(client), "CK-05")
-    r = _patch(client, "CK-05", {"reviewStatus": "Confirmed", "verdict": "NotComplied"})
+    r = _patch(client, "CK-05", {"action": "confirm", "verdict": "NotComplied"})
     assert r.status_code == 422, r.text
     _ok("common#/$defs/problem", r.json())
     assert r.json()["code"] == "colreg_review_verdict_not_allowed"
@@ -132,7 +132,7 @@ def test_A7_confirm_must_not_change_verdict(client):
 def test_A8_reject_must_not_change_verdict(client):
     """驳回带 verdict 应 422 colreg_review_verdict_not_allowed，不得改判定。"""
     before = _check(_colreg(client), "CK-05")
-    r = _patch(client, "CK-05", {"reviewStatus": "Rejected", "verdict": "NotComplied", "note": "合成理由"})
+    r = _patch(client, "CK-05", {"action": "dismiss", "verdict": "NotComplied", "reason": "合成理由"})
     assert r.status_code == 422, r.text
     _ok("common#/$defs/problem", r.json())
     assert r.json()["code"] == "colreg_review_verdict_not_allowed"
@@ -152,7 +152,7 @@ def test_B1_audit_has_who_when_before_after_reason(client, status, verdict, reas
     cid = "CK-07"
     old = _check(_colreg(client), cid)
     t0 = datetime.now(timezone.utc) - timedelta(seconds=5)
-    body = {"reviewStatus": status, "note": reason}
+    body = {"action": {"Confirmed": "confirm", "Rejected": "dismiss", "Modified": "modify"}[status], "reason": reason}
     if verdict:
         body["verdict"] = verdict
     r = _patch(client, cid, body)
@@ -178,7 +178,7 @@ def test_B2_long_reason_kept_whole_in_audit(client):
     """21:34 裁定：审计 after 摘要允许截断；落盘行 reason 键与复核历史保存全文（逐字相等）。"""
     import json
     reason = "合成理由" + "甲乙丙丁戊己庚辛壬癸" * 39
-    r = _patch(client, "CK-08", {"reviewStatus": "Rejected", "note": reason})
+    r = _patch(client, "CK-08", {"action": "dismiss", "reason": reason})
     assert r.status_code == 200, r.text
     e = _reviews(client, "CK-08")[-1]
     assert len(e["after"]) <= 400  # 摘要允许截断
@@ -189,7 +189,7 @@ def test_B2_long_reason_kept_whole_in_audit(client):
 
 
 def test_B3_default_operator_when_header_missing(client):
-    r = client.patch(f"{L}/colreg/checks/CK-09", json={"reviewStatus": "Confirmed"}, headers={"X-MCIS-Role": "Investigator"})
+    r = client.patch(f"{L}/colreg/checks/CK-09", json={"action": "confirm"}, headers={"X-MCIS-Role": "Investigator"})
     assert r.status_code == 200
     e = _reviews(client, "CK-09")[-1]
     assert e["operator"].strip(), "操作人为空"
@@ -197,8 +197,8 @@ def test_B3_default_operator_when_header_missing(client):
 
 def test_B4_sequential_reviews_chain_and_before_after_link(client):
     cid = "CK-10"
-    steps = [({"reviewStatus": "Confirmed"}, ), ({"reviewStatus": "Modified", "verdict": "Partial", "note": "合成①"}, ),
-             ({"reviewStatus": "Rejected", "note": "合成②"}, )]
+    steps = [({"action": "confirm"}, ), ({"action": "modify", "verdict": "Partial", "reason": "合成①"}, ),
+             ({"action": "dismiss", "reason": "合成②"}, )]
     for (b,) in steps:
         assert _patch(client, cid, b).status_code == 200
     evs = _reviews(client, cid)
@@ -213,7 +213,7 @@ def test_B4_sequential_reviews_chain_and_before_after_link(client):
 
 
 def test_B5_review_persisted_and_doc_valid(client):
-    assert _patch(client, "CK-11", {"reviewStatus": "Modified", "verdict": "NeedsReview", "note": "合成"}).status_code == 200
+    assert _patch(client, "CK-11", {"action": "modify", "verdict": "NeedsReview", "reason": "合成"}).status_code == 200
     doc = _colreg(client)
     _ok("colreg", doc)
     c = _check(doc, "CK-11")
@@ -329,7 +329,8 @@ def test_F1_evaluate_optional_body(client, mode):
     _ok("colreg", doc)
     assert doc["caseId"] == LILY and "不作责任认定" in doc["disclaimer"]
     assert doc["checks"] and all(c["reviewStatus"] == "Draft" and c["source"] == "RuleEngine" for c in doc["checks"])
-    assert _colreg(client) == doc
+    assert doc.get("runId"), "W6.2 evaluate must identify the new run"
+    assert _colreg(client) == {k: v for k, v in doc.items() if k != "runId"}
     ev = client.get(f"{L}/audit", params={"action": "colreg.evaluate"}, headers=H()).json()
     assert ev and ev[-1]["category"] == "Colreg"
 
@@ -361,7 +362,7 @@ def test_F3_evaluate_checks_link_evidence(client):
 def test_F4_evaluate_then_review_roundtrip(client):
     doc = client.post(f"{L}/colreg:evaluate", json={}, headers=H()).json()
     cid = doc["checks"][0]["checkId"]
-    r = _patch(client, cid, {"reviewStatus": "Rejected", "note": "合成驳回"})
+    r = _patch(client, cid, {"action": "dismiss", "reason": "合成驳回"})
     assert r.status_code == 200 and r.json()["reviewStatus"] == "Rejected"
     _ok("colreg", _colreg(client))
 

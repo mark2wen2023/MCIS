@@ -1,0 +1,5 @@
+{
+  "path": "service/mcis_service/recommendations/router.py",
+  "sha256": "2658f0a53de61ef5f903de81afa64218f185a940f8e166ecae1549caab5325b1",
+  "scope": "Unmodified router prior to input-parity implementation; no lock change authorized"
+}

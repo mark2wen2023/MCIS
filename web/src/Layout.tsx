@@ -4,6 +4,7 @@ import { api, CASE_ID, getOperator, getRole, setIdentity } from './api'
 import { ROUTES } from './routes'
 import type { CaseDef, Role } from './types'
 import { SERVICE_ADDR } from './config'
+import { caseForLocation, navigationForCase } from './caseContext'
 
 const ROLES: { role: Role; label: string; op: string }[] = [
   { role: 'LeadInvestigator', label: '首席调查官', op: '首席调查官' },
@@ -20,21 +21,33 @@ export function Layout() {
   const loc = useLocation()
   const [params] = useSearchParams()
   const onAnalysis = loc.pathname.endsWith('/analysis') // W12：分析页也按 ?case= 显示当前案件
-  const caseId = ((loc.pathname.endsWith('/colreg') || onAnalysis) && params.get('case')) || CASE_ID
+  const caseId = caseForLocation(loc.pathname, params.toString(), CASE_ID)
   useEffect(() => {
-    api.get<CaseDef>(`/cases/${caseId}`).then((c) => { setCaseDef(c); setOnline(true) }).catch(() => {
+    let cancelled = false
+    setCaseDef(null); setOnline(null)
+    api.get<CaseDef>(`/cases/${encodeURIComponent(caseId)}`).then((c) => {
+      if (!cancelled) { setCaseDef(c); setOnline(true) }
+    }).catch(() => {
+      if (cancelled) return
       if (!onAnalysis) { setOnline(false); return }
-      // W12：YANGZE 22 等未入库案例，用分析页案例清单里的标题/虚构标志
+      // Analysis-only historical cases can still be identified without a DB record.
       api.get<{ cases: { caseId: string; title: string; isFictionalDemo: boolean }[] }>('/analysis/cases')
-        .then((l) => { const c = l.cases.find((x) => x.caseId === caseId); setCaseDef(c ? ({ ...c } as CaseDef) : null); setOnline(true) })
-        .catch(() => setOnline(false))
+        .then((l) => {
+          if (cancelled) return
+          const c = l.cases.find((x) => x.caseId === caseId)
+          setCaseDef(c ? ({ ...c } as CaseDef) : null); setOnline(Boolean(c))
+        }).catch(() => { if (!cancelled) setOnline(false) })
     })
+    return () => { cancelled = true }
   }, [caseId, onAnalysis])
   const changeRole = (r: Role) => {
     setIdentity(r, ROLES.find((x) => x.role === r)?.op)
     setRole(r)
   }
-  const fictional = caseDef?.isFictionalDemo !== false
+  const currentCase = caseDef?.caseId === caseId ? caseDef : null
+  const fictional = currentCase?.isFictionalDemo === true
+  const unknown = !currentCase
+  const unknownLabel = online === false ? '案件信息不可用' : '案件信息载入中'
   return (
     <div className="app">
       <aside className="sidebar">
@@ -45,16 +58,16 @@ export function Layout() {
             <div className="brand-sub">海事事故调查工作台</div>
           </div>
         </div>
-        <div className={`demo-banner ${fictional ? '' : 'real'}`}>
-          {fictional
+        <div className={`demo-banner ${fictional || unknown ? '' : 'real'}`}>
+          {unknown ? <>{unknownLabel}<br />{caseId}</> : fictional
             ? <>⚠ 示例数据（虚构）<br />Lily × Mary 星屿港碰撞演示案，与任何真实事故无关</>
-            : <>⚠ 真实案例（公开报告）<br />{caseDef?.title || '公开事故报告数据'}，仅作技术分析，不作责任认定</>}
+            : <>⚠ 真实案例（公开报告）<br />{currentCase?.title || '公开事故报告数据'}，仅作技术分析，不作责任认定</>}
         </div>
         <nav className="nav">
           <div className="nav-sub-label first">调查与仿真工作流（01–08）</div>
-          {ROUTES.filter((r) => r.group === 'core').map((r) => <NavItem key={r.path} {...r} />)}
+          {ROUTES.filter((r) => r.group === 'core').map((r) => <NavItem key={r.path} {...r} caseId={caseId} />)}
           <div className="nav-sub-label">国际对标调查模块（09–17）</div>
-          {ROUTES.filter((r) => r.group === 'p6').map((r) => <NavItem key={r.path} {...r} />)}
+          {ROUTES.filter((r) => r.group === 'p6').map((r) => <NavItem key={r.path} {...r} caseId={caseId} />)}
         </nav>
         <div className="sidebar-foot">
           <span>service {SERVICE_ADDR}</span>
@@ -63,8 +76,8 @@ export function Layout() {
       </aside>
       <header className="topbar">
         <div className="topbar-left">
-          <span className={`watermark ${fictional ? '' : 'real'}`}>{fictional ? '⚠ 示例数据（虚构）' : '⚠ 真实案例（公开报告）'}</span>
-          <span className="case-chip">当前案件<b>{caseDef?.caseId ?? caseId}</b>{caseDef ? caseDef.title.replace('【虚构演示】', '') : '—'}</span>
+          <span className={`watermark ${fictional || unknown ? '' : 'real'}`}>{unknown ? unknownLabel : fictional ? '⚠ 示例数据（虚构）' : '⚠ 真实案例（公开报告）'}</span>
+          <span className="case-chip">当前案件<b>{caseId}</b>{currentCase ? currentCase.title.replace('【虚构演示】', '') : '—'}</span>
         </div>
         <div className="topbar-right">
           <span className="ident">操作人：{getOperator()}</span>
@@ -78,9 +91,9 @@ export function Layout() {
   )
 }
 
-function NavItem(r: (typeof ROUTES)[number]) {
+function NavItem(r: (typeof ROUTES)[number] & { caseId: string }) {
   return (
-    <NavLink to={`/${r.path}`} className={({ isActive }) => `nav-item ${r.group === 'p6' ? 'p6' : ''} ${isActive ? 'active' : ''}`}>
+    <NavLink to={navigationForCase(r.path, r.caseId, CASE_ID)} className={({ isActive }) => `nav-item ${r.group === 'p6' ? 'p6' : ''} ${isActive ? 'active' : ''}`}>
       <span className="nav-step-num">{r.num}</span>
       <span className="nav-item-text">
         <span className="nav-item-name">{r.name}</span>

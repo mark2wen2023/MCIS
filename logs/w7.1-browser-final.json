@@ -1,0 +1,461 @@
+{
+  "checks": [
+    {
+      "name": "frozen implementation hashes before",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "default latest open round",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "case switch clears old draft and rounds",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "RO has no mutation forms",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "reply HTTP201",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "two Pending comments persisted",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "double click emitted one POST",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "decision HTTP R2-C06",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "trimmed blank feedback blocks submission",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "decision HTTP R2-C07",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "reload preserves reply and decisions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "audit refreshed after UI mutations",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "closed round prevents reply",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "real stale reply HTTP409",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "conflict no retry and stale form invalidated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual permission change HTTP403",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "403 no mutation retry",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "closed round Pending remains actionable",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "decision HTTP R2-C04",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "viewport no document overflow 1440",
+      "passed": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "panel": 353.6875,
+        "main": 1216,
+        "mainScroll": 1216
+      }
+    },
+    {
+      "name": "viewport no document overflow 768",
+      "passed": true,
+      "detail": {
+        "viewport": 768,
+        "document": 768,
+        "panel": 506,
+        "main": 544,
+        "mainScroll": 544
+      }
+    },
+    {
+      "name": "whole page immediately removes prior audit and feedback before denied response",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "new role audit response held",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Deny clears consultation content",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "two allowed old-role audit responses held",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "late allowed audit response cannot refill denied role",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "policy failure is fail closed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "old-case response held",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "late old-case response ignored",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no external network requests",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "no JS errors",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "no unexpected HTTP errors",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "no non-resource console errors",
+      "passed": true,
+      "detail": [
+        {
+          "phase": "normal",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        },
+        {
+          "phase": "normal",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        },
+        {
+          "phase": "expected-conflict",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+        },
+        {
+          "phase": "expected-permission",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        },
+        {
+          "phase": "role-denied",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        },
+        {
+          "phase": "role-denied",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        },
+        {
+          "phase": "role-denied",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        },
+        {
+          "phase": "role-denied",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+        },
+        {
+          "phase": "expected-policy-error",
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+        }
+      ]
+    },
+    {
+      "name": "audit hash chain valid",
+      "passed": true,
+      "detail": {
+        "valid": true,
+        "count": 64,
+        "brokenAt": null,
+        "reason": "",
+        "headHash": "37026acf05392ec4ece9d945729511a76232b854f530e4db86f986ad646b0e4b"
+      }
+    },
+    {
+      "name": "exact audit mutation counts",
+      "passed": true,
+      "detail": [
+        [
+          "consultation.reply",
+          "2"
+        ],
+        [
+          "consultation.decide",
+          "R2-C06"
+        ],
+        [
+          "consultation.decide",
+          "R2-C07"
+        ],
+        [
+          "consultation.reply",
+          "2"
+        ],
+        [
+          "consultation.close",
+          "2"
+        ],
+        [
+          "consultation.decide",
+          "R2-C04"
+        ]
+      ]
+    },
+    {
+      "name": "browser mutations bound to demo case",
+      "passed": true,
+      "detail": [
+        {
+          "phase": "normal",
+          "method": "POST",
+          "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/consultation/rounds/2/replies",
+          "body": "{\"partyId\":\"FLAG-B\",\"text\":\"W71 browser received reply (fictional)\",\"comments\":[\"W71 browser comment one\",\"W71 browser comment two\"]}"
+        },
+        {
+          "phase": "normal",
+          "method": "PATCH",
+          "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/consultation/rounds/2/comments/R2-C06",
+          "body": "{\"decision\":\"Adopted\",\"feedback\":\"\"}"
+        },
+        {
+          "phase": "normal",
+          "method": "PATCH",
+          "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/consultation/rounds/2/comments/R2-C07",
+          "body": "{\"decision\":\"PartiallyAdopted\",\"feedback\":\"Browser acceptance partial reason\"}"
+        },
+        {
+          "phase": "expected-conflict",
+          "method": "POST",
+          "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/consultation/rounds/2/replies",
+          "body": "{\"partyId\":\"CO-MARY\",\"text\":\"stale reply\",\"comments\":[]}"
+        },
+        {
+          "phase": "expected-permission",
+          "method": "PATCH",
+          "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/consultation/rounds/2/comments/R2-C04",
+          "body": "{\"decision\":\"Adopted\",\"feedback\":\"\"}"
+        },
+        {
+          "phase": "normal",
+          "method": "PATCH",
+          "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/consultation/rounds/2/comments/R2-C04",
+          "body": "{\"decision\":\"NotAdopted\",\"feedback\":\"Closed round pending decision reason\"}"
+        }
+      ]
+    },
+    {
+      "name": "frozen implementation hashes after",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "errors": [],
+  "console": [
+    {
+      "phase": "normal",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "phase": "normal",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "phase": "expected-conflict",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+    },
+    {
+      "phase": "expected-permission",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "phase": "role-denied",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "phase": "role-denied",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "phase": "role-denied",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "phase": "role-denied",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "phase": "expected-policy-error",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    }
+  ],
+  "httpErrors": [
+    {
+      "phase": "normal",
+      "status": 403,
+      "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/audit?category=SafetyRec&order=desc&limit=14",
+      "role": "InterestedState"
+    },
+    {
+      "phase": "normal",
+      "status": 403,
+      "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/audit?category=Consultation&order=desc&limit=6",
+      "role": "InterestedState"
+    },
+    {
+      "phase": "expected-conflict",
+      "status": 409,
+      "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/consultation/rounds/2/replies",
+      "role": "Investigator"
+    },
+    {
+      "phase": "expected-permission",
+      "status": 403,
+      "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/consultation/rounds/2/comments/R2-C04",
+      "role": "Investigator"
+    },
+    {
+      "phase": "role-denied",
+      "status": 403,
+      "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/audit?category=Consultation&order=desc&limit=6",
+      "role": "Public"
+    },
+    {
+      "phase": "role-denied",
+      "status": 403,
+      "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/audit?category=SafetyRec&order=desc&limit=14",
+      "role": "Public"
+    },
+    {
+      "phase": "role-denied",
+      "status": 403,
+      "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/audit?category=SafetyRec&order=desc&limit=14",
+      "role": "ExternalExpert"
+    },
+    {
+      "phase": "role-denied",
+      "status": 403,
+      "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/audit?category=Consultation&order=desc&limit=6",
+      "role": "ExternalExpert"
+    },
+    {
+      "phase": "expected-policy-error",
+      "status": 503,
+      "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/access-policy",
+      "role": "Investigator"
+    }
+  ],
+  "mutations": [
+    {
+      "phase": "normal",
+      "method": "POST",
+      "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/consultation/rounds/2/replies",
+      "body": "{\"partyId\":\"FLAG-B\",\"text\":\"W71 browser received reply (fictional)\",\"comments\":[\"W71 browser comment one\",\"W71 browser comment two\"]}"
+    },
+    {
+      "phase": "normal",
+      "method": "PATCH",
+      "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/consultation/rounds/2/comments/R2-C06",
+      "body": "{\"decision\":\"Adopted\",\"feedback\":\"\"}"
+    },
+    {
+      "phase": "normal",
+      "method": "PATCH",
+      "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/consultation/rounds/2/comments/R2-C07",
+      "body": "{\"decision\":\"PartiallyAdopted\",\"feedback\":\"Browser acceptance partial reason\"}"
+    },
+    {
+      "phase": "expected-conflict",
+      "method": "POST",
+      "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/consultation/rounds/2/replies",
+      "body": "{\"partyId\":\"CO-MARY\",\"text\":\"stale reply\",\"comments\":[]}"
+    },
+    {
+      "phase": "expected-permission",
+      "method": "PATCH",
+      "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/consultation/rounds/2/comments/R2-C04",
+      "body": "{\"decision\":\"Adopted\",\"feedback\":\"\"}"
+    },
+    {
+      "phase": "normal",
+      "method": "PATCH",
+      "url": "http://127.0.0.1:42011/api/v1/cases/CASE-2026-DEMO-LILY-MARY/consultation/rounds/2/comments/R2-C04",
+      "body": "{\"decision\":\"NotAdopted\",\"feedback\":\"Closed round pending decision reason\"}"
+    }
+  ],
+  "screenshotsLocalOnly": [
+    "consultation-1440.png",
+    "consultation-768.png"
+  ]
+}

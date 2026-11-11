@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
-# W6 验收用：直接运行已构建的 mcis-core.dll，不触发重编（避免与其它包并行构建冲突）
-export DOTNET_CLI_TELEMETRY_OPTOUT=1 DOTNET_NOLOGO=1 DOTNET_ROOT="$HOME/.dotnet"
-exec "$HOME/.dotnet/dotnet" /workspace/maritime-sim-design/tools/mcis-core/out/mcis-core.dll "$@"
+# W6验收：只执行预构建的真实CLI，路径相对仓库；不自动构建或替换计算结果。
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+DOTNET="${MCIS_DOTNET:-$HOME/.dotnet/dotnet}"
+DLL="${MCIS_CORE_DLL:-$ROOT/tools/mcis-core/out/mcis-core.dll}"
+export DOTNET_CLI_TELEMETRY_OPTOUT=1 DOTNET_NOLOGO=1
+export DOTNET_ROOT="$(dirname "$DOTNET")"
+exec "$DOTNET" "$DLL" "$@"

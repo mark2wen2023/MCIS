@@ -1,0 +1,9 @@
+W7.3 independent actual-browser regression: 57/57 passed, process exit0.
+Ran published tests_acceptance/W7/consultation_lifecycle_browser.py UNCHANGED.
+Script SHA256 before/after:3b572be43710db4ff14897a35a0e662be833993884499e1afa20cc17a1123c36.
+W7.2 frontend8frozen hashes and W7.3 backend2frozen hashes checked before/after, all match.
+Official Chrome157.0.8103.50; fresh disposable DB, actual service/core and Vite,127.0.0.1 only.0external requests,0JS errors; explained intentional403/409/503 and committed-response-abort ERR_FAILED remain expected.
+Full lifecycle and actual201 committed then dropped response reconciliation passed; actual201 plus failed GET reconciliation fails closed then manual read recovers. Exact audit increments and chainvalid pass. Expired test uses labelled disposable deadline fixture, no audit rewrite.
+1440 document1440/main1216 scroll1216;768 document768/main544 scroll544. Both screenshots locally inspected, no new layout issue; PNGs remain local and MUST NOT be uploaded.
+Detailed checks:logs/w7.3-browser-regression.json. Reproduction/scope:logs/w7.2-browser-review.md. Not production/mobile/user-device/live messaging or cross-client concurrency safety. This confirms UI workflow regression, not exhaustive W7.3 malformed-input validation (covered by independent service reviewer).
+No source/script/previous evidence edits, stage,push,merge,deploy or image upload.
