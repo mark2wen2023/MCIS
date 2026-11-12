@@ -1,0 +1,6 @@
+service/mcis_service/agents/router.py: OK
+service/mcis_service/agents/model_client.py: OK
+service/mcis_service/agents/extraction.py: OK
+contracts/W20-local-extraction.md: OK
+contracts/schemas/agent-extraction.schema.json: OK
+docs/W20-local-model.md: OK

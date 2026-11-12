@@ -1,4 +1,4 @@
-"""智能体骨架：只有接口与人工确认队列，不接任何模型。
+"""智能体服务：W20.1 本地 LLM 文本抽取与人工确认队列。
 
 流程：智能体服务（role=AgentService）先通过 /agents/inputs/... 取脱敏后的输入 → 生成草稿 → POST drafts（必须带出处）
 → 调查员在确认队列里 Confirmed / Modified / Rejected → 服务把确认结果写回目标实体，全程审计。
@@ -7,7 +7,8 @@ from __future__ import annotations
 
 from typing import Any, Literal
 
-from fastapi import APIRouter, Body
+from fastapi import APIRouter, Body, HTTPException
+from sqlalchemy import text
 from pydantic import BaseModel
 
 from ..audit import service as audit
@@ -22,6 +23,7 @@ from ..interviews.models import InterviewRow
 from ..redaction.gateway import get_policy, redact_interview, require, strip_meta
 from ..timeline.models import TimelineEventRow
 from .models import AgentDraftRow
+from . import extraction, model_client
 
 router = APIRouter(prefix="/api/v1", tags=["agents"])
 
@@ -43,7 +45,13 @@ class Review(BaseModel):
 
 @router.get("/agents")
 def registry(ctx: Ctx = CtxDep) -> list[dict[str, Any]]:
-    return [{**a, "status": "not_connected", "model": "none"} for a in REGISTRY]
+    try:
+        cfg = model_client.config()
+        status = "configured" if cfg else "not_connected"
+    except HTTPException:
+        cfg, status = None, "invalid_configuration"
+    return [{**a, "status": status if a["agent"] == "people_ops" else "not_connected",
+             "model": cfg.model if cfg and a["agent"] == "people_ops" else "none"} for a in REGISTRY]
 
 
 @router.get("/cases/{case_id}/agents/drafts")
@@ -56,6 +64,8 @@ def list_drafts(case_id: str, ctx: Ctx = CtxDep, status: str | None = None) -> l
 
 @router.post("/cases/{case_id}/agents/drafts", status_code=201)
 def submit_draft(case_id: str, body: dict[str, Any] = Body(...), ctx: Ctx = CtxDep) -> dict[str, Any]:
+    if body.get("targetEntityType") == "interviewStatements":
+        raise problem(422, "MANAGED_DRAFT_TARGET", "此草稿只能由人员/作业抽取端点生成")
     with ctx.db.session() as s:
         load_case(s, case_id)
         require(ctx, s, case_id, "agent_drafts", write=True)
@@ -78,6 +88,22 @@ def submit_draft(case_id: str, body: dict[str, Any] = Body(...), ctx: Ctx = CtxD
 def _apply(s, ctx: Ctx, case_id: str, d: dict[str, Any], payload: dict[str, Any]) -> str:
     """把确认后的草稿写回目标实体。返回效果说明。"""
     t = d.get("targetEntityType")
+    if t == "interviewStatements":
+        if d["status"] == "Rejected":
+            return "已驳回；未写入陈述"
+        require(ctx, s, case_id, "testimony", write=True)
+        rec = interviews.load(s, case_id, d["targetEntityId"])
+        _require_agent_read(ctx, s, case_id)
+        statements, citations = extraction.checked_statements(payload, rec, get_policy(s, case_id))
+        if citations != d["citations"]:
+            raise problem(422, "INVALID_CITATION", "草稿引用与陈述不一致")
+        for st in statements:
+            st["statementId"] = next_key([x["statementId"] for x in rec["statements"]], f"{rec['recordId']}-S", 2)
+            st["reviewStatus"] = d["status"]
+            rec["statements"].append(st)
+        contracts.validate("interview", rec)
+        put_doc(s, InterviewRow, case_id, rec["recordId"], rec)
+        return f"新增陈述 {len(statements)} 条：" + ",".join(x["statementId"] for x in statements)
     if t == "statement" and payload.get("recordId") and payload.get("statementId"):
         rec = interviews.load(s, case_id, payload["recordId"])
         st = next((x for x in rec["statements"] if x["statementId"] == payload["statementId"]), None)
@@ -107,6 +133,9 @@ def review(case_id: str, draft_id: str, body: Review, ctx: Ctx = CtxDep) -> dict
     if ctx.role not in ("LeadInvestigator", "Investigator"):
         raise problem(403, "FORBIDDEN", "只有调查员可以确认智能体草稿")
     with ctx.db.session() as s:
+        # Serialize review and its apply operation, including repeated concurrent requests.
+        s.execute(text("BEGIN IMMEDIATE"))
+        require(ctx, s, case_id, "agent_drafts", write=True)
         d = get_doc(s, AgentDraftRow, case_id, draft_id)
         if d is None:
             raise problem(404, "NOT_FOUND", f"草稿不存在：{draft_id}")
@@ -114,6 +143,10 @@ def review(case_id: str, draft_id: str, body: Review, ctx: Ctx = CtxDep) -> dict
             raise problem(409, "ALREADY_REVIEWED", f"草稿已处理：{d['status']}")
         if body.decision == "Modified" and body.payload is None:
             raise problem(422, "PAYLOAD_REQUIRED", "修改后确认需要提供修改后的 payload")
+        if d.get("targetEntityType") == "interviewStatements" and body.payload is not None:
+            if body.decision != "Modified":
+                raise problem(422, "MODIFIED_REQUIRED", "改变抽取结果须选择 Modified")
+            extraction.validate_modification(d["payload"], body.payload)
         if body.payload is not None:
             d["payload"] = body.payload
         d["status"] = body.decision
@@ -141,3 +174,60 @@ def agent_input_interview(case_id: str, record_id: str, ctx: Ctx = CtxDep) -> di
         audit.append(s, case_id=case_id, operator=ctx.operator, role=ctx.role, action="agent.input", category="Agent",
                      command=f"生成智能体输入（脱敏）{record_id}", after="role=AgentService", entity_type="interview", entity_id=record_id)
         return red
+
+
+def _require_agent_read(ctx: Ctx, s, case_id: str) -> None:
+    require(Ctx(role="AgentService", operator=ctx.operator, request=ctx.request), s, case_id, "testimony")
+
+
+def _extraction_access(ctx: Ctx, s, case_id: str) -> None:
+    if ctx.role not in ("AgentService", "LeadInvestigator", "Investigator"):
+        raise problem(403, "FORBIDDEN", "只有调查组或智能体服务可以执行抽取")
+    load_case(s, case_id)
+    require(ctx, s, case_id, "testimony")
+    require(ctx, s, case_id, "agent_drafts", write=True)
+    _require_agent_read(ctx, s, case_id)
+
+
+@router.post("/cases/{case_id}/agents/people_ops/interviews/{record_id}:extract", status_code=201)
+def extract_interview(case_id: str, record_id: str, ctx: Ctx = CtxDep) -> dict[str, Any]:
+    with ctx.db.session() as s:
+        _extraction_access(ctx, s, case_id)
+        rec = interviews.load(s, case_id, record_id)
+        messages = extraction.prompt(rec, get_policy(s, case_id))
+    cfg = model_client.config()
+    if cfg is None:
+        raise problem(503, "MODEL_NOT_CONFIGURED", "未配置本地模型；没有执行推理")
+    prompt_digest = extraction.digest(messages)
+    # Commit start before inference. Failures remain auditable without raw prompts/responses.
+    with ctx.db.session() as s:
+        audit.append(s, case_id=case_id, operator=ctx.operator, role=ctx.role, action="agent.run.started", category="Agent",
+                     command="people_ops 本地模型调用", after=f"model={cfg.model};prompt={prompt_digest}",
+                     entity_type="interview", entity_id=record_id)
+    try:
+        content = model_client.complete(cfg, messages)
+        payload = extraction.parse_output(content, rec)
+        with ctx.db.session() as s:
+            s.execute(text("BEGIN IMMEDIATE"))
+            _extraction_access(ctx, s, case_id)
+            current = interviews.load(s, case_id, record_id)
+            _, citations = extraction.checked_statements(payload, current, get_policy(s, case_id))
+            d = {"caseId": case_id,
+                 "draftId": next_key([x["draftId"] for x in list_docs(s, AgentDraftRow, case_id)], "AD-", 3),
+                 "agent": "people_ops", "kind": "statement_extraction", "targetEntityType": "interviewStatements",
+                 "targetEntityId": record_id, "payload": payload, "citations": citations, "model": cfg.model,
+                 "promptDigest": prompt_digest, "status": "PendingReview", "createdUtc": iso(now_utc()),
+                 "reviewedBy": None, "reviewedUtc": None, "reviewNote": ""}
+            contracts.validate("agent-draft", d)
+            put_doc(s, AgentDraftRow, case_id, d["draftId"], d)
+            audit.append(s, case_id=case_id, operator=ctx.operator, role=ctx.role, action="agent.draft", category="Agent",
+                         command=f"people_ops 提交草稿 {d['draftId']}",
+                         after=f"出处 {len(citations)} 条；model={cfg.model}；prompt={prompt_digest}",
+                         entity_type="agentDraft", entity_id=d["draftId"])
+            return d
+    except HTTPException as exc:
+        with ctx.db.session() as s:
+            audit.append(s, case_id=case_id, operator=ctx.operator, role=ctx.role, action="agent.run.failed", category="Agent",
+                         command="people_ops 本地模型调用失败", after=f"code={exc.detail['code']};prompt={prompt_digest}",
+                         entity_type="interview", entity_id=record_id)
+        raise
