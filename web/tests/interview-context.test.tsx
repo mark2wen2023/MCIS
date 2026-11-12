@@ -27,7 +27,7 @@ async function main() {
   assert(src.includes('key={current ?? \'\'}'), 'record switch unmounts old detail/forms')
   assert(src.includes('result.caseId !== caseId') && src.includes('result.recordId !== current'), 'mismatched response rejected')
   assert(src.includes('pending.current = true') && src.includes('pending.current ||'), 'synchronous duplicate mutation guard')
-  assert(src.includes('if (!alive.current) return'), 'late mutation completions suppressed')
+  assert(src.includes('if (!alive.current || who!==contentIdentity()) return'), 'late mutation completions suppressed')
   assert(!src.includes('api.post(`/cases/'), 'mutations use encoded scoped record path')
   assert((src.match(/encodeURIComponent\(sid\)/g) || []).length === 4, 'all four action IDs encoded')
   console.log(`interview-context: ${count} assertions passed`)

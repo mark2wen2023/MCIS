@@ -1769,6 +1769,7 @@ paths:
     parameters: [{ $ref: '#/components/parameters/caseId' }]
     get: { tags: [interviews], summary: 笔录摘要列表（已按角色脱敏）, responses: { '200': { description: ok } } }
     post:
+      x-w52a-content-access: 'See interview-content-access-v1.md: original/derived interview content requires full policy access; default Investigator/AgentService denied (403), signed mutations and source hash conflicts rejected (409), injected legacy creation states rejected (422). No complete-redaction or authentication claim.'
       tags: [interviews]
       summary: 新建笔录
       requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/Interview' } } } }
@@ -1776,6 +1777,7 @@ paths:
   /api/v1/cases/{caseId}/interviews/{recordId}:
     parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }]
     get:
+      x-w52a-content-access: 'See interview-content-access-v1.md: original/derived interview content requires full policy access; default Investigator/AgentService denied (403), signed mutations and source hash conflicts rejected (409), injected legacy creation states rejected (422). No complete-redaction or authentication claim.'
       tags: [interviews]
       summary: 笔录全文（按角色脱敏；响应头 X-MCIS-Redaction 列出生效规则；外部角色调阅写审计）
       responses: { '200': { description: ok, content: { application/json: { schema: { $ref: '#/components/schemas/Interview' } } } }, '403': { $ref: '#/components/responses/Problem' } }
@@ -1810,6 +1812,7 @@ paths:
   /api/v1/cases/{caseId}/interview-compare/{recordId}/rows/{statementId}:confirm:
     parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }, { $ref: '#/components/parameters/statementId' }]
     post:
+      x-w52a-content-access: 'See interview-content-access-v1.md: original/derived interview content requires full policy access; default Investigator/AgentService denied (403), signed mutations and source hash conflicts rejected (409), injected legacy creation states rejected (422). No complete-redaction or authentication claim.'
       tags: [interviews]
       summary: ✓确认并写入审计（陈述复核 + 待确认比对结论；过期结论 409 icmp_entry_stale；无待复核项 409 icmp_not_reviewable）
       requestBody: { content: { application/json: { schema: { type: object, properties: { note: { type: string } } } } } }
@@ -1817,6 +1820,7 @@ paths:
   /api/v1/cases/{caseId}/interview-compare/{recordId}/rows/{statementId}:reject:
     parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }, { $ref: '#/components/parameters/statementId' }]
     post:
+      x-w52a-content-access: 'See interview-content-access-v1.md: original/derived interview content requires full policy access; default Investigator/AgentService denied (403), signed mutations and source hash conflicts rejected (409), injected legacy creation states rejected (422). No complete-redaction or authentication claim.'
       tags: [interviews]
       summary: ✕驳回（陈述 → Rejected，待确认结论 → Dismissed；理由必填；已确认结论 409 icmp_entry_not_pending）
       requestBody: { required: true, content: { application/json: { schema: { type: object, required: [reason], properties: { reason: { type: string, minLength: 1 } } } } } }
@@ -1824,6 +1828,7 @@ paths:
   /api/v1/cases/{caseId}/interview-compare/{recordId}/statements/{statementId}:revise:
     parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }, { $ref: '#/components/parameters/statementId' }]
     post:
+      x-w52a-content-access: 'See interview-content-access-v1.md: original/derived interview content requires full policy access; default Investigator/AgentService denied (403), signed mutations and source hash conflicts rejected (409), injected legacy creation states rejected (422). No complete-redaction or authentication claim.'
       tags: [interviews]
       summary: ✎修改陈述（仅 Draft/Modified；revision + 1、状态 Modified、写 statement.modify 审计；旧比对结论随即过期）
       requestBody: { required: true, content: { application/json: { schema: { type: object, required: [summary, reason], properties: { summary: { type: string }, claim: { $ref: 'schemas/interview.schema.json#/$defs/claim' }, referenceUtc: { type: [string, 'null'] }, reason: { type: string, minLength: 1 } } } } } }
@@ -1831,6 +1836,7 @@ paths:
   /api/v1/cases/{caseId}/interview-compare/{recordId}/rows/{statementId}:recheck:
     parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }, { $ref: '#/components/parameters/statementId' }]
     post:
+      x-w52a-content-access: 'See interview-content-access-v1.md: original/derived interview content requires full policy access; default Investigator/AgentService denied (403), signed mutations and source hash conflicts rejected (409), injected legacy creation states rejected (422). No complete-redaction or authentication claim.'
       tags: [interviews]
       summary: 重新比对（结论带当前 statementVersion；未比对 → submit；Dismissed → resubmit，旧条目 Superseded；过期待确认 → 先 dismiss 再 resubmit；其余 409 icmp_recheck_not_allowed）
       requestBody: { required: true, content: { application/json: { schema: { type: object, required: [outcome, observedText], properties: { outcome: { type: string, enum: [Consistent, Contradictory, Unverifiable] }, observedText: { type: string }, sourceLabel: { type: string }, delta: { type: [number, 'null'] }, deltaUnit: { type: string }, rule: { type: string }, reason: { type: string } } } } } }
@@ -2071,6 +2077,7 @@ paths:
   /api/v1/cases/{caseId}/agents/people_ops/interviews/{recordId}:extract:
     parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }]
     post:
+      x-w52a-content-access: 'See interview-content-access-v1.md: original/derived interview content requires full policy access; default Investigator/AgentService denied (403), signed mutations and source hash conflicts rejected (409), injected legacy creation states rejected (422). No complete-redaction or authentication claim.'
       tags: [agents]
       summary: 本地 LLM 抽取脱敏问答，校验引用后生成 PendingReview 草稿
       responses:
@@ -2084,6 +2091,7 @@ paths:
   /api/v1/cases/{caseId}/agents/drafts:
     parameters: [{ $ref: '#/components/parameters/caseId' }, { name: status, in: query, schema: { type: string } }]
     get:
+      x-w52a-content-access: 'See interview-content-access-v1.md: original/derived interview content requires full policy access; default Investigator/AgentService denied (403), signed mutations and source hash conflicts rejected (409), injected legacy creation states rejected (422). No complete-redaction or authentication claim.'
       tags: [agents]
       summary: 人工确认队列
       responses: { '200': { description: ok, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/AgentDraft' } } } } } }

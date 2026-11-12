@@ -4,10 +4,10 @@ export const agentIdentity = () => JSON.stringify([getRole(), getOperator()])
 export async function agentRequest(path: string, who: string, body?: unknown, signal?: AbortSignal): Promise<unknown> {
   if (who !== agentIdentity()) throw new Error('身份已变化，未发送请求')
   const [role, operator] = JSON.parse(who) as [string, string]
-  const response = await fetch('/api/v1' + path, { method: body === undefined ? 'GET' : 'POST', signal,
+  const response = await fetch('/api/v1' + path, { cache:'no-store', method: body === undefined ? 'GET' : 'POST', signal,
     headers: { 'X-MCIS-Role': role, 'X-MCIS-Operator': encodeURIComponent(operator), ...(body === undefined ? {} : { 'Content-Type': 'application/json' }) },
     body: body === undefined ? undefined : JSON.stringify(body) })
-  const data: unknown = await response.json()
+  const data: unknown = await response.json().catch(error=>{if(!response.ok)return {};throw error})
   if (!response.ok) { const x = data as {code?: string;message?: string;detail?: unknown}; throw new ApiError(response.status, x.code || 'HTTP_' + response.status, x.message || response.statusText, x.detail) }
   return data
 }

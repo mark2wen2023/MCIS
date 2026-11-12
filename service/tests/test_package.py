@@ -3,12 +3,31 @@ import hashlib
 import io
 import json
 import zipfile
+import pytest
+from fastapi.testclient import TestClient
 
 from mcis_service.common.csjson import ZERO_HASH, sha256_hex
 
 from .conftest import C, CASE, H
 
 LEAD = H("LeadInvestigator", "首席调查官")
+
+
+@pytest.fixture
+def basic_client(tmp_path, monkeypatch):
+    """Explicit no-transcript/no-agent synthetic source for supported old import.
+    Production seed is not modified; existing full-transcript rejection is tested
+    separately. No real public case seed is loaded.
+    """
+    from mcis_service.main import create_app
+    from mcis_service.seed import lily_mary
+    from .conftest import make_settings
+    app = create_app(make_settings(tmp_path / 'basic', seed=False))
+    with monkeypatch.context() as patch:
+        patch.setattr(lily_mary, 'seed_interviews', lambda s: None)
+        patch.setattr(lily_mary, 'seed_agent_drafts', lambda s: None)
+        with app.state.db.session() as session: lily_mary.seed(session, app.state.settings.blob_dir)
+    with TestClient(app) as result: yield result
 
 
 def _zip(files: dict[str, bytes]) -> bytes:
@@ -50,7 +69,8 @@ def test_export_manifest_matches_csharp_convention(client):
     assert client.get(f"{C}/audit", params={"action": "package.export"}, headers=LEAD).json()
 
 
-def test_round_trip_into_empty_service(client, empty_client):
+def test_round_trip_into_empty_service(basic_client, empty_client):
+    client = basic_client
     data = client.get(f"{C}/export", headers=LEAD).content
     src_audit = _unzip(data)["audit/audit.jsonl"].decode().splitlines()
     v = empty_client.post("/api/v1/packages:verify", content=data, headers=LEAD).json()
@@ -69,16 +89,20 @@ def test_round_trip_into_empty_service(client, empty_client):
     assert empty_client.get(f"{C}/custody:verify-chain", headers=LEAD).json()["valid"]
     assert empty_client.post(f"{C}/evidence:verify-all", headers=LEAD).json()["mismatched"] == 0
     again = _unzip(empty_client.get(f"{C}/export", headers=LEAD).content)
-    assert again["testimony/IR-03.json"] == _unzip(data)["testimony/IR-03.json"]
+    # The supported legacy round-trip fixture explicitly contains no testimony.
+    assert {k:v for k,v in again.items() if k.startswith('testimony/')} == {k:v for k,v in _unzip(data).items() if k.startswith('testimony/')}
+    assert 'testimony/IR-03.json' not in again
 
 
-def test_duplicate_import_conflict(client):
+def test_duplicate_import_conflict(basic_client):
+    client = basic_client
     data = client.get(f"{C}/export", headers=LEAD).content
     r = client.post("/api/v1/cases:import", content=data, headers=LEAD)
     assert r.status_code == 409 and r.json()["code"] == "CASE_EXISTS"
 
 
-def test_tampered_package_rejected(client, empty_client):
+def test_tampered_package_rejected(basic_client, empty_client):
+    client = basic_client
     files = _unzip(client.get(f"{C}/export", headers=LEAD).content)
     files["raw/vdr/lily_svdr.zip"] = files["raw/vdr/lily_svdr.zip"] + b"!"
     r = empty_client.post("/api/v1/cases:import", content=_zip(files), headers=LEAD)
@@ -97,7 +121,8 @@ def test_extra_file_is_reported_not_fatal(client):
     assert v["isValid"] and v["extraFiles"] == ["notes/extra.txt"]
 
 
-def test_broken_audit_chain_rejected(client, empty_client):
+def test_broken_audit_chain_rejected(basic_client, empty_client):
+    client = basic_client
     files = _unzip(client.get(f"{C}/export", headers=LEAD).content)
     lines = files["audit/audit.jsonl"].decode().splitlines()
     lines[3] = lines[3].replace('"before":""', '"before":"x"', 1) if '"before":""' in lines[3] else lines[3].replace("调查员", "调査员", 1)
@@ -129,7 +154,19 @@ def test_minimal_unity_style_package(empty_client):
     assert ev[0]["evidenceId"] == "EV-001" and ev[0]["confidentiality"] == "Restricted" and ev[0]["status"] == "Verified"
 
 
-def test_multipart_upload(client, empty_client):
+def test_multipart_upload(basic_client, empty_client):
+    client = basic_client
     data = client.get(f"{C}/export", headers=LEAD).content
     r = empty_client.post("/api/v1/cases:import", files={"file": ("demo.mcase", data, "application/zip")}, headers=LEAD)
     assert r.status_code == 201
+
+
+def test_legacy_transcript_import_explicitly_rejected_without_mutation(client, empty_client):
+    data = client.get(f"{C}/export", headers=LEAD).content
+    assert 'testimony/IR-03.json' in _unzip(data)
+    before = empty_client.get('/api/v1/cases').json()
+    for form in (False, True):
+        kwargs = {'files': {'file': ('old.mcase', data, 'application/zip')}} if form else {'content': data}
+        result = empty_client.post('/api/v1/cases:import', headers=LEAD, **kwargs)
+        assert result.status_code == 422 and result.json()['code'] == 'INTERVIEW_IMPORT_UNSUPPORTED'
+        assert empty_client.get('/api/v1/cases').json() == before
