@@ -1,0 +1,71 @@
+W4.1 32 model/static-render checks passed (not browser interaction).
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+W12 analysis tests: 94 passed
+W8.2 106 assertions passed
+W7.1 41 model/static-render checks passed (not browser interaction).
+W7.2 30 model/static-render checks passed (not browser interaction).
+interview-context: 17 assertions passed
+W8.3 53 assertions passed
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> web@0.0.0 test
+> esbuild tests/colreg-render.test.tsx --bundle --platform=node --format=cjs --outfile=tests/.tmp-colreg-render.cjs --jsx=automatic && node tests/.tmp-colreg-render.cjs && esbuild tests/colreg-w61.test.tsx --bundle --platform=node --format=cjs --outfile=tests/.tmp-colreg-w61.cjs --jsx=automatic --log-level=warning && node tests/.tmp-colreg-w61.cjs
+
+
+  tests/.tmp-colreg-render.cjs  1.5mb ⚠️
+
+⚡ Done in 41ms
+ok  18 assertions (labels + render lily/mary + haili5)
+ok  58 assertions (W6.1 rulings 2–11 + W6.2)
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> web@0.0.0 test:w5
+> esbuild tests/interview-render.test.tsx --bundle --platform=node --format=cjs --outfile=tests/.tmp-interview-render.cjs --jsx=automatic --log-level=warning && node tests/.tmp-interview-render.cjs
+
+interview-render: 40 项断言通过
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> web@0.0.0 test:w16
+> esbuild tests/report-render.test.tsx --bundle --platform=node --format=cjs --outfile=tests/.tmp-report-render.cjs --jsx=automatic && node tests/.tmp-report-render.cjs
+
+
+  tests/.tmp-report-render.cjs  1.5mb ⚠️
+
+⚡ Done in 42ms
+ok 148 assertions (W16 三模板×三语言、引用、复核、导出、GISIS、真实锁定与请求合同)
+W8.1 22 assertions passed
+case context: 30 assertions passed
+case-linked-pages: 30 assertions passed
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> web@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 668 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                     0.42 kB │ gzip:   0.32 kB
+dist/assets/index-BX9eshrK.css     39.27 kB │ gzip:   8.31 kB
+dist/assets/index-WI_kaDMl.js   1,552.10 kB │ gzip: 507.00 kB
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 1500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 782ms
+src/consultation/RoundLifecycle.tsx:57:51: warning react(purity): Cannot call impure function during render help: `Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component re-renders
+src/packages/model.ts:33:38: warning eslint(no-control-regex): Unexpected control characters help: Avoid matching control characters in regular expressions. If intentional, disable this rule for the expression.
+src/components/Toast.tsx:21:17: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/align/AlignPreviewPanel.tsx:20:19: warning react(immutability): This value cannot be modified help: Modifying a value returned from 'useState()', which should not be modified directly. Use the setter function to update instead
+src/align/AlignPreviewPanel.tsx:33:5: warning react(immutability): This value cannot be modified help: Modifying a value returned from 'useState()', which should not be modified directly. Use the setter function to update instead
+src/align/AlignPreviewPanel.tsx:20:53: warning react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+src/Layout.tsx:27:20: warning react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+src/reports/ReportView.tsx:116:17: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/reports/ReportView.tsx:127:17: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/pages/ReportPage.tsx:31:13: warning react(refs): Cannot access refs during render help: React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected
+src/pages/ReportPage.tsx:39:5: warning react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+src/pages/EvidencePage.tsx:35:23: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
