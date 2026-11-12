@@ -853,6 +853,50 @@ components:
 
 
 paths:
+  /api/v1/cases/{caseId}/systemic/bowtie:sources:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+    get:
+      tags: [bowtie-preview]
+      summary: 可见证据登记来源（非认证）
+      responses:
+        '200':
+          description: no-store；仅结构性技术结果
+          content:
+            application/json:
+              schema: { $ref: 'schemas/bowtie-preview.schema.json#/$defs/sources' }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '413': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }
+        '503': { $ref: '#/components/responses/Problem' }
+
+  /api/v1/cases/{caseId}/systemic/bowtie:preview:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+    post:
+      tags: [bowtie-preview]
+      summary: 人工假设领结图结构预览（不持久化、不确认事实）
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: 'schemas/bowtie-preview.schema.json#/$defs/input' }
+      responses:
+        '200':
+          description: no-store；仅结构性技术结果
+          content:
+            application/json:
+              schema: { $ref: 'schemas/bowtie-preview.schema.json#/$defs/output' }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '413': { $ref: '#/components/responses/Problem' }
+        '415': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }
+        '503': { $ref: '#/components/responses/Problem' }
+
   /api/v1/cases/{caseId}/human-factors/rest:sources:
     get:
       tags: [human-factors]

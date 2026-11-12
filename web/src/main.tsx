@@ -8,6 +8,7 @@ import { KnowledgePage } from './pages/KnowledgePage'
 import { TrackPage } from './pages/TrackPage'
 import { ShipsPage } from './pages/ShipsPage'
 import { EnvironmentPage } from './pages/EnvironmentPage'
+import { SystemicPage } from './pages/SystemicPage'
 import { HumanFactorsPage } from './pages/HumanFactorsPage'
 import { AccessPage } from './pages/AccessPage'
 import { LobbyPage } from './pages/LobbyPage'
@@ -23,6 +24,7 @@ import { ROUTES } from './routes'
 import { AnalysisPage } from './pages/AnalysisPage'
 
 const LIVE: Record<string, () => React.ReactElement> = {
+  systemic: () => <SystemicPage />,
   hf: () => <HumanFactorsPage />,
   access: () => <AccessPage />,
   case: () => <CaseInfoPage />,

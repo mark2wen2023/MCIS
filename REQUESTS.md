@@ -464,3 +464,6 @@ GET-only unknown-outcome recovery. Independent acceptance required before comple
 核对官方STCW/MLC原文及既有W18.2算法后，限定非结论性技术预览；合同rest-preview-v1.md。
 独立mcis-rest工具引用既有不变RestHours/Result源，防止改动原core DLL造成W12来源漂移。
 13号页与新只读计算/来源端点，不写已确认事实、不自动补休息、未评估专业适用条件明确展示；仅合成验收数据。
+
+## W15.3 假设 Bow-tie 结构预览
+合同先行：contracts/bowtie-preview-v1.md、schema 与 OpenAPI。新增独立 CLI、只读服务与 page14，修改共享入口 main.py/main.tsx/routes/caseContext；不改原核心/W11。仅待核验人工假设、Unknown屏障，元数据来源绑定不等于事实支持。原型其余 AcciMap/STAMP/ECFC/导出/持久化不在本切片。
