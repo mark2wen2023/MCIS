@@ -3304,3 +3304,75 @@ paths:
           $ref: '#/components/responses/Problem'
         '500':
           $ref: '#/components/responses/Problem'
+
+  /api/v1/cases/{case_id}/reports/{report_id}/output-bundle:preview:
+    get:
+      tags: [report-output]
+      summary: 预览当前保存报告的可追溯输出绑定，不渲染不记导出
+      description: 完整报告原文/审计权限及新增全案现存证据笔录门禁。返回规范报告摘要供明确确认；不是来源闭包认证。全部响应no-store，见report-output-bundle-v1.md。
+      parameters:
+        - { name: case_id, in: path, required: true, schema: { type: string } }
+        - { name: report_id, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: 当前服务器保存快照；不是后续权限凭证
+          headers:
+            Cache-Control: { schema: { type: string, const: no-store } }
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [caseId, reportId, reportDocumentSha256, reportVersion, reportStatus, storedLanguage, canonicalization]
+                properties:
+                  caseId: { type: string }
+                  reportId: { type: string }
+                  reportDocumentSha256: { type: string, pattern: '^[a-f0-9]{64}$' }
+                  reportVersion: { type: integer, minimum: 1 }
+                  reportStatus: { enum: [Draft, Confirmed, Modified, Dismissed] }
+                  storedLanguage: { enum: [zh, en, bilingual] }
+                  canonicalization: { const: MCIS-PY-JSON-1 }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '413': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }
+        '500': { $ref: '#/components/responses/Problem' }
+  /api/v1/cases/{case_id}/reports/{report_id}/output-bundle:
+    post:
+      tags: [report-output]
+      summary: 明确单次生成PDF或DOCX的用户自行保留追溯ZIP
+      description: JSON请求仅接受application/json或唯一charset=utf-8参数（1024字节以内）；其它参数/编码拒绝415。两短事务权限/报告/策略重核，事务外单次渲染。ZIP固定当次原文件、report.json、原audit.json、manifest.json；不服务端保存、不随.mcase恢复、不是签名或完整来源链。成功仅准备下载且记一次report.export，不证明客户端落盘。未知交付不自动重试；新生成可能不同且多一条审计。全部响应no-store。
+      parameters:
+        - { name: case_id, in: path, required: true, schema: { type: string } }
+        - { name: report_id, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [format, lang, expectedReportDigest]
+              properties:
+                format: { enum: [pdf, docx] }
+                lang: { enum: [zh, en, bilingual] }
+                expectedReportDigest: { type: string, pattern: '^[a-f0-9]{64}$' }
+      responses:
+        '200':
+          description: 受限四成员ZIP_STORED，最多19MiB，内部严格绑定见版本合同。摘要仅校验自洽。
+          headers:
+            Cache-Control: { schema: { type: string, const: no-store } }
+            X-Sha256: { schema: { type: string, pattern: '^[a-f0-9]{64}$' } }
+            Content-Disposition: { schema: { type: string, const: 'attachment; filename="report-output.zip"' } }
+          content:
+            application/zip:
+              schema: { type: string, format: binary }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '413': { $ref: '#/components/responses/Problem' }
+        '415': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }
+        '500': { $ref: '#/components/responses/Problem' }
+        '503': { $ref: '#/components/responses/Problem' }

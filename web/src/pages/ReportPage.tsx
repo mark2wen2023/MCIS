@@ -4,6 +4,7 @@ import { ReportApiError, createReportApi } from '../reports/api'
 import { ReportView, ReviewDialog } from '../reports/ReportView'
 import { getRole, getOperator, onIdentityChange } from '../api'
 import { parseCases } from '../cases/model'
+import { ReportOutputPanel } from '../reportOutput/Panel'
 import { ArchiveProvenance } from '../archiveProvenance/Provenance'
 import { DEMO_CASE_ID } from '../reports/types'
 import type { GisisDocument, GisisValidation, RealDataStatus, Report, ReportAudit, ReportLanguage, ReportTemplate, ReportTemplateId, ReviewAction, ReviewPayload, ReviewTarget } from '../reports/types'
@@ -145,6 +146,7 @@ function ReportSession({identity, isActive, refresh}: {identity:string; isActive
         else setValidation(await reportApi.gisisValidate(caseId, values))
         if (report) { try { setAudit(await reportApi.audit(caseId, report.reportId)) } catch (e) { if (current()) { setAudit([]); setAuditError(`审计读取失败：${(e as Error).message}`) } } }
       }).catch(() => {}) }} onRefresh={refresh} />
+    {report&&!denied&&<ReportOutputPanel report={report} who={identity} onDenied={()=>handleError(new ReportApiError(403,'FORBIDDEN','',null))}/>}
     {review && <ReviewDialog key={`${report?.reportId}:${review.target.sectionId}:${review.target.sentenceId || ''}:${review.action}`} action={review.action} target={review.target} busy={saving} error={error} onCancel={() => setReview(null)} onSubmit={submitReview} />}
   </>
 }

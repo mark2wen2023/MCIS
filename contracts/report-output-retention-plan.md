@@ -1,0 +1,17 @@
+# Server-retained report originals — deferred plan, not implemented
+
+The A download-bundle feature does not store generated PDF/DOCX/ZIP bytes on the server. Existing report.export hashes and operation snapshots cannot recover an old output. Re-rendering later is a new output, never a promise of identical old bytes. The user must retain the downloaded file separately. No old file is reconstructed or silently backfilled.
+
+## Preconditions for a separate B implementation
+
+1. Explicit opt-in “generate and retain exact output”, with a stable request identity and an expected stored-report digest. Keep ordinary download available. No background conversion of real case files.
+2. An immutable retained object must contain the actual rendered bytes, full original report input snapshot, format/language, versioned canonicalization, byte length and hashes, actual renderer/template/font identification, and original operation/audit association. Identity remains locally self-reported until real authentication is implemented. A hash does not establish signature, facts or authorship.
+3. Do not register the object as ordinary evidence to bypass full report access. Metadata, content and recovery endpoints must all recheck complete current original-content permissions and relevant source visibility. Denied clients cannot probe existence, hashes or actor details.
+4. Render outside database writer transactions. Recheck report/policy/source access in a short commit transaction. Immutable bytes, metadata, request receipt and audit must commit together or have a proven rollback protocol. Do not introduce global long locks merely to simplify file persistence.
+5. Same request/subject/content may return the same retained bytes, not a new render. Conflicts reject. Unknown outcomes use a real durable recovery record. After case restoration, imported receipts are inert history, never active credentials; original request identities remain reserved. Do not repeat the W10 restored-receipt activation defect.
+6. Versioned case archival must ship with retention, not later. Include every retained byte, exact input snapshot, metadata, audit association, request history and dependency closure. Existing readers must actually reject the new version. Cases without retention continue to use existing supported formats. No unknown table ignore-list shortcut and no silent omission.
+7. Reserve archive format/version only after coordination with the separate unimplemented W7 proposal; this document allocates no number. Preserve ancestor package bytes and all prior chains across multiple restore/export generations.
+8. Agree on conservative per-file, count, aggregate and ancestor-package budgets that fit the existing archive envelope. Refuse excess explicitly, never prune immutable history, delete existing output or unexpectedly enable a retention path that makes an otherwise supported case unexportable.
+9. Synthetic independent tests must cover real PDF and DOCX, exact-byte download after later report edits, three-database generations, current authorization and revocation races, old-reader rejection, unknown-response recovery, duplicate/concurrent requests, rollback, orphan records, damaged bytes and audit/source linkage. No deployment or real user material in tests.
+
+These are planning requirements only. A successful A ZIP download is not evidence that B persistence, recovery or archival exists.

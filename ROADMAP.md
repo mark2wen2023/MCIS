@@ -362,3 +362,9 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-12 | Local stage demonstration | 冻结待独立裁定 | 真实三空库API合成链及15项只读浏览器通过，W10当前/历史严格分离、原件字节比较、知识只读历史不激活；脚本模拟审核不是专家确认，浏览器非全部表单写入。13文件冻结，含3页仅1.2/1.3静态文案校正、16源断言/tsc/build过；4运行安全开发项过。独立优化模式问题已显式拒绝-O/PYTHONOPTIMIZE，强制终止manifest可陈旧但浏览器PID/starttime/socket所有权核验拒绝。Linux既有依赖，不安装、不部署、不接真实资料、不碰W11；最终独立结果另列。 |
 
 | 2026-11-12 | Local stage demonstration | 受限演示独立验证通过 | 最终冻结独立11 passed/26.89s，真实新三库API往返、15项真浏览器及新版三页提示DOM、Python优化拒绝、恶意env不重定向、已有文件/目录/链接保全、故障与正常SIGINT只清自建服务；下载仅新增合法Access及对应审计链，原前缀/业务行保全。13文件SHA前后核验，具体边界见tests_acceptance/STAGEDEMO/REPORT.md。可复跑Linux工具，不是全UI写入验收、生产部署、智能体推理或全系统完成。 |
+
+
+| 2026-11-12 | Report output A | 冻结待独立裁定 | 明确preview→单格式生成→用户自行保留四成员ZIP，原文件/输入JSON/原审计/manifest自洽绑定；不服务端保存、不随.mcase恢复、不认证签署。20文件冻结，后端最终342 passed/80.17s，UI129校验+原148回归/tsc/build/API-double过。两短事务外单render、前后原文权限/来源门禁/报告策略复核；客户端未知保锁/停止等待/显式弃投递freshpreview。独立完整真实浏览器与故障矩阵进行中，未把开发中通过当最终验收。B另列计划，未实施；不部署不触W11。 |
+
+
+| 2026-11-12 | Report output A | 受限独立验收通过 | 最终独立49 passed/11.56s，20SHA前后匹配；真实双格式单render/原文不变/审计关联、实际第二连接改报告或策略后409/403、故障全表回滚与commit后交付失败各有证明。真浏览器2正常下载+2真实commit后故障替换+1真实commit后身份迟响应丢弃，最终5审计；8独立客户端坏结构/错绑拒绝。实际2MiB报告及16MiB输出边界与其余缩小limit测试区别详见独立REPORT；未穷尽多worker/真实切案/全部变体。无服务端原件保存、无.mcase文件恢复、无签署认证；B仅计划，不部署不触W11。 |
