@@ -1,0 +1,3 @@
+ac68422554d2f40dec035f794a31db41c778fe51f17d2b4bbe892c7c157829d4  service/mcis_service/package/mcase.py
+36abffbf4ff712b34f30850dc2656d027f6cf1786894222ea0ec24a99c75c177  service/tests/test_package_zip_boundary.py
+66c71a71b456030ce90bd45596c5c44510c49da23182729d15eeae980d6bbcdd  contracts/W8-package-zip-boundary.md
