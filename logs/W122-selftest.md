@@ -42,3 +42,9 @@ npm run build && npm run lint
 ```
 
 Pending real-service browser test: `python web/tests/current-analysis-w122.browser.py` with Playwright and a permitted Chromium installation. It uses isolated synthetic SQLite and127.0.0.1 only. Do not expose the service on an external interface to bypass a runner restriction.
+
+## Latest-main integration supplement
+
+After draft PR creation, main advanced to `276fe2529432041d5d0d242bf28a7d108c44ffde` (W20.3). All W20.3 additions were verified against Git blob IDs and preserved, including `main.tsx`, `routes.ts`, `caseContext.ts`, new modules and shared document appendices. W12.2's 86 frozen hashes remain unchanged.
+
+On this integrated snapshot: 102 selected current-analysis/independent/contract/W20.3 API tests pass in19.24s; W12.2 and W20.3 frontend models, independent36 assertions, TypeScript, build and standard lint pass (existing warnings remain). These102 overlap earlier suites and must not be added to the263+47 as unique coverage. Browser acceptance remains blocked with0 completed assertions. The branch is still draft and must not be merged.
