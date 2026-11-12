@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+from math import isfinite
 import subprocess
 from typing import Any
 
@@ -17,6 +18,13 @@ class CoreError(Exception):
 _STATUS = {"NOT_IMPLEMENTED": 501, "BAD_REQUEST": 422, "BAD_JSON": 422, "UNKNOWN_COMMAND": 501}
 
 
+def _finite_float(text: str) -> float:
+    value = float(text)
+    if not isfinite(value):
+        raise ValueError("Non-finite number in core JSON response")
+    return value
+
+
 def run(core_cmd: str, command: str, payload: dict[str, Any], timeout_s: float = 60.0) -> dict[str, Any]:
     try:
         proc = subprocess.run([core_cmd, command], input=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
@@ -29,7 +37,10 @@ def run(core_cmd: str, command: str, payload: dict[str, Any], timeout_s: float =
     if not out:
         raise CoreError("CORE_NO_OUTPUT", f"mcis-core 无输出（exit={proc.returncode}）：{proc.stderr.decode('utf-8', 'replace')[-400:]}", 502)
     try:
-        env = json.loads(out[-1])
+        # The default decoder accepts NaN/Infinity and overflowing floats.
+        # Reject them at decode time, including nested/extension fields, before
+        # any result can reach persistence or strict HTTP JSON serialization.
+        env = json.loads(out[-1], parse_float=_finite_float, parse_constant=_finite_float)
     except ValueError as e:
         raise CoreError("CORE_BAD_OUTPUT", out[-1][:400], 502) from e
     # A JSON value is not necessarily an envelope. Validate the types used
