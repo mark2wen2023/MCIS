@@ -43,6 +43,191 @@ components:
       description: 错误（400/403/404/409/422/501/502/503）
       content: { application/json: { schema: { $ref: 'schemas/common.schema.json#/$defs/problem' } } }
   schemas:
+    TrackImportInput:
+      type: object
+      additionalProperties: false
+      required:
+      - profile
+      - vesselId
+      - fileName
+      - source
+      - timeBasis
+      - contentBase64
+      properties:
+        profile: &w102schema001
+          const: mcis-utc-v1
+        vesselId: &w102schema002
+          type: string
+          pattern: ^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$
+        fileName: &w102schema003
+          type: string
+          maxLength: 128
+        source: &w102schema004
+          type: string
+          minLength: 1
+          maxLength: 1000
+        timeBasis: &w102schema005
+          type: string
+          minLength: 1
+          maxLength: 1000
+        contentBase64: &w102schema006
+          type: string
+          contentEncoding: base64
+          maxLength: 1398104
+    TrackImportReceipt:
+      type: object
+      required:
+      - caseId
+      - vesselId
+      - previewDigest
+      - sourceSha256
+      - reportSha256
+      - pointCount
+      - sourceEvidenceId
+      - reportEvidenceId
+      - committedUtc
+      - replayed
+      properties:
+        caseId:
+          type: string
+        vesselId:
+          type: string
+        previewDigest:
+          type: string
+        sourceSha256:
+          type: string
+        sourceEvidenceId:
+          type: string
+        reportEvidenceId:
+          type: string
+        committedUtc:
+          type: string
+        reportSha256:
+          type: string
+        pointCount:
+          type: integer
+          minimum: 1
+          maximum: 10000
+        replayed:
+          type: boolean
+    TrackImportPreview:
+      type: object
+      description: No writes. samplePoints at most 100; issue entries at most 200, issuesTotal
+        is complete. timeRange describes accepted candidate rows, not dropped/invalid
+        rows. canCommit requires every row valid and vessel track empty. See W10.2-track-input.md.
+      required:
+      - profile
+      - caseId
+      - vesselId
+      - caseEpochUtc
+      - previewDigest
+      - sourceSha256
+      - fileName
+      - source
+      - timeBasis
+      - rowCount
+      - canCommit
+      - issues
+      - issuesTotal
+      - issuesTruncated
+      - samplePoints
+      - timeRange
+      - warnings
+      - existingTrackCount
+      properties:
+        profile:
+          type: string
+        caseId:
+          type: string
+        vesselId:
+          type: string
+        caseEpochUtc:
+          type: string
+        previewDigest:
+          type: string
+        sourceSha256:
+          type: string
+        fileName:
+          type: string
+        source:
+          type: string
+        timeBasis:
+          type: string
+        rowCount:
+          type: integer
+        canCommit:
+          type: boolean
+        issues:
+          type: array
+          maxItems: 200
+          items:
+            type: object
+            required:
+            - row
+            - field
+            - code
+            - message
+            properties:
+              row:
+                type: integer
+              field:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+        issuesTotal:
+          type: integer
+        issuesTruncated:
+          type: boolean
+        samplePoints:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/TrackPoint'
+        timeRange:
+          type:
+          - object
+          - 'null'
+          properties:
+            firstUtc:
+              type: string
+            lastUtc:
+              type: string
+            fromSec:
+              type: number
+            toSec:
+              type: number
+        warnings:
+          type: array
+          items:
+            type: string
+        existingTrackCount:
+          type: integer
+    TrackImportCommit:
+      type: object
+      additionalProperties: false
+      required:
+      - profile
+      - vesselId
+      - fileName
+      - source
+      - timeBasis
+      - contentBase64
+      - previewDigest
+      - confirmed
+      properties:
+        profile: *w102schema001
+        vesselId: *w102schema002
+        fileName: *w102schema003
+        source: *w102schema004
+        timeBasis: *w102schema005
+        contentBase64: *w102schema006
+        previewDigest:
+          type: string
+          pattern: ^[0-9a-f]{64}$
+        confirmed:
+          const: true
     Case: { $ref: 'schemas/case.schema.json' }
     EnvironmentObservation: { $ref: 'schemas/environment-observation.schema.json' }
     Vessel: { $ref: 'schemas/vessel.schema.json' }
@@ -433,6 +618,158 @@ components:
 
 
 paths:
+  /api/v1/cases/{caseId}/track-imports:preview:
+    post:
+      tags:
+      - tracks-import
+      summary: 只读预览
+      description: MCIS-UTC v1 only; request <=1536 KiB, original <=1 MiB, <=10000 rows.
+        Investigator/Lead + current write policies. Strict UTC Z. No AIS raw decoder,
+        no inference of saturation from 102.2. File/DB exception rollback; process-crash
+        orphan files possible.
+      parameters: &w102path001
+      - &w102path002
+        $ref: '#/components/parameters/caseId'
+      - &w102path003
+        $ref: '#/components/parameters/role'
+      - &w102path004
+        $ref: '#/components/parameters/operator'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TrackImportInput'
+      responses:
+        '200':
+          description: 成功（preview不写入；commit仅提交成功或同一原件完整回读）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackImportPreview'
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+        '413':
+          $ref: '#/components/responses/Problem'
+        '422':
+          $ref: '#/components/responses/Problem'
+  /api/v1/cases/{caseId}/track-imports:commit:
+    post:
+      tags:
+      - tracks-import
+      summary: 人工确认后首次保存，重复相同摘要幂等返回
+      description: MCIS-UTC v1 only; request <=1536 KiB, original <=1 MiB, <=10000 rows.
+        Investigator/Lead + current write policies. Strict UTC Z. No AIS raw decoder,
+        no inference of saturation from 102.2. File/DB exception rollback; process-crash
+        orphan files possible.
+      parameters: *w102path001
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TrackImportCommit'
+      responses:
+        '200':
+          description: 成功（preview不写入；commit仅提交成功或同一原件完整回读）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackImportReceipt'
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+        '413':
+          $ref: '#/components/responses/Problem'
+        '422':
+          $ref: '#/components/responses/Problem'
+  /api/v1/cases/{caseId}/track-imports:
+    get:
+      tags:
+      - tracks-import
+      summary: 只读列出本案指定船舶的导入回执，不写审计
+      parameters:
+      - *w102path002
+      - *w102path003
+      - *w102path004
+      - name: vesselId
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Receipt array; no import => []
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TrackImportReceipt'
+  /api/v1/cases/{caseId}/track-imports/{digest}:
+    get:
+      tags:
+      - tracks-import
+      summary: 只读回执恢复；调查组且当前策略允许；同时校验两原件哈希
+      parameters:
+      - *w102path002
+      - *w102path003
+      - *w102path004
+      - &w102path005
+        name: digest
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-f]{64}$
+      responses:
+        '200':
+          description: 保存回执
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackImportReceipt'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+  /api/v1/cases/{caseId}/track-imports/{digest}/{kind}:
+    get:
+      tags:
+      - tracks-import
+      summary: 只读原件或导入记录下载，无审计写；当前调查组权限与Restricted策略
+      parameters:
+      - *w102path002
+      - *w102path003
+      - *w102path004
+      - *w102path005
+      - name: kind
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - source
+          - report
+      responses:
+        '200':
+          description: 源CSV逐字节或派生JSON；固定下载名；X-Sha256
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
   /api/v1/knowledge/cards:
     get:
       tags: [knowledge]

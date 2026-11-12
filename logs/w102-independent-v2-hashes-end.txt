@@ -1,0 +1,12 @@
+contracts/W10.2-track-input.md: OK
+service/mcis_service/tracks_import/__init__.py: OK
+service/mcis_service/tracks_import/parser.py: OK
+service/mcis_service/tracks_import/router.py: OK
+service/tests/test_tracks_import_w102.py: OK
+web/src/trackInput/model.ts: OK
+web/src/trackInput/api.ts: OK
+web/src/trackInput/TrackInputPanel.tsx: OK
+web/src/styles/w10-input.css: OK
+web/src/pages/TrackPage.tsx: OK
+web/tests/track-input-w102.test.tsx: OK
+web/tests/run-track-input-w102.sh: OK

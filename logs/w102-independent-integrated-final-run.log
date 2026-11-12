@@ -1,0 +1,47 @@
+PASS BOM CRLF reported102.2 HDG511 null UTC milliseconds negative sim preview zero writes
+PASS Required SOG lowerBound blocks
+PASS Required SOG unknown blocks
+PASS Required SOG unavailable blocks
+PASS Reject 45,unknown
+PASS Reject 3600,unavailable
+PASS Reject 511,unknown
+PASS Reject 23:59:59Z
+PASS Reject 2025-02-30T23:59:59Z
+PASS Reject 2026-01-01T00:00:00.001Z
+PASS Reject 2026-01-02T00:00:00Z
+PASS Reject 2025-12-31T23:59:59+00:00
+PASS Reject 2025-12-31T23:59:59.1234Z
+PASS Reject ,91,121,
+PASS Metadata operator vessel case profile confirmation binding
+PASS Save originals report digest evidence custody audit idempotency no overwrite
+PASS Concurrent same request single result
+PASS Concurrent different source one wins
+PASS Injected file2 rollback
+PASS Injected dbcommit rollback
+PASS Injected cleanup rollback
+PASS Role Public denied
+PASS Role InterestedState denied
+PASS Role ExternalExpert denied
+PASS 10000 row 100 preview 200 diagnostics bounded
+PASS mcase export fresh DB import original receipt tracks
+PASS Encoding NUL missing duplicate headers NaN negative empty metadata bytes body limits
+PASS Persisted GET tracks receipt source row values consistency
+PASS Epoch changed after preview revalidated
+PASS Restricted source policy changed after preview denied
+PASS KnownDefect receipt recovery rejects missing persisted points
+PASS Receipt recovery rejects edited-point
+PASS Receipt recovery rejects point-source
+PASS Receipt recovery rejects epoch
+PASS Receipt recovery rejects source-bytes
+PASS W8.4 description edit after W10 preview permits original confirmed commit
+PASS W8.4 description edit after saved W10 preserves receipt bytes points epoch
+PASS Chromium local-only selection preview invalidate escaping confirm doubleclick reload
+PASS Chromium committed response loss readonly recovery
+PASS Chromium 1920 no horizontal overflow keyboard close
+PASS Chromium file replacement invalidates preview confirmation
+PASS Chromium late preview case navigation fast Back isolation
+MEASURE Chromium 10000 rows preview seconds 0.284
+PASS Chromium 10000 rows preview 100 samples paginated 20 DOM budget
+PASS Chromium navigate during committed response then reopen readonly recovery
+PASS Chromium role switch rejects late preview
+TOTAL 45 PASS 45 FAIL 0
