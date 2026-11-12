@@ -7,6 +7,7 @@ import { InterviewView } from '../interview/InterviewView'
 import { errorText } from '../interview/labels'
 import type { IcPage, IcRoster, RecheckInput } from '../interview/types'
 import '../interview/interview.css'
+import { AgentReviewPanel } from '../agents/AgentReviewPanel'
 
 const interviewIdentity = () => JSON.stringify([getRole(), getOperator()])
 
@@ -78,6 +79,9 @@ function InterviewRecordPage({ caseId, current, roster, reloadRoster, onSelectRe
   }
 
   return (
+    <>
+    <AgentReviewPanel caseId={caseId} recordId={current} recordReady={!!page.data && !page.error} turns={page.data?.turns ?? []}
+      onApplied={() => { page.reload(); reloadRoster() }} />
     <InterviewView
       roster={roster}
       page={page.data}
@@ -92,5 +96,6 @@ function InterviewRecordPage({ caseId, current, roster, reloadRoster, onSelectRe
       onRevise={(sid, summary, reason) => act(`已修改 ${sid}（旧比对结论已过期）`, sid, `statements/${encodeURIComponent(sid)}:revise`, { summary, reason })}
       onRecheck={(sid, input: RecheckInput) => act(`已重新比对 ${sid}`, sid, `rows/${encodeURIComponent(sid)}:recheck`, input)}
     />
+    </>
   )
 }

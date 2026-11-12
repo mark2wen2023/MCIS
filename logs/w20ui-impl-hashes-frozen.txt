@@ -1,0 +1,8 @@
+a2446f164d2bd7e6cdaf3a836b1478d891ea7b1c680fd5f25cc0294803feadfb  contracts/W20.2-review-ui.md
+5c3804c8b5167d8e93711f873451a7343ca5204b0d8b88e203ca8318e5688d1b  web/src/agents/api.ts
+951f75646d0bd037e954d9960d00cf0e1b23520b80c91dc002a6a1172a9bf54e  web/src/agents/model.ts
+47bcab26da99cc781cacad7bf99450daab38cb1370cd509df4a3c719b7237afc  web/src/agents/AgentReviewPanel.tsx
+2590bb82304d951dd21509192a505f627e3551ca90d40a4d37ee04d98a6dadb5  web/src/styles/w20-agent.css
+410910ca5f1419235832a6a33f9ebe55464d29287f23d0c783d27e352a84bdd7  web/src/pages/InterviewPage.tsx
+6609b232241b12ec02518262faa78a4e1288ff8226358fd8ec9d569b2c17addd  web/tests/agent-review-w202.test.tsx
+459a5d63ff44ad145113ba9e6e44478c96b86b4198a0e689e834667855dfe525  web/tests/run-agent-review-w202.sh

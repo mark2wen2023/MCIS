@@ -1,0 +1,8 @@
+contracts/W20.2-review-ui.md: OK
+web/src/agents/api.ts: OK
+web/src/agents/model.ts: OK
+web/src/agents/AgentReviewPanel.tsx: OK
+web/src/styles/w20-agent.css: OK
+web/src/pages/InterviewPage.tsx: OK
+web/tests/agent-review-w202.test.tsx: OK
+web/tests/run-agent-review-w202.sh: OK
