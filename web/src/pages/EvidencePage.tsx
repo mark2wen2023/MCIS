@@ -7,7 +7,8 @@ import { SERVICE_ADDR } from '../config'
 import { EChart } from '../components/EChart'
 import { Metric, Panel } from '../components/Panel'
 import { useToast } from '../components/Toast'
-import { shortHash, simToClock, toLocal } from '../format'
+import { shortHash } from '../format'
+import { simToClock, toLocal, timeZoneLabel, distanceTooltip } from '../cases/evidenceTime'
 import { useLoad } from '../hooks'
 import type { CaseDef, ChainCheck, Conflict, ConflictStatus, CpaPoint, CustodyEvent, EvidenceItem, TimelineEvent } from '../types'
 
@@ -72,6 +73,7 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
       return r
     }, '已重新校验全部证据哈希（每条写入保管链 Verify 事件）')
 
+  const offsetMinutes = caseRes.data?.displayTimeZoneOffsetMinutes ?? 0
   const counts = {
     total: items.length,
     verified: items.filter((e) => e.status === 'Verified').length,
@@ -85,8 +87,9 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
     <div className="w4-page">
       <div className="page-head">
         <div>
-          <div className="page-title">证据中心 · 保管链与时间冲突 <span className="p6-tag">{caseRes.data ? (caseRes.data.isFictionalDemo ? '示例数据（虚构）' : '真实案例（公开报告）') : '案件信息加载中'}</span><span className="p6-tag cyan">LIVE · {SERVICE_ADDR}</span></div>
+          <div className="page-title">证据中心 · 保管链与时间冲突 <span className="p6-tag">{caseRes.data ? (caseRes.data.isFictionalDemo ? '示例数据（虚构）' : '非虚构案件') : '案件信息加载中'}</span><span className="p6-tag cyan">LIVE · {SERVICE_ADDR}</span></div>
           <div className="page-sub">
+            {caseRes.data && <div>{caseRes.data.title}</div>}
             证据登记快照不可改，之后的访问、校验、派生、复核标注只以保管链事件追加（audit/custody.jsonl，与 C# CustodyLedger 逐字节兼容）；
             多源时间冲突由调查员处理，每次变更写审计。
           </div>
@@ -126,7 +129,7 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
                   <td className="mono" style={{ color: 'var(--cyan)' }}>{e.evidenceId}</td>
                   <td>{e.title}</td>
                   <td className="p6-dim">{e.source} / {e.extractedBy}</td>
-                  <td className="mono">{toLocal(e.extractedUtc)}</td>
+                  <td className="mono">{toLocal(e.extractedUtc, true, offsetMinutes)}</td>
                   <td className="mono p6-dim" title={e.currentSha256}>{shortHash(e.currentSha256)}</td>
                   <td className="mono">{e.accessCount} 次</td>
                   <td>
@@ -136,30 +139,30 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
                   <td><span className={`st ${STATUS_BADGE[e.status][0]}`}>{STATUS_BADGE[e.status][1]}</span></td>
                 </tr>
               ))}
-              {!items.length && <tr><td colSpan={8} className="empty">{ev.error ? '无权限或后端不可用' : '加载中…'}</td></tr>}
+              {!items.length && <tr><td colSpan={8} className="empty">{ev.error ? '无权限或后端不可用' : ev.data ? '暂无证据，请添加调查证据。' : '加载中…'}</td></tr>}
             </tbody>
           </table>
         </Panel>
-        <CustodyPanel key={sel?.evidenceId || 'missing'} caseId={caseId} item={sel} events={custody.data?.evidenceId === sel?.evidenceId ? custody.data?.events ?? [] : []} onChanged={refreshEvidence} />
+        <CustodyPanel offsetMinutes={offsetMinutes} key={sel?.evidenceId || 'missing'} caseId={caseId} item={sel} events={custody.data?.evidenceId === sel?.evidenceId ? custody.data?.events ?? [] : []} onChanged={refreshEvidence} />
       </div>
 
       <div className="grid w4-columns">
-        <Panel title="事件时间线 · 冲突标注 · 两船距离" meta={<span>北京时间 UTC+8 · 源：/timeline + mcis-core cpa</span>} bodyStyle={{ padding: '4px 6px' }}>
+        <Panel title="事件时间线 · 冲突标注 · 两船距离" meta={<span>{caseRes.data ? timeZoneLabel(offsetMinutes) : '时区加载中'} · 源：/timeline + mcis-core cpa</span>} bodyStyle={{ padding: '4px 6px' }}>
           {cpa.data?.status === 'missing-tracks' && <div className="empty">轨迹数据不足：尚无两艘船的非空轨迹，CPA / 两船距离未运行。</div>}
           {cpa.error && <div className="empty">轨迹或 CPA 加载失败：{cpa.error}</div>}
           {!cpa.data && !cpa.error && <div className="empty">正在检查轨迹数据…</div>}
           {tl.data && tl.data.events.length === 0 && <div className="empty">尚无事件时间线数据。</div>}
-          {caseRes.data && tl.data ? (
-            <TimelineChart fictional={caseRes.data.isFictionalDemo} epoch={caseRes.data.caseEpochUtc} events={tl.data.events} conflicts={conflicts.data ?? []} cpa={cpa.data?.results ?? []} />
-          ) : <div className="empty">加载中…</div>}
+          {caseRes.data && tl.data && (tl.data.events.length > 0 || (cpa.data?.results.length ?? 0) > 0) ? (
+            <TimelineChart fictional={caseId === CASE_ID && caseRes.data.isFictionalDemo} offsetMinutes={offsetMinutes} epoch={caseRes.data.caseEpochUtc} events={tl.data.events} conflicts={conflicts.data ?? []} cpa={cpa.data?.results ?? []} />
+          ) : (!caseRes.data || !tl.data) ? <div className="empty">加载中…</div> : null}
         </Panel>
-        <ConflictPanel caseId={caseId} conflicts={conflicts.data ?? []} epoch={caseRes.data?.caseEpochUtc} onChanged={conflicts.reload} />
+        <ConflictPanel offsetMinutes={offsetMinutes} caseId={caseId} conflicts={conflicts.data ?? []} epoch={caseRes.data?.caseEpochUtc} onChanged={conflicts.reload} />
       </div>
     </div>
   )
 }
 
-function CustodyPanel({ caseId, item, events, onChanged }: { caseId: string; item?: EvidenceItem; events: CustodyEvent[]; onChanged: () => void }) {
+function CustodyPanel({ caseId, item, events, onChanged, offsetMinutes }: { offsetMinutes: number; caseId: string; item?: EvidenceItem; events: CustodyEvent[]; onChanged: () => void }) {
   const { run } = useToast()
   const [reason, setReason] = useState('')
   if (!item) return <Panel title="保管链"><div className="empty">请选择证据</div></Panel>
@@ -196,7 +199,7 @@ function CustodyPanel({ caseId, item, events, onChanged }: { caseId: string; ite
                   {e.kind === 'Verify' && <> <span className={`st ${e.verifyMatched ? 'st-ok' : 'st-bad'}`}>{e.verifyMatched ? 'match' : 'mismatch'}</span></>}
                   {e.kind === 'Review' && <> <span className="st st-warn">{e.needsReview ? 'needs_review' : 'cleared'}</span></>}
                 </span>
-                <span className="mono p6-dim">#{e.seq} · {toLocal(e.utc)}</span>
+                <span className="mono p6-dim">#{e.seq} · {toLocal(e.utc, true, offsetMinutes)}</span>
               </div>
               {e.detail && <div className="chain-sub">{e.detail}</div>}
               <div className="chain-hash">prev {shortHash(e.prevLineHash)} · sha {shortHash(e.sha256)}</div>
@@ -208,7 +211,7 @@ function CustodyPanel({ caseId, item, events, onChanged }: { caseId: string; ite
   )
 }
 
-function ConflictPanel({ caseId, conflicts, epoch, onChanged }: { caseId: string; conflicts: Conflict[]; epoch?: string; onChanged: () => void }) {
+function ConflictPanel({ caseId, conflicts, epoch, onChanged, offsetMinutes }: { offsetMinutes: number; caseId: string; conflicts: Conflict[]; epoch?: string; onChanged: () => void }) {
   const { run } = useToast()
   const [editing, setEditing] = useState<string | null>(null)
   const [note, setNote] = useState('')
@@ -223,7 +226,7 @@ function ConflictPanel({ caseId, conflicts, epoch, onChanged }: { caseId: string
             <tr key={c.conflictId} className={editing === c.conflictId ? 'sel' : ''} onClick={() => { setEditing(c.conflictId); setNote(c.resolution) }}>
               <td className="mono" style={{ color: 'var(--cyan)' }}>
                 {c.conflictId}
-                <div className="p6-muted" style={{ fontSize: 9.5 }}>{c.timeSec != null && epoch ? simToClock(epoch, c.timeSec) : ''}</div>
+                <div className="p6-muted" style={{ fontSize: 9.5 }}>{c.timeSec != null && epoch ? simToClock(epoch, c.timeSec, true, offsetMinutes) : ''}</div>
               </td>
               <td>
                 <div>{c.summary}</div>
@@ -263,7 +266,7 @@ const KIND_STYLE: Record<TimelineEvent['kind'], { color: string; symbol: string;
   Observation: { color: '#10b981', symbol: 'roundRect', name: '观测' },
 }
 
-function TimelineChart({ fictional, epoch, events, conflicts, cpa }: { fictional: boolean; epoch: string; events: TimelineEvent[]; conflicts: Conflict[]; cpa: CpaPoint[] }) {
+function TimelineChart({ fictional, epoch, events, conflicts, cpa, offsetMinutes }: { offsetMinutes: number; fictional: boolean; epoch: string; events: TimelineEvent[]; conflicts: Conflict[]; cpa: CpaPoint[] }) {
   const option = useMemo<EChartsOption>(() => {
     const vesselIds = [...new Set(events.map((e) => e.vesselId).filter((id): id is string => Boolean(id)))]
     const lanes = fictional ? LANES : ['双方 / 环境', ...vesselIds]
@@ -295,13 +298,13 @@ function TimelineChart({ fictional, epoch, events, conflicts, cpa }: { fictional
         trigger: 'item', backgroundColor: 'rgba(10,20,35,.95)', borderColor: 'rgba(59,227,255,.4)', textStyle: { color: '#e6f1ff', fontSize: 11 },
         formatter: (p: unknown) => {
           const d = (p as { data: { raw?: TimelineEvent; value: number[] } }).data
-          if (d.raw) return `${simToClock(epoch, d.raw.timeSec)} ${d.raw.title}<br/><span style="color:#8da4c4">${d.raw.sourceLabel ?? ''}</span>`
-          return `${simToClock(epoch, d.value[0])} 距离 ${d.value[1].toFixed(2)} nm`
+          if (d.raw) return `${simToClock(epoch, d.raw.timeSec, true, offsetMinutes)} ${d.raw.title}<br/><span style="color:#8da4c4">${d.raw.sourceLabel ?? ''}</span>`
+          return distanceTooltip(epoch, d.value[0], d.value[1], offsetMinutes)
         },
       },
       xAxis: {
         type: 'value', min: 0, max: fictional ? 780 : Math.max(60, ...events.map((e) => e.timeSec), ...cpa.map((p) => p.timeSec)), interval: 60,
-        axisLabel: { color: '#8da4c4', fontSize: 10, formatter: (v: number) => simToClock(epoch, v, false) },
+        axisLabel: { color: '#8da4c4', fontSize: 10, formatter: (v: number) => simToClock(epoch, v, false, offsetMinutes) },
         axisLine: { lineStyle: { color: 'rgba(59,227,255,.3)' } },
         splitLine: { lineStyle: { color: 'rgba(141,164,196,.08)' } },
       },
@@ -324,6 +327,6 @@ function TimelineChart({ fictional, epoch, events, conflicts, cpa }: { fictional
         ...evSeries,
       ],
     }
-  }, [fictional, epoch, events, conflicts, cpa])
+  }, [fictional, epoch, events, conflicts, cpa, offsetMinutes])
   return <EChart option={option} height={262} />
 }

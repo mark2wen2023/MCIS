@@ -1,0 +1,66 @@
+import { readFileSync } from 'node:fs'
+import { renderToStaticMarkup } from 'react-dom/server'
+import { MemoryRouter } from 'react-router-dom'
+import { toLocal as legacyToLocal, simToClock as legacySimToClock } from '../src/format'
+import { toLocal, simToClock, timeZoneLabel, distanceTooltip } from '../src/cases/evidenceTime'
+import { buildCase, emptyCaseForm, matchesCreatedCase, canCreateCase, type CaseForm } from '../src/cases/create'
+let count=0
+function check(value:unknown,message:string){if(!value)throw Error(message);count++}
+const valid: CaseForm={caseId:'CASE-2026-test',title:'<script>测试</script>',accidentType:'Collision',incidentTimeUtc:'2026-11-12T08:30:00Z',lonDeg:'121.5',latDeg:'31.2',fictional:'true',placeName:'海域'}
+function bad(delta: Partial<CaseForm>){let failed=false;try{buildCase({...valid,...delta})}catch{failed=true}check(failed,'reject '+JSON.stringify(delta))}
+for(const value of ['','a','ab','abc\n','中文','case/id','case id'])bad({caseId:value})
+for(const value of ['', '   ','\n'])bad({title:value})
+for(const value of ['','Unknown','<script>'])bad({accidentType:value})
+for(const value of ['', '2026-02-30T01:00:00Z','2026-11-12T24:00:00Z','2026-11-12T08:30:00+08:00','2026-11-12T08:30','2026-11-12T08:30:00','2026-11-12T08:60:00Z','2026-11-12T08:30:60Z','2026-13-12T08:30:00Z','0000-01-01T00:00:00Z'])bad({incidentTimeUtc:value})
+for(const key of ['lonDeg','latDeg'] as const)for(const value of ['',' ','NaN','Infinity','1e309','0x10','121,5','--1'])bad({[key]:value})
+bad({lonDeg:'180.00001'});bad({lonDeg:'-180.00001'});bad({latDeg:'90.00001'});bad({latDeg:'-90.00001'})
+for(const value of ['', '0','yes'])bad({fictional:value})
+const result=buildCase(valid)
+check(result.caseId===valid.caseId && result.title===valid.title,'user values retained')
+check(result.caseEpochUtc===result.incidentTimeUtc,'epoch explicit equal incident time')
+check(result.schemaVersion==='1.0.0' && result.displayTimeZoneOffsetMinutes===0,'contract version and UTC')
+check(result.incidentLocation.lonDeg===121.5 && result.incidentLocation.latDeg===31.2,'coordinates')
+check(result.isFictionalDemo,'fictional')
+check(!('durationSec' in result) && !('vessels' in result),'no invented data')
+check(buildCase({...valid,fictional:'false'}).isFictionalDemo===false,'non fictional explicit')
+check(!('placeName' in buildCase({...valid,placeName:' '})),'optional place omitted')
+check(buildCase({...valid,incidentTimeUtc:'2024-02-29T08:30Z'}).incidentTimeUtc==='2024-02-29T08:30:00Z','leap and minute UTC normalization')
+for(const sign of [-1,1])check(buildCase({...valid,lonDeg:String(sign*180),latDeg:String(sign*90)}).incidentLocation.lonDeg===sign*180,'coordinate boundary')
+check(buildCase({...valid,lonDeg:'0',latDeg:'0'}).incidentLocation.latDeg===0,'explicit zero valid')
+check(matchesCreatedCase(result,result),'exact payload')
+check(matchesCreatedCase({...result,extra:'allowed'},result),'server extensions allowed')
+for(const value of [null,[],{},'wrong',{...result,caseId:'other'},{...result,title:'other'},{...result,isFictionalDemo:false},{...result,incidentLocation:{lonDeg:121.5}},{...result,incidentLocation:{lonDeg:'121.5',latDeg:31.2}}])check(!matchesCreatedCase(value,result),'bad response rejected')
+check(canCreateCase('Investigator')&&canCreateCase('LeadInvestigator'),'allowed roles')
+for(const role of ['Public','ExternalExpert','InterestedState','AgentService','','Administrator'])check(!canCreateCase(role),'role denied '+role)
+check(emptyCaseForm().fictional==='' && emptyCaseForm().incidentTimeUtc==='' && emptyCaseForm().lonDeg==='','no silently defaulted fact')
+const layout=readFileSync('src/Layout.tsx','utf8')
+check(!layout.includes('真实案例（公开报告）') && !layout.includes('Lily × Mary'),'new cases never labeled public report or Lily Mary')
+const evidence=readFileSync('src/pages/EvidencePage.tsx','utf8')
+check(!evidence.includes('真实案例（公开报告）') && evidence.includes("'非虚构案件'"),'evidence page does not invent public-report provenance')
+check(evidence.includes('<div>{caseRes.data.title}</div>'),'evidence page displays actual title as escaped React text')
+check(toLocal('2026-11-12T23:30:00Z',true,0)==='11-12 23:30','UTC date display')
+check(toLocal('2026-11-12T23:30:00Z',true,480)==='11-13 07:30','positive offset crosses date')
+check(toLocal('2026-11-12T00:30:00Z',true,-330)==='11-11 19:00','negative offset crosses date')
+check(simToClock('2026-11-12T00:30:00Z',60,true,0)==='00:31:00','UTC simulation clock')
+check(simToClock('2026-11-12T00:30:00Z',60,true,480)==='08:31:00','positive simulation clock')
+check(simToClock('2026-11-12T00:30:00Z',60,true,-330)==='19:01:00','negative simulation clock')
+check(legacyToLocal('2026-11-12T00:30:00Z')===toLocal('2026-11-12T00:30:00Z',true,480),'legacy date default unchanged')
+check(legacySimToClock('2026-11-12T00:30:00Z',60)===simToClock('2026-11-12T00:30:00Z',60,true,480),'legacy simulation default unchanged')
+for(const [offset,label] of [[0,'UTC'],[480,'UTC+08:00'],[-330,'UTC-05:30'],[345,'UTC+05:45']] as const)check(timeZoneLabel(offset)===label,'accurate timezone label')
+check(evidence.includes("ev.data ? '暂无证据"),'loaded empty evidence is not permanent loading')
+check(evidence.includes('caseId === CASE_ID && caseRes.data.isFictionalDemo'),'demo-specific lanes restricted to actual demo')
+check(evidence.includes('tl.data.events.length > 0 || (cpa.data?.results.length ?? 0) > 0'),'no chart fabricated for empty case')
+check(!evidence.includes('北京时间 UTC+8'),'no fixed evidence timezone label')
+check(distanceTooltip('2026-11-12T00:30:00Z',60,1.234,0)==='00:31:00 距离 1.23 nm','distance tooltip UTC actual formatter')
+check(distanceTooltip('2026-11-12T00:30:00Z',60,1.234,480)==='08:31:00 距离 1.23 nm','distance tooltip positive offset')
+check(distanceTooltip('2026-11-12T00:30:00Z',60,1.234,-330)==='19:01:00 距离 1.23 nm','distance tooltip negative offset')
+check(evidence.includes('return distanceTooltip(epoch, d.value[0], d.value[1], offsetMinutes)'),'actual chart distance tooltip wired with case offset')
+for(const call of evidence.matchAll(/(?:simToClock|toLocal)\(([^)]*)\)/g))check(call[1].includes('offsetMinutes'),'every evidence time formatter explicitly passes case offset')
+async function main(){
+Object.defineProperty(globalThis,'localStorage',{value:{getItem:()=>null,setItem:()=>{}}})
+const {CreateCasePanel}=await import('../src/cases/CreateCasePanel')
+const html=renderToStaticMarkup(<MemoryRouter><CreateCasePanel who={'Investigator\n调查员 A'} onCreated={()=>{}}/></MemoryRouter>)
+check(html.includes('新建案件') && !html.includes('<form'),'creation initially collapsed')
+console.log(`W8.2 ${count} assertions passed`)
+}
+main().catch(error=>{console.error(error);process.exitCode=1})

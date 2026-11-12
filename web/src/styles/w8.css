@@ -9,3 +9,23 @@
 .w8-lobby button { color: #f0f6ff; background: #234965; border: 1px solid #76c9ff; border-radius: 6px; padding: 9px 16px; font: inherit; cursor: pointer; }
 .w8-lobby button:hover { background: #2c5c80; }
 .w8-lobby button:focus-visible, .w8-cases a:focus-visible { outline: 3px solid #ffd580; outline-offset: 3px; }
+.w82-toolbar { display: inline-flex; margin: 0 12px 16px 0; }
+.w82-new { margin-bottom: 16px; }
+.w82-create { margin: 4px 0 24px; padding: 24px; background: #162333; border: 1px solid #52708e; border-radius: 12px; }
+.w82-heading { display: flex; justify-content: space-between; align-items: start; gap: 16px; }
+.w82-heading h2 { margin: 6px 0 12px; font-size: 24px; }
+.w82-help { color: #b7c5d6; line-height: 1.7; max-width: 850px; }
+.w82-fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px 24px; padding: 12px 0; border: 0; margin: 0; min-width: 0; }
+.w82-fields label { display: flex; flex-wrap: wrap; align-content: start; gap: 6px; min-width: 0; color: #edf5ff; }
+.w82-fields label span { font-size: 12px; color: #b7c5d6; align-self: center; }
+.w82-fields input, .w82-fields select { box-sizing: border-box; width: 100%; min-width: 0; padding: 11px 12px; color: #f0f6ff; background: #0e1928; border: 1px solid #58718c; border-radius: 6px; font: inherit; }
+.w82-fields input::placeholder { color: #91a4bb; }
+.w82-fields input:focus-visible, .w82-fields select:focus-visible, .w82-success a:focus-visible { outline: 3px solid #ffd580; outline-offset: 2px; }
+.w82-wide { grid-column: 1 / -1; }
+.w82-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 18px; }
+.w82-actions span { color: #a5b1c2; font-size: 12px; }
+.w82-notice { color: #ffe0a3; background: #342e20; border-left: 3px solid #e6bf74; padding: 14px; line-height: 1.6; overflow-wrap: anywhere; }
+.w8-lobby button:disabled { cursor: not-allowed; opacity: .55; }
+.w82-success { overflow-wrap: anywhere; }
+.w82-success a { display: inline-block; color: #76c9ff; margin: 8px 24px 8px 0; }
+@media (max-width: 800px) { .w8-lobby { padding: 16px; } .w82-create { padding: 16px; } .w82-fields { grid-template-columns: minmax(0,1fr); } .w82-heading { flex-wrap: wrap; } }

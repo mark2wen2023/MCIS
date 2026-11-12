@@ -1,15 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useSyncExternalStore, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { api, onIdentityChange } from '../api'
+import { CreateCasePanel } from '../cases/CreateCasePanel'
+import { caseIdentity } from '../cases/identity'
+import { canCreateCase } from '../cases/create'
 import { parseCases, type CaseSummary } from '../cases/model'
 import '../styles/w8.css'
 
 type State = { status: 'loading' | 'error' } | { status: 'ready'; cases: CaseSummary[] }
-export function LobbyContent({ state, retry }: { state: State; retry: () => void }) {
+export function LobbyContent({ state, retry, create }: { state: State; retry: () => void; create?: ReactNode }) {
   return <section className="w8-lobby" aria-labelledby="lobby-title">
     <h1 id="lobby-title">案件大厅</h1>
-    <p>选择案件进入证据中心。新建、编辑及 .mcase 导入导出尚未开放。</p>
-    <button type="button" onClick={retry}>刷新案件列表</button>
+    <p>选择案件进入证据中心，或由调查组创建新的调查档案。编辑及 .mcase 导入导出尚未开放。</p>
+    <div className="w82-toolbar"><button type="button" onClick={retry}>刷新案件列表</button></div>
+    {create}
     {state.status === 'loading' && <p role="status">正在加载案件列表…</p>}
     {state.status === 'error' && <div role="alert"><p>无法加载案件列表。请检查服务连接后重试。</p><button type="button" onClick={retry}>重试</button></div>}
     {state.status === 'ready' && (state.cases.length === 0 ? <p role="status">暂无案件。当前没有可进入的案件。</p> : <>
@@ -24,13 +28,18 @@ export function LobbyContent({ state, retry }: { state: State; retry: () => void
   </section>
 }
 export function LobbyPage() {
+  const who = useSyncExternalStore(onIdentityChange, caseIdentity, caseIdentity)
+  return <LobbySession key={who} who={who} />
+}
+function LobbySession({who}: {who: string}) {
   const [revision, setRevision] = useState(0)
   const [state, setState] = useState<State>({status:'loading'})
   useEffect(() => onIdentityChange(() => { setState({status:'loading'}); setRevision(v=>v+1) }), [])
   useEffect(() => {
     let active = true
-    api.get<unknown>('/cases').then(parseCases).then(cases=>{if(active) setState({status:'ready',cases})}).catch(()=>{if(active) setState({status:'error'})})
+    api.get<unknown>('/cases').then(parseCases).then(cases=>{if(active && caseIdentity()===who) setState({status:'ready',cases})}).catch(()=>{if(active && caseIdentity()===who) setState({status:'error'})})
     return () => { active = false }
-  }, [revision])
-  return <LobbyContent state={state} retry={()=>{setState({status:'loading'}); setRevision(v=>v+1)}} />
+  }, [revision, who])
+  const refresh=()=>{setState({status:'loading'});setRevision(v=>v+1)}
+  return <LobbyContent state={state} retry={refresh} create={canCreateCase(who.split('\n')[0]!) ? <CreateCasePanel who={who} onCreated={refresh}/> : <p>当前身份仅可浏览案件；调查组成员可新建案件。</p>} />
 }
