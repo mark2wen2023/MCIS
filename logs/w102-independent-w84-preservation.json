@@ -1,0 +1,86 @@
+{
+  "passed": 20,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "W8.4 nonshared backend contracts/W8.4-case-metadata.md",
+      "passed": true
+    },
+    {
+      "name": "W8.4 nonshared backend contracts/schemas/case-metadata.schema.json",
+      "passed": true
+    },
+    {
+      "name": "W8.4 nonshared backend service/mcis_service/case_metadata/__init__.py",
+      "passed": true
+    },
+    {
+      "name": "W8.4 nonshared backend service/mcis_service/case_metadata/router.py",
+      "passed": true
+    },
+    {
+      "name": "W8.4 nonshared backend service/mcis_service/case_metadata/service.py",
+      "passed": true
+    },
+    {
+      "name": "W8.4 nonshared backend service/tests/test_case_metadata_w84.py",
+      "passed": true
+    },
+    {
+      "name": "W8.4 UI web/src/Layout.tsx",
+      "passed": true
+    },
+    {
+      "name": "W8.4 UI web/src/caseMetadata/events.ts",
+      "passed": true
+    },
+    {
+      "name": "W8.4 UI web/src/caseMetadata/model.ts",
+      "passed": true
+    },
+    {
+      "name": "W8.4 UI web/src/caseMetadata/navigation.ts",
+      "passed": true
+    },
+    {
+      "name": "W8.4 UI web/src/pages/CaseInfoPage.tsx",
+      "passed": true
+    },
+    {
+      "name": "W8.4 UI web/src/pages/LobbyPage.tsx",
+      "passed": true
+    },
+    {
+      "name": "W8.4 UI web/src/styles/w8-case-info.css",
+      "passed": true
+    },
+    {
+      "name": "W8.4 UI web/tests/case-metadata-w84.browser.cjs",
+      "passed": true
+    },
+    {
+      "name": "W8.4 UI web/tests/case-metadata-w84.test.tsx",
+      "passed": true
+    },
+    {
+      "name": "W8.4 UI web/tests/run-case-metadata-w84.sh",
+      "passed": true
+    },
+    {
+      "name": "main stripped W10 two lines exact W8.4 frozen hash",
+      "passed": true
+    },
+    {
+      "name": "openapi stripped four schemas five paths exact W8.4 frozen hash",
+      "passed": true
+    },
+    {
+      "name": "contract metadata GET PATCH retained",
+      "passed": true
+    },
+    {
+      "name": "runtime metadata GET PATCH retained",
+      "passed": true
+    }
+  ]
+}

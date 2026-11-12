@@ -14,6 +14,7 @@ from .agents.router import router as agents_router
 from .audit.router import router as audit_router
 from .case_metadata.router import router as case_metadata_router
 from .cases.router import router as cases_router
+from .tracks_import.router import router as tracks_import_router
 from .colreg.router import router as colreg_router
 from .config import Settings
 from .db import Database
@@ -72,6 +73,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
               audit_router, redaction_router, agents_router, sim_router, package_router, reports_router):
         app.include_router(r)
     app.include_router(case_metadata_router)  # W8.4 text metadata only
+    app.include_router(tracks_import_router)  # W10.2 explicit CSV first-track input
     app.include_router(environment_router)  # W9.2 partial observations only
     app.include_router(knowledge_router)
     app.include_router(analysis_router)  # W12

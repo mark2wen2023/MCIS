@@ -435,3 +435,11 @@ W19.1最终串行集成：W9.2 main `2bdbeb4f2fbe9eece6c0167274d1caed25495824` �
 独立 case_metadata router 与 #/case 页面，五个文字字段编辑、版本冲突保护、来源理由与完整前后值审计；时间/坐标/分类/虚构性质锁定。合同先行见 contracts/W8.4-case-metadata.md。跨包仅 main router接线、OpenAPI及 Web main/routes/caseContext与大厅说明；不改cases/router、W10导入/W19实现或原始报告，既有案件包字段往返不变。
 
 W8.4 共享壳补充：Layout 目前仅在切案/大厅时读取标题，保存文字档案后会显示旧标题。允许新增案件定向 metadata-changed 通知并让当前案壳重新读取，防迟到/跨案，不修改通用API或虚构性质。此项列入UI独立验收。
+
+## 2026-11-12 W10.2 合同先行及共享接线登记
+基于main8235918按原W10继续明确语义UTC CSV首次输入，范围见contracts/W10.2-track-input.md。读取原型、ARCHITECTURE§4.2和现C#解析/清洗实现后，限制为显式字段状态交换格式，不把普通102.2数值推断为AIS饱和，不暴露未验证的NMEA/清洗链。新增独立tracks_import与trackInput模块；改TrackPage接线与routes航迹副标题（避免整个页面仍称只读），main.py注册路由，openapi新增接口。登记W10.1 TrackPage冻结预期漂移，旧冻结保留。W9并行W8.4由双方串行整合，不改其caseEpoch/元数据逻辑。尚未实现验收完成，不部署。
+
+### W10.2 D01 恢复核查返修
+独立验收37场景36过1红：隔离数据库故障注入删除已存点后历史导入回执仍200。不是正常操作已证实丢点，但未知写结果恢复UI可能误认完整保存；裁定必须重算原件/配置绑定并核当前全部点，缺失/多点/内容或纪元变更409失败关闭，不自动修复。保留v1冻结及原红测试，返修后整套独立复验。未发布。
+
+W10.2 串行整合以 W8.4 main `7c1208daef26fd263b87edd9d06bab3d6b267725` 为准，35条远端变更逐blob核对保留。W8.4共享OpenAPI/main.py整文件冻结因已登记W10路由追加预期漂移，剥离W10专属新增后与W8.4原文逐字一致；不改旧冻结。W8.4业务合同/实现与10项UI冻结不变，独立组合重验另记。本轮没有改caseContext/Layout/Lobby/metadata字段规则。
