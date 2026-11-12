@@ -15,6 +15,7 @@ from .cases.router import router as cases_router
 from .colreg.router import router as colreg_router
 from .config import Settings
 from .db import Database
+from .environment.router import router as environment_router
 from .evidence.router import router as evidence_router
 from .interviews.router import router as interviews_router
 from .package.router import router as package_router
@@ -68,6 +69,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     for r in (cases_router, evidence_router, timeline_router, interviews_router, recommendations_router, colreg_router,
               audit_router, redaction_router, agents_router, sim_router, package_router, reports_router):
         app.include_router(r)
+    app.include_router(environment_router)  # W9.2 partial observations only
     app.include_router(analysis_router)  # W12
     app.include_router(interview_compare_router)  # W5
     return app

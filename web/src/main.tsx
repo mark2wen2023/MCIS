@@ -5,6 +5,7 @@ import './styles.css'
 import './styles/w16.css' // W16 报告页样式（独立文件，不再追加共享 styles.css）
 import { TrackPage } from './pages/TrackPage'
 import { ShipsPage } from './pages/ShipsPage'
+import { EnvironmentPage } from './pages/EnvironmentPage'
 import { LobbyPage } from './pages/LobbyPage'
 import { Layout } from './Layout'
 import { ToastProvider } from './components/Toast'
@@ -20,6 +21,7 @@ import { AnalysisPage } from './pages/AnalysisPage'
 const LIVE: Record<string, () => React.ReactElement> = {
   lobby: () => <LobbyPage />,
   ships: () => <ShipsPage />,
+  env: () => <EnvironmentPage />,
   track: () => <TrackPage />,
   evidence: () => <EvidencePage />,
   interview: () => <InterviewPage />,
@@ -46,3 +48,4 @@ createRoot(document.getElementById('root')!).render(
     </ToastProvider>
   </StrictMode>,
 )
+

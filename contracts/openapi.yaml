@@ -15,6 +15,7 @@ security: []
 tags:
   - { name: unity, description: Unity 主仿真需要的接口（取案件、取时间线/航迹、推送 SimTime、取跳转命令） }
   - { name: cases }
+  - { name: environment }
   - { name: evidence }
   - { name: timeline }
   - { name: interviews }
@@ -43,6 +44,7 @@ components:
       content: { application/json: { schema: { $ref: 'schemas/common.schema.json#/$defs/problem' } } }
   schemas:
     Case: { $ref: 'schemas/case.schema.json' }
+    EnvironmentObservation: { $ref: 'schemas/environment-observation.schema.json' }
     Vessel: { $ref: 'schemas/vessel.schema.json' }
     TrackPoint: { $ref: 'schemas/track-point.schema.json' }
     EvidenceItem: { $ref: 'schemas/evidence-item.schema.json' }
@@ -1413,3 +1415,37 @@ paths:
           content:
             application/json:
               schema: { $ref: 'schemas/common.schema.json#/$defs/problem' }
+
+
+  /api/v1/cases/{caseId}/environment-observations:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+    get:
+      tags: [environment]
+      summary: 读取案件环境观测记录（非仿真状态，ais_sim 读取权限）
+      responses:
+        '200':
+          description: 按创建顺序返回；未知量省略或 null，不补值
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/EnvironmentObservation' } }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+    post:
+      tags: [environment]
+      summary: 追加环境观测（调查组 + ais_sim 写权限，不覆盖）
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/EnvironmentObservation' }
+      responses:
+        '201':
+          description: 已保存且同事务记录审计
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/EnvironmentObservation' }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }

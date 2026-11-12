@@ -30,6 +30,8 @@ from ..common.context import problem
 from ..common.csjson import quote, sha256_hex
 from ..common.timeutil import iso, now_utc, parse_iso
 from ..db import get_doc, list_docs, put_doc
+from ..environment.models import EnvironmentObservationRow
+from ..environment.service import validate_observations
 from ..evidence.models import CustodyEventRow, EvidenceRow
 from ..evidence import service as evidence_service
 from ..interviews.models import InterviewRow
@@ -140,6 +142,9 @@ def build_files(s: Session, blob_root: Path, case_id: str) -> dict[str, bytes]:
     files["case.json"] = case_json(case).encode("utf-8")
     files["case.ext.json"] = _j({k: case[k] for k in CASE_EXT_FIELDS if k in case})
     files["vessels.json"] = _j(list_docs(s, VesselRow, case_id))
+    observations = list_docs(s, EnvironmentObservationRow, case_id)
+    if observations:
+        files["environment/observations.json"] = _j(observations)
     pts = s.scalars(select(TrackPointRow).where(TrackPointRow.case_id == case_id).order_by(TrackPointRow.vessel_id, TrackPointRow.time_sec)).all()
     by_v: dict[str, list] = {}
     for p in pts:
@@ -291,6 +296,18 @@ def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: s
     if s.scalars(select(CaseRow).where(CaseRow.case_id == case_id)).first():
         raise problem(409, "CASE_EXISTS", f"案件已存在：{case_id}（请先换库或改名）")
 
+    # Validate optional W9.2 extension before any SQL/blob write. Legacy absence is empty.
+    env_path = next((k for k in files if k.lower() == "environment/observations.json"), None)
+    observations = []
+    if env_path is not None:
+        if env_path in report["extraFiles"]:
+            raise problem(422, "BAD_PACKAGE", "环境记录必须包含在完整性清单中")
+        try:
+            observations = _load_json(files, env_path, [])
+        except (ValueError, UnicodeError):
+            raise problem(422, "BAD_PACKAGE", "环境记录不是有效 JSON")
+        validate_observations(observations, case_id)
+
     # 审计链与保管链先校验再落库
     audit_lines = [l for l in files.get("audit/audit.jsonl", b"").decode("utf-8").splitlines() if l.strip()]
     custody_lines = [l for l in files.get("audit/custody.jsonl", b"").decode("utf-8").splitlines() if l.strip()]
@@ -300,6 +317,8 @@ def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: s
             raise problem(422, "CHAIN_BROKEN", f"{name} 哈希链断裂", chk)
 
     put_doc(s, CaseRow, case_id, case_id, case)
+    for observation in observations:
+        put_doc(s, EnvironmentObservationRow, case_id, observation["observationId"], observation)
     for v in _load_json(files, "vessels.json", []):
         put_doc(s, VesselRow, case_id, v["vesselId"], v)
     for rel, blob in files.items():
