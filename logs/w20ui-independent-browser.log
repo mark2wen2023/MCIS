@@ -1,0 +1,31 @@
+PASS 1 six actual registry roles, five disconnected
+PASS 2 configured explicitly not healthy/inference proof
+PASS 3 injected registry not_connected disables extraction
+PASS 4 injected registry invalid_configuration disables extraction
+PASS 5 keyboard extraction, confirmation blocked before human check
+PASS 6 real backend PendingReview leaves statements unchanged
+PASS 7 keyboard confirmation appends once
+PASS 8 W5 counts refreshed
+PASS 9 reject requires reason
+PASS 10 reject writes no statements
+PASS 11 real fake-model HTTP failure creates no draft
+PASS 12 real SOURCE_CHANGED visible without write
+PASS 13 real ALREADY_REVIEWED error no duplicate write
+PASS 14 backend enforces forbidden extraction independent of UI
+PASS 15 backend forbids AgentService review
+PASS 16 actual backend 403 rendered
+PASS 17 double-click one POST
+PASS 18 late extraction isolated after record switch
+PASS 19 late extraction isolated after identity switch
+PASS 20 late extraction isolated after same-document case switch
+PASS 21 lost committed response locks retry
+PASS 22 unknown result refetch never automatically resends
+PASS 23 HTML rendered as escaped text
+PASS 24 390px mobile no horizontal document overflow
+PASS 25 AgentService sees queue but cannot confirm
+PASS 26 cross-case queue response rejected, not rendered
+PASS 27 two-item draft requires every semantic acknowledgement
+PASS 28 two acknowledgements enable explicit write, no auto-write
+PASS 29 mismatched successful response cannot claim success or resend
+PASS 30 no browser runtime errors
+TOTAL 30 PASS; REAL FASTAPI + LOOPBACK FAKE MODEL; NO REAL LLM TESTED

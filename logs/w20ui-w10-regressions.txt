@@ -1,0 +1,31 @@
+50k parse: 85.7 ms
+W10.1 117 assertions passed
+W20.2 frontend: 34 assertions passed
+interview-context: 17 assertions passed
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> web@0.0.0 test:w5
+> esbuild tests/interview-render.test.tsx --bundle --platform=node --format=cjs --outfile=tests/.tmp-interview-render.cjs --jsx=automatic --log-level=warning && node tests/.tmp-interview-render.cjs
+
+interview-render: 40 项断言通过
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> web@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 682 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                     0.42 kB │ gzip:   0.32 kB
+dist/assets/index-CiGnS4fj.css     50.12 kB │ gzip:  10.30 kB
+dist/assets/index-DpFj9BjG.js   1,595.26 kB │ gzip: 520.77 kB
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 1500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 633ms
