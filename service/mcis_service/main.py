@@ -1,5 +1,6 @@
 """FastAPI 应用入口。运行：.venv/bin/python -m mcis_service（只监听 127.0.0.1）。"""
 from __future__ import annotations
+from .report_output.router import router as report_output_router
 from .track_history.router import router as track_history_router
 from .knowledge_archive.router import router as knowledge_archive_router
 
@@ -83,6 +84,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     for r in (cases_router, evidence_router, timeline_router, interviews_router, manual_interviews_router, recommendations_router, colreg_router,
               audit_router, redaction_router, agents_router, sim_router, package_router, reports_router):
         app.include_router(r)
+    app.include_router(report_output_router)
     app.include_router(human_factors_preview_router)
     app.include_router(bowtie_preview_router)
     app.include_router(nomoto_preview_router)
