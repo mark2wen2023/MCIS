@@ -496,3 +496,6 @@ Authorized narrow package export correction, following synthetic reproduction: R
 
 ## W19.2 来源模板整理预览（2026-11-12）
 登记跨包/已冻结改动：knowledge/router.py、KnowledgePage.tsx和共享openapi.yaml；仅追加只读预览、保留W19.1创建/审批/审计。新合同W19.2-suggestion-preview.md先行。不触及W11及笔录/报告。采用受控模板stub，未接LLM，不代表自动知识理解已完成。
+
+## W12.2 current saved-track analysis
+Contract contracts/W12.2-current-track-analysis.md. New read-only current-case endpoint and module; explicit exact-time pairing delegates numeric calculation to existing C# cpa, preserving per-vessel provenance and distinguishing calculated output. No new interpolation, safety verdict or W11/core edits. Cross-package wiring limited to main.py/openapi and AnalysisPage; old W12 seed files and view untouched, old mode retained explicitly as historical reference. New separate styles/module/tests. Input digest and permission are rechecked after core work; no persistence or deployment.
