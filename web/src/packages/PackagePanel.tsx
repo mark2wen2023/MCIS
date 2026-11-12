@@ -45,7 +45,7 @@ export function PackagePanel({ who }: { who: string }) {
   useEffect(() => onPackageNavigation(() => setOpen(false)), [])
   return <section className="w83-package" aria-label="案件包工具">
     <div className="w83-heading"><div><span className="w83-eyebrow">.MCASE · 证据完整性</span><h2>案件包预检</h2></div><button type="button" aria-expanded={open} onClick={()=>setOpen(v=>!v)}>{open ? '关闭预检' : '选择案件包预检'}</button></div>
-    <p>上传到本机调查服务核对清单。预检不等于导入，导入暂未开放。完整案件包导出位于下方对应案件卡片。</p>
+    <p>上传到本机调查服务核对清单。预检不等于导入。受限基础资料首次导入请使用独立的导入面板；完整案件包还原未开放。完整案件包导出位于下方对应案件卡片。</p>
     {open && <PackageCheckForm key={who} who={who}/>}
   </section>
 }
