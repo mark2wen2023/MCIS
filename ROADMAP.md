@@ -174,3 +174,6 @@
 | 2026-11-12 | W8 package ZIP boundary | 独立限定切片验收通过 | 独立发现祖先文件冲突D01并修，原3红保留→61过；整合W8.2 main37bbeb2后完整690+CORE_FINITE43=733过无跳过，另W8.2 HTTP13过/1既有xfail、Web462/build过。14项package/W8.2冻结匹配；仅package/mcase.py生产变更。有效包兼容保留，坏ZIP/歧义路径422；资源预算/JSON语义/认证/原子导入仍未解决。见logs/package-boundary-verification.md与independent-review.md，不部署。 |
 | 2026-11-12 | W5 案件上下文 | 待测（隔离切片） | main0a29f28：?case读写/导航绑定，案件与身份及笔录切换销毁旧状态；响应ID复核、重复写保护、迟到通知抑制、空案与非虚构标签。W5 40+context17+导航30断言、tsc/build通过；源码lint仅既有11警告。冻结logs/w5-context-impl-hashes-frozen.txt；独立浏览器/HTTP验收待完成，不部署。 |
 | 2026-11-12 | W5 案件上下文 | 独立限定切片验收通过 | 9项freeze一致；完整service532过无跳过、Web666断言+tsc/build过、源码lint仅既有11警告；独立真HTTP10过+浏览器19场景组过。新案进入W5不再落到演示案，四写操作及身份/记录/导航/迟到响应隔离。仅本切片通过，UTC+8/笔录创建UI/生产认证未完成；见logs/w5-context-verification.md与independent-review.md，不部署。 |
+
+| 2026-11-12 | W9.1 船舶录入首片 | 待测（限定切片） | 案件级新增静态参数、字段来源、保存/重开；POST仅调查组与ais_sim写权，旧船不覆盖。38后端自测、84前端断言、tsc通过；冻结logs/w9.1-impl-hashes-frozen.txt，等待独立验收。环境/修改/删除/AI抽取/自动分析不在本片，不部署。 |
+| 2026-11-12 | W9.1 船舶录入首片 | 独立限定切片验收通过 | 案件级新增静态参数→保存→重开，逐字段来源与审计、调查组/ais_sim写权，重复ID不覆盖。独立39API/存储+13浏览器组通过；D01对比/D02窄屏返修关闭，10项冻结一致。整合W5 main27f4825后733服务/安全/来源聚合+CORE43、W82 HTTP13/1既有xfail、Web750断言/build/tsc/source lint通过；W5独立HTTP10/浏览器19组回归通过。见logs/w9.1-verification.md；详尽本地验收记录不发布。环境/修改删除/AI/自动分析仍未做，不部署。 |

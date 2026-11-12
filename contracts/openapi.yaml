@@ -459,6 +459,17 @@ paths:
       tags: [cases, unity]
       summary: 船舶静态参数
       responses: { '200': { description: ok, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/Vessel' } } } } } }
+    post:
+      tags: [cases]
+      summary: 新增案件船舶（仅调查组且 ais_sim ReadWrite；不覆盖已有船舶）
+      description: W9.1 create-only. See W9.1-vessel-entry.md for write validation and source requirements. Existing GET and legacy records unchanged.
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/Vessel' } } } }
+      responses:
+        '201': { description: 已保存, content: { application/json: { schema: { $ref: '#/components/schemas/Vessel' } } } }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }
   /api/v1/cases/{caseId}/tracks:
     parameters:
       - { $ref: '#/components/parameters/caseId' }

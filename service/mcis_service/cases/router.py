@@ -8,7 +8,7 @@ from ..audit import service as audit
 from ..common import contracts
 from ..common.context import Ctx, CtxDep, problem
 from ..common.timeutil import sim_to_utc
-from ..db import put_doc
+from ..db import put_doc, get_doc, WRITE_LOCK
 from ..redaction.gateway import require
 from ..timeline.models import ConflictRow, TimelineEventRow
 from ..evidence.models import EvidenceRow
@@ -17,7 +17,8 @@ from ..recommendations.models import RecommendationRow
 from ..agents.models import AgentDraftRow
 from ..db import list_docs
 from . import service
-from .models import CaseRow
+from .models import CaseRow, VesselRow
+from .vessel_entry import validate_create
 
 router = APIRouter(prefix="/api/v1", tags=["cases"])
 
@@ -82,6 +83,24 @@ def get_vessels(case_id: str, ctx: Ctx = CtxDep) -> list[dict[str, Any]]:
         service.load_case(s, case_id)
         require(ctx, s, case_id, "ais_sim")
         return service.vessels(s, case_id)
+
+
+@router.post("/cases/{case_id}/vessels", status_code=201)
+def create_vessel(case_id: str, body: dict[str, Any] = Body(...), ctx: Ctx = CtxDep) -> dict[str, Any]:
+    if ctx.role not in ("LeadInvestigator", "Investigator"):
+        raise problem(403, "FORBIDDEN", "只有调查组可以新增船舶")
+    # Hold through commit so duplicate checks and audit sequencing stay atomic.
+    with WRITE_LOCK, ctx.db.session() as s:
+        case = service.load_case(s, case_id)
+        require(ctx, s, case_id, "ais_sim", write=True)
+        validate_create(body, case)
+        if get_doc(s, VesselRow, case_id, body["vesselId"]) is not None:
+            raise problem(409, "VESSEL_EXISTS", "该案件内船舶编号已存在；不会覆盖已有参数")
+        put_doc(s, VesselRow, case_id, body["vesselId"], body)
+        audit.append(s, case_id=case_id, operator=ctx.operator, role=ctx.role, action="vessel.create",
+                     category="Case", command="新增船舶静态参数", after=body,
+                     entity_type="vessel", entity_id=body["vesselId"])
+        return body
 
 
 @router.get("/cases/{case_id}/tracks")

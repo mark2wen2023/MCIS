@@ -1,0 +1,29 @@
+.w9-page {max-width: 1400px; margin: 0 auto; padding: 24px; color: var(--text, #dbe7f4)}
+.w9-heading {display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap}
+.w9-page h1 {font-size:26px}.w9-page h2 {font-size:20px}.w9-page p {line-height:1.6}
+.w9-page button {margin:8px 12px 8px 0;padding:10px 16px;cursor:pointer;background:#12445e;color:#effaff;border:1px solid #5095bc;border-radius:6px;font-weight:600}.w9-page button:hover:not(:disabled) {background:#1b5f80}.w9-page button:disabled {cursor:wait;background:#263a49;color:#b7c8d6;border-color:#516778}.w9-page a {color:#7ed8ff;text-decoration:underline;text-underline-offset:3px}.w9-page a:hover {color:#c1efff}.w9-page a:focus-visible {outline:2px solid #58bcfa;outline-offset:3px}
+.w9-page button:focus-visible,.w9-page input:focus-visible,.w9-page select:focus-visible {outline:2px solid #58bcfa;outline-offset:3px}
+.w9-case,.w9-create,.w9-vessel {border:1px solid #334a60;border-radius:10px;padding:20px;margin:20px 0;background:#152131}
+.w9-case span {color:#7bc5ff}.w9-case p,.w9-vessel p {overflow-wrap:anywhere}
+.w9-create fieldset {border:0;padding:0;min-width:0}.w9-fields {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.w9-field {padding:14px;border:1px solid #334a60;border-radius:8px}.w9-page label {display:flex;flex-direction:column;gap:8px;font-size:14px}
+.w9-page input,.w9-page select {min-width:0;width:100%;box-sizing:border-box;padding:10px;background:#0e1927;border:1px solid #52708d;color:#eaf2ff;border-radius:5px}
+.w9-id {max-width:600px;margin:12px 0 20px}.w9-source {display:grid;grid-template-columns:3fr 1fr;gap:8px;margin-top:12px}.w9-source label {font-size:12px;color:#b4c9dc}
+.w9-notice {padding:12px;border:1px solid #d9ac55;color:#ffe0a0}.w9-vessel dl>div {display:grid;grid-template-columns:180px minmax(0,1fr);padding:10px 0;border-bottom:1px solid #334a60}
+.w9-vessel dd {margin:0;overflow-wrap:anywhere}.w9-vessel small {display:block;color:#acc0d5;margin-top:6px}.w9-vessel dt {color:#acc0d5}
+@media(max-width:850px){.w9-fields{grid-template-columns:1fr}.w9-page{padding:12px}.w9-vessel dl>div{grid-template-columns:1fr;gap:8px}}
+/* Route-local layout, matching other live forms; never hide overflowing content. */
+.app:has(.w9-page) {grid-template-columns:var(--sidebar-w) minmax(0,1fr)}
+.w9-page {min-width:0;overflow-wrap:anywhere}
+@media(max-width:1100px){
+  .app:has(.w9-page){grid-template-rows:auto minmax(0,1fr)}
+  .app:has(.w9-page) .topbar{min-width:0;flex-wrap:wrap;padding:10px 12px}
+  .app:has(.w9-page) .topbar-left,.app:has(.w9-page) .topbar-right{min-width:0;max-width:100%;flex-wrap:wrap}
+  .app:has(.w9-page) .case-chip{white-space:normal;overflow-wrap:anywhere}
+  .app:has(.w9-page) .role-select{max-width:100%}
+}
+@media(max-width:600px){
+  .app:has(.w9-page){grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr);height:auto;min-height:100vh}
+  .app:has(.w9-page) .sidebar{grid-row:auto;max-height:240px;overflow-y:auto}
+  .app:has(.w9-page) .main{padding:12px}
+}

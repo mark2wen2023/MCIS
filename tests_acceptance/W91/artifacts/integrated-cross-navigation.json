@@ -1,0 +1,5 @@
+{
+  "status": "PASS",
+  "case": "W91-W5-INTEGRATED",
+  "flow": "Ships → Interview empty → Ships → Back → Forward → Public readonly"
+}
