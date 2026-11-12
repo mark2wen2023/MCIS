@@ -13,7 +13,7 @@ type State = { status: 'loading' | 'error' } | { status: 'ready'; cases: CaseSum
 export function LobbyContent({ state, retry, create, packages, exportCase }: { state: State; retry: () => void; create?: ReactNode; packages?: ReactNode; exportCase?: (c: CaseSummary) => ReactNode }) {
   return <section className="w8-lobby" aria-labelledby="lobby-title">
     <h1 id="lobby-title">案件大厅</h1>
-    <p>选择案件进入证据中心，或由调查组创建新的调查档案。案件编辑与 .mcase 导入尚未开放。</p>
+    <p>选择案件进入证据中心，或由调查组创建新的调查档案。可进入基本档案编辑文字信息；.mcase 导入尚未开放。</p>
     <div className="w82-toolbar"><button type="button" onClick={retry}>刷新案件列表</button></div>
     {create}
     {packages}
@@ -26,6 +26,7 @@ export function LobbyContent({ state, retry, create, packages, exportCase }: { s
         <h2>{c.title}</h2><p className="w8-id">{c.caseId}</p>
         <p>{c.placeName || '地点未填写'}</p><p>{c.incidentTimeUtc || '事故时间未填写'}</p>
         <Link to={'/evidence?case=' + encodeURIComponent(c.caseId)} aria-label={'进入案件：' + c.title}>进入案件 →</Link>
+        <Link to={'/case?case=' + encodeURIComponent(c.caseId)} aria-label={'基本档案：' + c.title}>基本档案 / 文字编辑 →</Link>
         {exportCase?.(c)}
       </li>)}</ul>
     </>)}

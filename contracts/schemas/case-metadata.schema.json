@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/case-metadata.schema.json",
+  "$defs": {
+    "update": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expectedRevision",
+        "changes",
+        "sourceLabel",
+        "changeReason",
+        "operationId"
+      ],
+      "properties": {
+        "expectedRevision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "changes": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": false,
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 500
+            },
+            "placeName": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1,
+              "maxLength": 1000
+            },
+            "leadInvestigator": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1,
+              "maxLength": 500
+            },
+            "agencyName": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1,
+              "maxLength": 1000
+            },
+            "summaryNotes": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1,
+              "maxLength": 20000
+            }
+          }
+        },
+        "sourceLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "changeReason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "operationId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$"
+        }
+      }
+    },
+    "snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case",
+        "revision",
+        "lastChange"
+      ],
+      "properties": {
+        "case": {
+          "$ref": "case.schema.json"
+        },
+        "revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "lastChange": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "utc",
+                "operator",
+                "sourceLabel",
+                "changeReason",
+                "fields",
+                "operationId"
+              ],
+              "properties": {
+                "utc": {
+                  "$ref": "common.schema.json#/$defs/utc"
+                },
+                "operator": {
+                  "type": "string"
+                },
+                "sourceLabel": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2000
+                },
+                "changeReason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      "title",
+                      "placeName",
+                      "leadInvestigator",
+                      "agencyName",
+                      "summaryNotes"
+                    ]
+                  }
+                },
+                "operationId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}
