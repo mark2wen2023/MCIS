@@ -1,0 +1,55 @@
+[
+  {
+    "name": "real-create-double-submit-reopen-navigation",
+    "status": "PASS"
+  },
+  {
+    "name": "real-source-and-number-validation-responsive",
+    "status": "PASS"
+  },
+  {
+    "name": "real-cancel-role-restrictions",
+    "status": "PASS"
+  },
+  {
+    "name": "real-duplicate-preserves-existing-and-draft",
+    "status": "PASS"
+  },
+  {
+    "name": "fault-lost-success-response-read-only-recovery",
+    "status": "PASS"
+  },
+  {
+    "name": "fault-unconfirmed-not-written-manual-retry-only",
+    "status": "PASS"
+  },
+  {
+    "name": "fault-identity-switch-during-success-response",
+    "status": "PASS"
+  },
+  {
+    "name": "fault-case-switch-during-success-response",
+    "status": "PASS"
+  },
+  {
+    "name": "real-explicit-refresh-discards-local-draft",
+    "status": "PASS"
+  },
+  {
+    "name": "fault-server-forbidden-keeps-draft-no-retry",
+    "status": "PASS"
+  },
+  {
+    "name": "real-extra-widths-390-and-1920",
+    "status": "PASS"
+  },
+  {
+    "name": "real-unknown-case-no-demo-fallback",
+    "status": "PASS"
+  },
+  {
+    "name": "javascript-console-errors",
+    "status": "PASS",
+    "errors": []
+  }
+]
