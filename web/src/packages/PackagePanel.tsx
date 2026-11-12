@@ -45,7 +45,7 @@ export function PackagePanel({ who }: { who: string }) {
   useEffect(() => onPackageNavigation(() => setOpen(false)), [])
   return <section className="w83-package" aria-label="案件包工具">
     <div className="w83-heading"><div><span className="w83-eyebrow">.MCASE · 证据完整性</span><h2>案件包预检</h2></div><button type="button" aria-expanded={open} onClick={()=>setOpen(v=>!v)}>{open ? '关闭预检' : '选择案件包预检'}</button></div>
-    <p>上传到本机调查服务核对清单。预检不等于导入。受限基础资料首次导入请使用独立的导入面板；完整案件包还原未开放。完整案件包导出位于下方对应案件卡片。</p>
+    <p>上传到本机调查服务核对清单。预检不等于导入。受限基础资料首次导入请使用独立的导入面板；完整案件包还原未开放。当前支持范围的案件包导出位于下方对应案件卡片；不是全系统备份。HFACS当前版本最多支持256个完整修订及对应回执，超限整体拒绝，不截断历史。</p>
     {open && <PackageCheckForm key={who} who={who}/>}
   </section>
 }
@@ -96,7 +96,7 @@ export function PackageExport({caseId, title, who}: {caseId: string; title: stri
       const anchor = document.createElement('a'); anchor.href = url; anchor.download = packageFilename(caseId)
       document.body.appendChild(anchor); anchor.click(); anchor.remove()
       window.setTimeout(()=>{URL.revokeObjectURL(url);urls.current.delete(url)}, 1000)
-      setMessage('已交给浏览器下载，请检查下载列表。包含完整案件资料，请妥善保管。')
+      setMessage('已交给浏览器下载，请检查下载列表。仅包含当前支持范围的案件资料，不是全系统备份，请妥善保管。')
     } catch(err) { if (operation.valid(controller)) setMessage(packageError(err)) }
     finally { if (operation.valid(controller)) setBusy(false); operation.end(controller) }
   }

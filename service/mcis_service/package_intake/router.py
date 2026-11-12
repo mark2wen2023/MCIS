@@ -73,10 +73,12 @@ def describe(parsed, data):
     if not SAFE_ID.fullmatch(case_id): raise problem(422, 'CASE_ID', '本切片要求安全案件编号')
     return {'profile': PROFILE, 'caseId': case_id, 'title': parsed.case['title'],
             'sourceSha256': hashlib.sha256(data).hexdigest(), 'byteLength': len(data),
+            'packageVersion': parsed.manifest['packageVersion'],
+            'hfacsExtension': parsed.hfacs_archive.summary if parsed.hfacs_archive else None,
             'counts': {'vessels': len(parsed.vessels), 'tracks': len(parsed.tracks),
                        'environment': len(parsed.observations), 'evidence': len(parsed.evidence),
                        'custodyEvents': len(parsed.custody_lines), 'auditEvents': len(parsed.audit_lines)},
-            'warnings': ['仅基础资料导入；不含其他业务模块结果。', '本地角色头不是生产身份认证。']}
+            'warnings': ['仅基础资料及明确支持的HFACS完整扩展；其他业务模块不在范围。', '历史回执仅归档，不恢复活跃重放；原请求摘要无法由现存文档重算。', '本地角色头不是生产身份认证；旧读器不保证保留扩展。']}
 
 
 def root_path(ctx):
@@ -110,7 +112,16 @@ def receipt(ctx, session, digest):
             raise ValueError('integrity')
     except (OSError, ValueError, KeyError):
         raise problem(409, 'PACKAGE_RECEIPT', '原始案件包缺失或完整性异常，停止重试')
-    return {**doc, 'replayed': True}
+    parsed = parse_package(raw)
+    if parsed.hfacs_archive is not None:
+        from ..hfacs_drafts.router import snapshot as hfacs_snapshot, PreviewError
+        try:
+            hfacs_snapshot(session, ctx, row.case_id, [], audit=True)
+            for event in parsed.hfacs_archive.data['revisionAudit']:
+                hfacs_snapshot(session, ctx, row.case_id, [source['evidenceId'] for source in event['after']['sources']], audit=True)
+        except PreviewError as exc: raise problem(exc.status, exc.code, exc.message)
+    return {**doc, 'packageVersion': parsed.manifest['packageVersion'],
+            'hfacsExtension': parsed.hfacs_archive.summary if parsed.hfacs_archive else None, 'replayed': True}
 
 
 @router.post('/intakes:preview')
@@ -129,6 +140,7 @@ def recover(digest: str, ctx: Ctx = CtxDep):
     authorize(ctx)
     if not DIGEST.fullmatch(digest): raise problem(422, 'PACKAGE_DIGEST', '摘要格式无效')
     with WRITE_LOCK, ctx.db.session() as s:
+        if s.get_bind().dialect.name == "sqlite": s.connection().exec_driver_sql("BEGIN")
         result = receipt(ctx, s, digest)
         if result is None: raise problem(404, 'PACKAGE_NOT_FOUND', '没有已提交回执；勿自动重发')
         return result
@@ -148,13 +160,14 @@ async def commit(request: Request, ctx: Ctx = CtxDep):
         published = False
         try:
             with ctx.db.session() as s:
+                if s.get_bind().dialect.name == "sqlite": s.connection().exec_driver_sql("BEGIN IMMEDIATE")
                 prior = receipt(ctx, s, digest)
                 if prior is not None: return prior
                 if target.exists() or target.is_symlink():
                     raise problem(409, 'PACKAGE_PATH_EXISTS', '案件文件目录已存在，不覆盖')
                 if s.scalars(select(CaseRow).where(CaseRow.case_id == case_id)).first():
                     raise problem(409, 'CASE_EXISTS', '案件已存在，不覆盖')
-                import_case(s, staged, data, ctx.operator, ctx.role)
+                import_case(s, staged, data, ctx.operator, ctx.role, validated_hfacs=parsed.hfacs_archive)
                 case_dir = staged / case_id
                 archive_dir = case_dir / '_package_intake'
                 archive_dir.mkdir(parents=True)

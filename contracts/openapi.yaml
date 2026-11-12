@@ -1109,7 +1109,7 @@ paths:
     post:
       tags: [package]
       summary: 基础资料包严格预览，不写入
-      description: 见 package-intake-v1.md；仅调查组，32MiB 原包上限。
+      description: 见 package-intake-v1.md 与 hfacs-package-extension-v1.md；仅调查组，32MiB 原包上限。响应包含 packageVersion/hfacsExtension；HFACS 回执只归档不激活。
       requestBody:
         required: true
         content:
@@ -1128,11 +1128,12 @@ paths:
         "413": { $ref: "#/components/responses/Problem" }
         "415": { $ref: "#/components/responses/Problem" }
         "422": { $ref: "#/components/responses/Problem" }
+        "503": { $ref: "#/components/responses/Problem" }
   /api/v1/packages/intakes:commit:
     post:
       tags: [package]
       summary: 确认原包摘要后仅新案导入
-      description: 见 package-intake-v1.md；仅调查组，32MiB 原包上限。
+      description: 见 package-intake-v1.md 与 hfacs-package-extension-v1.md；仅调查组，32MiB 原包上限。响应包含 packageVersion/hfacsExtension；HFACS 回执只归档不激活。
       requestBody:
         required: true
         content:
@@ -1153,11 +1154,12 @@ paths:
         "413": { $ref: "#/components/responses/Problem" }
         "415": { $ref: "#/components/responses/Problem" }
         "422": { $ref: "#/components/responses/Problem" }
+        "503": { $ref: "#/components/responses/Problem" }
   /api/v1/packages/intakes/{digest}:
     get:
       tags: [package]
       summary: 未知写入结果仅查询已提交回执
-      description: 见 package-intake-v1.md；仅调查组，32MiB 原包上限。
+      description: 见 package-intake-v1.md 与 hfacs-package-extension-v1.md；仅调查组，32MiB 原包上限。响应包含 packageVersion/hfacsExtension；HFACS 回执只归档不激活。
       parameters:
         - { name: digest, in: path, required: true, schema: { type: string, pattern: "^[a-f0-9]{64}$" } }
       responses:
@@ -1168,6 +1170,7 @@ paths:
         "413": { $ref: "#/components/responses/Problem" }
         "415": { $ref: "#/components/responses/Problem" }
         "422": { $ref: "#/components/responses/Problem" }
+        "503": { $ref: "#/components/responses/Problem" }
   /api/v1/cases/{caseId}/evidence-intakes:preview:
     post:
       tags:

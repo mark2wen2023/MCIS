@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { MemoryRouter } from 'react-router-dom'
 import { MAX_BYTES,fileError,encodeBytes,parsePreview,parseReceipt } from '../src/packageIntake/model'
 Object.defineProperty(globalThis,'localStorage',{value:{getItem:()=>null,setItem:()=>{}}})
-const p={profile:'MCIS-BASIC-INTAKE-1',caseId:'ABC',title:'<script>x</script>',sourceSha256:'a'.repeat(64),byteLength:12,counts:{evidence:2},warnings:['人工核对']}
+const p={packageVersion:'1.0.0' as const,hfacsExtension:null,profile:'MCIS-BASIC-INTAKE-1',caseId:'ABC',title:'<script>x</script>',sourceSha256:'a'.repeat(64),byteLength:12,counts:{evidence:2},warnings:['人工核对']}
 assert.equal(MAX_BYTES,33554432);assert.equal(fileError({name:'x.mcase',size:MAX_BYTES}),null)
 for(const f of [{name:'x.zip',size:1},{name:'x.mcase',size:0},{name:'x.mcase',size:MAX_BYTES+1}])assert.ok(fileError(f))
 assert.equal(encodeBytes(new Uint8Array([0,255,13,10])),'AP8NCg==')

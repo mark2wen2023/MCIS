@@ -103,11 +103,11 @@ def infer_role(rel: str) -> str:
     return "Derived"
 
 
-def manifest_json(case_id: str, files: dict[str, bytes], created: str) -> str:
+def manifest_json(case_id: str, files: dict[str, bytes], created: str, package_version: str = PACKAGE_VERSION) -> str:
     """与 C# PackageManifest.ToJson 相同的格式。"""
     L = ["{",
          f'  "packageFormat": {quote(PACKAGE_FORMAT)},',
-         f'  "packageVersion": {quote(PACKAGE_VERSION)},',
+         f'  "packageVersion": {quote(package_version)},',
          f'  "caseId": {quote(case_id)},',
          f'  "createdAtUtc": {quote(created)},',
          f'  "lastModifiedAtUtc": {quote(iso(now_utc()))},',
@@ -178,18 +178,29 @@ def build_files(s: Session, blob_root: Path, case_id: str) -> dict[str, bytes]:
 
 
 def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: str) -> bytes:
+    from ..hfacs_drafts import archive as hfacs_archive
+    from ..hfacs_drafts.router import PreviewError
+    from ..package_intake.parser import parse_package
     row = s.scalars(select(CaseRow).where(CaseRow.case_id == case_id)).first()
     if row is None:
         raise problem(404, "CASE_NOT_FOUND", f"案件不存在：{case_id}")
+    try: extension = hfacs_archive.build(s, case_id, role)
+    except PreviewError as exc: raise problem(exc.status, exc.code, exc.message)
+    def assemble():
+        files = build_files(s, blob_root, case_id)
+        if extension is not None: files[hfacs_archive.PATH] = extension.raw
+        files["manifest.json"] = manifest_json(case_id, files, iso(parse_iso(row.created_utc)),
+                                                "1.1.0" if extension else "1.0.0").encode("utf-8")
+        buf = io.BytesIO()
+        with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
+            for rel in sorted(files): z.writestr(rel, files[rel])
+        result = buf.getvalue()
+        if extension is not None: parse_package(result, validated_hfacs=extension)
+        return result
+    if extension is not None: assemble()
     audit.append(s, case_id=case_id, operator=operator, role=role, action="package.export", category="Package",
                  command=f"导出案件包 {case_id}.mcase", after=GENERATOR, entity_type="case", entity_id=case_id)
-    files = build_files(s, blob_root, case_id)
-    files["manifest.json"] = manifest_json(case_id, files, iso(parse_iso(row.created_utc))).encode("utf-8")
-    buf = io.BytesIO()
-    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
-        for rel in sorted(files):
-            z.writestr(rel, files[rel])
-    return buf.getvalue()
+    return assemble()
 
 
 # ---------------- 导入 ----------------
@@ -268,8 +279,22 @@ def _load_json(files: dict[str, bytes], rel: str, default: Any) -> Any:
     return json.loads(files[rel].decode("utf-8-sig")) if rel in files else default
 
 
-def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: str) -> dict[str, Any]:
+def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: str, *, validated_hfacs=None) -> dict[str, Any]:
     files = read_zip(data)
+    from ..hfacs_drafts import archive as hfacs_archive
+    namespace = [name for name in files if name.casefold() == "hfacs" or name.casefold().startswith("hfacs/")]
+    try:
+        manifest = json.loads(files.get("manifest.json", b"{}").decode("utf-8-sig"))
+        if not isinstance(manifest, dict): raise ValueError("manifest shape")
+    except (ValueError, UnicodeError):
+        raise problem(422, "BAD_PACKAGE", "案件包清单无效")
+    if namespace or manifest.get("packageVersion") == "1.1.0":
+        if (namespace != [hfacs_archive.PATH] or manifest.get("packageVersion") != "1.1.0"
+                or not isinstance(validated_hfacs, hfacs_archive.ValidatedArchive)
+                or validated_hfacs.raw != files[hfacs_archive.PATH]):
+            raise problem(422, "HFACS_IMPORT_ENTRY", "HFACS扩展只能通过本版本受限导入预检与确认恢复，旧入口不接受")
+    elif manifest.get("packageVersion", PACKAGE_VERSION) != PACKAGE_VERSION:
+        raise problem(422, "BAD_PACKAGE", "不支持的案件包版本")
     report = verify_files(files)
     if not report["isValid"]:
         raise problem(422, "INTEGRITY_FAILED", "案件包完整性校验失败", report)
@@ -380,6 +405,9 @@ def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: s
     for i, line in enumerate(audit_lines):
         audit.append_raw_line(s, case_id, json.loads(line), line, i + 1, prev)
         prev = sha256_utf8(line)
+    if validated_hfacs is not None:
+        if validated_hfacs.data["caseId"] != case_id: raise problem(422, "HFACS_IMPORT_CASE", "HFACS案件不一致")
+        hfacs_archive.restore(s, validated_hfacs)
     s.flush()
     audit.append(s, case_id=case_id, operator=operator, role=role, action="package.import", category="Package",
                  command=f"导入案件包 {case_id}", after=f"{report.get('generatorVersion')}；文件 {len(files)} 个；额外 {len(report['extraFiles'])} 个",

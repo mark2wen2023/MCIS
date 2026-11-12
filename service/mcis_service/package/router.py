@@ -7,6 +7,7 @@ from fastapi.responses import Response
 
 from ..common.context import Ctx, CtxDep, problem
 from ..redaction.gateway import require
+from ..db import WRITE_LOCK
 from . import mcase
 
 router = APIRouter(prefix="/api/v1", tags=["package"])
@@ -30,10 +31,11 @@ async def _body_bytes(request: Request) -> bytes:
 def export(case_id: str, ctx: Ctx = CtxDep):
     if ctx.role not in ("LeadInvestigator", "Investigator"):
         raise problem(403, "FORBIDDEN", "只有调查组可以导出完整案件包（对外导出请走脱敏预览）")
-    with ctx.db.session() as s:
+    with WRITE_LOCK, ctx.db.session() as s:
+        if s.get_bind().dialect.name == "sqlite": s.connection().exec_driver_sql("BEGIN IMMEDIATE")
         data = mcase.export_case(s, ctx.settings.blob_dir, case_id, ctx.operator, ctx.role)
     return Response(content=data, media_type="application/zip",
-                    headers={"Content-Disposition": f'attachment; filename="{case_id}.mcase"'})
+                    headers={"Cache-Control": "no-store", "Content-Disposition": f'attachment; filename="{case_id}.mcase"'})
 
 
 @router.post("/cases:import", status_code=201)

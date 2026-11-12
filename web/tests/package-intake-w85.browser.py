@@ -11,7 +11,7 @@ try:
  with sync_playwright() as pw:
   browser=pw.chromium.launch(executable_path=os.environ.get('MCIS_BROWSER_BIN','/usr/bin/chromium'),headless=True,args=['--no-sandbox'])
   page=browser.new_page();writes=[];reads=[];payload=b'synthetic frontend lifecycle test'
-  p=dict(profile='MCIS-BASIC-INTAKE-1',caseId='TEST-W85',title='Synthetic test',sourceSha256=hashlib.sha256(payload).hexdigest(),byteLength=len(payload),counts={'evidence':0},warnings=[])
+  p=dict(packageVersion='1.0.0',hfacsExtension=None,profile='MCIS-BASIC-INTAKE-1',caseId='TEST-W85',title='Synthetic test',sourceSha256=hashlib.sha256(payload).hexdigest(),byteLength=len(payload),counts={'evidence':0},warnings=[])
   def route(r):
    url=r.request.url
    if url.endswith('intakes:preview'):r.fulfill(json=p)
