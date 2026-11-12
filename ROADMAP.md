@@ -163,3 +163,5 @@
 | 2026-11-12 | W16字体覆盖修复 | 限定切片待合并验收 | 固定官方Noto Sans SC字体/OFL、可复现构建脚本、生产路径回归；独立报告177通过，旧字体回归明确失败。冻结 logs/w16-font-impl-hashes-frozen.txt。仅缺字修复，原报告不变；Windows Word/完整产品验收未完成，不部署。 |
 | 2026-11-12 | CPA bounded sampling | 待测（安全切片） | 仅案件级CPA时间序列：有限数、实际5001点上限与浮点前进检查，保持有效采样网格及权限顺序；自测29+合同4通过。冻结 logs/cpa-bounds-impl-hashes-frozen.txt，独立验收待完成。不关闭旧align，不宣称生产鉴权，不部署。 |
 | 2026-11-12 | CPA bounded sampling | 独立安全切片验收通过 | 拒非有限值/浮点停滞并硬限5001点，保留正常累计采样；独立18项含400随机网格对比。整合当前main（含W16字体）服务470+独立18+旧安全75+来源9合计572通过、无跳过。九项CPA/W16冻结匹配。见 logs/cpa-bounds-verification.md；旧align与生产认证仍未修，不部署。 |
+| 2026-11-12 | Core finite JSON | 待测（兼容性安全切片） | 核心响应最后一行拒NaN/Infinity/溢出数值，沿用CORE_BAD_OUTPUT/502；合法有限数/整数/字符串不变。红15败8过→自测23+合同4通过；冻结logs/core-finite-impl-hashes-frozen.txt，待独立验收。不改CLI/旧align/认证，不部署。 |
+| 2026-11-12 | Core finite JSON | 独立安全切片验收通过 | 非有限核心响应在解码边界拒绝，HTTP返回脱敏502。独立43项含400随机有效JSON对比；完整服务493+CPA18+旧安全75+来源9=595过，连新独立共638项无失败/跳过。当前3项/W16字体5项冻结一致，CPA路由未改。见logs/core-finite-verification.md。不改旧align/生产认证，不部署。 |
