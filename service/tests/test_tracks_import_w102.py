@@ -49,7 +49,8 @@ def test_happy_preview_save_replay_export(local):
  report=c.get(URL+'/'+d+'/report');assert report.json()['metadata']['timeBasis']==b['timeBasis']
  assert counts(app)==(1,2,2,3) and c.post(URL+':commit',json=body).json()==saved and counts(app)==(1,2,2,3)
  from mcis_service.package.mcase import read_zip
- files=read_zip(c.get(f'/api/v1/cases/{CASE}/export').content)
+ assert c.get(f'/api/v1/cases/{CASE}/export').status_code==403
+ files=read_zip(c.get(f'/api/v1/cases/{CASE}/export',headers=H('LeadInvestigator')).content)
  assert files[f'raw/track-imports/{d}/source.csv']==raw and files[f'raw/track-imports/{d}/report.json']==report.content
 @pytest.mark.parametrize('old,new,code',[
  ('102.2,reported','102.2,lowerBound','NOT_EXACT_VALUE'),('102.2,reported','102.2,unknown','NOT_EXACT_VALUE'),('102.2,reported','102.3,unavailable','NOT_EXACT_VALUE'),
@@ -102,7 +103,7 @@ def test_rollback_file_failure(local,monkeypatch):
   if path.name=='report.json':raise OSError('injected')
   real(path,data,created)
  monkeypatch.setattr(module,'exclusive_write',fail)
- with pytest.raises(OSError):c.post(URL+':commit',json=prepared(c,payload()))
+ response=c.post(URL+':commit',json=prepared(c,payload()));assert response.status_code==500 and response.headers['cache-control']=='no-store'
  assert counts(app)==(0,0,0,0) and not list(app.state.settings.blob_dir.rglob('*.csv'))
 def test_rollback_commit_failure(local,monkeypatch):
  c,app=local;body=prepared(c,payload());real=module.exclusive_write
@@ -112,7 +113,7 @@ def test_rollback_commit_failure(local,monkeypatch):
   real(path,data,created)
   if path.name=='report.json':event.listen(app.state.db.SessionLocal.class_,'before_commit',fail,once=True)
  monkeypatch.setattr(module,'exclusive_write',install)
- with pytest.raises(RuntimeError):c.post(URL+':commit',json=body)
+ response=c.post(URL+':commit',json=body);assert response.status_code==500 and response.headers['cache-control']=='no-store'
  assert counts(app)==(0,0,0,0) and not list(app.state.settings.blob_dir.rglob('*.csv'))
 def test_preexisting_file_not_overwritten(local):
  c,app=local;body=prepared(c,payload());d=body['previewDigest'];p=app.state.settings.blob_dir/CASE/'raw'/'track-imports'/d/'source.csv';p.parent.mkdir(parents=True);p.write_bytes(b'untouched')
@@ -174,12 +175,21 @@ def test_reject_unsupported_timestamp(local,time):
 
 def test_mcase_restore_receipt_and_original(local,tmp_path):
  c,app=local;r=c.post(URL+':commit',json=prepared(c,payload())).json();d=r['previewDigest']
- package=c.get(f'/api/v1/cases/{CASE}/export').content
+ assert c.get(f'/api/v1/cases/{CASE}/export').status_code==403
+ package=c.get(f'/api/v1/cases/{CASE}/export',headers=H('LeadInvestigator')).content
  with TestClient(create_app(make_settings(tmp_path/'restored',False))) as other:
   result=other.post('/api/v1/cases:import',files={'file':('synthetic.mcase',package)})
-  assert result.status_code==201,result.text
-  assert other.get(URL+'/'+d).json()=={**r,'replayed':True}
-  assert other.get(URL+'/'+d+'/source').content==c.get(URL+'/'+d+'/source').content
+  assert result.status_code==422,result.text
+  import hashlib
+  request={'contentBase64':base64.b64encode(package).decode()}
+  p=other.post('/api/v1/packages/intakes:preview',headers=H('LeadInvestigator'),json=request)
+  assert p.status_code==200,p.text
+  result=other.post('/api/v1/packages/intakes:commit',headers=H('LeadInvestigator'),json={**request,'sourceSha256':hashlib.sha256(package).hexdigest(),'confirmed':True})
+  assert result.status_code==200,result.text
+  assert other.get(URL+'/'+d).status_code==403
+  assert other.get(URL+'/'+d,headers=H('LeadInvestigator')).json()['code']=='ARCHIVE_HISTORY_ONLY'
+  history=f'/api/v1/cases/{CASE}/archive-history/track-imports/'+d
+  assert other.get(history+'/source',headers=H('LeadInvestigator')).content==c.get(URL+'/'+d+'/source').content
   assert other.get(f'/api/v1/cases/{CASE}/tracks').json()==c.get(f'/api/v1/cases/{CASE}/tracks').json()
 
 def test_hdg_unavailable_preserves_raw_numeric(local):

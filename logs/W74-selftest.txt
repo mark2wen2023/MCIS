@@ -1,0 +1,12 @@
+W7.4 implementation checks on W7ACCESS base a76cc56e13caa79b91e5b0036a838851fc967869:
+- TypeScript build check and production build passed; existing large-bundle warning remains.
+- Lint completed; no new recommendationReview warning; existing repository warnings remain.
+- Content/history projection tests passed (binding, dates, whole-batch rejection, raw-field omission).
+- W7.1 41 / W7.2 30 existing frontend checks passed.
+- Existing UI regression checks: colreg18+58, interview40, reports148, analysis94, agent review34, knowledge27, W19.2/W20.3 projection guards passed.
+- Actual read API tests6 passed, server W7ACCESS permissions authoritative.
+- Real loopback HTTP with fresh synthetic SQLite and headless browser passed: explicit content fetch,12 replies/pagination,HTML escaped as text,optional audit,refresh clears audit and resets reply page,close clears content,default Investigator/Public actual403,GET-only and unchanged audit count. Desktop1440 and mobile390 visual inspection completed; mobile no horizontal overflow.
+- Earlier browser selftest expected audit seq1, but fixture seed already has audit events; corrected test locator to actual synthetic command, no implementation change.
+- Analysis regression initially lacked tracked W14 dump inputs in isolated snapshot; exact upstream blob-verified files were materialized and94 checks passed. No test assertion removed.
+Not a full product/Unity/security-authentication/LLM/deployment test. Existing W7 writes have no new CAS/receipt guarantee; no editor or outbound send was added.
+Final integration base fdb8a2103d9f81d9801a9b5ad8ae9247acccd5fb: archive B65 files integrated by exact remote blob checks, all63 nonshared files preserved. Shared docs kept complete and W7.4 increments appended only. Ten frozen UI/test/spec hashes unchanged. Repeated TypeScript/build, W7 frontend41+30, projection and real HTTP browser passed; reader/security/legacy recommendation/archive service checks99 passed. Independent final narrow recheck separately recorded.

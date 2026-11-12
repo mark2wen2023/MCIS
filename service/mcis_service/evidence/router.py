@@ -17,7 +17,8 @@ from ..redaction.gateway import filter_evidence, get_policy, level_of, require
 from . import service
 from .models import EvidenceRow
 
-router = APIRouter(prefix="/api/v1/cases/{case_id}", tags=["evidence"])
+from ..reports.access import NoStoreRoute
+router = APIRouter(prefix="/api/v1/cases/{case_id}", tags=["evidence"],route_class=NoStoreRoute)
 
 
 class EvidenceIn(BaseModel):
@@ -153,6 +154,12 @@ def verify_all(case_id: str, ctx: Ctx = CtxDep) -> dict[str, Any]:
 @router.get("/evidence/{evidence_id}/content")
 def get_content(case_id: str, evidence_id: str, purpose: str = "查看原件", ctx: Ctx = CtxDep):
     with ctx.db.session() as s:
+        from ..working_records_archive.service import archived_evidence,historical_only
+        from ..track_history.service import evidence_archived
+        if archived_evidence(s,case_id,evidence_id=evidence_id) is not None or evidence_archived(s,case_id,evidence_id):
+            from ..reports.access import require_content
+            require_content(s,case_id,ctx.role)
+            historical_only()
         require(ctx, s, case_id, "evidence_meta")
         item = service.load_item(s, case_id, evidence_id)
         if item.get("confidentiality") == "Restricted" and level_of(get_policy(s, case_id), ctx.role, "testimony") not in ("ReadWrite", "ReadOnly"):

@@ -65,8 +65,9 @@ def test_final_commit_failure_rolls_back(empty_client, monkeypatch):
     def broken(self): raise RuntimeError('commit injected')
     with monkeypatch.context() as m:
         m.setattr(session_class, 'commit', broken)
-        with pytest.raises(RuntimeError,match='commit injected'):
-            c.post(P+':commit',json=payload(commit=True))
+        result=c.post(P+':commit',json=payload(commit=True))
+        assert result.status_code==500 and 'commit injected'not in result.text
+        assert result.headers['cache-control']=='no-store'
     assert not list(c.app.state.settings.blob_dir.iterdir())
     with c.app.state.db.session() as s:
         assert not s.scalars(select(CaseRow)).all()

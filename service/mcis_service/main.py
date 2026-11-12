@@ -1,5 +1,8 @@
 """FastAPI 应用入口。运行：.venv/bin/python -m mcis_service（只监听 127.0.0.1）。"""
 from __future__ import annotations
+from .report_output.router import router as report_output_router
+from .track_history.router import router as track_history_router
+from .knowledge_archive.router import router as knowledge_archive_router
 
 from contextlib import asynccontextmanager
 
@@ -28,6 +31,7 @@ from .evidence.router import router as evidence_router
 from .evidence_intake.router import router as evidence_intake_router
 from .interviews.router import router as interviews_router
 from .manual_interviews.router import router as manual_interviews_router
+from .working_records_archive.router import router as working_records_archive_router
 from .package.router import router as package_router
 from .package_intake.router import router as package_intake_router
 from .recommendations.router import router as recommendations_router
@@ -81,18 +85,23 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     for r in (cases_router, evidence_router, timeline_router, interviews_router, manual_interviews_router, recommendations_router, colreg_router,
               audit_router, redaction_router, agents_router, sim_router, package_router, reports_router):
         app.include_router(r)
+    app.include_router(report_output_router)
     app.include_router(human_factors_preview_router)
     app.include_router(bowtie_preview_router)
     app.include_router(nomoto_preview_router)
     app.include_router(hfacs_drafts_router)
     app.include_router(access_workbench_router)
     app.include_router(package_intake_router)
+    app.include_router(working_records_archive_router)
     app.include_router(evidence_intake_router)  # W4.2 supplied-file intake
     app.include_router(case_metadata_router)  # W8.4 text metadata only
+    app.include_router(track_history_router)
     app.include_router(tracks_import_router)  # W10.2 explicit CSV first-track input
     app.include_router(environment_router)  # W9.2 partial observations only
     app.include_router(knowledge_router)
+    app.include_router(knowledge_archive_router)
     app.include_router(analysis_router)  # W12
     app.include_router(current_analysis_router)  # W12.2
     app.include_router(interview_compare_router)  # W5
     return app
+

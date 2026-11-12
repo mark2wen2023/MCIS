@@ -1,4 +1,21 @@
-from .conftest import C, H
+from .conftest import C, H as identity_headers
+import pytest
+from fastapi.testclient import TestClient
+from mcis_service.config import Settings
+from mcis_service.main import create_app
+from mcis_service.seed.lily_mary import seed
+
+# W7 original-content compatibility tightening: business lifecycle runs as an
+# already-authorized lead; no policy grant and no weakening of denial assertions.
+def H(role="LeadInvestigator", operator=None):
+    return identity_headers(role, operator)
+
+@pytest.fixture
+def client(tmp_path):
+    app = create_app(Settings(data_dir=tmp_path, seed_demo=False))
+    with app.state.db.session() as s: seed(s, app.state.settings.blob_dir)
+    with TestClient(app) as client: yield client
+
 
 
 def _rec(client, rid):

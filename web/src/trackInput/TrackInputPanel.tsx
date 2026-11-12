@@ -5,6 +5,7 @@ import { onTrackNavigation } from '../tracks/navigation'
 import type { Snapshot } from '../tracks/model'
 import { importRequest,inputError } from './api'
 import { MAX_FILE_BYTES,TEMPLATE,downloadBytes,encodeBytes,sha256,importBody,parsePreview,parseReceipt,type ImportBody,type Preview,type Receipt } from './model'
+import {histories,historyBytes,historyRefusal,type TrackHistory} from './history'
 import '../styles/w10-input.css'
 type Selection={name:string;base64:string;sha:string;size:number}
 export function TrackInputPanel({snapshot,who}:{snapshot:Snapshot;who:string}){
@@ -12,8 +13,9 @@ export function TrackInputPanel({snapshot,who}:{snapshot:Snapshot;who:string}){
   const [open,setOpen]=useState(false),[vesselId,setVessel]=useState(''),[source,setSource]=useState(''),[timeBasis,setTime]=useState('')
   const [file,setFile]=useState<Selection|null>(null),[fileKey,setFileKey]=useState(0),[preview,setPreview]=useState<Preview|null>(null),[body,setBody]=useState<ImportBody|null>(null)
   const [confirmed,setConfirmed]=useState(false),[busy,setBusy]=useState(''),[message,setMessage]=useState(''),[receipt,setReceipt]=useState<Receipt|null>(null),[uncertain,setUncertain]=useState(false),[page,setPage]=useState(0)
+  const [history,setHistory]=useState<TrackHistory[]>([])
   const gate=useRef({alive:true,version:0,busy:false,controller:null as AbortController|null})
-  const clear=()=>{setPreview(null);setBody(null);setConfirmed(false);setReceipt(null);setUncertain(false);setMessage('');setPage(0)}
+  const clear=()=>{setHistory([]);setPreview(null);setBody(null);setConfirmed(false);setReceipt(null);setUncertain(false);setMessage('');setPage(0)}
   useEffect(()=>{
     const g=gate.current;g.alive=true
     const cancel=()=>{g.version++;g.controller?.abort();g.busy=false;setBusy('');setOpen(false);setFile(null);setFileKey(k=>k+1);setSource('');setTime('');setVessel('');clear()}
@@ -51,7 +53,8 @@ export function TrackInputPanel({snapshot,who}:{snapshot:Snapshot;who:string}){
       const saved=parseReceipt(await importRequest(caseId,who,':commit',run.signal,{...body,previewDigest:preview.previewDigest,confirmed:true}),caseId,body.vesselId,preview)
       if(live(run.version)){setReceipt(saved);setUncertain(false);setMessage('')}
     }catch(e){if(live(run.version)){
-      if(e instanceof ApiError&&[400,403,404,409,413,422].includes(e.status)){setMessage(inputError(e));setPreview(null);setBody(null);setConfirmed(false);setUncertain(false)}
+      if(historyRefusal(e)){setUncertain(true);setReceipt(null);setMessage(inputError(e))}
+      else if(e instanceof ApiError&&[400,403,404,409,413,422].includes(e.status)){setMessage(inputError(e));setPreview(null);setBody(null);setConfirmed(false);setUncertain(false)}
       else {setUncertain(true);setMessage('保存结果未确认，服务可能已经保存。先只读核查；不要另选文件重复提交。')}
     }}finally{finish(run.version)}
   }
@@ -84,6 +87,14 @@ export function TrackInputPanel({snapshot,who}:{snapshot:Snapshot;who:string}){
       if(live(run.version)){downloadBytes(new Blob([bytes]),`mcis-track-${receipt.previewDigest.slice(0,12)}.${kind==='source'?'csv':'json'}`);setMessage('已读取并下载文件。'+(expected?'SHA-256 与保存回执一致；这不证明内容真实性。':'此报告未提供独立期望哈希，不声称完成一致性核验。'))}
     }catch{if(live(run.version))setMessage('文件读取失败、为空或哈希不符，没有下载。请核查案件证据原件。')}finally{finish(run.version)}
   }
+  const readHistory=async()=>{
+    if(!vesselId)return;const run=begin('读取独立历史');if(!run)return;setHistory([])
+    try{const rows=await histories(caseId,vesselId,who,run.signal);if(live(run.version)){setHistory(rows);if(!rows.length)setMessage('未返回可读历史，不代表当前未知请求未提交。')}}catch(e){if(live(run.version))setMessage(inputError(e))}finally{finish(run.version)}
+  }
+  const downloadHistory=async(h:TrackHistory,kind:'source'|'report')=>{
+    const run=begin('读取历史原件并记录访问');if(!run)return
+    try{const bytes=await historyBytes(h,kind,who,run.signal);if(live(run.version)){downloadBytes(new Blob([bytes as BlobPart]),`historical-track-${h.digest}.${kind==='source'?'csv':'json'}`);setMessage('历史原字节SHA一致，已记录本次访问；不是当前保存成功、当前航迹有效或来源真实性证明。')}}catch(e){if(live(run.version)){if(e instanceof ApiError&&e.status===403)setHistory([]);setMessage(inputError(e))}}finally{finish(run.version)}
+  }
   const allowed=['Investigator','LeadInvestigator'].includes(getRole())
   if(!allowed)return <p className="w102-restricted">本轮航迹首次输入及原件仅对调查组开放，仍受案件权限约束。</p>
   if(!open)return <button type="button" className="w102-open" onClick={()=>reset(true)}>＋ 导入明确语义 UTC CSV / 查看导入原件</button>
@@ -102,6 +113,7 @@ export function TrackInputPanel({snapshot,who}:{snapshot:Snapshot;who:string}){
     {preview.canCommit?<><label className="w102-confirm"><input type="checkbox" checked={confirmed} disabled={!!busy||uncertain} onChange={e=>setConfirmed(e.target.checked)}/>我已核对目标案件/船舶、原件摘要、全部输入的字段语义及UTC依据，确认首次保存，不覆盖旧航迹。</label>{!uncertain&&<button type="button" disabled={!confirmed||!!busy} onClick={()=>void save()}>确认保存本次航迹</button>}</>:<p role="alert" className="w102-notice">本批不可保存。请核查原始资料后重新准备文件，不能把未知改成零或删除问题行来伪造完整性。</p>}
     </section>}
     {uncertain&&<div className="w102-notice"><p>3 · 结果待核查。已发送请求不能由关闭表单撤销。</p><div className="w102-actions"><button type="button" disabled={!!busy} onClick={()=>void verify()}>只读核查本次保存</button><button type="button" disabled={!!busy} onClick={()=>void save()}>同一内容幂等重试保存</button></div></div>}
+    <section aria-label="独立航迹历史"><button type="button" disabled={!!busy||!vesselId} onClick={()=>void readHistory()}>独立读取本船归档历史（不核验当前保存）</button>{history.map(h=><article key={h.digest}><h3>只读航迹归档历史</h3><p>{h.vesselId} · {h.pointCount} 个原导入点。当前航迹可能后来改变，此读取不证明当前点位仍一致。</p><p>历史声明身份未认证；不是本次保存回执，不能解除未知写入锁。</p><code>{h.digest}</code><button disabled={!!busy} onClick={()=>void downloadHistory(h,'source')}>记录访问并下载历史CSV</button><button disabled={!!busy} onClick={()=>void downloadHistory(h,'report')}>记录访问并下载历史说明</button></article>)}</section>
     {receipt&&<section className="w102-receipt" role="status"><h3>已核对保存回执</h3><p>船舶 {receipt.vesselId} · {receipt.pointCount} 点 · {receipt.committedUtc}{receipt.replayed?' · 已存在的相同提交，未重复保存':''}</p><p>原件：{receipt.sourceEvidenceId}；说明：{receipt.reportEvidenceId}。点击上方“读取已保存航迹”可刷新点位，或重开页面继续查看。</p><p className="w102-hash">摘要：{receipt.previewDigest}<br/>原件 SHA-256：{receipt.sourceSha256}</p><div className="w102-actions"><button type="button" disabled={!!busy} onClick={()=>void download('source')}>下载已保存 CSV 原件</button><button type="button" disabled={!!busy} onClick={()=>void download('report')}>下载导入说明 JSON</button><button type="button" disabled={!!busy} onClick={()=>reset(true)}>选择其他船舶 / 重新核查</button></div></section>}
     {busy&&<p role="status">{busy}…</p>}{message&&<p role="alert" className="w102-notice">{message}</p>}
   </section>

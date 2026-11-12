@@ -1,0 +1,9 @@
+/** Bounded JSON grammar; rejects duplicate keys and ambiguous Unicode. Not a canonicalizer. */
+export function strictJson(bytes:Uint8Array):unknown{
+ if(bytes.length>=3&&bytes[0]===239&&bytes[1]===187&&bytes[2]===191)throw Error('JSON BOM')
+ const s=new TextDecoder('utf-8',{fatal:true}).decode(bytes);let i=0
+ const fail=():never=>{throw Error('严格JSON校验失败')};const ws=()=>{while(/[\x20\t\r\n]/.test(s[i]||'!'))i++}
+ function str():string{if(s[i++]!=='"')return fail();const start=i-1;let closed=false;while(i<s.length){const c=s.charCodeAt(i++);if(c===34){closed=true;break}if(c<32)fail();if(c===92){const e=s[i++];if(e==='u'){if(!/^[a-fA-F0-9]{4}$/.test(s.slice(i,i+4)))fail();i+=4}else if(!e||!'"\\/bfnrt'.includes(e))fail()}}if(!closed)fail();const value=JSON.parse(s.slice(start,i)) as string;for(let j=0;j<value.length;j++){const c=value.charCodeAt(j);if(c>=0xd800&&c<=0xdbff){const next=value.charCodeAt(++j);if(!(next>=0xdc00&&next<=0xdfff))fail()}else if(c>=0xdc00&&c<=0xdfff)fail()}return value}
+ function value(depth:number):unknown{ws();const c=s[i];if(c==='{'){if(depth>64)fail();i++;ws();const out=Object.create(null),seen=new Set<string>();if(s[i]==='}'){i++;return out}while(true){ws();const key=str();if(seen.has(key))fail();seen.add(key);ws();if(s[i++]!==':')fail();out[key]=value(depth+1);ws();const d=s[i++];if(d==='}')break;if(d!==',')fail()}return out}if(c==='['){if(depth>64)fail();i++;ws();const out:unknown[]=[];if(s[i]===']'){i++;return out}while(true){out.push(value(depth+1));ws();const d=s[i++];if(d===']')break;if(d!==',')fail()}return out}if(c==='"')return str();for(const [literal,v] of [['true',true],['false',false],['null',null]] as const)if(s.slice(i,i+literal.length)===literal){i+=literal.length;return v}const m=/^-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?/.exec(s.slice(i));if(!m)fail();i+=m![0].length;const n=Number(m![0]);if(!Number.isFinite(n))fail();return n}
+ const result=value(1);ws();if(i!==s.length)fail();return result
+}

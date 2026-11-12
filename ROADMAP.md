@@ -338,8 +338,41 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | W20.3 | 待测 | 2026-11-12：只读六角色配置登记与按案草稿队列；主会话/自动调度未接通，无假交互；合成真实HTTP/浏览器、API7、TS/build与W20.2 UI34通过；冻结logs/W203-impl-hashes-frozen.txt。 |
 | W20.3 | 已验收（只读状态范围） | 2026-11-12：独立API7、格式/路由校验、跨案身份导航/错误空状态/键盘移动端浏览器及真实HTTP合成库通过；D01引用格式修复复测关闭。主会话、自动任务编排、真实模型能力均未实现或验证；无部署。 |
 
+| W7ACCESS | 待独立验收 | 2026-11-12 | 建议/征求意见原文服务端保守隔离；默认 Investigator/外部角色403，不授新权限；列表/详情/board/写返回/审计/包出口及旧导入目标权限。冻结 logs/W7ACCESS-impl-hashes-frozen.txt；W7.4 UI 暂不发布，原文编辑仍无 CAS/回执。 |
+| W7ACCESS | 已独立验收 | 2026-11-12 | 27独立安全 + 33原W17断言合成适配 + 257定向服务回归通过；9项冻结一致，另16项loopback HTTP实施自测。DEFECTS/W7ACCESS.md无阻塞缺陷。默认非首席原文拒绝/含原文非默认策略旧包拒绝为有意兼容收紧；仅代码集成，不是生产身份认证、完整产品或W7.4 UI验收。 |
+
+| 2026-11-12 | Archive B | 待独立验收 | 1.2受限同案号新案恢复：完整笔录、报告版本/审核快照、原审计保管链、历史回执只归档、多代源包字节保全及预算、单对象恢复来源；所有不支持业务/来源/策略整包拒绝。W7ACCESS主线门禁已整合。当前字节615定向服务组合通过(153.87s)，独立预算原用例8通过(6.94s)，与旧474/189重叠不累加；UI专项和回归/tsc/build通过，浏览器API替身与真实服务验收分列。52项冻结logs/ARCHIVEB-impl-hashes-frozen.txt；独立三库/真实浏览器最终验收待重跑。非全系统备份/认证/事实认定，不部署、不碰W11。 |
+
+| 2026-11-12 | Archive B | 独立验收通过 | 最终52项冻结前后哈希一致，独立56项合成API/DB/真实HFACS CLI与真实Chromium+双FastAPI端到端通过；三空库往返、历史原件/回执只归档、实际64MiB累计/8与9层/32与33件预算、超过50快照、故障回滚、锁序及撤权清屏均有实测。615实施定向组合与独立56分列不混计。见tests_acceptance/ARCHIVEB/REPORT.md和DEFECTS/ARCHIVEB.md。未穷举6引用/10快照、全部对象上限或生产多worker；版本1.2仅支持合同内同案号新案/默认策略，未知非空业务整包拒绝，原包真实性和历史签署未认证，无部署/W11。 |
+
+| W7.4 | 待独立验收 | 2026-11-12 | 基于已合并W7ACCESS，安全建议正文/已登记回复/独立权限审计只读核查，10回复/组、审计最早至多200条。冻结 logs/W74-impl-hashes-frozen.txt；真实HTTP合成浏览器、权限拒绝、GET-only及无审计写通过，待延迟/身份/导航独立验收。无正文编辑/CAS/外发/部署。 |
+| W7.4 | 已独立验收 | 2026-11-12 | 独立组件浏览器覆盖迟到body/audit、关闭刷新重开、切卡切案导航操作人、审计403隔离/畸形整批拒绝/空内容/移动键盘/GET-only；真实HTTP合成DB浏览器复跑、API6、TS/lint/build和旧W7前端41+30通过，10冻结一致。DEFECTS/W74.md无阻塞；只读增量，既有写操作不在GET-only保证内，未部署。 |
+| W7.4 | 最终集成复验通过 | 2026-11-12 | 基于归档B已合并 fdb8a210；完整保留其65文件，REQUESTS/ROADMAP仅追加W7.4。独立再次核10冻结/API6/中断浏览器/真实HTTP浏览器，远端mcase+working_records_archive逐blob一致；实施服务联动99通过、tsc/build/旧W7前端复跑通过。准备正常PR合并，不部署。 |
+
+| 2026-11-12 | Knowledge archive v1 | 待独立验收 | 独立全局知识JSON归档→预检→只读历史→原包下载，不恢复在线库/不自动公开；今后create/review同事务完整快照与明确旧缺失覆盖。归档预算不成为在线撤回限制，3全局表精确兼容.mcase未知表门禁；未知保存绑定主体+同字节重试、仅明确预事务拒绝标记释放。后端185定向组合过44.85s，UI18模型断言/tsc/build/API-double通过；独立正式双库/权限/并发/回滚/真实浏览器尚待完成。21实现冻结logs/KNOWLEDGEARCHIVE-impl-hashes-frozen.txt；B两新增GET统一OpenAPI遗漏一并补正，无运行路由变化。非全库/生产认证/全历史备份，不部署、不碰W11。 |
+
+| 2026-11-12 | Knowledge archive v1 | 受限切片独立验收通过 | 最终独立70项后端/12.92s、真实Chromium+双空库服务原包往返/提交后503同字节恢复、4新版身份迟响应API-double均过，21冻结前后相等；补受控export/review交错，仅完整旧/新快照。完整保全现存知识卡/原链与前向审核快照，历史Published不激活；旧覆盖审批不可还原，知识来源文件不含、非在线库/全系统恢复。原主体未知请求不能借另一主体同SHA回执宣称成功，已知保守锁边界记录。未测任意崩溃/生产多worker/全repo；详见tests_acceptance/KNOWLEDGEARCHIVE/REPORT.md、DEFECTS/KNOWLEDGEARCHIVE.md。不部署、不触W11。 |
+
+| 2026-11-12 | W10 restored receipt isolation | 待独立验收 | 合成真实流程和独立复现确认旧恢复回执GET/list/commit误作active；新1.3/workingv2携完整非活跃索引，原CSV/report/链保留，历史独立受权读取。旧无本地标记一律来源未验证，不暗示失败或自动重提；新本地proof同事务且永不导入，真实SQLite writer reservation限W10。当前370定向组合/116.43s含真双进程及HFACS+W10+报告三库通过；UI18新断言/原W10/W8.5/tsc/build/API-double过。29实现冻结logs/TRACKHISTORY-impl-hashes-frozen.txt；独立全矩阵/真实浏览器待完成。演示原失败断言不删除，不部署、不碰W11。 |
+
+| 2026-11-12 | W10 restored receipt isolation | 新冻结待最终独立裁定 | 兼容提示窄修后33文件冻结；完整定向组合373 passed/130.30s。已知旧W10来源迁移边界单独409 ARCHIVE_HISTORY_UNSUPPORTED，原包和当前报告不删除；真实损坏仍INTEGRITY，UI不把来源核验不可用误作正文丢失。包1.3原件/链保全、无proof兼容收紧不变。最终独立报告另列，不冒充CI或全系统完成。 |
+
+| 2026-11-12 | W10 restored receipt isolation | 受限修复独立通过 | 新33冻结独立49 passed/31.75s，另知识归档独立70 passed/13.70s；真实历史浏览器及真实旧来源provenance浏览器通过，包含原包/正文不变、损坏与不支持区分、403清正文。33 SHA前后相同。仅原historybrowser的未知写入两错误为明确API-double，其余真服务；详情tests_acceptance/TRACKHISTORY/REPORT.md。开发373定向项另计，不称全repo/CI/生产身份认证。旧W10包不能直接迁移，旧本地回执无proof不再活跃重放；原件保留，严格验证后可1.3新空目标恢复。演示包将另行更新实跑，不部署不触W11。 |
+
+| 2026-11-12 | Local stage demonstration | 冻结待独立裁定 | 真实三空库API合成链及15项只读浏览器通过，W10当前/历史严格分离、原件字节比较、知识只读历史不激活；脚本模拟审核不是专家确认，浏览器非全部表单写入。13文件冻结，含3页仅1.2/1.3静态文案校正、16源断言/tsc/build过；4运行安全开发项过。独立优化模式问题已显式拒绝-O/PYTHONOPTIMIZE，强制终止manifest可陈旧但浏览器PID/starttime/socket所有权核验拒绝。Linux既有依赖，不安装、不部署、不接真实资料、不碰W11；最终独立结果另列。 |
+
+| 2026-11-12 | Local stage demonstration | 受限演示独立验证通过 | 最终冻结独立11 passed/26.89s，真实新三库API往返、15项真浏览器及新版三页提示DOM、Python优化拒绝、恶意env不重定向、已有文件/目录/链接保全、故障与正常SIGINT只清自建服务；下载仅新增合法Access及对应审计链，原前缀/业务行保全。13文件SHA前后核验，具体边界见tests_acceptance/STAGEDEMO/REPORT.md。可复跑Linux工具，不是全UI写入验收、生产部署、智能体推理或全系统完成。 |
+
+
+| 2026-11-12 | Report output A | 冻结待独立裁定 | 明确preview→单格式生成→用户自行保留四成员ZIP，原文件/输入JSON/原审计/manifest自洽绑定；不服务端保存、不随.mcase恢复、不认证签署。20文件冻结，后端最终342 passed/80.17s，UI129校验+原148回归/tsc/build/API-double过。两短事务外单render、前后原文权限/来源门禁/报告策略复核；客户端未知保锁/停止等待/显式弃投递freshpreview。独立完整真实浏览器与故障矩阵进行中，未把开发中通过当最终验收。B另列计划，未实施；不部署不触W11。 |
+
+
+| 2026-11-12 | Report output A | 受限独立验收通过 | 最终独立49 passed/11.56s，20SHA前后匹配；真实双格式单render/原文不变/审计关联、实际第二连接改报告或策略后409/403、故障全表回滚与commit后交付失败各有证明。真浏览器2正常下载+2真实commit后故障替换+1真实commit后身份迟响应丢弃，最终5审计；8独立客户端坏结构/错绑拒绝。实际2MiB报告及16MiB输出边界与其余缩小limit测试区别详见独立REPORT；未穷尽多worker/真实切案/全部变体。无服务端原件保存、无.mcase文件恢复、无签署认证；B仅计划，不部署不触W11。 |
+
+
 | W12.2 | 待独立复核 / 浏览器阻塞（草稿，不合并） | 2026-11-12：当前案两船已存同刻点→现有C# CPA；不插值/外推，逐船保留实测/插值/手绘/仿真/未知来源标签，输出均为推算，无风险或责任结论；旧3案seed明确为历史基准。基于80fad29整合，263限定服务回归、tsc/build/lint及W12/相邻UI模型测试通过；86项冻结logs/W122-impl-hashes-frozen.txt。独立发现的错误语义/核心标志/中文错误/超大整数已返工，等待最终复核；Chromium socket权限与CUA loopback访问阻碍导致真实浏览器实际完成0项，不可称完整验收，不部署、不触W11。 |
 
 | W12.2 | 独立后端/模型范围通过；浏览器仍阻塞（草稿，不合并） | 2026-11-12：冻结后独立47 API/数据库/真实C#测试与36 UI模型/SSR断言通过，起止86/86哈希一致；D01–D04逐项复核关闭（D03仅代码/模型范围）。真实浏览器0项、无截图，因此不宣布UI或完整W12验收；待受支持环境完成交互/视觉验证再决定合并。见tests_acceptance/W122/REPORT.md。 |
 
 | W12.2 | 草稿最新主线整合 | 2026-11-12：保留main276fe25的W20.3共享路由与所有追加，86冻结哈希不变；整合后102项API（与此前覆盖重叠）、W12.2/W20.3模型、独立36断言、tsc/build/lint通过。浏览器0项限制不变，草稿PR不合并。 |
+

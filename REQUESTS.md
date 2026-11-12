@@ -500,5 +500,69 @@ Authorized narrow package export correction, following synthetic reproduction: R
 ## W20.3 只读智能体协作状态（2026-11-12）
 登记新前端模块agentOverview及AgentOverviewPage，新合同规格W20.3-agent-overview.md。共享接线main.tsx、routes.ts、caseContext.ts仅新增agents路由并保留案件上下文；不修改其他模块。只调用既有GET agents/drafts，主会话/任务编排尚未实现，无假聊天或自动执行，不碰W11。
 
+## W7 原文访问隔离 v1（2026-11-12，先于 W7.4 UI）
+纯合成确认默认 Public 可读取建议 Draft 原文。经授权按既有报告/笔录保守 full-content guard 修复，不改权限矩阵。登记跨包 Recommendations router、audit router、access_workbench router（原始审计行分类门，保留核验内容）、package/mcase.py；新增 recommendations/access.py 和合同 recommendation-content-access-v1.md。覆盖建议/征求意见读写返回、派生审计、组包前准入及旧导入目标库权限，不触 W11。默认 Investigator 收紧为403，明确兼容变化；共享包与归档B串行重放窄改。无 CAS/回执或可靠正文编辑宣称。
+
+回归断言适配：test_recommendations 使用已授权首席和纯合成种子保留原业务断言；test_reports_w162_access 保留旁路用例但默认 Investigator 的 history 未授权先403，不再先查存在404。
+
+### Working-record archive B: reviewed bounded restore and compatibility changes
+Independent contract review approved working-record-archive-v1.md before implementation. New1.2 extension restores complete supported interviews/reports/snapshots and inert receipt/source history; unsupported tables/files/citations remain whole-export refusal, never fallback partial success. W11 and professional core unchanged.
+
+Intentional compatibility boundaries: a restored case now has source.mcase/intake history, so its subsequent full archive requires full12 original-content permissions. Default Investigator previously exporting narrow HFACS/basic or evidence-only packages must now receive403 when such working/import history is included; qualified Lead tests retain original restoration assertions plus explicit Investigator403. Evidence-intake restored receipts no longer reactivate; existing replay/download entry points return409 ARCHIVE_HISTORY_ONLY, while authorized history content preserves original bytes and appends a new Access event. Old generic import cannot accept1.2. Existing fault-injection tests now verify safe500/no-store plus unchanged DB/blob state because NoStoreRoute deliberately does not expose internal exceptions.
+
+Manual original A refusal applies when a case remains unsupported/incomplete; a complete validated1.2 package can now preserve active/orphan manual receipts as inactive history. Forced writer/export interleaving asserts actual complete snapshot contents (not merely changing an expected status). Entire new package processing runs in worker helpers after bounded async body reading; SQLite sessions remain owned by one worker. Export422 semantic preflight failures map to409 ARCHIVE_RESTORE_UNSUPPORTED;403, budget413 and failure rollback remain intact. No user-visible completion is claimed until independent acceptance.
+
+W archive B compatibility: legacy packages containing evidence-intake custody credentials without a validated working-record extension now fail closed at import. This concerns subsequent imports only; existing database credentials are not migrated, cleaned or silently rewritten. Version downgrade/incomplete namespace attempts are tested.
+
+## W7.4 安全建议只读核查（2026-11-12）
+登记已冻结 RecommendationsPage.tsx 的窄接线：新增独立 recommendationReview 正文/全部已登记回复读取器及可选单建议审计；合同 W7.4-recommendation-review.md 先行，使用原有 GET 与服务端权限。无后端/schema/共享路由修改，不修称旧写并发，无正文编辑、自动状态变更或外发，不触 W11。审计现接口最早至多 200 条，不宣称完整审计链。
+
+## Knowledge archive v1: independent historical collection (2026-11-12, implementation in progress)
+
+User requested enduring structured investigation datasets and reliable recoverable records. This slice is intentionally separate from `.mcase`: preserve all currently stored W19 card documents/index columns/original audit strings, and future complete create/review snapshots, in a bounded versioned JSON envelope. Lead-only save creates immutable read-only history, never online cards or reactivated approval. Historical Published is not a present release decision. Existing Withdrawn cards have already overwritten publication approval fields; no old missing fields are reconstructed. Snapshot coverage starts explicitly with the first new writer transaction and retains the prior original chain hash.
+
+Cross-module agreement: three exact global non-case tables (`knowledge_archives`, `knowledge_audit_snapshots`, `knowledge_audit_snapshot_epoch`) may be added to the working-record archive GLOBALS exclusions after confirming no case_id, case foreign keys, or case retrieval. This preserves existing `.mcase` scope, not broader backup completeness; unknown nonempty case tables still fail closed. Free-text privacy/public-source truth cannot be guaranteed by a Public/Synthetic label. All original source/review labels are self-reported; hashes only check internal consistency. New library exports exclude saved history collections, whose exact original files remain separately retrievable.
+
+Contract: `contracts/knowledge-archive-v1.md`; design-only independent review: `tests_acceptance/KNOWLEDGEARCHIVE/PRE_REVIEW.md`. Runtime implementation and independent acceptance remain outstanding. No W11, deployment, online restoration, automatic disclosure, model call, or candidate derivation.
+
+### Archive B uniform OpenAPI omission
+
+Unmodified baseline W19/W19.2 suite reproduced 65 pass / 1 route-contract failure: PR36's two real archive-history GET routes were described only in the dedicated fragment, absent from shared OpenAPI. Added their shared declarations and removed stale implementation-pending prose; no runtime routing or behavior changes. Same 66 tests now pass (9.20s), original red assertion unchanged. Independent route test passes, and two isolated synthetic databases produced actual restored provenance JSON conforming to both declarations plus exact historical bytes/headers. This is contract integration correction, not a new runtime restoration claim.
+
+## W10 restored receipt isolation (2026-11-12, implementation in progress)
+
+Real synthetic stage demonstration on released main d44bb4e found that restored W10 digest GET, vessel receipt list and identical original-body commit returned active `replayed:true`. An independent empty-database reproduction confirmed all three; raw originals were preserved, so this is a current-operation provenance/receipt defect, not a claim of byte loss. The demonstration remains failed until the unchanged receipt-isolation assertion succeeds.
+
+Approved contract `track-history-v1.md` reserves package1.3.0 / working-record root v2 (single existing member path) when W10 is included. Original CSV/report and chains remain exact; imported receipts become separate inert history indexes. Old W10-containing1.0/1.1/1.2 top-level imports refuse without writes; old no-W10 formats remain supported. Do not label unsupported migration as corruption or delete a user's old package. W7's unimplemented proposal moves to a later version; no W7 or W11 work is included.
+
+Previously restored databases cannot reliably be distinguished from genuinely local old receipts. The intentional conservative upgrade introduces append-only local commit markers made only by new real commits, never by import/backfill. No marker and no historical index means TRACK_ORIGIN_UNVERIFIED, not proof of failure or permission to retry with new IDs. Existing source data remains; strict validation may export1.3 for archive-only restoration. Local markers are non-transferable runtime-origin state, not identity authentication; their portable business contents remain in original report bytes/indexes. Orphan/conflicting markers reject export and keep both evidence IDs/digest reserved.
+
+W10 only adopts existing WRITE_LOCK then actual SQLite BEGIN IMMEDIATE in a synchronous worker, with marker/points/evidence/chains in one transaction. Shared locking framework is unchanged. Actual two-process and rollback tests required; no arbitrary crash-atomic or systemwide multiworker claim. History byte reads require current full original-content permission plus both source registrations and commit Access before returning bytes. UI must separate active/history/unverified and never clear unknown current write state on the two history/source-origin refusals.
+
+### Independently verified legacy provenance limitation
+
+A genuine pre-fix1.2 restricted restore with saved report remains readable after upgrade (report GET200), and its preserved current state can validate/export1.3 and restore into a new empty destination. However, the old database's latest-restore provenance lookup still uses its original W10-containing1.2 source package and returns409 ARCHIVE_HISTORY_UNSUPPORTED with an explicit old-version compatibility explanation. Only the exact structured legacy-W10 migration refusal maps to this code; actual source hash/receipt mismatches and other parsing failures remain ARCHIVE_HISTORY_INTEGRITY. This is an unsupported legacy provenance-inspection path, not proof that original bytes were tampered with or lost. No automatic rewrite/migration of the original source package or historical metadata is performed. Current report data remains; use the explicitly verified export/new-case recovery path rather than assuming the old history badge was fully migrated.
+
+## Reproducible local synthetic stage demonstration
+
+Continue Sunday's runnable framework goal with a deliberately limited, repeatable Linux demonstration, not deployment or production authentication. Three owned empty SQLite/loopback services execute actual HTTP case creation, evidence and fixed-UTC track input, manual interview/Q&A, template report and explicitly simulated review, restricted package1.3 empty-target restoration, and separate knowledge-history archival without online activation. Original documents and bytes are compared; restored W10 receipts must refuse active replay. No W11, LLM, real accident materials or installation is involved.
+
+The first pre-fix demonstration failed on restored W10 active receipts, leading to separately verified PR39; the failing baseline was not relabeled passed. The post-fix runner and real read-only browser now cover the selected flow. API scripted writes are not claimed as complete UI form entry; authorized history downloads append Access audit. A normal --hold SIGINT exit stops only owned child processes. Stale manifests or another PID namespace fail closed; external forced termination can leave stale running state. Independent review found optimization could remove assert-based checks; both tool entrypoints now explicitly reject optimized Python before outputs/services. Three existing UI notices receive only precise1.2/1.3 wording corrections, not broader restore semantics.
+
+
+## Report output A: explicit traceable client download, not server retention
+
+Investigated the confirmed gap: existing report.export keeps format/language/SHA and operation snapshots, not the streamed original PDF/DOCX bytes. Ordinary EvidenceRow registration would not supply equivalent report-content permission checks, and new retention tables without simultaneous versioned archive support would regress backup behavior. Therefore implement the approved independent A slice only, with a separately marked deferred B plan.
+
+Users explicitly preview the currently saved report, choose one format/language and confirm one generation. A four-member ZIP contains that single actual PDF or DOCX, canonical exact report input JSON, the original export audit line and operation snapshot, and an unsigned manifest. Existing reason text binds report/output hashes into the original audit; no new persistent bytes, table, active receipt, import format or case-package version is introduced. Re-generation is a new output, not recovery of identical lost bytes. The user must save the downloaded package.
+
+The new endpoint adds conservative current-case evidence/interview visibility and row/document binding checks in addition to the full12-category report/audit gate. This is not a citation closure or original-source authenticity check. Render once outside transactions; short transactions before and after recheck report/policy fingerprints and permission. Preparation failures roll back the event; a post-commit delivery error may retain an audit record. Original report and ordinary export behavior remain unchanged. All generated/test content is synthetic.
+
+The browser uses a fixed-profile ZIP_STORED and strict JSON verifier, actual member CRC/SHA, preview/request binding and original audit association. No object URL/download occurs until checks succeed. Unknown delivery persists only scoped metadata and never auto-retries. Explicit stop-wait discards even abort-ignoring late replies. After checking downloads the user can knowingly abandon an attempt and freshly preview a new generation; storage corruption/unavailability has an explicit scoped recovery check, never silent lock deletion or false success. Local headers and hashes are not authentication, signature, facts or complete audit-chain certification.
+
+Engineering caps are declared for report/output/audit/manifest/ZIP. A self-review removed an unintended2MiB policy-fingerprint limit by streaming its hash without adding a policy editing restriction. OpenAPI labels now match the two new report-output routes while preserving the old14-report-route test unchanged. The B retention plan allocates no archive version and remains unimplemented.
+
+
 ## W12.2 current saved-track analysis
 Contract contracts/W12.2-current-track-analysis.md. New read-only current-case endpoint and module; explicit exact-time pairing delegates numeric calculation to existing C# cpa, preserving per-vessel provenance and distinguishing calculated output. No new interpolation, safety verdict or W11/core edits. Cross-package wiring limited to main.py/openapi and AnalysisPage; old W12 seed files and view untouched, old mode retained explicitly as historical reference. New separate styles/module/tests. Input digest and permission are rechecked after core work; no persistence or deployment.
+

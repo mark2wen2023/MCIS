@@ -148,6 +148,11 @@ def list_items(s: Session, case_id: str) -> list[dict[str, Any]]:
 
 def next_id(s: Session, case_id: str) -> str:
     nums = [int(re.sub(r"\D", "", d["evidenceId"]) or 0) for d in list_docs(s, EvidenceRow, case_id)]
+    from ..working_records_archive.models import ArchiveImportHistoryRow
+    reserved = s.scalars(select(ArchiveImportHistoryRow.evidence_id).where(ArchiveImportHistoryRow.case_id==case_id,ArchiveImportHistoryRow.kind=='evidence-intake'))
+    nums.extend(int(re.sub(r"\D", "", v) or 0) for v in reserved if v)
+    from ..track_history.service import reserved
+    nums.extend(int(re.sub(r"\D", "", v) or 0) for v in reserved(s,case_id))
     return f"EV-{(max(nums) + 1 if nums else 1):03d}"
 
 

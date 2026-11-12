@@ -17,7 +17,8 @@ from ..redaction.gateway import require, filter_evidence, get_policy, level_of
 from .parser import (PROFILE, VERSION, PREFIX, MAX_BODY, MAX_BYTES, SAFE_ID, DIGEST,
                      canonical, sha, inputs, preview, text)
 
-router=APIRouter(prefix='/api/v1/cases/{case_id}',tags=['evidence-intake'])
+from ..reports.access import NoStoreRoute
+router=APIRouter(prefix='/api/v1/cases/{case_id}',tags=['evidence-intake'],route_class=NoStoreRoute)
 
 
 def authorize(ctx,s,case_id,*,write=False):
@@ -87,6 +88,11 @@ def exclusive_write(path: Path,raw,created):
 
 
 def load_receipt(ctx,s,case_id,digest):
+    from ..working_records_archive.service import archived_evidence,historical_only
+    if archived_evidence(s,case_id,digest=digest) is not None:
+        from ..reports.access import require_content
+        require_content(s,case_id,ctx.role)
+        historical_only()
     rel=rel_for(digest)
     rows=s.scalars(select(EvidenceRow).where(EvidenceRow.case_id==case_id,
                            EvidenceRow.doc['relativePath'].as_string()==rel).limit(2)).all()
@@ -191,7 +197,13 @@ def receipt_input(case_id:str,digest:str,ctx:Ctx=CtxDep):
 @router.get('/evidence/{evidence_id}/intake')
 def receipt_evidence(case_id:str,evidence_id:str,ctx:Ctx=CtxDep):
     with ctx.db.session() as s:
-        authorize(ctx,s,case_id);item=evidence.load_item(s,case_id,evidence_id)
+        authorize(ctx,s,case_id)
+        from ..working_records_archive.service import archived_evidence,historical_only
+        if archived_evidence(s,case_id,evidence_id=evidence_id) is not None:
+            from ..reports.access import require_content
+            require_content(s,case_id,ctx.role)
+            historical_only()
+        item=evidence.load_item(s,case_id,evidence_id)
         if not filter_evidence([item],ctx.role,get_policy(s,case_id)):raise problem(403,'FORBIDDEN','受限原件')
         match=re.fullmatch(r'raw/evidence-intakes/([0-9a-f]{64})/source\.bin',item.get('relativePath',''))
         if not match:

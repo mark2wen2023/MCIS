@@ -145,6 +145,9 @@ def request_hash(ctx,case_id,operation,record_id,body):
     return digest({'caseId':case_id,'operation':operation,'recordId':record_id,'body':body,'role':ctx.role,'operator':ctx.operator})
 
 def replay(s,ctx,case_id,operation,record_id,body):
+    from ..working_records_archive.models import ArchivedManualReceiptRow
+    from ..working_records_archive.service import historical_only
+    if s.get(ArchivedManualReceiptRow,(case_id,body['requestId'])) is not None: historical_only()
     row=s.get(InterviewRequestReceiptRow,(case_id,body['requestId']))
     if row is None:return None
     if row.role!=ctx.role or row.operator!=ctx.operator or row.operation!=operation or row.request_digest!=request_hash(ctx,case_id,operation,record_id,body):
@@ -176,6 +179,8 @@ def create_sync(case_id,body,ctx):
         if old is not None:return JSONResponse(old,status_code=200)
         used=[d['recordId'] for d in list_docs(s,InterviewRow,case_id)]
         used.extend(s.scalars(select(InterviewRequestReceiptRow.record_id).where(InterviewRequestReceiptRow.case_id==case_id)))
+        from ..working_records_archive.models import ArchivedManualReceiptRow
+        used.extend(s.scalars(select(ArchivedManualReceiptRow.record_id).where(ArchivedManualReceiptRow.case_id==case_id)))
         record_id=next_key(used,'IR-')
         rid(record_id)
         doc={'recordId':record_id,'caseId':case_id,'interviewee':copy.deepcopy(body['interviewee']),'startUtc':body['startUtc'],
@@ -226,6 +231,9 @@ def recover(case_id:str,request_id:str,ctx:Ctx=CtxDep):
     with ctx.db.session() as s:
         access.require_content(s,case_id,ctx.role)
         load_case(s,case_id)
+        from ..working_records_archive.models import ArchivedManualReceiptRow
+        from ..working_records_archive.service import historical_only
+        if s.get(ArchivedManualReceiptRow,(case_id,request_id)) is not None: historical_only()
         row=s.get(InterviewRequestReceiptRow,(case_id,request_id))
         if row is None:raise problem(404,'INTERVIEW_REQUEST_NOT_FOUND','未找到可恢复回执；这不证明原请求从未提交')
         return envelope(s,ctx,case_id,row,True)

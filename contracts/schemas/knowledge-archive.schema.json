@@ -1,0 +1,456 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "version",
+    "exportedUtc",
+    "cards",
+    "audit",
+    "auditSnapshots"
+  ],
+  "properties": {
+    "format": {
+      "const": "MCIS-KNOWLEDGE-ARCHIVE"
+    },
+    "version": {
+      "const": 1
+    },
+    "exportedUtc": {
+      "type": "string"
+    },
+    "cards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "order",
+          "cardId",
+          "status",
+          "kind",
+          "searchText",
+          "tagsText",
+          "doc"
+        ],
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "cardId": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "Candidate",
+              "Published",
+              "Rejected",
+              "Withdrawn"
+            ]
+          },
+          "kind": {
+            "enum": [
+              "Case",
+              "Challenge",
+              "Method"
+            ]
+          },
+          "searchText": {
+            "type": "string"
+          },
+          "tagsText": {
+            "type": "string"
+          },
+          "doc": {
+            "$ref": "#/$defs/document"
+          }
+        }
+      },
+      "maxItems": 1024
+    },
+    "audit": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "seq",
+          "line"
+        ],
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "line": {
+            "type": "string"
+          }
+        }
+      },
+      "maxItems": 4096
+    },
+    "auditSnapshots": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "coverage",
+        "items"
+      ],
+      "properties": {
+        "coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mode",
+            "firstSeq",
+            "priorHeadSha256"
+          ],
+          "properties": {
+            "mode": {
+              "enum": [
+                "legacy-only",
+                "from-sequence"
+              ]
+            },
+            "firstSeq": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            },
+            "priorHeadSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "seq",
+              "auditLineSha256",
+              "cardId",
+              "beforeDoc",
+              "afterDoc"
+            ],
+            "properties": {
+              "seq": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "auditLineSha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "cardId": {
+                "type": "string"
+              },
+              "beforeDoc": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "#/$defs/document"
+                  }
+                ]
+              },
+              "afterDoc": {
+                "$ref": "#/$defs/document"
+              }
+            }
+          },
+          "maxItems": 4096
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "document": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cardId",
+            "status",
+            "content",
+            "contentDigest",
+            "createdUtc",
+            "createdBy"
+          ],
+          "properties": {
+            "cardId": {
+              "type": "string",
+              "pattern": "^KC-[a-f0-9]{32}$"
+            },
+            "status": {
+              "const": "Candidate"
+            },
+            "content": {
+              "$ref": "knowledge-card.schema.json"
+            },
+            "contentDigest": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "createdUtc": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cardId",
+            "status",
+            "content",
+            "contentDigest",
+            "createdUtc",
+            "createdBy",
+            "reviewedUtc",
+            "reviewedBy",
+            "reviewNote",
+            "approvals"
+          ],
+          "properties": {
+            "cardId": {
+              "type": "string",
+              "pattern": "^KC-[a-f0-9]{32}$"
+            },
+            "status": {
+              "enum": [
+                "Published",
+                "Rejected",
+                "Withdrawn"
+              ]
+            },
+            "content": {
+              "$ref": "knowledge-card.schema.json"
+            },
+            "contentDigest": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "createdUtc": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "reviewedUtc": {
+              "type": "string"
+            },
+            "reviewedBy": {
+              "type": "string"
+            },
+            "reviewNote": {
+              "type": "string"
+            },
+            "approvals": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "sourceVerified",
+                "rightsVerified",
+                "releaseApproved"
+              ],
+              "properties": {
+                "sourceVerified": {
+                  "type": "boolean"
+                },
+                "rightsVerified": {
+                  "type": "boolean"
+                },
+                "releaseApproved": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "archiveSha256",
+        "byteLength",
+        "cardCount",
+        "auditCount",
+        "auditHeadSha256",
+        "auditSnapshotCount",
+        "snapshotCoverage",
+        "scope",
+        "restoreMode",
+        "identityMode"
+      ],
+      "properties": {
+        "profile": {
+          "const": "MCIS-KNOWLEDGE-ARCHIVE-1"
+        },
+        "archiveSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "byteLength": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cardCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "auditCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "auditHeadSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "auditSnapshotCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "snapshotCoverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mode",
+            "firstSeq",
+            "priorHeadSha256"
+          ],
+          "properties": {
+            "mode": {
+              "enum": [
+                "legacy-only",
+                "from-sequence"
+              ]
+            },
+            "firstSeq": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            },
+            "priorHeadSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        },
+        "scope": {
+          "const": "current-online-library-snapshot"
+        },
+        "restoreMode": {
+          "const": "isolated-read-only-history"
+        },
+        "identityMode": {
+          "const": "unverified-self-reported"
+        }
+      }
+    },
+    "savedMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "summary",
+        "importedUtc",
+        "importedBy",
+        "importedRole"
+      ],
+      "properties": {
+        "summary": {
+          "$ref": "#/$defs/summary"
+        },
+        "importedUtc": {
+          "type": "string"
+        },
+        "importedBy": {
+          "type": "string"
+        },
+        "importedRole": {
+          "const": "LeadInvestigator"
+        }
+      }
+    },
+    "saveResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "archive",
+        "replayed"
+      ],
+      "properties": {
+        "archive": {
+          "$ref": "#/$defs/savedMetadata"
+        },
+        "replayed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "detailResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "archive",
+        "envelope"
+      ],
+      "properties": {
+        "archive": {
+          "$ref": "#/$defs/savedMetadata"
+        },
+        "envelope": {
+          "$ref": "#"
+        }
+      }
+    },
+    "listResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "items",
+        "total",
+        "limit",
+        "offset"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/savedMetadata"
+          },
+          "maxItems": 50
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  },
+  "$id": "https://mcis.local/contracts/v1/knowledge-archive.schema.json"
+}

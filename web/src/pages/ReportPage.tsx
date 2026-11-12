@@ -4,6 +4,8 @@ import { ReportApiError, createReportApi } from '../reports/api'
 import { ReportView, ReviewDialog } from '../reports/ReportView'
 import { getRole, getOperator, onIdentityChange } from '../api'
 import { parseCases } from '../cases/model'
+import { ReportOutputPanel } from '../reportOutput/Panel'
+import { ArchiveProvenance } from '../archiveProvenance/Provenance'
 import { DEMO_CASE_ID } from '../reports/types'
 import type { GisisDocument, GisisValidation, RealDataStatus, Report, ReportAudit, ReportLanguage, ReportTemplate, ReportTemplateId, ReviewAction, ReviewPayload, ReviewTarget } from '../reports/types'
 
@@ -125,8 +127,9 @@ function ReportSession({identity, isActive, refresh}: {identity:string; isActive
   }
 
   return <>
-    <p className="rpt-disclaimer" role="note">当前案件包不能完整恢复已存报告与操作快照；含这些内容时整个案件包导出将拒绝，不会成功遗漏。请独立保管原始资料。报告文件导出不等于案件备份。</p>
+    <p className="rpt-disclaimer" role="note">报告与操作快照仅在匹配版本的受限归档中支持（无W10时1.2.0工作记录扩展；含W10时须1.3.0）；仍须逐包校验依赖与预算，不支持内容整包拒绝。完整性校验不等于可恢复，报告PDF/DOCX原导出文件不因保存了历史哈希而自动重建。原始资料须独立保管，报告文件导出不等于案件备份。</p>
     <div className="rpt-disclaimer" role="note">静态接线说明（不是当前来源快照）：本版本仅支持满足完整资料权限的原文报告，尚未提供字段级脱敏报告；默认 Investigator 受限是有意的访问边界变更。报告为模板编排，非 LLM 调查；工作流确认不是事实认证。旧 What-if 来自历史 seed，systemic 暂无来源；新 Nomoto / Bow-tie / HFACS 尚未接入报告。身份为本地自报角色，不是真实身份认证。切换会话仅丢弃迟到显示，不撤销已发送的写入。</div>
+    {report && <ArchiveProvenance caseId={caseId} kind="report" recordId={report.reportId} revision={report} onDenied={()=>handleError(new ReportApiError(403,'FORBIDDEN','',null))}/>}
     {casesError && <p role="alert">{casesError}</p>}
     {auditError && <p role="alert">{auditError}</p>}
     <ReportView cases={cases} accessDenied={denied} blockedReason={blockedReason} caseId={caseId} templates={templates} templateId={templateId} lang={lang} report={report} reports={reports} gisis={gisis} audit={audit} realDataStatus={realDataStatus} selectedSectionId={selectedSection} busy={loading || saving} error={error} notice={notice || (loading ? '正在载入报告数据…' : null)} validation={validation}
@@ -143,6 +146,7 @@ function ReportSession({identity, isActive, refresh}: {identity:string; isActive
         else setValidation(await reportApi.gisisValidate(caseId, values))
         if (report) { try { setAudit(await reportApi.audit(caseId, report.reportId)) } catch (e) { if (current()) { setAudit([]); setAuditError(`审计读取失败：${(e as Error).message}`) } } }
       }).catch(() => {}) }} onRefresh={refresh} />
+    {report&&!denied&&<ReportOutputPanel report={report} who={identity} onDenied={()=>handleError(new ReportApiError(403,'FORBIDDEN','',null))}/>}
     {review && <ReviewDialog key={`${report?.reportId}:${review.target.sectionId}:${review.target.sentenceId || ''}:${review.action}`} action={review.action} target={review.target} busy={saving} error={error} onCancel={() => setReview(null)} onSubmit={submitReview} />}
   </>
 }

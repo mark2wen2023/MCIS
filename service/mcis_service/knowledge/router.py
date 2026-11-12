@@ -75,7 +75,9 @@ def audit(s, ctx, card_id, action, before, after, note=''):
     event = {'seq': last.seq + 1 if last else 1, 'utc': iso(now_utc()), 'operator': ctx.operator, 'role': ctx.role,
              'cardId': card_id, 'action': action, 'before': before, 'after': after, 'note': note,
              'prevHash': hashlib.sha256(last.line.encode()).hexdigest() if last else ZERO}
-    s.add(Event(seq=event['seq'], line=canonical(event)))
+    row = Event(seq=event['seq'], line=canonical(event))
+    s.add(row)
+    return row
 
 @router.get('/cards')
 def search(ctx: Ctx = CtxDep, status: Literal['Published','Candidate','Rejected','Withdrawn'] = 'Published',
@@ -99,12 +101,14 @@ def create(body: dict = Body(...), ctx: Ctx = CtxDep):
     internal(ctx); tags = validate_content(body)
     with WRITE_LOCK, ctx.db.session() as s:
         s.execute(text('BEGIN IMMEDIATE'))
+        from ..knowledge_archive.service import prepare_write, capture
+        prepare_write(s)
         card_id = 'KC-' + uuid.uuid4().hex
         doc = {'cardId': card_id, 'status': 'Candidate', 'content': body, 'contentDigest': digest(body),
                'createdUtc': iso(now_utc()), 'createdBy': ctx.operator}
         row = Card(card_id=card_id, status='Candidate', kind=body['kind'], tags_text='|' + '|'.join(tags) + '|',
                    search_text='\n'.join([body[k] for k in ('title','summary','body','applicability')] + tags).casefold(), doc=doc)
-        s.add(row); audit(s, ctx, card_id, 'knowledge.create', '', doc['contentDigest']); s.flush()
+        s.add(row); event = audit(s, ctx, card_id, 'knowledge.create', '', doc['contentDigest']); capture(s, event, None, doc); s.flush()
         return output(row, ctx)
 
 @router.get('/cards/{card_id}')
@@ -130,17 +134,20 @@ def review(card_id: str, body: dict = Body(...), ctx: Ctx = CtxDep):
         raise problem(422, 'APPROVAL_REQUIRED', '发布必须确认来源、使用权和公开范围；来源分类本身不构成许可')
     with WRITE_LOCK, ctx.db.session() as s:
         s.execute(text('BEGIN IMMEDIATE'))
+        from ..knowledge_archive.service import prepare_write, capture
+        prepare_write(s)
         row = s.scalar(select(Card).where(Card.card_id == card_id))
         if not row: raise problem(404, 'NOT_FOUND', '知识卡不存在')
         if row.doc['contentDigest'] != body['expectedDigest']:
             raise problem(409, 'VERSION_CHANGED', '审核内容版本不一致，请重新读取')
         expected = 'Published' if body['decision'] == 'Withdrawn' else 'Candidate'
         if row.status != expected: raise problem(409, 'STATE_CHANGED', '状态已改变，不能重复审核')
+        original = copy.deepcopy(row.doc)
         d = copy.deepcopy(row.doc); before = row.status
         d.update(status=body['decision'], reviewedUtc=iso(now_utc()), reviewedBy=ctx.operator, reviewNote=body['note'],
                  approvals={k: body.get(k, False) for k in ('sourceVerified','rightsVerified','releaseApproved')})
         row.status = d['status']; row.doc = d
-        audit(s, ctx, card_id, 'knowledge.' + d['status'].lower(), before, d['status'], body['note']); s.flush()
+        event = audit(s, ctx, card_id, 'knowledge.' + d['status'].lower(), before, d['status'], body['note']); capture(s, event, original, d); s.flush()
         return output(row, ctx)
 
 @router.get('/audit')

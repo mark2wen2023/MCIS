@@ -1,0 +1,1 @@
+W7.4 real HTTP browser: current content,12 replies pagination,escaped text,separate audit,refresh/close clearing,actual W7ACCESS identity denials,GET-only and no audit mutation passed

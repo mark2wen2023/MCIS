@@ -16,7 +16,7 @@ async function main(){
  const { IntakeSummary,PackageIntakePanel }=await import('../src/packageIntake/PackageIntakePanel')
  const html=renderToStaticMarkup(<IntakeSummary preview={p}/>);assert.ok(html.includes('&lt;script&gt;'));assert.ok(!html.includes('<script>'));assert.ok(html.includes('不代表来源真实'))
  assert.equal(renderToStaticMarkup(<MemoryRouter><PackageIntakePanel who={'Viewer\nx'} onImported={()=>{}}/></MemoryRouter>),'')
- const panel=renderToStaticMarkup(<MemoryRouter><PackageIntakePanel who={'Investigator\n调查员 A'} onImported={()=>{}}/></MemoryRouter>);assert.ok(panel.includes('不是完整案件包还原'));assert.ok(panel.includes('不静默丢弃'))
+ const panel=renderToStaticMarkup(<MemoryRouter><PackageIntakePanel who={'Investigator\n调查员 A'} onImported={()=>{}}/></MemoryRouter>);assert.ok(panel.includes('不是通用案件恢复或全系统备份'));assert.ok(panel.includes('不静默丢弃'))
  const { request }=await import('../src/packageIntake/api');const calls:any[]=[]
  globalThis.fetch=async (u,o)=>{calls.push({u,o});return new Response(JSON.stringify(p))}
  const who='Investigator\n调查员 A',c=new AbortController()

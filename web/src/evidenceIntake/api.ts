@@ -11,7 +11,7 @@ export async function intakeRequest(caseId:string,who:string,path:string,signal:
   // Generation guards still suppress late UI results. This is not a delivery guarantee
   // across browser termination/network loss; do not use keepalive for an 8 MiB file.
   const requestSignal=path==='/evidence-intakes:commit'&&body!==undefined?undefined:signal
-  const r=await fetch('/api/v1'+casePath(path,caseId),{method:body===undefined?'GET':'POST',headers,signal:requestSignal,body:body===undefined?undefined:JSON.stringify(body)})
+  const r=await fetch('/api/v1'+casePath(path,caseId),{cache:'no-store',method:body===undefined?'GET':'POST',headers,signal:requestSignal,body:body===undefined?undefined:JSON.stringify(body)})
   if(!r.ok){let code='EVIDENCE_INTAKE';try{const data=await r.json();if(typeof data.code==='string')code=data.code}catch{/* Do not display response internals. */}throw new ApiError(r.status,code,'登记请求未完成',null)}
   if(!raw)return r.json()
   const reader=r.body?.getReader();let total=0;const chunks:Uint8Array[]=[]
@@ -20,6 +20,6 @@ export async function intakeRequest(caseId:string,who:string,path:string,signal:
   return {bytes:joined.buffer,sha:r.headers.get('X-Sha256')}
 }
 export function intakeError(e:unknown):string {
-  if(e instanceof ApiError){if(e.status===403)return '当前身份或案件策略不允许访问受限登记原件。';if(e.status===404)return '未找到案件或本片登记回执；旧证据不会自动迁移为本片登记。';if(e.status===409)return '登记记录、原件完整性或请求绑定不一致，已停止操作；不会覆盖或自动修复。';if(e.status===413)return '超过本片 8 MiB 原件 / 12 MiB 请求工程上限，不代表证据无效。';if([400,422].includes(e.status))return '输入被拒绝。请核对文件名、字段限额及已知 UTC 整秒提取时间；未自动重试。'}
+  if(e instanceof ApiError){if(e.status===409&&e.code==='ARCHIVE_HISTORY_ONLY')return '此登记属于只读恢复历史，不是当前请求成功回执，不能重放。可在明确历史状态后单独调阅历史原件。';if(e.status===409&&e.code==='ARCHIVE_HISTORY_INTEGRITY')return '历史原件完整性或关联无法核验，已停止；不会自动修复。';if(e.status===403)return '当前身份或案件策略不允许访问受限登记原件。';if(e.status===404)return '未找到案件或本片登记回执；旧证据不会自动迁移为本片登记。';if(e.status===409)return '登记记录、原件完整性或请求绑定不一致，已停止操作；不会覆盖或自动修复。';if(e.status===413)return '超过本片 8 MiB 原件 / 12 MiB 请求工程上限，不代表证据无效。';if([400,422].includes(e.status))return '输入被拒绝。请核对文件名、字段限额及已知 UTC 整秒提取时间；未自动重试。'}
   return '请求失败或响应无法核对。请核查服务与登记记录。'
 }

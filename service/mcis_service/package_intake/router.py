@@ -10,6 +10,7 @@ import tempfile
 from pathlib import Path
 
 from fastapi import APIRouter, Request
+from starlette.concurrency import run_in_threadpool
 from sqlalchemy import select, UniqueConstraint
 
 from ..common.context import Ctx, CtxDep, problem
@@ -24,7 +25,8 @@ MAX_BYTES = 32 * 1024 * 1024
 MAX_BODY = 45 * 1024 * 1024
 DIGEST = re.compile(r'^[a-f0-9]{64}$')
 SAFE_ID = re.compile(r'^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$')
-router = APIRouter(prefix='/api/v1/packages', tags=['package-intake'])
+from ..reports.access import NoStoreRoute,require_content
+router = APIRouter(prefix='/api/v1/packages', tags=['package-intake'],route_class=NoStoreRoute)
 
 
 class IntakeReceipt(DocMixin, Base):
@@ -75,6 +77,7 @@ def describe(parsed, data):
             'sourceSha256': hashlib.sha256(data).hexdigest(), 'byteLength': len(data),
             'packageVersion': parsed.manifest['packageVersion'],
             'hfacsExtension': parsed.hfacs_archive.summary if parsed.hfacs_archive else None,
+            'workingRecordsExtension': parsed.working_archive.summary if parsed.working_archive else None,
             'counts': {'vessels': len(parsed.vessels), 'tracks': len(parsed.tracks),
                        'environment': len(parsed.observations), 'evidence': len(parsed.evidence),
                        'custodyEvents': len(parsed.custody_lines), 'auditEvents': len(parsed.audit_lines)},
@@ -89,7 +92,14 @@ def root_path(ctx):
 
 def receipt(ctx, session, digest):
     row = session.scalars(select(IntakeReceipt).where(IntakeReceipt.key == digest)).first()
-    if row is None: return None
+    if row is None:
+        from ..working_records_archive.models import ArchiveImportHistoryRow
+        from ..working_records_archive.service import historical_only
+        historical=session.scalars(select(ArchiveImportHistoryRow).where(ArchiveImportHistoryRow.kind=='package-intake',ArchiveImportHistoryRow.key==digest)).first()
+        if historical is not None:
+            require_content(session,historical.case_id,ctx.role)
+            historical_only()
+        return None
     from ..evidence_intake.router import authorize as authorize_case
     authorize_case(ctx, session, row.case_id)
     doc = row.doc
@@ -113,6 +123,11 @@ def receipt(ctx, session, digest):
     except (OSError, ValueError, KeyError):
         raise problem(409, 'PACKAGE_RECEIPT', '原始案件包缺失或完整性异常，停止重试')
     parsed = parse_package(raw)
+    if parsed.working_archive is not None:
+        from ..working_records_archive.service import full_access
+        from ..interviews.access import document as protect_original
+        full_access(session,ctx,row.case_id)
+        for entry in parsed.working_archive.data['interviews']: protect_original(session,ctx,entry['doc'])
     if parsed.hfacs_archive is not None:
         from ..hfacs_drafts.router import snapshot as hfacs_snapshot, PreviewError
         try:
@@ -121,15 +136,22 @@ def receipt(ctx, session, digest):
                 hfacs_snapshot(session, ctx, row.case_id, [source['evidenceId'] for source in event['after']['sources']], audit=True)
         except PreviewError as exc: raise problem(exc.status, exc.code, exc.message)
     return {**doc, 'packageVersion': parsed.manifest['packageVersion'],
-            'hfacsExtension': parsed.hfacs_archive.summary if parsed.hfacs_archive else None, 'replayed': True}
+            'hfacsExtension': parsed.hfacs_archive.summary if parsed.hfacs_archive else None,
+            'workingRecordsExtension': parsed.working_archive.summary if parsed.working_archive else None, 'replayed': True}
 
 
 @router.post('/intakes:preview')
 async def preview(request: Request, ctx: Ctx = CtxDep):
     authorize(ctx)
     data = await read_body(request)
-    result = describe(parse_package(data), data)
+    return await run_in_threadpool(preview_sync,ctx,data)
+
+
+def preview_sync(ctx,data):
+    parsed = parse_package(data)
+    result = describe(parsed, data)
     with ctx.db.session() as s:
+        if parsed.working_archive is not None: require_content(s,result['caseId'],ctx.role)
         if s.scalars(select(CaseRow).where(CaseRow.case_id == result['caseId'])).first():
             raise problem(409, 'CASE_EXISTS', '案件已存在，不覆盖')
     return result
@@ -140,7 +162,7 @@ def recover(digest: str, ctx: Ctx = CtxDep):
     authorize(ctx)
     if not DIGEST.fullmatch(digest): raise problem(422, 'PACKAGE_DIGEST', '摘要格式无效')
     with WRITE_LOCK, ctx.db.session() as s:
-        if s.get_bind().dialect.name == "sqlite": s.connection().exec_driver_sql("BEGIN")
+        if s.get_bind().dialect.name == "sqlite": s.connection().exec_driver_sql("BEGIN IMMEDIATE")
         result = receipt(ctx, s, digest)
         if result is None: raise problem(404, 'PACKAGE_NOT_FOUND', '没有已提交回执；勿自动重发')
         return result
@@ -150,6 +172,10 @@ def recover(digest: str, ctx: Ctx = CtxDep):
 async def commit(request: Request, ctx: Ctx = CtxDep):
     authorize(ctx)
     data = await read_body(request, True)
+    return await run_in_threadpool(commit_sync,ctx,data)
+
+
+def commit_sync(ctx,data):
     parsed = parse_package(data)
     result = describe(parsed, data)
     digest, case_id = result['sourceSha256'], result['caseId']
@@ -161,13 +187,14 @@ async def commit(request: Request, ctx: Ctx = CtxDep):
         try:
             with ctx.db.session() as s:
                 if s.get_bind().dialect.name == "sqlite": s.connection().exec_driver_sql("BEGIN IMMEDIATE")
+                if parsed.working_archive is not None: require_content(s,case_id,ctx.role)
                 prior = receipt(ctx, s, digest)
                 if prior is not None: return prior
                 if target.exists() or target.is_symlink():
                     raise problem(409, 'PACKAGE_PATH_EXISTS', '案件文件目录已存在，不覆盖')
                 if s.scalars(select(CaseRow).where(CaseRow.case_id == case_id)).first():
                     raise problem(409, 'CASE_EXISTS', '案件已存在，不覆盖')
-                import_case(s, staged, data, ctx.operator, ctx.role, validated_hfacs=parsed.hfacs_archive)
+                import_case(s, staged, data, ctx.operator, ctx.role, validated_hfacs=parsed.hfacs_archive, validated_working=parsed.working_archive)
                 case_dir = staged / case_id
                 archive_dir = case_dir / '_package_intake'
                 archive_dir.mkdir(parents=True)
