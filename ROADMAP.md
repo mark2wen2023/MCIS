@@ -344,3 +344,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-12 | Archive B | 待独立验收 | 1.2受限同案号新案恢复：完整笔录、报告版本/审核快照、原审计保管链、历史回执只归档、多代源包字节保全及预算、单对象恢复来源；所有不支持业务/来源/策略整包拒绝。W7ACCESS主线门禁已整合。当前字节615定向服务组合通过(153.87s)，独立预算原用例8通过(6.94s)，与旧474/189重叠不累加；UI专项和回归/tsc/build通过，浏览器API替身与真实服务验收分列。52项冻结logs/ARCHIVEB-impl-hashes-frozen.txt；独立三库/真实浏览器最终验收待重跑。非全系统备份/认证/事实认定，不部署、不碰W11。 |
 
 | 2026-11-12 | Archive B | 独立验收通过 | 最终52项冻结前后哈希一致，独立56项合成API/DB/真实HFACS CLI与真实Chromium+双FastAPI端到端通过；三空库往返、历史原件/回执只归档、实际64MiB累计/8与9层/32与33件预算、超过50快照、故障回滚、锁序及撤权清屏均有实测。615实施定向组合与独立56分列不混计。见tests_acceptance/ARCHIVEB/REPORT.md和DEFECTS/ARCHIVEB.md。未穷举6引用/10快照、全部对象上限或生产多worker；版本1.2仅支持合同内同案号新案/默认策略，未知非空业务整包拒绝，原包真实性和历史签署未认证，无部署/W11。 |
+
+| W7.4 | 待独立验收 | 2026-11-12 | 基于已合并W7ACCESS，安全建议正文/已登记回复/独立权限审计只读核查，10回复/组、审计最早至多200条。冻结 logs/W74-impl-hashes-frozen.txt；真实HTTP合成浏览器、权限拒绝、GET-only及无审计写通过，待延迟/身份/导航独立验收。无正文编辑/CAS/外发/部署。 |
+| W7.4 | 已独立验收 | 2026-11-12 | 独立组件浏览器覆盖迟到body/audit、关闭刷新重开、切卡切案导航操作人、审计403隔离/畸形整批拒绝/空内容/移动键盘/GET-only；真实HTTP合成DB浏览器复跑、API6、TS/lint/build和旧W7前端41+30通过，10冻结一致。DEFECTS/W74.md无阻塞；只读增量，既有写操作不在GET-only保证内，未部署。 |
+| W7.4 | 最终集成复验通过 | 2026-11-12 | 基于归档B已合并 fdb8a210；完整保留其65文件，REQUESTS/ROADMAP仅追加W7.4。独立再次核10冻结/API6/中断浏览器/真实HTTP浏览器，远端mcase+working_records_archive逐blob一致；实施服务联动99通过、tsc/build/旧W7前端复跑通过。准备正常PR合并，不部署。 |

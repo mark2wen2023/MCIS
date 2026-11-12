@@ -1,6 +1,7 @@
 import { useState, useSyncExternalStore, type DragEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
+import { RecommendationReview } from '../recommendationReview/RecommendationReview'
 import { ConsultationPanel } from '../consultation/ConsultationPanel'
 import { SERVICE_ADDR } from '../config'
 import { Metric, Panel } from '../components/Panel'
@@ -121,6 +122,8 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
           ))}
         </div>
       </Panel>
+
+      {sel && <RecommendationReview caseId={caseId} recId={sel.id} />}
 
       <div className="grid w7-columns">
         {sel ? (
