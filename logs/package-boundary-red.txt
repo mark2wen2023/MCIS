@@ -1,0 +1,1239 @@
+FFFFF...FFFFFFFF...FFFF..FFFF.............                               [100%]
+=================================== FAILURES ===================================
+_________ test_duplicate_or_ambiguous_paths_are_bad_package[entries0] __________
+
+entries = [('case.json', b'a'), ('case.json', b'b')]
+
+    @pytest.mark.parametrize('entries', [
+        [('case.json', b'a'), ('case.json', b'b')],
+        [('raw/a', b'a'), ('raw\\a', b'b')],
+        [('Case.json', b'a'), ('case.json', b'b')],
+        [('raw/a', b'a'), ('RAW/A', b'a')],
+        [('raw/', b''), ('raw', b'file')],
+    ])
+    def test_duplicate_or_ambiguous_paths_are_bad_package(entries):
+>       with pytest.raises(HTTPException) as exc:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE HTTPException
+
+tests/test_package_zip_boundary.py:39: Failed
+_________ test_duplicate_or_ambiguous_paths_are_bad_package[entries1] __________
+
+entries = [('raw/a', b'a'), ('raw\\a', b'b')]
+
+    @pytest.mark.parametrize('entries', [
+        [('case.json', b'a'), ('case.json', b'b')],
+        [('raw/a', b'a'), ('raw\\a', b'b')],
+        [('Case.json', b'a'), ('case.json', b'b')],
+        [('raw/a', b'a'), ('RAW/A', b'a')],
+        [('raw/', b''), ('raw', b'file')],
+    ])
+    def test_duplicate_or_ambiguous_paths_are_bad_package(entries):
+>       with pytest.raises(HTTPException) as exc:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE HTTPException
+
+tests/test_package_zip_boundary.py:39: Failed
+_________ test_duplicate_or_ambiguous_paths_are_bad_package[entries2] __________
+
+entries = [('Case.json', b'a'), ('case.json', b'b')]
+
+    @pytest.mark.parametrize('entries', [
+        [('case.json', b'a'), ('case.json', b'b')],
+        [('raw/a', b'a'), ('raw\\a', b'b')],
+        [('Case.json', b'a'), ('case.json', b'b')],
+        [('raw/a', b'a'), ('RAW/A', b'a')],
+        [('raw/', b''), ('raw', b'file')],
+    ])
+    def test_duplicate_or_ambiguous_paths_are_bad_package(entries):
+>       with pytest.raises(HTTPException) as exc:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE HTTPException
+
+tests/test_package_zip_boundary.py:39: Failed
+_________ test_duplicate_or_ambiguous_paths_are_bad_package[entries3] __________
+
+entries = [('raw/a', b'a'), ('RAW/A', b'a')]
+
+    @pytest.mark.parametrize('entries', [
+        [('case.json', b'a'), ('case.json', b'b')],
+        [('raw/a', b'a'), ('raw\\a', b'b')],
+        [('Case.json', b'a'), ('case.json', b'b')],
+        [('raw/a', b'a'), ('RAW/A', b'a')],
+        [('raw/', b''), ('raw', b'file')],
+    ])
+    def test_duplicate_or_ambiguous_paths_are_bad_package(entries):
+>       with pytest.raises(HTTPException) as exc:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE HTTPException
+
+tests/test_package_zip_boundary.py:39: Failed
+_________ test_duplicate_or_ambiguous_paths_are_bad_package[entries4] __________
+
+entries = [('raw/', b''), ('raw', b'file')]
+
+    @pytest.mark.parametrize('entries', [
+        [('case.json', b'a'), ('case.json', b'b')],
+        [('raw/a', b'a'), ('raw\\a', b'b')],
+        [('Case.json', b'a'), ('case.json', b'b')],
+        [('raw/a', b'a'), ('RAW/A', b'a')],
+        [('raw/', b''), ('raw', b'file')],
+    ])
+    def test_duplicate_or_ambiguous_paths_are_bad_package(entries):
+>       with pytest.raises(HTTPException) as exc:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE HTTPException
+
+tests/test_package_zip_boundary.py:39: Failed
+________ test_unsafe_paths_including_directories_are_rejected[C:/tmp/x] ________
+
+name = 'C:/tmp/x'
+
+    @pytest.mark.parametrize('name', ['/absolute', '../up', 'raw/../up', 'C:/tmp/x', 'raw/a:stream', './case.json',
+        'raw//a', 'raw/./a', '../bad/', '/bad/', 'C:\\bad\\', 'raw\\..\\x'])
+    def test_unsafe_paths_including_directories_are_rejected(name):
+>       with pytest.raises(HTTPException) as exc:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE HTTPException
+
+tests/test_package_zip_boundary.py:48: Failed
+______ test_unsafe_paths_including_directories_are_rejected[raw/a:stream] ______
+
+name = 'raw/a:stream'
+
+    @pytest.mark.parametrize('name', ['/absolute', '../up', 'raw/../up', 'C:/tmp/x', 'raw/a:stream', './case.json',
+        'raw//a', 'raw/./a', '../bad/', '/bad/', 'C:\\bad\\', 'raw\\..\\x'])
+    def test_unsafe_paths_including_directories_are_rejected(name):
+>       with pytest.raises(HTTPException) as exc:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE HTTPException
+
+tests/test_package_zip_boundary.py:48: Failed
+______ test_unsafe_paths_including_directories_are_rejected[./case.json] _______
+
+name = './case.json'
+
+    @pytest.mark.parametrize('name', ['/absolute', '../up', 'raw/../up', 'C:/tmp/x', 'raw/a:stream', './case.json',
+        'raw//a', 'raw/./a', '../bad/', '/bad/', 'C:\\bad\\', 'raw\\..\\x'])
+    def test_unsafe_paths_including_directories_are_rejected(name):
+>       with pytest.raises(HTTPException) as exc:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE HTTPException
+
+tests/test_package_zip_boundary.py:48: Failed
+_________ test_unsafe_paths_including_directories_are_rejected[raw//a] _________
+
+name = 'raw//a'
+
+    @pytest.mark.parametrize('name', ['/absolute', '../up', 'raw/../up', 'C:/tmp/x', 'raw/a:stream', './case.json',
+        'raw//a', 'raw/./a', '../bad/', '/bad/', 'C:\\bad\\', 'raw\\..\\x'])
+    def test_unsafe_paths_including_directories_are_rejected(name):
+>       with pytest.raises(HTTPException) as exc:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE HTTPException
+
+tests/test_package_zip_boundary.py:48: Failed
+________ test_unsafe_paths_including_directories_are_rejected[raw/./a] _________
+
+name = 'raw/./a'
+
+    @pytest.mark.parametrize('name', ['/absolute', '../up', 'raw/../up', 'C:/tmp/x', 'raw/a:stream', './case.json',
+        'raw//a', 'raw/./a', '../bad/', '/bad/', 'C:\\bad\\', 'raw\\..\\x'])
+    def test_unsafe_paths_including_directories_are_rejected(name):
+>       with pytest.raises(HTTPException) as exc:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE HTTPException
+
+tests/test_package_zip_boundary.py:48: Failed
+________ test_unsafe_paths_including_directories_are_rejected[../bad/] _________
+
+name = '../bad/'
+
+    @pytest.mark.parametrize('name', ['/absolute', '../up', 'raw/../up', 'C:/tmp/x', 'raw/a:stream', './case.json',
+        'raw//a', 'raw/./a', '../bad/', '/bad/', 'C:\\bad\\', 'raw\\..\\x'])
+    def test_unsafe_paths_including_directories_are_rejected(name):
+>       with pytest.raises(HTTPException) as exc:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE HTTPException
+
+tests/test_package_zip_boundary.py:48: Failed
+_________ test_unsafe_paths_including_directories_are_rejected[/bad/] __________
+
+name = '/bad/'
+
+    @pytest.mark.parametrize('name', ['/absolute', '../up', 'raw/../up', 'C:/tmp/x', 'raw/a:stream', './case.json',
+        'raw//a', 'raw/./a', '../bad/', '/bad/', 'C:\\bad\\', 'raw\\..\\x'])
+    def test_unsafe_paths_including_directories_are_rejected(name):
+>       with pytest.raises(HTTPException) as exc:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE HTTPException
+
+tests/test_package_zip_boundary.py:48: Failed
+_______ test_unsafe_paths_including_directories_are_rejected[C:\\bad\\] ________
+
+name = 'C:\\bad\\'
+
+    @pytest.mark.parametrize('name', ['/absolute', '../up', 'raw/../up', 'C:/tmp/x', 'raw/a:stream', './case.json',
+        'raw//a', 'raw/./a', '../bad/', '/bad/', 'C:\\bad\\', 'raw\\..\\x'])
+    def test_unsafe_paths_including_directories_are_rejected(name):
+>       with pytest.raises(HTTPException) as exc:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE HTTPException
+
+tests/test_package_zip_boundary.py:48: Failed
+_____ test_malformed_zip_http_422_no_writes[/api/v1/packages:verify-data2] _____
+
+empty_client = <starlette.testclient.TestClient object at 0x7f82409de810>
+data = b'PK\x03\x04\x14\x00\x00\x00\x00\x00aQl]\x8c\x1f!\x08\x16\x00\x00\x00\x16\x00\x00\x00\t\x00\x00\x00case.jsoncorrupted-...0\x00\x00\x80\x01\x00\x00\x00\x00case.jsonPK\x05\x06\x00\x00\x00\x00\x01\x00\x01\x007\x00\x00\x00=\x00\x00\x00\x00\x00'
+endpoint = '/api/v1/packages:verify'
+
+    @pytest.mark.parametrize('data', malformed_archives())
+    @pytest.mark.parametrize('endpoint', ['/api/v1/packages:verify', '/api/v1/cases:import'])
+    def test_malformed_zip_http_422_no_writes(empty_client, data, endpoint):
+>       response = empty_client.post(endpoint, content=data)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_package_zip_boundary.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:1144: in post
+    return self.request(
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:518: in request
+    return super().request(
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:928: in send
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:922: in send
+    response.read()
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_models.py:881: in read
+    self._content = b"".join(self.iter_bytes())
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_models.py:897: in iter_bytes
+    for raw_bytes in self.iter_raw():
+                     ^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_models.py:951: in iter_raw
+    for raw_stream_bytes in self.stream:
+                            ^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:153: in __iter__
+    for chunk in self._stream:
+                 ^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:384: in iter_body
+    exit_stack.close()
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:618: in close
+    self.__exit__(None, None, None)
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:610: in __exit__
+    raise exc_details[1]
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:595: in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:399: in close_app
+    raise exception
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/anyio/from_thread.py:272: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:366: in run_app
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/applications.py:1194: in __call__
+    await super().__call__(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/telemetry/_asgi.py:151: in __call__
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py:91: in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py:149: in simple_response
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/routing.py:683: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:2811: in app
+    await route.handle(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:1839: in handle
+    await self.original_router.handle(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:2894: in handle
+    await included_router._handle_selected(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:1865: in _handle_selected
+    await original_route.handle(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:1328: in handle
+    await effective_context.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:166: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:152: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:745: in app
+    raw_response = await run_endpoint_function(
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:372: in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mcis_service/package/router.py:51: in verify_package
+    return mcase.verify_files(mcase.read_zip(data))
+                              ^^^^^^^^^^^^^^^^^^^^
+mcis_service/package/mcase.py:202: in read_zip
+    out[name] = z.read(info)
+                ^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1586: in read
+    return fp.read()
+           ^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:994: in read
+    buf += self._read1(self.MAX_N)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1098: in _read1
+    self._update_crc(data)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <zipfile.ZipExtFile [closed]>, newdata = b'corrupted-test-payloa!'
+
+    def _update_crc(self, newdata):
+        # Update the CRC using the given data.
+        if self._expected_crc is None:
+            # No need to compute the CRC if we don't have a reference value
+            return
+        self._running_crc = crc32(newdata, self._running_crc)
+        # Check the CRC if we're at the end of the file
+        if self._eof and self._running_crc != self._expected_crc:
+>           raise BadZipFile("Bad CRC-32 for file %r" % self.name)
+E           zipfile.BadZipFile: Bad CRC-32 for file 'case.json'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1026: BadZipFile
+_____ test_malformed_zip_http_422_no_writes[/api/v1/packages:verify-data3] _____
+
+empty_client = <starlette.testclient.TestClient object at 0x7f82407f5a60>
+data = b'PK\x03\x04\x14\x00\x01\x00\x00\x00aQl]\x8c\x1f!\x08\x16\x00\x00\x00\x16\x00\x00\x00\t\x00\x00\x00case.jsonsynthetic-...0\x00\x00\x80\x01\x00\x00\x00\x00case.jsonPK\x05\x06\x00\x00\x00\x00\x01\x00\x01\x007\x00\x00\x00=\x00\x00\x00\x00\x00'
+endpoint = '/api/v1/packages:verify'
+
+    @pytest.mark.parametrize('data', malformed_archives())
+    @pytest.mark.parametrize('endpoint', ['/api/v1/packages:verify', '/api/v1/cases:import'])
+    def test_malformed_zip_http_422_no_writes(empty_client, data, endpoint):
+>       response = empty_client.post(endpoint, content=data)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_package_zip_boundary.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:1144: in post
+    return self.request(
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:518: in request
+    return super().request(
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:928: in send
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:922: in send
+    response.read()
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_models.py:881: in read
+    self._content = b"".join(self.iter_bytes())
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_models.py:897: in iter_bytes
+    for raw_bytes in self.iter_raw():
+                     ^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_models.py:951: in iter_raw
+    for raw_stream_bytes in self.stream:
+                            ^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:153: in __iter__
+    for chunk in self._stream:
+                 ^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:384: in iter_body
+    exit_stack.close()
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:618: in close
+    self.__exit__(None, None, None)
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:610: in __exit__
+    raise exc_details[1]
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:595: in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:399: in close_app
+    raise exception
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/anyio/from_thread.py:272: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:366: in run_app
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/applications.py:1194: in __call__
+    await super().__call__(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/telemetry/_asgi.py:151: in __call__
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py:91: in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py:149: in simple_response
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/routing.py:683: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:2811: in app
+    await route.handle(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:1839: in handle
+    await self.original_router.handle(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:2894: in handle
+    await included_router._handle_selected(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:1865: in _handle_selected
+    await original_route.handle(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:1328: in handle
+    await effective_context.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:166: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:152: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:745: in app
+    raw_response = await run_endpoint_function(
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:372: in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mcis_service/package/router.py:51: in verify_package
+    return mcase.verify_files(mcase.read_zip(data))
+                              ^^^^^^^^^^^^^^^^^^^^
+mcis_service/package/mcase.py:202: in read_zip
+    out[name] = z.read(info)
+                ^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1585: in read
+    with self.open(name, "r", pwd) as fp:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <zipfile.ZipFile file=<_io.BytesIO object at 0x7f8240951120> mode='r'>
+name = <ZipInfo filename='case.json' filemode='?rw-------' file_size=22>
+mode = 'r', pwd = None, force_zip64 = False
+
+    def open(self, name, mode="r", pwd=None, *, force_zip64=False):
+        """Return file-like object for 'name'.
+    
+        name is a string for the file name within the ZIP file, or a ZipInfo
+        object.
+    
+        mode should be 'r' to read a file already in the ZIP file, or 'w' to
+        write to a file newly added to the archive.
+    
+        pwd is the password to decrypt files (only used for reading).
+    
+        When writing, if the file size is not known in advance but may exceed
+        2 GiB, pass force_zip64 to use the ZIP64 format, which can handle large
+        files.  If the size is known in advance, it is best to pass a ZipInfo
+        instance for name, with zinfo.file_size set.
+        """
+        if mode not in {"r", "w"}:
+            raise ValueError('open() requires mode "r" or "w"')
+        if pwd and (mode == "w"):
+            raise ValueError("pwd is only supported for reading files")
+        if not self.fp:
+            raise ValueError(
+                "Attempt to use ZIP archive that was already closed")
+    
+        # Make sure we have an info object
+        if isinstance(name, ZipInfo):
+            # 'name' is already an info object
+            zinfo = name
+        elif mode == 'w':
+            zinfo = ZipInfo(name)
+            zinfo.compress_type = self.compression
+            zinfo._compresslevel = self.compresslevel
+        else:
+            # Get info object for name
+            zinfo = self.getinfo(name)
+    
+        if mode == 'w':
+            return self._open_to_write(zinfo, force_zip64=force_zip64)
+    
+        if self._writing:
+            raise ValueError("Can't read from the ZIP file while there "
+                    "is an open writing handle on it. "
+                    "Close the writing handle before trying to read.")
+    
+        # Open for reading:
+        self._fileRefCnt += 1
+        zef_file = _SharedFile(self.fp, zinfo.header_offset,
+                               self._fpclose, self._lock, lambda: self._writing)
+        try:
+            # Skip the file header:
+            fheader = zef_file.read(sizeFileHeader)
+            if len(fheader) != sizeFileHeader:
+                raise BadZipFile("Truncated file header")
+            fheader = struct.unpack(structFileHeader, fheader)
+            if fheader[_FH_SIGNATURE] != stringFileHeader:
+                raise BadZipFile("Bad magic number for file header")
+    
+            fname = zef_file.read(fheader[_FH_FILENAME_LENGTH])
+            if fheader[_FH_EXTRA_FIELD_LENGTH]:
+                zef_file.seek(fheader[_FH_EXTRA_FIELD_LENGTH], whence=1)
+    
+            if zinfo.flag_bits & _MASK_COMPRESSED_PATCH:
+                # Zip 2.7: compressed patched data
+                raise NotImplementedError("compressed patched data (flag bit 5)")
+    
+            if zinfo.flag_bits & _MASK_STRONG_ENCRYPTION:
+                # strong encryption
+                raise NotImplementedError("strong encryption (flag bit 6)")
+    
+            if fheader[_FH_GENERAL_PURPOSE_FLAG_BITS] & _MASK_UTF_FILENAME:
+                # UTF-8 filename
+                fname_str = fname.decode("utf-8")
+            else:
+                fname_str = fname.decode(self.metadata_encoding or "cp437")
+    
+            if fname_str != zinfo.orig_filename:
+                raise BadZipFile(
+                    'File name in directory %r and header %r differ.'
+                    % (zinfo.orig_filename, fname))
+    
+            if (zinfo._end_offset is not None and
+                zef_file.tell() + zinfo.compress_size > zinfo._end_offset):
+                if zinfo._end_offset == zinfo.header_offset:
+                    import warnings
+                    warnings.warn(
+                        f"Overlapped entries: {zinfo.orig_filename!r} "
+                        f"(possible zip bomb)",
+                        skip_file_prefixes=(os.path.dirname(__file__),))
+                else:
+                    raise BadZipFile(
+                        f"Overlapped entries: {zinfo.orig_filename!r} "
+                        f"(possible zip bomb)")
+    
+            # check for encrypted flag & handle password
+            is_encrypted = zinfo.flag_bits & _MASK_ENCRYPTED
+            if is_encrypted:
+                if not pwd:
+                    pwd = self.pwd
+                if pwd and not isinstance(pwd, bytes):
+                    raise TypeError("pwd: expected bytes, got %s" % type(pwd).__name__)
+                if not pwd:
+>                   raise RuntimeError("File %r is encrypted, password "
+                                       "required for extraction" % name)
+E                                      RuntimeError: File <ZipInfo filename='case.json' filemode='?rw-------' file_size=22> is encrypted, password required for extraction
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1689: RuntimeError
+_____ test_malformed_zip_http_422_no_writes[/api/v1/packages:verify-data4] _____
+
+empty_client = <starlette.testclient.TestClient object at 0x7f82408d7f20>
+data = b'PK\x03\x04\x14\x00\x00\x00c\x00aQl]\x8c\x1f!\x08\x16\x00\x00\x00\x16\x00\x00\x00\t\x00\x00\x00case.jsonsynthetic-tes...0\x00\x00\x80\x01\x00\x00\x00\x00case.jsonPK\x05\x06\x00\x00\x00\x00\x01\x00\x01\x007\x00\x00\x00=\x00\x00\x00\x00\x00'
+endpoint = '/api/v1/packages:verify'
+
+    @pytest.mark.parametrize('data', malformed_archives())
+    @pytest.mark.parametrize('endpoint', ['/api/v1/packages:verify', '/api/v1/cases:import'])
+    def test_malformed_zip_http_422_no_writes(empty_client, data, endpoint):
+>       response = empty_client.post(endpoint, content=data)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_package_zip_boundary.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:1144: in post
+    return self.request(
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:518: in request
+    return super().request(
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:928: in send
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:922: in send
+    response.read()
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_models.py:881: in read
+    self._content = b"".join(self.iter_bytes())
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_models.py:897: in iter_bytes
+    for raw_bytes in self.iter_raw():
+                     ^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_models.py:951: in iter_raw
+    for raw_stream_bytes in self.stream:
+                            ^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:153: in __iter__
+    for chunk in self._stream:
+                 ^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:384: in iter_body
+    exit_stack.close()
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:618: in close
+    self.__exit__(None, None, None)
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:610: in __exit__
+    raise exc_details[1]
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:595: in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:399: in close_app
+    raise exception
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/anyio/from_thread.py:272: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:366: in run_app
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/applications.py:1194: in __call__
+    await super().__call__(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/telemetry/_asgi.py:151: in __call__
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py:91: in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py:149: in simple_response
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/routing.py:683: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:2811: in app
+    await route.handle(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:1839: in handle
+    await self.original_router.handle(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:2894: in handle
+    await included_router._handle_selected(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:1865: in _handle_selected
+    await original_route.handle(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:1328: in handle
+    await effective_context.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:166: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:152: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:745: in app
+    raw_response = await run_endpoint_function(
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:372: in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mcis_service/package/router.py:51: in verify_package
+    return mcase.verify_files(mcase.read_zip(data))
+                              ^^^^^^^^^^^^^^^^^^^^
+mcis_service/package/mcase.py:202: in read_zip
+    out[name] = z.read(info)
+                ^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1585: in read
+    with self.open(name, "r", pwd) as fp:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1694: in open
+    return ZipExtFile(zef_file, mode, zinfo, pwd, True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:882: in __init__
+    self._decompressor = _get_decompressor(self._compress_type)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:778: in _get_decompressor
+    _check_compression(compress_type)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+compression = 99
+
+    def _check_compression(compression):
+        if compression == ZIP_STORED:
+            pass
+        elif compression == ZIP_DEFLATED:
+            if not zlib:
+                raise RuntimeError(
+                    "Compression requires the (missing) zlib module")
+        elif compression == ZIP_BZIP2:
+            if not bz2:
+                raise RuntimeError(
+                    "Compression requires the (missing) bz2 module")
+        elif compression == ZIP_LZMA:
+            if not lzma:
+                raise RuntimeError(
+                    "Compression requires the (missing) lzma module")
+        else:
+>           raise NotImplementedError("That compression method is not supported")
+E           NotImplementedError: That compression method is not supported
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:758: NotImplementedError
+_____ test_malformed_zip_http_422_no_writes[/api/v1/packages:verify-data5] _____
+
+empty_client = <starlette.testclient.TestClient object at 0x7f8240a006b0>
+data = b'PK\x03\x04\x14\x00\x00\x00\x00\x00aQl]\x8c\x1f!\x08\x16\x00\x00\x00\x16\x00\x00\x00\t\x00\x00\x00case\x00jsonsynthet...00\x00\x80\x01\x00\x00\x00\x00case\x00jsonPK\x05\x06\x00\x00\x00\x00\x01\x00\x01\x007\x00\x00\x00=\x00\x00\x00\x00\x00'
+endpoint = '/api/v1/packages:verify'
+
+    @pytest.mark.parametrize('data', malformed_archives())
+    @pytest.mark.parametrize('endpoint', ['/api/v1/packages:verify', '/api/v1/cases:import'])
+    def test_malformed_zip_http_422_no_writes(empty_client, data, endpoint):
+        response = empty_client.post(endpoint, content=data)
+>       assert response.status_code == 422, response.text
+E       AssertionError: {"isValid":false,"tamperedFiles":[],"missingFiles":["manifest.json"],"extraFiles":[]}
+E       assert 200 == 422
+E        +  where 200 = <Response [200 OK]>.status_code
+
+tests/test_package_zip_boundary.py:67: AssertionError
+______ test_malformed_zip_http_422_no_writes[/api/v1/cases:import-data2] _______
+
+empty_client = <starlette.testclient.TestClient object at 0x7f82412cf560>
+data = b'PK\x03\x04\x14\x00\x00\x00\x00\x00aQl]\x8c\x1f!\x08\x16\x00\x00\x00\x16\x00\x00\x00\t\x00\x00\x00case.jsoncorrupted-...0\x00\x00\x80\x01\x00\x00\x00\x00case.jsonPK\x05\x06\x00\x00\x00\x00\x01\x00\x01\x007\x00\x00\x00=\x00\x00\x00\x00\x00'
+endpoint = '/api/v1/cases:import'
+
+    @pytest.mark.parametrize('data', malformed_archives())
+    @pytest.mark.parametrize('endpoint', ['/api/v1/packages:verify', '/api/v1/cases:import'])
+    def test_malformed_zip_http_422_no_writes(empty_client, data, endpoint):
+>       response = empty_client.post(endpoint, content=data)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_package_zip_boundary.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:1144: in post
+    return self.request(
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:518: in request
+    return super().request(
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:928: in send
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:922: in send
+    response.read()
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_models.py:881: in read
+    self._content = b"".join(self.iter_bytes())
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_models.py:897: in iter_bytes
+    for raw_bytes in self.iter_raw():
+                     ^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_models.py:951: in iter_raw
+    for raw_stream_bytes in self.stream:
+                            ^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:153: in __iter__
+    for chunk in self._stream:
+                 ^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:384: in iter_body
+    exit_stack.close()
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:618: in close
+    self.__exit__(None, None, None)
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:610: in __exit__
+    raise exc_details[1]
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:595: in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:399: in close_app
+    raise exception
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/anyio/from_thread.py:272: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:366: in run_app
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/applications.py:1194: in __call__
+    await super().__call__(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/telemetry/_asgi.py:151: in __call__
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py:91: in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py:149: in simple_response
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/routing.py:683: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:2811: in app
+    await route.handle(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:1839: in handle
+    await self.original_router.handle(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:2894: in handle
+    await included_router._handle_selected(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:1865: in _handle_selected
+    await original_route.handle(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:1328: in handle
+    await effective_context.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:166: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:152: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:745: in app
+    raw_response = await run_endpoint_function(
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:372: in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mcis_service/package/router.py:45: in import_package
+    return mcase.import_case(s, ctx.settings.blob_dir, data, ctx.operator, ctx.role)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mcis_service/package/mcase.py:235: in import_case
+    files = read_zip(data)
+            ^^^^^^^^^^^^^^
+mcis_service/package/mcase.py:202: in read_zip
+    out[name] = z.read(info)
+                ^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1586: in read
+    return fp.read()
+           ^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:994: in read
+    buf += self._read1(self.MAX_N)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1098: in _read1
+    self._update_crc(data)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <zipfile.ZipExtFile [closed]>, newdata = b'corrupted-test-payloa!'
+
+    def _update_crc(self, newdata):
+        # Update the CRC using the given data.
+        if self._expected_crc is None:
+            # No need to compute the CRC if we don't have a reference value
+            return
+        self._running_crc = crc32(newdata, self._running_crc)
+        # Check the CRC if we're at the end of the file
+        if self._eof and self._running_crc != self._expected_crc:
+>           raise BadZipFile("Bad CRC-32 for file %r" % self.name)
+E           zipfile.BadZipFile: Bad CRC-32 for file 'case.json'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1026: BadZipFile
+______ test_malformed_zip_http_422_no_writes[/api/v1/cases:import-data3] _______
+
+empty_client = <starlette.testclient.TestClient object at 0x7f823bd05c70>
+data = b'PK\x03\x04\x14\x00\x01\x00\x00\x00aQl]\x8c\x1f!\x08\x16\x00\x00\x00\x16\x00\x00\x00\t\x00\x00\x00case.jsonsynthetic-...0\x00\x00\x80\x01\x00\x00\x00\x00case.jsonPK\x05\x06\x00\x00\x00\x00\x01\x00\x01\x007\x00\x00\x00=\x00\x00\x00\x00\x00'
+endpoint = '/api/v1/cases:import'
+
+    @pytest.mark.parametrize('data', malformed_archives())
+    @pytest.mark.parametrize('endpoint', ['/api/v1/packages:verify', '/api/v1/cases:import'])
+    def test_malformed_zip_http_422_no_writes(empty_client, data, endpoint):
+>       response = empty_client.post(endpoint, content=data)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_package_zip_boundary.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:1144: in post
+    return self.request(
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:518: in request
+    return super().request(
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:928: in send
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:922: in send
+    response.read()
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_models.py:881: in read
+    self._content = b"".join(self.iter_bytes())
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_models.py:897: in iter_bytes
+    for raw_bytes in self.iter_raw():
+                     ^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_models.py:951: in iter_raw
+    for raw_stream_bytes in self.stream:
+                            ^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:153: in __iter__
+    for chunk in self._stream:
+                 ^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:384: in iter_body
+    exit_stack.close()
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:618: in close
+    self.__exit__(None, None, None)
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:610: in __exit__
+    raise exc_details[1]
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:595: in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:399: in close_app
+    raise exception
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/anyio/from_thread.py:272: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:366: in run_app
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/applications.py:1194: in __call__
+    await super().__call__(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/telemetry/_asgi.py:151: in __call__
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py:91: in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py:149: in simple_response
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/routing.py:683: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:2811: in app
+    await route.handle(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:1839: in handle
+    await self.original_router.handle(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:2894: in handle
+    await included_router._handle_selected(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:1865: in _handle_selected
+    await original_route.handle(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:1328: in handle
+    await effective_context.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:166: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:152: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:745: in app
+    raw_response = await run_endpoint_function(
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:372: in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mcis_service/package/router.py:45: in import_package
+    return mcase.import_case(s, ctx.settings.blob_dir, data, ctx.operator, ctx.role)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mcis_service/package/mcase.py:235: in import_case
+    files = read_zip(data)
+            ^^^^^^^^^^^^^^
+mcis_service/package/mcase.py:202: in read_zip
+    out[name] = z.read(info)
+                ^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1585: in read
+    with self.open(name, "r", pwd) as fp:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <zipfile.ZipFile file=<_io.BytesIO object at 0x7f823bd86430> mode='r'>
+name = <ZipInfo filename='case.json' filemode='?rw-------' file_size=22>
+mode = 'r', pwd = None, force_zip64 = False
+
+    def open(self, name, mode="r", pwd=None, *, force_zip64=False):
+        """Return file-like object for 'name'.
+    
+        name is a string for the file name within the ZIP file, or a ZipInfo
+        object.
+    
+        mode should be 'r' to read a file already in the ZIP file, or 'w' to
+        write to a file newly added to the archive.
+    
+        pwd is the password to decrypt files (only used for reading).
+    
+        When writing, if the file size is not known in advance but may exceed
+        2 GiB, pass force_zip64 to use the ZIP64 format, which can handle large
+        files.  If the size is known in advance, it is best to pass a ZipInfo
+        instance for name, with zinfo.file_size set.
+        """
+        if mode not in {"r", "w"}:
+            raise ValueError('open() requires mode "r" or "w"')
+        if pwd and (mode == "w"):
+            raise ValueError("pwd is only supported for reading files")
+        if not self.fp:
+            raise ValueError(
+                "Attempt to use ZIP archive that was already closed")
+    
+        # Make sure we have an info object
+        if isinstance(name, ZipInfo):
+            # 'name' is already an info object
+            zinfo = name
+        elif mode == 'w':
+            zinfo = ZipInfo(name)
+            zinfo.compress_type = self.compression
+            zinfo._compresslevel = self.compresslevel
+        else:
+            # Get info object for name
+            zinfo = self.getinfo(name)
+    
+        if mode == 'w':
+            return self._open_to_write(zinfo, force_zip64=force_zip64)
+    
+        if self._writing:
+            raise ValueError("Can't read from the ZIP file while there "
+                    "is an open writing handle on it. "
+                    "Close the writing handle before trying to read.")
+    
+        # Open for reading:
+        self._fileRefCnt += 1
+        zef_file = _SharedFile(self.fp, zinfo.header_offset,
+                               self._fpclose, self._lock, lambda: self._writing)
+        try:
+            # Skip the file header:
+            fheader = zef_file.read(sizeFileHeader)
+            if len(fheader) != sizeFileHeader:
+                raise BadZipFile("Truncated file header")
+            fheader = struct.unpack(structFileHeader, fheader)
+            if fheader[_FH_SIGNATURE] != stringFileHeader:
+                raise BadZipFile("Bad magic number for file header")
+    
+            fname = zef_file.read(fheader[_FH_FILENAME_LENGTH])
+            if fheader[_FH_EXTRA_FIELD_LENGTH]:
+                zef_file.seek(fheader[_FH_EXTRA_FIELD_LENGTH], whence=1)
+    
+            if zinfo.flag_bits & _MASK_COMPRESSED_PATCH:
+                # Zip 2.7: compressed patched data
+                raise NotImplementedError("compressed patched data (flag bit 5)")
+    
+            if zinfo.flag_bits & _MASK_STRONG_ENCRYPTION:
+                # strong encryption
+                raise NotImplementedError("strong encryption (flag bit 6)")
+    
+            if fheader[_FH_GENERAL_PURPOSE_FLAG_BITS] & _MASK_UTF_FILENAME:
+                # UTF-8 filename
+                fname_str = fname.decode("utf-8")
+            else:
+                fname_str = fname.decode(self.metadata_encoding or "cp437")
+    
+            if fname_str != zinfo.orig_filename:
+                raise BadZipFile(
+                    'File name in directory %r and header %r differ.'
+                    % (zinfo.orig_filename, fname))
+    
+            if (zinfo._end_offset is not None and
+                zef_file.tell() + zinfo.compress_size > zinfo._end_offset):
+                if zinfo._end_offset == zinfo.header_offset:
+                    import warnings
+                    warnings.warn(
+                        f"Overlapped entries: {zinfo.orig_filename!r} "
+                        f"(possible zip bomb)",
+                        skip_file_prefixes=(os.path.dirname(__file__),))
+                else:
+                    raise BadZipFile(
+                        f"Overlapped entries: {zinfo.orig_filename!r} "
+                        f"(possible zip bomb)")
+    
+            # check for encrypted flag & handle password
+            is_encrypted = zinfo.flag_bits & _MASK_ENCRYPTED
+            if is_encrypted:
+                if not pwd:
+                    pwd = self.pwd
+                if pwd and not isinstance(pwd, bytes):
+                    raise TypeError("pwd: expected bytes, got %s" % type(pwd).__name__)
+                if not pwd:
+>                   raise RuntimeError("File %r is encrypted, password "
+                                       "required for extraction" % name)
+E                                      RuntimeError: File <ZipInfo filename='case.json' filemode='?rw-------' file_size=22> is encrypted, password required for extraction
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1689: RuntimeError
+______ test_malformed_zip_http_422_no_writes[/api/v1/cases:import-data4] _______
+
+empty_client = <starlette.testclient.TestClient object at 0x7f82404e0950>
+data = b'PK\x03\x04\x14\x00\x00\x00c\x00aQl]\x8c\x1f!\x08\x16\x00\x00\x00\x16\x00\x00\x00\t\x00\x00\x00case.jsonsynthetic-tes...0\x00\x00\x80\x01\x00\x00\x00\x00case.jsonPK\x05\x06\x00\x00\x00\x00\x01\x00\x01\x007\x00\x00\x00=\x00\x00\x00\x00\x00'
+endpoint = '/api/v1/cases:import'
+
+    @pytest.mark.parametrize('data', malformed_archives())
+    @pytest.mark.parametrize('endpoint', ['/api/v1/packages:verify', '/api/v1/cases:import'])
+    def test_malformed_zip_http_422_no_writes(empty_client, data, endpoint):
+>       response = empty_client.post(endpoint, content=data)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_package_zip_boundary.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:1144: in post
+    return self.request(
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:518: in request
+    return super().request(
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:928: in send
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:922: in send
+    response.read()
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_models.py:881: in read
+    self._content = b"".join(self.iter_bytes())
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_models.py:897: in iter_bytes
+    for raw_bytes in self.iter_raw():
+                     ^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_models.py:951: in iter_raw
+    for raw_stream_bytes in self.stream:
+                            ^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/httpx/_client.py:153: in __iter__
+    for chunk in self._stream:
+                 ^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:384: in iter_body
+    exit_stack.close()
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:618: in close
+    self.__exit__(None, None, None)
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:610: in __exit__
+    raise exc_details[1]
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:595: in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:399: in close_app
+    raise exception
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/anyio/from_thread.py:272: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/testclient.py:366: in run_app
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/applications.py:1194: in __call__
+    await super().__call__(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/telemetry/_asgi.py:151: in __call__
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py:91: in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py:149: in simple_response
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/routing.py:683: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:2811: in app
+    await route.handle(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:1839: in handle
+    await self.original_router.handle(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:2894: in handle
+    await included_router._handle_selected(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:1865: in _handle_selected
+    await original_route.handle(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:1328: in handle
+    await effective_context.app(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:166: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:152: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:745: in app
+    raw_response = await run_endpoint_function(
+../../mcis-canonical-validation/service/.venv/lib/python3.12/site-packages/fastapi/routing.py:372: in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mcis_service/package/router.py:45: in import_package
+    return mcase.import_case(s, ctx.settings.blob_dir, data, ctx.operator, ctx.role)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mcis_service/package/mcase.py:235: in import_case
+    files = read_zip(data)
+            ^^^^^^^^^^^^^^
+mcis_service/package/mcase.py:202: in read_zip
+    out[name] = z.read(info)
+                ^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1585: in read
+    with self.open(name, "r", pwd) as fp:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1694: in open
+    return ZipExtFile(zef_file, mode, zinfo, pwd, True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:882: in __init__
+    self._decompressor = _get_decompressor(self._compress_type)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:778: in _get_decompressor
+    _check_compression(compress_type)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+compression = 99
+
+    def _check_compression(compression):
+        if compression == ZIP_STORED:
+            pass
+        elif compression == ZIP_DEFLATED:
+            if not zlib:
+                raise RuntimeError(
+                    "Compression requires the (missing) zlib module")
+        elif compression == ZIP_BZIP2:
+            if not bz2:
+                raise RuntimeError(
+                    "Compression requires the (missing) bz2 module")
+        elif compression == ZIP_LZMA:
+            if not lzma:
+                raise RuntimeError(
+                    "Compression requires the (missing) lzma module")
+        else:
+>           raise NotImplementedError("That compression method is not supported")
+E           NotImplementedError: That compression method is not supported
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:758: NotImplementedError
+______ test_malformed_zip_http_422_no_writes[/api/v1/cases:import-data5] _______
+
+empty_client = <starlette.testclient.TestClient object at 0x7f82407947a0>
+data = b'PK\x03\x04\x14\x00\x00\x00\x00\x00aQl]\x8c\x1f!\x08\x16\x00\x00\x00\x16\x00\x00\x00\t\x00\x00\x00case\x00jsonsynthet...00\x00\x80\x01\x00\x00\x00\x00case\x00jsonPK\x05\x06\x00\x00\x00\x00\x01\x00\x01\x007\x00\x00\x00=\x00\x00\x00\x00\x00'
+endpoint = '/api/v1/cases:import'
+
+    @pytest.mark.parametrize('data', malformed_archives())
+    @pytest.mark.parametrize('endpoint', ['/api/v1/packages:verify', '/api/v1/cases:import'])
+    def test_malformed_zip_http_422_no_writes(empty_client, data, endpoint):
+        response = empty_client.post(endpoint, content=data)
+        assert response.status_code == 422, response.text
+>       assert response.json()['code'] == 'BAD_PACKAGE'
+E       AssertionError: assert 'INTEGRITY_FAILED' == 'BAD_PACKAGE'
+E         
+E         - BAD_PACKAGE
+E         + INTEGRITY_FAILED
+
+tests/test_package_zip_boundary.py:68: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_package_zip_boundary.py::test_duplicate_or_ambiguous_paths_are_bad_package[entries0]
+FAILED tests/test_package_zip_boundary.py::test_duplicate_or_ambiguous_paths_are_bad_package[entries1]
+FAILED tests/test_package_zip_boundary.py::test_duplicate_or_ambiguous_paths_are_bad_package[entries2]
+FAILED tests/test_package_zip_boundary.py::test_duplicate_or_ambiguous_paths_are_bad_package[entries3]
+FAILED tests/test_package_zip_boundary.py::test_duplicate_or_ambiguous_paths_are_bad_package[entries4]
+FAILED tests/test_package_zip_boundary.py::test_unsafe_paths_including_directories_are_rejected[C:/tmp/x]
+FAILED tests/test_package_zip_boundary.py::test_unsafe_paths_including_directories_are_rejected[raw/a:stream]
+FAILED tests/test_package_zip_boundary.py::test_unsafe_paths_including_directories_are_rejected[./case.json]
+FAILED tests/test_package_zip_boundary.py::test_unsafe_paths_including_directories_are_rejected[raw//a]
+FAILED tests/test_package_zip_boundary.py::test_unsafe_paths_including_directories_are_rejected[raw/./a]
+FAILED tests/test_package_zip_boundary.py::test_unsafe_paths_including_directories_are_rejected[../bad/]
+FAILED tests/test_package_zip_boundary.py::test_unsafe_paths_including_directories_are_rejected[/bad/]
+FAILED tests/test_package_zip_boundary.py::test_unsafe_paths_including_directories_are_rejected[C:\\bad\\]
+FAILED tests/test_package_zip_boundary.py::test_malformed_zip_http_422_no_writes[/api/v1/packages:verify-data2]
+FAILED tests/test_package_zip_boundary.py::test_malformed_zip_http_422_no_writes[/api/v1/packages:verify-data3]
+FAILED tests/test_package_zip_boundary.py::test_malformed_zip_http_422_no_writes[/api/v1/packages:verify-data4]
+FAILED tests/test_package_zip_boundary.py::test_malformed_zip_http_422_no_writes[/api/v1/packages:verify-data5]
+FAILED tests/test_package_zip_boundary.py::test_malformed_zip_http_422_no_writes[/api/v1/cases:import-data2]
+FAILED tests/test_package_zip_boundary.py::test_malformed_zip_http_422_no_writes[/api/v1/cases:import-data3]
+FAILED tests/test_package_zip_boundary.py::test_malformed_zip_http_422_no_writes[/api/v1/cases:import-data4]
+FAILED tests/test_package_zip_boundary.py::test_malformed_zip_http_422_no_writes[/api/v1/cases:import-data5]
+21 failed, 21 passed in 5.52s

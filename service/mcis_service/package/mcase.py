@@ -12,6 +12,8 @@ from __future__ import annotations
 import io
 import json
 import zipfile
+import zlib
+import lzma
 from pathlib import Path
 from typing import Any
 
@@ -187,20 +189,50 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
 
 # ---------------- 导入 ----------------
 
+def _zip_member_name(info: zipfile.ZipInfo) -> tuple[str, bool]:
+    # ZipInfo truncates filename at NUL; inspect the original before normalization.
+    original = info.orig_filename
+    name = original.replace("\\", "/")
+    directory = name.endswith("/")
+    components = name[:-1].split("/") if directory else name.split("/")
+    if ("\x00" in original or name.startswith("/")
+            or any(part in ("", ".", "..") or ":" in part for part in components)):
+        raise problem(422, "BAD_PACKAGE", "案件包包含非法路径")
+    return name, directory
+
+
 def read_zip(data: bytes) -> dict[str, bytes]:
+    """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+    Backslashes remain supported for Unity packages. Case-insensitive collisions
+    are rejected because integrity verification already uses that comparison.
+    This decoder is not an upload/decompression resource budget.
+    """
     try:
-        z = zipfile.ZipFile(io.BytesIO(data))
-    except zipfile.BadZipFile as e:
-        raise problem(422, "BAD_PACKAGE", "不是有效的 .mcase（ZIP）文件") from e
-    out = {}
-    for info in z.infolist():
-        if info.is_dir():
-            continue
-        name = info.filename.replace("\\", "/")
-        if name.startswith("/") or ".." in name.split("/"):
-            raise problem(422, "BAD_PACKAGE", f"非法路径：{name}")
-        out[name] = z.read(info)
-    return out
+        with zipfile.ZipFile(io.BytesIO(data)) as z:
+            members = []
+            seen = set()
+            for info in z.infolist():
+                name, directory = _zip_member_name(info)
+                key = name.rstrip("/").lower()
+                if key in seen:
+                    raise problem(422, "BAD_PACKAGE", "案件包包含重复或歧义路径")
+                seen.add(key)
+                if info.flag_bits & 1:
+                    raise problem(422, "BAD_PACKAGE", "不支持加密案件包")
+                members.append((info, name, directory))
+            file_keys = {name.lower() for _, name, directory in members if not directory}
+            for _, name, _ in members:
+                parts = name.rstrip("/").lower().split("/")
+                for end in range(1, len(parts)):
+                    if "/".join(parts[:end]) in file_keys:
+                        raise problem(422, "BAD_PACKAGE", "案件包包含文件与目录路径冲突")
+            return {name: z.read(info) for info, name, directory in members if not directory}
+    except (zipfile.BadZipFile, zipfile.LargeZipFile, NotImplementedError,
+            RuntimeError, EOFError, ValueError, OSError, zlib.error, lzma.LZMAError) as e:
+        # Corrupt CRC/compression/header errors must not escape as HTTP 500 or
+        # expose parser internals. HTTPException from validation is not caught.
+        raise problem(422, "BAD_PACKAGE", "不是有效或受支持的 .mcase（ZIP）文件") from e
 
 
 def verify_files(files: dict[str, bytes]) -> dict[str, Any]:
