@@ -12,6 +12,7 @@ from . import __version__
 from .knowledge.router import router as knowledge_router
 from .agents.router import router as agents_router
 from .audit.router import router as audit_router
+from .access_workbench.router import router as access_workbench_router
 from .case_metadata.router import router as case_metadata_router
 from .cases.router import router as cases_router
 from .tracks_import.router import router as tracks_import_router
@@ -74,6 +75,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     for r in (cases_router, evidence_router, timeline_router, interviews_router, recommendations_router, colreg_router,
               audit_router, redaction_router, agents_router, sim_router, package_router, reports_router):
         app.include_router(r)
+    app.include_router(access_workbench_router)
     app.include_router(package_intake_router)
     app.include_router(evidence_intake_router)  # W4.2 supplied-file intake
     app.include_router(case_metadata_router)  # W8.4 text metadata only

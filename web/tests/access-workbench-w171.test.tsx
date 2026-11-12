@@ -1,0 +1,13 @@
+import {strict as assert} from 'node:assert'
+import {renderToStaticMarkup} from 'react-dom/server'
+import {parseWorkbench,categories} from '../src/accessWorkbench/model'
+import {AccessContent} from '../src/accessWorkbench/AccessContent'
+Object.defineProperty(globalThis,'localStorage',{value:{getItem:()=>null,setItem:()=>{}}})
+const event={seq:1,caseId:'CASE-A',utc:'2026-11-12T00:00:00Z',operator:'<img src=x>',role:'Investigator',action:'policy.update',category:'Access',entityType:'accessPolicy',entityId:'policy',command:'test',before:'{}',after:'{}',prevHash:'0'.repeat(64)}
+const data={caseId:'CASE-A',policy:{matrix:{Investigator:{Audit:'ReadOnly'}},fieldRules:[],categories:['Case']},policySource:'saved',policyAudit:{events:[event],limit:50,hasMore:false},identityMode:'local-role-header',readOnly:true}
+const p=parseWorkbench(data,'CASE-A');assert.deepEqual(categories(p.policy),['Case','Audit'])
+for(const change of [{caseId:'B'},{readOnly:false},{identityMode:'authenticated'},{policySource:'fake'},{policy:{matrix:{Investigator:{Audit:'Allow'}},fieldRules:[]}},{policyAudit:{...data.policyAudit,events:[{...event,caseId:'B'}]}},{policyAudit:{...data.policyAudit,events:[{...event,action:'other'}]}},{policyAudit:{...data.policyAudit,events:[event,event]}},{policyAudit:{...data.policyAudit,limit:51}}])assert.throws(()=>parseWorkbench({...data,...change},'CASE-A'))
+const html=renderToStaticMarkup(<AccessContent data={p} role="Investigator"/>);assert.ok(html.includes('未配置（默认拒绝）'));assert.ok(html.includes('&lt;img'));assert.ok(!html.includes('<img'));assert.ok(!html.includes('<button'));assert.ok(html.includes('不保证加密'));assert.ok(html.includes('不是完整策略快照'))
+const empty=renderToStaticMarkup(<AccessContent data={{...p,policy:{matrix:{},fieldRules:[]},policyAudit:{events:[],limit:50,hasMore:false}}} role="Public"/>);assert.ok(empty.includes('暂无权限矩阵条目'));assert.ok(empty.includes('暂无策略变更审计记录'))
+async function main(){const {loadWorkbench}=await import('../src/accessWorkbench/api');const calls:any[]=[];globalThis.fetch=async(u,o)=>{calls.push({u,o});return new Response(JSON.stringify(data))};const c=new AbortController();await loadWorkbench('CASE-A','Investigator\n调查员 A',c.signal);assert.equal(calls[0].u,'/api/v1/cases/CASE-A/access-workbench');assert.equal(calls[0].o.method,'GET');assert.equal(calls[0].o.cache,'no-store');assert.equal(calls[0].o.signal,c.signal);await assert.rejects(()=>loadWorkbench('CASE-A','stale',c.signal));assert.equal(calls.length,1);globalThis.fetch=async()=>new Response('',{status:403});await assert.rejects(()=>loadWorkbench('CASE-A','Investigator\n调查员 A',c.signal));console.log('W17.1 model/render/transport tests passed')}
+main().catch(e=>{console.error(e);process.exit(1)})

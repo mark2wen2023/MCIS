@@ -454,3 +454,8 @@ Contract: contracts/package-intake-v1.md. New isolated backend/frontend; shared 
 limited to main router registration and Lobby entry. Existing import/export unchanged.
 Only new cases, strict supported subset, original archive retention, explicit commit,
 GET-only unknown-outcome recovery. Independent acceptance required before completion.
+
+## W17.1 权限只读核验
+原计划17号工作台小切片，合同见contracts/access-workbench-v1.md。
+新独立access_workbench后端和accessWorkbench前端，主router/main/routes最小注册。
+仅逐案授权读取策略与最近策略更新记录；不改旧权限API、不修改策略、不宣称生产认证或脱敏实施已完整。
