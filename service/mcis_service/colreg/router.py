@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import secrets
 from contextlib import contextmanager
+from math import isfinite
 import time
 from typing import Any
 
@@ -154,12 +155,21 @@ def cpa_series(case_id: str, ctx: Ctx = CtxDep, fromSec: float = 0, toSec: float
         case = cases.load_case(s, case_id)
         require(ctx, s, case_id, "ais_sim")
         end = toSec if toSec is not None else float(case.get("durationSec") or 600)
-        if stepSec <= 0 or (end - fromSec) / stepSec > 5000:
+        if (not all(isfinite(v) for v in (fromSec, end, stepSec))
+                or stepSec <= 0 or (end - fromSec) / stepSec > 5000):
             raise problem(422, "BAD_RANGE", "步长过小")
         times, t = [], fromSec
         while t <= end + 1e-9:
+            # Endpoint tolerance can dwarf a tiny step; float addition can also
+            # stop advancing at large magnitudes. Bound the actual work, not
+            # only the nominal interval count above.
+            if len(times) >= 5001:
+                raise problem(422, "BAD_RANGE", "采样点数超出限制")
             times.append(round(t, 3))
-            t += stepSec
+            next_t = t + stepSec
+            if next_t <= t:
+                raise problem(422, "BAD_RANGE", "步长无法推进采样时间")
+            t = next_t
         loc = case["incidentLocation"]
         req = {"origin": {"latDeg": loc["latDeg"], "lonDeg": loc["lonDeg"]},
                "pairs": _pairs_at(s, case_id, times, ownVesselId, targetVesselId)}
