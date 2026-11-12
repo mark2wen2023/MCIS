@@ -23,6 +23,7 @@ from .evidence.router import router as evidence_router
 from .evidence_intake.router import router as evidence_intake_router
 from .interviews.router import router as interviews_router
 from .package.router import router as package_router
+from .package_intake.router import router as package_intake_router
 from .recommendations.router import router as recommendations_router
 from .reports.router import router as reports_router
 from .redaction.router import router as redaction_router
@@ -73,6 +74,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     for r in (cases_router, evidence_router, timeline_router, interviews_router, recommendations_router, colreg_router,
               audit_router, redaction_router, agents_router, sim_router, package_router, reports_router):
         app.include_router(r)
+    app.include_router(package_intake_router)
     app.include_router(evidence_intake_router)  # W4.2 supplied-file intake
     app.include_router(case_metadata_router)  # W8.4 text metadata only
     app.include_router(tracks_import_router)  # W10.2 explicit CSV first-track input

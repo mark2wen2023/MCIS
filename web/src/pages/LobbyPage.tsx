@@ -7,13 +7,14 @@ import { canCreateCase } from '../cases/create'
 import { parseCases, type CaseSummary } from '../cases/model'
 import '../styles/w8.css'
 import { PackagePanel, PackageExport } from '../packages/PackagePanel'
+import { PackageIntakePanel } from '../packageIntake/PackageIntakePanel'
 import { canUsePackages } from '../packages/model'
 
 type State = { status: 'loading' | 'error' } | { status: 'ready'; cases: CaseSummary[] }
 export function LobbyContent({ state, retry, create, packages, exportCase }: { state: State; retry: () => void; create?: ReactNode; packages?: ReactNode; exportCase?: (c: CaseSummary) => ReactNode }) {
   return <section className="w8-lobby" aria-labelledby="lobby-title">
     <h1 id="lobby-title">案件大厅</h1>
-    <p>选择案件进入证据中心，或由调查组创建新的调查档案。可进入基本档案编辑文字信息；.mcase 导入尚未开放。</p>
+    <p>选择案件进入证据中心，或由调查组创建新的调查档案。可进入基本档案编辑文字信息；支持受限基础资料包首次导入；不是完整案件包还原。</p>
     <div className="w82-toolbar"><button type="button" onClick={retry}>刷新案件列表</button></div>
     {create}
     {packages}
@@ -46,6 +47,6 @@ function LobbySession({who}: {who: string}) {
     return () => { active = false }
   }, [revision, who])
   const refresh=()=>{setState({status:'loading'});setRevision(v=>v+1)}
-  return <LobbyContent state={state} retry={refresh} packages={canUsePackages(who.split("\n")[0]!) ? <PackagePanel who={who}/> : undefined} exportCase={canUsePackages(who.split("\n")[0]!) ? c=><PackageExport key={c.caseId} caseId={c.caseId} title={c.title} who={who}/> : undefined} create={canCreateCase(who.split('\n')[0]!) ? <CreateCasePanel who={who} onCreated={refresh}/> : <p>当前身份仅可浏览案件；调查组成员可新建案件。</p>} />
+  return <LobbyContent state={state} retry={refresh} packages={canUsePackages(who.split("\n")[0]!) ? <><PackagePanel who={who}/><PackageIntakePanel who={who} onImported={refresh}/></> : undefined} exportCase={canUsePackages(who.split("\n")[0]!) ? c=><PackageExport key={c.caseId} caseId={c.caseId} title={c.title} who={who}/> : undefined} create={canCreateCase(who.split('\n')[0]!) ? <CreateCasePanel who={who} onCreated={refresh}/> : <p>当前身份仅可浏览案件；调查组成员可新建案件。</p>} />
 }
 
