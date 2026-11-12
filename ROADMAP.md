@@ -184,3 +184,8 @@
 
 | 2026-11-12 | W20.1 | 待独立验收 | 本地 LLM people_ops 最小文本提取链路：脱敏 → 模型 → 引用校验 → PendingReview → 人工追加陈述；五角色仍 not_connected，默认禁用，不部署。冻结 `logs/w20-impl-hashes-frozen.txt`；共享 openapi 按新增路径核对。真实模型未执行，HTTP 协议假服务不得当作模型质量验收。 |
 | 2026-11-12 | W20.1 本地 LLM 文本抽取 | 独立限定切片验收通过 | 基于 W8.3/W9/W5 main 03e3fb8；服务603过无跳过、独立组合95过、最终受影响回归102过。重叠引用/敏感片段姓名相交/非法JSON三缺陷已返修关闭，6项冻结一致；仅people_ops配置型本机模型适配→出处校验→PendingReview→人工追加陈述。真实LLM推理质量未验，五角色未连、默认禁用、无OCR/ASR/视频能力、无部署。见logs/w20-verification.md及DEFECTS/W20.md。 |
+
+| 2026-11-12 | W10.1 已保存航迹检查 | 待独立验收 | 原型05与ARCHITECTURE§4.2，实际读取案件/船舶/已存点；来源类型及时间描述、UTC时序分页与散点联动，不传stepSec不插值不假导入保存。5万点界面预算、图最多2000原点展示抽样；最大间隔非自动缺口判定，来源标签非证据完整保证。117自测断言、tsc/build通过，冻结logs/w101-impl-hashes-frozen.txt；共享main/routes/caseContext按接线核对。基于含W9/W8.3/W20的main b64812b，独立浏览器/HTTP待测，不部署。 |
+| 2026-11-12 | W10.1 D01/D02 | 修复待独立复验 | 真浏览器快速返回复现旧航迹迟到显示，包内导航意图/历史事件现立即取消、清旧snapshot并允许重新读取；新增船舶/桶各1000项界面元数据预算，非海事业务限制，超限整批拒绝。原失败独立用例/v1冻结保留，9项新冻结；117自测+tsc/build通过，尚未提交合并。 |
+| 2026-11-12 | W10.1 D03 | 修复待独立复验 | D01修复后正常切案可能由延后到达的hashchange误取消新会话；现history/hashchange仅当前URL离开订阅URL才取消，anchor离开意图/pagehide仍立即取消。原D03红用例与v2冻结保留，新9项freeze、117自测/tsc/build通过。独立全复验未完成，不提交合并。 |
+| 2026-11-12 | W10.1 已保存航迹检查 | 桌面只读切片独立验收通过 | main b64812b（含W20）基线，920前端断言+tsc/build/source lint过；独立真实HTTP15、真实Chromium40过/1既有390px共享壳KnownDefect、模型38及导航7过，9冻结匹配，80服务Python源与主线一致，未调用模型。D01–D03保留原失败用例修复关闭。仅已存点读取/来源与时序检查，非原始AIS/自动缺口判定/ENC/导入编辑保存/整W10或部署完成。见logs/w101-verification.md与tests_acceptance/W101/REVIEW.md。 |

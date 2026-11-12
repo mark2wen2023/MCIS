@@ -1,0 +1,172 @@
+{
+  "checks": [
+    {
+      "name": "track page real content no overlay",
+      "passed": true
+    },
+    {
+      "name": "2051 stored points + 2000 plot samples explicit",
+      "passed": true
+    },
+    {
+      "name": "100 rows first page",
+      "passed": true
+    },
+    {
+      "name": "date-line warning and source caveat",
+      "passed": true
+    },
+    {
+      "name": "keyboard selection exact negative/zero/360/UTC",
+      "passed": true
+    },
+    {
+      "name": "malicious source remains literal text",
+      "passed": true
+    },
+    {
+      "name": "pagination preserves exact index",
+      "passed": true
+    },
+    {
+      "name": "unknown filter not guessed measured",
+      "passed": true
+    },
+    {
+      "name": "empty source filter no fake points",
+      "passed": true
+    },
+    {
+      "name": "typing does not request",
+      "passed": true
+    },
+    {
+      "name": "window applies real HTTP without resampling",
+      "passed": true
+    },
+    {
+      "name": "reversed window rejected no network",
+      "passed": true
+    },
+    {
+      "name": "refresh resets filter page selection",
+      "passed": true
+    },
+    {
+      "name": "1440 desktop no outer overflow",
+      "passed": true
+    },
+    {
+      "name": "1920 desktop no outer overflow",
+      "passed": true
+    },
+    {
+      "name": "nonfictional empty case honest",
+      "passed": true
+    },
+    {
+      "name": "registered empty vessel no synthetic track",
+      "passed": true
+    },
+    {
+      "name": "real seed has two selectable vessels",
+      "passed": true
+    },
+    {
+      "name": "vessel selection works",
+      "passed": true
+    },
+    {
+      "name": "fictional badge explicit",
+      "passed": true
+    },
+    {
+      "name": "Public uses real read permission",
+      "passed": true
+    },
+    {
+      "name": "50000 accepted all table pages and plot budget",
+      "passed": true
+    },
+    {
+      "name": "plot endpoint selects exact final table point",
+      "passed": true
+    },
+    {
+      "name": "wrong case fails closed",
+      "passed": true
+    },
+    {
+      "name": "wrong point vessel fails closed",
+      "passed": true
+    },
+    {
+      "name": "bad coordinate fails closed",
+      "passed": true
+    },
+    {
+      "name": "invalid UTC fails closed",
+      "passed": true
+    },
+    {
+      "name": "403 fails closed",
+      "passed": true
+    },
+    {
+      "name": "404 fails closed",
+      "passed": true
+    },
+    {
+      "name": "500 fails closed",
+      "passed": true
+    },
+    {
+      "name": "too many fails closed",
+      "passed": true
+    },
+    {
+      "name": "too many buckets fails closed",
+      "passed": true
+    },
+    {
+      "name": "fast Back no stale response",
+      "passed": true
+    },
+    {
+      "name": "aborted navigation read can recover",
+      "passed": true
+    },
+    {
+      "name": "normal Back Forward keeps case",
+      "passed": true
+    },
+    {
+      "name": "cross-case late data suppressed",
+      "passed": true
+    },
+    {
+      "name": "role change clears old data",
+      "passed": true
+    },
+    {
+      "name": "390 shared shell overflow",
+      "passed": false,
+      "knownDefect": true,
+      "width": 934,
+      "baseline": 934
+    },
+    {
+      "name": "no added mobile outer overflow",
+      "passed": true
+    },
+    {
+      "name": "all UI requests read only",
+      "passed": true
+    },
+    {
+      "name": "no runtime JS errors",
+      "passed": true
+    }
+  ],
+  "errors": []
+}

@@ -408,3 +408,6 @@ W5 同步必要修正：服务 W5 roster/detail disclaimer 只对固定演示案
 跨包只追加 `contracts/openapi.yaml` 路径及专属 schema，不修改 W5 `interviews/router.py` / InterviewPage / caseContext，不修改 W9 船舶与环境接口。保留 interview schema 和 UTF-16 SourceSpan，不复用不可靠的脱敏后偏移。多模态证据是后续目标，本轮不宣称 OCR/ASR/视频处理已接通。
 
 W20.1 最终集成：W5、W9、W8.3 精确主线 03e3fb8 的已有改动与共享记录全部保留。独立发现三项边界缺陷后统一返工并再次冻结；服务全量603、独立组合95、最终相关回归102通过。仅提交 agents 层、专属契约/测试/说明及共享追加，不触碰 Web。实际本地模型尚未提供，不能将协议假服务验证称为真实推理；后续真实模型与多模态评测是单独工作，不阻塞这条已验证的受控人审代码链路。
+
+## 2026-11-12 W10.1 航迹只读检查登记
+原型05/ARCHITECTURE§4.2/track-point合同依据及边界见contracts/W10.1-track-inspection.md。本轮只读已存航迹与来源/时间描述，不做无接口支持的导入/编辑/保存成功UI。新增TrackPage/tracks/w10.css；共享main/routes/caseContext只增加track接线和已实现只读文案，不改W9/W20业务或服务。共享文件不入单包冻结，旧冻结不改。

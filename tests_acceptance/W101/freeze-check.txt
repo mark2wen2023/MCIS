@@ -1,0 +1,9 @@
+contracts/W10.1-track-inspection.md: OK
+web/src/tracks/TrackView.tsx: OK
+web/src/tracks/api.ts: OK
+web/src/tracks/model.ts: OK
+web/src/tracks/navigation.ts: OK
+web/src/pages/TrackPage.tsx: OK
+web/src/styles/w10.css: OK
+web/tests/track-inspection-w101.test.tsx: OK
+web/tests/run-track-inspection-w101.sh: OK
