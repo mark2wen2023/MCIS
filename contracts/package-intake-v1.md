@@ -2,8 +2,9 @@
 
 Profile `MCIS-BASIC-INTAKE-1`. Local single-process investigation-group workflow only.
 POST `/api/v1/packages/intakes:preview` JSON `{contentBase64}` validates a complete
-MCIS-MCASE 1.0.0 ZIP and returns profile, caseId, title, sourceSha256, byteLength,
-counts and warnings. No writes. POST `/api/v1/packages/intakes:commit` requires
+MCIS-MCASE 1.0.0 basic ZIP or 1.1.0 with the sole supported HFACS extension (see
+hfacs-package-extension-v1.md) and returns profile, caseId, title, sourceSha256,
+byteLength, counts, warnings, packageVersion and hfacsExtension. No writes. POST `/api/v1/packages/intakes:commit` requires
 identical bytes, sourceSha256 and literal `confirmed:true`; revalidates, imports only
 into a NEW case and returns a receipt including importedUtc and replayed.
 GET `/api/v1/packages/intakes/{sha256}` is the sole recovery operation after an
@@ -11,7 +12,8 @@ unknown write outcome. 404 means no committed receipt, not permission to auto-re
 
 Only Investigator/LeadInvestigator. Existing header identity is NOT authentication.
 Only case/case.ext, vessels, tracks, environment, registered evidence, custody/audit
-and default access policy are supported. Other business content must be empty;
+and default access policy are supported, plus the exact versioned W18.6 HFACS archive
+when present. Other business content must be empty;
 unknown files and fields are rejected, never silently dropped. Original ZIP retained
 with SHA-256 receipt. Imported original chains preserved; one local import event added.
 No imported policy may expand access. No existing case or blob directory overwritten.

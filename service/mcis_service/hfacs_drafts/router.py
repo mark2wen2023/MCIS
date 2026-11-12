@@ -20,7 +20,7 @@ from ..cases.models import CaseRow
 from ..evidence.models import EvidenceRow
 from ..redaction.models import AccessPolicyRow
 from ..redaction.policy import default_policy
-from .models import HfacsWorksheetRow, HfacsAuditRow, HfacsRequestRow
+from .models import HfacsWorksheetRow, HfacsAuditRow, HfacsRequestRow, HfacsArchivedRequestRow
 
 PROFILE="MCIS-HFACS-DRAFT-1"
 TAXONOMY="mcis-hfacs-project/1"
@@ -187,6 +187,8 @@ def check_document_sources(session,ctx,case_id,doc,write=False,audit=False):
 
 
 def receipt_response(session,ctx,case_id,request_id,request_digest):
+    if session.get(HfacsArchivedRequestRow,(case_id,request_id)) is not None:
+        reject(409,"REQUEST_ARCHIVED","历史回执仅归档，请使用新的requestId")
     receipt=session.get(HfacsRequestRow,(case_id,request_id))
     if receipt is None: return None
     if receipt.request_digest!=request_digest or receipt.operator!=ctx.operator: reject(409,'REQUEST_REUSED','requestId已用于其他请求或操作者')

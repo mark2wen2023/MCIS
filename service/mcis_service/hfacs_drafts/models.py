@@ -34,3 +34,19 @@ for model in (HfacsAuditRow,HfacsRequestRow):
             f"CREATE TRIGGER IF NOT EXISTS {table}_no_{operation.lower()} BEFORE {operation} ON {table} "
             f"BEGIN SELECT RAISE(ABORT, '{table} is append-only'); END;"
         ).execute_if(dialect='sqlite'))
+
+
+class HfacsArchivedRequestRow(Base):
+    __tablename__='hfacs_archived_requests'
+    case_id=Column(String(64),primary_key=True)
+    request_id=Column(String(36),primary_key=True)
+    request_digest=Column(String(64),nullable=False)
+    operator=Column(String,nullable=False)
+    response=Column(JSON,nullable=False)
+
+
+for operation in ('UPDATE','DELETE'):
+    event.listen(HfacsArchivedRequestRow.__table__,'after_create',DDL(
+        f"CREATE TRIGGER IF NOT EXISTS hfacs_archived_requests_no_{operation.lower()} BEFORE {operation} ON hfacs_archived_requests "
+        "BEGIN SELECT RAISE(ABORT, 'hfacs_archived_requests is append-only'); END;"
+    ).execute_if(dialect='sqlite'))

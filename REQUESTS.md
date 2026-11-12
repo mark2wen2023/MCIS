@@ -473,3 +473,6 @@ GET-only unknown-outcome recovery. Independent acceptance required before comple
 
 ## W18.4 人工分类草稿持久化
 合同/schema/OpenAPI先行。新增独立Hfacs CLI、case-scoped worksheet/audit/request表、main与models_registry注册、HFACS pane；保留工休预览及PR25边界修正。人工选择仅待核查，不作证人/人员过错或责任判断；目录为项目版本而非统一海事标准。固定Draft/ToBeVerified/Investigator，不连接确认/报告/ECFC，不触W11。原子事务+版本摘要+幂等收据，审计权限独立，不部署。
+
+## W18.6 HFACS完整案件包备份扩展
+合同见contracts/hfacs-package-extension-v1.md。跨包修改package/mcase及导出权限事务、package_intake严格预检/恢复、hfacs_drafts归档回执model和保存ID占位、models_registry注册。完整当前/审计/回执不截断；回执不可重算原摘要，只归档不活化。新案默认权限恢复，旧入口拒扩展，不改核心/W11/web，不部署。

@@ -272,3 +272,14 @@ UI保留当前案件上下文，身份/案号切换清空旧数据及迟响应�
 | 2026-11-12 | W18.3 覆盖声明修正 | 已验收 | 明确总休息段数未评估、短记录双空输出不能判断合规、短Rest未专业认定、核心历史“合规”措辞非本预览结论；原说明保留并折叠限定。仅声明/UI和合成回归，未改核心或设法律阈值。后端63项、独立5项CLI/API+4组真实浏览器、UI回归/原W18.3测试/tsc通过；法律适用性待专业核实。 |
 
 | 2026-11-12 | W18.4 | 已验收 | 逐案人工HFACS草稿可保存/编辑/重开，项目32类真实核心校验；固定Draft/ToBeVerified/Investigator，不确认事实/归责，根分组有标记。新增worksheet/append-only audit/request receipt三表，同事务权限/来源重核、摘要版本冲突与同ID幂等；503不确定回执保持原请求重试（实现审查修正并留回归）。后端50项、CLI7组、合成定向307项、独立14CLI+18API共32项和真实浏览器通过，tsc/build/UI自测通过。7原源码不改、工休PR25警示保留、不触W11、不部署。仅合成验收非全库CI；新草稿未纳入.mcase导入导出，已醒目说明；不接报告/确认/自动分类。 |
+
+
+## W18.6 HFACS archive extension — 待独立验收
+
+Rebuilt from merged main 9d6de474 after execution workspace loss; all results rerun. Supported .mcase 1.1.0 extension preserves current worksheet, complete revision chain and inert archived request receipts; strict basic new-case intake only, same case ID, default policy, no overwrite. At most256 complete revisions/receipts; reject whole operation on unsupported content or budgets, never truncate. No identity/causality verification, general-reader compatibility, full-system backup, W11 change or deployment. Original C# core unchanged.
+
+Self-test:170 synthetic tests (23 extension +50 HFACS +97 package), with opt-in tests.synthetic_seed_plugin disabling real-report seed and retaining fictional Lily/Mary; no real evidence used. UI model/render, W8.5/W18.4 regression, tsc/build and API-double browser tests pass. Independent acceptance pending; freeze logs/W186-impl-hashes-frozen.txt. Official .NET build required normal sandbox approval in restored environment; no security settings changed.
+
+### W18.6 independent acceptance passed
+
+Independent20 tests passed (19 guards+1 long history roundtrip), plus real browser→two isolated services→actual CLI export/download, explicit new-case import, reopen and re-export;51 different revisions preserved, new request continues revision52.23 frozen files+7 original HFACS source hashes verified. Original tools/mcis-core DLL was absent after environment restoration and was not built or claimed hash-verified. No new product defects found by independent review. See tests_acceptance/W186/REPORT.md. All inputs synthetic. No deployment or W11 work. No full-repository/CI/real-case or professional validation claim.

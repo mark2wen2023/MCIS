@@ -133,9 +133,10 @@ class ParsedPackage:
     audit_lines: list[str]
     custody_lines: list[str]
     summary: dict
+    hfacs_archive: Any = None
 
 
-def parse_package(data: bytes) -> ParsedPackage:
+def parse_package(data: bytes, *, validated_hfacs=None) -> ParsedPackage:
     files = read_bounded(data)
     required = {"manifest.json", "case.json", "case.ext.json", "vessels.json", "evidence/index.json",
                 "audit/audit.jsonl", "audit/custody.jsonl", "access-policy.json"}
@@ -144,13 +145,17 @@ def parse_package(data: bytes) -> ParsedPackage:
     def load(path):
         return strict_json(files[path])
     manifest = load("manifest.json")
-    if not isinstance(manifest, dict) or manifest.get("packageFormat") != PACKAGE_FORMAT or manifest.get("packageVersion") != PACKAGE_VERSION:
+    if not isinstance(manifest, dict) or manifest.get("packageFormat") != PACKAGE_FORMAT or manifest.get("packageVersion") not in (PACKAGE_VERSION, "1.1.0"):
         fail("不支持的包格式或版本")
     if set(manifest) != {"packageFormat", "packageVersion", "caseId", "createdAtUtc", "lastModifiedAtUtc", "generatorVersion", "files"}:
         fail("未知或不完整清单字段")
     for field in ("createdAtUtc", "lastModifiedAtUtc"):
         if not isinstance(manifest[field], str) or not contracts.validator("case").format_checker.conforms(manifest[field], "date-time"):
             fail("清单时间无效")
+    from ..hfacs_drafts.archive import PATH as hfacs_path, ValidatedArchive, validate as validate_hfacs
+    has_hfacs = hfacs_path in files
+    if (manifest["packageVersion"] == "1.1.0") != has_hfacs:
+        fail("外层版本与HFACS扩展不匹配")
     entries = manifest.get("files")
     if not isinstance(entries, list):
         fail("缺少完整清单")
@@ -204,7 +209,16 @@ def parse_package(data: bytes) -> ParsedPackage:
     for vid in vi:
         if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}", vid):
             fail("不安全船舶标识")
+    hfacs_archive = None
+    if has_hfacs:
+        if validated_hfacs is not None:
+            if not isinstance(validated_hfacs, ValidatedArchive) or validated_hfacs.raw != files[hfacs_path] or validated_hfacs.data["caseId"] != cid:
+                fail("HFACS验证状态不匹配")
+            hfacs_archive = validated_hfacs
+        else:
+            hfacs_archive = validate_hfacs(files[hfacs_path], cid, set(ei))
     allowed = required | {"environment/observations.json", "audit/agent.jsonl"}
+    if has_hfacs: allowed.add(hfacs_path)
     empty_sections = {"analysis/timeline.json": {"events": []}, "analysis/time-alignment.json": {"conflicts": []},
                       "analysis/colreg.json": {}, "recommendations.json": [], "consultation/rounds.json": [], "agents/drafts.json": []}
     for path, empty in empty_sections.items():
@@ -313,4 +327,4 @@ def parse_package(data: bytes) -> ParsedPackage:
     summary = {"caseId": cid, "title": case["title"], "files": len(files), "vessels": len(vessels),
                "trackPoints": sum(map(len, tracks.values())), "observations": len(observations), "evidence": len(evidence),
                "auditEvents": len(audit_lines), "custodyEvents": len(custody_lines)}
-    return ParsedPackage(files, manifest, case, vessels, tracks, observations, evidence, audit_lines, custody_lines, summary)
+    return ParsedPackage(files, manifest, case, vessels, tracks, observations, evidence, audit_lines, custody_lines, summary, hfacs_archive)
