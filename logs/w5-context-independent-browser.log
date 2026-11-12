@@ -1,0 +1,97 @@
+RUN real-ui-create-to-interview-empty
+RUN demo-default-and-active-navigation
+RUN real-ui-confirm-isolated
+RUN real-ui-reject-isolated
+RUN real-ui-revise-isolated
+RUN real-ui-recheck-isolated
+RUN fault-delayed-record-form-isolation
+RUN fault-delayed-case-roster-back-forward
+RUN fault-delayed-case-detail-back-forward
+RUN fault-late-protected-detail-after-role-and-operator-switch
+RUN fault-late-mutation-success-duplicate-guard
+RUN fault-late-mutation-error-duplicate-guard
+RUN fault-mismatch-roster
+RUN fault-mismatch-detail
+RUN real-special-statement-id-url-encoding
+RUN fault-record-id-mismatch-False
+RUN fault-record-id-mismatch-True
+RUN real-external-role-redaction-write-rejection
+RUN real-missing-case-no-demo-fallback
+[
+  {
+    "name": "real-ui-create-to-interview-empty",
+    "result": "PASS"
+  },
+  {
+    "name": "demo-default-and-active-navigation",
+    "result": "PASS"
+  },
+  {
+    "name": "real-ui-confirm-isolated",
+    "result": "PASS"
+  },
+  {
+    "name": "real-ui-reject-isolated",
+    "result": "PASS"
+  },
+  {
+    "name": "real-ui-revise-isolated",
+    "result": "PASS"
+  },
+  {
+    "name": "real-ui-recheck-isolated",
+    "result": "PASS"
+  },
+  {
+    "name": "fault-delayed-record-form-isolation",
+    "result": "PASS"
+  },
+  {
+    "name": "fault-delayed-case-roster-back-forward",
+    "result": "PASS"
+  },
+  {
+    "name": "fault-delayed-case-detail-back-forward",
+    "result": "PASS"
+  },
+  {
+    "name": "fault-late-protected-detail-after-role-and-operator-switch",
+    "result": "PASS"
+  },
+  {
+    "name": "fault-late-mutation-success-duplicate-guard",
+    "result": "PASS"
+  },
+  {
+    "name": "fault-late-mutation-error-duplicate-guard",
+    "result": "PASS"
+  },
+  {
+    "name": "fault-mismatch-roster",
+    "result": "PASS"
+  },
+  {
+    "name": "fault-mismatch-detail",
+    "result": "PASS"
+  },
+  {
+    "name": "real-special-statement-id-url-encoding",
+    "result": "PASS"
+  },
+  {
+    "name": "fault-record-id-mismatch-False",
+    "result": "PASS"
+  },
+  {
+    "name": "fault-record-id-mismatch-True",
+    "result": "PASS"
+  },
+  {
+    "name": "real-external-role-redaction-write-rejection",
+    "result": "PASS"
+  },
+  {
+    "name": "real-missing-case-no-demo-fallback",
+    "result": "PASS"
+  }
+]

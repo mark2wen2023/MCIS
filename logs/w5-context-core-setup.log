@@ -1,0 +1,7 @@
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:04.45
+{"ok":true,"command":"version","coreVersion":"mcis-core/0.1.0","result":{"coreVersion":"mcis-core/0.1.0","commands":["cpa","colreg","align","version"]}}

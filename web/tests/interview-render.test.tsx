@@ -119,7 +119,10 @@ function run() {
   check(hr.includes('data-testid="ic-suppressed"'), '脱敏时提示高亮已关闭')
   // 真实案例标签
   const real = html({ roster: { ...roster, fictional: false, disclaimer: '真实案例' } })
-  check(real.includes('真实案例（公开报告）') && !real.includes('示例数据（虚构）</span>'), '真实案例标签')
+  check(real.includes('非虚构案件') && !real.includes('示例数据（虚构）</span>'), '非虚构标签不推定公开报告')
+  check(!real.includes('人物均为虚构演示角色。') && !real.includes('公开报告'), '非虚构案不带虚构人物或公开来源声明')
+  const empty = html({ roster: { ...roster, records: [] }, page: null })
+  check(empty.includes('当前案件暂无询问笔录') && !empty.includes('data-testid="ic-actions"'), '空案明确空态且无操作表单')
   // 无页面数据
   check(html({ page: null }).includes('请选择左侧笔录'), '无页面时的占位')
   check(html({ page: null, pageError: '后端错误' }).includes('role="alert"'), '页面错误提示')

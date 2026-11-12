@@ -34,7 +34,7 @@ export function InterviewView(props: InterviewViewProps) {
         <div>
           <div className="page-title">
             询问笔录管理与数据交叉比对
-            <span className={`p6-tag ${fictional ? '' : 'cyan'}`}>{fictional ? '示例数据（虚构）' : '真实案例（公开报告）'}</span>
+            <span className={`p6-tag ${fictional ? '' : 'cyan'}`}>{fictional ? '示例数据（虚构）' : '非虚构案件'}</span>
             <span className="p6-tag cyan" data-testid="service-addr">LIVE · {serviceAddr}</span>
           </div>
           <div className="page-sub">
@@ -48,6 +48,7 @@ export function InterviewView(props: InterviewViewProps) {
       <div className="ic-grid">
         <Panel title="受询问人员" meta={`${roster.records.length} 份笔录`}>
           <div className="ic-roster" data-testid="ic-roster">
+            {!roster.records.length && <div className="empty">当前案件暂无询问笔录</div>}
             {roster.records.map((r) => (
               <button key={r.recordId} type="button" className={`ic-person ${r.recordId === selectedRecordId ? 'sel' : ''}`}
                 onClick={() => onSelectRecord(r.recordId)} data-record={r.recordId}>
@@ -61,7 +62,7 @@ export function InterviewView(props: InterviewViewProps) {
               </button>
             ))}
           </div>
-          <div className="p6-note ic-foot">人物均为虚构演示角色。笔录属 MSC.255(84) 第 23 章受保护记录，默认仅调查组可见；外部角色按脱敏规则替换。</div>
+          <div className="p6-note ic-foot">{fictional && '人物均为虚构演示角色。'}笔录属 MSC.255(84) 第 23 章受保护记录，默认仅调查组可见；外部角色按脱敏规则替换。</div>
         </Panel>
 
         <Panel

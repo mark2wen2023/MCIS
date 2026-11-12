@@ -24,7 +24,7 @@ from . import view
 router = APIRouter(prefix="/api/v1/cases/{case_id}/interview-compare", tags=["interviews"])
 
 DISCLAIMER_FICTIONAL = "示例数据（虚构）：Lily × Mary 星屿港碰撞演示案，人物、笔录与数据均为虚构，与任何真实事故无关。比对结论一律须调查员确认后才生效。"
-DISCLAIMER_REAL = "真实案例（公开报告）：仅作安全调查技术分析，不作责任认定。比对结论一律须调查员确认后才生效。"
+DISCLAIMER_REAL = "非虚构案件：仅作安全调查技术分析，不作责任认定。比对结论一律须调查员确认后才生效。"
 
 
 class ConfirmIn(BaseModel):
@@ -50,6 +50,14 @@ class RecheckIn(BaseModel):
     deltaUnit: str = ""
     rule: str = "调查员重新比对（数据值人工录入）"
     reason: str = ""
+
+
+def _disclaimer(case_id: str, fictional: bool) -> str:
+    if not fictional:
+        return DISCLAIMER_REAL
+    if case_id == "CASE-2026-DEMO-LILY-MARY":
+        return DISCLAIMER_FICTIONAL
+    return "示例数据（虚构）：本案件资料为虚构，不代表真实事故。比对结论一律须调查员确认后才生效。"
 
 
 def _fictional(s, case_id: str) -> bool:
@@ -85,7 +93,7 @@ def roster(case_id: str, ctx: Ctx = CtxDep) -> dict[str, Any]:
         pol = get_policy(s, case_id)
         docs = sorted(list_docs(s, InterviewRow, case_id), key=lambda d: d["recordId"])
         recs = [view.roster_entry(redact_interview(d, ctx.role, pol, _token_index(docs, d["recordId"]))) for d in docs]
-        return {"caseId": case_id, "fictional": fictional, "disclaimer": DISCLAIMER_FICTIONAL if fictional else DISCLAIMER_REAL,
+        return {"caseId": case_id, "fictional": fictional, "disclaimer": _disclaimer(case_id, fictional),
                 "records": recs}
 
 
@@ -126,7 +134,7 @@ def page(case_id: str, record_id: str, ctx: Ctx = CtxDep) -> dict[str, Any]:
         rec = {k: red.get(k) for k in ("recordId", "interviewee", "startUtc", "durationMin", "location", "recorder", "interviewers",
                                        "signed", "evidenceId", "sourceSha256")}
         return {"caseId": case_id, "recordId": record_id, "fictional": fictional,
-                "disclaimer": DISCLAIMER_FICTIONAL if fictional else DISCLAIMER_REAL,
+                "disclaimer": _disclaimer(case_id, fictional),
                 "record": rec, "turns": turns, "rows": rows, "summary": view.summarize(doc), "chart": view.chart(doc),
                 "superseded": [c for c in doc.get("crossChecks", []) if c.get("state") == view.SUPERSEDED],
                 "highlightSuppressed": suppressed, "redaction": rules}
