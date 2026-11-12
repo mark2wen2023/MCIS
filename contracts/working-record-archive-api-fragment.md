@@ -35,3 +35,15 @@ History content success additionally requires `X-Sha256` equal to the server-ver
 ## Legacy credential compatibility
 
 This version rejects legacy archives containing evidence-intake custody credentials without the validated working-record extension, including attempted version downgrades or incomplete extension namespaces. It does not reactivate those credentials through either old import or restricted intake. This restriction applies to subsequent imports only: no automatic cleanup, migration or repair of credentials already active in existing databases is performed. Existing data is not rewritten.
+
+
+## Track-history extension v2 (package 1.3.0)
+
+See `track-history-v1.md`. Only a case containing supported W10 state selects package1.3.0/root working version2; summary version becomes `MCIS-WORKING-RECORDS-2` and adds required nonnegative integer `trackReceiptCount` (>=1 for1.3). All prior v1 summary fields remain and must bind through preview/commit/recovery. No-W101.0/1.1/1.2 remain unchanged. The single authoritative working member path remains backup.v1.json; do not infer envelope version from its historical filename.
+
+Archived W10 inputs never return active `replayed` results. Their metadata and exact originals are separately authorized through `/archive-history/track-imports` endpoints declared in OpenAPI. Old data without either archived index or newly instrumented local-origin marker returns `TRACK_ORIGIN_UNVERIFIED`, not proof of failure or permission to resubmit. Original data is retained. Full restrictions, original-byte preservation and upgrade compatibility are specified in the versioned supplement.
+
+
+### Existing restored-source provenance compatibility
+
+The known legacy-W10 migration refusal remains HTTP422 `PACKAGE_INTAKE_INVALID` at package intake, with structured `detail.reason: TRACK_HISTORY_MIGRATION_UNSUPPORTED` only for that branch. When an already-restored database's original `source.mcase` hits precisely that refusal, the provenance GET returns HTTP409 `ARCHIVE_HISTORY_UNSUPPORTED`, not a claim that the original is corrupt. The original package and current report/interview remain unchanged; no migration, credential activation or file deletion occurs. Other parsing failures and source hash/receipt mismatches continue to return `ARCHIVE_HISTORY_INTEGRITY`. Current permissions still precede source inspection. `UNSUPPORTED` does not certify that all package contents are valid: the parser stopped at the known migration boundary; the provenance route has checked only its preceding stored-source byte/hash binding before that refusal.

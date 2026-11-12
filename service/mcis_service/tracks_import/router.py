@@ -1,6 +1,6 @@
 """Case-scoped first-track import. SQLite transaction + exclusive immutable blob writes.
 
-One-process WRITE_LOCK is the existing service's concurrency boundary. A process crash
+This W10 path reserves SQLite writers across processes in addition to WRITE_LOCK. A process crash
 between blob creation and DB commit may leave an unreferenced orphan; no crash-ACID claim.
 """
 from __future__ import annotations
@@ -13,6 +13,10 @@ from pathlib import Path
 
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import Response
+from starlette.concurrency import run_in_threadpool
+from ..reports.access import NoStoreRoute,begin
+from ..track_history.models import LocalReceipt
+from ..track_history.service import active_gate,entries,historical,archived
 from sqlalchemy import func, select
 
 from ..audit import service as audit
@@ -27,7 +31,7 @@ from ..evidence.models import EvidenceRow
 from ..redaction.gateway import filter_evidence, get_policy, require
 from .parser import MAX_BODY, MAX_BYTES, SAFE_ID, canonical, inputs, preview, sha
 
-router=APIRouter(prefix='/api/v1/cases/{case_id}', tags=['tracks-import'])
+router=APIRouter(prefix='/api/v1/cases/{case_id}', tags=['tracks-import'],route_class=NoStoreRoute)
 
 
 def authorize(ctx,s,case_id,*,write=False):
@@ -122,6 +126,7 @@ def read_report(ctx,s,case_id,digest,item):
 
 def load_receipt(ctx,s,case_id,digest):
     source_rel, report_rel=rels(digest)
+    proof=active_gate(ctx,s,case_id,digest)
     rows=s.scalars(select(EvidenceRow).where(EvidenceRow.case_id==case_id)).all()
     source_items=[r.doc for r in rows if r.doc.get('relativePath')==source_rel]
     report_items=[r.doc for r in rows if r.doc.get('relativePath')==report_rel]
@@ -129,7 +134,10 @@ def load_receipt(ctx,s,case_id,digest):
         raise problem(409,'IMPORT_INTEGRITY','导入原件记录重复，无法唯一核对')
     source=source_items[0] if source_items else None
     report=report_items[0] if report_items else None
-    if source is None and report is None: return None
+    if source is None and report is None:
+        if proof is not None:raise problem(409,'IMPORT_INTEGRITY','本地来源标记缺少原件')
+        return None
+    if proof is None:raise problem(409,'TRACK_ORIGIN_UNVERIFIED','旧航迹来源无法认定为本库提交，不代表导入失败，请勿自动重提')
     if source is None or report is None:
         raise problem(409,'IMPORT_INCOMPLETE','导入原件记录不完整，禁止重复覆盖')
     if len(filter_evidence([source,report],ctx.role,get_policy(s,case_id)))!=2:
@@ -176,6 +184,8 @@ def load_receipt(ctx,s,case_id,digest):
                 raise ValueError('point content')
     except (OSError,ValueError,KeyError,TypeError,UnicodeError,RecursionError,HTTPException):
         raise problem(409,'IMPORT_INTEGRITY','当前航迹点、案件纪元或导入原件/记录不完整或不匹配；未核对为保存成功，也未修复数据')
+    if (proof.source_evidence_id,proof.report_evidence_id,proof.report_sha256)!=(receipt['sourceEvidenceId'],receipt['reportEvidenceId'],sha(report_bytes)):
+        raise problem(409,'IMPORT_INTEGRITY','本地来源标记与原件不一致')
     return {**receipt,'reportSha256':sha(report_bytes)},raw,report_bytes
 
 
@@ -210,14 +220,18 @@ async def commit_input(case_id: str,request: Request,ctx: Ctx=CtxDep):
     with ctx.db.session() as s: authorize(ctx,s,case_id,write=True)
     body=await body_bounded(request)
     raw=inputs(body,commit=True)
+    return await run_in_threadpool(commit_sync,case_id,ctx,body,raw)
+
+def commit_sync(case_id,ctx,body,raw):
     created=[]
     # Covers session exit/commit as well as all blob writes. Failures roll back DB
     # then remove only files exclusively created by this attempt, never preexisting files.
     with WRITE_LOCK:
         try:
             with ctx.db.session() as s:
+                begin(s)
                 case=authorize(ctx,s,case_id,write=True)
-                vessel(s,case_id,body['vesselId'])
+                active_gate(ctx,s,case_id,body['previewDigest'])
                 result,points=preview(body,raw,case,operator=ctx.operator,role=ctx.role,existing_count=0)
                 digest=result['previewDigest']
                 if digest!=body['previewDigest']:
@@ -225,6 +239,7 @@ async def commit_input(case_id: str,request: Request,ctx: Ctx=CtxDep):
                 saved=load_receipt(ctx,s,case_id,digest)
                 if saved:
                     return {**saved[0],'replayed':True}
+                vessel(s,case_id,body['vesselId'])
                 if count_points(s,case_id,body['vesselId']):
                     raise problem(409,'TRACK_EXISTS','该船已有航迹，本切片不覆盖、不追加')
                 if not result['canCommit']:
@@ -264,6 +279,7 @@ async def commit_input(case_id: str,request: Request,ctx: Ctx=CtxDep):
                              command='人工确认单船首次航迹输入',after=receipt,entity_type='track-import',entity_id=digest)
                 exclusive_write(file_path(ctx,case_id,source_rel),raw,created)
                 exclusive_write(file_path(ctx,case_id,report_rel),report_data,created)
+                s.add(LocalReceipt(case_id=case_id,preview_digest=digest,source_evidence_id=source_id,report_evidence_id=report_id,report_sha256=sha(report_data)))
                 s.flush()
             return {**receipt,'reportSha256':sha(report_data),'replayed':False}
         except BaseException as error:
@@ -279,14 +295,19 @@ async def commit_input(case_id: str,request: Request,ctx: Ctx=CtxDep):
 
 @router.get('/track-imports')
 def list_inputs(case_id: str,vesselId: str,ctx: Ctx=CtxDep):
-    with ctx.db.session() as s:
+    with WRITE_LOCK,ctx.db.session() as s:
+        begin(s)
         authorize(ctx,s,case_id)
+        for row in entries(s,case_id):
+            if row.doc['metadata']['vesselId']==vesselId:
+                active_gate(ctx,s,case_id,row.key)
         vessel(s,case_id,vesselId)
         candidates=[]
         for row in s.scalars(select(EvidenceRow).where(EvidenceRow.case_id==case_id)):
             rel=row.doc.get('relativePath','')
             match=re.fullmatch(r'raw/track-imports/([0-9a-f]{64})/report\.json',rel)
             if match:
+                if archived(s,case_id,match.group(1))is not None:continue
                 # Other vessels: only verify/read bounded metadata, never decode their
                 # CSV or query/rebuild their track points on this vessel's request.
                 saved,_=read_report(ctx,s,case_id,match.group(1),row.doc)
@@ -301,7 +322,8 @@ def list_inputs(case_id: str,vesselId: str,ctx: Ctx=CtxDep):
 
 @router.get('/track-imports/{digest}')
 def receipt_input(case_id: str,digest: str,ctx: Ctx=CtxDep):
-    with ctx.db.session() as s:
+    with WRITE_LOCK,ctx.db.session() as s:
+        begin(s)
         authorize(ctx,s,case_id)
         saved=load_receipt(ctx,s,case_id,digest)
         if saved is None: raise problem(404,'IMPORT_NOT_FOUND','没有找到该预览摘要的已保存记录')
@@ -311,7 +333,8 @@ def receipt_input(case_id: str,digest: str,ctx: Ctx=CtxDep):
 @router.get('/track-imports/{digest}/{kind}')
 def read_input(case_id: str,digest: str,kind: str,ctx: Ctx=CtxDep):
     if kind not in ('source','report'): raise problem(404,'NOT_FOUND','原件类型不存在')
-    with ctx.db.session() as s:
+    with WRITE_LOCK,ctx.db.session() as s:
+        begin(s)
         authorize(ctx,s,case_id)
         saved=load_receipt(ctx,s,case_id,digest)
         if saved is None: raise problem(404,'IMPORT_NOT_FOUND','没有找到已保存记录')

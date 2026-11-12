@@ -155,7 +155,8 @@ def verify_all(case_id: str, ctx: Ctx = CtxDep) -> dict[str, Any]:
 def get_content(case_id: str, evidence_id: str, purpose: str = "查看原件", ctx: Ctx = CtxDep):
     with ctx.db.session() as s:
         from ..working_records_archive.service import archived_evidence,historical_only
-        if archived_evidence(s,case_id,evidence_id=evidence_id) is not None:
+        from ..track_history.service import evidence_archived
+        if archived_evidence(s,case_id,evidence_id=evidence_id) is not None or evidence_archived(s,case_id,evidence_id):
             from ..reports.access import require_content
             require_content(s,case_id,ctx.role)
             historical_only()
