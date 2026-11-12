@@ -62,8 +62,8 @@ export function Layout() {
         </div>
         <div className={`demo-banner ${fictional || unknown ? '' : 'real'}`}>
           {unknown ? <>{unknownLabel}<br />{onLobby ? '案件大厅' : caseId}</> : fictional
-            ? <>⚠ 示例数据（虚构）<br />Lily × Mary 星屿港碰撞演示案，与任何真实事故无关</>
-            : <>⚠ 真实案例（公开报告）<br />{currentCase?.title || '公开事故报告数据'}，仅作技术分析，不作责任认定</>}
+            ? <>⚠ 示例数据（虚构）<br />{currentCase?.title}，虚构演示，不作为真实事故资料</>
+            : <>⚠ 非虚构案件<br />{currentCase?.title || '案件资料'}，仅作技术分析，不作责任认定</>}
         </div>
         <nav className="nav">
           <div className="nav-sub-label first">调查与仿真工作流（01–08）</div>
@@ -78,7 +78,7 @@ export function Layout() {
       </aside>
       <header className="topbar">
         <div className="topbar-left">
-          <span className={`watermark ${fictional || unknown ? '' : 'real'}`}>{unknown ? unknownLabel : fictional ? '⚠ 示例数据（虚构）' : '⚠ 真实案例（公开报告）'}</span>
+          <span className={`watermark ${fictional || unknown ? '' : 'real'}`}>{unknown ? unknownLabel : fictional ? '⚠ 示例数据（虚构）' : '⚠ 非虚构案件'}</span>
           <span className="case-chip">{onLobby ? '案件大厅' : '当前案件'}<b>{onLobby ? '尚未选择' : caseId}</b>{currentCase ? currentCase.title.replace('【虚构演示】', '') : '—'}</span>
         </div>
         <div className="topbar-right">

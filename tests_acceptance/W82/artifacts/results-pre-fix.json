@@ -1,0 +1,37 @@
+[
+  {
+    "name": "real-create-evidence-1440",
+    "result": "PASS"
+  },
+  {
+    "name": "real-create-evidence-768",
+    "result": "FAIL",
+    "error": ""
+  },
+  {
+    "name": "browser-validation-roles-reset",
+    "result": "PASS"
+  },
+  {
+    "name": "real-409-injected-403-422",
+    "result": "FAIL",
+    "error": "LocatorAssertions.to_contain_text: Route.fulfill: Object of type Request is not JSON serializable"
+  },
+  {
+    "name": "real-write-lost-response-read-failure-recovery",
+    "result": "PASS"
+  },
+  {
+    "name": "injected-5xx-404-explicit-retry-invalid-success-conflict",
+    "result": "FAIL",
+    "error": "Locator expected to be visible\nActual value: None\nError: element(s) not found \nCall log:\n  - Expect \"to_be_visible\" with timeout 5000ms\n  - waiting for get_by_role(\"heading\", name=\"案件已创建\")\n\nAria snapshot:\n- complementary:\n  - text: M MCISWEB 海事事故调查工作台 请选择案件 案件大厅\n  - navigation:\n    - text: 调查与仿真工作流（01–08）\n    - link \"01 案件大厅 案件列表 / 进入调查 LIVE\":\n      - /url: \"#/lobby\"\n    - link \"02 信息录入 事故基本信息 / 当事方\":\n      - /url: \"#/case\"\n    - link \"03 船舶参数 主尺度 / 操纵性 / 装载\":\n      - /url: \"#/ships\"\n    - link \"04 气象水文 风 / 流 / 能见度 / 潮汐\":\n      - /url: \"#/env\"\n    - link \"05 航迹设定 AIS 导入 / 关键点编辑\":\n      - /url: \"#/track\"\n    - link \"06 三维仿真 Unity 推演 / SimTime 同步\":\n      - /url: \"#/sim\"\n    - link \"07 ECFC 因果链 事件与致因因素图\":\n      - /url: \"#/ecfc\"\n    - link \"08 分析与报告导出 曲线 / 证据 / PDF LIVE\":\n      - /url: \"#/analysis\"\n    - text: 国际对标调查模块（09–17）\n    - link \"09 证据中心 · VDR 证据清单 / 保管链 / 时间冲突 LIVE\":\n      - /url: \"#/evidence\"\n    - link \"10 询问笔录比对 陈述抽取 / 矛盾确认 LIVE\":\n      - /url: \"#/interview\"\n    - link \"11 避碰规则对照 会遇局面 / 应采取 vs 实际 LIVE\":\n      - /url: \"#/colreg\"\n    - link \"12 What-if 反事实 参数重跑 / 是否可避免\":\n      - /url: \"#/whatif\"\n    - link \"13 人为因素 HFACS / 工休 / BRM\":\n      - /url: \"#/hf\"\n    - link \"14 系统性分析 Bow-tie / AcciMap / STAMP\":\n      - /url: \"#/systemic\"\n    - link \"15 安全建议与报告 看板 / 征求意见 / 审计 LIVE\":\n      - /url: \"#/recs\"\n    - link \"15 国际格式报告 IMO/MAIB/中国海事 · 双语 · GISIS LIVE\":\n      - /url: \"#/report\"\n    - link \"16 知识库 相似案例 / 分级与通知\":\n      - /url: \"#/knowledge\"\n    - link \"17 权限与脱敏 角色矩阵 / 字段脱敏\":\n      - /url: \"#/access\"\n  - text: service 127.0.0.1:45947 …\n- banner:\n  - text: 请选择案件 案件大厅尚未选择— 操作人：调查员 A\n  - combobox \"X-MCIS-Role\":\n    - option \"首席调查官（LeadInvestigator）\"\n    - option \"调查员（Investigator）\" [selected]\n    - option \"外部专家（ExternalExpert）\"\n    - option \"利益相关国（InterestedState）\"\n    - option \"公众（Public）\"\n- main:\n  - region \"案件大厅\":\n    - heading \"案件大厅\" [level=1]\n    - paragraph: 选择案件进入证据中心，或由调查组创建新的调查档案。编辑及 .mcase 导入导出尚未开放。\n    - button \"刷新案件列表\"\n    - button \"＋ 新建案件\"\n    - status: 共 5 个案件\n    - list:\n      - listitem:\n        - text: 虚构演示\n        - heading \"独立浏览器 <script>alert(1)</script>\" [level=2]\n        - paragraph: W82-B-eb5dc52418\n        - paragraph: 独立验收地点\n        - paragraph: 2026-11-12T08:30:00Z\n        - link \"进入案件：独立浏览器 <script>alert(1)</script>\":\n          - /url: \"#/evidence?case=W82-B-eb5dc52418\"\n          - text: 进入案件 →\n      - listitem:\n        - text: 非虚构案件\n        - heading \"独立浏览器 <script>alert(1)</script>\" [level=2]\n        - paragraph: W82-B-943ca2268c\n        - paragraph: 独立验收地点\n        - paragraph: 2026-11-12T08:30:00Z\n        - link \"进入案件：独立浏览器 <script>alert(1)</script>\":\n          - /url: \"#/evidence?case=W82-B-943ca2268c\"\n          - text: 进入案件 →\n      - listitem:\n        - text: 虚构演示\n        - heading \"独立浏览器 <script>alert(1)</script>\" [level=2]\n        - paragraph: W82-B-e4d8993521\n        - paragraph: 独立验收地点\n        - paragraph: 2026-11-12T08:30:00Z\n        - link \"进入案件：独立浏览器 <script>alert(1)</script>\":\n          - /url: \"#/evidence?case=W82-B-e4d8993521\"\n          - text: 进入案件 →\n      - listitem:\n        - text: 虚构演示\n        - heading \"独立浏览器 <script>alert(1)</script>\" [level=2]\n        - paragraph: W82-B-797c29b3d6\n        - paragraph: 独立验收地点\n        - paragraph: 2026-11-12T08:30:00Z\n        - link \"进入案件：独立浏览器 <script>alert(1)</script>\":\n          - /url: \"#/evidence?case=W82-B-797c29b3d6\"\n          - text: 进入案件 →\n      - listitem:\n        - text: 虚构演示\n        - heading \"独立浏览器 <script>alert(1)</script>\" [level=2]\n        - paragraph: W82-B-4fe5c7fa33\n        - paragraph: 独立验收地点\n        - paragraph: 2026-11-12T08:30:00Z\n        - link \"进入案件：独立浏览器 <script>alert(1)</script>\":\n          - /url: \"#/evidence?case=W82-B-4fe5c7fa33\"\n          - text: 进入案件 →"
+  },
+  {
+    "name": "real-delayed-doubleclick-identity",
+    "result": "PASS"
+  },
+  {
+    "name": "real-delayed-doubleclick-navigation",
+    "result": "PASS"
+  }
+]

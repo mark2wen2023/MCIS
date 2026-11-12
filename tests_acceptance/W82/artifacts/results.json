@@ -1,0 +1,42 @@
+[
+  {
+    "name": "real-create-evidence-1440",
+    "result": "PASS"
+  },
+  {
+    "name": "real-create-evidence-768",
+    "result": "PASS"
+  },
+  {
+    "name": "real-offset-UTC-positive-negative-cross-day-evidence",
+    "result": "PASS"
+  },
+  {
+    "name": "browser-validation-roles-reset",
+    "result": "PASS"
+  },
+  {
+    "name": "real-sequential-create-and-uncertain-close-reset",
+    "result": "PASS"
+  },
+  {
+    "name": "real-409-injected-403-422",
+    "result": "PASS"
+  },
+  {
+    "name": "real-write-lost-response-read-failure-recovery",
+    "result": "PASS"
+  },
+  {
+    "name": "injected-5xx-404-explicit-retry-invalid-success-conflict",
+    "result": "PASS"
+  },
+  {
+    "name": "real-delayed-doubleclick-identity",
+    "result": "PASS"
+  },
+  {
+    "name": "real-delayed-doubleclick-navigation",
+    "result": "PASS"
+  }
+]

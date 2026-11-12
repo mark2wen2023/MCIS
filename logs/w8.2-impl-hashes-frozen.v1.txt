@@ -1,0 +1,9 @@
+c4a9f73b4cbf95d6c01073796bdf751c02f00893182fec70a3da1d9c53b0c099  web/src/cases/create.ts
+6a92f258742a640c01ed5260f5228757a33b037f8fec7c08b732dbca7d4d4450  web/src/cases/CreateCasePanel.tsx
+fa17ddd6526fb30125c7f5a42136da38064b34ec12652f3e08808d33ffeff780  web/src/cases/identity.ts
+22c3986d497ffd1078634b97b99376de456955aaba26a5a8401bf0375ea909cc  web/src/pages/LobbyPage.tsx
+d6cbf863081a27715648b96e620b57637db380111e4ccaef697446a71c3be705  web/src/Layout.tsx
+c7b9c96a6d5fa4949c27ea4a32a5c4290f601c5475ebbe62167855bef98775f4  web/src/styles/w8.css
+04f99fb3ad9e563cd47ba3a8ea332d9638ff1fa68b4888b3160bcd68169e9288  web/tests/case-create-w82.test.tsx
+23865759ed6f1e20506f3f3496faf2cf4deab890299ac61298c714fb6def4842  web/tests/run-case-create-w82.sh
+b8deb0fab3964919a284cd61a22e31dd3efe3b04558e9e85dd63aac304f7f4dd  contracts/W8.2-case-create.md

@@ -373,3 +373,19 @@ Security/availability fix against main c54990c: only case-scoped GET /cpa time s
 
 ## Core JSON finite-number boundary (2026-11-12)
 Follow-up to core envelope type validation: Python's JSON decoder accepts NaN/Infinity tokens and overflowing numeric literals (1e309) that cannot be safely serialized by the HTTP JSON response. Reject these anywhere in the final core response envelope as existing CORE_BAD_OUTPUT/502 before downstream use. Preserve all finite JSON numeric values, integer decoding, string values, extra fields, build preamble/last-line protocol and valid domain error mappings. No input limits, CLI changes, schema shape change, authentication, raw align restriction, persistence migration or deployment.
+
+## 2026-11-12 W8.2 案件新建闭环
+
+沿用现有 POST /cases 合同和 case.schema.json。新增表单/纯校验，修改 W8.1 冻结的 LobbyPage.tsx、w8.css（以及确有必要的 cases/model.ts）以开放新建；保留只读列表能力。规格见 contracts/W8.2-case-create.md。不得改公开报告、历史种子或服务权限规则。旧冻结保留，新切片单独冻结与验收。选择本片是为了让空安装从只读演示升级到能创建自己的调查案件，不声明整个 W8 完成。
+
+W8.2 入口联动追加：现 Layout.tsx 将所有虚构案标为 Lily/Mary、所有非虚构案标为公开报告。新建案件不能继承虚假来源，故将既有 W8.1 冻结的 Layout.tsx 纳入本切片，用实际标题及保守虚构/非虚构标识。不能在无证据时声称“公开报告”。
+
+### W8.2 D01 独立验收返修
+
+独立验收发现 EvidencePage.tsx 仍将所有非虚构案件主标题标为“真实案例（公开报告）”。按架构裁定，将 W4 已冻结文件 web/src/pages/EvidencePage.tsx 纳入本片，仅修改案件标签为保守“非虚构案件”并展示实际案件标题；不改证据数据、时间轴或任何写入逻辑。原 W8.2 冻结保留为 logs/w8.2-impl-hashes-frozen.v1.txt，返修后重新冻结；独立测试保持不动。
+
+### W8.2 空案件显示收口（D01 后续）
+
+新案显示时区为 UTC，但 EvidencePage 全部时间显示与标题仍硬编码 UTC+8，且空证据显示永久加载、任意虚构案借用 Lily/Mary 演示时间线。按架构裁定，允许 format.ts 增加可选显示偏移参数（默认480，保持其它页面行为），EvidencePage 所有时间显示传入当前案件偏移；新案无证据明确显示暂无证据，专属 Lily/Mary 船名/时长/碰撞标记仅限 CASE_ID 演示案。仅修显示，不变更事件时间、存储或计算核心。旧冻结v1/v2保留，全部修改后一次性再冻结。
+
+最终采用架构补充裁定：时间显示 helper 位于 web/src/cases/evidenceTime.ts，仅由 EvidencePage 使用；共享 format.ts 保持原始字节不改。此前可选参数提案未进入最终实现，避免其它页面回归。

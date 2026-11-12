@@ -1,0 +1,11 @@
+web/src/cases/create.ts: OK
+web/src/cases/CreateCasePanel.tsx: OK
+web/src/cases/identity.ts: OK
+web/src/cases/evidenceTime.ts: OK
+web/src/pages/LobbyPage.tsx: OK
+web/src/Layout.tsx: OK
+web/src/pages/EvidencePage.tsx: OK
+web/src/styles/w8.css: OK
+web/tests/case-create-w82.test.tsx: OK
+web/tests/run-case-create-w82.sh: OK
+contracts/W8.2-case-create.md: OK
