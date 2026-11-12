@@ -159,3 +159,5 @@
 
 | 2026-11-12 | W8.1 | 案件大厅最小闭环待测：GET /cases 列表、进入证据中心、加载/空/错误重试、案件与角色切换重新挂载。新建/编辑/.mcase 导入导出不在本片范围。build + 22 自测通过；冻结 logs/w8.1-impl-hashes-frozen.txt，独立浏览器验收待完成。 |
 | 2026-11-12 | W8.1 | 最小切片独立验收通过 | 案件大厅列表/进入、空错重试、case/role重新挂载；Web611断言+另case-context28、SSR16、mock浏览器20、真实HTTP浏览器21与build通过。按钮对比缺陷修复复验；真实HTTP为新种子库只读集成，非生产认证。新建/编辑/.mcase/全模块隔离未完成。见 logs/w8.1-integration-review.md；不部署。 |
+
+| 2026-11-12 | W16字体覆盖修复 | 限定切片待合并验收 | 固定官方Noto Sans SC字体/OFL、可复现构建脚本、生产路径回归；独立报告177通过，旧字体回归明确失败。冻结 logs/w16-font-impl-hashes-frozen.txt。仅缺字修复，原报告不变；Windows Word/完整产品验收未完成，不部署。 |
