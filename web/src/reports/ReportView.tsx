@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Panel } from '../components/Panel'
 import { SERVICE_ADDR } from '../config'
 import type { Citation, GisisDocument, GisisField, GisisValidation, RealDataStatus, Report, ReportAudit, ReportLanguage, ReportSection, ReportStatus, ReportTemplate, ReportTemplateId, ReviewAction, ReviewPayload, ReviewTarget } from './types'
-import { DEMO_CASE_ID, REPORT_CASES } from './types'
+import { DEMO_CASE_ID } from './types'
 
 const STATUS_LABEL: Record<ReportStatus, string> = { Draft: 'Draft 草稿', Confirmed: 'Confirmed 已确认', Modified: 'Modified 已修改', Dismissed: 'Dismissed 已驳回' }
 const STATUS_CLASS: Record<ReportStatus, string> = { Draft: 'st-warn', Confirmed: 'st-ok', Modified: 'st-pur', Dismissed: 'st-bad' }
@@ -14,6 +14,7 @@ export const REPORT_DISCLAIMER_ZH = '不作责任认定'
 export const REPORT_DISCLAIMER_EN = 'This report does not apportion blame or liability'
 
 export interface ReportViewProps {
+  cases?: {caseId: string; label: string}[]; accessDenied?: boolean;
   caseId: string; templates: ReportTemplate[]; templateId: ReportTemplateId; lang: ReportLanguage
   report: Report | null; reports: Report[]; gisis: GisisDocument | null; audit: ReportAudit[]
   blockedReason?: 'report_case_not_imported'; selectedSectionId: string | null; busy: boolean; realDataStatus?: RealDataStatus; error?: string | null; notice?: string | null
@@ -31,8 +32,9 @@ function targetOf(section: ReportSection): ReviewTarget { return { sectionId: se
 export function ReportView(props: ReportViewProps) {
   const { caseId, report, templates, templateId, lang, busy, onReview } = props
   const pending = props.realDataStatus ? props.realDataStatus === 'pending-confirmation' : report ? report.realDataStatus === 'pending-confirmation' : caseId !== DEMO_CASE_ID
-  const blocked = Boolean(props.blockedReason)
+  const blocked = Boolean(props.blockedReason || props.accessDenied)
   const publicCase = props.realDataStatus === 'authorized-public' || report?.realDataStatus === 'authorized-public'
+  const cases = props.cases ?? []
   const selected = report?.sections.find((s) => s.sectionId === props.selectedSectionId) ?? report?.sections[0]
   const draft = !report || report.sections.some((s) => s.status !== 'Confirmed')
   const citations = selected?.sentences.flatMap((s) => s.citations) ?? []
@@ -49,13 +51,13 @@ export function ReportView(props: ReportViewProps) {
           <div className="page-sub">IMO / MAIB / 中国海事 · 中英双语 · 句子级引用与人工复核 · GISIS 本地准备字段</div>
         </div>
         <div className="rpt-toolbar rpt-heading-actions">
-          <label>案件 <select className="select" aria-label="报告案件" value={caseId} disabled={busy} onChange={(e) => props.onSwitchCase(e.target.value)}>{!REPORT_CASES.some((c) => c.caseId === caseId) && <option value={caseId}>{caseId}</option>}{REPORT_CASES.map((c) => <option key={c.caseId} value={c.caseId}>{c.label}</option>)}</select></label>
+          <label>案件 <select className="select" aria-label="报告案件" value={caseId} onChange={(e) => props.onSwitchCase(e.target.value)}>{!cases.some((c) => c.caseId === caseId) && <option value={caseId}>{caseId}</option>}{cases.map((c) => <option key={c.caseId} value={c.caseId}>{c.label}</option>)}</select></label>
           {props.onRefresh && <button className="btn btn-sm" onClick={props.onRefresh} disabled={busy}>刷新</button>}
           <button className="btn btn-primary" disabled={busy || pending || blocked} onClick={() => props.onCreate('bilingual')}>📄 生成双语报告</button>
         </div>
       </div>
       {pending && <div className="rpt-pending" role="status"><b>待确认</b> · 真实数据使用待 Mark 本人确认</div>}
-      {blocked && <div className="rpt-pending" role="status">公开报告已授权使用；案件尚未导入服务数据库，暂不可生成或导出。</div>}
+      {props.blockedReason && <div className="rpt-pending" role="status">公开报告已授权使用；案件尚未导入服务数据库，暂不可生成或导出。</div>}
       {props.error && <div className="rpt-error" role="alert">{props.error}</div>}
       {props.notice && <div className="rpt-notice" role="status">{props.notice}</div>}
       <div className="rpt-columns">

@@ -267,7 +267,9 @@ def test_direct_external_roles_cannot_read_restricted_report_content(ctx, role):
                   lambda: router.export_report(CASE, report['reportId'], 'pdf', 'zh', ctx)]
     for operation in operations:
         fails('FORBIDDEN', operation, status=403)
-    assert len(router.get_templates(CASE, ctx)['templates']) == 3
+    # W16.2 case-specific templates disclose case status and are gated.
+    fails('FORBIDDEN', lambda: router.get_templates(CASE, ctx), status=403)
+    assert len(router.get_templates(None, ctx)['templates']) == 3
     assert router.get_glossary()
 
 

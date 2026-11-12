@@ -58,8 +58,3 @@ export const DEMO_CASE_ID = 'CASE-2026-DEMO-LILY-MARY'
 export const HAILI_CASE_ID = 'CASE-2025-HAILI5-WANA17'
 /** 已授权公开报告；是否可生成由服务返回的入库状态决定。 */
 export const YANGZE_CASE_ID = 'CJK-2024-1230-YangZe22-VegaDream' // 规范 caseId（DEFECTS/W12.md 21:52 裁定）
-export const REPORT_CASES = [
-  { caseId: DEMO_CASE_ID, label: 'Lily / Mary（虚构）' },
-  { caseId: HAILI_CASE_ID, label: '海力5（公开报告）' },
-  { caseId: YANGZE_CASE_ID, label: 'YANGZE 22（公开报告）' },
-]

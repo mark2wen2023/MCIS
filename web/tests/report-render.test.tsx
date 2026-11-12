@@ -1,12 +1,13 @@
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { ReportView, ReviewDialog, reviewProblem, reviewPayload } from '../src/reports/ReportView'
-import { ReportApiError, reportApi } from '../src/reports/api'
+import { ReportApiError, createReportApi } from '../src/reports/api'
 import { YANGZE_CASE_ID } from '../src/reports/types'
 import { readFileSync, existsSync } from 'node:fs'
 import type { GisisDocument, Report, ReportSection, ReportTemplate, ReviewTarget } from '../src/reports/types'
 
 function assert(value: unknown, message: string) { if (!value) throw new Error(message); assertions++ }
+const reportApi = createReportApi({role:'Investigator',operator:'调查员 A'})
 let assertions = 0
 // DEFECTS/W12.md 21:52 裁定：YANGZE 22 规范 caseId
 assert(YANGZE_CASE_ID === 'CJK-2024-1230-YangZe22-VegaDream', 'YANGZE 22 规范 caseId')
@@ -39,7 +40,7 @@ const report: Report = { reportId: 'RPT-1', familyId: 'FAM-1', parentReportId: n
 const gisis: GisisDocument = { caseId, isFictionalDemo: true, realDataStatus: 'fictional', notice: '本地准备字段，不表示已提交 IMO GISIS。', fields: [{ id: 'vessels.lily.imoNumber', labelZh: 'IMO 号', labelEn: 'IMO number', required: true, value: null, missing: true, missingLabel: '缺数据', vesselId: 'lily', sourceRefs: ['vessels.lily.imoNumber'], rules: { pattern: '^[0-9]{7}$' }, gisisRef: '附录2 1.1*', mappingStatus: 'exact', mappingNote: '完全对应' }] }
 
 function html(overrides: Partial<Parameters<typeof ReportView>[0]> = {}) {
-  return renderToStaticMarkup(createElement(ReportView, { caseId, templates, templateId: 'imo-cic', lang: 'bilingual', report, reports: [report], gisis, audit: [], selectedSectionId: 'analysis', busy: false, onSelectSection: () => {}, onSwitchCase: () => {}, onTemplate: () => {}, onLang: () => {}, onSelectReport: () => {}, onCreate: () => {}, onRegenerate: () => {}, onReview: () => {}, onExport: () => {}, onGisisExport: () => {}, onGisisValidate: () => {}, onGlossary: () => {}, ...overrides }))
+  return renderToStaticMarkup(createElement(ReportView, { cases:[{caseId:YANGZE_CASE_ID,label:'YANGZE 22（公开报告）'}], caseId, templates, templateId: 'imo-cic', lang: 'bilingual', report, reports: [report], gisis, audit: [], selectedSectionId: 'analysis', busy: false, onSelectSection: () => {}, onSwitchCase: () => {}, onTemplate: () => {}, onLang: () => {}, onSelectReport: () => {}, onCreate: () => {}, onRegenerate: () => {}, onReview: () => {}, onExport: () => {}, onGisisExport: () => {}, onGisisValidate: () => {}, onGlossary: () => {}, ...overrides }))
 }
 
 for (const template of templates) {
@@ -75,7 +76,7 @@ assert(recsSource.includes('📄 国际格式报告 →') && recsSource.includes
 const reportPageSource = readFileSync('src/pages/ReportPage.tsx', 'utf8')
 assert(reportPageSource.includes('reportApi.create(caseId, templateId, generateLang)'), '页头生成动作沿用当前模板并接受指定语言')
 let generatedLanguage: string | undefined
-const view = ReportView({ caseId, templates, templateId: 'maib', lang: 'zh', report, reports: [report], gisis, audit: [], selectedSectionId: 'analysis', busy: false, onSelectSection: () => {}, onSwitchCase: () => {}, onTemplate: () => {}, onLang: () => {}, onSelectReport: () => {}, onCreate: (language) => { generatedLanguage = language }, onRegenerate: () => {}, onReview: () => {}, onExport: () => {}, onGisisExport: () => {}, onGisisValidate: () => {}, onGlossary: () => {} })
+const view = ReportView({ cases:[{caseId:YANGZE_CASE_ID,label:'YANGZE 22（公开报告）'}], caseId, templates, templateId: 'maib', lang: 'zh', report, reports: [report], gisis, audit: [], selectedSectionId: 'analysis', busy: false, onSelectSection: () => {}, onSwitchCase: () => {}, onTemplate: () => {}, onLang: () => {}, onSelectReport: () => {}, onCreate: (language) => { generatedLanguage = language }, onRegenerate: () => {}, onReview: () => {}, onExport: () => {}, onGisisExport: () => {}, onGisisValidate: () => {}, onGlossary: () => {} })
 function findHeaderButton(node: unknown): { onClick: () => void; disabled: boolean } | undefined {
   if (!node || typeof node !== 'object') return undefined
   if (Array.isArray(node)) return node.map(findHeaderButton).find(Boolean)
@@ -131,7 +132,7 @@ async function clientContractTests() {
   const originalFetch = globalThis.fetch
   let lastUrl = ''
   let lastRequest: RequestInit = {}
-  globalThis.fetch = async (url, init) => { lastUrl = String(url); lastRequest = init || {}; return new Response(JSON.stringify(report), { headers: { 'Content-Type': 'application/json' } }) }
+  globalThis.fetch = async (url, init) => { lastUrl = String(url); lastRequest = init || {}; return new Response(JSON.stringify(init?.method === 'PATCH' ? section : report), { headers: { 'Content-Type': 'application/json' } }) }
   try {
     await reportApi.create(caseId, 'maib', 'en')
     // 与 src/api.ts 一致走同源 /api（vite 代理目标取自 MCIS_API 配置）；直连 SERVICE_URL 会被 CORS 拦截（临时端口 preview 实测 Failed to fetch）

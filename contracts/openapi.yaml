@@ -6,6 +6,7 @@ info:
     模块③（Python 服务）对 ②Unity 与 ④网页工作台提供的本地接口。只监听 127.0.0.1:8765。
     - 数据结构见 schemas/*.schema.json（JSON Schema 2020-12），字段与 C# 计算核心对齐（camelCase）。
     - 角色与操作者：请求头 X-MCIS-Role（默认 Investigator）、X-MCIS-Operator（URL 编码）。脱敏网关按角色在出口处理。
+    - W16.2 报告完整内容访问隔离见 report-content-access-v1.md：全部12类显式原文读权限、无适用字段处理规则；默认 Investigator 拒绝是有意兼容变更。不提供报告字段级脱敏，也不认证角色头。报告及含报告内容的审计/案件包旁路均重核当前策略。
     - 所有写操作写只追加审计（GET /cases/{caseId}/audit）；例外：PUT /sim/state 是瞬态遥测，不入审计。
     - 错误体统一为 {code, message, detail?}（schemas/common.schema.json#/$defs/problem）。
     - 冒号路径（如 /evidence:verify-all）是“自定义动作”，与资源路径并列，不是路径参数。
