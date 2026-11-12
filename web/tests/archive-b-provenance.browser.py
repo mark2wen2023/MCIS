@@ -15,11 +15,12 @@ try:
    u=r.request.url;case='SYNTHETIC-B' if 'SYNTHETIC-B' in u else 'SYNTHETIC-A';rid=u.rsplit('/',1)[1]
    data={'caseId':case,'kind':'interview','recordId':rid,'provenance':None if rid=='IR-02' else provenance}
    if mode['hold'] and case=='SYNTHETIC-A' and rid=='IR-01':held.append((r,data))
-   elif mode['error'] or r.request.headers.get('x-mcis-role')=='Investigator':r.fulfill(status=409 if mode['error']==409 else 403,json={'code':'ARCHIVE_HISTORY_INTEGRITY' if mode['error']==409 else 'FORBIDDEN'})
+   elif mode['error'] or r.request.headers.get('x-mcis-role')=='Investigator':r.fulfill(status=409 if mode['error'] in [409,'unsupported'] else 403,json={'code':'ARCHIVE_HISTORY_UNSUPPORTED' if mode['error']=='unsupported' else 'ARCHIVE_HISTORY_INTEGRITY' if mode['error']==409 else 'FORBIDDEN'})
    else:r.fulfill(json=data)
   p.add_init_script("localStorage.setItem('mcis.role','LeadInvestigator')");p.route('**/api/v1/**',route);p.goto('http://127.0.0.1:15856/tests/archive-b-provenance-harness.html')
   p.get_by_text('此对象包含恢复历史',exact=True).wait_for();assert '不把当前所有状态都称为历史状态' in p.locator('body').inner_text()
   mode['error']=409;p.reload();p.get_by_text('此对象恢复来源未能核验',exact=False).wait_for();assert 'PROTECTED-PARENT-TEXT' in p.locator('body').inner_text()
+  mode['error']='unsupported';p.reload();p.get_by_text('旧来源包版本暂不支持恢复来源核验',exact=False).wait_for();assert 'PROTECTED-PARENT-TEXT' in p.locator('body').inner_text();assert '未因此丢失或删除' in p.locator('body').inner_text()
   mode['error']=False;mode['hold']=True;p.reload()
   for _ in range(50):
    p.wait_for_timeout(20)

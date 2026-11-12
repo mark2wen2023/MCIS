@@ -184,7 +184,15 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
     from ..recommendations.access import protect_package as protect_recommendations
     protect_recommendations(s, case_id, role)
     from ..working_records_archive.service import has_history, build as build_working
-    if has_history(s, case_id):
+    track_root=blob_root/case_id/'raw'/'track-imports'
+    track_namespace=track_root.exists()or track_root.is_symlink()
+    case_root=blob_root/case_id
+    if case_root.is_dir()and not case_root.is_symlink():
+        for raw_dir in case_root.iterdir():
+            if raw_dir.name.casefold()=='raw':
+                if raw_dir.is_symlink():track_namespace=True
+                elif raw_dir.is_dir():track_namespace=track_namespace or any(p.name.casefold().startswith('track-imports')for p in raw_dir.iterdir())
+    if has_history(s, case_id) or track_namespace:
         from fastapi import HTTPException
         from ..hfacs_drafts.router import PreviewError
         try:
@@ -197,7 +205,7 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
             row = s.scalars(select(CaseRow).where(CaseRow.case_id == case_id)).first()
             def assemble_working():
                 files['audit/audit.jsonl'] = _lines(audit.all_lines(s, case_id))
-                files['manifest.json'] = manifest_json(case_id, {k:v for k,v in files.items() if k!='manifest.json'}, iso(parse_iso(row.created_utc)), '1.2.0').encode()
+                files['manifest.json'] = manifest_json(case_id, {k:v for k,v in files.items() if k!='manifest.json'}, iso(parse_iso(row.created_utc)), '1.3.0'if working['version']==2 else'1.2.0').encode()
                 buf = io.BytesIO()
                 with zipfile.ZipFile(buf, 'w', zipfile.ZIP_DEFLATED) as z:
                     for rel in sorted(files): z.writestr(rel, files[rel])
@@ -340,6 +348,9 @@ def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: s
     from ..working_records_archive.validation import PATH as working_path, ValidatedArchive as WorkingArchive
     namespace = [p for p in files if p.casefold() == 'working-records' or p.casefold().startswith('working-records/')]
     working_ok = isinstance(validated_working, WorkingArchive) and files.get(working_path) == validated_working.raw
+    from ..track_history.validation import markers
+    if markers(files)and(not working_ok or validated_working.data['version']!=2):
+        raise problem(422,'TRACK_HISTORY_IMPORT_REQUIRED','旧包包含航迹凭证，本入口不能恢复为活跃请求；请保留原包')
     if namespace and (namespace != [working_path] or not working_ok):
         raise problem(422, 'WORKING_IMPORT_ENTRY', '工作记录扩展只能通过本版本完整预检与确认恢复')
     if any(p.casefold().startswith('history/') for p in files) and not working_ok:
@@ -379,15 +390,15 @@ def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: s
     except (ValueError, UnicodeError):
         raise problem(422, "BAD_PACKAGE", "案件包清单无效")
     if namespace or manifest.get("packageVersion") == "1.1.0":
-        if (namespace != [hfacs_archive.PATH] or manifest.get("packageVersion") not in ("1.1.0", "1.2.0")
+        if (namespace != [hfacs_archive.PATH] or manifest.get("packageVersion") not in ("1.1.0", "1.2.0", "1.3.0")
                 or not isinstance(validated_hfacs, hfacs_archive.ValidatedArchive)
                 or validated_hfacs.raw != files[hfacs_archive.PATH]):
             raise problem(422, "HFACS_IMPORT_ENTRY", "HFACS扩展只能通过本版本受限导入预检与确认恢复，旧入口不接受")
-    elif manifest.get('packageVersion') == '1.2.0':
+    elif manifest.get('packageVersion') in ('1.2.0','1.3.0'):
         if not working_ok: raise problem(422, 'WORKING_IMPORT_ENTRY', '工作记录包只能通过完整预检恢复')
     elif manifest.get("packageVersion", PACKAGE_VERSION) != PACKAGE_VERSION:
         raise problem(422, "BAD_PACKAGE", "不支持的案件包版本")
-    if manifest.get('packageVersion') == '1.2.0' and not working_ok:
+    if manifest.get('packageVersion') in ('1.2.0','1.3.0') and not working_ok:
         raise problem(422, 'WORKING_IMPORT_ENTRY', '工作记录包只能通过完整预检恢复')
     report = verify_files(files)
     if not report["isValid"]:

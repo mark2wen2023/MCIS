@@ -1,6 +1,6 @@
 """Authorized historical bytes and latest-restore provenance; never replay."""
 import hashlib
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from fastapi.responses import Response
 from sqlalchemy import select
 from ..common.context import Ctx,CtxDep,problem
@@ -50,6 +50,12 @@ def provenance(case_id:str,kind:str,record_id:str,ctx:Ctx=CtxDep):
         raw=read_blob(ctx.settings.blob_dir,case_id,'_package_intake/source.mcase',32*1024*1024)
         if hashlib.sha256(raw).hexdigest()!=row.key or row.doc.get('sourceSha256')!=row.key or row.doc.get('byteLength')!=len(raw)or row.doc.get('caseId')!=case_id:fail('恢复来源完整性异常','ARCHIVE_HISTORY_INTEGRITY',409)
         try:parsed=parse_package(raw)
+        except HTTPException as exc:
+            if (exc.status_code == 422 and isinstance(exc.detail, dict)
+                    and exc.detail.get('code') == 'PACKAGE_INTAKE_INVALID'
+                    and exc.detail.get('detail') == {'reason': 'TRACK_HISTORY_MIGRATION_UNSUPPORTED'}):
+                fail('旧恢复来源包的W10历史迁移尚不支持；原包和当前报告/笔录未删除', 'ARCHIVE_HISTORY_UNSUPPORTED', 409)
+            fail('恢复来源完整性异常','ARCHIVE_HISTORY_INTEGRITY',409)
         except Exception:fail('恢复来源完整性异常','ARCHIVE_HISTORY_INTEGRITY',409)
         if parsed.case['caseId']!=case_id:fail('恢复来源案件不一致','ARCHIVE_HISTORY_INTEGRITY',409)
         for old in parsed.evidence:

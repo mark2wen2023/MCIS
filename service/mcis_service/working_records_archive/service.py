@@ -6,7 +6,7 @@ from ..db import put_doc
 from ..common.context import problem
 from ..reports.access import require_content
 from ..interviews.access import document as protect_interview,source as protect_source
-from ..cases.models import CaseRow
+from ..cases.models import CaseRow,TrackPointRow
 from ..interviews.models import InterviewRow
 from ..reports.models import ReportRow,ReportAuditRow
 from ..evidence.models import EvidenceRow,CustodyEventRow
@@ -17,7 +17,7 @@ from .validation import PATH,FORMAT,MAX_BYTES,canonical,fail,sha
 ALLOWED_TABLES={'cases','vessels','track_points','evidence_items','custody_events','audit_events','environment_observations',
 'access_policies','interviews','investigation_reports','report_operation_snapshots','interview_request_receipts',
 'archived_manual_interview_receipts','archive_import_history','archive_historical_artifacts','package_intake_receipts',
-'hfacs_worksheets','hfacs_worksheet_audit','hfacs_worksheet_requests','hfacs_archived_requests'}
+'track_local_receipts','hfacs_worksheets','hfacs_worksheet_audit','hfacs_worksheet_requests','hfacs_archived_requests'}
 GLOBALS={'knowledge_cards','knowledge_audit','knowledge_archives','knowledge_audit_snapshots','knowledge_audit_snapshot_epoch','sqlite_sequence'}
 
 
@@ -57,6 +57,12 @@ def full_access(s,ctx,case_id):
 
 
 def has_history(s,case_id):
+    from ..track_history.models import LocalReceipt
+    from ..audit.models import AuditEventRow
+    if s.scalars(select(TrackPointRow).where(TrackPointRow.case_id==case_id,TrackPointRow.doc['source'].as_string().startswith('CSV:')).limit(1)).first() is not None:return True
+    if s.scalars(select(AuditEventRow).where(AuditEventRow.case_id==case_id,AuditEventRow.action=='track.import').limit(1)).first() is not None:return True
+    if s.scalars(select(LocalReceipt).where(LocalReceipt.case_id==case_id).limit(1)).first() is not None:return True
+    if s.scalars(select(EvidenceRow).where(EvidenceRow.case_id==case_id,EvidenceRow.doc['relativePath'].as_string().startswith('raw/track-imports')).limit(1)).first() is not None:return True
     models=(InterviewRow,ReportRow,ReportAuditRow,InterviewRequestReceiptRow,ArchivedManualReceiptRow,ArchiveImportHistoryRow,ArchiveArtifactRow)
     for model in models:
         if s.scalars(select(model).where(model.case_id==case_id).limit(1)).first()is not None:return True
@@ -95,6 +101,14 @@ def build(s,root,ctx,case_id):
     report_docs=rows(data['reports'],'report','reportId',case_id,256)
     report_graph(report_docs);snapshots(data['reportSnapshots'],report_docs,all_lines(s,case_id),case_id)
     manual_receipts(data['manualReceipts'],case_id)
+    # Check registered W10 path types before the legacy assembler can read bytes.
+    for item in s.scalars(select(EvidenceRow).where(EvidenceRow.case_id==case_id)):
+        rel=item.doc.get('relativePath','')
+        if rel.casefold().startswith('raw/track-imports'):
+            from ..track_history.validation import PATTERN
+            match=PATTERN.fullmatch(rel)
+            if match is None:fail('航迹原件路径不受支持')
+            read_blob(root,case_id,rel,1024*1024 if match[2]=='source.csv'else 256*1024)
     histories={};artifacts={};nodes={};files=build_files(s,root,case_id)
     for p in list(files):
         if p.startswith('testimony/'):del files[p] # originals exist ONLY in authoritative extension
@@ -121,6 +135,10 @@ def build(s,root,ctx,case_id):
             'metadata':{'custodySeq':r.seq,'evidenceId':r.evidence_id,'requestDigest':h,'binding':d['binding'],'sourceSha256':r.sha256,'relativePath':'raw/evidence-intakes/'+h+'/source.bin'}}
         if key in histories and histories[key]!=entry:fail('证据历史禁用索引与原始登记链不一致')
         histories[key]=entry
+    from ..track_history.service import collect_export
+    track_entries=collect_export(s,case_id,files)
+    if track_entries:data['version']=2
+    for entry in track_entries:histories[('track-intake',entry['key'])]=entry
     data['importHistory']=[histories[k]for k in sorted(histories)]
     data['historicalArtifacts']=[artifacts[k]for k in sorted(artifacts)]
     data['lineage']={'nodes':[{'artifactSha256':k,'parentArtifactSha256s':nodes[k]}for k in sorted(nodes)]}
@@ -145,7 +163,7 @@ def restore(s,root,validated,files):
     for r in data['manualReceipts']:
         s.add(ArchivedManualReceiptRow(case_id=cid,request_id=r['request_id'],record_id=r['record_id'],doc=r))
     for h in data['importHistory']:
-        s.add(ArchiveImportHistoryRow(case_id=cid,kind=h['kind'],key=h['key'],evidence_id=h['metadata']['evidenceId']if h['kind']=='evidence-intake'else None,doc=h))
+        s.add(ArchiveImportHistoryRow(case_id=cid,kind=h['kind'],key=h['key'],evidence_id=(h['metadata']['evidenceId']if h['kind']=='evidence-intake'else h['metadata']['sourceEvidenceId']if h['kind']=='track-intake'else None),doc=h))
     nodes={n['artifactSha256']:n['parentArtifactSha256s']for n in data['lineage']['nodes']}
     for a in data['historicalArtifacts']:
         s.add(ArchiveArtifactRow(case_id=cid,sha256=a['sha256'],doc=a,parents=nodes[a['sha256']]))

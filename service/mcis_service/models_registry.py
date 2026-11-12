@@ -21,3 +21,5 @@ from .manual_interviews.models import InterviewRequestReceiptRow  # noqa: F401
 from .working_records_archive.models import ArchivedManualReceiptRow, ArchiveImportHistoryRow, ArchiveArtifactRow  # noqa: F401
 
 from .knowledge_archive.models import Archive, Epoch, Snapshot  # noqa: F401
+
+from .track_history.models import LocalReceipt  # noqa: F401

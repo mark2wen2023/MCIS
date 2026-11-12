@@ -68,9 +68,11 @@ class ValidatedArchive:
     data:dict
     @property
     def summary(self):
-        return {'version':PROFILE,'interviewCount':len(self.data['interviews']),'reportCount':len(self.data['reports']),
+        result = {'version':PROFILE if self.data['version']==1 else 'MCIS-WORKING-RECORDS-2','interviewCount':len(self.data['interviews']),'reportCount':len(self.data['reports']),
                 'reportSnapshotCount':len(self.data['reportSnapshots']),'manualReceiptCount':len(self.data['manualReceipts']),
                 'receiptMode':'archive-only','identityMode':'unverified-self-reported'}
+        if self.data['version']==2:result['trackReceiptCount']=sum(h['kind']=='track-intake'for h in self.data['importHistory'])
+        return result
 
 
 def uri(href,page,params):
@@ -284,7 +286,7 @@ def inspect_historical_packages(data,files,case_id,outer_member_count=None):
         if 'manifest.json'not in inside or 'case.json'not in inside or 'case.ext.json'not in inside:fail()
         m=strict_json(inside['manifest.json'])
         exact(m,{'packageFormat','packageVersion','caseId','createdAtUtc','lastModifiedAtUtc','generatorVersion','files'})
-        if m['packageFormat']!='MCIS-MCASE' or m['packageVersion']not in ('1.0.0','1.1.0','1.2.0') or m['caseId']!=case_id:fail('历史源包版本或案件关联不支持')
+        if m['packageFormat']!='MCIS-MCASE' or m['packageVersion']not in ('1.0.0','1.1.0','1.2.0','1.3.0') or m['caseId']!=case_id:fail('历史源包版本或案件关联不支持')
         stamp(m['createdAtUtc']);stamp(m['lastModifiedAtUtc']);text(m['generatorVersion'])
         if not isinstance(m['files'],list):fail()
         listed=set()
@@ -321,10 +323,12 @@ def import_history(data,files,evidence,custody_lines,case_id,art):
     seen=set();refs=set();evidence_receipts={}
     for h in data['importHistory']:
         exact(h,{'kind','caseId','key','createdUtc','updatedUtc','metadata','sourceArtifactSha256'})
-        if h['kind']not in ('package-intake','evidence-intake') or h['caseId']!=case_id:fail()
+        if h['kind']not in ('package-intake','evidence-intake','track-intake') or h['caseId']!=case_id:fail()
         sha(h['key']);key=(h['kind'],h['key'])
         if key in seen:fail()
         seen.add(key);m=h['metadata']
+        if h['kind']=='track-intake':
+            continue # Exact source/index association is validated against reconstructed originals below.
         if h['kind']=='package-intake':
             stamp(h['createdUtc']);stamp(h['updatedUtc'])
             if h['sourceArtifactSha256']!=h['key'] or h['key']not in art:fail()
@@ -337,9 +341,9 @@ def import_history(data,files,evidence,custody_lines,case_id,art):
             for field in ('hfacsExtension','workingRecordsExtension'):
                 summary=m.get(field)
                 if summary is not None:
-                    counts=('draftCount','revisionCount','receiptCount')if field=='hfacsExtension'else('interviewCount','reportCount','reportSnapshotCount','manualReceiptCount')
+                    counts=('draftCount','revisionCount','receiptCount')if field=='hfacsExtension'else(('interviewCount','reportCount','reportSnapshotCount','manualReceiptCount','trackReceiptCount')if summary.get('version')=='MCIS-WORKING-RECORDS-2'else('interviewCount','reportCount','reportSnapshotCount','manualReceiptCount'))
                     exact(summary,{'version','receiptMode','identityMode',*counts})
-                    if summary['version']!=('MCIS-HFACS-PACKAGE-1'if field=='hfacsExtension'else PROFILE)or summary['receiptMode']!='archive-only'or summary['identityMode']!='unverified-self-reported':fail()
+                    if summary['version']!=('MCIS-HFACS-PACKAGE-1'if field=='hfacsExtension'else ('MCIS-WORKING-RECORDS-2'if summary.get('version')=='MCIS-WORKING-RECORDS-2'else PROFILE))or summary['receiptMode']!='archive-only'or summary['identityMode']!='unverified-self-reported':fail()
                     for count in counts:integer(summary[count])
             stamp(m['importedUtc']);text(m['title'],16000,True)
             if not isinstance(m['counts'],dict) or set(m['counts'])!={'vessels','tracks','environment','evidence','custodyEvents','auditEvents'}:fail()
@@ -390,8 +394,8 @@ def validate(raw,case_id,files,evidence,audit_lines,custody_lines,*,outer_member
         for node in lineage['nodes']:
             if isinstance(node,dict) and isinstance(node.get('parents'),list) and len(node['parents'])>32:
                 fail('历史索引超过父引用预算','ARCHIVE_BUDGET',413)
-    schema('working-record-archive',data)
-    if data['format']!=FORMAT or type(data['version'])is not int or data['version']!=1 or data['caseId']!=case_id or data['receiptPolicy']!='archive-only-on-import':fail()
+    schema('working-record-archive-v2'if data.get('version')==2 else'working-record-archive',data)
+    if data['format']!=FORMAT or type(data['version'])is not int or data['version']not in (1,2) or data['caseId']!=case_id or data['receiptPolicy']!='archive-only-on-import':fail()
     # Ensures recursive finite/scalar encoding, including surrogate strings.
     try:canonical(data)
     except (ValueError,UnicodeError,RecursionError):fail()
@@ -422,6 +426,10 @@ def validate(raw,case_id,files,evidence,audit_lines,custody_lines,*,outer_member
     manual_receipts(data['manualReceipts'],case_id)
     art=inspect_historical_packages(data,files,case_id,outer_member_count)
     import_history(data,files,evidence,custody_lines,case_id,art)
+    from ..track_history.validation import collect
+    track_entries=collect(files,case_id)
+    saved_tracks=[h for h in data['importHistory']if h['kind']=='track-intake']
+    if bool(track_entries)!=(data['version']==2)or canonical(sorted(track_entries,key=lambda x:x['key']))!=canonical(sorted(saved_tracks,key=lambda x:x['key'])):fail('航迹历史索引缺失或不一致')
     for line in audit_lines:
         e=strict_json(line.encode())
         if e.get('category')=='Agent':fail('不支持智能体审计与草稿状态的局部归档')

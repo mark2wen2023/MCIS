@@ -13,16 +13,18 @@ export function parseProvenance(v:unknown,caseId:string,kind:Kind,recordId:strin
  return p as unknown as Provenance
 }
 export function ProvenanceNote({value}:{value:Provenance|null}){return value?<aside className="ic-disclaimer" aria-label="对象恢复历史"><h3>此对象包含恢复历史</h3><p>原有签署、确认和审核为历史工作流字段，不是本次新签署或审核，更不是事实、原始来源或身份认证；恢复后的操作另行留痕。不能因所在案件有归档就推断其他对象也是历史。</p><p>{value.changedSinceImport?'当前文档已不同于导入时原文，不把当前所有状态都称为历史状态。':'服务器摘要显示当前文档与导入时原文一致；这不证明原始真实性。'}</p><dl><dt>最近一次恢复来源归档 SHA-256</dt><dd>{value.sourceArchiveSha256}</dd><dt>导入时间</dt><dd>{value.importedUtc}</dd><dt>导入时文档摘要</dt><dd>{value.originalDocumentSha256}</dd><dt>当前文档摘要</dt><dd>{value.currentDocumentSha256}</dd></dl><p>这里只描述最近一次恢复，不认定最早来源。文档摘要为服务器规范化JSON标识，未在浏览器独立重算。历史回执不可重放，不能解除当前未知写入锁。</p></aside>:<p role="note">服务未返回此对象的本次恢复关联；这不是“从无历史”或真实性认证。</p>}
+export function unsupportedProvenance(e:unknown){return e instanceof ApiError&&e.status===409&&e.code==='ARCHIVE_HISTORY_UNSUPPORTED'}
+export function UnsupportedProvenanceNote(){return <p role="alert">旧来源包版本暂不支持恢复来源核验；当前已加载的报告或笔录未因此丢失或删除。请保留原始包与资料，不自动迁移或重新提交。此兼容限制不是来源真实性认证，也不等同一般完整性损坏。</p>}
 export function ArchiveProvenance({caseId,kind,recordId,revision,onDenied}:{caseId:string;kind:Kind;recordId:string;revision?:object;onDenied?:()=>void}){
  const version=useRef({value:revision,serial:0});if(version.current.value!==revision)version.current={value:revision,serial:version.current.serial+1}
  const who=useSyncExternalStore(onIdentityChange,contentIdentity,contentIdentity)
  return <Session key={JSON.stringify([caseId,kind,recordId,who,version.current.serial])} caseId={caseId} kind={kind} recordId={recordId} who={who} onDenied={onDenied}/>
 }
 function Session({caseId,kind,recordId,who,onDenied}:{caseId:string;kind:Kind;recordId:string;who:string;onDenied?:()=>void}){
- const [state,setState]=useState<{status:'loading'}|{status:'error'}|{status:'ready';value:Provenance|null}>({status:'loading'})
+ const [state,setState]=useState<{status:'loading'}|{status:'error'}|{status:'unsupported'}|{status:'ready';value:Provenance|null}>({status:'loading'})
  useEffect(()=>{let active=true;const c=new AbortController()
- void contentRequest<unknown>(casePath('/archive-history/provenance/'+kind+'/'+encodeURIComponent(recordId),caseId),who,undefined,c.signal).then(v=>{const p=parseProvenance(v,caseId,kind,recordId);if(active&&who===contentIdentity())setState({status:'ready',value:p})}).catch(e=>{if(active&&who===contentIdentity()){setState({status:'error'});if(e instanceof ApiError&&e.status===403)onDenied?.()}})
+ void contentRequest<unknown>(casePath('/archive-history/provenance/'+kind+'/'+encodeURIComponent(recordId),caseId),who,undefined,c.signal).then(v=>{const p=parseProvenance(v,caseId,kind,recordId);if(active&&who===contentIdentity())setState({status:'ready',value:p})}).catch(e=>{if(active&&who===contentIdentity()){setState({status:unsupportedProvenance(e)?'unsupported':'error'});if(e instanceof ApiError&&e.status===403)onDenied?.()}})
  return()=>{active=false;c.abort()}
  },[caseId,kind,recordId,who])
- return state.status==='loading'?<p role="status">正在单独核对当前对象的恢复来源…</p>:state.status==='error'?<p role="alert">此对象恢复来源未能核验。权限拒绝、缺失或异常均不能推断为“没有历史”，也不能据此认定历史状态。</p>:<ProvenanceNote value={state.value}/>
+ return state.status==='loading'?<p role="status">正在单独核对当前对象的恢复来源…</p>:state.status==='unsupported'?<UnsupportedProvenanceNote/>:state.status==='error'?<p role="alert">此对象恢复来源未能核验。权限拒绝、缺失或异常均不能推断为“没有历史”，也不能据此认定历史状态。</p>:<ProvenanceNote value={state.value}/>
 }

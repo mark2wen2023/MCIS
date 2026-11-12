@@ -151,6 +151,8 @@ def next_id(s: Session, case_id: str) -> str:
     from ..working_records_archive.models import ArchiveImportHistoryRow
     reserved = s.scalars(select(ArchiveImportHistoryRow.evidence_id).where(ArchiveImportHistoryRow.case_id==case_id,ArchiveImportHistoryRow.kind=='evidence-intake'))
     nums.extend(int(re.sub(r"\D", "", v) or 0) for v in reserved if v)
+    from ..track_history.service import reserved
+    nums.extend(int(re.sub(r"\D", "", v) or 0) for v in reserved(s,case_id))
     return f"EV-{(max(nums) + 1 if nums else 1):03d}"
 
 

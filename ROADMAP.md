@@ -352,3 +352,9 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-12 | Knowledge archive v1 | 待独立验收 | 独立全局知识JSON归档→预检→只读历史→原包下载，不恢复在线库/不自动公开；今后create/review同事务完整快照与明确旧缺失覆盖。归档预算不成为在线撤回限制，3全局表精确兼容.mcase未知表门禁；未知保存绑定主体+同字节重试、仅明确预事务拒绝标记释放。后端185定向组合过44.85s，UI18模型断言/tsc/build/API-double通过；独立正式双库/权限/并发/回滚/真实浏览器尚待完成。21实现冻结logs/KNOWLEDGEARCHIVE-impl-hashes-frozen.txt；B两新增GET统一OpenAPI遗漏一并补正，无运行路由变化。非全库/生产认证/全历史备份，不部署、不碰W11。 |
 
 | 2026-11-12 | Knowledge archive v1 | 受限切片独立验收通过 | 最终独立70项后端/12.92s、真实Chromium+双空库服务原包往返/提交后503同字节恢复、4新版身份迟响应API-double均过，21冻结前后相等；补受控export/review交错，仅完整旧/新快照。完整保全现存知识卡/原链与前向审核快照，历史Published不激活；旧覆盖审批不可还原，知识来源文件不含、非在线库/全系统恢复。原主体未知请求不能借另一主体同SHA回执宣称成功，已知保守锁边界记录。未测任意崩溃/生产多worker/全repo；详见tests_acceptance/KNOWLEDGEARCHIVE/REPORT.md、DEFECTS/KNOWLEDGEARCHIVE.md。不部署、不触W11。 |
+
+| 2026-11-12 | W10 restored receipt isolation | 待独立验收 | 合成真实流程和独立复现确认旧恢复回执GET/list/commit误作active；新1.3/workingv2携完整非活跃索引，原CSV/report/链保留，历史独立受权读取。旧无本地标记一律来源未验证，不暗示失败或自动重提；新本地proof同事务且永不导入，真实SQLite writer reservation限W10。当前370定向组合/116.43s含真双进程及HFACS+W10+报告三库通过；UI18新断言/原W10/W8.5/tsc/build/API-double过。29实现冻结logs/TRACKHISTORY-impl-hashes-frozen.txt；独立全矩阵/真实浏览器待完成。演示原失败断言不删除，不部署、不碰W11。 |
+
+| 2026-11-12 | W10 restored receipt isolation | 新冻结待最终独立裁定 | 兼容提示窄修后33文件冻结；完整定向组合373 passed/130.30s。已知旧W10来源迁移边界单独409 ARCHIVE_HISTORY_UNSUPPORTED，原包和当前报告不删除；真实损坏仍INTEGRITY，UI不把来源核验不可用误作正文丢失。包1.3原件/链保全、无proof兼容收紧不变。最终独立报告另列，不冒充CI或全系统完成。 |
+
+| 2026-11-12 | W10 restored receipt isolation | 受限修复独立通过 | 新33冻结独立49 passed/31.75s，另知识归档独立70 passed/13.70s；真实历史浏览器及真实旧来源provenance浏览器通过，包含原包/正文不变、损坏与不支持区分、403清正文。33 SHA前后相同。仅原historybrowser的未知写入两错误为明确API-double，其余真服务；详情tests_acceptance/TRACKHISTORY/REPORT.md。开发373定向项另计，不称全repo/CI/生产身份认证。旧W10包不能直接迁移，旧本地回执无proof不再活跃重放；原件保留，严格验证后可1.3新空目标恢复。演示包将另行更新实跑，不部署不触W11。 |

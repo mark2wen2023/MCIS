@@ -146,7 +146,7 @@ def parse_package(data: bytes, *, validated_hfacs=None) -> ParsedPackage:
     def load(path):
         return strict_json(files[path])
     manifest = load("manifest.json")
-    if not isinstance(manifest, dict) or manifest.get("packageFormat") != PACKAGE_FORMAT or manifest.get("packageVersion") not in (PACKAGE_VERSION, "1.1.0", "1.2.0"):
+    if not isinstance(manifest, dict) or manifest.get("packageFormat") != PACKAGE_FORMAT or manifest.get("packageVersion") not in (PACKAGE_VERSION, "1.1.0", "1.2.0", "1.3.0"):
         fail("不支持的包格式或版本")
     if set(manifest) != {"packageFormat", "packageVersion", "caseId", "createdAtUtc", "lastModifiedAtUtc", "generatorVersion", "files"}:
         fail("未知或不完整清单字段")
@@ -157,10 +157,14 @@ def parse_package(data: bytes, *, validated_hfacs=None) -> ParsedPackage:
     has_hfacs = hfacs_path in files
     from ..working_records_archive.validation import PATH as working_path
     has_working = working_path in files
-    if (manifest['packageVersion'] == '1.2.0') != has_working:
+    if (manifest['packageVersion'] in ('1.2.0','1.3.0')) != has_working:
         fail('外层版本与工作记录扩展不匹配')
-    if manifest['packageVersion'] != '1.2.0' and ((manifest["packageVersion"] == "1.1.0") != has_hfacs):
+    if manifest['packageVersion'] not in ('1.2.0','1.3.0') and ((manifest["packageVersion"] == "1.1.0") != has_hfacs):
         fail("外层版本与HFACS扩展不匹配")
+    from ..track_history.validation import markers
+    if markers(files)and manifest['packageVersion']!='1.3.0':
+        raise problem(422, 'PACKAGE_INTAKE_INVALID', '旧包包含W10凭证，尚不支持安全迁移；原包未修改',
+                      {'reason': 'TRACK_HISTORY_MIGRATION_UNSUPPORTED'})
     entries = manifest.get("files")
     if not isinstance(entries, list):
         fail("缺少完整清单")
@@ -345,6 +349,7 @@ def parse_package(data: bytes, *, validated_hfacs=None) -> ParsedPackage:
         with zipfile.ZipFile(io.BytesIO(data)) as outer_zip:
             outer_members = len(outer_zip.infolist())
         working_archive = validate_working(files[working_path], cid, files, ei, audit_lines, custody_lines, outer_member_count=outer_members)
+        if (manifest['packageVersion']=='1.3.0')!=(working_archive.data['version']==2):fail('外层版本与航迹历史扩展不匹配')
     summary = {"caseId": cid, "title": case["title"], "files": len(files), "vessels": len(vessels),
                "trackPoints": sum(map(len, tracks.values())), "observations": len(observations), "evidence": len(evidence),
                "auditEvents": len(audit_lines), "custodyEvents": len(custody_lines)}
