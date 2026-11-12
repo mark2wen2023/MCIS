@@ -853,6 +853,39 @@ components:
 
 
 paths:
+  /api/v1/cases/{caseId}/access-workbench:
+    get:
+      tags: [redaction]
+      summary: 当前案件权限与脱敏配置只读核验
+      description: 仅调查组且audit完整读取权限；本地角色头不是认证。见access-workbench-v1.md。
+      parameters:
+        - { $ref: '#/components/parameters/caseId' }
+      responses:
+        '200':
+          description: 策略、来源与最近50条匹配策略审计，不产生写入
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [caseId, policy, policySource, policyAudit, identityMode, readOnly]
+                properties:
+                  caseId: { type: string }
+                  policy: { $ref: 'schemas/access-policy.schema.json' }
+                  policySource: { enum: [default, saved] }
+                  identityMode: { const: local-role-header }
+                  readOnly: { const: true }
+                  policyAudit:
+                    type: object
+                    required: [events, limit, hasMore]
+                    properties:
+                      events:
+                        type: array
+                        maxItems: 50
+                        items: { $ref: 'schemas/audit-event.schema.json' }
+                      limit: { const: 50 }
+                      hasMore: { type: boolean }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
   /api/v1/packages/intakes:preview:
     post:
       tags: [package]
