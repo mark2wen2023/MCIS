@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useLocation, useSearchParams } from 'react-router-dom'
 import { api, CASE_ID, getOperator, getRole, setIdentity } from './api'
+import { onCaseMetadataChanged } from './caseMetadata/events'
 import { ROUTES } from './routes'
 import type { CaseDef, Role } from './types'
 import { SERVICE_ADDR } from './config'
@@ -15,6 +16,7 @@ const ROLES: { role: Role; label: string; op: string }[] = [
 ]
 
 export function Layout() {
+  const [caseRevision, setCaseRevision] = useState(0)
   const [role, setRole] = useState<Role>(getRole())
   const [caseDef, setCaseDef] = useState<CaseDef | null>(null)
   const [online, setOnline] = useState<boolean | null>(null)
@@ -23,6 +25,7 @@ export function Layout() {
   const onLobby = loc.pathname.endsWith('/lobby')
   const onAnalysis = loc.pathname.endsWith('/analysis') // W12：分析页也按 ?case= 显示当前案件
   const caseId = caseForLocation(loc.pathname, params.toString(), CASE_ID)
+  useEffect(() => onCaseMetadataChanged(caseId, () => { if (!onLobby) setCaseRevision(n => n + 1) }), [caseId, onLobby])
   useEffect(() => {
     if (onLobby) { setCaseDef(null); setOnline(null); return }
     let cancelled = false
@@ -41,7 +44,7 @@ export function Layout() {
         }).catch(() => { if (!cancelled) setOnline(false) })
     })
     return () => { cancelled = true }
-  }, [caseId, onAnalysis, onLobby])
+  }, [caseId, onAnalysis, onLobby, caseRevision])
   const changeRole = (r: Role) => {
     setIdentity(r, ROLES.find((x) => x.role === r)?.op)
     setRole(r)

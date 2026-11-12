@@ -1502,3 +1502,36 @@ paths:
         '404': { $ref: '#/components/responses/Problem' }
         '409': { $ref: '#/components/responses/Problem' }
         '422': { $ref: '#/components/responses/Problem' }
+
+  /api/v1/cases/{caseId}/metadata:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+    get:
+      tags: [cases]
+      summary: 读取案件文字档案与并发版本
+      responses:
+        '200':
+          description: 原案件、版本和最近人工修改声明
+          content:
+            application/json:
+              schema: { $ref: 'schemas/case-metadata.schema.json#/$defs/snapshot' }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+    patch:
+      tags: [cases]
+      summary: 仅更新五个文字字段，必须匹配版本，原子审计
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: 'schemas/case-metadata.schema.json#/$defs/update' }
+      responses:
+        '200':
+          description: 新档案快照；不更新原始证据或旧报告
+          content:
+            application/json:
+              schema: { $ref: 'schemas/case-metadata.schema.json#/$defs/snapshot' }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }

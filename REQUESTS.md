@@ -428,3 +428,10 @@ W20.2 最终组合以 W10.1 main `8fce05a65b3df0364819207d749c50ce6f86be8b` 为�
 合同先行见 contracts/W19.1-knowledge-cards.md。新增全局公开/合成Case/Challenge/Method候选→首席人工明确发布/驳回/撤回→结构化字面检索；不从案件自动导出，不做向量/LLM/训练/分级通知。独立模型/路由/审计表与前端，原表/权限不改；共享注册限 service main/models_registry、web main/routes、openapi与本记录，W9线发布后按精确基线串行整合。只有来源分类不构成发布许可，额外明确人工来源/使用权/发布范围审批；哈希不是真实性证书。不部署。
 W19.1 数据边界补记：这是全局人工资料库，不属于任一案件卷宗；当前 .mcase 导入/导出仍只处理案件，不把知识卡或其独立审计链混入案件包。已发布内容能撤回后续访问，但无法追回此前用户读取或另存的副本。没有自动认定链接/摘录真实性或数据训练许可。
 W19.1最终串行集成：W9.2 main `2bdbeb4f2fbe9eece6c0167274d1caed25495824` 的main/models_registry、Web入口/导航、环境与案件包/OpenAPI及所有记录保留，W19仅重放已登记新增项。共享注册变更重新冻结并独立复验，来源/许可与公开审批边界不变，具体证据见logs/w19-verification.md。
+
+
+## W8.4 案件文字档案编辑
+
+独立 case_metadata router 与 #/case 页面，五个文字字段编辑、版本冲突保护、来源理由与完整前后值审计；时间/坐标/分类/虚构性质锁定。合同先行见 contracts/W8.4-case-metadata.md。跨包仅 main router接线、OpenAPI及 Web main/routes/caseContext与大厅说明；不改cases/router、W10导入/W19实现或原始报告，既有案件包字段往返不变。
+
+W8.4 共享壳补充：Layout 目前仅在切案/大厅时读取标题，保存文字档案后会显示旧标题。允许新增案件定向 metadata-changed 通知并让当前案壳重新读取，防迟到/跨案，不修改通用API或虚构性质。此项列入UI独立验收。
