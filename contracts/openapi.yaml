@@ -853,6 +853,51 @@ components:
 
 
 paths:
+  /api/v1/cases/{caseId}/human-factors/rest:sources:
+    get:
+      tags: [human-factors]
+      summary: 获取当前案可读登记来源元数据
+      description: 见rest-preview-v1.md；固定普通休息基线、不处理授权例外、不持久化，角色头不等于认证。
+      parameters:
+        - { $ref: "#/components/parameters/caseId" }
+      responses:
+        "200":
+          description: 参考来源或非结论性技术结果
+          content:
+            application/json:
+              schema: { $ref: "schemas/rest-preview.schema.json#/$defs/sources" }
+        "403": { $ref: "#/components/responses/Problem" }
+        "404": { $ref: "#/components/responses/Problem" }
+        "409": { $ref: "#/components/responses/Problem" }
+        "413": { $ref: "#/components/responses/Problem" }
+        "415": { $ref: "#/components/responses/Problem" }
+        "422": { $ref: "#/components/responses/Problem" }
+        "503": { $ref: "#/components/responses/Problem" }
+  /api/v1/cases/{caseId}/human-factors/rest:preview:
+    post:
+      tags: [human-factors]
+      summary: 有来源的工休基线技术预览（非合规结论）
+      description: 见rest-preview-v1.md；固定普通休息基线、不处理授权例外、不持久化，角色头不等于认证。
+      parameters:
+        - { $ref: "#/components/parameters/caseId" }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "schemas/rest-preview.schema.json#/$defs/input" }
+      responses:
+        "200":
+          description: 参考来源或非结论性技术结果
+          content:
+            application/json:
+              schema: { $ref: "schemas/rest-preview.schema.json#/$defs/preview" }
+        "403": { $ref: "#/components/responses/Problem" }
+        "404": { $ref: "#/components/responses/Problem" }
+        "409": { $ref: "#/components/responses/Problem" }
+        "413": { $ref: "#/components/responses/Problem" }
+        "415": { $ref: "#/components/responses/Problem" }
+        "422": { $ref: "#/components/responses/Problem" }
+        "503": { $ref: "#/components/responses/Problem" }
   /api/v1/cases/{caseId}/access-workbench:
     get:
       tags: [redaction]
