@@ -24,7 +24,7 @@ export function InterviewPage() {
 function InterviewCasePage({ caseId }: { caseId: string }) {
   const [denied,setDenied]=useState(false)
   const [epoch,setEpoch]=useState(0)
-  return <><p className="ic-disclaimer" role="note">{CONTENT_ACCESS_NOTICE}</p><p className="ic-disclaimer" role="note">笔录仅在1.2.0受限归档全部校验通过时支持同案号新案恢复；未知内容整包拒绝。原始资料须独立保管，旧包校验成功不等于可以恢复笔录；过往签署与确认不代表本次认证。</p>{denied?<div role="alert"><p>当前身份无权访问笔录原文。受保护内容已清空；已发送写入不代表撤销。</p><button onClick={()=>{setDenied(false);setEpoch(n=>n+1)}}>重新读取笔录权限</button></div>:<InterviewAllowed key={epoch} caseId={caseId} onDenied={()=>setDenied(true)}/>}</>
+  return <><p className="ic-disclaimer" role="note">{CONTENT_ACCESS_NOTICE}</p><p className="ic-disclaimer" role="note">笔录仅在匹配版本的受限归档全部校验通过时支持同案号新案恢复（无W10时1.2.0工作记录扩展；含W10时须1.3.0）；未知内容整包拒绝。原始资料须独立保管，旧包校验成功不等于可以恢复笔录；过往签署与确认不代表本次认证。</p>{denied?<div role="alert"><p>当前身份无权访问笔录原文。受保护内容已清空；已发送写入不代表撤销。</p><button onClick={()=>{setDenied(false);setEpoch(n=>n+1)}}>重新读取笔录权限</button></div>:<InterviewAllowed key={epoch} caseId={caseId} onDenied={()=>setDenied(true)}/>}</>
 }
 function InterviewAllowed({caseId,onDenied}:{caseId:string;onDenied:()=>void}){
   const [who]=useState(contentIdentity)
