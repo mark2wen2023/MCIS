@@ -490,3 +490,6 @@ W5.2b record reservation hardening: approved cross-package change to legacy inte
 
 ### W5.2b reviewed shared lock-order correction
 Approved narrow shared changes: reports/access.py marks only successfully acquired SQLite BEGIN IMMEDIATE with root transaction/connection/thread proof; audit/service.py avoids inverse Python lock acquisition only for that verified active root writer (including its savepoints). Existing unmarked and non-SQLite calls retain prior locking. No change to professional core or W11. Tests cover real manual/legacy/compare/export interleavings, proof lifecycle/fallback, rollback and actual independent-process reserved writers. No raw SQL COMMIT/ROLLBACK found in service source; such driver bypass and shared-session cross-thread use remain unsupported.
+
+### Archive safety A: refuse known incomplete exports
+Authorized narrow package export correction, following synthetic reproduction: ReportRow/ReportAuditRow export200 omitted documents; legacy InterviewRow export200 could not be restored (422). Preserve existing permission and source checks, then reject known report/interview records or residual classified audit with409 ARCHIVE_RESTORE_UNSUPPORTED before files/export audit. Preserve dedicated manual receipt refusal. No import, shared lock, core/W11 or database content changes. See contracts/archive-export-safety-v1.md.

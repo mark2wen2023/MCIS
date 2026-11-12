@@ -48,7 +48,8 @@ def _manifest(case_id: str, files: dict[str, bytes]) -> bytes:
     return manifest_json(case_id, files, "2026-05-18T06:00:00Z").encode("utf-8")
 
 
-def test_export_manifest_matches_csharp_convention(client):
+def test_export_manifest_matches_csharp_convention(basic_client):
+    client = basic_client  # supported no-transcript synthetic package
     r = client.get(f"{C}/export", headers=LEAD)
     assert r.status_code == 200 and CASE in r.headers["content-disposition"]
     files = _unzip(r.content)
@@ -114,7 +115,8 @@ def test_tampered_package_rejected(basic_client, empty_client):
     assert empty_client.get("/api/v1/cases").json() == []
 
 
-def test_extra_file_is_reported_not_fatal(client):
+def test_extra_file_is_reported_not_fatal(basic_client):
+    client = basic_client
     files = _unzip(client.get(f"{C}/export", headers=LEAD).content)
     files["notes/extra.txt"] = b"hello"
     v = client.post("/api/v1/packages:verify", content=_zip(files), headers=LEAD).json()
@@ -162,7 +164,14 @@ def test_multipart_upload(basic_client, empty_client):
 
 
 def test_legacy_transcript_import_explicitly_rejected_without_mutation(client, empty_client):
-    data = client.get(f"{C}/export", headers=LEAD).content
+    refusal = client.get(f"{C}/export", headers=LEAD)
+    assert refusal.status_code == 409 and refusal.json()['code'] == 'ARCHIVE_RESTORE_UNSUPPORTED'
+    # Explicit legacy-format synthetic fixture, not a claim the current export succeeds.
+    from mcis_service.package.mcase import build_files
+    with client.app.state.db.session() as session:
+        files = build_files(session, client.app.state.settings.blob_dir, CASE)
+    files['manifest.json'] = _manifest(CASE, files)
+    data = _zip(files)
     assert 'testimony/IR-03.json' in _unzip(data)
     before = empty_client.get('/api/v1/cases').json()
     for form in (False, True):

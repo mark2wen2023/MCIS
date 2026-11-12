@@ -188,6 +188,18 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
     protect_package(s, case_id, role)
     from ..interviews.access import protect_package as protect_interviews
     protect_interviews(s, case_id, role)
+    # Refuse known incomplete backups only after full-content/source authorization.
+    # Existing serializers omit reports/snapshots and import rejects testimony.
+    from ..reports.models import ReportRow, ReportAuditRow
+    from ..reports.access import report_event
+    from ..interviews.access import event_related
+    unsupported = any(s.scalar(select(model.id).where(model.case_id == case_id).limit(1)) is not None
+                      for model in (InterviewRow, ReportRow, ReportAuditRow))
+    if not unsupported:
+        unsupported = any(report_event(audit.to_doc(event)) or event_related(audit.to_doc(event))
+                          for event in s.scalars(select(AuditEventRow).where(AuditEventRow.case_id == case_id)))
+    if unsupported:
+        raise problem(409, 'ARCHIVE_RESTORE_UNSUPPORTED', '此案含当前案件包不能完整恢复的笔录、报告或相关历史，未导出')
     from ..hfacs_drafts import archive as hfacs_archive
     from ..hfacs_drafts.router import PreviewError
     from ..package_intake.parser import parse_package
