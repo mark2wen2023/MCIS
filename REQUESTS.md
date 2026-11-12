@@ -496,3 +496,6 @@ Authorized narrow package export correction, following synthetic reproduction: R
 
 ## W19.2 来源模板整理预览（2026-11-12）
 登记跨包/已冻结改动：knowledge/router.py、KnowledgePage.tsx和共享openapi.yaml；仅追加只读预览、保留W19.1创建/审批/审计。新合同W19.2-suggestion-preview.md先行。不触及W11及笔录/报告。采用受控模板stub，未接LLM，不代表自动知识理解已完成。
+
+## W20.3 只读智能体协作状态（2026-11-12）
+登记新前端模块agentOverview及AgentOverviewPage，新合同规格W20.3-agent-overview.md。共享接线main.tsx、routes.ts、caseContext.ts仅新增agents路由并保留案件上下文；不修改其他模块。只调用既有GET agents/drafts，主会话/任务编排尚未实现，无假聊天或自动执行，不碰W11。
