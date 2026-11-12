@@ -909,7 +909,20 @@ paths:
     post: { tags: [redaction], summary: 导出预览：某笔录在指定角色下的脱敏结果, responses: { '200': { description: ok } } }
 
   /api/v1/agents:
-    get: { tags: [agents], summary: 六个智能体登记表（骨架：status=not_connected）, responses: { '200': { description: ok } } }
+    get: { tags: [agents], summary: 六角色登记（people_ops 可配置；configured 不代表推理已成功）, responses: { '200': { description: ok } } }
+  /api/v1/cases/{caseId}/agents/people_ops/interviews/{recordId}:extract:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recordId' }]
+    post:
+      tags: [agents]
+      summary: 本地 LLM 抽取脱敏问答，校验引用后生成 PendingReview 草稿
+      responses:
+        '201': { description: PendingReview, content: { application/json: { schema: { $ref: '#/components/schemas/AgentDraft' } } } }
+        '403': { description: 角色或案件策略禁止 }
+        '409': { description: 生成期间来源变更 }
+        '422': { description: 输入或引用不合法 }
+        '502': { description: 模型连接或响应失败 }
+        '503': { description: 未配置或配置非法 }
+        '504': { description: 模型超时 }
   /api/v1/cases/{caseId}/agents/drafts:
     parameters: [{ $ref: '#/components/parameters/caseId' }, { name: status, in: query, schema: { type: string } }]
     get:

@@ -401,3 +401,10 @@ W5 同步必要修正：服务 W5 roster/detail disclaimer 只对固定演示案
 ## 2026-11-12 W8.3 限定 UI 切片登记
 
 原型大厅打开 .mcase / 分析页导出与 ARCHITECTURE §11/R-03 为依据。W8.3 在已验收 W8.2 LobbyPage 增加预检工具、按卡片案件ID导出，不改旧建案/来源/时区逻辑；共享入口 main/routes、服务、现有合同、W9/W20不改。新增规格 contracts/W8.3-package-ui.md；预检仅清单哈希一致性，不是真实性、审计链或导入验证。导入因既有非原子文件写入与资源预算缺口暂不开放。新样式独立 w8-package.css。旧冻结保留，旧LobbyPage漂移仅核对本切片接线，新清单另列。
+
+## W20.1 本地 LLM 抽取最小切片（2026-11-12）
+
+依据用户重新强调的真正 LLM 驱动设计，优先落地 ARCHITECTURE §15.5 人员/作业文本提取。接口先行见 `contracts/W20-local-extraction.md`。增加本机 OpenAI-compatible 模型适配、严格逐字引用校验、PendingReview 与人工确认追加陈述；保持默认禁用，其他五角色不连接，不引入外部模型、密钥或部署。
+跨包只追加 `contracts/openapi.yaml` 路径及专属 schema，不修改 W5 `interviews/router.py` / InterviewPage / caseContext，不修改 W9 船舶与环境接口。保留 interview schema 和 UTF-16 SourceSpan，不复用不可靠的脱敏后偏移。多模态证据是后续目标，本轮不宣称 OCR/ASR/视频处理已接通。
+
+W20.1 最终集成：W5、W9、W8.3 精确主线 03e3fb8 的已有改动与共享记录全部保留。独立发现三项边界缺陷后统一返工并再次冻结；服务全量603、独立组合95、最终相关回归102通过。仅提交 agents 层、专属契约/测试/说明及共享追加，不触碰 Web。实际本地模型尚未提供，不能将协议假服务验证称为真实推理；后续真实模型与多模态评测是单独工作，不阻塞这条已验证的受控人审代码链路。

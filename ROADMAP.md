@@ -181,3 +181,6 @@
 | 2026-11-12 | W8.3 案件包预检/导出UI | 待独立验收 | 复用真实 packages:verify 与按案件ID export，清单缺失/篡改/额外文件显式呈现；身份/选择/关闭隔离与防双击。预检≠导入/真实性/审计链；导入不开放，资源预算未解决。53项模型/HTTP适配/静态渲染断言，tsc/build通过；冻结logs/w83-impl-hashes-frozen.txt。旧W8.2 Lobby接线漂移已登记，不改服务/W9/W20，不部署。 |
 | 2026-11-12 | W8.3 D01 | 修复待独立复测 | 独立真浏览器发现快速进入案件后Back时React未提交卸载，旧预检结果可迟到显示。包内捕获导航意图及popstate/hashchange/pagehide立即取消，面板折叠/导出状态清理；不改全局router/history。保留原失败用例与v1冻结，新9项冻结。尚未PR/合并。 |
 | 2026-11-12 | W8.3 案件包预检/导出UI | 桌面限定切片独立验收通过 | 整合W9 main e8db196，803前端断言+tsc/build通过；独立真实HTTP14、真Chromium32过/1既有390px共享壳KnownDefect、生命周期28过，9冻结匹配、78服务Python源与主线一致。D01快速Back迟到结果已修并保留原用例；1440/1920桌面通过，不称移动端/W8整包/部署完成。预检仅manifest SHA256一致性，导入仍未开放、资源预算/原子回滚/认证仍未解决。见logs/w83-verification.md与tests_acceptance/W83/REVIEW.md。 |
+
+| 2026-11-12 | W20.1 | 待独立验收 | 本地 LLM people_ops 最小文本提取链路：脱敏 → 模型 → 引用校验 → PendingReview → 人工追加陈述；五角色仍 not_connected，默认禁用，不部署。冻结 `logs/w20-impl-hashes-frozen.txt`；共享 openapi 按新增路径核对。真实模型未执行，HTTP 协议假服务不得当作模型质量验收。 |
+| 2026-11-12 | W20.1 本地 LLM 文本抽取 | 独立限定切片验收通过 | 基于 W8.3/W9/W5 main 03e3fb8；服务603过无跳过、独立组合95过、最终受影响回归102过。重叠引用/敏感片段姓名相交/非法JSON三缺陷已返修关闭，6项冻结一致；仅people_ops配置型本机模型适配→出处校验→PendingReview→人工追加陈述。真实LLM推理质量未验，五角色未连、默认禁用、无OCR/ASR/视频能力、无部署。见logs/w20-verification.md及DEFECTS/W20.md。 |
