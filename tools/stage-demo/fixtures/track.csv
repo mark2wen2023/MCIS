@@ -1,0 +1,3 @@
+utc,latDeg,lonDeg,sogKn,sogStatus,cogDeg,cogStatus,hdgDeg,hdgStatus
+2026-01-01T00:00:00Z,31,121,5,reported,45,reported,45,reported
+2026-01-01T00:01:00Z,31.001,121.001,5,reported,45,reported,45,reported

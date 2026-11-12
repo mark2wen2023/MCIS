@@ -45,7 +45,7 @@ export function PackagePanel({ who }: { who: string }) {
   useEffect(() => onPackageNavigation(() => setOpen(false)), [])
   return <section className="w83-package" aria-label="案件包工具">
     <div className="w83-heading"><div><span className="w83-eyebrow">.MCASE · 证据完整性</span><h2>案件包预检</h2></div><button type="button" aria-expanded={open} onClick={()=>setOpen(v=>!v)}>{open ? '关闭预检' : '选择案件包预检'}</button></div>
-    <p>上传到本机调查服务核对清单。预检不等于导入。受限基础资料首次导入请使用独立的导入面板；完整案件包还原未开放。当前支持范围的案件包导出位于下方对应案件卡片；不是完整案件备份。1.2.0仅在受限工作记录与依赖全部校验通过时支持同案号新案恢复；未知或不支持内容整包拒绝，不会成功遗漏。HFACS当前版本最多支持256个完整修订及对应回执，超限整体拒绝，不截断历史。</p>
+    <p>上传到本机调查服务核对清单。预检不等于导入。受限基础资料首次导入请使用独立的导入面板；完整案件包还原未开放。当前支持范围的案件包导出位于下方对应案件卡片；不是完整案件备份。匹配版本的受限归档仅在工作记录与依赖全部校验通过时支持同案号新案恢复（无W10时1.2.0工作记录扩展；含W10时须1.3.0）；未知或不支持内容整包拒绝，不会成功遗漏。HFACS当前版本最多支持256个完整修订及对应回执，超限整体拒绝，不截断历史。</p>
     {open && <PackageCheckForm key={who} who={who}/>}
   </section>
 }
@@ -100,5 +100,5 @@ export function PackageExport({caseId, title, who}: {caseId: string; title: stri
     } catch(err) { if (operation.valid(controller)) setMessage(packageError(err)) }
     finally { if (operation.valid(controller)) setBusy(false); operation.end(controller) }
   }
-  return <div className="w83-export"><p>完整性校验成功不等于可恢复。本功能不是完整案件备份；1.2.0仅恢复列明的工作记录与历史，限同案号新案件、默认策略。未知模块、缺失依赖、预算超限整包拒绝；历史回执不可重放，过往确认不是本次审核。原始资料须独立保管。</p><button type="button" disabled={busy} onClick={()=>void download()} aria-label={'导出案件包：' + title}>{busy ? '正在准备案件包…' : '导出 .mcase'}</button>{message && <p role="status">{message}</p>}</div>
+  return <div className="w83-export"><p>完整性校验成功不等于可恢复。本功能不是完整案件备份；匹配版本的受限归档仅恢复列明的工作记录与历史（无W10时1.2.0工作记录扩展；含W10时须1.3.0），限同案号新案件、默认策略。未知模块、缺失依赖、预算超限整包拒绝；历史回执不可重放，过往确认不是本次审核。原始资料须独立保管。</p><button type="button" disabled={busy} onClick={()=>void download()} aria-label={'导出案件包：' + title}>{busy ? '正在准备案件包…' : '导出 .mcase'}</button>{message && <p role="status">{message}</p>}</div>
 }

@@ -358,3 +358,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-12 | W10 restored receipt isolation | 新冻结待最终独立裁定 | 兼容提示窄修后33文件冻结；完整定向组合373 passed/130.30s。已知旧W10来源迁移边界单独409 ARCHIVE_HISTORY_UNSUPPORTED，原包和当前报告不删除；真实损坏仍INTEGRITY，UI不把来源核验不可用误作正文丢失。包1.3原件/链保全、无proof兼容收紧不变。最终独立报告另列，不冒充CI或全系统完成。 |
 
 | 2026-11-12 | W10 restored receipt isolation | 受限修复独立通过 | 新33冻结独立49 passed/31.75s，另知识归档独立70 passed/13.70s；真实历史浏览器及真实旧来源provenance浏览器通过，包含原包/正文不变、损坏与不支持区分、403清正文。33 SHA前后相同。仅原historybrowser的未知写入两错误为明确API-double，其余真服务；详情tests_acceptance/TRACKHISTORY/REPORT.md。开发373定向项另计，不称全repo/CI/生产身份认证。旧W10包不能直接迁移，旧本地回执无proof不再活跃重放；原件保留，严格验证后可1.3新空目标恢复。演示包将另行更新实跑，不部署不触W11。 |
+
+| 2026-11-12 | Local stage demonstration | 冻结待独立裁定 | 真实三空库API合成链及15项只读浏览器通过，W10当前/历史严格分离、原件字节比较、知识只读历史不激活；脚本模拟审核不是专家确认，浏览器非全部表单写入。13文件冻结，含3页仅1.2/1.3静态文案校正、16源断言/tsc/build过；4运行安全开发项过。独立优化模式问题已显式拒绝-O/PYTHONOPTIMIZE，强制终止manifest可陈旧但浏览器PID/starttime/socket所有权核验拒绝。Linux既有依赖，不安装、不部署、不接真实资料、不碰W11；最终独立结果另列。 |
+
+| 2026-11-12 | Local stage demonstration | 受限演示独立验证通过 | 最终冻结独立11 passed/26.89s，真实新三库API往返、15项真浏览器及新版三页提示DOM、Python优化拒绝、恶意env不重定向、已有文件/目录/链接保全、故障与正常SIGINT只清自建服务；下载仅新增合法Access及对应审计链，原前缀/业务行保全。13文件SHA前后核验，具体边界见tests_acceptance/STAGEDEMO/REPORT.md。可复跑Linux工具，不是全UI写入验收、生产部署、智能体推理或全系统完成。 |
