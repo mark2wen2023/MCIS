@@ -516,3 +516,15 @@ W archive B compatibility: legacy packages containing evidence-intake custody cr
 
 ## W7.4 安全建议只读核查（2026-11-12）
 登记已冻结 RecommendationsPage.tsx 的窄接线：新增独立 recommendationReview 正文/全部已登记回复读取器及可选单建议审计；合同 W7.4-recommendation-review.md 先行，使用原有 GET 与服务端权限。无后端/schema/共享路由修改，不修称旧写并发，无正文编辑、自动状态变更或外发，不触 W11。审计现接口最早至多 200 条，不宣称完整审计链。
+
+## Knowledge archive v1: independent historical collection (2026-11-12, implementation in progress)
+
+User requested enduring structured investigation datasets and reliable recoverable records. This slice is intentionally separate from `.mcase`: preserve all currently stored W19 card documents/index columns/original audit strings, and future complete create/review snapshots, in a bounded versioned JSON envelope. Lead-only save creates immutable read-only history, never online cards or reactivated approval. Historical Published is not a present release decision. Existing Withdrawn cards have already overwritten publication approval fields; no old missing fields are reconstructed. Snapshot coverage starts explicitly with the first new writer transaction and retains the prior original chain hash.
+
+Cross-module agreement: three exact global non-case tables (`knowledge_archives`, `knowledge_audit_snapshots`, `knowledge_audit_snapshot_epoch`) may be added to the working-record archive GLOBALS exclusions after confirming no case_id, case foreign keys, or case retrieval. This preserves existing `.mcase` scope, not broader backup completeness; unknown nonempty case tables still fail closed. Free-text privacy/public-source truth cannot be guaranteed by a Public/Synthetic label. All original source/review labels are self-reported; hashes only check internal consistency. New library exports exclude saved history collections, whose exact original files remain separately retrievable.
+
+Contract: `contracts/knowledge-archive-v1.md`; design-only independent review: `tests_acceptance/KNOWLEDGEARCHIVE/PRE_REVIEW.md`. Runtime implementation and independent acceptance remain outstanding. No W11, deployment, online restoration, automatic disclosure, model call, or candidate derivation.
+
+### Archive B uniform OpenAPI omission
+
+Unmodified baseline W19/W19.2 suite reproduced 65 pass / 1 route-contract failure: PR36's two real archive-history GET routes were described only in the dedicated fragment, absent from shared OpenAPI. Added their shared declarations and removed stale implementation-pending prose; no runtime routing or behavior changes. Same 66 tests now pass (9.20s), original red assertion unchanged. Independent route test passes, and two isolated synthetic databases produced actual restored provenance JSON conforming to both declarations plus exact historical bytes/headers. This is contract integration correction, not a new runtime restoration claim.

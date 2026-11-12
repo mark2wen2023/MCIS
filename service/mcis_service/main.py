@@ -1,5 +1,6 @@
 """FastAPI 应用入口。运行：.venv/bin/python -m mcis_service（只监听 127.0.0.1）。"""
 from __future__ import annotations
+from .knowledge_archive.router import router as knowledge_archive_router
 
 from contextlib import asynccontextmanager
 
@@ -93,6 +94,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(tracks_import_router)  # W10.2 explicit CSV first-track input
     app.include_router(environment_router)  # W9.2 partial observations only
     app.include_router(knowledge_router)
+    app.include_router(knowledge_archive_router)
     app.include_router(analysis_router)  # W12
     app.include_router(interview_compare_router)  # W5
     return app

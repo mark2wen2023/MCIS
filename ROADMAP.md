@@ -348,3 +348,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | W7.4 | 待独立验收 | 2026-11-12 | 基于已合并W7ACCESS，安全建议正文/已登记回复/独立权限审计只读核查，10回复/组、审计最早至多200条。冻结 logs/W74-impl-hashes-frozen.txt；真实HTTP合成浏览器、权限拒绝、GET-only及无审计写通过，待延迟/身份/导航独立验收。无正文编辑/CAS/外发/部署。 |
 | W7.4 | 已独立验收 | 2026-11-12 | 独立组件浏览器覆盖迟到body/audit、关闭刷新重开、切卡切案导航操作人、审计403隔离/畸形整批拒绝/空内容/移动键盘/GET-only；真实HTTP合成DB浏览器复跑、API6、TS/lint/build和旧W7前端41+30通过，10冻结一致。DEFECTS/W74.md无阻塞；只读增量，既有写操作不在GET-only保证内，未部署。 |
 | W7.4 | 最终集成复验通过 | 2026-11-12 | 基于归档B已合并 fdb8a210；完整保留其65文件，REQUESTS/ROADMAP仅追加W7.4。独立再次核10冻结/API6/中断浏览器/真实HTTP浏览器，远端mcase+working_records_archive逐blob一致；实施服务联动99通过、tsc/build/旧W7前端复跑通过。准备正常PR合并，不部署。 |
+
+| 2026-11-12 | Knowledge archive v1 | 待独立验收 | 独立全局知识JSON归档→预检→只读历史→原包下载，不恢复在线库/不自动公开；今后create/review同事务完整快照与明确旧缺失覆盖。归档预算不成为在线撤回限制，3全局表精确兼容.mcase未知表门禁；未知保存绑定主体+同字节重试、仅明确预事务拒绝标记释放。后端185定向组合过44.85s，UI18模型断言/tsc/build/API-double通过；独立正式双库/权限/并发/回滚/真实浏览器尚待完成。21实现冻结logs/KNOWLEDGEARCHIVE-impl-hashes-frozen.txt；B两新增GET统一OpenAPI遗漏一并补正，无运行路由变化。非全库/生产认证/全历史备份，不部署、不碰W11。 |
+
+| 2026-11-12 | Knowledge archive v1 | 受限切片独立验收通过 | 最终独立70项后端/12.92s、真实Chromium+双空库服务原包往返/提交后503同字节恢复、4新版身份迟响应API-double均过，21冻结前后相等；补受控export/review交错，仅完整旧/新快照。完整保全现存知识卡/原链与前向审核快照，历史Published不激活；旧覆盖审批不可还原，知识来源文件不含、非在线库/全系统恢复。原主体未知请求不能借另一主体同SHA回执宣称成功，已知保守锁边界记录。未测任意崩溃/生产多worker/全repo；详见tests_acceptance/KNOWLEDGEARCHIVE/REPORT.md、DEFECTS/KNOWLEDGEARCHIVE.md。不部署、不触W11。 |
