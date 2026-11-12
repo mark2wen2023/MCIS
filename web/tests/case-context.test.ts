@@ -2,13 +2,13 @@ import { caseForLocation, navigationForCase } from '../src/caseContext'
 const demo = 'CASE-2026-DEMO-LILY-MARY', real = 'CJK-2024-1230-YangZe22-VegaDream'
 let count = 0
 function equal(a: string, b: string) { if (a !== b) throw new Error(`${a} != ${b}`); count++ }
-for (const route of ['report', 'colreg', 'analysis', 'evidence', 'recs']) {
+for (const route of ['report', 'colreg', 'analysis', 'evidence', 'recs', 'interview']) {
   equal(caseForLocation('/' + route, '?case=' + real, demo), real)
   equal(caseForLocation('/' + route, '', demo), demo)
   equal(navigationForCase(route, real, demo), '/' + route + '?case=' + real)
   equal(navigationForCase(route, demo, demo), '/' + route)
 }
-for (const route of ['interview', 'sim', 'cases']) {
+for (const route of ['sim', 'cases']) {
   equal(caseForLocation('/' + route, '?case=' + real, demo), demo)
   equal(navigationForCase(route, real, demo), '/' + route)
 }

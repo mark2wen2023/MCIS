@@ -1,0 +1,23 @@
+...F
+=================================== FAILURES ===================================
+________________________ test_colreg_seed_and_evaluate _________________________
+
+client = <starlette.testclient.TestClient object at 0x7f11b937b2f0>
+
+    def test_colreg_seed_and_evaluate(client):
+        c = client.get(f"{C}/colreg", headers=H()).json()
+        assert [b["bandId"] for b in c["bands"]] == ["B1", "B2", "B3", "B4", "B5"] and len(c["checks"]) == 24
+        r = client.post(f"{C}/colreg:evaluate", json={}, headers=H())
+        if not HAS_DOTNET:
+            assert r.status_code == 501
+            pytest.skip("需要 ~/.dotnet 才能调用 mcis-core colreg")
+>       assert r.status_code == 200, r.text
+E       AssertionError: {"code":"CORE_NO_OUTPUT","message":"计算核心未返回有效结果。"}
+E       assert 502 == 200
+E        +  where 502 = <Response [502 Bad Gateway]>.status_code
+
+tests/test_agents_colreg_sim.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_agents_colreg_sim.py::test_colreg_seed_and_evaluate - Asser...
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 3 passed in 12.19s

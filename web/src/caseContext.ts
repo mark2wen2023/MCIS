@@ -1,5 +1,5 @@
 /** Only routes that actually bind their reads/writes to ?case may retain context. */
-export const CASE_CONTEXT_ROUTES = new Set(['colreg', 'analysis', 'report', 'evidence', 'recs'])
+export const CASE_CONTEXT_ROUTES = new Set(['colreg', 'analysis', 'report', 'evidence', 'recs', 'interview'])
 
 export function supportsCaseContext(pathname: string): boolean {
   return CASE_CONTEXT_ROUTES.has(pathname.replace(/\/$/, '').split('/').pop() || '')

@@ -1,0 +1,9 @@
+web/src/pages/InterviewPage.tsx: OK
+web/src/interview/InterviewView.tsx: OK
+web/src/caseContext.ts: OK
+web/tests/interview-context.test.tsx: OK
+web/tests/interview-render.test.tsx: OK
+web/tests/case-context.test.ts: OK
+web/tests/run-interview-context.sh: OK
+service/mcis_service/interview_compare/router.py: OK
+service/tests/test_interview_context_w5.py: OK
