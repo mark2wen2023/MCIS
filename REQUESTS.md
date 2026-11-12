@@ -470,3 +470,6 @@ GET-only unknown-outcome recovery. Independent acceptance required before comple
 
 ## W14.4 假设单船恒舵响应预览
 新增合同/schema/OpenAPI、隔离mcis-nomoto工具与page12子集，修改main.py/main.tsx/routes/caseContext共享入口。引用原核心不改核心，不接W11。参数必须人工提供，输入来源/不确定性说明必填；两条航迹均假设。碰撞/临界/多船/锚泊/完整What-if未实现，零安全结论，不部署。
+
+## W18.4 人工分类草稿持久化
+合同/schema/OpenAPI先行。新增独立Hfacs CLI、case-scoped worksheet/audit/request表、main与models_registry注册、HFACS pane；保留工休预览及PR25边界修正。人工选择仅待核查，不作证人/人员过错或责任判断；目录为项目版本而非统一海事标准。固定Draft/ToBeVerified/Investigator，不连接确认/报告/ECFC，不触W11。原子事务+版本摘要+幂等收据，审计权限独立，不部署。

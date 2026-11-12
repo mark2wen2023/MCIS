@@ -16,6 +16,7 @@ from .access_workbench.router import router as access_workbench_router
 from .human_factors_preview.router import router as human_factors_preview_router
 from .bowtie_preview.router import router as bowtie_preview_router
 from .nomoto_preview.router import router as nomoto_preview_router
+from .hfacs_drafts.router import router as hfacs_drafts_router
 from .case_metadata.router import router as case_metadata_router
 from .cases.router import router as cases_router
 from .tracks_import.router import router as tracks_import_router
@@ -81,6 +82,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(human_factors_preview_router)
     app.include_router(bowtie_preview_router)
     app.include_router(nomoto_preview_router)
+    app.include_router(hfacs_drafts_router)
     app.include_router(access_workbench_router)
     app.include_router(package_intake_router)
     app.include_router(evidence_intake_router)  # W4.2 supplied-file intake
