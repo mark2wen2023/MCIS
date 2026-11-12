@@ -161,3 +161,5 @@
 | 2026-11-12 | W8.1 | 最小切片独立验收通过 | 案件大厅列表/进入、空错重试、case/role重新挂载；Web611断言+另case-context28、SSR16、mock浏览器20、真实HTTP浏览器21与build通过。按钮对比缺陷修复复验；真实HTTP为新种子库只读集成，非生产认证。新建/编辑/.mcase/全模块隔离未完成。见 logs/w8.1-integration-review.md；不部署。 |
 
 | 2026-11-12 | W16字体覆盖修复 | 限定切片待合并验收 | 固定官方Noto Sans SC字体/OFL、可复现构建脚本、生产路径回归；独立报告177通过，旧字体回归明确失败。冻结 logs/w16-font-impl-hashes-frozen.txt。仅缺字修复，原报告不变；Windows Word/完整产品验收未完成，不部署。 |
+| 2026-11-12 | CPA bounded sampling | 待测（安全切片） | 仅案件级CPA时间序列：有限数、实际5001点上限与浮点前进检查，保持有效采样网格及权限顺序；自测29+合同4通过。冻结 logs/cpa-bounds-impl-hashes-frozen.txt，独立验收待完成。不关闭旧align，不宣称生产鉴权，不部署。 |
+| 2026-11-12 | CPA bounded sampling | 独立安全切片验收通过 | 拒非有限值/浮点停滞并硬限5001点，保留正常累计采样；独立18项含400随机网格对比。整合当前main（含W16字体）服务470+独立18+旧安全75+来源9合计572通过、无跳过。九项CPA/W16冻结匹配。见 logs/cpa-bounds-verification.md；旧align与生产认证仍未修，不部署。 |

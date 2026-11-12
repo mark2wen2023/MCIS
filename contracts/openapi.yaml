@@ -742,7 +742,13 @@ paths:
       - { name: stepSec, in: query, schema: { type: number, default: 15 } }
       - { name: ownVesselId, in: query, schema: { type: string } }
       - { name: targetVesselId, in: query, schema: { type: string } }
-    get: { tags: [colreg], summary: 两船 DCPA/TCPA 序列（mcis-core 批量计算）, responses: { '200': { description: '{thresholds, results: CpaResult[]}' } } }
+    get:
+      tags: [colreg]
+      summary: 两船 DCPA/TCPA 序列（mcis-core 批量计算）
+      description: 时间参数必须有限、步长为正且能推进浮点采样；名义区间最多5000步，含1e-9端点容差后最多5001点。超出预算返回BAD_RANGE，不调用核心。
+      responses:
+        '200': { description: '{thresholds, results: CpaResult[]}' }
+        '422': { $ref: '#/components/responses/Problem' }
   /api/v1/cases/{caseId}/colreg:
     parameters: [{ $ref: '#/components/parameters/caseId' }]
     get:

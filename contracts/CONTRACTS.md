@@ -131,3 +131,7 @@ Python 核心适配器要求 JSON 顶层为对象、ok 为真正布尔值；成�
 这是对原先过宽的新命令输入的收紧；成功载荷不重写，play/pause 的无关有限 rate 保留，`PUT sim/state` 倍速范围不变。不会修改/跳过历史命令，不改变 ACK、重启恢复或投递保证；focus 是否可用及实际副作用仍由消费者判断。
 
 勘误（W13.2 核查）：上述 §8「sim/commands 同样不持久化」是旧描述；当前 `service/mcis_service/sim/router.py::_issue` 将命令写入 SQLite `SimCommandRow`（`sim_commands` 表），`sim/state` 仍为内存态。命令持久化不代表执行 ACK，也不保证消费者重启后的可靠恢复；本切片不改变这些语义。
+
+### CPA 序列采样预算（2026-11-12）
+
+`GET /api/v1/cases/{caseId}/cpa` 的 fromSec、有效 toSec（含省略时案件时长）及 stepSec 必须为有限数，stepSec > 0，既有 `(toSec-fromSec)/stepSec <= 5000` 限制保留。采样按累计步进、端点 `1e-9` 容差、三位小数舍入生成，但最多 5001 点；浮点步进不能前进或包含容差后超出预算均返回 422 `BAD_RANGE`，不调用核心、不部分计算。有效反向空区间语义、权限校验、响应及 CLI 不变。该预算仅约束此路由的采样循环，不是整个服务的资源限制或生产身份认证。
