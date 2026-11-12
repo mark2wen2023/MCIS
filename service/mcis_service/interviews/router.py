@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from typing import Any, Literal
+from sqlalchemy import select
+from ..manual_interviews.models import InterviewRequestReceiptRow
 
 from fastapi import APIRouter, Body
 from fastapi.responses import JSONResponse
@@ -89,7 +91,11 @@ def create_interview(case_id: str, body: dict[str, Any] = Body(...), ctx: Ctx = 
         if body.get('evidenceId'):
             doc['sourceSha256'] = access.source(s, case_id, ctx.role, body['evidenceId'])['sha256']
         doc["caseId"] = case_id
-        doc.setdefault("recordId", next_key([d["recordId"] for d in list_docs(s, InterviewRow, case_id)], "IR-"))
+        current_ids = [d["recordId"] for d in list_docs(s, InterviewRow, case_id)]
+        reserved_ids = set(s.scalars(select(InterviewRequestReceiptRow.record_id).where(InterviewRequestReceiptRow.case_id == case_id)))
+        doc.setdefault("recordId", next_key([*current_ids, *reserved_ids], "IR-"))
+        if isinstance(doc.get("recordId"), str) and doc["recordId"] in reserved_ids and doc["recordId"] not in current_ids:
+            raise problem(409, "INTERVIEW_RECORD_ID_RESERVED", "该笔录编号由历史回执保留，不可重新绑定")
         doc.setdefault("signed", False)
         doc.setdefault("turns", [])
         doc.setdefault("statements", [])

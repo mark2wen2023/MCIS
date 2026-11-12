@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from fastapi.routing import APIRoute
 from sqlalchemy import select
 import json
+import threading
 
 from ..common.context import ROLES, problem
 from ..redaction.models import AccessPolicyRow
@@ -18,6 +19,8 @@ def begin(session):
         conn = session.connection()
         if not conn.connection.driver_connection.in_transaction:
             conn.exec_driver_sql('BEGIN IMMEDIATE')
+            # Only this successful statement proves a reserved SQLite writer.
+            session.info['_mcis_reserved_writer'] = (session.get_transaction(), conn, threading.current_thread())
 
 
 def deny():

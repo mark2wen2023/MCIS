@@ -854,6 +854,76 @@ components:
 
 
 paths:
+  /api/v1/cases/{case_id}/manual-interviews:
+    parameters:
+    - {name: case_id, in: path, required: true, schema: {type: string}}
+    post:
+      tags: [manual-interviews]
+      summary: 创建未签署空人工笔录及幂等回执
+      description: 'See manual-interviews-v1.md. Full original-content access required; backupAcknowledged:true only acknowledges software backup limitation, not legal signature.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: 'schemas/manual-interviews.schema.json#/$defs/create'}
+      responses:
+        '201': {description: Created, content: {application/json: {schema: {$ref: 'schemas/manual-interviews.schema.json#/$defs/response'}}}}
+        '200': {description: Exact request replay, content: {application/json: {schema: {$ref: 'schemas/manual-interviews.schema.json#/$defs/response'}}}}
+        '403': {description: Original content access denied}
+        '409': {description: Request conflict or unavailable current target}
+        '413': {description: Body exceeds128KiB}
+        '415': {description: JSON required}
+        '422': {description: Strict input rejected}
+  /api/v1/cases/{case_id}/manual-interviews/{record_id}/turns:
+    parameters:
+    - {name: case_id, in: path, required: true, schema: {type: string}}
+    - {name: record_id, in: path, required: true, schema: {$ref: 'schemas/manual-interviews.schema.json#/$defs/recordId'}}
+    post:
+      tags: [manual-interviews]
+      summary: 按完整文档摘要追加一轮原样问答
+      description: 'See manual-interviews-v1.md. Same request checked before digest; no overwriting prior turns or automatic statement/signature.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: 'schemas/manual-interviews.schema.json#/$defs/append'}
+      responses:
+        '201': {description: Appended, content: {application/json: {schema: {$ref: 'schemas/manual-interviews.schema.json#/$defs/response'}}}}
+        '200': {description: Exact replay, content: {application/json: {schema: {$ref: 'schemas/manual-interviews.schema.json#/$defs/response'}}}}
+        '403': {description: Current permission/source denied}
+        '404': {description: Record not found after gate}
+        '409': {description: Version/request/source conflict or signed/unsupported state}
+        '413': {description: Body exceeds128KiB}
+        '415': {description: JSON required}
+        '422': {description: Strict input rejected}
+  /api/v1/cases/{case_id}/manual-interviews/requests/{request_id}:
+    parameters:
+    - {name: case_id, in: path, required: true, schema: {type: string}}
+    - {name: request_id, in: path, required: true, schema: {$ref: 'schemas/manual-interviews.schema.json#/$defs/uuid'}}
+    get:
+      tags: [manual-interviews]
+      summary: 按原自报操作者恢复提交元数据
+      description: 'See manual-interviews-v1.md. Rechecks current content/source access. Receipt is historical metadata, not current transcript.404 is not proof that no request committed.'
+      responses:
+        '200': {description: Receipt metadata, content: {application/json: {schema: {$ref: 'schemas/manual-interviews.schema.json#/$defs/response'}}}}
+        '403': {description: Current access denied}
+        '404': {description: Receipt not found; outcome remains uncertain}
+        '409': {description: Actor conflict or current target unavailable}
+        '422': {description: Invalid request ID}
+  /api/v1/cases/{case_id}/manual-interviews/{record_id}:
+    parameters:
+    - {name: case_id, in: path, required: true, schema: {type: string}}
+    - {name: record_id, in: path, required: true, schema: {$ref: 'schemas/manual-interviews.schema.json#/$defs/recordId'}}
+    get:
+      tags: [manual-interviews]
+      summary: 读取当前人工笔录与服务器版本摘要
+      description: 'See manual-interviews-v1.md. Digest is an opaque server token, not client JSON.stringify hash; legacy-unverified source state blocks new append.'
+      responses:
+        '200': {description: Current record, content: {application/json: {schema: {$ref: 'schemas/manual-interviews.schema.json#/$defs/current'}}}}
+        '403': {description: Current original-content/source access denied}
+        '404': {description: Record not found after gate}
+        '409': {description: Source conflict or unsupported stored state}
+        '422': {description: Invalid record ID}
   /api/v1/cases/{caseId}/whatif/nomoto:sources:
     parameters:
       - { $ref: '#/components/parameters/caseId' }

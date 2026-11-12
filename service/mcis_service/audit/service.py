@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 from datetime import datetime
+from contextlib import nullcontext
 import json
+import threading
 from typing import Any
 
 from sqlalchemy import func, select
@@ -41,7 +43,20 @@ def append(s: Session, *, case_id: str, operator: str, role: str, action: str, c
            before: Any = "", after: Any = "", entity_type: str = "", entity_id: str = "",
            utc: datetime | str | None = None, reason: str | None = None,
            snapshot_ref: str | None = None) -> AuditEventRow:
-    with WRITE_LOCK:
+    # A proven SQLite writer already serializes sequence allocation until commit.
+    # Waiting for WRITE_LOCK here would invert outer WRITE_LOCK -> BEGIN callers.
+    proof = s.info.get('_mcis_reserved_writer')
+    reserved = False
+    if isinstance(proof, tuple) and len(proof) == 3:
+        transaction, connection, owner_thread = proof
+        reserved = (owner_thread is threading.current_thread()
+                    and s.get_bind().dialect.name == 'sqlite'
+                    and transaction is s.get_transaction()
+                    and transaction is not None and transaction.is_active
+                    and not connection.closed
+                    and connection is s.connection()
+                    and connection.connection.driver_connection.in_transaction)
+    with nullcontext() if reserved else WRITE_LOCK:
         last = s.scalars(select(AuditEventRow).where(AuditEventRow.case_id == case_id)
                          .order_by(AuditEventRow.seq.desc()).limit(1)).first()
         seq = (last.seq + 1) if last else 1

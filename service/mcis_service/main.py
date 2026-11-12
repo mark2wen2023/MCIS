@@ -27,6 +27,7 @@ from .environment.router import router as environment_router
 from .evidence.router import router as evidence_router
 from .evidence_intake.router import router as evidence_intake_router
 from .interviews.router import router as interviews_router
+from .manual_interviews.router import router as manual_interviews_router
 from .package.router import router as package_router
 from .package_intake.router import router as package_intake_router
 from .recommendations.router import router as recommendations_router
@@ -76,7 +77,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     def health():
         return {"status": "ok", "service": "mcis-service", "version": __version__}
 
-    for r in (cases_router, evidence_router, timeline_router, interviews_router, recommendations_router, colreg_router,
+    for r in (cases_router, evidence_router, timeline_router, interviews_router, manual_interviews_router, recommendations_router, colreg_router,
               audit_router, redaction_router, agents_router, sim_router, package_router, reports_router):
         app.include_router(r)
     app.include_router(human_factors_preview_router)
