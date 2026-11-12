@@ -3,6 +3,7 @@ import {getRole} from '../api'
 import * as api from '../knowledge/api'
 import {KINDS,STATUSES,permissions,utc,sample,type Card,type Content,type Status,type Kind,type Page} from '../knowledge/model'
 import '../styles/w19.css'
+import {SuggestionPreview} from '../knowledge/SuggestionPreview'
 export function KnowledgePage(){const key=useSyncExternalStore(api.subscribe,api.context,api.context);return <KnowledgeWorkspace key={key}/>}
 function KnowledgeWorkspace(){
  const [who]=useState(api.identity),[scope]=useState(api.context),access=permissions(getRole())
@@ -51,7 +52,7 @@ function CreateCard({disabled,onCreate}:{disabled:boolean;onCreate:(c:Content)=>
  <label>标签（英文逗号分隔，最多8个）<input required value={tags} maxLength={327} onChange={e=>setTags(e.target.value)}/></label><label>来源类型<select value={form.source.type} onChange={e=>{const s={...form.source,type:e.target.value as 'Public'|'Synthetic'};delete s.url;setForm({...form,source:s})}}><option value="Synthetic">合成样本</option><option value="Public">公开资料（仍需明确审批）</option></select></label>
  {(['title','locator','excerpt','rightsNote'] as const).map((k,i)=><label key={k}>{['来源标题','页码/章节/段落定位','原文摘录','使用权与公开依据说明'][i]}<textarea required maxLength={[240,240,2000,1000][i]} value={form.source[k]} onChange={e=>source(k,e.target.value)}/></label>)}
  {form.source.type==='Public'&&<label>HTTPS来源链接<input required type="url" maxLength={1000} value={form.source.url||''} onChange={e=>source('url',e.target.value)}/></label>}
- <button type="submit">保存为内部待审候选</button></fieldset></form></details>
+ <SuggestionPreview key={JSON.stringify([form.kind,form.source])} input={{kind:form.kind,source:form.source}} onApply={c=>{setForm(c);setTags(c.tags.join(','))}}/><button type="submit">保存为内部待审候选</button></fieldset></form></details>
 }
 
 function AuditReader({who,valid}:{who:string;valid:()=>boolean}){

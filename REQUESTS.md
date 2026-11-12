@@ -493,3 +493,6 @@ Approved narrow shared changes: reports/access.py marks only successfully acquir
 
 ### Archive safety A: refuse known incomplete exports
 Authorized narrow package export correction, following synthetic reproduction: ReportRow/ReportAuditRow export200 omitted documents; legacy InterviewRow export200 could not be restored (422). Preserve existing permission and source checks, then reject known report/interview records or residual classified audit with409 ARCHIVE_RESTORE_UNSUPPORTED before files/export audit. Preserve dedicated manual receipt refusal. No import, shared lock, core/W11 or database content changes. See contracts/archive-export-safety-v1.md.
+
+## W19.2 来源模板整理预览（2026-11-12）
+登记跨包/已冻结改动：knowledge/router.py、KnowledgePage.tsx和共享openapi.yaml；仅追加只读预览、保留W19.1创建/审批/审计。新合同W19.2-suggestion-preview.md先行。不触及W11及笔录/报告。采用受控模板stub，未接LLM，不代表自动知识理解已完成。
