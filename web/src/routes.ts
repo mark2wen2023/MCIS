@@ -9,6 +9,7 @@ export interface RouteDef {
 
 // 与 prototype/index.html 的导航一致（01–08 主流程，09–17 国际对标调查模块）。
 export const ROUTES: RouteDef[] = [
+  { path: 'agents', num: 'AI', name: '智能体协作状态', desc: '配置登记 / 人工草稿队列', group: 'core', live: true },
   { path: 'lobby', num: '01', name: '案件大厅', desc: '案件列表 / 进入调查', group: 'core', live: true },
   { path: 'case', num: '02', name: '信息录入', desc: '基本档案 / 文字编辑', group: 'core', live: true },
   { path: 'ships', num: '03', name: '船舶参数', desc: '静态参数录入 / 来源 / 查看', group: 'core', live: true },

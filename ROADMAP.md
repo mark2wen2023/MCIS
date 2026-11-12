@@ -334,3 +334,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 | W19.2 | 待测 | 2026-11-12：来源摘录→受控模板预览→人工候选表单；无模型/无自动保存发布；专项67通过、TS/UI/合成真实HTTP浏览器通过；冻结 logs/W192-impl-hashes-frozen.txt；自动知识理解仍未实现。 |
 | W19.2 | 已验收（限定范围） | 2026-11-12：独立API14、延迟/重复/网络失败浏览器、真实HTTP合成闭环通过；D01文案修复复测关闭；基于归档A main24db6d0集成后专项82及web build通过；无自动知识理解/LLM，详见DEFECTS/W192.md。 |
+
+| W20.3 | 待测 | 2026-11-12：只读六角色配置登记与按案草稿队列；主会话/自动调度未接通，无假交互；合成真实HTTP/浏览器、API7、TS/build与W20.2 UI34通过；冻结logs/W203-impl-hashes-frozen.txt。 |
+| W20.3 | 已验收（只读状态范围） | 2026-11-12：独立API7、格式/路由校验、跨案身份导航/错误空状态/键盘移动端浏览器及真实HTTP合成库通过；D01引用格式修复复测关闭。主会话、自动任务编排、真实模型能力均未实现或验证；无部署。 |
