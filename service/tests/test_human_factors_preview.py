@@ -271,3 +271,60 @@ def test_real_cli_split_limit_is_hours_not_number_of_segments(preview):
     result=response.json()['result']
     split=[row for row in result['findings']+result['insufficientData'] if row['rule']=='RestSplit']
     assert split and all(row['limitHours']==10 for row in split)
+
+
+def test_real_cli_three_rest_periods_require_explicit_unassessed_notice(preview):
+    """Preserve core behavior: empty findings do not assess total rest-period count."""
+    client,_=preview
+    if not api.CLI.is_file(): pytest.skip('real CLI not installed yet')
+    value=body()
+    edges=[(0,6,'Rest'),(6,8,'Watch'),(8,12,'Rest'),(12,14,'Watch'),(14,15,'Rest'),(15,24,'Watch')]
+    def stamp(hour):
+        return '2026-01-02T00:00:00Z' if hour==24 else f'2026-01-01T{hour:02}:00:00Z'
+    value['intervals']=[{'startUtc':stamp(a),'endUtc':stamp(b),'kind':kind} for a,b,kind in edges]
+    response=client.post(URL,json=value,headers=H())
+    assert response.status_code==200,response.text
+    output=response.json(); result=output['result']
+    assert result['totals']['restHours']==11
+    assert result['findings']==[]
+    assert not any(row['rule']=='RestSplit' for row in result['insufficientData'])
+    assert any('休息段数未评估，不能据此判断合规' in text for text in output['limitations'])
+    assert any('不检查休息总段数' in text for text in output['limitations'])
+    assert output['assessment']=='technical-preview-only'
+
+
+def test_real_cli_five_hours_empty_findings_are_not_compliance(preview):
+    client,_=preview
+    if not api.CLI.is_file(): pytest.skip('real CLI not installed yet')
+    value=body(); value['recordEndUtc']='2026-01-01T05:00:00Z'
+    value['intervals']=[{'startUtc':value['recordStartUtc'],'endUtc':value['recordEndUtc'],'kind':'Rest'}]
+    response=client.post(URL,json=value,headers=H()); assert response.status_code==200,response.text
+    output=response.json(); result=output['result']
+    assert result['findings']==result['insufficientData']==[]
+    assert result['coverage']['has24hWindow'] is False and result['coverage']['has7dWindow'] is False
+    assert any('均为空也不作合规结论' in x for x in output['limitations'])
+    # Preserve original assumptions verbatim, explain their historical wording separately.
+    assert any('判合规' in x for x in result['assumptions'])
+    assert any('旧措辞仅为模型历史描述，不是本预览的合规结论' in x for x in output['limitations'])
+
+
+def test_real_cli_one_minute_rest_changes_interval_without_legal_threshold(preview):
+    client,_=preview
+    if not api.CLI.is_file(): pytest.skip('real CLI not installed yet')
+    value=body()
+    def stamp(hm): return f'2026-01-01T{hm}:00Z'
+    value['intervals']=[
+        {'startUtc':stamp('00:00'),'endUtc':stamp('06:00'),'kind':'Rest'},
+        {'startUtc':stamp('06:00'),'endUtc':stamp('13:30'),'kind':'Watch'},
+        {'startUtc':stamp('13:30'),'endUtc':stamp('13:31'),'kind':'Rest'},
+        {'startUtc':stamp('13:31'),'endUtc':stamp('21:00'),'kind':'Watch'},
+        {'startUtc':stamp('21:00'),'endUtc':'2026-01-02T00:00:00Z','kind':'Rest'}]
+    response=client.post(URL,json=value,headers=H()); assert response.status_code==200,response.text
+    output=response.json(); result=output['result']
+    assert not any(row['rule']=='RestInterval' for row in result['findings']+result['insufficientData'])
+    assert any('短暂间歇未经业务定义和专业核对不得当作法定休息' in x for x in output['limitations'])
+    assert any('不设定法定最短休息阈值' in x for x in output['limitations'])
+    value['intervals']=[value['intervals'][0],{'startUtc':stamp('06:00'),'endUtc':stamp('21:00'),'kind':'Watch'},value['intervals'][-1]]
+    without=client.post(URL,json=value,headers=H()); assert without.status_code==200,without.text
+    plain=without.json()['result']
+    assert any(row['rule']=='RestInterval' for row in plain['findings']+plain['insufficientData'])
