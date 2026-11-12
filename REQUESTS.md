@@ -443,3 +443,8 @@ W8.4 共享壳补充：Layout 目前仅在切案/大厅时读取标题，保存�
 独立验收37场景36过1红：隔离数据库故障注入删除已存点后历史导入回执仍200。不是正常操作已证实丢点，但未知写结果恢复UI可能误认完整保存；裁定必须重算原件/配置绑定并核当前全部点，缺失/多点/内容或纪元变更409失败关闭，不自动修复。保留v1冻结及原红测试，返修后整套独立复验。未发布。
 
 W10.2 串行整合以 W8.4 main `7c1208daef26fd263b87edd9d06bab3d6b267725` 为准，35条远端变更逐blob核对保留。W8.4共享OpenAPI/main.py整文件冻结因已登记W10路由追加预期漂移，剥离W10专属新增后与W8.4原文逐字一致；不改旧冻结。W8.4业务合同/实现与10项UI冻结不变，独立组合重验另记。本轮没有改caseContext/Layout/Lobby/metadata字段规则。
+
+## 2026-11-12 W4.2 数字文件副本登记切片（实现前）
+以W10.2 main096e3d2为基线，依据原型09/ARCHITECTURE R-03及NIST IR8387/SWGDE/IMO已核资料，先行合同见contracts/W4.2-evidence-intake.md。仅已获得文件的副本保全，已知UTC整秒提取人/时间必填，默认Restricted并确认；8MiB是工程上限，不代表业务标准。新独立evidence_intake/evidenceIntake，现有Evidence/Custody Register.detail存请求元数据，避免新增表/mcase扩展；共享main/OpenAPI接线，EvidencePage只嵌入面板并刷新清单。W4.1/旧W8.2 EvidencePage冻结预期接线漂移，旧冻结保留。与W11按精确主线串行，不碰其图/核心/包实现。无真实文件上传、钟差或多模态解析、部署或生产认证承诺。
+
+W4.2 D01裁定：独立网络故障复现关闭表单主动abort已发commit，发生于服务器读请求体前，不是已落库后撤销。新面板commit与可取消读取分离；SPA关闭/导航只失效UI，网络/整页终止结果仍可能未知。保留旧freeze及红用例，返修新冻结后完整复验。

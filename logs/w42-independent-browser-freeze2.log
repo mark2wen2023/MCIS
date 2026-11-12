@@ -1,0 +1,7 @@
+PASS NETWORK lifecycle + same/different concurrent + fresh DB mcase
+PASS BROWSER local selection/invalidation/doubleclick/XSS/reopen/download/1440+1920/keyboard
+PASS BROWSER lost write response recovered read-only
+PASS BROWSER delayed preview case/role/reopen/Back isolation
+PASS BROWSER in-flight write survives close and cannot populate reopened session
+PASS BROWSER delayed receipt cannot cross evidence selection
+PASS BROWSER 8MiB upload/save/download and reject +1 byte

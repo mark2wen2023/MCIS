@@ -43,6 +43,241 @@ components:
       description: 错误（400/403/404/409/422/501/502/503）
       content: { application/json: { schema: { $ref: 'schemas/common.schema.json#/$defs/problem' } } }
   schemas:
+    EvidenceIntakeMetadata:
+      type: object
+      additionalProperties: false
+      required:
+      - title
+      - source
+      - extractedBy
+      - extractedUtc
+      - category
+      - confidentiality
+      - note
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 1000
+        source:
+          type: string
+          minLength: 1
+          maxLength: 1000
+        extractedBy:
+          type: string
+          minLength: 1
+          maxLength: 200
+        extractedUtc:
+          type: string
+          pattern: ^[1-9][0-9]{3}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$
+        category:
+          enum:
+          - VDR
+          - AIS
+          - ECDIS
+          - EngineLog
+          - Testimony
+          - Photo
+          - Document
+          - Other
+        confidentiality:
+          const: Restricted
+        note:
+          type: string
+          maxLength: 2000
+    EvidenceIntakeInput:
+      type: object
+      additionalProperties: false
+      required:
+      - profile
+      - fileName
+      - title
+      - source
+      - extractedBy
+      - extractedUtc
+      - category
+      - confidentiality
+      - note
+      - contentBase64
+      properties:
+        profile:
+          const: mcis-evidence-intake-v1
+        fileName:
+          type: string
+          minLength: 1
+          maxLength: 128
+        title:
+          type: string
+          minLength: 1
+          maxLength: 1000
+        source:
+          type: string
+          minLength: 1
+          maxLength: 1000
+        extractedBy:
+          type: string
+          minLength: 1
+          maxLength: 200
+        extractedUtc:
+          type: string
+          pattern: ^[1-9][0-9]{3}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$
+        category:
+          enum:
+          - VDR
+          - AIS
+          - ECDIS
+          - EngineLog
+          - Testimony
+          - Photo
+          - Document
+          - Other
+        confidentiality:
+          const: Restricted
+        note:
+          type: string
+          maxLength: 2000
+        contentBase64:
+          type: string
+          contentEncoding: base64
+          maxLength: 11184812
+    EvidenceIntakeCommit:
+      type: object
+      additionalProperties: false
+      required:
+      - profile
+      - fileName
+      - title
+      - source
+      - extractedBy
+      - extractedUtc
+      - category
+      - confidentiality
+      - note
+      - contentBase64
+      - requestDigest
+      - confirmed
+      properties:
+        profile:
+          const: mcis-evidence-intake-v1
+        fileName:
+          type: string
+          minLength: 1
+          maxLength: 128
+        title:
+          type: string
+          minLength: 1
+          maxLength: 1000
+        source:
+          type: string
+          minLength: 1
+          maxLength: 1000
+        extractedBy:
+          type: string
+          minLength: 1
+          maxLength: 200
+        extractedUtc:
+          type: string
+          pattern: ^[1-9][0-9]{3}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$
+        category:
+          enum:
+          - VDR
+          - AIS
+          - ECDIS
+          - EngineLog
+          - Testimony
+          - Photo
+          - Document
+          - Other
+        confidentiality:
+          const: Restricted
+        note:
+          type: string
+          maxLength: 2000
+        contentBase64:
+          type: string
+          contentEncoding: base64
+          maxLength: 11184812
+        requestDigest:
+          type: string
+          pattern: ^[0-9a-f]{64}$
+        confirmed:
+          const: true
+    EvidenceIntakePreview:
+      type: object
+      required:
+      - caseId
+      - requestDigest
+      - sourceSha256
+      - fileName
+      - byteLength
+      - metadata
+      - profile
+      - warnings
+      properties:
+        caseId:
+          type: string
+        requestDigest:
+          type: string
+        sourceSha256:
+          type: string
+        fileName:
+          type: string
+        byteLength:
+          type: integer
+          minimum: 0
+          maximum: 8388608
+        metadata:
+          $ref: '#/components/schemas/EvidenceIntakeMetadata'
+        profile:
+          const: mcis-evidence-intake-v1
+        warnings:
+          type: array
+          items:
+            type: string
+    EvidenceIntakeReceipt:
+      type: object
+      required:
+      - caseId
+      - requestDigest
+      - sourceSha256
+      - fileName
+      - byteLength
+      - metadata
+      - evidenceId
+      - registeredUtc
+      - registeredBy
+      - registeredRole
+      - evidence
+      - replayed
+      properties:
+        caseId:
+          type: string
+        requestDigest:
+          type: string
+        sourceSha256:
+          type: string
+        fileName:
+          type: string
+        byteLength:
+          type: integer
+          minimum: 0
+          maximum: 8388608
+        metadata:
+          $ref: '#/components/schemas/EvidenceIntakeMetadata'
+        evidenceId:
+          type: string
+        registeredUtc:
+          type: string
+        registeredBy:
+          type: string
+        registeredRole:
+          enum:
+          - Investigator
+          - LeadInvestigator
+        evidence:
+          $ref: schemas/evidence-item.schema.json
+        replayed:
+          type: boolean
     TrackImportInput:
       type: object
       additionalProperties: false
@@ -618,6 +853,218 @@ components:
 
 
 paths:
+  /api/v1/cases/{caseId}/evidence-intakes:preview:
+    post:
+      tags:
+      - evidence-intake
+      summary: 无写入预览：已有数字文件副本，非现场提取
+      description: W4.2 supplied-file profile only. Known whole-second UTC extraction
+        time; never default to registration time. Opaque bytes <=8MiB, JSON <=12MiB.
+        Investigator/Lead and current Restricted policy. Ordinary failure rollback,
+        no process-crash ACID claim. See W4.2-evidence-intake.md.
+      parameters:
+      - $ref: '#/components/parameters/caseId'
+      - $ref: '#/components/parameters/role'
+      - $ref: '#/components/parameters/operator'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvidenceIntakePreview'
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+        '413':
+          $ref: '#/components/responses/Problem'
+        '415':
+          $ref: '#/components/responses/Problem'
+        '422':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EvidenceIntakeInput'
+  /api/v1/cases/{caseId}/evidence-intakes:commit:
+    post:
+      tags:
+      - evidence-intake
+      summary: 人工确认后登记，原件不可覆写，同请求幂等
+      description: W4.2 supplied-file profile only. Known whole-second UTC extraction
+        time; never default to registration time. Opaque bytes <=8MiB, JSON <=12MiB.
+        Investigator/Lead and current Restricted policy. Ordinary failure rollback,
+        no process-crash ACID claim. See W4.2-evidence-intake.md.
+      parameters:
+      - $ref: '#/components/parameters/caseId'
+      - $ref: '#/components/parameters/role'
+      - $ref: '#/components/parameters/operator'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvidenceIntakeReceipt'
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+        '413':
+          $ref: '#/components/responses/Problem'
+        '415':
+          $ref: '#/components/responses/Problem'
+        '422':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EvidenceIntakeCommit'
+  /api/v1/cases/{caseId}/evidence-intakes/{digest}:
+    get:
+      tags:
+      - evidence-intake
+      summary: 只读核查原件与登记回执
+      description: W4.2 supplied-file profile only. Known whole-second UTC extraction
+        time; never default to registration time. Opaque bytes <=8MiB, JSON <=12MiB.
+        Investigator/Lead and current Restricted policy. Ordinary failure rollback,
+        no process-crash ACID claim. See W4.2-evidence-intake.md.
+      parameters:
+      - $ref: '#/components/parameters/caseId'
+      - $ref: '#/components/parameters/role'
+      - $ref: '#/components/parameters/operator'
+      - name: digest
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvidenceIntakeReceipt'
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+        '413':
+          $ref: '#/components/responses/Problem'
+        '415':
+          $ref: '#/components/responses/Problem'
+        '422':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+  /api/v1/cases/{caseId}/evidence/{evidenceId}/intake:
+    get:
+      tags:
+      - evidence-intake
+      summary: 读取本片已有证据回执，不假定旧条目已迁移
+      description: W4.2 supplied-file profile only. Known whole-second UTC extraction
+        time; never default to registration time. Opaque bytes <=8MiB, JSON <=12MiB.
+        Investigator/Lead and current Restricted policy. Ordinary failure rollback,
+        no process-crash ACID claim. See W4.2-evidence-intake.md.
+      parameters:
+      - $ref: '#/components/parameters/caseId'
+      - $ref: '#/components/parameters/role'
+      - $ref: '#/components/parameters/operator'
+      - name: evidenceId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvidenceIntakeReceipt'
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+        '413':
+          $ref: '#/components/responses/Problem'
+        '415':
+          $ref: '#/components/responses/Problem'
+        '422':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+  /api/v1/cases/{caseId}/evidence-intakes/{digest}:download:
+    post:
+      tags:
+      - evidence-intake
+      summary: 按访问目的下载并追加Access审计，非零写入
+      description: W4.2 supplied-file profile only. Known whole-second UTC extraction
+        time; never default to registration time. Opaque bytes <=8MiB, JSON <=12MiB.
+        Investigator/Lead and current Restricted policy. Ordinary failure rollback,
+        no process-crash ACID claim. See W4.2-evidence-intake.md.
+      parameters:
+      - $ref: '#/components/parameters/caseId'
+      - $ref: '#/components/parameters/role'
+      - $ref: '#/components/parameters/operator'
+      - name: digest
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 原bytes；X-Sha256；追加访问与审计
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+        '413':
+          $ref: '#/components/responses/Problem'
+        '415':
+          $ref: '#/components/responses/Problem'
+        '422':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+              - purpose
+              properties:
+                purpose:
+                  type: string
+                  minLength: 1
+                  maxLength: 1000
   /api/v1/cases/{caseId}/track-imports:preview:
     post:
       tags:

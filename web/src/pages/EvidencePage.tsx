@@ -2,6 +2,8 @@ import { useMemo, useState, useSyncExternalStore } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import type { EChartsOption } from 'echarts'
 import { api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
+import { EvidenceIntakePanel } from '../evidenceIntake/EvidenceIntakePanel'
+import { announceEvidenceSelection } from '../evidenceIntake/navigation'
 import { AlignPreviewPanel } from '../align/AlignPreviewPanel'
 import { SERVICE_ADDR } from '../config'
 import { EChart } from '../components/EChart'
@@ -65,6 +67,7 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
   const custody = useLoad(async () => ({ evidenceId: sel?.evidenceId, events: sel ? await api.get<CustodyEvent[]>(casePath(`/evidence/${sel.evidenceId}/custody`, caseId)) : [] }), [sel?.evidenceId])
 
   const refreshEvidence = () => { ev.reload(); custody.reload(); chain.reload() }
+  const selectEvidence = (id: string) => { announceEvidenceSelection(caseId); setSelId(id) }
 
   const verifyAll = () =>
     run(async () => {
@@ -100,6 +103,8 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
         </div>
       </div>
 
+      <EvidenceIntakePanel caseId={caseId} caseTitle={caseRes.data?.title} who={evidenceIdentity()} selectedEvidenceId={sel?.evidenceId} onRegistered={id=>{setSelId(id);refreshEvidence()}} onRefresh={refreshEvidence}/>
+
       <details className="w4-preview-disclosure">
         <summary>临时CSV预览，未入库</summary>
         <AlignPreviewPanel caseId={caseId} />
@@ -125,9 +130,9 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
             </thead>
             <tbody>
               {items.map((e) => (
-                <tr key={e.evidenceId} className={sel?.evidenceId === e.evidenceId ? 'sel' : ''} onClick={() => setSelId(e.evidenceId)}>
+                <tr key={e.evidenceId} className={sel?.evidenceId === e.evidenceId ? 'sel' : ''} onClick={() => selectEvidence(e.evidenceId)}>
                   <td className="mono" style={{ color: 'var(--cyan)' }}>{e.evidenceId}</td>
-                  <td>{e.title}</td>
+                  <td><button type="button" className="w42-evidence-select" onClick={event=>{event.stopPropagation();selectEvidence(e.evidenceId)}}>{e.title}</button></td>
                   <td className="p6-dim">{e.source} / {e.extractedBy}</td>
                   <td className="mono">{toLocal(e.extractedUtc, true, offsetMinutes)}</td>
                   <td className="mono p6-dim" title={e.currentSha256}>{shortHash(e.currentSha256)}</td>

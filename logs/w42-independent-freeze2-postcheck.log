@@ -1,0 +1,13 @@
+contracts/W4.2-evidence-intake.md: OK
+service/mcis_service/evidence_intake/__init__.py: OK
+service/mcis_service/evidence_intake/parser.py: OK
+service/mcis_service/evidence_intake/router.py: OK
+service/tests/test_evidence_intake_w42.py: OK
+web/src/evidenceIntake/EvidenceIntakePanel.tsx: OK
+web/src/evidenceIntake/api.ts: OK
+web/src/evidenceIntake/model.ts: OK
+web/src/evidenceIntake/navigation.ts: OK
+web/src/styles/w4-intake.css: OK
+web/src/pages/EvidencePage.tsx: OK
+web/tests/evidence-intake-w42.test.tsx: OK
+web/tests/run-evidence-intake-w42.sh: OK
