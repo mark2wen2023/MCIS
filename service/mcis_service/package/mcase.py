@@ -181,6 +181,12 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
     from ..manual_interviews.models import InterviewRequestReceiptRow
     from ..interviews.access import begin, require_content
     begin(s)
+    # A new ECFC draft is not part of any supported archive profile. Never omit it.
+    from ..ecfc_drafts.models import EcfcWorksheetRow, EcfcAuditRow, EcfcRequestRow
+    if any(s.execute(select(model.case_id).where(model.case_id==case_id).limit(1)).first()
+           for model in (EcfcWorksheetRow,EcfcAuditRow,EcfcRequestRow)):
+        require_content(s, case_id, role)
+        raise problem(409, 'ECFC_ARCHIVE_UNSUPPORTED', 'ECFC草稿及审计尚未纳入案件包，不能导出不完整案件')
     from ..recommendations.access import protect_package as protect_recommendations
     protect_recommendations(s, case_id, role)
     from ..working_records_archive.service import has_history, build as build_working

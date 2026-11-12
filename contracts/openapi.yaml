@@ -3376,3 +3376,422 @@ paths:
         '422': { $ref: '#/components/responses/Problem' }
         '500': { $ref: '#/components/responses/Problem' }
         '503': { $ref: '#/components/responses/Problem' }
+
+  /api/v1/cases/{case_id}/ecfc/context:
+    get:
+      tags:
+      - ecfc-drafts
+      summary: ECFC原文权限与登记来源上下文
+      description: 见 ecfc-draft-v1.md 和 ecfc-core-v1.md。全12类原文权限、无适用脱敏规则；本地自报角色不是身份认证。专业诊断不阻止草稿；结构规则硬拒绝。所有响应no-store。
+      parameters:
+      - name: case_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 受限响应绑定见合同；saved不表示专业确认；摘要是服务器不透明并发令牌
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                type: object
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+        '413':
+          $ref: '#/components/responses/Problem'
+        '415':
+          $ref: '#/components/responses/Problem'
+        '422':
+          $ref: '#/components/responses/Problem'
+        '503':
+          $ref: '#/components/responses/Problem'
+  /api/v1/cases/{case_id}/ecfc/draft:
+    get:
+      tags:
+      - ecfc-drafts
+      summary: 读取人工ECFC草稿（不代表专业结论）
+      description: 见 ecfc-draft-v1.md 和 ecfc-core-v1.md。全12类原文权限、无适用脱敏规则；本地自报角色不是身份认证。专业诊断不阻止草稿；结构规则硬拒绝。所有响应no-store。
+      parameters:
+      - name: case_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 受限响应绑定见合同；saved不表示专业确认；摘要是服务器不透明并发令牌
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                type: object
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+        '413':
+          $ref: '#/components/responses/Problem'
+        '415':
+          $ref: '#/components/responses/Problem'
+        '422':
+          $ref: '#/components/responses/Problem'
+        '503':
+          $ref: '#/components/responses/Problem'
+  /api/v1/cases/{case_id}/ecfc/preview:
+    post:
+      tags:
+      - ecfc-drafts
+      summary: 真实核心结构与方法提示预览，不保存
+      description: 见 ecfc-draft-v1.md 和 ecfc-core-v1.md。全12类原文权限、无适用脱敏规则；本地自报角色不是身份认证。专业诊断不阻止草稿；结构规则硬拒绝。所有响应no-store。
+      parameters:
+      - name: case_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 受限响应绑定见合同；saved不表示专业确认；摘要是服务器不透明并发令牌
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                type: object
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+        '413':
+          $ref: '#/components/responses/Problem'
+        '415':
+          $ref: '#/components/responses/Problem'
+        '422':
+          $ref: '#/components/responses/Problem'
+        '503':
+          $ref: '#/components/responses/Problem'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+              - draft
+              - expectedSources
+              properties:
+                draft:
+                  type: object
+                  additionalProperties: false
+                  required:
+                  - scope
+                  - nodes
+                  - edges
+                  properties:
+                    scope:
+                      type: string
+                      minLength: 1
+                      maxLength: 1000
+                    nodes:
+                      type: array
+                      maxItems: 40
+                      items:
+                        type: object
+                        additionalProperties: false
+                        required:
+                        - id
+                        - kind
+                        - text
+                        - timeSeconds
+                        - lane
+                        - isPrimaryIncident
+                        - evidenceIds
+                        properties:
+                          id:
+                            type: string
+                            pattern: ^[A-Za-z][A-Za-z0-9_-]{0,63}$
+                          kind:
+                            enum:
+                            - Event
+                            - Condition
+                          text:
+                            type: string
+                            minLength: 1
+                            maxLength: 1000
+                          timeSeconds:
+                            type:
+                            - number
+                            - 'null'
+                            minimum: -315576000
+                            maximum: 315576000
+                          lane:
+                            type: integer
+                            minimum: -5
+                            maximum: 5
+                          isPrimaryIncident:
+                            type: boolean
+                          evidenceIds:
+                            type: array
+                            maxItems: 8
+                            uniqueItems: true
+                            items:
+                              type: string
+                              pattern: ^EV-[0-9]{3,}$
+                    edges:
+                      type: array
+                      maxItems: 80
+                      items:
+                        type: object
+                        additionalProperties: false
+                        required:
+                        - id
+                        - from
+                        - to
+                        properties:
+                          id:
+                            type: string
+                            pattern: ^[A-Za-z][A-Za-z0-9_-]{0,63}$
+                          from:
+                            type: string
+                            pattern: ^[A-Za-z][A-Za-z0-9_-]{0,63}$
+                          to:
+                            type: string
+                            pattern: ^[A-Za-z][A-Za-z0-9_-]{0,63}$
+                expectedSources:
+                  type: array
+                  maxItems: 8
+                  items:
+                    type: object
+                    additionalProperties: false
+                    required:
+                    - evidenceId
+                    - title
+                    - sha256
+                    properties:
+                      evidenceId:
+                        type: string
+                        pattern: ^EV-[0-9]{3,}$
+                      title:
+                        type: string
+                      sha256:
+                        type: string
+                        pattern: ^[a-f0-9]{64}$
+  /api/v1/cases/{case_id}/ecfc/save:
+    post:
+      tags:
+      - ecfc-drafts
+      summary: 保存人工推定ECFC草稿及原子审计，整案暂不支持导出
+      description: 见 ecfc-draft-v1.md 和 ecfc-core-v1.md。全12类原文权限、无适用脱敏规则；本地自报角色不是身份认证。专业诊断不阻止草稿；结构规则硬拒绝。所有响应no-store。
+      parameters:
+      - name: case_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 受限响应绑定见合同；saved不表示专业确认；摘要是服务器不透明并发令牌
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                type: object
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+        '413':
+          $ref: '#/components/responses/Problem'
+        '415':
+          $ref: '#/components/responses/Problem'
+        '422':
+          $ref: '#/components/responses/Problem'
+        '503':
+          $ref: '#/components/responses/Problem'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+              - acknowledgeArchiveLimitation
+              - requestId
+              - expectedDigest
+              - draft
+              - expectedSources
+              properties:
+                acknowledgeArchiveLimitation:
+                  type: boolean
+                  const: true
+                requestId:
+                  type: string
+                  format: uuid
+                expectedDigest:
+                  type:
+                  - string
+                  - 'null'
+                  pattern: ^[a-f0-9]{64}$
+                draft:
+                  type: object
+                  additionalProperties: false
+                  required:
+                  - scope
+                  - nodes
+                  - edges
+                  properties:
+                    scope:
+                      type: string
+                      minLength: 1
+                      maxLength: 1000
+                    nodes:
+                      type: array
+                      maxItems: 40
+                      items:
+                        type: object
+                        additionalProperties: false
+                        required:
+                        - id
+                        - kind
+                        - text
+                        - timeSeconds
+                        - lane
+                        - isPrimaryIncident
+                        - evidenceIds
+                        properties:
+                          id:
+                            type: string
+                            pattern: ^[A-Za-z][A-Za-z0-9_-]{0,63}$
+                          kind:
+                            enum:
+                            - Event
+                            - Condition
+                          text:
+                            type: string
+                            minLength: 1
+                            maxLength: 1000
+                          timeSeconds:
+                            type:
+                            - number
+                            - 'null'
+                            minimum: -315576000
+                            maximum: 315576000
+                          lane:
+                            type: integer
+                            minimum: -5
+                            maximum: 5
+                          isPrimaryIncident:
+                            type: boolean
+                          evidenceIds:
+                            type: array
+                            maxItems: 8
+                            uniqueItems: true
+                            items:
+                              type: string
+                              pattern: ^EV-[0-9]{3,}$
+                    edges:
+                      type: array
+                      maxItems: 80
+                      items:
+                        type: object
+                        additionalProperties: false
+                        required:
+                        - id
+                        - from
+                        - to
+                        properties:
+                          id:
+                            type: string
+                            pattern: ^[A-Za-z][A-Za-z0-9_-]{0,63}$
+                          from:
+                            type: string
+                            pattern: ^[A-Za-z][A-Za-z0-9_-]{0,63}$
+                          to:
+                            type: string
+                            pattern: ^[A-Za-z][A-Za-z0-9_-]{0,63}$
+                expectedSources:
+                  type: array
+                  maxItems: 8
+                  items:
+                    type: object
+                    additionalProperties: false
+                    required:
+                    - evidenceId
+                    - title
+                    - sha256
+                    properties:
+                      evidenceId:
+                        type: string
+                        pattern: ^EV-[0-9]{3,}$
+                      title:
+                        type: string
+                      sha256:
+                        type: string
+                        pattern: ^[a-f0-9]{64}$
+  /api/v1/cases/{case_id}/ecfc/audit:
+    get:
+      tags:
+      - ecfc-drafts
+      summary: 读取最新50条ECFC审计摘要，不是全链认证
+      description: 见 ecfc-draft-v1.md 和 ecfc-core-v1.md。全12类原文权限、无适用脱敏规则；本地自报角色不是身份认证。专业诊断不阻止草稿；结构规则硬拒绝。所有响应no-store。
+      parameters:
+      - name: case_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 受限响应绑定见合同；saved不表示专业确认；摘要是服务器不透明并发令牌
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                type: object
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+        '413':
+          $ref: '#/components/responses/Problem'
+        '415':
+          $ref: '#/components/responses/Problem'
+        '422':
+          $ref: '#/components/responses/Problem'
+        '503':
+          $ref: '#/components/responses/Problem'

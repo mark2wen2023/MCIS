@@ -1,0 +1,7 @@
+7da630a58e175b45b926ca221a76f0ce5aa447bc593f29f9de4a11991519b8bb  web/src/ecfcDrafts/model.ts
+07daafdbf918669f668c6ef4533764dc846e1b3ecff8f246dd926742b1cefa5f  web/src/ecfcDrafts/api.ts
+9ec50a9112977147af5fb8fb8b81ff55b950102de22057c0436c0e5cd5488456  web/src/ecfcDrafts/locks.ts
+80649bf0f50dda6540670ef08f2ca1b716b354d0d9fdeff6b3c521fb8f547f93  web/src/ecfcDrafts/Graph.tsx
+8078ba794bf92dde4cb851ba8b6eef54f946d06f49a699eaad5c0656664a1529  web/src/ecfcDrafts/Panel.tsx
+14b500f42ab6de65c4a90bb7290928b9dd0eb8cf90c7052e3434b44b07e5c09c  web/src/pages/EcfcPage.tsx
+4298b79aab8efec21af314ff58d38af1b8a3809b4ee4f4cd2b502bd0abaee74b  web/src/styles/w11-ecfc.css

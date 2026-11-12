@@ -82,3 +82,8 @@ Thumbs.db
 
 # Test result directories (keep logs/*.trx acceptance records)
 TestResults/
+
+
+# W11 isolated adapter build artifacts
+tools/mcis-ecfc/out/
+tools/mcis-ecfc/obj/
