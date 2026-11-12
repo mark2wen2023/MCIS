@@ -331,3 +331,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-12 | Archive A | 待独立验收 | 合成复现旧报告/快照遗漏及笔录不可恢复；仅对已知不完整内容在权限后拒绝整包导出，原manual回执409保持，不改资料、导入或共享锁。351定向回归、UI9/API-double browser/W83 53/W16 148/W5 40与tsc/build通过；12文件冻结logs/ARCHIVEA-impl-hashes-frozen.txt。尚非归档恢复实现，不部署、不触W11。 |
 
 | 2026-11-12 | Archive A | 独立验收通过 | 18合成API/DB与真实FastAPI浏览器通过，12冻结哈希一致；原报告丢失风险已真实双库复现，现明确拒绝已知不完整包并保持权限/来源先行、无拒绝副作用。见tests_acceptance/ARCHIVEA/REPORT.md与DEFECTS/ARCHIVEA.md。351实施回归与独立18分列，非完整仓库CI；未增加恢复能力，后续版本化工作记录归档仍待完成。 |
+
+| W19.2 | 待测 | 2026-11-12：来源摘录→受控模板预览→人工候选表单；无模型/无自动保存发布；专项67通过、TS/UI/合成真实HTTP浏览器通过；冻结 logs/W192-impl-hashes-frozen.txt；自动知识理解仍未实现。 |
+| W19.2 | 已验收（限定范围） | 2026-11-12：独立API14、延迟/重复/网络失败浏览器、真实HTTP合成闭环通过；D01文案修复复测关闭；基于归档A main24db6d0集成后专项82及web build通过；无自动知识理解/LLM，详见DEFECTS/W192.md。 |

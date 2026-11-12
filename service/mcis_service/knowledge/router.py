@@ -159,3 +159,9 @@ def verify(ctx: Ctx = CtxDep):
             if row.seq != count or d['seq'] != count or d['prevHash'] != prev: return {'valid': False, 'count': count}
             prev = hashlib.sha256(row.line.encode()).hexdigest()
         return {'valid': True, 'count': count}
+
+@router.post('/suggestions')
+def suggestion_preview(body: dict = Body(...), ctx: Ctx = CtxDep):
+    internal(ctx)
+    from .suggestions import suggest
+    return suggest(body)
