@@ -130,12 +130,12 @@ def test_recover_missing_and_current_target_deleted_and_backup_stays_blocked(cli
     before=counts(client)
     from mcis_service.package import mcase
     monkeypatch.setattr(mcase,'build_files',lambda *a,**kw:pytest.fail('must not assemble blocked export'))
-    assert client.get(C+'/export',headers=LEAD).json()['code']=='INTERVIEW_RECEIPTS_BACKUP_UNSUPPORTED'
+    assert client.get(C+'/export',headers=LEAD).json()['code']=='ARCHIVE_RESTORE_UNSUPPORTED'
     assert counts(client)==before
     with client.app.state.db.session() as s:s.execute(delete(InterviewRow))
     assert client.get(URL+'/requests/'+b['requestId'],headers=LEAD).json()['code']=='INTERVIEW_RECEIPT_TARGET_UNAVAILABLE'
     assert client.get(C+'/export',headers=H()).status_code==403
-    assert client.get(C+'/export',headers=LEAD).json()['code']=='INTERVIEW_RECEIPTS_BACKUP_UNSUPPORTED'
+    assert client.get(C+'/export',headers=LEAD).json()['code']=='ARCHIVE_RESTORE_UNSUPPORTED'
 
 
 def test_receipt_append_only_and_all_writes_rollback(client,monkeypatch):
@@ -307,7 +307,7 @@ def test_writer_export_lock_order_no_inversion(client,monkeypatch,writer):
         rid=created['receipt']['recordId']
         with client.app.state.db.session() as s:
             row=s.scalars(select(InterviewRow).where(InterviewRow.case_id==CASE)).one()
-            row.doc={**row.doc,'statements':[{'statementId':'S-1','recordId':rid,'reviewStatus':'Draft','summary':'Synthetic','kind':'Observation','subject':'Synthetic','claim':{'valueType':'Occurrence'},'span':{'round':1,'field':'Answer','start':0,'length':0},'quote':''}]}
+            row.doc={**row.doc,'turns':[{'round':1,'question':'Synthetic','answer':'Synthetic'}],'statements':[{'statementId':'S-1','recordId':rid,'reviewStatus':'Draft','summary':'Synthetic','kind':'Observation','subject':'Synthetic','claim':{'valueType':'Occurrence'},'span':{'round':1,'field':'Answer','start':0,'length':0},'quote':''}]}
     reached=threading.Event(); export_begin=threading.Event(); original=audit_service.append
     def paused(*args,**kwargs):
         if threading.current_thread().name.startswith('AnyIO') and not reached.is_set():
@@ -329,8 +329,13 @@ def test_writer_export_lock_order_no_inversion(client,monkeypatch,writer):
             export=pool.submit(client.get,C+'/export',headers=LEAD)
             result=write.result(timeout=15); exported=export.result(timeout=15)
         assert result.status_code==(200 if writer=='compare' else 201),result.text
-        assert exported.status_code==409,exported.text
-        assert exported.json()['code']==('ARCHIVE_RESTORE_UNSUPPORTED' if writer=='legacy' else 'INTERVIEW_RECEIPTS_BACKUP_UNSUPPORTED')
+        assert exported.status_code==200,exported.text
+        import zipfile,io,json
+        with zipfile.ZipFile(io.BytesIO(exported.content)) as archive:
+            restored=json.loads(archive.read('working-records/backup.v1.json'))
+        assert len(restored['interviews'])==1
+        if writer=='compare':assert restored['interviews'][0]['doc']['statements'][0]['reviewStatus']=='Confirmed'
+        else:assert restored['interviews'][0]['doc']['turns']==[]
         with client.app.state.db.session() as s:
             events=list(s.scalars(select(AuditEventRow).order_by(AuditEventRow.seq)))
             from mcis_service.common.csjson import ZERO_HASH,sha256_utf8

@@ -1,5 +1,5 @@
 export const PROFILE='MCIS-MANUAL-INTERVIEW-1'
-export const BACKUP_WARNING='重要：创建或追加成功后，本案件只要存在此类请求回执，当前版本就无法导出整个 .mcase 案件包；现有案件包导入也不支持恢复这些笔录与回执。旧案件包导出或校验成功，也不等于笔录、报告均可完整恢复。原始资料须独立保管，未绑定原件不等于已经保全。不是完整备份功能，请先确认单位的数据保管安排。'
+export const BACKUP_WARNING='重要：笔录与请求历史仅在1.2.0受限工作记录归档全部校验通过时可导出并恢复到同案号新案件；未知模块、非默认策略、缺失依赖或超出预算均整包拒绝，不遗漏后报成功。恢复回执仅为不可重放的历史，过往签署/确认不等于本次认证。旧包导出或完整性校验成功，不等于笔录、报告均可恢复；原始资料须独立保管，未绑定原件不等于已经保全。本功能不是完整案件备份。'
 export type Binding='none'|'registered-metadata-only'|'legacy-unverified'
 export interface Turn {round:number;question:string;answer:string;utc?:string|null}
 export interface Document {profile:typeof PROFILE;caseId:string;record:{caseId:string;recordId:string;interviewee:{intervieweeId:string;name:string;role:string;affiliation:string};startUtc:string;signed?:boolean;turns:Turn[];[key:string]:unknown};documentDigest:string;sourceBinding:Binding;signed:boolean;identityMode:'local-role-header'}

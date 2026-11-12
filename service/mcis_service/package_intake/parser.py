@@ -134,6 +134,7 @@ class ParsedPackage:
     custody_lines: list[str]
     summary: dict
     hfacs_archive: Any = None
+    working_archive: Any = None
 
 
 def parse_package(data: bytes, *, validated_hfacs=None) -> ParsedPackage:
@@ -145,7 +146,7 @@ def parse_package(data: bytes, *, validated_hfacs=None) -> ParsedPackage:
     def load(path):
         return strict_json(files[path])
     manifest = load("manifest.json")
-    if not isinstance(manifest, dict) or manifest.get("packageFormat") != PACKAGE_FORMAT or manifest.get("packageVersion") not in (PACKAGE_VERSION, "1.1.0"):
+    if not isinstance(manifest, dict) or manifest.get("packageFormat") != PACKAGE_FORMAT or manifest.get("packageVersion") not in (PACKAGE_VERSION, "1.1.0", "1.2.0"):
         fail("不支持的包格式或版本")
     if set(manifest) != {"packageFormat", "packageVersion", "caseId", "createdAtUtc", "lastModifiedAtUtc", "generatorVersion", "files"}:
         fail("未知或不完整清单字段")
@@ -154,7 +155,11 @@ def parse_package(data: bytes, *, validated_hfacs=None) -> ParsedPackage:
             fail("清单时间无效")
     from ..hfacs_drafts.archive import PATH as hfacs_path, ValidatedArchive, validate as validate_hfacs
     has_hfacs = hfacs_path in files
-    if (manifest["packageVersion"] == "1.1.0") != has_hfacs:
+    from ..working_records_archive.validation import PATH as working_path
+    has_working = working_path in files
+    if (manifest['packageVersion'] == '1.2.0') != has_working:
+        fail('外层版本与工作记录扩展不匹配')
+    if manifest['packageVersion'] != '1.2.0' and ((manifest["packageVersion"] == "1.1.0") != has_hfacs):
         fail("外层版本与HFACS扩展不匹配")
     entries = manifest.get("files")
     if not isinstance(entries, list):
@@ -219,6 +224,13 @@ def parse_package(data: bytes, *, validated_hfacs=None) -> ParsedPackage:
             hfacs_archive = validate_hfacs(files[hfacs_path], cid, set(ei))
     allowed = required | {"environment/observations.json", "audit/agent.jsonl"}
     if has_hfacs: allowed.add(hfacs_path)
+    if has_working:
+        allowed.add(working_path)
+        wdata = strict_json(files[working_path])
+        if not isinstance(wdata, dict) or not isinstance(wdata.get('historicalArtifacts'), list): fail('历史文件索引无效')
+        for a in wdata['historicalArtifacts']:
+            if not isinstance(a, dict) or not isinstance(a.get('relativePath'), str): fail('历史文件索引无效')
+            allowed.add(a['relativePath'])
     empty_sections = {"analysis/timeline.json": {"events": []}, "analysis/time-alignment.json": {"conflicts": []},
                       "analysis/colreg.json": {}, "recommendations.json": [], "consultation/rounds.json": [], "agents/drafts.json": []}
     for path, empty in empty_sections.items():
@@ -324,7 +336,16 @@ def parse_package(data: bytes, *, validated_hfacs=None) -> ParsedPackage:
         expected = "".join(line + "\n" for line in audit_lines if strict_json(line.encode()).get("category") == "Agent").encode()
         if files["audit/agent.jsonl"] != expected:
             fail("智能体审计副本与主审计不一致")
+    working_archive = None
+    from ..evidence_intake.parser import PREFIX as intake_prefix
+    if not has_working and any(intake_prefix in line for line in custody_lines):
+        fail('旧包包含证据导入凭证但无历史禁用索引，不能恢复为活跃请求')
+    if has_working:
+        from ..working_records_archive.validation import validate as validate_working
+        with zipfile.ZipFile(io.BytesIO(data)) as outer_zip:
+            outer_members = len(outer_zip.infolist())
+        working_archive = validate_working(files[working_path], cid, files, ei, audit_lines, custody_lines, outer_member_count=outer_members)
     summary = {"caseId": cid, "title": case["title"], "files": len(files), "vessels": len(vessels),
                "trackPoints": sum(map(len, tracks.values())), "observations": len(observations), "evidence": len(evidence),
                "auditEvents": len(audit_lines), "custodyEvents": len(custody_lines)}
-    return ParsedPackage(files, manifest, case, vessels, tracks, observations, evidence, audit_lines, custody_lines, summary, hfacs_archive)
+    return ParsedPackage(files, manifest, case, vessels, tracks, observations, evidence, audit_lines, custody_lines, summary, hfacs_archive, working_archive)
