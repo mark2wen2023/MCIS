@@ -1,0 +1,30 @@
+[
+  {
+    "name": "NETWORK lifecycle + same/different concurrent + fresh DB mcase",
+    "result": "PASS"
+  },
+  {
+    "name": "BROWSER local selection/invalidation/doubleclick/XSS/reopen/download/1440+1920/keyboard",
+    "result": "PASS"
+  },
+  {
+    "name": "BROWSER lost write response recovered read-only",
+    "result": "PASS"
+  },
+  {
+    "name": "BROWSER delayed preview case/role/reopen/Back isolation",
+    "result": "PASS"
+  },
+  {
+    "name": "BROWSER in-flight write survives close and cannot populate reopened session",
+    "result": "PASS"
+  },
+  {
+    "name": "BROWSER delayed receipt cannot cross evidence selection",
+    "result": "PASS"
+  },
+  {
+    "name": "BROWSER 8MiB upload/save/download and reject +1 byte",
+    "result": "PASS"
+  }
+]
