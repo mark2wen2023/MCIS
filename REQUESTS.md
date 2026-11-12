@@ -482,3 +482,11 @@ Contract: contracts/report-content-access-v1.md. Approved scope includes reports
 
 ## W5.2a interview full-content access isolation
 Contract contracts/interview-content-access-v1.md. Existing routes restricted: interviews/compare/redaction preview, related agent drafts/application, audit and package paths. Default Investigator loses original-content access without any policy changes. SQLite writer serialization prevents lost question/answer updates. Old creation becomes unsigned empty draft only; signed records are immutable via these endpoints. Legacy transcript package import rejects rather than restoring permissive policy. W5.2b manual idempotent entry remains separate; no W11/core edits.
+
+## W5.2b manual interview entry
+Contract contracts/manual-interviews-v1.md. New create/append/current/recovery endpoints with requestId receipts and full-document optimistic digest, same original InterviewRow. W5.2a security applies. backupAcknowledged software notice required; any receipt blocks old case-package export before side effects, even if record is gone. No signature/identity or factual verification claim; no W11/core changes.
+
+W5.2b record reservation hardening: approved cross-package change to legacy interviews.create: receipt-referenced IDs remain reserved when original row is absent, including automatic allocation. Explicit reuse409; prevents orphan receipt recovery pointing at a replacement transcript. No alteration of existing original record or receipt.
+
+### W5.2b reviewed shared lock-order correction
+Approved narrow shared changes: reports/access.py marks only successfully acquired SQLite BEGIN IMMEDIATE with root transaction/connection/thread proof; audit/service.py avoids inverse Python lock acquisition only for that verified active root writer (including its savepoints). Existing unmarked and non-SQLite calls retain prior locking. No change to professional core or W11. Tests cover real manual/legacy/compare/export interleavings, proof lifecycle/fallback, rollback and actual independent-process reserved writers. No raw SQL COMMIT/ROLLBACK found in service source; such driver bypass and shared-session cross-thread use remain unsupported.

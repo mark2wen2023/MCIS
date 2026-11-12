@@ -178,6 +178,12 @@ def build_files(s: Session, blob_root: Path, case_id: str) -> dict[str, bytes]:
 
 
 def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: str) -> bytes:
+    from ..manual_interviews.models import InterviewRequestReceiptRow
+    from ..interviews.access import begin, require_content
+    begin(s)
+    if s.scalar(select(InterviewRequestReceiptRow.request_id).where(InterviewRequestReceiptRow.case_id == case_id).limit(1)) is not None:
+        require_content(s, case_id, role)
+        raise problem(409, 'INTERVIEW_RECEIPTS_BACKUP_UNSUPPORTED', '此案含人工录入回执，旧案件包不能完整备份，未导出')
     from ..reports.access import protect_package
     protect_package(s, case_id, role)
     from ..interviews.access import protect_package as protect_interviews

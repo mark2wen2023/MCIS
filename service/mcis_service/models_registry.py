@@ -16,3 +16,5 @@ from .knowledge.models import KnowledgeCardRow, KnowledgeAuditRow  # noqa: F401
 from .hfacs_drafts.models import HfacsWorksheetRow, HfacsAuditRow, HfacsRequestRow  # noqa: F401
 
 from .hfacs_drafts.models import HfacsArchivedRequestRow  # noqa: F401
+
+from .manual_interviews.models import InterviewRequestReceiptRow  # noqa: F401

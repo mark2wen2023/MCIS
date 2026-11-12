@@ -96,9 +96,9 @@ export function PackageExport({caseId, title, who}: {caseId: string; title: stri
       const anchor = document.createElement('a'); anchor.href = url; anchor.download = packageFilename(caseId)
       document.body.appendChild(anchor); anchor.click(); anchor.remove()
       window.setTimeout(()=>{URL.revokeObjectURL(url);urls.current.delete(url)}, 1000)
-      setMessage('已交给浏览器下载，请检查下载列表。仅包含当前支持范围的案件资料，不是全系统备份，请妥善保管。')
+      setMessage('已交给浏览器下载，请检查下载列表。仅包含当前支持范围的案件资料，不是全系统备份。导出或校验成功不等于笔录、报告可以完整恢复，原始资料须独立保管。')
     } catch(err) { if (operation.valid(controller)) setMessage(packageError(err)) }
     finally { if (operation.valid(controller)) setBusy(false); operation.end(controller) }
   }
-  return <div className="w83-export"><button type="button" disabled={busy} onClick={()=>void download()} aria-label={'导出案件包：' + title}>{busy ? '正在准备案件包…' : '导出 .mcase'}</button>{message && <p role="status">{message}</p>}</div>
+  return <div className="w83-export"><p>导出或校验成功不等于旧笔录、报告可完整恢复。人工笔录请求回执存在时，当前版本禁止整个案件包导出；重试不能解决此版本限制。原始资料须独立保管。</p><button type="button" disabled={busy} onClick={()=>void download()} aria-label={'导出案件包：' + title}>{busy ? '正在准备案件包…' : '导出 .mcase'}</button>{message && <p role="status">{message}</p>}</div>
 }

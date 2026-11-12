@@ -7,6 +7,7 @@ import { InterviewView } from '../interview/InterviewView'
 import { errorText } from '../interview/labels'
 import type { IcPage, IcRoster, RecheckInput } from '../interview/types'
 import '../interview/interview.css'
+import { ManualInterviewPanel } from '../interviewIntake/Panel'
 import { AgentReviewPanel } from '../agents/AgentReviewPanel'
 
 const interviewIdentity = () => JSON.stringify([getRole(), getOperator()])
@@ -26,7 +27,9 @@ function InterviewCasePage({ caseId }: { caseId: string }) {
 }
 function InterviewAllowed({caseId,onDenied}:{caseId:string;onDenied:()=>void}){
   const [who]=useState(contentIdentity)
-  const [recordId, setRecordId] = useState<string | null>(null)
+  const [params,setParams]=useSearchParams()
+  const recordId=params.get('record')
+  const setRecordId=(id:string)=>{setParams({case:caseId,record:id})}
   const roster = useContentLoad(async (signal) => {
     const result = await contentRequest<IcRoster>(casePath('/interview-compare', caseId),who,undefined,signal)
     if (result.caseId !== caseId) throw new Error('笔录列表与当前案件不一致，请重新载入')
@@ -38,11 +41,10 @@ function InterviewAllowed({caseId,onDenied}:{caseId:string;onDenied:()=>void}){
       : <div className="empty">正在载入询问笔录…</div>
   }
   const records = roster.data.records
-  const current = records.find((r) => r.recordId === recordId)?.recordId
-    ?? (caseId === CASE_ID ? records.find((r) => r.recordId === 'IR-03')?.recordId : null)
+  const current = recordId ?? (caseId === CASE_ID ? records.find((r) => r.recordId === 'IR-03')?.recordId : null)
     ?? records[0]?.recordId ?? null
-  return <InterviewRecordPage key={current ?? ''} caseId={caseId} current={current}
-    onDenied={onDenied} roster={roster.data} reloadRoster={roster.reload} onSelectRecord={setRecordId} />
+  return <><ManualInterviewPanel key={'manual:'+String(current)} caseId={caseId} recordId={current} onDenied={onDenied} onOpened={id=>{setRecordId(id);roster.reload()}}/><InterviewRecordPage key={current ?? ''} caseId={caseId} current={current}
+    onDenied={onDenied} roster={roster.data} reloadRoster={roster.reload} onSelectRecord={setRecordId} /></>
 }
 
 function InterviewRecordPage({ caseId, current, roster, reloadRoster, onSelectRecord, onDenied }: {
