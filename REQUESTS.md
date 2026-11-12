@@ -416,3 +416,9 @@ W20.1 最终集成：W5、W9、W8.3 精确主线 03e3fb8 的已有改动与共�
 
 基于已合并 W20.1，以 `contracts/W20.2-review-ui.md` 为先行规格，W5 `InterviewPage` 仅嵌入专属面板并在确认后刷新原有陈述。新增 agents 前端模块与独立样式/测试，既有服务、身份头合同和导航不改；不与 W10 共享 main/routes/caseContext。逐条来源与语义核查后确认，驳回须理由；不做 Modified 编辑器、不扩接其他五智能体，不部署。模型配置、实际连接与推理能力分开表述，无真实本地模型时仅合成 HTTP 假服务验收。
 W20.2 最终组合以 W10.1 main `8fce05a65b3df0364819207d749c50ce6f86be8b` 为基线，36条变更逐blob核对并保留共享追加；不改 W10/全局入口/后端。独立限定验收通过，真实模型质量仍未验，不混同协议假服务测试与推理能力。
+
+
+
+## W9.2 环境观测记录跨包登记
+
+按 W9 原设计新增独立环境观测合同、案件级追加存储和 UI，保留未知与来源口径。修改 service main/models_registry 接线、OpenAPI、package/mcase.py 可选环境记录往返以及 Web main/routes/caseContext 接线；保留 W20.2/W10.1。无专业阈值、仿真接线或部署。实现边界见 contracts/W9.2-environment-observations.md。

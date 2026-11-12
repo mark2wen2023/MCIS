@@ -191,3 +191,12 @@
 | 2026-11-12 | W10.1 已保存航迹检查 | 桌面只读切片独立验收通过 | main b64812b（含W20）基线，920前端断言+tsc/build/source lint过；独立真实HTTP15、真实Chromium40过/1既有390px共享壳KnownDefect、模型38及导航7过，9冻结匹配，80服务Python源与主线一致，未调用模型。D01–D03保留原失败用例修复关闭。仅已存点读取/来源与时序检查，非原始AIS/自动缺口判定/ENC/导入编辑保存/整W10或部署完成。见logs/w101-verification.md与tests_acceptance/W101/REVIEW.md。 |
 | 2026-11-12 | W20.2 笔录模型草稿人审 UI | 待测（既有API最小切片） | 专属面板绑定当前案/笔录/身份，配置非健康证明，逐条引用与含义核对后确认/驳回；确认刷新 W5，未知写结果锁定核查。34自测、W5相关57、tsc/build/lint通过；真HTTP+真浏览器+合成假模型自测18场景检查通过。冻结 logs/w20ui-impl-hashes-frozen.txt；独立验收待完成，真实模型未验、不部署。 |
 | 2026-11-12 | W20.2 笔录模型草稿人审 UI | 独立限定切片验收通过 | 精确整合W10.1 main8fce05a；既有服务+旧W20独立626过，Web837+W10新增117及相关复跑208、tsc/build过；新独立浏览器30/合同4/冻结8通过，旧W10 HTTP15/browser40与1项既有窄屏壳限制保留。真实状态/逐条来源含义核对/确认驳回/W5刷新/异步隔离与未知结果核查；真实LLM未验、其他5角色未接、无Modified编辑器、无部署。见logs/w20ui-verification.md。 |
+
+
+| W9.2 环境观测后端 | 待测 | 合同与后端自测 68 项通过；冻结 logs/w92-backend-hashes-frozen.txt；UI 仍在自测，整体尚未验收或发布。 |
+
+| W9.2 环境观测 UI | 待测 | 103 模型/SSR、31 mock 浏览器断言、TS/lint/build 通过；冻结 logs/w92-ui-hashes-frozen.txt；整体组合回归尚在核实。 |
+
+| W9.2 后端契约修正 | 待复测 | 修正 OpenAPI 环境路径 /api/v1 前缀，冻结 logs/w92-backend-hashes-frozen-v2.txt；独立复测中。 |
+
+| W9.2 环境观测记录 | 已验收，待正常合并 | 保留未知的风/流/能见度来源录入、保存重开与案件包往返；后端 v3 冻结，独立 47+4、真实后端浏览器 27；组合服务 672、前端 1057；D01/D02 已关闭。见 logs/w92-verification.md。非仿真状态、不代表规范合规、未部署。 |

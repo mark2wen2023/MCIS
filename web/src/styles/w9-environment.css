@@ -1,0 +1,22 @@
+.w92-page { padding: 24px; max-width: 1300px; margin: auto; min-width: 0; overflow-wrap: anywhere; }
+.w92-page *, .w92-page *::before, .w92-page *::after { box-sizing: border-box; }
+.w92-heading { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.w92-page h1 { font-size:24px; margin:0; }.w92-page h2 { font-size:19px; }.w92-page h3 { font-size:15px; }
+.w92-page p { line-height:1.65; }.w92-muted,.w92-page small { color:#9aafc7; }
+.w92-case,.w92-create,.w92-record { border:1px solid #344861; background:#142338; border-radius:12px; padding:20px; margin:18px 0; min-width:0; }
+.w92-case span { color:#a4d6ff; }.w92-case p { margin-bottom:0; }
+.w92-actions { margin:14px 0; }.w92-list { display:grid; gap:16px; margin-top:22px; }.w92-record { margin:0; }
+.w92-grid,.w92-record dl { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }.w92-record dl { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.w92-page label { display:flex; flex-direction:column; gap:7px; min-width:0; margin:6px 0; font-weight:500; }.w92-page small { font-size:12px; font-weight:400; }
+.w92-page input,.w92-page select,.w92-page textarea { display:block; width:100%; min-width:0; border:1px solid #53667f; background:#0d1b2d; border-radius:6px; padding:10px; color:#edf4ff; font:inherit; }.w92-page textarea { resize:vertical; }
+.w92-page fieldset { border:0; padding:0; min-width:0; margin:0; }.w92-page fieldset:disabled { opacity:.7; }
+.w92-page button { border:1px solid #567b9e; border-radius:7px; padding:9px 13px; color:#edf4ff; background:#203d5b; cursor:pointer; white-space:normal; max-width:100%; font:inherit; }
+.w92-page button:disabled { opacity:.5; cursor:default; }.w92-page :focus-visible { outline:2px solid #7bc8ff; outline-offset:3px; }
+.w92-page a { color:#91cfff; }.w92-direction { border-left:3px solid #6db2e4; padding:12px; background:#192f47; }.w92-notice { border-left:3px solid #edbf79; padding:12px; color:#ffe0ac; }
+.w92-record dt { color:#a9bdd4; font-size:13px; }.w92-record dd { margin:6px 0 12px; }.w92-original { white-space:pre-wrap; }
+@media(max-width:800px){.w92-page{padding:16px}.w92-record dl{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.w92-page{padding:12px}.w92-grid,.w92-record dl{grid-template-columns:minmax(0,1fr)}.w92-case,.w92-create,.w92-record{padding:14px}.w92-page h1{font-size:21px}}
+/* Limit shell adaptations to the environment surface; keep other workspaces unchanged. */
+.app:has(.w92-page){grid-template-columns:var(--sidebar-w) minmax(0,1fr)}
+@media(max-width:1100px){.app:has(.w92-page){grid-template-rows:auto minmax(0,1fr)}.app:has(.w92-page) .topbar{flex-wrap:wrap;min-width:0;padding:10px 12px}.app:has(.w92-page) .topbar-left,.app:has(.w92-page) .topbar-right{min-width:0;max-width:100%;flex-wrap:wrap}.app:has(.w92-page) .case-chip{white-space:normal;overflow-wrap:anywhere}}
+@media(max-width:600px){.app:has(.w92-page){grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr);height:auto;min-height:100vh}.app:has(.w92-page) .sidebar{grid-row:auto;max-height:220px;overflow-y:auto}.app:has(.w92-page) .main{padding:10px}.app:has(.w92-page) .role-select{max-width:100%}}

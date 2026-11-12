@@ -12,7 +12,7 @@ export const ROUTES: RouteDef[] = [
   { path: 'lobby', num: '01', name: '案件大厅', desc: '案件列表 / 进入调查', group: 'core', live: true },
   { path: 'case', num: '02', name: '信息录入', desc: '事故基本信息 / 当事方', group: 'core' },
   { path: 'ships', num: '03', name: '船舶参数', desc: '静态参数录入 / 来源 / 查看', group: 'core', live: true },
-  { path: 'env', num: '04', name: '气象水文', desc: '风 / 流 / 能见度 / 潮汐', group: 'core' },
+  { path: 'env', num: '04', name: '气象水文', desc: '风 / 流 / 能见度观测记录', group: 'core', live: true },
   { path: 'track', num: '05', name: '航迹设定', desc: '已存点 / 来源状态（只读）', group: 'core', live: true },
   { path: 'sim', num: '06', name: '三维仿真', desc: 'Unity 推演 / SimTime 同步', group: 'core' },
   { path: 'ecfc', num: '07', name: 'ECFC 因果链', desc: '事件与致因因素图', group: 'core' },
@@ -28,3 +28,4 @@ export const ROUTES: RouteDef[] = [
   { path: 'knowledge', num: '16', name: '知识库', desc: '相似案例 / 分级与通知', group: 'p6' },
   { path: 'access', num: '17', name: '权限与脱敏', desc: '角色矩阵 / 字段脱敏', group: 'p6' },
 ]
+
