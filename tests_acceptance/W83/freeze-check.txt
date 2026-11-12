@@ -1,0 +1,9 @@
+web/src/packages/PackagePanel.tsx: OK
+web/src/packages/api.ts: OK
+web/src/packages/model.ts: OK
+web/src/packages/navigation.ts: OK
+web/src/styles/w8-package.css: OK
+web/src/pages/LobbyPage.tsx: OK
+web/tests/package-w83.test.tsx: OK
+web/tests/run-package-w83.sh: OK
+contracts/W8.3-package-ui.md: OK

@@ -1,0 +1,44 @@
+W4.1 32 model/static-render checks passed (not browser interaction).
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+W12 analysis tests: 94 passed
+W8.2 106 assertions passed
+W7.1 41 model/static-render checks passed (not browser interaction).
+W7.2 30 model/static-render checks passed (not browser interaction).
+interview-context: 17 assertions passed
+W8.3 53 assertions passed
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> web@0.0.0 test
+> esbuild tests/colreg-render.test.tsx --bundle --platform=node --format=cjs --outfile=tests/.tmp-colreg-render.cjs --jsx=automatic && node tests/.tmp-colreg-render.cjs && esbuild tests/colreg-w61.test.tsx --bundle --platform=node --format=cjs --outfile=tests/.tmp-colreg-w61.cjs --jsx=automatic --log-level=warning && node tests/.tmp-colreg-w61.cjs
+
+
+  tests/.tmp-colreg-render.cjs  1.5mb ⚠️
+
+⚡ Done in 53ms
+ok  18 assertions (labels + render lily/mary + haili5)
+ok  58 assertions (W6.1 rulings 2–11 + W6.2)
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> web@0.0.0 test:w5
+> esbuild tests/interview-render.test.tsx --bundle --platform=node --format=cjs --outfile=tests/.tmp-interview-render.cjs --jsx=automatic --log-level=warning && node tests/.tmp-interview-render.cjs
+
+interview-render: 40 项断言通过
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> web@0.0.0 test:w16
+> esbuild tests/report-render.test.tsx --bundle --platform=node --format=cjs --outfile=tests/.tmp-report-render.cjs --jsx=automatic && node tests/.tmp-report-render.cjs
+
+
+  tests/.tmp-report-render.cjs  1.5mb ⚠️
+
+⚡ Done in 43ms
+ok 148 assertions (W16 三模板×三语言、引用、复核、导出、GISIS、真实锁定与请求合同)
+W8.1 22 assertions passed
+case context: 30 assertions passed
+case-linked-pages: 30 assertions passed
+✘ [ERROR] Top-level await is currently not supported with the "cjs" output format
+
+    tests/vessel-entry-w91.test.tsx:27:19:
+      27 │ const {VesselList}=await import('../src/pages/ShipsPage')
+         ╵                    ~~~~~
+

@@ -397,3 +397,7 @@ W5 同步必要修正：服务 W5 roster/detail disclaimer 只对固定演示案
 ## 2026-11-12 W9.1 船舶录入限定切片
 
 合同先行登记：W9 原路线图 03 船舶参数的首片，仅案件级新增静态参数、保存、重开与来源显示；不覆写/删除已有船舶，不做环境/操纵曲线/模型自动抽取/部署。新增 POST vessels，原 GET 不变；vessel schema 增加可选 parameterSources，旧记录仍有效。新写入校验与来源规则见 contracts/W9.1-vessel-entry.md。跨包仅 cases/router.py、共享 openapi/schema、main/routes/caseContext 接线；其余新文件隔离。既有冻结按原包片段核对，不重冻结旧包。
+
+## 2026-11-12 W8.3 限定 UI 切片登记
+
+原型大厅打开 .mcase / 分析页导出与 ARCHITECTURE §11/R-03 为依据。W8.3 在已验收 W8.2 LobbyPage 增加预检工具、按卡片案件ID导出，不改旧建案/来源/时区逻辑；共享入口 main/routes、服务、现有合同、W9/W20不改。新增规格 contracts/W8.3-package-ui.md；预检仅清单哈希一致性，不是真实性、审计链或导入验证。导入因既有非原子文件写入与资源预算缺口暂不开放。新样式独立 w8-package.css。旧冻结保留，旧LobbyPage漂移仅核对本切片接线，新清单另列。

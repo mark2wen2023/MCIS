@@ -1,0 +1,29 @@
+PASS select does not upload
+PASS same-render double click sends once
+PASS inflight disabled
+PASS file replacement aborts old request
+PASS late old file response hidden
+PASS new file response appears
+PASS new run clears prior report
+PASS cancel suppresses late response
+PASS close/unmount aborts request
+PASS identity change aborts
+PASS identity late response hidden
+PASS empty upload disabled
+PASS non-mcase disabled
+PASS invalid/error response no success
+PASS invalid/error response no success
+PASS invalid/error response no success
+PASS invalid/error response no success
+PASS invalid/error response no success
+PASS export double click sends once
+PASS case path percent encoded
+PASS success hands download once
+PASS late identity export cannot download
+PASS bad export no download
+PASS bad export no download
+PASS bad export no download
+PASS navigation unmount suppresses download
+PASS navigation intent aborts export before unmount
+PASS navigation intent suppresses late download
+28 independent lifecycle assertions passed

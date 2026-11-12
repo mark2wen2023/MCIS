@@ -1,0 +1,58 @@
+[
+  {
+    "name": "real export HTTP 200 ZIP",
+    "passed": true
+  },
+  {
+    "name": "export verifies actual SHA256",
+    "passed": true
+  },
+  {
+    "name": "tampered reported",
+    "passed": true
+  },
+  {
+    "name": "missing reported",
+    "passed": true
+  },
+  {
+    "name": "extra reported",
+    "passed": true
+  },
+  {
+    "name": "bad ZIP rejected 422",
+    "passed": true
+  },
+  {
+    "name": "empty body rejected 422",
+    "passed": true
+  },
+  {
+    "name": "missing case export 404",
+    "passed": true
+  },
+  {
+    "name": "Public denied full export",
+    "passed": true
+  },
+  {
+    "name": "ExternalExpert denied full export",
+    "passed": true
+  },
+  {
+    "name": "InterestedState denied full export",
+    "passed": true
+  },
+  {
+    "name": "AgentService denied full export",
+    "passed": true
+  },
+  {
+    "name": "LeadInvestigator exports",
+    "passed": true
+  },
+  {
+    "name": "verification did not import/change case list",
+    "passed": true
+  }
+]
