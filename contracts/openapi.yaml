@@ -942,6 +942,91 @@ paths:
         '422': { $ref: '#/components/responses/Problem' }
         '503': { $ref: '#/components/responses/Problem' }
 
+  /api/v1/cases/{caseId}/human-factors/hfacs:context:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+    get:
+      tags: [hfacs-drafts]
+      summary: 项目分类目录及本案可见来源
+      responses:
+        '200':
+          description: no-store；本地自报角色，非真实身份认证
+          content:
+            application/json:
+              schema: { $ref: 'schemas/hfacs-draft.schema.json#/$defs/context' }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '413': { $ref: '#/components/responses/Problem' }
+        '415': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }
+        '503': { $ref: '#/components/responses/Problem' }
+
+  /api/v1/cases/{caseId}/human-factors/hfacs:draft:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+    get:
+      tags: [hfacs-drafts]
+      summary: 重新读取已保存的待核查人工草稿
+      responses:
+        '200':
+          description: no-store；本地自报角色，非真实身份认证
+          content:
+            application/json:
+              schema: { $ref: 'schemas/hfacs-draft.schema.json#/$defs/snapshot' }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '413': { $ref: '#/components/responses/Problem' }
+        '415': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }
+        '503': { $ref: '#/components/responses/Problem' }
+
+  /api/v1/cases/{caseId}/human-factors/hfacs:save:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+    post:
+      tags: [hfacs-drafts]
+      summary: 原子保存待核查草稿与审计（不是确认结论）
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: 'schemas/hfacs-draft.schema.json#/$defs/save' }
+      responses:
+        '200':
+          description: no-store；本地自报角色，非真实身份认证
+          content:
+            application/json:
+              schema: { $ref: 'schemas/hfacs-draft.schema.json#/$defs/snapshot' }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '413': { $ref: '#/components/responses/Problem' }
+        '415': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }
+        '503': { $ref: '#/components/responses/Problem' }
+
+  /api/v1/cases/{caseId}/human-factors/hfacs:audit:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+    get:
+      tags: [hfacs-drafts]
+      summary: 有权限的草稿修订审计摘要
+      responses:
+        '200':
+          description: no-store；本地自报角色，非真实身份认证
+          content:
+            application/json:
+              schema: { $ref: 'schemas/hfacs-draft.schema.json#/$defs/audit' }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '413': { $ref: '#/components/responses/Problem' }
+        '415': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }
+        '503': { $ref: '#/components/responses/Problem' }
+
   /api/v1/cases/{caseId}/human-factors/rest:sources:
     get:
       tags: [human-factors]

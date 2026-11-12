@@ -21,7 +21,7 @@ export const ROUTES: RouteDef[] = [
   { path: 'interview', num: '10', name: '询问笔录比对', desc: '陈述抽取 / 矛盾确认', group: 'p6', live: true },
   { path: 'colreg', num: '11', name: '避碰规则对照', desc: '会遇局面 / 应采取 vs 实际', group: 'p6', live: true },
   { path: 'whatif', num: '12', name: 'What-if 反事实', desc: '单船舵响应假设 / 非风险判定', group: 'p6', live: true },
-  { path: 'hf', num: '13', name: '人为因素', desc: '工休基线技术预览 / 来源与覆盖状态', group: 'p6', live: true },
+  { path: 'hf', num: '13', name: '人为因素', desc: '工休技术预览 / 人工分类草稿', group: 'p6', live: true },
   { path: 'systemic', num: '14', name: '系统性分析', desc: 'Bow-tie假设 / 结构核查', group: 'p6', live: true },
   { path: 'recs', num: '15', name: '安全建议与报告', desc: '看板 / 征求意见 / 审计', group: 'p6', live: true },
   { path: 'report', num: '15', name: '国际格式报告', desc: 'IMO/MAIB/中国海事 · 双语 · GISIS', group: 'p6', live: true },

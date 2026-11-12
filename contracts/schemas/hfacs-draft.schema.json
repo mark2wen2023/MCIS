@@ -1,0 +1,467 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/hfacs-draft.schema.json",
+  "title": "W18.4 项目HFACS人工分类草稿",
+  "$defs": {
+    "category": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "name",
+        "layer",
+        "parentCode",
+        "isLeaf"
+      ],
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "layer": {
+          "enum": [
+            "UnsafeActs",
+            "Preconditions",
+            "UnsafeSupervision",
+            "OrganizationalInfluences",
+            "ExternalFactors"
+          ]
+        },
+        "parentCode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "isLeaf": {
+          "type": "boolean"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidenceId",
+        "title",
+        "sha256"
+      ],
+      "properties": {
+        "evidenceId": {
+          "type": "string",
+          "pattern": "^EV-[0-9]{3,}$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "categoryCode",
+        "description",
+        "rationale"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "categoryCode": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        }
+      }
+    },
+    "draft": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "entries"
+      ],
+      "properties": {
+        "scope": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entry"
+          },
+          "minItems": 1,
+          "maxItems": 32
+        }
+      }
+    },
+    "save": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requestId",
+        "expectedDigest",
+        "draft",
+        "expectedSources"
+      ],
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "expectedDigest": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "draft": {
+          "$ref": "#/$defs/draft"
+        },
+        "expectedSources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source"
+          },
+          "minItems": 0,
+          "maxItems": 8
+        }
+      }
+    },
+    "classificationEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "categoryCode",
+        "layer",
+        "description",
+        "strength",
+        "reviewStatus",
+        "origin"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "categoryCode": {
+          "type": "string"
+        },
+        "layer": {
+          "enum": [
+            "UnsafeActs",
+            "Preconditions",
+            "UnsafeSupervision",
+            "OrganizationalInfluences",
+            "ExternalFactors"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "strength": {
+          "const": "ToBeVerified"
+        },
+        "reviewStatus": {
+          "const": "Draft"
+        },
+        "origin": {
+          "const": "Investigator"
+        }
+      }
+    },
+    "classification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "coreVersion",
+        "taxonomyVersion",
+        "entries"
+      ],
+      "properties": {
+        "coreVersion": {
+          "const": "mcis-hfacs/1"
+        },
+        "taxonomyVersion": {
+          "const": "mcis-hfacs-project/1"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/classificationEntry"
+          },
+          "minItems": 1,
+          "maxItems": 32
+        }
+      }
+    },
+    "document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "caseId",
+        "revision",
+        "digest",
+        "draft",
+        "sources",
+        "classification",
+        "status",
+        "strength",
+        "origin",
+        "savedBy",
+        "savedRole",
+        "savedUtc"
+      ],
+      "properties": {
+        "caseId": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "draft": {
+          "$ref": "#/$defs/draft"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source"
+          },
+          "minItems": 0,
+          "maxItems": 8
+        },
+        "classification": {
+          "$ref": "#/$defs/classification"
+        },
+        "status": {
+          "const": "Draft"
+        },
+        "strength": {
+          "const": "ToBeVerified"
+        },
+        "origin": {
+          "const": "Investigator"
+        },
+        "savedBy": {
+          "type": "string"
+        },
+        "savedRole": {
+          "enum": [
+            "Investigator",
+            "LeadInvestigator"
+          ]
+        },
+        "savedUtc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "caseId",
+        "document",
+        "sourceStatus",
+        "persisted",
+        "identityMode"
+      ],
+      "properties": {
+        "profile": {
+          "const": "MCIS-HFACS-DRAFT-1"
+        },
+        "caseId": {
+          "type": "string"
+        },
+        "document": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/document"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sourceStatus": {
+          "enum": [
+            "none",
+            "unchanged",
+            "changed"
+          ]
+        },
+        "persisted": {
+          "type": "boolean"
+        },
+        "identityMode": {
+          "const": "local-role-header"
+        }
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "caseId",
+        "taxonomyVersion",
+        "categories",
+        "sources",
+        "writeAllowed",
+        "identityMode",
+        "sourceBinding"
+      ],
+      "properties": {
+        "profile": {
+          "const": "MCIS-HFACS-DRAFT-1"
+        },
+        "caseId": {
+          "type": "string"
+        },
+        "taxonomyVersion": {
+          "const": "mcis-hfacs-project/1"
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/category"
+          },
+          "minItems": 32,
+          "maxItems": 32
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source"
+          }
+        },
+        "writeAllowed": {
+          "type": "boolean"
+        },
+        "identityMode": {
+          "const": "local-role-header"
+        },
+        "sourceBinding": {
+          "const": "registered-metadata-only"
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "revision",
+        "utc",
+        "operator",
+        "role",
+        "action",
+        "requestId",
+        "beforeDigest",
+        "afterDigest",
+        "prevHash",
+        "hash"
+      ],
+      "properties": {
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "utc": {
+          "type": "string"
+        },
+        "operator": {
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "Investigator",
+            "LeadInvestigator"
+          ]
+        },
+        "action": {
+          "type": "string"
+        },
+        "requestId": {
+          "type": "string"
+        },
+        "beforeDigest": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "afterDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "prevHash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "caseId",
+        "events"
+      ],
+      "properties": {
+        "profile": {
+          "const": "MCIS-HFACS-DRAFT-1"
+        },
+        "caseId": {
+          "type": "string"
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/event"
+          },
+          "minItems": 0,
+          "maxItems": 50
+        }
+      }
+    }
+  }
+}
