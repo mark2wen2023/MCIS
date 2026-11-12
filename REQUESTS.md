@@ -476,3 +476,6 @@ GET-only unknown-outcome recovery. Independent acceptance required before comple
 
 ## W18.6 HFACS完整案件包备份扩展
 合同见contracts/hfacs-package-extension-v1.md。跨包修改package/mcase及导出权限事务、package_intake严格预检/恢复、hfacs_drafts归档回执model和保存ID占位、models_registry注册。完整当前/审计/回执不截断；回执不可重算原摘要，只归档不活化。新案默认权限恢复，旧入口拒扩展，不改核心/W11/web，不部署。
+
+## W16.2 conservative full-report access boundary
+Contract: contracts/report-content-access-v1.md. Approved scope includes reports, report-bearing generic audit/history and package export; explicit SQLite authorization transactions and no-store. Default Investigator compatibility intentionally restricted, without policy changes. Full content access is not redaction or authentication. Synthetic-only tests; no W11 or professional template/core edits.

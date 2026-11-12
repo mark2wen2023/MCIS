@@ -9,8 +9,9 @@ from ..common.context import Ctx, CtxDep, problem
 from ..redaction.gateway import require
 from ..db import WRITE_LOCK
 from . import mcase
+from ..reports.access import NoStoreRoute
 
-router = APIRouter(prefix="/api/v1", tags=["package"])
+router = APIRouter(prefix="/api/v1", tags=["package"], route_class=NoStoreRoute)
 
 
 async def _body_bytes(request: Request) -> bytes:

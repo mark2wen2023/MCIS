@@ -178,6 +178,8 @@ def build_files(s: Session, blob_root: Path, case_id: str) -> dict[str, bytes]:
 
 
 def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: str) -> bytes:
+    from ..reports.access import protect_package
+    protect_package(s, case_id, role)
     from ..hfacs_drafts import archive as hfacs_archive
     from ..hfacs_drafts.router import PreviewError
     from ..package_intake.parser import parse_package

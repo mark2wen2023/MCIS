@@ -23,9 +23,10 @@ from ..common.crud import diff_summary, next_key
 from ..common.timeutil import iso, now_utc, parse_iso
 from ..db import get_doc, list_docs, put_doc
 from ..redaction.gateway import require
+from ..reports.access import NoStoreRoute, begin, protect_events
 from .models import ConsultationRoundRow, RecommendationRow
 
-router = APIRouter(prefix="/api/v1/cases/{case_id}", tags=["recommendations"])
+router = APIRouter(prefix="/api/v1/cases/{case_id}", tags=["recommendations"], route_class=NoStoreRoute)
 
 Status = Literal["Draft", "Issued", "Responded", "Implemented", "NotAdopted", "Closed"]
 ALLOWED: dict[str, tuple[str, ...]] = {          # = SafetyRecommendationBoard.Allowed
@@ -273,8 +274,11 @@ def record_response(case_id: str, rec_id: str, body: ResponseIn, ctx: Ctx = CtxD
 @router.get("/recommendations/{rec_id}/history")
 def rec_history(case_id: str, rec_id: str, ctx: Ctx = CtxDep) -> list[dict[str, Any]]:
     with ctx.db.session() as s:
+        begin(s)
         require(ctx, s, case_id, "audit")
-        return audit.list_events(s, case_id, entity_id=rec_id)
+        _load(s, case_id, rec_id)
+        events = audit.list_events(s, case_id, entity_id=rec_id, entity_type="recommendation", category="SafetyRec")
+        return protect_events(s, case_id, ctx.role, events)
 
 
 # ---------------- 征求意见 ----------------

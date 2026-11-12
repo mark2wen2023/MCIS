@@ -14,9 +14,10 @@ from ..common.context import Ctx, CtxDep, problem
 from ..db import WRITE_LOCK, list_docs
 from ..redaction.gateway import require
 from . import service
+from .access import NoStoreRoute, require_content
 from .models import ReportRow
 
-router = APIRouter(prefix='/api/v1', tags=['reports'])
+router = APIRouter(prefix='/api/v1', tags=['reports'], route_class=NoStoreRoute)
 
 
 def file_response(data: bytes, filename: str, media_type: str) -> StreamingResponse:
@@ -26,6 +27,7 @@ def file_response(data: bytes, filename: str, media_type: str) -> StreamingRespo
 
 
 def check_access(s, ctx: Ctx, case_id: str, *, write: bool = False, available: bool = False) -> dict:
+    require_content(s, case_id, ctx.role, write=write)
     case = service.case_info(s, case_id)
 
     # 必须在上游访问前检查许可及入库状态，不触发拒绝路径的延迟初始化。
@@ -44,6 +46,7 @@ def get_templates(caseId: str | None = None, ctx: Ctx = CtxDep) -> dict:
     status = 'fictional'
     if caseId:
         with ctx.db.session() as s:
+            require_content(s, caseId, ctx.role)
             status = service.data_status(service.case_info(s, caseId))
     return {'templates': templates_for_case(caseId), 'caseId': caseId, 'realDataStatus': status}
 
@@ -172,7 +175,7 @@ def validate_gisis(case_id: str, body: dict[str, Any] | None = Body(None), ctx: 
     args = body or {}
     failed = None
     with WRITE_LOCK, ctx.db.session() as s:
-        case = check_access(s, ctx, case_id, available=True)
+        case = check_access(s, ctx, case_id, write=True, available=True)
         if set(args) - {'values', 'export', 'format'} or not isinstance(args.get('values', {}), dict) or \
                 not isinstance(args.get('export', False), bool) or args.get('format', 'json') not in ('json', 'csv'):
             raise problem(422, 'report_invalid_argument', 'GISIS 校验参数不合法')
