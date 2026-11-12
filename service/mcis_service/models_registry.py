@@ -10,3 +10,5 @@ from .redaction.models import AccessPolicyRow  # noqa: F401
 from .sim.models import SimCommandRow  # noqa: F401
 from .timeline.models import ConflictRow, TimelineEventRow  # noqa: F401
 from .environment.models import EnvironmentObservationRow  # noqa: F401
+
+from .knowledge.models import KnowledgeCardRow, KnowledgeAuditRow  # noqa: F401

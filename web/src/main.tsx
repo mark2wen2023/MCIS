@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './styles.css'
 import './styles/w16.css' // W16 报告页样式（独立文件，不再追加共享 styles.css）
+import { KnowledgePage } from './pages/KnowledgePage'
 import { TrackPage } from './pages/TrackPage'
 import { ShipsPage } from './pages/ShipsPage'
 import { EnvironmentPage } from './pages/EnvironmentPage'
@@ -19,6 +20,7 @@ import { ROUTES } from './routes'
 import { AnalysisPage } from './pages/AnalysisPage'
 
 const LIVE: Record<string, () => React.ReactElement> = {
+  knowledge: () => <KnowledgePage />,
   lobby: () => <LobbyPage />,
   ships: () => <ShipsPage />,
   env: () => <EnvironmentPage />,

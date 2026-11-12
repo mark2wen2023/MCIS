@@ -1,0 +1,12 @@
+get /api/v1/knowledge/cards
+post /api/v1/knowledge/cards
+get /api/v1/knowledge/cards/{card_id}
+post /api/v1/knowledge/cards/{card_id}/review
+get /api/v1/knowledge/audit
+get /api/v1/knowledge/audit:verify
+TABLE knowledge_cards registered
+TABLE knowledge_audit registered
+TABLE environment_observations registered
+ROLES LeadInvestigator,Investigator,ExternalExpert,InterestedState,AgentService,Public
+FREEZE_CHANGES ['service/mcis_service/main.py', 'service/mcis_service/models_registry.py']
+PASS 6 knowledge OpenAPI operations; 3 tables; unchanged 12 dedicated hashes; declared roles unchanged

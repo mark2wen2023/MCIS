@@ -1,0 +1,28 @@
+PASS 1 not simulation claim
+PASS 2 new case empty
+PASS 3 real HTTP create shows one
+PASS 4 server unknown not fabricated
+PASS 5 zero and source whitespace roundtrip
+PASS 6 reopen known zero
+PASS 7 reopen unknown label
+PASS 8 duplicate does not overwrite
+PASS 9 direction semantics visible and distinct
+PASS 10 case B no leaked A records
+PASS 11 browser Back returns original saved case
+PASS 12 browser Forward restores B
+PASS 13 cancel clears draft
+PASS 14 lost response prevents blind resend
+PASS 15 read-only recovery no second POST
+PASS 16 Public cannot create
+PASS 17 Redacted policy fails closed
+PASS 18 document fits 1440
+PASS 19 environment fits 1440
+PASS 20 document fits 768
+PASS 21 environment fits 768
+PASS 22 document fits 390
+PASS 23 environment fits 390
+PASS 24 W10 navigation retains current case
+PASS 25 W20 interview route retained
+PASS 26 environment sidebar roundtrip retains case and records
+PASS 27 no runtime JS errors
+TOTAL 27 passed; real backend, synthetic inputs.

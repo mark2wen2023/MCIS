@@ -1,0 +1,16 @@
+{
+  "base": "2bdbeb4f2fbe9eece6c0167274d1caed25495824",
+  "existingOpenApiPreserved": true,
+  "knowledgePaths": [
+    "/api/v1/knowledge/cards",
+    "/api/v1/knowledge/cards/{cardId}",
+    "/api/v1/knowledge/cards/{cardId}/review",
+    "/api/v1/knowledge/audit",
+    "/api/v1/knowledge/audit:verify"
+  ],
+  "w19DedicatedFrozenUnchanged": 12,
+  "sharedRegistrationFreezeUpdates": [
+    "service/mcis_service/main.py",
+    "service/mcis_service/models_registry.py"
+  ]
+}

@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from . import __version__
+from .knowledge.router import router as knowledge_router
 from .agents.router import router as agents_router
 from .audit.router import router as audit_router
 from .cases.router import router as cases_router
@@ -70,6 +71,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
               audit_router, redaction_router, agents_router, sim_router, package_router, reports_router):
         app.include_router(r)
     app.include_router(environment_router)  # W9.2 partial observations only
+    app.include_router(knowledge_router)
     app.include_router(analysis_router)  # W12
     app.include_router(interview_compare_router)  # W5
     return app

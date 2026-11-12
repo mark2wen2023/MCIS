@@ -1,0 +1,14 @@
+contracts/W19.1-knowledge-cards.md: OK
+contracts/schemas/knowledge-card.schema.json: OK
+service/mcis_service/knowledge/__init__.py: OK
+service/mcis_service/knowledge/models.py: OK
+service/mcis_service/knowledge/router.py: OK
+service/mcis_service/main.py: OK
+service/mcis_service/models_registry.py: OK
+service/tests/test_knowledge_w19.py: OK
+web/src/knowledge/api.ts: OK
+web/src/knowledge/model.ts: OK
+web/src/pages/KnowledgePage.tsx: OK
+web/src/styles/w19.css: OK
+web/tests/knowledge-w191.test.tsx: OK
+web/tests/run-knowledge-w191.sh: OK

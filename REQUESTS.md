@@ -422,3 +422,9 @@ W20.2 最终组合以 W10.1 main `8fce05a65b3df0364819207d749c50ce6f86be8b` 为�
 ## W9.2 环境观测记录跨包登记
 
 按 W9 原设计新增独立环境观测合同、案件级追加存储和 UI，保留未知与来源口径。修改 service main/models_registry 接线、OpenAPI、package/mcase.py 可选环境记录往返以及 Web main/routes/caseContext 接线；保留 W20.2/W10.1。无专业阈值、仿真接线或部署。实现边界见 contracts/W9.2-environment-observations.md。
+
+## W19.1 知识卡初始切片（2026-11-12，实现前）
+
+合同先行见 contracts/W19.1-knowledge-cards.md。新增全局公开/合成Case/Challenge/Method候选→首席人工明确发布/驳回/撤回→结构化字面检索；不从案件自动导出，不做向量/LLM/训练/分级通知。独立模型/路由/审计表与前端，原表/权限不改；共享注册限 service main/models_registry、web main/routes、openapi与本记录，W9线发布后按精确基线串行整合。只有来源分类不构成发布许可，额外明确人工来源/使用权/发布范围审批；哈希不是真实性证书。不部署。
+W19.1 数据边界补记：这是全局人工资料库，不属于任一案件卷宗；当前 .mcase 导入/导出仍只处理案件，不把知识卡或其独立审计链混入案件包。已发布内容能撤回后续访问，但无法追回此前用户读取或另存的副本。没有自动认定链接/摘录真实性或数据训练许可。
+W19.1最终串行集成：W9.2 main `2bdbeb4f2fbe9eece6c0167274d1caed25495824` 的main/models_registry、Web入口/导航、环境与案件包/OpenAPI及所有记录保留，W19仅重放已登记新增项。共享注册变更重新冻结并独立复验，来源/许可与公开审批边界不变，具体证据见logs/w19-verification.md。
