@@ -24,7 +24,7 @@ try:
   page.get_by_role('button',name='选择基础资料包',exact=True).click()
   page.get_by_label('基础资料 .mcase 文件',exact=True).set_input_files({'name':'test.mcase','mimeType':'application/zip','buffer':payload})
   page.get_by_role('button',name='上传并预览基础资料',exact=True).click()
-  page.get_by_text('服务端基础资料预览',exact=True).wait_for()
+  page.get_by_text('服务端受限恢复范围预览',exact=True).wait_for()
   assert page.get_by_text('历史请求回执数',exact=True).is_visible();assert page.get_by_label('HFACS扩展范围',exact=True).get_by_text('历史回执仅归档',exact=False).is_visible();assert page.get_by_text('未验证的自报身份',exact=False).is_visible()
   commit=page.get_by_role('button',name='确认首次导入',exact=True);assert commit.is_disabled()
   page.get_by_role('checkbox',name='我已核对案号').check();commit.click()

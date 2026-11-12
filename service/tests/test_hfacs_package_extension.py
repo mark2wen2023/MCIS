@@ -41,8 +41,8 @@ def save(client,code,previous=None,sources=None):
     assert response.status_code==200,response.text
     return body,response.json()['document']
 
-def export(client):
-    result=client.get(BASE+'/export',headers=H());assert result.status_code==200,result.text
+def export(client,role='Investigator'):
+    result=client.get(BASE+'/export',headers=H(role));assert result.status_code==200,result.text
     assert result.headers['cache-control']=='no-store'
     return result.content
 
@@ -59,8 +59,8 @@ def repack(files,version='1.1.0'):
 
 def preview(client,data): return client.post('/api/v1/packages/intakes:preview',json={'contentBase64':base64.b64encode(data).decode()},headers=H())
 
-def commit(client,data):
-    return client.post('/api/v1/packages/intakes:commit',json={'contentBase64':base64.b64encode(data).decode(),'sourceSha256':hashlib.sha256(data).hexdigest(),'confirmed':True},headers=H())
+def commit(client,data,role='Investigator'):
+    return client.post('/api/v1/packages/intakes:commit',json={'contentBase64':base64.b64encode(data).decode(),'sourceSha256':hashlib.sha256(data).hexdigest(),'confirmed':True},headers=H(role))
 
 def counts(app):
     with app.state.db.session() as s: return tuple(s.scalar(select(func.count()).select_from(t)) for t in (CaseRow,HfacsWorksheetRow,HfacsAuditRow,HfacsRequestRow,HfacsArchivedRequestRow))
@@ -81,15 +81,17 @@ def test_complete_roundtrip_inert_receipts_then_continue_history(env):
         assert replay.status_code==409 and replay.json()['code']=='REQUEST_ARCHIVED'
         recovered=restored.get('/api/v1/packages/intakes/'+hashlib.sha256(data).hexdigest(),headers=H())
         assert recovered.status_code==200 and recovered.json()['hfacsExtension']==summary
-        assert json.loads(unpack(export(restored))[archive.PATH])==original
+        assert json.loads(unpack(export(restored,'LeadInvestigator'))[archive.PATH])==original
         _,third=save(restored,code,second)
         assert third['revision']==3 and counts(other_app)==(1,1,3,1,2)
-        second_package=export(restored);union=json.loads(unpack(second_package)[archive.PATH])
+        assert restored.get(BASE+'/export',headers=H()).status_code==403
+        second_package=export(restored,'LeadInvestigator');union=json.loads(unpack(second_package)[archive.PATH])
         assert len(union['requestReceipts'])==3 and all(r in union['requestReceipts'] for r in original['requestReceipts'])
     with client_at(tmp/'restore-again') as (restored,other_app):
-        assert commit(restored,second_package).status_code==200
+        assert commit(restored,second_package).status_code==403
+        assert commit(restored,second_package,'LeadInvestigator').status_code==200
         assert counts(other_app)==(1,1,3,0,3)
-        assert json.loads(unpack(export(restored))[archive.PATH])==union
+        assert json.loads(unpack(export(restored,'LeadInvestigator'))[archive.PATH])==union
 
 def test_legacy_absence_and_old_entry_rejection(env):
     client,app,code,tmp=env
@@ -162,7 +164,9 @@ def test_failure_after_archive_inserts_rolls_back_all(env,monkeypatch):
         raise RuntimeError('synthetic failure after archive flush')
     monkeypatch.setattr(archive,'restore',failed)
     with client_at(tmp/'target') as (target,target_app):
-        with pytest.raises(RuntimeError):commit(target,data)
+        result=commit(target,data)
+        assert result.status_code==500 and 'synthetic failure'not in result.text
+        assert result.headers['cache-control']=='no-store'
         assert counts(target_app)==(0,0,0,0,0)
         assert not (target_app.state.settings.blob_dir/CASE).exists()
 

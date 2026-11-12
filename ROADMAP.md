@@ -340,3 +340,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 | W7ACCESS | 待独立验收 | 2026-11-12 | 建议/征求意见原文服务端保守隔离；默认 Investigator/外部角色403，不授新权限；列表/详情/board/写返回/审计/包出口及旧导入目标权限。冻结 logs/W7ACCESS-impl-hashes-frozen.txt；W7.4 UI 暂不发布，原文编辑仍无 CAS/回执。 |
 | W7ACCESS | 已独立验收 | 2026-11-12 | 27独立安全 + 33原W17断言合成适配 + 257定向服务回归通过；9项冻结一致，另16项loopback HTTP实施自测。DEFECTS/W7ACCESS.md无阻塞缺陷。默认非首席原文拒绝/含原文非默认策略旧包拒绝为有意兼容收紧；仅代码集成，不是生产身份认证、完整产品或W7.4 UI验收。 |
+
+| 2026-11-12 | Archive B | 待独立验收 | 1.2受限同案号新案恢复：完整笔录、报告版本/审核快照、原审计保管链、历史回执只归档、多代源包字节保全及预算、单对象恢复来源；所有不支持业务/来源/策略整包拒绝。W7ACCESS主线门禁已整合。当前字节615定向服务组合通过(153.87s)，独立预算原用例8通过(6.94s)，与旧474/189重叠不累加；UI专项和回归/tsc/build通过，浏览器API替身与真实服务验收分列。52项冻结logs/ARCHIVEB-impl-hashes-frozen.txt；独立三库/真实浏览器最终验收待重跑。非全系统备份/认证/事实认定，不部署、不碰W11。 |
+
+| 2026-11-12 | Archive B | 独立验收通过 | 最终52项冻结前后哈希一致，独立56项合成API/DB/真实HFACS CLI与真实Chromium+双FastAPI端到端通过；三空库往返、历史原件/回执只归档、实际64MiB累计/8与9层/32与33件预算、超过50快照、故障回滚、锁序及撤权清屏均有实测。615实施定向组合与独立56分列不混计。见tests_acceptance/ARCHIVEB/REPORT.md和DEFECTS/ARCHIVEB.md。未穷举6引用/10快照、全部对象上限或生产多worker；版本1.2仅支持合同内同案号新案/默认策略，未知非空业务整包拒绝，原包真实性和历史签署未认证，无部署/W11。 |

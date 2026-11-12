@@ -11,7 +11,7 @@ try:
   except Exception:time.sleep(.1)
  with sync_playwright() as pw:
   b=pw.chromium.launch(executable_path=os.environ.get('MCIS_BROWSER_BIN','/usr/bin/chromium'),headless=True,args=['--no-sandbox']);p=b.new_page();p.set_default_timeout(8000)
-  db={'doc':None,'digest':A};receipts={};writes=[];held=[];mode={'bad':False,'unknown':False,'404':False,'conflict':False,'hold':False}
+  db={'doc':None,'digest':A};receipts={};writes=[];held=[];mode={'bad':False,'unknown':False,'404':False,'conflict':False,'hold':False,'history':False}
   def env(rec):return dict(profile=P,caseId=C,receipt=rec,replayed=False,sourceBinding='none',currentDigest=db['digest'],identityMode='local-role-header')
   def route(r):
    u=r.request.url
@@ -31,6 +31,7 @@ try:
      r.fulfill(status=201,json=env(receipts[rid]));return
     if '/requests/' in u:
      rid=u.rsplit('/',1)[1]
+     if mode['history']:r.fulfill(status=409,json={'code':'ARCHIVE_HISTORY_ONLY'});return
      if mode['404'] or rid not in receipts:r.fulfill(status=404,json={'code':'INTERVIEW_REQUEST_NOT_FOUND'})
      else:r.fulfill(json={**env(receipts[rid]),'replayed':True})
      return
@@ -44,13 +45,14 @@ try:
    else:r.fulfill(status=404,json={})
   p.route('**/api/v1/**',route);p.add_init_script("localStorage.setItem('mcis.role','LeadInvestigator')");p.goto('http://127.0.0.1:15853/#/interview?case='+C)
   panel=p.get_by_role('region',name='人工笔录录入');panel.wait_for()
-  assert '整个 .mcase 案件包' in panel.inner_text();assert panel.get_by_label('真实开始时间 UTC（必填，秒Z）',exact=True).input_value()==''
+  assert '1.2.0受限工作记录归档' in panel.inner_text();assert panel.get_by_label('真实开始时间 UTC（必填，秒Z）',exact=True).input_value()==''
   for label,value in [('受询问人标识（必填）','person'),('受询问人姓名（必填）','Synthetic Name'),('职务（必填）','role'),('所属单位（必填）','unit'),('真实开始时间 UTC（必填，秒Z）','2026-11-12T00:00:00Z')]:panel.get_by_label(label,exact=True).fill(value)
   assert panel.get_by_role('button',name='保存空白人工笔录',exact=True).is_disabled()
   panel.get_by_role('checkbox').check();mode['bad']=True;panel.get_by_role('button',name='保存空白人工笔录',exact=True).evaluate('(el)=>{el.click();el.click()}')
   panel.get_by_text('存在结果未确认的',exact=False).wait_for();assert len(writes)==1 and writes[0]['backupAcknowledged'] is True
   mode['404']=True;panel.get_by_role('button',name='只读查询原请求回执',exact=True).click();panel.get_by_text('尚未查到原请求回执',exact=False).wait_for();assert len(writes)==1
-  mode['404']=False;mode['bad']=False;panel.get_by_role('button',name='同ID原样重试',exact=True).click();panel.get_by_text('已核验此请求的保存回执',exact=True).wait_for();assert writes[0]==writes[1]
+  mode['404']=False;mode['history']=True;panel.get_by_role('button',name='只读查询原请求回执',exact=True).click();panel.get_by_text('不能解除未知写入锁',exact=False).wait_for();assert panel.get_by_text('存在结果未确认的',exact=False).count()==1 and panel.get_by_text('已核验此请求的保存回执',exact=True).count()==0;assert len(writes)==1
+  mode['history']=False;mode['bad']=False;panel.get_by_role('button',name='同ID原样重试',exact=True).click();panel.get_by_text('已核验此请求的保存回执',exact=True).wait_for();assert writes[0]==writes[1]
   panel.get_by_role('button',name='重新打开服务器当前笔录',exact=True).click();p.wait_for_url('**record=IR-01');panel.get_by_text('服务器当前原文 · IR-01',exact=True).wait_for()
   for label,value in [('问题原文（必填）',' Q exact\n'),('回答原文（必填）',' A exact\n')]:panel.get_by_label(label,exact=True).fill(value)
   panel.get_by_role('checkbox').check();mode['conflict']=True;panel.get_by_role('button',name='保存追加问答',exact=True).click();panel.get_by_text('INTERVIEW_VERSION_CONFLICT',exact=False).wait_for()

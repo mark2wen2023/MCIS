@@ -183,6 +183,38 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
     begin(s)
     from ..recommendations.access import protect_package as protect_recommendations
     protect_recommendations(s, case_id, role)
+    from ..working_records_archive.service import has_history, build as build_working
+    if has_history(s, case_id):
+        from fastapi import HTTPException
+        from ..hfacs_drafts.router import PreviewError
+        try:
+            from types import SimpleNamespace
+            from ..hfacs_drafts import archive as hfacs_archive
+            from ..package_intake.parser import parse_package
+            files, working = build_working(s, blob_root, SimpleNamespace(role=role), case_id)
+            hfacs = hfacs_archive.build(s, case_id, role)
+            if hfacs is not None: files[hfacs_archive.PATH] = hfacs.raw
+            row = s.scalars(select(CaseRow).where(CaseRow.case_id == case_id)).first()
+            def assemble_working():
+                files['audit/audit.jsonl'] = _lines(audit.all_lines(s, case_id))
+                files['manifest.json'] = manifest_json(case_id, {k:v for k,v in files.items() if k!='manifest.json'}, iso(parse_iso(row.created_utc)), '1.2.0').encode()
+                buf = io.BytesIO()
+                with zipfile.ZipFile(buf, 'w', zipfile.ZIP_DEFLATED) as z:
+                    for rel in sorted(files): z.writestr(rel, files[rel])
+                result = buf.getvalue()
+                parse_package(result, validated_hfacs=hfacs)
+                return result
+            assemble_working()
+            audit.append(s, case_id=case_id, operator=operator, role=role, action='package.export', category='Package', command=f'导出案件包 {case_id}.mcase', after=GENERATOR, entity_type='case', entity_id=case_id)
+            return assemble_working()
+        except PreviewError as exc:
+            if exc.status == 422:
+                raise problem(409, 'ARCHIVE_RESTORE_UNSUPPORTED', 'HFACS历史未通过完整恢复预检，未导出') from exc
+            raise problem(exc.status, exc.code, exc.message) from exc
+        except HTTPException as exc:
+            if exc.status_code == 422:
+                raise problem(409, 'ARCHIVE_RESTORE_UNSUPPORTED', '此案未通过完整恢复预检，未生成部分案件包') from exc
+            raise
     if s.scalar(select(InterviewRequestReceiptRow.request_id).where(InterviewRequestReceiptRow.case_id == case_id).limit(1)) is not None:
         require_content(s, case_id, role)
         raise problem(409, 'INTERVIEW_RECEIPTS_BACKUP_UNSUPPORTED', '此案含人工录入回执，旧案件包不能完整备份，未导出')
@@ -303,14 +335,24 @@ def _load_json(files: dict[str, bytes], rel: str, default: Any) -> Any:
     return json.loads(files[rel].decode("utf-8-sig")) if rel in files else default
 
 
-def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: str, *, validated_hfacs=None) -> dict[str, Any]:
+def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: str, *, validated_hfacs=None, validated_working=None) -> dict[str, Any]:
     files = read_zip(data)
+    from ..working_records_archive.validation import PATH as working_path, ValidatedArchive as WorkingArchive
+    namespace = [p for p in files if p.casefold() == 'working-records' or p.casefold().startswith('working-records/')]
+    working_ok = isinstance(validated_working, WorkingArchive) and files.get(working_path) == validated_working.raw
+    if namespace and (namespace != [working_path] or not working_ok):
+        raise problem(422, 'WORKING_IMPORT_ENTRY', '工作记录扩展只能通过本版本完整预检与确认恢复')
+    if any(p.casefold().startswith('history/') for p in files) and not working_ok:
+        raise problem(422, 'WORKING_IMPORT_ENTRY', '历史原包档案需要完整工作记录预检')
+    from ..evidence_intake.parser import PREFIX as intake_prefix
+    if not working_ok and intake_prefix.encode() in files.get('audit/custody.jsonl',b''):
+        raise problem(422, 'WORKING_IMPORT_ENTRY', '证据导入凭证必须通过历史禁用索引恢复，不允许重新激活')
     from ..interviews.access import draft_related, event_related
     for name, raw in files.items():
         if name.casefold() in ('audit/audit.jsonl', 'audit/agent.jsonl'):
             try: lines = raw.decode('utf-8-sig').splitlines()
             except UnicodeError: raise problem(422, 'BAD_PACKAGE', '审计格式无效')
-            if any(event_related({'line': line}) for line in lines if line.strip()):
+            if not working_ok and any(event_related({'line': line}) for line in lines if line.strip()):
                 raise problem(422, 'INTERVIEW_IMPORT_UNSUPPORTED', '此旧入口不支持恢复笔录或未分类智能体审计')
             for line in lines:
                 if not line.strip(): continue
@@ -337,12 +379,16 @@ def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: s
     except (ValueError, UnicodeError):
         raise problem(422, "BAD_PACKAGE", "案件包清单无效")
     if namespace or manifest.get("packageVersion") == "1.1.0":
-        if (namespace != [hfacs_archive.PATH] or manifest.get("packageVersion") != "1.1.0"
+        if (namespace != [hfacs_archive.PATH] or manifest.get("packageVersion") not in ("1.1.0", "1.2.0")
                 or not isinstance(validated_hfacs, hfacs_archive.ValidatedArchive)
                 or validated_hfacs.raw != files[hfacs_archive.PATH]):
             raise problem(422, "HFACS_IMPORT_ENTRY", "HFACS扩展只能通过本版本受限导入预检与确认恢复，旧入口不接受")
+    elif manifest.get('packageVersion') == '1.2.0':
+        if not working_ok: raise problem(422, 'WORKING_IMPORT_ENTRY', '工作记录包只能通过完整预检恢复')
     elif manifest.get("packageVersion", PACKAGE_VERSION) != PACKAGE_VERSION:
         raise problem(422, "BAD_PACKAGE", "不支持的案件包版本")
+    if manifest.get('packageVersion') == '1.2.0' and not working_ok:
+        raise problem(422, 'WORKING_IMPORT_ENTRY', '工作记录包只能通过完整预检恢复')
     report = verify_files(files)
     if not report["isValid"]:
         raise problem(422, "INTEGRITY_FAILED", "案件包完整性校验失败", report)
@@ -461,6 +507,10 @@ def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: s
     if validated_hfacs is not None:
         if validated_hfacs.data["caseId"] != case_id: raise problem(422, "HFACS_IMPORT_CASE", "HFACS案件不一致")
         hfacs_archive.restore(s, validated_hfacs)
+    if validated_working is not None:
+        if validated_working.data['caseId'] != case_id: raise problem(422, 'WORKING_IMPORT_CASE', '工作记录案件不一致')
+        from ..working_records_archive.service import restore as restore_working
+        restore_working(s, blob_root, validated_working, files)
     s.flush()
     audit.append(s, case_id=case_id, operator=operator, role=role, action="package.import", category="Package",
                  command=f"导入案件包 {case_id}", after=f"{report.get('generatorVersion')}；文件 {len(files)} 个；额外 {len(report['extraFiles'])} 个",

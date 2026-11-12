@@ -28,6 +28,7 @@ from .evidence.router import router as evidence_router
 from .evidence_intake.router import router as evidence_intake_router
 from .interviews.router import router as interviews_router
 from .manual_interviews.router import router as manual_interviews_router
+from .working_records_archive.router import router as working_records_archive_router
 from .package.router import router as package_router
 from .package_intake.router import router as package_intake_router
 from .recommendations.router import router as recommendations_router
@@ -86,6 +87,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(hfacs_drafts_router)
     app.include_router(access_workbench_router)
     app.include_router(package_intake_router)
+    app.include_router(working_records_archive_router)
     app.include_router(evidence_intake_router)  # W4.2 supplied-file intake
     app.include_router(case_metadata_router)  # W8.4 text metadata only
     app.include_router(tracks_import_router)  # W10.2 explicit CSV first-track input

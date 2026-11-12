@@ -22,6 +22,6 @@ async function more(){
  const {ApiError}=await import('../src/api');const {packageError}=await import('../src/packages/api')
  const error=packageError(new ApiError(409,'INTERVIEW_RECEIPTS_BACKUP_UNSUPPORTED','',null));assert(error.includes('整个案件包导出已拒绝')&&error.includes('重试不能解决'))
  const {createElement}=await import('react');const {renderToStaticMarkup}=await import('react-dom/server');const {PackageExport}=await import('../src/packages/PackagePanel')
- const html=renderToStaticMarkup(createElement(PackageExport,{caseId:'C',title:'Synthetic',who:'LeadInvestigator\nTest'}));assert(html.includes('导出或校验成功不等于旧笔录、报告可完整恢复'))
+ const html=renderToStaticMarkup(createElement(PackageExport,{caseId:'C',title:'Synthetic',who:'LeadInvestigator\nTest'}));assert(html.includes('完整性校验成功不等于可恢复'))
  console.log('W5.2b UTC/text/binding/receipt/backup refusal+render passed (synthetic)')
 }void more().catch(e=>{console.error(e);process.exitCode=1})

@@ -96,13 +96,15 @@ def test_commit_rollback(local,monkeypatch):
  def fail(s):raise RuntimeError('synthetic commit failure')
  def install(path,raw,created):real(path,raw,created);event.listen(app.state.db.SessionLocal.class_,'before_commit',fail,once=True)
  monkeypatch.setattr(module,'exclusive_write',install)
- with pytest.raises(RuntimeError):c.post(URL+':commit',json=b)
+ result=c.post(URL+':commit',json=b);assert result.status_code==500 and 'synthetic commit failure'not in result.text
+ assert result.headers['cache-control']=='no-store'
  assert counts(app)==(0,0,0) and not list(app.state.settings.blob_dir.rglob('source.bin'))
 def test_file_failure_and_cleanup_failure(local,monkeypatch):
  c,app=local;b=prepared(c);real=module.exclusive_write
  def fail(path,raw,created):real(path,raw,created);raise OSError('synthetic')
  monkeypatch.setattr(module,'exclusive_write',fail)
- with pytest.raises(OSError):c.post(URL+':commit',json=b)
+ result=c.post(URL+':commit',json=b);assert result.status_code==500 and 'synthetic'not in result.text
+ assert result.headers['cache-control']=='no-store'
  assert counts(app)==(0,0,0) and not list(app.state.settings.blob_dir.rglob('source.bin'))
  unlink=Path.unlink
  def fail_unlink(p,*a,**k):
@@ -149,12 +151,19 @@ def test_limits(local):
 def test_download_purpose(local,purpose):
  c,app=local;b,r=save(c);assert c.post(URL+'/'+r['requestDigest']+':download',json={'purpose':purpose}).status_code==422;assert counts(app)==(1,1,1)
 def test_package_roundtrip(local,tmp_path):
- c,app=local;b,r=save(c);d=r['requestDigest'];data=c.get(f'/api/v1/cases/{CASE}/export').content
+ c,app=local;b,r=save(c);d=r['requestDigest']
+ assert c.get(f'/api/v1/cases/{CASE}/export').status_code==403
+ data=c.get(f'/api/v1/cases/{CASE}/export',headers=H('LeadInvestigator')).content
  other=tmp_path/'other';other.mkdir();app2=create_app(make_settings(other,False))
  with TestClient(app2) as c2:
-  q=c2.post('/api/v1/cases:import',content=data,headers={'Content-Type':'application/zip'});assert q.status_code==201,q.text
-  q=c2.get(URL+'/'+d);assert q.status_code==200,q.text;assert q.json()=={**r,'replayed':True}
-  q=c2.post(URL+'/'+d+':download',json={'purpose':'synthetic migrated copy'});assert q.status_code==200 and q.content==RAW
+  legacy=c2.post('/api/v1/cases:import',content=data,headers=H('LeadInvestigator'));assert legacy.status_code==422
+  payload={'contentBase64':base64.b64encode(data).decode(),'confirmed':True,'sourceSha256':__import__('hashlib').sha256(data).hexdigest()}
+  assert c2.post('/api/v1/packages/intakes:commit',json=payload).status_code==403
+  q=c2.post('/api/v1/packages/intakes:commit',json=payload,headers=H('LeadInvestigator'));assert q.status_code==200,q.text
+  q=c2.get(URL+'/'+d,headers=H('LeadInvestigator'));assert q.status_code==409 and q.json()['code']=='ARCHIVE_HISTORY_ONLY'
+  q=c2.post(URL+'/'+d+':download',json={'purpose':'synthetic migrated copy'},headers=H('LeadInvestigator'));assert q.status_code==409
+  q=c2.get(f'/api/v1/cases/{CASE}/archive-history/evidence/{r["evidenceId"]}/content',headers=H('LeadInvestigator'));assert q.status_code==200 and q.content==RAW
+  assert c2.get(f'/api/v1/cases/{CASE}/evidence/{r["evidenceId"]}',headers=H('LeadInvestigator')).json()['sha256']==r['sourceSha256']
 
 @pytest.mark.parametrize("stamp",["1000-01-01T00:00:00Z","9999-12-31T23:59:59Z"])
 def test_year_boundaries(local,stamp):
@@ -208,7 +217,7 @@ def test_intake_csharp_custody_compatibility(local,tmp_path):
  import io,subprocess,zipfile
  c,_=local;b,r=save(c,body(source='合成来源 "quoted"\ntransfer',title='合成副本 🧭',note='原文\\尾'))
  assert c.post(URL+'/'+r['requestDigest']+':download',json={'purpose':'合成核查\n副本'}).status_code==200
- data=c.get(f'/api/v1/cases/{CASE}/export').content
+ data=c.get(f'/api/v1/cases/{CASE}/export',headers=H('LeadInvestigator')).content
  with zipfile.ZipFile(io.BytesIO(data)) as z:(tmp_path/'custody.jsonl').write_bytes(z.read('audit/custody.jsonl'))
  compat=Path(__file__).resolve().parents[2]/'tools/mcis-compat/mcis-compat.sh'
  out=subprocess.run([str(compat),'custody',str(tmp_path/'custody.jsonl')],capture_output=True,text=True,timeout=300)

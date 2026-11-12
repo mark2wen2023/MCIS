@@ -1,6 +1,7 @@
 import { useEffect,useRef,useState } from 'react'
 import { ApiError,getRole,onIdentityChange } from '../api'
 import { caseIdentity } from '../cases/identity'
+import { downloadHistory } from './history'
 import { intakeError,intakeRequest,type Download } from './api'
 import { onIntakeNavigation,SELECTION_EVENT } from './navigation'
 import { CATEGORIES,MAX_FILE_BYTES,downloadBytes,encodeBytes,fileNameValid,intakeBody,parsePreview,parseReceipt,sha256,type Category,type IntakeBody,type Metadata,type Preview,type Receipt } from './model'
@@ -9,11 +10,12 @@ const EMPTY:Metadata={title:'',source:'',extractedBy:'',extractedUtc:'',category
 type FileSelection={name:string;size:number;sha:string;base64:string}
 export interface IntakeProps {caseId:string;caseTitle?:string;who:string;selectedEvidenceId?:string;onRegistered?:(id:string)=>void;onRefresh?:()=>void}
 export function EvidenceIntakePanel({caseId,caseTitle,who,selectedEvidenceId,onRegistered,onRefresh}:IntakeProps){
+  const [historyEvidenceId,setHistoryEvidenceId]=useState<string|null>(null)
   const [open,setOpen]=useState(false),[fields,setFields]=useState<Metadata>(EMPTY),[file,setFile]=useState<FileSelection|null>(null),[fileKey,setFileKey]=useState(0)
   const [preview,setPreview]=useState<Preview|null>(null),[body,setBody]=useState<IntakeBody|null>(null),[confirmed,setConfirmed]=useState(false),[receipt,setReceipt]=useState<Receipt|null>(null)
   const [busy,setBusy]=useState(''),[message,setMessage]=useState(''),[uncertain,setUncertain]=useState(false),[purpose,setPurpose]=useState('')
   const gate=useRef({alive:true,version:0,busy:false,controller:null as AbortController|null})
-  const clearResult=()=>{setPreview(null);setBody(null);setConfirmed(false);setReceipt(null);setUncertain(false);setPurpose('');setMessage('')}
+  const clearResult=()=>{setHistoryEvidenceId(null);setPreview(null);setBody(null);setConfirmed(false);setReceipt(null);setUncertain(false);setPurpose('');setMessage('')}
   const reset=(next:boolean)=>{const g=gate.current;g.version++;g.controller?.abort();g.busy=false;setBusy('');setOpen(next);setFile(null);setFileKey(k=>k+1);setFields(EMPTY);clearResult()}
   useEffect(()=>{
     const g=gate.current;g.alive=true
@@ -49,7 +51,8 @@ export function EvidenceIntakePanel({caseId,caseTitle,who,selectedEvidenceId,onR
     const run=begin('登记保存中');if(!run)return
     try{const r=parseReceipt(await intakeRequest(caseId,who,'/evidence-intakes:commit',run.signal,{...body,requestDigest:preview.requestDigest,confirmed:true}),caseId,preview);if(live(run.version))accept(r)}
     catch(e){if(live(run.version)){
-      if(e instanceof ApiError&&[400,403,404,409,413,422].includes(e.status)){setMessage(intakeError(e));setPreview(null);setBody(null);setConfirmed(false);setUncertain(false)}
+      if(e instanceof ApiError&&e.code==='ARCHIVE_HISTORY_ONLY'){setUncertain(true);setMessage('只读历史不能作为当前成功回执，未知写入锁保持。 '+intakeError(e))}
+      else if(e instanceof ApiError&&[400,403,404,409,413,422].includes(e.status)){setMessage(intakeError(e));setPreview(null);setBody(null);setConfirmed(false);setUncertain(false)}
       else{setUncertain(true);setMessage('登记结果未确认，服务器可能已经保存。先只读核查；不要另建请求重复登记。')}
     }}finally{finish(run.version)}
   }
@@ -64,7 +67,7 @@ export function EvidenceIntakePanel({caseId,caseTitle,who,selectedEvidenceId,onR
     const target=selectedEvidenceId,run=begin('读取当前证据登记回执');if(!run)return
     setReceipt(null);setPreview(null);setBody(null);setConfirmed(false);setPurpose('');setFile(null);setFileKey(k=>k+1);setFields(EMPTY)
     try{const r=parseReceipt(await intakeRequest(caseId,who,'/evidence/'+encodeURIComponent(target)+'/intake',run.signal),caseId,undefined,target);if(live(run.version)){setReceipt(r);setMessage('')}}
-    catch(e){if(live(run.version))setMessage(intakeError(e))}finally{finish(run.version)}
+    catch(e){if(live(run.version)){if(e instanceof ApiError&&e.status===409&&e.code==='ARCHIVE_HISTORY_ONLY')setHistoryEvidenceId(target);setMessage(intakeError(e))}}finally{finish(run.version)}
   }
   const download=async()=>{
     if(!receipt||!purpose.trim()||purpose.length>1000)return
@@ -75,6 +78,12 @@ export function EvidenceIntakePanel({caseId,caseTitle,who,selectedEvidenceId,onR
       if(live(run.version)){downloadBytes(r.bytes,receipt.fileName);setMessage('已下载原字节并核对 SHA-256；服务已追加访问记录。这不是真实性认证或已阅读证明。');onRefresh?.()}
     }catch(e){if(live(run.version))setMessage('下载未完成或原件无法核对，没有交付文件。访问记录可能已追加，不会自动重发；请核查保管链。 '+intakeError(e))}finally{finish(run.version)}
   }
+  const historicalDownload=async()=>{
+    if(!historyEvidenceId)return
+    const target=historyEvidenceId,run=begin('显式调阅历史原件');if(!run)return
+    try{const r=await downloadHistory(caseId,target,who,run.signal);if(live(run.version)){downloadBytes(r.bytes,`historical-${target.replace(/[^a-zA-Z0-9_-]/g,'_')}.bin`);setMessage('历史原字节下载完成，SHA-256已核对；新增当前访问审计，不激活历史回执，也不证明原始真实性。');onRefresh?.()}}
+    catch(e){if(live(run.version))setMessage('历史下载未完成，未交付文件；已发请求可能产生访问审计，不会自动重试。 '+intakeError(e))}finally{finish(run.version)}
+  }
   if(!['Investigator','LeadInvestigator'].includes(getRole()))return <p className="w42-restricted">文件登记及本片受限原件仅向调查组开放，仍受当前案件策略限制。</p>
   if(!open)return <div className="w42-entry"><button type="button" className="btn btn-primary" onClick={()=>reset(true)}>＋ 登记已有文件副本 / 查看登记原件</button><button type="button" className="btn" onClick={onRefresh}>刷新证据清单（只读）</button></div>
   const locked=!!busy||uncertain||receipt!==null
@@ -83,6 +92,7 @@ export function EvidenceIntakePanel({caseId,caseTitle,who,selectedEvidenceId,onR
     <p className="w42-notice">保全选入的文件原字节，不是现场取证、真实性认证或完整现实保管链。只接收已知提取人和已知 UTC 整秒提取时间；年份范围 1000–9999。未知/亚秒时间暂不支持，不能填登记时间代替。</p>
     <details><summary>支持范围与上限</summary><p>单文件 0–8 MiB，服务 JSON 请求最多 12 MiB，均为本切片工程上限，不是证据有效性标准。格式不作解读；文件不内嵌打开或执行，无 OCR、ASR、视频/VDR解析、设备钟差或时间线校准。来源及提取信息是人工声明。</p><p>本片保守限定 Restricted 受限存储，并不自动判定法定保密类别。保存后原件不覆盖，后续分析应使用工作副本；文件入库前是否修改不能靠本地哈希证明。</p></details>
     <div className="w42-actions"><span>当前清单选择：{selectedEvidenceId||'尚无证据'}</span><button type="button" disabled={!!busy||uncertain||!selectedEvidenceId} onClick={()=>void lookup()}>读取当前证据登记回执（只读）</button></div>
+    {historyEvidenceId&&<aside className="w42-notice" aria-label="历史原件访问"><p>服务明确标记 {historyEvidenceId} 为归档历史，不是当前登记成功回执。历史回执不可重放，不解除任何未知写入锁。</p><p>显式下载调用独立严格权限接口并新增访问审计，不修改原历史保管链；最大16MiB，文件不在页面执行。</p><button disabled={!!busy} onClick={()=>void historicalDownload()}>记录访问并下载历史原件</button></aside>}
     {!receipt&&<fieldset disabled={locked}><legend>1 · 原件与人工登记声明</legend>
       <label>原件文件（最多 8 MiB，可为零字节）<input key={fileKey} type="file" onChange={e=>void choose(e.target.files?.[0])}/></label>
       <label>证据标题（必填）<input maxLength={1000} value={fields.title} onChange={e=>change('title',e.target.value)}/></label>

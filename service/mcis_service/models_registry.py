@@ -18,3 +18,4 @@ from .hfacs_drafts.models import HfacsWorksheetRow, HfacsAuditRow, HfacsRequestR
 from .hfacs_drafts.models import HfacsArchivedRequestRow  # noqa: F401
 
 from .manual_interviews.models import InterviewRequestReceiptRow  # noqa: F401
+from .working_records_archive.models import ArchivedManualReceiptRow, ArchiveImportHistoryRow, ArchiveArtifactRow  # noqa: F401
