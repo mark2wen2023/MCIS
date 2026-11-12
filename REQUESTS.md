@@ -513,3 +513,6 @@ Intentional compatibility boundaries: a restored case now has source.mcase/intak
 Manual original A refusal applies when a case remains unsupported/incomplete; a complete validated1.2 package can now preserve active/orphan manual receipts as inactive history. Forced writer/export interleaving asserts actual complete snapshot contents (not merely changing an expected status). Entire new package processing runs in worker helpers after bounded async body reading; SQLite sessions remain owned by one worker. Export422 semantic preflight failures map to409 ARCHIVE_RESTORE_UNSUPPORTED;403, budget413 and failure rollback remain intact. No user-visible completion is claimed until independent acceptance.
 
 W archive B compatibility: legacy packages containing evidence-intake custody credentials without a validated working-record extension now fail closed at import. This concerns subsequent imports only; existing database credentials are not migrated, cleaned or silently rewritten. Version downgrade/incomplete namespace attempts are tested.
+
+## W7.4 安全建议只读核查（2026-11-12）
+登记已冻结 RecommendationsPage.tsx 的窄接线：新增独立 recommendationReview 正文/全部已登记回复读取器及可选单建议审计；合同 W7.4-recommendation-review.md 先行，使用原有 GET 与服务端权限。无后端/schema/共享路由修改，不修称旧写并发，无正文编辑、自动状态变更或外发，不触 W11。审计现接口最早至多 200 条，不宣称完整审计链。

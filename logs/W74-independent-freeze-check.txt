@@ -1,0 +1,10 @@
+contracts/W7.4-recommendation-review.md: OK
+web/src/recommendationReview/context.ts: OK
+web/src/recommendationReview/model.ts: OK
+web/src/recommendationReview/RecommendationReview.tsx: OK
+web/src/styles/w74.css: OK
+web/src/pages/RecommendationsPage.tsx: OK
+web/tests/recommendation-review-w74.test.ts: OK
+web/tests/run-recommendation-review-w74.sh: OK
+web/tests/recommendation-review-w74-real-browser.py: OK
+service/tests/test_recommendation_review_w74.py: OK

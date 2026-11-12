@@ -1,0 +1,7 @@
+Remote base fdb8a2103d9f81d9801a9b5ad8ae9247acccd5fb; GitHub connector exact-ref reads; local git-blob SHA matches
+service/mcis_service/package/mcase.py 762c9f5fafa5943f0cd568038e2c6244136c7270 MATCH
+service/mcis_service/working_records_archive/__init__.py e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 MATCH
+service/mcis_service/working_records_archive/models.py 3f88c4a1678271ad68af40648ee15ea6cd9f0fa0 MATCH
+service/mcis_service/working_records_archive/router.py f10203b24184020021d00e7ae7cfd47de1db771b MATCH
+service/mcis_service/working_records_archive/service.py 2440999b1d6bfc95b26b61b6f91f6c4f436686a2 MATCH
+service/mcis_service/working_records_archive/validation.py bee3dadf4991c0eefac132028b898a5e9b13b29f MATCH

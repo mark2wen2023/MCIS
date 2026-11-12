@@ -1,0 +1,1 @@
+W74 independent projection: all replies validated, invalid whole-batch rejected, empty semantics, case/id/history binding, safe projection passed
