@@ -13,7 +13,7 @@ export const ROUTES: RouteDef[] = [
   { path: 'case', num: '02', name: '信息录入', desc: '事故基本信息 / 当事方', group: 'core' },
   { path: 'ships', num: '03', name: '船舶参数', desc: '静态参数录入 / 来源 / 查看', group: 'core', live: true },
   { path: 'env', num: '04', name: '气象水文', desc: '风 / 流 / 能见度 / 潮汐', group: 'core' },
-  { path: 'track', num: '05', name: '航迹设定', desc: 'AIS 导入 / 关键点编辑', group: 'core' },
+  { path: 'track', num: '05', name: '航迹设定', desc: '已存点 / 来源状态（只读）', group: 'core', live: true },
   { path: 'sim', num: '06', name: '三维仿真', desc: 'Unity 推演 / SimTime 同步', group: 'core' },
   { path: 'ecfc', num: '07', name: 'ECFC 因果链', desc: '事件与致因因素图', group: 'core' },
   { path: 'analysis', num: '08', name: '分析与报告导出', desc: '曲线 / 证据 / PDF', group: 'core', live: true },

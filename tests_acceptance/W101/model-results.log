@@ -1,0 +1,39 @@
+PASS preserve exact stored values and unknown provenance
+PASS reject wrong envelope null
+PASS reject wrong envelope 
+PASS reject wrong envelope [object Object]
+PASS reject wrong envelope x
+PASS reject timeSec
+PASS reject latDeg
+PASS reject lonDeg
+PASS reject sogKn
+PASS reject cogDeg
+PASS reject hdgDeg
+PASS reject rotDegPerMin
+PASS reject utc
+PASS reject source
+PASS reject provenance
+PASS reject wrong point ID
+PASS reject wrong response case
+PASS reject duplicate bucket
+PASS reject duplicate vessel
+PASS 50000 exact allowed unchanged
+PASS 50001 rejected whole batch
+PASS plot actual indices 0
+PASS plot actual indices 1
+PASS plot actual indices 1999
+PASS plot actual indices 2000
+PASS plot actual indices 2001
+PASS plot actual indices 50000
+PASS statistics do not repair returned order
+PASS window rejects Infinity:
+PASS window rejects 0x10:
+PASS window rejects 1:0
+PASS window rejects 1e13:
+PASS window rejects NaN:
+PASS window omits resampling
+PASS allow exactly 1000 vessels metadata
+PASS allow exactly 1000 empty buckets
+PASS reject 1001 vessels metadata
+PASS reject 1001 empty track buckets
+38 independent model checks passed

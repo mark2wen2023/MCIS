@@ -1,0 +1,46 @@
+.w10-page { max-width: 1500px; margin: 0 auto; padding: 22px; color: #edf5ff; }
+.w10-heading { display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap; }
+.w10-heading h1 { margin:8px 0 14px; }
+.w10-eyebrow { color:#81cde5; font-size:12px; letter-spacing:.12em; }
+.w10-heading a { display:inline-block; padding:10px; color:#88d5ff; }
+.w10-page p { line-height:1.65; color:#b9cad8; overflow-wrap:anywhere; }
+.w10-page button { padding:9px 14px; border:1px solid #82b7d1; border-radius:6px; background:#234965; color:#f0f6ff; font:inherit; cursor:pointer; }
+.w10-page button:disabled { opacity:.5; cursor:not-allowed; }
+.w10-page button:hover:not(:disabled) { background:#2c5c80; }
+.w10-page button:focus-visible,.w10-page input:focus-visible,.w10-page select:focus-visible,.w10-page a:focus-visible,.w10-table-scroll:focus-visible { outline:3px solid #ffd580; outline-offset:3px; }
+.w10-page input,.w10-page select { box-sizing:border-box; min-width:0; max-width:100%; padding:10px; color:#f0f6ff; background:#0e1b29; border:1px solid #58778f; border-radius:6px; font:inherit; }
+.w10-read { padding:18px; border:1px solid #354e65; border-radius:10px; background:#132333; margin:22px 0 12px; }
+.w10-read > div:first-child { display:flex; gap:18px; align-items:end; flex-wrap:wrap; }
+.w10-read label { display:grid; gap:8px; }
+.w10-read p { margin-bottom:0; }
+.w10-case { border-left:3px solid #6bbbd4; padding:6px 16px; margin:20px 0; background:#122332; overflow-wrap:anywhere; }
+.w10-case span { color:#f2d191; font-size:12px; }
+.w10-case h2 { font-size:20px; margin:8px 0; }
+.w10-case p { margin:8px 0; }
+.w10-filter { display:flex; align-items:center; flex-wrap:wrap; gap:12px; margin:18px 0; }
+.w10-stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:18px 0; }
+.w10-stats > div { padding:16px; background:#152a3b; border:1px solid #34506a; border-radius:8px; color:#a9bfd0; overflow-wrap:anywhere; }
+.w10-stats strong { display:block; font-size:20px; color:#e9f6ff; margin-bottom:7px; }
+.w10-page .w10-warning,.w10-page .w10-notice { padding:14px; border-left:3px solid #c5a766; background:#2f2b21; color:#efdbb1; }
+.w10-provenance { display:flex; flex-wrap:wrap; gap:10px; }
+.w10-provenance span { border:1px solid #3a5b74; border-radius:5px; padding:7px 10px; color:#b9d8e9; }
+.w10-chart-detail { display:grid; grid-template-columns:minmax(0,2fr) minmax(240px,1fr); gap:20px; align-items:start; margin:20px 0; }
+.w10-chart-detail > section:first-child { background:#0e1b29; border:1px solid #34506a; border-radius:10px; padding:16px; }
+.w10-plot svg { display:block; width:100%; height:auto; min-height:240px; }
+.w10-plot text { fill:#a9bfd0; font-size:11px; }
+.w10-plot circle { cursor:pointer; }
+.w10-detail { padding:16px; background:#152738; border:1px solid #3a5b74; border-radius:10px; overflow-wrap:anywhere; }
+.w10-detail h3 { margin-top:0; color:#f4d291; }
+.w10-detail dl { display:grid; grid-template-columns:90px minmax(0,1fr); gap:10px; }
+.w10-detail dt { color:#a9bfd0; }
+.w10-detail dd { margin:0; }
+.w10-table-scroll { overflow:auto; border:1px solid #34506a; border-radius:8px; }
+.w10-page table { width:100%; border-collapse:collapse; font-size:13px; }
+.w10-page caption { text-align:left; padding:12px; color:#b9cad8; }
+.w10-page th { padding:12px; background:#213a4e; text-align:left; }
+.w10-page td { padding:10px 12px; border-top:1px solid #294154; vertical-align:top; overflow-wrap:anywhere; max-width:320px; }
+.w10-page td small { display:block; color:#abc3d4; margin-top:6px; }
+.w10-page .w10-selected td { background:#2c3e36; }
+.w10-pagination { display:flex; flex-wrap:wrap; align-items:center; gap:14px; margin:16px 0; }
+@media(max-width:1100px) { .w10-chart-detail { grid-template-columns:minmax(0,1fr); } .w10-stats { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:600px) { .w10-page { padding:12px; } .w10-stats { grid-template-columns:minmax(0,1fr); } .w10-read input { width:100%; } .w10-plot svg { min-height:180px; } }

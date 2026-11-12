@@ -1,0 +1,68 @@
+[
+  {
+    "name": "real HTTP 2051 stored points",
+    "passed": true
+  },
+  {
+    "name": "all returned points exactly DB JSON no interpolation",
+    "passed": true
+  },
+  {
+    "name": "negative time 0 speed 360 angle and date-line retained",
+    "passed": true
+  },
+  {
+    "name": "inclusive window returns original objects",
+    "passed": true
+  },
+  {
+    "name": "no samples empty response",
+    "passed": true
+  },
+  {
+    "name": "empty case empty vessels and tracks",
+    "passed": true
+  },
+  {
+    "name": "nonexistent case 404",
+    "passed": true
+  },
+  {
+    "name": "LeadInvestigator access per actual gateway",
+    "passed": true,
+    "status": 200
+  },
+  {
+    "name": "Investigator access per actual gateway",
+    "passed": true,
+    "status": 200
+  },
+  {
+    "name": "Public access per actual gateway",
+    "passed": true,
+    "status": 200
+  },
+  {
+    "name": "AgentService access per actual gateway",
+    "passed": true,
+    "status": 200
+  },
+  {
+    "name": "ExternalExpert access per actual gateway",
+    "passed": true,
+    "status": 200
+  },
+  {
+    "name": "InterestedState access per actual gateway",
+    "passed": true,
+    "status": 200
+  },
+  {
+    "name": "read did not change overview/audit",
+    "passed": true
+  },
+  {
+    "name": "stored point JSON unchanged after reads",
+    "passed": true
+  }
+]
