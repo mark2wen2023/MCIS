@@ -42,6 +42,7 @@ from .seed.lily_mary import seed
 from .seed.yangze22 import seed as seed_yangze22
 from .sim.router import router as sim_router
 from .timeline.router import router as timeline_router
+from .current_analysis.router import router as current_analysis_router
 from .analysis.router import router as analysis_router  # W12 分析页（只读种子）
 from .interview_compare.router import router as interview_compare_router  # W5 询问笔录比对页
 
@@ -100,5 +101,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(knowledge_router)
     app.include_router(knowledge_archive_router)
     app.include_router(analysis_router)  # W12
+    app.include_router(current_analysis_router)  # W12.2
     app.include_router(interview_compare_router)  # W5
     return app
+

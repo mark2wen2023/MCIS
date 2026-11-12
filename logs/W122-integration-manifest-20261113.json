@@ -1,0 +1,132 @@
+[
+  {
+    "path": "DEFECTS/W122.md",
+    "sha256": "3df4a4c5cb9b7c757671ccbabbfb1be7e22eb3729a1fddd352d2d3064cd6a8c2",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "REQUESTS.md",
+    "sha256": "51f50060cf236479cde72dfe250347fd65d22549dd52ce8f154ffae52a551503",
+    "method": "three-way-candidate"
+  },
+  {
+    "path": "ROADMAP.md",
+    "sha256": "ad8398e89d76a928c72d11f11daeee1a86412a51edb606d3574362cec98527b9",
+    "method": "three-way-candidate"
+  },
+  {
+    "path": "contracts/W12.2-current-track-analysis.md",
+    "sha256": "f2c4092b2b1a8d3d8993234ea8aeec9a920a53e0fbfb89b6eded82298721ab15",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "contracts/openapi.yaml",
+    "sha256": "96e355b4ed9c050da810e078378a00eb699156782bf5b8aa8b724051f909e97d",
+    "method": "three-way-candidate"
+  },
+  {
+    "path": "logs/W122-impl-hashes-frozen.txt",
+    "sha256": "0eaa5e939fd272f317d965df49af8dc7fbe486a99cba27da6425be70a37263b1",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "logs/W122-selftest.md",
+    "sha256": "49c7031cb9fe9bff8ca0b257c2e31ac9c03c94a8f2ee194d3f7a9dd7b2445ac4",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "service/mcis_service/current_analysis/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "service/mcis_service/current_analysis/router.py",
+    "sha256": "5826c6947b5698bd8f1646e144e5585c86a672167a1487fe70dbc00b63a8a31b",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "service/mcis_service/main.py",
+    "sha256": "1dd44ef04b369f2e00e7b2fcab83b4c8ba7b28c72d3b1dccf636f67b85bdca3c",
+    "method": "three-way-candidate"
+  },
+  {
+    "path": "service/tests/test_current_analysis_w122.py",
+    "sha256": "7f9a8310546b99d3f1b4d75248f0750aa45cf725b6e36093fcd5482f8b131d11",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "tests_acceptance/W122/PLAN.md",
+    "sha256": "acb93208e1531df9fc9782478b3ef8f4dadddbf69f642438143a388928845808",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "tests_acceptance/W122/REPORT.md",
+    "sha256": "f1f379fbf7d0944d4409bd246af9468b5350cdb995cc74c7633ef7a649c6732a",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "tests_acceptance/W122/test_independent.py",
+    "sha256": "1eed496a5b156143492c55c1717e9880ab9f4cde91d72ec5e522e353a6d21df8",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "tests_acceptance/W122/ui-report.md",
+    "sha256": "522aaa5e12228a36314fe75570a6236006404498c152708235f5043aa30ab759",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "tests_acceptance/W122/ui_accept.py",
+    "sha256": "5894d2a1045b4186bd2f966ac9758a1635c84436a287dcb03c511eb7ae2c6553",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "tests_acceptance/W122/ui_model.test.tsx",
+    "sha256": "fc5034dc248f2cd534aec10c0a319b21469ec949eb88bec5985451d1a607aae0",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "tests_acceptance/W122/ui_run_model.sh",
+    "sha256": "0d5531d459542811d64499e32074e0a8d298ec84ea720a17f19c89ea97eb0bdf",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "web/src/currentAnalysis/CurrentAnalysis.tsx",
+    "sha256": "4fb3b9493a0646c2861cebf11ace19816c64318426cdf1e8a729ac94bad9ed34",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "web/src/currentAnalysis/model.ts",
+    "sha256": "d2e0f8160f31d45f9397cea710af91e345838357aeca9a8d94b5dc29a1739ee8",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "web/src/pages/AnalysisPage.tsx",
+    "sha256": "7c9040550c8480bf226353b996fe16c0786c7b4ab30ed31b264c39f31c2a1751",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "web/src/styles/w12-current.css",
+    "sha256": "d50471f0b70fbcb30543f92a21d0c1b8859afab94144826556ab468af099f60a",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "web/tests/current-analysis-w122-server.py",
+    "sha256": "d8fba341825458f08e01149ed4c806da4af0426a9212325108c1e16fdd814c8e",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "web/tests/current-analysis-w122.browser.py",
+    "sha256": "a5a226582b0c10f7aea3833359df98231760ecb5051cdeed21ea8800ff94672f",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "web/tests/current-analysis-w122.test.tsx",
+    "sha256": "5905aaa73236a627bf883172a0f1f259855772039f76e6e6cabf099b4cb69427",
+    "method": "verified-pr-head"
+  },
+  {
+    "path": "web/tests/run-current-analysis-w122.sh",
+    "sha256": "f4d58f19db7502751240a0e54c2a6360477168a0393796d8d2123fd84a15b52c",
+    "method": "verified-pr-head"
+  }
+]

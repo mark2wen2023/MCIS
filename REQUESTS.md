@@ -561,3 +561,8 @@ The new endpoint adds conservative current-case evidence/interview visibility an
 The browser uses a fixed-profile ZIP_STORED and strict JSON verifier, actual member CRC/SHA, preview/request binding and original audit association. No object URL/download occurs until checks succeed. Unknown delivery persists only scoped metadata and never auto-retries. Explicit stop-wait discards even abort-ignoring late replies. After checking downloads the user can knowingly abandon an attempt and freshly preview a new generation; storage corruption/unavailability has an explicit scoped recovery check, never silent lock deletion or false success. Local headers and hashes are not authentication, signature, facts or complete audit-chain certification.
 
 Engineering caps are declared for report/output/audit/manifest/ZIP. A self-review removed an unintended2MiB policy-fingerprint limit by streaming its hash without adding a policy editing restriction. OpenAPI labels now match the two new report-output routes while preserving the old14-report-route test unchanged. The B retention plan allocates no archive version and remains unimplemented.
+
+
+## W12.2 current saved-track analysis
+Contract contracts/W12.2-current-track-analysis.md. New read-only current-case endpoint and module; explicit exact-time pairing delegates numeric calculation to existing C# cpa, preserving per-vessel provenance and distinguishing calculated output. No new interpolation, safety verdict or W11/core edits. Cross-package wiring limited to main.py/openapi and AnalysisPage; old W12 seed files and view untouched, old mode retained explicitly as historical reference. New separate styles/module/tests. Input digest and permission are rechecked after core work; no persistence or deployment.
+

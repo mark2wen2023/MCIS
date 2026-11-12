@@ -1962,6 +1962,26 @@ paths:
     parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/roundNo' }]
     post: { tags: [recommendations], summary: 登记一方放弃回复（reason 必填，= WaiveReply）, responses: { '201': { description: ok } } }
 
+  /api/v1/cases/{caseId}/analysis/current:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+      - { name: ownVesselId, in: query, required: true, schema: { type: string } }
+      - { name: targetVesselId, in: query, required: true, schema: { type: string } }
+      - { name: fromSec, in: query, schema: { type: number } }
+      - { name: toSec, in: query, schema: { type: number } }
+    get:
+      tags: [analysis]
+      summary: 当前已保存同刻点CPA，只读、不插值、不判责任或安全
+      description: 'W12.2-current-track-analysis.md; MCIS-CURRENT-CPA-1. Exact saved-time pairs; per-ship 5000-point budget; source digest and permission recheck after core. No riskLevel/thresholds. No-store.'
+      responses:
+        '200': { description: 'profile, caseId, title, isFictionalDemo, caseEpochUtc, origin, vessels, window, inputDigest, coreVersion, counts, rows' }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }
+        '502': { $ref: '#/components/responses/Problem' }
+        '503': { $ref: '#/components/responses/Problem' }
+        '504': { $ref: '#/components/responses/Problem' }
   /api/v1/core/cpa:
     post:
       tags: [colreg]
@@ -3376,3 +3396,4 @@ paths:
         '422': { $ref: '#/components/responses/Problem' }
         '500': { $ref: '#/components/responses/Problem' }
         '503': { $ref: '#/components/responses/Problem' }
+
