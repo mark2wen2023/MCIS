@@ -8,6 +8,7 @@ import { KnowledgePage } from './pages/KnowledgePage'
 import { TrackPage } from './pages/TrackPage'
 import { ShipsPage } from './pages/ShipsPage'
 import { EnvironmentPage } from './pages/EnvironmentPage'
+import { HumanFactorsPage } from './pages/HumanFactorsPage'
 import { AccessPage } from './pages/AccessPage'
 import { LobbyPage } from './pages/LobbyPage'
 import { Layout } from './Layout'
@@ -22,6 +23,7 @@ import { ROUTES } from './routes'
 import { AnalysisPage } from './pages/AnalysisPage'
 
 const LIVE: Record<string, () => React.ReactElement> = {
+  hf: () => <HumanFactorsPage />,
   access: () => <AccessPage />,
   case: () => <CaseInfoPage />,
   knowledge: () => <KnowledgePage />,

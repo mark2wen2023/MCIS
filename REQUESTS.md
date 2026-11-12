@@ -459,3 +459,8 @@ GET-only unknown-outcome recovery. Independent acceptance required before comple
 原计划17号工作台小切片，合同见contracts/access-workbench-v1.md。
 新独立access_workbench后端和accessWorkbench前端，主router/main/routes最小注册。
 仅逐案授权读取策略与最近策略更新记录；不改旧权限API、不修改策略、不宣称生产认证或脱敏实施已完整。
+
+## W18.3 工休基线预览
+核对官方STCW/MLC原文及既有W18.2算法后，限定非结论性技术预览；合同rest-preview-v1.md。
+独立mcis-rest工具引用既有不变RestHours/Result源，防止改动原core DLL造成W12来源漂移。
+13号页与新只读计算/来源端点，不写已确认事实、不自动补休息、未评估专业适用条件明确展示；仅合成验收数据。
