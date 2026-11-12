@@ -337,3 +337,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 | W20.3 | 待测 | 2026-11-12：只读六角色配置登记与按案草稿队列；主会话/自动调度未接通，无假交互；合成真实HTTP/浏览器、API7、TS/build与W20.2 UI34通过；冻结logs/W203-impl-hashes-frozen.txt。 |
 | W20.3 | 已验收（只读状态范围） | 2026-11-12：独立API7、格式/路由校验、跨案身份导航/错误空状态/键盘移动端浏览器及真实HTTP合成库通过；D01引用格式修复复测关闭。主会话、自动任务编排、真实模型能力均未实现或验证；无部署。 |
+
+| W7ACCESS | 待独立验收 | 2026-11-12 | 建议/征求意见原文服务端保守隔离；默认 Investigator/外部角色403，不授新权限；列表/详情/board/写返回/审计/包出口及旧导入目标权限。冻结 logs/W7ACCESS-impl-hashes-frozen.txt；W7.4 UI 暂不发布，原文编辑仍无 CAS/回执。 |
+| W7ACCESS | 已独立验收 | 2026-11-12 | 27独立安全 + 33原W17断言合成适配 + 257定向服务回归通过；9项冻结一致，另16项loopback HTTP实施自测。DEFECTS/W7ACCESS.md无阻塞缺陷。默认非首席原文拒绝/含原文非默认策略旧包拒绝为有意兼容收紧；仅代码集成，不是生产身份认证、完整产品或W7.4 UI验收。 |

@@ -181,6 +181,8 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
     from ..manual_interviews.models import InterviewRequestReceiptRow
     from ..interviews.access import begin, require_content
     begin(s)
+    from ..recommendations.access import protect_package as protect_recommendations
+    protect_recommendations(s, case_id, role)
     if s.scalar(select(InterviewRequestReceiptRow.request_id).where(InterviewRequestReceiptRow.case_id == case_id).limit(1)) is not None:
         require_content(s, case_id, role)
         raise problem(409, 'INTERVIEW_RECEIPTS_BACKUP_UNSUPPORTED', '此案含人工录入回执，旧案件包不能完整备份，未导出')
@@ -364,8 +366,13 @@ def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: s
     for k in ("incidentTimeUtc", "caseEpochUtc"):
         case[k] = iso(parse_iso(case[k]))
     case_id = case["caseId"]
+    from ..reports.access import begin
+    begin(s)
     if s.scalars(select(CaseRow).where(CaseRow.case_id == case_id)).first():
         raise problem(409, "CASE_EXISTS", f"案件已存在：{case_id}（请先换库或改名）")
+
+    from ..recommendations.access import protect_import as protect_recommendation_import
+    protect_recommendation_import(s, case_id, role, files)
 
     # Validate optional W9.2 extension before any SQL/blob write. Legacy absence is empty.
     env_path = next((k for k in files if k.lower() == "environment/observations.json"), None)

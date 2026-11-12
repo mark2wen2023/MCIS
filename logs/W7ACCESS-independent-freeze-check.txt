@@ -1,0 +1,9 @@
+contracts/recommendation-content-access-v1.md: OK
+service/mcis_service/recommendations/access.py: OK
+service/mcis_service/recommendations/router.py: OK
+service/mcis_service/audit/router.py: OK
+service/mcis_service/access_workbench/router.py: OK
+service/mcis_service/package/mcase.py: OK
+service/tests/test_recommendation_content_access.py: OK
+service/tests/test_recommendations.py: OK
+service/tests/test_reports_w162_access.py: OK
