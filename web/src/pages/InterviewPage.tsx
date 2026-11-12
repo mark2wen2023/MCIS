@@ -23,7 +23,7 @@ export function InterviewPage() {
 function InterviewCasePage({ caseId }: { caseId: string }) {
   const [denied,setDenied]=useState(false)
   const [epoch,setEpoch]=useState(0)
-  return <><p className="ic-disclaimer" role="note">{CONTENT_ACCESS_NOTICE}</p>{denied?<div role="alert"><p>当前身份无权访问笔录原文。受保护内容已清空；已发送写入不代表撤销。</p><button onClick={()=>{setDenied(false);setEpoch(n=>n+1)}}>重新读取笔录权限</button></div>:<InterviewAllowed key={epoch} caseId={caseId} onDenied={()=>setDenied(true)}/>}</>
+  return <><p className="ic-disclaimer" role="note">{CONTENT_ACCESS_NOTICE}</p><p className="ic-disclaimer" role="note">当前案件包不能完整恢复笔录；含笔录时整个案件包导出将拒绝，不会成功遗漏。原始资料须独立保管；旧包校验成功不等于可以恢复笔录。</p>{denied?<div role="alert"><p>当前身份无权访问笔录原文。受保护内容已清空；已发送写入不代表撤销。</p><button onClick={()=>{setDenied(false);setEpoch(n=>n+1)}}>重新读取笔录权限</button></div>:<InterviewAllowed key={epoch} caseId={caseId} onDenied={()=>setDenied(true)}/>}</>
 }
 function InterviewAllowed({caseId,onDenied}:{caseId:string;onDenied:()=>void}){
   const [who]=useState(contentIdentity)

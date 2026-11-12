@@ -329,7 +329,8 @@ def test_writer_export_lock_order_no_inversion(client,monkeypatch,writer):
             export=pool.submit(client.get,C+'/export',headers=LEAD)
             result=write.result(timeout=15); exported=export.result(timeout=15)
         assert result.status_code==(200 if writer=='compare' else 201),result.text
-        assert exported.status_code==(200 if writer=='legacy' else 409),exported.text
+        assert exported.status_code==409,exported.text
+        assert exported.json()['code']==('ARCHIVE_RESTORE_UNSUPPORTED' if writer=='legacy' else 'INTERVIEW_RECEIPTS_BACKUP_UNSUPPORTED')
         with client.app.state.db.session() as s:
             events=list(s.scalars(select(AuditEventRow).order_by(AuditEventRow.seq)))
             from mcis_service.common.csjson import ZERO_HASH,sha256_utf8

@@ -125,6 +125,7 @@ function ReportSession({identity, isActive, refresh}: {identity:string; isActive
   }
 
   return <>
+    <p className="rpt-disclaimer" role="note">当前案件包不能完整恢复已存报告与操作快照；含这些内容时整个案件包导出将拒绝，不会成功遗漏。请独立保管原始资料。报告文件导出不等于案件备份。</p>
     <div className="rpt-disclaimer" role="note">静态接线说明（不是当前来源快照）：本版本仅支持满足完整资料权限的原文报告，尚未提供字段级脱敏报告；默认 Investigator 受限是有意的访问边界变更。报告为模板编排，非 LLM 调查；工作流确认不是事实认证。旧 What-if 来自历史 seed，systemic 暂无来源；新 Nomoto / Bow-tie / HFACS 尚未接入报告。身份为本地自报角色，不是真实身份认证。切换会话仅丢弃迟到显示，不撤销已发送的写入。</div>
     {casesError && <p role="alert">{casesError}</p>}
     {auditError && <p role="alert">{auditError}</p>}

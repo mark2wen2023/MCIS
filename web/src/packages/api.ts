@@ -31,6 +31,7 @@ export async function exportPackage(caseId: string, who: string, signal: AbortSi
 }
 export function packageError(error: unknown): string {
   if (error instanceof ApiError) {
+    if (error.status === 409 && error.code === 'ARCHIVE_RESTORE_UNSUPPORTED') return '本案件包含当前案件包尚不支持完整恢复的笔录、已存报告或操作快照，整个案件包导出已拒绝，不会成功遗漏这些内容。重试不能解决此版本限制；请独立保管原始资料，不要绕过限制。'
     if (error.status === 409 && error.code === 'INTERVIEW_RECEIPTS_BACKUP_UNSUPPORTED') return '本案件包含人工笔录请求回执，当前版本不支持完整导出，整个案件包导出已拒绝。重试不能解决此版本限制；请独立保管原始资料，不要绕过限制。'
     if (error.status === 403) return '当前身份无权限。未自动重试，请核实身份。'
     if (error.status === 404) return '案件不存在，请刷新案件列表。'
