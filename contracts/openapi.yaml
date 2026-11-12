@@ -433,6 +433,59 @@ components:
 
 
 paths:
+  /api/v1/knowledge/cards:
+    get:
+      tags: [knowledge]
+      summary: 已发布公开或合成知识卡的字面与结构化检索，内部状态仅调查组
+      parameters:
+        - { name: status, in: query, schema: { type: string, enum: [Published, Candidate, Rejected, Withdrawn], default: Published } }
+        - { name: kind, in: query, schema: { type: string, enum: [Case, Challenge, Method] } }
+        - { name: tag, in: query, schema: { type: string, maxLength: 40 } }
+        - { name: q, in: query, schema: { type: string, maxLength: 160 } }
+        - { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 50, default: 20 } }
+        - { name: offset, in: query, schema: { type: integer, minimum: 0, maximum: 10000, default: 0 } }
+      responses: { '200': { description: items/total/limit/offset }, '403': { description: 未获内部读取权限 } }
+    post:
+      tags: [knowledge]
+      summary: 调查组人工创建不可变知识候选，不自动公开
+      requestBody: { required: true, content: { application/json: { schema: { $ref: './schemas/knowledge-card.schema.json' } } } }
+      responses: { '201': { description: Candidate }, '403': { description: 禁止 }, '422': { description: 内容或来源不合法 } }
+  /api/v1/knowledge/cards/{cardId}:
+    get:
+      tags: [knowledge]
+      parameters: [{ name: cardId, in: path, required: true, schema: { type: string } }]
+      responses: { '200': { description: 知识卡 }, '404': { description: 不存在或不可公开读取 } }
+  /api/v1/knowledge/cards/{cardId}/review:
+    post:
+      tags: [knowledge]
+      summary: 首席明确审核发布、驳回或撤回；发布需来源/权利/范围三项审批
+      parameters: [{ name: cardId, in: path, required: true, schema: { type: string } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [decision, expectedDigest, note]
+              properties:
+                decision: { type: string, enum: [Published, Rejected, Withdrawn] }
+                expectedDigest: { type: string, pattern: '^[a-f0-9]{64}$' }
+                note: { type: string, minLength: 1, maxLength: 2000 }
+                sourceVerified: { type: boolean }
+                rightsVerified: { type: boolean }
+                releaseApproved: { type: boolean }
+      responses: { '200': { description: 审核结果 }, '403': { description: 禁止 }, '409': { description: 版本或状态不符 }, '422': { description: 审批不完整 } }
+  /api/v1/knowledge/audit:
+    get:
+      tags: [knowledge]
+      summary: 调查组读取知识库独立审计，不读取案件审计
+      responses: { '200': { description: 审计事件 }, '403': { description: 禁止 } }
+  /api/v1/knowledge/audit:verify:
+    get:
+      tags: [knowledge]
+      responses: { '200': { description: 哈希链完整性，不证明事实真实性 }, '403': { description: 禁止 } }
+
   /api/v1/health:
     get: { tags: [cases], summary: 健康检查, responses: { '200': { description: ok } } }
 

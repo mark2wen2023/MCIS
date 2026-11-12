@@ -25,7 +25,7 @@ export const ROUTES: RouteDef[] = [
   { path: 'systemic', num: '14', name: '系统性分析', desc: 'Bow-tie / AcciMap / STAMP', group: 'p6' },
   { path: 'recs', num: '15', name: '安全建议与报告', desc: '看板 / 征求意见 / 审计', group: 'p6', live: true },
   { path: 'report', num: '15', name: '国际格式报告', desc: 'IMO/MAIB/中国海事 · 双语 · GISIS', group: 'p6', live: true },
-  { path: 'knowledge', num: '16', name: '知识库', desc: '相似案例 / 分级与通知', group: 'p6' },
+  { path: 'knowledge', num: '16', name: '知识库', desc: '知识卡 / 人工发布 / 结构化检索', group: 'p6', live: true },
   { path: 'access', num: '17', name: '权限与脱敏', desc: '角色矩阵 / 字段脱敏', group: 'p6' },
 ]
 

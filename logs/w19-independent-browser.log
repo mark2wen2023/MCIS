@@ -1,0 +1,8 @@
+PASS B01 three-kind UI create, unpublished isolation, explicit three-checkbox publication, external read-only
+PASS B02 HTML literal escaping, external review-note stripping, keyboard submit, 390px no overflow
+PASS B03 withdrawal removes external list
+PASS B04 real committed delayed POST, double-click single send, identity change no internal result leak
+PASS B05 server commit plus lost response is unknown, no retry, queue+audit reread and explicit unlock
+FAIL B07: real HTTP 422 duplicate tags response is cleared by automatic list refresh, no persistent error shown
+FAIL B08: leave and return in same browser task lets prior committed POST update returned workspace notice/filter
+PASS B06 no uncaught browser errors; screenshots temporary

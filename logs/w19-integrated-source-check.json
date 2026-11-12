@@ -1,0 +1,12 @@
+{
+  "main": "2bdbeb4f2fbe9eece6c0167274d1caed25495824",
+  "same": 267,
+  "changed": [
+    "contracts/openapi.yaml",
+    "service/mcis_service/main.py",
+    "service/mcis_service/models_registry.py",
+    "web/src/main.tsx",
+    "web/src/routes.ts"
+  ],
+  "missing": []
+}
