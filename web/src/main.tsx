@@ -8,6 +8,7 @@ import { KnowledgePage } from './pages/KnowledgePage'
 import { TrackPage } from './pages/TrackPage'
 import { ShipsPage } from './pages/ShipsPage'
 import { EnvironmentPage } from './pages/EnvironmentPage'
+import { WhatIfPage } from './pages/WhatIfPage'
 import { SystemicPage } from './pages/SystemicPage'
 import { HumanFactorsPage } from './pages/HumanFactorsPage'
 import { AccessPage } from './pages/AccessPage'
@@ -24,6 +25,7 @@ import { ROUTES } from './routes'
 import { AnalysisPage } from './pages/AnalysisPage'
 
 const LIVE: Record<string, () => React.ReactElement> = {
+  whatif: () => <WhatIfPage />,
   systemic: () => <SystemicPage />,
   hf: () => <HumanFactorsPage />,
   access: () => <AccessPage />,

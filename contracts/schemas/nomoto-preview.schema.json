@@ -1,0 +1,340 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/nomoto-preview.schema.json",
+  "title": "W14.4 假设单船恒舵响应",
+  "$defs": {
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "headingDeg",
+        "speedKn",
+        "k",
+        "tSeconds",
+        "referenceSpeedKn",
+        "maxRudderDeg",
+        "rudderRateDegPerSec",
+        "commandRudderDeg",
+        "durationSeconds",
+        "provenanceNote",
+        "uncertaintyNote"
+      ],
+      "properties": {
+        "headingDeg": {
+          "type": "string",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "maxLength": 20
+        },
+        "speedKn": {
+          "type": "string",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "maxLength": 20
+        },
+        "k": {
+          "type": "string",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "maxLength": 20
+        },
+        "tSeconds": {
+          "type": "string",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "maxLength": 20
+        },
+        "referenceSpeedKn": {
+          "type": "string",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "maxLength": 20
+        },
+        "maxRudderDeg": {
+          "type": "string",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "maxLength": 20
+        },
+        "rudderRateDegPerSec": {
+          "type": "string",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "maxLength": 20
+        },
+        "commandRudderDeg": {
+          "type": "string",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]{1,6})?$",
+          "maxLength": 20
+        },
+        "durationSeconds": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,2}$"
+        },
+        "provenanceNote": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000,
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+        },
+        "uncertaintyNote": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000,
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+        }
+      }
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "parameters",
+        "sourceEvidenceIds"
+      ],
+      "properties": {
+        "parameters": {
+          "$ref": "#/$defs/parameters"
+        },
+        "sourceEvidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^EV-[0-9]{3,}$"
+          },
+          "minItems": 0,
+          "maxItems": 8,
+          "uniqueItems": true
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidenceId",
+        "title",
+        "sha256"
+      ],
+      "properties": {
+        "evidenceId": {
+          "type": "string",
+          "pattern": "^EV-[0-9]{3,}$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "sources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "caseId",
+        "sources",
+        "sourceBinding",
+        "identityMode"
+      ],
+      "properties": {
+        "profile": {
+          "const": "MCIS-NOMOTO-PREVIEW-1"
+        },
+        "caseId": {
+          "type": "string"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source"
+          }
+        },
+        "sourceBinding": {
+          "const": "registered-metadata-only"
+        },
+        "identityMode": {
+          "const": "local-role-header"
+        }
+      }
+    },
+    "point": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "timeSeconds",
+        "eastM",
+        "northM",
+        "headingDeg",
+        "speedKn",
+        "rotDegPerSec",
+        "rudderDeg"
+      ],
+      "properties": {
+        "timeSeconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 300
+        },
+        "eastM": {
+          "type": "number"
+        },
+        "northM": {
+          "type": "number"
+        },
+        "headingDeg": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMaximum": 360
+        },
+        "speedKn": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 40
+        },
+        "rotDegPerSec": {
+          "type": "number"
+        },
+        "rudderDeg": {
+          "type": "number",
+          "minimum": -45,
+          "maximum": 45
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "coreVersion",
+        "mode",
+        "stepSeconds",
+        "comparisonStepSeconds",
+        "baseline",
+        "response",
+        "numericalDifference",
+        "assumptions"
+      ],
+      "properties": {
+        "coreVersion": {
+          "const": "mcis-nomoto/1"
+        },
+        "mode": {
+          "const": "fixed-rudder-hypothesis"
+        },
+        "stepSeconds": {
+          "const": 0.1
+        },
+        "comparisonStepSeconds": {
+          "const": 0.05
+        },
+        "baseline": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/point"
+          },
+          "minItems": 2,
+          "maxItems": 301
+        },
+        "response": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/point"
+          },
+          "minItems": 2,
+          "maxItems": 301
+        },
+        "numericalDifference": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "endpointDistanceM",
+            "endpointHeadingDifferenceDeg",
+            "endpointRotDifferenceDegPerSec"
+          ],
+          "properties": {
+            "endpointDistanceM": {
+              "type": "number",
+              "minimum": 0
+            },
+            "endpointHeadingDifferenceDeg": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 180
+            },
+            "endpointRotDifferenceDegPerSec": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "maxItems": 30
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "caseId",
+        "inputSha256",
+        "sources",
+        "sourceRole",
+        "sourceBinding",
+        "persisted",
+        "assessment",
+        "result",
+        "limitations"
+      ],
+      "properties": {
+        "profile": {
+          "const": "MCIS-NOMOTO-PREVIEW-1"
+        },
+        "caseId": {
+          "type": "string"
+        },
+        "inputSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source"
+          },
+          "minItems": 0,
+          "maxItems": 8
+        },
+        "sourceRole": {
+          "enum": [
+            "Investigator",
+            "LeadInvestigator"
+          ]
+        },
+        "sourceBinding": {
+          "const": "registered-metadata-only"
+        },
+        "persisted": {
+          "const": false
+        },
+        "assessment": {
+          "const": "hypothetical-single-vessel-response"
+        },
+        "result": {
+          "$ref": "#/$defs/result"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "maxItems": 30
+        }
+      }
+    }
+  }
+}

@@ -467,3 +467,6 @@ GET-only unknown-outcome recovery. Independent acceptance required before comple
 
 ## W15.3 假设 Bow-tie 结构预览
 合同先行：contracts/bowtie-preview-v1.md、schema 与 OpenAPI。新增独立 CLI、只读服务与 page14，修改共享入口 main.py/main.tsx/routes/caseContext；不改原核心/W11。仅待核验人工假设、Unknown屏障，元数据来源绑定不等于事实支持。原型其余 AcciMap/STAMP/ECFC/导出/持久化不在本切片。
+
+## W14.4 假设单船恒舵响应预览
+新增合同/schema/OpenAPI、隔离mcis-nomoto工具与page12子集，修改main.py/main.tsx/routes/caseContext共享入口。引用原核心不改核心，不接W11。参数必须人工提供，输入来源/不确定性说明必填；两条航迹均假设。碰撞/临界/多船/锚泊/完整What-if未实现，零安全结论，不部署。
