@@ -3,6 +3,7 @@ import {getRole} from '../api'
 import * as api from '../knowledge/api'
 import {KINDS,STATUSES,permissions,utc,sample,type Card,type Content,type Status,type Kind,type Page} from '../knowledge/model'
 import '../styles/w19.css'
+import {KnowledgeArchivePanel} from '../knowledgeArchive/Panel'
 import {SuggestionPreview} from '../knowledge/SuggestionPreview'
 export function KnowledgePage(){const key=useSyncExternalStore(api.subscribe,api.context,api.context);return <KnowledgeWorkspace key={key}/>}
 function KnowledgeWorkspace(){
@@ -26,7 +27,7 @@ function KnowledgeWorkspace(){
  }
  return <main className="w19" aria-labelledby="knowledge-heading"><header><span>W19 · 人工维护的知识资料库</span><h1 id="knowledge-heading">案例、疑难与方法知识卡</h1><p>全局资料库，与当前案件无关。这里只收明确公开或合成内容，不读取真实案件、内网材料，也不调用模型或训练。</p></header>
  <p className="w19-warning">来源链接、摘录及使用权仍需人工核实。内容哈希只标识版本，不证明真实性或已获授权。检索为字面与标签匹配，不是语义相似度或调查结论。</p>
- <form className="w19-search" onSubmit={e=>{e.preventDefault();setFilter({...filter,kind,q,tag,offset:0})}}><label>字面关键词<input value={q} maxLength={160} onChange={e=>setQ(e.target.value)}/></label><label>类型<select value={kind} onChange={e=>setKind(e.target.value)}><option value="">全部类型</option>{Object.entries(KINDS).map(([k,v])=><option key={k} value={k}>{v}</option>)}</select></label><label>精确标签<input maxLength={40} value={tag} onChange={e=>setTag(e.target.value)}/></label><button type="submit" disabled={loading}>检索</button></form>
+ <KnowledgeArchivePanel/><form className="w19-search" onSubmit={e=>{e.preventDefault();setFilter({...filter,kind,q,tag,offset:0})}}><label>字面关键词<input value={q} maxLength={160} onChange={e=>setQ(e.target.value)}/></label><label>类型<select value={kind} onChange={e=>setKind(e.target.value)}><option value="">全部类型</option>{Object.entries(KINDS).map(([k,v])=><option key={k} value={k}>{v}</option>)}</select></label><label>精确标签<input maxLength={40} value={tag} onChange={e=>setTag(e.target.value)}/></label><button type="submit" disabled={loading}>检索</button></form>
  {access.internal&&<label className="w19-status">资料状态<select value={filter.status} disabled={lock==='pending'} onChange={e=>setFilter({...filter,status:e.target.value as Status,offset:0})}>{Object.entries(STATUSES).map(([k,v])=><option key={k} value={k}>{v}</option>)}</select></label>}
  <div className="w19-actions"><button disabled={loading||lock==='pending'} onClick={()=>setTick(n=>n+1)}>重新读取</button><span>{access.internal?'内部候选不向外部角色展示；只有首席可批准发布。':'只读已发布公开/合成知识卡；未审批或撤回内容不可访问。'}</span></div>
  {lock==='pending'&&<p role="status">写入进行中。离开页面不会撤销服务处理，请勿重复操作。</p>}{notice&&<p role="status">{notice}</p>}{error&&<p role="alert" className="w19-warning">{error}</p>}{actionError&&<p role="alert" className="w19-warning">{actionError}</p>}

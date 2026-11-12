@@ -2736,3 +2736,333 @@ paths:
         '403': { $ref: '#/components/responses/Problem' }
         '422': { $ref: '#/components/responses/Problem' }
         '503': { $ref: '#/components/responses/Problem' }
+  /api/v1/cases/{case_id}/archive-history/evidence/{evidence_id}/content:
+    get:
+      tags: [archive-history]
+      summary: 明确读取历史原件，不激活导入回执
+      description: 全部12类原文权限及当前证据可见性先行；校验原件并提交Access审计后返回原字节。全部响应no-store。见working-record-archive-api-fragment.md。
+      parameters:
+        - { name: case_id, in: path, required: true, schema: { type: string } }
+        - { name: evidence_id, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: 原始附件字节，Content-Disposition为attachment；不是活跃回执
+          headers:
+            Cache-Control: { schema: { type: string, const: no-store } }
+            X-Sha256: { schema: { type: string, pattern: '^[a-f0-9]{64}$' } }
+            Content-Disposition: { schema: { type: string } }
+          content:
+            application/octet-stream: { schema: { type: string, format: binary } }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '413': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }
+        '500': { $ref: '#/components/responses/Problem' }
+  /api/v1/cases/{case_id}/archive-history/provenance/{kind}/{record_id}:
+    get:
+      tags: [archive-history]
+      summary: 最近一次恢复来源与当前文档摘要比较
+      description: 全部12类原文权限先行，重核当前与历史来源。原包损坏返回409而不是null；摘要不证明真实性、签署或字段核验。全部响应no-store。见working-record-archive-api-fragment.md。
+      parameters:
+        - { name: case_id, in: path, required: true, schema: { type: string } }
+        - { name: kind, in: path, required: true, schema: { type: string, enum: [interview, report] } }
+        - { name: record_id, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: 无恢复来源时provenance为null；损坏或权限错误不得视为无历史
+          headers:
+            Cache-Control: { schema: { type: string, const: no-store } }
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [caseId, kind, recordId, provenance]
+                properties:
+                  caseId: { type: string }
+                  kind: { type: string, enum: [interview, report] }
+                  recordId: { type: string }
+                  provenance:
+                    oneOf:
+                      - { type: 'null' }
+                      - type: object
+                        additionalProperties: false
+                        required: [origin, sourceArchiveSha256, importedUtc, originalDocumentSha256, currentDocumentSha256, changedSinceImport]
+                        properties:
+                          origin: { type: string, const: restored-history }
+                          sourceArchiveSha256: { type: string, pattern: '^[a-f0-9]{64}$' }
+                          importedUtc: { type: string }
+                          originalDocumentSha256: { type: string, pattern: '^[a-f0-9]{64}$' }
+                          currentDocumentSha256: { type: string, pattern: '^[a-f0-9]{64}$' }
+                          changedSinceImport: { type: boolean }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '413': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }
+        '500': { $ref: '#/components/responses/Problem' }
+  /api/v1/knowledge/archives:export:
+    get:
+      tags:
+      - knowledge
+      summary: 导出当前在线知识库完整受限快照
+      description: LeadInvestigator限定，角色头不构成认证；所有响应no-store，原hash不是来源真实性证明。
+      responses:
+        '200':
+          description: 仅首席可见的独立历史；不恢复在线库、不自动公开。详见knowledge-archive-v1.md。
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+            X-Sha256:
+              schema:
+                type: string
+                pattern: ^[a-f0-9]{64}$
+            Content-Disposition:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: schemas/knowledge-archive.schema.json
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+        '413':
+          $ref: '#/components/responses/Problem'
+        '415':
+          $ref: '#/components/responses/Problem'
+        '422':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+  /api/v1/knowledge/archives:preview:
+    post:
+      tags:
+      - knowledge
+      summary: 只预检知识历史包，不保存
+      description: LeadInvestigator限定，角色头不构成认证；所有响应no-store，原hash不是来源真实性证明。
+      responses:
+        '200':
+          description: 仅首席可见的独立历史；不恢复在线库、不自动公开。详见knowledge-archive-v1.md。
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: schemas/knowledge-archive.schema.json#/$defs/summary
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+        '413':
+          $ref: '#/components/responses/Problem'
+        '415':
+          $ref: '#/components/responses/Problem'
+        '422':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: schemas/knowledge-archive.schema.json
+  /api/v1/knowledge/archives:
+    get:
+      tags:
+      - knowledge
+      summary: 列出独立知识历史归档
+      description: LeadInvestigator限定，角色头不构成认证；所有响应no-store，原hash不是来源真实性证明。
+      responses:
+        '200':
+          description: 仅首席可见的独立历史；不恢复在线库、不自动公开。详见knowledge-archive-v1.md。
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: schemas/knowledge-archive.schema.json#/$defs/listResponse
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+        '413':
+          $ref: '#/components/responses/Problem'
+        '415':
+          $ref: '#/components/responses/Problem'
+        '422':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+      parameters:
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 20
+      - name: offset
+        in: query
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 10000
+          default: 0
+    post:
+      tags:
+      - knowledge
+      summary: 明确保存为只读历史，不恢复在线知识卡
+      description: LeadInvestigator限定，角色头不构成认证；所有响应no-store，原hash不是来源真实性证明。
+      responses:
+        '200':
+          description: 仅首席可见的独立历史；不恢复在线库、不自动公开。详见knowledge-archive-v1.md。
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: schemas/knowledge-archive.schema.json#/$defs/saveResponse
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+        '413':
+          $ref: '#/components/responses/Problem'
+        '415':
+          $ref: '#/components/responses/Problem'
+        '422':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+        '201':
+          description: 仅首席可见的独立历史；不恢复在线库、不自动公开。详见knowledge-archive-v1.md。
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: schemas/knowledge-archive.schema.json#/$defs/saveResponse
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: schemas/knowledge-archive.schema.json
+      parameters:
+      - name: X-Archive-Sha256
+        in: header
+        required: true
+        schema:
+          type: string
+          pattern: ^[a-f0-9]{64}$
+  /api/v1/knowledge/archives/{archive_sha256}:
+    get:
+      tags:
+      - knowledge
+      summary: 读取完整且校验过的只读历史
+      description: LeadInvestigator限定，角色头不构成认证；所有响应no-store，原hash不是来源真实性证明。
+      responses:
+        '200':
+          description: 仅首席可见的独立历史；不恢复在线库、不自动公开。详见knowledge-archive-v1.md。
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: schemas/knowledge-archive.schema.json#/$defs/detailResponse
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+        '413':
+          $ref: '#/components/responses/Problem'
+        '415':
+          $ref: '#/components/responses/Problem'
+        '422':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+      parameters:
+      - name: archive_sha256
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: ^[a-f0-9]{64}$
+  /api/v1/knowledge/archives/{archive_sha256}/content:
+    get:
+      tags:
+      - knowledge
+      summary: 取回精确原包字节
+      description: LeadInvestigator限定，角色头不构成认证；所有响应no-store，原hash不是来源真实性证明。
+      responses:
+        '200':
+          description: 仅首席可见的独立历史；不恢复在线库、不自动公开。详见knowledge-archive-v1.md。
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+            X-Sha256:
+              schema:
+                type: string
+                pattern: ^[a-f0-9]{64}$
+            Content-Disposition:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: schemas/knowledge-archive.schema.json
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+        '413':
+          $ref: '#/components/responses/Problem'
+        '415':
+          $ref: '#/components/responses/Problem'
+        '422':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+      parameters:
+      - name: archive_sha256
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: ^[a-f0-9]{64}$

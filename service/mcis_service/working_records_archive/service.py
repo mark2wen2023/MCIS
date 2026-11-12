@@ -18,7 +18,7 @@ ALLOWED_TABLES={'cases','vessels','track_points','evidence_items','custody_event
 'access_policies','interviews','investigation_reports','report_operation_snapshots','interview_request_receipts',
 'archived_manual_interview_receipts','archive_import_history','archive_historical_artifacts','package_intake_receipts',
 'hfacs_worksheets','hfacs_worksheet_audit','hfacs_worksheet_requests','hfacs_archived_requests'}
-GLOBALS={'knowledge_cards','knowledge_audit','sqlite_sequence'}
+GLOBALS={'knowledge_cards','knowledge_audit','knowledge_archives','knowledge_audit_snapshots','knowledge_audit_snapshot_epoch','sqlite_sequence'}
 
 
 def read_blob(root,case_id,rel,limit=MAX_BYTES):

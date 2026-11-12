@@ -1,6 +1,6 @@
-# Working archive B API fragment (implementation pending)
+# Working archive B API contract (PR36 implemented)
 
-This fragment does not edit shared OpenAPI. Existing package URLs and request shapes remain unchanged. Added successful preview/commit/recovery field:
+The two added GET routes are also declared in shared OpenAPI; this document specifies their detailed behavior. Existing package URLs and request shapes remain unchanged. Added successful preview/commit/recovery field:
 
 ```
 workingRecordsExtension: null | {
@@ -20,7 +20,7 @@ GET `/api/v1/cases/{case_id}/archive-history/evidence/{evidence_id}/content`: cu
 
 Expected errors (existing errors also remain):403 FORBIDDEN with no state details;404 HISTORY_NOT_FOUND for no matching historical object after authorization;409 ARCHIVE_HISTORY_ONLY for inactive receipt/old content route;409 ARCHIVE_HISTORY_INTEGRITY for missing/corrupt historical source;422 WORKING_ARCHIVE_INVALID for unsupported or inconsistent archive;413 ARCHIVE_BUDGET for uniform count/byte/decompression budgets. All added routes and archive-related refusals no-store. No success response contains restored active credentials. Invalid/unsupported requests may retain existing package-specific422 codes; UI should show server code/message without guessing successful recovery.
 
-Provenance GET is specified below; implementation requires independent acceptance before release. Do not infer all current reports/interviews are restored just because their case has an archive extension.
+Provenance GET is specified below; PR36 passed the recorded independent acceptance. Do not infer all current reports/interviews are restored just because their case has an archive extension.
 
 ## Reviewed provenance addition: latest restore only
 
