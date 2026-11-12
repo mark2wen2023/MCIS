@@ -135,7 +135,8 @@ def test_generic_audit_raw_line_and_rec_history_bypass(client, app):
     assert_denied(client.get(C + '/audit?entityId=' + rid, headers=H()))
     # Passing a report ID is not a recommendation and cannot reveal its audit.
     r = client.get(f'{C}/recommendations/{rid}/history', headers=H())
-    assert r.status_code == 404
+    # W7 full-content gate now denies default Investigator before existence lookup.
+    assert r.status_code == 403
     with app.state.db.session() as s:
         audit.append(s, case_id=CASE, operator='synthetic', role='LeadInvestigator', action='other', category='Other', command='synthetic', snapshot_ref='report-snapshot:synthetic')
     assert_denied(client.get(C + '/audit?category=Other', headers=H()))

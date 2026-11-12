@@ -26,6 +26,7 @@ from ..redaction.gateway import require
 from ..reports.access import NoStoreRoute, begin, protect_events
 from ..interviews.access import protect_events as protect_interview_events
 from .models import ConsultationRoundRow, RecommendationRow
+from .access import require_content
 
 router = APIRouter(prefix="/api/v1/cases/{case_id}", tags=["recommendations"], route_class=NoStoreRoute)
 
@@ -143,8 +144,9 @@ def _move(s, ctx: Ctx, case_id: str, rec: dict[str, Any], to: str, note: str, wr
 @router.get("/recommendations")
 def list_recs(case_id: str, ctx: Ctx = CtxDep, status: str | None = None) -> list[dict[str, Any]]:
     with ctx.db.session() as s:
+        begin(s)
         load_case(s, case_id)
-        require(ctx, s, case_id, "recommendations")
+        require_content(s, case_id, ctx.role)
         return [_with_derived(r) for r in list_docs(s, RecommendationRow, case_id) if status is None or r["status"] == status]
 
 
@@ -152,8 +154,9 @@ def list_recs(case_id: str, ctx: Ctx = CtxDep, status: str | None = None) -> lis
 def board(case_id: str, ctx: Ctx = CtxDep) -> dict[str, Any]:
     """看板四栏映射（架构裁定）：草拟=Draft、已发布=Issued、落实中=Responded、已关闭=Implemented/NotAdopted/Closed。"""
     with ctx.db.session() as s:
+        begin(s)
         load_case(s, case_id)
-        require(ctx, s, case_id, "recommendations")
+        require_content(s, case_id, ctx.role)
         cols = [{"key": "Draft", "title": "草拟", "statuses": ["Draft"]},
                 {"key": "Issued", "title": "已发布", "statuses": ["Issued"]},
                 {"key": "InProgress", "title": "落实中", "statuses": ["Responded"]},
@@ -167,8 +170,9 @@ def board(case_id: str, ctx: Ctx = CtxDep) -> dict[str, Any]:
 @router.post("/recommendations", status_code=201)
 def create_rec(case_id: str, body: RecIn, ctx: Ctx = CtxDep) -> dict[str, Any]:
     with ctx.db.session() as s:
+        begin(s)
         load_case(s, case_id)
-        require(ctx, s, case_id, "recommendations", write=True)
+        require_content(s, case_id, ctx.role, write_category="recommendations")
         existing = [r["id"] for r in list_docs(s, RecommendationRow, case_id)]
         now = now_utc()
         rid = body.id or next_key(existing, f"SR-{now.year}-")
@@ -195,7 +199,7 @@ def create_rec(case_id: str, body: RecIn, ctx: Ctx = CtxDep) -> dict[str, Any]:
 @router.get("/recommendations/{rec_id}")
 def get_rec(case_id: str, rec_id: str, ctx: Ctx = CtxDep) -> dict[str, Any]:
     with ctx.db.session() as s:
-        require(ctx, s, case_id, "recommendations")
+        require_content(s, case_id, ctx.role)
         return _with_derived(_load(s, case_id, rec_id))
 
 
@@ -204,7 +208,7 @@ def patch_rec(case_id: str, rec_id: str, body: RecPatch, ctx: Ctx = CtxDep) -> d
     """progressPct 走 C# SetProgress 规则（仅 Responded、0–100，审计 safetyrec.progress）；
     内容字段修改为服务扩展（仅 Draft 可改，审计 safetyrec.update）。状态只能走 :transition / responses。"""
     with ctx.db.session() as s:
-        require(ctx, s, case_id, "recommendations", write=True)
+        require_content(s, case_id, ctx.role, write_category="recommendations")
         cur = _load(s, case_id, rec_id)
         changes = body.model_dump(exclude_unset=True)
         note = changes.pop("note", "")
@@ -242,7 +246,7 @@ def patch_rec(case_id: str, rec_id: str, body: RecPatch, ctx: Ctx = CtxDep) -> d
 @router.post("/recommendations/{rec_id}:transition")
 def transition(case_id: str, rec_id: str, body: TransitionIn, ctx: Ctx = CtxDep) -> dict[str, Any]:
     with ctx.db.session() as s:
-        require(ctx, s, case_id, "recommendations", write=True)
+        require_content(s, case_id, ctx.role, write_category="recommendations")
         rec = _load(s, case_id, rec_id)
         if body.to == "Responded":
             raise problem(409, "safetyrec_illegal_transition", "进入已回复须通过登记回复（POST .../responses）")
@@ -255,7 +259,7 @@ def transition(case_id: str, rec_id: str, body: TransitionIn, ctx: Ctx = CtxDep)
 def record_response(case_id: str, rec_id: str, body: ResponseIn, ctx: Ctx = CtxDep) -> dict[str, Any]:
     """登记被建议对象的书面回复（= RecordResponse）。Issued 时自动转为 Responded。"""
     with ctx.db.session() as s:
-        require(ctx, s, case_id, "recommendations", write=True)
+        require_content(s, case_id, ctx.role, write_category="recommendations")
         rec = _load(s, case_id, rec_id)
         if rec["status"] not in ("Issued", "Responded"):
             raise problem(409, "safetyrec_illegal_transition", f"仅已发布/已回复的建议可登记回复，当前：{rec['status']}")
@@ -275,7 +279,7 @@ def record_response(case_id: str, rec_id: str, body: ResponseIn, ctx: Ctx = CtxD
 @router.get("/recommendations/{rec_id}/history")
 def rec_history(case_id: str, rec_id: str, ctx: Ctx = CtxDep) -> list[dict[str, Any]]:
     with ctx.db.session() as s:
-        begin(s)
+        require_content(s, case_id, ctx.role)
         require(ctx, s, case_id, "audit")
         _load(s, case_id, rec_id)
         events = audit.list_events(s, case_id, entity_id=rec_id, entity_type="recommendation", category="SafetyRec")
@@ -331,16 +335,18 @@ def _load_round(s, case_id: str, n: int) -> dict[str, Any]:
 @router.get("/consultation/rounds")
 def list_rounds(case_id: str, ctx: Ctx = CtxDep) -> list[dict[str, Any]]:
     with ctx.db.session() as s:
+        begin(s)
         load_case(s, case_id)
-        require(ctx, s, case_id, "report_draft")
+        require_content(s, case_id, ctx.role)
         return [_round_view(r) for r in list_docs(s, ConsultationRoundRow, case_id)]
 
 
 @router.post("/consultation/rounds", status_code=201)
 def open_round(case_id: str, body: RoundIn, ctx: Ctx = CtxDep) -> dict[str, Any]:
     with ctx.db.session() as s:
+        begin(s)
         load_case(s, case_id)
-        require(ctx, s, case_id, "report_draft", write=True)
+        require_content(s, case_id, ctx.role, write_category="report_draft")
         if _core_blank(body.draftVersion):
             raise problem(422, "consultation_invalid_argument", "草案版本不能为空")
         rounds = list_docs(s, ConsultationRoundRow, case_id)
@@ -374,7 +380,7 @@ def open_round(case_id: str, body: RoundIn, ctx: Ctx = CtxDep) -> dict[str, Any]
 @router.post("/consultation/rounds/{round_no}/replies", status_code=201)
 def record_reply(case_id: str, round_no: int, body: ReplyIn, ctx: Ctx = CtxDep) -> dict[str, Any]:
     with ctx.db.session() as s:
-        require(ctx, s, case_id, "report_draft", write=True)
+        require_content(s, case_id, ctx.role, write_category="report_draft")
         rnd = _load_round(s, case_id, round_no)
         if rnd.get("isClosed"):
             raise problem(409, "consultation_round_closed", "已关闭")
@@ -404,7 +410,7 @@ def record_reply(case_id: str, round_no: int, body: ReplyIn, ctx: Ctx = CtxDep) 
 @router.patch("/consultation/rounds/{round_no}/comments/{comment_id}")
 def decide_comment(case_id: str, round_no: int, comment_id: str, body: CommentDecision, ctx: Ctx = CtxDep) -> dict[str, Any]:
     with ctx.db.session() as s:
-        require(ctx, s, case_id, "report_draft", write=True)
+        require_content(s, case_id, ctx.role, write_category="report_draft")
         rnd = _load_round(s, case_id, round_no)
         c = next((x for x in rnd["comments"] if x["commentId"] == comment_id), None)
         if c is None:
@@ -427,7 +433,7 @@ def decide_comment(case_id: str, round_no: int, comment_id: str, body: CommentDe
 @router.post("/consultation/rounds/{round_no}:close")
 def close_round(case_id: str, round_no: int, ctx: Ctx = CtxDep) -> dict[str, Any]:
     with ctx.db.session() as s:
-        require(ctx, s, case_id, "report_draft", write=True)
+        require_content(s, case_id, ctx.role, write_category="report_draft")
         rnd = _load_round(s, case_id, round_no)
         if rnd.get("isClosed"):
             raise problem(409, "consultation_round_closed", "已关闭")
@@ -448,7 +454,7 @@ def close_round(case_id: str, round_no: int, ctx: Ctx = CtxDep) -> dict[str, Any
 def waive_reply(case_id: str, round_no: int, body: WaiveIn, ctx: Ctx = CtxDep) -> dict[str, Any]:
     """登记某方放弃回复（= Consultation.WaiveReply，必须写理由）。"""
     with ctx.db.session() as s:
-        require(ctx, s, case_id, "report_draft", write=True)
+        require_content(s, case_id, ctx.role, write_category="report_draft")
         rnd = _load_round(s, case_id, round_no)
         if rnd.get("isClosed"):
             raise problem(409, "consultation_round_closed", "已关闭")

@@ -12,8 +12,10 @@ from ..common.context import Ctx, CtxDep
 from ..db import get_doc
 from ..redaction.models import AccessPolicyRow
 from ..redaction.policy import default_policy
+from ..recommendations.access import protect_events as protect_recommendation_events
+from ..reports.access import begin, NoStoreRoute
 
-router = APIRouter(prefix="/api/v1/cases/{case_id}", tags=["access-workbench"])
+router = APIRouter(prefix="/api/v1/cases/{case_id}", tags=["access-workbench"], route_class=NoStoreRoute)
 LIMIT = 50
 
 
@@ -30,11 +32,9 @@ def inspect_access(case_id: str, response: Response, ctx: Ctx = CtxDep) -> Any:
     if ctx.role not in ("Investigator", "LeadInvestigator"):
         return forbidden()
     with ctx.db.session() as session:
-        # SQLite legacy transaction mode does not BEGIN for SELECT. Explicitly
-        # begin before the first read so policy and audit share one snapshot.
-        # Keep this local: other endpoints and database configuration are unchanged.
-        if session.get_bind().dialect.name == "sqlite":
-            session.connection().exec_driver_sql("BEGIN")
+        # Reserve before policy/audit reads so a classified raw-line event cannot
+        # race revocation when checked by the original-content guard.
+        begin(session)
         saved = get_doc(session, AccessPolicyRow, case_id, "policy")
         policy = default_policy() if saved is None else saved
         # Fail closed for incomplete/malformed stored matrices as well as Redacted.
@@ -47,6 +47,7 @@ def inspect_access(case_id: str, response: Response, ctx: Ctx = CtxDep) -> Any:
         events = audit.list_events(session, case_id, category="Access", action="policy.update",
                                    entity_type="accessPolicy", entity_id="policy", limit=LIMIT + 1,
                                    newest_first=True)
+        protect_recommendation_events(session, case_id, ctx.role, events)
         response.headers["Cache-Control"] = "no-store"
         return {"caseId": case_id, "policy": policy,
                 "policySource": "default" if saved is None else "saved",

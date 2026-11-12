@@ -499,3 +499,8 @@ Authorized narrow package export correction, following synthetic reproduction: R
 
 ## W20.3 只读智能体协作状态（2026-11-12）
 登记新前端模块agentOverview及AgentOverviewPage，新合同规格W20.3-agent-overview.md。共享接线main.tsx、routes.ts、caseContext.ts仅新增agents路由并保留案件上下文；不修改其他模块。只调用既有GET agents/drafts，主会话/任务编排尚未实现，无假聊天或自动执行，不碰W11。
+
+## W7 原文访问隔离 v1（2026-11-12，先于 W7.4 UI）
+纯合成确认默认 Public 可读取建议 Draft 原文。经授权按既有报告/笔录保守 full-content guard 修复，不改权限矩阵。登记跨包 Recommendations router、audit router、access_workbench router（原始审计行分类门，保留核验内容）、package/mcase.py；新增 recommendations/access.py 和合同 recommendation-content-access-v1.md。覆盖建议/征求意见读写返回、派生审计、组包前准入及旧导入目标库权限，不触 W11。默认 Investigator 收紧为403，明确兼容变化；共享包与归档B串行重放窄改。无 CAS/回执或可靠正文编辑宣称。
+
+回归断言适配：test_recommendations 使用已授权首席和纯合成种子保留原业务断言；test_reports_w162_access 保留旁路用例但默认 Investigator 的 history 未授权先403，不再先查存在404。

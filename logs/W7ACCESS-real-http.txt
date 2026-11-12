@@ -1,0 +1,1 @@
+Loopback HTTP with fresh synthetic-only SQLite: 16/16 role/endpoint checks passed; all no-store; denied responses contained no synthetic body. No UI/browser, deployment or real data tested.
