@@ -24,6 +24,7 @@ from ..common.timeutil import iso, now_utc, parse_iso
 from ..db import get_doc, list_docs, put_doc
 from ..redaction.gateway import require
 from ..reports.access import NoStoreRoute, begin, protect_events
+from ..interviews.access import protect_events as protect_interview_events
 from .models import ConsultationRoundRow, RecommendationRow
 
 router = APIRouter(prefix="/api/v1/cases/{case_id}", tags=["recommendations"], route_class=NoStoreRoute)
@@ -278,6 +279,7 @@ def rec_history(case_id: str, rec_id: str, ctx: Ctx = CtxDep) -> list[dict[str, 
         require(ctx, s, case_id, "audit")
         _load(s, case_id, rec_id)
         events = audit.list_events(s, case_id, entity_id=rec_id, entity_type="recommendation", category="SafetyRec")
+        protect_interview_events(s, case_id, ctx.role, events)
         return protect_events(s, case_id, ctx.role, events)
 
 

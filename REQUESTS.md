@@ -479,3 +479,6 @@ GET-only unknown-outcome recovery. Independent acceptance required before comple
 
 ## W16.2 conservative full-report access boundary
 Contract: contracts/report-content-access-v1.md. Approved scope includes reports, report-bearing generic audit/history and package export; explicit SQLite authorization transactions and no-store. Default Investigator compatibility intentionally restricted, without policy changes. Full content access is not redaction or authentication. Synthetic-only tests; no W11 or professional template/core edits.
+
+## W5.2a interview full-content access isolation
+Contract contracts/interview-content-access-v1.md. Existing routes restricted: interviews/compare/redaction preview, related agent drafts/application, audit and package paths. Default Investigator loses original-content access without any policy changes. SQLite writer serialization prevents lost question/answer updates. Old creation becomes unsigned empty draft only; signed records are immutable via these endpoints. Legacy transcript package import rejects rather than restoring permissive policy. W5.2b manual idempotent entry remains separate; no W11/core edits.

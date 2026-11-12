@@ -20,12 +20,13 @@ from ..common.timeutil import iso, now_utc, sim_to_utc
 from ..db import get_doc, list_docs, put_doc
 from ..interviews import service as interviews
 from ..interviews.models import InterviewRow
+from ..interviews import access as interview_access
 from ..redaction.gateway import get_policy, redact_interview, require, strip_meta
 from ..timeline.models import TimelineEventRow
 from .models import AgentDraftRow
 from . import extraction, model_client
 
-router = APIRouter(prefix="/api/v1", tags=["agents"])
+router = APIRouter(prefix="/api/v1", tags=["agents"], route_class=interview_access.NoStoreRoute)
 
 REGISTRY = [
     {"agent": "ships", "name": "船舶智能体", "inputs": "船舶资料、AIS 摘要", "outputs": "船舶参数核对建议"},
@@ -57,9 +58,12 @@ def registry(ctx: Ctx = CtxDep) -> list[dict[str, Any]]:
 @router.get("/cases/{case_id}/agents/drafts")
 def list_drafts(case_id: str, ctx: Ctx = CtxDep, status: str | None = None) -> list[dict[str, Any]]:
     with ctx.db.session() as s:
+        interview_access.begin(s)
         load_case(s, case_id)
         require(ctx, s, case_id, "agent_drafts")
-        return [d for d in list_docs(s, AgentDraftRow, case_id) if status is None or d["status"] == status]
+        drafts = [d for d in list_docs(s, AgentDraftRow, case_id) if status is None or d["status"] == status]
+        for d in drafts: interview_access.protect_draft(s, ctx, case_id, d)
+        return drafts
 
 
 @router.post("/cases/{case_id}/agents/drafts", status_code=201)
@@ -67,9 +71,11 @@ def submit_draft(case_id: str, body: dict[str, Any] = Body(...), ctx: Ctx = CtxD
     if body.get("targetEntityType") == "interviewStatements":
         raise problem(422, "MANAGED_DRAFT_TARGET", "此草稿只能由人员/作业抽取端点生成")
     with ctx.db.session() as s:
+        interview_access.begin(s)
         load_case(s, case_id)
         require(ctx, s, case_id, "agent_drafts", write=True)
         d = dict(body)
+        interview_access.protect_draft(s, ctx, case_id, d)
         d["caseId"] = case_id
         d["draftId"] = next_key([x["draftId"] for x in list_docs(s, AgentDraftRow, case_id)], "AD-", 3)
         d["status"] = "PendingReview"
@@ -87,12 +93,14 @@ def submit_draft(case_id: str, body: dict[str, Any] = Body(...), ctx: Ctx = CtxD
 
 def _apply(s, ctx: Ctx, case_id: str, d: dict[str, Any], payload: dict[str, Any]) -> str:
     """把确认后的草稿写回目标实体。返回效果说明。"""
+    interview_access.protect_draft(s, ctx, case_id, d, write=True)
     t = d.get("targetEntityType")
     if t == "interviewStatements":
         if d["status"] == "Rejected":
             return "已驳回；未写入陈述"
         require(ctx, s, case_id, "testimony", write=True)
         rec = interviews.load(s, case_id, d["targetEntityId"])
+        interview_access.document(s, ctx, rec, write=True)
         _require_agent_read(ctx, s, case_id)
         statements, citations = extraction.checked_statements(payload, rec, get_policy(s, case_id))
         if citations != d["citations"]:
@@ -106,6 +114,7 @@ def _apply(s, ctx: Ctx, case_id: str, d: dict[str, Any], payload: dict[str, Any]
         return f"新增陈述 {len(statements)} 条：" + ",".join(x["statementId"] for x in statements)
     if t == "statement" and payload.get("recordId") and payload.get("statementId"):
         rec = interviews.load(s, case_id, payload["recordId"])
+        interview_access.document(s, ctx, rec, write=True)
         st = next((x for x in rec["statements"] if x["statementId"] == payload["statementId"]), None)
         if st is None:
             raise problem(404, "NOT_FOUND", "草稿指向的陈述不存在")
@@ -134,11 +143,12 @@ def review(case_id: str, draft_id: str, body: Review, ctx: Ctx = CtxDep) -> dict
         raise problem(403, "FORBIDDEN", "只有调查员可以确认智能体草稿")
     with ctx.db.session() as s:
         # Serialize review and its apply operation, including repeated concurrent requests.
-        s.execute(text("BEGIN IMMEDIATE"))
+        interview_access.begin(s)
         require(ctx, s, case_id, "agent_drafts", write=True)
         d = get_doc(s, AgentDraftRow, case_id, draft_id)
         if d is None:
             raise problem(404, "NOT_FOUND", f"草稿不存在：{draft_id}")
+        interview_access.protect_draft(s, ctx, case_id, d, write=True)
         if d["status"] != "PendingReview":
             raise problem(409, "ALREADY_REVIEWED", f"草稿已处理：{d['status']}")
         if body.decision == "Modified" and body.payload is None:
@@ -168,7 +178,10 @@ def agent_input_interview(case_id: str, record_id: str, ctx: Ctx = CtxDep) -> di
     if ctx.role not in ("AgentService", "LeadInvestigator", "Investigator"):
         raise problem(403, "FORBIDDEN", "无权查看智能体输入")
     with ctx.db.session() as s:
+        interview_access.begin(s)
+        interview_access.require_content(s, case_id, ctx.role)
         doc = interviews.load(s, case_id, record_id)
+        interview_access.document(s, ctx, doc)
         ids = sorted(x["recordId"] for x in list_docs(s, InterviewRow, case_id))
         red = strip_meta(redact_interview(doc, "AgentService", get_policy(s, case_id), ids.index(record_id) + 1))
         audit.append(s, case_id=case_id, operator=ctx.operator, role=ctx.role, action="agent.input", category="Agent",
@@ -181,6 +194,7 @@ def _require_agent_read(ctx: Ctx, s, case_id: str) -> None:
 
 
 def _extraction_access(ctx: Ctx, s, case_id: str) -> None:
+    interview_access.require_content(s, case_id, ctx.role)
     if ctx.role not in ("AgentService", "LeadInvestigator", "Investigator"):
         raise problem(403, "FORBIDDEN", "只有调查组或智能体服务可以执行抽取")
     load_case(s, case_id)
@@ -192,8 +206,10 @@ def _extraction_access(ctx: Ctx, s, case_id: str) -> None:
 @router.post("/cases/{case_id}/agents/people_ops/interviews/{record_id}:extract", status_code=201)
 def extract_interview(case_id: str, record_id: str, ctx: Ctx = CtxDep) -> dict[str, Any]:
     with ctx.db.session() as s:
+        interview_access.begin(s)
         _extraction_access(ctx, s, case_id)
         rec = interviews.load(s, case_id, record_id)
+        interview_access.document(s, ctx, rec)
         messages = extraction.prompt(rec, get_policy(s, case_id))
     cfg = model_client.config()
     if cfg is None:
@@ -201,16 +217,34 @@ def extract_interview(case_id: str, record_id: str, ctx: Ctx = CtxDep) -> dict[s
     prompt_digest = extraction.digest(messages)
     # Commit start before inference. Failures remain auditable without raw prompts/responses.
     with ctx.db.session() as s:
+        interview_access.begin(s)
+        _extraction_access(ctx, s, case_id)
+        interview_access.document(s, ctx, interviews.load(s, case_id, record_id))
         audit.append(s, case_id=case_id, operator=ctx.operator, role=ctx.role, action="agent.run.started", category="Agent",
                      command="people_ops 本地模型调用", after=f"model={cfg.model};prompt={prompt_digest}",
                      entity_type="interview", entity_id=record_id)
     try:
+        with ctx.db.session() as send_session:
+            _extraction_access(ctx, send_session, case_id)
+            current = interviews.load(send_session, case_id, record_id)
+            interview_access.document(send_session, ctx, current)
+            if extraction.digest(extraction.prompt(current, get_policy(send_session, case_id))) != prompt_digest:
+                raise problem(409, "INTERVIEW_CHANGED", "笔录或权限已变化，未调用模型")
+            # Authorization linearizes at this short transaction. The outbound
+            # bytes cannot be recalled after release; no DB lock spans inference.
+            messages = extraction.prompt(current, get_policy(send_session, case_id))
+            rec = current
+            authorized_source = extraction.digest({'record': current, 'evidence': interview_access.source(send_session, case_id, ctx.role, current['evidenceId']) if current.get('evidenceId') else None})
         content = model_client.complete(cfg, messages)
-        payload = extraction.parse_output(content, rec)
         with ctx.db.session() as s:
-            s.execute(text("BEGIN IMMEDIATE"))
+            interview_access.begin(s)
             _extraction_access(ctx, s, case_id)
             current = interviews.load(s, case_id, record_id)
+            interview_access.document(s, ctx, current)
+            current_source = extraction.digest({'record': current, 'evidence': interview_access.source(s, case_id, ctx.role, current['evidenceId']) if current.get('evidenceId') else None})
+            if current_source != authorized_source or extraction.digest(extraction.prompt(current, get_policy(s, case_id))) != prompt_digest:
+                raise problem(409, "INTERVIEW_CHANGED", "笔录、来源或权限已变化，未保存模型结果")
+            payload = extraction.parse_output(content, rec)
             _, citations = extraction.checked_statements(payload, current, get_policy(s, case_id))
             d = {"caseId": case_id,
                  "draftId": next_key([x["draftId"] for x in list_docs(s, AgentDraftRow, case_id)], "AD-", 3),
@@ -226,7 +260,9 @@ def extract_interview(case_id: str, record_id: str, ctx: Ctx = CtxDep) -> dict[s
                          entity_type="agentDraft", entity_id=d["draftId"])
             return d
     except HTTPException as exc:
+        if exc.status_code == 403: raise
         with ctx.db.session() as s:
+            interview_access.begin(s)
             audit.append(s, case_id=case_id, operator=ctx.operator, role=ctx.role, action="agent.run.failed", category="Agent",
                          command="people_ops 本地模型调用失败", after=f"code={exc.detail['code']};prompt={prompt_digest}",
                          entity_type="interview", entity_id=record_id)

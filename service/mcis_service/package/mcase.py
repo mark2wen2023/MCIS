@@ -180,6 +180,8 @@ def build_files(s: Session, blob_root: Path, case_id: str) -> dict[str, bytes]:
 def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: str) -> bytes:
     from ..reports.access import protect_package
     protect_package(s, case_id, role)
+    from ..interviews.access import protect_package as protect_interviews
+    protect_interviews(s, case_id, role)
     from ..hfacs_drafts import archive as hfacs_archive
     from ..hfacs_drafts.router import PreviewError
     from ..package_intake.parser import parse_package
@@ -283,6 +285,30 @@ def _load_json(files: dict[str, bytes], rel: str, default: Any) -> Any:
 
 def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: str, *, validated_hfacs=None) -> dict[str, Any]:
     files = read_zip(data)
+    from ..interviews.access import draft_related, event_related
+    for name, raw in files.items():
+        if name.casefold() in ('audit/audit.jsonl', 'audit/agent.jsonl'):
+            try: lines = raw.decode('utf-8-sig').splitlines()
+            except UnicodeError: raise problem(422, 'BAD_PACKAGE', '审计格式无效')
+            if any(event_related({'line': line}) for line in lines if line.strip()):
+                raise problem(422, 'INTERVIEW_IMPORT_UNSUPPORTED', '此旧入口不支持恢复笔录或未分类智能体审计')
+            for line in lines:
+                if not line.strip(): continue
+                event=json.loads(line)
+                if event.get('category') == 'Agent':
+                    try: incoming=json.loads(files.get('agents/drafts.json',b'[]'))
+                    except (ValueError,UnicodeError): incoming=[]
+                    matches=[d for d in incoming if isinstance(d,dict) and d.get('draftId')==event.get('entity_id',event.get('entityId'))] if isinstance(incoming,list) and event.get('entity_type',event.get('entityType'))=='agentDraft' else []
+                    if len(matches)!=1 or draft_related(matches[0]):
+                        raise problem(422, 'INTERVIEW_IMPORT_UNSUPPORTED', '此旧入口不支持恢复未分类智能体原文审计')
+    if any(name.casefold().startswith('testimony/') and name.casefold().endswith('.json') for name in files):
+        raise problem(422, 'INTERVIEW_IMPORT_UNSUPPORTED', '此旧入口不支持恢复笔录及其访问策略')
+    for name, raw in files.items():
+        if name.casefold() == 'agents/drafts.json':
+            try: drafts = json.loads(raw.decode('utf-8-sig'))
+            except (ValueError, UnicodeError): raise problem(422, 'BAD_PACKAGE', '草稿格式无效')
+            if not isinstance(drafts, list) or any(not isinstance(d,dict) or draft_related(d) for d in drafts):
+                raise problem(422, 'INTERVIEW_IMPORT_UNSUPPORTED', '此旧入口不支持恢复笔录派生草稿')
     from ..hfacs_drafts import archive as hfacs_archive
     namespace = [name for name in files if name.casefold() == "hfacs" or name.casefold().startswith("hfacs/")]
     try:

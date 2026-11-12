@@ -1,13 +1,15 @@
 import { useCallback, useEffect, useId, useRef, useState, useSyncExternalStore } from 'react'
-import { getRole, onIdentityChange } from '../api'
+import { ApiError, getRole, onIdentityChange } from '../api'
 import type { IcTurn } from '../interview/types'
 import { agentError, agentIdentity, beginOperation, decide, extract, getAgents, getDrafts, operationKey, operationState, setOperation, subscribeOperation, uncertain } from './api'
 import { agentStatus, roleAccess, STATUS, utc, type Agent, type Decision, type Draft } from './model'
 import '../styles/w20-agent.css'
 
-export function AgentReviewPanel({ caseId, recordId, recordReady, turns, onApplied }: {
-  caseId: string; recordId: string | null; recordReady: boolean; turns: IcTurn[]; onApplied: () => void
+export function AgentReviewPanel({ caseId, recordId, recordReady, turns, onApplied, onAccessDenied }: {
+  onAccessDenied?:()=>void; caseId: string; recordId: string | null; recordReady: boolean; turns: IcTurn[]; onApplied: () => void
 }) {
+  const [denied,setDenied]=useState(false)
+  const deny=()=>{setDenied(true);setDrafts([]);setAgents([]);setSelected('');setNotice('');setActionError('');setAckUnknown(false);onAccessDenied?.()}
   const [who] = useState(agentIdentity)
   const [route] = useState(() => typeof window === 'undefined' ? '' : window.location.hash)
   const permission = roleAccess(getRole())
@@ -44,23 +46,25 @@ export function AgentReviewPanel({ caseId, recordId, recordReady, turns, onAppli
     const controller = new AbortController(); let cancelled = false
     void Promise.resolve().then(async () => {
       if (cancelled || !valid()) return
+      if(!recordReady || denied){setDrafts([]);setAgents([]);setSelected('');setLoading(false);return}
       setLoading(true); setReadError(''); setDrafts([]); setAgents([]); setAckUnknown(false)
       try {
         const [registry, queue] = await Promise.all([getAgents(who, controller.signal),
-          permission.read && recordId ? getDrafts(caseId, recordId, who, controller.signal) : Promise.resolve([])])
+          permission.read && recordId ? getDrafts(caseId, recordId, who, controller.signal).catch(error=>{if(!cancelled&&valid()&&error instanceof ApiError&&error.status===403)deny();throw error}) : Promise.resolve([])])
         if (cancelled || !valid()) return
         setAgents(registry); setDrafts(queue)
       } catch (error) {
         if (cancelled || !valid()) return
+        if(error instanceof ApiError && error.status===403){deny();setReadError('当前身份无权访问笔录原文或草稿，请联系授权管理员按单位规则处理。');return}
         setReadError('无法读取智能体状态或草稿队列。' + (error instanceof Error ? error.message : '请重试读取。'))
       } finally { if (!cancelled && valid()) setLoading(false) }
     })
     return () => { cancelled = true; controller.abort() }
-  }, [caseId, recordId, who, tick, permission.read, valid])
+  }, [caseId, recordId, who, tick, permission.read, valid, recordReady, denied])
   const refresh = () => { if (valid() && lock !== 'pending') setTick(n => n + 1) }
   const current = drafts.find(d => d.draftId === selected) || [...drafts].reverse().find(d => d.status === 'PendingReview') || drafts.at(-1)
   const model = agents.find(a => a.agent === 'people_ops')
-  const available = !loading && !readError && recordReady && !!recordId && permission.read && lock === 'idle'
+  const available = !denied && !loading && !readError && recordReady && !!recordId && permission.read && lock === 'idle'
   async function run(decision?: Decision, note = '') {
     if (!valid() || !available || !recordId || (decision && (!permission.review || !current || current.status !== 'PendingReview'))
       || (!decision && model?.status !== 'configured') || !beginOperation(key)) return
@@ -75,13 +79,14 @@ export function AgentReviewPanel({ caseId, recordId, recordReady, turns, onAppli
           : `${result.draftId} 已生成待审草稿，尚未写回。引用通过校验不代表解读正确。`)
     } catch (error) {
       if (uncertain(error)) finalLock = 'unknown'
-      if (valid()) setActionError(agentError(error))
+      if(valid()&&error instanceof ApiError&&error.status===403){deny();setActionError('当前身份无权访问笔录原文或草稿，请联系授权管理员按单位规则处理。')}
+      else if (valid()) setActionError(agentError(error))
     } finally { setOperation(key, finalLock) }
   }
   return <section className="w20-agent" aria-labelledby="w20-title" data-testid="w20-agent">
     <div className="w20-heading"><div><span className="w20-eyebrow">LLM 辅助 · 人工把关</span><h2 id="w20-title">笔录抽取与草稿审核</h2></div>
       <button type="button" disabled={loading || lock === 'pending'} onClick={refresh}>读取服务器状态</button></div>
-    <p>当前案件 <code>{caseId}</code> · 笔录 <strong>{recordId || '未选择'}</strong>。只发送脱敏问答到已配置的本机模型；不会自动提取或自动采纳。</p>
+    <p>当前案件 <code>{caseId}</code> · 笔录 <strong>{recordId || '未选择'}</strong>。仅在服务端许可下发送当前问答到已配置的本机模型；当前接口不保证字段级脱敏，不能把预处理当作隐私认证。不会自动提取或自动采纳。</p>
     <p className="w20-warning">配置已登记不等于模型可用或推理质量已验证。请核对每条候选的原文与含义，引用匹配不证明事实。仅作安全调查技术分析，不作责任认定。</p>
     {loading && <p role="status">正在读取模型配置与草稿…</p>}
     {readError && <p className="w20-warning" role="alert">{readError}</p>}
@@ -98,7 +103,7 @@ export function AgentReviewPanel({ caseId, recordId, recordReady, turns, onAppli
     {lock === 'unknown' && <div className="w20-warning" role="alert"><p>结果未确认，操作已锁定。先读取服务器状态并核对草稿/审计；本页不会自动重发。整页重载不代表原请求已撤销。</p>
       <label className="w20-check"><input type="checkbox" checked={ackUnknown} disabled={loading || !!readError} onChange={e => setAckUnknown(e.target.checked)}/>我已核对服务器草稿与审计，确认不会重复操作</label>
       <button type="button" disabled={!ackUnknown || loading || !!readError} onClick={() => { if (valid()) { setOperation(key, 'idle'); setActionError(''); setAckUnknown(false) } }}>核查后解除本页锁定</button></div>}
-    {permission.read && !loading && !readError && <div className="w20-queue">
+    {!denied && recordReady && permission.read && !loading && !readError && <div className="w20-queue">
       <h3>当前笔录草稿 <span>{drafts.filter(d => d.status === 'PendingReview').length} 待审 / {drafts.length} 条记录</span></h3>
       <p>此处仅显示本片人员/作业抽取草稿，历史骨架草稿不混入。逐条核验后一次确认整份草稿。</p>
       {!drafts.length ? <p className="w20-empty">当前笔录暂无此类草稿。未配置模型时保持空态，不伪造结果。</p> : <>

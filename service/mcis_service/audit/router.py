@@ -8,6 +8,7 @@ from ..cases.service import load_case
 from ..common.context import Ctx, CtxDep
 from ..redaction.gateway import require
 from . import service
+from ..interviews.access import protect_events as protect_interview_events
 from ..reports.access import NoStoreRoute, begin, protect_events
 
 router = APIRouter(prefix="/api/v1/cases/{case_id}", tags=["audit"], route_class=NoStoreRoute)
@@ -23,6 +24,7 @@ def list_audit(case_id: str, ctx: Ctx = CtxDep, category: str | None = None, ent
         require(ctx, s, case_id, "audit")
         events = service.list_events(s, case_id, category=category, entity_id=entityId, action=action, entity_type=entityType, after_seq=afterSeq, limit=limit,
                                    newest_first=(order == "desc"))
+        protect_interview_events(s, case_id, ctx.role, events)
         return protect_events(s, case_id, ctx.role, events)
 
 

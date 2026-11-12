@@ -13,9 +13,10 @@ from ..db import list_docs, put_doc
 from ..interviews import service as interviews
 from ..interviews.models import InterviewRow
 from .gateway import get_policy, redact_interview
+from ..interviews import access
 from .models import AccessPolicyRow
 
-router = APIRouter(prefix="/api/v1/cases/{case_id}", tags=["redaction"])
+router = APIRouter(prefix="/api/v1/cases/{case_id}", tags=["redaction"], route_class=access.NoStoreRoute)
 
 
 class PreviewIn(BaseModel):
@@ -55,7 +56,9 @@ def preview(case_id: str, body: PreviewIn, ctx: Ctx = CtxDep) -> dict[str, Any]:
     if body.role not in ROLES:
         raise problem(422, "BAD_ROLE", f"未知角色 {body.role}")
     with ctx.db.session() as s:
+        access.require_content(s, case_id, ctx.role)
         doc = interviews.load(s, case_id, body.recordId)
+        access.document(s, ctx, doc)
         ids = sorted(x["recordId"] for x in list_docs(s, InterviewRow, case_id))
         pol = get_policy(s, case_id)
         lvl = pol["matrix"].get(body.role, {}).get("testimony", "Deny")

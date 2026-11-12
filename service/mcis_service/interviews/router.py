@@ -14,10 +14,10 @@ from ..common.crud import next_key
 from ..common.timeutil import iso, now_utc
 from ..db import list_docs, put_doc
 from ..redaction.gateway import get_policy, redact_interview, require, strip_meta
-from . import service
+from . import service, access
 from .models import InterviewRow
 
-router = APIRouter(prefix="/api/v1/cases/{case_id}", tags=["interviews"])
+router = APIRouter(prefix="/api/v1/cases/{case_id}", tags=["interviews"], route_class=access.NoStoreRoute)
 
 
 class TurnIn(BaseModel):
@@ -50,18 +50,22 @@ def _token_index(docs: list[dict[str, Any]], record_id: str) -> int:
 @router.get("/interviews")
 def list_interviews(case_id: str, ctx: Ctx = CtxDep) -> list[dict[str, Any]]:
     with ctx.db.session() as s:
+        access.require_content(s, case_id, ctx.role, write=False)
         load_case(s, case_id)
         require(ctx, s, case_id, "testimony")
         pol = get_policy(s, case_id)
         docs = sorted(list_docs(s, InterviewRow, case_id), key=lambda d: d["recordId"])
+        for doc in docs: access.document(s, ctx, doc)
         return [service.summary(redact_interview(d, ctx.role, pol, _token_index(docs, d["recordId"]))) for d in docs]
 
 
 @router.get("/interviews/{record_id}")
 def get_interview(case_id: str, record_id: str, ctx: Ctx = CtxDep):
     with ctx.db.session() as s:
+        access.require_content(s, case_id, ctx.role, write=False)
         lvl = require(ctx, s, case_id, "testimony")
         doc = service.load(s, case_id, record_id)
+        access.document(s, ctx, doc, write=False)
         docs = list_docs(s, InterviewRow, case_id)
         out = redact_interview(doc, ctx.role, get_policy(s, case_id), _token_index(docs, record_id))
         if ctx.role not in ("LeadInvestigator", "Investigator"):
@@ -76,11 +80,17 @@ def get_interview(case_id: str, record_id: str, ctx: Ctx = CtxDep):
 @router.post("/interviews", status_code=201)
 def create_interview(case_id: str, body: dict[str, Any] = Body(...), ctx: Ctx = CtxDep) -> dict[str, Any]:
     with ctx.db.session() as s:
+        access.require_content(s, case_id, ctx.role, write=True)
         load_case(s, case_id)
         require(ctx, s, case_id, "testimony", write=True)
+        if body.get('signed', False) is not False or any(body.get(k, []) != [] for k in ('turns','statements','crossChecks')) or 'sourceSha256' in body:
+            raise problem(422, 'INTERVIEW_EMPTY_DRAFT_ONLY', '仅支持未签署空草稿，不接受预置业务状态或客户端原件哈希')
         doc = dict(body)
+        if body.get('evidenceId'):
+            doc['sourceSha256'] = access.source(s, case_id, ctx.role, body['evidenceId'])['sha256']
         doc["caseId"] = case_id
         doc.setdefault("recordId", next_key([d["recordId"] for d in list_docs(s, InterviewRow, case_id)], "IR-"))
+        doc.setdefault("signed", False)
         doc.setdefault("turns", [])
         doc.setdefault("statements", [])
         doc.setdefault("crossChecks", [])
@@ -97,8 +107,10 @@ def create_interview(case_id: str, body: dict[str, Any] = Body(...), ctx: Ctx = 
 @router.post("/interviews/{record_id}/turns", status_code=201)
 def add_turn(case_id: str, record_id: str, body: TurnIn, ctx: Ctx = CtxDep) -> dict[str, Any]:
     with ctx.db.session() as s:
+        access.require_content(s, case_id, ctx.role, write=True)
         require(ctx, s, case_id, "testimony", write=True)
         doc = service.load(s, case_id, record_id)
+        access.document(s, ctx, doc, write=True)
         turn = {"round": len(doc["turns"]) + 1, **body.model_dump()}
         doc["turns"].append(turn)
         contracts.validate("interview", doc)
@@ -112,8 +124,10 @@ def add_turn(case_id: str, record_id: str, body: TurnIn, ctx: Ctx = CtxDep) -> d
 @router.post("/interviews/{record_id}/statements", status_code=201)
 def add_statement(case_id: str, record_id: str, body: StatementIn, ctx: Ctx = CtxDep) -> dict[str, Any]:
     with ctx.db.session() as s:
+        access.require_content(s, case_id, ctx.role, write=True)
         require(ctx, s, case_id, "testimony", write=True)
         doc = service.load(s, case_id, record_id)
+        access.document(s, ctx, doc, write=True)
         st = body.model_dump()
         st["recordId"] = record_id
         st["statementId"] = next_key([x["statementId"] for x in doc["statements"]], f"{record_id}-S", 2)
@@ -131,8 +145,10 @@ def add_statement(case_id: str, record_id: str, body: StatementIn, ctx: Ctx = Ct
 @router.patch("/interviews/{record_id}/statements/{statement_id}")
 def review_statement(case_id: str, record_id: str, statement_id: str, body: StatementReview, ctx: Ctx = CtxDep) -> dict[str, Any]:
     with ctx.db.session() as s:
+        access.require_content(s, case_id, ctx.role, write=True)
         require(ctx, s, case_id, "testimony", write=True)
         doc = service.load(s, case_id, record_id)
+        access.document(s, ctx, doc, write=True)
         st = next((x for x in doc["statements"] if x["statementId"] == statement_id), None)
         if st is None:
             raise problem(404, "NOT_FOUND", f"陈述不存在：{statement_id}")
@@ -159,8 +175,10 @@ def _effective(c: dict[str, Any]) -> bool:
 def crosscheck(case_id: str, record_id: str, ctx: Ctx = CtxDep) -> dict[str, Any]:
     """比对结果一律需调查员确认才生效（架构裁定）；只有 Confirmed 进入分析。"""
     with ctx.db.session() as s:
+        access.require_content(s, case_id, ctx.role, write=False)
         require(ctx, s, case_id, "testimony")
         doc = service.load(s, case_id, record_id)
+        access.document(s, ctx, doc, write=False)
         cc = doc.get("crossChecks", [])
         return {"recordId": record_id, "engine": "seed（待接入 mcis-core crosscheck / W3 StatementCrossChecker）",
                 "results": cc,
@@ -171,10 +189,12 @@ def crosscheck(case_id: str, record_id: str, ctx: Ctx = CtxDep) -> dict[str, Any
 def _decide(ctx: Ctx, case_id: str, record_id: str, statement_ids: list[str] | None, target: str, note: str,
             only_consistent: bool = False) -> dict[str, Any]:
     with ctx.db.session() as s:
+        access.require_content(s, case_id, ctx.role, write=True)
         require(ctx, s, case_id, "testimony", write=True)
         if ctx.role not in ("LeadInvestigator", "Investigator"):
             raise problem(403, "FORBIDDEN", "只有调查员可以确认比对结果")
         doc = service.load(s, case_id, record_id)
+        access.document(s, ctx, doc, write=True)
         hits = []
         for c in doc.get("crossChecks", []):
             if statement_ids is not None and c["statementId"] not in statement_ids:

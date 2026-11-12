@@ -17,11 +17,12 @@ from ..common.context import Ctx, CtxDep, problem
 from ..common.timeutil import iso, now_utc
 from ..db import list_docs, put_doc
 from ..interviews import service as interviews
+from ..interviews import access
 from ..interviews.models import InterviewRow
 from ..redaction.gateway import MASK, get_policy, redact_interview, require
 from . import view
 
-router = APIRouter(prefix="/api/v1/cases/{case_id}/interview-compare", tags=["interviews"])
+router = APIRouter(prefix="/api/v1/cases/{case_id}/interview-compare", tags=["interviews"], route_class=access.NoStoreRoute)
 
 DISCLAIMER_FICTIONAL = "示例数据（虚构）：Lily × Mary 星屿港碰撞演示案，人物、笔录与数据均为虚构，与任何真实事故无关。比对结论一律须调查员确认后才生效。"
 DISCLAIMER_REAL = "非虚构案件：仅作安全调查技术分析，不作责任认定。比对结论一律须调查员确认后才生效。"
@@ -70,6 +71,7 @@ def _token_index(docs: list[dict[str, Any]], record_id: str) -> int:
 
 
 def _writer(ctx: Ctx, s, case_id: str) -> None:
+    access.require_content(s, case_id, ctx.role, write=True)
     require(ctx, s, case_id, "testimony", write=True)
     if ctx.role not in ("LeadInvestigator", "Investigator"):
         raise problem(403, "FORBIDDEN", "只有调查员可以复核比对结果")
@@ -88,10 +90,12 @@ def _save(s, case_id: str, doc: dict[str, Any]) -> None:
 @router.get("")
 def roster(case_id: str, ctx: Ctx = CtxDep) -> dict[str, Any]:
     with ctx.db.session() as s:
+        access.require_content(s, case_id, ctx.role)
         fictional = _fictional(s, case_id)
         require(ctx, s, case_id, "testimony")
         pol = get_policy(s, case_id)
         docs = sorted(list_docs(s, InterviewRow, case_id), key=lambda d: d["recordId"])
+        for doc in docs: access.document(s, ctx, doc)
         recs = [view.roster_entry(redact_interview(d, ctx.role, pol, _token_index(docs, d["recordId"]))) for d in docs]
         return {"caseId": case_id, "fictional": fictional, "disclaimer": _disclaimer(case_id, fictional),
                 "records": recs}
@@ -100,9 +104,11 @@ def roster(case_id: str, ctx: Ctx = CtxDep) -> dict[str, Any]:
 @router.get("/{record_id}")
 def page(case_id: str, record_id: str, ctx: Ctx = CtxDep) -> dict[str, Any]:
     with ctx.db.session() as s:
+        access.require_content(s, case_id, ctx.role)
         fictional = _fictional(s, case_id)
         lvl = require(ctx, s, case_id, "testimony")
         doc = interviews.load(s, case_id, record_id)
+        access.document(s, ctx, doc, write=False)
         docs = list_docs(s, InterviewRow, case_id)
         red = redact_interview(doc, ctx.role, get_policy(s, case_id), _token_index(docs, record_id))
         rules = red.get("_redaction", {}).get("rules", [])
@@ -166,8 +172,10 @@ def _find(doc: dict[str, Any], sid: str) -> tuple[dict[str, Any] | None, dict[st
 def confirm_row(case_id: str, record_id: str, statement_id: str, body: ConfirmIn, ctx: Ctx = CtxDep) -> dict[str, Any]:
     """“✓确认并写入审计”：陈述复核（草稿/已修改 → 已确认）+ 比对结论（待确认 → 已确认），各写一条审计。过期结论须先重新比对。"""
     with ctx.db.session() as s:
+        access.require_content(s, case_id, ctx.role)
         _writer(ctx, s, case_id)
         doc = interviews.load(s, case_id, record_id)
+        access.document(s, ctx, doc, write=True)
         st, cc = _find(doc, statement_id)
         if cc is not None and cc.get("state") != view.DISMISSED and view.is_stale(cc, st):
             raise problem(409, "icmp_entry_stale", f"比对结论基于陈述 r{view.version(cc)}，陈述已改为 r{view.revision(st)}，请先重新比对")
@@ -198,8 +206,10 @@ def reject_row(case_id: str, record_id: str, statement_id: str, body: RejectIn, 
     if not body.reason.strip():
         raise problem(422, "icmp_invalid_argument", "驳回必须填写理由")
     with ctx.db.session() as s:
+        access.require_content(s, case_id, ctx.role)
         _writer(ctx, s, case_id)
         doc = interviews.load(s, case_id, record_id)
+        access.document(s, ctx, doc, write=True)
         st, cc = _find(doc, statement_id)
         if st is not None and st.get("reviewStatus") not in view.OPEN_REVIEW:
             raise problem(409, "icmp_not_reviewable", f"陈述已复核，不能驳回：{st.get('reviewStatus')}")
@@ -229,8 +239,10 @@ def revise_statement(case_id: str, record_id: str, statement_id: str, body: Revi
     if not body.reason.strip() or not body.summary.strip():
         raise problem(422, "icmp_invalid_argument", "修改须填写新摘要与理由")
     with ctx.db.session() as s:
+        access.require_content(s, case_id, ctx.role)
         _writer(ctx, s, case_id)
         doc = interviews.load(s, case_id, record_id)
+        access.document(s, ctx, doc, write=True)
         st = view.statement(doc, statement_id)
         if st is None:
             raise problem(404, "icmp_statement_not_found", f"笔录中没有该陈述：{statement_id}")
@@ -256,8 +268,10 @@ def recheck_row(case_id: str, record_id: str, statement_id: str, body: RecheckIn
     未比对 → 登记；已驳回 → 重新提交（旧条目 Superseded 留痕）；过期且待确认 → 先驳回（“陈述已改版 rA→rB”）再重新提交；
     未过期的待确认 / 已确认 → 409 icmp_recheck_not_allowed。已有条目时理由必填。"""
     with ctx.db.session() as s:
+        access.require_content(s, case_id, ctx.role)
         _writer(ctx, s, case_id)
         doc = interviews.load(s, case_id, record_id)
+        access.document(s, ctx, doc, write=True)
         st = view.statement(doc, statement_id)
         if st is None:
             raise problem(404, "icmp_statement_not_found", f"笔录中没有该陈述：{statement_id}")
