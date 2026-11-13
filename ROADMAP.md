@@ -372,3 +372,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 ## SK-T01 read-only preview research increment (2026-11-13)
 Native subtask implementation, not separate Codex app. `research/skills_timeline/` follows draft design PR #55, with injected trusted repository/core ports and strict source/digest/version boundary checks. No production contracts or W2 frozen files changed. 19 local synthetic Python tests passed; FakeCore does not run W2 or an LLM. Independent review in module REVIEW.md. No .NET here: actual W2 transport, production permissions, source clock uncertainty, UI/persistence remain pending. Do not mark full Skill complete or production-ready; do not merge/deploy as an operational feature.
+
+
+## SK-T01 exact source-reference binding (2026-11-13)
+Native subtask + independent review, not Codex app execution. Draft #56 now binds each a/b sourceLabel exactly to selected frozen snapshots; rejects unknown/self/duplicate references and untrusted evidenceId. 32 synthetic tests plus 8 independent tests pass. This is reference binding only, not original media or observation-value verification. No actual W2/.NET, production authorization, UI or LLM executed. No merge/deployment; REVIEW_BINDING.md records limits.
