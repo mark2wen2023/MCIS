@@ -25,3 +25,13 @@ Reviewed updated demo.js: pagehide and selection change clear visible prior outp
 Ran primary `node web/tests/web-demo-dom.mjs` successfully. Added and ran `node web/tests/web-demo-dom-independent.mjs`: 17 malformed/mismatched summary variants rejected; overlapping old/new request preserves newer lock and hides stale result; changing choice removes previous result and rejects source-mismatched response; valid single-source no-conflict result displays with caution; no injected markup or local/session storage. No product changes made by independent reviewer.
 
 These are happy-dom simulated DOM checks, not a browser-engine render, click, CSP enforcement, or network end-to-end acceptance. Actual CUA browser remains unverified/refused as separately documented.
+
+## Opt-in Chromium harness review
+Read `web/tests/web-demo-browser.mjs` independently. No blocking issue found within the trusted-local-executable test harness boundary. Chromium sandbox remains enabled; browser is launched before the Python service so unavailable Chromium cannot start the demo listener. Origin comes only from the harness child and is validated as numeric IPv4 loopback port. Fresh browser context blocks service workers; route allowlist rejects external/legacy requests. Three genuine click paths require precise W2 display and source-count expectations. Inline CSP probe injects a DOM script rather than treating evaluate as CSP-controlled. Cookies and web storage are asserted empty. Screenshots use a unique mkdtemp directory, avoiding pre-existing file replacement.
+
+Independent controlled-stub failure checks (`python tests_acceptance/WEB_DEMO/check_browser_harness_failures.py`) passed three cases:
+1. launch rejection => BLOCKED exit 1, no service spawn;
+2. context rejection => FAIL exit 1, browser close invoked, no service spawn;
+3. child emits non-loopback origin => FAIL exit 1, browser close and child SIGTERM cleanup observed.
+
+These controlled stubs exercise failure reporting and ownership/cleanup only. They are not a Chromium run, CSP enforcement test, screenshot acceptance, or actual browser-to-W2 result. Real sandboxed Chromium remains blocked as recorded by the primary worker. No product security defaults were changed. No merge/deployment performed.
