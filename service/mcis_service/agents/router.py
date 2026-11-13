@@ -74,6 +74,8 @@ def submit_draft(case_id: str, body: dict[str, Any] = Body(...), ctx: Ctx = CtxD
         interview_access.begin(s)
         load_case(s, case_id)
         require(ctx, s, case_id, "agent_drafts", write=True)
+        from .binding_boundary import reject_client_binding
+        reject_client_binding(body)
         d = dict(body)
         interview_access.protect_draft(s, ctx, case_id, d)
         d["caseId"] = case_id
@@ -153,6 +155,11 @@ def review(case_id: str, draft_id: str, body: Review, ctx: Ctx = CtxDep) -> dict
         interview_access.protect_draft(s, ctx, case_id, d, write=True)
         if d["status"] != "PendingReview":
             raise problem(409, "ALREADY_REVIEWED", f"草稿已处理：{d['status']}")
+        from .binding_boundary import reject_client_binding
+        if body.payload is not None:
+            reject_client_binding({"payload": body.payload})
+        if body.decision in ("Confirmed", "Modified"):
+            reject_client_binding(d)
         if body.decision == "Modified" and body.payload is None:
             raise problem(422, "PAYLOAD_REQUIRED", "修改后确认需要提供修改后的 payload")
         if d.get("targetEntityType") == "interviewStatements" and body.payload is not None:

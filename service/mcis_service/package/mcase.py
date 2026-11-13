@@ -345,6 +345,8 @@ def _load_json(files: dict[str, bytes], rel: str, default: Any) -> Any:
 
 def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: str, *, validated_hfacs=None, validated_working=None) -> dict[str, Any]:
     files = read_zip(data)
+    from ..agents.binding_boundary import reject_client_binding, reject_package_binding_paths
+    reject_package_binding_paths(files)
     from ..working_records_archive.validation import PATH as working_path, ValidatedArchive as WorkingArchive
     namespace = [p for p in files if p.casefold() == 'working-records' or p.casefold().startswith('working-records/')]
     working_ok = isinstance(validated_working, WorkingArchive) and files.get(working_path) == validated_working.raw
@@ -380,6 +382,8 @@ def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: s
         if name.casefold() == 'agents/drafts.json':
             try: drafts = json.loads(raw.decode('utf-8-sig'))
             except (ValueError, UnicodeError): raise problem(422, 'BAD_PACKAGE', '草稿格式无效')
+            if isinstance(drafts, list):
+                for draft in drafts: reject_client_binding(draft)
             if not isinstance(drafts, list) or any(not isinstance(d,dict) or draft_related(d) for d in drafts):
                 raise problem(422, 'INTERVIEW_IMPORT_UNSUPPORTED', '此旧入口不支持恢复笔录派生草稿')
     from ..hfacs_drafts import archive as hfacs_archive
@@ -528,3 +532,4 @@ def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: s
                  entity_type="case", entity_id=case_id)
     return {"caseId": case_id, "integrity": report, "imported": {
         "evidence": len(ev_index), "custodyEvents": len(custody_lines), "auditEvents": len(audit_lines) + 1}}
+
