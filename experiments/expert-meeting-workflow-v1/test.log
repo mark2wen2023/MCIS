@@ -1,0 +1,19 @@
+✔ four independent reviews before agenda, then whole-report candidate (1.83605ms)
+✔ pause stops operations and requires human resume (0.453279ms)
+✔ budget includes initial reviews and failed provider attempts (0.306262ms)
+✔ failed provider is charged, no review recorded (0.276728ms)
+✔ cancellation stops late result publication (0.322115ms)
+✔ pause drains in-flight result but blocks new work, cannot resume busy (0.253224ms)
+✔ concurrent review rejected; no double debit (0.250781ms)
+✔ invalid agenda atomic; returned view copy isolated (0.30487ms)
+✔ HTML escaping and explicit limits (0.425488ms)
+✔ untrusted panel cannot override coordinator issue, speaker or target (1.873464ms)
+✔ early close requires reason and preserves skipped issues in view and audit (0.33218ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 140.508952
