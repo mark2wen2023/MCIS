@@ -117,7 +117,11 @@ def test_valid_history_roundtrip_is_exact_and_never_live(client,empty_client,tmp
         response=upload(target,raw) if modern else target.post('/api/v1/cases:import',headers=H('LeadInvestigator'),content=raw)
         assert response.status_code in (200,201),response.text
         with target.app.state.db.session() as s:
-            assert not any('unreviewed' in x for x in inspect(s.connection()).get_table_names())
+            # The new local index table exists in the application schema, but
+            # historical imports must never populate it.
+            from sqlalchemy import select,func
+            from mcis_service.timeline.unreviewed_storage import UnreviewedRunRow
+            assert s.scalar(select(func.count()).select_from(UnreviewedRunRow))==0
         again=target.get(C+'/export',headers=H('LeadInvestigator'));assert again.status_code==200,again.text
         records=[json.loads(x) for x in _unzip(again.content)['audit/audit.jsonl'].decode().splitlines()]
         saved=[r['snapshot_ref'] for r in records if r.get('snapshot_ref','').startswith(history.PREFIX)]

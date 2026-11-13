@@ -52,6 +52,9 @@ def protect_events(session, case_id, role, events):
 
 
 def protect_package(session, case_id, role):
+    from .unreviewed_storage import UnreviewedRunRow
+    if session.scalar(select(UnreviewedRunRow.run_id).where(UnreviewedRunRow.case_id == case_id).limit(1)) is not None:
+        require_content(session, case_id, role)
     events = session.scalars(select(AuditEventRow).where(AuditEventRow.case_id == case_id))
     for event in events:
         if related(to_doc(event)):

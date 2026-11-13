@@ -189,6 +189,8 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
     protect_unreviewed(s, case_id, role)
     from ..timeline.unreviewed_history import validate_lines as validate_result_history
     validate_result_history(audit.all_lines(s, case_id), case_id)
+    from ..timeline.unreviewed_storage import validate_local_history
+    validate_local_history(s, case_id)
     from ..working_records_archive.service import has_history, build as build_working
     track_root=blob_root/case_id/'raw'/'track-imports'
     track_namespace=track_root.exists()or track_root.is_symlink()

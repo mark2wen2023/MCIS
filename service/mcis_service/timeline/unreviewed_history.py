@@ -82,6 +82,7 @@ def declaration(event,case_id):
         exact_ints(d)
 
         if d['caseId']!=case_id:raise ValueError()
+        if 'operationId' in d and str(uuid.UUID(d['operationId']))!=d['operationId']:raise ValueError()
         for key,value in [('runId',d['runId']),('caseIncarnation',d['generationSnapshot']['caseIncarnation'])]:
             if str(uuid.UUID(value))!=value:raise ValueError()
         if (event.get('action')!='timeline.unreviewed.save' or event.get('category')!='TimelineUnreviewed'

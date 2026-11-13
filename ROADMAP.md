@@ -473,3 +473,6 @@ Independent24/24 tests pass (20 primary +3 independent +1 public-report HTTP/W2)
 
 
 | 2026-11-13 | Strict unreviewed history schema/import boundary | 本历史格式切片独立验收/草稿 | Native implementation+review.35 primary +12 independent =47/47; selected92/92 zero skips. Machine schema+cross-links/budgets, both imports reject before writes, export checks after authorization, exact historical roundtrip without live index. Save/index/approval still OFF; historical validity is not authenticity. Frozen logs/unreviewed-history-schema-impl-hashes-frozen.txt; no merge/deploy. |
+
+
+| 2026-11-13 | Internal unreviewed run save/retry/history | 内部闭环独立验收/草稿 | Native implementation+review. Atomic final-transaction audit+index save, current-state scoped retry, concurrent operation winner, corruption/rollback refusal, history-only restore.25 primary; independent32/32 incl1 actual W2; final136/136 zero skips. This supersedes earlier save-OFF status only for internal service; no HTTP/UI/approval/production identity. Frozen logs/internal-unreviewed-save-impl-hashes-frozen.txt. No merge/deploy. |

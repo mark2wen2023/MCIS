@@ -29,6 +29,35 @@
     },
     "serverPreview": {
       "$ref": "align-preview.schema.json#/$defs/response"
+    },
+    "operationId": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "description": "Optional historical attempt ID; never restored as live idempotency authority."
+    },
+    "processing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "serviceProtocolVersion",
+        "alignmentAdapterVersion",
+        "coreProtocolVersion",
+        "coreImplementationVersionStatus"
+      ],
+      "properties": {
+        "serviceProtocolVersion": {
+          "const": "mcis-internal-unreviewed-save-v1"
+        },
+        "alignmentAdapterVersion": {
+          "const": "registered-csv-preflight-v1"
+        },
+        "coreProtocolVersion": {
+          "const": "mcis-core-align-json-v1"
+        },
+        "coreImplementationVersionStatus": {
+          "const": "not_attested"
+        }
+      }
     }
   },
   "required": [
