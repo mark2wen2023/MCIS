@@ -87,6 +87,10 @@ def validate_csv(text, mapping):
         reader = csv.DictReader(io.StringIO(text), strict=True)
         headers = reader.fieldnames or []
         selected = [mapping.timeColumn] + [c.column for c in mapping.columns]
+        # W2 splits physical lines, unlike Python's logical CSV records.
+        # Embedded newlines (even in unused cells) could create phantom samples.
+        if any('\r' in name or '\n' in name for name in headers):
+            raise ValueError('multiline header unsupported')
         # W2 resolves header names with Trim + OrdinalIgnoreCase, first wins.
         # Reject aliases instead of validating one column and computing another.
         # casefold is deliberately conservative; do not rename source columns.
@@ -98,6 +102,8 @@ def validate_csv(text, mapping):
         for row in reader:
             count += 1
             if None in row or any(v is None for v in row.values()): raise ValueError('row shape')
+            if any('\r' in value or '\n' in value for value in row.values()):
+                raise ValueError('multiline cell unsupported')
             value = row[mapping.timeColumn]
             if not re.fullmatch(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,7})?(?:Z|[+-]\d{2}:\d{2})', value):
                 raise ValueError('explicit ISO timestamp required')
@@ -119,7 +125,7 @@ def validate_csv(text, mapping):
                 if column.kind == 'SpeedOverGround' and value < 0: raise ValueError('negative speed')
         if not count: raise ValueError('no observations')
     except (ValueError, csv.Error, OverflowError, TypeError):
-        raise problem(422, 'TIMELINE_SOURCE_CSV', 'CSV必须包含唯一映射列、带时区时间及有限数值；未跳过错误行或执行公式') from None
+        raise problem(422, 'TIMELINE_SOURCE_CSV', 'CSV必须包含无歧义列名、带时区时间及有限数值，表头和单元格不得跨行；未跳过错误行或执行公式') from None
 
 
 def parent_snapshot(ctx, session, case_id, source):
