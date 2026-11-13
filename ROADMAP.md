@@ -476,3 +476,8 @@ Independent24/24 tests pass (20 primary +3 independent +1 public-report HTTP/W2)
 
 
 | 2026-11-13 | Internal unreviewed run save/retry/history | 内部闭环独立验收/草稿 | Native implementation+review. Atomic final-transaction audit+index save, current-state scoped retry, concurrent operation winner, corruption/rollback refusal, history-only restore.25 primary; independent32/32 incl1 actual W2; final136/136 zero skips. This supersedes earlier save-OFF status only for internal service; no HTTP/UI/approval/production identity. Frozen logs/internal-unreviewed-save-impl-hashes-frozen.txt. No merge/deploy. |
+
+
+## Unreviewed HTTP API: default-closed prerequisite
+Design and negative tests only; no product implementation, registered route, builder, feature switch or identity integration. Legacy X-MCIS role/operator headers are forgeable and MUST NOT authorize result persistence. Real per-case identity/session authorization must be enforced at initial/final reserved write transactions, including replay, before activation.
+Independent 8/8 tests pass (4 spoofed roles and unauthenticated GET/POST/PUT remain404, no database writes, no OpenAPI route); repeated8/8 pass. Existing internal-save regression37/37 includes one actual W2 invocation, not real authentication/browser/CI/LLM validation. Internal save remains available only to existing trusted service callers; investigator-facing API remains NOT IMPLEMENTED. See contracts/unreviewed-api-design.md and tests_acceptance/UNREVIEWED_API_CLOSED/REPORT.md. No merge/deployment.
