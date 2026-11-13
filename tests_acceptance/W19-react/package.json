@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "esbuild": "0.28.2",
+    "happy-dom": "21.0.4",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "private": true,
+  "scripts": {
+    "test": "npm run test:lifecycle && npm run test:cancel",
+    "test:lifecycle": "esbuild lifecycle.tsx --bundle --packages=external --platform=node --format=esm --jsx=automatic --outfile=.run.mjs && node .run.mjs && esbuild review-probe.tsx --bundle --packages=external --platform=node --format=esm --jsx=automatic --outfile=.probe.mjs && node .probe.mjs",
+    "test:cancel": "esbuild ../w19-react-lifecycle/cancel.tsx --bundle --packages=external --platform=node --format=esm --jsx=automatic --outfile=.cancel.mjs && node .cancel.mjs && esbuild ../w19-react-lifecycle/independent-cancel.tsx --bundle --packages=external --platform=node --format=esm --jsx=automatic --outfile=.cancel-probe.mjs && node .cancel-probe.mjs"
+  }
+}

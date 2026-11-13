@@ -561,3 +561,18 @@ The new endpoint adds conservative current-case evidence/interview visibility an
 The browser uses a fixed-profile ZIP_STORED and strict JSON verifier, actual member CRC/SHA, preview/request binding and original audit association. No object URL/download occurs until checks succeed. Unknown delivery persists only scoped metadata and never auto-retries. Explicit stop-wait discards even abort-ignoring late replies. After checking downloads the user can knowingly abandon an attempt and freshly preview a new generation; storage corruption/unavailability has an explicit scoped recovery check, never silent lock deletion or false success. Local headers and hashes are not authentication, signature, facts or complete audit-chain certification.
 
 Engineering caps are declared for report/output/audit/manifest/ZIP. A self-review removed an unintended2MiB policy-fingerprint limit by streaming its hash without adding a policy editing restriction. OpenAPI labels now match the two new report-output routes while preserving the old14-report-route test unchanged. The B retention plan allocates no archive version and remains unimplemented.
+
+
+## W19 product source-review gate — 2026-11-13
+
+This increment modifies the existing frozen `web/src/knowledge/SuggestionPreview.tsx` entry point, with isolated new source-review view/helper and regression tests. It adds a visible operator-asserted Public/Synthetic label, exact source locator/excerpt, unverified warning, and a local acknowledgment bound to the returned preview input digest before copying into the candidate form. Existing server/source-binding checks remain authoritative; no API/schema/authentication changes, no auto-save or publication. This is the existing template-stub flow, not an LLM integration. Original frozen summaries are preserved; new freeze is `logs/w19-product-source-review-sha256.txt`.
+
+
+## W19 preview session reset — 2026-11-13
+
+Registers the modification of frozen SuggestionPreview before new freeze: keyed source/kind/identity child session discards old preview/ack state on committed input change. Existing API and template-only behavior unchanged. Earlier freeze retained; new hashes logs/w19-preview-session-sha256.txt. Actual browser lifecycle acceptance remains pending.
+
+
+## W19 explicit stop-wait — 2026-11-13
+
+Registers change to frozen SuggestionPreview: explicit local stop-wait plus monotonic request generation prevents late results and finally blocks from affecting retries. No API change or server cancellation claim. Prior freezes retained; logs/w19-stop-wait-sha256.txt is new freeze.
