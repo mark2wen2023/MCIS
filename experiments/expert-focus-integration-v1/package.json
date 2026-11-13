@@ -1,0 +1,12 @@
+{
+  "name": "mcis-pi-adapter-spike",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@earendil-works/pi-agent-core": "1.5.2",
+    "@earendil-works/pi-ai": "1.5.2"
+  },
+  "scripts": {
+    "test": "node test.mjs && node test-interleavings.mjs && node test-focus.mjs && node review-probe.mjs && node review-cancel-probe.mjs"
+  }
+}
