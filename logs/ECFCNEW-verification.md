@@ -1,0 +1,14 @@
+# W11 fresh implementation verification record
+
+Baseline: main3aba2bf03e393909c611489ae573a887087637ac. Original interrupted W11 artifacts were unavailable; old reported933 tests are NOT current evidence. This is a new implementation, not recovery of old bytes.
+
+- Isolated real C# adapter selftest:49 synthetic cases, including legal25x1000emoji output328526bytes and201diagnostic bound. Five original referenced domain source git blob hashes match baseline.
+- Final developer affected service regression:243 passed/101.50s. Command from service: `PYTHONPATH=. .venv/bin/pytest -q tests/test_ecfc_drafts.py tests/test_archive_export_safety.py tests/test_hfacs_package_extension.py tests/test_package_intake_parser.py tests/test_package_intake_router.py tests/test_package_zip_boundary.py tests/test_working_record_archive.py tests/test_track_history.py -p no:cacheprovider -p tests.synthetic_seed_plugin`. Runtime uses existing.NET8.0.428 configured through MCIS_DOTNET, no new package installation.39 new module developer cases included. Earlier238 run preceded mandatory archive acknowledgement; not substituted for final243.
+- IndependentAPI/DB:30 passed/11.48s against post-ack13backend SHA. Independent actualTCP loopback+service+CLI+SQLite:10 passed. See acceptance report for exact boundaries and failure injection.
+- Frontend:82 implementation assertions,TypeScript/build and Chromium API-double flows passed in implementation worker. These do not constitute independent real-service browser acceptance. Full-width40-node schematic remains scrollable, rather than crushing labels into1800pixels.
+- Independent real-service browser:NOT RUN beyond launch. Chromium process singleton socket returned Operation not permitted. Same exec normal escalated-approval execution still failed before any UI assertion.0UI assertions. Stopped this execution path; no changed binary, identity, parameters or tool route retry.
+- Final implementation20SHA: logs/ECFCNEW-impl-hashes-frozen.txt, comprising post-ack backendv2 and UIv2. Historical pre-ack/v1 freeze records are retained as earlier stages, not final evidence. Shared main.tsx mount is excluded from single-package freeze per AGENTS; diff is only import/LIVE registration.
+
+D1 and D2 original red tests and corrections are retained in DEFECTS/ECFCNEW.md and independent tests. No whole-repository, Windows/Unity, actual LLM, professional/legal or production-authentication acceptance claimed. No deployment. The case archive is deliberately blocked once ECFC state exists, with explicit user acknowledgement; archival follow-up is design-only.
+
+Disposition: preserve as draft PR, DO NOT MERGE until independent real-service browser flow succeeds on the same final code through a supported execution path. Do not bypass the current execution restriction.

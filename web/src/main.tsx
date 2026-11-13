@@ -1,4 +1,5 @@
 import { StrictMode } from 'react'
+import { EcfcPage } from './pages/EcfcPage'
 import { createRoot } from 'react-dom/client'
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './styles.css'
@@ -26,6 +27,7 @@ import { ROUTES } from './routes'
 import { AnalysisPage } from './pages/AnalysisPage'
 
 const LIVE: Record<string, () => React.ReactElement> = {
+  ecfc: () => <EcfcPage />,
   agents: () => <AgentOverviewPage />,
   whatif: () => <WhatIfPage />,
   systemic: () => <SystemicPage />,

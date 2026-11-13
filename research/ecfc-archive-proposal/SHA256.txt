@@ -1,0 +1,3 @@
+2a072d199fef408c1ddf47d5e03af12c3527888efdbe6740d25d60f555d89165  ecfc-archive-design-0830/prototype.py
+1c4c968ecb5b6148fef06a006aa2e89b0c8502664cebaef86c6ff8fa183e16a5  ecfc-archive-design-0830/test_prototype.py
+8e4be7e4581a2b1095b6b6b085b8758e81a35249fe43245d509ea564aad53318  ecfc-archive-design-0830/CONTRACT.md
