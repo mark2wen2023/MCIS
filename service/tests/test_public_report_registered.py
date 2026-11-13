@@ -43,6 +43,8 @@ def test_public_report_registered_scope_real_http(client):
         while not server.started and time.monotonic()<deadline:time.sleep(.02)
         assert server.started
         with httpx.Client(base_url=f'http://127.0.0.1:{port}/api/v1/cases/{CASE}',headers=H(),trust_env=False,timeout=60) as h:
+            from .test_registered_parent_report import parent
+            report_receipt=parent(h,pdf,'yangze22-public-report.pdf',case='')
             sources=[]
             for o in observations:
                 raw=f"utc,heading\n{o['interpretationUtc']},{o['headingDeg']}\n".encode()
@@ -54,7 +56,9 @@ def test_public_report_registered_scope_real_http(client):
                 p=h.post('/evidence-intakes:preview',json=b);assert p.status_code==200,p.text
                 r=h.post('/evidence-intakes:commit',json={**b,'confirmed':True,'requestDigest':p.json()['requestDigest']});assert r.status_code==200,r.text
                 receipt=r.json();assert receipt['sourceSha256']==hashlib.sha256(raw).hexdigest()
-                sources.append({'evidenceId':receipt['evidenceId'],'csvMapping':{'timeColumn':'utc','columns':[{'column':'heading','kind':'Heading'}]},
+                sources.append({'evidenceId':receipt['evidenceId'],
+                  'parentReport':{'evidenceId':report_receipt['evidenceId'],'sourceSha256':REPORT_SHA},
+                  'csvMapping':{'timeColumn':'utc','columns':[{'column':'heading','kind':'Heading'}]},
                   'comparisonContext':{'vesselLabel':'YANGZE 22 / IMO 9958212','sourceNature':'report_extract','sourceTitle':TITLE,
                     'citation':f"PDF p{o['pdfPage']} / 正文p{o['bodyPage']} / {o['figure']} / SHA256 {REPORT_SHA}",
                     'timeBasis':o['interpretationBasis'], 'headingReference':'true' if o['headingReference']=='true' else 'unknown'}})
@@ -69,6 +73,9 @@ def test_public_report_registered_scope_real_http(client):
             assert data['comparisonScope']['status']=='user_declared_not_verified'
             assert data['comparisonScope']['sources'][0]['context']==sources[1]['comparisonContext']
             assert data['sourceSnapshots'][0]['evidenceId']==sources[1]['evidenceId']
+            assert data['reportSnapshots'][0]['evidenceId']==report_receipt['evidenceId']
+            assert data['reportSnapshots'][0]['sourceSha256']==REPORT_SHA
+            assert data['reportSnapshots'][0]['relationshipStatus']=='user_declared_not_verified'
             assert data['result']['stats']['sourcesImported']==1
             assert data['result']['conflicts']==[] # single source; not corroboration
             assert data['result']['calibration']['allCalibrated'] is False

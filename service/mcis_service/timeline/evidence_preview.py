@@ -38,10 +38,25 @@ class ComparisonContext(StrictDto):
         return value
 
 
+class ParentReport(StrictDto):
+    evidenceId: str = Field(pattern=r'^EV-[0-9]{3,}$', max_length=32)
+    sourceSha256: str = Field(pattern=r'^[0-9a-f]{64}$')
+
+
 class RegisteredSource(StrictDto):
     evidenceId: str = Field(pattern=r'^EV-[0-9]{3,}$', max_length=32)
     csvMapping: PreviewMapping
     comparisonContext: ComparisonContext | None = None
+    parentReport: ParentReport | None = None
+
+    @model_validator(mode='after')
+    def report_declaration(self):
+        if self.parentReport:
+            if self.parentReport.evidenceId == self.evidenceId:
+                raise ValueError('parent must differ from extract')
+            if self.comparisonContext is None or self.comparisonContext.sourceNature != 'report_extract':
+                raise ValueError('parent report requires report-extract declaration')
+        return self
 
 
 class RegisteredPreview(StrictDto):
@@ -103,11 +118,34 @@ def validate_csv(text, mapping):
         raise problem(422, 'TIMELINE_SOURCE_CSV', 'CSV必须包含唯一映射列、带时区时间及有限数值；未跳过错误行或执行公式') from None
 
 
+def parent_snapshot(ctx, session, case_id, source):
+    """Check registered bytes only. Never certify the claimed extraction relation."""
+    parent = source.parentReport
+    item = evidence.load_item(session, case_id, parent.evidenceId)
+    match = PATH.fullmatch(item.get('relativePath') or '')
+    if not match:
+        raise problem(422, 'TIMELINE_PARENT_UNSUPPORTED', '父报告必须是本案件本地登记的文件')
+    found = intake.load_receipt(ctx, session, case_id, match.group(1))
+    if found is None or found[0]['evidenceId'] != parent.evidenceId:
+        raise problem(409, 'TIMELINE_PARENT_CHANGED', '父报告登记不存在或身份已变化')
+    receipt, raw = found
+    if receipt['evidence']['needsReview'] or receipt['evidence']['status'] == 'Mismatch':
+        raise problem(409, 'TIMELINE_PARENT_REVIEW_REQUIRED', '父报告需复核或校验不匹配，未采用结果')
+    if receipt['sourceSha256'] != parent.sourceSha256:
+        raise problem(409, 'TIMELINE_PARENT_CHANGED', '父报告版本与本次声明不一致')
+    if not receipt['fileName'].lower().endswith('.pdf') or receipt['metadata']['category'] != 'Document':
+        raise problem(422, 'TIMELINE_PARENT_UNSUPPORTED', '本切片仅关联登记为Document的.pdf文件，不解析或证明PDF内容')
+    return {'extractEvidenceId': source.evidenceId, 'evidenceId': parent.evidenceId,
+            'sourceSha256': receipt['sourceSha256'], 'registrationDigest': receipt['requestDigest'],
+            'byteLength': len(raw), 'registeredUtc': receipt['registeredUtc'],
+            'relationshipStatus': 'user_declared_not_verified'}
+
+
 def resolve(ctx, session, case_id, body):
     begin(session)
     intake.authorize(ctx, session, case_id)
     require(ctx, session, case_id, 'timeline')
-    sources, versions = [], []
+    sources, versions, parents = [], [], []
     for source in body.sources:
         item = evidence.load_item(session, case_id, source.evidenceId)
         match = PATH.fullmatch(item.get('relativePath') or '')
@@ -133,28 +171,31 @@ def resolve(ctx, session, case_id, body):
         versions.append({'evidenceId':source.evidenceId, 'sourceSha256':receipt['sourceSha256'],
                          'registrationDigest':receipt['requestDigest'], 'byteLength':len(raw),
                          'registeredUtc':receipt['registeredUtc']})
+        if source.parentReport:
+            parents.append(parent_snapshot(ctx, session, case_id, source))
     try: resolved = PreviewRequest.model_validate({'sources':sources})
     except ValueError:
         raise problem(422, 'TIMELINE_SOURCE_CSV', '来源内容或映射不符合预览限制') from None
-    return resolved, versions
+    return resolved, versions, parents
 
 
 @router.post('/timeline/registered-align-preview')
 def registered_preview(case_id: str, body: RegisteredPreview, ctx: Ctx = CtxDep):
     with ctx.db.session() as session:
-        resolved, versions = resolve(ctx, session, case_id, body)
+        resolved, versions, parents = resolve(ctx, session, case_id, body)
         epoch = parse_iso(load_case(session, case_id)["caseEpochUtc"])
     response = preview_alignment(case_id, resolved, ctx)
     with ctx.db.session() as session:
-        _, current = resolve(ctx, session, case_id, body)
+        _, current, current_parents = resolve(ctx, session, case_id, body)
         if parse_iso(load_case(session, case_id)["caseEpochUtc"]) != epoch or parse_iso(response["caseEpochUtc"]) != epoch:
             raise problem(409, "ALIGN_PREVIEW_CASE_CHANGED", "案件时间基准已变化，未采用结果")
-        if current != versions:
+        if current != versions or current_parents != parents:
             raise problem(409, 'TIMELINE_SOURCE_CHANGED', '计算期间原件登记版本已变化，未采用结果')
     if any(str(d.get('severity', '')).casefold() == 'error'
            for d in response['result']['importDiagnostics']):
         raise problem(422, 'TIMELINE_SOURCE_CORE_DIAGNOSTIC', '核心报告来源导入错误，未将跳过数据解释为无冲突')
-    return {**response, 'sourceSnapshots': versions, 'sourceBinding': 'transient-local-intake-bytes',
+    return {**response, 'sourceSnapshots': versions, 'reportSnapshots': parents,
+            'sourceBinding': 'transient-local-intake-bytes',
             'observationApproval': 'not_assessed',
             'comparisonScope': {'status': 'user_declared_not_verified' if body.sources[0].comparisonContext else 'unscoped',
                                 'sources': [{'evidenceId': s.evidenceId, 'context': s.comparisonContext.model_dump()}
