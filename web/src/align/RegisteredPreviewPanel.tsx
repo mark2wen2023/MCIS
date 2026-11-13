@@ -4,6 +4,7 @@ import { caseIdentity } from '../cases/identity'
 import { intakeRequest } from '../evidenceIntake/api'
 import { Panel } from '../components/Panel'
 import { PreviewResult } from './AlignPreviewPanel'
+import { SourceCoverage } from './SourceCoverage'
 import { KINDS,KIND_LABEL } from './model'
 import type { EvidenceItem } from '../types'
 import type { PreviewKind } from './types'
@@ -67,6 +68,6 @@ export function RegisteredPreviewPanel({caseId,items}:{caseId:string;items:Evide
       <button type="button" className="btn" onClick={()=>{clear();setMessage('已停止等待并清除预览；不保证已发计算在服务端终止。')}}>停止等待 / 清除预览</button>
     </form>
     {busy&&<p role="status">读取登记原件并计算中…</p>}{message&&<p role="alert">{message}</p>}
-    {result&&resultContext===context&&who===caseIdentity()&&<><h3>本次人工声明的比较范围 · 未核验</h3>{result.comparisonScope?.sources.map(s=><p key={s.evidenceId}>{s.evidenceId} · {s.context.vesselLabel} · {s.context.sourceNature==='report_extract'?'报告摘录，非原始传感器':s.context.sourceNature}<br/>{s.context.sourceTitle} · {s.context.citation}<br/>时间说明：{s.context.timeBasis}</p>)}<p>同名不证明同船，声明不证明真实；报告派生值不得当作独立原始证据。时间说明不会校正钟差；未校准提示仍有效。</p><h3>本次核对的来源字节</h3>{result.sourceSnapshots.map(s=><p key={s.evidenceId} style={{overflowWrap:'anywhere'}}>{s.evidenceId} · {s.byteLength} bytes<br/>SHA-256：{s.sourceSha256}<br/>登记摘要：{s.registrationDigest}</p>)}{Boolean(result.reportSnapshots?.length)&&<><h3>声明关联的父报告 · 关系未经核实</h3>{result.reportSnapshots!.map(s=><p key={s.extractEvidenceId} style={{overflowWrap:'anywhere'}}>摘录 {s.extractEvidenceId} → 父报告 {s.evidenceId}<br/>已核对本次登记字节：{s.byteLength} bytes<br/>SHA-256：{s.sourceSha256}<br/>登记摘要：{s.registrationDigest}<br/>关联由用户声明，尚未验证摘录是否来自该报告、是否准确；不是审核通过。</p>)}</>}<p>只核对当前字节与登记；未批准事实，也不证明钟差已消除。</p><PreviewResult value={result}/></>}
+    {result&&resultContext===context&&who===caseIdentity()&&<><SourceCoverage value={result}/><h3>本次人工声明的比较范围 · 未核验</h3>{result.comparisonScope?.sources.map(s=><p key={s.evidenceId}>{s.evidenceId} · {s.context.vesselLabel} · {s.context.sourceNature==='report_extract'?'报告摘录，非原始传感器':s.context.sourceNature}<br/>{s.context.sourceTitle} · {s.context.citation}<br/>时间说明：{s.context.timeBasis}</p>)}<p>同名不证明同船，声明不证明真实；报告派生值不得当作独立原始证据。时间说明不会校正钟差；未校准提示仍有效。</p><h3>本次核对的来源字节</h3>{result.sourceSnapshots.map(s=><p key={s.evidenceId} style={{overflowWrap:'anywhere'}}>{s.evidenceId} · {s.byteLength} bytes<br/>SHA-256：{s.sourceSha256}<br/>登记摘要：{s.registrationDigest}</p>)}{Boolean(result.reportSnapshots?.length)&&<><h3>声明关联的父报告 · 关系未经核实</h3>{result.reportSnapshots!.map(s=><p key={s.extractEvidenceId} style={{overflowWrap:'anywhere'}}>摘录 {s.extractEvidenceId} → 父报告 {s.evidenceId}<br/>已核对本次登记字节：{s.byteLength} bytes<br/>SHA-256：{s.sourceSha256}<br/>登记摘要：{s.registrationDigest}<br/>关联由用户声明，尚未验证摘录是否来自该报告、是否准确；不是审核通过。</p>)}</>}<p>只核对当前字节与登记；未批准事实，也不证明钟差已消除。</p><PreviewResult value={result}/></>}
   </div></Panel>
 }
