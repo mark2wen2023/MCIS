@@ -1,0 +1,29 @@
+test_after (test_timeline.Tests.test_after) ... ok
+test_arithmetic_independent_of_caller_context (test_timeline.Tests.test_arithmetic_independent_of_caller_context) ... ok
+test_bad_shape (test_timeline.Tests.test_bad_shape) ... ok
+test_before (test_timeline.Tests.test_before) ... ok
+test_bounds_and_expansion (test_timeline.Tests.test_bounds_and_expansion) ... ok
+test_correction_scope (test_timeline.Tests.test_correction_scope) ... ok
+test_crosscase (test_timeline.Tests.test_crosscase) ... ok
+test_cycle (test_timeline.Tests.test_cycle) ... ok
+test_duplicate (test_timeline.Tests.test_duplicate) ... ok
+test_fixed_point_grammar (test_timeline.Tests.test_fixed_point_grammar) ... ok
+test_immutable (test_timeline.Tests.test_immutable) ... ok
+test_invalid_numbers (test_timeline.Tests.test_invalid_numbers) ... ok
+test_missing_reference (test_timeline.Tests.test_missing_reference) ... ok
+test_nanosecond_difference_survives_zero_correction (test_timeline.Tests.test_nanosecond_difference_survives_zero_correction) ... ok
+test_no_fake_precision (test_timeline.Tests.test_no_fake_precision) ... ok
+test_overlap_not_same (test_timeline.Tests.test_overlap_not_same) ... ok
+test_point (test_timeline.Tests.test_point) ... ok
+test_precision_applies_to_corrections (test_timeline.Tests.test_precision_applies_to_corrections) ... ok
+test_proposal_not_applied (test_timeline.Tests.test_proposal_not_applied) ... ok
+test_range (test_timeline.Tests.test_range) ... ok
+test_reject_excess_precision_instead_of_rounding (test_timeline.Tests.test_reject_excess_precision_instead_of_rounding) ... ok
+test_relative_no_time (test_timeline.Tests.test_relative_no_time) ... ok
+test_uncertainty (test_timeline.Tests.test_uncertainty) ... ok
+test_versions_remain (test_timeline.Tests.test_versions_remain) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.001s
+
+OK
