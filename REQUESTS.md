@@ -565,3 +565,7 @@ Engineering caps are declared for report/output/audit/manifest/ZIP. A self-revie
 
 ## 2026-11-13 expert panel SQLite synthetic service slice (experimental)
 User-requested third parallel expert-panel line. Add only experiments/expert-panel-sqlite-v1; no production API/database changes. Includes frozen snapshots, independent first pass, peer turns, source-version delivery records, SQLite transactions, revision conflicts, receipts, turn budget and cancellation. Independent review found cancelled receipt replay and malformed source IDs; both fixed and 26 standard-library tests independently rerun. Actor identities are trusted fixtures, not authentication; no real LLM, UI, source ACL, substantive citation validation, human adoption or archive. Keep Draft and do not enable production.
+
+
+## Expert meeting workflow experiment (2026-11-13)
+Append-only synthetic coordinator and read-only HTML snapshot under experiments/expert-meeting-workflow-v1. No production interface changes. Pi/LLM wiring, dynamic expert roster and interactive UI are not implemented. Focus is audit tagging only pending a host-controlled adapter interface. Early close requires reasons and lists unaddressed issues; candidate metadata cannot overwrite coordinator identity. Research draft only.

@@ -371,3 +371,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 | 2026-11-13 | Expert-panel SQLite experimental slice | 待完整验收：26项隔离标准库测试经独立复验；仅合成数据、非生产接口，无LLM/UI/认证/归档。修复取消后旧回执泄露和非法sourceId；不合并部署。文件见 experiments/expert-panel-sqlite-v1/，原型局部通过不等于W20完成。 |
+
+
+| 2026-11-13 | Expert meeting workflow experiment | 待测 / research draft | 11 local Node tests; previous 10 independently rerun, early-close regression awaits final review. Frozen hashes: experiments/expert-meeting-workflow-v1/SHA256SUMS.txt. No real LLM, Pi wiring, interactive UI, production auth or deployment. |
