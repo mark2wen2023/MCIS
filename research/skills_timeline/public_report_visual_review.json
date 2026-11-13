@@ -1,0 +1,52 @@
+{
+  "reviewType": "assistant_visual_transcription_not_investigator_approval",
+  "report": {
+    "path": "reports/yangze22/report.pdf",
+    "sha256": "99084b8e672da6e2f8d9809bea25a92fe5fcf31c318554832e14339610015d7f",
+    "gitBlob": "cf7819378cd68eb9e7ef9c37d8d76c417a779cee",
+    "officialUrl": "https://www.sh.msa.gov.cn/u/cms/www/202505/191445221747637122775.pdf",
+    "sourceFamily": "single_published_investigation_report"
+  },
+  "observations": [
+    {
+      "id": "yangze22-fig6",
+      "pdfPage": 17,
+      "bodyPage": 15,
+      "figure": "图6",
+      "identityCropPdfPoints": [180, 390, 285, 515],
+      "clockCropPdfPoints": [210, 260, 270, 300],
+      "vesselName": "YANGZE 22",
+      "imo": "9958212",
+      "headingLabel": "船首向",
+      "headingDeg": 47.0,
+      "headingReference": "not_explicit_in_crop",
+      "courseLabel": "航向",
+      "courseDeg": 54.0,
+      "displayTime": "30-12-2024 22:01:54",
+      "displayTimeZone": "not_labelled_on_clock",
+      "interpretationUtc": "2024-12-30T14:01:54Z",
+      "interpretationBasis": "existing_report_extraction_Beijing_time_not_device_clock_calibration"
+    },
+    {
+      "id": "yangze22-fig27",
+      "pdfPage": 41,
+      "bodyPage": 39,
+      "figure": "图27",
+      "identityHeadingClockCropPdfPoints": [190, 300, 505, 346],
+      "vesselName": "YANGZE 22",
+      "imo": "9958212",
+      "headingLabel": "Heading True",
+      "headingDeg": 48.0,
+      "headingReference": "true",
+      "displayTimeUtc": "2024/12/30 14:01:54",
+      "displayTimeLmt": "2024/12/30 14:01:54",
+      "interpretationUtc": "2024-12-30T14:01:54Z",
+      "interpretationBasis": "explicit_UTC_field_not_LMT_field"
+    }
+  ],
+  "investigatorApproval": "pending",
+  "originalTelemetryVerified": false,
+  "clockCalibrationVerified": false,
+  "independentEvidenceSourcesVerified": false,
+  "comparisonDisposition": "bounded_engine_replay_only_not_evidence_consistency"
+}
