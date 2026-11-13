@@ -376,3 +376,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 | 2026-11-13 | W19 preview session reset | 局部独立验收通过，待浏览器验收 | 14 session key/wrapper checks, prior16/9+W19.2 regression, isolated tsc/browser bundle, independent10 boundary probes pass. Native subtasks; no actual React mount/network-race or browser test, full app, production auth, or real LLM verification. No merge/deploy. |
+
+
+| 2026-11-13 | W19 explicit stop-wait | 局部独立验收通过，待浏览器/完整应用验收 | 19 lifecycle +10 prior probes +16 cancel assertions and independent10 probes pass; browser bundle passes. Happy DOM controlled fetch only, no real server/LLM/CI acceptance. Native subtasks; no merge/deploy. |

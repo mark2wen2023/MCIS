@@ -571,3 +571,8 @@ This increment modifies the existing frozen `web/src/knowledge/SuggestionPreview
 ## W19 preview session reset — 2026-11-13
 
 Registers the modification of frozen SuggestionPreview before new freeze: keyed source/kind/identity child session discards old preview/ack state on committed input change. Existing API and template-only behavior unchanged. Earlier freeze retained; new hashes logs/w19-preview-session-sha256.txt. Actual browser lifecycle acceptance remains pending.
+
+
+## W19 explicit stop-wait — 2026-11-13
+
+Registers change to frozen SuggestionPreview: explicit local stop-wait plus monotonic request generation prevents late results and finally blocks from affecting retries. No API change or server cancellation claim. Prior freezes retained; logs/w19-stop-wait-sha256.txt is new freeze.
