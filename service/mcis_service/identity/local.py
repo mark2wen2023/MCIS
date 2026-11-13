@@ -107,7 +107,7 @@ def disable_subject(session, subject_id):
         row.enabled=False; row.revision += 1; session.flush()
 
 
-def authorize_save(session, token, case_id):
+def _authorize(session, token, case_id, *, save):
     # SQLite writer reservation precedes ALL identity and policy reads. A caller
     # must keep this same transaction through the protected write/return decision.
     if session.get_bind().dialect.name != 'sqlite': denied()
@@ -126,8 +126,16 @@ def authorize_save(session, token, case_id):
     if subject is None or not subject.enabled: denied()
     incarnation = current(session, case_id)
     member = session.get(Membership, (subject.subject_id, incarnation), populate_existing=True)
-    if (member is None or not member.enabled or not member.can_save_unreviewed
+    if (member is None or not member.enabled or (save and not member.can_save_unreviewed)
             or member.case_id != case_id or member.role not in ('Investigator','LeadInvestigator')): denied()
     return Authority(subject.subject_id, member.role,
         (subject.subject_id, subject.revision, row.token_hash, row.revision,
          row.expires_at, case_id, incarnation, member.revision, member.role))
+
+
+def authorize_save(session, token, case_id):
+    return _authorize(session, token, case_id, save=True)
+
+def authorize_read(session, token, case_id):
+    """Current local case membership grants read only; content policies still apply."""
+    return _authorize(session, token, case_id, save=False)

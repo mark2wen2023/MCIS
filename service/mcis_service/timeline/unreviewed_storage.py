@@ -154,3 +154,32 @@ def save_authenticated_unreviewed(db,settings,token,case_id,request,operation_id
     ctx=SimpleNamespace(db=db,settings=settings,operator='authenticated',role='')
     return save_unreviewed(ctx,case_id,request,operation_id,
         _authorize=lambda session:authorize_save(session,token,case_id))
+
+
+def read_authenticated_unreviewed(db, settings, token, case_id, run_id):
+    """Read current local result only; never recompute, activate history or approve.
+
+    The reserved SQLite transaction holds identity/content checks through response
+    materialization. Revocation after that decision cannot recall already sent data.
+    """
+    from ..identity.local import authorize_read
+    with db.session() as session:
+        authority = authorize_read(session, token, case_id)
+        require_content(session, case_id, authority.role)
+        records = validate_local_history(session, case_id)
+        found = next((d for row,d,event in records.values() if row.run_id == run_id), None)
+        if found is None:
+            raise problem(404, 'UNREVIEWED_RUN_NOT_FOUND', '没有可读取的当前本地结果')
+        request = RegisteredPreview.model_validate(found['request'])
+        ctx = SimpleNamespace(db=db, settings=settings, operator=authority.subject_id, role=authority.role)
+        _, snapshot = capture(ctx, session, case_id, request, write=False)
+        if snapshot != found['generationSnapshot']: conflict('UNREVIEWED_RUN_STALE')
+        # Materialize only the reviewed result schema, not audit/operator/session data.
+        response = json.loads(canonical({'runId':found['runId'], 'caseId':case_id,
+            'status':'unreviewed', 'observationApproval':'not_assessed',
+            'usableAsWriteCredential':False, 'createdUtc':found['createdUtc'],
+            'request':found['request'], 'generationSnapshot':snapshot,
+            'serverPreview':found['serverPreview'], 'processing':found['processing']}))
+        if authorize_read(session, token, case_id) != authority:
+            conflict('UNREVIEWED_AUTHORITY_CHANGED')
+    return response

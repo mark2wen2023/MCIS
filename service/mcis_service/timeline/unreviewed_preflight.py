@@ -13,9 +13,9 @@ from .align_preview import preview_alignment
 MAX_ENVELOPE_BYTES = 2 * 1024 * 1024
 
 
-def capture(ctx, session, case_id, request):
+def capture(ctx, session, case_id, request, *, write=True):
     begin(session)
-    require(ctx, session, case_id, 'timeline', write=True)
+    require(ctx, session, case_id, 'timeline', write=write)
     resolved, sources, parents = resolve(ctx, session, case_id, request)
     incarnation = case_identity(session, case_id)
     ids = sorted({s.evidenceId for s in request.sources} |
