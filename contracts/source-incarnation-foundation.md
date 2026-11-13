@@ -1,0 +1,10 @@
+# Local source-incarnation foundation
+
+Scope: internal prerequisite for future timeline source binding, not an approval endpoint.
+Only a newly committed original-file evidence intake in a case with validated local case incarnation gets a fresh server UUID. Allocation, Register custody event and full audit marker commit atomically under the existing write lock and SQLite immediate transaction. Replay never allocates/backfills. Legacy cases, ordinary evidence registrations and imported historical source claims remain unqualified. Newly acquired originals after restoration can qualify against the fresh local case incarnation; restored old originals cannot.
+
+`source_local_incarnations` binds case/evidence IDs, case/source incarnations, request digest, original SHA, registration sequence/time and audit sequence. The full declaration is preserved in an existing untruncated `snapshot_ref`, not truncated before/after summaries. Archive export validates every local row against registration and the full audit chain. Import keeps declarations as history only and never rebuilds source authority. No package version bump, active receipt restoration or new external route.
+
+Internal `current` first applies existing source visibility/role gates, validates local markers, reopens original bytes through the existing safe-reader and checks exact intake bindings. Changed bytes, any Change custody event (even identical SHA), needsReview and Mismatch fail closed. Access and a cleared review flag do not independently approve facts. A valid UUID is not a digital signature, production identity, semantic extraction verification, investigator approval or persistent authorization.
+
+The returned value is a point-in-time prerequisite only. A future approval/save operation MUST reserve its write transaction and repeat case/source/permission checks in that transaction. This slice creates no timeline binding/approval record and does not add an agent role or save endpoint. No frontend, browser, live LLM or production deployment is included.

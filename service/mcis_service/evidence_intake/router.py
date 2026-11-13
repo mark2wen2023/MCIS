@@ -156,6 +156,8 @@ async def commit_input(case_id:str,request:Request,ctx:Ctx=CtxDep):
     with WRITE_LOCK:
         try:
             with ctx.db.session() as s:
+                from ..reports.access import begin
+                begin(s)
                 authorize(ctx,s,case_id,write=True)
                 result,binding=preview(body,raw,case_id,ctx.operator,ctx.role);digest=result['requestDigest']
                 if digest!=body['requestDigest']: raise problem(409,'INTAKE_STALE','原件、声明或操作身份变化，请重新预览')
@@ -168,6 +170,8 @@ async def commit_input(case_id:str,request:Request,ctx:Ctx=CtxDep):
                 detail=PREFIX+canonical({'binding':binding,'requestDigest':digest}).decode('utf-8')
                 reg=evidence.append_custody(s,case_id=case_id,evidence_id=eid,kind='Register',operator=ctx.operator,
                          role=ctx.role,sha256=sha(raw),detail=detail,item=item)
+                from .incarnation import allocate_for_intake
+                allocate_for_intake(s,case_id,reg,digest,ctx.operator,ctx.role)
                 exclusive_write(file_path(ctx,case_id,rel),raw,created)
                 receipt={'caseId':case_id,'evidenceId':eid,'requestDigest':digest,'sourceSha256':sha(raw),
                     'fileName':body['fileName'],'byteLength':len(raw),'metadata':meta,'registeredUtc':reg.utc,

@@ -182,6 +182,7 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
     from ..interviews.access import begin, require_content
     begin(s)
     from ..cases.incarnation import validate_archive_identity
+    from ..evidence_intake.incarnation import validate_archive_identities
     from ..recommendations.access import protect_package as protect_recommendations
     protect_recommendations(s, case_id, role)
     from ..working_records_archive.service import has_history, build as build_working
@@ -202,6 +203,7 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
             from ..package_intake.parser import parse_package
             files, working = build_working(s, blob_root, SimpleNamespace(role=role), case_id)
             validate_archive_identity(s, case_id)
+            validate_archive_identities(s, case_id)
             hfacs = hfacs_archive.build(s, case_id, role)
             if hfacs is not None: files[hfacs_archive.PATH] = hfacs.raw
             row = s.scalars(select(CaseRow).where(CaseRow.case_id == case_id)).first()
@@ -233,6 +235,7 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
     from ..interviews.access import protect_package as protect_interviews
     protect_interviews(s, case_id, role)
     validate_archive_identity(s, case_id)
+    validate_archive_identities(s, case_id)
     # Refuse known incomplete backups only after full-content/source authorization.
     # Existing serializers omit reports/snapshots and import rejects testimony.
     from ..reports.models import ReportRow, ReportAuditRow

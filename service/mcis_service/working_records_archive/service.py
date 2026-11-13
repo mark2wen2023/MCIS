@@ -14,7 +14,7 @@ from ..manual_interviews.models import InterviewRequestReceiptRow
 from .models import ArchivedManualReceiptRow,ArchiveImportHistoryRow,ArchiveArtifactRow
 from .validation import PATH,FORMAT,MAX_BYTES,canonical,fail,sha
 
-ALLOWED_TABLES={'case_local_incarnations','cases','vessels','track_points','evidence_items','custody_events','audit_events','environment_observations',
+ALLOWED_TABLES={'source_local_incarnations','case_local_incarnations','cases','vessels','track_points','evidence_items','custody_events','audit_events','environment_observations',
 'access_policies','interviews','investigation_reports','report_operation_snapshots','interview_request_receipts',
 'archived_manual_interview_receipts','archive_import_history','archive_historical_artifacts','package_intake_receipts',
 'track_local_receipts','hfacs_worksheets','hfacs_worksheet_audit','hfacs_worksheet_requests','hfacs_archived_requests'}
