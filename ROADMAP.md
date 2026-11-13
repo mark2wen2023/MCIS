@@ -380,3 +380,7 @@ Native subtask + independent review, not Codex app execution. Draft #56 now bind
 
 ## SK-T01 pre-compute snapshot recheck (2026-11-13)
 Native implementation subtask and independent review, not Codex app execution. Rechecks the full snapshot set before core dispatch and retains the post-compute check. 47 synthetic regression tests plus 6 independent probes passed. This is not an atomic authorization lease: TOCTOU, real W2/.NET, production permission integration, original media, UI and LLM remain unverified. No merge/deployment.
+
+
+## SK-T01 actual W2 roundtrip acceptance (2026-11-13)
+Native implementation + separate native reviewer, not Codex app execution. Draft #56 clean fixed-source offline direct-Roslyn build with official SDK8.0.428/runtime8.0.34: 67 synthetic tests plus 10 actual W2 tests on fictional NMEA, independent rerun 77 passed/zero skipped. Source binding, conflict/equal/disjoint times, invalid checksum, malformed/missing timestamps, timezone equivalence, circular headings and revocation response verified within this scope. Standard MSBuild blocked on NuGet-Migrations mutex; no NuGet access or permission bypass. No production repository/auth, bounded transport, API/UI, LLM or real evidence acceptance; no core implementation changes, merge or deployment. Reproduction and limits: research/skills_timeline/REVIEW_REAL_W2.md.

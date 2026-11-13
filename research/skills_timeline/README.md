@@ -90,3 +90,38 @@ Independent reviewer added 6 tests; combined local synthetic suite: **67/67**.
 Missing/null statistics deliberately remain unknown for compatibility; malformed
 non-null supplied statistics reject the preview. Independent review approved
 this limited draft scope, not production readiness.
+
+## Real W2 roundtrip acceptance (2026-11-13, supersedes old "no .NET" limitation)
+
+A clean cloud checkout of PR56 at `80b27b6c22c5b62ca4d4388da42c51094063a995`
+was verified against Git blob hashes. Official .NET SDK 8.0.428 was installed.
+Standard `dotnet build` could not initialize its NuGet-Migrations named mutex
+in this environment. No permissions were relaxed and no NuGet packages fetched.
+The package-free project's 55 original C# source files were compiled directly
+using the installed SDK's Roslyn and .NET 8 reference assemblies. This is a
+**direct compiler acceptance build**, not the normal MSBuild/CI pipeline.
+
+Developer reproduction (use an isolated already-installed .NET 8 SDK):
+```sh
+python research/skills_timeline/build_real_w2.py --sdk-root /absolute/dotnet-sdk --output /absolute/test-build
+cd research/skills_timeline
+MCIS_TEST_DOTNET=/absolute/dotnet-sdk/dotnet MCIS_TEST_CORE_DLL=/absolute/test-build/mcis-core.dll python -m unittest -v
+```
+
+The six new opt-in tests run the real `align` command with fictional,
+checksum-generated NMEA: conflicting headings, equal headings, disjoint time
+ranges, invalid checksum, unparsable input, and post-compute permission revocation.
+They exercise actual W2 import/conflict/statistics output through `preview()`.
+The repository/principal remain synthetic. There is no actual LLM, production
+database/authentication, API/UI, source-clock validation or original media.
+The subprocess helper is for fixed acceptance fixtures only; it is explicitly
+**not** the production transport (no streaming output cap/cancellation lifecycle).
+Unset paths skip these six tests, and skipped tests must not be reported passed.
+Developer run: 67 synthetic tests + 6 real-engine fixture tests = 73 passed.
+No core source, public contract, production service, merge or deployment changed.
+
+Independent review added four real-engine cases (wraparound, source order,
+missing timestamps, equivalent explicit timezone). Final independent rerun:
+**77 passed, zero skipped** = 67 synthetic + 10 real-engine fictional-fixture tests.
+See REVIEW_REAL_W2.md; this removes only the earlier lack of an actual W2 run,
+not the production integration gates.
