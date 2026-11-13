@@ -42,7 +42,8 @@ export function RegisteredPreviewPanel({caseId,items}:{caseId:string;items:Evide
     {!candidates.length&&<p role="status">暂无本地登记来源。请先通过上方“登记已有文件副本”保存已有CSV，再刷新证据清单。</p>}
     <form onSubmit={e=>{e.preventDefault();void run()}}>
       {rows.map((r,i)=><fieldset key={i} disabled={busy}><legend>核查来源 {i+1}</legend>
-        <label>登记证据<select className="input" value={r.evidenceId} onChange={e=>change(i,{evidenceId:e.target.value})}><option value="">请选择当前案件证据</option>{candidates.map(e=><option key={e.evidenceId} value={e.evidenceId} disabled={e.needsReview||e.status==='Mismatch'}>{e.evidenceId} · {e.title}{e.needsReview?' · 需复核':''}</option>)}</select></label>
+        <label>登记证据<select className="input" value={r.evidenceId} onChange={e=>change(i,{...newRow(),evidenceId:e.target.value,parentReport:undefined})}><option value="">请选择当前案件证据</option>{candidates.map(e=><option key={e.evidenceId} value={e.evidenceId} disabled={e.needsReview||e.status==='Mismatch'}>{e.evidenceId} · {e.title}{e.needsReview?' · 需复核':''}</option>)}</select></label>
+        <p>更换登记证据会清空该来源的列名、人工声明和父报告关联，请重新核对。</p>
         <label>带时区时间列名<input className="input" maxLength={128} value={r.timeColumn} onChange={e=>change(i,{timeColumn:e.target.value})}/></label>
         <label>数值列名<input className="input" maxLength={128} value={r.column} onChange={e=>change(i,{column:e.target.value})}/></label>
         <label>测量类型<select className="input" value={r.kind} onChange={e=>change(i,{kind:e.target.value as PreviewKind,comparisonContext:{...r.comparisonContext!,headingReference:null}})}>{KINDS.map(k=><option key={k} value={k}>{KIND_LABEL[k]}</option>)}</select></label>

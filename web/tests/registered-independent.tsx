@@ -59,11 +59,19 @@ await field('parentReport','EV-005');
 const dispatch=async()=>{await act(async()=>container.querySelector<HTMLInputElement>('input[type=checkbox]')!.click());await act(async()=>container.querySelector('form')!.dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true})))};
 await dispatch();check(()=>assert.deepEqual(JSON.parse(pending.at(-1).options.body).sources[0].parentReport,parent));
 await act(async()=>pending.at(-1).resolve({ok:true,json:async()=>parentOutput()}));check(()=>assert.equal(container.textContent?.includes('声明关联的父报告'),true));
-await field('sourceNature','sensor_export');check(()=>assert.equal(container.querySelector('[name=parentReport]'),null));check(()=>assert.equal(container.textContent?.includes('声明关联的父报告'),false));
+await field('sourceNature','sensor_export');check(()=>assert.equal(Boolean(container.querySelector('[name=parentReport]')),false));check(()=>assert.equal(container.textContent?.includes('声明关联的父报告'),false));
 await field('sourceNature','report_extract');check(()=>assert.equal((container.querySelector('[name=parentReport]') as any).value,''));
 await field('parentReport','EV-005');await dispatch();const oldParentRequest=pending.at(-1);
 await render('CASE-A',[parentItems[0],{...parentItem,currentSha256:'d'.repeat(64)}]);await act(async()=>oldParentRequest.resolve({ok:true,json:async()=>parentOutput()}));check(()=>assert.equal(container.textContent?.includes('声明关联的父报告'),false));
 const n=pending.length;await dispatch();check(()=>assert.equal(pending.length,n));check(()=>assert.equal(container.textContent?.includes('父报告清单或版本已变化'),true));
+// Changing the selected extract must never inherit another extract's declarations.
+await render('CASE-A',[...parentItems,{...parentItems[0],evidenceId:'EV-008',title:'Different extract'}]);
+await act(async()=>{const el=container.querySelector('select')!;el.value='EV-008';el.dispatchEvent(new window.Event('change',{bubbles:true}))});
+check(()=>assert.equal(Boolean(container.querySelector('[name=parentReport]')),false));
+for(const name of ['vesselLabel','sourceTitle','citation','timeBasis'])check(()=>assert.equal((container.querySelector(`[name=${name}]`) as HTMLInputElement).value,''));
+check(()=>assert.equal((container.querySelector('[name=sourceNature]') as HTMLSelectElement).value,'unknown'));
+check(()=>assert.equal(container.querySelector<HTMLInputElement>('input[type=checkbox]')!.checked,false));
+check(()=>assert.equal(container.textContent?.includes(parent.sourceSha256),false));
 await act(async()=>root.unmount());await window.happyDOM.abort();console.log(count+' independent checks passed: controlled fetch + HappyDOM, not browser/backend E2E')
 
 const real=JSON.parse(readFileSync(new URL('./registered-independent.fixture.json',import.meta.url),'utf8'));const realIds=real.sourceSnapshots.map((s:any)=>s.evidenceId);check(()=>assert.equal(registeredResult(real,real.caseId,realIds).result.conflicts[0].delta,5));
