@@ -1,0 +1,14 @@
+test_content_and_markers (test_render.RenderTests.test_content_and_markers) ... ok
+test_csp_and_language (test_render.RenderTests.test_csp_and_language) ... ok
+test_duplicate_visible (test_render.RenderTests.test_duplicate_visible) ... ok
+test_empty (test_render.RenderTests.test_empty) ... ok
+test_injection_not_markup (test_render.RenderTests.test_injection_not_markup) ... ok
+test_no_external_resources (test_render.RenderTests.test_no_external_resources) ... ok
+test_stale_rejected (test_render.RenderTests.test_stale_rejected) ... ok
+test_unicode_newlines_preserved (test_render.RenderTests.test_unicode_newlines_preserved) ... ok
+test_unknown_rejected (test_render.RenderTests.test_unknown_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.002s
+
+OK
