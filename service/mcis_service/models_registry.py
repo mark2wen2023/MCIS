@@ -29,3 +29,5 @@ from .cases.incarnation import CaseIncarnationRow  # noqa: F401
 from .evidence_intake.incarnation import SourceIncarnationRow  # noqa: F401
 
 from .timeline.unreviewed_storage import UnreviewedRunRow  # noqa: F401
+
+from .identity.local import Subject, SessionRecord, Membership  # noqa: F401

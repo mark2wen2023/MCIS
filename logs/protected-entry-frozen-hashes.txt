@@ -1,0 +1,3 @@
+2f4f1f78893d0de07e758fae25932269600762d032b4c95d935640e38b329a15  service/mcis_service/protected_app.py
+318620a21ba56cd8353a7917775ddca0c2e9ce31f6d4097acdd30584573f0fca  contracts/protected-entry-closed.md
+75bef5f1138a8b33263374c98b52ce0b42edc42d4c351ee2761b98defc4a7ed3  contracts/http-route-inventory.json

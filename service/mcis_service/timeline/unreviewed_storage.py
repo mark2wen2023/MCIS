@@ -84,7 +84,7 @@ def replay(session,ctx,case_id,operation_id,request,snapshot):
     return {'runId':d['runId'],'saved':True,'status':'unreviewed','replayed':True,'declaration':d}
 
 
-def save_unreviewed(ctx,case_id,request,operation_id):
+def save_unreviewed(ctx,case_id,request,operation_id,*,_authorize=None):
     # operation ID selects an attempt; it never supplies output or authority.
     try:
         if not isinstance(operation_id,str) or str(uuid.UUID(operation_id))!=operation_id:raise ValueError()
@@ -95,9 +95,14 @@ def save_unreviewed(ctx,case_id,request,operation_id):
     ctx=SimpleNamespace(role=ctx.role,operator=ctx.operator,db=ctx.db,settings=ctx.settings)
     frozen=RegisteredPreview.model_validate_json(request.model_dump_json())
     request_doc=frozen.model_dump(mode='json')
+    authority_before=None
     with ctx.db.session() as session:
+        if _authorize is not None:
+            authority_before=_authorize(session)
+            ctx.operator=authority_before.subject_id; ctx.role=authority_before.role
         require_content(session,case_id,ctx.role)
         resolved,before=capture(ctx,session,case_id,frozen)
+        if _authorize is not None and _authorize(session)!=authority_before:conflict('UNREVIEWED_AUTHORITY_CHANGED')
         old=replay(session,ctx,case_id,operation_id,request_doc,before)
         if old:return old
     output=preview_alignment(case_id,resolved,ctx)
@@ -105,9 +110,13 @@ def save_unreviewed(ctx,case_id,request,operation_id):
     if any(str(x['severity']).casefold()=='error' for x in output['result']['importDiagnostics']):
         raise problem(422,'TIMELINE_SOURCE_CORE_DIAGNOSTIC','核心报告来源导入错误，未保存结果')
     with ctx.db.session() as session:
+        if _authorize is not None:
+            authority_after=_authorize(session)
+            if authority_after!=authority_before:conflict('UNREVIEWED_AUTHORITY_CHANGED')
         require_content(session,case_id,ctx.role)
         _,after=capture(ctx,session,case_id,frozen)
         if before!=after:conflict('UNREVIEWED_RUN_STALE')
+        if _authorize is not None and _authorize(session)!=authority_before:conflict('UNREVIEWED_AUTHORITY_CHANGED')
         old=replay(session,ctx,case_id,operation_id,request_doc,after)
         if old:return old
         run_id=str(uuid.uuid4());created=iso(now_utc())
@@ -133,3 +142,15 @@ def save_unreviewed(ctx,case_id,request,operation_id):
     # Return only after successful commit. Unknown delivery can be retried using
     # the same operation ID, but only under unchanged scope/permissions/versions.
     return result
+
+
+def save_authenticated_unreviewed(db,settings,token,case_id,request,operation_id):
+    """Trusted-host entry. No HTTP header, actor, role or imported grant accepted.
+
+    Legacy save_unreviewed remains an INTERNAL trusted-call compatibility entry;
+    neither function is mounted in the closed protected HTTP app.
+    """
+    from ..identity.local import authorize_save
+    ctx=SimpleNamespace(db=db,settings=settings,operator='authenticated',role='')
+    return save_unreviewed(ctx,case_id,request,operation_id,
+        _authorize=lambda session:authorize_save(session,token,case_id))

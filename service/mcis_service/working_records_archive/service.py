@@ -18,7 +18,8 @@ ALLOWED_TABLES={'timeline_local_unreviewed_runs','source_local_incarnations','ca
 'access_policies','interviews','investigation_reports','report_operation_snapshots','interview_request_receipts',
 'archived_manual_interview_receipts','archive_import_history','archive_historical_artifacts','package_intake_receipts',
 'track_local_receipts','hfacs_worksheets','hfacs_worksheet_audit','hfacs_worksheet_requests','hfacs_archived_requests'}
-GLOBALS={'knowledge_cards','knowledge_audit','knowledge_archives','knowledge_audit_snapshots','knowledge_audit_snapshot_epoch','sqlite_sequence'}
+# Identity is deployment-local authority, deliberately never serialized/restored.
+GLOBALS={'identity_local_subjects','identity_local_sessions','identity_local_memberships','knowledge_cards','knowledge_audit','knowledge_archives','knowledge_audit_snapshots','knowledge_audit_snapshot_epoch','sqlite_sequence'}
 
 
 def read_blob(root,case_id,rel,limit=MAX_BYTES):

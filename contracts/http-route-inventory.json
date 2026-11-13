@@ -1,0 +1,775 @@
+{
+  "purpose": "Observed OpenAPI legacy surface; no route is approved for protected deployment; documentation routes are additional",
+  "routes": [
+    {
+      "path": "/api/v1/health",
+      "method": "GET",
+      "operationId": "health_api_v1_health_get"
+    },
+    {
+      "path": "/api/v1/cases",
+      "method": "GET",
+      "operationId": "list_cases_api_v1_cases_get"
+    },
+    {
+      "path": "/api/v1/cases",
+      "method": "POST",
+      "operationId": "create_case_api_v1_cases_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}",
+      "method": "GET",
+      "operationId": "get_case_api_v1_cases__case_id__get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/overview",
+      "method": "GET",
+      "operationId": "overview_api_v1_cases__case_id__overview_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/vessels",
+      "method": "GET",
+      "operationId": "get_vessels_api_v1_cases__case_id__vessels_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/vessels",
+      "method": "POST",
+      "operationId": "create_vessel_api_v1_cases__case_id__vessels_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/tracks",
+      "method": "GET",
+      "operationId": "get_tracks_api_v1_cases__case_id__tracks_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/evidence",
+      "method": "GET",
+      "operationId": "list_evidence_api_v1_cases__case_id__evidence_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/evidence",
+      "method": "POST",
+      "operationId": "register_evidence_api_v1_cases__case_id__evidence_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}",
+      "method": "GET",
+      "operationId": "get_evidence_api_v1_cases__case_id__evidence__evidence_id__get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}",
+      "method": "PATCH",
+      "operationId": "patch_evidence_api_v1_cases__case_id__evidence__evidence_id__patch"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}/custody",
+      "method": "GET",
+      "operationId": "get_custody_api_v1_cases__case_id__evidence__evidence_id__custody_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}/access",
+      "method": "POST",
+      "operationId": "record_access_api_v1_cases__case_id__evidence__evidence_id__access_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}/verify",
+      "method": "POST",
+      "operationId": "verify_api_v1_cases__case_id__evidence__evidence_id__verify_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/evidence:verify-all",
+      "method": "POST",
+      "operationId": "verify_all_api_v1_cases__case_id__evidence_verify_all_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}/content",
+      "method": "GET",
+      "operationId": "get_content_api_v1_cases__case_id__evidence__evidence_id__content_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/custody:verify-chain",
+      "method": "GET",
+      "operationId": "verify_chain_api_v1_cases__case_id__custody_verify_chain_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/timeline",
+      "method": "GET",
+      "operationId": "get_timeline_api_v1_cases__case_id__timeline_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/timeline/events",
+      "method": "POST",
+      "operationId": "add_event_api_v1_cases__case_id__timeline_events_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/conflicts",
+      "method": "GET",
+      "operationId": "get_conflicts_api_v1_cases__case_id__conflicts_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/conflicts",
+      "method": "POST",
+      "operationId": "add_conflict_api_v1_cases__case_id__conflicts_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/conflicts/{conflict_id}",
+      "method": "PATCH",
+      "operationId": "patch_conflict_api_v1_cases__case_id__conflicts__conflict_id__patch"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/timeline/align-preview",
+      "method": "POST",
+      "operationId": "preview_alignment_api_v1_cases__case_id__timeline_align_preview_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/timeline/registered-align-preview",
+      "method": "POST",
+      "operationId": "registered_preview_api_v1_cases__case_id__timeline_registered_align_preview_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/interviews",
+      "method": "GET",
+      "operationId": "list_interviews_api_v1_cases__case_id__interviews_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/interviews",
+      "method": "POST",
+      "operationId": "create_interview_api_v1_cases__case_id__interviews_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/interviews/{record_id}",
+      "method": "GET",
+      "operationId": "get_interview_api_v1_cases__case_id__interviews__record_id__get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/interviews/{record_id}/turns",
+      "method": "POST",
+      "operationId": "add_turn_api_v1_cases__case_id__interviews__record_id__turns_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/interviews/{record_id}/statements",
+      "method": "POST",
+      "operationId": "add_statement_api_v1_cases__case_id__interviews__record_id__statements_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/interviews/{record_id}/statements/{statement_id}",
+      "method": "PATCH",
+      "operationId": "review_statement_api_v1_cases__case_id__interviews__record_id__statements__statement_id__patch"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/interviews/{record_id}/crosscheck",
+      "method": "GET",
+      "operationId": "crosscheck_api_v1_cases__case_id__interviews__record_id__crosscheck_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/interviews/{record_id}/crosscheck/{statement_id}:confirm",
+      "method": "POST",
+      "operationId": "confirm_crosscheck_api_v1_cases__case_id__interviews__record_id__crosscheck__statement_id__confirm_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/interviews/{record_id}/crosscheck/{statement_id}:dismiss",
+      "method": "POST",
+      "operationId": "dismiss_crosscheck_api_v1_cases__case_id__interviews__record_id__crosscheck__statement_id__dismiss_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/interviews/{record_id}/crosscheck:confirm-consistent",
+      "method": "POST",
+      "operationId": "confirm_consistent_api_v1_cases__case_id__interviews__record_id__crosscheck_confirm_consistent_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/manual-interviews",
+      "method": "POST",
+      "operationId": "create_api_v1_cases__case_id__manual_interviews_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/manual-interviews/{record_id}/turns",
+      "method": "POST",
+      "operationId": "append_api_v1_cases__case_id__manual_interviews__record_id__turns_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/manual-interviews/requests/{request_id}",
+      "method": "GET",
+      "operationId": "recover_api_v1_cases__case_id__manual_interviews_requests__request_id__get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/manual-interviews/{record_id}",
+      "method": "GET",
+      "operationId": "get_api_v1_cases__case_id__manual_interviews__record_id__get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/recommendations",
+      "method": "GET",
+      "operationId": "list_recs_api_v1_cases__case_id__recommendations_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/recommendations",
+      "method": "POST",
+      "operationId": "create_rec_api_v1_cases__case_id__recommendations_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/recommendations:board",
+      "method": "GET",
+      "operationId": "board_api_v1_cases__case_id__recommendations_board_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/recommendations/{rec_id}",
+      "method": "GET",
+      "operationId": "get_rec_api_v1_cases__case_id__recommendations__rec_id__get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/recommendations/{rec_id}",
+      "method": "PATCH",
+      "operationId": "patch_rec_api_v1_cases__case_id__recommendations__rec_id__patch"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/recommendations/{rec_id}:transition",
+      "method": "POST",
+      "operationId": "transition_api_v1_cases__case_id__recommendations__rec_id__transition_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/recommendations/{rec_id}/responses",
+      "method": "POST",
+      "operationId": "record_response_api_v1_cases__case_id__recommendations__rec_id__responses_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/recommendations/{rec_id}/history",
+      "method": "GET",
+      "operationId": "rec_history_api_v1_cases__case_id__recommendations__rec_id__history_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/consultation/rounds",
+      "method": "GET",
+      "operationId": "list_rounds_api_v1_cases__case_id__consultation_rounds_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/consultation/rounds",
+      "method": "POST",
+      "operationId": "open_round_api_v1_cases__case_id__consultation_rounds_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/consultation/rounds/{round_no}/replies",
+      "method": "POST",
+      "operationId": "record_reply_api_v1_cases__case_id__consultation_rounds__round_no__replies_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/consultation/rounds/{round_no}/comments/{comment_id}",
+      "method": "PATCH",
+      "operationId": "decide_comment_api_v1_cases__case_id__consultation_rounds__round_no__comments__comment_id__patch"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/consultation/rounds/{round_no}:close",
+      "method": "POST",
+      "operationId": "close_round_api_v1_cases__case_id__consultation_rounds__round_no__close_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/consultation/rounds/{round_no}/waivers",
+      "method": "POST",
+      "operationId": "waive_reply_api_v1_cases__case_id__consultation_rounds__round_no__waivers_post"
+    },
+    {
+      "path": "/api/v1/core/cpa",
+      "method": "POST",
+      "operationId": "core_cpa_api_v1_core_cpa_post"
+    },
+    {
+      "path": "/api/v1/core/version",
+      "method": "GET",
+      "operationId": "core_version_api_v1_core_version_get"
+    },
+    {
+      "path": "/api/v1/core/align",
+      "method": "POST",
+      "operationId": "core_align_api_v1_core_align_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/cpa",
+      "method": "GET",
+      "operationId": "cpa_series_api_v1_cases__case_id__cpa_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/colreg",
+      "method": "GET",
+      "operationId": "get_colreg_api_v1_cases__case_id__colreg_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/colreg/runs",
+      "method": "GET",
+      "operationId": "list_colreg_runs_api_v1_cases__case_id__colreg_runs_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/colreg/runs/{run_id}",
+      "method": "GET",
+      "operationId": "get_colreg_run_api_v1_cases__case_id__colreg_runs__run_id__get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/colreg/runs/{run_id}:activate",
+      "method": "POST",
+      "operationId": "activate_colreg_run_api_v1_cases__case_id__colreg_runs__run_id__activate_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/colreg/compare",
+      "method": "GET",
+      "operationId": "compare_colreg_runs_api_v1_cases__case_id__colreg_compare_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/colreg:evaluate",
+      "method": "POST",
+      "operationId": "evaluate_api_v1_cases__case_id__colreg_evaluate_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/colreg/checks/{check_id}",
+      "method": "PATCH",
+      "operationId": "review_check_api_v1_cases__case_id__colreg_checks__check_id__patch"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/colreg/checks/{check_id}/reviews",
+      "method": "GET",
+      "operationId": "check_reviews_api_v1_cases__case_id__colreg_checks__check_id__reviews_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/audit",
+      "method": "GET",
+      "operationId": "list_audit_api_v1_cases__case_id__audit_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/audit:verify",
+      "method": "GET",
+      "operationId": "verify_api_v1_cases__case_id__audit_verify_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/access-policy",
+      "method": "GET",
+      "operationId": "get_access_policy_api_v1_cases__case_id__access_policy_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/access-policy",
+      "method": "PUT",
+      "operationId": "put_access_policy_api_v1_cases__case_id__access_policy_put"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/redaction/preview",
+      "method": "POST",
+      "operationId": "preview_api_v1_cases__case_id__redaction_preview_post"
+    },
+    {
+      "path": "/api/v1/agents",
+      "method": "GET",
+      "operationId": "registry_api_v1_agents_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/agents/drafts",
+      "method": "GET",
+      "operationId": "list_drafts_api_v1_cases__case_id__agents_drafts_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/agents/drafts",
+      "method": "POST",
+      "operationId": "submit_draft_api_v1_cases__case_id__agents_drafts_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/agents/drafts/{draft_id}/review",
+      "method": "POST",
+      "operationId": "review_api_v1_cases__case_id__agents_drafts__draft_id__review_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/agents/inputs/interviews/{record_id}",
+      "method": "GET",
+      "operationId": "agent_input_interview_api_v1_cases__case_id__agents_inputs_interviews__record_id__get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/agents/people_ops/interviews/{record_id}:extract",
+      "method": "POST",
+      "operationId": "extract_interview_api_v1_cases__case_id__agents_people_ops_interviews__record_id__extract_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/sim/state",
+      "method": "GET",
+      "operationId": "get_state_api_v1_cases__case_id__sim_state_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/sim/state",
+      "method": "PUT",
+      "operationId": "put_state_api_v1_cases__case_id__sim_state_put"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/sim/seek",
+      "method": "POST",
+      "operationId": "seek_api_v1_cases__case_id__sim_seek_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/sim/commands",
+      "method": "POST",
+      "operationId": "command_api_v1_cases__case_id__sim_commands_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/sim/commands",
+      "method": "GET",
+      "operationId": "poll_api_v1_cases__case_id__sim_commands_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/export",
+      "method": "GET",
+      "operationId": "export_api_v1_cases__case_id__export_get"
+    },
+    {
+      "path": "/api/v1/cases:import",
+      "method": "POST",
+      "operationId": "import_package_api_v1_cases_import_post"
+    },
+    {
+      "path": "/api/v1/packages:verify",
+      "method": "POST",
+      "operationId": "verify_package_api_v1_packages_verify_post"
+    },
+    {
+      "path": "/api/v1/report-templates",
+      "method": "GET",
+      "operationId": "get_templates_api_v1_report_templates_get"
+    },
+    {
+      "path": "/api/v1/report-glossary",
+      "method": "GET",
+      "operationId": "get_glossary_api_v1_report_glossary_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/reports",
+      "method": "GET",
+      "operationId": "list_reports_api_v1_cases__case_id__reports_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/reports",
+      "method": "POST",
+      "operationId": "create_report_api_v1_cases__case_id__reports_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/reports/sections/colreg:draft",
+      "method": "POST",
+      "operationId": "colreg_draft_api_v1_cases__case_id__reports_sections_colreg_draft_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/reports/{report_id}",
+      "method": "GET",
+      "operationId": "get_report_api_v1_cases__case_id__reports__report_id__get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/reports/{report_id}:generate",
+      "method": "POST",
+      "operationId": "regenerate_api_v1_cases__case_id__reports__report_id__generate_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/reports/{report_id}/sections/{section_id}",
+      "method": "PATCH",
+      "operationId": "review_api_v1_cases__case_id__reports__report_id__sections__section_id__patch"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/reports/{report_id}/audit",
+      "method": "GET",
+      "operationId": "audit_list_api_v1_cases__case_id__reports__report_id__audit_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/report-snapshots/{snapshot_id}",
+      "method": "GET",
+      "operationId": "get_snapshot_api_v1_cases__case_id__report_snapshots__snapshot_id__get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/reports/{report_id}/export",
+      "method": "GET",
+      "operationId": "export_report_api_v1_cases__case_id__reports__report_id__export_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/gisis",
+      "method": "GET",
+      "operationId": "get_gisis_api_v1_cases__case_id__gisis_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/gisis:validate",
+      "method": "POST",
+      "operationId": "validate_gisis_api_v1_cases__case_id__gisis_validate_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/gisis/export",
+      "method": "GET",
+      "operationId": "export_gisis_api_v1_cases__case_id__gisis_export_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/reports/{report_id}/output-bundle:preview",
+      "method": "GET",
+      "operationId": "preview_api_v1_cases__case_id__reports__report_id__output_bundle_preview_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/reports/{report_id}/output-bundle",
+      "method": "POST",
+      "operationId": "create_api_v1_cases__case_id__reports__report_id__output_bundle_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/human-factors/rest:sources",
+      "method": "GET",
+      "operationId": "sources_api_v1_cases__case_id__human_factors_rest_sources_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/human-factors/rest:preview",
+      "method": "POST",
+      "operationId": "preview_api_v1_cases__case_id__human_factors_rest_preview_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/systemic/bowtie:sources",
+      "method": "GET",
+      "operationId": "sources_api_v1_cases__case_id__systemic_bowtie_sources_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/systemic/bowtie:preview",
+      "method": "POST",
+      "operationId": "preview_api_v1_cases__case_id__systemic_bowtie_preview_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/whatif/nomoto:sources",
+      "method": "GET",
+      "operationId": "sources_api_v1_cases__case_id__whatif_nomoto_sources_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/whatif/nomoto:preview",
+      "method": "POST",
+      "operationId": "preview_api_v1_cases__case_id__whatif_nomoto_preview_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/human-factors/hfacs:context",
+      "method": "GET",
+      "operationId": "context_api_v1_cases__case_id__human_factors_hfacs_context_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/human-factors/hfacs:draft",
+      "method": "GET",
+      "operationId": "get_draft_api_v1_cases__case_id__human_factors_hfacs_draft_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/human-factors/hfacs:save",
+      "method": "POST",
+      "operationId": "save_api_v1_cases__case_id__human_factors_hfacs_save_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/human-factors/hfacs:audit",
+      "method": "GET",
+      "operationId": "audit_history_api_v1_cases__case_id__human_factors_hfacs_audit_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/access-workbench",
+      "method": "GET",
+      "operationId": "inspect_access_api_v1_cases__case_id__access_workbench_get"
+    },
+    {
+      "path": "/api/v1/packages/intakes:preview",
+      "method": "POST",
+      "operationId": "preview_api_v1_packages_intakes_preview_post"
+    },
+    {
+      "path": "/api/v1/packages/intakes/{digest}",
+      "method": "GET",
+      "operationId": "recover_api_v1_packages_intakes__digest__get"
+    },
+    {
+      "path": "/api/v1/packages/intakes:commit",
+      "method": "POST",
+      "operationId": "commit_api_v1_packages_intakes_commit_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/archive-history/evidence/{evidence_id}/content",
+      "method": "GET",
+      "operationId": "content_api_v1_cases__case_id__archive_history_evidence__evidence_id__content_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/archive-history/provenance/{kind}/{record_id}",
+      "method": "GET",
+      "operationId": "provenance_api_v1_cases__case_id__archive_history_provenance__kind___record_id__get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/evidence-intakes:preview",
+      "method": "POST",
+      "operationId": "preview_input_api_v1_cases__case_id__evidence_intakes_preview_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/evidence-intakes:commit",
+      "method": "POST",
+      "operationId": "commit_input_api_v1_cases__case_id__evidence_intakes_commit_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/evidence-intakes/{digest}",
+      "method": "GET",
+      "operationId": "receipt_input_api_v1_cases__case_id__evidence_intakes__digest__get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}/intake",
+      "method": "GET",
+      "operationId": "receipt_evidence_api_v1_cases__case_id__evidence__evidence_id__intake_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/evidence-intakes/{digest}:download",
+      "method": "POST",
+      "operationId": "download_api_v1_cases__case_id__evidence_intakes__digest__download_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/metadata",
+      "method": "GET",
+      "operationId": "get_metadata_api_v1_cases__case_id__metadata_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/metadata",
+      "method": "PATCH",
+      "operationId": "update_metadata_api_v1_cases__case_id__metadata_patch"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/archive-history/track-imports",
+      "method": "GET",
+      "operationId": "listing_api_v1_cases__case_id__archive_history_track_imports_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/archive-history/track-imports/{digest}",
+      "method": "GET",
+      "operationId": "detail_api_v1_cases__case_id__archive_history_track_imports__digest__get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/archive-history/track-imports/{digest}/{kind}",
+      "method": "GET",
+      "operationId": "content_api_v1_cases__case_id__archive_history_track_imports__digest___kind__get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/track-imports:preview",
+      "method": "POST",
+      "operationId": "preview_input_api_v1_cases__case_id__track_imports_preview_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/track-imports:commit",
+      "method": "POST",
+      "operationId": "commit_input_api_v1_cases__case_id__track_imports_commit_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/track-imports",
+      "method": "GET",
+      "operationId": "list_inputs_api_v1_cases__case_id__track_imports_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/track-imports/{digest}",
+      "method": "GET",
+      "operationId": "receipt_input_api_v1_cases__case_id__track_imports__digest__get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/track-imports/{digest}/{kind}",
+      "method": "GET",
+      "operationId": "read_input_api_v1_cases__case_id__track_imports__digest___kind__get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/environment-observations",
+      "method": "GET",
+      "operationId": "get_observations_api_v1_cases__case_id__environment_observations_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/environment-observations",
+      "method": "POST",
+      "operationId": "create_observation_api_v1_cases__case_id__environment_observations_post"
+    },
+    {
+      "path": "/api/v1/knowledge/cards",
+      "method": "GET",
+      "operationId": "search_api_v1_knowledge_cards_get"
+    },
+    {
+      "path": "/api/v1/knowledge/cards",
+      "method": "POST",
+      "operationId": "create_api_v1_knowledge_cards_post"
+    },
+    {
+      "path": "/api/v1/knowledge/cards/{card_id}",
+      "method": "GET",
+      "operationId": "detail_api_v1_knowledge_cards__card_id__get"
+    },
+    {
+      "path": "/api/v1/knowledge/cards/{card_id}/review",
+      "method": "POST",
+      "operationId": "review_api_v1_knowledge_cards__card_id__review_post"
+    },
+    {
+      "path": "/api/v1/knowledge/audit",
+      "method": "GET",
+      "operationId": "events_api_v1_knowledge_audit_get"
+    },
+    {
+      "path": "/api/v1/knowledge/audit:verify",
+      "method": "GET",
+      "operationId": "verify_api_v1_knowledge_audit_verify_get"
+    },
+    {
+      "path": "/api/v1/knowledge/suggestions",
+      "method": "POST",
+      "operationId": "suggestion_preview_api_v1_knowledge_suggestions_post"
+    },
+    {
+      "path": "/api/v1/knowledge/archives:export",
+      "method": "GET",
+      "operationId": "export_api_v1_knowledge_archives_export_get"
+    },
+    {
+      "path": "/api/v1/knowledge/archives:preview",
+      "method": "POST",
+      "operationId": "preview_api_v1_knowledge_archives_preview_post"
+    },
+    {
+      "path": "/api/v1/knowledge/archives",
+      "method": "GET",
+      "operationId": "listing_api_v1_knowledge_archives_get"
+    },
+    {
+      "path": "/api/v1/knowledge/archives",
+      "method": "POST",
+      "operationId": "save_api_v1_knowledge_archives_post"
+    },
+    {
+      "path": "/api/v1/knowledge/archives/{archive_sha256}",
+      "method": "GET",
+      "operationId": "detail_api_v1_knowledge_archives__archive_sha256__get"
+    },
+    {
+      "path": "/api/v1/knowledge/archives/{archive_sha256}/content",
+      "method": "GET",
+      "operationId": "content_api_v1_knowledge_archives__archive_sha256__content_get"
+    },
+    {
+      "path": "/api/v1/analysis/cases",
+      "method": "GET",
+      "operationId": "list_analysis_cases_api_v1_analysis_cases_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/analysis",
+      "method": "GET",
+      "operationId": "get_analysis_api_v1_cases__case_id__analysis_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/interview-compare",
+      "method": "GET",
+      "operationId": "roster_api_v1_cases__case_id__interview_compare_get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/interview-compare/{record_id}",
+      "method": "GET",
+      "operationId": "page_api_v1_cases__case_id__interview_compare__record_id__get"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/interview-compare/{record_id}/rows/{statement_id}:confirm",
+      "method": "POST",
+      "operationId": "confirm_row_api_v1_cases__case_id__interview_compare__record_id__rows__statement_id__confirm_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/interview-compare/{record_id}/rows/{statement_id}:reject",
+      "method": "POST",
+      "operationId": "reject_row_api_v1_cases__case_id__interview_compare__record_id__rows__statement_id__reject_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/interview-compare/{record_id}/statements/{statement_id}:revise",
+      "method": "POST",
+      "operationId": "revise_statement_api_v1_cases__case_id__interview_compare__record_id__statements__statement_id__revise_post"
+    },
+    {
+      "path": "/api/v1/cases/{case_id}/interview-compare/{record_id}/rows/{statement_id}:recheck",
+      "method": "POST",
+      "operationId": "recheck_row_api_v1_cases__case_id__interview_compare__record_id__rows__statement_id__recheck_post"
+    }
+  ]
+}
