@@ -467,3 +467,6 @@ Independent24/24 tests pass (20 primary +3 independent +1 public-report HTTP/W2)
 
 
 | 2026-11-13 | Server-generated unreviewed snapshot preflight | 本前置切片独立验收/草稿 | Native implementation + independent native reviewer.19/19 (1 actual W2) +4 independent passed; selected78 passed/3 existing opt-in skips. Short transactions before/after core check case/source/parent identities+bytes+access; no caller result accepted. Internal only, no saved-result lifecycle/endpoint/table/approval/LLM/UI claim. Contract timeline-unreviewed-result-preflight.md; frozen hashes logs/unreviewed-preflight-impl-hashes-frozen.txt. No merge/deploy. |
+
+
+| 2026-11-13 | Unreviewed history access/capacity prerequisite | 本安全前置独立验收/草稿 | Native implementation+review. Closed audit and access-workbench historical marker leaks; export gated.17+5 independent tests passed; selected61/61 zero skips. Capacity helper tested but no save operation. Storage/index/strict historical envelope parser remain DESIGN ONLY, not persistence completion. Modern non-default-policy restore/export restriction unchanged. Frozen logs/unreviewed-history-boundary-impl-hashes-frozen.txt; no merge/deploy. |

@@ -185,6 +185,8 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
     from ..evidence_intake.incarnation import validate_archive_identities
     from ..recommendations.access import protect_package as protect_recommendations
     protect_recommendations(s, case_id, role)
+    from ..timeline.unreviewed_access import protect_package as protect_unreviewed
+    protect_unreviewed(s, case_id, role)
     from ..working_records_archive.service import has_history, build as build_working
     track_root=blob_root/case_id/'raw'/'track-imports'
     track_namespace=track_root.exists()or track_root.is_symlink()

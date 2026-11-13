@@ -11,6 +11,7 @@ from . import service
 from ..interviews.access import protect_events as protect_interview_events
 from ..recommendations.access import protect_events as protect_recommendation_events
 from ..reports.access import NoStoreRoute, begin, protect_events
+from ..timeline.unreviewed_access import protect_events as protect_unreviewed_events
 
 router = APIRouter(prefix="/api/v1/cases/{case_id}", tags=["audit"], route_class=NoStoreRoute)
 
@@ -25,6 +26,7 @@ def list_audit(case_id: str, ctx: Ctx = CtxDep, category: str | None = None, ent
         require(ctx, s, case_id, "audit")
         events = service.list_events(s, case_id, category=category, entity_id=entityId, action=action, entity_type=entityType, after_seq=afterSeq, limit=limit,
                                    newest_first=(order == "desc"))
+        protect_unreviewed_events(s, case_id, ctx.role, events)
         protect_recommendation_events(s, case_id, ctx.role, events)
         protect_interview_events(s, case_id, ctx.role, events)
         return protect_events(s, case_id, ctx.role, events)
@@ -37,3 +39,4 @@ def verify(case_id: str, ctx: Ctx = CtxDep) -> dict[str, Any]:
         load_case(s, case_id)
         require(ctx, s, case_id, "audit")
         return service.verify_chain(service.all_lines(s, case_id))
+
