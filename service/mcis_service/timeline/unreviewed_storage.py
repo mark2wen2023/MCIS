@@ -84,7 +84,7 @@ def replay(session,ctx,case_id,operation_id,request,snapshot):
     return {'runId':d['runId'],'saved':True,'status':'unreviewed','replayed':True,'declaration':d}
 
 
-def save_unreviewed(ctx,case_id,request,operation_id,*,_authorize=None):
+def save_unreviewed(ctx,case_id,request,operation_id,*,_authorize=None,expected_selection=None):
     # operation ID selects an attempt; it never supplies output or authority.
     try:
         if not isinstance(operation_id,str) or str(uuid.UUID(operation_id))!=operation_id:raise ValueError()
@@ -95,6 +95,7 @@ def save_unreviewed(ctx,case_id,request,operation_id,*,_authorize=None):
     ctx=SimpleNamespace(role=ctx.role,operator=ctx.operator,db=ctx.db,settings=ctx.settings)
     frozen=RegisteredPreview.model_validate_json(request.model_dump_json())
     request_doc=frozen.model_dump(mode='json')
+    expected_selection=json.loads(canonical(expected_selection)) if expected_selection is not None else None
     authority_before=None
     with ctx.db.session() as session:
         if _authorize is not None:
@@ -102,6 +103,8 @@ def save_unreviewed(ctx,case_id,request,operation_id,*,_authorize=None):
             ctx.operator=authority_before.subject_id; ctx.role=authority_before.role
         require_content(session,case_id,ctx.role)
         resolved,before=capture(ctx,session,case_id,frozen)
+        if expected_selection is not None and expected_selection!=selection_snapshot(before):
+            conflict('UNREVIEWED_SELECTION_CHANGED')
         if _authorize is not None and _authorize(session)!=authority_before:conflict('UNREVIEWED_AUTHORITY_CHANGED')
         old=replay(session,ctx,case_id,operation_id,request_doc,before)
         if old:return old
@@ -144,7 +147,7 @@ def save_unreviewed(ctx,case_id,request,operation_id,*,_authorize=None):
     return result
 
 
-def save_authenticated_unreviewed(db,settings,token,case_id,request,operation_id):
+def save_authenticated_unreviewed(db,settings,token,case_id,request,operation_id,expected_selection=None):
     """Trusted-host entry. No HTTP header, actor, role or imported grant accepted.
 
     Legacy save_unreviewed remains an INTERNAL trusted-call compatibility entry;
@@ -153,7 +156,7 @@ def save_authenticated_unreviewed(db,settings,token,case_id,request,operation_id
     from ..identity.local import authorize_save
     ctx=SimpleNamespace(db=db,settings=settings,operator='authenticated',role='')
     return save_unreviewed(ctx,case_id,request,operation_id,
-        _authorize=lambda session:authorize_save(session,token,case_id))
+        _authorize=lambda session:authorize_save(session,token,case_id),expected_selection=expected_selection)
 
 
 def read_authenticated_unreviewed(db, settings, token, case_id, run_id):
@@ -183,3 +186,12 @@ def read_authenticated_unreviewed(db, settings, token, case_id, run_id):
         if authorize_read(session, token, case_id) != authority:
             conflict('UNREVIEWED_AUTHORITY_CHANGED')
     return response
+
+
+def selection_snapshot(snapshot):
+    """Caller-visible version precondition, never an authorization credential."""
+    return {'caseId':snapshot['caseId'],'caseIncarnation':snapshot['caseIncarnation'],
+        'caseEpochUtc':snapshot['caseEpochUtc'],
+        'sources':sorted([{'evidenceId':x['evidenceId'],'sourceSha256':x['sourceSha256'],
+            'registrationDigest':x['requestDigest'],'sourceIncarnation':x['incarnation']}
+            for x in snapshot['sourceIdentities']],key=lambda x:x['evidenceId'])}

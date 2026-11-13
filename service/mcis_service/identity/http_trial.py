@@ -26,6 +26,7 @@ class SaveRequest(BaseModel):
     model_config=ConfigDict(extra='forbid',strict=True)
     operationId: str
     request: RegisteredPreview
+    expectedSelection: dict | None = None
 
 
 def pairs(items):
@@ -154,7 +155,7 @@ class TrialIdentityApp:
             await self.respond(send,422,'INVALID_SAVE_REQUEST');return
         try:
             result=await run_in_threadpool(save_authenticated_unreviewed,
-                self.db,self.settings,token,case_id,body.request,body.operationId)
+                self.db,self.settings,token,case_id,body.request,body.operationId,body.expectedSelection)
             receipt={key:result[key] for key in ('runId','saved','status','replayed')}
         except HTTPException as error:
             # Never forward core stderr, paths, evidence, SQL or exception details.
