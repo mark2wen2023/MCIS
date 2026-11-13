@@ -101,3 +101,11 @@ read-before-retry and the business service receipt prevent duplication.
 HTTP exposure does not complete workbench integration, production login,
 archiving/restore or browser security acceptance. All returned content is still
 working_unreviewed. There is no fact approval or LLM generation endpoint.
+
+## Supplemental archival follow-up
+
+The separate `investigation.archive` trusted-host API now supports a bounded,
+versioned bundle of issue histories and directly referenced source bytes. Restored
+bundles are inert, unverified history, never active events, credentials or grants.
+See `issue-archive-bundle.md`. This does not integrate the records into existing
+`.mcase` export/import, include parent evidence lineage, or supply browser UI.
