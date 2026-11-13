@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {EventStream} from '@earendil-works/pi-ai';
+import {createPanel,ROLES} from './panel.mjs';
+const snapshot={synthetic:true,caseId:'SYNTHETIC',sources:[{kind:'report',id:'R',version:'1',text:'Synthetic report draft'},{kind:'evidence',id:'E',version:'2',text:'Synthetic evidence'}]};
+const seen={};
+function provider(role,source='E'){let n=0;seen[role]=[];return (_m,ctx)=>{seen[role].push(structuredClone(ctx));const stream=new EventStream(e=>e.type==='done',e=>e.message);let k=n++%3;const action=k===0?['read_evidence',{caseId:'SYNTHETIC',sourceId:source}]:k===1?['submit_candidate',{caseId:'SYNTHETIC',text:`${role} scripted candidate`,sourceId:source,version:'2'}]:null;const msg={role:'assistant',content:action?[{type:'toolCall',id:`${role}-${n}`,name:action[0],arguments:action[1]}]:[],stopReason:action?'toolUse':'stop',api:'openai-completions',provider:'offline',model:'scripted-not-llm',timestamp:Date.now(),usage:{input:0,output:0,totalTokens:0,cost:{total:0}}};queueMicrotask(()=>stream.push({type:'done',reason:msg.stopReason,message:msg}));return stream;};}
+function config(){return {actor:'investigator',snapshot,access:Object.fromEntries(ROLES.map(r=>[r,['R','E']])),providers:Object.fromEntries(ROLES.map(r=>[r,provider(r)])),turnBudget:1};}
+assert.throws(()=>createPanel({...config(),actor:'model'}));assert.throws(()=>createPanel({...config(),snapshot:{...snapshot,synthetic:false}}));
+const p=createPanel(config());await assert.rejects(()=>p.challenge('vessel','navigation'));
+for(const role of ROLES){assert.equal(p.context(role).phase,'independent');assert(!('reviews' in p.context(role)));await p.review(role);}
+for(const role of ROLES){const all=JSON.stringify(seen[role]);for(const peer of ROLES.filter(x=>x!==role))assert(!all.includes(`${peer} scripted candidate`));}
+assert.equal(p.context('navigation').phase,'cross_examination');await assert.rejects(()=>p.challenge('vessel','vessel'));const t=await p.challenge('vessel','navigation');assert.equal(t.target,'navigation');assert.equal(p.context('vessel').phase,'budget_exhausted');await assert.rejects(()=>p.challenge('vessel','navigation'));
+const v=JSON.stringify(seen.vessel);assert(v.includes('navigation scripted candidate'));assert(!JSON.stringify(seen.regulation).includes('navigation scripted candidate'));p.cancel('investigator');assert.throws(()=>p.context('vessel'));
+const restricted=config();restricted.access.regulation=['R'];const q=createPanel(restricted);await assert.rejects(()=>q.review('regulation'));assert.equal(q.context('regulation').phase,'independent');
+const divided=config();divided.snapshot=structuredClone(snapshot);divided.snapshot.sources.push({kind:'evidence',id:'E2',version:'2',text:'Restricted synthetic'});divided.access.regulation=['R','E2'];divided.providers.regulation=provider('regulation','E2');const panel2=createPanel(divided);for(const role of ROLES)await panel2.review(role);assert(!('regulation' in panel2.context('vessel').reviews));assert(!('navigation' in panel2.context('regulation').reviews));await assert.rejects(()=>panel2.challenge('vessel','regulation'));
+console.log('PASS: four independent Pi instances, blind reviews, host-mediated peer context, case/source grants, role separation, target, turn budget, cancellation; scripted provider only');
