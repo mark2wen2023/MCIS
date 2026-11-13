@@ -1,6 +1,13 @@
 import unittest
 from dataclasses import replace,FrozenInstanceError
 from timeline import *
+from scoped import Scope, ScopedCorrection, scoped_compare
+
+def compare(a,b,ca=None,cb=None):
+ # Test adapter: explicitly pin each fixture to its source and a common basis.
+ def select(event, c):
+  return None if c is None else ScopedCorrection(c,Scope(event.source,'-1000000000000','1000000000000'),'fixture-epoch')
+ return scoped_compare(a,b,select(a,ca),select(b,cb))
 S=Source('case','source','v1','page 1')
 def event(id='a',**kw): return Event(id,S,'clock','original wording','point',**({'start':'10','end':'10'}|kw))
 def corr(**kw): return Correction(**({'case':'case','clock':'clock','revision':'c1','offset':'0','uncertainty':'0','basis':(S,),'status':'confirmed'}|kw))

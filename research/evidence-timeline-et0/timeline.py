@@ -70,12 +70,12 @@ def interval(event, correction=None):
 
 
 def compare(a,b,ca=None,cb=None):
-    if a.source.case!=b.source.case: raise ValueError('cross case')
-    x,y=interval(a,ca),interval(b,cb)
-    if x is None or y is None or not(x[2] and y[2]): return 'undetermined'
-    if x[1]<y[0]: return 'before'
-    if y[1]<x[0]: return 'after'
-    return 'overlap-not-identity'
+    """Disabled legacy entry point: it had no explicit common target basis.
+
+    Use scoped.scoped_compare with explicitly selected scoped corrections.
+    This guard prevents accidental use, not malicious in-process bypass.
+    """
+    raise ValueError('unsafe legacy comparison disabled; use scoped_compare')
 
 
 def validate_events(events):

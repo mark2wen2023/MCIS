@@ -1,3 +1,13 @@
+test_bad_clock_or_basis_rejected (test_scoped.ScopedTests.test_bad_clock_or_basis_rejected) ... ok
+test_bad_scope_and_case (test_scoped.ScopedTests.test_bad_scope_and_case) ... ok
+test_boundaries_and_original_unchanged (test_scoped.ScopedTests.test_boundaries_and_original_unchanged) ... ok
+test_explicit_matching_target_basis_required (test_scoped.ScopedTests.test_explicit_matching_target_basis_required) ... ok
+test_legacy_compare_cannot_bypass_target_basis (test_scoped.ScopedTests.test_legacy_compare_cannot_bypass_target_basis) ... ok
+test_partial_overlap_and_outside_refused (test_scoped.ScopedTests.test_partial_overlap_and_outside_refused) ... ok
+test_proposed_not_applied_and_no_default_alignment (test_scoped.ScopedTests.test_proposed_not_applied_and_no_default_alignment) ... ok
+test_relative_not_given_invented_time (test_scoped.ScopedTests.test_relative_not_given_invented_time) ... ok
+test_source_revision_and_locator_are_pinned (test_scoped.ScopedTests.test_source_revision_and_locator_are_pinned) ... ok
+test_uncertainty_and_temporal_order_only (test_scoped.ScopedTests.test_uncertainty_and_temporal_order_only) ... ok
 test_after (test_timeline.Tests.test_after) ... ok
 test_arithmetic_independent_of_caller_context (test_timeline.Tests.test_arithmetic_independent_of_caller_context) ... ok
 test_bad_shape (test_timeline.Tests.test_bad_shape) ... ok
@@ -24,6 +34,6 @@ test_uncertainty (test_timeline.Tests.test_uncertainty) ... ok
 test_versions_remain (test_timeline.Tests.test_versions_remain) ... ok
 
 ----------------------------------------------------------------------
-Ran 24 tests in 0.001s
+Ran 34 tests in 0.002s
 
 OK
