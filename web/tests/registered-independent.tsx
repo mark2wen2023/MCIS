@@ -40,6 +40,30 @@ await act(async()=>setIdentity('Investigator','reviewer'));await render();await 
 // A synthetic change event exercises the handler even while controls are disabled during a request.
 await act(async()=>{const el=container.querySelector('[name=citation]')!;Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value')!.set!.call(el,'changed page');el.dispatchEvent(new window.Event('input',{bubbles:true}));el.dispatchEvent(new window.Event('change',{bubbles:true}))});
 await act(async()=>declarationRequest.resolve({ok:true,json:async()=>output()}));check(()=>assert.equal(container.textContent?.includes('本次核对的来源字节'),false));
+const parent={evidenceId:'EV-005',sourceSha256:'c'.repeat(64)};
+const selected=scopedSelection.map(s=>({...s,parentReport:parent}));
+const parentOutput=()=>({...output(),reportSnapshots:[{...output().sourceSnapshots[0],evidenceId:'EV-005',extractEvidenceId:'EV-004',sourceSha256:parent.sourceSha256,relationshipStatus:'user_declared_not_verified'}]});
+check(()=>assert.deepEqual(registeredBody(selected).sources[0].parentReport,parent));
+check(()=>assert.equal(registeredResult(parentOutput(),'CASE-A',['EV-004'],selected).reportSnapshots!.length,1));
+for(const mutate of [(v:any)=>delete v.reportSnapshots,(v:any)=>v.reportSnapshots[0].relationshipStatus='verified',(v:any)=>v.reportSnapshots[0].sourceSha256='d'.repeat(64),(v:any)=>v.reportSnapshots[0].extractEvidenceId='EV-999',(v:any)=>v.reportSnapshots[0].byteLength=8388609]){const v=parentOutput();mutate(v);check(()=>assert.throws(()=>registeredResult(v,'CASE-A',['EV-004'],selected)))}
+check(()=>assert.throws(()=>registeredResult(parentOutput(),'CASE-A',['EV-004'],scopedSelection)));
+for(const mutate of [(r:any)=>r.parentReport.evidenceId=r.evidenceId,(r:any)=>r.parentReport.sourceSha256='bad',(r:any)=>r.comparisonContext.sourceNature='sensor_export']){const r=structuredClone(selected);mutate(r[0]);check(()=>assert.throws(()=>registeredBody(r)))}
+const parentItem={...items[0],caseId:'CASE-A',evidenceId:'EV-005',category:'Document',title:'Registered report',currentSha256:parent.sourceSha256};
+const parentItems=[{...items[0],caseId:'CASE-A',category:'Document'},parentItem,{...parentItem,evidenceId:'EV-006',caseId:'CASE-B'},{...parentItem,evidenceId:'EV-007',needsReview:true}];
+const field=async(name:string,value:string)=>act(async()=>{const el=container.querySelector(`[name=${name}]`)! as any;el.value=value;el.dispatchEvent(new window.Event('change',{bubbles:true}))});
+await render('CASE-A',parentItems);await submit();await act(async()=>Array.from(container.querySelectorAll('button')).find(x=>x.textContent?.includes('停止等待'))!.click());
+check(()=>assert.equal(container.querySelector('[name=parentReport] option[value="EV-006"]'),null));
+check(()=>assert.equal((container.querySelector('[name=parentReport] option[value="EV-007"]') as any).disabled,true));
+check(()=>assert.equal(container.querySelector('[name=parentReport] option[value="EV-004"]'),null));
+await field('parentReport','EV-005');
+const dispatch=async()=>{await act(async()=>container.querySelector<HTMLInputElement>('input[type=checkbox]')!.click());await act(async()=>container.querySelector('form')!.dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true})))};
+await dispatch();check(()=>assert.deepEqual(JSON.parse(pending.at(-1).options.body).sources[0].parentReport,parent));
+await act(async()=>pending.at(-1).resolve({ok:true,json:async()=>parentOutput()}));check(()=>assert.equal(container.textContent?.includes('声明关联的父报告'),true));
+await field('sourceNature','sensor_export');check(()=>assert.equal(container.querySelector('[name=parentReport]'),null));check(()=>assert.equal(container.textContent?.includes('声明关联的父报告'),false));
+await field('sourceNature','report_extract');check(()=>assert.equal((container.querySelector('[name=parentReport]') as any).value,''));
+await field('parentReport','EV-005');await dispatch();const oldParentRequest=pending.at(-1);
+await render('CASE-A',[parentItems[0],{...parentItem,currentSha256:'d'.repeat(64)}]);await act(async()=>oldParentRequest.resolve({ok:true,json:async()=>parentOutput()}));check(()=>assert.equal(container.textContent?.includes('声明关联的父报告'),false));
+const n=pending.length;await dispatch();check(()=>assert.equal(pending.length,n));check(()=>assert.equal(container.textContent?.includes('父报告清单或版本已变化'),true));
 await act(async()=>root.unmount());await window.happyDOM.abort();console.log(count+' independent checks passed: controlled fetch + HappyDOM, not browser/backend E2E')
 
 const real=JSON.parse(readFileSync(new URL('./registered-independent.fixture.json',import.meta.url),'utf8'));const realIds=real.sourceSnapshots.map((s:any)=>s.evidenceId);check(()=>assert.equal(registeredResult(real,real.caseId,realIds).result.conflicts[0].delta,5));

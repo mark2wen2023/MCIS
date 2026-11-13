@@ -1,9 +1,11 @@
 import type { AlignPreview, PreviewKind } from './types'
 export type ComparisonContext={vesselLabel:string;sourceNature:'report_extract'|'sensor_export'|'other'|'unknown';sourceTitle:string;citation:string;timeBasis:string;headingReference:'true'|'magnetic'|'unknown'|null}
 export const blankContext=():ComparisonContext=>({vesselLabel:'',sourceNature:'unknown',sourceTitle:'',citation:'',timeBasis:'',headingReference:null})
-export type RegisteredSelection={evidenceId:string;timeColumn:string;column:string;kind:PreviewKind;comparisonContext?:ComparisonContext}
+export type ParentReport={evidenceId:string;sourceSha256:string}
+export type RegisteredSelection={evidenceId:string;timeColumn:string;column:string;kind:PreviewKind;comparisonContext?:ComparisonContext;parentReport?:ParentReport}
 export type Snapshot={evidenceId:string;sourceSha256:string;registrationDigest:string;byteLength:number;registeredUtc:string}
-export type RegisteredResult=AlignPreview&{sourceSnapshots:Snapshot[];sourceBinding:'transient-local-intake-bytes';observationApproval:'not_assessed';comparisonScope?:{status:'unscoped'|'user_declared_not_verified';sources:{evidenceId:string;context:ComparisonContext}[]}}
+export type ReportSnapshot=Snapshot&{extractEvidenceId:string;relationshipStatus:'user_declared_not_verified'}
+export type RegisteredResult=AlignPreview&{sourceSnapshots:Snapshot[];reportSnapshots?:ReportSnapshot[];sourceBinding:'transient-local-intake-bytes';observationApproval:'not_assessed';comparisonScope?:{status:'unscoped'|'user_declared_not_verified';sources:{evidenceId:string;context:ComparisonContext}[]}}
 export const blankRegistered=():RegisteredSelection=>({evidenceId:'',timeColumn:'',column:'',kind:'Heading'})
 export function registeredBody(rows:RegisteredSelection[]){
   if(!rows.length||rows.length>4||new Set(rows.map(r=>r.evidenceId)).size!==rows.length)throw Error('请选择1–4份不同证据。')
@@ -12,7 +14,9 @@ export function registeredBody(rows:RegisteredSelection[]){
   if(scoped&&(normalized.some(c=>!c)||new Set(normalized.map(c=>c?.vesselLabel)).size!==1||new Set(rows.map(r=>r.kind)).size!==1))throw Error('本次来源须声明同一船舶、同一物理量；不得混合有无声明的来源。')
   return {sources:rows.map((r,i)=>{
     if(!/^EV-[0-9]{3,}$/.test(r.evidenceId)||!r.timeColumn.trim()||!r.column.trim()||r.timeColumn===r.column||r.timeColumn.length>128||r.column.length>128||!['Heading','CourseOverGround','SpeedOverGround'].includes(r.kind))throw Error('请选择证据并填写不同的时间列、数值列及类型。')
-    return {evidenceId:r.evidenceId,...(scoped?{comparisonContext:normalized[i]}:{}),csvMapping:{timeColumn:r.timeColumn,columns:[{column:r.column,kind:r.kind}]}}
+    const parent=r.parentReport
+    if(parent&&(normalized[i]?.sourceNature!=='report_extract'||typeof parent.evidenceId!=='string'||!/^EV-[0-9]{3,}$/.test(parent.evidenceId)||parent.evidenceId.length>32||parent.evidenceId===r.evidenceId||typeof parent.sourceSha256!=='string'||!/^[a-f0-9]{64}$/.test(parent.sourceSha256)))throw Error('父报告须为另一个本案登记文件及其当前SHA-256，并明确声明为报告摘录。')
+    return {evidenceId:r.evidenceId,...(scoped?{comparisonContext:normalized[i]}:{}),...(parent?{parentReport:{evidenceId:parent.evidenceId,sourceSha256:parent.sourceSha256}}:{}),csvMapping:{timeColumn:r.timeColumn,columns:[{column:r.column,kind:r.kind}]}}
   })}
 }
 export function registeredResult(value:unknown,caseId:string,ids:string[],expected?:RegisteredSelection[]):RegisteredResult{
@@ -28,6 +32,9 @@ export function registeredResult(value:unknown,caseId:string,ids:string[],expect
     const sent=registeredBody(expected).sources
     if(v.comparisonScope?.status!=='user_declared_not_verified'||!Array.isArray(v.comparisonScope.sources)||v.comparisonScope.sources.length!==sent.length||v.comparisonScope.sources.some((s,i)=>s.evidenceId!==sent[i].evidenceId||!sameContext(s.context,sent[i].comparisonContext)))throw Error('人工声明回显不一致，结果未采用。')
   }
+  const parents=(expected??[]).filter(s=>s.parentReport)
+  const reports=v.reportSnapshots===undefined&&parents.length===0?[]:v.reportSnapshots
+  if(!Array.isArray(reports)||reports.length!==parents.length||reports.some((s,i)=>!s||s.extractEvidenceId!==parents[i].evidenceId||s.evidenceId!==parents[i].parentReport!.evidenceId||s.sourceSha256!==parents[i].parentReport!.sourceSha256||s.relationshipStatus!=='user_declared_not_verified'||typeof s.registrationDigest!=='string'||!/^[a-f0-9]{64}$/.test(s.registrationDigest)||!Number.isInteger(s.byteLength)||s.byteLength<0||s.byteLength>8388608||typeof s.registeredUtc!=='string'||!Number.isFinite(Date.parse(s.registeredUtc))))throw Error('父报告版本或关联声明无法核对，结果未采用。')
   return v
 }
 
