@@ -368,3 +368,8 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 | 2026-11-12 | Report output A | 受限独立验收通过 | 最终独立49 passed/11.56s，20SHA前后匹配；真实双格式单render/原文不变/审计关联、实际第二连接改报告或策略后409/403、故障全表回滚与commit后交付失败各有证明。真浏览器2正常下载+2真实commit后故障替换+1真实commit后身份迟响应丢弃，最终5审计；8独立客户端坏结构/错绑拒绝。实际2MiB报告及16MiB输出边界与其余缩小limit测试区别详见独立REPORT；未穷尽多worker/真实切案/全部变体。无服务端原件保存、无.mcase文件恢复、无签署认证；B仅计划，不部署不触W11。 |
+
+
+| 2026-11-13 | W19 product source review | 待独立验收 | Existing candidate template preview gains explicit source review and digest-bound local acknowledgment. Local 16 checks, original W19.2 regression, isolated TypeScript check and browser bundle passed; no browser interaction or full application acceptance. Freeze: logs/w19-product-source-review-sha256.txt. |
+
+| 2026-11-13 | W19 product source review | 局部独立验收通过，待浏览器/整应用验收 | Existing W19.2 + 16 local + 9 independent checks and isolated tsc passed. Native development subtask plus independent review subtask; not a Codex application task. No real LLM, deployment or merge. |
