@@ -44,7 +44,9 @@ async def import_package(request: Request, ctx: Ctx = CtxDep) -> dict[str, Any]:
     if ctx.role not in ("LeadInvestigator", "Investigator"):
         raise problem(403, "FORBIDDEN", "只有调查组可以导入案件包")
     data = await _body_bytes(request)
-    with ctx.db.session() as s:
+    with WRITE_LOCK, ctx.db.session() as s:
+        if s.get_bind().dialect.name == "sqlite":
+            s.connection().exec_driver_sql("BEGIN IMMEDIATE")
         return mcase.import_case(s, ctx.settings.blob_dir, data, ctx.operator, ctx.role)
 
 

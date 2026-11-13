@@ -181,6 +181,7 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
     from ..manual_interviews.models import InterviewRequestReceiptRow
     from ..interviews.access import begin, require_content
     begin(s)
+    from ..cases.incarnation import validate_archive_identity
     from ..recommendations.access import protect_package as protect_recommendations
     protect_recommendations(s, case_id, role)
     from ..working_records_archive.service import has_history, build as build_working
@@ -200,6 +201,7 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
             from ..hfacs_drafts import archive as hfacs_archive
             from ..package_intake.parser import parse_package
             files, working = build_working(s, blob_root, SimpleNamespace(role=role), case_id)
+            validate_archive_identity(s, case_id)
             hfacs = hfacs_archive.build(s, case_id, role)
             if hfacs is not None: files[hfacs_archive.PATH] = hfacs.raw
             row = s.scalars(select(CaseRow).where(CaseRow.case_id == case_id)).first()
@@ -230,6 +232,7 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
     protect_package(s, case_id, role)
     from ..interviews.access import protect_package as protect_interviews
     protect_interviews(s, case_id, role)
+    validate_archive_identity(s, case_id)
     # Refuse known incomplete backups only after full-content/source authorization.
     # Existing serializers omit reports/snapshots and import rejects testimony.
     from ..reports.models import ReportRow, ReportAuditRow
@@ -455,6 +458,8 @@ def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: s
         if not chk["valid"]:
             raise problem(422, "CHAIN_BROKEN", f"{name} 哈希链断裂", chk)
 
+    from ..cases import incarnation
+    identity = incarnation.allocate(s, case_id, "imported")
     put_doc(s, CaseRow, case_id, case_id, case)
     for observation in observations:
         put_doc(s, EnvironmentObservationRow, case_id, observation["observationId"], observation)
@@ -527,9 +532,10 @@ def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: s
         from ..working_records_archive.service import restore as restore_working
         restore_working(s, blob_root, validated_working, files)
     s.flush()
-    audit.append(s, case_id=case_id, operator=operator, role=role, action="package.import", category="Package",
+    event = audit.append(s, case_id=case_id, operator=operator, role=role, action="package.import", category="Package",
                  command=f"导入案件包 {case_id}", after=f"{report.get('generatorVersion')}；文件 {len(files)} 个；额外 {len(report['extraFiles'])} 个",
-                 entity_type="case", entity_id=case_id)
+                 entity_type="case", entity_id=case_id, snapshot_ref=incarnation.marker(identity))
+    incarnation.persist(s, identity, event)
     return {"caseId": case_id, "integrity": report, "imported": {
         "evidence": len(ev_index), "custodyEvents": len(custody_lines), "auditEvents": len(audit_lines) + 1}}
 

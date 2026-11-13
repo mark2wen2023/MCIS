@@ -44,10 +44,13 @@ def create_case(body: dict[str, Any] = Body(...), ctx: Ctx = CtxDep) -> dict[str
             s.connection().exec_driver_sql("BEGIN IMMEDIATE")
         if s.query(CaseRow).filter_by(case_id=body["caseId"]).first():
             raise problem(409, "CASE_EXISTS", f"案件已存在：{body['caseId']}")
+        from . import incarnation
+        identity = incarnation.allocate(s, body["caseId"], "created")
         put_doc(s, CaseRow, body["caseId"], body["caseId"], body)
-        audit.append(s, case_id=body["caseId"], operator=ctx.operator, role=ctx.role, action="case.create",
+        event = audit.append(s, case_id=body["caseId"], operator=ctx.operator, role=ctx.role, action="case.create",
                      category="Case", command=f"创建案件 {body['caseId']}", after=body["title"],
-                     entity_type="case", entity_id=body["caseId"])
+                     entity_type="case", entity_id=body["caseId"], snapshot_ref=incarnation.marker(identity))
+        incarnation.persist(s, identity, event)
         return body
 
 

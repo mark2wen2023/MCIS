@@ -23,3 +23,5 @@ from .working_records_archive.models import ArchivedManualReceiptRow, ArchiveImp
 from .knowledge_archive.models import Archive, Epoch, Snapshot  # noqa: F401
 
 from .track_history.models import LocalReceipt  # noqa: F401
+
+from .cases.incarnation import CaseIncarnationRow  # noqa: F401
