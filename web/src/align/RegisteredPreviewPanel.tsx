@@ -24,7 +24,7 @@ export function RegisteredPreviewPanel({caseId,items}:{caseId:string;items:Evide
   const change=(i:number,values:Partial<RegisteredSelection>)=>{clear();setMessage('');setRows(old=>old.map((r,j)=>i===j?{...r,...values}:r))}
   const declare=(i:number,values:Partial<ComparisonContext>)=>change(i,{comparisonContext:{...rows[i].comparisonContext!,...values}})
   const parentCandidates=items.filter(e=>e.caseId===caseId&&e.category==='Document'&&/^raw\/evidence-intakes\/[a-f0-9]{64}\/source\.bin$/.test(e.relativePath||'')&&/^[a-f0-9]{64}$/.test(e.currentSha256))
-  const candidates=items.filter(e=>/^raw\/evidence-intakes\/[a-f0-9]{64}\/source\.bin$/.test(e.relativePath||''))
+  const candidates=items.filter(e=>e.caseId===caseId&&/^[a-f0-9]{64}$/.test(e.currentSha256)&&/^raw\/evidence-intakes\/[a-f0-9]{64}\/source\.bin$/.test(e.relativePath||''))
   const run=async()=>{
     const g=gate.current;if(g.busy||!ack)return
     let body;try{for(const row of rows){if(row.parentReport&&!parentCandidates.some(p=>p.evidenceId===row.parentReport!.evidenceId&&p.currentSha256===row.parentReport!.sourceSha256&&!p.needsReview&&p.status!=='Mismatch'))throw Error('父报告清单或版本已变化，请重新选择并核对。')}body=registeredBody(rows)}catch(e){setMessage((e as Error).message);return}
