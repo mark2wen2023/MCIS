@@ -30,6 +30,39 @@ def _identifier(value):
     return value
 
 
+def _import_quality(result, expected_sources):
+    """Summarize core-reported counts, never certify source/event coverage.
+
+    AlignCommand's stats are aggregate: even positive totals cannot establish
+    that every selected source produced usable observations or overlaps in time.
+    Missing/null stats remain unknown for older hosts; malformed non-null stats fail.
+    Raw diagnostics can contain evidence text and are deliberately not forwarded.
+    """
+    stats = result.get('stats')
+    counts = None
+    state = 'unknown'
+    if stats is not None:
+        keys = ('sourcesImported', 'tracks', 'linesRead', 'sentencesUsed')
+        if type(stats) is not dict or any(type(stats.get(k)) is not int or
+                not 0 <= stats[k] <= 2_147_483_647 for k in keys):
+            raise Rejected('invalid import statistics')
+        counts = {k: stats[k] for k in keys}
+        if counts['sourcesImported'] > expected_sources:
+            raise Rejected('invalid import source count')
+        state = ('insufficient_import' if counts['sourcesImported'] < expected_sources
+                 or counts['tracks'] < 2 or counts['sentencesUsed'] == 0
+                 or counts['linesRead'] == 0 else 'coverage_unverified')
+    diagnostics = result.get('importDiagnostics')
+    diagnostic_count = None
+    if diagnostics is not None:
+        if type(diagnostics) is not list or len(diagnostics) > 10000:
+            raise Rejected('invalid import diagnostic budget')
+        diagnostic_count = len(diagnostics)
+    return {'state': state, 'unverifiedCoreCounts': counts,
+            'unverifiedDiagnosticCount': diagnostic_count,
+            'perSourceCoverageVerified': False, 'timeOverlapVerified': False}
+
+
 def preview(request, *, principal, repository, core):
     """Return only a version-bound candidate. Exceptions never return partial evidence.
 
@@ -100,6 +133,7 @@ def preview(request, *, principal, repository, core):
         raise Rejected('invalid core conflicts or budget exceeded')
     if any(type(c) is not dict or c.get('caseId') != case for c in conflicts):
         raise Rejected('invalid upstream entry')
+    quality = _import_quality(result, len(snapshots))
     # Match only exact selected source IDs. Display labels, inferred aliases and
     # upstream evidence IDs are not authority. No arbitrary upstream text escapes.
     by_id = {s.source_id: s for s in snapshots}
@@ -131,13 +165,15 @@ def preview(request, *, principal, repository, core):
                            'binding': 'exact_source_id_snapshot', 'a': refs[0], 'b': refs[1]})
     if repository.recheck(principal, case, tuple(snapshots)) is not True:
         raise Rejected('permission or evidence changed')
-    return {'skillVersion': 'SK-T01-preview/0.3', 'caseId': case,
+    return {'skillVersion': 'SK-T01-preview/0.4', 'caseId': case,
             'status': 'needs_human_review', 'mode': 'uncalibrated_nmea_preview',
             'coreVersion': version,
             'computed': {'unverifiedUpstreamEntryCount': len(conflicts)}, 'hypotheses': [],
+            'importQuality': quality,
             'candidates': candidates,
             'sources': [{'sourceId': s.source_id, 'revision': s.revision,
                          'digest': s.digest, 'locator': s.locator} for s in snapshots],
             'notChecked': ['observation_values_and_original_media', 'timezone_of_source_records', 'clock_correction',
                            'interval_order', 'event_identity', 'responsibility'],
-            'warning': '零候选不代表证据一致；原始设备钟差尚未校准。'}
+            'warning': '零候选不代表证据一致；须核对各源有效数据及时间重叠，原始设备钟差尚未校准。'}
+

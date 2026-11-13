@@ -64,3 +64,29 @@ authorization. No real W2, database, media or LLM has been exercised.
 Full test discovery currently includes 40 previous synthetic tests plus 7 new
 preflight tests. The test doubles prove adapter order/rejection, not actual
 permission revocation propagation or a production data-access guarantee.
+
+
+## v0.4 import-quality summary (2026-11-13)
+
+`importQuality` now distinguishes missing statistics (`unknown`), zero/partial
+usable import (`insufficient_import`), and positive aggregate counters
+(`coverage_unverified`). These states are not an investigation conclusion.
+All counters remain explicitly core-reported and unverified. Positive totals
+cannot show that both sources produced comparable observations, or that their
+time ranges overlap. No state is named clean/passed/consistent.
+Only bounded integer counters and a diagnostic count escape; raw diagnostic
+messages are never forwarded into model/UI context. Source text, timestamps,
+clock calibration, per-source coverage and time overlap remain unverified.
+
+The field contract was read from `tools/mcis-core/src/AlignCommand.cs` at
+`c945a20ebec713ead35d1c49d7fc1bf0c50ccaaa`, lines 179–199. This is a source
+contract inspection, not an executed W2 integration test. Developer regression:
+61 local synthetic tests passed (53 previous + 8 import-quality tests). This
+checkout has no .NET runtime. No real W2, LLM, production permission store or
+UI was exercised. This remains an isolated research adapter in draft PR56.
+Executor: native subtask, not a Codex app task. No merge or deployment.
+
+Independent reviewer added 6 tests; combined local synthetic suite: **67/67**.
+Missing/null statistics deliberately remain unknown for compatibility; malformed
+non-null supplied statistics reject the preview. Independent review approved
+this limited draft scope, not production readiness.
