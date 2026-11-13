@@ -84,6 +84,14 @@ class RegisteredPreview(StrictDto):
 def validate_csv(text, mapping):
     """Do not let skipped bad observations look like successful no-conflict data."""
     try:
+        # W2 treats a physical line starting with # as a comment, even when
+        # that is an unmapped CSV field containing an otherwise valid sample.
+        for line in text.replace('\r\n', '\n').replace('\r', '\n').split('\n'):
+            trimmed = line.strip()
+            if trimmed.startswith('\ufeff'):
+                trimmed = trimmed[1:].lstrip()
+            if trimmed.startswith('#'):
+                raise ValueError('core comment-like CSV record unsupported')
         reader = csv.DictReader(io.StringIO(text), strict=True)
         headers = reader.fieldnames or []
         selected = [mapping.timeColumn] + [c.column for c in mapping.columns]
@@ -125,7 +133,7 @@ def validate_csv(text, mapping):
                 if column.kind == 'SpeedOverGround' and value < 0: raise ValueError('negative speed')
         if not count: raise ValueError('no observations')
     except (ValueError, csv.Error, OverflowError, TypeError):
-        raise problem(422, 'TIMELINE_SOURCE_CSV', 'CSV必须包含无歧义列名、带时区时间及有限数值，表头和单元格不得跨行；未跳过错误行或执行公式') from None
+        raise problem(422, 'TIMELINE_SOURCE_CSV', 'CSV必须包含无歧义列名、带时区时间及有限数值，表头和单元格不得跨行，记录不能以未加引号的#开头；未跳过错误行或执行公式') from None
 
 
 def parent_snapshot(ctx, session, case_id, source):
