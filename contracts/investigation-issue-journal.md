@@ -30,7 +30,8 @@ re-attest historical evidence. It returns the current journal, marked replayed.
   entry)`; entry fields: kind, note, sourceIds, outcome, againstJudgment.
 - `read(db, token, case_id, issue_id)` and `list_issues(db, token, case_id)`.
 
-These are usable in-process service APIs, **not a browser/HTTP feature**. They use
+These are usable in-process service APIs. The explicit identity trial app now also
+provides the bounded HTTP adapter below; this is **not a production/browser feature**. They use
 server-issued local sessions from existing trusted host identity, not role headers.
 No existing app route is mounted or changed; no browser token storage is introduced.
 The write grant is for this new journal resource, not a timeline or report permission.
@@ -67,3 +68,36 @@ implemented by this slice.
 service/tests/test_issue_journal_independent.py` (one shell command).
 Uses isolated temporary SQLite and registered evidence fixtures. These tests are
 business-service acceptance, not real browser/CSP/production identity acceptance.
+
+
+## Isolated authenticated HTTP adapter
+
+Only `create_identity_trial_app(db=..., settings=...)` serves these routes; the
+legacy app and default protected entry are unchanged. Trusted host must separately
+call `initialize` and provision an issue grant. The HTTP API cannot create accounts,
+issue sessions or grant permissions. No browser-facing token injection is offered.
+
+- `POST /api/v1/trial/cases/{caseId}/issues`: strict JSON `{issueId,
+  operationId, entry}` creates initial judgment at revision0. Returns201 new or200
+  same-operation replay. Caller supplies canonical UUIDs.
+- `POST /api/v1/trial/cases/{caseId}/issues/{issueId}/events`: strict JSON
+  `{operationId, expectedRevision, entry}`; revision1..199. URL fixes issue identity;
+  cannot create a missing card at revision0 through this endpoint.
+- `GET /api/v1/trial/cases/{caseId}/issues`: bounded summaries.
+- `GET /api/v1/trial/cases/{caseId}/issues/{issueId}`: historical working entries.
+
+Authentication is one server-issued Bearer session, rechecked against the actual
+server database and case membership before reading the body and again by business
+service under its transaction. Writes also require current IssueGrant; read does
+not require a write grant. Full-content policy is enforced for all actions.
+Cookie, Origin, content/transfer encoding and X-MCIS-Role/X-MCIS-Operator are
+rejected; no old-role fallback, CORS, redirects, arbitrary routes or provisioning.
+POST requires application/json, at most65536bytes, ten-second body deadline,
+unique keys, no nonfinite numbers and strict fields. Invalid/stale/conflicting
+writes return generic errors without notes, evidence metadata, token or SQL.
+Failures after uncertain write completion explicitly instruct same-operation retry;
+read-before-retry and the business service receipt prevent duplication.
+
+HTTP exposure does not complete workbench integration, production login,
+archiving/restore or browser security acceptance. All returned content is still
+working_unreviewed. There is no fact approval or LLM generation endpoint.

@@ -65,6 +65,8 @@ class TrialIdentityApp:
                 elif event['type']=='lifespan.shutdown':
                     await send({'type':'lifespan.shutdown.complete'});return
         if scope['type']!='http':raise RuntimeError('unsupported ASGI protocol')
+        from ..investigation.http_trial import handle as handle_issues
+        if await handle_issues(self,scope,receive,send):return
         head=scope.get('method')=='HEAD'
         listing=CATALOG_PATH.fullmatch(scope.get('path',''))
         if listing and scope.get('method')=='GET' and not scope.get('query_string'):
