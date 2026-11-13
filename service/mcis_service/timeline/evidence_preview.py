@@ -102,7 +102,9 @@ def validate_csv(text, mapping):
         # W2 resolves header names with Trim + OrdinalIgnoreCase, first wins.
         # Reject aliases instead of validating one column and computing another.
         # casefold is deliberately conservative; do not rename source columns.
-        header_keys = [name.strip().casefold() for name in headers]
+        # W2 also removes leading BOM characters from its first parsed header.
+        header_keys = [(name.lstrip('\ufeff') if i == 0 else name).strip().casefold()
+                       for i, name in enumerate(headers)]
         if len(header_keys) != len(set(header_keys)) or len(selected) != len(set(selected)):
             raise ValueError('duplicate columns')
         if not set(selected).issubset(headers): raise ValueError('missing columns')
