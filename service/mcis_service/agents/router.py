@@ -124,6 +124,8 @@ def _apply(s, ctx: Ctx, case_id: str, d: dict[str, Any], payload: dict[str, Any]
         put_doc(s, InterviewRow, case_id, payload["recordId"], rec)
         return f"陈述 {st['statementId']} → {d['status']}"
     if t == "timelineEvent" and d["status"] in ("Confirmed", "Modified"):
+        # Draft approval cannot confer write authority over its target.
+        require(ctx, s, case_id, "timeline", write=True)
         case = load_case(s, case_id)
         ev = {k: v for k, v in payload.items() if k in ("timeSec", "endTimeSec", "title", "description", "kind", "vesselId",
                                                          "presumptive", "evidenceIds", "sourceLabel")}
@@ -267,3 +269,4 @@ def extract_interview(case_id: str, record_id: str, ctx: Ctx = CtxDep) -> dict[s
                          command="people_ops 本地模型调用失败", after=f"code={exc.detail['code']};prompt={prompt_digest}",
                          entity_type="interview", entity_id=record_id)
         raise
+

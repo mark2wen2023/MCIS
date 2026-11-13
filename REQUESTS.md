@@ -598,3 +598,7 @@ Implementation and independent acceptance complete within the proposal scope:
 fresh final session guards real timeline preview;70 targeted local tests pass.
 See contracts/timeline-preview-exit-recheck.md and acceptance report. This does
 not approve evidence, fix legacy raw-core routes, or establish production auth.
+
+
+## Timeline draft target-permission fix (2026-11-13)
+Confirmed/Modified timelineEvent review now requires existing timeline ReadWrite inside the review transaction, in addition to agent_drafts permission. Real temporary SQLite reproduction showed old ReadOnly reviewer could create event; independent historical in-memory repro confirms.15 new regression cases passed; final targeted17 includes independent repro and existing authorized flow. Existing broader agent/interview tests are NOT all green:8 pass/1 failure/31 setup errors identical before/after this patch (full-interview access403); no tests removed or permission policies loosened. Rejected remains compatible and creates no event. No evidence-version binding, production authentication, CI/LLM, merge/deployment claim. See tests_acceptance/TIMELINE_DRAFT_PERMISSION/REPORT.md and contracts/timeline-draft-target-permission.md. Native implementation+independent review.
