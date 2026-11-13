@@ -67,14 +67,42 @@ def file_path(ctx,case_id,rel):
     return path
 
 
+class SafeReadUnavailable(RuntimeError):
+    pass
+
+
 def read_file(path):
-    # Reject special files, avoid unbounded reads. O_NOFOLLOW closes the leaf-link race.
+    # Pin each parent directory: a prior is_symlink check plus leaf O_NOFOLLOW
+    # alone leaves a parent-replacement race. Unsupported platforms fail closed.
     import stat
-    fd=os.open(path,os.O_RDONLY|getattr(os,'O_NOFOLLOW',0)|getattr(os,'O_NONBLOCK',0))
-    with os.fdopen(fd,'rb') as f:
-        if not stat.S_ISREG(os.fstat(f.fileno()).st_mode): raise ValueError('not regular file')
-        raw=f.read(MAX_BYTES+1)
-    if len(raw)>MAX_BYTES: raise ValueError('file budget')
+    path = Path(path)
+    if not path.is_absolute() or '..' in path.parts or not path.name:
+        raise ValueError('absolute bounded source path required')
+    if (not hasattr(os, 'O_DIRECTORY') or not hasattr(os, 'O_NOFOLLOW')
+            or os.open not in os.supports_dir_fd):
+        raise SafeReadUnavailable('safe descriptor-relative file reads unavailable')
+    directory_flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+    parent = os.open(path.anchor, directory_flags)
+    try:
+        for component in path.parts[1:-1]:
+            child = os.open(component, directory_flags, dir_fd=parent)
+            os.close(parent)
+            parent = child
+        fd = os.open(path.name, os.O_RDONLY | os.O_NOFOLLOW | getattr(os, 'O_NONBLOCK', 0), dir_fd=parent)
+    finally:
+        os.close(parent)
+    try:
+        if not stat.S_ISREG(os.fstat(fd).st_mode): raise ValueError('not regular file')
+        chunks, remaining = [], MAX_BYTES + 1
+        while remaining:
+            chunk = os.read(fd, remaining)
+            if not chunk: break
+            chunks.append(chunk)
+            remaining -= len(chunk)
+        raw = b''.join(chunks)
+    finally:
+        os.close(fd)
+    if len(raw) > MAX_BYTES: raise ValueError('file budget')
     return raw
 
 
@@ -138,6 +166,8 @@ def load_receipt(ctx,s,case_id,digest):
                  'registeredUtc':reg.utc,'registeredBy':reg.operator,'registeredRole':binding['role'],
                  'evidence':evidence.derive(item,events),'replayed':True}
         return receipt,raw
+    except SafeReadUnavailable:
+        raise problem(503,'INTAKE_SAFE_READ_UNAVAILABLE','当前平台不支持安全的登记原件读取；未降级读取') from None
     except (OSError,ValueError,KeyError,TypeError,UnicodeError,RecursionError,HTTPException):
         raise problem(409,'INTAKE_INTEGRITY','原件或登记快照/绑定信息缺失、篡改或不支持变更；未修复，也未核对为完整保存')
 
