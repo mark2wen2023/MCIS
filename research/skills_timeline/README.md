@@ -49,3 +49,18 @@ existing clock/uncertainty limitations remain unverified. `notChecked` now names
 Old README/REVIEW counts above document 0.1. Current test command runs 32 synthetic
 unit tests; no real W2 or LLM is executed. Source metadata is now bounded text,
 not arbitrary objects. New output still must be rendered as escaped text by a UI.
+
+## 0.3 pre-compute recheck (2026-11-13)
+
+Before passing source text to core.align, the adapter now calls the trusted
+repository recheck for the entire resolved snapshot set. A false/non-boolean or
+exception outcome stops before core invocation. The existing post-compute check
+remains; no result is released if evidence/permission changed during computation.
+This closes a missing check after sequential source loading, not all concurrency
+races: the host still needs an atomic lease/transaction or equivalent policy
+for the interval between recheck and dispatch. This code is NOT production
+authorization. No real W2, database, media or LLM has been exercised.
+
+Full test discovery currently includes 40 previous synthetic tests plus 7 new
+preflight tests. The test doubles prove adapter order/rejection, not actual
+permission revocation propagation or a production data-access guarantee.

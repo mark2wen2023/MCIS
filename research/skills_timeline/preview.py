@@ -74,6 +74,11 @@ def preview(request, *, principal, repository, core):
         if s.digest != sha256(s.text.encode('utf-8')).hexdigest():
             raise Rejected('source digest mismatch')
         snapshots.append(s)
+    # Sources may have changed while resolving the remaining selections.
+    # Refuse before disclosing snapshot text to the core. This is a host-port
+    # check, not an atomic production lease across the subsequent core call.
+    if repository.recheck(principal, case, tuple(snapshots)) is not True:
+        raise Rejected('permission or evidence changed before compute')
     # Narrow feature: raw NMEA comparison only. Never imply automatic estimated
     # offsets are human-approved calibration. Existing W2 handles diagnostics.
     payload = {'caseId': case, 'caseEpochUtc': epoch, 'calibrate': False,
@@ -126,7 +131,7 @@ def preview(request, *, principal, repository, core):
                            'binding': 'exact_source_id_snapshot', 'a': refs[0], 'b': refs[1]})
     if repository.recheck(principal, case, tuple(snapshots)) is not True:
         raise Rejected('permission or evidence changed')
-    return {'skillVersion': 'SK-T01-preview/0.2', 'caseId': case,
+    return {'skillVersion': 'SK-T01-preview/0.3', 'caseId': case,
             'status': 'needs_human_review', 'mode': 'uncalibrated_nmea_preview',
             'coreVersion': version,
             'computed': {'unverifiedUpstreamEntryCount': len(conflicts)}, 'hypotheses': [],

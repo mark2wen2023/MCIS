@@ -569,3 +569,7 @@ Native subtask implementation, not separate Codex app. `research/skills_timeline
 
 ## SK-T01 exact source-reference binding (2026-11-13)
 Native subtask + independent review, not Codex app execution. Draft #56 now binds each a/b sourceLabel exactly to selected frozen snapshots; rejects unknown/self/duplicate references and untrusted evidenceId. 32 synthetic tests plus 8 independent tests pass. This is reference binding only, not original media or observation-value verification. No actual W2/.NET, production authorization, UI or LLM executed. No merge/deployment; REVIEW_BINDING.md records limits.
+
+
+## SK-T01 pre-compute snapshot recheck (2026-11-13)
+Native implementation subtask and independent review, not Codex app execution. Rechecks the full snapshot set before core dispatch and retains the post-compute check. 47 synthetic regression tests plus 6 independent probes passed. This is not an atomic authorization lease: TOCTOU, real W2/.NET, production permission integration, original media, UI and LLM remain unverified. No merge/deployment.
