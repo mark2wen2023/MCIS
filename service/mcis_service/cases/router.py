@@ -38,7 +38,10 @@ def create_case(body: dict[str, Any] = Body(...), ctx: Ctx = CtxDep) -> dict[str
     contracts.validate("case", body)
     if ctx.role not in ("LeadInvestigator", "Investigator"):
         raise problem(403, "FORBIDDEN", "只有调查组可以创建案件")
-    with ctx.db.session() as s:
+    # Serialize duplicate check, insertion and audit through transaction commit.
+    with WRITE_LOCK, ctx.db.session() as s:
+        if s.get_bind().dialect.name == "sqlite":
+            s.connection().exec_driver_sql("BEGIN IMMEDIATE")
         if s.query(CaseRow).filter_by(case_id=body["caseId"]).first():
             raise problem(409, "CASE_EXISTS", f"案件已存在：{body['caseId']}")
         put_doc(s, CaseRow, body["caseId"], body["caseId"], body)
