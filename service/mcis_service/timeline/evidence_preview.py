@@ -82,6 +82,10 @@ def validate_csv(text, mapping):
             value = row[mapping.timeColumn]
             if not re.fullmatch(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,7})?(?:Z|[+-]\d{2}:\d{2})', value):
                 raise ValueError('explicit ISO timestamp required')
+            # datetime.fromisoformat normalizes e.g. +00:60 to +01:00.
+            # Reject malformed source offsets rather than silently reinterpreting them.
+            if not value.endswith('Z') and int(value[-2:]) > 59:
+                raise ValueError('timezone minute out of range')
             stamp = datetime.fromisoformat(value.replace('Z', '+00:00'))
             if stamp.tzinfo is None or stamp.utcoffset() is None or abs(stamp.utcoffset().total_seconds()) > 14*3600:
                 raise ValueError('supported timezone required')
