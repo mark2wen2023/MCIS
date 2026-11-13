@@ -561,3 +561,7 @@ The new endpoint adds conservative current-case evidence/interview visibility an
 The browser uses a fixed-profile ZIP_STORED and strict JSON verifier, actual member CRC/SHA, preview/request binding and original audit association. No object URL/download occurs until checks succeed. Unknown delivery persists only scoped metadata and never auto-retries. Explicit stop-wait discards even abort-ignoring late replies. After checking downloads the user can knowingly abandon an attempt and freshly preview a new generation; storage corruption/unavailability has an explicit scoped recovery check, never silent lock deletion or false success. Local headers and hashes are not authentication, signature, facts or complete audit-chain certification.
 
 Engineering caps are declared for report/output/audit/manifest/ZIP. A self-review removed an unintended2MiB policy-fingerprint limit by streaming its hash without adding a policy editing restriction. OpenAPI labels now match the two new report-output routes while preserving the old14-report-route test unchanged. The B retention plan allocates no archive version and remains unimplemented.
+
+
+## SK-T01 多源时间线核查技能提案（2026-11-13）
+新增 docs/skills/TIMELINE-SKILL-SPEC.md：提出基于已有 W2 的只读适配、可信来源/版本权限与人工核实契约，29 条待构建反例；未改现有合同或生产代码，不是已实现 Skill。后续需专业确认和独立代码/模型/E2E验收。原生子任务设计；不声称 Codex 应用执行。

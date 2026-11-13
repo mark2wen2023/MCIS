@@ -368,3 +368,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 | 2026-11-12 | Report output A | 受限独立验收通过 | 最终独立49 passed/11.56s，20SHA前后匹配；真实双格式单render/原文不变/审计关联、实际第二连接改报告或策略后409/403、故障全表回滚与commit后交付失败各有证明。真浏览器2正常下载+2真实commit后故障替换+1真实commit后身份迟响应丢弃，最终5审计；8独立客户端坏结构/错绑拒绝。实际2MiB报告及16MiB输出边界与其余缩小limit测试区别详见独立REPORT；未穷尽多worker/真实切案/全部变体。无服务端原件保存、无.mcase文件恢复、无签署认证；B仅计划，不部署不触W11。 |
+
+
+### 2026-11-13 SK-T01 调查 Skill 规格草稿
+设计文档 docs/skills/TIMELINE-SKILL-SPEC.md 已提出分层方法、范围和29条待构建反例。独立文档审查发现关系枚举歧义，已更正；校准范围需覆盖整个原始区间。仅设计，未运行模型或生产测试、未接通页面/服务；待业务专家审核和实施。不将反例数量视为测试通过数。
