@@ -15,3 +15,8 @@ npm test
 Use a writable npm cache if required. No server is started. Source inputs are synthetic. Install only test dependencies; do not alter web runtime dependencies.
 
 Independent rerun: 19 original assertions plus 10 additional lifecycle probes passed. No implementation changes; source SHA256 94c6eb23e155810a84ff6d096b05f12129a1b82ab4a806f675f86af37f88fca5. Native development and independent acceptance subtasks, not a Codex application task.
+
+
+## Cancellation suite runner repair
+
+The acceptance target now includes PR54 `f10952b` stop-wait behavior. `npm test` runs both the existing lifecycle/probe suite and the sibling cancellation/probe suite using this package's pinned dependencies. `npm run test:lifecycle` and `npm run test:cancel` run them separately. Cancellation bundles are emitted inside this package for external dependency resolution; do not run npm from the sibling source-only directory. No production source changes. Happy DOM and controlled fetch remain the verification boundary.
