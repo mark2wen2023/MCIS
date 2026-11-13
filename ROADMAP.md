@@ -429,3 +429,9 @@ Real read-only API /timeline/registered-align-preview now resolves only current 
 - Identity/case/source metadata or mapping changes invalidate results; cancel discards late output, not a server cancellation promise.
 - Local TypeScript/Vite build and 18 independent HappyDOM/control-fetch assertions passed. Separate local uvicorn + actual W2 HTTP used two synthetic CSVs and returned 200 / 5-degree difference; no live LLM involved.
 - Browser E2E remains pending: cloud browser could not reach execution-workspace localhost. No CI/full-suite claim, no merge/deploy. See contracts/timeline-registered-workbench.md and web/tests/registered-acceptance.
+
+
+### SK-T01 real transport acceptance follow-up
+- Reproducible isolated runner now exercises actual frontend request/parser code over native fetch → dynamic localhost Vite proxy → FastAPI → actual W2 (no response mocks): 6 real requests, synthetic 45/50° CSV registration, 5° result, AgentService403, no-store request option, pre-dispatch abort. Independently executed and repeated, exit0.
+- Registered-preview backend focused suite rerun with real-core acceptance enabled:30 passed, no skips. This is not whole-project CI.
+- Actual browser still cannot reach execution-workspace localhost, including approved localhost service attempt. No public exposure/workaround; visual/full-browser E2E stays pending. Services stopped. See web/tests/registered-network.README.md.
