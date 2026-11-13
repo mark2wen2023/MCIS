@@ -64,7 +64,9 @@ def preview(request, *, principal, repository, core):
         s = repository.resolve(principal, case, source_id)
         if not isinstance(s, Source) or s.case_id != case or s.source_id != source_id:
             raise Rejected('source identity mismatch')
-        if not s.revision or not s.locator or s.format != 'nmea' or not isinstance(s.text, str):
+        if (not isinstance(s.revision, str) or not 1 <= len(s.revision) <= 128
+                or not isinstance(s.locator, str) or not 1 <= len(s.locator) <= 2048
+                or s.format != 'nmea' or not isinstance(s.text, str)):
             raise Rejected('unsupported or unversioned source')
         size += len(s.text.encode('utf-8'))
         if size > 1_000_000:
@@ -93,16 +95,44 @@ def preview(request, *, principal, repository, core):
         raise Rejected('invalid core conflicts or budget exceeded')
     if any(type(c) is not dict or c.get('caseId') != case for c in conflicts):
         raise Rejected('invalid upstream entry')
-    # Only counts are exposed in this first slice; per-conflict provenance needs
-    # a reviewed W2 source-field adapter. This is not a complete conflict UI.
+    # Match only exact selected source IDs. Display labels, inferred aliases and
+    # upstream evidence IDs are not authority. No arbitrary upstream text escapes.
+    by_id = {s.source_id: s for s in snapshots}
+    candidates = []
+    seen = set()
+    for conflict in conflicts:
+        cid = conflict.get('conflictId')
+        if not isinstance(cid, str) or not re.fullmatch(r'C-[0-9]{2,32}', cid) or cid in seen:
+            raise Rejected('invalid or duplicate conflict identifier')
+        seen.add(cid)
+        refs = []
+        for side in ('a', 'b'):
+            observation = conflict.get(side)
+            if type(observation) is not dict:
+                raise Rejected('missing conflict observation')
+            label = observation.get('sourceLabel')
+            if not isinstance(label, str) or label not in by_id:
+                raise Rejected('unbound conflict source')
+            # Existing writer omits evidenceId. Never treat an extra supplied ID
+            # as a verified cross-reference to another evidence object.
+            if observation.get('evidenceId') is not None:
+                raise Rejected('unsupported upstream evidence identifier')
+            source = by_id[label]
+            refs.append({'sourceId': source.source_id, 'revision': source.revision,
+                         'digest': source.digest, 'locator': source.locator})
+        if refs[0]['sourceId'] == refs[1]['sourceId']:
+            raise Rejected('conflict requires distinct selected sources')
+        candidates.append({'conflictId': cid, 'status': 'needs_human_review',
+                           'binding': 'exact_source_id_snapshot', 'a': refs[0], 'b': refs[1]})
     if repository.recheck(principal, case, tuple(snapshots)) is not True:
         raise Rejected('permission or evidence changed')
-    return {'skillVersion': 'SK-T01-preview/0.1', 'caseId': case,
+    return {'skillVersion': 'SK-T01-preview/0.2', 'caseId': case,
             'status': 'needs_human_review', 'mode': 'uncalibrated_nmea_preview',
             'coreVersion': version,
             'computed': {'unverifiedUpstreamEntryCount': len(conflicts)}, 'hypotheses': [],
+            'candidates': candidates,
             'sources': [{'sourceId': s.source_id, 'revision': s.revision,
                          'digest': s.digest, 'locator': s.locator} for s in snapshots],
-            'notChecked': ['per_conflict_provenance', 'timezone_of_source_records', 'clock_correction',
+            'notChecked': ['observation_values_and_original_media', 'timezone_of_source_records', 'clock_correction',
                            'interval_order', 'event_identity', 'responsibility'],
             'warning': '零候选不代表证据一致；原始设备钟差尚未校准。'}
