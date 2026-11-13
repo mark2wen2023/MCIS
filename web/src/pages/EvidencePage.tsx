@@ -5,6 +5,7 @@ import { api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '
 import { EvidenceIntakePanel } from '../evidenceIntake/EvidenceIntakePanel'
 import { announceEvidenceSelection } from '../evidenceIntake/navigation'
 import { AlignPreviewPanel } from '../align/AlignPreviewPanel'
+import { RegisteredPreviewPanel } from '../align/RegisteredPreviewPanel'
 import { SERVICE_ADDR } from '../config'
 import { EChart } from '../components/EChart'
 import { Metric, Panel } from '../components/Panel'
@@ -104,6 +105,8 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
       </div>
 
       <EvidenceIntakePanel caseId={caseId} caseTitle={caseRes.data?.title} who={evidenceIdentity()} selectedEvidenceId={sel?.evidenceId} onRegistered={id=>{setSelId(id);refreshEvidence()}} onRefresh={refreshEvidence}/>
+
+      <RegisteredPreviewPanel caseId={caseId} items={items} />
 
       <details className="w4-preview-disclosure">
         <summary>临时CSV预览，未入库</summary>

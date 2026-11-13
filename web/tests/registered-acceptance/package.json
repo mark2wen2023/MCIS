@@ -1,0 +1,8 @@
+{
+  "name": "mcis-registered-preview-independent-tests",
+  "private": true,
+  "version": "1.0.0",
+  "description": "HappyDOM-only UI acceptance; no production runtime dependency",
+  "scripts": {"test": "bash run.sh"},
+  "devDependencies": {"happy-dom": "21.0.4"}
+}

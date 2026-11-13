@@ -422,3 +422,10 @@ Preparatory real-service slice reserves exact timelineSourceBinding root/direct-
 
 ## Registered evidence CSV timeline preview (2026-11-13)
 Real read-only API /timeline/registered-align-preview now resolves only current local evidence-intake CSV IDs, validates actual original-byte/registration hashes and existing source permissions, invokes existing W2, then rechecks sources/access/epoch. No caller text/path/approval accepted; no receipt table, archive whitelist, signed record or original edit. Strict finite ASCII numeric/explicit-timezone CSV,256KiB/source,4 sources; core import Error rejects. Independent30/30 and final selected195/195 local regressions passed, zero skips; includes real loopback HTTP+W2 five-degree conflict. Other core probes are doubles; no real LLM/UI, durable receipt, factual approval, production auth or atomic lease claim. Native implementation+independent reviewer; no merge/deploy. See contracts/timeline-registered-preview.md.
+
+
+## SK-T01 registered-evidence workbench slice
+- Added investigator selection of registered evidence IDs + CSV mapping, linked to real read-only registered-align-preview API; shows source hashes and uncalibrated/no-fact-approval boundaries.
+- Identity/case/source metadata or mapping changes invalidate results; cancel discards late output, not a server cancellation promise.
+- Local TypeScript/Vite build and 18 independent HappyDOM/control-fetch assertions passed. Separate local uvicorn + actual W2 HTTP used two synthetic CSVs and returned 200 / 5-degree difference; no live LLM involved.
+- Browser E2E remains pending: cloud browser could not reach execution-workspace localhost. No CI/full-suite claim, no merge/deploy. See contracts/timeline-registered-workbench.md and web/tests/registered-acceptance.
