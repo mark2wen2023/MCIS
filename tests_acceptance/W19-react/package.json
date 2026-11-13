@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "esbuild": "0.28.2",
+    "happy-dom": "21.0.4",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "private": true,
+  "scripts": {
+    "test": "esbuild lifecycle.tsx --bundle --packages=external --platform=node --format=esm --jsx=automatic --outfile=.run.mjs && node .run.mjs && esbuild review-probe.tsx --bundle --packages=external --platform=node --format=esm --jsx=automatic --outfile=.probe.mjs && node .probe.mjs"
+  }
+}
