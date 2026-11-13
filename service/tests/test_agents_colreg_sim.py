@@ -23,9 +23,13 @@ def test_agent_draft_requires_citations_and_human_review(client):
     assert any(e["title"] == "拖轮抵达（虚构）" for e in client.get(f"{C}/timeline", headers=H()).json()["events"])
 
 
-def test_agent_review_writes_back_statement(client):
-    r = client.post(f"{C}/agents/drafts/AD-001/review", json={"decision": "Rejected", "note": "证据不足"}, headers=H()).json()
-    assert r["effect"] == "陈述 IR-03-S08 → Rejected"
+def test_agent_review_preserves_signed_seed_statement(client):
+    before = client.get(f"{C}/interviews/IR-03", headers=H("LeadInvestigator")).json()
+    r = client.post(f"{C}/agents/drafts/AD-001/review", json={"decision": "Rejected", "note": "证据不足"}, headers=H("LeadInvestigator"))
+    assert r.status_code == 409 and r.json()["code"] == "INTERVIEW_SIGNED", r.text
+    assert client.get(f"{C}/interviews/IR-03", headers=H("LeadInvestigator")).json() == before
+    drafts = client.get(f"{C}/agents/drafts", headers=H("LeadInvestigator")).json()
+    assert next(d for d in drafts if d["draftId"] == "AD-001")["status"] == "PendingReview"
 
 
 def test_colreg_seed_and_evaluate(client):
@@ -78,3 +82,4 @@ def test_sim_state_seek_commands(client):
     assert [c["type"] for c in client.get(f"{C}/sim/commands", params={"afterSeq": 1}).json()["commands"]] == ["pause"]
     assert client.post(f"{C}/sim/seek", json={"simTimeSec": 99999}, headers=H()).status_code == 422
     assert client.get(f"{C}/audit", params={"action": "sim.seek"}, headers=H()).json()
+
