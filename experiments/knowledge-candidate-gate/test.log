@@ -1,0 +1,32 @@
+test_bad_json (test_gate.GateTests.test_bad_json) ... ok
+test_bad_offsets (test_gate.GateTests.test_bad_offsets) ... ok
+test_does_not_claim_entailment (test_gate.GateTests.test_does_not_claim_entailment) ... ok
+test_duplicate_json_key (test_gate.GateTests.test_duplicate_json_key) ... ok
+test_duplicate_source_identity (test_gate.GateTests.test_duplicate_source_identity) ... ok
+test_empty (test_gate.GateTests.test_empty) ... ok
+test_exact_duplicate (test_gate.GateTests.test_exact_duplicate) ... ok
+test_input_budgets (test_gate.GateTests.test_input_budgets) ... ok
+test_instruction_text_is_data (test_gate.GateTests.test_instruction_text_is_data) ... ok
+test_integer_digit_boundary (test_gate.GateTests.test_integer_digit_boundary) ... ok
+test_invalid_unicode (test_gate.GateTests.test_invalid_unicode) ... ok
+test_known_duplicate (test_gate.GateTests.test_known_duplicate) ... ok
+test_no_model_approval (test_gate.GateTests.test_no_model_approval) ... ok
+test_no_mutation_on_rejected_batch (test_gate.GateTests.test_no_mutation_on_rejected_batch) ... ok
+test_oversized_citation_integer_is_controlled (test_gate.GateTests.test_oversized_citation_integer_is_controlled) ... ok
+test_oversized_integer_is_controlled (test_gate.GateTests.test_oversized_integer_is_controlled) ... ok
+test_preview_only (test_gate.GateTests.test_preview_only) ... ok
+test_prior_validation (test_gate.GateTests.test_prior_validation) ... ok
+test_public_and_synthetic_mixed (test_gate.GateTests.test_public_and_synthetic_mixed) ... ok
+test_quote_mismatch (test_gate.GateTests.test_quote_mismatch) ... ok
+test_source_budgets (test_gate.GateTests.test_source_budgets) ... ok
+test_source_immutable (test_gate.GateTests.test_source_immutable) ... ok
+test_stale_hash (test_gate.GateTests.test_stale_hash) ... ok
+test_stale_version (test_gate.GateTests.test_stale_version) ... ok
+test_unknown_fields (test_gate.GateTests.test_unknown_fields) ... ok
+test_unknown_source (test_gate.GateTests.test_unknown_source) ... ok
+test_unknown_source_type (test_gate.GateTests.test_unknown_source_type) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.015s
+
+OK
