@@ -1,0 +1,2 @@
+01c4df4dd2605f1f70f6f36706b05d62d0dc3e1af05d04ed6e019ffcea3c99d9  service/mcis_service/identity/http_trial.py
+cdde1021e9ae35ab1149332b75ea5638dc595eeece3822c39be0175dd6c02ecb  contracts/identity-http-trial.md
