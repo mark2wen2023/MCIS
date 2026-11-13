@@ -1,0 +1,434 @@
+{
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "integer",
+      "const": 1
+    },
+    "runId": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "caseId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "createdUtc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "const": "unreviewed"
+    },
+    "request": {
+      "$ref": "#/$defs/RegisteredPreview"
+    },
+    "generationSnapshot": {
+      "$ref": "#/$defs/GenerationSnapshot"
+    },
+    "serverPreview": {
+      "$ref": "align-preview.schema.json#/$defs/response"
+    }
+  },
+  "required": [
+    "version",
+    "runId",
+    "caseId",
+    "createdUtc",
+    "status",
+    "request",
+    "generationSnapshot",
+    "serverPreview"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/unreviewed-result-history.schema.json",
+  "$defs": {
+    "ComparisonContext": {
+      "additionalProperties": false,
+      "description": "Caller declaration only; never changes evidence or approves an observation.",
+      "properties": {
+        "vesselLabel": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Vessellabel",
+          "type": "string"
+        },
+        "sourceNature": {
+          "enum": [
+            "report_extract",
+            "sensor_export",
+            "other",
+            "unknown"
+          ],
+          "title": "Sourcenature",
+          "type": "string"
+        },
+        "sourceTitle": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Sourcetitle",
+          "type": "string"
+        },
+        "citation": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Citation",
+          "type": "string"
+        },
+        "timeBasis": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Timebasis",
+          "type": "string"
+        },
+        "headingReference": {
+          "anyOf": [
+            {
+              "enum": [
+                "true",
+                "magnetic",
+                "unknown"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Headingreference"
+        }
+      },
+      "required": [
+        "vesselLabel",
+        "sourceNature",
+        "sourceTitle",
+        "citation",
+        "timeBasis"
+      ],
+      "title": "ComparisonContext",
+      "type": "object"
+    },
+    "ParentReport": {
+      "additionalProperties": false,
+      "properties": {
+        "evidenceId": {
+          "maxLength": 32,
+          "pattern": "^EV-[0-9]{3,}$",
+          "title": "Evidenceid",
+          "type": "string"
+        },
+        "sourceSha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sourcesha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "evidenceId",
+        "sourceSha256"
+      ],
+      "title": "ParentReport",
+      "type": "object"
+    },
+    "PreviewColumn": {
+      "additionalProperties": false,
+      "properties": {
+        "column": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Column",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "Heading",
+            "CourseOverGround",
+            "SpeedOverGround"
+          ],
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "column",
+        "kind"
+      ],
+      "title": "PreviewColumn",
+      "type": "object"
+    },
+    "PreviewMapping": {
+      "additionalProperties": false,
+      "properties": {
+        "timeColumn": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Timecolumn",
+          "type": "string"
+        },
+        "columns": {
+          "items": {
+            "$ref": "#/$defs/PreviewColumn"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "title": "Columns",
+          "type": "array"
+        }
+      },
+      "required": [
+        "timeColumn",
+        "columns"
+      ],
+      "title": "PreviewMapping",
+      "type": "object"
+    },
+    "RegisteredSource": {
+      "additionalProperties": false,
+      "properties": {
+        "evidenceId": {
+          "maxLength": 32,
+          "pattern": "^EV-[0-9]{3,}$",
+          "title": "Evidenceid",
+          "type": "string"
+        },
+        "csvMapping": {
+          "$ref": "#/$defs/PreviewMapping"
+        },
+        "comparisonContext": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComparisonContext"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "parentReport": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ParentReport"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "evidenceId",
+        "csvMapping"
+      ],
+      "title": "RegisteredSource",
+      "type": "object"
+    },
+    "RegisteredPreview": {
+      "additionalProperties": false,
+      "properties": {
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/RegisteredSource"
+          },
+          "maxItems": 4,
+          "minItems": 1,
+          "title": "Sources",
+          "type": "array"
+        }
+      },
+      "required": [
+        "sources"
+      ],
+      "title": "RegisteredPreview",
+      "type": "object"
+    },
+    "SourceIdentity": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": 1,
+          "type": "integer"
+        },
+        "caseId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "evidenceId": {
+          "type": "string",
+          "pattern": "^EV-[0-9]{3,}$",
+          "maxLength": 32
+        },
+        "incarnation": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "caseIncarnation": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "requestDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "sourceSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "registeredSeq": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "registeredUtc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "version",
+        "caseId",
+        "evidenceId",
+        "incarnation",
+        "caseIncarnation",
+        "requestDigest",
+        "sourceSha256",
+        "registeredSeq",
+        "registeredUtc"
+      ],
+      "additionalProperties": false
+    },
+    "SourceSnapshot": {
+      "type": "object",
+      "properties": {
+        "evidenceId": {
+          "type": "string",
+          "pattern": "^EV-[0-9]{3,}$",
+          "maxLength": 32
+        },
+        "sourceSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "registrationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "byteLength": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 262144
+        },
+        "registeredUtc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "evidenceId",
+        "sourceSha256",
+        "registrationDigest",
+        "byteLength",
+        "registeredUtc"
+      ],
+      "additionalProperties": false
+    },
+    "ReportSnapshot": {
+      "type": "object",
+      "properties": {
+        "extractEvidenceId": {
+          "type": "string",
+          "pattern": "^EV-[0-9]{3,}$",
+          "maxLength": 32
+        },
+        "evidenceId": {
+          "type": "string",
+          "pattern": "^EV-[0-9]{3,}$",
+          "maxLength": 32
+        },
+        "sourceSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "registrationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "byteLength": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8388608
+        },
+        "registeredUtc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "relationshipStatus": {
+          "const": "user_declared_not_verified"
+        }
+      },
+      "required": [
+        "extractEvidenceId",
+        "evidenceId",
+        "sourceSha256",
+        "registrationDigest",
+        "byteLength",
+        "registeredUtc",
+        "relationshipStatus"
+      ],
+      "additionalProperties": false
+    },
+    "GenerationSnapshot": {
+      "type": "object",
+      "properties": {
+        "caseId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "caseIncarnation": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "caseEpochUtc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sourceIdentities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceIdentity"
+          },
+          "maxItems": 8
+        },
+        "sourceSnapshots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceSnapshot"
+          },
+          "maxItems": 4
+        },
+        "reportSnapshots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ReportSnapshot"
+          },
+          "maxItems": 4
+        }
+      },
+      "required": [
+        "caseId",
+        "caseIncarnation",
+        "caseEpochUtc",
+        "sourceIdentities",
+        "sourceSnapshots",
+        "reportSnapshots"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "title": "Unreviewed result historical declaration v1 (not local authority)"
+}

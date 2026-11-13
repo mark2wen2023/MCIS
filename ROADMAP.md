@@ -470,3 +470,6 @@ Independent24/24 tests pass (20 primary +3 independent +1 public-report HTTP/W2)
 
 
 | 2026-11-13 | Unreviewed history access/capacity prerequisite | 本安全前置独立验收/草稿 | Native implementation+review. Closed audit and access-workbench historical marker leaks; export gated.17+5 independent tests passed; selected61/61 zero skips. Capacity helper tested but no save operation. Storage/index/strict historical envelope parser remain DESIGN ONLY, not persistence completion. Modern non-default-policy restore/export restriction unchanged. Frozen logs/unreviewed-history-boundary-impl-hashes-frozen.txt; no merge/deploy. |
+
+
+| 2026-11-13 | Strict unreviewed history schema/import boundary | 本历史格式切片独立验收/草稿 | Native implementation+review.35 primary +12 independent =47/47; selected92/92 zero skips. Machine schema+cross-links/budgets, both imports reject before writes, export checks after authorization, exact historical roundtrip without live index. Save/index/approval still OFF; historical validity is not authenticity. Frozen logs/unreviewed-history-schema-impl-hashes-frozen.txt; no merge/deploy. |

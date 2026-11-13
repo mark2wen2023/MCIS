@@ -335,6 +335,8 @@ def parse_package(data: bytes, *, validated_hfacs=None) -> ParsedPackage:
             fail("证据缺少登记来源链")
         return lines
     audit_lines = chain("audit/audit.jsonl")
+    from ..timeline.unreviewed_history import validate_lines as validate_result_history
+    validate_result_history(audit_lines, cid)
     custody_lines = chain("audit/custody.jsonl", True)
     if "audit/agent.jsonl" in files:
         expected = "".join(line + "\n" for line in audit_lines if strict_json(line.encode()).get("category") == "Agent").encode()
@@ -354,3 +356,4 @@ def parse_package(data: bytes, *, validated_hfacs=None) -> ParsedPackage:
                "trackPoints": sum(map(len, tracks.values())), "observations": len(observations), "evidence": len(evidence),
                "auditEvents": len(audit_lines), "custodyEvents": len(custody_lines)}
     return ParsedPackage(files, manifest, case, vessels, tracks, observations, evidence, audit_lines, custody_lines, summary, hfacs_archive, working_archive)
+

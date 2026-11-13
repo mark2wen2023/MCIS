@@ -187,6 +187,8 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
     protect_recommendations(s, case_id, role)
     from ..timeline.unreviewed_access import protect_package as protect_unreviewed
     protect_unreviewed(s, case_id, role)
+    from ..timeline.unreviewed_history import validate_lines as validate_result_history
+    validate_result_history(audit.all_lines(s, case_id), case_id)
     from ..working_records_archive.service import has_history, build as build_working
     track_root=blob_root/case_id/'raw'/'track-imports'
     track_namespace=track_root.exists()or track_root.is_symlink()
@@ -462,6 +464,9 @@ def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: s
         chk = audit.verify_chain(lines)
         if not chk["valid"]:
             raise problem(422, "CHAIN_BROKEN", f"{name} 哈希链断裂", chk)
+
+    from ..timeline.unreviewed_history import validate_lines as validate_result_history
+    validate_result_history(audit_lines, case_id)
 
     from ..cases import incarnation
     identity = incarnation.allocate(s, case_id, "imported")

@@ -6,6 +6,7 @@ from fastapi.testclient import TestClient
 from .conftest import C,CASE,H,make_settings
 from .test_source_incarnation import fresh
 from .test_registered_align_preview import register
+from .history_result_fixture import inject_valid_history
 from .test_archive_generation_boundary import upload
 from mcis_service.main import create_app
 from mcis_service.audit import service as audit
@@ -62,7 +63,7 @@ def test_malformed_raw_fails_closed(line):
 def test_imported_history_has_no_index_but_remains_protected(client,empty_client,tmp_path,modern):
     target=fresh(client,empty_client)
     if modern:register(target)
-    inject(target)
+    inject_valid_history(target)
     package=target.get(C+'/export',headers=H('LeadInvestigator'));assert package.status_code==200,package.text
     with TestClient(create_app(make_settings(tmp_path/'restored',seed=False))) as restored:
         response=upload(restored,package.content) if modern else restored.post('/api/v1/cases:import',headers=H('LeadInvestigator'),content=package.content)
@@ -74,7 +75,7 @@ def test_imported_history_has_no_index_but_remains_protected(client,empty_client
         deny_evidence(restored)
         assert restored.get(C+'/audit',headers=H()).status_code==403
         data=restored.get(C+'/audit',headers=H('LeadInvestigator'))
-        assert data.status_code==200 and SECRET in data.text
+        assert data.status_code==200 and 'local-unreviewed-result:v1:' in data.text
         assert restored.get(C+'/export',headers=H()).status_code==403
         export=restored.get(C+'/export',headers=H('LeadInvestigator'))
         assert export.status_code==(409 if modern else 200),export.text
