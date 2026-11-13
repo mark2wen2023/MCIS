@@ -29,3 +29,23 @@ python -m unittest -v
 - UI, persistence/review, actual model explanations, model citation checks, report/archive integration.
 
 No writes, network calls, model calls, external side effects, merge or deployment are performed by preview(). Output remains `needs_human_review`; it never confirms facts, event identity or responsibility. Do not merge or market this as a completed production Skill.
+
+## 0.2 exact source-reference binding (2026-11-13)
+
+Adds per-entry `candidates`: conflictId, human-review status and a/b references
+copied from the selected Source snapshots. Based on conflict.schema.json and
+ConflictJsonWriter at main 3aba2bf, sourceLabel is matched **exactly** to a selected
+source ID. No aliases, fuzzy labels, same-source pairs, duplicate conflict IDs,
+or upstream evidenceId claims are accepted. Unknown upstream text and values are
+not forwarded. Unknown source mapping fails the entire preview before release;
+final repository reauthorization/version recheck is still mandatory.
+
+This only checks referential linkage to input UTF-8 snapshots. It does **not**
+verify that W2 calculated a conflict correctly, that observation values occur in
+source records, or that original media authenticates the text. Actual .NET/W2
+runtime compatibility, line-level citations, full diagnostic forwarding and the
+existing clock/uncertainty limitations remain unverified. `notChecked` now names
+`observation_values_and_original_media`; no claim of full provenance completion.
+Old README/REVIEW counts above document 0.1. Current test command runs 32 synthetic
+unit tests; no real W2 or LLM is executed. Source metadata is now bounded text,
+not arbitrary objects. New output still must be rendered as escaped text by a UI.
