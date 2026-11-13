@@ -13,11 +13,14 @@ from starlette.concurrency import run_in_threadpool
 from ..timeline.evidence_preview import RegisteredPreview
 from ..timeline.unreviewed_storage import save_authenticated_unreviewed, read_authenticated_unreviewed
 from .local import authorize_save, authorize_read
+from . import catalog
 
 MAX_BODY=65536
 PATH=re.compile(r'/api/v1/cases/([A-Za-z0-9_-]{1,64})/timeline/unreviewed-runs\Z')
 
 READ_PATH=re.compile(r'/api/v1/cases/([A-Za-z0-9_-]{1,64})/timeline/unreviewed-runs/([0-9a-f-]{36})\Z')
+
+CATALOG_PATH=re.compile(r'/api/v1/trial/cases(?:/([A-Za-z0-9_-]{1,64})/sources)?\Z')
 
 class SaveRequest(BaseModel):
     model_config=ConfigDict(extra='forbid',strict=True)
@@ -62,6 +65,28 @@ class TrialIdentityApp:
                     await send({'type':'lifespan.shutdown.complete'});return
         if scope['type']!='http':raise RuntimeError('unsupported ASGI protocol')
         head=scope.get('method')=='HEAD'
+        listing=CATALOG_PATH.fullmatch(scope.get('path',''))
+        if listing and scope.get('method')=='GET' and not scope.get('query_string'):
+            hs={}
+            for key,value in scope.get('headers',[]):hs.setdefault(key.lower(),[]).append(value)
+            if (any(k in hs for k in (b'origin',b'cookie',b'content-encoding',b'transfer-encoding'))
+                    or len(hs.get(b'authorization',[]))!=1 or hs.get(b'content-length',[]) not in ([],[b'0'])):
+                await self.respond(send,400,'INVALID_AUTH_TRANSPORT');return
+            try:
+                value=hs[b'authorization'][0]
+                if not value.startswith(b'Bearer '):raise ValueError()
+                token=value[7:].decode('ascii')
+            except (ValueError,UnicodeError):
+                await self.respond(send,403,'LOCAL_AUTHORITY_DENIED');return
+            try:
+                if listing[1]:result=await run_in_threadpool(catalog.sources,self.db,self.settings,token,listing[1])
+                else:result=await run_in_threadpool(catalog.cases,self.db,token)
+            except HTTPException as error:
+                status=error.status_code if error.status_code in (403,409,413,503) else 403
+                await self.respond(send,status,'CATALOG_REJECTED');return
+            except Exception:
+                await self.respond(send,503,'CATALOG_UNAVAILABLE');return
+            await self.respond(send,200,'CATALOG',receipt=result);return
         read_match=READ_PATH.fullmatch(scope.get('path','')) if scope.get('method')=='GET' else None
         if read_match:
             try:

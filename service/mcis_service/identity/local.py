@@ -107,7 +107,7 @@ def disable_subject(session, subject_id):
         row.enabled=False; row.revision += 1; session.flush()
 
 
-def _authorize(session, token, case_id, *, save):
+def authorize_session(session, token):
     # SQLite writer reservation precedes ALL identity and policy reads. A caller
     # must keep this same transaction through the protected write/return decision.
     if session.get_bind().dialect.name != 'sqlite': denied()
@@ -124,13 +124,17 @@ def _authorize(session, token, case_id, *, save):
     if row is None or row.revoked or row.expires_at <= int(time.time()): denied()
     subject = session.get(Subject, row.subject_id, populate_existing=True)
     if subject is None or not subject.enabled: denied()
+    return subject.subject_id, (subject.revision,row.token_hash,row.revision,row.expires_at)
+
+
+def _authorize(session, token, case_id, *, save):
+    subject_id,session_scope=authorize_session(session,token)
     incarnation = current(session, case_id)
-    member = session.get(Membership, (subject.subject_id, incarnation), populate_existing=True)
+    member = session.get(Membership, (subject_id, incarnation), populate_existing=True)
     if (member is None or not member.enabled or (save and not member.can_save_unreviewed)
             or member.case_id != case_id or member.role not in ('Investigator','LeadInvestigator')): denied()
-    return Authority(subject.subject_id, member.role,
-        (subject.subject_id, subject.revision, row.token_hash, row.revision,
-         row.expires_at, case_id, incarnation, member.revision, member.role))
+    return Authority(subject_id, member.role,
+        (subject_id, *session_scope, case_id, incarnation, member.revision, member.role))
 
 
 def authorize_save(session, token, case_id):

@@ -17,6 +17,12 @@ def test_actual_w2_http_save_read_replay_revoke(client,empty_client):
     receipt=register(target);body={'operationId':OP,'request':request(receipt)}
     subject,token=provision(target)
     with trial(target) as api:
+        cases=api.get('/api/v1/trial/cases',headers=headers(token))
+        assert cases.status_code==200 and cases.json()['items'][0]['caseId']==CASE
+        candidates=api.get('/api/v1/trial/cases/'+CASE+'/sources',headers=headers(token))
+        assert candidates.status_code==200
+        assert candidates.json()['items'][0]['evidenceId']==receipt['evidenceId']
+        assert candidates.json()['items'][0]['sourceSha256']==receipt['sourceSha256']
         post=api.post(C+'/timeline/unreviewed-runs',headers=headers(token),json=body)
         assert post.status_code==200,post.text
         run=post.json()['runId'];path=C+'/timeline/unreviewed-runs/'+run
