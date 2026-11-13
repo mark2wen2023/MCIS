@@ -392,3 +392,13 @@ Native implementation + independent review: 80 local tests passed, zero skipped 
 
 ## SK-T01 original public-report figure review (2026-11-13)
 Official PDF downloaded and Git blob hash matched repository cf781937. Two native agents independently read figures6/27: same IMO9958212, AIS heading47/course54 versus VDR True Heading48. UTC/LMT both display14:01:54; no inferred LMT timezone correction. Structured source/page/crop/identity/time review added, investigatorApproval pending. Independent83/83 local tests passed/zero skipped (previous80 +3 record binding tests); Python tests do not prove image reading. Supersedes earlier unreviewed-image limitation only; original telemetry, sensor accuracy, clock calibration, independent evidence, production repository/API/UI/LLM remain unverified. No core edits, merge or deployment. See research/skills_timeline/PUBLIC_REPORT_VISUAL_REVIEW.md.
+
+
+## SK-T01 real service exit-boundary integration (2026-11-13)
+Existing timeline/align-preview now opens a fresh database session after calculation,
+rechecks timeline access and rejects a changed caseEpochUtc before returning.
+70 targeted local tests passed across existing/new service and independent W4
+suites, including3 actual-core cases; other core cases use test doubles.
+Native implementation + independent acceptance; not a separate Codex app task.
+No evidence-ID integration or authenticated production identity claimed.
+No merge/deployment. See tests_acceptance/SKT01_EXIT_RECHECK/REPORT.md.

@@ -96,6 +96,17 @@ def preview_alignment(case_id: str, body: PreviewRequest, ctx: Ctx = CtxDep):
         json.dumps(result, allow_nan=False)
         response = {'previewOnly': True, 'persisted': False, 'caseId': case_id, 'caseEpochUtc': epoch, 'result': result}
         if contracts.errors('align-preview#/$defs/response', response): raise ValueError()
-        return response
     except Exception:
         raise problem(502, 'ALIGN_PREVIEW_BAD_OUTPUT', '核心预览结果无法验证，未采用结果。') from None
+
+
+    # Computation happened outside a transaction. Do not release a stale preview
+    # after the case epoch or current access policy changes. This is a fresh
+    # database check, not a lease/production authentication guarantee.
+    with ctx.db.session() as session:
+        current_case = load_case(session, case_id)
+        require(ctx, session, case_id, 'timeline')
+        if parse_iso(current_case['caseEpochUtc']) != parse_iso(epoch):
+            raise problem(409, 'ALIGN_PREVIEW_CASE_CHANGED',
+                          '案件时间基准已变化，旧预览未采用；请重新核查输入。')
+    return response

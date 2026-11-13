@@ -585,3 +585,16 @@ Native implementation + independent review: 80 local tests passed, zero skipped 
 
 ## SK-T01 original public-report figure review (2026-11-13)
 Official PDF downloaded and Git blob hash matched repository cf781937. Two native agents independently read figures6/27: same IMO9958212, AIS heading47/course54 versus VDR True Heading48. UTC/LMT both display14:01:54; no inferred LMT timezone correction. Structured source/page/crop/identity/time review added, investigatorApproval pending. Independent83/83 local tests passed/zero skipped (previous80 +3 record binding tests); Python tests do not prove image reading. Supersedes earlier unreviewed-image limitation only; original telemetry, sensor accuracy, clock calibration, independent evidence, production repository/API/UI/LLM remain unverified. No core edits, merge or deployment. See research/skills_timeline/PUBLIC_REPORT_VISUAL_REVIEW.md.
+
+
+## SK-T01 integration safety proposal: existing align-preview exit recheck
+Before editing the existing W4.1 preview file, propose a limited cross-package
+hardening: after core output validation, reopen a real database session, require
+the existing timeline permission again, and reject a changed caseEpochUtc.
+No new capability, auth scheme, evidence approval semantics or public request
+fields. Existing raw-core routes and report-derived evidence integration remain
+out of scope. No normal writes, merge or deployment.
+Implementation and independent acceptance complete within the proposal scope:
+fresh final session guards real timeline preview;70 targeted local tests pass.
+See contracts/timeline-preview-exit-recheck.md and acceptance report. This does
+not approve evidence, fix legacy raw-core routes, or establish production auth.
