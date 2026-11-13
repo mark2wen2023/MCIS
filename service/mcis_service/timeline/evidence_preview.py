@@ -87,7 +87,11 @@ def validate_csv(text, mapping):
         reader = csv.DictReader(io.StringIO(text), strict=True)
         headers = reader.fieldnames or []
         selected = [mapping.timeColumn] + [c.column for c in mapping.columns]
-        if len(headers) != len(set(headers)) or len(selected) != len(set(selected)):
+        # W2 resolves header names with Trim + OrdinalIgnoreCase, first wins.
+        # Reject aliases instead of validating one column and computing another.
+        # casefold is deliberately conservative; do not rename source columns.
+        header_keys = [name.strip().casefold() for name in headers]
+        if len(header_keys) != len(set(header_keys)) or len(selected) != len(set(selected)):
             raise ValueError('duplicate columns')
         if not set(selected).issubset(headers): raise ValueError('missing columns')
         count = 0
