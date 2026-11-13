@@ -565,3 +565,7 @@ Engineering caps are declared for report/output/audit/manifest/ZIP. A self-revie
 
 ## 2026-11-13 W19 offline preview per-citation labels
 Research-only amendment to PR #53 frozen render_preview.py: render each gate-pinned citation's Public/Synthetic sourceType with Unverified, without trusting candidate declarations. No contract, API, data access or production behavior change. Preserve prior SHA256SUMS as .v1 and refreeze current implementation. Independent acceptance passed (15 existing/new unit tests and 9 separate probes); no browser or real-model acceptance.
+
+
+## 2026-11-13 W19 explicit local preview CLI
+Research-only local adapter, no production contract changes. Explicit candidates/source manifest inputs, strict budgeted validation, exclusive new output creation. Existing gate/render frozen files unchanged. No model/network, publication, case persistence or deployment.

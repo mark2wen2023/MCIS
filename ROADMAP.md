@@ -371,3 +371,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 | 2026-11-13 | W19 offline candidate preview: per-citation source labels | 研究增量独立通过 | Each citation displays gate-pinned Public/Synthetic and Unverified, including mixed candidates; no model-supplied type override. 15 local unit tests +9 independent probes, frozen hashes matched. Draft only; no real LLM, production integration, browser visual verification or deployment. See experiments/knowledge-review-preview/REVIEW-SOURCE-LABELS.md. |
+
+
+| 2026-11-13 | W19 offline review CLI | 研究增量独立通过 | 24 local tests plus 13 independent probes; frozen hashes match. New local HTML output only, no overwrite; validation failures create no output, write I/O failures may leave partial unverified files. No browser, real model or production integration acceptance. |
