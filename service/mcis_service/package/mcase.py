@@ -183,6 +183,8 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
     begin(s)
     from ..recommendations.access import protect_package as protect_recommendations
     protect_recommendations(s, case_id, role)
+    from ..investigation_issues.router import protect_export as protect_issues
+    protect_issues(s, case_id, role)
     from ..working_records_archive.service import has_history, build as build_working
     track_root=blob_root/case_id/'raw'/'track-imports'
     track_namespace=track_root.exists()or track_root.is_symlink()

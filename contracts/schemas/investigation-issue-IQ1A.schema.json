@@ -1,0 +1,481 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "CreateRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requestId",
+        "title",
+        "description",
+        "sourceRefs",
+        "acknowledgeArchiveUnsupported"
+      ],
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "sourceRefs": {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "evidenceId",
+              "sha256"
+            ],
+            "properties": {
+              "evidenceId": {
+                "type": "string",
+                "pattern": "^EV-[0-9]{3,}$"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            }
+          }
+        },
+        "acknowledgeArchiveUnsupported": {
+          "const": true
+        }
+      }
+    },
+    "EventRequest": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "requestId",
+            "expectedRevision",
+            "type",
+            "payload"
+          ],
+          "properties": {
+            "requestId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "type": {
+              "const": "RecordHypothesis"
+            },
+            "payload": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "hypothesisId",
+                "expectedVersion",
+                "text",
+                "reason",
+                "sourceRefs"
+              ],
+              "properties": {
+                "hypothesisId": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$"
+                },
+                "expectedVersion": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                },
+                "sourceRefs": {
+                  "type": "array",
+                  "maxItems": 20,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "evidenceId",
+                      "sha256"
+                    ],
+                    "properties": {
+                      "evidenceId": {
+                        "type": "string",
+                        "pattern": "^EV-[0-9]{3,}$"
+                      },
+                      "sha256": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "requestId",
+            "expectedRevision",
+            "type",
+            "payload"
+          ],
+          "properties": {
+            "requestId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "type": {
+              "const": "ReviewSources"
+            },
+            "payload": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "sourceRefs",
+                "reason"
+              ],
+              "properties": {
+                "sourceRefs": {
+                  "type": "array",
+                  "maxItems": 20,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "evidenceId",
+                      "sha256"
+                    ],
+                    "properties": {
+                      "evidenceId": {
+                        "type": "string",
+                        "pattern": "^EV-[0-9]{3,}$"
+                      },
+                      "sha256": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      }
+                    }
+                  }
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "requestId",
+            "expectedRevision",
+            "type",
+            "payload"
+          ],
+          "properties": {
+            "requestId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "type": {
+              "const": "BeginVerification"
+            },
+            "payload": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "question",
+                "method"
+              ],
+              "properties": {
+                "question": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                },
+                "method": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "requestId",
+            "expectedRevision",
+            "type",
+            "payload"
+          ],
+          "properties": {
+            "requestId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "type": {
+              "const": "RecordVerification"
+            },
+            "payload": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "hypothesisId",
+                "hypothesisVersion",
+                "activity",
+                "result",
+                "outcome",
+                "sourceRefs"
+              ],
+              "properties": {
+                "hypothesisId": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$"
+                },
+                "hypothesisVersion": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "activity": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                },
+                "result": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                },
+                "outcome": {
+                  "enum": [
+                    "Supported",
+                    "Contradicted",
+                    "Inconclusive",
+                    "UnableToVerify"
+                  ]
+                },
+                "sourceRefs": {
+                  "type": "array",
+                  "maxItems": 20,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "evidenceId",
+                      "sha256"
+                    ],
+                    "properties": {
+                      "evidenceId": {
+                        "type": "string",
+                        "pattern": "^EV-[0-9]{3,}$"
+                      },
+                      "sha256": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "requestId",
+            "expectedRevision",
+            "type",
+            "payload"
+          ],
+          "properties": {
+            "requestId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "type": {
+              "const": "SubmitDiscussion"
+            },
+            "payload": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "agenda",
+                "unresolved"
+              ],
+              "properties": {
+                "agenda": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                },
+                "unresolved": {
+                  "type": "array",
+                  "maxItems": 30,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1000
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "requestId",
+            "expectedRevision",
+            "type",
+            "payload"
+          ],
+          "properties": {
+            "requestId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "type": {
+              "const": "RecordDiscussion"
+            },
+            "payload": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "packetRevision",
+                "summary",
+                "dissent",
+                "participantsRecorded",
+                "outcome"
+              ],
+              "properties": {
+                "packetRevision": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "summary": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                },
+                "dissent": {
+                  "type": "array",
+                  "maxItems": 30,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1000
+                  }
+                },
+                "participantsRecorded": {
+                  "type": "array",
+                  "maxItems": 30,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1000
+                  },
+                  "minItems": 1
+                },
+                "outcome": {
+                  "enum": [
+                    "OpinionRecorded",
+                    "MoreVerification",
+                    "Undetermined"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "requestId",
+            "expectedRevision",
+            "type",
+            "payload"
+          ],
+          "properties": {
+            "requestId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$"
+            },
+            "expectedRevision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "type": {
+              "const": "Reopen"
+            },
+            "payload": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "reason"
+              ],
+              "properties": {
+                "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "$id": "https://mcis.local/contracts/v1/investigation-issue-IQ1A.schema.json"
+}

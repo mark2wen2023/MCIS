@@ -7,6 +7,7 @@ info:
     - 数据结构见 schemas/*.schema.json（JSON Schema 2020-12），字段与 C# 计算核心对齐（camelCase）。
     - 角色与操作者：请求头 X-MCIS-Role（默认 Investigator）、X-MCIS-Operator（URL 编码）。脱敏网关按角色在出口处理。
     - W16.2 报告完整内容访问隔离见 report-content-access-v1.md：全部12类显式原文读权限、无适用字段处理规则；默认 Investigator 拒绝是有意兼容变更。不提供报告字段级脱敏，也不认证角色头。报告及含报告内容的审计/案件包旁路均重核当前策略。
+    - IQ-1A 调查问题卡使用独立只追加事件与回执，见 investigation-issues-IQ1A.md；暂不接入通用 audit 页面。
     - 所有写操作写只追加审计（GET /cases/{caseId}/audit）；例外：PUT /sim/state 是瞬态遥测，不入审计。
     - 错误体统一为 {code, message, detail?}（schemas/common.schema.json#/$defs/problem）。
     - 冒号路径（如 /evidence:verify-all）是“自定义动作”，与资源路径并列，不是路径参数。
@@ -3376,3 +3377,97 @@ paths:
         '422': { $ref: '#/components/responses/Problem' }
         '500': { $ref: '#/components/responses/Problem' }
         '503': { $ref: '#/components/responses/Problem' }
+
+  /api/v1/cases/{caseId}/investigation-issues:
+    parameters:
+      - { in: path, name: caseId, required: true, schema: { type: string } }
+    get:
+      tags: [investigation-issues]
+      description: "IQ-1A restricted manual API. See investigation-issues-IQ1A.md. No automatic fact determination; local role headers are not authentication."
+      parameters:
+        - { in: query, name: offset, schema: { type: integer, minimum: 0, default: 0 } }
+        - { in: query, name: limit, schema: { type: integer, minimum: 1, maximum: 50 } }
+      responses:
+        '200': { description: 'IQ-1A manual record or historical idempotent receipt; Cache-Control no-store' }
+        '400': { $ref: '#/components/responses/Problem' }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '413': { $ref: '#/components/responses/Problem' }
+        '415': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }
+        '500': { $ref: '#/components/responses/Problem' }
+    post:
+      tags: [investigation-issues]
+      description: "IQ-1A restricted manual API. See investigation-issues-IQ1A.md. No automatic fact determination; local role headers are not authentication."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "./schemas/investigation-issue-IQ1A.schema.json#/$defs/CreateRequest" }
+      responses:
+        '200': { description: 'IQ-1A manual record or historical idempotent receipt; Cache-Control no-store' }
+        '201': { description: 'IQ-1A manual record or historical idempotent receipt; Cache-Control no-store' }
+        '400': { $ref: '#/components/responses/Problem' }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '413': { $ref: '#/components/responses/Problem' }
+        '415': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }
+        '500': { $ref: '#/components/responses/Problem' }
+  /api/v1/cases/{caseId}/investigation-issues/{issueId}:
+    parameters:
+      - { in: path, name: caseId, required: true, schema: { type: string } }
+      - { in: path, name: issueId, required: true, schema: { type: string, format: uuid } }
+    get:
+      tags: [investigation-issues]
+      description: "IQ-1A restricted manual API. See investigation-issues-IQ1A.md. No automatic fact determination; local role headers are not authentication."
+      responses:
+        '200': { description: 'IQ-1A manual record or historical idempotent receipt; Cache-Control no-store' }
+        '400': { $ref: '#/components/responses/Problem' }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '413': { $ref: '#/components/responses/Problem' }
+        '415': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }
+        '500': { $ref: '#/components/responses/Problem' }
+  /api/v1/cases/{caseId}/investigation-issues/{issueId}/events:
+    parameters:
+      - { in: path, name: caseId, required: true, schema: { type: string } }
+      - { in: path, name: issueId, required: true, schema: { type: string, format: uuid } }
+    get:
+      tags: [investigation-issues]
+      description: "IQ-1A restricted manual API. See investigation-issues-IQ1A.md. No automatic fact determination; local role headers are not authentication."
+      parameters:
+        - { in: query, name: after, schema: { type: integer, minimum: 0, default: 0 } }
+        - { in: query, name: limit, schema: { type: integer, minimum: 1, maximum: 100 } }
+      responses:
+        '200': { description: 'IQ-1A manual record or historical idempotent receipt; Cache-Control no-store' }
+        '400': { $ref: '#/components/responses/Problem' }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '413': { $ref: '#/components/responses/Problem' }
+        '415': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }
+        '500': { $ref: '#/components/responses/Problem' }
+    post:
+      tags: [investigation-issues]
+      description: "IQ-1A restricted manual API. See investigation-issues-IQ1A.md. No automatic fact determination; local role headers are not authentication."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "./schemas/investigation-issue-IQ1A.schema.json#/$defs/EventRequest" }
+      responses:
+        '200': { description: 'IQ-1A manual record or historical idempotent receipt; Cache-Control no-store' }
+        '400': { $ref: '#/components/responses/Problem' }
+        '403': { $ref: '#/components/responses/Problem' }
+        '404': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '413': { $ref: '#/components/responses/Problem' }
+        '415': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }
+        '500': { $ref: '#/components/responses/Problem' }
