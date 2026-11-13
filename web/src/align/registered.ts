@@ -19,10 +19,11 @@ export function registeredBody(rows:RegisteredSelection[]){
     return {evidenceId:r.evidenceId,...(scoped?{comparisonContext:normalized[i]}:{}),...(parent?{parentReport:{evidenceId:parent.evidenceId,sourceSha256:parent.sourceSha256}}:{}),csvMapping:{timeColumn:r.timeColumn,columns:[{column:r.column,kind:r.kind}]}}
   })}
 }
-export function registeredResult(value:unknown,caseId:string,ids:string[],expected?:RegisteredSelection[]):RegisteredResult{
+export function registeredResult(value:unknown,caseId:string,ids:string[],expected?:RegisteredSelection[],expectedSources?:{evidenceId:string;sourceSha256:string}[]):RegisteredResult{
   const v=value as RegisteredResult
   if(!v||v.caseId!==caseId||v.previewOnly!==true||v.persisted!==false||v.sourceBinding!=='transient-local-intake-bytes'||v.observationApproval!=='not_assessed'||typeof v.caseEpochUtc!=='string'||!v.result||v.result.caseId!==caseId)throw Error('返回范围或来源声明不匹配，结果未采用。')
   if(!Array.isArray(v.sourceSnapshots)||v.sourceSnapshots.length!==ids.length||v.sourceSnapshots.some((s,i)=>!s||s.evidenceId!==ids[i]||typeof s.sourceSha256!=='string'||typeof s.registrationDigest!=='string'||!/^[a-f0-9]{64}$/.test(s.sourceSha256)||!/^[a-f0-9]{64}$/.test(s.registrationDigest)||!Number.isInteger(s.byteLength)||s.byteLength<0||s.byteLength>262144||typeof s.registeredUtc!=='string'))throw Error('来源快照与本次选择不一致。')
+  if(expectedSources&&(expectedSources.length!==ids.length||expectedSources.some((s,i)=>s.evidenceId!==ids[i]||s.sourceSha256!==v.sourceSnapshots[i].sourceSha256)))throw Error('登记来源版本已变化，请刷新证据清单并重新核查。')
   const r=v.result
   if(!Array.isArray(r.conflicts)||r.conflicts.some(c=>typeof c?.conflictId!=='string'||typeof c.summary!=='string'||(c.delta!=null&&typeof c.delta!=='number'))||!Array.isArray(r.clockOffsets)||!r.calibration||!Array.isArray(r.calibration.uncalibratedSources)||r.calibration.uncalibratedSources.some(x=>typeof x!=='string')||!Array.isArray(r.calibration.sources)||!Array.isArray(r.importDiagnostics)||!Array.isArray(r.conflictDiagnostics)||!r.stats)throw Error('预览结构无法核对。')
   const numberOrNull=(n:unknown)=>n==null||(typeof n==='number'&&Number.isFinite(n))

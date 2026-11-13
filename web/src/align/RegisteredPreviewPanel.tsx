@@ -28,11 +28,11 @@ export function RegisteredPreviewPanel({caseId,items}:{caseId:string;items:Evide
   const candidates=items.filter(e=>e.caseId===caseId&&/^[a-f0-9]{64}$/.test(e.currentSha256)&&/^raw\/evidence-intakes\/[a-f0-9]{64}\/source\.bin$/.test(e.relativePath||''))
   const run=async()=>{
     const g=gate.current;if(g.busy||!ack)return
-    let body;try{for(const row of rows){if(row.parentReport&&!parentCandidates.some(p=>p.evidenceId===row.parentReport!.evidenceId&&p.currentSha256===row.parentReport!.sourceSha256&&!p.needsReview&&p.status!=='Mismatch'))throw Error('父报告清单或版本已变化，请重新选择并核对。')}body=registeredBody(rows)}catch(e){setMessage((e as Error).message);return}
+    let body;let expectedSources:{evidenceId:string;sourceSha256:string}[];try{expectedSources=rows.map(row=>{const matches=candidates.filter(p=>p.evidenceId===row.evidenceId&&!p.needsReview&&p.status!=='Mismatch');if(matches.length!==1)throw Error('来源不在本案可用登记清单中，请刷新并重新选择。');return {evidenceId:row.evidenceId,sourceSha256:matches[0].currentSha256}});for(const row of rows){if(row.parentReport&&!parentCandidates.some(p=>p.evidenceId===row.parentReport!.evidenceId&&p.currentSha256===row.parentReport!.sourceSha256&&!p.needsReview&&p.status!=='Mismatch'))throw Error('父报告清单或版本已变化，请重新选择并核对。')}body=registeredBody(rows)}catch(e){setMessage((e as Error).message);return}
     g.busy=true;g.controller=new AbortController();const token=++g.version;const identity=caseIdentity();setBusy(true);setMessage('');setResult(null)
     const live=()=>g.alive&&token===g.version&&identity===caseIdentity()
-    try{const raw=await intakeRequest(caseId,identity,'/timeline/registered-align-preview',g.controller.signal,body);if(live()){setResult(registeredResult(raw,caseId,rows.map(r=>r.evidenceId),rows));setResultContext(context)}}
-    catch(e){if(live())setMessage(e instanceof ApiError?`${e.code}：未完成核查。请核对权限、CSV列名以及父报告是否为本案当前登记的PDF文档；历史、变化或需复核来源不能继续。`:'响应未能核对，请检查服务和所选来源。')}
+    try{const raw=await intakeRequest(caseId,identity,'/timeline/registered-align-preview',g.controller.signal,body);if(live()){setResult(registeredResult(raw,caseId,rows.map(r=>r.evidenceId),rows,expectedSources));setResultContext(context)}}
+    catch(e){if(live())setMessage(e instanceof ApiError?`${e.code}：未完成核查。请核对权限、CSV列名以及父报告是否为本案当前登记的PDF文档；历史、变化或需复核来源不能继续。`:'响应未能核对，可能与所选登记版本不一致。请刷新证据清单并重新核查；未采用本次结果。')}
     finally{if(live()){g.busy=false;setBusy(false)}}
   }
   if(!['Investigator','LeadInvestigator'].includes(getRole()))return <p>登记原件核查仅向调查组开放，仍受案件策略限制。</p>
