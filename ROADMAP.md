@@ -373,3 +373,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-13 | W19 product source review | 待独立验收 | Existing candidate template preview gains explicit source review and digest-bound local acknowledgment. Local 16 checks, original W19.2 regression, isolated TypeScript check and browser bundle passed; no browser interaction or full application acceptance. Freeze: logs/w19-product-source-review-sha256.txt. |
 
 | 2026-11-13 | W19 product source review | 局部独立验收通过，待浏览器/整应用验收 | Existing W19.2 + 16 local + 9 independent checks and isolated tsc passed. Native development subtask plus independent review subtask; not a Codex application task. No real LLM, deployment or merge. |
+
+
+| 2026-11-13 | W19 preview session reset | 局部独立验收通过，待浏览器验收 | 14 session key/wrapper checks, prior16/9+W19.2 regression, isolated tsc/browser bundle, independent10 boundary probes pass. Native subtasks; no actual React mount/network-race or browser test, full app, production auth, or real LLM verification. No merge/deploy. |

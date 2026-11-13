@@ -5,7 +5,13 @@ import type {Content} from './model'
 import {parseSuggestion,type Suggestion,type SuggestionInput} from './suggestionModel'
 import {SuggestionSourceReview} from './SuggestionSourceReview'
 import {reviewedSuggestion} from './sourceReview'
-export function SuggestionPreview({input,onApply}:{input:SuggestionInput;onApply:(c:Content)=>void}){
+import {previewSessionKey} from './previewSession'
+type Props={input:SuggestionInput;onApply:(c:Content)=>void}
+export function SuggestionPreview({input,onApply}:Props){
+ // A changed source creates a fresh session: cleanup aborts and rejects late replies.
+ return <SuggestionPreviewSession key={previewSessionKey(input,identity())} input={input} onApply={onApply}/>
+}
+function SuggestionPreviewSession({input,onApply}:Props){
  const [who]=useState(identity),[result,setResult]=useState<Suggestion|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(false)
  const [acknowledgedDigest,setAcknowledgedDigest]=useState<string|null>(null)
  const active=useRef(true),pending=useRef(false),controller=useRef<AbortController|null>(null)

@@ -566,3 +566,8 @@ Engineering caps are declared for report/output/audit/manifest/ZIP. A self-revie
 ## W19 product source-review gate — 2026-11-13
 
 This increment modifies the existing frozen `web/src/knowledge/SuggestionPreview.tsx` entry point, with isolated new source-review view/helper and regression tests. It adds a visible operator-asserted Public/Synthetic label, exact source locator/excerpt, unverified warning, and a local acknowledgment bound to the returned preview input digest before copying into the candidate form. Existing server/source-binding checks remain authoritative; no API/schema/authentication changes, no auto-save or publication. This is the existing template-stub flow, not an LLM integration. Original frozen summaries are preserved; new freeze is `logs/w19-product-source-review-sha256.txt`.
+
+
+## W19 preview session reset — 2026-11-13
+
+Registers the modification of frozen SuggestionPreview before new freeze: keyed source/kind/identity child session discards old preview/ack state on committed input change. Existing API and template-only behavior unchanged. Earlier freeze retained; new hashes logs/w19-preview-session-sha256.txt. Actual browser lifecycle acceptance remains pending.
