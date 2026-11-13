@@ -22,4 +22,17 @@ The model can ignore focus; scripted tests prove delivery, not reasoning quality
 Existing conservative peer grant filtering remains; no authentic identity is claimed.
 Dependencies reused locally, not uploaded. No credentials or .env included.
 
-Independent acceptance reran all three suites plus review-probe.mjs and review-cancel-probe.mjs. Missing/empty/null/numeric snapshot version now denied. Focused challenge cancellation across cooperative provider await rejects late output. Unknown fields are stripped and returned contexts deep-copied. Workflow currently sends an empty focus sources list; direct panel interface supports validated refs.
+Independent acceptance reran all three suites plus review-probe.mjs and review-cancel-probe.mjs. Missing/empty/null/numeric snapshot version now denied. Focused challenge cancellation across cooperative provider await rejects late output. Unknown fields are stripped and returned contexts deep-copied. Workflow now supports optional agenda source refs; panel still checks the speaking expert’s grants.
+
+
+# Human agenda evidence references — isolated research increment
+
+Based on PR #52 (7aada80), this increment closes the workflow gap where every agenda item sent an empty source list. Human agenda entries now optionally carry sources [{id, version}], checked against the frozen case snapshot before the agenda commits. Unknown fields, duplicate IDs, malformed versions, absent/stale sources and more than 32 references are rejected atomically. Caller input and returned views cannot mutate stored references.
+
+The unchanged panel still checks the speaking expert's grants before model dispatch. Listing a reference does not prove it was read, supports a conclusion or is factually correct. No additional access is granted.
+
+Run npm test and node test-agenda-sources.mjs. Existing five suites pass, including an actual Pi workflow focus containing evidence E version 2. Eleven invalid source inputs plus atomicity, mutation isolation and backward compatibility are checked separately.
+
+This is research only, not production MCIS code or a UI. Four actual Pi objects, scripted provider only, no real LLM/network. No new authentication, persistence, real-case validation or mandatory source-reading step. Existing legacy focus omission and cooperative cancellation limits remain. No merge or deployment.
+
+Independent reviewer reran all six suites and separately verified unauthorized source rejection before provider dispatch, with no stored discussion turn.

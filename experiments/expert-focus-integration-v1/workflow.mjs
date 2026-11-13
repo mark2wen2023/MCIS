@@ -12,9 +12,20 @@ export function createMeeting({actor,panelFactory,config,operationBudget=12}) {
   async function invoke(fn,save){allowed();if(remaining===0)throw Error('budget exhausted');busy=true;remaining--;try{const r=await fn();if(stage==='cancelled')throw Error('cancelled');save(structuredClone(r));return structuredClone(r);}finally{busy=false;}}
   return {
     async review(role){allowed();if(stage!=='independent'||!ROLES.includes(role)||reviews[role])throw Error('phase or role');return invoke(()=>panel.review(role),r=>{reviews[role]=r;if(Object.keys(reviews).length===4)stage='agenda';audit.push({event:'review',role});});},
-    setAgenda(actor,items){human(actor);allowed();if(stage!=='agenda'||!Array.isArray(items)||items.length<1||items.length>12)throw Error('agenda');const ids=new Set();const next=items.map(i=>{if(!i||Object.keys(i).sort().join(',')!=='id,title')throw Error('issue');text(i.id,80);text(i.title,500);if(ids.has(i.id))throw Error('duplicate');ids.add(i.id);return {...i};});agenda=next;active=next[0].id;stage='discussion';audit.push({event:'agenda_confirmed',ids:[...ids]});},
+    setAgenda(actor,items){human(actor);allowed();if(stage!=='agenda'||!Array.isArray(items)||items.length<1||items.length>12)throw Error('agenda');const ids=new Set();const next=items.map(i=>{if(!i||!['id,title','id,sources,title'].includes(Object.keys(i).sort().join(',')))throw Error('issue');text(i.id,80);text(i.title,500);if(ids.has(i.id))throw Error('duplicate');ids.add(i.id);
+const refs=i.sources===undefined?[]:i.sources;
+if(!Array.isArray(refs)||refs.length>32)throw Error('issue sources');
+const seen=new Set();
+const sources=refs.map(ref=>{
+if(!ref||Object.keys(ref).sort().join(',')!=='id,version')throw Error('issue source');
+text(ref.id,80);text(ref.version,80);
+if(seen.has(ref.id))throw Error('duplicate source');seen.add(ref.id);
+if(!config.snapshot.sources.some(s=>s.id===ref.id&&s.version===ref.version))throw Error('source version denied');
+return {id:ref.id,version:ref.version};
+});
+return {id:i.id,title:i.title,sources};});agenda=next;active=next[0].id;stage='discussion';audit.push({event:'agenda_confirmed',ids:[...ids]});},
     focus(actor,id){human(actor);allowed();if(stage!=='discussion'||!agenda.some(x=>x.id===id))throw Error('issue');active=id;audit.push({event:'focus',id});},
-    async challenge(role,target){allowed();if(stage!=='discussion'||!ROLES.includes(role)||!ROLES.includes(target)||role===target)throw Error('phase or role');const issue=active;const item=agenda.find(x=>x.id===issue);const focus={sessionId:config.sessionId,caseId:config.snapshot.caseId,snapshotVersion:config.snapshot.version,id:issue,title:item.title,sources:[]};return invoke(()=>panel.challenge(role,target,focus),r=>{turns.push({candidate:r?.candidate,issue,speaker:role,target});audit.push({event:'challenge',issue,role,target});});},
+    async challenge(role,target){allowed();if(stage!=='discussion'||!ROLES.includes(role)||!ROLES.includes(target)||role===target)throw Error('phase or role');const issue=active;const item=agenda.find(x=>x.id===issue);const focus={sessionId:config.sessionId,caseId:config.snapshot.caseId,snapshotVersion:config.snapshot.version,id:issue,title:item.title,sources:structuredClone(item.sources)};return invoke(()=>panel.challenge(role,target,focus),r=>{turns.push({candidate:r?.candidate,issue,speaker:role,target});audit.push({event:'challenge',issue,role,target});});},
     closeDiscussion(actor,reason){human(actor);allowed();if(stage!=='discussion')throw Error('phase');const unaddressed=agenda.filter(i=>!turns.some(t=>t.issue===i.id)).map(i=>i.id);if(unaddressed.length)text(reason,1000);closure={kind:unaddressed.length?'human_early_close':'human_close',unaddressed,reason:reason===undefined?null:text(reason,1000),coverage:'turn_presence_only_not_resolved'};stage='report_suggestions';audit.push({event:'discussion_closed',...structuredClone(closure)});},
     recordSuggestions(actor,value){human(actor);allowed();if(stage!=='report_suggestions')throw Error('phase');suggestions={text:text(value,8000),status:'candidate_requires_human_review',scope:'whole_report'};stage='completed';audit.push({event:'suggestions_recorded'});},
     pause(actor){human(actor);if(stage==='cancelled'||stage==='completed')throw Error('phase');paused=true;audit.push({event:'pause'});},

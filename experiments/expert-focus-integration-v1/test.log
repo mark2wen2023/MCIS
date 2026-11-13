@@ -1,6 +1,7 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
 
 > test
-> node test.mjs && node test-interleavings.mjs && node test-focus.mjs && node review-probe.mjs && node review-cancel-probe.mjs
+> node test.mjs && node test-interleavings.mjs && node test-focus.mjs && node review-probe.mjs && node review-cancel-probe.mjs && node test-agenda-sources.mjs
 
 PASS: four independent Pi instances, blind reviews, host-mediated peer context, case/source grants, role separation, target, turn budget, cancellation; scripted provider only
 PASS: separate panels in parallel; busy serialization; cancel across cooperative provider await; failure remains blind
@@ -10,3 +11,4 @@ PASS missing snapshot version denied
 REPRO: omitted focus invokes Pi with null focus
 PASS empty/null/numeric version denied
 PASS cancellation across focused challenge provider await: no stored late turn, no challenge audit, busy denial
+PASS 11 malformed/stale agenda source denials, atomic validation, caller/view mutation isolation, source delivery, legacy empty refs

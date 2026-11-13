@@ -17,9 +17,9 @@ function fixture(sessionId='meeting-A'){
 const config=fixture(),m=createMeeting({actor:'investigator',panelFactory:createPanel,config});
 config.snapshot.version='mutated'; // Frozen at meeting creation.
 for(const r of ROLES)await m.review(r);
-m.setAgenda('investigator',[{id:'time',title:'SYNTHETIC: compare CCTV and AIS time'},{id:'speed',title:'SYNTHETIC: verify speed estimate'}]);
+m.setAgenda('investigator',[{id:'time',title:'SYNTHETIC: compare CCTV and AIS time',sources:[{id:'E',version:'2'}]},{id:'speed',title:'SYNTHETIC: verify speed estimate'}]);
 const first=await m.challenge('vessel','navigation');
-assert.equal(first.focus.id,'time');assert.equal(first.focus.snapshotVersion,'draft-1');
+assert.deepEqual(first.focus.sources,[{id:'E',version:'2'}]);assert.equal(first.focus.id,'time');assert.equal(first.focus.snapshotVersion,'draft-1');
 assert(JSON.stringify(logs['meeting-Avessel']).includes('compare CCTV and AIS time'));
 assert(!JSON.stringify(logs['meeting-Aregulation']).includes('compare CCTV and AIS time'));
 m.focus('investigator','speed');
