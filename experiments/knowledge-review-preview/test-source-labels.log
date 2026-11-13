@@ -1,0 +1,20 @@
+test_content_and_markers (test_render.RenderTests.test_content_and_markers) ... ok
+test_csp_and_language (test_render.RenderTests.test_csp_and_language) ... ok
+test_duplicate_visible (test_render.RenderTests.test_duplicate_visible) ... ok
+test_empty (test_render.RenderTests.test_empty) ... ok
+test_injection_not_markup (test_render.RenderTests.test_injection_not_markup) ... ok
+test_no_external_resources (test_render.RenderTests.test_no_external_resources) ... ok
+test_stale_rejected (test_render.RenderTests.test_stale_rejected) ... ok
+test_unicode_newlines_preserved (test_render.RenderTests.test_unicode_newlines_preserved) ... ok
+test_unknown_rejected (test_render.RenderTests.test_unknown_rejected) ... ok
+test_claim_cannot_override_label (test_source_labels.SourceLabelTests.test_claim_cannot_override_label) ... ok
+test_injected_classification_rejected (test_source_labels.SourceLabelTests.test_injected_classification_rejected) ... ok
+test_inputs_unchanged (test_source_labels.SourceLabelTests.test_inputs_unchanged) ... ok
+test_mixed_each_citation_has_own_label (test_source_labels.SourceLabelTests.test_mixed_each_citation_has_own_label) ... ok
+test_reversed_citations_preserve_labels (test_source_labels.SourceLabelTests.test_reversed_citations_preserve_labels) ... ok
+test_snapshot_type_not_registry_order (test_source_labels.SourceLabelTests.test_snapshot_type_not_registry_order) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.002s
+
+OK

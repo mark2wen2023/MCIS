@@ -11,7 +11,9 @@ def render(raw, sources, known=()):
         citations = []
         for citation in candidate['citations']:
             citations.append(
-                '<li><dl><dt>来源 / 版本</dt><dd>' + esc(citation['sourceId']) + ' / ' +
+                '<li><dl><dt>材料性质（来源快照）</dt><dd>' +
+                ('公开材料（Public）' if citation['sourceType'] == 'Public' else '虚构材料（Synthetic）') +
+                ' · 未核实</dd><dt>来源 / 版本</dt><dd>' + esc(citation['sourceId']) + ' / ' +
                 esc(citation['version']) + '</dd><dt>位置（原文字符，左闭右开）</dt><dd>' +
                 esc(citation['start']) + '–' + esc(citation['end']) + '</dd><dt>材料位置</dt><dd>' +
                 esc(citation['locator']) + '</dd><dt>文本 SHA-256</dt><dd class="hash">' +
