@@ -7,10 +7,11 @@ import { PreviewResult } from './AlignPreviewPanel'
 import { KINDS,KIND_LABEL } from './model'
 import type { EvidenceItem } from '../types'
 import type { PreviewKind } from './types'
-import { blankRegistered,registeredBody,registeredResult,type RegisteredResult,type RegisteredSelection } from './registered'
+import { blankContext,blankRegistered,registeredBody,registeredResult,type RegisteredResult,type ComparisonContext,type RegisteredSelection } from './registered'
 
+const newRow=()=>({...blankRegistered(),comparisonContext:blankContext()})
 export function RegisteredPreviewPanel({caseId,items}:{caseId:string;items:EvidenceItem[]}){
-  const [rows,setRows]=useState<RegisteredSelection[]>([blankRegistered()]),[result,setResult]=useState<RegisteredResult|null>(null)
+  const [rows,setRows]=useState<RegisteredSelection[]>([newRow()]),[result,setResult]=useState<RegisteredResult|null>(null)
   const [resultContext,setResultContext]=useState('')
   const [busy,setBusy]=useState(false),[message,setMessage]=useState(''),[ack,setAck]=useState(false)
   const gate=useRef({alive:true,version:0,busy:false,controller:null as AbortController|null})
@@ -18,16 +19,17 @@ export function RegisteredPreviewPanel({caseId,items}:{caseId:string;items:Evide
   const version=JSON.stringify(items.map(e=>[e.evidenceId,e.currentSha256,e.status,e.needsReview,e.relativePath]))
   const context=JSON.stringify([caseId,who,version])
   const clear=()=>{const g=gate.current;g.version++;g.controller?.abort();g.busy=false;setBusy(false);setResult(null);setAck(false)}
-  useEffect(()=>{const g=gate.current;g.alive=true;clear();setMessage('');const off=onIdentityChange(()=>{clear();setRows([blankRegistered()]);setMessage('身份已变化，旧结果已清除。')});return()=>{g.alive=false;g.version++;g.controller?.abort();off()}},[caseId,version])
-  useEffect(()=>{setRows([blankRegistered()])},[caseId])
+  useEffect(()=>{const g=gate.current;g.alive=true;clear();setMessage('');const off=onIdentityChange(()=>{clear();setRows([newRow()]);setMessage('身份已变化，旧结果已清除。')});return()=>{g.alive=false;g.version++;g.controller?.abort();off()}},[caseId,version])
+  useEffect(()=>{setRows([newRow()])},[caseId])
   const change=(i:number,values:Partial<RegisteredSelection>)=>{clear();setMessage('');setRows(old=>old.map((r,j)=>i===j?{...r,...values}:r))}
+  const declare=(i:number,values:Partial<ComparisonContext>)=>change(i,{comparisonContext:{...rows[i].comparisonContext!,...values}})
   const candidates=items.filter(e=>/^raw\/evidence-intakes\/[a-f0-9]{64}\/source\.bin$/.test(e.relativePath||''))
   const run=async()=>{
     const g=gate.current;if(g.busy||!ack)return
     let body;try{body=registeredBody(rows)}catch(e){setMessage((e as Error).message);return}
     g.busy=true;g.controller=new AbortController();const token=++g.version;const identity=caseIdentity();setBusy(true);setMessage('');setResult(null)
     const live=()=>g.alive&&token===g.version&&identity===caseIdentity()
-    try{const raw=await intakeRequest(caseId,identity,'/timeline/registered-align-preview',g.controller.signal,body);if(live()){setResult(registeredResult(raw,caseId,rows.map(r=>r.evidenceId)));setResultContext(context)}}
+    try{const raw=await intakeRequest(caseId,identity,'/timeline/registered-align-preview',g.controller.signal,body);if(live()){setResult(registeredResult(raw,caseId,rows.map(r=>r.evidenceId),rows));setResultContext(context)}}
     catch(e){if(live())setMessage(e instanceof ApiError?`${e.code}：未完成核查。请核对权限、来源是否为当前登记CSV及列名；历史、变化或需复核来源不能继续。`:'响应未能核对，请检查服务和所选来源。')}
     finally{if(live()){g.busy=false;setBusy(false)}}
   }
@@ -42,15 +44,22 @@ export function RegisteredPreviewPanel({caseId,items}:{caseId:string;items:Evide
         <label>登记证据<select className="input" value={r.evidenceId} onChange={e=>change(i,{evidenceId:e.target.value})}><option value="">请选择当前案件证据</option>{candidates.map(e=><option key={e.evidenceId} value={e.evidenceId} disabled={e.needsReview||e.status==='Mismatch'}>{e.evidenceId} · {e.title}{e.needsReview?' · 需复核':''}</option>)}</select></label>
         <label>带时区时间列名<input className="input" maxLength={128} value={r.timeColumn} onChange={e=>change(i,{timeColumn:e.target.value})}/></label>
         <label>数值列名<input className="input" maxLength={128} value={r.column} onChange={e=>change(i,{column:e.target.value})}/></label>
-        <label>测量类型<select className="input" value={r.kind} onChange={e=>change(i,{kind:e.target.value as PreviewKind})}>{KINDS.map(k=><option key={k} value={k}>{KIND_LABEL[k]}</option>)}</select></label>
+        <label>测量类型<select className="input" value={r.kind} onChange={e=>change(i,{kind:e.target.value as PreviewKind,comparisonContext:{...r.comparisonContext!,headingReference:null}})}>{KINDS.map(k=><option key={k} value={k}>{KIND_LABEL[k]}</option>)}</select></label>
+        <p>以下仅为本次人工声明，不证明材料真实性、同一船舶或独立来源；不会写入证据审核状态。</p>
+        <label>声明的船舶标识<input className="input" name="vesselLabel" maxLength={128} value={r.comparisonContext!.vesselLabel} onChange={e=>declare(i,{vesselLabel:e.target.value})}/></label>
+        <label>声明的来源性质<select className="input" name="sourceNature" value={r.comparisonContext!.sourceNature} onChange={e=>declare(i,{sourceNature:e.target.value as ComparisonContext['sourceNature']})}><option value="unknown">尚不明确</option><option value="report_extract">报告摘录 / 人工转录，非原始传感器</option><option value="sensor_export">声明为传感器导出，尚未核验</option><option value="other">其他派生材料</option></select></label>
+        <label>报告或来源名称<input className="input" name="sourceTitle" maxLength={200} value={r.comparisonContext!.sourceTitle} onChange={e=>declare(i,{sourceTitle:e.target.value})}/></label>
+        <label>页码 / 图表 / 记录定位<input className="input" name="citation" maxLength={500} value={r.comparisonContext!.citation} onChange={e=>declare(i,{citation:e.target.value})}/></label>
+        <label>时间口径说明<input className="input" name="timeBasis" maxLength={300} value={r.comparisonContext!.timeBasis} onChange={e=>declare(i,{timeBasis:e.target.value})}/></label>
+        {r.kind==='Heading'&&<label>船首向基准声明<select className="input" name="headingReference" value={r.comparisonContext!.headingReference??''} onChange={e=>declare(i,{headingReference:(e.target.value||null) as ComparisonContext['headingReference']})}><option value="">请选择，未自动推断</option><option value="true">已人工核对本次列为真航向</option><option value="magnetic">磁航向，暂不支持比较</option><option value="unknown">未知，暂不支持比较</option></select></label>}
         <button type="button" className="btn btn-sm" disabled={rows.length===1} onClick={()=>{clear();setRows(old=>old.filter((_,j)=>i!==j))}}>移除此来源</button>
       </fieldset>)}
-      <button type="button" className="btn" disabled={busy||rows.length>=4} onClick={()=>{clear();setRows(old=>[...old,blankRegistered()])}}>添加登记来源</button>
+      <button type="button" className="btn" disabled={busy||rows.length>=4} onClick={()=>{clear();setRows(old=>[...old,newRow()])}}>添加登记来源</button>
       <label className="w4-ack"><input type="checkbox" disabled={busy} checked={ack} onChange={e=>setAck(e.target.checked)}/>我已核对列名、单位及测量对象；本次仅预览，不视为采信证据或完成审核。</label>
       <button className="btn btn-primary" disabled={busy||!ack||!candidates.length}>{busy?'正在核查登记原件…':'核查并计算登记证据'}</button>{' '}
       <button type="button" className="btn" onClick={()=>{clear();setMessage('已停止等待并清除预览；不保证已发计算在服务端终止。')}}>停止等待 / 清除预览</button>
     </form>
     {busy&&<p role="status">读取登记原件并计算中…</p>}{message&&<p role="alert">{message}</p>}
-    {result&&resultContext===context&&who===caseIdentity()&&<><h3>本次核对的来源字节</h3>{result.sourceSnapshots.map(s=><p key={s.evidenceId} style={{overflowWrap:'anywhere'}}>{s.evidenceId} · {s.byteLength} bytes<br/>SHA-256：{s.sourceSha256}<br/>登记摘要：{s.registrationDigest}</p>)}<p>只核对当前字节与登记；未批准事实，也不证明钟差已消除。</p><PreviewResult value={result}/></>}
+    {result&&resultContext===context&&who===caseIdentity()&&<><h3>本次人工声明的比较范围 · 未核验</h3>{result.comparisonScope?.sources.map(s=><p key={s.evidenceId}>{s.evidenceId} · {s.context.vesselLabel} · {s.context.sourceNature==='report_extract'?'报告摘录，非原始传感器':s.context.sourceNature}<br/>{s.context.sourceTitle} · {s.context.citation}<br/>时间说明：{s.context.timeBasis}</p>)}<p>同名不证明同船，声明不证明真实；报告派生值不得当作独立原始证据。时间说明不会校正钟差；未校准提示仍有效。</p><h3>本次核对的来源字节</h3>{result.sourceSnapshots.map(s=><p key={s.evidenceId} style={{overflowWrap:'anywhere'}}>{s.evidenceId} · {s.byteLength} bytes<br/>SHA-256：{s.sourceSha256}<br/>登记摘要：{s.registrationDigest}</p>)}<p>只核对当前字节与登记；未批准事实，也不证明钟差已消除。</p><PreviewResult value={result}/></>}
   </div></Panel>
 }

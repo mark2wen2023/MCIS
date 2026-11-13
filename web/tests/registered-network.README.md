@@ -15,9 +15,11 @@ MCIS_DOTNET=/absolute/path/to/dotnet \
 
 Verified in the cloud environment:
 - Four real requests preview/commit two fictional CSV originals (heading 45/50, shared timestamp).
-- One real registered preview request traverses Vite/FastAPI/actual W2; frontend parser accepts the 5-degree conflict and `persisted:false`, `observationApproval:not_assessed`.
+- Two real registered preview requests (legacy unscoped and caller-declared scoped) traverses Vite/FastAPI/actual W2; frontend parser accepts the 5-degree conflict and `persisted:false`, `observationApproval:not_assessed`.
 - One real request using the existing AgentService header identity receives 403.
 - All dispatched requests supply fetch `cache:no-store`. This observes request configuration, **not browser cache behavior or a server Cache-Control guarantee**.
 - A pre-aborted request rejects with AbortError and dispatches no fetch. This does **not** verify cancellation of already-running core computation.
 
-Final run exited 0 with six real requests. An initial test attempted nonexistent role Viewer and received expected service BAD_ROLE/400; the final test uses the real AgentService role to exercise authorization denial. Header identity remains a development mechanism, not production authentication. No browser, rendering, clicking, cross-tab behavior, real evidence, LLM, or persistent source certification is validated here.
+Final run exited 0 with seven real requests. An initial test attempted nonexistent role Viewer and received expected service BAD_ROLE/400; the final test uses the real AgentService role to exercise authorization denial. Header identity remains a development mechanism, not production authentication. No browser, rendering, clicking, cross-tab behavior, real evidence, LLM, or persistent source certification is validated here.
+
+The scoped request explicitly declares a fictional report source; this tests transport/echo only and is not an actual public-report extraction or verification. Both response scopes are checked by the frontend parser; the old request remains unscoped.

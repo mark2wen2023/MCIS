@@ -4,8 +4,7 @@ The evidence page includes a read-only investigator panel for the existing
 `POST /api/v1/cases/{caseId}/timeline/registered-align-preview` service.
 Select 1–4 local intake evidence IDs, map one timezone-aware timestamp and one
 Heading/COG/SOG column per source, confirm mapping/units, then compute. The panel
-sends only evidence IDs and mapping, not user-supplied paths, hashes or review
-claims. It displays the server's byte hashes and existing conflict/calibration
+sends evidence IDs, mapping and explicitly unverified comparison declarations, not user-supplied paths, hashes or approval claims. See timeline-comparison-scope.md. It displays the server's byte hashes and existing conflict/calibration
 preview. Cancellation discards local results; it does not promise server abort.
 
 Identity, case, source metadata/path or mapping changes invalidate results.

@@ -631,3 +631,9 @@ Real read-only API /timeline/registered-align-preview now resolves only current 
 - Reproducible isolated runner now exercises actual frontend request/parser code over native fetch → dynamic localhost Vite proxy → FastAPI → actual W2 (no response mocks): 6 real requests, synthetic 45/50° CSV registration, 5° result, AgentService403, no-store request option, pre-dispatch abort. Independently executed and repeated, exit0.
 - Registered-preview backend focused suite rerun with real-core acceptance enabled:30 passed, no skips. This is not whole-project CI.
 - Actual browser still cannot reach execution-workspace localhost, including approved localhost service attempt. No public exposure/workaround; visual/full-browser E2E stays pending. Services stopped. See web/tests/registered-network.README.md.
+
+
+### SK-T01 investigator-declared comparison scope
+- Read-only workbench now captures vessel label, source nature (including report extract), source title, page/table/record locator, time-basis explanation and heading-reference declaration. This is caller-declared, NOT verified semantic binding or human approval.
+- Server enforces all-or-none context, same exact trimmed vessel label, same quantity and one mapping per source; true-heading declaration required for Heading (no magnetic conversion). Existing context-free requests remain explicitly unscoped. UI validates echoes and clears changed declarations; source SHA checks are separately shown.
+- Independent12 backend +23 HappyDOM assertions pass; combined focused backend42/42 including actual-core acceptance; actual proxy/W2 transport7 requests pass; TS/Vite build passes. Synthetic sources only, no public report extraction, no live LLM. Browser visual/E2E still pending; no merge/deploy. See contracts/timeline-comparison-scope.md.

@@ -11,7 +11,9 @@ const {setIdentity}=await import('../src/api')
 let count=0;const check=(f:()=>void)=>{f();count++}
 const selection=[{evidenceId:'EV-004',timeColumn:'utc',column:'heading',kind:'Heading' as const}]
 check(()=>assert.deepEqual(registeredBody(selection),{sources:[{evidenceId:'EV-004',csvMapping:{timeColumn:'utc',columns:[{column:'heading',kind:'Heading'}]}}]}))
-const output=()=>({caseId:'CASE-A',caseEpochUtc:'2026-01-01T00:00:00Z',previewOnly:true,persisted:false,sourceBinding:'transient-local-intake-bytes',observationApproval:'not_assessed',sourceSnapshots:[{evidenceId:'EV-004',sourceSha256:'a'.repeat(64),registrationDigest:'b'.repeat(64),byteLength:20,registeredUtc:'2026-01-01T00:00:00Z'}],result:{caseId:'CASE-A',conflicts:[],clockOffsets:[],calibration:{allCalibrated:false,uncalibratedSources:['EV-004'],sources:[]},importDiagnostics:[],conflictDiagnostics:[],stats:{tracks:1}}})
+const context={vesselLabel:'SHIP-A',sourceNature:'report_extract' as const,sourceTitle:'Public report',citation:'p17 fig6',timeBasis:'UTC declared',headingReference:'true' as const}
+const scopedSelection=selection.map(r=>({...r,comparisonContext:context}))
+const output=()=>({caseId:'CASE-A',caseEpochUtc:'2026-01-01T00:00:00Z',previewOnly:true,persisted:false,sourceBinding:'transient-local-intake-bytes',observationApproval:'not_assessed',comparisonScope:{status:'user_declared_not_verified',sources:[{evidenceId:'EV-004',context:{...context}}]},sourceSnapshots:[{evidenceId:'EV-004',sourceSha256:'a'.repeat(64),registrationDigest:'b'.repeat(64),byteLength:20,registeredUtc:'2026-01-01T00:00:00Z'}],result:{caseId:'CASE-A',conflicts:[],clockOffsets:[],calibration:{allCalibrated:false,uncalibratedSources:['EV-004'],sources:[]},importDiagnostics:[],conflictDiagnostics:[],stats:{tracks:1}}})
 check(()=>assert.equal(registeredResult(output(),'CASE-A',['EV-004']).persisted,false))
 for(const mutate of [(v:any)=>v.caseId='OTHER',(v:any)=>v.sourceSnapshots[0].evidenceId='EV-999',(v:any)=>v.observationApproval='approved']){const v=output();mutate(v);check(()=>assert.throws(()=>registeredResult(v,'CASE-A',['EV-004'])))}
 const items=[{evidenceId:'EV-004',title:'Fixture',relativePath:'raw/evidence-intakes/'+ 'b'.repeat(64)+'/source.bin',currentSha256:'a'.repeat(64),status:'Unverified',needsReview:false}] as any
@@ -23,8 +25,8 @@ const fill=async()=>act(async()=>{
  const inputs=container.querySelectorAll('input[type=text],input:not([type])');
  for(let i=0;i<2;i++){Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value')!.set!.call(inputs[i],i?'heading':'utc');inputs[i].dispatchEvent(new window.Event('input',{bubbles:true}));inputs[i].dispatchEvent(new window.Event('change',{bubbles:true}))}
 })
-const submit=async()=>{await fill();await act(async()=>container.querySelector<HTMLInputElement>('input[type=checkbox]')!.click());await act(async()=>container.querySelector('form')!.dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true})))}
-await render();await submit();check(()=>assert.equal(pending.length,1));check(()=>assert.deepEqual(JSON.parse(pending[0].options.body),registeredBody(selection)))
+const submit=async()=>{await fill();for(const [name,value] of Object.entries(context)){await act(async()=>{const el=container.querySelector(`[name=${name}]`)! as HTMLInputElement;if(el.tagName==='SELECT'){el.value=value;el.dispatchEvent(new window.Event('change',{bubbles:true}))}else{Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value')!.set!.call(el,value);el.dispatchEvent(new window.Event('input',{bubbles:true}));el.dispatchEvent(new window.Event('change',{bubbles:true}))}})};await act(async()=>container.querySelector<HTMLInputElement>('input[type=checkbox]')!.click());await act(async()=>container.querySelector('form')!.dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true})))}
+await render();await submit();check(()=>assert.equal(pending.length,1));check(()=>assert.deepEqual(JSON.parse(pending[0].options.body),registeredBody(scopedSelection)))
 await act(async()=>Array.from(container.querySelectorAll('button')).find(x=>x.textContent?.includes('停止等待'))!.click())
 check(()=>assert.equal(pending[0].options.signal.aborted,true))
 await act(async()=>pending[0].resolve({ok:true,json:async()=>output()}));check(()=>assert.equal(container.textContent?.includes('本次核对的来源字节'),false))
@@ -32,6 +34,12 @@ await submit();const request=pending.at(-1);await render('CASE-B');await act(asy
 await render();await submit();const sourceRequest=pending.at(-1);await render('CASE-A',[{...items[0],relativePath:'raw/changed.csv'}]);await act(async()=>sourceRequest.resolve({ok:true,json:async()=>output()}));check(()=>assert.equal(container.textContent?.includes('本次核对的来源字节'),false))
 await render();await submit();await act(async()=>pending.at(-1).resolve({ok:true,json:async()=>output()}));check(()=>assert.equal(container.textContent?.includes('本次核对的来源字节'),true));await render('CASE-B');check(()=>assert.equal(container.textContent?.includes('本次核对的来源字节'),false))
 await render();await submit();const identityRequest=pending.at(-1);await act(async()=>setIdentity('Public','changed'));await act(async()=>identityRequest.resolve({ok:true,json:async()=>output()}));check(()=>assert.equal(container.textContent?.includes('本次核对的来源字节'),false))
+const scoped=output();check(()=>assert.equal(registeredResult(scoped,'CASE-A',['EV-004'],scopedSelection).persisted,false));
+for(const alter of [(v:any)=>v.comparisonScope.sources[0].context.citation='other',(v:any)=>v.comparisonScope.status='verified',(v:any)=>delete v.comparisonScope]){const v=output();alter(v);check(()=>assert.throws(()=>registeredResult(v,'CASE-A',['EV-004'],scopedSelection)))}
+await act(async()=>setIdentity('Investigator','reviewer'));await render();await submit();const declarationRequest=pending.at(-1);
+// A synthetic change event exercises the handler even while controls are disabled during a request.
+await act(async()=>{const el=container.querySelector('[name=citation]')!;Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value')!.set!.call(el,'changed page');el.dispatchEvent(new window.Event('input',{bubbles:true}));el.dispatchEvent(new window.Event('change',{bubbles:true}))});
+await act(async()=>declarationRequest.resolve({ok:true,json:async()=>output()}));check(()=>assert.equal(container.textContent?.includes('本次核对的来源字节'),false));
 await act(async()=>root.unmount());await window.happyDOM.abort();console.log(count+' independent checks passed: controlled fetch + HappyDOM, not browser/backend E2E')
 
 const real=JSON.parse(readFileSync(new URL('./registered-independent.fixture.json',import.meta.url),'utf8'));const realIds=real.sourceSnapshots.map((s:any)=>s.evidenceId);check(()=>assert.equal(registeredResult(real,real.caseId,realIds).result.conflicts[0].delta,5));

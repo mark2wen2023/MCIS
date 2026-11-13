@@ -4,8 +4,9 @@ import csv
 import io
 import math
 from datetime import datetime
+from typing import Literal
 from fastapi import APIRouter
-from pydantic import Field, model_validator
+from pydantic import Field, field_validator, model_validator
 from ..common.context import Ctx, CtxDep, problem
 from ..common.timeutil import parse_iso
 from ..cases.service import load_case
@@ -19,9 +20,28 @@ router = APIRouter(route_class=NoStoreRoute)
 PATH = re.compile(r'^raw/evidence-intakes/([0-9a-f]{64})/source\.bin$')
 
 
+class ComparisonContext(StrictDto):
+    """Caller declaration only; never changes evidence or approves an observation."""
+    vesselLabel: str = Field(min_length=1, max_length=128)
+    sourceNature: Literal['report_extract', 'sensor_export', 'other', 'unknown']
+    sourceTitle: str = Field(min_length=1, max_length=200)
+    citation: str = Field(min_length=1, max_length=500)
+    timeBasis: str = Field(min_length=1, max_length=300)
+    headingReference: Literal['true', 'magnetic', 'unknown'] | None = None
+
+    @field_validator('vesselLabel', 'sourceTitle', 'citation', 'timeBasis')
+    @classmethod
+    def normalized(cls, value):
+        value = value.strip()
+        if not value or any(ord(c) < 32 for c in value):
+            raise ValueError('nonblank single-line declaration required')
+        return value
+
+
 class RegisteredSource(StrictDto):
     evidenceId: str = Field(pattern=r'^EV-[0-9]{3,}$', max_length=32)
     csvMapping: PreviewMapping
+    comparisonContext: ComparisonContext | None = None
 
 
 class RegisteredPreview(StrictDto):
@@ -31,6 +51,18 @@ class RegisteredPreview(StrictDto):
     def unique(self):
         ids = [source.evidenceId for source in self.sources]
         if len(set(ids)) != len(ids): raise ValueError('duplicate evidenceId')
+        contexts = [s.comparisonContext for s in self.sources]
+        if any(c is not None for c in contexts):
+            if any(c is None for c in contexts): raise ValueError('all sources require comparison context')
+            if len({c.vesselLabel for c in contexts}) != 1: raise ValueError('declared vessels differ')
+            if any(len(s.csvMapping.columns) != 1 for s in self.sources): raise ValueError('one quantity per scoped source')
+            kinds = {s.csvMapping.columns[0].kind for s in self.sources}
+            if len(kinds) != 1: raise ValueError('declared quantities differ')
+            for source in self.sources:
+                reference = source.comparisonContext.headingReference
+                if source.csvMapping.columns[0].kind == 'Heading':
+                    if reference != 'true': raise ValueError('scoped heading requires declared true reference; no conversion')
+                elif reference is not None: raise ValueError('heading reference is only for Heading')
         return self
 
 
@@ -119,4 +151,7 @@ def registered_preview(case_id: str, body: RegisteredPreview, ctx: Ctx = CtxDep)
            for d in response['result']['importDiagnostics']):
         raise problem(422, 'TIMELINE_SOURCE_CORE_DIAGNOSTIC', '核心报告来源导入错误，未将跳过数据解释为无冲突')
     return {**response, 'sourceSnapshots': versions, 'sourceBinding': 'transient-local-intake-bytes',
-            'observationApproval': 'not_assessed'}
+            'observationApproval': 'not_assessed',
+            'comparisonScope': {'status': 'user_declared_not_verified' if body.sources[0].comparisonContext else 'unscoped',
+                                'sources': [{'evidenceId': s.evidenceId, 'context': s.comparisonContext.model_dump()}
+                                            for s in body.sources if s.comparisonContext]}}

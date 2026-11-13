@@ -1,6 +1,6 @@
 # Independent registered-preview UI checks
 
-`registered-independent.tsx` executes 18 assertions: request ID/mapping boundary,
+`registered-independent.tsx` executes 23 assertions: request ID/mapping boundary,
 response case/source/approval checks, React cancellation and late responses,
 case/identity/source-path invalidation, valid rendering, and parsing a captured
 real-HTTP/W2 response plus tampered variants. It uses **HappyDOM and controlled
@@ -26,5 +26,7 @@ explicitly exits after all awaited assertions and component unmount, because the
 DOM emulator can retain asynchronous handles. This is not a service shutdown test.
 
 Independent execution used existing installed HappyDOM 21.0.4 and project React/
-esbuild dependencies. All 18 checks passed. Production sources were not changed
+esbuild dependencies. All 23 checks passed. Production sources were not changed
 by the reviewer. Real browser visual/layout validation remains pending.
+
+The scoped-workbench update additionally checks echoed declarations, missing/dishonest scope statuses and invalidation after a declaration handler change. The in-flight change is a synthetic event against a disabled field to exercise the handler, not a real browser action.
