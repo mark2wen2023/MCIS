@@ -1,6 +1,6 @@
 import sys
 from pathlib import Path
-sys.path.insert(0,str(Path('iq-impl-0930/tree/service/tests').resolve()))
+sys.path.insert(0,str(Path(__file__).resolve().parents[2] / 'service' / 'tests'))
 from test_investigation_issues import c,new,event,hypo,begin,verify,submit,get,H,BASE,ROOT,counts,rid
 from sqlalchemy import select
 from mcis_service.redaction.models import AccessPolicyRow
