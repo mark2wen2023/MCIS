@@ -628,3 +628,14 @@ not generated at runtime from candidate sources. Preserve manifest/local source
 comparison and concurrent real CLI rebuild equality. Add SDK-free mutation tests;
 missing/changed sources or receipt omissions fail. No production/build/core changes.
 Historical W184 report stays unchanged; its past environment is not current proof.
+
+## Recommendation blank-only cause links (2026-11-14)
+Actual HTTP reproduction accepts causeNodeIds=[' '] on create/patch, despite the
+at-least-one-cause requirement. Propose a bounded new input contract: after existing
+permissions/lifecycle validation, reject supplied null/blank-only cause lists with
+422 safetyrec_invalid_argument; preserve nonblank and mixed/duplicate labels
+verbatim for compatibility. No typed resolver, historic row rewrite, schema
+migration or report+recommendation archive enablement. Old external clients relying
+on blank-only writes will now receive422; current web already filters empty tokens.
+Change recommendations/router.py, document contracts/recommendation-cause-input.md,
+add HTTP regression; no change to underlying full-content permission policy.

@@ -44,6 +44,12 @@ EDITABLE = ["title", "body", "addressee", "causeNodeIds", "dueUtc", "isInterim"]
 COLUMN = {"Draft": "Draft", "Issued": "Issued", "Responded": "InProgress", "Implemented": "Closed", "NotAdopted": "Closed", "Closed": "Closed"}
 
 
+def _require_cause_label(labels):
+    # Labels remain unresolved declarations; never infer or rewrite a binding.
+    if labels is None or not any(not _core_blank(label) for label in labels):
+        raise problem(422, "safetyrec_invalid_argument", "至少提供一个非空白原因标签；标签不代表已核实的证据关联")
+
+
 class RecIn(BaseModel):
     title: str = Field(..., min_length=1)
     body: str = ""
@@ -182,6 +188,7 @@ def create_rec(case_id: str, body: RecIn, ctx: Ctx = CtxDep) -> dict[str, Any]:
             raise problem(409, "safetyrec_duplicate_id", f"编号已存在：{rid}")
         if parse_iso(body.dueUtc) <= now:
             raise problem(422, "safetyrec_invalid_argument", "期限必须晚于创建时间")
+        _require_cause_label(body.causeNodeIds)
         rec = {"id": rid, "caseId": case_id, "title": body.title, "body": body.body, "addressee": body.addressee,
                "causeNodeIds": body.causeNodeIds, "dueUtc": iso(parse_iso(body.dueUtc)), "isInterim": body.isInterim,
                "createdUtc": iso(now), "updatedUtc": iso(now), "status": "Draft", "progressPct": 0, "verificationNote": "",
@@ -222,6 +229,8 @@ def patch_rec(case_id: str, rec_id: str, body: RecPatch, ctx: Ctx = CtxDep) -> d
         if changes:
             if cur["status"] != "Draft":
                 raise problem(409, "safetyrec_illegal_transition", f"仅草拟状态可修改建议内容，当前：{cur['status']}")
+            if "causeNodeIds" in changes:
+                _require_cause_label(changes["causeNodeIds"])
             if "dueUtc" in changes:
                 changes["dueUtc"] = iso(parse_iso(changes["dueUtc"]))
             new.update(changes)

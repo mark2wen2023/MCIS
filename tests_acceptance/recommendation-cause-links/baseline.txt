@@ -1,0 +1,190 @@
+FFFFFFFF....                                                             [100%]
+=================================== FAILURES ===================================
+___ test_blank_only_causes_rejected_without_database_change[create-labels0] ____
+
+client = <starlette.testclient.TestClient object at 0x7f255308cd40>
+labels = [''], operation = 'create'
+
+    @pytest.mark.parametrize('labels', [[''], [' '], ['\t\n', '\u3000'], ['\u0085', '\u00a0']])
+    @pytest.mark.parametrize('operation', ['create', 'patch'])
+    def test_blank_only_causes_rejected_without_database_change(client, labels, operation):
+        url = C + '/recommendations'
+        if operation == 'patch':
+            url += '/' + create(client)['id']
+        before = snap(client)
+        if operation == 'create':
+            response = client.post(url, headers=H('LeadInvestigator'), json={**BASE, 'causeNodeIds': labels})
+        else:
+            response = client.patch(url, headers=H('LeadInvestigator'), json={'causeNodeIds': labels})
+>       assert response.status_code == 422, response.text
+E       AssertionError: {"id":"SR-2026-08","caseId":"CASE-2026-DEMO-LILY-MARY","title":"Synthetic recommendation","body":"","addressee":"Synthetic party","causeNodeIds":[""],"dueUtc":"2099-01-01T00:00:00Z","isInterim":false,"createdUtc":"2026-11-14T17:42:14Z","updatedUtc":"2026-11-14T17:42:14Z","status":"Draft","progressPct":0,"verificationNote":"","history":[],"responses":[],"isOverdue":false,"column":"Draft","responseSummary":""}
+E       assert 201 == 422
+E        +  where 201 = <Response [201 Created]>.status_code
+
+service/tests/test_recommendation_cause_links.py:33: AssertionError
+___ test_blank_only_causes_rejected_without_database_change[create-labels1] ____
+
+client = <starlette.testclient.TestClient object at 0x7f255238e300>
+labels = [' '], operation = 'create'
+
+    @pytest.mark.parametrize('labels', [[''], [' '], ['\t\n', '\u3000'], ['\u0085', '\u00a0']])
+    @pytest.mark.parametrize('operation', ['create', 'patch'])
+    def test_blank_only_causes_rejected_without_database_change(client, labels, operation):
+        url = C + '/recommendations'
+        if operation == 'patch':
+            url += '/' + create(client)['id']
+        before = snap(client)
+        if operation == 'create':
+            response = client.post(url, headers=H('LeadInvestigator'), json={**BASE, 'causeNodeIds': labels})
+        else:
+            response = client.patch(url, headers=H('LeadInvestigator'), json={'causeNodeIds': labels})
+>       assert response.status_code == 422, response.text
+E       AssertionError: {"id":"SR-2026-08","caseId":"CASE-2026-DEMO-LILY-MARY","title":"Synthetic recommendation","body":"","addressee":"Synthetic party","causeNodeIds":[" "],"dueUtc":"2099-01-01T00:00:00Z","isInterim":false,"createdUtc":"2026-11-14T17:42:15Z","updatedUtc":"2026-11-14T17:42:15Z","status":"Draft","progressPct":0,"verificationNote":"","history":[],"responses":[],"isOverdue":false,"column":"Draft","responseSummary":""}
+E       assert 201 == 422
+E        +  where 201 = <Response [201 Created]>.status_code
+
+service/tests/test_recommendation_cause_links.py:33: AssertionError
+___ test_blank_only_causes_rejected_without_database_change[create-labels2] ____
+
+client = <starlette.testclient.TestClient object at 0x7f2551a44200>
+labels = ['\t\n', '\u3000'], operation = 'create'
+
+    @pytest.mark.parametrize('labels', [[''], [' '], ['\t\n', '\u3000'], ['\u0085', '\u00a0']])
+    @pytest.mark.parametrize('operation', ['create', 'patch'])
+    def test_blank_only_causes_rejected_without_database_change(client, labels, operation):
+        url = C + '/recommendations'
+        if operation == 'patch':
+            url += '/' + create(client)['id']
+        before = snap(client)
+        if operation == 'create':
+            response = client.post(url, headers=H('LeadInvestigator'), json={**BASE, 'causeNodeIds': labels})
+        else:
+            response = client.patch(url, headers=H('LeadInvestigator'), json={'causeNodeIds': labels})
+>       assert response.status_code == 422, response.text
+E       AssertionError: {"id":"SR-2026-08","caseId":"CASE-2026-DEMO-LILY-MARY","title":"Synthetic recommendation","body":"","addressee":"Synthetic party","causeNodeIds":["\t\n","　"],"dueUtc":"2099-01-01T00:00:00Z","isInterim":false,"createdUtc":"2026-11-14T17:42:15Z","updatedUtc":"2026-11-14T17:42:15Z","status":"Draft","progressPct":0,"verificationNote":"","history":[],"responses":[],"isOverdue":false,"column":"Draft","responseSummary":""}
+E       assert 201 == 422
+E        +  where 201 = <Response [201 Created]>.status_code
+
+service/tests/test_recommendation_cause_links.py:33: AssertionError
+___ test_blank_only_causes_rejected_without_database_change[create-labels3] ____
+
+client = <starlette.testclient.TestClient object at 0x7f255171ee70>
+labels = ['\x85', '\xa0'], operation = 'create'
+
+    @pytest.mark.parametrize('labels', [[''], [' '], ['\t\n', '\u3000'], ['\u0085', '\u00a0']])
+    @pytest.mark.parametrize('operation', ['create', 'patch'])
+    def test_blank_only_causes_rejected_without_database_change(client, labels, operation):
+        url = C + '/recommendations'
+        if operation == 'patch':
+            url += '/' + create(client)['id']
+        before = snap(client)
+        if operation == 'create':
+            response = client.post(url, headers=H('LeadInvestigator'), json={**BASE, 'causeNodeIds': labels})
+        else:
+            response = client.patch(url, headers=H('LeadInvestigator'), json={'causeNodeIds': labels})
+>       assert response.status_code == 422, response.text
+E       AssertionError: {"id":"SR-2026-08","caseId":"CASE-2026-DEMO-LILY-MARY","title":"Synthetic recommendation","body":"","addressee":"Synthetic party","causeNodeIds":["
+"," "],"dueUtc":"2099-01-01T00:00:00Z","isInterim":false,"createdUtc":"2026-11-14T17:42:15Z","updatedUtc":"2026-11-14T17:42:15Z","status":"Draft","progressPct":0,"verificationNote":"","history":[],"responses":[],"isOverdue":false,"column":"Draft","responseSummary":""}
+E       assert 201 == 422
+E        +  where 201 = <Response [201 Created]>.status_code
+
+service/tests/test_recommendation_cause_links.py:33: AssertionError
+____ test_blank_only_causes_rejected_without_database_change[patch-labels0] ____
+
+client = <starlette.testclient.TestClient object at 0x7f25517a31a0>
+labels = [''], operation = 'patch'
+
+    @pytest.mark.parametrize('labels', [[''], [' '], ['\t\n', '\u3000'], ['\u0085', '\u00a0']])
+    @pytest.mark.parametrize('operation', ['create', 'patch'])
+    def test_blank_only_causes_rejected_without_database_change(client, labels, operation):
+        url = C + '/recommendations'
+        if operation == 'patch':
+            url += '/' + create(client)['id']
+        before = snap(client)
+        if operation == 'create':
+            response = client.post(url, headers=H('LeadInvestigator'), json={**BASE, 'causeNodeIds': labels})
+        else:
+            response = client.patch(url, headers=H('LeadInvestigator'), json={'causeNodeIds': labels})
+>       assert response.status_code == 422, response.text
+E       AssertionError: {"id":"SR-2026-08","caseId":"CASE-2026-DEMO-LILY-MARY","title":"Synthetic recommendation","body":"","addressee":"Synthetic party","causeNodeIds":[""],"dueUtc":"2099-01-01T00:00:00Z","isInterim":false,"createdUtc":"2026-11-14T17:42:15Z","updatedUtc":"2026-11-14T17:42:15Z","status":"Draft","progressPct":0,"verificationNote":"","history":[],"responses":[],"isOverdue":false,"column":"Draft","responseSummary":""}
+E       assert 200 == 422
+E        +  where 200 = <Response [200 OK]>.status_code
+
+service/tests/test_recommendation_cause_links.py:33: AssertionError
+____ test_blank_only_causes_rejected_without_database_change[patch-labels1] ____
+
+client = <starlette.testclient.TestClient object at 0x7f2551446e70>
+labels = [' '], operation = 'patch'
+
+    @pytest.mark.parametrize('labels', [[''], [' '], ['\t\n', '\u3000'], ['\u0085', '\u00a0']])
+    @pytest.mark.parametrize('operation', ['create', 'patch'])
+    def test_blank_only_causes_rejected_without_database_change(client, labels, operation):
+        url = C + '/recommendations'
+        if operation == 'patch':
+            url += '/' + create(client)['id']
+        before = snap(client)
+        if operation == 'create':
+            response = client.post(url, headers=H('LeadInvestigator'), json={**BASE, 'causeNodeIds': labels})
+        else:
+            response = client.patch(url, headers=H('LeadInvestigator'), json={'causeNodeIds': labels})
+>       assert response.status_code == 422, response.text
+E       AssertionError: {"id":"SR-2026-08","caseId":"CASE-2026-DEMO-LILY-MARY","title":"Synthetic recommendation","body":"","addressee":"Synthetic party","causeNodeIds":[" "],"dueUtc":"2099-01-01T00:00:00Z","isInterim":false,"createdUtc":"2026-11-14T17:42:16Z","updatedUtc":"2026-11-14T17:42:16Z","status":"Draft","progressPct":0,"verificationNote":"","history":[],"responses":[],"isOverdue":false,"column":"Draft","responseSummary":""}
+E       assert 200 == 422
+E        +  where 200 = <Response [200 OK]>.status_code
+
+service/tests/test_recommendation_cause_links.py:33: AssertionError
+____ test_blank_only_causes_rejected_without_database_change[patch-labels2] ____
+
+client = <starlette.testclient.TestClient object at 0x7f2551568c50>
+labels = ['\t\n', '\u3000'], operation = 'patch'
+
+    @pytest.mark.parametrize('labels', [[''], [' '], ['\t\n', '\u3000'], ['\u0085', '\u00a0']])
+    @pytest.mark.parametrize('operation', ['create', 'patch'])
+    def test_blank_only_causes_rejected_without_database_change(client, labels, operation):
+        url = C + '/recommendations'
+        if operation == 'patch':
+            url += '/' + create(client)['id']
+        before = snap(client)
+        if operation == 'create':
+            response = client.post(url, headers=H('LeadInvestigator'), json={**BASE, 'causeNodeIds': labels})
+        else:
+            response = client.patch(url, headers=H('LeadInvestigator'), json={'causeNodeIds': labels})
+>       assert response.status_code == 422, response.text
+E       AssertionError: {"id":"SR-2026-08","caseId":"CASE-2026-DEMO-LILY-MARY","title":"Synthetic recommendation","body":"","addressee":"Synthetic party","causeNodeIds":["\t\n","　"],"dueUtc":"2099-01-01T00:00:00Z","isInterim":false,"createdUtc":"2026-11-14T17:42:16Z","updatedUtc":"2026-11-14T17:42:16Z","status":"Draft","progressPct":0,"verificationNote":"","history":[],"responses":[],"isOverdue":false,"column":"Draft","responseSummary":""}
+E       assert 200 == 422
+E        +  where 200 = <Response [200 OK]>.status_code
+
+service/tests/test_recommendation_cause_links.py:33: AssertionError
+____ test_blank_only_causes_rejected_without_database_change[patch-labels3] ____
+
+client = <starlette.testclient.TestClient object at 0x7f25517420c0>
+labels = ['\x85', '\xa0'], operation = 'patch'
+
+    @pytest.mark.parametrize('labels', [[''], [' '], ['\t\n', '\u3000'], ['\u0085', '\u00a0']])
+    @pytest.mark.parametrize('operation', ['create', 'patch'])
+    def test_blank_only_causes_rejected_without_database_change(client, labels, operation):
+        url = C + '/recommendations'
+        if operation == 'patch':
+            url += '/' + create(client)['id']
+        before = snap(client)
+        if operation == 'create':
+            response = client.post(url, headers=H('LeadInvestigator'), json={**BASE, 'causeNodeIds': labels})
+        else:
+            response = client.patch(url, headers=H('LeadInvestigator'), json={'causeNodeIds': labels})
+>       assert response.status_code == 422, response.text
+E       AssertionError: {"id":"SR-2026-08","caseId":"CASE-2026-DEMO-LILY-MARY","title":"Synthetic recommendation","body":"","addressee":"Synthetic party","causeNodeIds":["
+"," "],"dueUtc":"2099-01-01T00:00:00Z","isInterim":false,"createdUtc":"2026-11-14T17:42:16Z","updatedUtc":"2026-11-14T17:42:16Z","status":"Draft","progressPct":0,"verificationNote":"","history":[],"responses":[],"isOverdue":false,"column":"Draft","responseSummary":""}
+E       assert 200 == 422
+E        +  where 200 = <Response [200 OK]>.status_code
+
+service/tests/test_recommendation_cause_links.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED service/tests/test_recommendation_cause_links.py::test_blank_only_causes_rejected_without_database_change[create-labels0]
+FAILED service/tests/test_recommendation_cause_links.py::test_blank_only_causes_rejected_without_database_change[create-labels1]
+FAILED service/tests/test_recommendation_cause_links.py::test_blank_only_causes_rejected_without_database_change[create-labels2]
+FAILED service/tests/test_recommendation_cause_links.py::test_blank_only_causes_rejected_without_database_change[create-labels3]
+FAILED service/tests/test_recommendation_cause_links.py::test_blank_only_causes_rejected_without_database_change[patch-labels0]
+FAILED service/tests/test_recommendation_cause_links.py::test_blank_only_causes_rejected_without_database_change[patch-labels1]
+FAILED service/tests/test_recommendation_cause_links.py::test_blank_only_causes_rejected_without_database_change[patch-labels2]
+FAILED service/tests/test_recommendation_cause_links.py::test_blank_only_causes_rejected_without_database_change[patch-labels3]
+8 failed, 4 passed in 3.93s
