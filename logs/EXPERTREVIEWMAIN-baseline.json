@@ -1,0 +1,24 @@
+{
+  "main": "25b9df6e1e8c554b043547afc9cd298eb4a5ff6e",
+  "source": "dd2f8b8f07cc9783d1fc92816d7fb95bd2b63017",
+  "mergeBase": "56edd5c49b07adb643d000670a563a7cf6263795",
+  "overlap": [
+    "REQUESTS.md",
+    "ROADMAP.md"
+  ],
+  "patchCheck": "passed excluding append-only progress files",
+  "sourcePaths": [
+    "DEFECTS/EXPERTREVIEWPLAN.md",
+    "logs/EXPERTREVIEWPLAN-impl-hashes-frozen.txt",
+    "logs/EXPERTREVIEWPLAN-selftest.txt",
+    "logs/EXPERTREVIEWPLAN-source-export.txt",
+    "research/expert_meeting/REVIEW_PLAN.md",
+    "research/expert_meeting/citation_html.py",
+    "research/expert_meeting/review_plan.py",
+    "research/expert_meeting/test_review_plan.py",
+    "tests_acceptance/EXPERTREVIEWPLAN/REPORT.md",
+    "tests_acceptance/EXPERTREVIEWPLAN/hashes.txt",
+    "tests_acceptance/EXPERTREVIEWPLAN/results.txt",
+    "tests_acceptance/EXPERTREVIEWPLAN/test_independent.py"
+  ]
+}
