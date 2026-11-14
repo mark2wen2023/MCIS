@@ -579,3 +579,10 @@ object. Reproduced in single-branch clone (15 pass/1 fail). Replace that Git loo
 with the SHA-256 pinned at reviewed extraction; preserve source commit provenance
 and stdlib assertion. No runtime change or history import. Source exports without
 .git pass, and modified source bytes fail the pinned digest assertion.
+
+## EXPERTMEETINGMAIN (2026-11-14)
+Extract bounded offline meeting protocol onto main73fc800 after PR78. Decouple
+pure pinned packet/review validation from old engine; no runner/transport/history
+import. Source behavior retained, public claims explicitly human-authored with
+counterexamples. Existing receipt module unchanged. Scope and integration boundary
+in research/expert_meeting/README.md; real execution HOLD.

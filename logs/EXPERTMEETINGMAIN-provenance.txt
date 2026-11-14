@@ -1,0 +1,5 @@
+Source machine/demo unchanged except import relocation. Packet byte-identical; extracted helper ASTs identical.
+No-.git source export:
+.......................................................................  [100%]
+71 passed in 0.45s
+No execution adapter/secret or environment changes.
