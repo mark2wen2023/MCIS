@@ -1,0 +1,52 @@
+# TL-AXIS independent review
+
+## Result
+PASS for the bounded helper and source integration review. No blocking issue identified in this slice. Browser, full web build, CI, and real-model acceptance are not covered by this report.
+
+Frozen implementation hashes:
+- `web/src/timeline/domain.ts`: `99e61519af4d0ad74ffb261f21360635e98273a8520229404450bc97b4485bd0`
+- `web/src/pages/EvidencePage.tsx`: `2fe64750cb3fd3aad5cbde36f3380843f548009b1653360657902c6e6a138386`
+
+## Review observations
+- `EvidencePage` imports the helper and spreads its result into the timeline value-axis min/max, using events, CPA and conflicts already present in memory. No new network request or privilege is introduced.
+- Defaults retain origin and minimum visible extent of 60 real / 780 fictional seconds, while allowing negative minima and larger maxima.
+- Finite timestamps from all streams contribute to the display domain. Valid duration endpoints extend the display domain; reversed durations are not repaired, and a nonfinite start cannot validate its finite end.
+- Source data remains unchanged, including frozen nested arrays/records. Nothing here computes uncertainty or changes investigation facts.
+- Numeric strings, booleans and nonfinite values are not coerced into valid axis values. Iterative processing avoids spread-argument limits.
+
+## Executed checks
+Existing suite: **15 passed**.
+New `web/tests/timeline-domain-independent.test.ts`: **8 passed**, including all-source extrema, negative durations, invalid starts, nonfinite stream values, runtime wrong numeric types, frozen inputs, 150000 events + 150000 conflicts, and fractional precision.
+Tests bundled with esbuild for Node and run successfully.
+
+Scoped helper TypeScript check passed:
+```
+node_modules/.bin/tsc --ignoreConfig --noEmit --skipLibCheck --target es2022 --module esnext --moduleResolution bundler src/timeline/domain.ts
+```
+
+## Limits / remaining gates
+This is synthetic local deterministic testing, not genuine-case or DeepSeek validation. We did not run the browser or full application build. Display-domain expansion does not itself draw duration bars or repair historical events. Fixed 60-second tick spacing, extreme finite numeric spans, zoom behavior, and overall large-chart rendering/performance remain integration concerns; the large-array test verifies calculation correctness rather than rendering capacity. Permission validation is unchanged, not newly certified. No implementation files or remote state were modified by this review.
+
+# Revision review: production axis factory (supersedes original verdict scope)
+
+The original helper review passed only domain arithmetic. The earlier two SSR checks were insufficient: they did not exercise the exact production tick policy, and therefore did not detect fixed `interval: 60` rendering failure on long spans or unsupported extreme finite domains. Do not cite that review as validation of the original production axis.
+
+## Revised verdict
+PASS for revised factory, static production integration and local SVG SSR regression scope; full browser/UI/CI remains pending.
+
+Frozen revision:
+- domain.ts `26d352e5e7c8dfe1827b319c25017b4766dd5b0b889e7044da7a98cc9a816461`
+- EvidencePage.tsx `2a51b81cbdfd4b73498c470c8609d94c7dae2fcc1c06c6989266d17ab179a94e`
+
+EvidencePage now obtains its exact axis from `timelineAxis`, passes that object as `xAxis`, and renders a `role="alert"` message instead of mounting EChart when the factory rejects the domain. The option useMemo returns null in that case. No silent domain clipping or timestamp mutation is present. Adaptive `splitNumber: 8` replaces fixed tick interval. Long spans include dates in labels.
+
+## Executed final regression
+- 15 original domain cases passed.
+- 8 independent domain cases passed.
+- 10 shared-production-axis SSR/guard cases passed, including updated assertion that exact x-axis formatted zero label appears in SVG.
+- 6 new independent production-axis cases passed, in `web/tests/timeline-axis-independent.test.ts`.
+- Total **39 passed**; scoped domain TypeScript check passed.
+
+Independent revision coverage: invalid/infinite endpoints and offsets; reversed/zero-width spans; finite-but-unrepresentable dates; exact Date maximum and immediately beyond; offset pushing range over Date limit; timezone arithmetic; frozen unchanged extrema; no fixed interval; asymmetric multi-week SVG using exact production factory with visible finite endpoint pixels and bounded output.
+
+The non-drawing branch was verified by source inspection, not mounting the complete React page. SVG SSR is not browser hover/scroll or full ECharts interaction acceptance. Boundary-Date acceptance tests cover factory validation, not render performance over the entire Date range. No model, real-case, remote, deployment or implementation edits performed in this independent review.
