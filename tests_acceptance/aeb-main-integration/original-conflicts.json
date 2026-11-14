@@ -1,0 +1,6 @@
+{
+  "command": "git merge-tree --write-tree 4a6e729 aeb8cf1",
+  "exit": 1,
+  "stdout": "cb99e87aacffafe1eb8719b48779db4f1de69576\n100644 8273a2085ed7c1089fa91f666383df51b580950b 1\tREQUESTS.md\n100644 872eb43c05fc420384330ead6cecd7794c313236 2\tREQUESTS.md\n100644 6d1271e5b79ddea178c6c84c0604b52c3766e83e 3\tREQUESTS.md\n100644 3e0d6a855943c7eb29f8cf562332193d12d1707d 1\tROADMAP.md\n100644 f5b7f613aa51f31dab50cb212fbd4d66bc7d74f1 2\tROADMAP.md\n100644 97045cc34f87cc42599d30a1b888aa982dc015fd 3\tROADMAP.md\n\nAuto-merging REQUESTS.md\nCONFLICT (content): Merge conflict in REQUESTS.md\nAuto-merging ROADMAP.md\nCONFLICT (content): Merge conflict in ROADMAP.md\n",
+  "stderr": ""
+}

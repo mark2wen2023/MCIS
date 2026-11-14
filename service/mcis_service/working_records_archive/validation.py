@@ -286,7 +286,7 @@ def inspect_historical_packages(data,files,case_id,outer_member_count=None):
         if 'manifest.json'not in inside or 'case.json'not in inside or 'case.ext.json'not in inside:fail()
         m=strict_json(inside['manifest.json'])
         exact(m,{'packageFormat','packageVersion','caseId','createdAtUtc','lastModifiedAtUtc','generatorVersion','files'})
-        if m['packageFormat']!='MCIS-MCASE' or m['packageVersion']not in ('1.0.0','1.1.0','1.2.0','1.3.0') or m['caseId']!=case_id:fail('历史源包版本或案件关联不支持')
+        if m['packageFormat']!='MCIS-MCASE' or m['packageVersion']not in ('1.0.0','1.1.0','1.2.0','1.3.0','1.4.0') or m['caseId']!=case_id:fail('历史源包版本或案件关联不支持')
         stamp(m['createdAtUtc']);stamp(m['lastModifiedAtUtc']);text(m['generatorVersion'])
         if not isinstance(m['files'],list):fail()
         listed=set()

@@ -1,0 +1,2 @@
+Real ASGI API preview/commit/lookup responses passed frontend parsing and SSR (not browser interaction)
+1.4 parser/receipt binding/render scope assertions passed (synthetic inputs; no backend mocks claimed as real workflow)

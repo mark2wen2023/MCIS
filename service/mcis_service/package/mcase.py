@@ -205,7 +205,7 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
             row = s.scalars(select(CaseRow).where(CaseRow.case_id == case_id)).first()
             def assemble_working():
                 files['audit/audit.jsonl'] = _lines(audit.all_lines(s, case_id))
-                files['manifest.json'] = manifest_json(case_id, {k:v for k,v in files.items() if k!='manifest.json'}, iso(parse_iso(row.created_utc)), '1.3.0'if working['version']==2 else'1.2.0').encode()
+                files['manifest.json'] = manifest_json(case_id, {k:v for k,v in files.items() if k!='manifest.json'}, iso(parse_iso(row.created_utc)), '1.4.0'if 'timeline/records.v1.json'in files else '1.3.0'if working['version']==2 else'1.2.0').encode()
                 buf = io.BytesIO()
                 with zipfile.ZipFile(buf, 'w', zipfile.ZIP_DEFLATED) as z:
                     for rel in sorted(files): z.writestr(rel, files[rel])
@@ -390,16 +390,22 @@ def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: s
     except (ValueError, UnicodeError):
         raise problem(422, "BAD_PACKAGE", "案件包清单无效")
     if namespace or manifest.get("packageVersion") == "1.1.0":
-        if (namespace != [hfacs_archive.PATH] or manifest.get("packageVersion") not in ("1.1.0", "1.2.0", "1.3.0")
+        if (namespace != [hfacs_archive.PATH] or manifest.get("packageVersion") not in ("1.1.0", "1.2.0", "1.3.0", "1.4.0")
                 or not isinstance(validated_hfacs, hfacs_archive.ValidatedArchive)
                 or validated_hfacs.raw != files[hfacs_archive.PATH]):
             raise problem(422, "HFACS_IMPORT_ENTRY", "HFACS扩展只能通过本版本受限导入预检与确认恢复，旧入口不接受")
-    elif manifest.get('packageVersion') in ('1.2.0','1.3.0'):
+    elif manifest.get('packageVersion') in ('1.2.0','1.3.0','1.4.0'):
         if not working_ok: raise problem(422, 'WORKING_IMPORT_ENTRY', '工作记录包只能通过完整预检恢复')
     elif manifest.get("packageVersion", PACKAGE_VERSION) != PACKAGE_VERSION:
         raise problem(422, "BAD_PACKAGE", "不支持的案件包版本")
-    if manifest.get('packageVersion') in ('1.2.0','1.3.0') and not working_ok:
+    if manifest.get('packageVersion') in ('1.2.0','1.3.0','1.4.0') and not working_ok:
         raise problem(422, 'WORKING_IMPORT_ENTRY', '工作记录包只能通过完整预检恢复')
+    from ..working_records_archive import timeline as timeline_archive
+    timeline_namespace=[p for p in files if p.casefold()=='timeline' or p.casefold().startswith('timeline/')]
+    if timeline_namespace or manifest.get('packageVersion')=='1.4.0':
+        if timeline_namespace!=[timeline_archive.PATH] or manifest.get('packageVersion')!='1.4.0' or not working_ok or validated_working.data['version']!=1:
+            raise problem(422,'TIMELINE_IMPORT_ENTRY','时间线扩展只能通过完整预检恢复')
+        timeline_archive.validate(files,validated_working.data['caseId'])
     report = verify_files(files)
     if not report["isValid"]:
         raise problem(422, "INTEGRITY_FAILED", "案件包完整性校验失败", report)
@@ -479,7 +485,7 @@ def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: s
             p = evidence_service.blob_path(blob_root, case_id, rel)
             p.parent.mkdir(parents=True, exist_ok=True)
             p.write_bytes(blob)
-    for e in _load_json(files, "analysis/timeline.json", {}).get("events", []):
+    for e in ([] if timeline_archive.PATH in files else _load_json(files, "analysis/timeline.json", {}).get("events", [])):
         put_doc(s, TimelineEventRow, case_id, e["eventId"], e)
     for c in _load_json(files, "analysis/time-alignment.json", {}).get("conflicts", []):
         put_doc(s, ConflictRow, case_id, c["conflictId"], c)

@@ -1,0 +1,22 @@
+{
+  "base": "4a6e72939c1d740707d65abb505b6eb90d585708",
+  "feature": "aeb8cf1dfb18b2fd723a6d98112e550b83054801",
+  "feature_paths_equal": [
+    "contracts/report-timeline-archive-v1.md",
+    "contracts/schemas/timeline-records-archive.schema.json",
+    "contracts/working-record-archive-v1.md",
+    "service/mcis_service/package/mcase.py",
+    "service/mcis_service/package_intake/parser.py",
+    "service/mcis_service/working_records_archive/service.py",
+    "service/mcis_service/working_records_archive/timeline.py",
+    "service/mcis_service/working_records_archive/validation.py",
+    "web/src/packageIntake/PackageIntakePanel.tsx",
+    "web/src/packageIntake/model.ts",
+    "web/src/packages/PackagePanel.tsx"
+  ],
+  "main_paths_preserved": [
+    "service/mcis_service/cases/service.py",
+    "service/tests/test_environment_w92.py"
+  ],
+  "docs": "Both append-only REQUESTS/ROADMAP suffixes retained"
+}
