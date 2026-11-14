@@ -567,3 +567,6 @@ New isolated research/expert_group module on main3aba2bf: frozen public report e
 
 ## Expert group verifier descriptor ownership correction · 2026-11-14
 Coordinator review found directory-leaf fdopen failure leaks a raw descriptor. Register frozen receipt.py/test_cli_render.py correction: validate file type before wrapping, transfer ownership only after fdopen succeeds, and finally close untransferred descriptors in read/write helpers. Add repeated directory-leaf and wrapper-failure regressions. No provider call; supersede freeze only after checks.
+
+## 2026-11-14 EXPERTWORKBENCH — 公开冻结案例离线审读工作台
+从专家候选 a686c85 独立分支，只新增 research/expert_workbench 与测试记录，不修改已冻结专家执行器/文件安全/正式案件/时间对照/查重组件。通过明确本地选入 result.json 展示公开冻结包三主张与双角色意见、出处和未核实状态；筛选分歧与缺失，不裁决。严格绑定该版本 packet/manifest，脚本模拟、真实提供方字段声明、未收到模型响应分开；任何JSON声明不认证真实调用、作者或导出完整性。CSP禁止网络，无模型入口、持久化或案件写入。

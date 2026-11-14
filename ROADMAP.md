@@ -373,3 +373,9 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Public two-role Pi research | 工程范围验收通过 | 2026-11-14：主测38+独审20=58通过、零跳；freeze12/12。独审发现并关闭EG-D01至D04（回执终态、HTTP总deadline、管道停读预算、末端导出完整性）。实际Pi两role fixture6模拟轮/4工具/providerRequests0；真实DeepSeek与浏览器能力仍未验收，无可用安全凭据。见 `tests_acceptance/EXPERT_GROUP/INDEPENDENT.md`。 |
 | Public two-role Pi research r1 | 待复审 | 2026-11-14：协调独审发现目录叶子fdopen异常裸fd泄漏；read/write helper改显式所有权与finally关闭，新增4类目录叶子反复拒绝及fdopen失败读写回归，13项CLI测试通过。新冻结 `logs/expert-group-r1-impl-hashes-frozen.txt` 替代原冻结；真实DeepSeek继续暂停。 |
 | Public two-role Pi research r1 | 修订范围验收通过 | 2026-11-14：主测43+独审36=79通过、零跳；新增16项独立fd生命周期回归，目录/FIFO/fstat/fdopen/read/write异常均无fd增长。EG-D05已修，r1freeze12/12。待协调复审；真实DeepSeek请求继续暂停，无可用安全注入。 |
+
+| 2026-11-14 | EXPERTWORKBENCH | 待独立验收 | 基于a686c85的独立公开研究查看器，不修改专家执行器。绑定冻结三主张，显式载入JSON→双角色/来源/分歧/缺失视图；模拟/真实提供方字段声明分开，未认证且不核验导出回执。36合成断言及TS/build过，旧a686模拟Pi产物只读兼容；无新模型/案件请求。9项冻结 logs/EXPERTWORKBENCH-impl-hashes-frozen.txt。原生Chromium沙箱配置阻断，未绕过/部署。 |
+
+| 2026-11-14 | EXPERTWORKBENCH r1 | 返工待复验 | 独审复现计数矛盾4项：未开始非零、完成零模型/零工具、真实完整组请求不等轮数。补固定执行器计数一致性，保留合法失败未知组请求小于轮次；40自测、TS/build过。r1九冻结待独审原断言复跑，无模型调用/正式案件接入。 |
+
+| 2026-11-14 | EXPERTWORKBENCH r1 | 受限独立验收通过 | 独审51/51（33模型结构、15DOM、2构建CSP哈希、1冻结）与9/9哈希通过；EW-D01计数矛盾原断言复过，初始失败证据保留。开发40断言另计；旧a686模拟Pi产物兼容不代表真实模型验收。原生Chromium导航前沙箱失败，真实截图/移动布局/CSP执行/浏览器交互未验。仅本地代码候选，未推送、合并部署或接正式案件。 |

@@ -1,0 +1,1 @@
+{"compatibility":"a686c85 existing fixture accepted","transportMocked":true,"realPi":true,"realModel":false,"roles":2}

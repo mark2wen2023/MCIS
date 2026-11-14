@@ -1,0 +1,6 @@
+PASS valid synthetic fixture
+FAIL EW-D01 not_started nonzero model Missing expected exception.
+FAIL EW-D01 completed zero model Missing expected exception.
+FAIL EW-D01 completed zero tools Missing expected exception.
+FAIL EW-D01 remote completed requests mismatch Missing expected exception.
+{"passed":1,"failed":4}

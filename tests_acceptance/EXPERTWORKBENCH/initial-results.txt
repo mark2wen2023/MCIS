@@ -1,0 +1,46 @@
+PASS valid synthetic fixture
+FAIL EW-D01 not_started nonzero model Missing expected exception.
+FAIL EW-D01 completed zero model Missing expected exception.
+FAIL EW-D01 completed zero tools Missing expected exception.
+FAIL EW-D01 remote completed requests mismatch Missing expected exception.
+PASS partial pre-receipt failure preserves fewer requests
+PASS minimum complete two model two tools
+PASS alien packet
+PASS alien manifest
+PASS unknown provider
+PASS changed Pi
+PASS identity asserted
+PASS facts asserted
+PASS consensus asserted
+PASS source verified
+PASS mock with real model
+PASS same run ids
+PASS swapped roles
+PASS altered quote
+PASS duplicate item
+PASS unknown row field
+PASS unknown group field
+PASS model budget
+PASS tool budget
+PASS partial reviews forbidden
+PASS success with error
+PASS duplicate JSON member rejected
+PASS malformed UTF8 rejected
+PASS oversized bytes rejected
+PASS initial no result
+PASS DOM literal hostile markup and provenance
+PASS different filter selects one
+PASS same filter two never consensus
+PASS missing empty selection removes stale cards
+PASS invalid import preserves previous result
+PASS repeat import replaces not appends
+PASS newer load beats older delayed load
+PASS failed newer load still invalidates pending old
+PASS clear invalidates pending read
+PASS remote remains declaration not authentication
+PASS partial role missing filter retains accepted role only
+PASS zero network and storage writes
+PASS build CSP exact script and style hashes
+PASS build self contained no external resource attributes
+PASS frozen nine files match
+{"passed":41,"failed":4}
