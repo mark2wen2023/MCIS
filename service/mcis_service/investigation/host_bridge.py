@@ -12,7 +12,7 @@ class Request(BaseModel):
     profile:Literal['mcis-issue-host-trial-v1']
     contextId:str
     requestId:str
-    action:Literal['save','read','sources']
+    action:Literal['save','read','sources','list']
     caseId:str
     issueId:str|None=None
     operationId:str|None=None
@@ -28,6 +28,14 @@ class SourceItem(BaseModel):
     mediaKind:Literal['csv','pdf']
     byteLength:int=Field(ge=0)
     registeredUtc:str
+
+class IssueSummary(BaseModel):
+    model_config=ConfigDict(extra='ignore',strict=True)
+    issueId:str
+    revision:int=Field(ge=1,le=200)
+    openingNotePreview:str=Field(max_length=200)
+    lastKind:Literal['judgment','verification','discussion']
+    status:Literal['working_unreviewed']
 
 class IssueHostClient:
     def __init__(self,*,db,settings,session_token,case_id):
@@ -54,7 +62,7 @@ class IssueHostClient:
         request_id=None
         try:
             req=Request.model_validate(value);canonical_id(req.requestId);request_id=req.requestId
-            if req.action=='sources':
+            if req.action in ('sources','list'):
                 if req.model_fields_set & {'issueId','operationId','expectedRevision','entry','sourcePins'}:raise ValueError()
             else:canonical_id(req.issueId)
             if self.__closed or req.contextId!=self.__context or req.caseId!=self.__case:raise ValueError()
@@ -62,6 +70,8 @@ class IssueHostClient:
             path=f'/api/v1/trial/cases/{self.__case}/issues'
             if req.action=='sources':
                 response=await self.__http.get(f'/api/v1/trial/cases/{self.__case}/sources',headers={'Authorization':'Bearer '+self.__token})
+            elif req.action=='list':
+                response=await self.__http.get(path,headers={'Authorization':'Bearer '+self.__token})
             elif req.action=='save':
                 canonical_id(req.operationId)
                 if req.entry is None or req.expectedRevision is None:raise ValueError()
@@ -80,6 +90,16 @@ class IssueHostClient:
                 if response.status_code==409 and response.json().get('code')=='SOURCE_SELECTION_CHANGED':code='ISSUE_SOURCE_SELECTION_CHANGED'
                 return {**self.scope,'requestId':request_id,'ok':False,'code':code,'status':response.status_code}
             raw=response.json()
+            if req.action=='list':
+                if response.status_code!=200 or raw.get('caseId')!=self.__case:raise ValueError()
+                items=raw.get('items')
+                if not isinstance(items,list) or len(items)>100:raise ValueError()
+                projected=[];seen=set()
+                for item in items:
+                    value=IssueSummary.model_validate(item).model_dump();canonical_id(value['issueId'])
+                    if value['issueId'] in seen:raise ValueError()
+                    seen.add(value['issueId']);projected.append(value)
+                return {**self.scope,'requestId':request_id,'ok':True,'body':{'profile':'trial-issue-list-v1','caseId':self.__case,'items':projected}}
             if req.action=='sources':
                 if (response.status_code!=200 or raw.get('profile')!='trial-current-sources-v1'
                     or raw.get('caseId')!=self.__case or raw.get('caseIncarnation')!=self.__generation

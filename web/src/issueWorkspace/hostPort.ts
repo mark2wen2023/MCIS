@@ -1,4 +1,4 @@
-import {parse,parseSources,SourceSelectionChanged,type JournalPort} from './model';
+import {parse,parseSources,parseIssueList,SourceSelectionChanged,type JournalPort} from './model';
 const PROFILE='mcis-issue-host-trial-v1';
 const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 function isUuid(value:unknown):value is string{return typeof value==='string'&&uuid.test(value)}
@@ -7,12 +7,12 @@ function keys(value:any,allowed:string[]){if(!value||typeof value!=='object'||Ar
 export function createIssueHostPort(scope:{profile:string,contextId:string,caseId:string,productionLogin:false},send:(message:unknown)=>Promise<unknown>):JournalPort{
  if(scope.profile!==PROFILE||scope.productionLogin!==false||!isUuid(scope.contextId)||typeof scope.caseId!=='string'||!/^[A-Za-z0-9_-]{1,64}$/.test(scope.caseId)||typeof send!=='function')throw Error('Invalid trial scope');
  const frozen={profile:PROFILE,contextId:scope.contextId,caseId:scope.caseId};
- async function call(action:'save'|'read'|'sources',value:any){
+ async function call(action:'save'|'read'|'sources'|'list',value:any){
   let sourceConflict=false;
   try{
    const input=structuredClone(value);
    keys(input,action==='save'?['caseId','issueId','operationId','expectedRevision','entry',...(Object.hasOwn(input,'sourcePins')?['sourcePins']:[])]:action==='read'?['caseId','issueId']:['caseId']);
-   if(input.caseId!==frozen.caseId||action!=='sources'&&!isUuid(input.issueId))throw Error('Trial scope mismatch');
+   if(input.caseId!==frozen.caseId||(action==='save'||action==='read')&&!isUuid(input.issueId))throw Error('Trial scope mismatch');
    if(action==='save'){
     keys(input.entry,['kind','note','sourceIds','outcome','againstJudgment']);
     const e=input.entry;
@@ -31,6 +31,7 @@ export function createIssueHostPort(scope:{profile:string,contextId:string,caseI
    if(new TextEncoder().encode(JSON.stringify(reply)).length>8*1024*1024)throw Error('Trial response limit');
    if(reply?.profile===PROFILE&&reply.contextId===frozen.contextId&&reply.caseId===frozen.caseId&&reply.productionLogin===false&&reply.requestId===requestId&&reply.ok===false&&reply.code==='ISSUE_SOURCE_SELECTION_CHANGED'&&reply.status===409){sourceConflict=true;throw new SourceSelectionChanged();}
    if(!reply||reply.profile!==PROFILE||reply.contextId!==frozen.contextId||reply.caseId!==frozen.caseId||reply.productionLogin!==false||reply.requestId!==requestId||reply.ok!==true)throw Error('Trial result unconfirmed');
+   if(action==='list')return {profile:'trial-issue-list-v1',caseId:frozen.caseId,items:parseIssueList(reply.body,frozen.caseId)};
    if(action==='sources')return {profile:'trial-issue-sources-v1',caseId:frozen.caseId,scope:'current-local-supported-candidates-only',items:parseSources(reply.body,frozen.caseId)};
    const parsed=parse(reply.body,input.caseId,input.issueId);
    if(action==='save'){
@@ -41,5 +42,5 @@ export function createIssueHostPort(scope:{profile:string,contextId:string,caseI
    return {...parsed,events:parsed.events.map(e=>({...e,status:'working_unreviewed'}))};
   }catch(error){if(sourceConflict&&error instanceof SourceSelectionChanged)throw error;throw Error('Trial result unconfirmed')}
  }
- return {sources:caseId=>call('sources',{caseId}),save:command=>call('save',command),read:(caseId,issueId)=>call('read',{caseId,issueId})};
+ return {list:caseId=>call('list',{caseId}),sources:caseId=>call('sources',{caseId}),save:command=>call('save',command),read:(caseId,issueId)=>call('read',{caseId,issueId})};
 }

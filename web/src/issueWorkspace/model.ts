@@ -11,7 +11,12 @@ export function parseSources(value:any,caseId:string):SourceCandidate[]{
  if(!value||value.profile!=="trial-issue-sources-v1"||value.caseId!==caseId||value.scope!=="current-local-supported-candidates-only"||!Array.isArray(value.items)||value.items.length>100)throw Error("Invalid sources");
  const ids=new Set<string>();return value.items.map((s:any)=>{if(!s||typeof s.evidenceId!=="string"||!s.evidenceId||s.evidenceId.length>64||ids.has(s.evidenceId)||typeof s.sourceIncarnation!=="string"||! /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(s.sourceIncarnation)||typeof s.sourceSha256!=="string"||! /^[0-9a-f]{64}$/.test(s.sourceSha256)||!["csv","pdf"].includes(s.mediaKind)||!Number.isSafeInteger(s.byteLength)||s.byteLength<0||typeof s.registeredUtc!=="string"||!Number.isFinite(Date.parse(s.registeredUtc)))throw Error("Invalid source");ids.add(s.evidenceId);return {sourceIncarnation:s.sourceIncarnation,evidenceId:s.evidenceId,sourceSha256:s.sourceSha256,mediaKind:s.mediaKind,byteLength:s.byteLength,registeredUtc:s.registeredUtc}});
 }
-export interface JournalPort{sources?(caseId:string):Promise<unknown>;save(command:Command):Promise<unknown>;read(caseId:string,issueId:string):Promise<unknown>}
+export type IssueSummary={issueId:string,revision:number,openingNotePreview:string,lastKind:Kind,status:'working_unreviewed'};
+export function parseIssueList(value:any,caseId:string):IssueSummary[]{
+ if(!value||value.profile!=='trial-issue-list-v1'||value.caseId!==caseId||!Array.isArray(value.items)||value.items.length>100)throw Error('Invalid issue list');
+ const ids=new Set<string>();return value.items.map((x:any)=>{if(!x||typeof x.issueId!=='string'||!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(x.issueId)||ids.has(x.issueId)||!Number.isInteger(x.revision)||x.revision<1||x.revision>200||typeof x.openingNotePreview!=='string'||x.openingNotePreview.length>200||!['judgment','verification','discussion'].includes(x.lastKind)||x.status!=='working_unreviewed')throw Error('Invalid issue summary');ids.add(x.issueId);return {issueId:x.issueId,revision:x.revision,openingNotePreview:x.openingNotePreview,lastKind:x.lastKind,status:'working_unreviewed'}});
+}
+export interface JournalPort{list?(caseId:string):Promise<unknown>;sources?(caseId:string):Promise<unknown>;save(command:Command):Promise<unknown>;read(caseId:string,issueId:string):Promise<unknown>}
 export function latest(history?:History){return history?.events.filter(e=>e.kind==='judgment').at(-1)?.seq??0}
 export function canDiscuss(history?:History){const n=latest(history);return !!n&&!!history?.events.some(e=>e.kind==='verification'&&e.againstJudgment===n)}
 export function parse(value:unknown,caseId:string,issueId:string):History{
@@ -26,13 +31,13 @@ export function parse(value:unknown,caseId:string,issueId:string):History{
  });return {caseId,issueId,revision:x.revision,status:'working_unreviewed',events};
 }
 export function createRehearsalPort():JournalPort{
- let history:History|undefined;const operations=new Map<string,string>();
+ const histories=new Map<string,History>();const operations=new Map<string,string>();
  return {async save(command){
   const c=structuredClone(command);if(c.caseId!=='CASE-ISSUE-FICTIONAL')throw Error('fictional only');
-  const wire=JSON.stringify(c);const prior=operations.get(c.operationId);
+  const history=histories.get(c.issueId);const wire=JSON.stringify(c);const prior=operations.get(c.operationId);
   if(prior){if(prior!==wire)throw Error('conflict');return structuredClone(history&&{...history,events:history.events.map(e=>({...e,status:'working_unreviewed'}))})}
   if(c.expectedRevision!==(history?.revision??0)||history&&history.issueId!==c.issueId)throw Error('conflict');
   const next={caseId:c.caseId,issueId:c.issueId,status:'working_unreviewed',revision:c.expectedRevision+1,events:[...(history?.events.map(e=>({...e,status:'working_unreviewed'}))??[]),{...c.entry,status:'working_unreviewed',seq:c.expectedRevision+1,recordedUtc:new Date().toISOString()}]};
-  history=parse(next,c.caseId,c.issueId);operations.set(c.operationId,wire);return structuredClone(history&&{...history,events:history.events.map(e=>({...e,status:'working_unreviewed'}))});
- },async read(caseId,issueId){if(!history||history.caseId!==caseId||history.issueId!==issueId)throw Error('missing');return structuredClone(history&&{...history,events:history.events.map(e=>({...e,status:'working_unreviewed'}))})}};
+  const saved=parse(next,c.caseId,c.issueId);histories.set(c.issueId,saved);operations.set(c.operationId,wire);return structuredClone({...saved,events:saved.events.map(e=>({...e,status:'working_unreviewed'}))});
+ },async list(caseId){if(caseId!=='CASE-ISSUE-FICTIONAL')throw Error('fictional only');return {profile:'trial-issue-list-v1',caseId,items:[...histories.values()].map(h=>({issueId:h.issueId,revision:h.revision,openingNotePreview:h.events[0].note.slice(0,200),lastKind:h.events.at(-1)!.kind,status:'working_unreviewed'}))}},async read(caseId,issueId){const history=histories.get(issueId);if(!history||history.caseId!==caseId||history.issueId!==issueId)throw Error('missing');return structuredClone(history&&{...history,events:history.events.map(e=>({...e,status:'working_unreviewed'}))})}};
 }

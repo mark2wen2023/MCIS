@@ -30,9 +30,15 @@ try{
  assert.equal(container.querySelectorAll('li').length,5);assert.match(container.querySelector('li')!.textContent!,/历史来源引用：EV-001/);assert.match(container.textContent!,/初判待核实/);assert.match(container.textContent!,/未审核/);
  await act(async()=>{[...container.querySelectorAll('button')].find(b=>b.textContent==='重新读取历史')!.dispatchEvent(new window.MouseEvent('click',{bubbles:true}));await new Promise(r=>setTimeout(r,150))});
  assert.equal(container.querySelectorAll('li').length,5);assert.match(container.textContent!,/已重新读取/);
+ await act(async()=>{[...container.querySelectorAll('button')].find(b=>b.textContent==='刷新问题卡目录')!.dispatchEvent(new window.MouseEvent('click',{bubbles:true}));await new Promise(r=>setTimeout(r,150))});
+ const open=container.querySelector('button[aria-label^="打开问题卡"]')!;assert(open,'saved card in directory');
+ await act(async()=>open.dispatchEvent(new window.MouseEvent('click',{bubbles:true})));
+ assert(container.querySelector('textarea')!.disabled,'open needs authorized read');
+ await act(async()=>{[...container.querySelectorAll('button')].find(b=>b.textContent==='重新读取历史')!.dispatchEvent(new window.MouseEvent('click',{bubbles:true}));await new Promise(r=>setTimeout(r,150))});
+ assert.equal(container.querySelectorAll('li').length,5);await add('目录重新打开后追加');assert.equal(container.querySelectorAll('li').length,6);
  await assert.rejects(()=>port.read('FOREIGN','00000000-0000-0000-0000-000000000000'));
  assert.equal(window.localStorage.length,0);assert.equal(window.sessionStorage.length,0);assert.equal(errors,'');
- console.log('PASS: React/HappyDOM -> TS business port -> fictional stdio host -> authenticated ASGI -> real temporary SQLite, two current source candidates, selected EV-001 reference, five records and readback. Not production browser IPC/login.');
+ console.log('PASS: React/HappyDOM -> TS business port -> fictional stdio host -> authenticated ASGI -> real temporary SQLite, two current source candidates, selected EV-001 reference, five records, directory reopen, readback and sixth appended record. Not production browser IPC/login.');
 }finally{
  await act(async()=>root.unmount());await window.happyDOM.abort();window.close();
  const exited=once(child,'exit');child.stdin.end();let timeout:any;await Promise.race([exited,new Promise(done=>{timeout=setTimeout(()=>{child.kill('SIGTERM');done(null)},5000)})]);clearTimeout(timeout);lines.close();
