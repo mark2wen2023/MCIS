@@ -4,7 +4,7 @@ from typing import Literal
 import httpx
 from pydantic import BaseModel,ConfigDict,Field
 from ..identity.http_trial import create_identity_trial_app
-from .journal import Entry,canonical_id,auth,load_case
+from .journal import Entry,SourcePin,canonical_id,auth,load_case
 
 PROFILE='mcis-issue-host-trial-v1'
 class Request(BaseModel):
@@ -18,11 +18,13 @@ class Request(BaseModel):
     operationId:str|None=None
     expectedRevision:int|None=Field(default=None,ge=0,lt=200)
     entry:Entry|None=None
+    sourcePins:list[SourcePin]|None=Field(default=None,max_length=20)
 
 class SourceItem(BaseModel):
     model_config=ConfigDict(extra='ignore',strict=True)
     evidenceId:str=Field(min_length=1,max_length=64)
     sourceSha256:str=Field(pattern=r'^[0-9a-f]{64}$')
+    sourceIncarnation:str
     mediaKind:Literal['csv','pdf']
     byteLength:int=Field(ge=0)
     registeredUtc:str
@@ -53,7 +55,7 @@ class IssueHostClient:
         try:
             req=Request.model_validate(value);canonical_id(req.requestId);request_id=req.requestId
             if req.action=='sources':
-                if req.model_fields_set & {'issueId','operationId','expectedRevision','entry'}:raise ValueError()
+                if req.model_fields_set & {'issueId','operationId','expectedRevision','entry','sourcePins'}:raise ValueError()
             else:canonical_id(req.issueId)
             if self.__closed or req.contextId!=self.__context or req.caseId!=self.__case:raise ValueError()
             self._check_scope()
@@ -63,16 +65,20 @@ class IssueHostClient:
             elif req.action=='save':
                 canonical_id(req.operationId)
                 if req.entry is None or req.expectedRevision is None:raise ValueError()
+                if req.entry.sourceIds and req.sourcePins is None:raise ValueError()
                 body={'operationId':req.operationId,'entry':req.entry.model_dump()}
+                if req.sourcePins is not None:body['sourcePins']=[p.model_dump() for p in req.sourcePins]
                 if req.expectedRevision==0:body['issueId']=req.issueId
                 else:path+='/'+req.issueId+'/events';body['expectedRevision']=req.expectedRevision
                 response=await self.__http.post(path,headers={'Authorization':'Bearer '+self.__token},json=body)
             else:
-                if req.operationId is not None or req.entry is not None or req.expectedRevision is not None:raise ValueError()
+                if req.operationId is not None or req.entry is not None or req.expectedRevision is not None or 'sourcePins' in req.model_fields_set:raise ValueError()
                 response=await self.__http.get(path+'/'+req.issueId,headers={'Authorization':'Bearer '+self.__token})
             self._check_scope()
             if response.status_code not in (200,201):
-                return {**self.scope,'requestId':request_id,'ok':False,'code':'ISSUE_HOST_REJECTED','status':response.status_code}
+                code='ISSUE_HOST_REJECTED'
+                if response.status_code==409 and response.json().get('code')=='SOURCE_SELECTION_CHANGED':code='ISSUE_SOURCE_SELECTION_CHANGED'
+                return {**self.scope,'requestId':request_id,'ok':False,'code':code,'status':response.status_code}
             raw=response.json()
             if req.action=='sources':
                 if (response.status_code!=200 or raw.get('profile')!='trial-current-sources-v1'
@@ -85,6 +91,7 @@ class IssueHostClient:
                 if len({x['evidenceId'] for x in projected})!=len(projected):raise ValueError()
                 from datetime import datetime
                 for item in projected:
+                    canonical_id(item['sourceIncarnation'])
                     if datetime.fromisoformat(item['registeredUtc'].replace('Z','+00:00')).utcoffset() is None:raise ValueError()
                 body={'profile':'trial-issue-sources-v1','caseId':self.__case,'items':projected,'scope':'current-local-supported-candidates-only',
                     'selectionSnapshotPinned':False,'observationApproval':'not_assessed'}

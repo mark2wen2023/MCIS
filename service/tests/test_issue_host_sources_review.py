@@ -21,7 +21,10 @@ def test_catalog_selection_save_rechecks_actual_source_and_authority(ready,chang
    if change=='grant':
     with t.app.state.db.session() as s:journal.grant(s,subject,CASE,enabled=False)
    if change=='missing':source='missing-source'
-   saved=await c.dispatch(request(c,ready,entry={'kind':'judgment','note':'来源辅助初判，未审核','sourceIds':[source]}))
+   selected=next(x for x in listing['body']['items'] if x['evidenceId']==r['evidenceId'])
+   pin={k:selected[k] for k in ('evidenceId','sourceIncarnation','sourceSha256')}
+   if change=='missing':pin['evidenceId']=source
+   saved=await c.dispatch(request(c,ready,sourcePins=[pin],entry={'kind':'judgment','note':'来源辅助初判，未审核','sourceIds':[source]}))
    assert saved['ok']==(change=='none')
    if change=='none':
     assert saved['body']['events'][0]['sourceIds']==[source]

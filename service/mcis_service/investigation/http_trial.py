@@ -15,12 +15,14 @@ class Create(BaseModel):
     issueId:str
     operationId:str
     entry:journal.Entry
+    sourcePins:list[journal.SourcePin]|None=Field(default=None,max_length=20)
 
 class Append(BaseModel):
     model_config=ConfigDict(extra='forbid',strict=True)
     operationId:str
     expectedRevision:int=Field(ge=1,lt=200)
     entry:journal.Entry
+    sourcePins:list[journal.SourcePin]|None=Field(default=None,max_length=20)
 
 
 def pairs(items):
@@ -93,8 +95,11 @@ async def handle(app,scope,receive,send):
     except (ValueError,UnicodeError,RecursionError,ValidationError):await fail(422,'ISSUE_REQUEST_INVALID');return True
     try:
         result=await run_in_threadpool(journal.append,app.db,app.settings,token,case_id,
-           issue_id or body.issueId,body.operationId,body.expectedRevision if issue_id else 0,body.entry.model_dump())
-    except HTTPException as e:await fail(e.status_code if e.status_code in (403,404,409,413,422) else 503,'ISSUE_WRITE_REJECTED');return True
+           issue_id or body.issueId,body.operationId,body.expectedRevision if issue_id else 0,body.entry.model_dump(),
+           source_pins=None if body.sourcePins is None else [p.model_dump() for p in body.sourcePins])
+    except HTTPException as e:
+        code='SOURCE_SELECTION_CHANGED' if e.status_code==409 and isinstance(e.detail,dict) and e.detail.get('code')=='SOURCE_SELECTION_CHANGED' else 'ISSUE_WRITE_REJECTED'
+        await fail(e.status_code if e.status_code in (403,404,409,413,422) else 503,code);return True
     except (ValueError,ValidationError):await fail(422,'ISSUE_REQUEST_INVALID');return True
     except Exception:await fail(503,'ISSUE_WRITE_UNCONFIRMED_RETRY_SAME_OPERATION');return True
     await app.respond(send,200 if issue_id or result['replayed'] else 201,'ISSUE_WRITTEN',receipt=result)

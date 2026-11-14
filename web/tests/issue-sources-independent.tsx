@@ -13,7 +13,7 @@ async function kind(value:string){await act(async()=>{const el=host.querySelecto
 async function click(text:string){await act(async()=>{const el=[...host.querySelectorAll('button')].find(x=>x.textContent===text)!;el.dispatchEvent(new window.MouseEvent('click',{bubbles:true}));})}
 const submit='追加记录，不覆盖历史';
 const {parseSources}=require('../src/issueWorkspace/model');let checks=0;const check=(x:any,m:string)=>{assert(x,m);checks++};
-const item={evidenceId:'EV-001',sourceSha256:'a'.repeat(64),mediaKind:'csv',byteLength:12,registeredUtc:'2026-11-14T00:00:00Z'};
+const item={sourceIncarnation:'00000000-0000-0000-0000-000000000101',evidenceId:'EV-001',sourceSha256:'a'.repeat(64),mediaKind:'csv',byteLength:12,registeredUtc:'2026-11-14T00:00:00Z'};
 const response=(items:any[]=[item])=>({profile:'trial-issue-sources-v1',caseId:'CASE-ISSUE-FICTIONAL',scope:'current-local-supported-candidates-only',items});
 check(parseSources(response(),'CASE-ISSUE-FICTIONAL').length===1,'valid parser');
 for(const edit of [(v:any)=>v.caseId='FOREIGN',(v:any)=>v.items.push({...item}),(v:any)=>v.items[0].sourceSha256='bad',(v:any)=>v.items[0].mediaKind='video',(v:any)=>v.items[0].byteLength=-1,(v:any)=>v.items[0].registeredUtc='bad']){const v=response([structuredClone(item)]);edit(v);assert.throws(()=>parseSources(v,'CASE-ISSUE-FICTIONAL'));checks++}

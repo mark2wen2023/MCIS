@@ -1,5 +1,5 @@
 import {useLayoutEffect,useMemo,useRef,useState} from 'react';
-import {parseSources,type SourceCandidate,canDiscuss,createRehearsalPort,latest,parse,type Command,type History,type JournalPort,type Kind} from './model';
+import {SourceSelectionChanged,parseSources,type SourceCandidate,canDiscuss,createRehearsalPort,latest,parse,type Command,type History,type JournalPort,type Kind} from './model';
 /** Unmounted trial component. Default disconnected; no credentials, old API or storage. */
 export function IssueWorkspace({caseId='CASE-ISSUE-FICTIONAL',port,rehearsal=false,contextKey='',issueId}:{caseId?:string,port?:JournalPort,rehearsal?:boolean,contextKey?:string,issueId?:string}){
  const demo=useMemo(()=>rehearsal&&!port&&caseId==='CASE-ISSUE-FICTIONAL'?createRehearsalPort():undefined,[caseId,port,rehearsal,contextKey]);
@@ -18,6 +18,7 @@ export function IssueWorkspace({caseId='CASE-ISSUE-FICTIONAL',port,rehearsal=fal
   if(!retry){
    if(unknown||readBlocked||!note.trim()||note.length>8000||kind!=='judgment'&&!history||kind==='discussion'&&!canDiscuss(history))return;
    command={caseId,issueId:history?.issueId??crypto.randomUUID(),operationId:crypto.randomUUID(),expectedRevision:history?.revision??0,
+    ...(selected.length?{sourcePins:selected.map(id=>{const source=sources.find(s=>s.evidenceId===id)!;return {evidenceId:id,sourceIncarnation:source.sourceIncarnation,sourceSha256:source.sourceSha256}})}:{}),
     entry:{kind,note,sourceIds:[...selected],outcome:kind==='verification'?outcome:null,againstJudgment:kind==='judgment'?null:latest(history)}};pending.current=command;
   }
   if(!command)return;issueRef.current=command.issueId;const mine=epoch.current;locked.current=true;setBusy(true);setStatus('正在提交工作记录，不代表事实审核');
@@ -27,7 +28,7 @@ export function IssueWorkspace({caseId='CASE-ISSUE-FICTIONAL',port,rehearsal=fal
    const recorded=next.events[command.expectedRevision];
    if(JSON.stringify({kind:recorded.kind,note:recorded.note,sourceIds:recorded.sourceIds,outcome:recorded.outcome,againstJudgment:recorded.againstJudgment})!==JSON.stringify(command.entry))throw Error('mismatched receipt');
    baseline.current=next;setHistory(next);pending.current=undefined;setUnknown(false);setSelected([]);setNote('');setKind('judgment');setStatus(demo?'仅保存在本页内存；未写入数据库':'试验服务已返回工作记录，未审核');
-  }catch{if(mine===epoch.current){setSources([]);setSelected([]);setSourceStatus('操作未确认，已隐藏来源；原操作保留待重试');setUnknown(true);setStatus('结果未确认：保留原操作重试，勿改写后重复提交。')}}
+  }catch(error){if(mine===epoch.current&&error instanceof SourceSelectionChanged){pending.current=undefined;setSources([]);setSelected([]);setUnknown(false);setSourceStatus('来源版本已变化：请重新读取并选择');setStatus('本次来源版本不匹配，未写入；保留意见，请重新选择来源后提交')}else if(mine===epoch.current){setSources([]);setSelected([]);setSourceStatus('操作未确认，已隐藏来源；原操作保留待重试');setUnknown(true);setStatus('结果未确认：保留原操作重试，勿改写后重复提交。')}}
   finally{if(mine===epoch.current){locked.current=false;setBusy(false)}}
  }
  async function refresh(){
@@ -54,7 +55,7 @@ export function IssueWorkspace({caseId='CASE-ISSUE-FICTIONAL',port,rehearsal=fal
  <fieldset disabled={disabled}><legend>引用已登记来源（最多 20 项）</legend>
  <button type="button" disabled={disabled||!connection?.sources} onClick={()=>void loadSources()}>读取当前来源</button><p>{sourceStatus}</p>
  {sources.map(source=><label key={source.evidenceId}><input type="checkbox" aria-label={'引用 '+source.evidenceId} checked={selected.includes(source.evidenceId)} disabled={disabled||selected.length>=20&&!selected.includes(source.evidenceId)} onChange={e=>setSelected(old=>e.target.checked?(old.includes(source.evidenceId)||old.length>=20?old:[...old,source.evidenceId]):old.filter(id=>id!==source.evidenceId))}/>{source.evidenceId} · {source.mediaKind} · {source.byteLength} 字节 · SHA256 {source.sourceSha256}</label>)}
- <p>仅清单引用，不上传附件、不表示已阅读原件；清单缺项不表示案件没有其他证据。保存记录保留当时服务端核验的来源快照。</p></fieldset>
+ <p>仅清单引用，不上传附件、不表示已阅读原件；清单缺项不表示案件没有其他证据。保存必须匹配所选来源代次与 SHA256；变化则拒绝写入，请重新读取并选择。</p></fieldset>
  <label>意见与理由 <textarea aria-label="意见与理由" maxLength={8000} disabled={disabled} value={note} onChange={e=>setNote(e.target.value)}/></label>
  <button type="button" disabled={disabled||!note.trim()} onClick={()=>void save()}>追加记录，不覆盖历史</button>
  {unknown&&<button type="button" disabled={busy||!connection} onClick={()=>void save(true)}>按原操作重试</button>}

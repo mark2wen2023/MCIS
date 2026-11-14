@@ -17,7 +17,7 @@ def test_current_sources_minimal_projection(ready):
             assert body['selectionSnapshotPinned'] is False and body['observationApproval']=='not_assessed'
             assert body['scope']=='current-local-supported-candidates-only'
             assert ready[1]['evidenceId'] in [x['evidenceId'] for x in body['items']]
-            for item in body['items']:assert set(item)=={'evidenceId','sourceSha256','mediaKind','byteLength','registeredUtc'}
+            for item in body['items']:assert set(item)=={'evidenceId','sourceSha256','mediaKind','byteLength','registeredUtc','sourceIncarnation'}
             assert ready[3] not in json.dumps(result) and 'relativePath' not in json.dumps(result)
     asyncio.run(run())
 

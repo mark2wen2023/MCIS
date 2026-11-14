@@ -10,6 +10,7 @@ from types import SimpleNamespace
 from sqlalchemy import Column, String, Integer, Boolean, JSON, select, text
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 from typing import Literal
+from fastapi import HTTPException
 from sqlalchemy.orm import DeclarativeBase
 
 class JournalBase(DeclarativeBase):
@@ -108,13 +109,48 @@ def project(case_id,issue_id,history):
       'sourceSnapshots':'historical-at-entry-not-current-attestation','events':[dict(r.doc) for r in history]}
 
 
-def append(db,settings,token,case_id,issue_id,operation_id,expected_revision,entry):
+class SourcePin(BaseModel):
+    model_config=ConfigDict(extra='forbid',strict=True)
+    evidenceId:str=Field(min_length=1,max_length=64)
+    sourceIncarnation:str
+    sourceSha256:str=Field(pattern=r'^[0-9a-f]{64}$')
+
+    @field_validator('sourceIncarnation')
+    @classmethod
+    def uuid_value(cls,value):return canonical_id(value)
+
+
+def selection_changed():
+    raise problem(409,'SOURCE_SELECTION_CHANGED','所选来源已变化，请刷新来源清单后重新选择')
+
+
+def selected_current(ctx,s,case_id,source_ids,pins):
+    try:snapshots=[source_current(ctx,s,case_id,eid) for eid in source_ids]
+    except HTTPException as error:
+        if pins is not None and error.status_code==409:selection_changed()
+        raise
+    if pins is not None:
+        actual={x['evidenceId']:(x['incarnation'],x['sourceSha256']) for x in snapshots}
+        if any(actual.get(x['evidenceId'])!=(x['sourceIncarnation'],x['sourceSha256']) for x in pins):selection_changed()
+    return snapshots
+
+
+def append(db,settings,token,case_id,issue_id,operation_id,expected_revision,entry,source_pins=None):
     """Create with revision 0 + judgment; append never replaces prior opinions."""
     canonical_id(issue_id);canonical_id(operation_id)
     if type(expected_revision) is not int or not 0<=expected_revision<200:raise problem(422,'ISSUE_REVISION_INVALID','版本不合法')
     entry=Entry.model_validate(entry)
     if (entry.kind=='verification')!=(entry.outcome is not None):raise problem(422,'ISSUE_OUTCOME_INVALID','核实必须给出结果，其他记录不得给出核实结果')
     request={'expectedRevision':expected_revision,'entry':entry.model_dump()}
+    pins=None
+    if source_pins is not None:
+        if not isinstance(source_pins,list) or len(source_pins)>20:raise problem(422,'ISSUE_SOURCE_PINS_INVALID','来源选择无效')
+        pins=[SourcePin.model_validate(x).model_dump() for x in source_pins]
+        ids=[x['evidenceId'] for x in pins]
+        if len(set(ids))!=len(ids) or set(ids)!=set(entry.sourceIds):raise problem(422,'ISSUE_SOURCE_PINS_INVALID','来源选择必须完整对应')
+        pins.sort(key=lambda x:x['evidenceId'])
+        if pins:request['sourcePins']=pins
+
 
     with db.session() as s:
         before,generation=auth(s,token,case_id,True)
@@ -141,13 +177,15 @@ def append(db,settings,token,case_id,issue_id,operation_id,expected_revision,ent
             if not any(r.seq>last_judgment and r.doc['kind']=='verification' for r in history):
                 raise problem(409,'ISSUE_VERIFICATION_REQUIRED','最新判断须先核实再讨论')
         ctx=SimpleNamespace(db=db,settings=settings,role=before.role,operator=before.subject_id)
-        snapshots=[source_current(ctx,s,case_id,eid) for eid in entry.sourceIds]
+        snapshots=selected_current(ctx,s,case_id,entry.sourceIds,pins)
         document={**entry.model_dump(),'seq':expected_revision+1,'recordedUtc':iso(now_utc()),
                   'authorSubjectId':before.subject_id,'sourceSnapshots':snapshots,'caseEpochUtc':load_case(s,case_id)['caseEpochUtc'],'status':'working_unreviewed'}
         row=Event(incarnation=generation,issue_id=issue_id,seq=expected_revision+1,operation_id=operation_id,digest=digest,doc=document)
         s.add(row);s.flush()
         response=project(case_id,issue_id,[*history,row]);response['replayed']=False
-        if [source_current(ctx,s,case_id,eid) for eid in entry.sourceIds]!=snapshots:raise problem(409,'ISSUE_SOURCE_CHANGED','来源变化')
+        if selected_current(ctx,s,case_id,entry.sourceIds,pins)!=snapshots:
+            if pins is not None:selection_changed()
+            raise problem(409,'ISSUE_SOURCE_CHANGED','来源变化')
         if auth(s,token,case_id,True)!=(before,generation):raise problem(403,'ISSUE_ACCESS_DENIED','授权变化')
         return response
 
