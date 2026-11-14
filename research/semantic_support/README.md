@@ -44,3 +44,7 @@ python research/semantic_support/evaluate.py \
 ## 已完成的一次真实能力试验
 
 在独立安全验收后，使用真实 DeepSeek API 与官方 Pi1.5.2 跑了一次固定公开样例，3次请求、2次工具、11项输出。模型只看到opaque编号及公开原文/主张/引用，没有建议标签、理由或专家意见。见 `BLIND_RUN.md` 与 `blind-real-*` 文件。这是未认证模型预测，不是专家真值；发现“与来源冲突”和“材料不足”的边界仍需打磨。模型能力结论只来源于这次真实运行，fixture仍只作协议/安全测试。没有新增专家意见或自动事实判断。
+
+## Second public case: time and provenance claims
+
+The fixed `jiangxin9-v1` profile adds 8 answer-hidden public-report claims without changing the original Yangze22 profile or execution manifest. See JIANGXIN9_BLIND_RUN.md, JIANGXIN9_SOURCE_REVIEW.md and JIANGXIN9_RESULT_REVIEW.md. One real Pi/DeepSeek run completed 3 requests/2 tools; no retry. This evaluates supplied controlled text, not model vision or complete timeline extraction. One provisional-label disagreement and one matching-label but unsupported rationale association remain for review; no accuracy or factual certification is claimed. Raw outputs and receipt use jiangxin9-real-* filenames.

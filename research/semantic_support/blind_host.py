@@ -4,6 +4,21 @@ from pathlib import Path
 import evaluate as ev
 
 CORPUS_SHA='77cdbdf3f2656aa57b0772fadc909671bf5bbfbd7c480a3fcbb1cc79460ad19b'
+DEFAULT_PROFILE='yangze22-v1'
+CASE_PROFILE_IDS=('yangze22-v1','jiangxin9-v1')
+# Explicit code-owned profiles only; no caller-provided path, hash or count.
+CASE_PROFILES={'yangze22-v1':('yangze22-provisional.json',CORPUS_SHA,11),'jiangxin9-v1':('jiangxin9-provisional.json','f7a1a69f2f2bf51236ecfc734952c8249e87b0bbaf0e8913b006167900bff782',8)}
+
+def case_profile(profile):
+    if type(profile) is not str or profile not in CASE_PROFILE_IDS or profile not in CASE_PROFILES:raise ValueError('Case profile unavailable')
+    config=CASE_PROFILES[profile]
+    if type(config) is not tuple or len(config)!=3:raise ValueError('Case profile')
+    filename,sha,count=config
+    expected='yangze22-provisional.json' if profile=='yangze22-v1' else 'jiangxin9-provisional.json'
+    if filename!=expected or type(count) is not int or not 1<=count<=(11 if profile=='yangze22-v1' else 8):raise ValueError('Case profile')
+    ev.sha(sha)
+    return config
+
 ENDPOINT='https://api.deepseek.com/chat/completions'
 MODEL='deepseek-v4-pro'
 MARKER='MCIS_BLIND_VALIDATED'
@@ -19,12 +34,13 @@ def strict(raw):
     v=json.loads(raw,object_pairs_hook=ev._pairs,parse_constant=lambda _:(_ for _ in ()).throw(ValueError()))
     ev._bounded(v);return v
 
-def project():
-    c,sha=ev.load(Path(__file__).with_name('yangze22-provisional.json'))
-    if sha!=CORPUS_SHA:raise ValueError()
+def project(profile=DEFAULT_PROFILE):
+    filename,expected_sha,count=case_profile(profile)
+    c,sha=ev.load(Path(__file__).with_name(filename))
+    if sha!=expected_sha:raise ValueError()
     check={'schemaVersion':1,'corpusSha256':sha,'origin':'scripted_fixture','predictions':[{'itemId':i['id'],'label':'insufficient','rationale':'schema validation placeholder'} for i in c['items']]}
     ev.evaluate(c,sha,check)
-    if len(c['items'])!=11:raise ValueError()
+    if len(c['items'])!=count:raise ValueError()
     mapping={f'case_{n:03d}':item['id'] for n,item in enumerate(c['items'],1)}
     cases=[{'id':f'case_{n:03d}',**{k:copy.deepcopy(item[k]) for k in ('sourceText','sourceSha256','sourceLocator','claim','citation')}} for n,item in enumerate(c['items'],1)]
     return cases,mapping
@@ -72,17 +88,19 @@ async def _http(key,messages,deadline):
 def remote(key,messages,deadline):return asyncio.run(_http(key,messages,deadline))
 
 class Host:
-    def __init__(self,cases,mapping,*,fixture,key=None,transport=remote):
+    def __init__(self,cases,mapping,*,fixture,key=None,transport=remote,case_profile_id=DEFAULT_PROFILE):
         if digest(MANIFEST)!=PINNED_MANIFEST:raise ValueError()
+        self._profile_id=case_profile_id;self._profile_config=case_profile(case_profile_id)
+        if len(cases)!=self._profile_config[2] or len(mapping)!=self._profile_config[2]:raise ValueError('Profile count')
         self.cases=copy.deepcopy(cases);self.mapping=dict(mapping);self.input_digest=digest(self.cases);self.mapping_digest=digest(self.mapping);self.fixture=fixture;self.key=key;self.transport=transport
         if type(fixture) is not bool or (fixture and key is not None) or (not fixture and (type(key) is not str or not re.fullmatch(r'sk-[A-Za-z0-9_-]{10,200}',key))):raise ValueError()
         self.run=str(uuid.uuid4());self.deadline=time.monotonic()+180;self.phase='idle';self.models=0;self.tools=0;self.attempts=0;self.completed=0;self.inflight=False;self.read=False;self.validated=None;self.terminal=None;self.pending=[];self.ids=set();self.closed=False;self.finished=False
         self.messages=[{'role':'system','content':SYSTEM},{'role':'user','content':'Read the authorized cases and return schema-validated provisional semantic predictions. No answer labels are supplied.'}]
-    def ready(self):return {'ready':True,'mode':'fixture' if self.fixture else 'remote-deepseek','manifestDigest':PINNED_MANIFEST,'inputDigest':self.input_digest,'corpusSha256':CORPUS_SHA,'runId':self.run,'model':MODEL,'limits':dict(LIMITS),'tools':copy.deepcopy(TOOLS),'completionMarker':MARKER}
+    def ready(self):return {'ready':True,'mode':'fixture' if self.fixture else 'remote-deepseek','manifestDigest':PINNED_MANIFEST,'inputDigest':self.input_digest,'corpusSha256':self._profile_config[1],'runId':self.run,'model':MODEL,'limits':dict(LIMITS),'tools':copy.deepcopy(TOOLS),'completionMarker':MARKER}
     def check(self):
-        if self.closed or time.monotonic()>=self.deadline or digest(MANIFEST)!=PINNED_MANIFEST or digest(self.cases)!=self.input_digest or digest(self.mapping)!=self.mapping_digest:raise ValueError()
+        if case_profile(self._profile_id)!=self._profile_config or self.closed or time.monotonic()>=self.deadline or digest(MANIFEST)!=PINNED_MANIFEST or digest(self.cases)!=self.input_digest or digest(self.mapping)!=self.mapping_digest:raise ValueError()
     def predictions(self,content):
-        value=strict(content);ev.exact(value,'predictions');rows=ev.array(value['predictions'],11,11);seen=set()
+        value=strict(content);ev.exact(value,'predictions');rows=ev.array(value['predictions'],self._profile_config[2],self._profile_config[2]);seen=set()
         for row in rows:
             ev.exact(row,'itemId label rationale');iid=row['itemId']
             if type(iid) is not str or iid not in self.mapping or iid in seen:raise ValueError()
@@ -134,7 +152,7 @@ class Host:
         if op=='final' and set(c)=={'op','payload'} and self.phase=='idle' and not self.pending and self.read and self.validated is not None and self.terminal==MARKER and c['payload']==MARKER:
             rows=[dict(row,itemId=self.mapping[row['itemId']]) for row in self.validated]
             self.finished=True;self.key=None
-            return {'status':'completed','runId':self.run,'manifestDigest':PINNED_MANIFEST,'inputDigest':self.input_digest,'requestAttempts':self.attempts,'requestsCompleted':self.completed,'realRequestsStarted':0 if self.fixture else self.attempts,'modelCalls':self.models,'toolCalls':self.tools,'realModel':not self.fixture,'transportMocked':self.fixture,'factActivated':False,'semanticSupportVerified':False,'predictions':{'schemaVersion':1,'corpusSha256':CORPUS_SHA,'origin':'scripted_fixture' if self.fixture else 'model_output_unverified','predictions':rows}}
+            return {'status':'completed','runId':self.run,'manifestDigest':PINNED_MANIFEST,'inputDigest':self.input_digest,'requestAttempts':self.attempts,'requestsCompleted':self.completed,'realRequestsStarted':0 if self.fixture else self.attempts,'modelCalls':self.models,'toolCalls':self.tools,'realModel':not self.fixture,'transportMocked':self.fixture,'factActivated':False,'semanticSupportVerified':False,'predictions':{'schemaVersion':1,'corpusSha256':self._profile_config[1],'origin':'scripted_fixture' if self.fixture else 'model_output_unverified','predictions':rows}}
         raise ValueError()
 
 class Lines:
@@ -158,14 +176,14 @@ def output(value):
     sys.stdout.buffer.write(raw+b'\n');sys.stdout.buffer.flush()
 
 def main():
-    parser=argparse.ArgumentParser();g=parser.add_mutually_exclusive_group(required=True);g.add_argument('--fixture',action='store_true');g.add_argument('--approved-blind',action='store_true');parser.add_argument('--receipt',required=True);args=parser.parse_args()
+    parser=argparse.ArgumentParser();g=parser.add_mutually_exclusive_group(required=True);g.add_argument('--fixture',action='store_true');g.add_argument('--approved-blind',action='store_true');parser.add_argument('--receipt',required=True);parser.add_argument('--case-profile',choices=CASE_PROFILE_IDS,default=DEFAULT_PROFILE);args=parser.parse_args()
     host=None;child=None;final=None
     try:
-        cases,mapping=project();key=None
+        cases,mapping=project(args.case_profile);key=None
         if not args.fixture:
             if sys.stdin.isatty():raise ValueError() # No echoing interactive terminal input.
             secret=Lines().read(time.monotonic()+30);ev.exact(secret,'apiKey');key=secret['apiKey'];del secret
-        host=Host(cases,mapping,fixture=args.fixture,key=key);key=None
+        host=Host(cases,mapping,fixture=args.fixture,key=key,case_profile_id=args.case_profile);key=None
         child=subprocess.Popen(['node',str(Path(__file__).with_name('blind-cli.mjs')),'--fixture' if args.fixture else '--approved-blind','--receipt',args.receipt],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.DEVNULL,env={'PATH':os.environ.get('PATH','/usr/bin:/bin')})
         lines=Lines(child.stdout.fileno())
         def reply(value):
