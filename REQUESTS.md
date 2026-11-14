@@ -641,3 +641,9 @@ Minimal main25b9df6 integration of reviewed dd2f8b8 increment; PR84 dependencies
 already merged. Twelve non-progress source files copied exactly, progress appended
 without overwriting main entries; existing freeze preserved. No other modules changed.
 Scope research/expert_meeting/REVIEW_MAIN_INTEGRATION.md; real0/HOLD.
+
+## EXPERTTRACE (2026-11-14)
+Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
+Tests join original source/tickets/snapshot/citation/human tasks and preserve past
+unresolved labels; self-consistent identity claims cannot become approval.
+Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.

@@ -1,0 +1,2 @@
+5ff567ae18bf2031734b25a67215647f81a33770fa4eb0e5c466cf6cb0624d0d  tests_acceptance/EXPERTTRACE/test_trace.py
+172ab683ced50e98887f68467304695c1b5bb7886cf5fce29e58a72a9baf5868  tests_acceptance/EXPERTTRACE/SCOPE.md

@@ -395,3 +395,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTREVIEWPLAN | 只读流程独审通过 | 2026-11-14：10项独审、4/4冻结一致；无.git副本154项回归通过。当前轮隔离/全部pending/绑定和文本安全已验，见 DEFECTS/EXPERTREVIEWPLAN.md；非认证任务库/真实浏览器/模型验收。 |
 | EXPERTREVIEWMAIN | 待独审 | 2026-11-14：main25b9df6上提取dd2f8b8最小人审清单增量，164回归通过，无代码冲突；冻结 logs/EXPERTREVIEWMAIN-impl-hashes-frozen.txt。离线/全部待复核/非认证/非真实模型边界不变。 |
 | EXPERTREVIEWMAIN | 最小整合独审通过 | 2026-11-14：main25b9df6前缀及其他跟踪文件保留，12源文件逐字；独立无.git副本164项通过，新/原冻结各4/4。见 DEFECTS/EXPERTREVIEWMAIN.md；仅离线pending人审，真实0/HOLD。 |
+| EXPERTTRACE | 待独审 | 2026-11-14：PR87head99b44f0上新增10跨视图追溯/反认证回归，组合174项通过；冻结 logs/EXPERTTRACE-impl-hashes-frozen.txt。不改运行代码；真模型0/HOLD，非浏览器或事实验收。 |
+| EXPERTTRACE | 测试增量独审通过 | 2026-11-14：独立无.git副本10过；临时断开taskId触发5红、伪认证flag触发1红，恢复10过；冻结2/2，运行文件无差异。见 DEFECTS/EXPERTTRACE.md。真实模型0/HOLD。 |
