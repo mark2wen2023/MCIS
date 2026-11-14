@@ -1,0 +1,22 @@
+F...........................                                             [100%]
+=================================== FAILURES ===================================
+__________ test_accepted_replay_at_deadline_terminates_active_meeting __________
+
+    def test_accepted_replay_at_deadline_terminates_active_meeting():
+        now=[0.0];meeting=m.Meeting(clock=lambda:now[0])
+        meeting.act({'type':'start_round'})
+        accepted=issue(meeting);meeting.act(accepted)
+        interrupted=issue(meeting,ROLES[1])
+        now[0]=600.0
+        result=meeting.act(accepted)
+>       assert result['phase']=='timed_out', 'exact historical replay bypassed cooperative deadline'
+E       AssertionError: exact historical replay bypassed cooperative deadline
+E       assert 'round_open' == 'timed_out'
+E         
+E         - timed_out
+E         + round_open
+
+tests_acceptance/EXPERTMEETING/test_independent.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED tests_acceptance/EXPERTMEETING/test_independent.py::test_accepted_replay_at_deadline_terminates_active_meeting
+1 failed, 27 passed in 0.16s

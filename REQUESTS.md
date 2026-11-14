@@ -567,3 +567,6 @@ New isolated research/expert_group module on main3aba2bf: frozen public report e
 
 ## Expert group verifier descriptor ownership correction · 2026-11-14
 Coordinator review found directory-leaf fdopen failure leaks a raw descriptor. Register frozen receipt.py/test_cli_render.py correction: validate file type before wrapping, transfer ownership only after fdopen succeeds, and finally close untransferred descriptors in read/write helpers. Add repeated directory-leaf and wrapper-failure regressions. No provider call; supersede freeze only after checks.
+
+## 2026-11-14 EXPERTMEETING — 有界离线会议状态机
+基于a686c85新隔离分支，不修改双角色执行器/工作台及其他线。现有COMMON明确No sibling review、单轮run_group，无主持/轮间读意见流程。新增纯内存“海青君（软件主持）”确定性状态机：2轮/4席次，第二轮上下文绑定前一完整轮意见，同轮冻结，不投票共识；显式继续/停止、预算预留、未知失败终止、可重放哈希审计。只接受模拟意见并标simulation_only，不执行Pi/模型、不接案件/凭据/网络，不把context摘要回传当已读理解证明。未来真实适配器须另行设计共享意见披露、预算和取消/未知请求处理，不能复用原独立模式授权冒充新会议已验收。

@@ -373,3 +373,9 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Public two-role Pi research | 工程范围验收通过 | 2026-11-14：主测38+独审20=58通过、零跳；freeze12/12。独审发现并关闭EG-D01至D04（回执终态、HTTP总deadline、管道停读预算、末端导出完整性）。实际Pi两role fixture6模拟轮/4工具/providerRequests0；真实DeepSeek与浏览器能力仍未验收，无可用安全凭据。见 `tests_acceptance/EXPERT_GROUP/INDEPENDENT.md`。 |
 | Public two-role Pi research r1 | 待复审 | 2026-11-14：协调独审发现目录叶子fdopen异常裸fd泄漏；read/write helper改显式所有权与finally关闭，新增4类目录叶子反复拒绝及fdopen失败读写回归，13项CLI测试通过。新冻结 `logs/expert-group-r1-impl-hashes-frozen.txt` 替代原冻结；真实DeepSeek继续暂停。 |
 | Public two-role Pi research r1 | 修订范围验收通过 | 2026-11-14：主测43+独审36=79通过、零跳；新增16项独立fd生命周期回归，目录/FIFO/fstat/fdopen/read/write异常均无fd增长。EG-D05已修，r1freeze12/12。待协调复审；真实DeepSeek请求继续暂停，无可用安全注入。 |
+
+| 2026-11-14 | EXPERTMEETING | 待独立验收 | a686c85上新增仅模拟主持状态机，2轮/4席次/16与32配额预留/合作式600秒；上轮完整意见快照、人工停止、未知终止、幂等与审计重放。33开发测试过，6项冻结logs/EXPERTMEETING-impl-hashes-frozen.txt。无实际Pi/模型请求、实际费用计量、持久调度或会议UI；不接案件、不自动事实确认，待独审。 |
+
+| 2026-11-14 | EXPERTMEETING r1 | 待独立复验 | 独审28项27过1红：旧提交幂等重放先于截止可保留其他活动席。非终止会议改为截止优先，终止后重放仍不复活；修正只读公开packet文案。34开发测试过，新6冻结待原断言复跑；不运行模型或真实Pi。 |
+
+| 2026-11-14 | EXPERTMEETING r1 | 受限独立验收通过 | 独立36/36，开发34与独审合跑70/70；6冻结前后匹配。D01截止重放关闭，原红测保留，C01只读源包澄清。显式脚本两轮4席10审计事件快照重放通过，modelExecuted/piExecuted/factActivated均false；不代表真实Pi会议、实际预算/取消、持久化、UI或认证验收。仅本地候选，无推送部署合并。 |
