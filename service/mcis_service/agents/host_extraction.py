@@ -36,23 +36,27 @@ class LocalProvider:
         return model_client.complete(cfg,messages)
 
 
+def snapshot_in_session(s,db,settings,token,case_id,record_id):
+    """Reuse the caller transaction; never opens/commits a nested session."""
+    authority,generation=journal.auth(s,token,case_id)
+    ctx=SimpleNamespace(db=db,settings=settings,role=authority.role,operator=authority.subject_id)
+    require(ctx,s,case_id,'testimony')
+    require(SimpleNamespace(role='AgentService'),s,case_id,'testimony')
+    record=copy.deepcopy(interviews.load(s,case_id,record_id))
+    if record['caseId']!=case_id or record['recordId']!=record_id:raise problem(409,'HOST_SOURCE_CHANGED','笔录绑定无效')
+    access.document(s,ctx,record)
+    policy=copy.deepcopy(get_policy(s,case_id))
+    source=journal.source_current(ctx,s,case_id,record['evidenceId']) if record.get('evidenceId') else None
+    binding={'caseId':case_id,'recordId':record_id,'caseIncarnation':generation,
+        'caseEpochUtc':journal.load_case(s,case_id)['caseEpochUtc'],'record':record,'policy':policy,'source':source}
+    checksum=extraction.digest(binding)
+    if journal.auth(s,token,case_id)!=(authority,generation):raise problem(403,'HOST_EXTRACTION_DENIED','授权已变化')
+    return checksum,record,policy,'registered_original_bytes' if source else 'interview_document_only'
+
+
 def _snapshot(db,settings,token,case_id,record_id):
     with db.session() as s:
-        authority,generation=journal.auth(s,token,case_id)
-        ctx=SimpleNamespace(db=db,settings=settings,role=authority.role,operator=authority.subject_id)
-        require(ctx,s,case_id,'testimony')
-        require(SimpleNamespace(role='AgentService'),s,case_id,'testimony')
-        record=copy.deepcopy(interviews.load(s,case_id,record_id))
-        if record['caseId']!=case_id or record['recordId']!=record_id:raise problem(409,'HOST_SOURCE_CHANGED','笔录绑定无效')
-        access.document(s,ctx,record)
-        policy=copy.deepcopy(get_policy(s,case_id))
-        source=journal.source_current(ctx,s,case_id,record['evidenceId']) if record.get('evidenceId') else None
-        binding={'caseId':case_id,'recordId':record_id,'caseIncarnation':generation,
-            'caseEpochUtc':journal.load_case(s,case_id)['caseEpochUtc'],'record':record,'policy':policy,'source':source}
-        checksum=extraction.digest(binding)
-        if journal.auth(s,token,case_id)!=(authority,generation):raise problem(403,'HOST_EXTRACTION_DENIED','授权已变化')
-        return checksum,record,policy,'registered_original_bytes' if source else 'interview_document_only'
-
+        return snapshot_in_session(s,db,settings,token,case_id,record_id)
 
 def describe(db,settings,session_token,case_id,record_id):
     """Authorized descriptor only, with no interview text or source details."""
