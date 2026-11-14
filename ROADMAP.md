@@ -383,3 +383,9 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-14 | EXPERTBRIDGE | 待独立验收 | 基于649d865的纯离线Pi线协议隔离接口；唯一控制器/上一完整轮上下文/逐次预算/工具票据绑定/done+exit双门禁/取消未知终止/元数据哈希链。新增31与原会议34合跑65通过，7项冻结logs/EXPERTBRIDGE-impl-hashes-frozen.txt。不启动Pi、不调用DeepSeek/凭据/服务，不是实际模型预算/取消验收，待独审。 |
 
 | 2026-11-14 | EXPERTBRIDGE | 受限独立验收通过 | 独立43/43、7冻结一致；单席/四席16与32精确预算、上一完整轮隔离、票据候选绑定、120/600截止、取消unknown、done/exit/父接受门禁及五阶段audit故障覆盖。开发31新+34原会议=65另计。独审全用例禁socket/Popen/_remote；无真实Pi/DeepSeek/服务请求，不证明真实预算、进程取消、持久化或身份。仅本地候选，不部署合并。 |
+
+| 2026-11-14 | EXPERTEXECUTOR | 待独立验收 | 0a4bf22上固定Pi1.5.2子进程+脚本提供方；Bridge仅加poll。实际两轮4进程/12模拟模型协议/8工具、上轮意见0/0/2/2；非阻塞管道/取消/截止/组清理及退出前门禁。18新+65原测试合83通过，10冻结logs/EXPERTEXECUTOR-impl-hashes-frozen.txt待独审。未调用DeepSeek、未认证服务/案件/模型质量，不部署合并。 |
+
+| 2026-11-14 | EXPERTEXECUTOR r1 | 待独立复验 | 初始独审17项16过1红：Bridge审计失败未传播顶层/run完整标记。现聚合一次Bridge快照，任一上游不完整粘性污染复合完整性，issue无run也受限；意见不补造。19新+65原=84自测过，新10冻结待扩展独审复跑。 |
+
+| 2026-11-14 | EXPERTEXECUTOR r1 | 受限独立验收通过 | 独立25/25、相关合跑109/109（19新+65原+25独审），10冻结前后匹配。D01六Bridge审计故障阶段及粘性读取修复，初始红测保留。实际Pi进程配脚本提供方，取消/截止/进程组/共享预算回执经过协议验收；不等于真实DeepSeek/语义/身份/持久化能力。仅本地候选，不合并部署。 |

@@ -1,0 +1,24 @@
+F................                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_bridge_audit_failure_marks_executor_receipt_incomplete __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fa5b13cef00>
+
+    def test_bridge_audit_failure_marks_executor_receipt_incomplete(monkeypatch):
+        meeting,bridge,executor=setup()
+        record=bridge._record
+        def broken(session,phase,**fields):
+            if phase=='scripted_model_requested':raise OSError('SYNTHETIC_BRIDGE_AUDIT_FAILURE')
+            return record(session,phase,**fields)
+        monkeypatch.setattr(bridge,'_record',broken)
+        with pytest.raises(e.ExecutionError):executor.run_turn(ROLES[0])
+        receipt=executor.receipt()
+        assert receipt['bridgeAudit']['auditComplete'] is False
+>       assert receipt['receiptComplete'] is False, 'top receipt completeness masks Bridge audit failure'
+E       AssertionError: top receipt completeness masks Bridge audit failure
+E       assert True is False
+
+tests_acceptance/EXPERTEXECUTOR/test_independent.py:65: AssertionError
+=========================== short test summary info ============================
+FAILED tests_acceptance/EXPERTEXECUTOR/test_independent.py::test_bridge_audit_failure_marks_executor_receipt_incomplete
+1 failed, 16 passed in 2.04s

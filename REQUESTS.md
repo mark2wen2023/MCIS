@@ -573,3 +573,6 @@ Coordinator review found directory-leaf fdopen failure leaks a raw descriptor. R
 
 ## 2026-11-14 EXPERTBRIDGE — 状态机/Pi线协议隔离接口
 基于649d865，保持会议状态机及a686执行器冻结。新增research/expert_bridge：兼容现有pi-runner的model/tool/done请求与配置，host独占上下文/工具授权/预算计数/完成门禁；逐席只能读固定公开包和已完成上一轮。仅scripted_response入口，无网络/凭据/子进程；协议单测不能称真实Pi执行。取消/时限/非零退出/异常均拒绝完成，未知结局不重试，保留审计元数据。未来真实传输和进程监管独立接入并重新批准共享意见披露。
+
+## 2026-11-14 EXPERTEXECUTOR — 真Pi进程、脚本提供方的受控协议验收
+基于0a4bf22独立分支。新增research/expert_executor，固定调用a686 pi-runner.mjs和已锁定Pi1.5.2，净化环境/新进程组/非阻塞有界管道/取消及截止清理；提供方仍固定脚本，不读密钥、不支持远端模型或案件接口。申请原冻结Bridge仅加公开poll(ticket)复用既有guard，以便无输出子进程也受120/600秒合作式截止。收集操作系统进程退出观察与共享Bridge预算回执，区分真实Pi运行、脚本模型响应和父模拟状态。不得宣称真实DeepSeek多轮能力或操作系统安全沙箱。

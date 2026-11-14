@@ -136,6 +136,10 @@ class Bridge:
                 self._fail(session, code)
                 raise ProtocolError(code) from None
 
+    def poll(self, ticket):
+        """Cooperative controller check, including a child that emits no protocol data."""
+        return self._invoke(ticket, lambda session: {'active': True})
+
     def from_runner(self, ticket, request):
         def handle(s):
             if type(request) is bytes:
