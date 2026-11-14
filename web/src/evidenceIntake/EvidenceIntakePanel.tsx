@@ -51,7 +51,8 @@ export function EvidenceIntakePanel({caseId,caseTitle,who,selectedEvidenceId,onR
     const run=begin('登记保存中');if(!run)return
     try{const r=parseReceipt(await intakeRequest(caseId,who,'/evidence-intakes:commit',run.signal,{...body,requestDigest:preview.requestDigest,confirmed:true}),caseId,preview);if(live(run.version))accept(r)}
     catch(e){if(live(run.version)){
-      if(e instanceof ApiError&&e.code==='ARCHIVE_HISTORY_ONLY'){setUncertain(true);setMessage('只读历史不能作为当前成功回执，未知写入锁保持。 '+intakeError(e))}
+      if(uncertain){setUncertain(true);setMessage('此前登记结果仍未确认；本次尝试失败不能证明此前未保存。保留原请求，请核查登记记录，不要另建请求。 '+intakeError(e))}
+      else if(e instanceof ApiError&&e.code==='ARCHIVE_HISTORY_ONLY'){setUncertain(true);setMessage('只读历史不能作为当前成功回执，未知写入锁保持。 '+intakeError(e))}
       else if(e instanceof ApiError&&[400,403,404,409,413,422].includes(e.status)){setMessage(intakeError(e));setPreview(null);setBody(null);setConfirmed(false);setUncertain(false)}
       else{setUncertain(true);setMessage('登记结果未确认，服务器可能已经保存。先只读核查；不要另建请求重复登记。')}
     }}finally{finish(run.version)}
