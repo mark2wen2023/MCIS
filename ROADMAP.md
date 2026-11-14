@@ -368,3 +368,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 | 2026-11-12 | Report output A | 受限独立验收通过 | 最终独立49 passed/11.56s，20SHA前后匹配；真实双格式单render/原文不变/审计关联、实际第二连接改报告或策略后409/403、故障全表回滚与commit后交付失败各有证明。真浏览器2正常下载+2真实commit后故障替换+1真实commit后身份迟响应丢弃，最终5审计；8独立客户端坏结构/错绑拒绝。实际2MiB报告及16MiB输出边界与其余缩小limit测试区别详见独立REPORT；未穷尽多worker/真实切案/全部变体。无服务端原件保存、无.mcase文件恢复、无签署认证；B仅计划，不部署不触W11。 |
+
+
+| TL-INTERVAL | 待测 | 2026-11-14 | 时间线区间与零边界修复；实现哈希 logs/tl-interval-impl-hashes-frozen.txt；不改存量数据，不提供时间不确定性推理。 |
+| TL-INTERVAL | 受限独立验收通过 | 2026-11-14 | 37/37 本地 API 测试（22新增+6旧+9独立）；不是CI/UI/真实模型验收。存量异常区间未自动修复；未部署。见 tests_acceptance/TL_INTERVAL/INDEPENDENT.md。 |
