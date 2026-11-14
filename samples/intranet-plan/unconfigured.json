@@ -1,0 +1,9 @@
+{
+  "sources": [
+    {"id": "ship_registry", "category": "ship_parameters", "transport": "api"},
+    {"id": "ais_archive", "category": "ais", "transport": "api", "maxWindowDays": 7},
+    {"id": "company_registry", "category": "company", "transport": "mcp"},
+    {"id": "regulatory_archive", "category": "regulatory", "transport": "mcp"}
+  ],
+  "case": {"caseId": null, "vessels": [], "startUtc": null, "endUtc": null}
+}

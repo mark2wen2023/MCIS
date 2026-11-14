@@ -717,3 +717,9 @@ Explicitly authorized real-model capability testing uses the public YANGZE22 rep
 
 ## Evidence quotation display and human verification reminder
 The real semantic blind run exposed qualifier preservation and blank-cell interpretation risks. Existing working/archive views keep quote strings but ordinary HTML blockquotes collapse whitespace. Add a shared read-only quotation component preserving exact text/newlines/spacing in presentation and a concise human-review notice: qualifiers must not be silently strengthened; absent/blank records prove neither occurrence nor non-occurrence; exact location is not semantic support. No automatic semantic verdict, quote rewriting, added review authority, RPC/schema change or model request. Archived content remains unverified history and displayed text is not a reconstruction of the original PDF table. Native implementation and independent UI tests precede Draft submission.
+
+## Intranet source metadata and read-only case query plan
+Authorized independent branch from 254167e; no changes to semantic_support. Add isolated service module and stdin/stdout CLI, contract `contracts/intranet-plan.md`. No HTTP route/UI mount, network client, secret resolver, database writes or model calls. Metadata registration is a validated JSON document, explicitly supplied to each call; deployment configuration and credentials remain outside it. Existing case metadata/identity boundary must authorize future integration; no inference of vessel identity from names. No frozen implementation from other packages changed.
+
+## Intranet plan acceptance corrections
+Independent coordinator found datetime.fromisoformat normalizes invalid timezone minutes and json.loads(bytes) autodetects UTF16/32 despite UTF8 contract. Reopen only intranet module/tests/contract frozen files for strict offset components and explicit strict UTF8 decoding. Report-attachment work paused and stashed separately; no changes from it included.
