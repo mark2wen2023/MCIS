@@ -1,0 +1,91 @@
+tests/timeline-axis-independent.test.ts
+
+  ../../../tmp/mcis-timeline25-timeline-axis-independent.test.cjs  2.8mb ⚠️
+
+⚡ Done in 438ms
+ok invalid numeric endpoints/order/offset fail closed
+ok date limit valid at boundary rejected immediately beyond
+ok offset can itself push valid seconds outside date limit
+ok epoch timezone and display offset combine once
+ok factory retains frozen extrema with no interval/clipping
+ok asymmetric week exact production axis SSR bounded and endpoints visible
+6 independent production-axis cases passed
+tests/timeline-domain-echarts.test.ts
+
+  ../../../tmp/mcis-timeline25-timeline-domain-echarts.test.cjs  2.8mb ⚠️
+
+⚡ Done in 205ms
+ok exact production axis SSR span 30
+ok exact production axis SSR span 86400
+ok exact production axis SSR span 259200
+ok exact production axis SSR span 604800
+ok exact production axis SSR span 31536000
+ok exact production axis SSR span 1000000000000
+10 production-axis render/guard cases passed
+tests/timeline-domain-independent.test.ts
+
+  ../../../tmp/mcis-timeline25-timeline-domain-independent.test.cjs  4.5kb
+
+⚡ Done in 7ms
+ok all source extrema combine without truncation
+ok valid negative duration preserves origin and minimum
+ok invalid start cannot lend validity to its finite end
+ok nonfinite values in each stream and both interval directions ignored
+ok numeric strings and booleans not coerced
+ok all arrays and nested records remain unchanged and frozen
+ok large event and conflict streams avoid argument limit and preserve extrema
+ok fractional boundaries are not rounded to fixed ticks
+8 independent cases passed
+tests/timeline-domain.test.ts
+
+  ../../../tmp/mcis-timeline25-timeline-domain.test.cjs  4.3kb
+
+⚡ Done in 4ms
+ok real empty default
+ok fictional default preserved
+ok negative event
+ok fractional negative preserved
+ok positive event extends real
+ok fictional event beyond780 included
+ok negative CPA included
+ok negative conflict included
+ok conflict max included
+ok valid duration extends max
+ok reverse duration not repaired
+ok null missing ends unchanged
+ok nonfinite ignored
+ok input untouched
+ok large series avoids spread argument limit
+15 cases passed
+tests/timeline-tooltip-independent.test.ts
+
+  ../../../tmp/mcis-timeline25-timeline-tooltip-independent.test.cjs  5.8kb
+
+⚡ Done in 3ms
+ok all nine flag combinations are independent
+ok null flags from legacy JSON do not become false or confirmed
+ok all untrusted fields cannot add a tag or attribute
+ok blank labels and empty refs explicitly missing
+ok long list has no truncation and retains duplicates
+ok frozen inputs are not mutated or inferred
+6 independent cases passed
+tests/timeline-tooltip.test.ts
+
+  ../../../tmp/mcis-timeline25-timeline-tooltip.test.cjs  5.6kb
+
+⚡ Done in 3ms
+ok all source refs retained in original order
+ok missing source explicit
+ok missing refs explicit
+ok missing flags never confirmed
+ok true flags labelled
+ok false flags labelled
+ok all HTML characters escaped
+ok title injection
+ok sourceLabel injection
+ok reference injection
+ok time injection
+ok no mutation
+ok formatted time passed unchanged
+ok workflow caveat retained
+14 cases passed

@@ -391,3 +391,16 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTCOORDINTEGRATED | 离线组合独审通过 | 2026-11-14：独立139项通过；两源各3/3、组合4/4冻结；实际加载新machine、源改动逐字一致，原NaN3红和fractional截止4测通过。缺失截止依赖已在本组合关闭；不放行真实模型/硬取消。 |
 | HFACS source portability | 待测 | fixed W184 seven-source pins replace missing sibling dependency; logs/hfacs-source-portability-impl-hashes-frozen.txt; real core remains blocked |
 | HFACS source portability | 局部独审通过 | self19pass/independent19pass; 7realCLI collection only; SDK/core blocked; tests_acceptance/hfacs-source-portability/REPORT.md |
+
+
+| TL-INTERVAL | 待测 | 2026-11-14 | 时间线区间与零边界修复；实现哈希 logs/tl-interval-impl-hashes-frozen.txt；不改存量数据，不提供时间不确定性推理。 |
+| TL-INTERVAL | 受限独立验收通过 | 2026-11-14 | 37/37 本地 API 测试（22新增+6旧+9独立）；不是CI/UI/真实模型验收。存量异常区间未自动修复；未部署。见 tests_acceptance/TL_INTERVAL/INDEPENDENT.md。 |
+
+| TL-SOURCE-DISPLAY | 待测 | 2026-11-14 | 时间线多证据引用与已有状态标记展示；HTML转义；冻结 logs/tl-source-display-frozen.txt。 |
+| TL-SOURCE-DISPLAY | 代码受限独审通过/浏览器待验 | 2026-11-14 | 20项tooltip测试和完整tsc通过；浏览器127.0.0.1连接拒绝，未验证hover/scroll/窄屏。仅显示已有来源与标记，不推断事实或调用模型。 |
+
+| TL-AXIS | 待测 | 2026-11-14 | 基于PR66，修正负秒显示范围；15单测，冻结logs/tl-axis-frozen.txt。 |
+| TL-AXIS | 受限代码独审通过/浏览器待验 | 2026-11-14 | 23域单测+2真实ECharts SVG SSR过、完整tsc过；浏览器loopback连接拒绝。依赖PR66，未合并部署。 |
+
+| TL-AXIS修订 | 待复验 | 2026-11-14 | 修固定ticks超限/溢出，生产轴工厂SSR10项通过；原2项SSR未含生产interval，不能证明其安全。 |
+| TL-AXIS修订 | 受限独审通过/浏览器待验 | 2026-11-14 | 最终39项（15域+8独立域+10生产轴SSR/guard+6独立轴）通过，tsc通过；显式无法绘制分支仅源码验证。保持草稿。 |

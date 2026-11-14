@@ -1,0 +1,30 @@
+ok invalid numeric endpoints/order/offset fail closed
+ok date limit valid at boundary rejected immediately beyond
+ok offset can itself push valid seconds outside date limit
+ok epoch timezone and display offset combine once
+ok factory retains frozen extrema with no interval/clipping
+ok asymmetric week exact production axis SSR bounded and endpoints visible
+6 independent production-axis cases passed
+ok all source extrema combine without truncation
+ok valid negative duration preserves origin and minimum
+ok invalid start cannot lend validity to its finite end
+ok nonfinite values in each stream and both interval directions ignored
+ok numeric strings and booleans not coerced
+ok all arrays and nested records remain unchanged and frozen
+ok large event and conflict streams avoid argument limit and preserve extrema
+ok fractional boundaries are not rounded to fixed ticks
+8 independent cases passed
+ok exact production axis SSR span 30
+ok exact production axis SSR span 86400
+ok exact production axis SSR span 259200
+ok exact production axis SSR span 604800
+ok exact production axis SSR span 31536000
+ok exact production axis SSR span 1000000000000
+10 production-axis render/guard cases passed
+ok all nine flag combinations are independent
+ok null flags from legacy JSON do not become false or confirmed
+ok all untrusted fields cannot add a tag or attribute
+ok blank labels and empty refs explicitly missing
+ok long list has no truncation and retains duplicates
+ok frozen inputs are not mutated or inferred
+6 independent cases passed

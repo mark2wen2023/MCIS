@@ -1,0 +1,28 @@
+{
+  "pr_exact_paths": [
+    "contracts/timeline-interval-safety.md",
+    "logs/tl-axis-frozen.txt",
+    "logs/tl-interval-impl-hashes-frozen.txt",
+    "logs/tl-source-display-frozen.txt",
+    "service/mcis_service/timeline/router.py",
+    "service/tests/test_timeline_intervals.py",
+    "service/tests/test_timeline_intervals_independent.py",
+    "tests_acceptance/TL_AXIS/INDEPENDENT.md",
+    "tests_acceptance/TL_AXIS/REPORT.md",
+    "tests_acceptance/TL_INTERVAL/INDEPENDENT.md",
+    "tests_acceptance/TL_INTERVAL/REPORT.md",
+    "tests_acceptance/TL_SOURCE_DISPLAY/INDEPENDENT.md",
+    "tests_acceptance/TL_SOURCE_DISPLAY/REPORT.md",
+    "web/src/pages/EvidencePage.tsx",
+    "web/src/timeline/domain.ts",
+    "web/src/timeline/tooltip.ts",
+    "web/tests/timeline-axis-independent.test.ts",
+    "web/tests/timeline-domain-echarts.test.ts",
+    "web/tests/timeline-domain-independent.test.ts",
+    "web/tests/timeline-domain.test.ts",
+    "web/tests/timeline-tooltip-independent.test.ts",
+    "web/tests/timeline-tooltip.test.ts"
+  ],
+  "all_other_main_paths_preserved": 2371,
+  "docs_exact_main_plus_pr_suffix": true
+}
