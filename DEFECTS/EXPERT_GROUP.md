@@ -1,6 +1,7 @@
 # Public two-role Pi research independent review
 
-2026-11-14: Independent20/20 tests passed, zero skips; frozen12/12 matched.
+2026-11-14 R1: Independent36/36 tests passed, zero skips; revised frozen12/12 matched.
+The original20-test verdict and original freeze remain historical; R1 supersedes them.
 No remaining blocking defect found within the frozen research slice.
 
 ## EG-D01 — completion receipt failure retained success status (fixed)
@@ -28,3 +29,16 @@ local consistency only, never identity, origin or model accuracy.
 Remaining gates: no real-model capability acceptance, no native browser acceptance,
 no new source-PDF verification and no production identity integration. Explicit
 fixtures must not be presented as real provider or human-expert results.
+
+## EG-D05 — raw descriptor leak before successful fdopen transfer (fixed in R1)
+Coordinating review reproduced directory-leaf rejection leaking one fd per attempt.
+The original read helper opened a descriptor then called fdopen before its with
+manager existed; fdopen failure bypassed closure. The owner now checks fstat first
+and explicitly closes the raw fd in finally unless wrapping succeeds. write_new
+also closes on wrapping failure.
+
+Independent R1 regression adds16 tests: repeated directory/FIFO leaves across all
+four artifacts, failure at each fdopen read stage, write fdopen and fstat failures,
+and errors after successful stream ownership transfer. Actual /proc/self/fd counts
+return to the prior count after each attempt. Independent36/36 pass, revised freeze
+12/12 consistent. No remaining descriptor-lifetime blocker within this scope.

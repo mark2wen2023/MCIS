@@ -564,3 +564,6 @@ Engineering caps are declared for report/output/audit/manifest/ZIP. A self-revie
 
 ## Public two-role Pi research slice · 2026-11-14
 New isolated research/expert_group module on main3aba2bf: frozen public report excerpt, two separate bounded Pi model perspectives, exact quotes/uncertainty and side-by-side disagreements. Contract first in contracts/public-expert-group.md. No production route, identity, evidence-file, timeline, hypothesis/archive changes; no consensus facts. Offline fixture is explicit and not model acceptance; current secure credential channel absent. No deployment/merge/report-citation PR retry.
+
+## Expert group verifier descriptor ownership correction · 2026-11-14
+Coordinator review found directory-leaf fdopen failure leaks a raw descriptor. Register frozen receipt.py/test_cli_render.py correction: validate file type before wrapping, transfer ownership only after fdopen succeeds, and finally close untransferred descriptors in read/write helpers. Add repeated directory-leaf and wrapper-failure regressions. No provider call; supersede freeze only after checks.

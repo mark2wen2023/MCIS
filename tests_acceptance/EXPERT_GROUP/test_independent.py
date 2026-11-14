@@ -44,7 +44,7 @@ def exported(tmp_path_factory):
 
 def test_frozen_bytes_and_main_ancestry():
     import subprocess
-    for line in (ROOT/'logs/expert-group-impl-hashes-frozen.txt').read_text().splitlines():
+    for line in (ROOT/'logs/expert-group-r1-impl-hashes-frozen.txt').read_text().splitlines():
         digest, name = line.split(maxsplit=1)
         assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest() == digest
     main='3aba2bf03e393909c611489ae573a887087637ac'
@@ -222,3 +222,81 @@ def test_inert_text_and_no_factual_consensus(exported):
     assert not set(parser.tags)&{'script','a','img','iframe','form','link'}
     assert '&lt;script&gt;' in text and '建议标签不同' in text
     assert '标签相同；不是共识或事实确认' in text and '脚本模拟提供方' in text
+
+
+def fd_count():
+    # Linux execution environment; enumerate and close the proc directory iterator.
+    return len(list(Path('/proc/self/fd').iterdir()))
+
+
+@pytest.mark.parametrize('leaf', ['completion.json', 'result.json', 'comparison.html', 'receipt.jsonl'])
+@pytest.mark.parametrize('kind', ['directory', 'fifo'])
+def test_repeated_nonregular_artifact_rejection_releases_descriptors(exported,tmp_path,leaf,kind):
+    path=tmp_path/'nonregular';shutil.copytree(exported,path)
+    (path/leaf).unlink()
+    if kind=='directory':(path/leaf).mkdir()
+    else:os.mkfifo(path/leaf,0o600)
+    before=fd_count()
+    for _ in range(8):
+        with pytest.raises(ValueError,match='regular file required'):receipt.verify_export(path)
+        assert fd_count()==before
+
+
+@pytest.mark.parametrize('leaf', ['completion.json', 'result.json', 'comparison.html', 'receipt.jsonl'])
+def test_fdopen_failure_on_each_read_stage_closes_raw_descriptor(exported,monkeypatch,leaf):
+    original=receipt.os.fdopen
+    affected=[]
+    def fail_target(fd,*args,**kwargs):
+        if Path(os.readlink('/proc/self/fd/'+str(fd))).name==leaf:
+            affected.append(fd)
+            raise OSError('synthetic wrapping failure')
+        return original(fd,*args,**kwargs)
+    before=fd_count()
+    monkeypatch.setattr(receipt.os,'fdopen',fail_target)
+    for _ in range(5):
+        with pytest.raises(OSError,match='synthetic wrapping failure'):receipt.verify_export(exported)
+        assert fd_count()==before
+    assert len(affected)==5
+
+
+def test_write_fdopen_failure_closes_raw_descriptor(tmp_path,monkeypatch):
+    def fail(fd,*args,**kwargs):raise OSError('synthetic write wrapping failure')
+    before=fd_count()
+    monkeypatch.setattr(receipt.os,'fdopen',fail)
+    for number in range(8):
+        target=tmp_path/f'failed-{number}.json'
+        with pytest.raises(OSError,match='synthetic write wrapping failure'):receipt.write_new(target,b'synthetic')
+        assert fd_count()==before
+        assert target.read_bytes()==b''  # A partial artifact remains, never a complete export.
+
+
+def test_fstat_failure_closes_unwrapped_read_descriptor(exported,monkeypatch):
+    original=receipt.os.fstat
+    def fail(fd):
+        if Path(os.readlink('/proc/self/fd/'+str(fd))).name=='completion.json':
+            raise OSError('synthetic stat failure')
+        return original(fd)
+    before=fd_count()
+    monkeypatch.setattr(receipt.os,'fstat',fail)
+    for _ in range(5):
+        with pytest.raises(OSError,match='synthetic stat failure'):receipt.verify_export(exported)
+        assert fd_count()==before
+
+
+@pytest.mark.parametrize('mode',['read','write'])
+def test_stream_failure_after_successful_fd_transfer_still_closes(exported,tmp_path,monkeypatch,mode):
+    original=receipt.os.fdopen
+    class BrokenStream:
+        def __init__(self,stream):self.stream=stream
+        def __enter__(self):return self
+        def __exit__(self,*args):self.stream.close()
+        def read(self,*args):raise OSError('synthetic stream failure')
+        def write(self,*args):raise OSError('synthetic stream failure')
+    def wrap(fd,*args,**kwargs):return BrokenStream(original(fd,*args,**kwargs))
+    before=fd_count()
+    monkeypatch.setattr(receipt.os,'fdopen',wrap)
+    for number in range(5):
+        with pytest.raises(OSError,match='synthetic stream failure'):
+            if mode=='read':receipt.verify_export(exported)
+            else:receipt.write_new(tmp_path/f'partial-{number}',b'synthetic')
+        assert fd_count()==before

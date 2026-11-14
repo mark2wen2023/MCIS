@@ -129,3 +129,33 @@ def test_terminal_receipt_failure_has_no_completion_marker(tmp_path, monkeypatch
     assert json.loads((path/'result.json').read_text())['artifactPolicy'] == 'incomplete_without_valid_completion_manifest'
     assert not (path/'completion.json').exists()
     with pytest.raises(FileNotFoundError): verify_export(path)
+
+
+@pytest.mark.parametrize('leaf', ['completion.json', 'result.json', 'comparison.html', 'receipt.jsonl'])
+def test_directory_leaf_rejected_without_descriptor_leak(tmp_path, monkeypatch, leaf):
+    from receipt import verify_export
+    _, result = inputs()
+    monkeypatch.setitem(sys.modules, 'engine', SimpleNamespace(disclosure=lambda: {}, run_group=lambda *a, **k: result))
+    path = tmp_path/'run'
+    assert cli.main(['--fixture', '--output-dir', str(path)]) == 0
+    (path/leaf).unlink(); (path/leaf).mkdir()
+    before = len(os.listdir('/proc/self/fd'))
+    for _ in range(4):
+        with pytest.raises(ValueError, match='regular file required'):
+            verify_export(path)
+    assert len(os.listdir('/proc/self/fd')) == before
+
+
+def test_fdopen_failure_closes_untransferred_read_and_write_fds(tmp_path, monkeypatch):
+    import receipt
+    _, result = inputs()
+    monkeypatch.setitem(sys.modules, 'engine', SimpleNamespace(disclosure=lambda: {}, run_group=lambda *a, **k: result))
+    path = tmp_path/'run'
+    assert cli.main(['--fixture', '--output-dir', str(path)]) == 0
+    def fail(*a, **k): raise OSError('wrapper failure')
+    monkeypatch.setattr(receipt.os, 'fdopen', fail)
+    before = len(os.listdir('/proc/self/fd'))
+    for index in range(4):
+        with pytest.raises(OSError, match='wrapper failure'): receipt.verify_export(path)
+        with pytest.raises(OSError, match='wrapper failure'): receipt.write_new(tmp_path/f'new-{index}', b'')
+    assert len(os.listdir('/proc/self/fd')) == before

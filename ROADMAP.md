@@ -371,3 +371,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 | Public two-role Pi research | 待测 | 2026-11-14：main独立研究切片，固定公开片段、两独立实际Pi会话、出处/不确定性并列、预算与hash-chain回执/完成清单；38项离线测试通过。fixture6模拟模型轮/4工具/0外发，不是真实DeepSeek能力验收。无可用安全凭据，不索取聊天密钥；不写案件/共识事实。冻结 `logs/expert-group-impl-hashes-frozen.txt`。 |
 | Public two-role Pi research | 工程范围验收通过 | 2026-11-14：主测38+独审20=58通过、零跳；freeze12/12。独审发现并关闭EG-D01至D04（回执终态、HTTP总deadline、管道停读预算、末端导出完整性）。实际Pi两role fixture6模拟轮/4工具/providerRequests0；真实DeepSeek与浏览器能力仍未验收，无可用安全凭据。见 `tests_acceptance/EXPERT_GROUP/INDEPENDENT.md`。 |
+| Public two-role Pi research r1 | 待复审 | 2026-11-14：协调独审发现目录叶子fdopen异常裸fd泄漏；read/write helper改显式所有权与finally关闭，新增4类目录叶子反复拒绝及fdopen失败读写回归，13项CLI测试通过。新冻结 `logs/expert-group-r1-impl-hashes-frozen.txt` 替代原冻结；真实DeepSeek继续暂停。 |
+| Public two-role Pi research r1 | 修订范围验收通过 | 2026-11-14：主测43+独审36=79通过、零跳；新增16项独立fd生命周期回归，目录/FIFO/fstat/fdopen/read/write异常均无fd增长。EG-D05已修，r1freeze12/12。待协调复审；真实DeepSeek请求继续暂停，无可用安全注入。 |

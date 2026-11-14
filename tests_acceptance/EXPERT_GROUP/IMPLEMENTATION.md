@@ -39,3 +39,14 @@ completion marker. Local chain/manifest are not signatures or authenticity proof
 No automatic overwrite/retry. Incomplete role/provider outcomes remain failed,
 cancelled or unknown and never count as completed group/model acceptance. Real model
 acceptance and native browser/CSP/download behavior remain explicit outstanding gates.
+
+## r1 coordinator-review correction
+
+Coordinator reproduced a directory-leaf failure that leaked one raw descriptor per
+verify attempt. receipt.read now validates regular-file type before wrapping, and
+both read/write helpers explicitly retain ownership until fdopen succeeds, closing
+any untransferred descriptor in finally. Four directory leaf cases each repeat four
+times with no fd growth; injected fdopen failure on both helpers likewise does not
+leak. Primary CLI suite is now13 cases (engine30 unchanged). New r1 freeze supersedes
+the initial freeze, retained as historical evidence. Real DeepSeek remains paused;
+no credentials or ready platform secret/outbound-identity bindings are available.

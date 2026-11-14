@@ -5,7 +5,9 @@ Reviewed frozen main-based candidate at `/workspace/mcis-expert-group-20261114`.
 No real credential access, real provider request, browser workaround, remote write,
 commit, merge, deployment or case-data write was performed by this reviewer.
 
-**20 independent tests passed, zero skips. All12 candidate frozen hashes match.**
+**R1:36 independent tests passed, zero skips. All12 revised frozen hashes match.**
+The original20-test acceptance remains historical;16 additional descriptor-lifetime
+checks cover EG-D05. The original freeze is superseded, not deleted.
 The tests run actual pinned Pi child loops against explicit scripted responses.
 A separate test replaces the provider function in memory to inspect canonical
 histories; its `fixture=False` result fields are not claimed as real inference.
@@ -16,7 +18,7 @@ Reproduce:
 ```sh
 PYTHONPATH=research/expert_group service/.venv/bin/pytest --import-mode=importlib -q \
   tests_acceptance/EXPERT_GROUP/test_independent.py
-sha256sum -c logs/expert-group-impl-hashes-frozen.txt
+sha256sum -c logs/expert-group-r1-impl-hashes-frozen.txt
 ```
 
 ## Defects identified before freeze and closed
@@ -74,3 +76,21 @@ signature and cannot authenticate a coordinated rewrite of all files/hashes. A
 complete export may truthfully contain a not_accepted partial run; export completeness
 and model-run acceptance must remain separate. Production identity, evidence-file,
 time-line and hypothesis/archive modules are outside this research candidate.
+
+## R1 follow-up — EG-D05 descriptor ownership failures
+
+The coordinating review reported one leaked descriptor per attempt when a directory
+occupied completion.json: os.fdopen raised before a context manager owned the raw
+fd. The owner moved regular-file validation before wrapping, retained raw ownership
+until fdopen succeeds, and closes untransferred descriptors in finally. write_new
+uses the same ownership-transfer rule. No implementation change was made by this
+independent reviewer.
+
+Additional16 independent tests use actual Linux /proc/self/fd counts after every
+rejection. Each of the four artifact leaves is replaced by a directory and a FIFO
+and rejected eight times without descriptor growth. Each of the four read stages
+has fdopen failure injected repeatedly; write wrapping and fstat failures are also
+repeated. Finally, successful wrapping followed by read/write exceptions confirms
+that context-owned streams close correctly. Failed writes may leave an empty partial
+file, but no complete export is asserted. All36 independent tests pass; R1 freeze
+12/12 matches. No remaining scoped blocker, real-model run or network access.

@@ -52,10 +52,16 @@ class Receipt:
 
 def write_new(path, content, *, dir_fd=None):
     fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600, dir_fd=dir_fd)
-    with os.fdopen(fd, 'wb') as stream:
-        stream.write(content)
-        stream.flush()
-        os.fsync(stream.fileno())
+    try:
+        stream = os.fdopen(fd, 'wb')
+        fd = None  # Ownership transfers only after wrapping succeeds.
+        with stream:
+            stream.write(content)
+            stream.flush()
+            os.fsync(stream.fileno())
+    finally:
+        if fd is not None:
+            os.close(fd)
 
 
 def verify_export(directory):
@@ -64,9 +70,15 @@ def verify_export(directory):
     descriptor = os.open(directory, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
     def read(name, limit):
         fd = os.open(name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=descriptor)
-        with os.fdopen(fd, 'rb') as stream:
-            if not stat.S_ISREG(os.fstat(stream.fileno()).st_mode): raise ValueError('regular file required')
-            raw = stream.read(limit+1)
+        try:
+            if not stat.S_ISREG(os.fstat(fd).st_mode): raise ValueError('regular file required')
+            stream = os.fdopen(fd, 'rb')
+            fd = None  # A failed fdopen leaves the raw descriptor owned here.
+            with stream:
+                raw = stream.read(limit+1)
+        finally:
+            if fd is not None:
+                os.close(fd)
         if len(raw) > limit: raise ValueError('artifact budget')
         return raw
     def parse(raw):
