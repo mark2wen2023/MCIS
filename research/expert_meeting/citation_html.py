@@ -4,6 +4,7 @@ from html import escape
 import sys
 from research.expert_meeting.citations import citation_view
 from research.expert_meeting.machine import MAX_SNAPSHOT
+from research.expert_meeting.review_plan import review_plan
 
 PHASES = {'ready':'尚未开始', 'round_open':'本轮尚未完整', 'round_review':'本轮已收齐，仍未核实',
           'completed_unverified':'协议轮次已完成，意见仍未核实', 'stopped_by_operator':'人工停止',
@@ -54,6 +55,16 @@ def render(snapshot):
         for item in comparison:
             meaning = '标签相同，但不是共识' if item['relationship']=='same_labels_not_consensus' else '标签不同，分歧未解决'
             parts.append('<p>第 '+text(index)+' 轮 · '+text(item['itemId'])+'：'+meaning+'；'+text(item['labels'])+'</p>')
+    parts.append('</section><section><h2>人工复核问题清单（全部待复核）</h2>')
+    plan = review_plan(snapshot)
+    parts.append('<p>仅列当前轮次待办；历史意见保留在上方。自动生成问题不等于已完成人工审查，不认证审查人。</p>')
+    for task in plan['tasks']:
+        parts.append('<h3>'+text(task['itemId'])+' · 当前轮次 '+text(task['round'])+'</h3>')
+        parts.append('<p>人工测试主张（含反例）：'+text(task['claim'])+'</p>')
+        parts.append('<p>快照绑定任务标识：<code>'+text(task['taskId'])+'</code></p>')
+        parts.append('<p>尚缺意见角色：'+text(', '.join(task['missingRoles']) or '无；仍需人工复核')+'</p><ul>')
+        for question in task['questions']: parts.append('<li>'+text(question)+'</li>')
+        parts.append('</ul>')
     parts.append('</section><p>本页没有模型运行、上传、批准或案件写入功能。静态 HTML 本身不是签名凭证；修改后应重新验证原始快照。</p></main></body></html>')
     return ''.join(parts)
 

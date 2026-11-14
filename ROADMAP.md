@@ -391,3 +391,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTCOORDINTEGRATED | 离线组合独审通过 | 2026-11-14：独立139项通过；两源各3/3、组合4/4冻结；实际加载新machine、源改动逐字一致，原NaN3红和fractional截止4测通过。缺失截止依赖已在本组合关闭；不放行真实模型/硬取消。 |
 | HFACS source portability | 待测 | fixed W184 seven-source pins replace missing sibling dependency; logs/hfacs-source-portability-impl-hashes-frozen.txt; real core remains blocked |
 | HFACS source portability | 局部独审通过 | self19pass/independent19pass; 7realCLI collection only; SDK/core blocked; tests_acceptance/hfacs-source-portability/REPORT.md |
+| EXPERTREVIEWPLAN | 待独审 | 2026-11-14：PR84head56edd5c上人工复核问题投影接入现有HTML，154项回归通过；冻结 logs/EXPERTREVIEWPLAN-impl-hashes-frozen.txt。本轮缺席/分歧/不确定性均待人工，不认证/不批准，模型0/HOLD。 |
+| EXPERTREVIEWPLAN | 只读流程独审通过 | 2026-11-14：10项独审、4/4冻结一致；无.git副本154项回归通过。当前轮隔离/全部pending/绑定和文本安全已验，见 DEFECTS/EXPERTREVIEWPLAN.md；非认证任务库/真实浏览器/模型验收。 |
+| EXPERTREVIEWMAIN | 待独审 | 2026-11-14：main25b9df6上提取dd2f8b8最小人审清单增量，164回归通过，无代码冲突；冻结 logs/EXPERTREVIEWMAIN-impl-hashes-frozen.txt。离线/全部待复核/非认证/非真实模型边界不变。 |
+| EXPERTREVIEWMAIN | 最小整合独审通过 | 2026-11-14：main25b9df6前缀及其他跟踪文件保留，12源文件逐字；独立无.git副本164项通过，新/原冻结各4/4。见 DEFECTS/EXPERTREVIEWMAIN.md；仅离线pending人审，真实0/HOLD。 |
