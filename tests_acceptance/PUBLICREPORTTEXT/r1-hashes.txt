@@ -1,0 +1,6 @@
+web/src/reportTextHandoff/model.ts: OK
+web/src/reportTextHandoff/Panel.tsx: OK
+web/src/evidenceIntake/EvidenceIntakePanel.tsx: OK
+web/tests/report-text-handoff.test.tsx: OK
+web/tests/run-report-text-handoff.sh: OK
+docs/PUBLICREPORTTEXT.md: OK

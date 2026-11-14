@@ -368,3 +368,9 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 | 2026-11-12 | Report output A | 受限独立验收通过 | 最终独立49 passed/11.56s，20SHA前后匹配；真实双格式单render/原文不变/审计关联、实际第二连接改报告或策略后409/403、故障全表回滚与commit后交付失败各有证明。真浏览器2正常下载+2真实commit后故障替换+1真实commit后身份迟响应丢弃，最终5审计；8独立客户端坏结构/错绑拒绝。实际2MiB报告及16MiB输出边界与其余缩小limit测试区别详见独立REPORT；未穷尽多worker/真实切案/全部变体。无服务端原件保存、无.mcase文件恢复、无签署认证；B仅计划，不部署不触W11。 |
+
+| 2026-11-14 | PUBLICREPORTTEXT | 待独立验收 | main 3aba2bf 上 Document 登记回执显示本入口未解析；公开报告人工声明后本地导出双摘要/来源绑定未解析交接。无 OCR/模型/服务/文件安全变动。新35合成DOM/模型、旧W4.2 88、tsc/build过；冻结 logs/PUBLICREPORTTEXT-impl-hashes-frozen.txt。浏览器/真实身份未验证；无部署合并。 |
+
+| 2026-11-14 | PUBLICREPORTTEXT r1 | 修复后待复验 | 初始独审20用例16过4失败：导出字段fileName/byteLength/registeredUtc变更未重置声明、createElement失败泄漏对象URL。已补绑定并在分配URL前构造元素，澄清人员字段不导出但自由文本仍须核查。35+88自测与build复过；新冻结 logs/PUBLICREPORTTEXT-r1-impl-hashes-frozen.txt，初始失败证据保留，待独立原断言复跑。 |
+
+| 2026-11-14 | PUBLICREPORTTEXT r1 | 受限独立验收通过 | 原20具名用例原样20/20过，6冻结前后匹配；D01声明失效/D02对象URL清理关闭，C01措辞澄清。新35合成DOM/模型与旧W4.2 88另计；正式面板回执→交接→身份切换在DOM/API-double验证，无新增请求。真实Chromium在导航前因SUID sandbox配置退出，磁盘保存/生产身份/公开性认证及OCR均未验证。详tests_acceptance/PUBLICREPORTTEXT/REPORT.md，不推送部署合并。 |

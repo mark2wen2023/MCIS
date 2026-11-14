@@ -6,6 +6,7 @@ import { intakeError,intakeRequest,type Download } from './api'
 import { onIntakeNavigation,SELECTION_EVENT } from './navigation'
 import { CATEGORIES,MAX_FILE_BYTES,downloadBytes,encodeBytes,fileNameValid,intakeBody,parsePreview,parseReceipt,sha256,type Category,type IntakeBody,type Metadata,type Preview,type Receipt } from './model'
 import '../styles/w4-intake.css'
+import { ReportTextHandoff } from '../reportTextHandoff/Panel'
 const EMPTY:Metadata={title:'',source:'',extractedBy:'',extractedUtc:'',category:'Other',confidentiality:'Restricted',note:''}
 type FileSelection={name:string;size:number;sha:string;base64:string}
 export interface IntakeProps {caseId:string;caseTitle?:string;who:string;selectedEvidenceId?:string;onRegistered?:(id:string)=>void;onRefresh?:()=>void}
@@ -109,6 +110,7 @@ export function EvidenceIntakePanel({caseId,caseTitle,who,selectedEvidenceId,onR
     </section>}
     {uncertain&&<div className="w42-notice"><p>结果未确认，原请求保持锁定。关闭不能撤销服务已受理的登记；网络或页面终止可能使在途结果未知。</p><div className="w42-actions"><button type="button" disabled={!!busy} onClick={()=>void recover()}>只读核查本次登记</button><button type="button" disabled={!!busy} onClick={()=>void save()}>同一内容幂等重试登记</button></div></div>}
     {receipt&&<section className="w42-receipt" aria-labelledby="w42-receipt-title"><h3 id="w42-receipt-title">已核对登记回执 · {receipt.evidenceId}</h3><Declaration metadata={receipt.metadata}/><p>系统登记 UTC：{receipt.registeredUtc} · 登记人：{receipt.registeredBy}（{receipt.registeredRole}）{receipt.replayed?' · 相同登记已存在，未重复新增':''}</p><p>文件：{receipt.fileName} · {receipt.byteLength} bytes。证据状态：{receipt.evidence.status}。登记本身不生成 Verify 事件；Verified 也仅指最近一次字节哈希一致。</p><p className="w42-hash">原件 SHA-256：{receipt.sourceSha256}<br/>请求摘要：{receipt.requestDigest}</p><label>本次下载目的（将记入访问记录）<textarea aria-label="本次下载目的（将记入访问记录）" rows={2} maxLength={1000} disabled={!!busy} value={purpose} onChange={e=>setPurpose(e.target.value)}/></label><p>下载会追加 Access 与审计，不是零写入查看；不会在页面执行文件。每次人工下载均可能产生新的访问记录。</p><div className="w42-actions"><button type="button" disabled={!!busy||!purpose.trim()} onClick={()=>void download()}>记录访问并下载原件</button><button type="button" disabled={!!busy} onClick={()=>reset(true)}>登记另一文件 / 清空当前表单</button></div></section>}
+    {receipt&&<ReportTextHandoff receipt={receipt}/>}
     {busy&&<p role="status">{busy}…</p>}{message&&<p role="alert" className="w42-notice">{message}</p>}
   </section>
 }

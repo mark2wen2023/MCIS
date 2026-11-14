@@ -1,0 +1,24 @@
+PASS exact JSON projection and unresolved boundaries
+PASS all evidence hash states retain unverified review
+PASS no export for nonDocument categories or undeclared material
+PASS malformed or mismatched receipts fail closed
+PASS URL admission preserves strings and rejects dangerous schemes/credentials
+PASS actual generated Blob roundtrip and repeated explicit export
+PASS source edit revokes declaration and prevents export
+PASS cancel clears declaration and source but preserves receipt
+PASS download preparation failure retains inputs without retry
+PASS download click failure retains inputs and removes anchor
+PASS receipt requestDigest change clears public declaration
+PASS receipt sourceSha256 change clears public declaration
+PASS receipt caseId change clears public declaration
+PASS receipt evidenceId change clears public declaration
+PASS receipt metadata change clears public declaration
+FAIL receipt fileName change clears public declaration :: fileName exported declaration changed but old consent remains
+FAIL receipt byteLength change clears public declaration :: byteLength exported declaration changed but old consent remains
+FAIL receipt registeredUtc change clears public declaration :: registeredUtc exported declaration changed but old consent remains
+PASS formal EvidenceIntakePanel lookup mounts handoff and identity change removes it
+FAIL element construction failure leaves no unrevoked object URL :: object URL survives failed element creation
+
+1 !== 0
+
+INDEPENDENT 16 passed, 4 failed, 20 cases
