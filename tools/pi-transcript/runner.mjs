@@ -1,4 +1,6 @@
 /** Explicit trusted-host runtime. No CLI, network provider, keys, shell or filesystem tools. */
+import { equivalentFinal } from './final-equivalence.mjs';
+import { finalDiagnostic } from './final-diagnostic.mjs';
 import { isRemoteAdapter } from './deepseek-adapter.mjs';
 import { Agent } from '@earendil-works/pi-agent-core';
 import { createAssistantMessageEventStream } from '@earendil-works/pi-ai';
@@ -69,12 +71,10 @@ export async function runTranscript({host,stream,model,signal,mode='fixture',dea
     const last=agent.state.messages.at(-1);
     if(last?.role!=='assistant'||last.stopReason!=='stop'||last.content.some(x=>x.type!=='text')) throw new Error('MCIS_FINAL_INVALID');
     const payload=last.content.map(x=>x.text).join('');
-    if(validated===null) throw new Error('MCIS_FINAL_UNVALIDATED_NO_VALIDATION');
-    if(payload!==validated) {
-      let formatting=false;try{formatting=JSON.stringify(JSON.parse(payload))===JSON.stringify(JSON.parse(validated));}catch{}
-      throw new Error(formatting?'MCIS_FINAL_UNVALIDATED_FORMATTING':'MCIS_FINAL_UNVALIDATED_CHANGED');
-    }
-    const result=await call({op:'final',payload});
+    const finalError=finalDiagnostic(payload,validated);
+    if(!equivalentFinal(payload,validated)) throw new Error(finalError || 'MCIS_FINAL_INVALID');
+    // Forward the exact previously validated bytes, never rewritten model text.
+    const result=await call({op:'final',payload:validated});
     return {result,trace,models,tools,piVersion:'1.5.2',realPi:true,realModel:mode==='remote-deepseek' && result.inferencePerformed===true,usageMeasured:false};
   } finally {clearTimeout(timer);signal?.removeEventListener('abort',onAbort);stop();}
 }

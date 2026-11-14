@@ -41,3 +41,44 @@ now distinguishes these cases without accepting any formerly rejected output.
 Do not weaken source quotes, JSON schemas, call IDs or approval checks to pass a
 live test. Add recovery-safe non-secret result receipts before another explicit
 live acceptance run; a lost process response cannot be inferred from code tests.
+
+## Recovery receipt addition (offline, not a new live pass)
+The explicit local launcher now creates a unique restricted-permission JSONL
+receipt under its OS temporary directory before reading credentials. It prints
+the receipt location and syncs each record before dispatching a model request.
+Only fixed lifecycle phases, bounded counters, a random run ID, timestamp and
+allowlisted rejection category are recorded. No key, model content, source text,
+request arguments, arbitrary exception or host output is recorded. Completed
+and rejected runs are terminal; a started request without a terminal record is
+**unknown**, not failed, and does not authorize retry. This supports recovery
+from lost process output, not survival of workspace destruction/power loss or
+a cryptographically authenticated audit trail. No new provider invocation was
+made during this implementation.
+
+## Independent new bounded live acceptance with recovery receipt
+Run 202d715c-5123-44f0-8445-67cade98b96a (2026-11-14 UTC) used the same
+explicitly authorized fixed public report and official DeepSeek model through
+actual Pi. Three model rounds and two tools completed. `read_transcript_excerpt`
+returned, and `validate_extraction_proposal` returned **PendingReview**. Final
+model output was rejected with **MCIS_FINAL_UNVALIDATED_FORMATTING**: formatting
+outside JSON strings differed from the exact validated candidate. Thus source
+validation succeeded for a candidate but the full end-to-end final delivery
+still did NOT pass. No approval or business-record save. The strict final-text
+rule was not relaxed. Sanitized durable phase/counter/terminal receipt is at
+receipts/public-probe-202d715c.jsonl; candidate text and key are not captured.
+Historical fourth-run state remains unknown and is not rewritten by this run.
+A separate launcher attempt had closed stdin and ended MCIS_KEY_TIMEOUT before
+host startup or any external request; it was not a provider retry.
+
+## Latest complete bounded live acceptance
+After separately reviewed strict presentation-equivalence handling, new run
+be93095b-c8be-47e1-9579-f2a3788a23aa completed **accepted_pending_review**:
+actual Pi1.5.2 + official DeepSeek configured model deepseek-v4-pro,4 model
+rounds,3 tools (read_transcript_excerpt and2 validate_extraction_proposal),
+7 proposals and7 citations, **saved=false**. The host retained strict original
+candidate bytes, exact citation validation, source/authorization rechecks and
+no fact approval. Recovery receipt receipts/public-probe-be93095b.jsonl has a
+terminal accepted_pending_review record. This is acceptance of one fixed public
+report excerpt, not full-case accuracy, witness testimony, production identity,
+UI/E2E or CI. It does not resolve the historical unknown fourth run.
+The earlier failed/unknown records remain history, not the latest outcome.
