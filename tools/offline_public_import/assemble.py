@@ -1,10 +1,12 @@
 """Single admitted public PDF -> local pending review packet. No HTTP/DB/model."""
-import argparse,hashlib,json,os,re,subprocess,sys,tempfile,uuid
+import argparse,hashlib,json,os,re,subprocess,sys,tempfile,uuid,shutil,time
 from datetime import datetime,timezone
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'tools/offline_public_import'))
 sys.path.insert(0,str(ROOT/'service'))
+sys.path.insert(0,str(ROOT/'tools/pdf_text_layer'))
+from derive import run_bounded, DerivationError
 import manifest as source_manifest
 from mcis_service.knowledge.router import digest
 from mcis_service.knowledge.freshness import preview as freshness,PROFILE as FRESH_PROFILE
@@ -32,18 +34,25 @@ def assemble(material_id, derivative=None):
  else:
   # Parse only the checked snapshot; original path cannot change bytes between check and parser.
   with tempfile.TemporaryDirectory() as d:
-   local=Path(d)/'source.pdf';local.write_bytes(raw)
-   cmd=subprocess.run(['pdftotext','-f','24','-l','24','-layout',str(local),'-'],capture_output=True,timeout=20)
-   if cmd.returncode!=0:raise Rejected('TEXT_EXTRACTION_FAILED')
-   page=cmd.stdout.decode('utf-8','strict')
-   if not re.search(r'\n\s*22\s*\f?\s*$',page):raise Rejected('PRINTED_PAGE_NOT_FOUND')
-   if page.count('（四）结论。')!=1 or page.count('八、')!=1:raise Rejected('PAGE_ANCHORS_AMBIGUOUS')
-   excerpt=page.split('（四）结论。',1)[1].split('八、',1)[0].strip()
-   if not excerpt or '工况正常' not in excerpt:raise Rejected('EXCERPT_NOT_FOUND')
-   version=subprocess.run(['pdftotext','-v'],capture_output=True,timeout=5)
-   version_lines=(version.stderr or version.stdout).decode('utf-8','replace').splitlines()
-   if version.returncode!=0 or not version_lines:raise Rejected('EXTRACTION_VERSION_UNAVAILABLE')
-   tool=version_lines[0]
+   local=Path(d)/'source.pdf';local.write_bytes(raw);local.chmod(0o400)
+   texttool=shutil.which('pdftotext')
+   if not texttool:raise Rejected('TEXT_TOOL_UNAVAILABLE')
+   deadline=time.monotonic()+20
+   try:
+    output,warnings=run_bounded([texttool,'-f','24','-l','24','-layout',str(local),'-'],deadline=deadline,limit=2*1024*1024)
+    if warnings.strip():raise Rejected('TEXT_EXTRACTION_WARNING')
+    page=output.decode('utf-8','strict')
+    if not re.search(r'\n\s*22\s*\f?\s*$',page):raise Rejected('PRINTED_PAGE_NOT_FOUND')
+    if page.count('（四）结论。')!=1 or page.count('八、')!=1:raise Rejected('PAGE_ANCHORS_AMBIGUOUS')
+    excerpt=page.split('（四）结论。',1)[1].split('八、',1)[0].strip()
+    if not excerpt or '工况正常' not in excerpt:raise Rejected('EXCERPT_NOT_FOUND')
+    version_out,version_err=run_bounded([texttool,'-v'],deadline=deadline,limit=16384)
+    version_lines=(version_err or version_out).decode('utf-8','strict').splitlines()
+    if not version_lines:raise Rejected('EXTRACTION_VERSION_UNAVAILABLE')
+    tool=version_lines[0]
+    if local.read_bytes()!=raw:raise Rejected('SOURCE_BYTES_CHANGED')
+   except (DerivationError,UnicodeError) as e:
+    raise Rejected('TEXT_EXTRACTION_FAILED') from e
  captured=datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
  declaration={'profile':source_manifest.PROFILE,'title':TITLE,'publisher':'上海海事局（既有来源声明，未联网复核）','sourceUrl':URL,'publicationDate':None,'fileSha256':SHA,'locators':[{'pdfPage':24,'printedPage':'22','label':'七、“YANGZE 22”轮操舵系统状况综合分析 / （四）结论。'}]}
  checked=source_manifest.preview(json.dumps(declaration,ensure_ascii=False).encode(),raw)
