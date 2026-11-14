@@ -615,3 +615,6 @@ EXPERTCONNECTED r3：修独审提示的embedded已显示但aria-live仍称未载
 
 ## EXPERTRAWKEYHOLD 2026-11-14
 授权核查并默认禁用旧raw-key在线入口。修改transport/isolated/worker/Executor及旧expert_group CLI/engine冻结文件：无真实凭据模式开关；managed仍需可信bootstrap并拒绝。仅显式httpx.MockTransport可运行合成协议测试，worker --mock传明确mock实例，不能伪装remote成功。旧离线测试fixture改为显式MockTransport，保留断言。旧approved-remote/remote调用兼容性刻意中断；公开packet/manifest不变，历史回执仍可只读验证。
+
+## EXPERTINTENT 2026-11-14
+基于498f807补浏览器到执行器前的最小离线准备合同。工作台显式下载固定公开packet请求标识，不含材料正文/凭据/URL/预算/ready/授权；重复导出同页同ID。Python严格预检仅返回BLOCKED，不排队、不调用Executor、不连接平台。真正身份授权、可信凭据bootstrap、原子预算/幂等/取消及回执绑定仍缺；不得把请求或预检摘要当授权/执行凭证。修改冻结app.ts与新增研究接口，不改正式案件。

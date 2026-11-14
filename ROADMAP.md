@@ -437,3 +437,7 @@ EXPERTCONNECTED r3待复验：embedded aria-live状态准确，34新增DOM/40旧
 | 2026-11-14 | EXPERTRAWKEYHOLD | 待独审 | 75b3ef4隔离，旧raw-key在线默认拒绝，explicit MockTransport/remote_mock保留；相关253项回归+新增CLI匹配摘要拒绝测试通过，40旧/19来源DOM断言过。冻结logs/EXPERTRAWKEYHOLD-impl-hashes-frozen.txt；无真实凭据/模型/设置改动，managed仍无可信bootstrap。 |
 
 | 2026-11-14 | EXPERTRAWKEYHOLD | 限定门禁独审通过 | 16新增独审+14原回显独审通过、20冻结一致，最终相关合跑270过；40/19DOM断言过。raw在线默认拒绝，显式mock成功控制与历史只读兼容通过；真实模型0、managed缺绑定HOLD，不是OS网络沙箱。 |
+
+| 2026-11-14 | EXPERTINTENT | 待独审/真实BLOCKED | 498f807隔离，既有工作台显式导出固定公开准备请求→纯离线严格预检；合法也BLOCKED，非授权/回执/预算预留。26预检+TS/Python DOM合同、43状态/34会议/40旧/19来源断言通过；freeze logs/EXPERTINTENT-impl-hashes-frozen.txt。无可信bootstrap/API/真实调用。 |
+
+| 2026-11-14 | EXPERTINTENT | 离线独审通过/真实BLOCKED | 16独立Python+7独立DOM场景、7冻结一致；相关合跑74过，前端合同/状态/来源与TS通过。请求只供离线准备，非认证/授权/执行回执/预算预留；真实服务与原生下载未验，无模型/API调用。 |

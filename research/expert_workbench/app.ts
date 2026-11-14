@@ -1,15 +1,19 @@
+import {executionIntent} from './intent'
 import {parseMeeting,compareRoles,type MeetingDisplay} from './meeting'
 import {packet, PACKET_SHA, MAX_BYTES, ROLE_NAMES, parseResult, mode, comparison, type Result} from './model'
 const phaseText:Record<string,string>={ready:'尚未开始',round_open:'本轮尚未完成',round_review:'首轮完成待审读；会议尚未完成',completed_unverified:'两轮完成；全部意见未核实',stopped_by_operator:'人工停止；不代表会议完成',stopped_failed:'失败停止；不代表会议完成',stopped_unknown:'结果未知；不代表会议完成',timed_out:'超时停止；不代表会议完成'}
 const roleText:Record<string,string>={not_started:'尚未开始',unknown:'结果未知',not_accepted:'未接受',completed_unverified:'意见已接受但未核实'}
 export function mount(root:HTMLElement, embedded?:MeetingDisplay) {
   let meeting=embedded?parseMeeting(new TextEncoder().encode(JSON.stringify(embedded))):null,roundIndex=0
+  let preparedIntent:string|null=null
   let result:Result|null=null, selected=packet.items[0].itemId, filter='all', generation=0
   const el=(tag:string,text?:string,className?:string)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(className)n.className=className;return n}
   const header=el('header');header.append(el('p','MCIS / PUBLIC RESEARCH','eyebrow'),el('h1','双视角审读工作台'),el('p','公开报告冻结片段 · 不是真人专家 · 全部意见未核实'))
   const notice=el('aside','仅在本地查看公开材料的结果 JSON。不接入案件、不运行模型、不上传。相同标签不是共识，分歧不自动裁决。三条人工编写测试主张（含反例）均对应同一份报告的同一页（PDF 第 28 页 / 印刷页 26），不是三份独立证据。','notice')
   const controls=el('section',undefined,'toolbar'),label=el('label','选入 a686c85 的 result.json（最大 1 MiB） '),file=document.createElement('input');file.type='file';file.accept='.json,application/json';label.append(file)
   const clear=el('button','清空结果') as HTMLButtonElement;clear.type='button';controls.append(label,clear)
+  const prepare=el('button','导出运行准备请求（不执行）') as HTMLButtonElement;prepare.type='button';controls.append(prepare)
+  controls.append(el('p','仅导出固定公开案例的准备请求，不含当前意见。真实执行不可用：没有认证授权或可信凭据绑定，不排队、不预留预算。'))
   const status=el('p',meeting?'已载入只读会议视图；全部意见未核实，没有执行模型。':'尚未载入结果。只接受冻结 YANGZE 22 公开片段，不接受其他案例。');status.setAttribute('role','status');status.setAttribute('aria-live','polite')
   const provenance=el('section',undefined,'provenance'),body=el('div',undefined,'workspace'),nav=el('nav');nav.setAttribute('aria-label','主张选择')
   const detail=el('section');detail.setAttribute('aria-label','主张与双角色意见');body.append(nav,detail)
@@ -52,6 +56,16 @@ export function mount(root:HTMLElement, embedded?:MeetingDisplay) {
     source.append(el('p',`PDF 第 ${item.sourceLocator.pdfPage} 页 / 印刷页 ${item.sourceLocator.printedPage} · ${item.sourceLocator.section}`),el('p',item.sourceLocator.url,'mono'),el('p',`PDF SHA-256（来源声明）：${item.sourceLocator.pdfSha256}`,'mono'),el('p',`片段 SHA-256：${item.sourceSha256}`,'mono'),el('pre',item.sourceText),el('p','公开报告来源声明，未重新下载或认证PDF。本页不打开外部链接。'))
     detail.append(source)
   }
+  prepare.addEventListener('click',()=>{
+    let url:string|null=null
+    try{
+      if(preparedIntent===null)preparedIntent=JSON.stringify(executionIntent(crypto.randomUUID()))
+      url=URL.createObjectURL(new Blob([preparedIntent],{type:'application/json'}))
+      const link=document.createElement('a');link.href=url;link.download='mcis-public-expert-intent.json';link.click()
+      status.textContent='已请求浏览器保存准备请求，未确认文件保存；没有提交、排队、预留预算或执行模型。同页重复导出复用请求 ID，不构成服务端去重。'
+    }catch{status.textContent='准备请求导出失败；没有提交或执行模型，已有结果保留。'}
+    finally{if(url!==null){const ownedUrl=url;setTimeout(()=>URL.revokeObjectURL(ownedUrl),1000)}}
+  })
   file.addEventListener('change',async()=>{
     const chosen=file.files?.[0];if(!chosen||meeting)return
     const own=++generation;status.textContent='正在本地校验；未上传。'

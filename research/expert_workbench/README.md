@@ -70,3 +70,6 @@ PYTHONPATH=. /workspace/mcis-local-export/service/.venv/bin/python -m research.e
 remote 模式零响应时显示“未声明收到响应”，不冒称响应观察；有响应也仅称“声明收到”，不认证真实模型。直接 build --meeting 的展示投影不能证明曾运行 Python 转换器，因此页面改为提示受控流程须先校验原回执，不再一律宣称已校验。会议停止/超时/未知和角色缺席均显示中文并保留原状态代码，回执声明完整不代表会议完成。状态及计数仍为未认证字段声明。
 
 test-status.mjs 新增43项合成DOM断言：四种停止状态、二轮缺席/上一轮已接受意见保留、未知/未接受角色、零响应标题与固定原文引用保留。测试不调用模型。未更改协议、回执验证器、原文、模型输入或运行器。
+
+## 运行准备请求（不执行）
+新增显式本地JSON下载，只携带固定公开packet摘要、UUIDv4请求ID和固定准备operation；不包含当前意见或材料正文。同页重复导出复用ID，不代表服务端去重。无crypto/下载失败不提交、不执行，已有视图保留；下载动作不确认文件已保存。配套expert_remote.preflight始终BLOCKED，不是授权或执行回执。真正浏览器认证、可信worker凭据、预算预留/取消/持久幂等及审计关联仍缺，详见 ../expert_remote/EXECUTION_INTENT.md。无在线按钮/服务，旧raw-key仍禁用。
