@@ -1,0 +1,15 @@
+{"version":1,"runId":"5d3b415b-9e8b-4c5e-aa98-9c978834fd85","sequence":1,"at":"2026-11-14T04:12:47.552Z","phase":"started","errorCode":null,"saved":false}
+{"version":1,"runId":"5d3b415b-9e8b-4c5e-aa98-9c978834fd85","sequence":2,"at":"2026-11-14T04:12:54.914Z","phase":"host_ready","errorCode":null,"saved":false}
+{"version":1,"runId":"5d3b415b-9e8b-4c5e-aa98-9c978834fd85","sequence":3,"at":"2026-11-14T04:12:54.984Z","phase":"model_request_started","models":1,"tools":0,"errorCode":null,"saved":false}
+{"version":1,"runId":"5d3b415b-9e8b-4c5e-aa98-9c978834fd85","sequence":4,"at":"2026-11-14T04:13:01.646Z","phase":"model_request_returned","models":1,"tools":0,"errorCode":null,"saved":false}
+{"version":1,"runId":"5d3b415b-9e8b-4c5e-aa98-9c978834fd85","sequence":5,"at":"2026-11-14T04:13:01.792Z","phase":"tool_returned","models":1,"tools":1,"errorCode":null,"saved":false}
+{"version":1,"runId":"5d3b415b-9e8b-4c5e-aa98-9c978834fd85","sequence":6,"at":"2026-11-14T04:13:01.834Z","phase":"model_request_started","models":2,"tools":1,"errorCode":null,"saved":false}
+{"version":1,"runId":"5d3b415b-9e8b-4c5e-aa98-9c978834fd85","sequence":7,"at":"2026-11-14T04:13:28.599Z","phase":"model_request_returned","models":2,"tools":1,"errorCode":null,"saved":false}
+{"version":1,"runId":"5d3b415b-9e8b-4c5e-aa98-9c978834fd85","sequence":8,"at":"2026-11-14T04:13:28.856Z","phase":"tool_returned","models":2,"tools":2,"errorCode":null,"saved":false}
+{"version":1,"runId":"5d3b415b-9e8b-4c5e-aa98-9c978834fd85","sequence":9,"at":"2026-11-14T04:13:28.904Z","phase":"model_request_started","models":3,"tools":2,"errorCode":null,"saved":false}
+{"version":1,"runId":"5d3b415b-9e8b-4c5e-aa98-9c978834fd85","sequence":10,"at":"2026-11-14T04:13:32.927Z","phase":"model_request_returned","models":3,"tools":2,"errorCode":null,"saved":false}
+{"version":1,"runId":"5d3b415b-9e8b-4c5e-aa98-9c978834fd85","sequence":11,"at":"2026-11-14T04:13:33.112Z","phase":"model_result_verified","models":3,"tools":2,"proposals":6,"citations":6,"errorCode":null,"saved":false}
+{"version":1,"runId":"5d3b415b-9e8b-4c5e-aa98-9c978834fd85","sequence":12,"at":"2026-11-14T04:13:33.953Z","phase":"ui_review_verified","models":3,"tools":2,"proposals":6,"citations":6,"errorCode":null,"saved":false}
+{"version":1,"runId":"5d3b415b-9e8b-4c5e-aa98-9c978834fd85","sequence":13,"at":"2026-11-14T04:13:34.779Z","phase":"archive_roundtrip_verified","models":3,"tools":2,"proposals":6,"citations":6,"errorCode":null,"saved":false}
+{"version":1,"runId":"5d3b415b-9e8b-4c5e-aa98-9c978834fd85","sequence":14,"at":"2026-11-14T04:13:34.785Z","phase":"cleanup_verified","models":3,"tools":2,"proposals":6,"citations":6,"errorCode":null,"saved":false}
+{"version":1,"runId":"5d3b415b-9e8b-4c5e-aa98-9c978834fd85","sequence":15,"at":"2026-11-14T04:13:35.001Z","phase":"accepted_pending_review","models":3,"tools":2,"proposals":6,"citations":6,"errorCode":null,"saved":false}

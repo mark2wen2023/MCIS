@@ -5,7 +5,9 @@ from . import host_extraction as h,extraction,extraction_working_store as store
 
 PROFILE='mcis-extraction-review-persistent-trial-v1'
 class PersistentExtractionReviewHost:
-    def __init__(self,*,db,settings,session_token,case_id,record_id,provider=None):
+    def __init__(self,*,db,settings,session_token,case_id,record_id,provider=None,review_origin='user_submission_unverified'):
+        if review_origin not in ('user_submission_unverified','scripted_test'):raise ValueError('trusted review origin required')
+        self.__review_origin=review_origin
         if provider is not None and type(provider) not in (h.FixtureProvider,h.LocalProvider):raise ValueError()
         self.__args=(db,settings,session_token,case_id,record_id)
         self.__binding=h.describe(*self.__args)['bindingDigest'];self.__provider=provider
@@ -49,7 +51,7 @@ class PersistentExtractionReviewHost:
         with self.__lock:
             self._check();db,settings,token,case,record=self.__args
             if store.read(db,settings,token,case,proposal_id)['recordId']!=record:raise ValueError('record scope mismatch')
-            return store.append_review(db,settings,token,case,proposal_id,operation_id,expected_revision,decisions)
+            return store.append_review(db,settings,token,case,proposal_id,operation_id,expected_revision,decisions,review_origin=self.__review_origin)
     def list(self):
         with self.__lock:
             self._check();db,settings,token,case,record=self.__args
