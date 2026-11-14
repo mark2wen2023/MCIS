@@ -368,3 +368,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 | 2026-11-12 | Report output A | 受限独立验收通过 | 最终独立49 passed/11.56s，20SHA前后匹配；真实双格式单render/原文不变/审计关联、实际第二连接改报告或策略后409/403、故障全表回滚与commit后交付失败各有证明。真浏览器2正常下载+2真实commit后故障替换+1真实commit后身份迟响应丢弃，最终5审计；8独立客户端坏结构/错绑拒绝。实际2MiB报告及16MiB输出边界与其余缩小limit测试区别详见独立REPORT；未穷尽多worker/真实切案/全部变体。无服务端原件保存、无.mcase文件恢复、无签署认证；B仅计划，不部署不触W11。 |
+
+| Report citation occurrences | 待测 | 2026-11-14：基于 main 3aba2bf；PDF/DOCX 逐句逐次引用位置与声明追溯，不核实来源/事实。自测 27 项及报告访问/旧版/下载包回归 245 项通过；冻结见 `logs/report-citation-occurrences-impl-hashes-frozen.txt`。 |
+| Report citation occurrences r1 | 待测 | 2026-11-14：独审发现 PDF 折叠元数据空白，已用 JSON Unicode 转义保留；正文不变。29 项自测通过；原冻结被 `logs/report-citation-occurrences-r1-impl-hashes-frozen.txt` 替代。 |
+| Report citation occurrences r1 | 验收通过 | 2026-11-14：独立实际 PDF/DOCX 验收 20 项通过，RCO-D01 空白折叠缺陷修复闭环；自测29项，报告旧版/权限/下载包回归245项，r1后下载包56项重测通过。范围与限制见 `tests_acceptance/REPORT_CITATION_OCCURRENCES/INDEPENDENT.md`；冻结4/4一致。 |

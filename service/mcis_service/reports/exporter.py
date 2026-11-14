@@ -18,6 +18,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
 from ..config import PROJECT_ROOT
+from . import citation_trace
 from .templates import DISCLAIMER_EN, DISCLAIMER_ZH, GLOSSARY, TEMPLATES
 
 _FONT = "MCIS-NotoSansSC-W16"
@@ -69,12 +70,13 @@ def _reference_label(citation):
     return label
 
 
-def _sentence_text(sentence, lang):
+def _sentence_text(sentence, lang, marker=None):
     text = sentence.get("textZh" if lang == "zh" else "textEn", "")
     if sentence.get("status") == "Dismissed":
         text = ("已驳回内容：" if lang == "zh" else "Dismissed content: ") + text
-    citations = " ".join(_reference_label(c) for c in sentence.get("citations", []))
-    return text + (" " + citations if citations else "")
+    citations = " ".join(_reference_label(c) + (" [" + citation_trace.citation_marker(marker, i) + "]" if marker else "")
+                         for i, c in enumerate(sentence.get("citations", []), 1))
+    return text + (" " + citations if citations else "") + (" [" + marker + "]" if marker else "")
 
 
 def _sentences(section):
@@ -83,12 +85,12 @@ def _sentences(section):
 
 
 def _references(report):
-    # 同一来源多次出现只在引用表列一次，句中引用保持原顺序。
+    # Only identical declarations collapse; per-use state differences must survive.
     found = {}
     for section in report.get("sections", []):
         for sentence in section.get("sentences", []):
             for citation in sentence.get("citations", []):
-                found.setdefault((citation["kind"], citation["id"], citation["href"], citation.get("sourceRef", "")), citation)
+                found.setdefault(citation_trace.declaration_key(citation), citation)
     return list(found.values())
 
 
@@ -137,7 +139,7 @@ def render_pdf(report: dict, lang: str, *, include_glossary=True) -> bytes:
             flow.append(p("含缺数据项 / Contains missing data", small))
         if lang == "bilingual":
             rows = [[p("中文", small), p("English", small)]]
-            rows.extend([[p(_sentence_text(s, "zh")), p(_sentence_text(s, "en"))] for s in _sentences(section)])
+            rows.extend([[p(_sentence_text(s, "zh", citation_trace.sentence_marker(number, index))), p(_sentence_text(s, "en", citation_trace.sentence_marker(number, index)))] for index, s in enumerate(_sentences(section), 1)])
             table = Table(rows, colWidths=[available / 2, available / 2], repeatRows=1, splitByRow=1, splitInRow=1)
             table.setStyle(TableStyle([
                 ("VALIGN", (0, 0), (-1, -1), "TOP"), ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#eef4f8")),
@@ -147,13 +149,18 @@ def render_pdf(report: dict, lang: str, *, include_glossary=True) -> bytes:
             ]))
             flow.append(table)
         else:
-            flow.extend(p(_sentence_text(sentence, lang)) for sentence in _sentences(section))
+            flow.extend(p(_sentence_text(sentence, lang, citation_trace.sentence_marker(number, index))) for index, sentence in enumerate(_sentences(section), 1))
     flow.append(p("引用表 / References", heading))
     refs = _references(report)
     if not refs:
         flow.append(p("缺数据：未提供引用 / Missing data: no references provided"))
     for citation in refs:
         flow.append(p(f"{_reference_label(citation)} {citation['kind']} — {citation['href']} | {citation.get('sourceRef', '')}", small))
+    flow.append(p("逐次引用定位 / Citation occurrence trace", heading))
+    flow.append(p(citation_trace.NOTICE, small))
+    for number, section in enumerate(report.get("sections", []), 1):
+        for index, sentence in enumerate(_sentences(section), 1):
+            flow.extend(p(line, small) for line in citation_trace.sentence_lines(section, sentence, citation_trace.sentence_marker(number, index)))
     if include_glossary:
         flow.append(p("术语表 / SMCP glossary（中文为项目译文）", heading))
         flow.extend(p(f"{term['termZh']} / {term['termEn']}", small) for term in GLOSSARY)
@@ -202,19 +209,25 @@ def render_docx(report: dict, lang: str, *, include_glossary=True) -> bytes:
             table.style = "Table Grid"
             table.rows[0].cells[0].text = "中文"
             table.rows[0].cells[1].text = "English"
-            for sentence in _sentences(section_data):
+            for index, sentence in enumerate(_sentences(section_data), 1):
                 cells = table.add_row().cells
-                cells[0].text = _sentence_text(sentence, "zh")
-                cells[1].text = _sentence_text(sentence, "en")
+                cells[0].text = _sentence_text(sentence, "zh", citation_trace.sentence_marker(number, index))
+                cells[1].text = _sentence_text(sentence, "en", citation_trace.sentence_marker(number, index))
         else:
-            for sentence in _sentences(section_data):
-                document.add_paragraph(_sentence_text(sentence, lang))
+            for index, sentence in enumerate(_sentences(section_data), 1):
+                document.add_paragraph(_sentence_text(sentence, lang, citation_trace.sentence_marker(number, index)))
     document.add_heading("引用表 / References", level=1)
     refs = _references(report)
     if not refs:
         document.add_paragraph("缺数据：未提供引用 / Missing data: no references provided")
     for citation in refs:
         document.add_paragraph(f"{_reference_label(citation)} {citation['kind']} — {citation['href']} | {citation.get('sourceRef', '')}")
+    document.add_heading("逐次引用定位 / Citation occurrence trace", level=1)
+    document.add_paragraph(citation_trace.NOTICE)
+    for number, section_data in enumerate(report.get("sections", []), 1):
+        for index, sentence in enumerate(_sentences(section_data), 1):
+            for line in citation_trace.sentence_lines(section_data, sentence, citation_trace.sentence_marker(number, index)):
+                document.add_paragraph(line)
     if include_glossary:
         document.add_heading("术语表 / SMCP glossary（中文为项目译文）", level=1)
         table = document.add_table(rows=1, cols=2)
