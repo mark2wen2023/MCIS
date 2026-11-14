@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import re
 import selectors
+import signal
 import shutil
 import subprocess
 import tempfile
@@ -28,6 +29,9 @@ def sha(b):
 
 def run_bounded(args, *, deadline, limit):
     """Bound combined stdout/stderr and wall time; not CPU/memory sandbox."""
+    if (os.name != "posix" or signal.getsignal(signal.SIGCHLD) != signal.SIG_DFL
+            or not all(hasattr(os, name) for name in ("waitid", "P_PID", "WEXITED", "WNOHANG", "WNOWAIT", "CLD_EXITED"))):
+        raise DerivationError("unsupported_process_lifecycle")
     proc=subprocess.Popen(args,stdin=subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.PIPE,
                           env={**os.environ,'LC_ALL':'C'},start_new_session=True)
     data={'out':bytearray(),'err':bytearray()};sel=selectors.DefaultSelector()
@@ -42,16 +46,21 @@ def run_bounded(args, *, deadline, limit):
                 if not b:sel.unregister(key.fileobj);continue
                 data[key.data].extend(b)
                 if sum(map(len,data.values()))>limit:raise DerivationError('output_budget')
-        remaining=deadline-time.monotonic()
-        if remaining<=0:raise DerivationError('time_budget')
-        try:code=proc.wait(timeout=remaining)
-        except subprocess.TimeoutExpired:raise DerivationError('time_budget') from None
-        if code:raise DerivationError('parser_failed')
+        # Observe exit without reaping the leader: its PID pins our process-group ID.
+        while True:
+            remaining=deadline-time.monotonic()
+            if remaining<=0:raise DerivationError('time_budget')
+            status=os.waitid(os.P_PID,proc.pid,os.WEXITED | os.WNOHANG | os.WNOWAIT)
+            if status is not None:
+                break
+            time.sleep(min(.01,remaining))
+        if status.si_code != os.CLD_EXITED or status.si_status != 0:
+            raise DerivationError('parser_failed')
         # Warnings are not silently converted to successful partial extraction.
         return bytes(data['out']),bytes(data['err'])
     finally:
+        # Do not poll/wait before killpg: an unreaped leader prevents PGID reuse.
         # Descendants may still hold pipes after the process-group leader exits.
-        import signal
         try:
             os.killpg(proc.pid,signal.SIGKILL)
         except ProcessLookupError:

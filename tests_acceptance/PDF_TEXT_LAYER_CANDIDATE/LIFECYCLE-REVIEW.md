@@ -1,0 +1,9 @@
+# Local PDF lifecycle fix independent revalidation
+
+Reviewed ONLY local derive.py SHA25639d57ffd056cd98d50d5743ec4ee809a05f1994f82b356c50befa8e15e381508; isolated exact copy and source hashes unchanged after tests. Remote49a5515 is still the old defective version and remains HOLD until this fix is published and verified. No PR, push, merge or deployment performed.
+
+Original unchanged ownership red test now passes. Old24 tests plus original ownership regression:25 passed in2.31s. Added6 lifecycle probes (4 missing capabilities, ignored SIGCHLD, real waitid/kill/wait ordering), full31 tests passed in2.29s. Counts overlap; use31 total, not56. Public PDF53-page/source and per-page hashes/text equality tests reran successfully with same source.
+
+Observed actual normal child order is waitid(WNOWAIT) exit observation -> killpg -> wait, with Popen.returncode still None at wait boundary. Leader not reaped before group signal. Missing waitid/WNOWAIT/P_PID/CLD_EXITED and SIGCHLD ignored state reject unsupported_process_lifecycle before Popen. Existing timeout/output overflow/nonzero exit, same-group child descendants and no partial artifact tests remain green. Original failed version and ownership-red.txt retained under review-pdf49 for evidence.
+
+The specific reaped-leader PID reuse race is closed under exclusive child-reaper ownership. Default SIGCHLD check cannot prove no other host thread reaps children or later changes signal handling; exclusive reaping remains deployment contract. No CPU/RSS confinement, no escaped-process-group isolation, no arbitrary untrusted-code sandbox, no scrubbed environment or executable supply-chain verification. Native operational errors may still escape; not certified HTTP/API behavior. Embedded text only, not Chinese OCR/image analysis or factual completeness. No new real model/production authentication or CI validation.
