@@ -496,3 +496,4 @@ Independent 8/8 tests pass (4 spoofed roles and unauthenticated GET/POST/PUT rem
 | 2026-11-14 | Original-quotation human-review reminder | 本UI切片独审通过／草稿 | Independent reviewer found no blocker; new7+primary5 and prior Pi/Skill/legacy working/archive tests and strictTS passed. No automatic semantic judgment or authority change. Freeze logs/source-quote-review-impl-hashes-frozen.txt; independent report tests_acceptance/SOURCE_QUOTE_UI/INDEPENDENT.md. No new model request/merge/deploy. |
 
 | 2026-11-14 | Intranet source metadata / case query plan | 隔离切片自测及独审通过／待协调验收 | Base254167e独立分支；纯服务模块+离线CLI，四类API/MCP来源、严格引用配置、缺值待补齐、范围限制；始终未连通验证/不可执行。主32+独35=67通过零跳，合同既有1败在原基线复现；全服务探索运行中止非全绿。无UI/HTTP/DB配置持久化/内网探测/模型/合并部署。报告tests_acceptance/INTRANET_PLAN/REPORT.md；冻结logs/intranet-plan-impl-hashes-frozen.txt。 |
+| 2026-11-14 | Intranet plan coordinator fixes | 修复后待协调复验 | 修正非法时区分钟静默归一化与JSON字节UTF16/32自动识别；旧实现新增回归11败/7过，修复后组合85/85零跳。重新冻结；无内网/模型/部署合并，报告附件任务单独暂停。 |

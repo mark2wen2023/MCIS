@@ -25,7 +25,7 @@ def matches(value, pattern):
 
 def stamp(value):
     require(type(value) is str and len(value) <= 40)
-    require(matches(value, r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?(?:Z|[+-]\d{2}:\d{2})'))
+    require(matches(value, r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?(?:Z|[+-](?:[01][0-9]|2[0-3]):[0-5][0-9])'))
     try:
         parsed = datetime.fromisoformat(value.replace('Z', '+00:00'))
         require(parsed.utcoffset() is not None)

@@ -39,3 +39,19 @@ From service:
 This returns four pending intents and explicit missing fields. It neither creates a
 case nor saves/query-fetches anything. Output may be inspected or explicitly saved
 as local metadata; never paste credential values into identifier fields.
+
+## Coordinator acceptance fixes — 2026-11-14
+
+Coordinator found two real validation gaps: datetime.fromisoformat normalized timezone
+minute overflow (+01:99/+00:60 and negative equivalents), and json.loads(bytes)
+autodetected UTF16/32. These invalidate the earlier no-blocker assessment for the old
+commit; both are now corrected before coordinator reacceptance.
+
+Offset grammar now independently limits hours00..23/minutes00..59 before datetime
+parsing. CLI decodes bytes with strict UTF8 before JSON parsing (BOM also rejected).
+Added18 regression cases:6 invalid offsets,4 valid offset boundary instants,7 rejected
+encodings (UTF16/32 endian variants and BOM, UTF8 BOM),1 accepted UTF8 subprocess.
+Actual old-code reproduction:11 failed/7 passed/32 deselected. After fix, same combined
+implementation+existing independent command: **85 passed, zero skips, 0.54s**.
+This is a local regression rerun, not a new independent review or full-service test.
+No network, model, deployment or merge. Separate report-attachment work is paused/stashed.

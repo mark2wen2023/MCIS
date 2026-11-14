@@ -91,3 +91,40 @@ def test_cli():
         assert run.returncode == 4
         assert run.stderr == b''
         assert json.loads(run.stdout)['status'] == 'validation_failed'
+
+
+@pytest.mark.parametrize('offset', ['+01:99', '+00:60', '-01:99', '-00:60', '+24:00', '-24:00'])
+def test_invalid_offset_components_are_not_normalized(offset):
+    data = sample()
+    data['case']['startUtc'] = '2026-01-01T00:00:00' + offset
+    assert build_plan(data)['status'] == 'validation_failed'
+
+
+@pytest.mark.parametrize('offset,expected', [('+01:59', '2025-12-31T22:01:00Z'),
+                                            ('-01:59', '2026-01-01T01:59:00Z'),
+                                            ('+23:59', '2025-12-31T00:01:00Z'),
+                                            ('-23:59', '2026-01-01T23:59:00Z')])
+def test_valid_offset_components_keep_exact_instant(offset, expected):
+    data = sample()
+    data['case']['startUtc'] = '2026-01-01T00:00:00' + offset
+    result = build_plan(data)
+    assert result['status'] == 'validated_offline'
+    assert result['scope']['startUtc'] == expected
+
+
+@pytest.mark.parametrize('encoding', ['utf-16', 'utf-16-le', 'utf-16-be',
+                                      'utf-32', 'utf-32-le', 'utf-32-be', 'utf-8-sig'])
+def test_cli_rejects_non_utf8_and_bom(encoding):
+    raw = json.dumps(sample()).encode(encoding)
+    run = subprocess.run([sys.executable, '-m', 'mcis_service.intranet_plan'], input=raw, capture_output=True)
+    assert run.returncode == 4
+    assert run.stderr == b''
+    assert json.loads(run.stdout)['status'] == 'validation_failed'
+
+
+def test_cli_strict_utf8_success():
+    raw = json.dumps(sample()).encode('utf-8')
+    run = subprocess.run([sys.executable, '-m', 'mcis_service.intranet_plan'], input=raw, capture_output=True)
+    assert run.returncode == 0
+    assert run.stderr == b''
+    assert json.loads(run.stdout)['scope'] == sample()['case']

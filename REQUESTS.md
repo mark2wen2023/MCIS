@@ -720,3 +720,6 @@ The real semantic blind run exposed qualifier preservation and blank-cell interp
 
 ## Intranet source metadata and read-only case query plan
 Authorized independent branch from 254167e; no changes to semantic_support. Add isolated service module and stdin/stdout CLI, contract `contracts/intranet-plan.md`. No HTTP route/UI mount, network client, secret resolver, database writes or model calls. Metadata registration is a validated JSON document, explicitly supplied to each call; deployment configuration and credentials remain outside it. Existing case metadata/identity boundary must authorize future integration; no inference of vessel identity from names. No frozen implementation from other packages changed.
+
+## Intranet plan acceptance corrections
+Independent coordinator found datetime.fromisoformat normalizes invalid timezone minutes and json.loads(bytes) autodetects UTF16/32 despite UTF8 contract. Reopen only intranet module/tests/contract frozen files for strict offset components and explicit strict UTF8 decoding. Report-attachment work paused and stashed separately; no changes from it included.

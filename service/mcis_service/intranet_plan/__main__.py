@@ -18,7 +18,7 @@ def main():
         raw = sys.stdin.buffer.read(65537)
         if len(raw) > 65536:
             raise ValueError()
-        document = json.loads(raw, object_pairs_hook=unique,
+        document = json.loads(raw.decode('utf-8', errors='strict'), object_pairs_hook=unique,
                               parse_constant=lambda _: (_ for _ in ()).throw(ValueError()))
         result = build_plan(document)
     except (ValueError, RecursionError, UnicodeError):

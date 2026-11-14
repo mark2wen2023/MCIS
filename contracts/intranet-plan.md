@@ -5,7 +5,8 @@ Isolated internal API: `mcis_service.intranet_plan.build_plan(document)` and off
 This is a proposal/metadata tool, not a connector or production configuration endpoint.
 
 Input is exactly `{sources: [...], case: {...}}`. Maximum UTF-8 CLI input 64 KiB,
-32 sources, 16 explicitly identified vessels. Duplicate JSON keys, unknown fields,
+32 sources, 16 explicitly identified vessels. Decode strictly as UTF-8 without BOM;
+UTF-16/32 are rejected even when JSON parsers could auto-detect them. Duplicate JSON keys, unknown fields,
 wrong types and excessive nesting fail closed. CLI errors contain only fixed codes,
 never input or exception details (exit 4). No automatic persistence or logging.
 Callers can save only successfully validated documents; invalid input is never exported.
@@ -29,6 +30,8 @@ vessels is a list of exact `{kind,value}` objects: IMO (7 digits, checksum valid
 or MMSI (9 digits, nonzero). They are caller-supplied identifiers, not identity verification.
 No name, inferred alias, wildcard, coordinates, arbitrary filter or executable operation.
 Timestamps must be ISO 8601 with explicit timezone and normalize to UTC; no naive dates.
+Numeric offsets require hours 00..23 and minutes 00..59, independently checked before
+datetime parsing; invalid offset components must never be silently normalized.
 Missing or empty vessel list, absent/null/blank case ID or timestamps are listed as
 `pendingFields`; malformed supplied values fail validation. start must precede end.
 Each source gets one read-only query intent preserving all vessel identifiers, case ID,
