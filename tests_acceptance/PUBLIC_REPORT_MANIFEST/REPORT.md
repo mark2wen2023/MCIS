@@ -9,3 +9,11 @@ Actual public report local-byte exercise: Jiangxin9 / IVY OCEAN PDF, official de
 Hash consistency is not source authenticity, publication authority, public status, rights approval, page accuracy, PDF validity or fact verification. All such unverified flags remain explicit. No database or case write, parsing, OCR, network, new LLM request, CI, browser, production auth, merge or deployment.
 
 Independent17 + primary34 = 51/51 tests passed on final frozen code. Independent report confirms no blocker inside this narrow local adapter scope; no production claim.
+
+## Review correction
+Parent independent review identified ASCII DEL and malformed DNS-label acceptance.
+Rejected DEL in all text fields; hostname syntax now requires ASCII LDH labels
+(max63 each, max253 total) with at most one trailing dot. IDN callers must supply
+ASCII names. Added 17 protocol assertions, total 68 passed locally.
+This remains syntax only: no DNS, reachability, authenticity or rights verification.
+Command: `python -m pytest -q tools/public_report_manifest`.

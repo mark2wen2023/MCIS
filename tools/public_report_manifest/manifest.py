@@ -26,7 +26,7 @@ def text(v, limit):
         raise Invalid('INVALID_TEXT')
     try: v.encode('utf-8')
     except UnicodeError: raise Invalid('INVALID_TEXT') from None
-    if any(ord(c) < 32 for c in v): raise Invalid('INVALID_TEXT')
+    if any(ord(c) < 32 or ord(c) == 127 for c in v): raise Invalid('INVALID_TEXT')
 
 def pairs(items):
     d = {}
@@ -58,12 +58,16 @@ def preview(manifest_raw, pdf_raw):
     if m['profile'] != PROFILE: raise Invalid('UNKNOWN_PROFILE')
     text(m['title'], 300);text(m['publisher'], 200);text(m['sourceUrl'], 2000)
     try:
-        u = urlsplit(m['sourceUrl']); host = (u.hostname or '').rstrip('.')
+        u = urlsplit(m['sourceUrl']); host = (u.hostname or ''); host = host[:-1] if host.endswith('.') else host
         valid = u.scheme == 'https' and '.' in host and not u.username and not u.password and u.port in (None, 443)
         valid = valid and not u.query and not u.fragment and '?' not in m['sourceUrl'] and '#' not in m['sourceUrl']
         valid = valid and host != 'localhost' and not host.endswith(('.local', '.localhost')) and not any(c.isspace() for c in m['sourceUrl']) and '\\' not in m['sourceUrl']
         try: valid = valid and ipaddress.ip_address(host).is_global
         except ValueError:
+            labels = host.split('.')
+            valid = valid and len(host) <= 253 and all(
+                re.fullmatch(r'[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?', label)
+                for label in labels)
             if re.fullmatch(r'[0-9.]+', host): valid = False
         if not valid: raise ValueError()
     except ValueError: raise Invalid('PUBLIC_HTTPS_URL_REQUIRED') from None

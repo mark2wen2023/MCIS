@@ -66,3 +66,26 @@ def test_no_network(tmp_path,monkeypatch):
  import socket
  monkeypatch.setattr(socket,'socket',lambda *a,**kw:pytest.fail('network forbidden'))
  m,p,o=inputs(tmp_path);assert cli(m,p,o)==0
+
+@pytest.mark.parametrize('url',[
+ 'https://exa%mple.com/a', 'https://.example.com/a', 'https://example..com/a',
+ 'https://example.com../a', 'https://-example.com/a', 'https://example-.com/a',
+ 'https://exam_ple.com/a', 'https://'+'a'*64+'.com/a',
+ 'https://' + '.'.join(['a'*63]*4) + '/a', 'https://例子.com/a'])
+def test_invalid_dns_syntax(url):
+ m=manifest();m['sourceUrl']=url
+ with pytest.raises(Invalid):run(m)
+
+@pytest.mark.parametrize('field',['title','publisher','sourceUrl'])
+def test_del_rejected(field):
+ m=manifest();m[field]+='\x7f'
+ with pytest.raises(Invalid):run(m)
+
+def test_del_locator_rejected():
+ m=manifest();m['locators'][0]['label']+='\x7f'
+ with pytest.raises(Invalid):run(m)
+
+@pytest.mark.parametrize('host',['example.com.','xn--fsqu00a.com','a-b.example.com'])
+def test_dns_syntax_not_authenticity(host):
+ m=manifest();m['sourceUrl']='https://'+host+'/a'
+ d=run(m);assert d['sourceAuthenticity']=='not_verified' and not d['networkUsed']
