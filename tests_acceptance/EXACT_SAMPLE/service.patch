@@ -1,0 +1,13 @@
+--- timeline-combo-main/service/mcis_service/cases/service.py	2026-11-14 16:52:24.974033578 +0800
++++ ais-exact-main/service/mcis_service/cases/service.py	2026-11-14 18:23:59.122506594 +0800
+@@ -51,6 +51,10 @@
+         return dict(points[0])
+     for a, b in zip(points, points[1:]):
+         if a["timeSec"] <= t <= b["timeSec"]:
++            # An exact recorded sample is not an interpolation. Preserve its metadata.
++            # For duplicate timestamps, the first encountered recorded point wins.
++            if t == b["timeSec"]:
++                return dict(b)
+             span = b["timeSec"] - a["timeSec"] or 1.0
+             f = (t - a["timeSec"]) / span
+             out = dict(a)
