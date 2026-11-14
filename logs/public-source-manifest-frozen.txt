@@ -1,0 +1,3 @@
+ab606b85d5c9259754ab5494f68f87e9f5dbb8fd6614d4fae2cad92f6317bd0e  tools/public_report_manifest/manifest.py
+69866abd4df9c9415f1cbaa102bc8fe1779939f0ccfe3b65dcb6a6f8cf868bca  tools/public_report_manifest/test_manifest.py
+3851cccd30d25c8620c868f98ec531e65b4a80d40eb4ba52d14f10c46dadf66b  contracts/public-report-manifest-preview.md

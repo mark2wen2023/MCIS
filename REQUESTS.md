@@ -717,3 +717,7 @@ Explicitly authorized real-model capability testing uses the public YANGZE22 rep
 
 ## Evidence quotation display and human verification reminder
 The real semantic blind run exposed qualifier preservation and blank-cell interpretation risks. Existing working/archive views keep quote strings but ordinary HTML blockquotes collapse whitespace. Add a shared read-only quotation component preserving exact text/newlines/spacing in presentation and a concise human-review notice: qualifiers must not be silently strengthened; absent/blank records prove neither occurrence nor non-occurrence; exact location is not semantic support. No automatic semantic verdict, quote rewriting, added review authority, RPC/schema change or model request. Archived content remains unverified history and displayed text is not a reconstruction of the original PDF table. Native implementation and independent UI tests precede Draft submission.
+
+
+## 2026-11-14 public source manifest preview
+Add standalone local source-declaration contract and CLI under tools/public_report_manifest. No existing intake/evidence routes or schemas changed, no case writes. Hash match never establishes source authenticity/public status/rights/page correctness. Explicit operator files only; no URL fetching. See contracts/public-report-manifest-preview.md.
