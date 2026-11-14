@@ -43,6 +43,16 @@ def internal(ctx):
     if ctx.role not in INTERNAL:
         raise problem(403, 'FORBIDDEN', '仅调查组可以读取或创建内部知识候选')
 
+def validate_actor(operator):
+    """Archive-compatible text constraint only; does not verify identity."""
+    if not isinstance(operator, str) or len(operator) > 160 or not operator.strip():
+        raise problem(422, 'INVALID_OPERATOR', '操作者须为1至160字符的非空文本')
+    try:
+        operator.encode('utf-8')
+        strings(operator)
+    except (UnicodeError, ValueError):
+        raise problem(422, 'INVALID_OPERATOR', '操作者须为有效文本')
+
 def digest(content): return hashlib.sha256(canonical(content).encode()).hexdigest()
 
 def validate_content(body):
@@ -63,6 +73,26 @@ def validate_content(body):
         except ValueError: valid = False
         if not valid: raise problem(422, 'INVALID_SOURCE', '公开来源需HTTPS公共地址；链接不会自动核实')
     return tags
+
+def validate_new_source_host(source):
+    """Syntax-only guard for new writes; legacy archive validation is unchanged."""
+    if source['type'] != 'Public': return
+    host = urlsplit(source['url']).hostname or ''
+    try:
+        ipaddress.ip_address(host)
+        return  # Existing validate_content already enforces global-address rules.
+    except ValueError:
+        pass
+    try:
+        ascii_host = host.encode('idna').decode('ascii')
+        labels = ascii_host.rstrip('.').split('.')
+        valid = len(ascii_host.rstrip('.')) <= 253 and all(
+            re.fullmatch(r'[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?', label)
+            for label in labels)
+    except UnicodeError:
+        valid = False
+    if not valid:
+        raise problem(422, 'INVALID_SOURCE', '公开来源主机名格式无效；链接不会自动核实')
 
 def output(row, ctx):
     d = copy.deepcopy(row.doc)
@@ -98,7 +128,7 @@ def search(ctx: Ctx = CtxDep, status: Literal['Published','Candidate','Rejected'
 
 @router.post('/cards', status_code=201)
 def create(body: dict = Body(...), ctx: Ctx = CtxDep):
-    internal(ctx); tags = validate_content(body)
+    internal(ctx); validate_actor(ctx.operator); tags = validate_content(body); validate_new_source_host(body['source'])
     with WRITE_LOCK, ctx.db.session() as s:
         s.execute(text('BEGIN IMMEDIATE'))
         from ..knowledge_archive.service import prepare_write, capture
@@ -122,6 +152,7 @@ def detail(card_id: str, ctx: Ctx = CtxDep):
 @router.post('/cards/{card_id}/review')
 def review(card_id: str, body: dict = Body(...), ctx: Ctx = CtxDep):
     if ctx.role != 'LeadInvestigator': raise problem(403, 'FORBIDDEN', '仅首席调查官可明确批准公开、驳回或撤回')
+    validate_actor(ctx.operator)
     canonical(body); strings(body)
     allowed = {'decision','expectedDigest','note','sourceVerified','rightsVerified','releaseApproved'}
     if set(body) - allowed or not {'decision','expectedDigest','note'} <= set(body) or body['decision'] not in ('Published','Rejected','Withdrawn') or not isinstance(body['note'], str) or len(body['note']) > 2000:
