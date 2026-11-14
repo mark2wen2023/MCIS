@@ -1,0 +1,17 @@
+# Internal digital PDF text-layer derivative candidate
+
+`derive(pdf_bytes, Limits(...))` is an opt-in local Python interface. No runtime service imports it, no API, database or evidence registration is added. Caller supplies authorized immutable source bytes. It returns a complete version1 derivative or raises; partial pages are not published. Original bytes are never overwritten; tools read a private temporary copy, which is checked unchanged before success. No file persistence is promised by this function.
+
+Outputs: original PDF SHA256/byte length, actual pdftotext version and options, physical PDF page index, exact UTF-8 page text and SHA256/byte length, explicit embedded_text_only capability and limitations. `no_selectable_text` does not mean blank content. Text-bearing pages can contain unextracted image areas; paper page numbering, OCR, image understanding, layout accuracy and factual correctness are not inferred.
+
+Budget controls cover input bytes, page count, per-command combined stdout/stderr, total derived text and elapsed wall time; child process group is killed on timeout/output overflow. Warnings fail closed. Parsing runs without shell and no network calls are added. **This is not a hardened hostile-PDF CPU/RSS/process sandbox**; Poppler executable/libraries must be trusted, process memory is not capped, and production isolation remains a prerequisite. It does not authenticate source ownership, verify document signatures, guarantee external permission/revocation semantics or expose a network endpoint.
+
+Read-only public acceptance uses the previously verified Shanghai MSA PDF at https://www.sh.msa.gov.cn/u/cms/www/202505/191445221747637122775.pdf (publication https://www.sh.msa.gov.cn/sgdc/104170.jhtml). SHA256 99084b8e672da6e2f8d9809bea25a92fe5fcf31c318554832e14339610015d7f. 53 independently extracted pages concatenate byte-for-byte to verified main report text. Original remains unchanged. PDF physical16 includes image annotations not captured by text extraction; no all-content-complete claim.
+
+Tests: `../mcis-work/service/.venv/bin/python -m pytest -q` from this directory. Synthetic fixtures were created using installed pypdf (blank, two-page, encrypted) and are not real scanned evidence. Initial test setup lacked pytest in default Python and pypdf in service venv; no package install occurred, generated fixture files remove runtime pypdf dependency. An initial budget test wrongly expected one-byte blank-page FF output to exceed a one-byte limit; replaced with real nonempty-page overflow, while blank-page behavior remains separately asserted.
+
+No OCR, LLM, true scanned Chinese accuracy test, production integration, remote commit, rejected PR retry, merge or deployment.
+
+Independent review reproduced a cleanup defect: a parser leader could exit while a descendant retained output pipes; timeout cleanup previously skipped the surviving process group. Cleanup now sends SIGKILL to the owned process group even when its leader has already exited. This is process cleanup, not a claim that subprocesses cannot escape the group or that hostile execution is sandboxed.
+
+Publication layout: tests_acceptance/PDF_TEXT_LAYER_CANDIDATE. Tests reference existing main reports/yangze22/report.pdf and report.txt; no public report is duplicated. Run `PYTHONPATH=tests_acceptance/PDF_TEXT_LAYER_CANDIDATE python -m pytest -q tests_acceptance/PDF_TEXT_LAYER_CANDIDATE` from the repository root with installed pytest and Poppler. The package remains internal/unregistered.
