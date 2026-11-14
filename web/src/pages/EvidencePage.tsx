@@ -1,3 +1,4 @@
+import { timelineDomain } from '../timeline/domain'
 import { timelineEventTooltip } from '../timeline/tooltip'
 import { useMemo, useState, useSyncExternalStore } from 'react'
 import { useSearchParams } from 'react-router-dom'
@@ -309,7 +310,7 @@ function TimelineChart({ fictional, epoch, events, conflicts, cpa, offsetMinutes
         },
       },
       xAxis: {
-        type: 'value', min: 0, max: fictional ? 780 : Math.max(60, ...events.map((e) => e.timeSec), ...cpa.map((p) => p.timeSec)), interval: 60,
+        type: 'value', ...timelineDomain(fictional, events, cpa, conflicts), interval: 60,
         axisLabel: { color: '#8da4c4', fontSize: 10, formatter: (v: number) => simToClock(epoch, v, false, offsetMinutes) },
         axisLine: { lineStyle: { color: 'rgba(59,227,255,.3)' } },
         splitLine: { lineStyle: { color: 'rgba(141,164,196,.08)' } },

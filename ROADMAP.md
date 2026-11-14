@@ -371,3 +371,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 | TL-SOURCE-DISPLAY | 待测 | 2026-11-14 | 时间线多证据引用与已有状态标记展示；HTML转义；冻结 logs/tl-source-display-frozen.txt。 |
 | TL-SOURCE-DISPLAY | 代码受限独审通过/浏览器待验 | 2026-11-14 | 20项tooltip测试和完整tsc通过；浏览器127.0.0.1连接拒绝，未验证hover/scroll/窄屏。仅显示已有来源与标记，不推断事实或调用模型。 |
+
+| TL-AXIS | 待测 | 2026-11-14 | 基于PR66，修正负秒显示范围；15单测，冻结logs/tl-axis-frozen.txt。 |
+| TL-AXIS | 受限代码独审通过/浏览器待验 | 2026-11-14 | 23域单测+2真实ECharts SVG SSR过、完整tsc过；浏览器loopback连接拒绝。依赖PR66，未合并部署。 |
