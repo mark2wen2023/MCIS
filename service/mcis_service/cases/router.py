@@ -17,6 +17,7 @@ from ..recommendations.models import RecommendationRow
 from ..agents.models import AgentDraftRow
 from ..db import list_docs
 from . import service
+from ..common.case_identity import visible_cases, authorize_case
 from .models import CaseRow, VesselRow
 from .vessel_entry import validate_create
 
@@ -27,7 +28,7 @@ router = APIRouter(prefix="/api/v1", tags=["cases"])
 def list_cases(ctx: Ctx = CtxDep) -> list[dict[str, Any]]:
     with ctx.db.session() as s:
         out = []
-        for c in service.list_cases(s):
+        for c in (visible_cases(s, ctx.principal) if ctx.principal else service.list_cases(s)):
             out.append({k: c.get(k) for k in ("caseId", "title", "accidentType", "accidentGrade", "incidentTimeUtc",
                                               "displayTimeZoneOffsetMinutes", "isFictionalDemo", "placeName")})
         return out
@@ -51,12 +52,16 @@ def create_case(body: dict[str, Any] = Body(...), ctx: Ctx = CtxDep) -> dict[str
 @router.get("/cases/{case_id}")
 def get_case(case_id: str, ctx: Ctx = CtxDep) -> dict[str, Any]:
     with ctx.db.session() as s:
+        if ctx.principal:
+            authorize_case(s, ctx.principal, case_id)
         return service.load_case(s, case_id)
 
 
 @router.get("/cases/{case_id}/overview")
 def overview(case_id: str, ctx: Ctx = CtxDep) -> dict[str, Any]:
     with ctx.db.session() as s:
+        if ctx.principal:
+            authorize_case(s, ctx.principal, case_id)
         case = service.load_case(s, case_id)
         recs = list_docs(s, RecommendationRow, case_id)
         conflicts = list_docs(s, ConflictRow, case_id)

@@ -397,3 +397,8 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTREVIEWMAIN | 最小整合独审通过 | 2026-11-14：main25b9df6前缀及其他跟踪文件保留，12源文件逐字；独立无.git副本164项通过，新/原冻结各4/4。见 DEFECTS/EXPERTREVIEWMAIN.md；仅离线pending人审，真实0/HOLD。 |
 | EXPERTTRACE | 待独审 | 2026-11-14：PR87head99b44f0上新增10跨视图追溯/反认证回归，组合174项通过；冻结 logs/EXPERTTRACE-impl-hashes-frozen.txt。不改运行代码；真模型0/HOLD，非浏览器或事实验收。 |
 | EXPERTTRACE | 测试增量独审通过 | 2026-11-14：独立无.git副本10过；临时断开taskId触发5红、伪认证flag触发1红，恢复10过；冻结2/2，运行文件无差异。见 DEFECTS/EXPERTTRACE.md。真实模型0/HOLD。 |
+
+
+
+| AUTH-METADATA-READONLY | 待测：独立候选，非生产认证 | 17 focused HTTP/CLI tests pass; selected existing regression 92 pass/1 skip/4 PDF rendering failures, same four failures reproduced on unchanged baseline | logs/auth-metadata-readonly-impl-hashes-frozen.txt | 默认 local-demo 不变；authenticated 只读三入口，其余拒绝；无真实 SSO/部署 |
+

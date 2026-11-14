@@ -647,3 +647,8 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+
+## AUTH-METADATA-READONLY proposal, 2026-11-15
+Cross-package candidate changes common/context.py, main.py, __main__.py and cases/router.py. Existing loopback demo remains unauthenticated; authenticated read-only mode is explicit and server-adapter injected, never inferred or downgraded. Only metadata list/detail/overview are integrated; remaining operations deny. No real SSO, membership administration or deployment readiness is claimed. Contract details: contracts/auth-metadata-readonly.md. Independent acceptance required before merge.
+

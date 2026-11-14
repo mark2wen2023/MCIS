@@ -46,7 +46,20 @@ from .analysis.router import router as analysis_router  # W12 分析页（只读
 from .interview_compare.router import router as interview_compare_router  # W5 询问笔录比对页
 
 
-def create_app(settings: Settings | None = None) -> FastAPI:
+def create_app(settings: Settings | None = None, *, identity_mode='local-demo', identity_verifier=None) -> FastAPI:
+    # Compatibility: existing factory callers retain the documented local-demo mode.
+    # Explicit authenticated mode always requires a server verifier and never falls back.
+    if identity_mode not in ('authenticated', 'local-demo'):
+        raise ValueError('Invalid identity mode')
+    if identity_mode == 'local-demo' and identity_verifier is not None:
+        raise ValueError('local-demo cannot accept an identity verifier; select authenticated explicitly')
+    if identity_mode == 'authenticated' and not callable(identity_verifier):
+        raise ValueError('Authenticated mode requires a server identity verifier')
+    if identity_mode == 'local-demo':
+        import warnings
+        warnings.warn('MCIS local-demo is unauthenticated; do not expose it to a network.', RuntimeWarning, stacklevel=2)
+    from .common.case_identity import verify, CaseMember
+
     settings = settings or Settings()
     settings.data_dir.mkdir(parents=True, exist_ok=True)
     settings.blob_dir.mkdir(parents=True, exist_ok=True)
@@ -63,6 +76,25 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.state.settings = settings
     app.state.db = db
     app.state.sim_states = {}
+    app.state.identity_mode = identity_mode
+
+    @app.middleware('http')
+    async def identity_boundary(request, call_next):
+        import re
+        if identity_mode == 'authenticated':
+            # Everything not integrated in this read-only slice is denied, including writes.
+            header = request.headers.get('authorization', '')
+            try:
+                if not header.startswith('Bearer '):
+                    raise ValueError('Missing bearer')
+                request.state.principal = verify(identity_verifier, header[7:])
+            except Exception:
+                return JSONResponse(status_code=401, content={'code':'UNAUTHENTICATED'})
+            if request.method != 'GET' or not re.fullmatch(r'/api/v1/cases(?:/[^/]+(?:/overview)?)?', request.url.path):
+                return JSONResponse(status_code=403, content={'code':'AUTH_SCOPE_NOT_IMPLEMENTED'})
+        response = await call_next(request)
+        response.headers['X-MCIS-Identity-Mode'] = identity_mode
+        return response
     app.add_middleware(CORSMiddleware, allow_origins=["http://127.0.0.1:5173", "http://localhost:5173",
                                                       "http://127.0.0.1:4173", "http://localhost:4173"],
                        allow_methods=["*"], allow_headers=["*"], expose_headers=["Content-Disposition", "X-Sha256", "X-MCIS-Redaction"])

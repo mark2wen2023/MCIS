@@ -14,6 +14,7 @@ class Ctx:
     role: str
     operator: str
     request: Request
+    principal: object | None = None
 
     @property
     def db(self):
@@ -25,6 +26,12 @@ class Ctx:
 
 
 def get_ctx(request: Request) -> Ctx:
+    if getattr(request.app.state, 'identity_mode', None) == 'authenticated':
+        p = getattr(request.state, 'principal', None)
+        if p is None:
+            raise HTTPException(401, detail={'code':'UNAUTHENTICATED'})
+        # Read-only context. Client role/operator headers are ignored.
+        return Ctx(role='Public', operator=p.display_name, request=request, principal=p)
     role = request.headers.get("X-MCIS-Role", "Investigator")
     if role not in ROLES:
         raise HTTPException(400, detail={"code": "BAD_ROLE", "message": f"未知角色 {role}"})
