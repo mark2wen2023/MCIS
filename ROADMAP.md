@@ -376,3 +376,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-14 | Archive1.4 web alignment | 冻结待独审；浏览器阻断 | 直接依赖fe36587；前端1.4版本/working-v1绑定、范围提示、回执绑定；真实ASGI回执进解析/SSR，旧前端定向回归。Chromium sandbox启动失败未关闭sandbox，真实浏览器交互未验。冻结 logs/report-timeline-web-impl-hashes-frozen.txt。不部署。 |
 
 | 2026-11-14 | Archive1.4 web alignment | 有限代码/模型/SSR独审通过；浏览器阻断 | 独立真实API预览/提交/回查200、拒权403/错版422，新响应进前端解析/SSR、另25边界断言、tsc通过，6冻结hash一致。无sandbox绕过；不称真实浏览器整体验收。报告 tests_acceptance/report-timeline-web-independent/REPORT.md；不部署。 |
+
+| 2026-11-14 | Report + recommendation closure | 研究阻断待独审 | aeb8cf1后裔/main f2eff95；10真实API/SQLite合成探针通过/3.36s，仅证明现状与拒绝/回滚，非新往返候选。原因标签无typed绑定、活动恢复与只读历史语义需明确。保留409，未启用新版本。冻结 logs/report-recommendation-research-frozen.txt。 |
+
+| 2026-11-14 | Report + recommendation closure | 阻断证据独审通过，功能未启用 | 独10通过/3.51s，冻结hash一致；证明自由标签/registered语义/旧活动恢复与权限回滚，不是新组合往返。无白名单放宽/新格式/生产变更。见 tests_acceptance/report-recommendation/independent.md。 |

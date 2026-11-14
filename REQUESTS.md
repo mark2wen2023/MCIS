@@ -571,3 +571,7 @@ Propose outer MCIS-MCASE1.4.0 with working-record v1 plus timeline-records v1; r
 Separate descendant of reviewed fe36587. Align package preview/receipt validator with1.4 + working-v1 only, keep old versions and HFACS checks, render version-specific timeline scope and explicit unsupported combinations. No backend format/permissions or unknown-write retry changes. Validate actual browser→local service preview/confirmation/import/receipt and negative range. Changes to frozen package-intake frontend are limited to this contract alignment.
 
 The corresponding package export panel scope text is aligned too; download/commit/unknown-result control flow is unchanged. Browser validation is attempted with sandbox enabled; no sandbox-disabling fallback is permitted.
+
+## Report + recommendation closure investigation (2026-11-14)
+
+Based on latest main f2eff95 and aeb8cf1 descendant. Current free cause labels have no typed case/revision binding; restored recommendations are active workflows. Detailed blocked draft/tests in tests_acceptance/report-recommendation; no new released format or product change, and no whitelist relaxation. Future version probe remains rejected.

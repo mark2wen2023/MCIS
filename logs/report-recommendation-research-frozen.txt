@@ -1,0 +1,2 @@
+862e74df3907f2238f00e691abe0329cf005556f3b527be8344d22dbfef3c403  tests_acceptance/report-recommendation/test_closure.py
+0d855369ad125dfbc1876fdb8bc8e33989fc58844c848996baf5da9b8eccca48  tests_acceptance/report-recommendation/DESIGN-DRAFT.md

@@ -1,0 +1,2 @@
+tests_acceptance/report-recommendation/test_closure.py: OK
+tests_acceptance/report-recommendation/DESIGN-DRAFT.md: OK
