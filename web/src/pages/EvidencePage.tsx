@@ -1,3 +1,4 @@
+import { timelineEventTooltip } from '../timeline/tooltip'
 import { useMemo, useState, useSyncExternalStore } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import type { EChartsOption } from 'echarts'
@@ -300,10 +301,10 @@ function TimelineChart({ fictional, epoch, events, conflicts, cpa, offsetMinutes
       grid: { left: 78, right: 44, top: 40, bottom: 24 },
       legend: { top: 2, left: 78, textStyle: { color: '#8da4c4', fontSize: 10 }, itemWidth: 10, itemHeight: 8 },
       tooltip: {
-        trigger: 'item', backgroundColor: 'rgba(10,20,35,.95)', borderColor: 'rgba(59,227,255,.4)', textStyle: { color: '#e6f1ff', fontSize: 11 },
+        trigger: 'item', confine: true, enterable: true, backgroundColor: 'rgba(10,20,35,.95)', borderColor: 'rgba(59,227,255,.4)', textStyle: { color: '#e6f1ff', fontSize: 11 },
         formatter: (p: unknown) => {
           const d = (p as { data: { raw?: TimelineEvent; value: number[] } }).data
-          if (d.raw) return `${simToClock(epoch, d.raw.timeSec, true, offsetMinutes)} ${d.raw.title}<br/><span style="color:#8da4c4">${d.raw.sourceLabel ?? ''}</span>`
+          if (d.raw) return timelineEventTooltip(d.raw, simToClock(epoch, d.raw.timeSec, true, offsetMinutes))
           return distanceTooltip(epoch, d.value[0], d.value[1], offsetMinutes)
         },
       },
