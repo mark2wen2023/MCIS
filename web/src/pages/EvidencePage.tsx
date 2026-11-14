@@ -1,3 +1,5 @@
+import { timelineDomain, timelineAxis } from '../timeline/domain'
+import { timelineEventTooltip } from '../timeline/tooltip'
 import { useMemo, useState, useSyncExternalStore } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import type { EChartsOption } from 'echarts'
@@ -272,7 +274,9 @@ const KIND_STYLE: Record<TimelineEvent['kind'], { color: string; symbol: string;
 }
 
 function TimelineChart({ fictional, epoch, events, conflicts, cpa, offsetMinutes }: { offsetMinutes: number; fictional: boolean; epoch: string; events: TimelineEvent[]; conflicts: Conflict[]; cpa: CpaPoint[] }) {
-  const option = useMemo<EChartsOption>(() => {
+  const axis = useMemo(() => timelineAxis(timelineDomain(fictional, events, cpa, conflicts), epoch, offsetMinutes), [fictional, events, cpa, conflicts, epoch, offsetMinutes])
+  const option = useMemo<EChartsOption | null>(() => {
+    if (!axis.ok) return null
     const vesselIds = [...new Set(events.map((e) => e.vesselId).filter((id): id is string => Boolean(id)))]
     const lanes = fictional ? LANES : ['双方 / 环境', ...vesselIds]
     const lane = (e: TimelineEvent) => fictional ? (e.vesselId === 'vessel_lily' ? 2 : e.vesselId === 'vessel_mary' ? 1 : 0) : (e.vesselId ? vesselIds.indexOf(e.vesselId) + 1 : 0)
@@ -300,19 +304,14 @@ function TimelineChart({ fictional, epoch, events, conflicts, cpa, offsetMinutes
       grid: { left: 78, right: 44, top: 40, bottom: 24 },
       legend: { top: 2, left: 78, textStyle: { color: '#8da4c4', fontSize: 10 }, itemWidth: 10, itemHeight: 8 },
       tooltip: {
-        trigger: 'item', backgroundColor: 'rgba(10,20,35,.95)', borderColor: 'rgba(59,227,255,.4)', textStyle: { color: '#e6f1ff', fontSize: 11 },
+        trigger: 'item', confine: true, enterable: true, backgroundColor: 'rgba(10,20,35,.95)', borderColor: 'rgba(59,227,255,.4)', textStyle: { color: '#e6f1ff', fontSize: 11 },
         formatter: (p: unknown) => {
           const d = (p as { data: { raw?: TimelineEvent; value: number[] } }).data
-          if (d.raw) return `${simToClock(epoch, d.raw.timeSec, true, offsetMinutes)} ${d.raw.title}<br/><span style="color:#8da4c4">${d.raw.sourceLabel ?? ''}</span>`
+          if (d.raw) return timelineEventTooltip(d.raw, simToClock(epoch, d.raw.timeSec, true, offsetMinutes))
           return distanceTooltip(epoch, d.value[0], d.value[1], offsetMinutes)
         },
       },
-      xAxis: {
-        type: 'value', min: 0, max: fictional ? 780 : Math.max(60, ...events.map((e) => e.timeSec), ...cpa.map((p) => p.timeSec)), interval: 60,
-        axisLabel: { color: '#8da4c4', fontSize: 10, formatter: (v: number) => simToClock(epoch, v, false, offsetMinutes) },
-        axisLine: { lineStyle: { color: 'rgba(59,227,255,.3)' } },
-        splitLine: { lineStyle: { color: 'rgba(141,164,196,.08)' } },
-      },
+      xAxis: axis.axis,
       yAxis: [
         { type: 'category', data: lanes, axisLabel: { color: '#c9d8ee', fontSize: 10.5 }, axisLine: { lineStyle: { color: 'rgba(59,227,255,.3)' } },
           splitLine: { show: true, lineStyle: { color: 'rgba(141,164,196,.1)' } } },
@@ -332,6 +331,7 @@ function TimelineChart({ fictional, epoch, events, conflicts, cpa, offsetMinutes
         ...evSeries,
       ],
     }
-  }, [fictional, epoch, events, conflicts, cpa, offsetMinutes])
-  return <EChart option={option} height={262} />
+  }, [fictional, epoch, events, conflicts, cpa, offsetMinutes, axis])
+  if (!axis.ok) return <div className="empty" role="alert">{axis.message}</div>
+  return <EChart option={option!} height={262} />
 }

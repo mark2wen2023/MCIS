@@ -368,3 +368,16 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 | 2026-11-12 | Report output A | 受限独立验收通过 | 最终独立49 passed/11.56s，20SHA前后匹配；真实双格式单render/原文不变/审计关联、实际第二连接改报告或策略后409/403、故障全表回滚与commit后交付失败各有证明。真浏览器2正常下载+2真实commit后故障替换+1真实commit后身份迟响应丢弃，最终5审计；8独立客户端坏结构/错绑拒绝。实际2MiB报告及16MiB输出边界与其余缩小limit测试区别详见独立REPORT；未穷尽多worker/真实切案/全部变体。无服务端原件保存、无.mcase文件恢复、无签署认证；B仅计划，不部署不触W11。 |
+
+
+| TL-INTERVAL | 待测 | 2026-11-14 | 时间线区间与零边界修复；实现哈希 logs/tl-interval-impl-hashes-frozen.txt；不改存量数据，不提供时间不确定性推理。 |
+| TL-INTERVAL | 受限独立验收通过 | 2026-11-14 | 37/37 本地 API 测试（22新增+6旧+9独立）；不是CI/UI/真实模型验收。存量异常区间未自动修复；未部署。见 tests_acceptance/TL_INTERVAL/INDEPENDENT.md。 |
+
+| TL-SOURCE-DISPLAY | 待测 | 2026-11-14 | 时间线多证据引用与已有状态标记展示；HTML转义；冻结 logs/tl-source-display-frozen.txt。 |
+| TL-SOURCE-DISPLAY | 代码受限独审通过/浏览器待验 | 2026-11-14 | 20项tooltip测试和完整tsc通过；浏览器127.0.0.1连接拒绝，未验证hover/scroll/窄屏。仅显示已有来源与标记，不推断事实或调用模型。 |
+
+| TL-AXIS | 待测 | 2026-11-14 | 基于PR66，修正负秒显示范围；15单测，冻结logs/tl-axis-frozen.txt。 |
+| TL-AXIS | 受限代码独审通过/浏览器待验 | 2026-11-14 | 23域单测+2真实ECharts SVG SSR过、完整tsc过；浏览器loopback连接拒绝。依赖PR66，未合并部署。 |
+
+| TL-AXIS修订 | 待复验 | 2026-11-14 | 修固定ticks超限/溢出，生产轴工厂SSR10项通过；原2项SSR未含生产interval，不能证明其安全。 |
+| TL-AXIS修订 | 受限独审通过/浏览器待验 | 2026-11-14 | 最终39项（15域+8独立域+10生产轴SSR/guard+6独立轴）通过，tsc通过；显式无法绘制分支仅源码验证。保持草稿。 |
