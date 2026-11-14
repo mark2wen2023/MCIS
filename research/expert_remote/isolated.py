@@ -18,15 +18,23 @@ def _command(mocked):
     return [sys.executable,'-m','research.expert_remote.worker']+(['--mock'] if mocked else [])
 
 
-async def request(messages,tools,*,key,deadline,cancel=None,mocked=False):
+async def request(messages,tools,*,key,deadline,cancel=None,mocked=False,managed_binding=None):
     proc=None;sent=0;data=b'';result=None;error=None;observed=None;reaped=False
     try:
         if type(mocked) is not bool:raise TransportError('worker_mode')
         if (cancel and cancel()) or time.monotonic()>=deadline:raise TransportError('cancelled')
-        payload=canonical({'messages':messages,'tools':tools,'key':key,'deadline':deadline})
+        config={'messages':messages,'tools':tools,'key':key,'deadline':deadline}
+        worker_env={'PATH':'/usr/bin:/bin','LANG':'C.UTF-8'}
+        if managed_binding is not None:
+            if mocked or key is not None:raise TransportError('managed_mode_invalid')
+            from research.expert_remote.managed import resolve
+            material=resolve(managed_binding)
+            worker_env.update(material.environment)
+            config['managedBinding']=managed_binding
+        payload=canonical(config)
         if len(payload)>MAX_BYTES+16384:raise TransportError('request_limit')
         require_support()
-        proc=subprocess.Popen(_command(mocked),cwd=ROOT,env={'PATH':'/usr/bin:/bin','LANG':'C.UTF-8'},
+        proc=subprocess.Popen(_command(mocked),cwd=ROOT,env=worker_env,
              stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.DEVNULL,start_new_session=True,bufsize=0)
         os.set_blocking(proc.stdin.fileno(),False);os.set_blocking(proc.stdout.fileno(),False)
         while True:

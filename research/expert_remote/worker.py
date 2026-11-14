@@ -11,9 +11,10 @@ def main():
         raw=sys.stdin.buffer.read(transport.MAX_BYTES+16385)
         if len(raw)>transport.MAX_BYTES+16384: raise ValueError()
         config=strict(raw)
-        if set(config)!={'messages','tools','key','deadline'}:raise ValueError()
+        if set(config) not in ({'messages','tools','key','deadline'},{'messages','tools','key','deadline','managedBinding'}):raise ValueError()
         mocked=sys.argv[1:]==['--mock']
         if sys.argv[1:] not in ([],['--mock']):raise ValueError()
+        if mocked and 'managedBinding' in config:raise ValueError()
         if mocked:
             import httpx
             from research.expert_group.engine import _fixture, _packet, load_packet
@@ -27,7 +28,7 @@ def main():
                 return httpx.Response(200,json={'id':'synthetic-mock-request','model':'MOCK-NOT-DEEPSEEK',
                     'choices':[{'finish_reason':'tool_calls' if message.get('tool_calls') else 'stop','message':message}]})
             transport.httpx.AsyncClient=lambda **kw:original(transport=httpx.MockTransport(reply),**kw)
-        result=asyncio.run(transport.request(config['messages'],config['tools'],key=config['key'],deadline=config['deadline']))
+        result=asyncio.run(transport.request(config['messages'],config['tools'],key=config['key'],deadline=config['deadline'],managed_binding=config.get('managedBinding')))
         output={'ok':True,'result':result,'transportMocked':mocked}
     except transport.TransportError as exc:
         output={'ok':False,'code':exc.code,'dispatched':exc.dispatched}

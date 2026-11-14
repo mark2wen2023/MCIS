@@ -600,3 +600,6 @@ EXPERTCONNECTED r1：来源测试保留四文件相同内容断言，改用87281
 EXPERTCONNECTED r2：自查并保留红测，展示投影completed调用数必须被received覆盖，not_started计数为0，ready/round_review/round_open状态收紧。Python源回执validator未改，原受控导出不会产生矛盾；直输build展示合同也不能自相矛盾。
 
 EXPERTCONNECTED r3：修独审提示的embedded已显示但aria-live仍称未载入，补显示状态断言；r2/r1冻结保留，r3另立。
+
+## EXPERTMANAGED 2026-11-14
+基于4dda486隔离研究平台网络密钥代理。当前无绑定、无可信control-plane→worker配置桥，禁止真实请求。新增默认拒绝的managed binding解析边界及严格离线验证器；固定DeepSeek POST，显式已验证proxy+SSLContext、保留拒绝重定向/重试，不信任ambient任意代理。复用transport/isolated/worker，不增加模型入口；不改变平台网络/安全设置。可信bootstrap未完成前不能启用，不把人工ready当平台证明。

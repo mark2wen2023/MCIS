@@ -417,3 +417,7 @@ EXPERTCONNECTED r2待独审：投影完成/received及阶段一致性红测转�
 EXPERTCONNECTED r3待复验：embedded aria-live状态准确，34新增DOM/40旧/19来源断言及22Python通过；freeze logs/EXPERTCONNECTED-r3-impl-hashes-frozen.txt。
 
 | 2026-11-14 | EXPERTCONNECTED r3 | 受限独审通过 | 22开发Python、40旧/19来源/34新DOM断言及TS过；12独立pytest（含8DOM/5parser子场景）、12冻结一致。D01/C01关闭并保留初始红测；仅本地只读接线，实际Pi+MockHTTP，真实模型0、浏览器启动阻塞、无身份/正式案件。 |
+
+| 2026-11-14 | EXPERTMANAGED | 待独审/生产默认拒绝 | 4dda486隔离最小代理/CA pins边界+固定DeepSeek目标，42新增离线测试+46原传输/进程回归通过；无平台bootstrap/安全绑定，不自动接Executor，真实请求0；freeze logs/EXPERTMANAGED-impl-hashes-frozen.txt。 |
+
+| 2026-11-14 | EXPERTMANAGED | 默认禁用范围独审通过 | 42新增离线、相关回归250通过；24独审通过、6freeze一致。平台bootstrap/worker可信引用、Executor与回执配置绑定待实际环境引用和另审；不认证平台兼容，无真实调用/配置变更。 |

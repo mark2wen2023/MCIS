@@ -72,7 +72,7 @@ def _decode(raw):
             'identityVerified': False}
 
 
-async def request(messages, tools, *, key, deadline, cancel=None):
+async def request(messages, tools, *, key, deadline, cancel=None, managed_binding=None):
     """Return one bounded non-stream response; deadline is absolute monotonic time.
 
     Error.dispatched conservatively means dispatch may have begun, NOT that the
@@ -83,8 +83,17 @@ async def request(messages, tools, *, key, deadline, cancel=None):
     dispatched = False
     task = None
     try:
-        if type(key) is not str or not key or len(key) > 8192 or any(ord(c) < 33 or ord(c) > 126 for c in key):
-            raise TransportError('credential_invalid')
+        options = {}
+        headers = {'Content-Type':'application/json','Accept':'application/json','Accept-Encoding':'identity'}
+        if managed_binding is not None:
+            if key is not None or ENDPOINT != 'https://api.deepseek.com/chat/completions': raise TransportError('managed_mode_invalid')
+            from research.expert_remote.managed import resolve
+            material=resolve(managed_binding)
+            options={'proxy':httpx.Proxy(material.proxy,ssl_context=material.context),'verify':material.context}
+        else:
+            if type(key) is not str or not key or len(key) > 8192 or any(ord(c) < 33 or ord(c) > 126 for c in key):
+                raise TransportError('credential_invalid')
+            headers['Authorization']='Bearer '+key
         if type(deadline) not in (int, float) or not math.isfinite(deadline):
             raise TransportError('deadline_invalid')
         if cancel is not None and cancel(): raise TransportError('cancelled')
@@ -103,13 +112,12 @@ async def request(messages, tools, *, key, deadline, cancel=None):
         async def send():
             nonlocal dispatched
             async with httpx.AsyncClient(trust_env=False, follow_redirects=False,
-                                         timeout=httpx.Timeout(max(.001, deadline-time.monotonic()))) as client:
+                                         timeout=httpx.Timeout(max(.001, deadline-time.monotonic())), **options) as client:
                 if cancel is not None and cancel(): raise TransportError('cancelled')
                 if time.monotonic() >= deadline: raise TransportError('deadline')
                 dispatched = True
                 async with client.stream('POST', ENDPOINT, content=body,
-                                         headers={'Authorization': 'Bearer '+key, 'Content-Type': 'application/json',
-                                                  'Accept': 'application/json', 'Accept-Encoding': 'identity'}) as response:
+                                         headers=headers) as response:
                     if response.status_code != 200: raise TransportError('http_rejected', True)
                     if response.headers.get('content-encoding', 'identity').lower() != 'identity':
                         raise TransportError('response_encoding', True)
