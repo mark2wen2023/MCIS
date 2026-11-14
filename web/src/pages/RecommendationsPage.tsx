@@ -1,6 +1,6 @@
-import { useState, useSyncExternalStore, type DragEvent } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore, type DragEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
+import { ApiError, api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
 import { RecommendationReview } from '../recommendationReview/RecommendationReview'
 import { ConsultationPanel } from '../consultation/ConsultationPanel'
 import { SERVICE_ADDR } from '../config'
@@ -182,10 +182,35 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
   const [lastId, setLastId] = useState(rec.id)
   if (lastId !== rec.id) { setLastId(rec.id); setPct(rec.progressPct); setParty(rec.addressee); setNote(''); setText('') }
 
-  const respond = () => run(async () => {
-    const r = await api.post(casePath(`/recommendations/${rec.id}/responses`, caseId), { party, text })
-    setText(''); props.onChanged(); props.onCancel(); return r
-  }, `${rec.id} 已登记回复${rec.status === 'Issued' ? '，状态 → 已回复' : ''}`)
+  const responseLock = useRef(false)
+  const responseAlive = useRef(true)
+  const responseIdentity = useRef(recommendationsIdentity())
+  const [responseState, setResponseState] = useState<'idle' | 'sending' | 'unknown'>('idle')
+  const [responseMessage, setResponseMessage] = useState('')
+  useEffect(() => { responseAlive.current = true; return () => { responseAlive.current = false } }, [])
+  const responseValid = () => responseAlive.current && recommendationsIdentity() === responseIdentity.current
+  const respond = async () => {
+    if (responseLock.current || !responseValid() || !party.trim() || !text.trim()) return
+    responseLock.current = true
+    setResponseState('sending'); setResponseMessage('正在登记；离开页面不会撤销已发出的请求。')
+    try {
+      await api.post(casePath(`/recommendations/${rec.id}/responses`, caseId), { party, text })
+      if (!responseValid()) return
+      setText(''); setResponseState('idle'); setResponseMessage('回复已登记。')
+      responseLock.current = false
+      try { props.onChanged(); props.onCancel() }
+      catch { setResponseMessage('回复已登记，但页面刷新失败；请重新读取核查，不要重复登记。') }
+    } catch (e) {
+      if (!responseValid()) return
+      if (e instanceof ApiError && [400, 403, 404, 409, 413, 422].includes(e.status)) {
+        responseLock.current = false; setResponseState('idle')
+        setResponseMessage(`本次登记被服务端拒绝（HTTP ${e.status}）；未自动重试。`)
+      } else {
+        setResponseState('unknown')
+        setResponseMessage('登记结果未知，原回复保留且本页禁止重复提交。请在完整内容核查中重新读取回复及审计，由有权人员核对；未查到不代表未提交。切换建议、案件或刷新会丢失本页锁，切勿用新请求补交。')
+      }
+    }
+  }
   const saveProgress = () => run(async () => {
     const r = await api.patch(casePath(`/recommendations/${rec.id}`, caseId), { progressPct: pct, note }); setNote(''); props.onChanged(); return r
   }, `${rec.id} 落实进度 → ${pct}%（审计 safetyrec.progress）`)
@@ -218,10 +243,11 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
         <div className="p6-card" style={{ marginTop: 8, borderColor: props.pending === 'Responded' ? 'var(--cyan)' : undefined }}>
           <div className="p6-dim" style={{ marginBottom: 4 }}>登记书面回复{rec.status === 'Issued' ? '（登记后进入“落实中”）' : '（追加，不改状态）'}</div>
           <div className="row-actions">
-            <input className="input" style={{ width: 130 }} value={party} onChange={(e) => setParty(e.target.value)} placeholder="回复方" />
-            <input className="input" style={{ flex: 1 }} value={text} onChange={(e) => setText(e.target.value)} placeholder="回复内容" />
-            <button className="btn btn-sm btn-primary" disabled={!party.trim() || !text.trim()} onClick={respond}>登记回复</button>
+            <input className="input" style={{ width: 130 }} value={party} disabled={responseState !== 'idle'} onChange={(e) => setParty(e.target.value)} placeholder="回复方" />
+            <input className="input" style={{ flex: 1 }} value={text} disabled={responseState !== 'idle'} onChange={(e) => setText(e.target.value)} placeholder="回复内容" />
+            <button className="btn btn-sm btn-primary" disabled={responseState !== 'idle' || !party.trim() || !text.trim()} onClick={() => void respond()}>登记回复</button>
           </div>
+          {responseMessage && <p role={responseState === 'unknown' ? 'alert' : 'status'}>{responseMessage}</p>}
         </div>
       )}
 
