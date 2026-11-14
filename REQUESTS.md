@@ -564,3 +564,9 @@ Engineering caps are declared for report/output/audit/manifest/ZIP. A self-revie
 
 ## TL-SOURCE-DISPLAY (2026-11-14)
 Authorized isolated EvidencePage tooltip change: render existing sourceLabel and all evidenceIds as escaped plain text, expose existing presumptive/confirmed flags without inference. Missing flags show unknown, never infer truth from absent fields. No extra data fetch, evidence resolution, navigation, permission changes, AI, new uncertainty model or source mutations. Keep case display timezone formatter. New pure helper + tests; main EvidencePage edit is one import and one callback call.
+
+## TL-AXIS (2026-11-14), dependent on PR66
+Fix verified axis/API mismatch: existing negative event starts, CPA points, and conflict markers must be inside the configured time domain. Preserve zero and default positive range; extend only for finite recorded seconds without inference, rounding or timestamp mutation. A valid recorded event duration end can extend display domain but is not uncertainty. New iterative helper avoids spread-argument limits. No server or source changes.
+
+### TL-AXIS integration correction (2026-11-14)
+Root authorized correction on PR70 after combined testing reproduced fixed60-second tick exhaustion at multi-day spans and finite-endpoint overflow. Replace fixed ticks with adaptive splitNumber8 via one production axis factory shared with SSR tests. When span or displayed-date endpoints are not representable, return an explicit unavailable notice and do not mount ECharts, without clipping evidence or editing timestamps. Multi-day labels include date. Refreeze implementation; previous2 SSR checks lacked production interval and did not prove its tick safety.
