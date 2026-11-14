@@ -628,3 +628,12 @@ not generated at runtime from candidate sources. Preserve manifest/local source
 comparison and concurrent real CLI rebuild equality. Add SDK-free mutation tests;
 missing/changed sources or receipt omissions fail. No production/build/core changes.
 Historical W184 report stays unchanged; its past environment is not current proof.
+
+## Report snapshot test policy alignment (2026-11-14)
+Latest main25b9df6; timeline efc1dd8 remains separate and unchanged. Snapshot
+regressions11fail3pass because default Investigator lacks full-content access.
+Change only test_reports_w161_snapshot.py scoped fixture to allowed Lead; retain
+all full snapshot/legacy audit/chain assertions and both investigator role cases,
+with Investigator explicitly403 under current default policy. Add before/after
+DB-state checks for denied known/missing/cross-case snapshot reads. No grants,
+production policy, core, archive or shared-fixture changes.

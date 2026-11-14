@@ -391,3 +391,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTCOORDINTEGRATED | 离线组合独审通过 | 2026-11-14：独立139项通过；两源各3/3、组合4/4冻结；实际加载新machine、源改动逐字一致，原NaN3红和fractional截止4测通过。缺失截止依赖已在本组合关闭；不放行真实模型/硬取消。 |
 | HFACS source portability | 待测 | fixed W184 seven-source pins replace missing sibling dependency; logs/hfacs-source-portability-impl-hashes-frozen.txt; real core remains blocked |
 | HFACS source portability | 局部独审通过 | self19pass/independent19pass; 7realCLI collection only; SDK/core blocked; tests_acceptance/hfacs-source-portability/REPORT.md |
+| Report snapshot policy alignment | 待测 | main25b9df6; scoped handler test roles with DB invariant denials; logs/report-snapshot-policy-impl-hashes-frozen.txt |
+| Report snapshot policy alignment | 局部独审通过 | baseline11fail3pass; self15pass/independent15pass; related80pass; tests_acceptance/report-snapshot-policy/REPORT.md |

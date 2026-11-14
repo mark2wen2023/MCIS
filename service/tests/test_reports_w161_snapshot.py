@@ -19,7 +19,8 @@ from .conftest import CASE
 
 @pytest.fixture()
 def ctx(app):
-    return SimpleNamespace(db=app.state.db, role='Investigator', operator='快照调查员',
+    # Synthetic handler context exercises policy, not authenticated identity.
+    return SimpleNamespace(db=app.state.db, role='LeadInvestigator', operator='快照调查员',
                            settings=app.state.settings, request=SimpleNamespace(app=app))
 
 
@@ -98,16 +99,28 @@ def test_snapshot_missing_is_404_and_case_scoped(ctx):
 def test_snapshot_restricted_roles_are_403(ctx, role):
     report = create(ctx)
     reference = router.audit_list(CASE, report['reportId'], ctx)[0]['snapshotRef']
+    from .test_reports_w16_direct import snapshot_db
+    before = snapshot_db(ctx)
     ctx.role = role
     assert_error(403, 'FORBIDDEN', lambda: router.get_snapshot(CASE, reference.split(':', 1)[1], ctx))
+    assert snapshot_db(ctx) == before
 
 
 @pytest.mark.parametrize('role', ['LeadInvestigator', 'Investigator'])
-def test_snapshot_investigator_roles_allowed(ctx, role):
+def test_snapshot_investigator_roles_follow_default_content_policy(ctx, role):
     report = create(ctx)
     reference = router.audit_list(CASE, report['reportId'], ctx)[0]['snapshotRef']
+    from .test_reports_w16_direct import snapshot_db
+    before = snapshot_db(ctx)
     ctx.role = role
-    assert router.get_snapshot(CASE, reference.split(':', 1)[1], ctx)['afterValue'] == report
+    if role == 'LeadInvestigator':
+        assert router.get_snapshot(CASE, reference.split(':', 1)[1], ctx)['afterValue'] == report
+    else:
+        # A role label alone cannot bypass full-content/field-rule checks.
+        for case_id, snapshot_id in [(CASE, reference.split(':', 1)[1]),
+                                     (CASE, 'RA-absent')]:
+            assert_error(403, 'FORBIDDEN', lambda: router.get_snapshot(case_id, snapshot_id, ctx))
+    assert snapshot_db(ctx) == before
 
 
 @pytest.mark.parametrize('case_id', sorted(service.REAL_CASE_IDS))
@@ -154,3 +167,15 @@ def test_legacy_report_snapshot_gets_reference_without_rewriting_audit_line(ctx)
     assert router.get_snapshot(CASE, snapshot_id, ctx)['afterValue'] == {'legacy': True}
     with ctx.db.session() as s:
         assert audit.verify_chain(audit.all_lines(s, CASE))['valid'] is True
+
+
+def test_investigator_cannot_read_snapshot_reference_from_another_case(ctx):
+    from mcis_service.db import put_doc
+    from .test_reports_w16_direct import snapshot_db
+    create(ctx)
+    with ctx.db.session() as s:
+        put_doc(s, ReportAuditRow, 'CASE-OTHER', 'RA-other-case', {'reason': 'Synthetic other case'})
+    before = snapshot_db(ctx)
+    ctx.role = 'Investigator'
+    assert_error(403, 'FORBIDDEN', lambda: router.get_snapshot(CASE, 'RA-other-case', ctx))
+    assert snapshot_db(ctx) == before
