@@ -579,3 +579,11 @@ object. Reproduced in single-branch clone (15 pass/1 fail). Replace that Git loo
 with the SHA-256 pinned at reviewed extraction; preserve source commit provenance
 and stdlib assertion. No runtime change or history import. Source exports without
 .git pass, and modified source bytes fail the pinned digest assertion.
+
+## Report font workflow policy alignment (2026-11-14)
+Latest main73fc800; PR82/83 remain open at79c935d/728d390, no production changes.
+Two public-report font regressions stop at403 before rendering under Investigator.
+Use scoped allowed LeadInvestigator for genuine production font/PDF assertions,
+retain all maritime term/page/watermark checks, and add Investigator creation/
+export denial with audit/report invariance. No service, policy, font or shared
+fixture changes; no SDK dependency or claims of visual browser acceptance.
