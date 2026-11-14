@@ -1,0 +1,4 @@
+No .git source export; only synthetic test opinions, no model calls.
+........................................................................ [ 80%]
+.................                                                        [100%]
+89 passed in 0.64s

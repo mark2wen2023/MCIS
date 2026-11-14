@@ -381,3 +381,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTMEETINGMAIN | 离线范围独审通过 | 2026-11-14：13项独审、7/7冻结一致；无.git副本71项、main路由24项通过。remote仅协议声明且模型/Pi/身份标志不升级；见 DEFECTS/EXPERTMEETINGMAIN.md。真实调用0/HOLD，未接正式案件或浏览器。 |
 | EXPERTCITATION | 待测 | 2026-11-14：PR81 de4729d上只读引用来源视图，83项自测/回归通过；冻结 logs/EXPERTCITATION-impl-hashes-frozen.txt。精确匹配不证明语义或事实，真实请求0/HOLD，无浏览器接线。 |
 | EXPERTCITATION | 只读投影独审通过 | 2026-11-14：12项独审、3/3冻结一致；无.git副本83项通过。失败/未知/上下文绑定/Unicode歧义及supported不升级语义已验；见 DEFECTS/EXPERTCITATION.md。非浏览器/事实/模型验收，真实0/HOLD。 |
+| EXPERTCITATIONHTML | 待测 | 2026-11-14：5322d92上静态离线审阅导出，89项自测/回归通过；冻结 logs/EXPERTCITATIONHTML-impl-hashes-frozen.txt。无真实浏览器/模型验收，不接正式案件；真实0/HOLD。 |
+| EXPERTCITATIONHTML | 静态导出独审通过 | 2026-11-14：10项独审、3/3冻结一致，无.git源码89项通过。完整/部分/未知/超时、转义及CLI限界已验；见 DEFECTS/EXPERTCITATIONHTML.md。HTMLParser非真实浏览器；真实模型0/HOLD。 |
