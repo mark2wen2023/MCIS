@@ -35,7 +35,7 @@ try{
  const counts=()=>({models:operations.model_request||0,tools:operations.tool||0});
  const host={call:async command=>{operations[command.op]=(operations[command.op]||0)+1;if(command.op==='tool')toolNames.push(command.name);if(command.op==='model_request')receipt.append('model_request_started',counts());child.stdin.write(JSON.stringify(command)+'\n');const result=await read();if(command.op==='model_request')receipt.append('model_request_returned',counts());if(command.op==='tool')receipt.append('tool_returned',counts());if(command.op==='tool')toolOutcomes.push({name:command.name,status:result.status||'read_result'});if(result.ok===false){errorCode=/^[A-Z0-9_]+$/.test(result.errorCode||'')?result.errorCode:'HOST_REJECTED';throw new Error('MCIS_HOST_REJECTED');}return result;}};
  const model={id:'deepseek-v4-pro',api:'openai-completions',provider:'deepseek',baseUrl:'https://api.deepseek.com',reasoning:false,input:['text'],cost:{input:0,output:0,cacheRead:0,cacheWrite:0},contextWindow:8192,maxTokens:4096};
- const result=await runTranscript({host,model,stream:createDeepSeekStream(host,model.id),mode:'remote-deepseek'});
+ const result=await runTranscript({host,model,stream:createDeepSeekStream(host,model.id),mode:'remote-deepseek',finalMode:workingMode?'validated-reference':'exact'});
  if(workingMode){
   const w=result.result.workingAcceptance;
   if(!w||w.workingSaved!==true||w.reopenedRead!==true||w.reviewRevision!==1||w.reviewActor!=='scripted_test_not_human'||w.factActivated!==false||w.storage!=='temporary_sqlite_deleted_after_probe')throw new Error('MCIS_WORKING_ACCEPTANCE_FAILED');

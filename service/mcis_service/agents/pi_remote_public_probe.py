@@ -100,13 +100,14 @@ async def run(working_mode=False):
             doc=public_document();contracts.validate('interview',doc)
             with db.session() as s:put_doc(s,InterviewRow,CASE,RECORD,doc)
             args=(db,settings,token,CASE,RECORD)
-            disclosure=describe_remote(*args,cfg)
+            completion_mode='validated-reference' if working_mode else 'exact'
+            disclosure=describe_remote(*args,cfg,completion_mode=completion_mode)
             # Caller explicitly selected this fixed public scope. This is not a
             # browser consent receipt or permission for arbitrary future cases.
             if working_mode:
                 working.initialize(db)
                 with db.session() as s:working.grant(s,local.authorize_read(s,token,CASE).subject_id,CASE,enabled=True)
-                host=PiWorkingHost(*args,cfg,approved_disclosure_digest=disclosure['approvalDigest'])
+                host=PiWorkingHost(*args,cfg,approved_disclosure_digest=disclosure['approvalDigest'],completion_mode=completion_mode)
             else:host=RemoteTranscriptHost(*args,cfg,approved_disclosure_digest=disclosure['approvalDigest'])
             probe_args=args
             del token,args

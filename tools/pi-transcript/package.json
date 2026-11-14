@@ -7,7 +7,7 @@
     "@earendil-works/pi-ai": "1.5.2"
   },
   "scripts": {
-    "test": "node --test test.mjs independent.test.mjs remote.test.mjs remote-independent.test.mjs final-diagnostic.test.mjs final-diagnostic-independent.test.mjs run-receipt.test.mjs run-receipt-independent.test.mjs final-equivalence.test.mjs final-equivalence-independent.test.mjs",
+    "test": "node --test test.mjs independent.test.mjs remote.test.mjs remote-independent.test.mjs final-diagnostic.test.mjs final-diagnostic-independent.test.mjs run-receipt.test.mjs run-receipt-independent.test.mjs final-equivalence.test.mjs final-equivalence-independent.test.mjs reference-independent.test.mjs",
     "test:integration": "node fixture-integration.mjs"
   },
   "engines": {

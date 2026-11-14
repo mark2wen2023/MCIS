@@ -5,6 +5,7 @@ import { isRemoteAdapter } from './deepseek-adapter.mjs';
 import { Agent } from '@earendil-works/pi-agent-core';
 import { createAssistantMessageEventStream } from '@earendil-works/pi-ai';
 
+export const COMPLETION_MARKER='MCIS_COMPLETE_VALIDATED_PROPOSAL';
 export const LIMITS = Object.freeze({ models: 4, tools: 8, milliseconds: 120000, bytes: 262144 });
 const schema = properties => ({ type: 'object', properties, required: Object.keys(properties), additionalProperties: false });
 const definitions = [
@@ -28,7 +29,8 @@ function bounded(value) {
   return value;
 }
 /** Trusted adapter only. host and stream are never constructed from model/UI arguments. */
-export async function runTranscript({host,stream,model,signal,mode='fixture',deadlineMs=LIMITS.milliseconds}) {
+export async function runTranscript({host,stream,model,signal,mode='fixture',deadlineMs=LIMITS.milliseconds,finalMode='exact'}) {
+  if(!['exact','validated-reference'].includes(finalMode)||(finalMode==='validated-reference'&&mode!=='remote-deepseek'))throw new Error('MCIS_CONFIG_INVALID');
   if(mode==='fixture' && isRemoteAdapter(stream)) throw new Error('MCIS_MODE_MISMATCH');
   if (mode !== 'fixture' && !(mode==='remote-deepseek' && isRemoteAdapter(stream,host,model))) throw new Error('MCIS_REMOTE_NOT_CONNECTED');
   if (!host || typeof host.call!=='function' || typeof stream!=='function' || !model) throw new Error('MCIS_CONFIG_INVALID');
@@ -40,8 +42,9 @@ export async function runTranscript({host,stream,model,signal,mode='fixture',dea
   const agent = new Agent({
     initialState:{systemPrompt:SYSTEM,model,tools:definitions.map(([name,parameters])=>({name,label:name,description:name,parameters,execute:async(_id,args)=>{
       ensure(); if(++tools>LIMITS.tools) throw new Error('MCIS_TOOL_BUDGET');
+      if(name==='validate_extraction_proposal') validated=null;
       const result = await call({op:'tool',name,args,...(mode==='remote-deepseek'?{callId:_id}:{})});
-      if(name==='validate_extraction_proposal' && result.status==='PendingReview' && result.saved===false) validated=args.content;
+      if(name==='validate_extraction_proposal') validated=result.status==='PendingReview' && result.saved===false?args.content:null;
       return {content:[{type:'text',text:JSON.stringify(result)}],details:{}};
     }}))},
     toolExecution:'sequential', identity:{attribution:null},
@@ -72,9 +75,11 @@ export async function runTranscript({host,stream,model,signal,mode='fixture',dea
     if(last?.role!=='assistant'||last.stopReason!=='stop'||last.content.some(x=>x.type!=='text')) throw new Error('MCIS_FINAL_INVALID');
     const payload=last.content.map(x=>x.text).join('');
     const finalError=finalDiagnostic(payload,validated);
-    if(!equivalentFinal(payload,validated)) throw new Error(finalError || 'MCIS_FINAL_INVALID');
+    if(finalMode==='validated-reference'){
+      if(validated===null||payload!==COMPLETION_MARKER)throw new Error('MCIS_FINAL_REFERENCE_INVALID');
+    }else if(!equivalentFinal(payload,validated)) throw new Error(finalError || 'MCIS_FINAL_INVALID');
     // Forward the exact previously validated bytes, never rewritten model text.
-    const result=await call({op:'final',payload:validated});
+    const result=await call({op:'final',payload:finalMode==='validated-reference'?COMPLETION_MARKER:validated});
     return {result,trace,models,tools,piVersion:'1.5.2',realPi:true,realModel:mode==='remote-deepseek' && result.inferencePerformed===true,usageMeasured:false};
   } finally {clearTimeout(timer);signal?.removeEventListener('abort',onAbort);stop();}
 }

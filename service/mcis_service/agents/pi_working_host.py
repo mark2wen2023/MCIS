@@ -6,10 +6,10 @@ from . import extraction as e, extraction_working_store as w
 from .pi_transcript_remote import RemoteTranscriptHost
 
 class PiWorkingHost:
-    def __init__(self,db,settings,session_token,case_id,record_id,cfg,*,approved_disclosure_digest):
+    def __init__(self,db,settings,session_token,case_id,record_id,cfg,*,approved_disclosure_digest,completion_mode='exact'):
         self.__lock=threading.RLock()
         self.__args=(db,settings,session_token,case_id,record_id)
-        self.__host=RemoteTranscriptHost(*self.__args,cfg,approved_disclosure_digest=approved_disclosure_digest)
+        self.__host=RemoteTranscriptHost(*self.__args,cfg,approved_disclosure_digest=approved_disclosure_digest,completion_mode=completion_mode)
         self.__binding=self.__host._binding
         self.__run=str(uuid.uuid4());self.__closed=False;self.__accepted=None;self.__payload=None;self.__trace=[]
 
@@ -25,7 +25,8 @@ class PiWorkingHost:
                 self.__trace.append(event)
                 if len(self.__trace)>32:raise ValueError('Pi trace limit')
                 if envelope['op']=='final':
-                    self.__payload=envelope['payload']
+                    self.__payload=self.__host._accepted_content
+                    if type(self.__payload) is not str:raise ValueError('No accepted content')
                     self.__accepted=copy.deepcopy(result)
                 return copy.deepcopy(result)
             except Exception:
@@ -43,7 +44,7 @@ class PiWorkingHost:
                 or result['factVerified'] is not False or result['providerMode']!='remote-deepseek'
                 or result['fixture'] is not False or result['inferencePerformed'] is not True):raise ValueError('Pi result mismatch')
         return w._bounded({**result,'execution':{'profile':'pi-working-trial-v1','runId':self.__run,
-            'trace':copy.deepcopy(self.__trace),'outputDigest':e.digest(parsed),
+            'completionMode':result['completionMode'],'trace':copy.deepcopy(self.__trace),'outputDigest':e.digest(parsed),
             'traceMeaning':'trusted_host_protocol_metadata_not_signed_audit','runtimeIdentityVerified':False}})
 
     def save(self,operation_id):

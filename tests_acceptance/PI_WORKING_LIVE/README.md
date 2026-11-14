@@ -42,3 +42,11 @@ after cleanup in both modes. Node79/79 zero skips. The independent review found
 and fixed cleanup ordering before the live run. These prove safety prerequisites,
 not real persistent-review completion, human judgment or CI. Earlier read-only
 real acceptance be93095b remains separate and is not substituted for this failure.
+
+## Later separate reference-mode success
+The earlier f3ecba87 failure above remains historical. After independent review
+of the explicit host-owned completion-marker protocol, run00975fc8 completed
+3 actual model requests/2 tools/7 proposals/7 citations and the full temporary
+working-record reopen/read/scripted-review/reopen sequence. See
+../PI_COMPLETION_REFERENCE/README.md and its terminal recovery receipt.
+This is not a human review, production store delivery or deployment.

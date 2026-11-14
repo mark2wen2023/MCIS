@@ -1,0 +1,12 @@
+{"version":1,"runId":"00975fc8-2298-4132-add3-a323c55989c2","sequence":1,"at":"2026-11-14T03:47:09.574Z","phase":"started","errorCode":null,"saved":false}
+{"version":1,"runId":"00975fc8-2298-4132-add3-a323c55989c2","sequence":2,"at":"2026-11-14T03:47:16.190Z","phase":"host_ready","errorCode":null,"saved":false}
+{"version":1,"runId":"00975fc8-2298-4132-add3-a323c55989c2","sequence":3,"at":"2026-11-14T03:47:16.221Z","phase":"model_request_started","models":1,"tools":0,"errorCode":null,"saved":false}
+{"version":1,"runId":"00975fc8-2298-4132-add3-a323c55989c2","sequence":4,"at":"2026-11-14T03:47:45.595Z","phase":"model_request_returned","models":1,"tools":0,"errorCode":null,"saved":false}
+{"version":1,"runId":"00975fc8-2298-4132-add3-a323c55989c2","sequence":5,"at":"2026-11-14T03:47:45.669Z","phase":"tool_returned","models":1,"tools":1,"errorCode":null,"saved":false}
+{"version":1,"runId":"00975fc8-2298-4132-add3-a323c55989c2","sequence":6,"at":"2026-11-14T03:47:45.697Z","phase":"model_request_started","models":2,"tools":1,"errorCode":null,"saved":false}
+{"version":1,"runId":"00975fc8-2298-4132-add3-a323c55989c2","sequence":7,"at":"2026-11-14T03:47:54.372Z","phase":"model_request_returned","models":2,"tools":1,"errorCode":null,"saved":false}
+{"version":1,"runId":"00975fc8-2298-4132-add3-a323c55989c2","sequence":8,"at":"2026-11-14T03:47:54.451Z","phase":"tool_returned","models":2,"tools":2,"errorCode":null,"saved":false}
+{"version":1,"runId":"00975fc8-2298-4132-add3-a323c55989c2","sequence":9,"at":"2026-11-14T03:47:54.474Z","phase":"model_request_started","models":3,"tools":2,"errorCode":null,"saved":false}
+{"version":1,"runId":"00975fc8-2298-4132-add3-a323c55989c2","sequence":10,"at":"2026-11-14T03:47:58.394Z","phase":"model_request_returned","models":3,"tools":2,"errorCode":null,"saved":false}
+{"version":1,"runId":"00975fc8-2298-4132-add3-a323c55989c2","sequence":11,"at":"2026-11-14T03:47:58.599Z","phase":"working_review_verified","proposals":7,"errorCode":null,"saved":false}
+{"version":1,"runId":"00975fc8-2298-4132-add3-a323c55989c2","sequence":12,"at":"2026-11-14T03:47:58.599Z","phase":"accepted_pending_review","models":3,"tools":2,"proposals":7,"citations":7,"errorCode":null,"saved":false}

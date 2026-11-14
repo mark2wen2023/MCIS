@@ -32,20 +32,20 @@ def test_independent_working_rehearsal_failure_never_reports_success(working,mon
 
 @pytest.mark.parametrize('working_mode',[False,True])
 def test_independent_probe_final_receipt_after_temporary_cleanup(working_mode,monkeypatch):
-    content=fixture.fixture_content();query='右满舵';roots=[];outputs=[];actual_temp=p.tempfile.TemporaryDirectory
+    content=fixture.fixture_content();terminal='MCIS_COMPLETE_VALIDATED_PROPOSAL' if working_mode else content;query='右满舵';roots=[];outputs=[];actual_temp=p.tempfile.TemporaryDirectory
     def temp(*args,**kwargs):
         value=actual_temp(*args,**kwargs);roots.append(Path(value.name));return value
     monkeypatch.setattr(p.tempfile,'TemporaryDirectory',temp)
     monkeypatch.setattr(p,'public_document',fixture.document)
     def tool(callid,name,args):return {'id':callid,'type':'function','function':{'name':name,'arguments':json.dumps(args)}}
     calls=[tool('read','find_transcript_passages',{'query':query}),tool('validate','validate_extraction_proposal',{'content':content})]
-    responses=[{'finish_reason':'tool_calls','message':{'role':'assistant','content':None,'tool_calls':[x]}} for x in calls]+[{'finish_reason':'stop','message':{'role':'assistant','content':content}}]
+    responses=[{'finish_reason':'tool_calls','message':{'role':'assistant','content':None,'tool_calls':[x]}} for x in calls]+[{'finish_reason':'stop','message':{'role':'assistant','content':terminal}}]
     def complete(*args,**kwargs):return responses.pop(0)
     monkeypatch.setattr(transport,'complete',complete)
     messages=[{'apiKey':'fake-offline-only'}]
     for c in calls:
         messages.extend([{'op':'model_start'},{'op':'model_request'},{'op':'model_end'},{'op':'tool','name':c['function']['name'],'args':json.loads(c['function']['arguments']),'callId':c['id']}])
-    messages.extend([{'op':'model_start'},{'op':'model_request'},{'op':'model_end'},{'op':'final','payload':content}])
+    messages.extend([{'op':'model_start'},{'op':'model_request'},{'op':'model_end'},{'op':'final','payload':terminal}])
     class Lines:
         def read(self,*args):return json.dumps(messages.pop(0)).encode() if messages else None
     monkeypatch.setattr(p,'Lines',Lines)
