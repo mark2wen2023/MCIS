@@ -82,3 +82,8 @@ terminal accepted_pending_review record. This is acceptance of one fixed public
 report excerpt, not full-case accuracy, witness testimony, production identity,
 UI/E2E or CI. It does not resolve the historical unknown fourth run.
 The earlier failed/unknown records remain history, not the latest outcome.
+
+Qualification: be93095b success passed Python's unchanged terminal == validated
+byte check. It does not validate acceptance of presentation differences across
+the complete Python path. Node structural-equivalence checks are narrower-scope
+unit/fixture coverage. The server deliberately remains stricter.

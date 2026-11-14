@@ -26,3 +26,10 @@ New run be93095b-c8be-47e1-9579-f2a3788a23aa completed accepted_pending_review:
 saved=false. Only the pinned public excerpt was supplied. The host received
 original validated text, not canonical reserialization. No facts approved,
 production persistence, UI/browser, CI, deployment or full-case accuracy claim.
+
+## Important end-to-end qualification
+The Python remote host still requires payload == terminal model text == validated
+candidate text. Therefore the live success proves an exact-byte final path;
+it does NOT prove whitespace-different final text is accepted end-to-end.
+The Node equivalence tests cover only the Node boundary; the Python gate remains
+strict and may reject presentation differences. No claim of server relaxation.

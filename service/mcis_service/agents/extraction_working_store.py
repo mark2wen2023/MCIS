@@ -107,11 +107,15 @@ def _final(s,db,settings,token,case_id,record_id,binding,before,write):
 
 def _save_generated(db,settings,token,case_id,record_id,operation_id,expected_binding,result,provider_key=None):
     """Private trusted-host entry only; never accept UI-submitted model results."""
+    return _save_checked(db,settings,token,case_id,record_id,operation_id,expected_binding,result,provider_key,_validate_generated)
+
+def _save_checked(db,settings,token,case_id,record_id,operation_id,expected_binding,result,provider_key,validator):
+    """Shared private transaction; validator supplied only by an in-process trusted host."""
     j.canonical_id(operation_id)
     with db.session() as s:
         before=_auth(s,token,case_id,True);authority,generation=before
         snapshot=_snapshot(s,db,settings,token,case_id,record_id,expected_binding)
-        frozen=_validate_generated(result,snapshot,record_id)
+        frozen=validator(result,snapshot,record_id)
         digest=extraction.digest({'recordId':record_id,'binding':expected_binding,'result':frozen,'actor':authority.subject_id,'providerKey':provider_key})
         row=s.scalars(select(WorkingProposal).where(WorkingProposal.incarnation==generation,WorkingProposal.operation_id==operation_id)).first()
         replayed=row is not None
