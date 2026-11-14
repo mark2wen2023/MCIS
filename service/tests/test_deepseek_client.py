@@ -74,3 +74,10 @@ def test_transport_errors_sanitized(monkeypatch,error):
     mock(monkeypatch,handler)
     with pytest.raises(HTTPException) as e:d.complete(d.DeepSeekConfig(KEY),MESSAGES)
     assert KEY not in str(e.value)
+
+
+def test_proxy_dependency_error_sanitized(monkeypatch):
+    def client(**kwargs):raise ImportError(KEY)
+    monkeypatch.setattr(d.httpx,'Client',client)
+    with pytest.raises(HTTPException) as e:d.complete(d.DeepSeekConfig(KEY),MESSAGES)
+    assert e.value.status_code==503 and KEY not in str(e.value)

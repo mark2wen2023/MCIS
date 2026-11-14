@@ -36,3 +36,20 @@ def test_unicode_request_rejected_before_transport(monkeypatch):
     with pytest.raises(HTTPException) as e:
         d.complete(d.DeepSeekConfig('fictional-key'),[{'role':'user','content':'\ud800'}])
     assert e.value.status_code==422
+
+@pytest.mark.parametrize('claim',[
+    {'valueType':'Position','position':'右舷'},
+    {'valueType':'Position','position':{'latDeg':'12.5','lonDeg':120}},
+])
+def test_geographic_position_types_not_relaxed(claim):
+    import json
+    from mcis_service.agents import extraction as e
+    from mcis_service.agents.extraction_review_fixture import document
+    from .test_agents_w20 import ITEM
+    with pytest.raises(HTTPException):
+        e.parse_output(json.dumps({'statements':[{**ITEM,'claim':claim}]}),document())
+
+def test_prompt_preserves_utc_and_geographic_semantics():
+    from mcis_service.agents import extraction as e
+    assert 'geographic coordinates only' in e.SYSTEM
+    assert 'never invent timezone' in e.SYSTEM

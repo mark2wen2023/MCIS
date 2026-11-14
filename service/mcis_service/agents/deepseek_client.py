@@ -86,6 +86,8 @@ def complete(cfg, messages):
         if type(content) is not str or not content.strip():
             raise ValueError()
         return content
+    except ImportError:
+        raise problem(503, 'DEEPSEEK_DEPENDENCY_MISSING', 'DeepSeek 运行依赖未安装完整') from None
     except httpx.TimeoutException:
         raise problem(504, 'DEEPSEEK_TIMEOUT', 'DeepSeek 调用超时') from None
     except httpx.HTTPError:
