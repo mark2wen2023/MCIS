@@ -374,3 +374,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 | TL-AXIS | 待测 | 2026-11-14 | 基于PR66，修正负秒显示范围；15单测，冻结logs/tl-axis-frozen.txt。 |
 | TL-AXIS | 受限代码独审通过/浏览器待验 | 2026-11-14 | 23域单测+2真实ECharts SVG SSR过、完整tsc过；浏览器loopback连接拒绝。依赖PR66，未合并部署。 |
+
+| TL-AXIS修订 | 待复验 | 2026-11-14 | 修固定ticks超限/溢出，生产轴工厂SSR10项通过；原2项SSR未含生产interval，不能证明其安全。 |
+| TL-AXIS修订 | 受限独审通过/浏览器待验 | 2026-11-14 | 最终39项（15域+8独立域+10生产轴SSR/guard+6独立轴）通过，tsc通过；显式无法绘制分支仅源码验证。保持草稿。 |
