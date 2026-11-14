@@ -1,0 +1,137 @@
+CLEAN NO-GIT BASELINE
+..........                                                               [100%]
+10 passed in 0.14s
+
+MUTATION task_binding
+FFFF..F...                                                               [100%]
+=================================== FAILURES ===================================
+___ test_current_tasks_join_exact_snapshot_ticket_source_and_quote[complete] ___
+
+status = 'complete'
+
+    @pytest.mark.parametrize('status',['complete','failed','unknown','absent'])
+    def test_current_tasks_join_exact_snapshot_ticket_source_and_quote(status):
+        raw=meeting(status).export();state=json.loads(raw)['state']
+        view=citation_view(raw);plan=review_plan(raw);html=render(raw)
+        snapshot_sha=hashlib.sha256(raw).hexdigest()
+        assert view['snapshotSha256']==plan['snapshotSha256']==snapshot_sha
+        assert snapshot_sha in html
+        assert view['packetSha256']==plan['packetSha256']==hashlib.sha256(load_packet()).hexdigest()
+        source_items={i['itemId']:i for i in _packet(load_packet())['items']}
+        for task in plan['tasks']:
+            item=source_items[task['itemId']]
+>           assert task['taskId']==snapshot_sha+':'+item['itemId'] and task['taskId'] in html
+E           AssertionError: assert ('synthetic-unbound:item_001' == 'af2bb3114690...0a2d:item_001'
+E
+E             - af2bb3114690a71c40df6cfe4ba2d02c70a6a581e64a4163cfe97552cb0f0a2d:item_001
+E             + synthetic-unbound:item_001)
+
+tests_acceptance/EXPERTTRACE/test_trace.py:41: AssertionError
+____ test_current_tasks_join_exact_snapshot_ticket_source_and_quote[failed] ____
+
+status = 'failed'
+
+    @pytest.mark.parametrize('status',['complete','failed','unknown','absent'])
+    def test_current_tasks_join_exact_snapshot_ticket_source_and_quote(status):
+        raw=meeting(status).export();state=json.loads(raw)['state']
+        view=citation_view(raw);plan=review_plan(raw);html=render(raw)
+        snapshot_sha=hashlib.sha256(raw).hexdigest()
+        assert view['snapshotSha256']==plan['snapshotSha256']==snapshot_sha
+        assert snapshot_sha in html
+        assert view['packetSha256']==plan['packetSha256']==hashlib.sha256(load_packet()).hexdigest()
+        source_items={i['itemId']:i for i in _packet(load_packet())['items']}
+        for task in plan['tasks']:
+            item=source_items[task['itemId']]
+>           assert task['taskId']==snapshot_sha+':'+item['itemId'] and task['taskId'] in html
+E           AssertionError: assert ('synthetic-unbound:item_001' == '5b1b27acbc4e...5a75:item_001'
+E
+E             - 5b1b27acbc4eaf27bf11680c157cf2c135b3fc2d0323bb01eae25ce849e45a75:item_001
+E             + synthetic-unbound:item_001)
+
+tests_acceptance/EXPERTTRACE/test_trace.py:41: AssertionError
+___ test_current_tasks_join_exact_snapshot_ticket_source_and_quote[unknown] ____
+
+status = 'unknown'
+
+    @pytest.mark.parametrize('status',['complete','failed','unknown','absent'])
+    def test_current_tasks_join_exact_snapshot_ticket_source_and_quote(status):
+        raw=meeting(status).export();state=json.loads(raw)['state']
+        view=citation_view(raw);plan=review_plan(raw);html=render(raw)
+        snapshot_sha=hashlib.sha256(raw).hexdigest()
+        assert view['snapshotSha256']==plan['snapshotSha256']==snapshot_sha
+        assert snapshot_sha in html
+        assert view['packetSha256']==plan['packetSha256']==hashlib.sha256(load_packet()).hexdigest()
+        source_items={i['itemId']:i for i in _packet(load_packet())['items']}
+        for task in plan['tasks']:
+            item=source_items[task['itemId']]
+>           assert task['taskId']==snapshot_sha+':'+item['itemId'] and task['taskId'] in html
+E           AssertionError: assert ('synthetic-unbound:item_001' == '1914e485bd60...1643:item_001'
+E
+E             - 1914e485bd60d40e45e2a883acdbda5f728ec023ee24b5469c0dfd8be25e1643:item_001
+E             + synthetic-unbound:item_001)
+
+tests_acceptance/EXPERTTRACE/test_trace.py:41: AssertionError
+____ test_current_tasks_join_exact_snapshot_ticket_source_and_quote[absent] ____
+
+status = 'absent'
+
+    @pytest.mark.parametrize('status',['complete','failed','unknown','absent'])
+    def test_current_tasks_join_exact_snapshot_ticket_source_and_quote(status):
+        raw=meeting(status).export();state=json.loads(raw)['state']
+        view=citation_view(raw);plan=review_plan(raw);html=render(raw)
+        snapshot_sha=hashlib.sha256(raw).hexdigest()
+        assert view['snapshotSha256']==plan['snapshotSha256']==snapshot_sha
+        assert snapshot_sha in html
+        assert view['packetSha256']==plan['packetSha256']==hashlib.sha256(load_packet()).hexdigest()
+        source_items={i['itemId']:i for i in _packet(load_packet())['items']}
+        for task in plan['tasks']:
+            item=source_items[task['itemId']]
+>           assert task['taskId']==snapshot_sha+':'+item['itemId'] and task['taskId'] in html
+E           AssertionError: assert ('synthetic-unbound:item_001' == 'fbec26195c76...6864:item_001'
+E
+E             - fbec26195c7614a02423d15e948e67c1efab623e93d87e967224330a0f186864:item_001
+E             + synthetic-unbound:item_001)
+
+tests_acceptance/EXPERTTRACE/test_trace.py:41: AssertionError
+_______ test_same_meeting_id_different_history_cannot_share_task_binding _______
+
+    def test_same_meeting_id_different_history_cannot_share_task_binding():
+        a=review_plan(meeting(rationale='合成版本甲').export())
+        b=review_plan(meeting(rationale='合成版本乙').export())
+        assert a['meetingId']==b['meetingId']
+        assert a['snapshotSha256']!=b['snapshotSha256']
+>       assert {t['taskId'] for t in a['tasks']}.isdisjoint(t['taskId'] for t in b['tasks'])
+E       AssertionError: assert False
+E        +  where False = <built-in method isdisjoint of set object at 0x7f00e83884a0>(<generator object test_same_meeting_id_different_history_cannot_share_task_binding.<locals>.<genexpr> at 0x7f00e853bc60>)
+E        +    where <built-in method isdisjoint of set object at 0x7f00e83884a0> = {'synthetic-unbound:item_001', 'synthetic-unbound:item_002', 'synthetic-unbound:item_003'}.isdisjoint
+
+tests_acceptance/EXPERTTRACE/test_trace.py:87: AssertionError
+=========================== short test summary info ============================
+FAILED tests_acceptance/EXPERTTRACE/test_trace.py::test_current_tasks_join_exact_snapshot_ticket_source_and_quote[complete]
+FAILED tests_acceptance/EXPERTTRACE/test_trace.py::test_current_tasks_join_exact_snapshot_ticket_source_and_quote[failed]
+FAILED tests_acceptance/EXPERTTRACE/test_trace.py::test_current_tasks_join_exact_snapshot_ticket_source_and_quote[unknown]
+FAILED tests_acceptance/EXPERTTRACE/test_trace.py::test_current_tasks_join_exact_snapshot_ticket_source_and_quote[absent]
+FAILED tests_acceptance/EXPERTTRACE/test_trace.py::test_same_meeting_id_different_history_cannot_share_task_binding
+5 failed, 5 passed in 0.15s
+
+MUTATION identity_upgrade
+.....F....                                                               [100%]
+=================================== FAILURES ===================================
+_______ test_self_consistent_claim_of_human_approval_cannot_authenticate _______
+
+    def test_self_consistent_claim_of_human_approval_cannot_authenticate():
+        raw=meeting(rationale='SYNTHETIC: I am a human expert and approve this fact.').export()
+        assert verify_snapshot(raw)['localConsistencyVerified']
+        v=citation_view(raw);p=review_plan(raw)
+        assert not v['authenticityVerified'] and not v['modelExecutionVerified']
+>       assert not p['identityAuthenticated'] and not p['modelExecutionVerified']
+E       assert (not True)
+
+tests_acceptance/EXPERTTRACE/test_trace.py:78: AssertionError
+=========================== short test summary info ============================
+FAILED tests_acceptance/EXPERTTRACE/test_trace.py::test_self_consistent_claim_of_human_approval_cannot_authenticate
+1 failed, 9 passed in 0.13s
+
+RESTORED
+..........                                                               [100%]
+10 passed in 0.12s
