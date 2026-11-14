@@ -1,0 +1,31 @@
+{
+  "fixed": true,
+  "url": "http://127.0.0.1:15942/#/evidence?case=QA-W42-A",
+  "title": "MCIS 调查工作台（虚构演示）",
+  "status": 409,
+  "code": "INTAKE_INTEGRITY",
+  "locked": true,
+  "browserCommitPosts": 1,
+  "registerCount": 1,
+  "pageErrors": [],
+  "console": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_FAILED"
+    }
+  ],
+  "body": "W4.2 · FILE COPY / PRESERVATION\n已有文件副本登记\n关闭（不撤销已发请求）\n\n目标案件：W4.2 合成文件登记验收 QA-W42-A · QA-W42-A。关闭、切案或切换证据不能撤销服务已受理的登记；在途请求仍需重开后刷新清单核查。网络中断或页面终止可能使结果未知，不保证每个已发请求完成。\n\n保全选入的文件原字节，不是现场取证、真实性认证或完整现实保管链。只接收已知提取人和已知 UTC 整秒提取时间；年份范围 1000–9999。未知/亚秒时间暂不支持，不能填登记时间代替。\n\n支持范围与上限\n当前清单选择：尚无证据\n读取当前证据登记回执（只读）\n1 · 原件与人工登记声明\n原件文件（最多 8 MiB，可为零字节）\n证据标题（必填）\n原来源 / 取得或移交方式（必填）\n提取人（必填，非当前登记人默认值）\n提取时间 UTC（整秒，必填）\n资料类别（人工选择）\nVDR\nAIS\nECDIS\nEngineLog\nTestimony\nPhoto\nDocument\nOther\n\n存储标记：Restricted（受限）\n\n登记备注（可留空，保留原文）\n\n本地文件：synthetic.bin · 18 bytes\nSHA-256：ca024752f77de72f97a2bf8df753003b0de0099a92c95dab15ed823bb3fd9b96\n选文件仅在本地读取，点服务端预览才上传。\n\n2 · 核对服务预览\n标题\nsynthetic conflict\n来源 / 取得方式\nsynthetic declared source\n提取人\nsynthetic collector\n提取 UTC（人工声明）\n2026-01-01T00:00:00Z\n类别 / 标记\nOther / Restricted\n原登记备注\n未填写\n\nsynthetic.bin · 18 bytes · Restricted\n\n原件 SHA-256：ca024752f77de72f97a2bf8df753003b0de0099a92c95dab15ed823bb3fd9b96\n请求摘要：b18189e7cd5fb07927dd2e8b26d2df00c7632acd51b4af2c2733ec0225adfb5a\n\n只保全本次选入的文件副本；人工来源、提取人和时间未经真实性认证。\n\n登记时间与提取时间分开；不解析内容、不校正设备钟差。\n\n8MiB仅本切片工程上限；Restricted为受限存储选择，不是法律分类认定。\n\n我已核对目标案件、文件原字节摘要及来源/提取信息，确认以 Restricted 受限登记；不以登记时间替代提取时间。\n\n结果未确认，原请求保持锁定。关闭不能撤销服务已受理的登记；网络或页面终止可能使在途结果未知。\n\n只读核查本次登记\n\n登记记录、原件完整性或请求绑定不一致，已停止操作；不会覆盖或自动修复。",
+  "lostResponse": "actual commit200 then injected transport loss; locked; GET recovered; no second commit"
+}

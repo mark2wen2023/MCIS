@@ -1,0 +1,12 @@
+{
+  "fixed": false,
+  "url": "http://127.0.0.1:15942/#/evidence?case=QA-W42-A",
+  "title": "MCIS 调查工作台（虚构演示）",
+  "status": 409,
+  "code": "INTAKE_INTEGRITY",
+  "locked": false,
+  "browserCommitPosts": 1,
+  "registerCount": 1,
+  "pageErrors": [],
+  "body": "W4.2 · FILE COPY / PRESERVATION\n已有文件副本登记\n关闭（不撤销已发请求）\n\n目标案件：W4.2 合成文件登记验收 QA-W42-A · QA-W42-A。关闭、切案或切换证据不能撤销服务已受理的登记；在途请求仍需重开后刷新清单核查。网络中断或页面终止可能使结果未知，不保证每个已发请求完成。\n\n保全选入的文件原字节，不是现场取证、真实性认证或完整现实保管链。只接收已知提取人和已知 UTC 整秒提取时间；年份范围 1000–9999。未知/亚秒时间暂不支持，不能填登记时间代替。\n\n支持范围与上限\n当前清单选择：尚无证据\n读取当前证据登记回执（只读）\n1 · 原件与人工登记声明\n原件文件（最多 8 MiB，可为零字节）\n证据标题（必填）\n原来源 / 取得或移交方式（必填）\n提取人（必填，非当前登记人默认值）\n提取时间 UTC（整秒，必填）\n资料类别（人工选择）\nVDR\nAIS\nECDIS\nEngineLog\nTestimony\nPhoto\nDocument\nOther\n\n存储标记：Restricted（受限）\n\n登记备注（可留空，保留原文）\n\n本地文件：synthetic.bin · 18 bytes\nSHA-256：ca024752f77de72f97a2bf8df753003b0de0099a92c95dab15ed823bb3fd9b96\n选文件仅在本地读取，点服务端预览才上传。\n\n服务端预览（不登记）\n\n登记记录、原件完整性或请求绑定不一致，已停止操作；不会覆盖或自动修复。"
+}

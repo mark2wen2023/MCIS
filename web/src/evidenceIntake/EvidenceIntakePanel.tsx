@@ -2,7 +2,7 @@ import { useEffect,useRef,useState } from 'react'
 import { ApiError,getRole,onIdentityChange } from '../api'
 import { caseIdentity } from '../cases/identity'
 import { downloadHistory } from './history'
-import { intakeError,intakeRequest,type Download } from './api'
+import { commitFailure,intakeError,intakeRequest,type Download } from './api'
 import { onIntakeNavigation,SELECTION_EVENT } from './navigation'
 import { CATEGORIES,MAX_FILE_BYTES,downloadBytes,encodeBytes,fileNameValid,intakeBody,parsePreview,parseReceipt,sha256,type Category,type IntakeBody,type Metadata,type Preview,type Receipt } from './model'
 import '../styles/w4-intake.css'
@@ -51,17 +51,16 @@ export function EvidenceIntakePanel({caseId,caseTitle,who,selectedEvidenceId,onR
     const run=begin('登记保存中');if(!run)return
     try{const r=parseReceipt(await intakeRequest(caseId,who,'/evidence-intakes:commit',run.signal,{...body,requestDigest:preview.requestDigest,confirmed:true}),caseId,preview);if(live(run.version))accept(r)}
     catch(e){if(live(run.version)){
-      if(uncertain){setUncertain(true);setMessage('此前登记结果仍未确认；本次尝试失败不能证明此前未保存。保留原请求，请核查登记记录，不要另建请求。 '+intakeError(e))}
-      else if(e instanceof ApiError&&e.code==='ARCHIVE_HISTORY_ONLY'){setUncertain(true);setMessage('只读历史不能作为当前成功回执，未知写入锁保持。 '+intakeError(e))}
-      else if(e instanceof ApiError&&[400,403,404,409,413,422].includes(e.status)){setMessage(intakeError(e));setPreview(null);setBody(null);setConfirmed(false);setUncertain(false)}
-      else{setUncertain(true);setMessage('登记结果未确认，服务器可能已经保存。先只读核查；不要另建请求重复登记。')}
+      const failure=commitFailure(e,uncertain)
+      setMessage(failure.message);setUncertain(failure.locked)
+      if(!failure.locked){setPreview(null);setBody(null);setConfirmed(false)}
     }}finally{finish(run.version)}
   }
   const recover=async()=>{
     if(!preview)return
     const run=begin('只读核查本次登记');if(!run)return
     try{const r=parseReceipt(await intakeRequest(caseId,who,'/evidence-intakes/'+preview.requestDigest,run.signal),caseId,preview);if(live(run.version))accept(r)}
-    catch(e){if(live(run.version))setMessage(e instanceof ApiError&&e.status===404?'核查时尚无回执，请求可能仍在处理。可稍后再核查，或人工以完全相同内容幂等重试。':intakeError(e))}finally{finish(run.version)}
+    catch(e){if(live(run.version))setMessage(e instanceof ApiError&&e.status===404?'核查时尚无回执，请求可能仍在处理，也可能存在待人工核验的状态。保持原请求锁定，可稍后只读核查；不要据此重新提交。':intakeError(e))}finally{finish(run.version)}
   }
   const lookup=async()=>{
     if(!selectedEvidenceId||uncertain)return
@@ -108,7 +107,7 @@ export function EvidenceIntakePanel({caseId,caseTitle,who,selectedEvidenceId,onR
       <label className="w42-confirm"><input type="checkbox" checked={confirmed} disabled={!!busy||uncertain} onChange={e=>setConfirmed(e.target.checked)}/>我已核对目标案件、文件原字节摘要及来源/提取信息，确认以 Restricted 受限登记；不以登记时间替代提取时间。</label>
       {!uncertain&&<button type="button" disabled={!!busy||!confirmed} onClick={()=>void save()}>确认登记文件副本</button>}
     </section>}
-    {uncertain&&<div className="w42-notice"><p>结果未确认，原请求保持锁定。关闭不能撤销服务已受理的登记；网络或页面终止可能使在途结果未知。</p><div className="w42-actions"><button type="button" disabled={!!busy} onClick={()=>void recover()}>只读核查本次登记</button><button type="button" disabled={!!busy} onClick={()=>void save()}>同一内容幂等重试登记</button></div></div>}
+    {uncertain&&<div className="w42-notice"><p>结果未确认，原请求保持锁定。关闭不能撤销服务已受理的登记；网络或页面终止可能使在途结果未知。</p><div className="w42-actions"><button type="button" disabled={!!busy} onClick={()=>void recover()}>只读核查本次登记</button></div></div>}
     {receipt&&<section className="w42-receipt" aria-labelledby="w42-receipt-title"><h3 id="w42-receipt-title">已核对登记回执 · {receipt.evidenceId}</h3><Declaration metadata={receipt.metadata}/><p>系统登记 UTC：{receipt.registeredUtc} · 登记人：{receipt.registeredBy}（{receipt.registeredRole}）{receipt.replayed?' · 相同登记已存在，未重复新增':''}</p><p>文件：{receipt.fileName} · {receipt.byteLength} bytes。证据状态：{receipt.evidence.status}。登记本身不生成 Verify 事件；Verified 也仅指最近一次字节哈希一致。</p><p className="w42-hash">原件 SHA-256：{receipt.sourceSha256}<br/>请求摘要：{receipt.requestDigest}</p><label>本次下载目的（将记入访问记录）<textarea aria-label="本次下载目的（将记入访问记录）" rows={2} maxLength={1000} disabled={!!busy} value={purpose} onChange={e=>setPurpose(e.target.value)}/></label><p>下载会追加 Access 与审计，不是零写入查看；不会在页面执行文件。每次人工下载均可能产生新的访问记录。</p><div className="w42-actions"><button type="button" disabled={!!busy||!purpose.trim()} onClick={()=>void download()}>记录访问并下载原件</button><button type="button" disabled={!!busy} onClick={()=>reset(true)}>登记另一文件 / 清空当前表单</button></div></section>}
     {busy&&<p role="status">{busy}…</p>}{message&&<p role="alert" className="w42-notice">{message}</p>}
   </section>

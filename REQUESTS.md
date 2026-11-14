@@ -561,3 +561,10 @@ The new endpoint adds conservative current-case evidence/interview visibility an
 The browser uses a fixed-profile ZIP_STORED and strict JSON verifier, actual member CRC/SHA, preview/request binding and original audit association. No object URL/download occurs until checks succeed. Unknown delivery persists only scoped metadata and never auto-retries. Explicit stop-wait discards even abort-ignoring late replies. After checking downloads the user can knowingly abandon an attempt and freshly preview a new generation; storage corruption/unavailability has an explicit scoped recovery check, never silent lock deletion or false success. Local headers and hashes are not authentication, signature, facts or complete audit-chain certification.
 
 Engineering caps are declared for report/output/audit/manifest/ZIP. A self-review removed an unintended2MiB policy-fingerprint limit by streaming its hash without adding a policy editing restriction. OpenAPI labels now match the two new report-output routes while preserving the old14-report-route test unchanged. The B retention plan allocates no archive version and remains unimplemented.
+
+## Evidence registration failure feedback (2026-11-14)
+Fix scoped workbench handling only: INTAKE_INTEGRITY409 can describe a pre-existing
+registration whose stored bytes fail verification, so must not clear original request
+or imply no save. Unknown outcome stays locked through later denials/conflicts;
+read-only recovery404 cannot authorize retry. No service writes/retry/cleanup changes.
+Freeze scope: evidenceIntake/api.ts and EvidenceIntakePanel.tsx plus targeted tests.
