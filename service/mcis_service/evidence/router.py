@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+import binascii
 from typing import Any
 
 from fastapi import APIRouter, Body
@@ -60,7 +61,12 @@ def register_evidence(case_id: str, body: EvidenceIn, ctx: Ctx = CtxDep) -> dict
         require(ctx, s, case_id, "evidence_meta", write=True)
         eid = service.next_id(s, case_id)
         if body.contentBase64 is not None:
-            data = base64.b64decode(body.contentBase64)
+            try:
+                data = base64.b64decode(body.contentBase64, validate=True)
+                if base64.b64encode(data).decode("ascii") != body.contentBase64:
+                    raise ValueError("noncanonical encoding")
+            except (binascii.Error, ValueError):
+                raise problem(422, "INVALID_BASE64", "文件内容必须为规范 Base64 编码") from None
             rel = body.relativePath or f"evidence/{eid}/{body.fileName or 'file.bin'}"
             sha = service.write_blob(ctx.settings.blob_dir, case_id, rel, data)
         elif body.sha256:
@@ -164,6 +170,8 @@ def get_content(case_id: str, evidence_id: str, purpose: str = "查看原件", c
             historical_only()
         require(ctx, s, case_id, "evidence_meta")
         item = service.load_item(s, case_id, evidence_id)
+        if not filter_evidence([item], ctx.role, get_policy(s, case_id)):
+            raise problem(403, "FORBIDDEN", "受限证据")
         if item.get("confidentiality") == "Restricted" and level_of(get_policy(s, case_id), ctx.role, "testimony") not in ("ReadWrite", "ReadOnly"):
             raise problem(403, "FORBIDDEN", "受限证据原件仅调查组可调阅")
         rel = item.get("relativePath") or ""

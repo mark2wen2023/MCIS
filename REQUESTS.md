@@ -613,3 +613,30 @@ and embedded foreign case binding fail closed (including TrackPointRow). Origina
 report/evidence retained as history; new independent52pass closes original2 failing probes.
 Current header identity remains unverified; this is policy consistency, not production auth.
 No push/merge/deploy; no full-policy bypass to improve performance.
+
+## 2026-11-14 Legacy content GET evidence visibility consistency
+Coordinator authorizes repair of reproduced evidence.restricted Remove bypass before and
+after restore. Modify frozen evidence/router.py content GET only to reuse filter_evidence
+inside existing reserved transaction before descriptor/file read or Access audit. Preserve
+all existing category, digest, archive and ZIP gates; no new role semantics or trusted ID.
+Base0991857; no Base64 input changes in this independent branch.
+
+## 2026-11-14 Strict legacy evidence Base64 input
+Coordinator authorized isolated repair of POST evidence accepting !!!! as empty content.
+Modify frozen evidence/router.py only at content decoding, preserving existing authorization,
+read/digest/container behavior. Canonical standard Base64 including explicit empty string;
+invalid encoding422 before filesystem/DB/audit mutation. Keep digest-only metadata behavior.
+No new arbitrary upload limit; measure valid lengths incl1MiB+1 and preserve prior semantics.
+This does not establish authentication, source authenticity or overall resource limits.
+
+Coordinator follow-up: evaluate dual-input checksum semantics. Recorded separate proposal
+contracts/legacy-evidence-expected-checksum-proposal.md; no frozen product expansion while
+Base64 independent review is running. Existing ignored-SHA behavior is not misrepresented
+as a prior checksum contract. Unknown external clients remain a compatibility question.
+
+## 2026-11-14 Isolated sibling-fix composition
+Authorized local integration validation of f3957e3 +70f7067 on0991857. Both router
+hunks apply cleanly; shared REQUESTS/ROADMAP append-only entries preserved explicitly.
+No added product changes. New combined hash records composition; historical standalone
+hashes remain historical, not falsely claimed to match the newly composed router.
+No commit/push/merge/deploy in this integration task.
