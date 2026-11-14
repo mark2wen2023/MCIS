@@ -48,3 +48,7 @@ python research/semantic_support/evaluate.py \
 ## Second public case: time and provenance claims
 
 The fixed `jiangxin9-v1` profile adds 8 answer-hidden public-report claims without changing the original Yangze22 profile or execution manifest. See JIANGXIN9_BLIND_RUN.md, JIANGXIN9_SOURCE_REVIEW.md and JIANGXIN9_RESULT_REVIEW.md. One real Pi/DeepSeek run completed 3 requests/2 tools; no retry. This evaluates supplied controlled text, not model vision or complete timeline extraction. One provisional-label disagreement and one matching-label but unsupported rationale association remain for review; no accuracy or factual certification is claimed. Raw outputs and receipt use jiangxin9-real-* filenames.
+
+## Offline explanation review sheet
+
+`render_review.py` creates an isolated static research page from strictly validated corpus/predictions, separating label and rationale from citations and source declarations. All review boxes start empty; notes are temporary unsaved browser state, not authenticated or durable review. See REVIEW_PAGE.md and REVIEW_PAGE_INDEPENDENT.md; an actual 8-item second-case HTML artifact is included. No new model call or production connection.
