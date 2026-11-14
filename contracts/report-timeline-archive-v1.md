@@ -11,3 +11,7 @@ Importer validates before mutations, then restores timeline rows in the same dat
 Reference closure validates identities and available bytes via the existing archive validators; it does not establish source truth or authenticate role headers. Real SSO, concurrency performance, long-lock and memory limitations remain. No deployment authorization.
 
 For outer1.4.0 only, this contract supersedes working-record-archive-v1.md §12.1 timeline_events refusal and its older historical-version enumeration. All other refusal/closure rules remain. Old clients currently reject1.4.0; this candidate is API-only and does not claim workbench/browser support. Historical confirmed flags retain existing listing/filter behavior; no new UI historical-status marker is introduced.
+
+### Web alignment candidate
+
+The descendant frontend candidate accepts1.4 only with working-v1 (and optional valid HFACS), binds receipt version/counts to its preview, and labels timeline scope separately. Other combinations remain server-rejected. Existing unknown-write and identity-change behavior is unchanged. Old clients still reject1.4. Rendered-browser acceptance is not implied by API or static-render tests; see the descendant QA record.

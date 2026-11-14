@@ -1,0 +1,1 @@
+25 independent real-response-derived mutation/SSR assertions passed; not browser interaction
