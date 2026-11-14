@@ -1,0 +1,8 @@
+{
+  "head": "fe3fb05515898cbde380af9bf819afcb344a28eb",
+  "status": "?? service/.venv\n?? tools/mcis-bowtie/out/\n",
+  "python": "3.12.14",
+  "command": "PYTHONPATH=service service/.venv/bin/python -m pytest -q service/tests",
+  "venv": "/workspace/mcis/service/.venv",
+  "product_modified": false
+}

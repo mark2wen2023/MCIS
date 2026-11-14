@@ -1,0 +1,2009 @@
+{
+  "runs": {
+    "parent": {
+      "path": "/workspace/mcis-server-registration-idempotency/tests_acceptance/server-idempotency-independent/baseline/parent-full-tests.txt",
+      "summary": "180 failed, 1563 passed, 11 skipped, 104 errors in 522.01s (0:08:42)",
+      "nodes": {
+        "service/tests/test_agents_colreg_sim.py::test_agent_review_writes_back_statement": [
+          "FAILED"
+        ],
+        "service/tests/test_agents_colreg_sim.py::test_colreg_seed_and_evaluate": [
+          "FAILED"
+        ],
+        "service/tests/test_agents_w20.py::test_bad_citation_no_draft_no_write[change0]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_bad_citation_no_draft_no_write[change1]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_bad_citation_no_draft_no_write[change2]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_bad_citation_no_draft_no_write[change3]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_bad_citation_no_draft_no_write[change4]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_changed_source_cannot_apply": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_disabled_no_inference": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_end_to_end_fake_is_only_draft_until_human_review": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_forbidden_role_never_calls_model[ExternalExpert]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_forbidden_role_never_calls_model[InterestedState]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_forbidden_role_never_calls_model[Public]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_malformed_output_fail_closed[not json]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_malformed_output_fail_closed[{\"statements\":NaN}]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_malformed_output_fail_closed[{\"statements\":[],\"statements\":[]}]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_malformed_output_fail_closed[{\"statements\":[]}]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_malformed_output_fail_closed[{\"statements\":{},\"tool\":\"write\"}]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_no_forged_managed_draft_and_no_modified_source": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_nonfinite_or_invalid_unicode_model_output[{\"statements\":[{\"claim\":{\"scalar\":1e400}}]}]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_nonfinite_or_invalid_unicode_model_output[{\"statements\":[{\"summary\":\"\\\\ud800\"}]}]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_policy_denial_never_calls_model[AgentService-testimony]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_policy_denial_never_calls_model[Investigator-agent_drafts]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_policy_denial_never_calls_model[Investigator-testimony]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_real_http_protocol_fake_server_not_real_model": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_redaction_minimal_input_even_with_weakened_policy": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_reject_and_modify": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_remote_and_ambiguous_urls_rejected[http://0.0.0.0:1234/v1]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_remote_and_ambiguous_urls_rejected[http://127.0.0.1.evil:1234/v1]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_remote_and_ambiguous_urls_rejected[http://127.0.0.1:1234/v1?token=x]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_remote_and_ambiguous_urls_rejected[http://localhost:1234/v1]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_remote_and_ambiguous_urls_rejected[http://user:secret@127.0.0.1:1234/v1]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_remote_and_ambiguous_urls_rejected[https://api.openai.com/v1]": [
+          "ERROR"
+        ],
+        "service/tests/test_analysis_w12.py::test_seed_sources_not_stale": [
+          "FAILED"
+        ],
+        "service/tests/test_audit.py::test_chain_valid_and_format": [
+          "FAILED"
+        ],
+        "service/tests/test_bowtie_preview.py::test_real_cli_core_id_rejection_preserved[_top-0]": [
+          "FAILED"
+        ],
+        "service/tests/test_bowtie_preview.py::test_real_cli_core_id_rejection_preserved[top-1]": [
+          "FAILED"
+        ],
+        "service/tests/test_bowtie_preview.py::test_real_cli_graph_diagnostics[duplicate_edge]": [
+          "FAILED"
+        ],
+        "service/tests/test_bowtie_preview.py::test_real_cli_graph_diagnostics[duplicate_node]": [
+          "FAILED"
+        ],
+        "service/tests/test_bowtie_preview.py::test_real_cli_graph_diagnostics[empty]": [
+          "FAILED"
+        ],
+        "service/tests/test_bowtie_preview.py::test_real_cli_graph_diagnostics[escalation]": [
+          "FAILED"
+        ],
+        "service/tests/test_bowtie_preview.py::test_real_cli_graph_diagnostics[unknown_endpoint]": [
+          "FAILED"
+        ],
+        "service/tests/test_bowtie_preview.py::test_real_cli_graph_diagnostics[valid]": [
+          "FAILED"
+        ],
+        "service/tests/test_bowtie_preview.py::test_real_cli_unicode_scalar_label": [
+          "FAILED"
+        ],
+        "service/tests/test_case_metadata_w84.py::test_read_update_audit_original_and_roundtrip": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body0]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body1]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body2]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body3]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body4]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_blank_waiver_no_write[ ]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_blank_waiver_no_write[\\t\\r\\n]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_blank_waiver_no_write[\\u3000]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_core_error_precedence_and_permission": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_exact_ids_and_valid_text_preserved": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\\u200b]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\\x1c]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\\x1d]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\\x1e]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\\x1f]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_bad_encoding_or_unlisted_environment[[]-False]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_bad_encoding_or_unlisted_environment[\\xff-True]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_bad_encoding_or_unlisted_environment[{oops-True]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_bad_package_environment_atomic[items0]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_bad_package_environment_atomic[items1]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_bad_package_environment_atomic[items2]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_bad_package_environment_atomic[items3]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_bad_package_environment_atomic[items4]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_bad_package_environment_atomic[items5]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_case_insensitive_package_extension": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_empty_create_unknown_roundtrip": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_legacy_absence": [
+          "FAILED"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_append_only_database_triggers[HfacsAuditRow]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_append_only_database_triggers[HfacsRequestRow]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_audit_failure_rolls_back_document_and_receipt": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_audit_returns_latest_fifty_summary_records": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_concurrent_distinct_requests_one_create_wins": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_concurrent_same_request_one_revision": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_content_type_size_and_cli_unavailable": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_context_changes_while_cli_runs_no_write[policy-409]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_context_changes_while_cli_runs_no_write[revoke-403]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_context_changes_while_cli_runs_no_write[source-409]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_denial_no_case_details[AgentService]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_denial_no_case_details[ExternalExpert]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_denial_no_case_details[InterestedState]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_denial_no_case_details[Public]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_hidden_historical_sources_deny_draft_retry_and_audit": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_missing_or_cross_case_sources_rejected": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_endpoints_make_no_database_writes": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_permission_gates[Deny-agent_drafts]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_permission_gates[Deny-evidence_meta]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_permission_gates[Deny-personal]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_permission_gates[None-agent_drafts]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_permission_gates[None-evidence_meta]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_permission_gates[None-personal]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_permission_gates[Redacted-agent_drafts]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_permission_gates[Redacted-evidence_meta]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_permission_gates[Redacted-personal]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_readonly_agent_draft_and_separate_audit_gate": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_real_context_and_empty_draft": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_request_receipt_failure_rolls_back_already_flushed_audit": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_retry_old_request_returns_original_revision_after_later_save": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_retry_same_request_returns_original_without_core_or_duplicate_audit": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_same_request_id_independent_across_cases": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_save_reopen_update_atomic_audit_digest": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_source_changed_status_and_stale_selection_rejected": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_stale_updates_and_duplicate_creation_conflict": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[bad_digest]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[bad_source]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[duplicate_id]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[empty]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[status]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[unknown]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[unknown_category]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[untrimmed]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[uuid]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_json[\"\\ud800\"]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_json[1e999]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_json[NaN]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_json[{\"draft\":1,\"draft\":2}]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_update_audit_failure_preserves_previous_document": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_zero_source_saved_status_is_unchanged": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_all_historical_sources_checked_before_export": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_archive_budget_rejects_whole_export_without_truncation": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_complete_roundtrip_inert_receipts_then_continue_history": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_denied_export_leaves_no_export_audit[agent_drafts]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_denied_export_leaves_no_export_audit[audit]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_denied_export_leaves_no_export_audit[evidence_meta]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_denied_export_leaves_no_export_audit[personal]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_export_includes_more_than_ui_fifty_history_records": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_failure_after_archive_inserts_rolls_back_all": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[document_digest]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[field]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[hash]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[missing_history]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[outer_version]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[receipt_digest]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[receipt_id]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[receipt_response]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[source]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[unknown_member]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[version]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_legacy_absence_and_old_entry_rejection": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_nondefault_policy_and_other_business_complete_rejection": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_resealed_unsupported_classification_rejected": [
+          "ERROR"
+        ],
+        "service/tests/test_human_factors_preview.py::test_real_cli_five_hours_empty_findings_are_not_compliance": [
+          "FAILED"
+        ],
+        "service/tests/test_human_factors_preview.py::test_real_cli_one_minute_rest_changes_interval_without_legal_threshold": [
+          "FAILED"
+        ],
+        "service/tests/test_human_factors_preview.py::test_real_cli_short_record_and_unknown_gap": [
+          "FAILED"
+        ],
+        "service/tests/test_human_factors_preview.py::test_real_cli_split_limit_is_hours_not_number_of_segments": [
+          "FAILED"
+        ],
+        "service/tests/test_human_factors_preview.py::test_real_cli_synthetic_integration": [
+          "FAILED"
+        ],
+        "service/tests/test_human_factors_preview.py::test_real_cli_three_rest_periods_require_explicit_unassessed_notice": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_confirm_and_reject_rows": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_external_roles_get_redacted_page_and_cannot_write": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_page_rows_summary_segments_and_chart": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_recheck_rules": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_recheck_stale_pending_dismisses_then_resubmits_and_keeps_superseded": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_records_without_statements_show_crosscheck_rows": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_reject_refuses_confirmed_entry": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_revise_marks_stale_and_confirm_is_refused": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_revise_only_open_statements": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_roster_lists_records_with_contract_counts": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_unknown_record_404": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_context_w5.py::test_new_case_roster_does_not_borrow_demo_or_public_provenance[False]": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_context_w5.py::test_new_case_roster_does_not_borrow_demo_or_public_provenance[True]": [
+          "FAILED"
+        ],
+        "service/tests/test_interviews_redaction.py::test_crosscheck_requires_confirmation": [
+          "FAILED"
+        ],
+        "service/tests/test_interviews_redaction.py::test_interview_list_summary": [
+          "FAILED"
+        ],
+        "service/tests/test_interviews_redaction.py::test_redaction_by_role": [
+          "FAILED"
+        ],
+        "service/tests/test_interviews_redaction.py::test_statement_add_and_review": [
+          "FAILED"
+        ],
+        "service/tests/test_nomoto_preview.py::test_real_cli_response[changes0]": [
+          "FAILED"
+        ],
+        "service/tests/test_nomoto_preview.py::test_real_cli_response[changes1]": [
+          "FAILED"
+        ],
+        "service/tests/test_nomoto_preview.py::test_real_cli_response[changes2]": [
+          "FAILED"
+        ],
+        "service/tests/test_nomoto_preview.py::test_real_cli_response[changes3]": [
+          "FAILED"
+        ],
+        "service/tests/test_nomoto_preview.py::test_real_cli_response[changes4]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_font_coverage.py::test_public_report_production_font_and_pdf_preserve_chinese[CASE-2025-HAILI5-WANA17]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_font_coverage.py::test_public_report_production_font_and_pdf_preserve_chinese[CJK-2024-1230-YangZe22-VegaDream]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_audit_reason_full_original_new_operator_and_regenerate": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_colreg_draft_entry_and_templates_glossary": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[generatedText-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[generatedText-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[newText-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[newText-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[newValue-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[newValue-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[text-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[text-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[textEn-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[textEn-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[textZh-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[textZh-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_export_stream_hash_status_and_audit[bilingual-docx]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_export_stream_hash_status_and_audit[bilingual-pdf]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_export_stream_hash_status_and_audit[en-docx]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_export_stream_hash_status_and_audit[en-pdf]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_export_stream_hash_status_and_audit[zh-docx]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_export_stream_hash_status_and_audit[zh-pdf]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_gisis_api_missing_validation_exports_and_audit": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_no_change_and_missing_text": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_reason_required[ \\t\\n\\u3000-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_reason_required[ \\t\\n\\u3000-modify]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_reason_required[-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_reason_required[-modify]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_reason_required[None-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_reason_required[None-modify]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_sentence_review_keeps_section_and_sentence_generated_text": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_snapshot_http_error_codes_and_role_limits": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[bilingual-cn-msa]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[bilingual-imo-cic]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[bilingual-maib]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[en-cn-msa]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[en-imo-cic]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[en-maib]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[zh-cn-msa]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[zh-imo-cic]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[zh-maib]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_validation_unknown_and_only_loopback_unchanged": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_yangze_authorized_but_not_imported_without_any_change": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_public_flow.py::test_haili_cn_template_contains_official_headings_without_generated_conclusions": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_public_flow.py::test_haili_public_report_full_lifecycle[cn-msa]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_public_flow.py::test_haili_public_report_full_lifecycle[imo-cic]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_public_flow.py::test_haili_public_report_full_lifecycle[maib]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_legacy_report_snapshot_gets_reference_without_rewriting_audit_line": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_real_snapshot_missing_or_not_imported_without_any_database_change[CASE-2025-HAILI5-WANA17]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_real_snapshot_missing_or_not_imported_without_any_database_change[CJK-2024-1230-YangZe22-VegaDream]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_snapshot_investigator_roles_allowed[Investigator]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_snapshot_investigator_roles_allowed[LeadInvestigator]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_snapshot_missing_is_404_and_case_scoped": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_snapshot_ref_round_trip_retains_full_reason_values_and_chain": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_snapshot_restricted_roles_are_403[AgentService]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_snapshot_restricted_roles_are_403[ExternalExpert]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_snapshot_restricted_roles_are_403[InterestedState]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_snapshot_restricted_roles_are_403[Public]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[bilingual-cn-msa]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[bilingual-imo-cic]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[bilingual-maib]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[en-cn-msa]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[en-imo-cic]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[en-maib]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[zh-cn-msa]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[zh-imo-cic]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[zh-maib]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_colreg_draft_data_sources_match_chapter_scope": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_colreg_draft_has_sources_and_audit": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_colreg_draft_regeneration_keeps_chapter_scope": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[generatedText-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[generatedText-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[newText-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[newText-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[newValue-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[newValue-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[text-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[text-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[textEn-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[textEn-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[textZh-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[textZh-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_external_roles_cannot_read_restricted_report_content[AgentService]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_external_roles_cannot_read_restricted_report_content[ExternalExpert]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_external_roles_cannot_read_restricted_report_content[InterestedState]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_external_roles_cannot_read_restricted_report_content[Public]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_generate_audit_failure_rolls_back_new_report": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_gisis_missing_validation_and_download_audit": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_malformed_sentence_identifier_is_422[5]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_malformed_sentence_identifier_is_422[]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_malformed_sentence_identifier_is_422[sentence_id2]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_modify_same_and_missing_text_and_sentence_originals": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_not_found_errors": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_reason_required[ \\t\\n\\u3000-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_reason_required[ \\t\\n\\u3000-modify]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_reason_required[-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_reason_required[-modify]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_reason_required[None-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_reason_required[None-modify]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_report_export_headers_hash_and_audit[docx]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_report_export_headers_hash_and_audit[pdf]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_review_audit_failure_rolls_back_report_and_snapshots": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_review_originals_full_reason_operator_and_regeneration": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_unknown_real_case_stays_pending_without_writes": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_validated_gisis_export_temporary_values_do_not_change_case": [
+          "FAILED"
+        ],
+        "service/tests/test_track_history.py::test_real_hfacs_and_report_optional_extension_three_generations": [
+          "FAILED"
+        ],
+        "service/tests/test_vessel_entry_w91.py::test_create_reopen_export_and_audit": [
+          "FAILED"
+        ],
+        "service/tests/test_working_record_archive.py::test_report_versions_full_review_gisis_and_hfacs_coexist": [
+          "FAILED"
+        ],
+        "service/tests/test_yangze22_seed.py::test_yangze_report_available_with_all_five_seed_scenarios[cn-msa]": [
+          "FAILED"
+        ],
+        "service/tests/test_yangze22_seed.py::test_yangze_report_available_with_all_five_seed_scenarios[imo-cic]": [
+          "FAILED"
+        ],
+        "service/tests/test_yangze22_seed.py::test_yangze_report_available_with_all_five_seed_scenarios[maib]": [
+          "FAILED"
+        ]
+      }
+    },
+    "candidate": {
+      "path": "/workspace/mcis-server-registration-idempotency/tests_acceptance/server-idempotency/full-review-tests.txt",
+      "summary": "180 failed, 1585 passed, 11 skipped, 104 errors in 524.45s (0:08:44)",
+      "nodes": {
+        "service/tests/test_agents_colreg_sim.py::test_agent_review_writes_back_statement": [
+          "FAILED"
+        ],
+        "service/tests/test_agents_colreg_sim.py::test_colreg_seed_and_evaluate": [
+          "FAILED"
+        ],
+        "service/tests/test_agents_w20.py::test_bad_citation_no_draft_no_write[change0]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_bad_citation_no_draft_no_write[change1]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_bad_citation_no_draft_no_write[change2]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_bad_citation_no_draft_no_write[change3]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_bad_citation_no_draft_no_write[change4]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_changed_source_cannot_apply": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_disabled_no_inference": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_end_to_end_fake_is_only_draft_until_human_review": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_forbidden_role_never_calls_model[ExternalExpert]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_forbidden_role_never_calls_model[InterestedState]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_forbidden_role_never_calls_model[Public]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_malformed_output_fail_closed[not json]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_malformed_output_fail_closed[{\"statements\":NaN}]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_malformed_output_fail_closed[{\"statements\":[],\"statements\":[]}]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_malformed_output_fail_closed[{\"statements\":[]}]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_malformed_output_fail_closed[{\"statements\":{},\"tool\":\"write\"}]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_no_forged_managed_draft_and_no_modified_source": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_nonfinite_or_invalid_unicode_model_output[{\"statements\":[{\"claim\":{\"scalar\":1e400}}]}]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_nonfinite_or_invalid_unicode_model_output[{\"statements\":[{\"summary\":\"\\\\ud800\"}]}]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_policy_denial_never_calls_model[AgentService-testimony]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_policy_denial_never_calls_model[Investigator-agent_drafts]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_policy_denial_never_calls_model[Investigator-testimony]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_real_http_protocol_fake_server_not_real_model": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_redaction_minimal_input_even_with_weakened_policy": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_reject_and_modify": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_remote_and_ambiguous_urls_rejected[http://0.0.0.0:1234/v1]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_remote_and_ambiguous_urls_rejected[http://127.0.0.1.evil:1234/v1]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_remote_and_ambiguous_urls_rejected[http://127.0.0.1:1234/v1?token=x]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_remote_and_ambiguous_urls_rejected[http://localhost:1234/v1]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_remote_and_ambiguous_urls_rejected[http://user:secret@127.0.0.1:1234/v1]": [
+          "ERROR"
+        ],
+        "service/tests/test_agents_w20.py::test_remote_and_ambiguous_urls_rejected[https://api.openai.com/v1]": [
+          "ERROR"
+        ],
+        "service/tests/test_analysis_w12.py::test_seed_sources_not_stale": [
+          "FAILED"
+        ],
+        "service/tests/test_audit.py::test_chain_valid_and_format": [
+          "FAILED"
+        ],
+        "service/tests/test_bowtie_preview.py::test_real_cli_core_id_rejection_preserved[_top-0]": [
+          "FAILED"
+        ],
+        "service/tests/test_bowtie_preview.py::test_real_cli_core_id_rejection_preserved[top-1]": [
+          "FAILED"
+        ],
+        "service/tests/test_bowtie_preview.py::test_real_cli_graph_diagnostics[duplicate_edge]": [
+          "FAILED"
+        ],
+        "service/tests/test_bowtie_preview.py::test_real_cli_graph_diagnostics[duplicate_node]": [
+          "FAILED"
+        ],
+        "service/tests/test_bowtie_preview.py::test_real_cli_graph_diagnostics[empty]": [
+          "FAILED"
+        ],
+        "service/tests/test_bowtie_preview.py::test_real_cli_graph_diagnostics[escalation]": [
+          "FAILED"
+        ],
+        "service/tests/test_bowtie_preview.py::test_real_cli_graph_diagnostics[unknown_endpoint]": [
+          "FAILED"
+        ],
+        "service/tests/test_bowtie_preview.py::test_real_cli_graph_diagnostics[valid]": [
+          "FAILED"
+        ],
+        "service/tests/test_bowtie_preview.py::test_real_cli_unicode_scalar_label": [
+          "FAILED"
+        ],
+        "service/tests/test_case_metadata_w84.py::test_read_update_audit_original_and_roundtrip": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body0]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body1]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body2]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body3]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body4]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_blank_waiver_no_write[ ]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_blank_waiver_no_write[\\t\\r\\n]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_blank_waiver_no_write[\\u3000]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_core_error_precedence_and_permission": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_exact_ids_and_valid_text_preserved": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\\u200b]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\\x1c]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\\x1d]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\\x1e]": [
+          "FAILED"
+        ],
+        "service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\\x1f]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_bad_encoding_or_unlisted_environment[[]-False]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_bad_encoding_or_unlisted_environment[\\xff-True]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_bad_encoding_or_unlisted_environment[{oops-True]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_bad_package_environment_atomic[items0]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_bad_package_environment_atomic[items1]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_bad_package_environment_atomic[items2]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_bad_package_environment_atomic[items3]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_bad_package_environment_atomic[items4]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_bad_package_environment_atomic[items5]": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_case_insensitive_package_extension": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_empty_create_unknown_roundtrip": [
+          "FAILED"
+        ],
+        "service/tests/test_environment_w92.py::test_legacy_absence": [
+          "FAILED"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_append_only_database_triggers[HfacsAuditRow]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_append_only_database_triggers[HfacsRequestRow]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_audit_failure_rolls_back_document_and_receipt": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_audit_returns_latest_fifty_summary_records": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_concurrent_distinct_requests_one_create_wins": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_concurrent_same_request_one_revision": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_content_type_size_and_cli_unavailable": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_context_changes_while_cli_runs_no_write[policy-409]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_context_changes_while_cli_runs_no_write[revoke-403]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_context_changes_while_cli_runs_no_write[source-409]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_denial_no_case_details[AgentService]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_denial_no_case_details[ExternalExpert]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_denial_no_case_details[InterestedState]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_denial_no_case_details[Public]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_hidden_historical_sources_deny_draft_retry_and_audit": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_missing_or_cross_case_sources_rejected": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_endpoints_make_no_database_writes": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_permission_gates[Deny-agent_drafts]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_permission_gates[Deny-evidence_meta]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_permission_gates[Deny-personal]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_permission_gates[None-agent_drafts]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_permission_gates[None-evidence_meta]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_permission_gates[None-personal]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_permission_gates[Redacted-agent_drafts]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_permission_gates[Redacted-evidence_meta]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_read_permission_gates[Redacted-personal]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_readonly_agent_draft_and_separate_audit_gate": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_real_context_and_empty_draft": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_request_receipt_failure_rolls_back_already_flushed_audit": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_retry_old_request_returns_original_revision_after_later_save": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_retry_same_request_returns_original_without_core_or_duplicate_audit": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_same_request_id_independent_across_cases": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_save_reopen_update_atomic_audit_digest": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_source_changed_status_and_stale_selection_rejected": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_stale_updates_and_duplicate_creation_conflict": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[bad_digest]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[bad_source]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[duplicate_id]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[empty]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[status]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[unknown]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[unknown_category]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[untrimmed]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[uuid]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_json[\"\\ud800\"]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_json[1e999]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_json[NaN]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_strict_json[{\"draft\":1,\"draft\":2}]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_update_audit_failure_preserves_previous_document": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_drafts.py::test_zero_source_saved_status_is_unchanged": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_all_historical_sources_checked_before_export": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_archive_budget_rejects_whole_export_without_truncation": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_complete_roundtrip_inert_receipts_then_continue_history": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_denied_export_leaves_no_export_audit[agent_drafts]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_denied_export_leaves_no_export_audit[audit]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_denied_export_leaves_no_export_audit[evidence_meta]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_denied_export_leaves_no_export_audit[personal]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_export_includes_more_than_ui_fifty_history_records": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_failure_after_archive_inserts_rolls_back_all": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[document_digest]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[field]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[hash]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[missing_history]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[outer_version]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[receipt_digest]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[receipt_id]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[receipt_response]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[source]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[unknown_member]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[version]": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_legacy_absence_and_old_entry_rejection": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_nondefault_policy_and_other_business_complete_rejection": [
+          "ERROR"
+        ],
+        "service/tests/test_hfacs_package_extension.py::test_resealed_unsupported_classification_rejected": [
+          "ERROR"
+        ],
+        "service/tests/test_human_factors_preview.py::test_real_cli_five_hours_empty_findings_are_not_compliance": [
+          "FAILED"
+        ],
+        "service/tests/test_human_factors_preview.py::test_real_cli_one_minute_rest_changes_interval_without_legal_threshold": [
+          "FAILED"
+        ],
+        "service/tests/test_human_factors_preview.py::test_real_cli_short_record_and_unknown_gap": [
+          "FAILED"
+        ],
+        "service/tests/test_human_factors_preview.py::test_real_cli_split_limit_is_hours_not_number_of_segments": [
+          "FAILED"
+        ],
+        "service/tests/test_human_factors_preview.py::test_real_cli_synthetic_integration": [
+          "FAILED"
+        ],
+        "service/tests/test_human_factors_preview.py::test_real_cli_three_rest_periods_require_explicit_unassessed_notice": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_confirm_and_reject_rows": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_external_roles_get_redacted_page_and_cannot_write": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_page_rows_summary_segments_and_chart": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_recheck_rules": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_recheck_stale_pending_dismisses_then_resubmits_and_keeps_superseded": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_records_without_statements_show_crosscheck_rows": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_reject_refuses_confirmed_entry": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_revise_marks_stale_and_confirm_is_refused": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_revise_only_open_statements": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_roster_lists_records_with_contract_counts": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_compare_w5.py::test_unknown_record_404": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_context_w5.py::test_new_case_roster_does_not_borrow_demo_or_public_provenance[False]": [
+          "FAILED"
+        ],
+        "service/tests/test_interview_context_w5.py::test_new_case_roster_does_not_borrow_demo_or_public_provenance[True]": [
+          "FAILED"
+        ],
+        "service/tests/test_interviews_redaction.py::test_crosscheck_requires_confirmation": [
+          "FAILED"
+        ],
+        "service/tests/test_interviews_redaction.py::test_interview_list_summary": [
+          "FAILED"
+        ],
+        "service/tests/test_interviews_redaction.py::test_redaction_by_role": [
+          "FAILED"
+        ],
+        "service/tests/test_interviews_redaction.py::test_statement_add_and_review": [
+          "FAILED"
+        ],
+        "service/tests/test_nomoto_preview.py::test_real_cli_response[changes0]": [
+          "FAILED"
+        ],
+        "service/tests/test_nomoto_preview.py::test_real_cli_response[changes1]": [
+          "FAILED"
+        ],
+        "service/tests/test_nomoto_preview.py::test_real_cli_response[changes2]": [
+          "FAILED"
+        ],
+        "service/tests/test_nomoto_preview.py::test_real_cli_response[changes3]": [
+          "FAILED"
+        ],
+        "service/tests/test_nomoto_preview.py::test_real_cli_response[changes4]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_font_coverage.py::test_public_report_production_font_and_pdf_preserve_chinese[CASE-2025-HAILI5-WANA17]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_font_coverage.py::test_public_report_production_font_and_pdf_preserve_chinese[CJK-2024-1230-YangZe22-VegaDream]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_audit_reason_full_original_new_operator_and_regenerate": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_colreg_draft_entry_and_templates_glossary": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[generatedText-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[generatedText-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[newText-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[newText-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[newValue-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[newValue-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[text-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[text-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[textEn-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[textEn-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[textZh-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[textZh-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_export_stream_hash_status_and_audit[bilingual-docx]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_export_stream_hash_status_and_audit[bilingual-pdf]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_export_stream_hash_status_and_audit[en-docx]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_export_stream_hash_status_and_audit[en-pdf]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_export_stream_hash_status_and_audit[zh-docx]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_export_stream_hash_status_and_audit[zh-pdf]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_gisis_api_missing_validation_exports_and_audit": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_no_change_and_missing_text": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_reason_required[ \\t\\n\\u3000-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_reason_required[ \\t\\n\\u3000-modify]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_reason_required[-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_reason_required[-modify]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_reason_required[None-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_reason_required[None-modify]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_sentence_review_keeps_section_and_sentence_generated_text": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_snapshot_http_error_codes_and_role_limits": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[bilingual-cn-msa]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[bilingual-imo-cic]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[bilingual-maib]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[en-cn-msa]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[en-imo-cic]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[en-maib]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[zh-cn-msa]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[zh-imo-cic]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[zh-maib]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_validation_unknown_and_only_loopback_unchanged": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16.py::test_yangze_authorized_but_not_imported_without_any_change": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_public_flow.py::test_haili_cn_template_contains_official_headings_without_generated_conclusions": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_public_flow.py::test_haili_public_report_full_lifecycle[cn-msa]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_public_flow.py::test_haili_public_report_full_lifecycle[imo-cic]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_public_flow.py::test_haili_public_report_full_lifecycle[maib]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_legacy_report_snapshot_gets_reference_without_rewriting_audit_line": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_real_snapshot_missing_or_not_imported_without_any_database_change[CASE-2025-HAILI5-WANA17]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_real_snapshot_missing_or_not_imported_without_any_database_change[CJK-2024-1230-YangZe22-VegaDream]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_snapshot_investigator_roles_allowed[Investigator]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_snapshot_investigator_roles_allowed[LeadInvestigator]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_snapshot_missing_is_404_and_case_scoped": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_snapshot_ref_round_trip_retains_full_reason_values_and_chain": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_snapshot_restricted_roles_are_403[AgentService]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_snapshot_restricted_roles_are_403[ExternalExpert]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_snapshot_restricted_roles_are_403[InterestedState]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w161_snapshot.py::test_snapshot_restricted_roles_are_403[Public]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[bilingual-cn-msa]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[bilingual-imo-cic]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[bilingual-maib]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[en-cn-msa]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[en-imo-cic]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[en-maib]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[zh-cn-msa]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[zh-imo-cic]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[zh-maib]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_colreg_draft_data_sources_match_chapter_scope": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_colreg_draft_has_sources_and_audit": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_colreg_draft_regeneration_keeps_chapter_scope": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[generatedText-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[generatedText-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[newText-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[newText-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[newValue-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[newValue-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[text-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[text-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[textEn-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[textEn-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[textZh-confirm]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[textZh-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_external_roles_cannot_read_restricted_report_content[AgentService]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_external_roles_cannot_read_restricted_report_content[ExternalExpert]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_external_roles_cannot_read_restricted_report_content[InterestedState]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_external_roles_cannot_read_restricted_report_content[Public]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_generate_audit_failure_rolls_back_new_report": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_gisis_missing_validation_and_download_audit": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_malformed_sentence_identifier_is_422[5]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_malformed_sentence_identifier_is_422[]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_malformed_sentence_identifier_is_422[sentence_id2]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_modify_same_and_missing_text_and_sentence_originals": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_not_found_errors": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_reason_required[ \\t\\n\\u3000-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_reason_required[ \\t\\n\\u3000-modify]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_reason_required[-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_reason_required[-modify]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_reason_required[None-dismiss]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_reason_required[None-modify]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_report_export_headers_hash_and_audit[docx]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_report_export_headers_hash_and_audit[pdf]": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_review_audit_failure_rolls_back_report_and_snapshots": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_review_originals_full_reason_operator_and_regeneration": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_unknown_real_case_stays_pending_without_writes": [
+          "FAILED"
+        ],
+        "service/tests/test_reports_w16_direct.py::test_direct_validated_gisis_export_temporary_values_do_not_change_case": [
+          "FAILED"
+        ],
+        "service/tests/test_track_history.py::test_real_hfacs_and_report_optional_extension_three_generations": [
+          "FAILED"
+        ],
+        "service/tests/test_vessel_entry_w91.py::test_create_reopen_export_and_audit": [
+          "FAILED"
+        ],
+        "service/tests/test_working_record_archive.py::test_report_versions_full_review_gisis_and_hfacs_coexist": [
+          "FAILED"
+        ],
+        "service/tests/test_yangze22_seed.py::test_yangze_report_available_with_all_five_seed_scenarios[cn-msa]": [
+          "FAILED"
+        ],
+        "service/tests/test_yangze22_seed.py::test_yangze_report_available_with_all_five_seed_scenarios[imo-cic]": [
+          "FAILED"
+        ],
+        "service/tests/test_yangze22_seed.py::test_yangze_report_available_with_all_five_seed_scenarios[maib]": [
+          "FAILED"
+        ]
+      }
+    }
+  },
+  "inherited_failure_or_error_nodes": [
+    "service/tests/test_agents_colreg_sim.py::test_agent_review_writes_back_statement",
+    "service/tests/test_agents_colreg_sim.py::test_colreg_seed_and_evaluate",
+    "service/tests/test_agents_w20.py::test_bad_citation_no_draft_no_write[change0]",
+    "service/tests/test_agents_w20.py::test_bad_citation_no_draft_no_write[change1]",
+    "service/tests/test_agents_w20.py::test_bad_citation_no_draft_no_write[change2]",
+    "service/tests/test_agents_w20.py::test_bad_citation_no_draft_no_write[change3]",
+    "service/tests/test_agents_w20.py::test_bad_citation_no_draft_no_write[change4]",
+    "service/tests/test_agents_w20.py::test_changed_source_cannot_apply",
+    "service/tests/test_agents_w20.py::test_disabled_no_inference",
+    "service/tests/test_agents_w20.py::test_end_to_end_fake_is_only_draft_until_human_review",
+    "service/tests/test_agents_w20.py::test_forbidden_role_never_calls_model[ExternalExpert]",
+    "service/tests/test_agents_w20.py::test_forbidden_role_never_calls_model[InterestedState]",
+    "service/tests/test_agents_w20.py::test_forbidden_role_never_calls_model[Public]",
+    "service/tests/test_agents_w20.py::test_malformed_output_fail_closed[not json]",
+    "service/tests/test_agents_w20.py::test_malformed_output_fail_closed[{\"statements\":NaN}]",
+    "service/tests/test_agents_w20.py::test_malformed_output_fail_closed[{\"statements\":[],\"statements\":[]}]",
+    "service/tests/test_agents_w20.py::test_malformed_output_fail_closed[{\"statements\":[]}]",
+    "service/tests/test_agents_w20.py::test_malformed_output_fail_closed[{\"statements\":{},\"tool\":\"write\"}]",
+    "service/tests/test_agents_w20.py::test_no_forged_managed_draft_and_no_modified_source",
+    "service/tests/test_agents_w20.py::test_nonfinite_or_invalid_unicode_model_output[{\"statements\":[{\"claim\":{\"scalar\":1e400}}]}]",
+    "service/tests/test_agents_w20.py::test_nonfinite_or_invalid_unicode_model_output[{\"statements\":[{\"summary\":\"\\\\ud800\"}]}]",
+    "service/tests/test_agents_w20.py::test_policy_denial_never_calls_model[AgentService-testimony]",
+    "service/tests/test_agents_w20.py::test_policy_denial_never_calls_model[Investigator-agent_drafts]",
+    "service/tests/test_agents_w20.py::test_policy_denial_never_calls_model[Investigator-testimony]",
+    "service/tests/test_agents_w20.py::test_real_http_protocol_fake_server_not_real_model",
+    "service/tests/test_agents_w20.py::test_redaction_minimal_input_even_with_weakened_policy",
+    "service/tests/test_agents_w20.py::test_reject_and_modify",
+    "service/tests/test_agents_w20.py::test_remote_and_ambiguous_urls_rejected[http://0.0.0.0:1234/v1]",
+    "service/tests/test_agents_w20.py::test_remote_and_ambiguous_urls_rejected[http://127.0.0.1.evil:1234/v1]",
+    "service/tests/test_agents_w20.py::test_remote_and_ambiguous_urls_rejected[http://127.0.0.1:1234/v1?token=x]",
+    "service/tests/test_agents_w20.py::test_remote_and_ambiguous_urls_rejected[http://localhost:1234/v1]",
+    "service/tests/test_agents_w20.py::test_remote_and_ambiguous_urls_rejected[http://user:secret@127.0.0.1:1234/v1]",
+    "service/tests/test_agents_w20.py::test_remote_and_ambiguous_urls_rejected[https://api.openai.com/v1]",
+    "service/tests/test_analysis_w12.py::test_seed_sources_not_stale",
+    "service/tests/test_audit.py::test_chain_valid_and_format",
+    "service/tests/test_bowtie_preview.py::test_real_cli_core_id_rejection_preserved[_top-0]",
+    "service/tests/test_bowtie_preview.py::test_real_cli_core_id_rejection_preserved[top-1]",
+    "service/tests/test_bowtie_preview.py::test_real_cli_graph_diagnostics[duplicate_edge]",
+    "service/tests/test_bowtie_preview.py::test_real_cli_graph_diagnostics[duplicate_node]",
+    "service/tests/test_bowtie_preview.py::test_real_cli_graph_diagnostics[empty]",
+    "service/tests/test_bowtie_preview.py::test_real_cli_graph_diagnostics[escalation]",
+    "service/tests/test_bowtie_preview.py::test_real_cli_graph_diagnostics[unknown_endpoint]",
+    "service/tests/test_bowtie_preview.py::test_real_cli_graph_diagnostics[valid]",
+    "service/tests/test_bowtie_preview.py::test_real_cli_unicode_scalar_label",
+    "service/tests/test_case_metadata_w84.py::test_read_update_audit_original_and_roundtrip",
+    "service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body0]",
+    "service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body1]",
+    "service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body2]",
+    "service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body3]",
+    "service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body4]",
+    "service/tests/test_consultation_input_w73.py::test_blank_waiver_no_write[ ]",
+    "service/tests/test_consultation_input_w73.py::test_blank_waiver_no_write[\\t\\r\\n]",
+    "service/tests/test_consultation_input_w73.py::test_blank_waiver_no_write[\\u3000]",
+    "service/tests/test_consultation_input_w73.py::test_core_error_precedence_and_permission",
+    "service/tests/test_consultation_input_w73.py::test_exact_ids_and_valid_text_preserved",
+    "service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\\u200b]",
+    "service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\\x1c]",
+    "service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\\x1d]",
+    "service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\\x1e]",
+    "service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\\x1f]",
+    "service/tests/test_environment_w92.py::test_bad_encoding_or_unlisted_environment[[]-False]",
+    "service/tests/test_environment_w92.py::test_bad_encoding_or_unlisted_environment[\\xff-True]",
+    "service/tests/test_environment_w92.py::test_bad_encoding_or_unlisted_environment[{oops-True]",
+    "service/tests/test_environment_w92.py::test_bad_package_environment_atomic[items0]",
+    "service/tests/test_environment_w92.py::test_bad_package_environment_atomic[items1]",
+    "service/tests/test_environment_w92.py::test_bad_package_environment_atomic[items2]",
+    "service/tests/test_environment_w92.py::test_bad_package_environment_atomic[items3]",
+    "service/tests/test_environment_w92.py::test_bad_package_environment_atomic[items4]",
+    "service/tests/test_environment_w92.py::test_bad_package_environment_atomic[items5]",
+    "service/tests/test_environment_w92.py::test_case_insensitive_package_extension",
+    "service/tests/test_environment_w92.py::test_empty_create_unknown_roundtrip",
+    "service/tests/test_environment_w92.py::test_legacy_absence",
+    "service/tests/test_hfacs_drafts.py::test_append_only_database_triggers[HfacsAuditRow]",
+    "service/tests/test_hfacs_drafts.py::test_append_only_database_triggers[HfacsRequestRow]",
+    "service/tests/test_hfacs_drafts.py::test_audit_failure_rolls_back_document_and_receipt",
+    "service/tests/test_hfacs_drafts.py::test_audit_returns_latest_fifty_summary_records",
+    "service/tests/test_hfacs_drafts.py::test_concurrent_distinct_requests_one_create_wins",
+    "service/tests/test_hfacs_drafts.py::test_concurrent_same_request_one_revision",
+    "service/tests/test_hfacs_drafts.py::test_content_type_size_and_cli_unavailable",
+    "service/tests/test_hfacs_drafts.py::test_context_changes_while_cli_runs_no_write[policy-409]",
+    "service/tests/test_hfacs_drafts.py::test_context_changes_while_cli_runs_no_write[revoke-403]",
+    "service/tests/test_hfacs_drafts.py::test_context_changes_while_cli_runs_no_write[source-409]",
+    "service/tests/test_hfacs_drafts.py::test_denial_no_case_details[AgentService]",
+    "service/tests/test_hfacs_drafts.py::test_denial_no_case_details[ExternalExpert]",
+    "service/tests/test_hfacs_drafts.py::test_denial_no_case_details[InterestedState]",
+    "service/tests/test_hfacs_drafts.py::test_denial_no_case_details[Public]",
+    "service/tests/test_hfacs_drafts.py::test_hidden_historical_sources_deny_draft_retry_and_audit",
+    "service/tests/test_hfacs_drafts.py::test_missing_or_cross_case_sources_rejected",
+    "service/tests/test_hfacs_drafts.py::test_read_endpoints_make_no_database_writes",
+    "service/tests/test_hfacs_drafts.py::test_read_permission_gates[Deny-agent_drafts]",
+    "service/tests/test_hfacs_drafts.py::test_read_permission_gates[Deny-evidence_meta]",
+    "service/tests/test_hfacs_drafts.py::test_read_permission_gates[Deny-personal]",
+    "service/tests/test_hfacs_drafts.py::test_read_permission_gates[None-agent_drafts]",
+    "service/tests/test_hfacs_drafts.py::test_read_permission_gates[None-evidence_meta]",
+    "service/tests/test_hfacs_drafts.py::test_read_permission_gates[None-personal]",
+    "service/tests/test_hfacs_drafts.py::test_read_permission_gates[Redacted-agent_drafts]",
+    "service/tests/test_hfacs_drafts.py::test_read_permission_gates[Redacted-evidence_meta]",
+    "service/tests/test_hfacs_drafts.py::test_read_permission_gates[Redacted-personal]",
+    "service/tests/test_hfacs_drafts.py::test_readonly_agent_draft_and_separate_audit_gate",
+    "service/tests/test_hfacs_drafts.py::test_real_context_and_empty_draft",
+    "service/tests/test_hfacs_drafts.py::test_request_receipt_failure_rolls_back_already_flushed_audit",
+    "service/tests/test_hfacs_drafts.py::test_retry_old_request_returns_original_revision_after_later_save",
+    "service/tests/test_hfacs_drafts.py::test_retry_same_request_returns_original_without_core_or_duplicate_audit",
+    "service/tests/test_hfacs_drafts.py::test_same_request_id_independent_across_cases",
+    "service/tests/test_hfacs_drafts.py::test_save_reopen_update_atomic_audit_digest",
+    "service/tests/test_hfacs_drafts.py::test_source_changed_status_and_stale_selection_rejected",
+    "service/tests/test_hfacs_drafts.py::test_stale_updates_and_duplicate_creation_conflict",
+    "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[bad_digest]",
+    "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[bad_source]",
+    "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[duplicate_id]",
+    "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[empty]",
+    "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[status]",
+    "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[unknown]",
+    "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[unknown_category]",
+    "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[untrimmed]",
+    "service/tests/test_hfacs_drafts.py::test_strict_input_and_core_taxonomy_rejection[uuid]",
+    "service/tests/test_hfacs_drafts.py::test_strict_json[\"\\ud800\"]",
+    "service/tests/test_hfacs_drafts.py::test_strict_json[1e999]",
+    "service/tests/test_hfacs_drafts.py::test_strict_json[NaN]",
+    "service/tests/test_hfacs_drafts.py::test_strict_json[{\"draft\":1,\"draft\":2}]",
+    "service/tests/test_hfacs_drafts.py::test_update_audit_failure_preserves_previous_document",
+    "service/tests/test_hfacs_drafts.py::test_zero_source_saved_status_is_unchanged",
+    "service/tests/test_hfacs_package_extension.py::test_all_historical_sources_checked_before_export",
+    "service/tests/test_hfacs_package_extension.py::test_archive_budget_rejects_whole_export_without_truncation",
+    "service/tests/test_hfacs_package_extension.py::test_complete_roundtrip_inert_receipts_then_continue_history",
+    "service/tests/test_hfacs_package_extension.py::test_denied_export_leaves_no_export_audit[agent_drafts]",
+    "service/tests/test_hfacs_package_extension.py::test_denied_export_leaves_no_export_audit[audit]",
+    "service/tests/test_hfacs_package_extension.py::test_denied_export_leaves_no_export_audit[evidence_meta]",
+    "service/tests/test_hfacs_package_extension.py::test_denied_export_leaves_no_export_audit[personal]",
+    "service/tests/test_hfacs_package_extension.py::test_export_includes_more_than_ui_fifty_history_records",
+    "service/tests/test_hfacs_package_extension.py::test_failure_after_archive_inserts_rolls_back_all",
+    "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[document_digest]",
+    "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[field]",
+    "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[hash]",
+    "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[missing_history]",
+    "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[outer_version]",
+    "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[receipt_digest]",
+    "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[receipt_id]",
+    "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[receipt_response]",
+    "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[source]",
+    "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[unknown_member]",
+    "service/tests/test_hfacs_package_extension.py::test_invalid_archive_rejected_without_partial_restore[version]",
+    "service/tests/test_hfacs_package_extension.py::test_legacy_absence_and_old_entry_rejection",
+    "service/tests/test_hfacs_package_extension.py::test_nondefault_policy_and_other_business_complete_rejection",
+    "service/tests/test_hfacs_package_extension.py::test_resealed_unsupported_classification_rejected",
+    "service/tests/test_human_factors_preview.py::test_real_cli_five_hours_empty_findings_are_not_compliance",
+    "service/tests/test_human_factors_preview.py::test_real_cli_one_minute_rest_changes_interval_without_legal_threshold",
+    "service/tests/test_human_factors_preview.py::test_real_cli_short_record_and_unknown_gap",
+    "service/tests/test_human_factors_preview.py::test_real_cli_split_limit_is_hours_not_number_of_segments",
+    "service/tests/test_human_factors_preview.py::test_real_cli_synthetic_integration",
+    "service/tests/test_human_factors_preview.py::test_real_cli_three_rest_periods_require_explicit_unassessed_notice",
+    "service/tests/test_interview_compare_w5.py::test_confirm_and_reject_rows",
+    "service/tests/test_interview_compare_w5.py::test_external_roles_get_redacted_page_and_cannot_write",
+    "service/tests/test_interview_compare_w5.py::test_page_rows_summary_segments_and_chart",
+    "service/tests/test_interview_compare_w5.py::test_recheck_rules",
+    "service/tests/test_interview_compare_w5.py::test_recheck_stale_pending_dismisses_then_resubmits_and_keeps_superseded",
+    "service/tests/test_interview_compare_w5.py::test_records_without_statements_show_crosscheck_rows",
+    "service/tests/test_interview_compare_w5.py::test_reject_refuses_confirmed_entry",
+    "service/tests/test_interview_compare_w5.py::test_revise_marks_stale_and_confirm_is_refused",
+    "service/tests/test_interview_compare_w5.py::test_revise_only_open_statements",
+    "service/tests/test_interview_compare_w5.py::test_roster_lists_records_with_contract_counts",
+    "service/tests/test_interview_compare_w5.py::test_unknown_record_404",
+    "service/tests/test_interview_context_w5.py::test_new_case_roster_does_not_borrow_demo_or_public_provenance[False]",
+    "service/tests/test_interview_context_w5.py::test_new_case_roster_does_not_borrow_demo_or_public_provenance[True]",
+    "service/tests/test_interviews_redaction.py::test_crosscheck_requires_confirmation",
+    "service/tests/test_interviews_redaction.py::test_interview_list_summary",
+    "service/tests/test_interviews_redaction.py::test_redaction_by_role",
+    "service/tests/test_interviews_redaction.py::test_statement_add_and_review",
+    "service/tests/test_nomoto_preview.py::test_real_cli_response[changes0]",
+    "service/tests/test_nomoto_preview.py::test_real_cli_response[changes1]",
+    "service/tests/test_nomoto_preview.py::test_real_cli_response[changes2]",
+    "service/tests/test_nomoto_preview.py::test_real_cli_response[changes3]",
+    "service/tests/test_nomoto_preview.py::test_real_cli_response[changes4]",
+    "service/tests/test_reports_font_coverage.py::test_public_report_production_font_and_pdf_preserve_chinese[CASE-2025-HAILI5-WANA17]",
+    "service/tests/test_reports_font_coverage.py::test_public_report_production_font_and_pdf_preserve_chinese[CJK-2024-1230-YangZe22-VegaDream]",
+    "service/tests/test_reports_w16.py::test_audit_reason_full_original_new_operator_and_regenerate",
+    "service/tests/test_reports_w16.py::test_colreg_draft_entry_and_templates_glossary",
+    "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[generatedText-confirm]",
+    "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[generatedText-dismiss]",
+    "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[newText-confirm]",
+    "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[newText-dismiss]",
+    "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[newValue-confirm]",
+    "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[newValue-dismiss]",
+    "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[text-confirm]",
+    "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[text-dismiss]",
+    "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[textEn-confirm]",
+    "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[textEn-dismiss]",
+    "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[textZh-confirm]",
+    "service/tests/test_reports_w16.py::test_confirm_dismiss_reject_every_new_value_even_null[textZh-dismiss]",
+    "service/tests/test_reports_w16.py::test_export_stream_hash_status_and_audit[bilingual-docx]",
+    "service/tests/test_reports_w16.py::test_export_stream_hash_status_and_audit[bilingual-pdf]",
+    "service/tests/test_reports_w16.py::test_export_stream_hash_status_and_audit[en-docx]",
+    "service/tests/test_reports_w16.py::test_export_stream_hash_status_and_audit[en-pdf]",
+    "service/tests/test_reports_w16.py::test_export_stream_hash_status_and_audit[zh-docx]",
+    "service/tests/test_reports_w16.py::test_export_stream_hash_status_and_audit[zh-pdf]",
+    "service/tests/test_reports_w16.py::test_gisis_api_missing_validation_exports_and_audit",
+    "service/tests/test_reports_w16.py::test_no_change_and_missing_text",
+    "service/tests/test_reports_w16.py::test_reason_required[ \\t\\n\\u3000-dismiss]",
+    "service/tests/test_reports_w16.py::test_reason_required[ \\t\\n\\u3000-modify]",
+    "service/tests/test_reports_w16.py::test_reason_required[-dismiss]",
+    "service/tests/test_reports_w16.py::test_reason_required[-modify]",
+    "service/tests/test_reports_w16.py::test_reason_required[None-dismiss]",
+    "service/tests/test_reports_w16.py::test_reason_required[None-modify]",
+    "service/tests/test_reports_w16.py::test_sentence_review_keeps_section_and_sentence_generated_text",
+    "service/tests/test_reports_w16.py::test_snapshot_http_error_codes_and_role_limits",
+    "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[bilingual-cn-msa]",
+    "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[bilingual-imo-cic]",
+    "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[bilingual-maib]",
+    "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[en-cn-msa]",
+    "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[en-imo-cic]",
+    "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[en-maib]",
+    "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[zh-cn-msa]",
+    "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[zh-imo-cic]",
+    "service/tests/test_reports_w16.py::test_templates_languages_draft_contract[zh-maib]",
+    "service/tests/test_reports_w16.py::test_validation_unknown_and_only_loopback_unchanged",
+    "service/tests/test_reports_w16.py::test_yangze_authorized_but_not_imported_without_any_change",
+    "service/tests/test_reports_w161_public_flow.py::test_haili_cn_template_contains_official_headings_without_generated_conclusions",
+    "service/tests/test_reports_w161_public_flow.py::test_haili_public_report_full_lifecycle[cn-msa]",
+    "service/tests/test_reports_w161_public_flow.py::test_haili_public_report_full_lifecycle[imo-cic]",
+    "service/tests/test_reports_w161_public_flow.py::test_haili_public_report_full_lifecycle[maib]",
+    "service/tests/test_reports_w161_snapshot.py::test_legacy_report_snapshot_gets_reference_without_rewriting_audit_line",
+    "service/tests/test_reports_w161_snapshot.py::test_real_snapshot_missing_or_not_imported_without_any_database_change[CASE-2025-HAILI5-WANA17]",
+    "service/tests/test_reports_w161_snapshot.py::test_real_snapshot_missing_or_not_imported_without_any_database_change[CJK-2024-1230-YangZe22-VegaDream]",
+    "service/tests/test_reports_w161_snapshot.py::test_snapshot_investigator_roles_allowed[Investigator]",
+    "service/tests/test_reports_w161_snapshot.py::test_snapshot_investigator_roles_allowed[LeadInvestigator]",
+    "service/tests/test_reports_w161_snapshot.py::test_snapshot_missing_is_404_and_case_scoped",
+    "service/tests/test_reports_w161_snapshot.py::test_snapshot_ref_round_trip_retains_full_reason_values_and_chain",
+    "service/tests/test_reports_w161_snapshot.py::test_snapshot_restricted_roles_are_403[AgentService]",
+    "service/tests/test_reports_w161_snapshot.py::test_snapshot_restricted_roles_are_403[ExternalExpert]",
+    "service/tests/test_reports_w161_snapshot.py::test_snapshot_restricted_roles_are_403[InterestedState]",
+    "service/tests/test_reports_w161_snapshot.py::test_snapshot_restricted_roles_are_403[Public]",
+    "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[bilingual-cn-msa]",
+    "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[bilingual-imo-cic]",
+    "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[bilingual-maib]",
+    "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[en-cn-msa]",
+    "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[en-imo-cic]",
+    "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[en-maib]",
+    "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[zh-cn-msa]",
+    "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[zh-imo-cic]",
+    "service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[zh-maib]",
+    "service/tests/test_reports_w16_direct.py::test_direct_colreg_draft_data_sources_match_chapter_scope",
+    "service/tests/test_reports_w16_direct.py::test_direct_colreg_draft_has_sources_and_audit",
+    "service/tests/test_reports_w16_direct.py::test_direct_colreg_draft_regeneration_keeps_chapter_scope",
+    "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[generatedText-confirm]",
+    "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[generatedText-dismiss]",
+    "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[newText-confirm]",
+    "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[newText-dismiss]",
+    "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[newValue-confirm]",
+    "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[newValue-dismiss]",
+    "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[text-confirm]",
+    "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[text-dismiss]",
+    "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[textEn-confirm]",
+    "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[textEn-dismiss]",
+    "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[textZh-confirm]",
+    "service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[textZh-dismiss]",
+    "service/tests/test_reports_w16_direct.py::test_direct_external_roles_cannot_read_restricted_report_content[AgentService]",
+    "service/tests/test_reports_w16_direct.py::test_direct_external_roles_cannot_read_restricted_report_content[ExternalExpert]",
+    "service/tests/test_reports_w16_direct.py::test_direct_external_roles_cannot_read_restricted_report_content[InterestedState]",
+    "service/tests/test_reports_w16_direct.py::test_direct_external_roles_cannot_read_restricted_report_content[Public]",
+    "service/tests/test_reports_w16_direct.py::test_direct_generate_audit_failure_rolls_back_new_report",
+    "service/tests/test_reports_w16_direct.py::test_direct_gisis_missing_validation_and_download_audit",
+    "service/tests/test_reports_w16_direct.py::test_direct_malformed_sentence_identifier_is_422[5]",
+    "service/tests/test_reports_w16_direct.py::test_direct_malformed_sentence_identifier_is_422[]",
+    "service/tests/test_reports_w16_direct.py::test_direct_malformed_sentence_identifier_is_422[sentence_id2]",
+    "service/tests/test_reports_w16_direct.py::test_direct_modify_same_and_missing_text_and_sentence_originals",
+    "service/tests/test_reports_w16_direct.py::test_direct_not_found_errors",
+    "service/tests/test_reports_w16_direct.py::test_direct_reason_required[ \\t\\n\\u3000-dismiss]",
+    "service/tests/test_reports_w16_direct.py::test_direct_reason_required[ \\t\\n\\u3000-modify]",
+    "service/tests/test_reports_w16_direct.py::test_direct_reason_required[-dismiss]",
+    "service/tests/test_reports_w16_direct.py::test_direct_reason_required[-modify]",
+    "service/tests/test_reports_w16_direct.py::test_direct_reason_required[None-dismiss]",
+    "service/tests/test_reports_w16_direct.py::test_direct_reason_required[None-modify]",
+    "service/tests/test_reports_w16_direct.py::test_direct_report_export_headers_hash_and_audit[docx]",
+    "service/tests/test_reports_w16_direct.py::test_direct_report_export_headers_hash_and_audit[pdf]",
+    "service/tests/test_reports_w16_direct.py::test_direct_review_audit_failure_rolls_back_report_and_snapshots",
+    "service/tests/test_reports_w16_direct.py::test_direct_review_originals_full_reason_operator_and_regeneration",
+    "service/tests/test_reports_w16_direct.py::test_direct_unknown_real_case_stays_pending_without_writes",
+    "service/tests/test_reports_w16_direct.py::test_direct_validated_gisis_export_temporary_values_do_not_change_case",
+    "service/tests/test_track_history.py::test_real_hfacs_and_report_optional_extension_three_generations",
+    "service/tests/test_vessel_entry_w91.py::test_create_reopen_export_and_audit",
+    "service/tests/test_working_record_archive.py::test_report_versions_full_review_gisis_and_hfacs_coexist",
+    "service/tests/test_yangze22_seed.py::test_yangze_report_available_with_all_five_seed_scenarios[cn-msa]",
+    "service/tests/test_yangze22_seed.py::test_yangze_report_available_with_all_five_seed_scenarios[imo-cic]",
+    "service/tests/test_yangze22_seed.py::test_yangze_report_available_with_all_five_seed_scenarios[maib]"
+  ],
+  "candidate_only_nodes": [],
+  "parent_only_nodes": [],
+  "status_changed_nodes": []
+}

@@ -1,0 +1,19 @@
+....................F                                                    [100%]
+=================================== FAILURES ===================================
+__________________ test_verifier_actor_issuer_must_be_string ___________________
+
+setup = (<fastapi.applications.FastAPI object at 0x7f9020378170>, <server_idem_proto.Registration object at 0x7f90205ee480>)
+
+    def test_verifier_actor_issuer_must_be_string(setup):
+        app,_=setup
+        class WrongVerifier:
+            def verify(self,credential):return p.Actor(['synthetic-issuer'],'synthetic-subject',datetime.now(timezone.utc)+timedelta(minutes=1))
+        store=p.Registration(app.state.db,store_epoch='synthetic-store-1',verifier=WrongVerifier(),authorizer=A())
+>       with pytest.raises(HTTPException) as error:run(store)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE HTTPException
+
+../tests_acceptance/server-idempotency-independent/test_boundaries.py:58: Failed
+=========================== short test summary info ============================
+FAILED ::test_verifier_actor_issuer_must_be_string - Failed: DID NOT RAISE HT...
+1 failed, 20 passed in 5.48s

@@ -1,0 +1,2 @@
+86dd4efae4754980b32f62e95e12052ec16e08171fd59e201cc7d8a256eb55bc  tests_acceptance/server-idempotency/prototype.py
+2e7c83fd77e64fd164a323a8e819344a3d54b70dd0ec6fcf52e7d9631510c6f2  service/tests/test_server_idempotency_research.py

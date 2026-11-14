@@ -575,3 +575,10 @@ Based on d1a4424: scoped sessionStorage recovery marker before dispatch, metadat
 statement or operator persistence, no automatic resend/delete, no server/schema change.
 Storage corruption/unavailability fails closed. Session-only convenience, not global
 idempotency, authenticated identity or cross-tab/crash durable request guarantees.
+
+## Server idempotency restricted research (2026-11-14)
+Parentfe3fb05. Existing role headers are not verified identities and file writes are
+not transaction-atomic with SQLite. Research-only metadata/SHA registration candidate:
+trusted verifier and case-grant interfaces required; BEGIN IMMEDIATE, current policy,
+Evidence/custody/audit/immutable request receipt in one SQLite transaction. No file
+body or production route/migration/config enablement. Full byte ingestion remains blocked.

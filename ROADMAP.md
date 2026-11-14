@@ -372,3 +372,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-14 | Evidence failure feedback | 独审80分类/5服务通过；真实浏览器前后复现 | main3aba2bf; frontend88+19; service84过1.NET跳；logs/evidence-failure-feedback-hashes-frozen.txt；无自动重试/删除 |
 
 | 2026-11-14 | Evidence refresh recovery | 隔离验证，待协调独审 | d1a4424父；前端88/恢复单测/独60过；真实Chromium刷新+404+权限403+GET恢复；同标签会话限制；logs/evidence-refresh-recovery-hashes-frozen.txt |
+
+| 2026-11-14 | Server registration idempotency study | 限SHA元数据研究17过/独审22过(重叠)，文件/生产阻断 | parentfe3fb05; real subprocess+SQLite failure/revoke; logs/server-idempotency-research-hashes-frozen.txt; no production wiring |

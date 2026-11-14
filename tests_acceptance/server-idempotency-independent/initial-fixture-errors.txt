@@ -1,0 +1,52 @@
+.................EEEE                                                    [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_external_prior_revoke_is_seen_before_any_registration _
+file /workspace/mcis-server-registration-idempotency/tests_acceptance/server-idempotency-independent/test_boundaries.py, line 13
+  def test_external_prior_revoke_is_seen_before_any_registration(setup):
+file /workspace/mcis-server-registration-idempotency/service/tests/test_server_idempotency_research.py, line 20
+  @pytest.fixture
+  def setup(local):
+E       fixture 'local' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, setup, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/workspace/mcis-server-registration-idempotency/service/tests/test_server_idempotency_research.py:20
+_ ERROR at setup of test_same_key_conflicting_metadata_across_connections_has_one_winner _
+file /workspace/mcis-server-registration-idempotency/tests_acceptance/server-idempotency-independent/test_boundaries.py, line 29
+  def test_same_key_conflicting_metadata_across_connections_has_one_winner(setup):
+file /workspace/mcis-server-registration-idempotency/service/tests/test_server_idempotency_research.py, line 20
+  @pytest.fixture
+  def setup(local):
+E       fixture 'local' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, setup, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/workspace/mcis-server-registration-idempotency/service/tests/test_server_idempotency_research.py:20
+___ ERROR at setup of test_policy_revocation_blocks_existing_receipt_queries ___
+file /workspace/mcis-server-registration-idempotency/tests_acceptance/server-idempotency-independent/test_boundaries.py, line 43
+  def test_policy_revocation_blocks_existing_receipt_queries(setup):
+file /workspace/mcis-server-registration-idempotency/service/tests/test_server_idempotency_research.py, line 20
+  @pytest.fixture
+  def setup(local):
+E       fixture 'local' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, setup, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/workspace/mcis-server-registration-idempotency/service/tests/test_server_idempotency_research.py:20
+_________ ERROR at setup of test_verifier_actor_issuer_must_be_string __________
+file /workspace/mcis-server-registration-idempotency/tests_acceptance/server-idempotency-independent/test_boundaries.py, line 53
+  def test_verifier_actor_issuer_must_be_string(setup):
+file /workspace/mcis-server-registration-idempotency/service/tests/test_server_idempotency_research.py, line 20
+  @pytest.fixture
+  def setup(local):
+E       fixture 'local' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, setup, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/workspace/mcis-server-registration-idempotency/service/tests/test_server_idempotency_research.py:20
+=========================== short test summary info ============================
+ERROR ::test_external_prior_revoke_is_seen_before_any_registration
+ERROR ::test_same_key_conflicting_metadata_across_connections_has_one_winner
+ERROR ::test_policy_revocation_blocks_existing_receipt_queries
+ERROR ::test_verifier_actor_issuer_must_be_string
+17 passed, 4 errors in 5.25s
