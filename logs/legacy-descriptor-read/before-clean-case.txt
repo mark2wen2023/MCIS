@@ -1,0 +1,76 @@
+FF....                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_parent_swap[content] ___________________________
+
+client = <starlette.testclient.TestClient object at 0x7f9213c1dbe0>
+app = <fastapi.applications.FastAPI object at 0x7f9214c31bb0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f9213d670b0>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-38/test_parent_swap_content_0')
+route = 'content'
+
+    @pytest.mark.parametrize('route', ['content', 'export'])
+    def test_parent_swap(client, app, monkeypatch, tmp_path, route):
+        item, p = setup_blob(client, app)
+        outside = tmp_path / 'outside'; outside.mkdir()
+        marker = b'SYNTHETIC-OUTSIDE-MARKER'
+        (outside / p.name).write_bytes(marker)
+        original = service.blob_path
+        swapped = False
+        def swap(*args):
+            nonlocal swapped
+            result = original(*args)
+            if result == p and not swapped:
+                swapped = True
+                p.parent.rename(p.parent.with_name(p.parent.name + '-saved'))
+                p.parent.symlink_to(outside, target_is_directory=True)
+            return result
+        monkeypatch.setattr(service, 'blob_path', swap)
+        url = f'{C}/evidence/EV-001/content' if route == 'content' else f'{C}/export'
+        response = client.get(url, headers=H('LeadInvestigator'))
+        assert swapped
+        if response.status_code == 200:
+            leaked = response.content if route == 'content' else zipfile.ZipFile(io.BytesIO(response.content)).read(item['relativePath'])
+>           assert leaked != marker, 'controlled local substitution returned synthetic outside bytes'
+E           AssertionError: controlled local substitution returned synthetic outside bytes
+E           assert b'SYNTHETIC-OUTSIDE-MARKER' != b'SYNTHETIC-OUTSIDE-MARKER'
+
+tests/test_legacy_safe_delivery.py:49: AssertionError
+___________________________ test_parent_swap[export] ___________________________
+
+client = <starlette.testclient.TestClient object at 0x7f9213893380>
+app = <fastapi.applications.FastAPI object at 0x7f9213895580>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f9213909d60>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-38/test_parent_swap_export_0')
+route = 'export'
+
+    @pytest.mark.parametrize('route', ['content', 'export'])
+    def test_parent_swap(client, app, monkeypatch, tmp_path, route):
+        item, p = setup_blob(client, app)
+        outside = tmp_path / 'outside'; outside.mkdir()
+        marker = b'SYNTHETIC-OUTSIDE-MARKER'
+        (outside / p.name).write_bytes(marker)
+        original = service.blob_path
+        swapped = False
+        def swap(*args):
+            nonlocal swapped
+            result = original(*args)
+            if result == p and not swapped:
+                swapped = True
+                p.parent.rename(p.parent.with_name(p.parent.name + '-saved'))
+                p.parent.symlink_to(outside, target_is_directory=True)
+            return result
+        monkeypatch.setattr(service, 'blob_path', swap)
+        url = f'{C}/evidence/EV-001/content' if route == 'content' else f'{C}/export'
+        response = client.get(url, headers=H('LeadInvestigator'))
+        assert swapped
+        if response.status_code == 200:
+            leaked = response.content if route == 'content' else zipfile.ZipFile(io.BytesIO(response.content)).read(item['relativePath'])
+>           assert leaked != marker, 'controlled local substitution returned synthetic outside bytes'
+E           AssertionError: controlled local substitution returned synthetic outside bytes
+E           assert b'SYNTHETIC-OUTSIDE-MARKER' != b'SYNTHETIC-OUTSIDE-MARKER'
+
+tests/test_legacy_safe_delivery.py:49: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_legacy_safe_delivery.py::test_parent_swap[content] - Assert...
+FAILED tests/test_legacy_safe_delivery.py::test_parent_swap[export] - Asserti...
+2 failed, 4 passed in 1.28s

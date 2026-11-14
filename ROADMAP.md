@@ -370,3 +370,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-12 | Report output A | 受限独立验收通过 | 最终独立49 passed/11.56s，20SHA前后匹配；真实双格式单render/原文不变/审计关联、实际第二连接改报告或策略后409/403、故障全表回滚与commit后交付失败各有证明。真浏览器2正常下载+2真实commit后故障替换+1真实commit后身份迟响应丢弃，最终5审计；8独立客户端坏结构/错绑拒绝。实际2MiB报告及16MiB输出边界与其余缩小limit测试区别详见独立REPORT；未穷尽多worker/真实切案/全部变体。无服务端原件保存、无.mcase文件恢复、无签署认证；B仅计划，不部署不触W11。 |
 
 | 2026-11-14 | Safe read / intake final authorization | 待独立安全复核 | main 3aba2bf 最小三文件依赖；42专项通过；扩展196通过/1既存HFACS失败/2缺.NET跳过。冻结哈希 logs/safe-read-prerequisite/impl-hashes-frozen.txt；尚未覆盖旧GET与打包读取，不构成集成放行。 |
+
+| 2026-11-14 | Legacy evidence/package safe read | 待独立审查 | 基于cb04aa6；四产品文件27增5删；保留原位文件修改/缺失文件省略/实际字节摘要语义限制；冻结hash logs/legacy-descriptor-read-impl-hashes-frozen.txt；基线HFACS失败与.NET跳过不隐去，不构成合并部署授权。 |
+
+| 2026-11-14 | Legacy evidence/package safe read | 独立窄范围复核完成，远端待审 | 新增独立12+复跑实现21共33通过；相关全回归161通过/1既存HFACS失败/1缺.NET跳过；四产品hash一致。DEFECTS/legacy-descriptor-read.md记录原位修改真实复现等KnownDefect；不构成附件集成或部署放行。 |

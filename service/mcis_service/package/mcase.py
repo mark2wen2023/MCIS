@@ -157,8 +157,11 @@ def build_files(s: Session, blob_root: Path, case_id: str) -> dict[str, bytes]:
         rel = item.get("relativePath") or ""
         if rel:
             p = evidence_service.blob_path(blob_root, case_id, rel)
-            if p.exists():
-                files[rel] = p.read_bytes()
+            from ..evidence.safe_content import read_content
+            try:
+                files[rel] = read_content(p)
+            except FileNotFoundError:
+                pass  # Preserve legacy metadata-only/missing local content export.
     files["analysis/timeline.json"] = _j({"events": list_docs(s, TimelineEventRow, case_id)})
     files["analysis/time-alignment.json"] = _j({"conflicts": list_docs(s, ConflictRow, case_id)})
     col = get_doc(s, ColregAnalysisRow, case_id, "current")

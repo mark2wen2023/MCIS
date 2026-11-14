@@ -564,3 +564,6 @@ Engineering caps are declared for report/output/audit/manifest/ZIP. A self-revie
 
 ## 2026-11-14 Safe read and final authorization prerequisite
 Authorized isolated security repair for evidence intake and working archive: descriptor-relative no-symlink reader and SQLite reservation before final commit authorization. No source-incarnation/timeline feature dependency. Frozen-file changes require independent review; logs/safe-read-prerequisite records actual baseline and remaining failures. Legacy evidence GET/package follow-up is excluded.
+
+## 2026-11-14 Legacy evidence GET/package descriptor reads
+Follow-up authorized for independent review branch based strictly on cb04aa6. Frozen evidence/router, package/mcase and common/safe_files changes: shared no-symlink descriptor reads, 1MiB syscall chunks, existing actual-byte digest and missing-file semantics preserved. No remote exploit capability asserted; no aggregate memory bound or inode immutability. See contracts/legacy-descriptor-read-candidate.md and logs/legacy-descriptor-read/ for actual tests and baseline failure.

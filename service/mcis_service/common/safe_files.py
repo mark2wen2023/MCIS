@@ -36,7 +36,7 @@ def read_regular_no_symlinks(path, limit):
         if not stat.S_ISREG(os.fstat(fd).st_mode): raise ValueError('not regular file')
         chunks, remaining = [], limit + 1
         while remaining:
-            chunk = os.read(fd, remaining)
+            chunk = os.read(fd, min(remaining, 1024 * 1024))
             if not chunk: break
             chunks.append(chunk)
             remaining -= len(chunk)

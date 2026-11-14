@@ -166,9 +166,13 @@ def get_content(case_id: str, evidence_id: str, purpose: str = "查看原件", c
             raise problem(403, "FORBIDDEN", "受限证据原件仅调查组可调阅")
         rel = item.get("relativePath") or ""
         p = service.blob_path(ctx.settings.blob_dir, case_id, rel) if rel else None
-        if p is None or not p.exists():
+        if p is None:
             raise problem(404, "NO_CONTENT", "证据文件不在本机存储")
-        data = p.read_bytes()
+        from .safe_content import read_content
+        try:
+            data = read_content(p)
+        except FileNotFoundError as exc:
+            raise problem(404, "NO_CONTENT", "证据文件不在本机存储") from exc
         cur = service.derive(item, service.custody_events(s, case_id, evidence_id))["currentSha256"]
         service.append_custody(s, case_id=case_id, evidence_id=evidence_id, kind="Access", operator=ctx.operator,
                                role=ctx.role, sha256=cur, detail=purpose)
