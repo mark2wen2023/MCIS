@@ -1,0 +1,1 @@
+service/tests/test_consultation_input_w73.py: OK

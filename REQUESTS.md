@@ -579,3 +579,11 @@ object. Reproduced in single-branch clone (15 pass/1 fail). Replace that Git loo
 with the SHA-256 pinned at reviewed extraction; preserve source commit provenance
 and stdlib assertion. No runtime change or history import. Source exports without
 .git pass, and modified source bytes fail the pinned digest assertion.
+
+## Consultation input test policy alignment (2026-11-14)
+Main73fc800 test_consultation_input_w73 has15 failures before intended input
+assertions because Investigator cannot access protected consultation originals.
+Propose local test-only LeadInvestigator success/precondition headers, explicit
+HTTP status assertions in setup/snapshots/error precedence, and restricted-role
+regressions with unchanged rounds/audit. No global fixture, service/policy/core
+or archive changes; .NET whitespace cases exercise existing Python parity only.
