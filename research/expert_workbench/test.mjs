@@ -1,0 +1,28 @@
+import assert from 'node:assert/strict'
+import {readFile} from 'node:fs/promises'
+import {build} from '../../web/node_modules/esbuild/lib/main.js'
+const compiled=await build({entryPoints:[new URL('app.ts',import.meta.url).pathname,new URL('model.ts',import.meta.url).pathname],bundle:true,write:false,format:'esm',platform:'browser',outdir:'/tmp/unused-expert-workbench'})
+const modules=Object.fromEntries(compiled.outputFiles.map(f=>[f.path.split('/').at(-1),f.text]))
+const {parseResult,packet,PACKET_SHA,mode}=await import('data:text/javascript;base64,'+Buffer.from(modules['model.js']).toString('base64'))
+const {mount}=await import('data:text/javascript;base64,'+Buffer.from(modules['app.js']).toString('base64'))
+let n=0;const test=(v,name)=>{assert.ok(v,name);n++}
+export function fixture(){return {runId:'00000000-0000-0000-0000-000000000001',status:'completed_unverified',outcome:'completed',packetSha256:PACKET_SHA,manifestDigest:'71cd8de0fdf4a9e9137db32e7a299b125f7ad107b1c9d8073c34c31ee70c4052',transportMocked:true,realPi:true,realModel:false,provider:'deepseek',configuredModel:'deepseek-v4-pro',piVersion:'1.5.2',modelIdentityVerified:false,sourceLocatorVerified:false,factActivated:false,consensusComputed:false,providerRequests:0,artifactPolicy:'incomplete_without_valid_completion_manifest',roles:['source_attribution','uncertainty_boundary'].map((roleId,i)=>({roleId,runId:`00000000-0000-0000-0000-00000000000${i+2}`,status:'completed_unverified',modelCalls:3,toolCalls:2,reviews:packet.items.map((item,j)=>({itemId:item.itemId,label:i===1&&j===0?'insufficient':'supported',quote:item.citation.quote,rationale:'<img src=x onerror=alert(1)> SYNTHETIC',uncertainty:'合成测试意见；未核实'}))}))}}
+const bytes=r=>new TextEncoder().encode(JSON.stringify(r))
+const original=fixture();test(parseResult(bytes(original)).transportMocked,'scripted fixture')
+const remote=fixture();remote.transportMocked=false;remote.realModel=true;remote.providerRequests=6;test(mode(parseResult(bytes(remote))).includes('声明收到真实'),'real flags displayed only as declaration, synthetic data')
+const partial=fixture();partial.status='not_accepted';partial.outcome='unknown';partial.transportMocked=false;partial.providerRequests=4;partial.realModel=true;partial.errorCode='deadline';partial.roles[1].status='not_accepted';partial.roles[1].reviews=[];test(parseResult(bytes(partial)).outcome==='unknown','partial unknown accepted, not success')
+for(const mutate of [r=>r.packetSha256='c'.repeat(64),r=>r.manifestDigest='c'.repeat(64),r=>r.factActivated=true,r=>r.transportMocked='true',r=>r.realModel=true,r=>r.providerRequests=1,r=>r.roles[0].reviews[0].quote='not present',r=>r.roles[0].reviews.pop(),r=>r.roles[0].reviews[1]=r.roles[0].reviews[0],r=>r.roles.reverse(),r=>r.roles[0].modelCalls=5,r=>r.roles[0].runId=r.runId,r=>r.status='approved',r=>r.sourceLocatorVerified=true,r=>r.additional='private',r=>r.roles[0].modelCalls=0,r=>r.roles[0].toolCalls=0,r=>{r.status='not_accepted';r.outcome='failed';r.roles[0].status='not_started';r.roles[0].reviews=[]},r=>{r.transportMocked=false;r.realModel=true;r.providerRequests=1}]){const r=fixture();mutate(r);assert.throws(()=>parseResult(bytes(r)));n++}
+for(const raw of ['{"transportMocked":true,"transportMocked":false}',JSON.stringify(original).replace('SYNTHETIC','\\ud800'),'['.repeat(100)+'0'+']'.repeat(100)]){assert.throws(()=>parseResult(new TextEncoder().encode(raw)));n++}
+assert.throws(()=>parseResult(new Uint8Array(1024*1024+1)));n++
+const {Window}=await import(process.env.MCIS_HAPPY_DOM_MODULE||'/tmp/mcis-ui-deps/node_modules/happy-dom/lib/index.js')
+const w=new Window();globalThis.document=w.document;const root=document.createElement('main');document.body.append(root);let network=0;globalThis.fetch=async()=>{network++;throw Error('network prohibited')};mount(root)
+const input=root.querySelector('input'),clear=root.querySelector('button')
+const read=async(r,size=bytes(r).length)=>{Object.defineProperty(input,'files',{configurable:true,value:[{size,arrayBuffer:async()=>bytes(r).buffer}]});input.dispatchEvent(new w.Event('change'));await new Promise(resolve=>setTimeout(resolve,0))}
+await read(original);test(root.textContent.includes('脚本模拟'),'simulation banner');test(root.querySelectorAll('.card').length===2,'two opinions');test(!root.querySelector('img'),'model HTML escaped');test(root.textContent.includes('标签分歧'),'difference visible');test(root.textContent.includes('未核验 completion.json'),'no completion proof claim')
+const select=()=>root.querySelector('select');select().value='same';select().dispatchEvent(new w.Event('change'));test(root.querySelectorAll('nav button').length===2,'same label filter');test(root.textContent.includes('不是共识或事实确认'),'same not consensus')
+await read({bad:true});test(root.textContent.includes('此前结果保留')&&root.querySelectorAll('.card').length===2,'invalid file preserves result')
+await read(partial);test(root.textContent.includes('意见不完整')&&root.textContent.includes('不补造答案'),'partial kept missing')
+await read(remote);test(root.textContent.includes('声明收到真实提供方响应'),'remote declaration visible')
+let resolve;Object.defineProperty(input,'files',{configurable:true,value:[{size:bytes(original).length,arrayBuffer:()=>new Promise(r=>resolve=r)}]});input.dispatchEvent(new w.Event('change'));clear.click();resolve(bytes(original).buffer);await new Promise(r=>setTimeout(r,0));test(!root.querySelector('.card'),'clear cancels late load')
+await read(original);await read(original);test(root.querySelectorAll('.card').length===2,'repeat replaces not duplicates');test(network===0,'no network');test(!root.querySelector('a'),'no external links')
+await w.happyDOM.close();console.log(`EXPERTWORKBENCH ${n} assertions passed (synthetic DOM/data; no model calls)`)

@@ -591,3 +591,12 @@ EXPERTREMOTE r1：独审发现空闲cancel未立即反映halted；自查BaseExce
 ## EXPERTOWNERSHIP 2026-11-14 HOLD
 协调独审发现SIGCHLD=SIG_IGN导致自动回收后killpg(pid)存在PGID复用风险。8f2fa05真实运行HOLD。跨冻结包修Executor/isolated共享所有权检查：启动前要求waitid/WNOWAIT及SIGCHLD默认行为；ECHILD、已回收或配置变化后粘性失去所有权，不再killpg。保留宿主独占reaper且运行期间不得改变SIGCHLD的约束。仅离线验收，不推送或真实调用。
 EXPERTOWNERSHIP r1：独审扩展确认仅callable/常量不能证明waitid内核可用；启动前加对当前自身PID的无子进程probe（必须ECHILD），拒绝NotImplementedError/ENOSYS/异常返回，避免spawn后才发现无法监管。保留初始冻结，新增r1冻结复验。
+
+## EXPERTCONNECTED 2026-11-14
+从6f8f429隔离接线，HOLD保持。仅提取已独审43d9f62的research/expert_workbench目录（不合并其父链或共享文档），复用离线UI来源分区；新增复合schema2回执Python校验/展示投影/显式本地HTML导出，原工作台加入轮次/预算显示。无模型调用入口、无正式案件、不自动上传；浏览器不冒充Python完整链重放，不伪造旧单轮runId或manifest。只静态/MockHTTP验收。
+
+EXPERTCONNECTED r1：来源测试保留四文件相同内容断言，改用872815c原始blob的固定SHA256，消除隔离提取后依赖未合并Git对象；非放宽断言。初始冻结保留，r1另立。
+
+EXPERTCONNECTED r2：自查并保留红测，展示投影completed调用数必须被received覆盖，not_started计数为0，ready/round_review/round_open状态收紧。Python源回执validator未改，原受控导出不会产生矛盾；直输build展示合同也不能自相矛盾。
+
+EXPERTCONNECTED r3：修独审提示的embedded已显示但aria-live仍称未载入，补显示状态断言；r2/r1冻结保留，r3另立。

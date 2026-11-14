@@ -407,3 +407,13 @@ EXPERTREMOTE r1冻结使用logs/EXPERTREMOTE-r1-impl-hashes-frozen.txt；原名�
 | 2026-11-14 | EXPERTOWNERSHIP r1 | 待复验/HOLD | 增实际waitid自PID能力probe，无子进程；初始冻结保留，r1冻结logs/EXPERTOWNERSHIP-r1-impl-hashes-frozen.txt。 |
 
 | 2026-11-14 | EXPERTOWNERSHIP r1 | 受限复验通过/HOLD协调放行 | 回归225通过，独审18通过，新5冻结匹配；ENOSYS红测保留，独占reaper约束不变；未真实调用、未推送。 |
+
+| 2026-11-14 | EXPERTCONNECTED | 待独审 | 基于6f8f429复用43d9f62工作台目录，复合回执严格本地校验→独占HTML→同一UI多轮/预算/partial；22Python+40原/19来源/29新增DOM断言与TS通过；真实模型0，原生浏览器启动阻塞，freeze logs/EXPERTCONNECTED-impl-hashes-frozen.txt。 |
+
+EXPERTCONNECTED r1待独审：测试源码绑定改固定blob SHA不依赖旁支Git对象，断言不变，freeze logs/EXPERTCONNECTED-r1-impl-hashes-frozen.txt。
+
+EXPERTCONNECTED r2待独审：投影完成/received及阶段一致性红测转绿，33新增DOM断言过；新freeze logs/EXPERTCONNECTED-r2-impl-hashes-frozen.txt，旧冻结保留。
+
+EXPERTCONNECTED r3待复验：embedded aria-live状态准确，34新增DOM/40旧/19来源断言及22Python通过；freeze logs/EXPERTCONNECTED-r3-impl-hashes-frozen.txt。
+
+| 2026-11-14 | EXPERTCONNECTED r3 | 受限独审通过 | 22开发Python、40旧/19来源/34新DOM断言及TS过；12独立pytest（含8DOM/5parser子场景）、12冻结一致。D01/C01关闭并保留初始红测；仅本地只读接线，实际Pi+MockHTTP，真实模型0、浏览器启动阻塞、无身份/正式案件。 |
