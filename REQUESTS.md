@@ -568,3 +568,10 @@ registration whose stored bytes fail verification, so must not clear original re
 or imply no save. Unknown outcome stays locked through later denials/conflicts;
 read-only recovery404 cannot authorize retry. No service writes/retry/cleanup changes.
 Freeze scope: evidenceIntake/api.ts and EvidenceIntakePanel.tsx plus targeted tests.
+
+## Evidence refresh recovery (2026-11-14)
+Based on d1a4424: scoped sessionStorage recovery marker before dispatch, metadata only
+(case/digest/content digest/length); refresh permits only explicit receipt GET. No file,
+statement or operator persistence, no automatic resend/delete, no server/schema change.
+Storage corruption/unavailability fails closed. Session-only convenience, not global
+idempotency, authenticated identity or cross-tab/crash durable request guarantees.

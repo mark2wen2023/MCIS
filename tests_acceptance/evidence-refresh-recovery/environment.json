@@ -1,0 +1,8 @@
+{
+  "chromiumCommand": "Chromium 156.0.8078.79 built on Debian GNU/Linux 13 (trixie)",
+  "playwright": "1.62.0",
+  "driverPython": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "node": "v24.22.1",
+  "vite": "vite/8.3.8 linux-x64 node-v24.22.1",
+  "server": "{\"python\": \"3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]\", \"uvicorn\": \"0.54.0\", \"fastapi\": \"0.162.7\"}"
+}

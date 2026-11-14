@@ -1,0 +1,1 @@
+Pending recovery: scoped minimal persistence, no overwrite, compare-before-clear, malformed/blocked storage refusal passed

@@ -1,6 +1,7 @@
-import { useEffect,useRef,useState } from 'react'
+import { useCallback,useEffect,useRef,useState } from 'react'
 import { ApiError,getRole,onIdentityChange } from '../api'
 import { caseIdentity } from '../cases/identity'
+import { readPending,rememberPending,forgetPending,samePending,type PendingIntake } from './pending'
 import { downloadHistory } from './history'
 import { commitFailure,intakeError,intakeRequest,type Download } from './api'
 import { onIntakeNavigation,SELECTION_EVENT } from './navigation'
@@ -14,9 +15,12 @@ export function EvidenceIntakePanel({caseId,caseTitle,who,selectedEvidenceId,onR
   const [open,setOpen]=useState(false),[fields,setFields]=useState<Metadata>(EMPTY),[file,setFile]=useState<FileSelection|null>(null),[fileKey,setFileKey]=useState(0)
   const [preview,setPreview]=useState<Preview|null>(null),[body,setBody]=useState<IntakeBody|null>(null),[confirmed,setConfirmed]=useState(false),[receipt,setReceipt]=useState<Receipt|null>(null)
   const [busy,setBusy]=useState(''),[message,setMessage]=useState(''),[uncertain,setUncertain]=useState(false),[purpose,setPurpose]=useState('')
+  const [pending,setPending]=useState<PendingIntake|null>(null)
   const gate=useRef({alive:true,version:0,busy:false,controller:null as AbortController|null})
-  const clearResult=()=>{setHistoryEvidenceId(null);setPreview(null);setBody(null);setConfirmed(false);setReceipt(null);setUncertain(false);setPurpose('');setMessage('')}
-  const reset=(next:boolean)=>{const g=gate.current;g.version++;g.controller?.abort();g.busy=false;setBusy('');setOpen(next);setFile(null);setFileKey(k=>k+1);setFields(EMPTY);clearResult()}
+  const clearResult=useCallback(()=>{setHistoryEvidenceId(null);setPreview(null);setBody(null);setConfirmed(false);setReceipt(null);setUncertain(false);setPurpose('');setMessage('')},[])
+  const reset=useCallback((next:boolean)=>{const g=gate.current;g.version++;g.controller?.abort();g.busy=false;setBusy('');setOpen(next);setFile(null);setFileKey(k=>k+1);setFields(EMPTY);clearResult();setPending(null)
+    try{const saved=readPending(caseId);if(saved){setPending(saved);setUncertain(true)}}catch{setUncertain(true);setMessage('无法读取本页登记恢复标识，禁止新登记。请人工核查服务记录；不会自动清除标识。')}
+  },[caseId,clearResult])
   useEffect(()=>{
     const g=gate.current;g.alive=true
     const cancel=()=>reset(false)
@@ -24,7 +28,7 @@ export function EvidenceIntakePanel({caseId,caseTitle,who,selectedEvidenceId,onR
     const identity=onIdentityChange(cancel),navigation=onIntakeNavigation(cancel)
     window.addEventListener(SELECTION_EVENT,selected)
     return()=>{g.alive=false;g.version++;g.controller?.abort();identity();navigation();window.removeEventListener(SELECTION_EVENT,selected)}
-  },[caseId])
+  },[caseId,reset])
   const live=(v:number)=>gate.current.alive&&gate.current.version===v&&caseIdentity()===who
   const begin=(label:string)=>{if(gate.current.busy||caseIdentity()!==who)return null;const g=gate.current;g.busy=true;g.controller=new AbortController();setBusy(label);setMessage('');return {version:++g.version,signal:g.controller.signal}}
   const finish=(v:number)=>{if(live(v)){gate.current.busy=false;setBusy('')}}
@@ -45,21 +49,26 @@ export function EvidenceIntakePanel({caseId,caseTitle,who,selectedEvidenceId,onR
     try{const p=parsePreview(await intakeRequest(caseId,who,'/evidence-intakes:preview',run.signal,request),caseId,request,file);if(live(run.version)){setPreview(p);setBody(request)}}
     catch(e){if(live(run.version))setMessage(intakeError(e))}finally{finish(run.version)}
   }
-  const accept=(r:Receipt)=>{setReceipt(r);setUncertain(false);setMessage('');onRegistered?.(r.evidenceId)}
+  const accept=(r:Receipt)=>{setPending(null);setReceipt(r);setUncertain(false);setMessage('');onRegistered?.(r.evidenceId)}
   const save=async()=>{
-    if(!preview||!body||!confirmed||receipt)return
+    if(!preview||!body||!confirmed||receipt||uncertain)return
     const run=begin('登记保存中');if(!run)return
-    try{const r=parseReceipt(await intakeRequest(caseId,who,'/evidence-intakes:commit',run.signal,{...body,requestDigest:preview.requestDigest,confirmed:true}),caseId,preview);if(live(run.version))accept(r)}
+    let marker:PendingIntake
+    try{marker=rememberPending({caseId,requestDigest:preview.requestDigest,sourceSha256:preview.sourceSha256,byteLength:preview.byteLength});setPending(marker)}catch{setUncertain(true);setMessage('恢复标识无法保存或已有待核查登记；未发送本次请求。请只读核查或人工检查，不要清除未知标识。');finish(run.version);return}
+    try{const r=parseReceipt(await intakeRequest(caseId,who,'/evidence-intakes:commit',run.signal,{...body,requestDigest:preview.requestDigest,confirmed:true}),caseId,preview);if(live(run.version)){forgetPending(marker);accept(r)}}
     catch(e){if(live(run.version)){
       const failure=commitFailure(e,uncertain)
       setMessage(failure.message);setUncertain(failure.locked)
-      if(!failure.locked){setPreview(null);setBody(null);setConfirmed(false)}
+      if(!failure.locked){try{forgetPending(marker);setPending(null);setPreview(null);setBody(null);setConfirmed(false)}catch{setUncertain(true);setMessage('本次请求被拒绝，但恢复标识无法核对；保留锁定并人工核查。')}}
     }}finally{finish(run.version)}
   }
   const recover=async()=>{
-    if(!preview)return
+    if(!pending)return
     const run=begin('只读核查本次登记');if(!run)return
-    try{const r=parseReceipt(await intakeRequest(caseId,who,'/evidence-intakes/'+preview.requestDigest,run.signal),caseId,preview);if(live(run.version))accept(r)}
+    try{const r=parseReceipt(await intakeRequest(caseId,who,'/evidence-intakes/'+pending.requestDigest,run.signal),caseId,preview??undefined)
+      if(!samePending(pending,{caseId:r.caseId,requestDigest:r.requestDigest,sourceSha256:r.sourceSha256,byteLength:r.byteLength}))throw Error('回执与恢复标识不一致')
+      if(live(run.version)){forgetPending(pending);accept(r)}
+    }
     catch(e){if(live(run.version))setMessage(e instanceof ApiError&&e.status===404?'核查时尚无回执，请求可能仍在处理，也可能存在待人工核验的状态。保持原请求锁定，可稍后只读核查；不要据此重新提交。':intakeError(e))}finally{finish(run.version)}
   }
   const lookup=async()=>{
@@ -107,7 +116,7 @@ export function EvidenceIntakePanel({caseId,caseTitle,who,selectedEvidenceId,onR
       <label className="w42-confirm"><input type="checkbox" checked={confirmed} disabled={!!busy||uncertain} onChange={e=>setConfirmed(e.target.checked)}/>我已核对目标案件、文件原字节摘要及来源/提取信息，确认以 Restricted 受限登记；不以登记时间替代提取时间。</label>
       {!uncertain&&<button type="button" disabled={!!busy||!confirmed} onClick={()=>void save()}>确认登记文件副本</button>}
     </section>}
-    {uncertain&&<div className="w42-notice"><p>结果未确认，原请求保持锁定。关闭不能撤销服务已受理的登记；网络或页面终止可能使在途结果未知。</p><div className="w42-actions"><button type="button" disabled={!!busy} onClick={()=>void recover()}>只读核查本次登记</button></div></div>}
+    {uncertain&&<div className="w42-notice">{pending&&<p className="w42-hash">待核查请求摘要：{pending.requestDigest}</p>}<p>结果未确认，本会话的该案新登记保持锁定。刷新后仅恢复查询标识，不恢复原件或声明正文，也不会重发。关闭不能撤销已发请求；关闭标签页或清理浏览器存储可能丢失标识，须人工核查。</p><div className="w42-actions"><button type="button" disabled={!!busy||!pending} onClick={()=>void recover()}>只读核查本次登记</button></div></div>}
     {receipt&&<section className="w42-receipt" aria-labelledby="w42-receipt-title"><h3 id="w42-receipt-title">已核对登记回执 · {receipt.evidenceId}</h3><Declaration metadata={receipt.metadata}/><p>系统登记 UTC：{receipt.registeredUtc} · 登记人：{receipt.registeredBy}（{receipt.registeredRole}）{receipt.replayed?' · 相同登记已存在，未重复新增':''}</p><p>文件：{receipt.fileName} · {receipt.byteLength} bytes。证据状态：{receipt.evidence.status}。登记本身不生成 Verify 事件；Verified 也仅指最近一次字节哈希一致。</p><p className="w42-hash">原件 SHA-256：{receipt.sourceSha256}<br/>请求摘要：{receipt.requestDigest}</p><label>本次下载目的（将记入访问记录）<textarea aria-label="本次下载目的（将记入访问记录）" rows={2} maxLength={1000} disabled={!!busy} value={purpose} onChange={e=>setPurpose(e.target.value)}/></label><p>下载会追加 Access 与审计，不是零写入查看；不会在页面执行文件。每次人工下载均可能产生新的访问记录。</p><div className="w42-actions"><button type="button" disabled={!!busy||!purpose.trim()} onClick={()=>void download()}>记录访问并下载原件</button><button type="button" disabled={!!busy} onClick={()=>reset(true)}>登记另一文件 / 清空当前表单</button></div></section>}
     {busy&&<p role="status">{busy}…</p>}{message&&<p role="alert" className="w42-notice">{message}</p>}
   </section>

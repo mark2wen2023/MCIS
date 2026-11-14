@@ -1,0 +1,1 @@
+60 independent storage/classifier assertions passed; synthetic storage only

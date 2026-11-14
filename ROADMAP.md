@@ -370,3 +370,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-12 | Report output A | 受限独立验收通过 | 最终独立49 passed/11.56s，20SHA前后匹配；真实双格式单render/原文不变/审计关联、实际第二连接改报告或策略后409/403、故障全表回滚与commit后交付失败各有证明。真浏览器2正常下载+2真实commit后故障替换+1真实commit后身份迟响应丢弃，最终5审计；8独立客户端坏结构/错绑拒绝。实际2MiB报告及16MiB输出边界与其余缩小limit测试区别详见独立REPORT；未穷尽多worker/真实切案/全部变体。无服务端原件保存、无.mcase文件恢复、无签署认证；B仅计划，不部署不触W11。 |
 
 | 2026-11-14 | Evidence failure feedback | 独审80分类/5服务通过；真实浏览器前后复现 | main3aba2bf; frontend88+19; service84过1.NET跳；logs/evidence-failure-feedback-hashes-frozen.txt；无自动重试/删除 |
+
+| 2026-11-14 | Evidence refresh recovery | 隔离验证，待协调独审 | d1a4424父；前端88/恢复单测/独60过；真实Chromium刷新+404+权限403+GET恢复；同标签会话限制；logs/evidence-refresh-recovery-hashes-frozen.txt |
