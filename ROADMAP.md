@@ -368,3 +368,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 | 2026-11-12 | Report output A | 受限独立验收通过 | 最终独立49 passed/11.56s，20SHA前后匹配；真实双格式单render/原文不变/审计关联、实际第二连接改报告或策略后409/403、故障全表回滚与commit后交付失败各有证明。真浏览器2正常下载+2真实commit后故障替换+1真实commit后身份迟响应丢弃，最终5审计；8独立客户端坏结构/错绑拒绝。实际2MiB报告及16MiB输出边界与其余缩小limit测试区别详见独立REPORT；未穷尽多worker/真实切案/全部变体。无服务端原件保存、无.mcase文件恢复、无签署认证；B仅计划，不部署不触W11。 |
+
+| Attachment main integration | 待测 | 2026-11-14：从 main 3aba2bf 仅提取 #64/#61；77项源测试通过，前端构建通过，新增跨模块 Unicode ZIP 权限/两轮恢复测试；新冻结 `logs/attachment-main-integration-impl-hashes-frozen.txt`。不继承PR56的97提交，保留main身份/读取基线限制；原分支报告仅历史证据。 |
+| Attachment main integration | 独审中 | 2026-11-14：源测试77通过；跨模块263通过、1跳过（缺.NET）、1失败（HFACS核心503，已在独立干净main复现）；前端23+14断言及正式构建通过。保留基线失败，不宣称全绿或生产认证/浏览器已验收。 |
+| Attachment main integration | 范围内验收通过 | 2026-11-14：新增独立14项通过、零跳过；冻结10/10；6个生产文件与原PR逐字节一致，intake为main精确4行下载增量；无PR56祖先。保留跨模块263通过/1跳过/1基线HFACS失败及浏览器、认证限制。见 `tests_acceptance/ATTACHMENT_MAIN_INTEGRATION/INDEPENDENT.md`。 |
