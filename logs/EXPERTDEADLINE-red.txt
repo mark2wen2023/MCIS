@@ -1,0 +1,41 @@
+F...F...                                                                 [100%]
+=================================== FAILURES ===================================
+_ test_exact_absolute_deadline_expires_without_extra_delay[4194262.256341955] __
+
+start = 4194262.256341955
+
+    @pytest.mark.parametrize('start',STARTS)
+    def test_exact_absolute_deadline_expires_without_extra_delay(start):
+        now=[start];m=Meeting(clock=lambda:now[0]);m.act({'type':'start_round'})
+        m.act({'type':'issue_turn','roleId':ROLES[0]})
+        now[0]=start+600
+        state=m.act({'type':'tick'})
+>       assert state['phase']=='timed_out'
+E       AssertionError: assert 'round_open' == 'timed_out'
+E
+E         - timed_out
+E         + round_open
+
+tests_acceptance/EXPERTDEADLINE/test_boundary.py:14: AssertionError
+___ test_previous_representable_instant_not_early_timeout[4194262.256341955] ___
+
+start = 4194262.256341955
+
+    @pytest.mark.parametrize('start',STARTS)
+    def test_previous_representable_instant_not_early_timeout(start):
+        now=[start];m=Meeting(clock=lambda:now[0]);m.act({'type':'start_round'})
+        deadline=start+600
+        now[0]=math.nextafter(deadline,-math.inf)
+        assert m.act({'type':'tick'})['phase']=='round_open'
+        now[0]=deadline
+>       assert m.act({'type':'tick'})['phase']=='timed_out'
+E       AssertionError: assert 'round_open' == 'timed_out'
+E
+E         - timed_out
+E         + round_open
+
+tests_acceptance/EXPERTDEADLINE/test_boundary.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED tests_acceptance/EXPERTDEADLINE/test_boundary.py::test_exact_absolute_deadline_expires_without_extra_delay[4194262.256341955]
+FAILED tests_acceptance/EXPERTDEADLINE/test_boundary.py::test_previous_representable_instant_not_early_timeout[4194262.256341955]
+2 failed, 6 passed in 0.05s

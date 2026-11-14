@@ -1,0 +1,52 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________ test_second_clock_observation_failure_permanently_blocks[stop] ________
+
+operation = 'stop'
+
+    @pytest.mark.parametrize('operation',['stop','settle_failed','settle_unknown'])
+    def test_second_clock_observation_failure_permanently_blocks(operation):
+        clock=Clock();g,a=active(clock);clock.values=[0,float('nan')]
+        with pytest.raises((GateError,MeetingError)):
+            if operation=='stop':g.action({'type':'stop'})
+            else:g.settle(a['attemptId'],operation.removeprefix('settle_'))
+        r=g.receipt()
+>       assert r['blockedReason']=='clock_or_protocol_failure'
+E       AssertionError: assert None == 'clock_or_protocol_failure'
+
+tests_acceptance/EXPERTCOORDINATION/test_independent.py:19: AssertionError
+___ test_second_clock_observation_failure_permanently_blocks[settle_failed] ____
+
+operation = 'settle_failed'
+
+    @pytest.mark.parametrize('operation',['stop','settle_failed','settle_unknown'])
+    def test_second_clock_observation_failure_permanently_blocks(operation):
+        clock=Clock();g,a=active(clock);clock.values=[0,float('nan')]
+        with pytest.raises((GateError,MeetingError)):
+            if operation=='stop':g.action({'type':'stop'})
+            else:g.settle(a['attemptId'],operation.removeprefix('settle_'))
+        r=g.receipt()
+>       assert r['blockedReason']=='clock_or_protocol_failure'
+E       AssertionError: assert None == 'clock_or_protocol_failure'
+
+tests_acceptance/EXPERTCOORDINATION/test_independent.py:19: AssertionError
+___ test_second_clock_observation_failure_permanently_blocks[settle_unknown] ___
+
+operation = 'settle_unknown'
+
+    @pytest.mark.parametrize('operation',['stop','settle_failed','settle_unknown'])
+    def test_second_clock_observation_failure_permanently_blocks(operation):
+        clock=Clock();g,a=active(clock);clock.values=[0,float('nan')]
+        with pytest.raises((GateError,MeetingError)):
+            if operation=='stop':g.action({'type':'stop'})
+            else:g.settle(a['attemptId'],operation.removeprefix('settle_'))
+        r=g.receipt()
+>       assert r['blockedReason']=='clock_or_protocol_failure'
+E       AssertionError: assert None == 'clock_or_protocol_failure'
+
+tests_acceptance/EXPERTCOORDINATION/test_independent.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED tests_acceptance/EXPERTCOORDINATION/test_independent.py::test_second_clock_observation_failure_permanently_blocks[stop]
+FAILED tests_acceptance/EXPERTCOORDINATION/test_independent.py::test_second_clock_observation_failure_permanently_blocks[settle_failed]
+FAILED tests_acceptance/EXPERTCOORDINATION/test_independent.py::test_second_clock_observation_failure_permanently_blocks[settle_unknown]
+3 failed in 0.04s
