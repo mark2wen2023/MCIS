@@ -1,0 +1,1615 @@
+{
+  "profile": "MCIS-ROUTE-CLASSIFICATION-1",
+  "routes": [
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/agents",
+      "endpoint": "mcis_service.agents.router.registry",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "read",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/analysis/cases",
+      "endpoint": "mcis_service.analysis.router.list_analysis_cases",
+      "declaredContext": false,
+      "scope": "global",
+      "operation": "read",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases",
+      "endpoint": "mcis_service.cases.router.list_cases",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "read",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases",
+      "endpoint": "mcis_service.cases.router.create_case",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "write",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}",
+      "endpoint": "mcis_service.cases.router.get_case",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/access-policy",
+      "endpoint": "mcis_service.redaction.router.get_access_policy",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "PUT",
+      "path": "/api/v1/cases/{case_id}/access-policy",
+      "endpoint": "mcis_service.redaction.router.put_access_policy",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/access-workbench",
+      "endpoint": "mcis_service.access_workbench.router.inspect_access",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/agents/drafts",
+      "endpoint": "mcis_service.agents.router.list_drafts",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/agents/drafts",
+      "endpoint": "mcis_service.agents.router.submit_draft",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/agents/drafts/{draft_id}/review",
+      "endpoint": "mcis_service.agents.router.review",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/agents/inputs/interviews/{record_id}",
+      "endpoint": "mcis_service.agents.router.agent_input_interview",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/agents/people_ops/interviews/{record_id}:extract",
+      "endpoint": "mcis_service.agents.router.extract_interview",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/analysis",
+      "endpoint": "mcis_service.analysis.router.get_analysis",
+      "declaredContext": false,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/archive-history/evidence/{evidence_id}/content",
+      "endpoint": "mcis_service.working_records_archive.router.content",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/archive-history/provenance/{kind}/{record_id}",
+      "endpoint": "mcis_service.working_records_archive.router.provenance",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/archive-history/track-imports",
+      "endpoint": "mcis_service.track_history.router.listing",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/archive-history/track-imports/{digest}",
+      "endpoint": "mcis_service.track_history.router.detail",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/archive-history/track-imports/{digest}/{kind}",
+      "endpoint": "mcis_service.track_history.router.content",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/audit",
+      "endpoint": "mcis_service.audit.router.list_audit",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/audit:verify",
+      "endpoint": "mcis_service.audit.router.verify",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/colreg",
+      "endpoint": "mcis_service.colreg.router.get_colreg",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "PATCH",
+      "path": "/api/v1/cases/{case_id}/colreg/checks/{check_id}",
+      "endpoint": "mcis_service.colreg.router.review_check",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/colreg/checks/{check_id}/reviews",
+      "endpoint": "mcis_service.colreg.router.check_reviews",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/colreg/compare",
+      "endpoint": "mcis_service.colreg.router.compare_colreg_runs",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/colreg/runs",
+      "endpoint": "mcis_service.colreg.router.list_colreg_runs",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/colreg/runs/{run_id}",
+      "endpoint": "mcis_service.colreg.router.get_colreg_run",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/colreg/runs/{run_id}:activate",
+      "endpoint": "mcis_service.colreg.router.activate_colreg_run",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/colreg:evaluate",
+      "endpoint": "mcis_service.colreg.router.evaluate",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/conflicts",
+      "endpoint": "mcis_service.timeline.router.get_conflicts",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/conflicts",
+      "endpoint": "mcis_service.timeline.router.add_conflict",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "PATCH",
+      "path": "/api/v1/cases/{case_id}/conflicts/{conflict_id}",
+      "endpoint": "mcis_service.timeline.router.patch_conflict",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/consultation/rounds",
+      "endpoint": "mcis_service.recommendations.router.list_rounds",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/consultation/rounds",
+      "endpoint": "mcis_service.recommendations.router.open_round",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "PATCH",
+      "path": "/api/v1/cases/{case_id}/consultation/rounds/{round_no}/comments/{comment_id}",
+      "endpoint": "mcis_service.recommendations.router.decide_comment",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/consultation/rounds/{round_no}/replies",
+      "endpoint": "mcis_service.recommendations.router.record_reply",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/consultation/rounds/{round_no}/waivers",
+      "endpoint": "mcis_service.recommendations.router.waive_reply",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/consultation/rounds/{round_no}:close",
+      "endpoint": "mcis_service.recommendations.router.close_round",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/cpa",
+      "endpoint": "mcis_service.colreg.router.cpa_series",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/custody:verify-chain",
+      "endpoint": "mcis_service.evidence.router.verify_chain",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/environment-observations",
+      "endpoint": "mcis_service.environment.router.get_observations",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/environment-observations",
+      "endpoint": "mcis_service.environment.router.create_observation",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/evidence",
+      "endpoint": "mcis_service.evidence.router.list_evidence",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/evidence",
+      "endpoint": "mcis_service.evidence.router.register_evidence",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/evidence-intakes/{digest}",
+      "endpoint": "mcis_service.evidence_intake.router.receipt_input",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/evidence-intakes/{digest}:download",
+      "endpoint": "mcis_service.evidence_intake.router.download",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "export",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/evidence-intakes:commit",
+      "endpoint": "mcis_service.evidence_intake.router.commit_input",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/evidence-intakes:preview",
+      "endpoint": "mcis_service.evidence_intake.router.preview_input",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}",
+      "endpoint": "mcis_service.evidence.router.get_evidence",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "PATCH",
+      "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}",
+      "endpoint": "mcis_service.evidence.router.patch_evidence",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}/access",
+      "endpoint": "mcis_service.evidence.router.record_access",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}/content",
+      "endpoint": "mcis_service.evidence.router.get_content",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}/custody",
+      "endpoint": "mcis_service.evidence.router.get_custody",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}/intake",
+      "endpoint": "mcis_service.evidence_intake.router.receipt_evidence",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}/verify",
+      "endpoint": "mcis_service.evidence.router.verify",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/evidence:verify-all",
+      "endpoint": "mcis_service.evidence.router.verify_all",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/export",
+      "endpoint": "mcis_service.package.router.export",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "export",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/gisis",
+      "endpoint": "mcis_service.reports.router.get_gisis",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/gisis/export",
+      "endpoint": "mcis_service.reports.router.export_gisis",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "export",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/gisis:validate",
+      "endpoint": "mcis_service.reports.router.validate_gisis",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/human-factors/hfacs:audit",
+      "endpoint": "mcis_service.hfacs_drafts.router.audit_history",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/human-factors/hfacs:context",
+      "endpoint": "mcis_service.hfacs_drafts.router.context",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/human-factors/hfacs:draft",
+      "endpoint": "mcis_service.hfacs_drafts.router.get_draft",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/human-factors/hfacs:save",
+      "endpoint": "mcis_service.hfacs_drafts.router.save",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/human-factors/rest:preview",
+      "endpoint": "mcis_service.human_factors_preview.router.preview",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/human-factors/rest:sources",
+      "endpoint": "mcis_service.human_factors_preview.router.sources",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/interview-compare",
+      "endpoint": "mcis_service.interview_compare.router.roster",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/interview-compare/{record_id}",
+      "endpoint": "mcis_service.interview_compare.router.page",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/interview-compare/{record_id}/rows/{statement_id}:confirm",
+      "endpoint": "mcis_service.interview_compare.router.confirm_row",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/interview-compare/{record_id}/rows/{statement_id}:recheck",
+      "endpoint": "mcis_service.interview_compare.router.recheck_row",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/interview-compare/{record_id}/rows/{statement_id}:reject",
+      "endpoint": "mcis_service.interview_compare.router.reject_row",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/interview-compare/{record_id}/statements/{statement_id}:revise",
+      "endpoint": "mcis_service.interview_compare.router.revise_statement",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/interviews",
+      "endpoint": "mcis_service.interviews.router.list_interviews",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/interviews",
+      "endpoint": "mcis_service.interviews.router.create_interview",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/interviews/{record_id}",
+      "endpoint": "mcis_service.interviews.router.get_interview",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/interviews/{record_id}/crosscheck",
+      "endpoint": "mcis_service.interviews.router.crosscheck",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/interviews/{record_id}/crosscheck/{statement_id}:confirm",
+      "endpoint": "mcis_service.interviews.router.confirm_crosscheck",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/interviews/{record_id}/crosscheck/{statement_id}:dismiss",
+      "endpoint": "mcis_service.interviews.router.dismiss_crosscheck",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/interviews/{record_id}/crosscheck:confirm-consistent",
+      "endpoint": "mcis_service.interviews.router.confirm_consistent",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/interviews/{record_id}/statements",
+      "endpoint": "mcis_service.interviews.router.add_statement",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "PATCH",
+      "path": "/api/v1/cases/{case_id}/interviews/{record_id}/statements/{statement_id}",
+      "endpoint": "mcis_service.interviews.router.review_statement",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/interviews/{record_id}/turns",
+      "endpoint": "mcis_service.interviews.router.add_turn",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/manual-interviews",
+      "endpoint": "mcis_service.manual_interviews.router.create",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/manual-interviews/requests/{request_id}",
+      "endpoint": "mcis_service.manual_interviews.router.recover",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/manual-interviews/{record_id}",
+      "endpoint": "mcis_service.manual_interviews.router.get",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/manual-interviews/{record_id}/turns",
+      "endpoint": "mcis_service.manual_interviews.router.append",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/metadata",
+      "endpoint": "mcis_service.case_metadata.router.get_metadata",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "PATCH",
+      "path": "/api/v1/cases/{case_id}/metadata",
+      "endpoint": "mcis_service.case_metadata.router.update_metadata",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/overview",
+      "endpoint": "mcis_service.cases.router.overview",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/recommendations",
+      "endpoint": "mcis_service.recommendations.router.list_recs",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/recommendations",
+      "endpoint": "mcis_service.recommendations.router.create_rec",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/recommendations/{rec_id}",
+      "endpoint": "mcis_service.recommendations.router.get_rec",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "PATCH",
+      "path": "/api/v1/cases/{case_id}/recommendations/{rec_id}",
+      "endpoint": "mcis_service.recommendations.router.patch_rec",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/recommendations/{rec_id}/history",
+      "endpoint": "mcis_service.recommendations.router.rec_history",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/recommendations/{rec_id}/responses",
+      "endpoint": "mcis_service.recommendations.router.record_response",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/recommendations/{rec_id}:transition",
+      "endpoint": "mcis_service.recommendations.router.transition",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/recommendations:board",
+      "endpoint": "mcis_service.recommendations.router.board",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/redaction/preview",
+      "endpoint": "mcis_service.redaction.router.preview",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/report-snapshots/{snapshot_id}",
+      "endpoint": "mcis_service.reports.router.get_snapshot",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/reports",
+      "endpoint": "mcis_service.reports.router.list_reports",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/reports",
+      "endpoint": "mcis_service.reports.router.create_report",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/reports/sections/colreg:draft",
+      "endpoint": "mcis_service.reports.router.colreg_draft",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/reports/{report_id}",
+      "endpoint": "mcis_service.reports.router.get_report",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/reports/{report_id}/audit",
+      "endpoint": "mcis_service.reports.router.audit_list",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/reports/{report_id}/export",
+      "endpoint": "mcis_service.reports.router.export_report",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "export",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/reports/{report_id}/output-bundle",
+      "endpoint": "mcis_service.report_output.router.create",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/reports/{report_id}/output-bundle:preview",
+      "endpoint": "mcis_service.report_output.router.preview",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "PATCH",
+      "path": "/api/v1/cases/{case_id}/reports/{report_id}/sections/{section_id}",
+      "endpoint": "mcis_service.reports.router.review",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/reports/{report_id}:generate",
+      "endpoint": "mcis_service.reports.router.regenerate",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/sim/commands",
+      "endpoint": "mcis_service.sim.router.poll",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/sim/commands",
+      "endpoint": "mcis_service.sim.router.command",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/sim/seek",
+      "endpoint": "mcis_service.sim.router.seek",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/sim/state",
+      "endpoint": "mcis_service.sim.router.get_state",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "PUT",
+      "path": "/api/v1/cases/{case_id}/sim/state",
+      "endpoint": "mcis_service.sim.router.put_state",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/systemic/bowtie:preview",
+      "endpoint": "mcis_service.bowtie_preview.router.preview",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/systemic/bowtie:sources",
+      "endpoint": "mcis_service.bowtie_preview.router.sources",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/timeline",
+      "endpoint": "mcis_service.timeline.router.get_timeline",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/timeline/align-preview",
+      "endpoint": "mcis_service.timeline.align_preview.preview_alignment",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/timeline/events",
+      "endpoint": "mcis_service.timeline.router.add_event",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/track-imports",
+      "endpoint": "mcis_service.tracks_import.router.list_inputs",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/track-imports/{digest}",
+      "endpoint": "mcis_service.tracks_import.router.receipt_input",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/track-imports/{digest}/{kind}",
+      "endpoint": "mcis_service.tracks_import.router.read_input",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/track-imports:commit",
+      "endpoint": "mcis_service.tracks_import.router.commit_input",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/track-imports:preview",
+      "endpoint": "mcis_service.tracks_import.router.preview_input",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/tracks",
+      "endpoint": "mcis_service.cases.router.get_tracks",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/vessels",
+      "endpoint": "mcis_service.cases.router.get_vessels",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/vessels",
+      "endpoint": "mcis_service.cases.router.create_vessel",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases/{case_id}/whatif/nomoto:preview",
+      "endpoint": "mcis_service.nomoto_preview.router.preview",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "write",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}/whatif/nomoto:sources",
+      "endpoint": "mcis_service.nomoto_preview.router.sources",
+      "declaredContext": true,
+      "scope": "case",
+      "operation": "read",
+      "rationale": "Existing case-addressed surface; category checks do not prove membership."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/cases:import",
+      "endpoint": "mcis_service.package.router.import_package",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "write",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/core/align",
+      "endpoint": "mcis_service.colreg.router.core_align",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "write",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/core/cpa",
+      "endpoint": "mcis_service.colreg.router.core_cpa",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "write",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/core/version",
+      "endpoint": "mcis_service.colreg.router.core_version",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "read",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/health",
+      "endpoint": "mcis_service.main.create_app.<locals>.health",
+      "declaredContext": false,
+      "scope": "meta",
+      "operation": "read",
+      "rationale": "Existing meta surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/knowledge/archives",
+      "endpoint": "mcis_service.knowledge_archive.router.listing",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "read",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/knowledge/archives",
+      "endpoint": "mcis_service.knowledge_archive.router.save",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "write",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/knowledge/archives/{archive_sha256}",
+      "endpoint": "mcis_service.knowledge_archive.router.detail",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "read",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/knowledge/archives/{archive_sha256}/content",
+      "endpoint": "mcis_service.knowledge_archive.router.content",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "read",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/knowledge/archives:export",
+      "endpoint": "mcis_service.knowledge_archive.router.export",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "export",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/knowledge/archives:preview",
+      "endpoint": "mcis_service.knowledge_archive.router.preview",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "write",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/knowledge/audit",
+      "endpoint": "mcis_service.knowledge.router.events",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "read",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/knowledge/audit:verify",
+      "endpoint": "mcis_service.knowledge.router.verify",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "read",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/knowledge/cards",
+      "endpoint": "mcis_service.knowledge.router.search",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "read",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/knowledge/cards",
+      "endpoint": "mcis_service.knowledge.router.create",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "write",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/knowledge/cards/{card_id}",
+      "endpoint": "mcis_service.knowledge.router.detail",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "read",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/knowledge/cards/{card_id}/review",
+      "endpoint": "mcis_service.knowledge.router.review",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "write",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/knowledge/suggestions",
+      "endpoint": "mcis_service.knowledge.router.suggestion_preview",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "write",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/packages/intakes/{digest}",
+      "endpoint": "mcis_service.package_intake.router.recover",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "read",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/packages/intakes:commit",
+      "endpoint": "mcis_service.package_intake.router.commit",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "write",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/packages/intakes:preview",
+      "endpoint": "mcis_service.package_intake.router.preview",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "write",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "POST",
+      "path": "/api/v1/packages:verify",
+      "endpoint": "mcis_service.package.router.verify_package",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "write",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/report-glossary",
+      "endpoint": "mcis_service.reports.router.get_glossary",
+      "declaredContext": false,
+      "scope": "global",
+      "operation": "read",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/api/v1/report-templates",
+      "endpoint": "mcis_service.reports.router.get_templates",
+      "declaredContext": true,
+      "scope": "global",
+      "operation": "read",
+      "rationale": "Existing global surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/docs",
+      "endpoint": "fastapi.applications.FastAPI.setup.<locals>.swagger_ui_html",
+      "declaredContext": false,
+      "scope": "documentation",
+      "operation": "read",
+      "rationale": "Existing documentation surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "HEAD",
+      "path": "/docs",
+      "endpoint": "fastapi.applications.FastAPI.setup.<locals>.swagger_ui_html",
+      "declaredContext": false,
+      "scope": "documentation",
+      "operation": "read",
+      "rationale": "Existing documentation surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/docs/oauth2-redirect",
+      "endpoint": "fastapi.applications.FastAPI.setup.<locals>.swagger_ui_redirect",
+      "declaredContext": false,
+      "scope": "documentation",
+      "operation": "read",
+      "rationale": "Existing documentation surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "HEAD",
+      "path": "/docs/oauth2-redirect",
+      "endpoint": "fastapi.applications.FastAPI.setup.<locals>.swagger_ui_redirect",
+      "declaredContext": false,
+      "scope": "documentation",
+      "operation": "read",
+      "rationale": "Existing documentation surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/openapi.json",
+      "endpoint": "fastapi.applications.FastAPI.setup.<locals>.openapi",
+      "declaredContext": false,
+      "scope": "documentation",
+      "operation": "read",
+      "rationale": "Existing documentation surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "HEAD",
+      "path": "/openapi.json",
+      "endpoint": "fastapi.applications.FastAPI.setup.<locals>.openapi",
+      "declaredContext": false,
+      "scope": "documentation",
+      "operation": "read",
+      "rationale": "Existing documentation surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "GET",
+      "path": "/redoc",
+      "endpoint": "fastapi.applications.FastAPI.setup.<locals>.redoc_html",
+      "declaredContext": false,
+      "scope": "documentation",
+      "operation": "read",
+      "rationale": "Existing documentation surface; explicit inventory only, not an anonymous-access approval."
+    },
+    {
+      "protocol": "http",
+      "method": "HEAD",
+      "path": "/redoc",
+      "endpoint": "fastapi.applications.FastAPI.setup.<locals>.redoc_html",
+      "declaredContext": false,
+      "scope": "documentation",
+      "operation": "read",
+      "rationale": "Existing documentation surface; explicit inventory only, not an anonymous-access approval."
+    }
+  ]
+}
