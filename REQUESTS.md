@@ -586,3 +586,10 @@ pure pinned packet/review validation from old engine; no runner/transport/histor
 import. Source behavior retained, public claims explicitly human-authored with
 counterexamples. Existing receipt module unchanged. Scope and integration boundary
 in research/expert_meeting/README.md; real execution HOLD.
+
+## EXPERTCITATION (2026-11-14)
+Add read-only citation projection atop PR81 de4729d; keep frozen protocol intact.
+Replay before projection, retain exact source/snapshot bindings and all distinct
+quote occurrences. Separate human-authored claim/fixed citation/reviewer quote;
+substring match never grants semantic support or fact status. See
+research/expert_meeting/CITATIONS.md; no provider/UI/case integration, real HOLD.
