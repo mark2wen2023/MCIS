@@ -603,3 +603,6 @@ EXPERTCONNECTED r3：修独审提示的embedded已显示但aria-live仍称未载
 
 ## EXPERTMANAGED 2026-11-14
 基于4dda486隔离研究平台网络密钥代理。当前无绑定、无可信control-plane→worker配置桥，禁止真实请求。新增默认拒绝的managed binding解析边界及严格离线验证器；固定DeepSeek POST，显式已验证proxy+SSLContext、保留拒绝重定向/重试，不信任ambient任意代理。复用transport/isolated/worker，不增加模型入口；不改变平台网络/安全设置。可信bootstrap未完成前不能启用，不把人工ready当平台证明。
+
+## EXPERTVAULTCHECK 2026-11-14
+基于cafffbd修正冻结MANAGED_PROXY文档的平台头注入假设，新增官方占位符/可信bootstrap阻断说明及不读取凭据的离线拒绝测试；不更改冻结运行代码，不接Executor、不改环境、不调用模型。
