@@ -1,0 +1,15 @@
+{
+  "removed_functions": [],
+  "added_functions": [
+    "app",
+    "client",
+    "export_package",
+    "test_seeded_restricted_content_export_still_denied"
+  ],
+  "changed_functions": [
+    "package",
+    "test_empty_create_unknown_roundtrip"
+  ],
+  "parent": "f2eff95",
+  "source_relocation": "baseline copy only replaces relative conftest import and registers existing tests.conftest plugin; test function bodies unchanged"
+}

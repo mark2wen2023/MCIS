@@ -368,3 +368,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 | 2026-11-12 | Report output A | 受限独立验收通过 | 最终独立49 passed/11.56s，20SHA前后匹配；真实双格式单render/原文不变/审计关联、实际第二连接改报告或策略后409/403、故障全表回滚与commit后交付失败各有证明。真浏览器2正常下载+2真实commit后故障替换+1真实commit后身份迟响应丢弃，最终5审计；8独立客户端坏结构/错绑拒绝。实际2MiB报告及16MiB输出边界与其余缩小limit测试区别详见独立REPORT；未穷尽多worker/真实切案/全部变体。无服务端原件保存、无.mcase文件恢复、无签署认证；B仅计划，不部署不触W11。 |
+
+| 2026-11-14 | W9.2 test fixture policy alignment | 冻结待独立验收 | main f2eff95；观测归档测试改用模块独立合成空案，显式检查导出成功并保留演示案403回归。原组12失败57通过，修后70通过/16.94s。只改测试，不放宽权限；冻结 logs/test-root-causes-impl-hashes-frozen.txt。全套历史180失败104错误尚未全部修复。 |
+
+| 2026-11-14 | W9.2 test fixture policy alignment | 窄切片独立验收通过 | 独审原模块12失败57通过/26.31s，修后70通过/15.71s；冻结hash一致、原断言参数保留、产品代码不变。开发相邻74通过/5.24s。见 tests_acceptance/test-root-causes-independent/REPORT.md；非全套绿色、不部署。 |

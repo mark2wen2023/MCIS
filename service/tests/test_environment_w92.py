@@ -18,6 +18,42 @@ from mcis_service.redaction.policy import default_policy
 URL = C + '/environment-observations'
 
 
+@pytest.fixture()
+def app(tmp_path):
+    # Environment archive coverage must not depend on unrelated demo content.
+    return create_app(make_settings(tmp_path, seed=False))
+
+
+@pytest.fixture()
+def client(app):
+    with TestClient(app) as client:
+        case = {
+            'schemaVersion': '1.0.0', 'caseId': CASE,
+            'title': 'Synthetic environment-only case', 'accidentType': 'Collision',
+            'caseEpochUtc': '2026-01-01T00:00:00Z',
+            'incidentTimeUtc': '2026-01-01T00:00:00Z',
+            'incidentLocation': {'lonDeg': 0, 'latDeg': 0},
+            'displayTimeZoneOffsetMinutes': 0, 'isFictionalDemo': True,
+        }
+        response = client.post('/api/v1/cases', json=case)
+        assert response.status_code == 201, response.text
+        yield client
+
+
+def export_package(client):
+    response = client.get(C + '/export')
+    assert response.status_code == 200, response.text
+    return response.content
+
+
+def test_seeded_restricted_content_export_still_denied(tmp_path):
+    with TestClient(create_app(make_settings(tmp_path, seed=True))) as client:
+        response = client.get(C + '/export', headers=H())
+        assert response.status_code == 403
+        assert response.json()['code'] == 'FORBIDDEN'
+        assert response.headers['content-type'].startswith('application/json')
+
+
 def observation(**extra):
     return dict(observationId='ENV-test', caseId=CASE, observedAtUtc=None,
                 locationDescription=None, description='Synthetic: qualitative visibility only',
@@ -36,7 +72,7 @@ def test_empty_create_unknown_roundtrip(client, empty_client):
     assert r.json()==body
     assert client.get(URL).json()==[body]
     assert 'currentSpeedKn' not in client.get(URL).json()[0]
-    data=client.get(C+'/export').content
+    data=export_package(client)
     files=read_zip(data)
     assert json.loads(files['environment/observations.json'])==[body]
     r=empty_client.post('/api/v1/cases:import',files={'file':('test.mcase',data,'application/zip')})
@@ -132,7 +168,7 @@ def test_case_isolation_and_restart(tmp_path):
 
 
 def package(client,items=None,raw=None,path='environment/observations.json',listed=True):
-    files=read_zip(client.get(C+'/export').content);files.pop('manifest.json')
+    files=read_zip(export_package(client));files.pop('manifest.json')
     if raw is not None:files[path]=raw
     elif items is not None:files[path]=json.dumps(items).encode()
     listing=files if listed else {k:v for k,v in files.items() if k!=path}
