@@ -1,0 +1,1 @@
+9 independent DOM scenarios passed; assertions=88; network=0

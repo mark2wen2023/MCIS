@@ -64,3 +64,9 @@ PYTHONPATH=. /workspace/mcis-local-export/service/.venv/bin/python -m research.e
 安全状态：6f8f429协调复验仅进程所有权通过；独占reaper/稳定SIGCHLD仍必需。本轮安全凭据不存在，真实DeepSeek调用0，只有实际Pi+明确MockHTTP的离线接线验证。无正式案件/身份/服务、无模型按钮、无上传/部署。当前工作台并非正式案件工作台路由。
 
 测试：Python test_export.py 22项（含实际Pi+MockHTTP端到端HTML），原40+来源19断言、新test-connected.mjs 34断言及TS检查；新断言可选传入本地projection JSON，未传则明确合成显示数据。浏览器插件未提供，使用现有Playwright+chromiumSandbox:true访问file HTML尝试在浏览器启动阶段失败，未导航/截图；未加no-sandbox。HappyDOM交互不是原生布局/键盘/辅助技术或CSP执行验收。
+
+## 停止、未知与来源声明显示修正（EXPERTUISTATUS）
+
+remote 模式零响应时显示“未声明收到响应”，不冒称响应观察；有响应也仅称“声明收到”，不认证真实模型。直接 build --meeting 的展示投影不能证明曾运行 Python 转换器，因此页面改为提示受控流程须先校验原回执，不再一律宣称已校验。会议停止/超时/未知和角色缺席均显示中文并保留原状态代码，回执声明完整不代表会议完成。状态及计数仍为未认证字段声明。
+
+test-status.mjs 新增43项合成DOM断言：四种停止状态、二轮缺席/上一轮已接受意见保留、未知/未接受角色、零响应标题与固定原文引用保留。测试不调用模型。未更改协议、回执验证器、原文、模型输入或运行器。

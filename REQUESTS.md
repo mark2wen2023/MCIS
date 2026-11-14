@@ -606,3 +606,6 @@ EXPERTCONNECTED r3：修独审提示的embedded已显示但aria-live仍称未载
 
 ## EXPERTVAULTCHECK 2026-11-14
 基于cafffbd修正冻结MANAGED_PROXY文档的平台头注入假设，新增官方占位符/可信bootstrap阻断说明及不读取凭据的离线拒绝测试；不更改冻结运行代码，不接Executor、不改环境、不调用模型。
+
+## EXPERTUISTATUS 2026-11-14
+基于c137ea2隔离核查显示安全：红测复现remote零响应仍称响应观察；app对任意合法展示投影一律声称转换器已校验。申请最小修改冻结app.ts显示文案，明确来源声明而非执行证明、停止/缺席/未知中文及回执完整不等于会议完成。不改会议协议、模型、数据源或运行器，不接真实服务。新增合成DOM状态矩阵测试，原断言保留。

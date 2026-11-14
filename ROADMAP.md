@@ -425,3 +425,7 @@ EXPERTCONNECTED r3待复验：embedded aria-live状态准确，34新增DOM/40旧
 | 2026-11-14 | EXPERTVAULTCHECK | 待独审/HOLD | 官方占位符替换纠正旧头注入假设；当前无secret绑定/可信worker bootstrap，不改运行代码；6新增拒绝路径+42开发+24既有独审测试通过，freeze logs/EXPERTVAULTCHECK-impl-hashes-frozen.txt；真实请求0，旧raw-key存在，不是全局网络禁用。 |
 
 | 2026-11-14 | EXPERTVAULTCHECK | 离线独审通过/真实HOLD | 8独立测试、3冻结一致，运行文件与cafffbd一致；合跑须--import-mode=importlib避免不同包test_independent同名收集冲突，80通过。可信bootstrap/Executor及回执绑定未实现，无秘密读取/网络请求/环境变更。 |
+
+| 2026-11-14 | EXPERTUISTATUS | 待独审 | c137ea2隔离；零响应标题与“已校验转换”过度断言红测后最小显示修复，停止/未知中文；43新增DOM、34会议/40旧/19来源断言及TS通过；freeze logs/EXPERTUISTATUS-impl-hashes-frozen.txt。无真实请求、不改协议/原文。 |
+
+| 2026-11-14 | EXPERTUISTATUS | 显示范围独审通过 | 9独立合成DOM场景network=0，3冻结一致；43新增+34会议+40旧+19来源断言、22Python导出和TS过。Playwright在导航前因SUID沙箱配置失败，无截图/原生交互/CSP验收。真实DeepSeek0/HOLD，未改源材料、协议、身份或案件。 |

@@ -1,0 +1,3 @@
+78268871890af618f23b49ff8f398e9f995a5a79527233890c25dcf7cb33e418  research/expert_workbench/app.ts
+9f59ce941503c45f1444f00dba134982d81931f08307070a7e34f3b6469ab8be  research/expert_workbench/test-status.mjs
+bb916b10f2388c3b3567c2b14bf786b65555af638b86884c53340f2a5803f6c4  research/expert_workbench/README.md

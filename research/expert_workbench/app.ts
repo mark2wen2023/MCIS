@@ -1,5 +1,7 @@
 import {parseMeeting,compareRoles,type MeetingDisplay} from './meeting'
 import {packet, PACKET_SHA, MAX_BYTES, ROLE_NAMES, parseResult, mode, comparison, type Result} from './model'
+const phaseText:Record<string,string>={ready:'尚未开始',round_open:'本轮尚未完成',round_review:'首轮完成待审读；会议尚未完成',completed_unverified:'两轮完成；全部意见未核实',stopped_by_operator:'人工停止；不代表会议完成',stopped_failed:'失败停止；不代表会议完成',stopped_unknown:'结果未知；不代表会议完成',timed_out:'超时停止；不代表会议完成'}
+const roleText:Record<string,string>={not_started:'尚未开始',unknown:'结果未知',not_accepted:'未接受',completed_unverified:'意见已接受但未核实'}
 export function mount(root:HTMLElement, embedded?:MeetingDisplay) {
   let meeting=embedded?parseMeeting(new TextEncoder().encode(JSON.stringify(embedded))):null,roundIndex=0
   let result:Result|null=null, selected=packet.items[0].itemId, filter='all', generation=0
@@ -19,7 +21,7 @@ export function mount(root:HTMLElement, embedded?:MeetingDisplay) {
     const r=result
     if(meeting){
       const m=meeting
-      provenance.append(el('h2',m.transportMode==='remote_mock'?'MockHTTP 协议结果 · 非真实模型验收':'远端响应观察声明 · 模型身份与能力未认证'),el('p',`会议状态：${m.meetingPhase} · 回执完整性声明：${m.receiptComplete} · 全部意见未核实`),el('p',`会议 ID：${m.meetingId}`,'mono'),el('p',`协议请求预留 ${m.budget.totalModels}/16 · 工具 ${m.budget.totalTools}/32 · 已返回 ${m.budget.received} · 未知 ${m.budget.unknown} · 未派发 ${m.budget.notDispatched}`),el('p',`原始复合回执 SHA-256：${m.receiptSha256}`,'mono'),el('p','显式本地转换器已校验回执链后生成此视图；浏览器只校验展示结构，不重放全部回执、不认证作者、模型或源PDF。只读审查，不授权新模型调用。','warning'))
+      provenance.append(el('h2',m.transportMode==='remote_mock'?'MockHTTP 协议结果 · 非真实模型验收':m.realDeepSeekExecuted?'声明收到远端响应 · 模型身份与能力未认证':'远端模式声明 · 未声明收到响应 · 非成功调用证明'),el('p',`会议状态：${phaseText[m.meetingPhase]}（${m.meetingPhase}） · ${m.receiptComplete?'回执声明完整不代表会议完成':'回执未声明完整'} · 全部意见未核实`),el('p',`会议 ID：${m.meetingId}`,'mono'),el('p',`协议请求预留 ${m.budget.totalModels}/16 · 工具 ${m.budget.totalTools}/32 · 已返回 ${m.budget.received} · 未知 ${m.budget.unknown} · 未派发 ${m.budget.notDispatched}`),el('p',`原始复合回执 SHA-256：${m.receiptSha256}`,'mono'),el('p','受控流程须先用显式本地转换器校验原回执链；本页不能证明已执行该转换。浏览器只校验展示结构，不重放全部回执、不认证作者、模型或源PDF。计数、模式与摘要均为未认证声明。只读审查，不授权新模型调用。','warning'))
       if(!m.rounds.length){detail.append(el('p','尚无已开始轮次；不补造专家意见。'));return}
       const rounds=document.createElement('select');rounds.setAttribute('aria-label','选择审读轮次')
       m.rounds.forEach((rd,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=`第 ${rd.number} 轮`;rounds.append(o)})
@@ -41,7 +43,7 @@ export function mount(root:HTMLElement, embedded?:MeetingDisplay) {
     detail.append(el('p',item.itemId,'eyebrow'),el('h2','人工编写测试主张（含反例）'),el('p',item.claim),el('p','这些主张由人工编写用于测试审读能力，不等于报告结论或已认定事实。','warning'),el('p',view.kind==='different'?'标签分歧 · 两侧意见并列保留':view.kind==='same'?'标签相同 · 不是共识或事实确认':'意见不完整 · 不能判定一致或分歧','badge'))
     const reportQuote=el('section',undefined,'report-quote');reportQuote.append(el('h3','固定报告逐字引用'),el('p','来自冻结报告文本片段的逐字引用；与下方模型选取引文分别展示。PDF 未重新认证。'),el('pre',item.citation.quote));detail.append(reportQuote)
     const columns=el('div',undefined,'columns')
-    roles.forEach((role,index)=>{const card=el('article',undefined,'card');card.append(el('h3',ROLE_NAMES[index]),el('p',`${role.status} · 模型轮次 ${role.modelCalls}/4 · 工具 ${role.toolCalls}/8`),el('p','ticketId' in role?(role.ticketId||'尚未发行票据'):role.runId,'mono'));const review=view.reviews[index]
+    roles.forEach((role,index)=>{const card=el('article',undefined,'card');card.append(el('h3',ROLE_NAMES[index]),el('p',`${roleText[role.status]||role.status}（${role.status}） · 模型轮次 ${role.modelCalls}/4 · 工具 ${role.toolCalls}/8`),el('p','ticketId' in role?(role.ticketId||'尚未发行票据'):role.runId,'mono'));const review=view.reviews[index]
       if(review){card.append(el('h4',`建议标签：${review.label}`),el('p',review.rationale),el('h4','不确定性'),el('p',review.uncertainty),el('h4','模型选取引文（精确子串不代表语义正确）'),el('pre',review.quote))}
       else card.append(el('p','该角色没有已接受的完整意见，不补造答案。'))
       columns.append(card)
