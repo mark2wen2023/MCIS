@@ -1928,7 +1928,28 @@ paths:
   /api/v1/cases/{caseId}/recommendations/{recId}:
     parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recId' }]
     get: { tags: [recommendations], summary: 单条建议, responses: { '200': { description: ok } } }
-    patch: { tags: [recommendations], summary: progressPct（仅 Responded，= SetProgress）/ 内容字段（仅 Draft）；不改状态, responses: { '200': { description: ok } } }
+    patch: { tags: [recommendations], summary: progressPct（仅 Responded）/ 非正文内容字段（仅 Draft）；正文须带版本走body-edit，否则428, responses: { '200': { description: ok } } }
+  /api/v1/cases/{caseId}/recommendations/{recId}/body-edit:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recId' }]
+    get:
+      tags: [recommendations]
+      summary: 读取正文编辑基线及最近20份完整正文变更；非事实批准
+      responses: { '200': { description: 'BodyEditView; see recommendation-body-edit.md' }, '403': { $ref: '#/components/responses/Problem' } }
+    put:
+      tags: [recommendations]
+      summary: 带版本保存草拟正文；旧版本409，无变化不写审计
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [expectedVersion, body]
+              properties:
+                expectedVersion: { type: string, pattern: '^[0-9a-f]{64}$' }
+                body: { type: string, maxLength: 20000 }
+      responses: { '200': { description: 'BodyEditView' }, '403': { $ref: '#/components/responses/Problem' }, '409': { $ref: '#/components/responses/Problem' }, '422': { $ref: '#/components/responses/Problem' } }
   /api/v1/cases/{caseId}/recommendations/{recId}:transition:
     parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/recId' }]
     post:

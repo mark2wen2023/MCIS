@@ -1,6 +1,7 @@
 import { useState, useSyncExternalStore, type DragEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
+import { RecommendationBodyEditor } from '../recommendationEdit/BodyEditor'
 import { RecommendationReview } from '../recommendationReview/RecommendationReview'
 import { ConsultationPanel } from '../consultation/ConsultationPanel'
 import { SERVICE_ADDR } from '../config'
@@ -49,6 +50,7 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
   const [dropCol, setDropCol] = useState<string | null>(null)
   const [pending, setPending] = useState<{ id: string; to: RecStatus } | null>(null)
   const [creating, setCreating] = useState(false)
+  const [bodyRevision, setBodyRevision] = useState(0)
 
   const all = (board.data?.columns ?? []).flatMap((c) => c.items)
   const sel = all.find((r) => r.id === selId)
@@ -123,7 +125,8 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
         </div>
       </Panel>
 
-      {sel && <RecommendationReview caseId={caseId} recId={sel.id} />}
+      {sel && <RecommendationBodyEditor caseId={caseId} recId={sel.id} onSaved={() => { setBodyRevision(v => v + 1); refresh() }} />}
+      {sel && <RecommendationReview key={bodyRevision} caseId={caseId} recId={sel.id} />}
 
       <div className="grid w7-columns">
         {sel ? (
