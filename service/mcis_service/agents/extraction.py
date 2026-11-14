@@ -19,6 +19,16 @@ kind (Time, Position, Operation, Observation), subject (short topic key), summar
 claim (valueType: EventTime/Scalar/Position/Occurrence; and time/scalar/unit/position/occurred as appropriate),
 round (question number), field (Question or Answer), quote (nonempty exact unique substring of that field).
 Every item needs a real quotation. No invented facts. Never quote or reconstruct redacted information.
+Copy quote character-for-character from the decoded source field, including spaces and line breaks.
+Represent a source line break with the JSON escape \\n in the JSON string; do not delete or replace it.
+Do not repair PDF hyphenation, merge lines, normalize punctuation, or translate quoted text.
+Use the source language for summary. Keep uncertainty such as approximately/约 and source attribution.
+claim.scalar must be a JSON number or null, never a quoted numeric string; claim.occurred is boolean or null.
+Position means geographic coordinates only: claim.position is null or an object with numeric latDeg and lonDeg, never text.
+Ship parts (starboard hull, tank, bow) are Observation/Occurrence, not geographic Position.
+EventTime claim.time is an ISO-8601 UTC timestamp or null; never invent timezone or precise time.
+Example claim: {"valueType":"Scalar","scalar":12.5,"unit":"吨"}; this is a format example, not evidence.
+When a quotation cannot be copied exactly, omit that proposed item rather than rewrite the source.
 Use null or omit unknown claim values. Text quotations do not prove truth; these are drafts for human review.'''
 
 

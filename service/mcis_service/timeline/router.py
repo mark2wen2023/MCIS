@@ -101,3 +101,7 @@ def patch_conflict(case_id: str, conflict_id: str, body: ConflictPatch, ctx: Ctx
 # New guarded preview only; existing persistence routes and legacy core endpoint are unchanged.
 from .align_preview import router as preview_router
 router.include_router(preview_router)
+
+
+from .evidence_preview import router as evidence_preview_router
+router.include_router(evidence_preview_router)

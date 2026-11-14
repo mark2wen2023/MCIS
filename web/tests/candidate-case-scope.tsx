@@ -1,0 +1,25 @@
+import {strict as assert} from 'node:assert'
+import {Window} from 'happy-dom'
+const window=new Window({url:'http://localhost/'})
+Object.assign(globalThis,{window,document:window.document,localStorage:window.localStorage,HTMLElement:window.HTMLElement,IS_REACT_ACT_ENVIRONMENT:true})
+const {act,createElement}=await import('react');const {createRoot}=await import('react-dom/client')
+const {RegisteredPreviewPanel}=await import('../src/align/RegisteredPreviewPanel')
+const {setIdentity}=await import('../src/api');setIdentity('Investigator','scope-review')
+const e=(id:string,extra:Record<string,unknown>={})=>({caseId:'CASE-A',evidenceId:id,category:'Document',title:id,relativePath:'raw/evidence-intakes/'+'b'.repeat(64)+'/source.bin',currentSha256:'c'.repeat(64),status:'Unverified',needsReview:false,...extra})
+const container=document.createElement('div');document.body.append(container);const root=createRoot(container)
+let checks=0;const check=(f:()=>void)=>{f();checks++}
+const items=[e('EV-001'),e('EV-001',{caseId:'CASE-B',title:'other-case-secret-title'}),e('EV-002',{caseId:'CASE-B'}),e('EV-003',{caseId:undefined}),e('EV-004',{currentSha256:'invalid'}),e('EV-005',{relativePath:'archive/old.csv'}),e('EV-006',{needsReview:true}),e('EV-007',{status:'Mismatch'})] as any
+await act(async()=>root.render(createElement(RegisteredPreviewPanel,{caseId:'CASE-A',items})))
+const options=()=>Array.from(container.querySelector('fieldset select')!.querySelectorAll('option'))
+check(()=>assert.deepEqual(options().map(x=>x.value),['','EV-001','EV-006','EV-007']))
+check(()=>assert(!container.textContent!.includes('other-case-secret-title')))
+check(()=>assert(options().find(x=>x.value==='EV-006')!.disabled))
+check(()=>assert(options().find(x=>x.value==='EV-007')!.disabled))
+check(()=>assert(!options().find(x=>x.value==='EV-001')!.disabled))
+await act(async()=>root.render(createElement(RegisteredPreviewPanel,{caseId:'CASE-B',items})))
+check(()=>assert.deepEqual(options().map(x=>x.value),['','EV-001','EV-002']))
+await act(async()=>root.render(createElement(RegisteredPreviewPanel,{caseId:'CASE-C',items})))
+check(()=>assert(container.textContent!.includes('暂无本地登记来源')))
+check(()=>assert.equal(options().length,1))
+await act(async()=>root.unmount());await window.happyDOM.abort()
+console.log(checks+' candidate scope HappyDOM checks passed; no network/browser proof');process.exit(0)

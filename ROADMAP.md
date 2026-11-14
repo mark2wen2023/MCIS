@@ -368,3 +368,129 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 | 2026-11-12 | Report output A | 受限独立验收通过 | 最终独立49 passed/11.56s，20SHA前后匹配；真实双格式单render/原文不变/审计关联、实际第二连接改报告或策略后409/403、故障全表回滚与commit后交付失败各有证明。真浏览器2正常下载+2真实commit后故障替换+1真实commit后身份迟响应丢弃，最终5审计；8独立客户端坏结构/错绑拒绝。实际2MiB报告及16MiB输出边界与其余缩小limit测试区别详见独立REPORT；未穷尽多worker/真实切案/全部变体。无服务端原件保存、无.mcase文件恢复、无签署认证；B仅计划，不部署不触W11。 |
+
+
+## SK-T01 read-only preview research increment (2026-11-13)
+Native subtask implementation, not separate Codex app. `research/skills_timeline/` follows draft design PR #55, with injected trusted repository/core ports and strict source/digest/version boundary checks. No production contracts or W2 frozen files changed. 19 local synthetic Python tests passed; FakeCore does not run W2 or an LLM. Independent review in module REVIEW.md. No .NET here: actual W2 transport, production permissions, source clock uncertainty, UI/persistence remain pending. Do not mark full Skill complete or production-ready; do not merge/deploy as an operational feature.
+
+
+## SK-T01 exact source-reference binding (2026-11-13)
+Native subtask + independent review, not Codex app execution. Draft #56 now binds each a/b sourceLabel exactly to selected frozen snapshots; rejects unknown/self/duplicate references and untrusted evidenceId. 32 synthetic tests plus 8 independent tests pass. This is reference binding only, not original media or observation-value verification. No actual W2/.NET, production authorization, UI or LLM executed. No merge/deployment; REVIEW_BINDING.md records limits.
+
+
+## SK-T01 pre-compute snapshot recheck (2026-11-13)
+Native implementation subtask and independent review, not Codex app execution. Rechecks the full snapshot set before core dispatch and retains the post-compute check. 47 synthetic regression tests plus 6 independent probes passed. This is not an atomic authorization lease: TOCTOU, real W2/.NET, production permission integration, original media, UI and LLM remain unverified. No merge/deployment.
+
+
+## SK-T01 actual W2 roundtrip acceptance (2026-11-13)
+Native implementation + separate native reviewer, not Codex app execution. Draft #56 clean fixed-source offline direct-Roslyn build with official SDK8.0.428/runtime8.0.34: 67 synthetic tests plus 10 actual W2 tests on fictional NMEA, independent rerun 77 passed/zero skipped. Source binding, conflict/equal/disjoint times, invalid checksum, malformed/missing timestamps, timezone equivalence, circular headings and revocation response verified within this scope. Standard MSBuild blocked on NuGet-Migrations mutex; no NuGet access or permission bypass. No production repository/auth, bounded transport, API/UI, LLM or real evidence acceptance; no core implementation changes, merge or deployment. Reproduction and limits: research/skills_timeline/REVIEW_REAL_W2.md.
+
+
+## SK-T01 public-report source checkpoint (2026-11-13)
+Native implementation + independent review: 80 local tests passed, zero skipped (prior 77 plus 3 provenance/format/actual-W2 report replay cases). Pinned Yangze22 public-report extraction, same ship/same instant HDG47/48 from figures6/27; no COG substitution or fake NMEA. Existing W2 CSV replay yields no default-threshold conflict, not a consistency verdict. PDF numeric pixel readings, original telemetry, clock calibration and source independence remain unverified. Current NMEA-only Skill deliberately rejects report-derived CSV; no production/API/UI integration claimed. See research/skills_timeline/PUBLIC_REPORT_REPLAY.md and PUBLIC_REPORT_REVIEW.md. No existing core source changes, merge/deployment.
+
+
+## SK-T01 original public-report figure review (2026-11-13)
+Official PDF downloaded and Git blob hash matched repository cf781937. Two native agents independently read figures6/27: same IMO9958212, AIS heading47/course54 versus VDR True Heading48. UTC/LMT both display14:01:54; no inferred LMT timezone correction. Structured source/page/crop/identity/time review added, investigatorApproval pending. Independent83/83 local tests passed/zero skipped (previous80 +3 record binding tests); Python tests do not prove image reading. Supersedes earlier unreviewed-image limitation only; original telemetry, sensor accuracy, clock calibration, independent evidence, production repository/API/UI/LLM remain unverified. No core edits, merge or deployment. See research/skills_timeline/PUBLIC_REPORT_VISUAL_REVIEW.md.
+
+
+## SK-T01 real service exit-boundary integration (2026-11-13)
+Existing timeline/align-preview now opens a fresh database session after calculation,
+rechecks timeline access and rejects a changed caseEpochUtc before returning.
+70 targeted local tests passed across existing/new service and independent W4
+suites, including3 actual-core cases; other core cases use test doubles.
+Native implementation + independent acceptance; not a separate Codex app task.
+No evidence-ID integration or authenticated production identity claimed.
+No merge/deployment. See tests_acceptance/SKT01_EXIT_RECHECK/REPORT.md.
+
+
+## Timeline draft target-permission fix (2026-11-13)
+Confirmed/Modified timelineEvent review now requires existing timeline ReadWrite inside the review transaction, in addition to agent_drafts permission. Real temporary SQLite reproduction showed old ReadOnly reviewer could create event; independent historical in-memory repro confirms.15 new regression cases passed; final targeted17 includes independent repro and existing authorized flow. Existing broader agent/interview tests are NOT all green:8 pass/1 failure/31 setup errors identical before/after this patch (full-interview access403); no tests removed or permission policies loosened. Rejected remains compatible and creates no event. No evidence-version binding, production authentication, CI/LLM, merge/deployment claim. See tests_acceptance/TIMELINE_DRAFT_PERMISSION/REPORT.md and contracts/timeline-draft-target-permission.md. Native implementation+independent review.
+
+
+## W20 regression fixture migration (2026-11-13)
+Current full-original gate correctly denies default Investigator; empty-only creation and signed-record protection made older fixtures obsolete. Tests now use authorized Lead without altering product policy, create empty then append via API, preserve signed seed unchanged, and retain positive unsigned statement-review flow. Native implementation+independent reviewer:46 local tests passed/zero skips, including extra stored-original validation; real SQLite/API, fake LLM/local protocol server, existing actual W2 core checks. Adds explicit Investigator/AgentService denial and inference-time revoke/source-change tests. No product permission relaxation, CI/full-system/auth/LLM certification, merge or deployment. See tests_acceptance/AGENT_FIXTURE_MIGRATION/REPORT.md. Earlier8/1/31 result refers to obsolete fixtures, not current migrated tests.
+
+
+## Timeline evidence binding design gate (2026-11-13)
+Inspected actual registration/custody/draft/import/archive paths. Independent review rejects trusting payload sourceSnapshot or needsReview=false: generic package import can carry draft JSON and new local receipt storage needs explicit archive semantics. Selected next slice is server-owned local receipt with source incarnation/version, review-time recheck and old/imported drafts remaining unbound; NOT yet implemented. Three real SQLite model-premise tests pass (Change currentSHA, Review not approval, Access not content change). No functional source binding/LLM/UI completion claim, product edits, merge or deployment. See contracts/timeline-evidence-binding-plan.md.
+
+
+## Timeline binding entry boundary (2026-11-13)
+Preparatory real-service slice reserves exact timelineSourceBinding root/direct-payload field and timeline-bindings package namespace: generic submit/review and .mcase import reject claimed authority before writes. No receipt table, archive whitelist or evidence source mutation. Independent review caught review-payload injection and it was fixed before push. Independent21/21 new tests and final combined95/95 local tests pass, zero skips; existing package9 included. Legacy unbound draft+registered original bytes roundtrip preserved; similar ordinary names not matched. Complete evidence version binding/receipt issuance remains NOT implemented. See contracts/timeline-binding-entry-boundary.md. Native subtasks, fake LLM only, no CI/auth/merge/deployment claim.
+
+
+## Registered evidence CSV timeline preview (2026-11-13)
+Real read-only API /timeline/registered-align-preview now resolves only current local evidence-intake CSV IDs, validates actual original-byte/registration hashes and existing source permissions, invokes existing W2, then rechecks sources/access/epoch. No caller text/path/approval accepted; no receipt table, archive whitelist, signed record or original edit. Strict finite ASCII numeric/explicit-timezone CSV,256KiB/source,4 sources; core import Error rejects. Independent30/30 and final selected195/195 local regressions passed, zero skips; includes real loopback HTTP+W2 five-degree conflict. Other core probes are doubles; no real LLM/UI, durable receipt, factual approval, production auth or atomic lease claim. Native implementation+independent reviewer; no merge/deploy. See contracts/timeline-registered-preview.md.
+
+
+## SK-T01 registered-evidence workbench slice
+- Added investigator selection of registered evidence IDs + CSV mapping, linked to real read-only registered-align-preview API; shows source hashes and uncalibrated/no-fact-approval boundaries.
+- Identity/case/source metadata or mapping changes invalidate results; cancel discards late output, not a server cancellation promise.
+- Local TypeScript/Vite build and 18 independent HappyDOM/control-fetch assertions passed. Separate local uvicorn + actual W2 HTTP used two synthetic CSVs and returned 200 / 5-degree difference; no live LLM involved.
+- Browser E2E remains pending: cloud browser could not reach execution-workspace localhost. No CI/full-suite claim, no merge/deploy. See contracts/timeline-registered-workbench.md and web/tests/registered-acceptance.
+
+
+### SK-T01 real transport acceptance follow-up
+- Reproducible isolated runner now exercises actual frontend request/parser code over native fetch → dynamic localhost Vite proxy → FastAPI → actual W2 (no response mocks): 6 real requests, synthetic 45/50° CSV registration, 5° result, AgentService403, no-store request option, pre-dispatch abort. Independently executed and repeated, exit0.
+- Registered-preview backend focused suite rerun with real-core acceptance enabled:30 passed, no skips. This is not whole-project CI.
+- Actual browser still cannot reach execution-workspace localhost, including approved localhost service attempt. No public exposure/workaround; visual/full-browser E2E stays pending. Services stopped. See web/tests/registered-network.README.md.
+
+
+### SK-T01 investigator-declared comparison scope
+- Read-only workbench now captures vessel label, source nature (including report extract), source title, page/table/record locator, time-basis explanation and heading-reference declaration. This is caller-declared, NOT verified semantic binding or human approval.
+- Server enforces all-or-none context, same exact trimmed vessel label, same quantity and one mapping per source; true-heading declaration required for Heading (no magnetic conversion). Existing context-free requests remain explicitly unscoped. UI validates echoes and clears changed declarations; source SHA checks are separately shown.
+- Independent12 backend +23 HappyDOM assertions pass; combined focused backend42/42 including actual-core acceptance; actual proxy/W2 transport7 requests pass; TS/Vite build passes. Synthetic sources only, no public report extraction, no live LLM. Browser visual/E2E still pending; no merge/deploy. See contracts/timeline-comparison-scope.md.
+
+
+### SK-T01 YANGZE22 public-report registered-flow acceptance
+- Independently rechecked pinned public PDF hash/pages17/41: figure6 heading47 has unknown reference; figure27 True Heading48 uses explicit UTC14:01:54. Same published-report family, not independent original telemetry.
+- Real HTTP normal intake registered two Document CSV derivatives with report/page/hash declarations. Joint scoped request correctly422 (unknown reference), no unscoped fallback or fabricated certainty; figure27 single-source actualW2 returns200, uncalibrated/not_assessed. This is not cross-source consistency. Preview only leaves post-registration DB unchanged.
+- New test independently1/1; focused combined backend43/43 with actual-core config, no skips. No browser/LLM/CI claim. Product still lacks server-owned validated PDF-version→CSV relationship; pinned hash is test safeguarding, citation is caller declaration. No new PDF uploaded, merge or deployment. See contracts/public-report-registered-acceptance.md.
+
+
+## Timeline CSV malformed timezone minute guard
+Python datetime.fromisoformat normalizes malformed +00:60/+01:99 offsets. Registered preview now rejects timezone minute fields above59 before core dispatch. Existing ±14h guard retained. No timestamp rewriting, clock calibration, source trust or interface expansion. Native implementation subtask and separate native reviewer, not Codex app execution.
+
+13 new API/SQLite tests passed; independent rerun13/13 and84 direct timezone boundary probes passed. Focused31/31 includes existing18 registered-preview cases and2 actual W2 tests (one real loopback HTTP). Zero skips. Core is a double in new syntax tests. Initial isolated-copy run had missing report seed setup errors; seed copied from same source and full focused rerun passed. No browser/LLM/CI/full-system claim, merge or deployment.
+
+
+## Transient registered parent-report reference
+Native implementation and separate native reviewer. Registered CSV preview accepts an optional same-case locally registered Document/.pdf ID+SHA declaration; verifies parent bytes/registration/permissions/review state before and after W2. Separate reportSnapshots bind checked parent byte versions to extract IDs but relationshipStatus remains user_declared_not_verified. No semantic extraction, valid-PDF, independent-source or fact-approval certification. Shared parent remains explicit; no mutation, receipt table/archive changes or durable approval.
+
+Independent24/24 tests pass (20 primary +3 independent +1 public-report HTTP/W2). Final selected79/79 local regressions pass with zero skips, including actual W2/loopback tests. Pinned YANGZE22 public PDF now actually registered and referenced by known report extracts; unknown AIS heading vs true VDR remains rejected, single VDR preview unapproved. A separate synthetic CSV deliberately attached to real PDF verifies that semantic relation is NOT validated. No browser/UI parent chooser, real LLM, CI/full-system, merge or deployment claim. Legacy no-parent requests remain supported. See contracts/timeline-parent-report-preview.md.
+
+
+| 2026-11-13 | Timeline source-incarnation prerequisite | 待独立补测/草稿 | Native subtask; new local-case original intake gets UUID + full history marker, ordinary/legacy/imported old sources not activated. Local targeted65 passed/2 skipped (actual W2 config absent); source7 passed. No approval/save/binding/UI/LLM completion claim; see contracts/source-incarnation-foundation.md and tests_acceptance/SOURCE_INCARNATION/REPORT.md. Frozen logs/source-incarnation-impl-hashes-frozen.txt; draft #56 only, no merge/deploy. |
+
+| 2026-11-13 | Timeline source-incarnation prerequisite | 本切片独立复验通过/草稿 | Independent native reviewer7/7 passed, zero skips, frozen hashes identical. Broader local65 passed/2 skipped; no actual W2 claim from skips. No full lifecycle/UI/LLM completion, merge or deployment. |
+
+
+| 2026-11-13 | Server-generated unreviewed snapshot preflight | 本前置切片独立验收/草稿 | Native implementation + independent native reviewer.19/19 (1 actual W2) +4 independent passed; selected78 passed/3 existing opt-in skips. Short transactions before/after core check case/source/parent identities+bytes+access; no caller result accepted. Internal only, no saved-result lifecycle/endpoint/table/approval/LLM/UI claim. Contract timeline-unreviewed-result-preflight.md; frozen hashes logs/unreviewed-preflight-impl-hashes-frozen.txt. No merge/deploy. |
+
+
+| 2026-11-13 | Unreviewed history access/capacity prerequisite | 本安全前置独立验收/草稿 | Native implementation+review. Closed audit and access-workbench historical marker leaks; export gated.17+5 independent tests passed; selected61/61 zero skips. Capacity helper tested but no save operation. Storage/index/strict historical envelope parser remain DESIGN ONLY, not persistence completion. Modern non-default-policy restore/export restriction unchanged. Frozen logs/unreviewed-history-boundary-impl-hashes-frozen.txt; no merge/deploy. |
+
+
+| 2026-11-13 | Strict unreviewed history schema/import boundary | 本历史格式切片独立验收/草稿 | Native implementation+review.35 primary +12 independent =47/47; selected92/92 zero skips. Machine schema+cross-links/budgets, both imports reject before writes, export checks after authorization, exact historical roundtrip without live index. Save/index/approval still OFF; historical validity is not authenticity. Frozen logs/unreviewed-history-schema-impl-hashes-frozen.txt; no merge/deploy. |
+
+
+| 2026-11-13 | Internal unreviewed run save/retry/history | 内部闭环独立验收/草稿 | Native implementation+review. Atomic final-transaction audit+index save, current-state scoped retry, concurrent operation winner, corruption/rollback refusal, history-only restore.25 primary; independent32/32 incl1 actual W2; final136/136 zero skips. This supersedes earlier save-OFF status only for internal service; no HTTP/UI/approval/production identity. Frozen logs/internal-unreviewed-save-impl-hashes-frozen.txt. No merge/deploy. |
+
+
+## Unreviewed HTTP API: default-closed prerequisite
+Design and negative tests only; no product implementation, registered route, builder, feature switch or identity integration. Legacy X-MCIS role/operator headers are forgeable and MUST NOT authorize result persistence. Real per-case identity/session authorization must be enforced at initial/final reserved write transactions, including replay, before activation.
+Independent 8/8 tests pass (4 spoofed roles and unauthenticated GET/POST/PUT remain404, no database writes, no OpenAPI route); repeated8/8 pass. Existing internal-save regression37/37 includes one actual W2 invocation, not real authentication/browser/CI/LLM validation. Internal save remains available only to existing trusted service callers; investigator-facing API remains NOT IMPLEMENTED. See contracts/unreviewed-api-design.md and tests_acceptance/UNREVIEWED_API_CLOSED/REPORT.md. No merge/deployment.
+
+| 2026-11-14 | Pi transcript bounded trial | 独立切片验证通过，真实模型待接 | 官方Pi1.5.2真实Agent循环；Python同DB权限/来源重核只读工具；4模型/8工具/120秒，无写/事实批准。Node18/18、Python54/54零跳，真实虚构Pi→stdio→SQLite三轮两工具一PendingReview通过。仅模拟provider，远程模式关闭；非真实DeepSeek+Pi/浏览器/生产UI/CI，未合并部署。见tests_acceptance/PI_TRANSCRIPT。 |
+
+| 2026-11-14 | Pi + DeepSeek远端只读工具试验 | 实现/离线独审通过；真实最终提案待验 | canonical history及callId严格匹配，单独显式授权host，固定官方HTTPS与总deadline。Node34/34、Python相关148/148零跳，恢复独审remote63/63。真实公开段第三次确实3轮DeepSeek/2工具后终稿拒绝，第四次执行会话丢失终态未知未重试；不称最终验收完成。见tests_acceptance/PI_TRANSCRIPT/REMOTE_LIVE_STATUS.md。未合并部署。 |
+
+
+| 2026-11-14 | Pi + DeepSeek → working-review UI → supplemental archive | 已完成隔离纵向切片验收，草稿 50da935 | Supersedes earlier real-Pi-final-pending status only for the bounded public-text trial. Real run 5d3b415b: 3 provider requests / 2 tools / 6 proposals and citations; existing React/HappyDOM per-item review, remount/read, v2 export/import/history roundtrip preserved full candidates/citations. Scripted review only; factActivated=false; temporary DB cleaned, exit0. Independent broker12/12 and launcher3/3; related50/50, strictTS. Not browser-engine, production authentication, permanent user storage, complete-case accuracy or CI. Historical fourth run remains unknown. See tests_acceptance/PI_PUBLIC_UI/LIVE_RESULT.md. No merge/deploy. |
+| 2026-11-14 | Version-pinned investigation extraction Skill | 设计登记／开发中 | Reuse actual bounded Pi extraction chain; native backend/UI implementation and separate native safety/UI acceptance. Pin built-in manifest to authorization and v2 working execution metadata, retain v1 legacy attribution and history-only archives. No uploaded Skill/code execution, new tool authority or professional certification. Not yet verified. |
+| 2026-11-14 | Version-pinned investigation extraction Skill | 本业务切片独立验收通过／草稿 | Built-in source-extraction1.0.0 pins actual prompts/tools/budgets to disclosure and execution v2; current/archived review UI displays version without inferred v1 attribution or historical authority. Related Python198/198 zero skips; independent backend16/16; UI26+independent31 and old30+28, strictTS; Node87. Actual Pi→working→UI→archive fixture run7dac16e4 preserved Skill/ref/citations with0 provider requests, scripted review and cleanup/exit0. No new real-model/semantic-support/browser/production/CI claim. Freeze logs/pi-skill-impl-hashes-frozen.txt; tests_acceptance/PI_SKILL/REPORT.md. No merge/deploy. |
+| 2026-11-14 | Provisional semantic-support evaluation | 研究业务切片独立验收通过／草稿 | 11 pinned public-report-derived claims: exact-location and suggested supported/conflicted/insufficient axes separate; 2 suggestions undecided. Offline comparison and empty/two-reviewer snapshot support, identities/expertise unverified, disagreement preserved, no fact activation/accuracy score. Final44/44 (primary16+independent28), source-page independent check, actual no-network CLI10 exact+1 deliberate mismatch; fixture predictions only,0real model/0experts. research/semantic_support/REPORT.md; freeze logs/semantic-support-impl-hashes-frozen.txt. Not production/Pi/real-model semantic evaluation; no merge/deploy. |
+| 2026-11-14 | Pi + DeepSeek public-source semantic blind run | 一次真实能力试验完成／草稿 | Actual run36c8d113 completed3 real requests/2 tools/11 predictions with frozen opaque-ID public-source input, no reference labels/rationale supplied, no retry, exit0. Two provisional label differences and omitted-qualifier undecided case retained for experts, no accuracy/fact approval. Independent safety32/32 plus input2 and Node2 scripts; fixture tests only engineering. Artifacts research/semantic_support/BLIND_RUN.md and blind-real-*; freeze logs/semantic-blind-impl-hashes-frozen.txt. No production mount/merge/deploy. |
+| 2026-11-14 | Original-quotation human-review reminder | UI切片待独审结案／草稿 | Shared current/archive quote component preserves original text and pre-wrap whitespace, separates AI summary/claim, reminds qualifier/missing-record/semantic-support checks without automated verdict or rewriting. New5+independent7 DOM checks passed; prior30+28+26 and strictTS passed. No new model call/RPC/schema/production/browser-engine claim. tests_acceptance/SOURCE_QUOTE_REVIEW/REPORT.md. No merge/deploy. |
+| 2026-11-14 | Original-quotation human-review reminder | 本UI切片独审通过／草稿 | Independent reviewer found no blocker; new7+primary5 and prior Pi/Skill/legacy working/archive tests and strictTS passed. No automatic semantic judgment or authority change. Freeze logs/source-quote-review-impl-hashes-frozen.txt; independent report tests_acceptance/SOURCE_QUOTE_UI/INDEPENDENT.md. No new model request/merge/deploy. |

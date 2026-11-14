@@ -1,0 +1,13 @@
+# Offline provisional semantic-support comparison
+
+Read and registered against contracts/pi-investigation-skill.md before implementation. No network, model execution, production persistence or factual activation.
+
+Corpus exact keys: schemaVersion=1, corpusId, provenance=assistant_constructed_provisional_not_expert_certified, items. Each item: id, sourceText, sourceSha256 (SHA256 of exact UTF8 text), sourceLocator {url,pdfSha256,pdfPage,printedPage,section}, claim, citation {start,length,quote}, suggestedLabel, rationale. Citation coordinates are Unicode code points, NOT UTF16; explicit spans disambiguate repeated text. Input source hash must match. Citation output is independently exact/not_exact/out_of_bounds, never a semantic verdict.
+
+Predictions exact keys: schemaVersion=1, corpusSha256 (raw corpus file bytes), origin (scripted_fixture or model_output_unverified), predictions. Each: itemId,label,rationale. All corpus items exactly once. Labels supported/conflicted/insufficient are external proposals of unverified provenance, always unreviewed (including scripted fixtures; not asserted to be real model outputs); comparison to corpus suggestions is provisional, not accuracy/gold-standard validation.
+
+Optional reviews exact keys: schemaVersion=1, corpusSha256, reviewers, opinions. Reviewer: reviewerId,displayName,qualificationStatement,origin (user_submission_unverified or scripted_test). Opinion: itemId,reviewerId,label,rationale. At most two distinct reviewer records; duplicate IDs and duplicate item/reviewer opinions rejected. IDs lowercase ASCII. Identity, qualifications and independence are self-reported, never authenticated; different aliases cannot establish two real people. Scripts do not count as humans. Opinions and disagreement preserved; no vote/consensus as truth. CLI reads input snapshots without modifying them; revisions must be separate files, never overwrites prior reviews.
+
+All JSON rejects duplicate keys, unknown fields, nonfinite numbers, boolean-as-integer, excessive bytes/depth/counts, invalid hashes and duplicate IDs. Corpus <=100 items, each source <=24000 characters, each input file <=4MiB, depth<=10. No total accuracy, correctness rate or official expert certification is emitted. CLI emits JSON to stdout only; errors use a generic code without source data.
+
+Source locator fields are bounded declarations only: PDF pages positive integers, SHA256 lowercase; this offline tool does not fetch/verify the PDF. suggestedLabel may be null (expert adjudication pending), yielding suggestedComparison=not_labeled. Different provisional labels are not errors/accuracy. Review inputs are single snapshots, not an append-only revision history or tamper-proof audit.

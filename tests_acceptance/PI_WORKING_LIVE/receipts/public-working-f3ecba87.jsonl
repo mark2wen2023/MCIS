@@ -1,0 +1,14 @@
+{"version":1,"runId":"f3ecba87-a33e-4927-92cd-55e2148dcf88","sequence":1,"at":"2026-11-14T03:42:27.188Z","phase":"started","errorCode":null,"saved":false}
+{"version":1,"runId":"f3ecba87-a33e-4927-92cd-55e2148dcf88","sequence":2,"at":"2026-11-14T03:42:34.105Z","phase":"host_ready","errorCode":null,"saved":false}
+{"version":1,"runId":"f3ecba87-a33e-4927-92cd-55e2148dcf88","sequence":3,"at":"2026-11-14T03:42:34.140Z","phase":"model_request_started","models":1,"tools":0,"errorCode":null,"saved":false}
+{"version":1,"runId":"f3ecba87-a33e-4927-92cd-55e2148dcf88","sequence":4,"at":"2026-11-14T03:42:48.271Z","phase":"model_request_returned","models":1,"tools":0,"errorCode":null,"saved":false}
+{"version":1,"runId":"f3ecba87-a33e-4927-92cd-55e2148dcf88","sequence":5,"at":"2026-11-14T03:42:48.354Z","phase":"tool_returned","models":1,"tools":1,"errorCode":null,"saved":false}
+{"version":1,"runId":"f3ecba87-a33e-4927-92cd-55e2148dcf88","sequence":6,"at":"2026-11-14T03:42:48.381Z","phase":"model_request_started","models":2,"tools":1,"errorCode":null,"saved":false}
+{"version":1,"runId":"f3ecba87-a33e-4927-92cd-55e2148dcf88","sequence":7,"at":"2026-11-14T03:42:56.387Z","phase":"model_request_returned","models":2,"tools":1,"errorCode":null,"saved":false}
+{"version":1,"runId":"f3ecba87-a33e-4927-92cd-55e2148dcf88","sequence":8,"at":"2026-11-14T03:42:56.483Z","phase":"tool_returned","models":2,"tools":2,"errorCode":null,"saved":false}
+{"version":1,"runId":"f3ecba87-a33e-4927-92cd-55e2148dcf88","sequence":9,"at":"2026-11-14T03:42:56.515Z","phase":"model_request_started","models":3,"tools":2,"errorCode":null,"saved":false}
+{"version":1,"runId":"f3ecba87-a33e-4927-92cd-55e2148dcf88","sequence":10,"at":"2026-11-14T03:43:03.975Z","phase":"model_request_returned","models":3,"tools":2,"errorCode":null,"saved":false}
+{"version":1,"runId":"f3ecba87-a33e-4927-92cd-55e2148dcf88","sequence":11,"at":"2026-11-14T03:43:04.059Z","phase":"tool_returned","models":3,"tools":3,"errorCode":null,"saved":false}
+{"version":1,"runId":"f3ecba87-a33e-4927-92cd-55e2148dcf88","sequence":12,"at":"2026-11-14T03:43:04.089Z","phase":"model_request_started","models":4,"tools":3,"errorCode":null,"saved":false}
+{"version":1,"runId":"f3ecba87-a33e-4927-92cd-55e2148dcf88","sequence":13,"at":"2026-11-14T03:43:32.895Z","phase":"model_request_returned","models":4,"tools":3,"errorCode":null,"saved":false}
+{"version":1,"runId":"f3ecba87-a33e-4927-92cd-55e2148dcf88","sequence":14,"at":"2026-11-14T03:43:32.926Z","phase":"not_accepted","errorCode":"MCIS_FINAL_UNVALIDATED_CHANGED","saved":false}

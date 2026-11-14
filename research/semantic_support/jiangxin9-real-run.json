@@ -1,0 +1,65 @@
+{
+  "status": "completed",
+  "runId": "33acba11-3c47-48d3-9ab5-64f103ce0c64",
+  "manifestDigest": "5a553a8dca41f1cbd1242f261d535aa66e19070c09f3b11abea5ec53c889bc9a",
+  "inputDigest": "a754aaeb1ff5a2d2852186bc513542356a3c93f44e00831ae7a686f4c6383c96",
+  "requestAttempts": 3,
+  "requestsCompleted": 3,
+  "realRequestsStarted": 3,
+  "modelCalls": 3,
+  "toolCalls": 2,
+  "realModel": true,
+  "transportMocked": false,
+  "factActivated": false,
+  "semanticSupportVerified": false,
+  "predictions": {
+    "schemaVersion": 1,
+    "corpusSha256": "f7a1a69f2f2bf51236ecfc734952c8249e87b0bbaf0e8913b006167900bff782",
+    "origin": "model_output_unverified",
+    "predictions": [
+      {
+        "itemId": "clock_elapsed",
+        "label": "supported",
+        "rationale": "图6受控转录时钟为20:55:53，图13受控转录时钟为20:55:09。53-09=44秒，图6比图13晚44秒，与claim一致。"
+      },
+      {
+        "itemId": "clock_same_instant",
+        "label": "conflicted",
+        "rationale": "图6时钟显示20:55:53，图13时钟显示20:55:09，两者相差44秒，并非完全相同的时刻，与claim矛盾。"
+      },
+      {
+        "itemId": "distance_proves_contradiction",
+        "label": "insufficient",
+        "rationale": "正文中3.4海里与3.5海里分别对应图6和图13两个不同时刻（时钟相差44秒），并非同一精确时刻；且数值均为约数（‘约’），不能仅凭两处约数差异即证明同一时刻自相矛盾。claim的推理前提不成立，证据不足。"
+      },
+      {
+        "itemId": "distance_false_precision",
+        "label": "conflicted",
+        "rationale": "正文写‘两船相距约3.4海里’，使用了‘约’字表近似，并非精确值3.4海里；claim称‘精确为3.4海里、没有任何测量误差’，与原文的近似表述不符。"
+      },
+      {
+        "itemId": "departure_page8_report",
+        "label": "supported",
+        "rationale": "第8页摘录明确写‘该轮2023年10月29日1648时左右从厦门港离泊’，与claim表述一致。"
+      },
+      {
+        "itemId": "departure_page11_report",
+        "label": "supported",
+        "rationale": "第11页摘录明确写‘2023年10月20日1947时左右，“江信9”轮从厦门港离泊开航’，与claim表述一致。"
+      },
+      {
+        "itemId": "departure_actual_29",
+        "label": "insufficient",
+        "rationale": "两段摘录对离泊日期给出不同说法（10月29日 vs 10月20日），彼此冲突，无法据此唯一确定‘真实’离泊日期一定是10月29日；需进一步核实。"
+      },
+      {
+        "itemId": "departure_typo_certain",
+        "label": "insufficient",
+        "rationale": "两段摘录仅显示日期时间记载不一致，并未提供证据证明哪一页是笔误或哪一页完全正确；且缺少其他核实材料，无法支持‘第8页为笔误、第11页完全正确’的结论。"
+      }
+    ]
+  },
+  "piVersion": "1.5.2",
+  "realPi": true,
+  "nodeCompleted": true
+}

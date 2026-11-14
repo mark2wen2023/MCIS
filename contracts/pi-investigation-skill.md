@@ -1,0 +1,11 @@
+# Trusted source extraction Skill 1.0.0
+
+This is an engineering-tested extraction procedure, not a legal standard or expert certification. It does not support external/user-supplied skills, dynamic prompts, new tools or expanded authority.
+
+The code-owned immutable JSON manifest pins both completion prompts, exact tool schemas, read/extract/validate/save/review steps, budgets and output restrictions with a literal SHA-256. Runtime checks fail closed if the manifest, tools or budgets differ. Each remote authorization disclosure includes the whole manifest and its exact {id,version,contentDigest} reference; the existing approval digest binds them with source, session, messages, tools and completion mode. The host retains the execution snapshot and verifies it again before saving. Exact remains the default completion mode.
+
+LLM proposes only; read-only tools fetch authorized source and validate original quotations; host alone stores its validated PendingReview candidate; investigator review is outside the model loop. No quote normalization, factual activation, liability decision or fabricated human review is allowed. Scripted review remains scripted_test.
+
+New execution.profile is pi-working-trial-v2, identical to v1 plus mandatory skillRef {id,version,contentDigest}. ID matches [a-z][a-z0-9.-]{0,99}; version is three decimal components separated by dots, at most 32 characters; digest is lowercase SHA-256. v1 remains readable with its exact original keys and no inferred Skill. Archive supplement-v2 envelope remains unchanged. Unknown historical Skill IDs/versions are inert declarations, validated structurally without registry lookup or execution. Matching a digest is not proof of execution or authority. Current saves require the server-owned same authorized manifest, not an imported declaration.
+
+Exact quotation matching is not semantic support or truth verification. Prompts require preserving approximations/qualifications, correct subject attribution, distinguishing absent records from negation and command signals from physical execution, and avoiding unsupported causal conclusions. These are instructions, not an implemented professional semantic validator. The existing exact_quote_match_only_not_fact_verification label remains unchanged.

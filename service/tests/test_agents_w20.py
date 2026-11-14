@@ -9,7 +9,12 @@ import pytest
 
 from mcis_service.agents import model_client
 from mcis_service.redaction.policy import default_policy
-from .conftest import C, H
+from .conftest import C, H as role_headers
+
+
+def H(role="LeadInvestigator", operator=None):
+    """Full-original fixtures require an authorized lead; never loosen policy."""
+    return role_headers(role, operator)
 
 RECORD = "IR-90"
 PATH = f"{C}/agents/people_ops/interviews/{RECORD}:extract"
@@ -30,9 +35,21 @@ def interview(client):
         "affiliation": "虚构", "phone": "13812345678", "idNumber": "123456789012345678"},
         "startUtc": "2026-11-12T00:00:00Z", "turns": [{"round": 1, "question": "请说明行动。",
         "answer": "我是测试甲，电话13812345678。😀随后右满舵避让。私人片段", "sensitiveFragments": ["私人片段"]}], "statements": []}
+    turns = doc.pop("turns")
     r = client.post(f"{C}/interviews", json=doc, headers=H())
     assert r.status_code == 201, r.text
-    return r.json()
+    for turn in turns:
+        added = client.post(f"{C}/interviews/{RECORD}/turns", json={k:v for k,v in turn.items() if k != "round"}, headers=H())
+        assert added.status_code == 201, added.text
+    from mcis_service.db import get_doc
+    from mcis_service.interviews.models import InterviewRow
+    from .conftest import CASE
+    with client.app.state.db.session() as session:
+        stored = get_doc(session, InterviewRow, CASE, RECORD)
+        for original, saved in zip(turns, stored["turns"], strict=True):
+            assert all(saved[key] == value for key, value in original.items())
+    # Span coordinates bind stored original, not a PII-masked GET rendering.
+    return {**r.json(), "turns": turns}
 
 
 @pytest.fixture()
@@ -91,13 +108,13 @@ def test_redaction_minimal_input_even_with_weakened_policy(client, interview, fa
     assert set(user) == {"turns"} and set(user["turns"][0]) == {"round", "question", "answer"}
 
 
-@pytest.mark.parametrize("role", ["Public", "ExternalExpert", "InterestedState"])
+@pytest.mark.parametrize("role", ["Public", "ExternalExpert", "InterestedState", "Investigator", "AgentService"])
 def test_forbidden_role_never_calls_model(client, interview, fake_model, role):
     assert client.post(PATH, headers=H(role)).status_code == 403
     assert fake_model == []
 
 
-@pytest.mark.parametrize("role,category", [("Investigator", "testimony"), ("AgentService", "testimony"), ("Investigator", "agent_drafts")])
+@pytest.mark.parametrize("role,category", [("LeadInvestigator", "testimony"), ("AgentService", "testimony"), ("LeadInvestigator", "agent_drafts")])
 def test_policy_denial_never_calls_model(client, interview, fake_model, role, category):
     p = default_policy();p["matrix"][role][category] = "Deny"
     assert client.put(f"{C}/access-policy", json=p, headers=H("LeadInvestigator")).status_code == 200
@@ -200,3 +217,43 @@ def test_redaction_union_in_original_coordinates():
 def test_nonfinite_or_invalid_unicode_model_output(client, interview, fake_model, monkeypatch, content):
     monkeypatch.setattr(model_client, "complete", lambda *_: content)
     assert client.post(PATH, headers=H()).json()["code"] == "MODEL_OUTPUT_INVALID"
+
+
+
+def test_legacy_statement_review_on_unsigned_record(client, interview, fake_model):
+    draft = execute(client)
+    assert review(client, draft).status_code == 200
+    st = client.get(f"{C}/interviews/{RECORD}", headers=H()).json()['statements'][0]
+    submitted = client.post(f"{C}/agents/drafts", headers=H(), json={
+        'agent':'people_ops','kind':'statement_extraction','targetEntityType':'statement',
+        'targetEntityId':st['statementId'],
+        'payload':{'recordId':RECORD,'statementId':st['statementId'],'summary':st['summary']},
+        'citations':[{'recordId':RECORD,'round':1,'quote':QUOTE}]})
+    assert submitted.status_code == 201, submitted.text
+    r = review(client, submitted.json(), 'Rejected')
+    assert r.status_code == 200, r.text
+    assert r.json()['effect'] == f"陈述 {st['statementId']} → Rejected"
+    saved = client.get(f"{C}/interviews/{RECORD}", headers=H()).json()["statements"]
+    assert next(item for item in saved if item["statementId"] == st["statementId"])["reviewStatus"] == "Rejected"
+
+
+@pytest.mark.parametrize('change', ['revoke', 'source'])
+def test_inference_time_change_does_not_save_draft(client, interview, fake_model, monkeypatch, change):
+    from mcis_service.db import list_docs
+    from mcis_service.agents.models import AgentDraftRow
+    from .conftest import CASE
+    with client.app.state.db.session() as s:
+        before = list_docs(s, AgentDraftRow, CASE)
+    def complete(*_):
+        if change == 'revoke':
+            p = default_policy(); p['matrix']['LeadInvestigator']['testimony'] = 'Deny'
+            assert client.put(f"{C}/access-policy", json=p, headers=H()).status_code == 200
+        else:
+            assert client.post(f"{C}/interviews/{RECORD}/turns", headers=H(), json={'question':'补充','answer':'新事实'}).status_code == 201
+        return json.dumps({'statements':[ITEM]}, ensure_ascii=False)
+    monkeypatch.setattr(model_client, 'complete', complete)
+    r = client.post(PATH, headers=H())
+    assert r.status_code == (403 if change == 'revoke' else 409), r.text
+    assert r.json()['code'] == ('FORBIDDEN' if change == 'revoke' else 'INTERVIEW_CHANGED')
+    with client.app.state.db.session() as s:
+        assert list_docs(s, AgentDraftRow, CASE) == before

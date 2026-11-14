@@ -181,8 +181,16 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
     from ..manual_interviews.models import InterviewRequestReceiptRow
     from ..interviews.access import begin, require_content
     begin(s)
+    from ..cases.incarnation import validate_archive_identity
+    from ..evidence_intake.incarnation import validate_archive_identities
     from ..recommendations.access import protect_package as protect_recommendations
     protect_recommendations(s, case_id, role)
+    from ..timeline.unreviewed_access import protect_package as protect_unreviewed
+    protect_unreviewed(s, case_id, role)
+    from ..timeline.unreviewed_history import validate_lines as validate_result_history
+    validate_result_history(audit.all_lines(s, case_id), case_id)
+    from ..timeline.unreviewed_storage import validate_local_history
+    validate_local_history(s, case_id)
     from ..working_records_archive.service import has_history, build as build_working
     track_root=blob_root/case_id/'raw'/'track-imports'
     track_namespace=track_root.exists()or track_root.is_symlink()
@@ -200,6 +208,8 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
             from ..hfacs_drafts import archive as hfacs_archive
             from ..package_intake.parser import parse_package
             files, working = build_working(s, blob_root, SimpleNamespace(role=role), case_id)
+            validate_archive_identity(s, case_id)
+            validate_archive_identities(s, case_id)
             hfacs = hfacs_archive.build(s, case_id, role)
             if hfacs is not None: files[hfacs_archive.PATH] = hfacs.raw
             row = s.scalars(select(CaseRow).where(CaseRow.case_id == case_id)).first()
@@ -230,6 +240,8 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
     protect_package(s, case_id, role)
     from ..interviews.access import protect_package as protect_interviews
     protect_interviews(s, case_id, role)
+    validate_archive_identity(s, case_id)
+    validate_archive_identities(s, case_id)
     # Refuse known incomplete backups only after full-content/source authorization.
     # Existing serializers omit reports/snapshots and import rejects testimony.
     from ..reports.models import ReportRow, ReportAuditRow
@@ -345,6 +357,8 @@ def _load_json(files: dict[str, bytes], rel: str, default: Any) -> Any:
 
 def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: str, *, validated_hfacs=None, validated_working=None) -> dict[str, Any]:
     files = read_zip(data)
+    from ..agents.binding_boundary import reject_client_binding, reject_package_binding_paths
+    reject_package_binding_paths(files)
     from ..working_records_archive.validation import PATH as working_path, ValidatedArchive as WorkingArchive
     namespace = [p for p in files if p.casefold() == 'working-records' or p.casefold().startswith('working-records/')]
     working_ok = isinstance(validated_working, WorkingArchive) and files.get(working_path) == validated_working.raw
@@ -380,6 +394,8 @@ def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: s
         if name.casefold() == 'agents/drafts.json':
             try: drafts = json.loads(raw.decode('utf-8-sig'))
             except (ValueError, UnicodeError): raise problem(422, 'BAD_PACKAGE', '草稿格式无效')
+            if isinstance(drafts, list):
+                for draft in drafts: reject_client_binding(draft)
             if not isinstance(drafts, list) or any(not isinstance(d,dict) or draft_related(d) for d in drafts):
                 raise problem(422, 'INTERVIEW_IMPORT_UNSUPPORTED', '此旧入口不支持恢复笔录派生草稿')
     from ..hfacs_drafts import archive as hfacs_archive
@@ -451,6 +467,11 @@ def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: s
         if not chk["valid"]:
             raise problem(422, "CHAIN_BROKEN", f"{name} 哈希链断裂", chk)
 
+    from ..timeline.unreviewed_history import validate_lines as validate_result_history
+    validate_result_history(audit_lines, case_id)
+
+    from ..cases import incarnation
+    identity = incarnation.allocate(s, case_id, "imported")
     put_doc(s, CaseRow, case_id, case_id, case)
     for observation in observations:
         put_doc(s, EnvironmentObservationRow, case_id, observation["observationId"], observation)
@@ -523,8 +544,10 @@ def import_case(s: Session, blob_root: Path, data: bytes, operator: str, role: s
         from ..working_records_archive.service import restore as restore_working
         restore_working(s, blob_root, validated_working, files)
     s.flush()
-    audit.append(s, case_id=case_id, operator=operator, role=role, action="package.import", category="Package",
+    event = audit.append(s, case_id=case_id, operator=operator, role=role, action="package.import", category="Package",
                  command=f"导入案件包 {case_id}", after=f"{report.get('generatorVersion')}；文件 {len(files)} 个；额外 {len(report['extraFiles'])} 个",
-                 entity_type="case", entity_id=case_id)
+                 entity_type="case", entity_id=case_id, snapshot_ref=incarnation.marker(identity))
+    incarnation.persist(s, identity, event)
     return {"caseId": case_id, "integrity": report, "imported": {
         "evidence": len(ev_index), "custodyEvents": len(custody_lines), "auditEvents": len(audit_lines) + 1}}
+

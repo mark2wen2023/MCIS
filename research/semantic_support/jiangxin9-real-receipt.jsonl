@@ -1,0 +1,8 @@
+{"version":1,"phase":"created"}
+{"version":1,"phase":"ready","runId":"33acba11-3c47-48d3-9ab5-64f103ce0c64","transportMocked":false,"manifestDigest":"5a553a8dca41f1cbd1242f261d535aa66e19070c09f3b11abea5ec53c889bc9a","inputDigest":"a754aaeb1ff5a2d2852186bc513542356a3c93f44e00831ae7a686f4c6383c96","corpusSha256":"f7a1a69f2f2bf51236ecfc734952c8249e87b0bbaf0e8913b006167900bff782","model":"deepseek-v4-pro","piVersion":"1.5.2"}
+{"version":1,"phase":"request_attempt_started","runId":"33acba11-3c47-48d3-9ab5-64f103ce0c64","attempt":1,"realRequest":true}
+{"version":1,"phase":"request_attempt_started","runId":"33acba11-3c47-48d3-9ab5-64f103ce0c64","attempt":2,"realRequest":true}
+{"version":1,"phase":"request_attempt_started","runId":"33acba11-3c47-48d3-9ab5-64f103ce0c64","attempt":3,"realRequest":true}
+{"version":1,"phase":"predictions_validated","runId":"33acba11-3c47-48d3-9ab5-64f103ce0c64","models":3,"tools":2}
+{"version":1,"phase":"cleanup_verified","runId":"33acba11-3c47-48d3-9ab5-64f103ce0c64"}
+{"version":1,"phase":"node_protocol_complete","runId":"33acba11-3c47-48d3-9ab5-64f103ce0c64","models":3,"tools":2}

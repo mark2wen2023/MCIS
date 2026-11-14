@@ -1,0 +1,11 @@
+{"version":1,"runId":"202d715c-5123-44f0-8445-67cade98b96a","sequence":1,"at":"2026-11-14T03:20:52.099Z","phase":"started","errorCode":null,"saved":false}
+{"version":1,"runId":"202d715c-5123-44f0-8445-67cade98b96a","sequence":2,"at":"2026-11-14T03:20:59.338Z","phase":"host_ready","errorCode":null,"saved":false}
+{"version":1,"runId":"202d715c-5123-44f0-8445-67cade98b96a","sequence":3,"at":"2026-11-14T03:20:59.377Z","phase":"model_request_started","models":1,"tools":0,"errorCode":null,"saved":false}
+{"version":1,"runId":"202d715c-5123-44f0-8445-67cade98b96a","sequence":4,"at":"2026-11-14T03:21:07.356Z","phase":"model_request_returned","models":1,"tools":0,"errorCode":null,"saved":false}
+{"version":1,"runId":"202d715c-5123-44f0-8445-67cade98b96a","sequence":5,"at":"2026-11-14T03:21:07.444Z","phase":"tool_returned","models":1,"tools":1,"errorCode":null,"saved":false}
+{"version":1,"runId":"202d715c-5123-44f0-8445-67cade98b96a","sequence":6,"at":"2026-11-14T03:21:07.471Z","phase":"model_request_started","models":2,"tools":1,"errorCode":null,"saved":false}
+{"version":1,"runId":"202d715c-5123-44f0-8445-67cade98b96a","sequence":7,"at":"2026-11-14T03:21:15.403Z","phase":"model_request_returned","models":2,"tools":1,"errorCode":null,"saved":false}
+{"version":1,"runId":"202d715c-5123-44f0-8445-67cade98b96a","sequence":8,"at":"2026-11-14T03:21:15.543Z","phase":"tool_returned","models":2,"tools":2,"errorCode":null,"saved":false}
+{"version":1,"runId":"202d715c-5123-44f0-8445-67cade98b96a","sequence":9,"at":"2026-11-14T03:21:15.571Z","phase":"model_request_started","models":3,"tools":2,"errorCode":null,"saved":false}
+{"version":1,"runId":"202d715c-5123-44f0-8445-67cade98b96a","sequence":10,"at":"2026-11-14T03:21:22.217Z","phase":"model_request_returned","models":3,"tools":2,"errorCode":null,"saved":false}
+{"version":1,"runId":"202d715c-5123-44f0-8445-67cade98b96a","sequence":11,"at":"2026-11-14T03:21:22.245Z","phase":"not_accepted","errorCode":"MCIS_FINAL_UNVALIDATED_FORMATTING","saved":false}

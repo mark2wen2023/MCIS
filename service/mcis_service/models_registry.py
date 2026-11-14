@@ -23,3 +23,11 @@ from .working_records_archive.models import ArchivedManualReceiptRow, ArchiveImp
 from .knowledge_archive.models import Archive, Epoch, Snapshot  # noqa: F401
 
 from .track_history.models import LocalReceipt  # noqa: F401
+
+from .cases.incarnation import CaseIncarnationRow  # noqa: F401
+
+from .evidence_intake.incarnation import SourceIncarnationRow  # noqa: F401
+
+from .timeline.unreviewed_storage import UnreviewedRunRow  # noqa: F401
+
+from .identity.local import Subject, SessionRecord, Membership  # noqa: F401

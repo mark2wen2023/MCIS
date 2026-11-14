@@ -19,26 +19,32 @@ class ModelConfig:
     model: str
 
 
-def config() -> ModelConfig | None:
-    base = os.environ.get("MCIS_AGENT_BASE_URL", "").strip()
-    model = os.environ.get("MCIS_AGENT_MODEL", "").strip()
-    if not base and not model:
-        return None
+def validate_config(cfg: ModelConfig) -> ModelConfig:
     try:
-        url = urlsplit(base)
-        valid = (url.scheme == "http" and url.hostname in ("127.0.0.1", "::1")
-                 and url.port is not None and 1 <= url.port <= 65535
-                 and not url.username and not url.password and not url.query and not url.fragment
-                 and url.path.rstrip("/") == "/v1" and model and len(model) <= 200
-                 and all(ord(c) >= 32 for c in model))
-    except ValueError:
-        valid = False
-    if not valid:
-        raise problem(503, "MODEL_CONFIG_INVALID", "仅支持显式配置的本机 HTTP OpenAI-compatible /v1 端点和模型名称")
-    return ModelConfig(base.rstrip("/"), model)
+        if type(cfg) is not ModelConfig or type(cfg.base_url) is not str or type(cfg.model) is not str:raise ValueError()
+        base,model=cfg.base_url,cfg.model
+        if any(c.isspace() or ord(c)<32 or ord(c)==127 or c=='\\' for c in base):raise ValueError()
+        url=urlsplit(base)
+        if '?' in base or '#' in base or '@' in url.netloc:raise ValueError()
+        valid=(url.scheme=='http' and url.hostname in ('127.0.0.1','::1')
+            and url.port is not None and 1<=url.port<=65535 and not url.username and not url.password
+            and not url.query and not url.fragment and url.path in ('/v1','/v1/')
+            and 0<len(model)<=200 and bool(model.strip()) and all(ord(c)>=32 and ord(c)!=127 for c in model))
+        if not valid:raise ValueError()
+    except (ValueError,TypeError,AttributeError):
+        raise problem(503,'MODEL_CONFIG_INVALID','仅支持显式本机模型配置') from None
+    return ModelConfig(base.rstrip('/'),model)
+
+
+def config() -> ModelConfig | None:
+    base=os.environ.get('MCIS_AGENT_BASE_URL','')
+    model=os.environ.get('MCIS_AGENT_MODEL','')
+    if not base and not model:return None
+    return validate_config(ModelConfig(base,model))
 
 
 def complete(cfg: ModelConfig, messages: list[dict[str, str]]) -> str:
+    cfg=validate_config(cfg)
     try:
         # No redirects, retries or environment proxies: one explicit local inference only.
         with httpx.Client(timeout=30, trust_env=False, follow_redirects=False) as client:
@@ -71,3 +77,4 @@ def complete(cfg: ModelConfig, messages: list[dict[str, str]]) -> str:
         raise problem(502, "MODEL_UNAVAILABLE", "无法连接本地模型") from None
     except (ValueError, KeyError, IndexError, TypeError, RecursionError):
         raise problem(502, "MODEL_OUTPUT_INVALID", "本地模型响应格式不合法") from None
+

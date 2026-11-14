@@ -1,6 +1,6 @@
 """Bounded, closed-world working-record archive assembly/restoration."""
 from pathlib import Path
-import hashlib,os,stat
+import hashlib
 from sqlalchemy import select,inspect,text as sqltext
 from ..db import put_doc
 from ..common.context import problem
@@ -14,11 +14,12 @@ from ..manual_interviews.models import InterviewRequestReceiptRow
 from .models import ArchivedManualReceiptRow,ArchiveImportHistoryRow,ArchiveArtifactRow
 from .validation import PATH,FORMAT,MAX_BYTES,canonical,fail,sha
 
-ALLOWED_TABLES={'cases','vessels','track_points','evidence_items','custody_events','audit_events','environment_observations',
+ALLOWED_TABLES={'timeline_local_unreviewed_runs','source_local_incarnations','case_local_incarnations','cases','vessels','track_points','evidence_items','custody_events','audit_events','environment_observations',
 'access_policies','interviews','investigation_reports','report_operation_snapshots','interview_request_receipts',
 'archived_manual_interview_receipts','archive_import_history','archive_historical_artifacts','package_intake_receipts',
 'track_local_receipts','hfacs_worksheets','hfacs_worksheet_audit','hfacs_worksheet_requests','hfacs_archived_requests'}
-GLOBALS={'knowledge_cards','knowledge_audit','knowledge_archives','knowledge_audit_snapshots','knowledge_audit_snapshot_epoch','sqlite_sequence'}
+# Identity is deployment-local authority, deliberately never serialized/restored.
+GLOBALS={'identity_local_subjects','identity_local_sessions','identity_local_memberships','knowledge_cards','knowledge_audit','knowledge_archives','knowledge_audit_snapshots','knowledge_audit_snapshot_epoch','sqlite_sequence'}
 
 
 def read_blob(root,case_id,rel,limit=MAX_BYTES):
@@ -28,13 +29,14 @@ def read_blob(root,case_id,rel,limit=MAX_BYTES):
         if part in ('..','.')or '\\'in part:fail()
         current=current/part
         if current.is_symlink():fail('历史文件路径异常','ARCHIVE_HISTORY_INTEGRITY',409)
+    from ..common.safe_files import SafeReadUnavailable, ReadBudgetExceeded, read_regular_no_symlinks
     try:
-        fd=os.open(p,os.O_RDONLY|getattr(os,'O_NOFOLLOW',0)|getattr(os,'O_NONBLOCK',0))
-        with os.fdopen(fd,'rb')as f:
-            if not stat.S_ISREG(os.fstat(f.fileno()).st_mode):raise ValueError()
-            raw=f.read(limit+1)
+        raw=read_regular_no_symlinks(p.absolute(),limit)
+    except SafeReadUnavailable:
+        fail('当前平台不支持安全历史原件读取；未降级读取','ARCHIVE_SAFE_READ_UNAVAILABLE',503)
+    except ReadBudgetExceeded:fail('历史原件超过当前读取预算，未截断','ARCHIVE_BUDGET',413)
     except (OSError,ValueError):fail('历史原件缺失或不可读取','ARCHIVE_HISTORY_INTEGRITY',409)
-    if len(raw)>limit:fail('历史原件超过单成员16MiB预算，未截断','ARCHIVE_BUDGET',413)
+
     return raw
 
 

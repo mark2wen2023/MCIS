@@ -47,9 +47,12 @@ def inspect_access(case_id: str, response: Response, ctx: Ctx = CtxDep) -> Any:
         events = audit.list_events(session, case_id, category="Access", action="policy.update",
                                    entity_type="accessPolicy", entity_id="policy", limit=LIMIT + 1,
                                    newest_first=True)
+        from ..timeline.unreviewed_access import protect_events as protect_unreviewed_events
+        protect_unreviewed_events(session, case_id, ctx.role, events)
         protect_recommendation_events(session, case_id, ctx.role, events)
         response.headers["Cache-Control"] = "no-store"
         return {"caseId": case_id, "policy": policy,
                 "policySource": "default" if saved is None else "saved",
                 "policyAudit": {"events": events[:LIMIT], "limit": LIMIT, "hasMore": len(events) > LIMIT},
                 "identityMode": "local-role-header", "readOnly": True}
+

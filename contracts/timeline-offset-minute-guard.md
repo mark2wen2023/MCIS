@@ -1,0 +1,4 @@
+## Timeline CSV malformed timezone minute guard
+Python datetime.fromisoformat normalizes malformed +00:60/+01:99 offsets. Registered preview now rejects timezone minute fields above59 before core dispatch. Existing ±14h guard retained. No timestamp rewriting, clock calibration, source trust or interface expansion. Native implementation subtask and separate native reviewer, not Codex app execution.
+
+13 new API/SQLite tests passed; independent rerun13/13 and84 direct timezone boundary probes passed. Focused31/31 includes existing18 registered-preview cases and2 actual W2 tests (one real loopback HTTP). Zero skips. Core is a double in new syntax tests. Initial isolated-copy run had missing report seed setup errors; seed copied from same source and full focused rerun passed. No browser/LLM/CI/full-system claim, merge or deployment.

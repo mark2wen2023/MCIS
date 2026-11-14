@@ -1,0 +1,325 @@
+{
+  "schemaVersion": 1,
+  "corpusId": "jiangxin9-semantic-provisional-v1",
+  "corpusSha256": "f7a1a69f2f2bf51236ecfc734952c8249e87b0bbaf0e8913b006167900bff782",
+  "status": "provisional_comparison_only",
+  "realModelCalled": false,
+  "factActivated": false,
+  "semanticSupportVerified": false,
+  "expertCertificationVerified": false,
+  "reviewers": [],
+  "items": [
+    {
+      "itemId": "clock_elapsed",
+      "claim": "按两段受控图示转录，图6的截图时钟比图13晚44秒。",
+      "sourceLocator": {
+        "url": "https://www.sh.msa.gov.cn/u/cms/www/202410/151707421728983262136.pdf",
+        "pdfSha256": "d424673df94377cbf93cad769ca514b08a24b8a0bb552b042cc34e5149c4ff55",
+        "pdfPage": 12,
+        "printedPage": 12,
+        "section": "联合PDF页12图6与页16图13；pdfPage为主定位而非完整定位；正文摘录及明确受控图示转录（AI查看渲染页），非单页原始摘录"
+      },
+      "sourceLocatorVerified": false,
+      "citation": {
+        "status": "exact",
+        "location": true,
+        "coordinates": "unicode_code_points",
+        "sourceSha256": "89e4194f0c3a644065ed1141577d26e41c6450d65521465876e95c549918cc8a",
+        "start": 0,
+        "length": 360,
+        "quote": "[PDF页12／印刷页12／图6：受控图示转录（AI查看渲染页）；非PDF文本层或自动OCR]\n20:55:53\n23-10-2023\n[PDF页12／印刷页12：正文逐字摘录]\n吴淞口警戒区，航向约 120°，航速约 6.8 节，两船相距约\n3.4 海里。\n[PDF页16／印刷页16／图13：受控图示转录（AI查看渲染页）；非PDF文本层或自动OCR]\n20:55:09\n23-10-2023\n[PDF页16／印刷页16：正文逐字摘录]\n  2055 时左右，该轮船位过 66 号灯浮下行进入吴淞口警\n戒区，航向约 120°，微速进，航速约 6.9 节，因前船航速\n较慢，减车控制航速与前船保持约 1 海里的距离。此时该轮\n引航员第一次发现左前方刚刚上行进入吴淞口警戒区的“江\n信 9”轮，两船相距约 3.5 海里。",
+        "meaning": "exact_text_location_only_not_semantic_support"
+      },
+      "suggestedLabel": "supported",
+      "suggestionRationale": "同日20:55:53与20:55:09之差44秒；这是给定截图时标的算术比较，不证明两设备时钟已校准或实际观察间隔。",
+      "suggestionStatus": "provisional_not_expert_certified",
+      "opinions": [],
+      "suggestedComparison": "same_provisional_label",
+      "prediction": {
+        "label": "supported",
+        "rationale": "图6受控转录时钟为20:55:53，图13受控转录时钟为20:55:09。53-09=44秒，图6比图13晚44秒，与claim一致。",
+        "status": "external_proposed_unreviewed",
+        "origin": "model_output_unverified",
+        "modelIdentityVerified": false,
+        "provenanceVerified": false
+      },
+      "disagreementRecorded": false,
+      "distinctReviewerRecords": 0,
+      "unverifiedHumanSubmissionRecords": 0,
+      "verifiedHumanReviewers": 0
+    },
+    {
+      "itemId": "clock_same_instant",
+      "claim": "所提供的图6和图13截图内时钟显示完全相同的时刻。",
+      "sourceLocator": {
+        "url": "https://www.sh.msa.gov.cn/u/cms/www/202410/151707421728983262136.pdf",
+        "pdfSha256": "d424673df94377cbf93cad769ca514b08a24b8a0bb552b042cc34e5149c4ff55",
+        "pdfPage": 12,
+        "printedPage": 12,
+        "section": "联合PDF页12图6与页16图13；pdfPage为主定位而非完整定位；正文摘录及明确受控图示转录（AI查看渲染页），非单页原始摘录"
+      },
+      "sourceLocatorVerified": false,
+      "citation": {
+        "status": "exact",
+        "location": true,
+        "coordinates": "unicode_code_points",
+        "sourceSha256": "89e4194f0c3a644065ed1141577d26e41c6450d65521465876e95c549918cc8a",
+        "start": 0,
+        "length": 360,
+        "quote": "[PDF页12／印刷页12／图6：受控图示转录（AI查看渲染页）；非PDF文本层或自动OCR]\n20:55:53\n23-10-2023\n[PDF页12／印刷页12：正文逐字摘录]\n吴淞口警戒区，航向约 120°，航速约 6.8 节，两船相距约\n3.4 海里。\n[PDF页16／印刷页16／图13：受控图示转录（AI查看渲染页）；非PDF文本层或自动OCR]\n20:55:09\n23-10-2023\n[PDF页16／印刷页16：正文逐字摘录]\n  2055 时左右，该轮船位过 66 号灯浮下行进入吴淞口警\n戒区，航向约 120°，微速进，航速约 6.9 节，因前船航速\n较慢，减车控制航速与前船保持约 1 海里的距离。此时该轮\n引航员第一次发现左前方刚刚上行进入吴淞口警戒区的“江\n信 9”轮，两船相距约 3.5 海里。",
+        "meaning": "exact_text_location_only_not_semantic_support"
+      },
+      "suggestedLabel": "conflicted",
+      "suggestionRationale": "给定转录的秒值53与09不同；图注均为2055时不能抹去截图秒值。",
+      "suggestionStatus": "provisional_not_expert_certified",
+      "opinions": [],
+      "suggestedComparison": "same_provisional_label",
+      "prediction": {
+        "label": "conflicted",
+        "rationale": "图6时钟显示20:55:53，图13时钟显示20:55:09，两者相差44秒，并非完全相同的时刻，与claim矛盾。",
+        "status": "external_proposed_unreviewed",
+        "origin": "model_output_unverified",
+        "modelIdentityVerified": false,
+        "provenanceVerified": false
+      },
+      "disagreementRecorded": false,
+      "distinctReviewerRecords": 0,
+      "unverifiedHumanSubmissionRecords": 0,
+      "verifiedHumanReviewers": 0
+    },
+    {
+      "itemId": "distance_proves_contradiction",
+      "claim": "仅凭这两段正文约3.4海里与约3.5海里的不同，即可证明报告对同一精确时刻的两船距离自相矛盾。",
+      "sourceLocator": {
+        "url": "https://www.sh.msa.gov.cn/u/cms/www/202410/151707421728983262136.pdf",
+        "pdfSha256": "d424673df94377cbf93cad769ca514b08a24b8a0bb552b042cc34e5149c4ff55",
+        "pdfPage": 12,
+        "printedPage": 12,
+        "section": "联合PDF页12图6与页16图13；pdfPage为主定位而非完整定位；正文摘录及明确受控图示转录（AI查看渲染页），非单页原始摘录"
+      },
+      "sourceLocatorVerified": false,
+      "citation": {
+        "status": "exact",
+        "location": true,
+        "coordinates": "unicode_code_points",
+        "sourceSha256": "89e4194f0c3a644065ed1141577d26e41c6450d65521465876e95c549918cc8a",
+        "start": 0,
+        "length": 360,
+        "quote": "[PDF页12／印刷页12／图6：受控图示转录（AI查看渲染页）；非PDF文本层或自动OCR]\n20:55:53\n23-10-2023\n[PDF页12／印刷页12：正文逐字摘录]\n吴淞口警戒区，航向约 120°，航速约 6.8 节，两船相距约\n3.4 海里。\n[PDF页16／印刷页16／图13：受控图示转录（AI查看渲染页）；非PDF文本层或自动OCR]\n20:55:09\n23-10-2023\n[PDF页16／印刷页16：正文逐字摘录]\n  2055 时左右，该轮船位过 66 号灯浮下行进入吴淞口警\n戒区，航向约 120°，微速进，航速约 6.9 节，因前船航速\n较慢，减车控制航速与前船保持约 1 海里的距离。此时该轮\n引航员第一次发现左前方刚刚上行进入吴淞口警戒区的“江\n信 9”轮，两船相距约 3.5 海里。",
+        "meaning": "exact_text_location_only_not_semantic_support"
+      },
+      "suggestedLabel": "insufficient",
+      "suggestionRationale": "正文均保留约数，截图时标亦不同；未建立同一精确时刻及误差口径，不能仅凭差值证明矛盾。",
+      "suggestionStatus": "provisional_not_expert_certified",
+      "opinions": [],
+      "suggestedComparison": "same_provisional_label",
+      "prediction": {
+        "label": "insufficient",
+        "rationale": "正文中3.4海里与3.5海里分别对应图6和图13两个不同时刻（时钟相差44秒），并非同一精确时刻；且数值均为约数（‘约’），不能仅凭两处约数差异即证明同一时刻自相矛盾。claim的推理前提不成立，证据不足。",
+        "status": "external_proposed_unreviewed",
+        "origin": "model_output_unverified",
+        "modelIdentityVerified": false,
+        "provenanceVerified": false
+      },
+      "disagreementRecorded": false,
+      "distinctReviewerRecords": 0,
+      "unverifiedHumanSubmissionRecords": 0,
+      "verifiedHumanReviewers": 0
+    },
+    {
+      "itemId": "distance_false_precision",
+      "claim": "图6对应的正文证明两船距离精确为3.4海里，没有任何测量误差。",
+      "sourceLocator": {
+        "url": "https://www.sh.msa.gov.cn/u/cms/www/202410/151707421728983262136.pdf",
+        "pdfSha256": "d424673df94377cbf93cad769ca514b08a24b8a0bb552b042cc34e5149c4ff55",
+        "pdfPage": 12,
+        "printedPage": 12,
+        "section": "联合PDF页12图6与页16图13；pdfPage为主定位而非完整定位；正文摘录及明确受控图示转录（AI查看渲染页），非单页原始摘录"
+      },
+      "sourceLocatorVerified": false,
+      "citation": {
+        "status": "exact",
+        "location": true,
+        "coordinates": "unicode_code_points",
+        "sourceSha256": "89e4194f0c3a644065ed1141577d26e41c6450d65521465876e95c549918cc8a",
+        "start": 0,
+        "length": 360,
+        "quote": "[PDF页12／印刷页12／图6：受控图示转录（AI查看渲染页）；非PDF文本层或自动OCR]\n20:55:53\n23-10-2023\n[PDF页12／印刷页12：正文逐字摘录]\n吴淞口警戒区，航向约 120°，航速约 6.8 节，两船相距约\n3.4 海里。\n[PDF页16／印刷页16／图13：受控图示转录（AI查看渲染页）；非PDF文本层或自动OCR]\n20:55:09\n23-10-2023\n[PDF页16／印刷页16：正文逐字摘录]\n  2055 时左右，该轮船位过 66 号灯浮下行进入吴淞口警\n戒区，航向约 120°，微速进，航速约 6.9 节，因前船航速\n较慢，减车控制航速与前船保持约 1 海里的距离。此时该轮\n引航员第一次发现左前方刚刚上行进入吴淞口警戒区的“江\n信 9”轮，两船相距约 3.5 海里。",
+        "meaning": "exact_text_location_only_not_semantic_support"
+      },
+      "suggestedLabel": "insufficient",
+      "suggestionRationale": "正文写约3.4海里，不提供无误差测量保证；截图时标也不自行证明精确距离测量时刻。",
+      "suggestionStatus": "provisional_not_expert_certified",
+      "opinions": [],
+      "suggestedComparison": "different_provisional_label",
+      "prediction": {
+        "label": "conflicted",
+        "rationale": "正文写‘两船相距约3.4海里’，使用了‘约’字表近似，并非精确值3.4海里；claim称‘精确为3.4海里、没有任何测量误差’，与原文的近似表述不符。",
+        "status": "external_proposed_unreviewed",
+        "origin": "model_output_unverified",
+        "modelIdentityVerified": false,
+        "provenanceVerified": false
+      },
+      "disagreementRecorded": false,
+      "distinctReviewerRecords": 0,
+      "unverifiedHumanSubmissionRecords": 0,
+      "verifiedHumanReviewers": 0
+    },
+    {
+      "itemId": "departure_page8_report",
+      "claim": "报告第8页写江信9轮于2023年10月29日1648时左右从厦门港离泊。",
+      "sourceLocator": {
+        "url": "https://www.sh.msa.gov.cn/u/cms/www/202410/151707421728983262136.pdf",
+        "pdfSha256": "d424673df94377cbf93cad769ca514b08a24b8a0bb552b042cc34e5149c4ff55",
+        "pdfPage": 8,
+        "printedPage": 8,
+        "section": "联合PDF页8与页11；pdfPage为主定位而非完整定位；各段标注页码的正文摘录，非单页原始摘录"
+      },
+      "sourceLocatorVerified": false,
+      "citation": {
+        "status": "exact",
+        "location": true,
+        "coordinates": "unicode_code_points",
+        "sourceSha256": "ee4b6feb2f932314ac20643f92d02df476e531195a5fa92eea938b1836d84e82",
+        "start": 0,
+        "length": 202,
+        "quote": "[PDF页8／印刷页8／（五）船舶载货及航次情况：正文逐字摘录]\n   1.“江信 9”轮\n   该轮 2023 年 10 月 29 日 1648 时左右从厦门港离泊，下\n一港上海张华浜码头，装载集装箱 818TEU，最大吃水 8.5\n米。\n[PDF页11／印刷页11／五、事故经过（一）江信9轮：正文逐字摘录]\n  2023 年 10 月 20 日 1947 时左右，“江信 9”轮从厦门\n港离泊开航。",
+        "meaning": "exact_text_location_only_not_semantic_support"
+      },
+      "suggestedLabel": "supported",
+      "suggestionRationale": "仅复述指定页记载，保留左右和报告归属，不认定该日期为事实正确日期。",
+      "suggestionStatus": "provisional_not_expert_certified",
+      "opinions": [],
+      "suggestedComparison": "same_provisional_label",
+      "prediction": {
+        "label": "supported",
+        "rationale": "第8页摘录明确写‘该轮2023年10月29日1648时左右从厦门港离泊’，与claim表述一致。",
+        "status": "external_proposed_unreviewed",
+        "origin": "model_output_unverified",
+        "modelIdentityVerified": false,
+        "provenanceVerified": false
+      },
+      "disagreementRecorded": false,
+      "distinctReviewerRecords": 0,
+      "unverifiedHumanSubmissionRecords": 0,
+      "verifiedHumanReviewers": 0
+    },
+    {
+      "itemId": "departure_page11_report",
+      "claim": "报告第11页写江信9轮于2023年10月20日1947时左右从厦门港离泊开航。",
+      "sourceLocator": {
+        "url": "https://www.sh.msa.gov.cn/u/cms/www/202410/151707421728983262136.pdf",
+        "pdfSha256": "d424673df94377cbf93cad769ca514b08a24b8a0bb552b042cc34e5149c4ff55",
+        "pdfPage": 8,
+        "printedPage": 8,
+        "section": "联合PDF页8与页11；pdfPage为主定位而非完整定位；各段标注页码的正文摘录，非单页原始摘录"
+      },
+      "sourceLocatorVerified": false,
+      "citation": {
+        "status": "exact",
+        "location": true,
+        "coordinates": "unicode_code_points",
+        "sourceSha256": "ee4b6feb2f932314ac20643f92d02df476e531195a5fa92eea938b1836d84e82",
+        "start": 0,
+        "length": 202,
+        "quote": "[PDF页8／印刷页8／（五）船舶载货及航次情况：正文逐字摘录]\n   1.“江信 9”轮\n   该轮 2023 年 10 月 29 日 1648 时左右从厦门港离泊，下\n一港上海张华浜码头，装载集装箱 818TEU，最大吃水 8.5\n米。\n[PDF页11／印刷页11／五、事故经过（一）江信9轮：正文逐字摘录]\n  2023 年 10 月 20 日 1947 时左右，“江信 9”轮从厦门\n港离泊开航。",
+        "meaning": "exact_text_location_only_not_semantic_support"
+      },
+      "suggestedLabel": "supported",
+      "suggestionRationale": "仅复述指定页记载，保留左右和报告归属，不认定该日期已独立核实。",
+      "suggestionStatus": "provisional_not_expert_certified",
+      "opinions": [],
+      "suggestedComparison": "same_provisional_label",
+      "prediction": {
+        "label": "supported",
+        "rationale": "第11页摘录明确写‘2023年10月20日1947时左右，“江信9”轮从厦门港离泊开航’，与claim表述一致。",
+        "status": "external_proposed_unreviewed",
+        "origin": "model_output_unverified",
+        "modelIdentityVerified": false,
+        "provenanceVerified": false
+      },
+      "disagreementRecorded": false,
+      "distinctReviewerRecords": 0,
+      "unverifiedHumanSubmissionRecords": 0,
+      "verifiedHumanReviewers": 0
+    },
+    {
+      "itemId": "departure_actual_29",
+      "claim": "这两段摘录足以确认江信9轮真实离泊日期一定是2023年10月29日。",
+      "sourceLocator": {
+        "url": "https://www.sh.msa.gov.cn/u/cms/www/202410/151707421728983262136.pdf",
+        "pdfSha256": "d424673df94377cbf93cad769ca514b08a24b8a0bb552b042cc34e5149c4ff55",
+        "pdfPage": 8,
+        "printedPage": 8,
+        "section": "联合PDF页8与页11；pdfPage为主定位而非完整定位；各段标注页码的正文摘录，非单页原始摘录"
+      },
+      "sourceLocatorVerified": false,
+      "citation": {
+        "status": "exact",
+        "location": true,
+        "coordinates": "unicode_code_points",
+        "sourceSha256": "ee4b6feb2f932314ac20643f92d02df476e531195a5fa92eea938b1836d84e82",
+        "start": 0,
+        "length": 202,
+        "quote": "[PDF页8／印刷页8／（五）船舶载货及航次情况：正文逐字摘录]\n   1.“江信 9”轮\n   该轮 2023 年 10 月 29 日 1648 时左右从厦门港离泊，下\n一港上海张华浜码头，装载集装箱 818TEU，最大吃水 8.5\n米。\n[PDF页11／印刷页11／五、事故经过（一）江信9轮：正文逐字摘录]\n  2023 年 10 月 20 日 1947 时左右，“江信 9”轮从厦门\n港离泊开航。",
+        "meaning": "exact_text_location_only_not_semantic_support"
+      },
+      "suggestedLabel": "insufficient",
+      "suggestionRationale": "两段离泊日期和时间不一致；仅此不能决定真实值，需核原始记录或正式勘误。",
+      "suggestionStatus": "provisional_not_expert_certified",
+      "opinions": [],
+      "suggestedComparison": "same_provisional_label",
+      "prediction": {
+        "label": "insufficient",
+        "rationale": "两段摘录对离泊日期给出不同说法（10月29日 vs 10月20日），彼此冲突，无法据此唯一确定‘真实’离泊日期一定是10月29日；需进一步核实。",
+        "status": "external_proposed_unreviewed",
+        "origin": "model_output_unverified",
+        "modelIdentityVerified": false,
+        "provenanceVerified": false
+      },
+      "disagreementRecorded": false,
+      "distinctReviewerRecords": 0,
+      "unverifiedHumanSubmissionRecords": 0,
+      "verifiedHumanReviewers": 0
+    },
+    {
+      "itemId": "departure_typo_certain",
+      "claim": "这两段摘录已经证明第8页是笔误，第11页日期及时间完全正确，无需再核实。",
+      "sourceLocator": {
+        "url": "https://www.sh.msa.gov.cn/u/cms/www/202410/151707421728983262136.pdf",
+        "pdfSha256": "d424673df94377cbf93cad769ca514b08a24b8a0bb552b042cc34e5149c4ff55",
+        "pdfPage": 8,
+        "printedPage": 8,
+        "section": "联合PDF页8与页11；pdfPage为主定位而非完整定位；各段标注页码的正文摘录，非单页原始摘录"
+      },
+      "sourceLocatorVerified": false,
+      "citation": {
+        "status": "exact",
+        "location": true,
+        "coordinates": "unicode_code_points",
+        "sourceSha256": "ee4b6feb2f932314ac20643f92d02df476e531195a5fa92eea938b1836d84e82",
+        "start": 0,
+        "length": 202,
+        "quote": "[PDF页8／印刷页8／（五）船舶载货及航次情况：正文逐字摘录]\n   1.“江信 9”轮\n   该轮 2023 年 10 月 29 日 1648 时左右从厦门港离泊，下\n一港上海张华浜码头，装载集装箱 818TEU，最大吃水 8.5\n米。\n[PDF页11／印刷页11／五、事故经过（一）江信9轮：正文逐字摘录]\n  2023 年 10 月 20 日 1947 时左右，“江信 9”轮从厦门\n港离泊开航。",
+        "meaning": "exact_text_location_only_not_semantic_support"
+      },
+      "suggestedLabel": "insufficient",
+      "suggestionRationale": "原文差异不等于已经证明哪处错误；不能自动修正文书或把可能笔误当已确认。",
+      "suggestionStatus": "provisional_not_expert_certified",
+      "opinions": [],
+      "suggestedComparison": "same_provisional_label",
+      "prediction": {
+        "label": "insufficient",
+        "rationale": "两段摘录仅显示日期时间记载不一致，并未提供证据证明哪一页是笔误或哪一页完全正确；且缺少其他核实材料，无法支持‘第8页为笔误、第11页完全正确’的结论。",
+        "status": "external_proposed_unreviewed",
+        "origin": "model_output_unverified",
+        "modelIdentityVerified": false,
+        "provenanceVerified": false
+      },
+      "disagreementRecorded": false,
+      "distinctReviewerRecords": 0,
+      "unverifiedHumanSubmissionRecords": 0,
+      "verifiedHumanReviewers": 0
+    }
+  ]
+}
