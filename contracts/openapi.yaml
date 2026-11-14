@@ -2716,6 +2716,21 @@ paths:
         '404': { $ref: '#/components/responses/Problem' }
         '409': { $ref: '#/components/responses/Problem' }
         '422': { $ref: '#/components/responses/Problem' }
+  /api/v1/knowledge/duplicates:preview:
+    post:
+      tags: [knowledge]
+      summary: 内部候选字面重复核对，不保存或自动合并
+      description: 仅本地声明角色开发边界，非生产认证；最新1000条最多50个匹配，截断必须显式显示。见knowledge-duplicate-preview.md。
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: 'schemas/knowledge-card.schema.json' }
+      responses:
+        '200': { description: 未保存的字面匹配提示，非事实或唯一性认证 }
+        '403': { $ref: '#/components/responses/Problem' }
+        '409': { $ref: '#/components/responses/Problem' }
+        '422': { $ref: '#/components/responses/Problem' }
   /api/v1/knowledge/suggestions:
     post:
       tags: [knowledge]
