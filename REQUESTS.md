@@ -628,3 +628,11 @@ not generated at runtime from candidate sources. Preserve manifest/local source
 comparison and concurrent real CLI rebuild equality. Add SDK-free mutation tests;
 missing/changed sources or receipt omissions fail. No production/build/core changes.
 Historical W184 report stays unchanged; its past environment is not current proof.
+
+## Report recommendation cause-label provenance (2026-11-14)
+Latest main4585016. New report sentences currently omit registered recommendation
+causeNodeIds. Add an explicit Draft sentence retaining exact ordered labels with
+unresolved/unchecked caveat and only a recommendation-register citation marked
+needsReview. No guessed evidence links, case/digest bindings, existing-report
+rewrite or report+recommendation archive enablement. Update reports/sources.py,
+contract note and real HTTP tests; renderer and permission policy unchanged.
