@@ -1,0 +1,16 @@
+{
+  "name": "mcis-pi-transcript",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@earendil-works/pi-agent-core": "1.5.2",
+    "@earendil-works/pi-ai": "1.5.2"
+  },
+  "scripts": {
+    "test": "node --test test.mjs independent.test.mjs",
+    "test:integration": "node fixture-integration.mjs"
+  },
+  "engines": {
+    "node": ">=22.19.0"
+  }
+}
