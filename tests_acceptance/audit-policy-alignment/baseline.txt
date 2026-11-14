@@ -1,0 +1,18 @@
+F.......                                                                 [100%]
+=================================== FAILURES ===================================
+_________________________ test_chain_valid_and_format __________________________
+
+client = <starlette.testclient.TestClient object at 0x7f4a3bab1ca0>
+
+    def test_chain_valid_and_format(client):
+        v = client.get(f"{C}/audit:verify", headers=H()).json()
+        assert v["valid"] and v["count"] > 40
+        ev = client.get(f"{C}/audit", params={"limit": 2000}, headers=H()).json()
+>       assert [e["seq"] for e in ev] == list(range(1, len(ev) + 1))
+                ^^^^^^^^
+E       TypeError: string indices must be integers, not 'str'
+
+service/tests/test_audit.py:15: TypeError
+=========================== short test summary info ============================
+FAILED service/tests/test_audit.py::test_chain_valid_and_format - TypeError: ...
+1 failed, 7 passed in 1.95s
