@@ -1,11 +1,11 @@
-import {frozenProposal as parseWorkingProposal,type ProviderMode,type PiTrace,type ReviewOrigin} from '../extractionWorking/hostPort';
+import {frozenProposal as parseWorkingProposal,type ProviderMode,type PiExecution,type ReviewOrigin} from '../extractionWorking/hostPort';
 export const PROFILE='mcis-working-history-archive-trial-v1';
 export const MAX_BYTES=8*1024*1024;
 const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 export type Decision={index:number,decision:'adopted_working'|'rejected'|'needs_verification',note:string};
 export type Scope={profile:typeof PROFILE,contextId:string,caseId:string,productionLogin:false};
 export type Command=({action:'export'|'list'}|{action:'import',bundleBase64:string}|{action:'read',sha256:string})&{requestId:string};
-export type HistoricalProposal={proposalId:string,recordId:string,fixture:boolean,providerMode:ProviderMode,configuredModel:string|null,completionMode?:'exact'|'validated-reference',execution?:{runId:string,trace:PiTrace[]},sourceScope:string,bindingDigest:string,sourceDeclaration:null|{evidenceId:string,sourceIncarnation:string,sourceSha256:string},proposals:{summary:string,claim:Record<string,unknown>,quote:string,span:{round:number,field:string,start:number,length:number}}[],reviews:{revision:number,authorRef:string,recordedUtc:string,decisions:Decision[],reviewOrigin:ReviewOrigin}[]};
+export type HistoricalProposal={proposalId:string,recordId:string,fixture:boolean,providerMode:ProviderMode,configuredModel:string|null,completionMode?:'exact'|'validated-reference',execution?:PiExecution,sourceScope:string,bindingDigest:string,sourceDeclaration:null|{evidenceId:string,sourceIncarnation:string,sourceSha256:string},proposals:{summary:string,claim:Record<string,unknown>,quote:string,span:{round:number,field:string,start:number,length:number}}[],reviews:{revision:number,authorRef:string,recordedUtc:string,decisions:Decision[],reviewOrigin:ReviewOrigin}[]};
 export type Result={kind:'export',bytes:Uint8Array,sha256:string}|{kind:'import',sha256:string,replayed:boolean,count:number}|{kind:'list',items:{sha256:string,count:number}[]}|{kind:'read',sha256:string,proposals:HistoricalProposal[],originCaseIncarnation:string};
 export type ArchivePort={scope:Scope,execute(c:Command):Promise<Result>};
 function obj(v:any){if(!v||typeof v!=='object'||Array.isArray(v))throw Error();return v}

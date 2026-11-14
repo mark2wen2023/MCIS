@@ -6,9 +6,11 @@ export type Command=({action:'list'}|{action:'read',proposalId:string}|{action:'
 export type Item={proposalId:string,recordId:string,revision:number};
 export type ProviderMode='fixture'|'local'|'remote-deepseek';
 export type ReviewOrigin='user_submission_unverified'|'scripted_test'|'legacy_unspecified';
+export type SkillRef={id:string,version:string,contentDigest:string};
+export type PiExecution={runId:string,trace:PiTrace[],skillRef?:SkillRef};
 export type PiTrace={op:'model_start'|'model_request'|'model_end'|'tool'|'final',tool?:string,outcome?:string};
 export type Review={revision:number,authorRef:string,recordedUtc:string,decisions:Decision[],reviewOrigin:ReviewOrigin};
-export type View={status:'working_unreviewed',proposalId:string,recordId:string,revision:number,fixture:boolean,providerMode:ProviderMode,configuredModel:string|null,completionMode?:'exact'|'validated-reference',execution?:{runId:string,trace:PiTrace[]},fingerprint:string,bindingDigest:string,sourceScope:string,proposals:{summary:string,claim:Record<string,unknown>,quote:string,span:{round:number,field:string,start:number,length:number}}[],reviews:Review[]};
+export type View={status:'working_unreviewed',proposalId:string,recordId:string,revision:number,fixture:boolean,providerMode:ProviderMode,configuredModel:string|null,completionMode?:'exact'|'validated-reference',execution?:PiExecution,fingerprint:string,bindingDigest:string,sourceScope:string,proposals:{summary:string,claim:Record<string,unknown>,quote:string,span:{round:number,field:string,start:number,length:number}}[],reviews:Review[]};
 export type Result=View|{status:'not_connected'}|{status:'list',items:Item[]};
 export type WorkingPort={scope:Scope,execute(command:Command):Promise<Result>};
 function obj(v:any){if(!v||typeof v!=='object'||Array.isArray(v))throw Error();return v}
@@ -19,10 +21,12 @@ function decisions(v:any):Decision[]{if(!Array.isArray(v)||!v.length||v.length>2
 function receipt(v:any,review=false){obj(v);for(const k of ['bindingDigest','promptDigest','outputDigest','runChecksum',...(review?['reviewChecksum']:[])])if(typeof v[k]!=='string'||! /^[0-9a-f]{64}$/.test(v[k]))throw Error();if(v.persistentAudit!==false||v.signature!==false)throw Error();return v}
 function claim(v:any){obj(v);if(Object.keys(v).some(k=>!['valueType','time','scalar','unit','position','occurred'].includes(k))||!['EventTime','Scalar','Position','Occurrence'].includes(v.valueType))throw Error();for(const k of ['time','unit'])if(v[k]!=null)str(v[k],200);if(v.scalar!=null&&(typeof v.scalar!=='number'||!Number.isFinite(v.scalar)))throw Error();if(v.occurred!=null&&typeof v.occurred!=='boolean')throw Error();if(v.position!=null){obj(v.position);if(typeof v.position.lonDeg!=='number'||typeof v.position.latDeg!=='number'||Math.abs(v.position.lonDeg)>180||Math.abs(v.position.latDeg)>90)throw Error();for(const [k,n] of Object.entries(v.position))if(!['latDeg','lonDeg','heightM'].includes(k)||typeof n!=='number'||!Number.isFinite(n))throw Error()};return structuredClone(v)}
 
-function hash(v:any){if(typeof v!=='string'||! /^[0-9a-f]{64}$/.test(v))throw Error();return v as string}
+function hash(v:any){if(typeof v!=='string'||v.length!==64||! /^[0-9a-f]{64}$/.test(v))throw Error();return v as string}
 function piExecution(b:any){
- const x=b.execution;exact(x,['profile','runId','completionMode','trace','outputDigest','traceMeaning','runtimeIdentityVerified']);
- if(x.profile!=='pi-working-trial-v1'||x.completionMode!==b.completionMode||!['exact','validated-reference'].includes(x.completionMode)||x.traceMeaning!=='trusted_host_protocol_metadata_not_signed_audit'||x.runtimeIdentityVerified!==false)throw Error();
+ const x=obj(b.execution),versioned=x.profile==='pi-working-trial-v2';exact(x,['profile','runId','completionMode','trace','outputDigest','traceMeaning','runtimeIdentityVerified',...(versioned?['skillRef']:[])]);
+ let skillRef:SkillRef|undefined;
+ if(versioned){const r=x.skillRef;exact(r,['id','version','contentDigest']);if(typeof r.id!=='string'||/[\r\n\u2028\u2029]/.test(r.id)||! /^[a-z][a-z0-9.-]{0,99}$/.test(r.id)||typeof r.version!=='string'||/[\r\n\u2028\u2029]/.test(r.version)||r.version.length>32||! /^[0-9]+\.[0-9]+\.[0-9]+$/.test(r.version))throw Error();skillRef={id:r.id,version:r.version,contentDigest:hash(r.contentDigest)}}
+ if(!['pi-working-trial-v1','pi-working-trial-v2'].includes(x.profile)||x.completionMode!==b.completionMode||!['exact','validated-reference'].includes(x.completionMode)||x.traceMeaning!=='trusted_host_protocol_metadata_not_signed_audit'||x.runtimeIdentityVerified!==false)throw Error();
  id(x.runId);hash(x.outputDigest);
  if(!Array.isArray(x.trace)||!x.trace.length||x.trace.length>32)throw Error();
  let state='idle',models=0,tools=0,read=false,validated=false;
@@ -40,10 +44,10 @@ function piExecution(b:any){
   else throw Error();return {op:e.op};
  });
  if(state!=='final'||models!==b.modelCalls||tools!==b.toolCalls||!Number.isInteger(models)||models<1||models>4||tools<1||tools>8)throw Error();
- return {runId:x.runId as string,trace};
+ return {runId:x.runId as string,trace,...(skillRef?{skillRef}:{})};
 }
 export function frozenProposal(b:any,recordId:string){
- obj(b);const pi=b.providerMode==='remote-deepseek';let providerMode:ProviderMode,configuredModel:string|null,completionMode:'exact'|'validated-reference'|undefined,execution:{runId:string,trace:PiTrace[]}|undefined,sourceScope:string,bindingDigest:string,fingerprint:string;
+ obj(b);const pi=b.providerMode==='remote-deepseek';let providerMode:ProviderMode,configuredModel:string|null,completionMode:'exact'|'validated-reference'|undefined,execution:PiExecution|undefined,sourceScope:string,bindingDigest:string,fingerprint:string;
  if(pi){
   exact(b,['status','proposals','citations','saved','factVerified','persistentAudit','bindingDigest','citationMeaning','sourceScope','modelCalls','toolCalls','completionMode','providerMode','configuredModel','modelIdentityVerified','humanApprovalVerified','inferencePerformed','fixture','execution']);
   if(b.fixture!==false||b.inferencePerformed!==true||b.factVerified!==false||b.persistentAudit!==false||b.modelIdentityVerified!==false||b.humanApprovalVerified!==false||!Number.isInteger(b.modelCalls)||!Number.isInteger(b.toolCalls))throw Error();

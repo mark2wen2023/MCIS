@@ -5,12 +5,14 @@ import uuid
 from . import extraction as e, extraction_working_store as w
 from .pi_transcript_remote import RemoteTranscriptHost
 from .pi_working_result import validate_current
+from . import pi_extraction_skill as skill
 
 class PiWorkingHost:
     def __init__(self,db,settings,session_token,case_id,record_id,cfg,*,approved_disclosure_digest,completion_mode='exact'):
         self.__lock=threading.RLock()
         self.__args=(db,settings,session_token,case_id,record_id)
         self.__host=RemoteTranscriptHost(*self.__args,cfg,approved_disclosure_digest=approved_disclosure_digest,completion_mode=completion_mode)
+        self.__skill_manifest=copy.deepcopy(self.__host._skill_manifest)
         self.__binding=self.__host._binding
         self.__run=str(uuid.uuid4());self.__closed=False;self.__accepted=None;self.__payload=None;self.__trace=[]
 
@@ -44,7 +46,9 @@ class PiWorkingHost:
                 or result['status']!='PendingReview' or result['saved'] is not False
                 or result['factVerified'] is not False or result['providerMode']!='remote-deepseek'
                 or result['fixture'] is not False or result['inferencePerformed'] is not True):raise ValueError('Pi result mismatch')
-        frozen=w._bounded({**result,'execution':{'profile':'pi-working-trial-v1','runId':self.__run,
+        skill_ref=skill.verify_current_snapshot(self.__skill_manifest)
+        if self.__host._skill_manifest!=self.__skill_manifest:raise ValueError('Skill run changed')
+        frozen=w._bounded({**result,'execution':{'profile':'pi-working-trial-v2','skillRef':skill_ref,'runId':self.__run,
             'completionMode':result['completionMode'],'trace':copy.deepcopy(self.__trace),'outputDigest':e.digest(parsed),
             'traceMeaning':'trusted_host_protocol_metadata_not_signed_audit','runtimeIdentityVerified':False}})
         return validate_current(frozen,snapshot,record_id)

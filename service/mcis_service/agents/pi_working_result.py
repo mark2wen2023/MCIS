@@ -1,6 +1,7 @@
 """Strict Pi working-history shape and current-source checks. No authority from metadata."""
 import copy,json,re
 from . import extraction as e
+from .pi_extraction_skill import validate_reference
 from ..common import contracts
 from ..interviews.service import utf16_len
 from ..investigation.journal import canonical_id
@@ -22,8 +23,11 @@ def validate_shape(result,record_id,binding):
     if type(model) is not str or not model.strip() or len(model)>200 or any(ord(c)<32 for c in model):raise ValueError('Pi model')
     for k,limit in [('modelCalls',4),('toolCalls',8)]:
         if type(result[k]) is not int or not 1<=result[k]<=limit:raise ValueError('Pi counts')
-    x=result['execution'];keys(x,'profile runId trace outputDigest traceMeaning runtimeIdentityVerified completionMode')
-    if x['profile']!='pi-working-trial-v1' or x['traceMeaning']!='trusted_host_protocol_metadata_not_signed_audit' or x['runtimeIdentityVerified'] is not False or x['completionMode']!=result['completionMode']:raise ValueError('Pi trace tags')
+    x=result['execution']
+    profile=x.get('profile') if type(x) is dict else None
+    keys(x,'profile runId trace outputDigest traceMeaning runtimeIdentityVerified completionMode'+(' skillRef' if profile=='pi-working-trial-v2' else ''))
+    if profile=='pi-working-trial-v2':validate_reference(x['skillRef'])
+    if x['profile'] not in ('pi-working-trial-v1','pi-working-trial-v2') or x['traceMeaning']!='trusted_host_protocol_metadata_not_signed_audit' or x['runtimeIdentityVerified'] is not False or x['completionMode']!=result['completionMode']:raise ValueError('Pi trace tags')
     canonical_id(x['runId']);sha(x['outputDigest'])
     if type(x['trace']) is not list or not 1<=len(x['trace'])<=32:raise ValueError('Pi trace')
     state='idle';models=tools=0;read=validated=False;model_completed=False
