@@ -1,0 +1,342 @@
+FFFFFFFFFFFFFFFFF........F.....                                          [100%]
+=================================== FAILURES ===================================
+_________________________ test_invalid_no_writes[!!!!] _________________________
+
+local = (<starlette.testclient.TestClient object at 0x7f1eb63dd070>, <fastapi.applications.FastAPI object at 0x7f1eb6297290>)
+value = '!!!!'
+
+    @pytest.mark.parametrize('value',['!!!!','Zg','Zg=','Zg===','Zg==x','Zm9v=','Zm9v====',
+                                     'Z g==','Zg==\n','\tZg==','====','AA=A','_w==','é',
+                                     'data:application/octet-stream;base64,Zg==','Zh==','Zm9='])
+    def test_invalid_no_writes(local,value):
+        c,app=local
+        before=counts(app);files=set(app.state.settings.blob_dir.rglob('*'))
+        r=c.post(URL,json=body(value),headers=H())
+>       assert r.status_code==422,r.text
+E       AssertionError: {"evidenceId":"EV-001","caseId":"W42-SYNTHETIC","title":"Synthetic strict encoding","source":"Synthetic declaration only","extractedBy":"Synthetic collector","extractedUtc":"2026-01-01T00:00:00Z","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","relativePath":"evidence/synthetic.bin","category":"Other","confidentiality":"Normal","note":"","currentSha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","accessCount":0,"status":"Unverified","needsReview":false,"lastAccessUtc":null,"lastAccessBy":null}
+E       assert 201 == 422
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_base64.py:23: AssertionError
+__________________________ test_invalid_no_writes[Zg] __________________________
+
+local = (<starlette.testclient.TestClient object at 0x7f1eb62ef3e0>, <fastapi.applications.FastAPI object at 0x7f1eb61d3950>)
+value = 'Zg'
+
+    @pytest.mark.parametrize('value',['!!!!','Zg','Zg=','Zg===','Zg==x','Zm9v=','Zm9v====',
+                                     'Z g==','Zg==\n','\tZg==','====','AA=A','_w==','é',
+                                     'data:application/octet-stream;base64,Zg==','Zh==','Zm9='])
+    def test_invalid_no_writes(local,value):
+        c,app=local
+        before=counts(app);files=set(app.state.settings.blob_dir.rglob('*'))
+        r=c.post(URL,json=body(value),headers=H())
+>       assert r.status_code==422,r.text
+E       AssertionError: {"code":"INTERNAL_ERROR","message":"请求处理失败"}
+E       assert 500 == 422
+E        +  where 500 = <Response [500 Internal Server Error]>.status_code
+
+tests/test_legacy_evidence_base64.py:23: AssertionError
+_________________________ test_invalid_no_writes[Zg=] __________________________
+
+local = (<starlette.testclient.TestClient object at 0x7f1eb62ef410>, <fastapi.applications.FastAPI object at 0x7f1eb6097c50>)
+value = 'Zg='
+
+    @pytest.mark.parametrize('value',['!!!!','Zg','Zg=','Zg===','Zg==x','Zm9v=','Zm9v====',
+                                     'Z g==','Zg==\n','\tZg==','====','AA=A','_w==','é',
+                                     'data:application/octet-stream;base64,Zg==','Zh==','Zm9='])
+    def test_invalid_no_writes(local,value):
+        c,app=local
+        before=counts(app);files=set(app.state.settings.blob_dir.rglob('*'))
+        r=c.post(URL,json=body(value),headers=H())
+>       assert r.status_code==422,r.text
+E       AssertionError: {"code":"INTERNAL_ERROR","message":"请求处理失败"}
+E       assert 500 == 422
+E        +  where 500 = <Response [500 Internal Server Error]>.status_code
+
+tests/test_legacy_evidence_base64.py:23: AssertionError
+________________________ test_invalid_no_writes[Zg===] _________________________
+
+local = (<starlette.testclient.TestClient object at 0x7f1eb5b0ce60>, <fastapi.applications.FastAPI object at 0x7f1eb6044950>)
+value = 'Zg==='
+
+    @pytest.mark.parametrize('value',['!!!!','Zg','Zg=','Zg===','Zg==x','Zm9v=','Zm9v====',
+                                     'Z g==','Zg==\n','\tZg==','====','AA=A','_w==','é',
+                                     'data:application/octet-stream;base64,Zg==','Zh==','Zm9='])
+    def test_invalid_no_writes(local,value):
+        c,app=local
+        before=counts(app);files=set(app.state.settings.blob_dir.rglob('*'))
+        r=c.post(URL,json=body(value),headers=H())
+>       assert r.status_code==422,r.text
+E       AssertionError: {"evidenceId":"EV-001","caseId":"W42-SYNTHETIC","title":"Synthetic strict encoding","source":"Synthetic declaration only","extractedBy":"Synthetic collector","extractedUtc":"2026-01-01T00:00:00Z","sha256":"252f10c83610ebca1a059c0bae8255eba2f95be4d1d7bcfa89d7248a82d9f111","relativePath":"evidence/synthetic.bin","category":"Other","confidentiality":"Normal","note":"","currentSha256":"252f10c83610ebca1a059c0bae8255eba2f95be4d1d7bcfa89d7248a82d9f111","accessCount":0,"status":"Unverified","needsReview":false,"lastAccessUtc":null,"lastAccessBy":null}
+E       assert 201 == 422
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_base64.py:23: AssertionError
+________________________ test_invalid_no_writes[Zg==x] _________________________
+
+local = (<starlette.testclient.TestClient object at 0x7f1eb5beef30>, <fastapi.applications.FastAPI object at 0x7f1eb6097e60>)
+value = 'Zg==x'
+
+    @pytest.mark.parametrize('value',['!!!!','Zg','Zg=','Zg===','Zg==x','Zm9v=','Zm9v====',
+                                     'Z g==','Zg==\n','\tZg==','====','AA=A','_w==','é',
+                                     'data:application/octet-stream;base64,Zg==','Zh==','Zm9='])
+    def test_invalid_no_writes(local,value):
+        c,app=local
+        before=counts(app);files=set(app.state.settings.blob_dir.rglob('*'))
+        r=c.post(URL,json=body(value),headers=H())
+>       assert r.status_code==422,r.text
+E       AssertionError: {"evidenceId":"EV-001","caseId":"W42-SYNTHETIC","title":"Synthetic strict encoding","source":"Synthetic declaration only","extractedBy":"Synthetic collector","extractedUtc":"2026-01-01T00:00:00Z","sha256":"252f10c83610ebca1a059c0bae8255eba2f95be4d1d7bcfa89d7248a82d9f111","relativePath":"evidence/synthetic.bin","category":"Other","confidentiality":"Normal","note":"","currentSha256":"252f10c83610ebca1a059c0bae8255eba2f95be4d1d7bcfa89d7248a82d9f111","accessCount":0,"status":"Unverified","needsReview":false,"lastAccessUtc":null,"lastAccessBy":null}
+E       assert 201 == 422
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_base64.py:23: AssertionError
+________________________ test_invalid_no_writes[Zm9v=] _________________________
+
+local = (<starlette.testclient.TestClient object at 0x7f1eb5f7e720>, <fastapi.applications.FastAPI object at 0x7f1eb5f286e0>)
+value = 'Zm9v='
+
+    @pytest.mark.parametrize('value',['!!!!','Zg','Zg=','Zg===','Zg==x','Zm9v=','Zm9v====',
+                                     'Z g==','Zg==\n','\tZg==','====','AA=A','_w==','é',
+                                     'data:application/octet-stream;base64,Zg==','Zh==','Zm9='])
+    def test_invalid_no_writes(local,value):
+        c,app=local
+        before=counts(app);files=set(app.state.settings.blob_dir.rglob('*'))
+        r=c.post(URL,json=body(value),headers=H())
+>       assert r.status_code==422,r.text
+E       AssertionError: {"evidenceId":"EV-001","caseId":"W42-SYNTHETIC","title":"Synthetic strict encoding","source":"Synthetic declaration only","extractedBy":"Synthetic collector","extractedUtc":"2026-01-01T00:00:00Z","sha256":"2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae","relativePath":"evidence/synthetic.bin","category":"Other","confidentiality":"Normal","note":"","currentSha256":"2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae","accessCount":0,"status":"Unverified","needsReview":false,"lastAccessUtc":null,"lastAccessBy":null}
+E       assert 201 == 422
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_base64.py:23: AssertionError
+_______________________ test_invalid_no_writes[Zm9v====] _______________________
+
+local = (<starlette.testclient.TestClient object at 0x7f1eb4aae150>, <fastapi.applications.FastAPI object at 0x7f1eb6148620>)
+value = 'Zm9v===='
+
+    @pytest.mark.parametrize('value',['!!!!','Zg','Zg=','Zg===','Zg==x','Zm9v=','Zm9v====',
+                                     'Z g==','Zg==\n','\tZg==','====','AA=A','_w==','é',
+                                     'data:application/octet-stream;base64,Zg==','Zh==','Zm9='])
+    def test_invalid_no_writes(local,value):
+        c,app=local
+        before=counts(app);files=set(app.state.settings.blob_dir.rglob('*'))
+        r=c.post(URL,json=body(value),headers=H())
+>       assert r.status_code==422,r.text
+E       AssertionError: {"evidenceId":"EV-001","caseId":"W42-SYNTHETIC","title":"Synthetic strict encoding","source":"Synthetic declaration only","extractedBy":"Synthetic collector","extractedUtc":"2026-01-01T00:00:00Z","sha256":"2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae","relativePath":"evidence/synthetic.bin","category":"Other","confidentiality":"Normal","note":"","currentSha256":"2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae","accessCount":0,"status":"Unverified","needsReview":false,"lastAccessUtc":null,"lastAccessBy":null}
+E       assert 201 == 422
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_base64.py:23: AssertionError
+________________________ test_invalid_no_writes[Z g==] _________________________
+
+local = (<starlette.testclient.TestClient object at 0x7f1eb49a5970>, <fastapi.applications.FastAPI object at 0x7f1eb5b0d8e0>)
+value = 'Z g=='
+
+    @pytest.mark.parametrize('value',['!!!!','Zg','Zg=','Zg===','Zg==x','Zm9v=','Zm9v====',
+                                     'Z g==','Zg==\n','\tZg==','====','AA=A','_w==','é',
+                                     'data:application/octet-stream;base64,Zg==','Zh==','Zm9='])
+    def test_invalid_no_writes(local,value):
+        c,app=local
+        before=counts(app);files=set(app.state.settings.blob_dir.rglob('*'))
+        r=c.post(URL,json=body(value),headers=H())
+>       assert r.status_code==422,r.text
+E       AssertionError: {"evidenceId":"EV-001","caseId":"W42-SYNTHETIC","title":"Synthetic strict encoding","source":"Synthetic declaration only","extractedBy":"Synthetic collector","extractedUtc":"2026-01-01T00:00:00Z","sha256":"252f10c83610ebca1a059c0bae8255eba2f95be4d1d7bcfa89d7248a82d9f111","relativePath":"evidence/synthetic.bin","category":"Other","confidentiality":"Normal","note":"","currentSha256":"252f10c83610ebca1a059c0bae8255eba2f95be4d1d7bcfa89d7248a82d9f111","accessCount":0,"status":"Unverified","needsReview":false,"lastAccessUtc":null,"lastAccessBy":null}
+E       assert 201 == 422
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_base64.py:23: AssertionError
+________________________ test_invalid_no_writes[Zg==\n] ________________________
+
+local = (<starlette.testclient.TestClient object at 0x7f1eb4888fe0>, <fastapi.applications.FastAPI object at 0x7f1eb5f7ea20>)
+value = 'Zg==\n'
+
+    @pytest.mark.parametrize('value',['!!!!','Zg','Zg=','Zg===','Zg==x','Zm9v=','Zm9v====',
+                                     'Z g==','Zg==\n','\tZg==','====','AA=A','_w==','é',
+                                     'data:application/octet-stream;base64,Zg==','Zh==','Zm9='])
+    def test_invalid_no_writes(local,value):
+        c,app=local
+        before=counts(app);files=set(app.state.settings.blob_dir.rglob('*'))
+        r=c.post(URL,json=body(value),headers=H())
+>       assert r.status_code==422,r.text
+E       AssertionError: {"evidenceId":"EV-001","caseId":"W42-SYNTHETIC","title":"Synthetic strict encoding","source":"Synthetic declaration only","extractedBy":"Synthetic collector","extractedUtc":"2026-01-01T00:00:00Z","sha256":"252f10c83610ebca1a059c0bae8255eba2f95be4d1d7bcfa89d7248a82d9f111","relativePath":"evidence/synthetic.bin","category":"Other","confidentiality":"Normal","note":"","currentSha256":"252f10c83610ebca1a059c0bae8255eba2f95be4d1d7bcfa89d7248a82d9f111","accessCount":0,"status":"Unverified","needsReview":false,"lastAccessUtc":null,"lastAccessBy":null}
+E       assert 201 == 422
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_base64.py:23: AssertionError
+________________________ test_invalid_no_writes[\tZg==] ________________________
+
+local = (<starlette.testclient.TestClient object at 0x7f1eb4760770>, <fastapi.applications.FastAPI object at 0x7f1eb5d59b20>)
+value = '\tZg=='
+
+    @pytest.mark.parametrize('value',['!!!!','Zg','Zg=','Zg===','Zg==x','Zm9v=','Zm9v====',
+                                     'Z g==','Zg==\n','\tZg==','====','AA=A','_w==','é',
+                                     'data:application/octet-stream;base64,Zg==','Zh==','Zm9='])
+    def test_invalid_no_writes(local,value):
+        c,app=local
+        before=counts(app);files=set(app.state.settings.blob_dir.rglob('*'))
+        r=c.post(URL,json=body(value),headers=H())
+>       assert r.status_code==422,r.text
+E       AssertionError: {"evidenceId":"EV-001","caseId":"W42-SYNTHETIC","title":"Synthetic strict encoding","source":"Synthetic declaration only","extractedBy":"Synthetic collector","extractedUtc":"2026-01-01T00:00:00Z","sha256":"252f10c83610ebca1a059c0bae8255eba2f95be4d1d7bcfa89d7248a82d9f111","relativePath":"evidence/synthetic.bin","category":"Other","confidentiality":"Normal","note":"","currentSha256":"252f10c83610ebca1a059c0bae8255eba2f95be4d1d7bcfa89d7248a82d9f111","accessCount":0,"status":"Unverified","needsReview":false,"lastAccessUtc":null,"lastAccessBy":null}
+E       assert 201 == 422
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_base64.py:23: AssertionError
+_________________________ test_invalid_no_writes[====] _________________________
+
+local = (<starlette.testclient.TestClient object at 0x7f1eb4648080>, <fastapi.applications.FastAPI object at 0x7f1eb6361520>)
+value = '===='
+
+    @pytest.mark.parametrize('value',['!!!!','Zg','Zg=','Zg===','Zg==x','Zm9v=','Zm9v====',
+                                     'Z g==','Zg==\n','\tZg==','====','AA=A','_w==','é',
+                                     'data:application/octet-stream;base64,Zg==','Zh==','Zm9='])
+    def test_invalid_no_writes(local,value):
+        c,app=local
+        before=counts(app);files=set(app.state.settings.blob_dir.rglob('*'))
+        r=c.post(URL,json=body(value),headers=H())
+>       assert r.status_code==422,r.text
+E       AssertionError: {"evidenceId":"EV-001","caseId":"W42-SYNTHETIC","title":"Synthetic strict encoding","source":"Synthetic declaration only","extractedBy":"Synthetic collector","extractedUtc":"2026-01-01T00:00:00Z","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","relativePath":"evidence/synthetic.bin","category":"Other","confidentiality":"Normal","note":"","currentSha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","accessCount":0,"status":"Unverified","needsReview":false,"lastAccessUtc":null,"lastAccessBy":null}
+E       assert 201 == 422
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_base64.py:23: AssertionError
+_________________________ test_invalid_no_writes[AA=A] _________________________
+
+local = (<starlette.testclient.TestClient object at 0x7f1eb489f770>, <fastapi.applications.FastAPI object at 0x7f1eb47bd640>)
+value = 'AA=A'
+
+    @pytest.mark.parametrize('value',['!!!!','Zg','Zg=','Zg===','Zg==x','Zm9v=','Zm9v====',
+                                     'Z g==','Zg==\n','\tZg==','====','AA=A','_w==','é',
+                                     'data:application/octet-stream;base64,Zg==','Zh==','Zm9='])
+    def test_invalid_no_writes(local,value):
+        c,app=local
+        before=counts(app);files=set(app.state.settings.blob_dir.rglob('*'))
+        r=c.post(URL,json=body(value),headers=H())
+>       assert r.status_code==422,r.text
+E       AssertionError: {"code":"INTERNAL_ERROR","message":"请求处理失败"}
+E       assert 500 == 422
+E        +  where 500 = <Response [500 Internal Server Error]>.status_code
+
+tests/test_legacy_evidence_base64.py:23: AssertionError
+_________________________ test_invalid_no_writes[_w==] _________________________
+
+local = (<starlette.testclient.TestClient object at 0x7f1eb49f0b90>, <fastapi.applications.FastAPI object at 0x7f1eb47396a0>)
+value = '_w=='
+
+    @pytest.mark.parametrize('value',['!!!!','Zg','Zg=','Zg===','Zg==x','Zm9v=','Zm9v====',
+                                     'Z g==','Zg==\n','\tZg==','====','AA=A','_w==','é',
+                                     'data:application/octet-stream;base64,Zg==','Zh==','Zm9='])
+    def test_invalid_no_writes(local,value):
+        c,app=local
+        before=counts(app);files=set(app.state.settings.blob_dir.rglob('*'))
+        r=c.post(URL,json=body(value),headers=H())
+>       assert r.status_code==422,r.text
+E       AssertionError: {"code":"INTERNAL_ERROR","message":"请求处理失败"}
+E       assert 500 == 422
+E        +  where 500 = <Response [500 Internal Server Error]>.status_code
+
+tests/test_legacy_evidence_base64.py:23: AssertionError
+_________________________ test_invalid_no_writes[\xe9] _________________________
+
+local = (<starlette.testclient.TestClient object at 0x7f1eb49692b0>, <fastapi.applications.FastAPI object at 0x7f1eb478f980>)
+value = 'é'
+
+    @pytest.mark.parametrize('value',['!!!!','Zg','Zg=','Zg===','Zg==x','Zm9v=','Zm9v====',
+                                     'Z g==','Zg==\n','\tZg==','====','AA=A','_w==','é',
+                                     'data:application/octet-stream;base64,Zg==','Zh==','Zm9='])
+    def test_invalid_no_writes(local,value):
+        c,app=local
+        before=counts(app);files=set(app.state.settings.blob_dir.rglob('*'))
+        r=c.post(URL,json=body(value),headers=H())
+>       assert r.status_code==422,r.text
+E       AssertionError: {"code":"INTERNAL_ERROR","message":"请求处理失败"}
+E       assert 500 == 422
+E        +  where 500 = <Response [500 Internal Server Error]>.status_code
+
+tests/test_legacy_evidence_base64.py:23: AssertionError
+______ test_invalid_no_writes[data:application/octet-stream;base64,Zg==] _______
+
+local = (<starlette.testclient.TestClient object at 0x7f1eb4a7ba70>, <fastapi.applications.FastAPI object at 0x7f1eb49f2bd0>)
+value = 'data:application/octet-stream;base64,Zg=='
+
+    @pytest.mark.parametrize('value',['!!!!','Zg','Zg=','Zg===','Zg==x','Zm9v=','Zm9v====',
+                                     'Z g==','Zg==\n','\tZg==','====','AA=A','_w==','é',
+                                     'data:application/octet-stream;base64,Zg==','Zh==','Zm9='])
+    def test_invalid_no_writes(local,value):
+        c,app=local
+        before=counts(app);files=set(app.state.settings.blob_dir.rglob('*'))
+        r=c.post(URL,json=body(value),headers=H())
+>       assert r.status_code==422,r.text
+E       AssertionError: {"evidenceId":"EV-001","caseId":"W42-SYNTHETIC","title":"Synthetic strict encoding","source":"Synthetic declaration only","extractedBy":"Synthetic collector","extractedUtc":"2026-01-01T00:00:00Z","sha256":"5bb115dba9ba7ca7bd2ddc80fe7e76eb9fdd013d955f16a3d5d6b6e368c07f75","relativePath":"evidence/synthetic.bin","category":"Other","confidentiality":"Normal","note":"","currentSha256":"5bb115dba9ba7ca7bd2ddc80fe7e76eb9fdd013d955f16a3d5d6b6e368c07f75","accessCount":0,"status":"Unverified","needsReview":false,"lastAccessUtc":null,"lastAccessBy":null}
+E       assert 201 == 422
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_base64.py:23: AssertionError
+_________________________ test_invalid_no_writes[Zh==] _________________________
+
+local = (<starlette.testclient.TestClient object at 0x7f1eb5fe25a0>, <fastapi.applications.FastAPI object at 0x7f1eb47bc4d0>)
+value = 'Zh=='
+
+    @pytest.mark.parametrize('value',['!!!!','Zg','Zg=','Zg===','Zg==x','Zm9v=','Zm9v====',
+                                     'Z g==','Zg==\n','\tZg==','====','AA=A','_w==','é',
+                                     'data:application/octet-stream;base64,Zg==','Zh==','Zm9='])
+    def test_invalid_no_writes(local,value):
+        c,app=local
+        before=counts(app);files=set(app.state.settings.blob_dir.rglob('*'))
+        r=c.post(URL,json=body(value),headers=H())
+>       assert r.status_code==422,r.text
+E       AssertionError: {"evidenceId":"EV-001","caseId":"W42-SYNTHETIC","title":"Synthetic strict encoding","source":"Synthetic declaration only","extractedBy":"Synthetic collector","extractedUtc":"2026-01-01T00:00:00Z","sha256":"252f10c83610ebca1a059c0bae8255eba2f95be4d1d7bcfa89d7248a82d9f111","relativePath":"evidence/synthetic.bin","category":"Other","confidentiality":"Normal","note":"","currentSha256":"252f10c83610ebca1a059c0bae8255eba2f95be4d1d7bcfa89d7248a82d9f111","accessCount":0,"status":"Unverified","needsReview":false,"lastAccessUtc":null,"lastAccessBy":null}
+E       assert 201 == 422
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_base64.py:23: AssertionError
+_________________________ test_invalid_no_writes[Zm9=] _________________________
+
+local = (<starlette.testclient.TestClient object at 0x7f1eb5bc7110>, <fastapi.applications.FastAPI object at 0x7f1eb48ea6f0>)
+value = 'Zm9='
+
+    @pytest.mark.parametrize('value',['!!!!','Zg','Zg=','Zg===','Zg==x','Zm9v=','Zm9v====',
+                                     'Z g==','Zg==\n','\tZg==','====','AA=A','_w==','é',
+                                     'data:application/octet-stream;base64,Zg==','Zh==','Zm9='])
+    def test_invalid_no_writes(local,value):
+        c,app=local
+        before=counts(app);files=set(app.state.settings.blob_dir.rglob('*'))
+        r=c.post(URL,json=body(value),headers=H())
+>       assert r.status_code==422,r.text
+E       AssertionError: {"evidenceId":"EV-001","caseId":"W42-SYNTHETIC","title":"Synthetic strict encoding","source":"Synthetic declaration only","extractedBy":"Synthetic collector","extractedUtc":"2026-01-01T00:00:00Z","sha256":"9c3aee7110b787f0fb5f81633a36392bd277ea945d44c874a9a23601aefe20cf","relativePath":"evidence/synthetic.bin","category":"Other","confidentiality":"Normal","note":"","currentSha256":"9c3aee7110b787f0fb5f81633a36392bd277ea945d44c874a9a23601aefe20cf","accessCount":0,"status":"Unverified","needsReview":false,"lastAccessUtc":null,"lastAccessBy":null}
+E       assert 201 == 422
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_base64.py:23: AssertionError
+________________ test_invalid_does_not_overwrite_existing_file _________________
+
+local = (<starlette.testclient.TestClient object at 0x7f1eb60bf8c0>, <fastapi.applications.FastAPI object at 0x7f1eb60e6ae0>)
+
+    def test_invalid_does_not_overwrite_existing_file(local):
+        c,app=local;raw=b'original synthetic evidence'
+        assert c.post(URL,json=body(base64.b64encode(raw).decode()),headers=H()).status_code==201
+        before=counts(app)
+        r=c.post(URL,json=body('!!!!'),headers=H())
+>       assert r.status_code==422 and counts(app)==before
+E       assert (409 == 422)
+E        +  where 409 = <Response [409 Conflict]>.status_code
+
+tests/test_legacy_evidence_base64.py:47: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_legacy_evidence_base64.py::test_invalid_no_writes[!!!!] - A...
+FAILED tests/test_legacy_evidence_base64.py::test_invalid_no_writes[Zg] - Ass...
+FAILED tests/test_legacy_evidence_base64.py::test_invalid_no_writes[Zg=] - As...
+FAILED tests/test_legacy_evidence_base64.py::test_invalid_no_writes[Zg===] - ...
+FAILED tests/test_legacy_evidence_base64.py::test_invalid_no_writes[Zg==x] - ...
+FAILED tests/test_legacy_evidence_base64.py::test_invalid_no_writes[Zm9v=] - ...
+FAILED tests/test_legacy_evidence_base64.py::test_invalid_no_writes[Zm9v====]
+FAILED tests/test_legacy_evidence_base64.py::test_invalid_no_writes[Z g==] - ...
+FAILED tests/test_legacy_evidence_base64.py::test_invalid_no_writes[Zg==\n]
+FAILED tests/test_legacy_evidence_base64.py::test_invalid_no_writes[\tZg==]
+FAILED tests/test_legacy_evidence_base64.py::test_invalid_no_writes[====] - A...
+FAILED tests/test_legacy_evidence_base64.py::test_invalid_no_writes[AA=A] - A...
+FAILED tests/test_legacy_evidence_base64.py::test_invalid_no_writes[_w==] - A...
+FAILED tests/test_legacy_evidence_base64.py::test_invalid_no_writes[\xe9] - A...
+FAILED tests/test_legacy_evidence_base64.py::test_invalid_no_writes[data:application/octet-stream;base64,Zg==]
+FAILED tests/test_legacy_evidence_base64.py::test_invalid_no_writes[Zh==] - A...
+FAILED tests/test_legacy_evidence_base64.py::test_invalid_no_writes[Zm9=] - A...
+FAILED tests/test_legacy_evidence_base64.py::test_invalid_does_not_overwrite_existing_file
+18 failed, 13 passed in 3.56s
