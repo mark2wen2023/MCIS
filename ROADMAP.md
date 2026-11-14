@@ -379,3 +379,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-14 | EXPERTMEETING r1 | 待独立复验 | 独审28项27过1红：旧提交幂等重放先于截止可保留其他活动席。非终止会议改为截止优先，终止后重放仍不复活；修正只读公开packet文案。34开发测试过，新6冻结待原断言复跑；不运行模型或真实Pi。 |
 
 | 2026-11-14 | EXPERTMEETING r1 | 受限独立验收通过 | 独立36/36，开发34与独审合跑70/70；6冻结前后匹配。D01截止重放关闭，原红测保留，C01只读源包澄清。显式脚本两轮4席10审计事件快照重放通过，modelExecuted/piExecuted/factActivated均false；不代表真实Pi会议、实际预算/取消、持久化、UI或认证验收。仅本地候选，无推送部署合并。 |
+
+| 2026-11-14 | EXPERTBRIDGE | 待独立验收 | 基于649d865的纯离线Pi线协议隔离接口；唯一控制器/上一完整轮上下文/逐次预算/工具票据绑定/done+exit双门禁/取消未知终止/元数据哈希链。新增31与原会议34合跑65通过，7项冻结logs/EXPERTBRIDGE-impl-hashes-frozen.txt。不启动Pi、不调用DeepSeek/凭据/服务，不是实际模型预算/取消验收，待独审。 |
+
+| 2026-11-14 | EXPERTBRIDGE | 受限独立验收通过 | 独立43/43、7冻结一致；单席/四席16与32精确预算、上一完整轮隔离、票据候选绑定、120/600截止、取消unknown、done/exit/父接受门禁及五阶段audit故障覆盖。开发31新+34原会议=65另计。独审全用例禁socket/Popen/_remote；无真实Pi/DeepSeek/服务请求，不证明真实预算、进程取消、持久化或身份。仅本地候选，不部署合并。 |
