@@ -4,7 +4,12 @@ export type Event=Entry&{seq:number,recordedUtc:string};
 export type History={caseId:string,issueId:string,revision:number,status:'working_unreviewed',events:Event[]};
 export type Command={caseId:string,issueId:string,operationId:string,expectedRevision:number,entry:Entry};
 /** No URL/credential transport. Implementer must use current server authority, not browser role headers. */
-export interface JournalPort{save(command:Command):Promise<unknown>;read(caseId:string,issueId:string):Promise<unknown>}
+export type SourceCandidate={evidenceId:string,sourceSha256:string,mediaKind:"csv"|"pdf",byteLength:number,registeredUtc:string};
+export function parseSources(value:any,caseId:string):SourceCandidate[]{
+ if(!value||value.profile!=="trial-issue-sources-v1"||value.caseId!==caseId||value.scope!=="current-local-supported-candidates-only"||!Array.isArray(value.items)||value.items.length>100)throw Error("Invalid sources");
+ const ids=new Set<string>();return value.items.map((s:any)=>{if(!s||typeof s.evidenceId!=="string"||!s.evidenceId||s.evidenceId.length>64||ids.has(s.evidenceId)||typeof s.sourceSha256!=="string"||! /^[0-9a-f]{64}$/.test(s.sourceSha256)||!["csv","pdf"].includes(s.mediaKind)||!Number.isSafeInteger(s.byteLength)||s.byteLength<0||typeof s.registeredUtc!=="string"||!Number.isFinite(Date.parse(s.registeredUtc)))throw Error("Invalid source");ids.add(s.evidenceId);return {evidenceId:s.evidenceId,sourceSha256:s.sourceSha256,mediaKind:s.mediaKind,byteLength:s.byteLength,registeredUtc:s.registeredUtc}});
+}
+export interface JournalPort{sources?(caseId:string):Promise<unknown>;save(command:Command):Promise<unknown>;read(caseId:string,issueId:string):Promise<unknown>}
 export function latest(history?:History){return history?.events.filter(e=>e.kind==='judgment').at(-1)?.seq??0}
 export function canDiscuss(history?:History){const n=latest(history);return !!n&&!!history?.events.some(e=>e.kind==='verification'&&e.againstJudgment===n)}
 export function parse(value:unknown,caseId:string,issueId:string):History{

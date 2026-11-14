@@ -1,0 +1,13 @@
+# Source reference slice independent review
+
+Python host implementation was authored by the client_review worker and inspected independently by read_resume. Existing protected catalog is reused through ASGI; no old app, listener or public URL is added. Source requests forbid issue/write fields, including explicit nulls. Authentication, case incarnation and epoch are checked before and after response materialization. Projection drops paths, raw content, registration receipts and actor information.
+
+Independent actual integration tests in test_issue_host_sources_review.py: **5/5 passed**, zero skips. They load the real source catalog and then save a source-bearing issue entry. Normal source produces a recorded source snapshot. Modified bytes after discovery, revoked membership, revoked issue grant and nonexistent source all reject and leave no journal Event. These are additional tests, not implementation-author tests. The implementer suite separately passed 47/47 (22 new plus 25 prior).
+
+The UI and TypeScript changes were independently checked by stored_ui_review. See SOURCE_SELECTION_UI/REPORT.md for the final independent checks. Real React/HappyDOM→stdio host→protected ASGI→temporary SQLite verifies EV-001 selected and retained through five progressive records/readback. This is a DOM/runtime integration check, not a browser visual or production identity acceptance.
+
+Review boundary: list values are current discovery, not a pinned selection version. The existing journal independently validates current sources at write time and retains its then-current snapshots. This slice does not make observations reviewed, author identities officially verified or historical sources currently valid.
+
+Final frozen related Python regression: **267 passed, zero skipped**, 128.75s, one existing Starlette/httpx deprecation warning. Includes the 22 new host-source checks and 5 independent catalog→save checks; do not add overlapping totals. Command: `PYTHONPATH=issue-journal/service MCIS_PREFLIGHT_REAL_CORE=/tmp/mcis-preflight-core.sh mcis-work/service/.venv/bin/pytest issue-journal/service/tests/test_issue*.py issue-journal/service/tests/test_identity_http_trial.py issue-journal/service/tests/test_trial_catalog*.py issue-journal/service/tests/test_web_demo*.py -q`.
+
+The author inspected the independent reviewer's cleanup/selection amendments: failed save/read clears only visible source metadata/selection, frozen pending command remains intact; checkbox updater enforces unique IDs and 20-item cap. All final TS/DOM/real-host integration checks reran after these changes. No unresolved finding remains within this trial slice; production authentication/UI/browser acceptance remains outside it.

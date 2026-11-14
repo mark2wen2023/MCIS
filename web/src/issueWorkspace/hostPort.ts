@@ -1,4 +1,4 @@
-import {parse,type JournalPort} from './model';
+import {parse,parseSources,type JournalPort} from './model';
 const PROFILE='mcis-issue-host-trial-v1';
 const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 function isUuid(value:unknown):value is string{return typeof value==='string'&&uuid.test(value)}
@@ -7,11 +7,11 @@ function keys(value:any,allowed:string[]){if(!value||typeof value!=='object'||Ar
 export function createIssueHostPort(scope:{profile:string,contextId:string,caseId:string,productionLogin:false},send:(message:unknown)=>Promise<unknown>):JournalPort{
  if(scope.profile!==PROFILE||scope.productionLogin!==false||!isUuid(scope.contextId)||typeof scope.caseId!=='string'||!/^[A-Za-z0-9_-]{1,64}$/.test(scope.caseId)||typeof send!=='function')throw Error('Invalid trial scope');
  const frozen={profile:PROFILE,contextId:scope.contextId,caseId:scope.caseId};
- async function call(action:'save'|'read',value:any){
+ async function call(action:'save'|'read'|'sources',value:any){
   try{
    const input=structuredClone(value);
-   keys(input,action==='save'?['caseId','issueId','operationId','expectedRevision','entry']:['caseId','issueId']);
-   if(input.caseId!==frozen.caseId||!isUuid(input.issueId))throw Error('Trial scope mismatch');
+   keys(input,action==='save'?['caseId','issueId','operationId','expectedRevision','entry']:action==='read'?['caseId','issueId']:['caseId']);
+   if(input.caseId!==frozen.caseId||action!=='sources'&&!isUuid(input.issueId))throw Error('Trial scope mismatch');
    if(action==='save'){
     keys(input.entry,['kind','note','sourceIds','outcome','againstJudgment']);
     const e=input.entry;
@@ -24,6 +24,7 @@ export function createIssueHostPort(scope:{profile:string,contextId:string,caseI
    const reply:any=await send(message);
    if(new TextEncoder().encode(JSON.stringify(reply)).length>8*1024*1024)throw Error('Trial response limit');
    if(!reply||reply.profile!==PROFILE||reply.contextId!==frozen.contextId||reply.caseId!==frozen.caseId||reply.productionLogin!==false||reply.requestId!==requestId||reply.ok!==true)throw Error('Trial result unconfirmed');
+   if(action==='sources')return {profile:'trial-issue-sources-v1',caseId:frozen.caseId,scope:'current-local-supported-candidates-only',items:parseSources(reply.body,frozen.caseId)};
    const parsed=parse(reply.body,input.caseId,input.issueId);
    if(action==='save'){
     if(parsed.revision<input.expectedRevision+1)throw Error('Missing saved entry');
@@ -33,5 +34,5 @@ export function createIssueHostPort(scope:{profile:string,contextId:string,caseI
    return {...parsed,events:parsed.events.map(e=>({...e,status:'working_unreviewed'}))};
   }catch{throw Error('Trial result unconfirmed')}
  }
- return {save:command=>call('save',command),read:(caseId,issueId)=>call('read',{caseId,issueId})};
+ return {sources:caseId=>call('sources',{caseId}),save:command=>call('save',command),read:(caseId,issueId)=>call('read',{caseId,issueId})};
 }

@@ -12,12 +12,20 @@ class Request(BaseModel):
     profile:Literal['mcis-issue-host-trial-v1']
     contextId:str
     requestId:str
-    action:Literal['save','read']
+    action:Literal['save','read','sources']
     caseId:str
-    issueId:str
+    issueId:str|None=None
     operationId:str|None=None
     expectedRevision:int|None=Field(default=None,ge=0,lt=200)
     entry:Entry|None=None
+
+class SourceItem(BaseModel):
+    model_config=ConfigDict(extra='ignore',strict=True)
+    evidenceId:str=Field(min_length=1,max_length=64)
+    sourceSha256:str=Field(pattern=r'^[0-9a-f]{64}$')
+    mediaKind:Literal['csv','pdf']
+    byteLength:int=Field(ge=0)
+    registeredUtc:str
 
 class IssueHostClient:
     def __init__(self,*,db,settings,session_token,case_id):
@@ -43,11 +51,16 @@ class IssueHostClient:
     async def dispatch(self,value):
         request_id=None
         try:
-            req=Request.model_validate(value);canonical_id(req.requestId);request_id=req.requestId;canonical_id(req.issueId)
+            req=Request.model_validate(value);canonical_id(req.requestId);request_id=req.requestId
+            if req.action=='sources':
+                if req.model_fields_set & {'issueId','operationId','expectedRevision','entry'}:raise ValueError()
+            else:canonical_id(req.issueId)
             if self.__closed or req.contextId!=self.__context or req.caseId!=self.__case:raise ValueError()
             self._check_scope()
             path=f'/api/v1/trial/cases/{self.__case}/issues'
-            if req.action=='save':
+            if req.action=='sources':
+                response=await self.__http.get(f'/api/v1/trial/cases/{self.__case}/sources',headers={'Authorization':'Bearer '+self.__token})
+            elif req.action=='save':
                 canonical_id(req.operationId)
                 if req.entry is None or req.expectedRevision is None:raise ValueError()
                 body={'operationId':req.operationId,'entry':req.entry.model_dump()}
@@ -61,6 +74,21 @@ class IssueHostClient:
             if response.status_code not in (200,201):
                 return {**self.scope,'requestId':request_id,'ok':False,'code':'ISSUE_HOST_REJECTED','status':response.status_code}
             raw=response.json()
+            if req.action=='sources':
+                if (response.status_code!=200 or raw.get('profile')!='trial-current-sources-v1'
+                    or raw.get('caseId')!=self.__case or raw.get('caseIncarnation')!=self.__generation
+                    or raw.get('caseEpochUtc')!=self.__epoch
+                    or raw.get('scope')!='current-local-supported-candidates-only'):raise ValueError()
+                items=raw.get('items')
+                if not isinstance(items,list) or len(items)>100:raise ValueError()
+                projected=[SourceItem.model_validate(item).model_dump() for item in items]
+                if len({x['evidenceId'] for x in projected})!=len(projected):raise ValueError()
+                from datetime import datetime
+                for item in projected:
+                    if datetime.fromisoformat(item['registeredUtc'].replace('Z','+00:00')).utcoffset() is None:raise ValueError()
+                body={'profile':'trial-issue-sources-v1','caseId':self.__case,'items':projected,'scope':'current-local-supported-candidates-only',
+                    'selectionSnapshotPinned':False,'observationApproval':'not_assessed'}
+                return {**self.scope,'requestId':request_id,'ok':True,'body':body}
             if raw['caseId']!=self.__case or raw['issueId']!=req.issueId or raw['status']!='working_unreviewed':raise ValueError()
             # Only the UI's fields; no identity table, raw source bytes or author IDs.
             fields=('kind','note','sourceIds','outcome','againstJudgment','seq','recordedUtc','status')
