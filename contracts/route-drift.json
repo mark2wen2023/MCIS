@@ -1,0 +1,4392 @@
+{
+  "profile": "MCIS-OFFLINE-DRIFT-1",
+  "source": {
+    "access_workbench/router.py": "ae0ed974c121bf4f983295e91a3f994dd9f499e83461b613e9e9237a5fdcfcc0",
+    "agents/router.py": "4ef2ebb1e20bc8c6faac8824680c8a9e499d9b0cfcd4ec4c7b4b1816dba0314b",
+    "analysis/router.py": "b3e91f7606b20da2c4ec1f07de396df0d041603dfbea694431a963f6e41bb4be",
+    "audit/router.py": "f8f0ffc1299e8cddf75385835c678c34608dd669d4ecaae686f5a014efab22d3",
+    "bowtie_preview/router.py": "2e1d2eac668b32e791027920098bbd08a444f9522e453bd56aa01f1f1bc24a80",
+    "case_metadata/router.py": "5270a614acbdde0ebd20b72c50ad50f25910c0ddc5babd2a5f80928a41a30de8",
+    "cases/router.py": "8c1af5e9138d95c578bec6219debba063dbe90fefb5b434dcf6a8e56c8afe15f",
+    "colreg/router.py": "11e72064fd10b3961ad6afb0f0bdbe2e0de4532b39d13f2cc1732412bec73d21",
+    "common/context.py": "a860b79756a213c6bc70ce375c3b29c76920f79ccd3f8dba5c5eae5b22438dde",
+    "environment/router.py": "d231f75e154f410c6d80f9cedaea3337cc3656ccb12f71b038622270d2e0c393",
+    "evidence/router.py": "3c2c2ae31a258bc620d0765c655285b3fbf1f647d59cd98a3f7ba1d1f74569f6",
+    "evidence_intake/router.py": "5f530def72292d7d363232977ceff9ecf27bf042303ab33969ece4d27f10ea54",
+    "hfacs_drafts/router.py": "15dd672fb3a10a3271f5ba261341a80527e767e7cd0dcd3df99d5a72f7c0784b",
+    "human_factors_preview/router.py": "5f5e19ed7db9b41db6cbe2010b7abe2e344df14e1bf6ae3f36184c8d8bb5955d",
+    "interview_compare/router.py": "8194a078210fe906e6650724cc090cf364150871d1c27be6a86af8181f8a9888",
+    "interviews/router.py": "24ac9207a08ee5604eb8efa013470a49becfa84d9a8e1b51aba12e9302375157",
+    "knowledge/router.py": "26686dd2fc14b9f80600b676b547d6a8d9d325b16cdd2b5ca9672383ee76e632",
+    "knowledge_archive/router.py": "0d68f70a3737ab4a93e2a3fe55f3c9cc071658ef5a50f92536d50cf4d20f8a37",
+    "main.py": "2c21e58417fe208462921543762eaf3a9c81e9fd40238be44de50e5a9ff28d93",
+    "manual_interviews/router.py": "8000a087d0272bb34d371fa13075d3c5572cd4729692461d7862c05df2f35202",
+    "nomoto_preview/router.py": "dedf72f52bce79de5cb921b947b455a1478bcf4e365398edb1ced7d71d313f04",
+    "package/router.py": "74e3419b822f57aca9c4cba63d41cd0ff9349734c77a6d54d8173cc8e8d7c2cf",
+    "package_intake/router.py": "0c523e6f58c27032a2c6ee5603ea2c7c20112923c416f52b9eb3fcb187307fdb",
+    "recommendations/router.py": "0959f767931086713528f050546e55d78bc6832197530c9d5c803fa06efce078",
+    "redaction/router.py": "f87444773892a8c7dbb368932f679f7de41bf857a0fc38368420a1df4388db6c",
+    "report_output/router.py": "15d28d7817db3b3a4af84e0fc368fe596f720df8fd2ea9ef3357e77bc476b646",
+    "reports/router.py": "4739d7184395fcab8b110d156ec38a073972d439c63d9924c6c510e7ff63f21d",
+    "sim/router.py": "9eb64f415d40e2bca166768c20824e4018d1cb03f03b35b165fbde7e94fdce30",
+    "timeline/align_preview.py": "00395156c1c85be5b47bcaa766060065758f935e1f3c5626b2d92f51e2ccc771",
+    "timeline/router.py": "d5ef3f7aaf4a1a329079344b114d3532fae3c04d9dbbc6332eae849b04735d6a",
+    "track_history/router.py": "5eb2e4be12b8df150f931d4f51c9caa81ec180c48f34a5e3b0d80960c24e6b0d",
+    "tracks_import/router.py": "a89a366d003c2a991a1ba48a76cf0e75fdc219de03ce7e46fe78bde1571c9eb8",
+    "working_records_archive/router.py": "41eee4c2f98ff704f6fcb6b6d3f6ccbcc65d0bd2959c514440256c9625f04cfb",
+    "config.py": "0e5e5262bcffe7f63fbca833e5cd267045d9db790d7600f0848c5451f21aa2ea",
+    "security_inventory/drift.py": "40887059c83727537e5bb7f59b01d27dba462e6d53bb4e778d60d8102d76da5b",
+    "security_inventory/routes.py": "84f980f93302325b540a708a0f8808e0154d0210020058a8eaf4f5998b0d8148"
+  },
+  "runtime": {
+    "python": [
+      3,
+      12
+    ],
+    "middleware": [
+      {
+        "class": "starlette.middleware.cors.CORSMiddleware",
+        "args": {
+          "tuple": []
+        },
+        "kwargs": {
+          "dict": {
+            "allow_origins": {
+              "list": [
+                "http://127.0.0.1:5173",
+                "http://localhost:5173",
+                "http://127.0.0.1:4173",
+                "http://localhost:4173"
+              ]
+            },
+            "allow_methods": {
+              "list": [
+                "*"
+              ]
+            },
+            "allow_headers": {
+              "list": [
+                "*"
+              ]
+            },
+            "expose_headers": {
+              "list": [
+                "Content-Disposition",
+                "X-Sha256",
+                "X-MCIS-Redaction"
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "routes": [
+      {
+        "path": "/openapi.json",
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "endpoint": {
+          "name": "fastapi.applications.FastAPI.setup.<locals>.openapi",
+          "code": "024d521d4fc35f25fa3fbfca1062ed36cb45589c62744a54e04236efc125c8aa",
+          "closureNames": [
+            "self"
+          ]
+        },
+        "dependencies": null
+      },
+      {
+        "path": "/docs",
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "endpoint": {
+          "name": "fastapi.applications.FastAPI.setup.<locals>.swagger_ui_html",
+          "code": "db17d7c2d003438c76824747c4464f3fabd7d4bef20dd65d47326e4f6fff323d",
+          "closureNames": [
+            "self"
+          ]
+        },
+        "dependencies": null
+      },
+      {
+        "path": "/docs/oauth2-redirect",
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "endpoint": {
+          "name": "fastapi.applications.FastAPI.setup.<locals>.swagger_ui_redirect",
+          "code": "d3ad236345713c5c185fed235199ba5e36feb5d3fd770a859d79386661316d38",
+          "closureNames": []
+        },
+        "dependencies": null
+      },
+      {
+        "path": "/redoc",
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "endpoint": {
+          "name": "fastapi.applications.FastAPI.setup.<locals>.redoc_html",
+          "code": "ccd282fa37f031aa964cbb62c5abcaf87fe05a782e3fa78efa2ef96f645496e5",
+          "closureNames": [
+            "self"
+          ]
+        },
+        "dependencies": null
+      },
+      {
+        "path": "/api/v1/health",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.main.create_app.<locals>.health",
+          "code": "54948d3adccb403dbeda6ba3cd1c834420de7533c6361ec2b086ac043ed4cd15",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.main.create_app.<locals>.health",
+            "code": "54948d3adccb403dbeda6ba3cd1c834420de7533c6361ec2b086ac043ed4cd15",
+            "closureNames": []
+          },
+          "children": []
+        }
+      },
+      {
+        "path": "/api/v1/cases",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.cases.router.list_cases",
+          "code": "054111a50026e18a11a55aab3d892b27b1fd32443e32a3495da892ef20a849f8",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.cases.router.list_cases",
+            "code": "054111a50026e18a11a55aab3d892b27b1fd32443e32a3495da892ef20a849f8",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.cases.router.create_case",
+          "code": "b5d67cc900c8afdc0c9f1e621e7bbd6d316d8709bc8f248ff05f82abf724901e",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.cases.router.create_case",
+            "code": "b5d67cc900c8afdc0c9f1e621e7bbd6d316d8709bc8f248ff05f82abf724901e",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.cases.router.get_case",
+          "code": "53e22accc18319d8938e9bd6da29cceca89eb6a1f04ea1ad0dc65b659c3cd1af",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.cases.router.get_case",
+            "code": "53e22accc18319d8938e9bd6da29cceca89eb6a1f04ea1ad0dc65b659c3cd1af",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/overview",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.cases.router.overview",
+          "code": "22c9a815be0dcb57d14f96d8ddb23c867a99bbbd5db84c797a9fdace74b05eab",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.cases.router.overview",
+            "code": "22c9a815be0dcb57d14f96d8ddb23c867a99bbbd5db84c797a9fdace74b05eab",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/vessels",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.cases.router.get_vessels",
+          "code": "1d107fc4709c5a485926e2d25e9c0d4dab4ba115c620b037797c1300aa3b5e14",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.cases.router.get_vessels",
+            "code": "1d107fc4709c5a485926e2d25e9c0d4dab4ba115c620b037797c1300aa3b5e14",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/vessels",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.cases.router.create_vessel",
+          "code": "ca884d02a8011b2c183768b8ed0af5dd284c84ba2ad4546f24fd442e4bbd44c3",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.cases.router.create_vessel",
+            "code": "ca884d02a8011b2c183768b8ed0af5dd284c84ba2ad4546f24fd442e4bbd44c3",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/tracks",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.cases.router.get_tracks",
+          "code": "5e38f744994b0df543b26d589cb26515897ed9a78ce46df6a1583e7abc4fed49",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.cases.router.get_tracks",
+            "code": "5e38f744994b0df543b26d589cb26515897ed9a78ce46df6a1583e7abc4fed49",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/evidence",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.evidence.router.list_evidence",
+          "code": "5f0d0f3b9c3000e1abdc8ecf6dddb12eb65e8e750f13191c0d2acae91429da8b",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.evidence.router.list_evidence",
+            "code": "5f0d0f3b9c3000e1abdc8ecf6dddb12eb65e8e750f13191c0d2acae91429da8b",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/evidence",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.evidence.router.register_evidence",
+          "code": "82d5abf00eb8afc1224a2002bcbec290ee3478ea5058e6681b8c97270e0a1966",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.evidence.router.register_evidence",
+            "code": "82d5abf00eb8afc1224a2002bcbec290ee3478ea5058e6681b8c97270e0a1966",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.evidence.router.get_evidence",
+          "code": "57295f4e076e2de51cd7251ecfed24e107d2588de7ae13617726072539cff206",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.evidence.router.get_evidence",
+            "code": "57295f4e076e2de51cd7251ecfed24e107d2588de7ae13617726072539cff206",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}",
+        "methods": [
+          "PATCH"
+        ],
+        "endpoint": {
+          "name": "mcis_service.evidence.router.patch_evidence",
+          "code": "045895ec4d53640f4849f9d82a4343399af36e3af5518a144365c1706896a06d",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.evidence.router.patch_evidence",
+            "code": "045895ec4d53640f4849f9d82a4343399af36e3af5518a144365c1706896a06d",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}/custody",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.evidence.router.get_custody",
+          "code": "2846a29a85e1c20209ae669ca4cb932c41dbb6d96ec017d328744e1b1f681cfa",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.evidence.router.get_custody",
+            "code": "2846a29a85e1c20209ae669ca4cb932c41dbb6d96ec017d328744e1b1f681cfa",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}/access",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.evidence.router.record_access",
+          "code": "ebd96cf7fc61e160278d29c2b29f743175787f3535f5f9470fcf8852b2bf1f06",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.evidence.router.record_access",
+            "code": "ebd96cf7fc61e160278d29c2b29f743175787f3535f5f9470fcf8852b2bf1f06",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}/verify",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.evidence.router.verify",
+          "code": "1886f08a32ee85ecbdb01cecb8dbaa48d4fa2f7648bfd06f31cb9fd3d0060e9d",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.evidence.router.verify",
+            "code": "1886f08a32ee85ecbdb01cecb8dbaa48d4fa2f7648bfd06f31cb9fd3d0060e9d",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/evidence:verify-all",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.evidence.router.verify_all",
+          "code": "798bdd4e691c6302216c737de760b45aa8a5157b2f33353489e8ae0db5f5a666",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.evidence.router.verify_all",
+            "code": "798bdd4e691c6302216c737de760b45aa8a5157b2f33353489e8ae0db5f5a666",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}/content",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.evidence.router.get_content",
+          "code": "1aeac99671ab2f73637ffb4eca9f6ca83e2913841f052da144e4f154c66befe4",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.evidence.router.get_content",
+            "code": "1aeac99671ab2f73637ffb4eca9f6ca83e2913841f052da144e4f154c66befe4",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/custody:verify-chain",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.evidence.router.verify_chain",
+          "code": "1baab78703f9b296e2eb4c8204bd4c6e567bc0dc09f49c0d140911f7f3b75d51",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.evidence.router.verify_chain",
+            "code": "1baab78703f9b296e2eb4c8204bd4c6e567bc0dc09f49c0d140911f7f3b75d51",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/timeline",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.timeline.router.get_timeline",
+          "code": "b46e4bd3293c894b34678c4981854937830e9dcfd71872421304c805eef7e350",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.timeline.router.get_timeline",
+            "code": "b46e4bd3293c894b34678c4981854937830e9dcfd71872421304c805eef7e350",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/timeline/events",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.timeline.router.add_event",
+          "code": "5a212ec6f111a916968641dd5e126afe685a58b13a9407a42ff5d82769e79b2d",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.timeline.router.add_event",
+            "code": "5a212ec6f111a916968641dd5e126afe685a58b13a9407a42ff5d82769e79b2d",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/conflicts",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.timeline.router.get_conflicts",
+          "code": "a217fcf56e367892b3e557be2a80bcf6c32c6e00046e453e43550f3828dc6eb9",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.timeline.router.get_conflicts",
+            "code": "a217fcf56e367892b3e557be2a80bcf6c32c6e00046e453e43550f3828dc6eb9",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/conflicts",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.timeline.router.add_conflict",
+          "code": "21a2328c4dcefbf8709ed149a955d7d08e513daf5d87cbeeaba053f399cbb91f",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.timeline.router.add_conflict",
+            "code": "21a2328c4dcefbf8709ed149a955d7d08e513daf5d87cbeeaba053f399cbb91f",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/conflicts/{conflict_id}",
+        "methods": [
+          "PATCH"
+        ],
+        "endpoint": {
+          "name": "mcis_service.timeline.router.patch_conflict",
+          "code": "5ad0ca2bc503848ba38d7bcb978be0d4cfab614a74357206bed57d6b0e087b46",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.timeline.router.patch_conflict",
+            "code": "5ad0ca2bc503848ba38d7bcb978be0d4cfab614a74357206bed57d6b0e087b46",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/timeline/align-preview",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.timeline.align_preview.preview_alignment",
+          "code": "78acfd9d30a72927352cdeec4980304c030307dfba096f96977c983ad5064528",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.timeline.align_preview.preview_alignment",
+            "code": "78acfd9d30a72927352cdeec4980304c030307dfba096f96977c983ad5064528",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/interviews",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.interviews.router.list_interviews",
+          "code": "c7fe5a1e1ee7a9a60e7d9e59199cf41d3e99a9ac2f12df6a08389ed8d31c088d",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.interviews.router.list_interviews",
+            "code": "c7fe5a1e1ee7a9a60e7d9e59199cf41d3e99a9ac2f12df6a08389ed8d31c088d",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/interviews/{record_id}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.interviews.router.get_interview",
+          "code": "e0c1be596ead4ef5b690914e3a7a24ae81602e40b4de213f5e450816399264b2",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.interviews.router.get_interview",
+            "code": "e0c1be596ead4ef5b690914e3a7a24ae81602e40b4de213f5e450816399264b2",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/interviews",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.interviews.router.create_interview",
+          "code": "356d74dcf7083b52b73ba9f898c76495904a7d3b8c7883ee811488549ea4333b",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.interviews.router.create_interview",
+            "code": "356d74dcf7083b52b73ba9f898c76495904a7d3b8c7883ee811488549ea4333b",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/interviews/{record_id}/turns",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.interviews.router.add_turn",
+          "code": "da4a2585350bb1b4eecae1e4838c0cd55ddb83dedd26d75189e4f5dfab09bc97",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.interviews.router.add_turn",
+            "code": "da4a2585350bb1b4eecae1e4838c0cd55ddb83dedd26d75189e4f5dfab09bc97",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/interviews/{record_id}/statements",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.interviews.router.add_statement",
+          "code": "232b658a800348e8149cdb450a081aa96563e8a4ee7ab30620a8d3d1145ddb13",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.interviews.router.add_statement",
+            "code": "232b658a800348e8149cdb450a081aa96563e8a4ee7ab30620a8d3d1145ddb13",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/interviews/{record_id}/statements/{statement_id}",
+        "methods": [
+          "PATCH"
+        ],
+        "endpoint": {
+          "name": "mcis_service.interviews.router.review_statement",
+          "code": "5e1be97de42d9d045756641c7bc685f8f82cb3d4f52b214d7c4fa82333913f4d",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.interviews.router.review_statement",
+            "code": "5e1be97de42d9d045756641c7bc685f8f82cb3d4f52b214d7c4fa82333913f4d",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/interviews/{record_id}/crosscheck",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.interviews.router.crosscheck",
+          "code": "9331a20bd80b8ce06eb416b4edc52dbd4272c4127d0d6b9ac343f712b523af29",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.interviews.router.crosscheck",
+            "code": "9331a20bd80b8ce06eb416b4edc52dbd4272c4127d0d6b9ac343f712b523af29",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/interviews/{record_id}/crosscheck/{statement_id}:confirm",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.interviews.router.confirm_crosscheck",
+          "code": "03a905aebfc7699e07faa3343d59ff4b82b777a2a6dca721b58ab3ab691fe780",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.interviews.router.confirm_crosscheck",
+            "code": "03a905aebfc7699e07faa3343d59ff4b82b777a2a6dca721b58ab3ab691fe780",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/interviews/{record_id}/crosscheck/{statement_id}:dismiss",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.interviews.router.dismiss_crosscheck",
+          "code": "17dab5ae752df4ccd9c82ce885986a732b5a3c0e909bf2f4df972e7589ccd9dc",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.interviews.router.dismiss_crosscheck",
+            "code": "17dab5ae752df4ccd9c82ce885986a732b5a3c0e909bf2f4df972e7589ccd9dc",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/interviews/{record_id}/crosscheck:confirm-consistent",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.interviews.router.confirm_consistent",
+          "code": "bb3a3b4f39b803b3612ee42e2dcee80b7b49e698734dcde8ed7f506a845c66e9",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.interviews.router.confirm_consistent",
+            "code": "bb3a3b4f39b803b3612ee42e2dcee80b7b49e698734dcde8ed7f506a845c66e9",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/manual-interviews",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.manual_interviews.router.create",
+          "code": "0f146bb1262cb3721796651c65ec3c036ccfbc204e8da2f9a59575194e1a71fb",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.manual_interviews.router.create",
+            "code": "0f146bb1262cb3721796651c65ec3c036ccfbc204e8da2f9a59575194e1a71fb",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/manual-interviews/{record_id}/turns",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.manual_interviews.router.append",
+          "code": "0e922bbc50ba73a41894c1824a577c0dc256ec2c82b9bf31d48c0aa423cddd31",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.manual_interviews.router.append",
+            "code": "0e922bbc50ba73a41894c1824a577c0dc256ec2c82b9bf31d48c0aa423cddd31",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/manual-interviews/requests/{request_id}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.manual_interviews.router.recover",
+          "code": "96dd5f03406dfb248176f87315357a9134795eb459bef4251265a3075c884123",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.manual_interviews.router.recover",
+            "code": "96dd5f03406dfb248176f87315357a9134795eb459bef4251265a3075c884123",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/manual-interviews/{record_id}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.manual_interviews.router.get",
+          "code": "9dc95d350d788887777cfc1c35557fdd4a8fdeb1e7087eb30df28d15a78d78ae",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.manual_interviews.router.get",
+            "code": "9dc95d350d788887777cfc1c35557fdd4a8fdeb1e7087eb30df28d15a78d78ae",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/recommendations",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.recommendations.router.list_recs",
+          "code": "9e412a0dde7aa228b2b25dbb0b4fa6f3f1974f971aa1e9191d730d612f652d1a",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.recommendations.router.list_recs",
+            "code": "9e412a0dde7aa228b2b25dbb0b4fa6f3f1974f971aa1e9191d730d612f652d1a",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/recommendations:board",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.recommendations.router.board",
+          "code": "3514637bb31cdc80f2aff5d3fcac16ac9bb350093928b220cf6436f6ca80fd57",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.recommendations.router.board",
+            "code": "3514637bb31cdc80f2aff5d3fcac16ac9bb350093928b220cf6436f6ca80fd57",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/recommendations",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.recommendations.router.create_rec",
+          "code": "0c013cb7d50d9dbd7562774eb08cd87d4736ff084a28b2598337e538de4c9321",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.recommendations.router.create_rec",
+            "code": "0c013cb7d50d9dbd7562774eb08cd87d4736ff084a28b2598337e538de4c9321",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/recommendations/{rec_id}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.recommendations.router.get_rec",
+          "code": "1a05f22135d6503b1c593d9ccb3072692ad26af5387331b1d51d3228c406acf7",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.recommendations.router.get_rec",
+            "code": "1a05f22135d6503b1c593d9ccb3072692ad26af5387331b1d51d3228c406acf7",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/recommendations/{rec_id}",
+        "methods": [
+          "PATCH"
+        ],
+        "endpoint": {
+          "name": "mcis_service.recommendations.router.patch_rec",
+          "code": "3ecd93428c2cc14b1d18ba6e1fa942badd99eca0df5846e2a71126a425bcaadb",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.recommendations.router.patch_rec",
+            "code": "3ecd93428c2cc14b1d18ba6e1fa942badd99eca0df5846e2a71126a425bcaadb",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/recommendations/{rec_id}:transition",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.recommendations.router.transition",
+          "code": "cdfdf2fcb4b9a37b9d6bc4c7cef738330ae43ce4704470ed7292aa3bf443e8a5",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.recommendations.router.transition",
+            "code": "cdfdf2fcb4b9a37b9d6bc4c7cef738330ae43ce4704470ed7292aa3bf443e8a5",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/recommendations/{rec_id}/responses",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.recommendations.router.record_response",
+          "code": "6cc630534c4b7df8cc1b978d302eb59929b9648f3e82374caa0b40bf2088a2da",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.recommendations.router.record_response",
+            "code": "6cc630534c4b7df8cc1b978d302eb59929b9648f3e82374caa0b40bf2088a2da",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/recommendations/{rec_id}/history",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.recommendations.router.rec_history",
+          "code": "6f780c16ad37483a571c58cc4ecb3ab57376433b93d85984b6516f4d6a0f4cb6",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.recommendations.router.rec_history",
+            "code": "6f780c16ad37483a571c58cc4ecb3ab57376433b93d85984b6516f4d6a0f4cb6",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/consultation/rounds",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.recommendations.router.list_rounds",
+          "code": "e64159907626c15b07eaf878598272263ca5e3151a38f26d08862784ff69ce57",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.recommendations.router.list_rounds",
+            "code": "e64159907626c15b07eaf878598272263ca5e3151a38f26d08862784ff69ce57",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/consultation/rounds",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.recommendations.router.open_round",
+          "code": "251241b8b6784275229ed0e4dc026e826917a084eb660eeca989a637e0add3f4",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.recommendations.router.open_round",
+            "code": "251241b8b6784275229ed0e4dc026e826917a084eb660eeca989a637e0add3f4",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/consultation/rounds/{round_no}/replies",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.recommendations.router.record_reply",
+          "code": "dd672c012d2a1a08ba7bb01c9dc3d073ca2277655eb145b0fbd589fd5b9c2f33",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.recommendations.router.record_reply",
+            "code": "dd672c012d2a1a08ba7bb01c9dc3d073ca2277655eb145b0fbd589fd5b9c2f33",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/consultation/rounds/{round_no}/comments/{comment_id}",
+        "methods": [
+          "PATCH"
+        ],
+        "endpoint": {
+          "name": "mcis_service.recommendations.router.decide_comment",
+          "code": "02e8e5611cd79a33af43cd5fe5d76bd4d1bb7bc8d03b9bee170b3e2300df983a",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.recommendations.router.decide_comment",
+            "code": "02e8e5611cd79a33af43cd5fe5d76bd4d1bb7bc8d03b9bee170b3e2300df983a",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/consultation/rounds/{round_no}:close",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.recommendations.router.close_round",
+          "code": "8550f27b0496a1686cf45deec7f73cc743cbb8e32baf2c0d4a5dad81cda84dc2",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.recommendations.router.close_round",
+            "code": "8550f27b0496a1686cf45deec7f73cc743cbb8e32baf2c0d4a5dad81cda84dc2",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/consultation/rounds/{round_no}/waivers",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.recommendations.router.waive_reply",
+          "code": "3be054a0561ebf29b0c323b6cd96afeb5dff60efcbddb28ed33dd60d518d14f9",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.recommendations.router.waive_reply",
+            "code": "3be054a0561ebf29b0c323b6cd96afeb5dff60efcbddb28ed33dd60d518d14f9",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/core/cpa",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.colreg.router.core_cpa",
+          "code": "8f74f227a85404369efb992893d2cf7e777ebbccbed5cbad6f15458513abdaf1",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.colreg.router.core_cpa",
+            "code": "8f74f227a85404369efb992893d2cf7e777ebbccbed5cbad6f15458513abdaf1",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/core/version",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.colreg.router.core_version",
+          "code": "05d4d97c11f507471265ef109e8b13a5a5bb6a63712870e58e7054a76ca4f1a4",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.colreg.router.core_version",
+            "code": "05d4d97c11f507471265ef109e8b13a5a5bb6a63712870e58e7054a76ca4f1a4",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/core/align",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.colreg.router.core_align",
+          "code": "eb5992247f6390aa27a29565acc43cc6e97f2680abd30934b8de931809edd961",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.colreg.router.core_align",
+            "code": "eb5992247f6390aa27a29565acc43cc6e97f2680abd30934b8de931809edd961",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/cpa",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.colreg.router.cpa_series",
+          "code": "9b1e09a6f1a5451f02c61702af9fd06032f72e80f989ae05bd44b2736823462e",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.colreg.router.cpa_series",
+            "code": "9b1e09a6f1a5451f02c61702af9fd06032f72e80f989ae05bd44b2736823462e",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/colreg",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.colreg.router.get_colreg",
+          "code": "e522cf7e9b8f61eb409b043220beae8299d7aa38a56e34d6033a56c00ddc7471",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.colreg.router.get_colreg",
+            "code": "e522cf7e9b8f61eb409b043220beae8299d7aa38a56e34d6033a56c00ddc7471",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/colreg/runs",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.colreg.router.list_colreg_runs",
+          "code": "248ac4e835b9d60f2b868f3f29d9f730dcc565e0b6e0aeab89a4c13872c0ee2b",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.colreg.router.list_colreg_runs",
+            "code": "248ac4e835b9d60f2b868f3f29d9f730dcc565e0b6e0aeab89a4c13872c0ee2b",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/colreg/runs/{run_id}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.colreg.router.get_colreg_run",
+          "code": "126a37b8d012b991b8f3e49580672e3308d1c9ec35ac608a4a5e9f5fe1fc03db",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.colreg.router.get_colreg_run",
+            "code": "126a37b8d012b991b8f3e49580672e3308d1c9ec35ac608a4a5e9f5fe1fc03db",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/colreg/runs/{run_id}:activate",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.colreg.router.activate_colreg_run",
+          "code": "5a1680f2b9d72f921d82e81735813905062d9753d7c74bea47df37309efb5e9a",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.colreg.router.activate_colreg_run",
+            "code": "5a1680f2b9d72f921d82e81735813905062d9753d7c74bea47df37309efb5e9a",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/colreg/compare",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.colreg.router.compare_colreg_runs",
+          "code": "a0c18718aa1c4fc0731e3b4e0f90c08a6e026fc5b1258e010bf2b29434a82644",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.colreg.router.compare_colreg_runs",
+            "code": "a0c18718aa1c4fc0731e3b4e0f90c08a6e026fc5b1258e010bf2b29434a82644",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/colreg:evaluate",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.colreg.router.evaluate",
+          "code": "2c0fa5bdafd3f345cca3270c641bd65ba07c080f5768259a1a67d1c56311055c",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.colreg.router.evaluate",
+            "code": "2c0fa5bdafd3f345cca3270c641bd65ba07c080f5768259a1a67d1c56311055c",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/colreg/checks/{check_id}",
+        "methods": [
+          "PATCH"
+        ],
+        "endpoint": {
+          "name": "mcis_service.colreg.router.review_check",
+          "code": "7058c39c67e9756043ef87923b9c4a4e050dfd1a8651346136fa802ea5a2d5d0",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.colreg.router.review_check",
+            "code": "7058c39c67e9756043ef87923b9c4a4e050dfd1a8651346136fa802ea5a2d5d0",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/colreg/checks/{check_id}/reviews",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.colreg.router.check_reviews",
+          "code": "68685278040bb1e3fb97c9eeedc1ed3b4321504cdf7725e941f61a3fe2db0e8a",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.colreg.router.check_reviews",
+            "code": "68685278040bb1e3fb97c9eeedc1ed3b4321504cdf7725e941f61a3fe2db0e8a",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/audit",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.audit.router.list_audit",
+          "code": "a2dd94f2b15a75a997a1e8f5f816666ac95749dc20186022c3848ee9f39bce7c",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.audit.router.list_audit",
+            "code": "a2dd94f2b15a75a997a1e8f5f816666ac95749dc20186022c3848ee9f39bce7c",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/audit:verify",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.audit.router.verify",
+          "code": "fd25bb78090e7c2edcc53c4c99922c75cce8a0fcbffc88cf74de619dc04b528e",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.audit.router.verify",
+            "code": "fd25bb78090e7c2edcc53c4c99922c75cce8a0fcbffc88cf74de619dc04b528e",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/access-policy",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.redaction.router.get_access_policy",
+          "code": "e576f2ab57d35346e7330c99470fa19fe32f63765f7c45ef9f68835871f36509",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.redaction.router.get_access_policy",
+            "code": "e576f2ab57d35346e7330c99470fa19fe32f63765f7c45ef9f68835871f36509",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/access-policy",
+        "methods": [
+          "PUT"
+        ],
+        "endpoint": {
+          "name": "mcis_service.redaction.router.put_access_policy",
+          "code": "3beec6d5cdd40bf26401e11e239d6fab78e4380e189b37fe63fc1b0384ba4348",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.redaction.router.put_access_policy",
+            "code": "3beec6d5cdd40bf26401e11e239d6fab78e4380e189b37fe63fc1b0384ba4348",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/redaction/preview",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.redaction.router.preview",
+          "code": "4d13365d46bfbcfb497747e852b6e340a52cc94aa415a690c06cc1b8f2a15327",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.redaction.router.preview",
+            "code": "4d13365d46bfbcfb497747e852b6e340a52cc94aa415a690c06cc1b8f2a15327",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/agents",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.agents.router.registry",
+          "code": "0ea7234578fcf52d7e7dbf0ee5a507bc28693d1e4949d067064f26b86d55906b",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.agents.router.registry",
+            "code": "0ea7234578fcf52d7e7dbf0ee5a507bc28693d1e4949d067064f26b86d55906b",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/agents/drafts",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.agents.router.list_drafts",
+          "code": "ceb533594b9677bc94efabd64ca6289a5c960f39553d1c157c1640bed3094ddc",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.agents.router.list_drafts",
+            "code": "ceb533594b9677bc94efabd64ca6289a5c960f39553d1c157c1640bed3094ddc",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/agents/drafts",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.agents.router.submit_draft",
+          "code": "5aceafabbb95fc9392b3836eccdca15cb8d2a4c98b85bee1f011a443d1f4dc9a",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.agents.router.submit_draft",
+            "code": "5aceafabbb95fc9392b3836eccdca15cb8d2a4c98b85bee1f011a443d1f4dc9a",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/agents/drafts/{draft_id}/review",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.agents.router.review",
+          "code": "e0e948c2994dafd1807a93c0bf14b746652fa617872a12994cb8612abdea0dcb",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.agents.router.review",
+            "code": "e0e948c2994dafd1807a93c0bf14b746652fa617872a12994cb8612abdea0dcb",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/agents/inputs/interviews/{record_id}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.agents.router.agent_input_interview",
+          "code": "b6887d2fe5e8b3a1c2c1b5482675a97a8e73aa6fe8db5a5441f7070e6cf11c8d",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.agents.router.agent_input_interview",
+            "code": "b6887d2fe5e8b3a1c2c1b5482675a97a8e73aa6fe8db5a5441f7070e6cf11c8d",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/agents/people_ops/interviews/{record_id}:extract",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.agents.router.extract_interview",
+          "code": "33bf9a6abd2323f0990defabde9ae828847a43e2dde48364f8d1662001449b84",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.agents.router.extract_interview",
+            "code": "33bf9a6abd2323f0990defabde9ae828847a43e2dde48364f8d1662001449b84",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/sim/state",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.sim.router.get_state",
+          "code": "97dbe4e2f584547bb4771fc115ffb2939670f60623defe5ba26f8ad4e3fc5962",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.sim.router.get_state",
+            "code": "97dbe4e2f584547bb4771fc115ffb2939670f60623defe5ba26f8ad4e3fc5962",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/sim/state",
+        "methods": [
+          "PUT"
+        ],
+        "endpoint": {
+          "name": "mcis_service.sim.router.put_state",
+          "code": "fb9c97ebe471e90c84ca8c94d7c13216860355b1b789fae2ce6c71ad30bc8444",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.sim.router.put_state",
+            "code": "fb9c97ebe471e90c84ca8c94d7c13216860355b1b789fae2ce6c71ad30bc8444",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/sim/seek",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.sim.router.seek",
+          "code": "729139842bc74480817326daeb9ceffa79f4919f03e7a4595a71ef38d0b4b4fe",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.sim.router.seek",
+            "code": "729139842bc74480817326daeb9ceffa79f4919f03e7a4595a71ef38d0b4b4fe",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/sim/commands",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.sim.router.command",
+          "code": "51eb5d5ad46a47a378974b5266f292f8c2c021efd52c3dcf46f7b05e795d061d",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.sim.router.command",
+            "code": "51eb5d5ad46a47a378974b5266f292f8c2c021efd52c3dcf46f7b05e795d061d",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/sim/commands",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.sim.router.poll",
+          "code": "3f959bd7af3a2414cdfaa98af65063f756089b1a97ef70326ce9085ebdc03355",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.sim.router.poll",
+            "code": "3f959bd7af3a2414cdfaa98af65063f756089b1a97ef70326ce9085ebdc03355",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/export",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.package.router.export",
+          "code": "3223086abc102d74a9abf5dc3ffe231c5791b280c26f21a6beb7aa3800bc72ad",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.package.router.export",
+            "code": "3223086abc102d74a9abf5dc3ffe231c5791b280c26f21a6beb7aa3800bc72ad",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases:import",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.package.router.import_package",
+          "code": "08fe8ea0c2126f42a550b6180f80aec579378ad461551d5cb1f89988f3b7d659",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.package.router.import_package",
+            "code": "08fe8ea0c2126f42a550b6180f80aec579378ad461551d5cb1f89988f3b7d659",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/packages:verify",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.package.router.verify_package",
+          "code": "8c5f1ca76aa422f2335156ab1e4034bcf1f6363a45dfee3d334e1278803451cc",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.package.router.verify_package",
+            "code": "8c5f1ca76aa422f2335156ab1e4034bcf1f6363a45dfee3d334e1278803451cc",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/report-templates",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.reports.router.get_templates",
+          "code": "2501da35b6f3fb32d326a881ac4220604e8cb4cc0911ad709d28c50da34f647c",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.reports.router.get_templates",
+            "code": "2501da35b6f3fb32d326a881ac4220604e8cb4cc0911ad709d28c50da34f647c",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/report-glossary",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.reports.router.get_glossary",
+          "code": "2d9583e2c5fefbb1004699000412bbae47dba74aba8c3b2635bdb2424729f3cc",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.reports.router.get_glossary",
+            "code": "2d9583e2c5fefbb1004699000412bbae47dba74aba8c3b2635bdb2424729f3cc",
+            "closureNames": []
+          },
+          "children": []
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/reports",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.reports.router.list_reports",
+          "code": "f98339d4419af2040d045754a277270816edfe46a55e7d87e7e354bc51d56a21",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.reports.router.list_reports",
+            "code": "f98339d4419af2040d045754a277270816edfe46a55e7d87e7e354bc51d56a21",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/reports",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.reports.router.create_report",
+          "code": "59db2f325fdf99f3fb89d64169712faa56d67548380684c8efb2b50cc53863a2",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.reports.router.create_report",
+            "code": "59db2f325fdf99f3fb89d64169712faa56d67548380684c8efb2b50cc53863a2",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/reports/sections/colreg:draft",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.reports.router.colreg_draft",
+          "code": "ba467f8010a834851441e6c115b74f1289bb5af5b398cd7ff09d6dab1577da37",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.reports.router.colreg_draft",
+            "code": "ba467f8010a834851441e6c115b74f1289bb5af5b398cd7ff09d6dab1577da37",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/reports/{report_id}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.reports.router.get_report",
+          "code": "c775efaa5d3802ea6f15faa4e4e881b7830021b929b62ccb6163a216adf8d88d",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.reports.router.get_report",
+            "code": "c775efaa5d3802ea6f15faa4e4e881b7830021b929b62ccb6163a216adf8d88d",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/reports/{report_id}:generate",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.reports.router.regenerate",
+          "code": "827064e9105d2aa9ee96444aee8596ab507075fff902f85e7bababc5b9ebf0c5",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.reports.router.regenerate",
+            "code": "827064e9105d2aa9ee96444aee8596ab507075fff902f85e7bababc5b9ebf0c5",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/reports/{report_id}/sections/{section_id}",
+        "methods": [
+          "PATCH"
+        ],
+        "endpoint": {
+          "name": "mcis_service.reports.router.review",
+          "code": "880de332296f10bcfb5b685f2a27725d1f588d370f30e9b6a9b5f48e60258a96",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.reports.router.review",
+            "code": "880de332296f10bcfb5b685f2a27725d1f588d370f30e9b6a9b5f48e60258a96",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/reports/{report_id}/audit",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.reports.router.audit_list",
+          "code": "67789154cf615468856de153a1cb38046a16ab55ee371d383f8335b9a977263e",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.reports.router.audit_list",
+            "code": "67789154cf615468856de153a1cb38046a16ab55ee371d383f8335b9a977263e",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/report-snapshots/{snapshot_id}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.reports.router.get_snapshot",
+          "code": "dd3bfb3f7cd81b5170db801d5340e1abadfb5a3b7954cb662165f899be3841d3",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.reports.router.get_snapshot",
+            "code": "dd3bfb3f7cd81b5170db801d5340e1abadfb5a3b7954cb662165f899be3841d3",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/reports/{report_id}/export",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.reports.router.export_report",
+          "code": "57a7721ac7c533faf1802efb846a05b6b7796feb2b49c33f75de539a869e75be",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.reports.router.export_report",
+            "code": "57a7721ac7c533faf1802efb846a05b6b7796feb2b49c33f75de539a869e75be",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/gisis",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.reports.router.get_gisis",
+          "code": "1faa87cdeaee6a61d20c6bc17760f025f784001cdd4d7b296b2c0386b9654c51",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.reports.router.get_gisis",
+            "code": "1faa87cdeaee6a61d20c6bc17760f025f784001cdd4d7b296b2c0386b9654c51",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/gisis:validate",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.reports.router.validate_gisis",
+          "code": "0f43561ef830cfdd9808b41ec7099f4474ae741fe8b3ab83c39415b0fbcd596f",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.reports.router.validate_gisis",
+            "code": "0f43561ef830cfdd9808b41ec7099f4474ae741fe8b3ab83c39415b0fbcd596f",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/gisis/export",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.reports.router.export_gisis",
+          "code": "6f176be1be276c29a3a458684b50824f5b7aaa44dff1ca7334353c0bff51110c",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.reports.router.export_gisis",
+            "code": "6f176be1be276c29a3a458684b50824f5b7aaa44dff1ca7334353c0bff51110c",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/reports/{report_id}/output-bundle:preview",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.report_output.router.preview",
+          "code": "731234f86d364cf72c8a6e78bcd7536089fc9a8636f7f3a7a6645b18ae628e82",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.report_output.router.preview",
+            "code": "731234f86d364cf72c8a6e78bcd7536089fc9a8636f7f3a7a6645b18ae628e82",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/reports/{report_id}/output-bundle",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.report_output.router.create",
+          "code": "9fcc6d57ec1e9cbde84ce4e0ffe0444339db2db32e55e4b2e4c58bb43c1a9468",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.report_output.router.create",
+            "code": "9fcc6d57ec1e9cbde84ce4e0ffe0444339db2db32e55e4b2e4c58bb43c1a9468",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/human-factors/rest:sources",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.human_factors_preview.router.sources",
+          "code": "8539c33c893d90b055f5b99deef3c9886bbf02ea653fdf70e1c55b7eda2d6b1f",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.human_factors_preview.router.sources",
+            "code": "8539c33c893d90b055f5b99deef3c9886bbf02ea653fdf70e1c55b7eda2d6b1f",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/human-factors/rest:preview",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.human_factors_preview.router.preview",
+          "code": "58c3d816032fd9d345786c14bca2e9aae1b7a1413dc37817436375cea79ac2ed",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.human_factors_preview.router.preview",
+            "code": "58c3d816032fd9d345786c14bca2e9aae1b7a1413dc37817436375cea79ac2ed",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/systemic/bowtie:sources",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.bowtie_preview.router.sources",
+          "code": "8539c33c893d90b055f5b99deef3c9886bbf02ea653fdf70e1c55b7eda2d6b1f",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.bowtie_preview.router.sources",
+            "code": "8539c33c893d90b055f5b99deef3c9886bbf02ea653fdf70e1c55b7eda2d6b1f",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/systemic/bowtie:preview",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.bowtie_preview.router.preview",
+          "code": "42d0860eb08ccd0b1209a618bc0f8a998cc4682681dd8dcd20fcec46f1edbbd4",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.bowtie_preview.router.preview",
+            "code": "42d0860eb08ccd0b1209a618bc0f8a998cc4682681dd8dcd20fcec46f1edbbd4",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/whatif/nomoto:sources",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.nomoto_preview.router.sources",
+          "code": "8539c33c893d90b055f5b99deef3c9886bbf02ea653fdf70e1c55b7eda2d6b1f",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.nomoto_preview.router.sources",
+            "code": "8539c33c893d90b055f5b99deef3c9886bbf02ea653fdf70e1c55b7eda2d6b1f",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/whatif/nomoto:preview",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.nomoto_preview.router.preview",
+          "code": "5b4a72218e173e63efd5bf385865999bb2ec86df57532b6aafabc6be9436997f",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.nomoto_preview.router.preview",
+            "code": "5b4a72218e173e63efd5bf385865999bb2ec86df57532b6aafabc6be9436997f",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/human-factors/hfacs:context",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.hfacs_drafts.router.context",
+          "code": "f6e8e7fa43ef54c65f4be9ddd662339394b83c7bd4da7c2835d55f5992c45027",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.hfacs_drafts.router.context",
+            "code": "f6e8e7fa43ef54c65f4be9ddd662339394b83c7bd4da7c2835d55f5992c45027",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/human-factors/hfacs:draft",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.hfacs_drafts.router.get_draft",
+          "code": "fa1312efd0191671d3c858dccd0d1f6b8cad0c9ad62e4d8c292ff6bb5c1cecab",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.hfacs_drafts.router.get_draft",
+            "code": "fa1312efd0191671d3c858dccd0d1f6b8cad0c9ad62e4d8c292ff6bb5c1cecab",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/human-factors/hfacs:save",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.hfacs_drafts.router.save",
+          "code": "79e185fd2da07771f02fa441bae58fb2717bf3dc6eb6062cb088001b4c941c33",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.hfacs_drafts.router.save",
+            "code": "79e185fd2da07771f02fa441bae58fb2717bf3dc6eb6062cb088001b4c941c33",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/human-factors/hfacs:audit",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.hfacs_drafts.router.audit_history",
+          "code": "caedbd0e3cabfd5e7e1de18f7d43075992421ffa066b26f9c41113680c9ef197",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.hfacs_drafts.router.audit_history",
+            "code": "caedbd0e3cabfd5e7e1de18f7d43075992421ffa066b26f9c41113680c9ef197",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/access-workbench",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.access_workbench.router.inspect_access",
+          "code": "ad5384e2bdb56338965c0cd90fa6a55bc379bc14d0e97cec8473ceb378a6ebbf",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.access_workbench.router.inspect_access",
+            "code": "ad5384e2bdb56338965c0cd90fa6a55bc379bc14d0e97cec8473ceb378a6ebbf",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/packages/intakes:preview",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.package_intake.router.preview",
+          "code": "ee827259eb8b26829f60b1cfc4719b2bd23b9ff877b98b9c630fb2c1fcd37103",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.package_intake.router.preview",
+            "code": "ee827259eb8b26829f60b1cfc4719b2bd23b9ff877b98b9c630fb2c1fcd37103",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/packages/intakes/{digest}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.package_intake.router.recover",
+          "code": "2b41327ce8a66aeaf2666789afcbec9d077ab01483c13fa29a61e4e63d40c6cb",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.package_intake.router.recover",
+            "code": "2b41327ce8a66aeaf2666789afcbec9d077ab01483c13fa29a61e4e63d40c6cb",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/packages/intakes:commit",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.package_intake.router.commit",
+          "code": "68f2723bd3f98de26df29347b64141f21ef4edee870335e31baee8afb92eab28",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.package_intake.router.commit",
+            "code": "68f2723bd3f98de26df29347b64141f21ef4edee870335e31baee8afb92eab28",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/archive-history/evidence/{evidence_id}/content",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.working_records_archive.router.content",
+          "code": "7e032ae3b7c0bc72c0783aae45ff11a5243f767780050b05a1b466b7195e10da",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.working_records_archive.router.content",
+            "code": "7e032ae3b7c0bc72c0783aae45ff11a5243f767780050b05a1b466b7195e10da",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/archive-history/provenance/{kind}/{record_id}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.working_records_archive.router.provenance",
+          "code": "2ffae523fcf17ba2242ad9813efc8106e3fed0454d291e496845d9421551b375",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.working_records_archive.router.provenance",
+            "code": "2ffae523fcf17ba2242ad9813efc8106e3fed0454d291e496845d9421551b375",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/evidence-intakes:preview",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.evidence_intake.router.preview_input",
+          "code": "a92421ccbaf6f25ad2b873b840e37c04968f74ff1e64ff6429547f40742b7d05",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.evidence_intake.router.preview_input",
+            "code": "a92421ccbaf6f25ad2b873b840e37c04968f74ff1e64ff6429547f40742b7d05",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/evidence-intakes:commit",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.evidence_intake.router.commit_input",
+          "code": "c6d523fcd914487e17f92d8478ff3235fafd69e3d7a75bbb14c45a5349ae5609",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.evidence_intake.router.commit_input",
+            "code": "c6d523fcd914487e17f92d8478ff3235fafd69e3d7a75bbb14c45a5349ae5609",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/evidence-intakes/{digest}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.evidence_intake.router.receipt_input",
+          "code": "d6377e8b3c432c361b40ff7a32915cb86674bde70c50115f56000d85550895ca",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.evidence_intake.router.receipt_input",
+            "code": "d6377e8b3c432c361b40ff7a32915cb86674bde70c50115f56000d85550895ca",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/evidence/{evidence_id}/intake",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.evidence_intake.router.receipt_evidence",
+          "code": "89b4992a384fd07116f7555206175cd8854379562f843731fd4bd43638a8c8de",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.evidence_intake.router.receipt_evidence",
+            "code": "89b4992a384fd07116f7555206175cd8854379562f843731fd4bd43638a8c8de",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/evidence-intakes/{digest}:download",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.evidence_intake.router.download",
+          "code": "3bfc885b452176b98a4b385714e4f165aa211410c8f4601ff8853012b8ad63fd",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.evidence_intake.router.download",
+            "code": "3bfc885b452176b98a4b385714e4f165aa211410c8f4601ff8853012b8ad63fd",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/metadata",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.case_metadata.router.get_metadata",
+          "code": "86f157e8faefc4eeaa8836b65e423a5c6fdccf0d1de3a4aa0f31249aa9531e04",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.case_metadata.router.get_metadata",
+            "code": "86f157e8faefc4eeaa8836b65e423a5c6fdccf0d1de3a4aa0f31249aa9531e04",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/metadata",
+        "methods": [
+          "PATCH"
+        ],
+        "endpoint": {
+          "name": "mcis_service.case_metadata.router.update_metadata",
+          "code": "e40d77876d8f1ce6bdfb66bfcc906dab3d92f595cb095b4a32508ac75478d20e",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.case_metadata.router.update_metadata",
+            "code": "e40d77876d8f1ce6bdfb66bfcc906dab3d92f595cb095b4a32508ac75478d20e",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/archive-history/track-imports",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.track_history.router.listing",
+          "code": "b86d2c4f3dbe6208fe18abcebbef58e49e0ba9c9deb4eefd564ad5e2a68765bb",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.track_history.router.listing",
+            "code": "b86d2c4f3dbe6208fe18abcebbef58e49e0ba9c9deb4eefd564ad5e2a68765bb",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/archive-history/track-imports/{digest}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.track_history.router.detail",
+          "code": "ecdef31230e1f0d7f6d9e20fc0127b746d210c797a47c42a15668325a8283bbe",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.track_history.router.detail",
+            "code": "ecdef31230e1f0d7f6d9e20fc0127b746d210c797a47c42a15668325a8283bbe",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/archive-history/track-imports/{digest}/{kind}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.track_history.router.content",
+          "code": "f096485bb8bb48272217a1f8be784a46c8eeb39612fa6a54655ef081cb37f321",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.track_history.router.content",
+            "code": "f096485bb8bb48272217a1f8be784a46c8eeb39612fa6a54655ef081cb37f321",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/track-imports:preview",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.tracks_import.router.preview_input",
+          "code": "520a9b4fb6f340e7e5d5306b8e49d5835297fa94f799028b072ea27fbeebf9dc",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.tracks_import.router.preview_input",
+            "code": "520a9b4fb6f340e7e5d5306b8e49d5835297fa94f799028b072ea27fbeebf9dc",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/track-imports:commit",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.tracks_import.router.commit_input",
+          "code": "95c7262d712c90710fb8c8bb0659c5c5ce932a580b365b40ec9d4a40b2b40703",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.tracks_import.router.commit_input",
+            "code": "95c7262d712c90710fb8c8bb0659c5c5ce932a580b365b40ec9d4a40b2b40703",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/track-imports",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.tracks_import.router.list_inputs",
+          "code": "20d4ac068d987f9d81ea65b4c3c4c09cb335a5fba942424fd16930f394289ed3",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.tracks_import.router.list_inputs",
+            "code": "20d4ac068d987f9d81ea65b4c3c4c09cb335a5fba942424fd16930f394289ed3",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/track-imports/{digest}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.tracks_import.router.receipt_input",
+          "code": "da6219dcc20a5c12ab8fcc265d4d83b3e7f31d98d579811fd9312a8e33b2e13e",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.tracks_import.router.receipt_input",
+            "code": "da6219dcc20a5c12ab8fcc265d4d83b3e7f31d98d579811fd9312a8e33b2e13e",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/track-imports/{digest}/{kind}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.tracks_import.router.read_input",
+          "code": "68ca74b65545ceeefa279eb64c9fa11a7a6c953e84b172b7ff55e00d427a4e12",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.tracks_import.router.read_input",
+            "code": "68ca74b65545ceeefa279eb64c9fa11a7a6c953e84b172b7ff55e00d427a4e12",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/environment-observations",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.environment.router.get_observations",
+          "code": "10402ae450c3fd08a97fe4e099c04e9ac4e66f8f5c20d6a6e4d8cf7f7e7da870",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.environment.router.get_observations",
+            "code": "10402ae450c3fd08a97fe4e099c04e9ac4e66f8f5c20d6a6e4d8cf7f7e7da870",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/environment-observations",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.environment.router.create_observation",
+          "code": "10930c19309b95babcad86844c27952694eb9a4978fb13f0dc9e685a31a16274",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.environment.router.create_observation",
+            "code": "10930c19309b95babcad86844c27952694eb9a4978fb13f0dc9e685a31a16274",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/knowledge/cards",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.knowledge.router.search",
+          "code": "ef15f5b4bc4d6a510fa1e3480cca984c22600513c445bc4dae69dc575fd55cc9",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.knowledge.router.search",
+            "code": "ef15f5b4bc4d6a510fa1e3480cca984c22600513c445bc4dae69dc575fd55cc9",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/knowledge/cards",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.knowledge.router.create",
+          "code": "051ee3c067fb77e6bcc9a01920a946ef585d6a79aa54b58cf4c03c17205c74ab",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.knowledge.router.create",
+            "code": "051ee3c067fb77e6bcc9a01920a946ef585d6a79aa54b58cf4c03c17205c74ab",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/knowledge/cards/{card_id}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.knowledge.router.detail",
+          "code": "1668c83d72e4d3a9aa59d4eb2642eef6cc007e8b7f72338c63c4283972add95a",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.knowledge.router.detail",
+            "code": "1668c83d72e4d3a9aa59d4eb2642eef6cc007e8b7f72338c63c4283972add95a",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/knowledge/cards/{card_id}/review",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.knowledge.router.review",
+          "code": "94fade053174bf8c7e4f945ba29a9df3a72513a72829d3e077c8747f36765a8b",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.knowledge.router.review",
+            "code": "94fade053174bf8c7e4f945ba29a9df3a72513a72829d3e077c8747f36765a8b",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/knowledge/audit",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.knowledge.router.events",
+          "code": "0ec43a5c546b858e375bbe06f4917f37b01f3fd08f1c90349c38746f07c7972b",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.knowledge.router.events",
+            "code": "0ec43a5c546b858e375bbe06f4917f37b01f3fd08f1c90349c38746f07c7972b",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/knowledge/audit:verify",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.knowledge.router.verify",
+          "code": "c15075aecc108aab6e1b4e9534686b27caa97647b90d410161f8e0ae9c0d12d9",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.knowledge.router.verify",
+            "code": "c15075aecc108aab6e1b4e9534686b27caa97647b90d410161f8e0ae9c0d12d9",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/knowledge/suggestions",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.knowledge.router.suggestion_preview",
+          "code": "1c99a6d17f9fcf3cecb37cd94c2491add2ae08bb38f96dacd4c0a62b644491b3",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.knowledge.router.suggestion_preview",
+            "code": "1c99a6d17f9fcf3cecb37cd94c2491add2ae08bb38f96dacd4c0a62b644491b3",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/knowledge/archives:export",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.knowledge_archive.router.export",
+          "code": "ec6860ff7bd2454e23d1b13b57560e2b3755a9a85085226d8e0577a81bfe0969",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.knowledge_archive.router.export",
+            "code": "ec6860ff7bd2454e23d1b13b57560e2b3755a9a85085226d8e0577a81bfe0969",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/knowledge/archives:preview",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.knowledge_archive.router.preview",
+          "code": "c749af0d202f0a3f782c51d60d3e5627b05ab120721467085b5dcb6d326dd656",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.knowledge_archive.router.preview",
+            "code": "c749af0d202f0a3f782c51d60d3e5627b05ab120721467085b5dcb6d326dd656",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/knowledge/archives",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.knowledge_archive.router.save",
+          "code": "22b30d88c87490eada483d3253480cc1663ace91cd3eabdf3625d2fe142a0120",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.knowledge_archive.router.save",
+            "code": "22b30d88c87490eada483d3253480cc1663ace91cd3eabdf3625d2fe142a0120",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/knowledge/archives",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.knowledge_archive.router.listing",
+          "code": "2b3a66871c1aecb468fc91192ecc9212f8dcda0e41c620218667fd1201ad9efd",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.knowledge_archive.router.listing",
+            "code": "2b3a66871c1aecb468fc91192ecc9212f8dcda0e41c620218667fd1201ad9efd",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/knowledge/archives/{archive_sha256}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.knowledge_archive.router.detail",
+          "code": "c3087f63cd8e7c0ec19759dd778eba0bcdd0052bcfc050d3d569bcab6f034ac2",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.knowledge_archive.router.detail",
+            "code": "c3087f63cd8e7c0ec19759dd778eba0bcdd0052bcfc050d3d569bcab6f034ac2",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/knowledge/archives/{archive_sha256}/content",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.knowledge_archive.router.content",
+          "code": "ab0042957c0ab5d6a0b335f9843c6aa5ef6440dd6ff03a5eca64519d8d523d43",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.knowledge_archive.router.content",
+            "code": "ab0042957c0ab5d6a0b335f9843c6aa5ef6440dd6ff03a5eca64519d8d523d43",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/analysis/cases",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.analysis.router.list_analysis_cases",
+          "code": "54ce6ce819e27e8f00a6244d83281bc06dbbf800d60703f64dfdb5c79a67c233",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.analysis.router.list_analysis_cases",
+            "code": "54ce6ce819e27e8f00a6244d83281bc06dbbf800d60703f64dfdb5c79a67c233",
+            "closureNames": []
+          },
+          "children": []
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/analysis",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.analysis.router.get_analysis",
+          "code": "a75be55316cbee81aa15d5c219a826bb9e476a93f8060e7ffc2291b7ef662e85",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.analysis.router.get_analysis",
+            "code": "a75be55316cbee81aa15d5c219a826bb9e476a93f8060e7ffc2291b7ef662e85",
+            "closureNames": []
+          },
+          "children": []
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/interview-compare",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.interview_compare.router.roster",
+          "code": "5e31255326047d45af1066644e81d78d3495feb4b5df37ad657b8f83671367f5",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.interview_compare.router.roster",
+            "code": "5e31255326047d45af1066644e81d78d3495feb4b5df37ad657b8f83671367f5",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/interview-compare/{record_id}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": {
+          "name": "mcis_service.interview_compare.router.page",
+          "code": "ad5ec4b5d2338fe6d74ca0e9fe692c2a76e9d2db3def5fbf34d13fd54f81e3ef",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.interview_compare.router.page",
+            "code": "ad5ec4b5d2338fe6d74ca0e9fe692c2a76e9d2db3def5fbf34d13fd54f81e3ef",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/interview-compare/{record_id}/rows/{statement_id}:confirm",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.interview_compare.router.confirm_row",
+          "code": "4a2c5eb4d17ba9e80de19249bc3cf9c0c908b55f05cd06d70798e8ccd8f8463f",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.interview_compare.router.confirm_row",
+            "code": "4a2c5eb4d17ba9e80de19249bc3cf9c0c908b55f05cd06d70798e8ccd8f8463f",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/interview-compare/{record_id}/rows/{statement_id}:reject",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.interview_compare.router.reject_row",
+          "code": "74f6046039149c3c3a4aa07b17135125b46a978cd1c9c9b40e35e970f6dcb760",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.interview_compare.router.reject_row",
+            "code": "74f6046039149c3c3a4aa07b17135125b46a978cd1c9c9b40e35e970f6dcb760",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/interview-compare/{record_id}/statements/{statement_id}:revise",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.interview_compare.router.revise_statement",
+          "code": "1f90abd3c2ec01ab2de70a8ee09f716e68bc4f26037275e0d2d8d80bc4543e05",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.interview_compare.router.revise_statement",
+            "code": "1f90abd3c2ec01ab2de70a8ee09f716e68bc4f26037275e0d2d8d80bc4543e05",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/cases/{case_id}/interview-compare/{record_id}/rows/{statement_id}:recheck",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": {
+          "name": "mcis_service.interview_compare.router.recheck_row",
+          "code": "a6e20c4d39a1f3dc9679261b720f7f5bd23716ba8774b17c691a6d3a891c5d63",
+          "closureNames": []
+        },
+        "dependencies": {
+          "call": {
+            "name": "mcis_service.interview_compare.router.recheck_row",
+            "code": "a6e20c4d39a1f3dc9679261b720f7f5bd23716ba8774b17c691a6d3a891c5d63",
+            "closureNames": []
+          },
+          "children": [
+            {
+              "call": {
+                "name": "mcis_service.common.context.get_ctx",
+                "code": "3554350220ee7e856ef6fd9ea97ab85a78e137bd141cb013ba72b7411d3ca56f",
+                "closureNames": []
+              },
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -17,4 +17,4 @@ jobs:
         run: python -m pip install -r service/requirements.txt
       - name: Verify classified route surface
         working-directory: service
-        run: python -m pytest -q tests/test_route_classification*.py
+        run: python -m pytest -q tests/test_route_classification*.py tests/test_route_drift*.py
