@@ -81,7 +81,7 @@ export function EvidenceIntakePanel({caseId,caseTitle,who,selectedEvidenceId,onR
   const historicalDownload=async()=>{
     if(!historyEvidenceId)return
     const target=historyEvidenceId,run=begin('显式调阅历史原件');if(!run)return
-    try{const r=await downloadHistory(caseId,target,who,run.signal);if(live(run.version)){downloadBytes(r.bytes,`historical-${target.replace(/[^a-zA-Z0-9_-]/g,'_')}.bin`);setMessage('历史原字节下载完成，SHA-256已核对；新增当前访问审计，不激活历史回执，也不证明原始真实性。');onRefresh?.()}}
+    try{const r=await downloadHistory(caseId,target,who,run.signal);if(live(run.version)){downloadBytes(r.bytes,r.fileName);setMessage('已发起历史原字节下载，SHA-256已核对；新增当前访问审计，不激活历史回执，也不证明原始真实性。');onRefresh?.()}}
     catch(e){if(live(run.version))setMessage('历史下载未完成，未交付文件；已发请求可能产生访问审计，不会自动重试。 '+intakeError(e))}finally{finish(run.version)}
   }
   if(!['Investigator','LeadInvestigator'].includes(getRole()))return <p className="w42-restricted">文件登记及本片受限原件仅向调查组开放，仍受当前案件策略限制。</p>
