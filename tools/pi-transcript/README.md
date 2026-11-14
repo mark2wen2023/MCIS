@@ -2,8 +2,9 @@
 
 This is an **actual Pi Agent 1.5.2 loop**, not a new name for a single completion.
 It is an isolated trusted-host prototype, not mounted in the production workbench.
-Only `mode: fixture` is accepted in this checkpoint: the model adapter is simulated.
-DeepSeek+Pi real inference is **not connected or accepted** here. The existing
+The default `mode: fixture` uses a simulated model. Explicit `remote-deepseek`
+requires the bound adapter and approved Python remote host. See the remote
+acceptance report for actual model results; mocked tests alone are not live proof. The existing
 Python single-completion DeepSeek API remains unchanged and rejects tool calls.
 
 ## Run
@@ -40,8 +41,10 @@ Final text must equal a successfully validated candidate; Python validates it
 again and rechecks authority. Output is PendingReview, never a saved/approved fact.
 No write tools exist. Exact matching proves quotation provenance, not truth.
 Cancellation/deadlines suppress late results but cannot promise to terminate an
-arbitrary noncooperating adapter's already-started work. No remote adapter is
-shipped until its abort, authorization and fixed-destination controls are tested.
+arbitrary noncooperating adapter's already-started work. The remote host owns the canonical transcript, tool-call IDs and actual tool
+results; Node cannot submit arbitrary messages. Python enforces the total HTTP
+deadline with asyncio cancellation. The launcher also terminates its child when
+the runtime ends; bytes already sent cannot be recalled.
 
 Trace contains event types/tool names only; it is not a durable/signed audit.
 No UI or genuine browser acceptance, no production authentication, no real model
@@ -67,3 +70,22 @@ Do not redistribute node_modules as a complete licensed binary bundle yet:
 @aws-sdk/nested-clients, data-uri-to-buffer, proxy-agent-negotiate,
 standardwebhooks). Preserve/recover applicable upstream LICENSE/NOTICE before
 such distribution. This repository commits source and lockfile, not those bundles.
+
+## Explicit fixed public-report live acceptance
+
+`node live-probe.mjs --approved-public-report` accepts a single first stdin JSON
+object `{"apiKey":"..."}` from a trusted operator. Do not put credentials in
+command arguments, files, logs, or repository. This flag asserts that the user
+already authorized the fixed public YANGZE22 excerpt and official DeepSeek use;
+it is not a human-click verification service and does not authorize other cases.
+The source report text and excerpt SHA, unique offset and page are pinned.
+It uses temporary fixture identity, not production login, and is explicitly a
+report excerpt, NOT witness testimony. No environment key lookup or auto-start.
+
+The three remote tools remain read-only. Python maintains complete canonical
+wire history and compares each callId/name/argument tuple to the actual model
+response. Final content must equal a previously validated proposal and model
+final reply. All model/tool boundaries reauthorize the same case/source snapshot.
+The old single-completion DeepSeek adapter is unchanged. Pi usage fields are
+zero placeholders required by its message type; `usageMeasured:false` means they
+are not measured usage/cost or proof of zero billing.

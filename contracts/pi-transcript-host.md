@@ -22,3 +22,29 @@ envelopes from trusted runtime. No user or model-provided identity/URL settings.
 The Node runtime requires final text to equal a validated candidate; the host
 revalidates independently. Real Pi tool execution with fictional model responses
 is distinct from actual DeepSeek tool calling, which is not implemented here.
+
+## Opt-in remote extension (separate files; original single-shot API unchanged)
+`describe_remote` returns full redacted transcript, fixed system/task prompt,
+fixed three tool schemas, official DeepSeek destination/model and a scope digest.
+It explicitly discloses that model outputs and real tool results are sent back in
+later rounds. A digest is only binding, not proof of user consent: trusted caller
+supplies it after explicit user authorization. Unknown/absent approval means no
+network. Approval binds session, case/source/policy, prompt and model.
+`RemoteTranscriptHost` owns canonical messages. `model_request` accepts only
+`{op:'model_request'}`, once between each model_start/end. No caller-supplied
+messages, URL, model or credentials. Remote tool envelope adds `callId`, and must
+match the next outstanding actual model call name/args/id exactly. Real tool
+results are appended by the host. Missing tool results prevent another model
+turn. Final payload must equal actual final model content; at least one successful
+proposal validation tool and a source read/search must have occurred, and final
+content must be the content successfully validated. Failed/unknown network calls
+close the run rather than silently retrying.
+The transport independently validates message roles, call identifiers, exact
+three tool schemas/arguments, size/type/number bounds, finish reason and duplicate
+JSON keys. Fixed official HTTPS, TLS verification and managed proxy/CA; no retry,
+redirect, arbitrary destination or implicit environment selection.
+
+DeepSeek response compatibility: a tool-call may additionally carry `index`.
+When present it must be an integer (not boolean) equal to that call's array
+position in0..7. It is stripped before canonical storage/execution; unique `id`
+remains the identity. All other unknown tool-call fields remain rejected.

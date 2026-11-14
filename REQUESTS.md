@@ -701,3 +701,6 @@ Independent 8/8 tests pass (4 spoofed roles and unauthenticated GET/POST/PUT rem
 
 ## Pi transcript read-only bounded trial · 2026-11-14
 User explicitly requests Pi harness, not only a direct DeepSeek completion. Add an isolated official Pi1.5.2 runtime and Python trusted-host tool contract (contracts/pi-transcript-host.md). No prior runtime or extraction interface weakened. Public-source remote model tool-cycle acceptance is the next separate slice, not claimed by this simulated-provider checkpoint. No production mount, write tool, merge or deployment.
+
+## Pi remote transcript tool-loop checkpoint · 2026-11-14
+Separate approved remote host preserves canonical messages, exact tool call ID/name/arguments, source/authority rechecks and pending-review-only final output. The old single-completion DeepSeek adapter remains unchanged. Optional provider tool-call index is validated then stripped. Absolute asyncio deadline replaces per-read-only timing. Actual public-source loop executed but final output was rejected; last diagnostic run outcome unknown after process recovery, no automatic retry. This Draft checkpoint preserves tests and failure evidence, not a complete acceptance or deployment. Recovery-safe non-secret live result receipts and unresolved final validation remain next work.

@@ -483,3 +483,5 @@ Design and negative tests only; no product implementation, registered route, bui
 Independent 8/8 tests pass (4 spoofed roles and unauthenticated GET/POST/PUT remain404, no database writes, no OpenAPI route); repeated8/8 pass. Existing internal-save regression37/37 includes one actual W2 invocation, not real authentication/browser/CI/LLM validation. Internal save remains available only to existing trusted service callers; investigator-facing API remains NOT IMPLEMENTED. See contracts/unreviewed-api-design.md and tests_acceptance/UNREVIEWED_API_CLOSED/REPORT.md. No merge/deployment.
 
 | 2026-11-14 | Pi transcript bounded trial | 独立切片验证通过，真实模型待接 | 官方Pi1.5.2真实Agent循环；Python同DB权限/来源重核只读工具；4模型/8工具/120秒，无写/事实批准。Node18/18、Python54/54零跳，真实虚构Pi→stdio→SQLite三轮两工具一PendingReview通过。仅模拟provider，远程模式关闭；非真实DeepSeek+Pi/浏览器/生产UI/CI，未合并部署。见tests_acceptance/PI_TRANSCRIPT。 |
+
+| 2026-11-14 | Pi + DeepSeek远端只读工具试验 | 实现/离线独审通过；真实最终提案待验 | canonical history及callId严格匹配，单独显式授权host，固定官方HTTPS与总deadline。Node34/34、Python相关148/148零跳，恢复独审remote63/63。真实公开段第三次确实3轮DeepSeek/2工具后终稿拒绝，第四次执行会话丢失终态未知未重试；不称最终验收完成。见tests_acceptance/PI_TRANSCRIPT/REMOTE_LIVE_STATUS.md。未合并部署。 |
