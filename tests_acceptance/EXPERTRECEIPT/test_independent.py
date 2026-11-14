@@ -1,5 +1,5 @@
 """Independent synthetic local consistency tests, no provider execution."""
-import hashlib,json,os,subprocess
+import hashlib,json,os
 from pathlib import Path
 import pytest
 from research.expert_group import receipt as r
@@ -81,6 +81,9 @@ def test_zero_write_fails_without_loop(tmp_path,monkeypatch):
 def test_exact_published_source_and_stdlib_only():
     import ast
     path='research/expert_group/receipt.py';raw=Path(path).read_bytes()
-    assert raw==subprocess.check_output(['git','show','1d5262c:'+path])
+    # Pinned during byte-for-byte extraction from source commit
+    # 1d5262c9f8a491fd7b1d8037c4dff8988865770c (not a main ancestor).
+    # Do not fetch unrelated history or derive the expected digest from this file.
+    assert sha(raw)=='90bec2c56a046cd536b9afb167c6ca9181f0a340ec51365bdad9785c1123eeb5'
     tree=ast.parse(raw);names={n.name for node in ast.walk(tree) if isinstance(node,ast.Import) for n in node.names}
     assert names=={'hashlib','json','os','re','stat'}

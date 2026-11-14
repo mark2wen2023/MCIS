@@ -572,3 +572,10 @@ Propose only the reviewed expert receipt consistency foundation from 1d5262c on
 main 4a6e729; no application routes or provider access. See
 research/expert_group/RECEIPT_SCOPE.md for dependency splits and strict scope limits.
 Raw credential and real API execution remain HOLD. No merge/deployment requested.
+
+## EXPERTRECEIPT portability correction (2026-11-14)
+Independent review found the source equality test required a non-ancestor Git
+object. Reproduced in single-branch clone (15 pass/1 fail). Replace that Git lookup
+with the SHA-256 pinned at reviewed extraction; preserve source commit provenance
+and stdlib assertion. No runtime change or history import. Source exports without
+.git pass, and modified source bytes fail the pinned digest assertion.
