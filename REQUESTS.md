@@ -620,3 +620,10 @@ fail-closed handler; preserve original red assertions. Re-freeze as r1.
 Authorized combination of ced79f5/d26314b on10ec700. Exact source freeze matches;
 new actual gate+deadline tests prove dependency present. No live execution release.
 See research/expert_meeting/COORDINATION_INTEGRATED.md; original red evidence retained.
+
+## EXPERTREVIEWPLAN (2026-11-14)
+PR81de4729d is ancestor of PR84head56edd5c, both depend main73fc800 (remote refs
+checked). Add human review question plan tied to validated snapshot/current round,
+then display it in existing static HTML export. Reopen citation_html.py freeze only
+for this read-only section; new revision freeze. No checkbox/approval/case write,
+no model invocation, no semantic adjudication. Prior detail/source output retained.

@@ -389,3 +389,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTCOORDINATION r1 | 限定复验通过/依赖HOLD | 2026-11-14：10独审通过，D01二次时钟采样异常封闭原红测转绿；冻结 logs/EXPERTCOORDINATION-r1-impl-hashes-frozen.txt。继承浮点deadline另分支修复中，不晋级精确截止或真实执行。 |
 | EXPERTCOORDINTEGRATED | 待独审 | 2026-11-14：10ec700上实际组合截止修复+协调r1；139项通过（含二次采样3项另复跑）。两源冻结保持，新增实际gate精确截止4测；冻结 logs/EXPERTCOORDINTEGRATED-impl-hashes-frozen.txt。真实0/HOLD，非硬取消。 |
 | EXPERTCOORDINTEGRATED | 离线组合独审通过 | 2026-11-14：独立139项通过；两源各3/3、组合4/4冻结；实际加载新machine、源改动逐字一致，原NaN3红和fractional截止4测通过。缺失截止依赖已在本组合关闭；不放行真实模型/硬取消。 |
+| EXPERTREVIEWPLAN | 待独审 | 2026-11-14：PR84head56edd5c上人工复核问题投影接入现有HTML，154项回归通过；冻结 logs/EXPERTREVIEWPLAN-impl-hashes-frozen.txt。本轮缺席/分歧/不确定性均待人工，不认证/不批准，模型0/HOLD。 |
+| EXPERTREVIEWPLAN | 只读流程独审通过 | 2026-11-14：10项独审、4/4冻结一致；无.git副本154项回归通过。当前轮隔离/全部pending/绑定和文本安全已验，见 DEFECTS/EXPERTREVIEWPLAN.md；非认证任务库/真实浏览器/模型验收。 |
