@@ -1,0 +1,3 @@
+# Consultation input policy test disposition
+
+Independent PASS:20 passed/12.33s, frozen test hash1/1 verified. Product permissions unchanged; original validation and state/audit assertions retained with authorized Lead test context and explicit statuses. Added three restricted-role read/write denials with unchanged round/full-audit snapshots. Python whitespace checks and synthetic role headers do not validate C# core or authenticated identity. Full service/core/browser acceptance is not established. Evidence: tests_acceptance/consultation-policy-alignment/independent.md. No push/merge/deployment.

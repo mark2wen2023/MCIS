@@ -1,0 +1,329 @@
+FFFFFFFFFF.FFFFF.                                                        [100%]
+=================================== FAILURES ===================================
+________________ test_bad_open_no_state_or_audit_change[body0] _________________
+
+client = <starlette.testclient.TestClient object at 0x7fa0785a8650>
+body = {'draftVersion': '', 'parties': [{'partyId': 'A', 'name': ''}]}
+
+    @pytest.mark.parametrize('body', [
+        {**BASE, 'draftVersion': ''}, {**BASE, 'draftVersion': ' \t\n\u3000'},
+        {**BASE, 'parties': [{'partyId': '', 'name': ''}]},
+        {**BASE, 'parties': [{'partyId': ' \n\u3000', 'name': ''}]},
+        {**BASE, 'parties': [{'partyId': 'A', 'name': 'one'}, {'partyId': 'A', 'name': 'two'}]},
+    ])
+    def test_bad_open_no_state_or_audit_change(client, body):
+>       clear_open_round(client)
+
+service/tests/test_consultation_input_w73.py:29:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x7fa0785a8650>
+
+    def clear_open_round(client):
+        for r in client.get(ROOT, headers=H()).json():
+>           if not r['isClosed']:
+                   ^^^^^^^^^^^^^
+E           TypeError: string indices must be integers, not 'str'
+
+service/tests/test_consultation_input_w73.py:11: TypeError
+________________ test_bad_open_no_state_or_audit_change[body1] _________________
+
+client = <starlette.testclient.TestClient object at 0x7fa07828df10>
+body = {'draftVersion': ' \t\n\u3000', 'parties': [{'partyId': 'A', 'name': ''}]}
+
+    @pytest.mark.parametrize('body', [
+        {**BASE, 'draftVersion': ''}, {**BASE, 'draftVersion': ' \t\n\u3000'},
+        {**BASE, 'parties': [{'partyId': '', 'name': ''}]},
+        {**BASE, 'parties': [{'partyId': ' \n\u3000', 'name': ''}]},
+        {**BASE, 'parties': [{'partyId': 'A', 'name': 'one'}, {'partyId': 'A', 'name': 'two'}]},
+    ])
+    def test_bad_open_no_state_or_audit_change(client, body):
+>       clear_open_round(client)
+
+service/tests/test_consultation_input_w73.py:29:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x7fa07828df10>
+
+    def clear_open_round(client):
+        for r in client.get(ROOT, headers=H()).json():
+>           if not r['isClosed']:
+                   ^^^^^^^^^^^^^
+E           TypeError: string indices must be integers, not 'str'
+
+service/tests/test_consultation_input_w73.py:11: TypeError
+________________ test_bad_open_no_state_or_audit_change[body2] _________________
+
+client = <starlette.testclient.TestClient object at 0x7fa0781a7a10>
+body = {'draftVersion': 'v3', 'parties': [{'partyId': '', 'name': ''}]}
+
+    @pytest.mark.parametrize('body', [
+        {**BASE, 'draftVersion': ''}, {**BASE, 'draftVersion': ' \t\n\u3000'},
+        {**BASE, 'parties': [{'partyId': '', 'name': ''}]},
+        {**BASE, 'parties': [{'partyId': ' \n\u3000', 'name': ''}]},
+        {**BASE, 'parties': [{'partyId': 'A', 'name': 'one'}, {'partyId': 'A', 'name': 'two'}]},
+    ])
+    def test_bad_open_no_state_or_audit_change(client, body):
+>       clear_open_round(client)
+
+service/tests/test_consultation_input_w73.py:29:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x7fa0781a7a10>
+
+    def clear_open_round(client):
+        for r in client.get(ROOT, headers=H()).json():
+>           if not r['isClosed']:
+                   ^^^^^^^^^^^^^
+E           TypeError: string indices must be integers, not 'str'
+
+service/tests/test_consultation_input_w73.py:11: TypeError
+________________ test_bad_open_no_state_or_audit_change[body3] _________________
+
+client = <starlette.testclient.TestClient object at 0x7fa07828da30>
+body = {'draftVersion': 'v3', 'parties': [{'partyId': ' \n\u3000', 'name': ''}]}
+
+    @pytest.mark.parametrize('body', [
+        {**BASE, 'draftVersion': ''}, {**BASE, 'draftVersion': ' \t\n\u3000'},
+        {**BASE, 'parties': [{'partyId': '', 'name': ''}]},
+        {**BASE, 'parties': [{'partyId': ' \n\u3000', 'name': ''}]},
+        {**BASE, 'parties': [{'partyId': 'A', 'name': 'one'}, {'partyId': 'A', 'name': 'two'}]},
+    ])
+    def test_bad_open_no_state_or_audit_change(client, body):
+>       clear_open_round(client)
+
+service/tests/test_consultation_input_w73.py:29:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x7fa07828da30>
+
+    def clear_open_round(client):
+        for r in client.get(ROOT, headers=H()).json():
+>           if not r['isClosed']:
+                   ^^^^^^^^^^^^^
+E           TypeError: string indices must be integers, not 'str'
+
+service/tests/test_consultation_input_w73.py:11: TypeError
+________________ test_bad_open_no_state_or_audit_change[body4] _________________
+
+client = <starlette.testclient.TestClient object at 0x7fa076d56300>
+body = {'draftVersion': 'v3', 'parties': [{'partyId': 'A', 'name': 'one'}, {'partyId': 'A', 'name': 'two'}]}
+
+    @pytest.mark.parametrize('body', [
+        {**BASE, 'draftVersion': ''}, {**BASE, 'draftVersion': ' \t\n\u3000'},
+        {**BASE, 'parties': [{'partyId': '', 'name': ''}]},
+        {**BASE, 'parties': [{'partyId': ' \n\u3000', 'name': ''}]},
+        {**BASE, 'parties': [{'partyId': 'A', 'name': 'one'}, {'partyId': 'A', 'name': 'two'}]},
+    ])
+    def test_bad_open_no_state_or_audit_change(client, body):
+>       clear_open_round(client)
+
+service/tests/test_consultation_input_w73.py:29:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x7fa076d56300>
+
+    def clear_open_round(client):
+        for r in client.get(ROOT, headers=H()).json():
+>           if not r['isClosed']:
+                   ^^^^^^^^^^^^^
+E           TypeError: string indices must be integers, not 'str'
+
+service/tests/test_consultation_input_w73.py:11: TypeError
+___________________ test_exact_ids_and_valid_text_preserved ____________________
+
+client = <starlette.testclient.TestClient object at 0x7fa076c893d0>
+
+    def test_exact_ids_and_valid_text_preserved(client):
+>       clear_open_round(client)
+
+service/tests/test_consultation_input_w73.py:38:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x7fa076c893d0>
+
+    def clear_open_round(client):
+        for r in client.get(ROOT, headers=H()).json():
+>           if not r['isClosed']:
+                   ^^^^^^^^^^^^^
+E           TypeError: string indices must be integers, not 'str'
+
+service/tests/test_consultation_input_w73.py:11: TypeError
+__________________ test_core_error_precedence_and_permission ___________________
+
+client = <starlette.testclient.TestClient object at 0x7fa076a093d0>
+
+    def test_core_error_precedence_and_permission(client):
+        # Existing seed has closed round1 and open round2.
+        blank_id = {**BASE, 'parties': [{'partyId': ' ', 'name': ''}]}
+>       assert client.post(ROOT, json=blank_id, headers=H()).json()['code'] == 'consultation_round_open'
+E       AssertionError: assert 'FORBIDDEN' == 'consultation_round_open'
+E
+E         - consultation_round_open
+E         + FORBIDDEN
+
+service/tests/test_consultation_input_w73.py:52: AssertionError
+________________________ test_blank_waiver_no_write[ ] _________________________
+
+client = <starlette.testclient.TestClient object at 0x7fa076ba20c0>
+reason = ' '
+
+    @pytest.mark.parametrize('reason', [' ', '\t\r\n', '\u3000'])
+    def test_blank_waiver_no_write(client, reason):
+        before = snapshot(client)
+        result = client.post(f'{ROOT}/2/waivers', json={'partyId': 'FLAG-B', 'reason': reason}, headers=H())
+>       assert result.status_code == 422 and result.json()['code'] == 'consultation_invalid_argument'
+E       assert (403 == 422)
+E        +  where 403 = <Response [403 Forbidden]>.status_code
+
+service/tests/test_consultation_input_w73.py:67: AssertionError
+______________________ test_blank_waiver_no_write[\t\r\n] ______________________
+
+client = <starlette.testclient.TestClient object at 0x7fa076a999a0>
+reason = '\t\r\n'
+
+    @pytest.mark.parametrize('reason', [' ', '\t\r\n', '\u3000'])
+    def test_blank_waiver_no_write(client, reason):
+        before = snapshot(client)
+        result = client.post(f'{ROOT}/2/waivers', json={'partyId': 'FLAG-B', 'reason': reason}, headers=H())
+>       assert result.status_code == 422 and result.json()['code'] == 'consultation_invalid_argument'
+E       assert (403 == 422)
+E        +  where 403 = <Response [403 Forbidden]>.status_code
+
+service/tests/test_consultation_input_w73.py:67: AssertionError
+______________________ test_blank_waiver_no_write[\u3000] ______________________
+
+client = <starlette.testclient.TestClient object at 0x7fa076a0acc0>
+reason = '\u3000'
+
+    @pytest.mark.parametrize('reason', [' ', '\t\r\n', '\u3000'])
+    def test_blank_waiver_no_write(client, reason):
+        before = snapshot(client)
+        result = client.post(f'{ROOT}/2/waivers', json={'partyId': 'FLAG-B', 'reason': reason}, headers=H())
+>       assert result.status_code == 422 and result.json()['code'] == 'consultation_invalid_argument'
+E       assert (403 == 422)
+E        +  where 403 = <Response [403 Forbidden]>.status_code
+
+service/tests/test_consultation_input_w73.py:67: AssertionError
+_______ test_non_dotnet_whitespace_is_not_silently_newly_rejected[\x1c] ________
+
+client = <starlette.testclient.TestClient object at 0x7fa076e33830>
+value = '\x1c'
+
+    @pytest.mark.parametrize('value', ['\u001c', '\u001d', '\u001e', '\u001f', '\u200b'])
+    def test_non_dotnet_whitespace_is_not_silently_newly_rejected(client, value):
+>       clear_open_round(client)
+
+service/tests/test_consultation_input_w73.py:77:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x7fa076e33830>
+
+    def clear_open_round(client):
+        for r in client.get(ROOT, headers=H()).json():
+>           if not r['isClosed']:
+                   ^^^^^^^^^^^^^
+E           TypeError: string indices must be integers, not 'str'
+
+service/tests/test_consultation_input_w73.py:11: TypeError
+_______ test_non_dotnet_whitespace_is_not_silently_newly_rejected[\x1d] ________
+
+client = <starlette.testclient.TestClient object at 0x7fa0778c7ad0>
+value = '\x1d'
+
+    @pytest.mark.parametrize('value', ['\u001c', '\u001d', '\u001e', '\u001f', '\u200b'])
+    def test_non_dotnet_whitespace_is_not_silently_newly_rejected(client, value):
+>       clear_open_round(client)
+
+service/tests/test_consultation_input_w73.py:77:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x7fa0778c7ad0>
+
+    def clear_open_round(client):
+        for r in client.get(ROOT, headers=H()).json():
+>           if not r['isClosed']:
+                   ^^^^^^^^^^^^^
+E           TypeError: string indices must be integers, not 'str'
+
+service/tests/test_consultation_input_w73.py:11: TypeError
+_______ test_non_dotnet_whitespace_is_not_silently_newly_rejected[\x1e] ________
+
+client = <starlette.testclient.TestClient object at 0x7fa0767550d0>
+value = '\x1e'
+
+    @pytest.mark.parametrize('value', ['\u001c', '\u001d', '\u001e', '\u001f', '\u200b'])
+    def test_non_dotnet_whitespace_is_not_silently_newly_rejected(client, value):
+>       clear_open_round(client)
+
+service/tests/test_consultation_input_w73.py:77:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x7fa0767550d0>
+
+    def clear_open_round(client):
+        for r in client.get(ROOT, headers=H()).json():
+>           if not r['isClosed']:
+                   ^^^^^^^^^^^^^
+E           TypeError: string indices must be integers, not 'str'
+
+service/tests/test_consultation_input_w73.py:11: TypeError
+_______ test_non_dotnet_whitespace_is_not_silently_newly_rejected[\x1f] ________
+
+client = <starlette.testclient.TestClient object at 0x7fa0778f6300>
+value = '\x1f'
+
+    @pytest.mark.parametrize('value', ['\u001c', '\u001d', '\u001e', '\u001f', '\u200b'])
+    def test_non_dotnet_whitespace_is_not_silently_newly_rejected(client, value):
+>       clear_open_round(client)
+
+service/tests/test_consultation_input_w73.py:77:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x7fa0778f6300>
+
+    def clear_open_round(client):
+        for r in client.get(ROOT, headers=H()).json():
+>           if not r['isClosed']:
+                   ^^^^^^^^^^^^^
+E           TypeError: string indices must be integers, not 'str'
+
+service/tests/test_consultation_input_w73.py:11: TypeError
+______ test_non_dotnet_whitespace_is_not_silently_newly_rejected[\u200b] _______
+
+client = <starlette.testclient.TestClient object at 0x7fa076c06300>
+value = '\u200b'
+
+    @pytest.mark.parametrize('value', ['\u001c', '\u001d', '\u001e', '\u001f', '\u200b'])
+    def test_non_dotnet_whitespace_is_not_silently_newly_rejected(client, value):
+>       clear_open_round(client)
+
+service/tests/test_consultation_input_w73.py:77:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x7fa076c06300>
+
+    def clear_open_round(client):
+        for r in client.get(ROOT, headers=H()).json():
+>           if not r['isClosed']:
+                   ^^^^^^^^^^^^^
+E           TypeError: string indices must be integers, not 'str'
+
+service/tests/test_consultation_input_w73.py:11: TypeError
+=========================== short test summary info ============================
+FAILED service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body0]
+FAILED service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body1]
+FAILED service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body2]
+FAILED service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body3]
+FAILED service/tests/test_consultation_input_w73.py::test_bad_open_no_state_or_audit_change[body4]
+FAILED service/tests/test_consultation_input_w73.py::test_exact_ids_and_valid_text_preserved
+FAILED service/tests/test_consultation_input_w73.py::test_core_error_precedence_and_permission
+FAILED service/tests/test_consultation_input_w73.py::test_blank_waiver_no_write[ ]
+FAILED service/tests/test_consultation_input_w73.py::test_blank_waiver_no_write[\t\r\n]
+FAILED service/tests/test_consultation_input_w73.py::test_blank_waiver_no_write[\u3000]
+FAILED service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\x1c]
+FAILED service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\x1d]
+FAILED service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\x1e]
+FAILED service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\x1f]
+FAILED service/tests/test_consultation_input_w73.py::test_non_dotnet_whitespace_is_not_silently_newly_rejected[\u200b]
+15 failed, 2 passed in 4.91s
