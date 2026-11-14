@@ -628,3 +628,22 @@ not generated at runtime from candidate sources. Preserve manifest/local source
 comparison and concurrent real CLI rebuild equality. Add SDK-free mutation tests;
 missing/changed sources or receipt omissions fail. No production/build/core changes.
 Historical W184 report stays unchanged; its past environment is not current proof.
+
+## EXPERTREVIEWPLAN (2026-11-14)
+PR81de4729d is ancestor of PR84head56edd5c, both depend main73fc800 (remote refs
+checked). Add human review question plan tied to validated snapshot/current round,
+then display it in existing static HTML export. Reopen citation_html.py freeze only
+for this read-only section; new revision freeze. No checkbox/approval/case write,
+no model invocation, no semantic adjudication. Prior detail/source output retained.
+
+## EXPERTREVIEWMAIN (2026-11-14)
+Minimal main25b9df6 integration of reviewed dd2f8b8 increment; PR84 dependencies
+already merged. Twelve non-progress source files copied exactly, progress appended
+without overwriting main entries; existing freeze preserved. No other modules changed.
+Scope research/expert_meeting/REVIEW_MAIN_INTEGRATION.md; real0/HOLD.
+
+## EXPERTTRACE (2026-11-14)
+Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
+Tests join original source/tickets/snapshot/citation/human tasks and preserve past
+unresolved labels; self-consistent identity claims cannot become approval.
+Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.

@@ -1,0 +1,5 @@
+HEAD main/merge-base/ancestor verified; 12 source files identical; 2 progress originals exact prefixes; other tracked main files unchanged
+Fresh no-Git isolated copy: ........................................................................ [ 43%]
+........................................................................ [ 87%]
+....................                                                     [100%]
+164 passed in 0.93s
