@@ -1,0 +1,30 @@
+{
+  "profile": "MCIS-PUBLIC-REPORT-MANIFEST-1",
+  "title": "江信9 / IVY OCEAN 碰撞调查报告（人工来源简称）",
+  "publisher": "上海海事局（人工声明）",
+  "sourceUrl": "https://www.sh.msa.gov.cn/u/cms/www/202410/151707421728983262136.pdf",
+  "publicationDate": null,
+  "fileSha256": "d424673df94377cbf93cad769ca514b08a24b8a0bb552b042cc34e5149c4ff55",
+  "locators": [
+    {
+      "pdfPage": 8,
+      "printedPage": null,
+      "label": "离泊记载一，保留原页待核对"
+    },
+    {
+      "pdfPage": 11,
+      "printedPage": null,
+      "label": "离泊记载二，保留原页待核对"
+    },
+    {
+      "pdfPage": 12,
+      "printedPage": null,
+      "label": "图6截图时钟"
+    },
+    {
+      "pdfPage": 16,
+      "printedPage": null,
+      "label": "图13截图时钟"
+    }
+  ]
+}

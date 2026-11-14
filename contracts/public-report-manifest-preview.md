@@ -1,0 +1,12 @@
+# Public report source manifest preview
+
+Explicit CLI/callable adapter, no API mount: import a manually supplied JSON manifest and local bytes, verify byte SHA256 and metadata structure, then export an unverified source-declaration preview. Nothing is written to the case database or fetched from the declared URL. No model inference, automatic approval, authenticity, publication authority or rights certification.
+
+Input exact fields: profile `MCIS-PUBLIC-REPORT-MANIFEST-1`, title (1..300), publisher (1..200), sourceUrl (HTTPS syntax, no credentials/query/fragment/local literal; ASCII DNS labels only (IDNs must be supplied in ASCII form), optional single trailing dot; no percent escapes, empty labels, underscores or leading/trailing label hyphens; DNS is not resolved), publicationDate (ISO YYYY-MM-DD or null), fileSha256 (lower hex SHA256), locators (1..200 exact objects: pdfPage integer1..10000, printedPage null or text1..80, label text1..500). Strings must be nonblank UTF-8 without ASCII control characters. Duplicate JSON keys/identical locators, nonfinite values and unknown fields are rejected. Null dates/pages remain null; no inference is made.
+
+Manifest max64KiB; file max8MiB. `%PDF-` marker is required but is NOT PDF parsing or validation. Page count and locator text are not checked against the document. Output explicitly retains `sourceAuthenticity=not_verified`, `pdfStructureValidated=false`, `pageLocatorsVerified=false`, `reviewRequired=true`, `caseWritten=false`. It preserves source declarations and binds their canonical digest separately from PDF byte hash. Even successful checks do not establish that material is public, authorized, authentic or safe to parse.
+
+CLI: `python tools/public_report_manifest/manifest.py --manifest declaration.json --pdf report.pdf --output new-preview.json`.
+No source path is accepted inside the manifest or emitted in results. File paths are explicit operator arguments. Descriptor-relative no-follow reads reject symlink path components/FIFOs and unsupported platforms; output is exclusive new-file creation0600. Validation completes before output creation. No automatic retries or deletion; I/O failures may leave a partial new file, exit3 not success. Validation error exit4, argument error2, success0. Contents/errors do not echo source payloads or filesystem paths.
+
+Not a production UI, upload route, document parser, OCR, page-count checker, identity service, case import, rights review or LLM test. Security fixtures use clearly marked synthetic invalid-PDF marker bytes.

@@ -1,0 +1,7 @@
+# Independent acceptance — source declaration preview
+
+Independent review of manifest.py and contract. **17 independent tests passed**; combined primary + independent **51/51 passed**, exit0, 0.19s. No implementation changes, no network/model calls, repository publication or database writes by this reviewer.
+
+Coverage: unknown path fields rejected; malformed Unicode/control/metadata types; nested duplicate keys and nonfinite JSON; manifest/file limits; directory/FIFO inputs; parent traversal and symlink ancestors; input overwrite prevention; fsync failure reports failure (partial new file may remain); safe-file capability refusal; redacted errors; unknown date/page assertions remain unverified. Actual subprocess FIFO test completes within3s. All security fixtures are synthetic marker bytes, not valid PDFs. One initial test expected directory input exit4; inspection established fdopen returns an I/O error(exit3), and the test was corrected to the documented I/O behavior. No product defect was suppressed.
+
+No blocker found within the declared local adapter scope. URLs remain operator declarations, not verified reachable public sites; DNS is not resolved. The PDF marker and matching hash do not establish valid PDF, provenance, public status, rights, page count/content or model capability. There is no UI/browser/production-authentication/CI acceptance. No automatic downstream loading/publication should be enabled based on this preview.
