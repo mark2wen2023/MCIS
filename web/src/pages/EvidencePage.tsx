@@ -20,7 +20,7 @@ const STATUS_BADGE: Record<EvidenceItem['status'], [string, string]> = {
   Unverified: ['st-mute', '未校验'],
   NeedsReview: ['st-warn', '需复核'],
 }
-const KIND_LABEL: Record<CustodyEvent['kind'], string> = { Register: '登记', Access: '访问', Change: '派生/变更', Verify: '校验', Review: '复核标注' }
+const KIND_LABEL: Record<CustodyEvent['kind'], string> = { Register: '登记', Access: '访问', Change: '原件哈希变更', Verify: '校验', Review: '复核标注' }
 const CONFLICT_STATUS: Record<ConflictStatus, [string, string]> = {
   Open: ['st-bad', '待处理'],
   PendingInterview: ['st-bad', '待询问核实'],
@@ -93,8 +93,8 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
           <div className="page-title">证据中心 · 保管链与时间冲突 <span className="p6-tag">{caseRes.data ? (caseRes.data.isFictionalDemo ? '示例数据（虚构）' : '非虚构案件') : '案件信息加载中'}</span><span className="p6-tag cyan">LIVE · {SERVICE_ADDR}</span></div>
           <div className="page-sub">
             {caseRes.data && <div>{caseRes.data.title}</div>}
-            证据登记快照不可改，之后的访问、校验、派生、复核标注只以保管链事件追加（audit/custody.jsonl，与 C# CustodyLedger 逐字节兼容）；
-            多源时间冲突由调查员处理，每次变更写审计。
+            证据访问、哈希校验与复核标注记录在保管链中；Change 表示当前原件哈希变更，不用于登记新生成的分析文本。
+            多源时间冲突由调查员处理，每次变更写审计。哈希校验状态不代表文本提取成功；当前页面尚未接入 PDF 文本提取任务。
           </div>
         </div>
         <div className="page-actions">
