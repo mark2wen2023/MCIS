@@ -2,6 +2,7 @@ import { useMemo, useState, useSyncExternalStore } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import type { EChartsOption } from 'echarts'
 import { api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
+import { OpaqueUploadStatus } from '../evidenceIntake/OpaqueUploadStatus'
 import { EvidenceIntakePanel } from '../evidenceIntake/EvidenceIntakePanel'
 import { announceEvidenceSelection } from '../evidenceIntake/navigation'
 import { AlignPreviewPanel } from '../align/AlignPreviewPanel'
@@ -105,6 +106,8 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
       </div>
 
       <EvidenceIntakePanel caseId={caseId} caseTitle={caseRes.data?.title} who={evidenceIdentity()} selectedEvidenceId={sel?.evidenceId} onRegistered={id=>{setSelId(id);refreshEvidence()}} onRefresh={refreshEvidence}/>
+
+      <OpaqueUploadStatus caseId={caseId} evidence={sel} />
 
       <RegisteredPreviewPanel caseId={caseId} items={items} />
 

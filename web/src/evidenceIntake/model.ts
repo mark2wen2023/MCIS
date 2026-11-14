@@ -17,8 +17,9 @@ export function validateMetadata(m:Metadata):void {
   if(!utcSeconds(m.extractedUtc))throw Error('请输入已知的 UTC 整秒提取时间，如 2026-01-01T00:00:00Z；未知时间暂不支持，不会自动补造。')
   if(!CATEGORIES.includes(m.category)||m.confidentiality!=='Restricted'||typeof m.note!=='string'||m.note.length>2000)throw Error('类别、受限标记或备注不符合本片输入要求。')
 }
+export function uploadFileNameValid(s:string):boolean{return fileNameValid(s)&&!/[\u061c\u200e\u200f\u202a-\u202e\u2066-\u2069]/.test(s)}
 export function intakeBody(fileName:string,contentBase64:string,metadata:Metadata):IntakeBody {
-  if(!fileNameValid(fileName))throw Error('文件名须为不含目录和控制字符的 1–128 字符名称。')
+  if(!uploadFileNameValid(fileName))throw Error('新上传文件名须为不含目录、控制字符或双向文字控制符的 1–128 字符名称；请核对文件名，系统不会自动改名。')
   validateMetadata(metadata);return {profile:PROFILE,fileName,...metadata,contentBase64}
 }
 function metadata(v:unknown):v is Metadata {if(!obj(v)||Object.keys(v).length!==META_KEYS.length||!META_KEYS.every(k=>typeof v[k]==='string'))return false;try{validateMetadata(v as unknown as Metadata);return true}catch{return false}}
