@@ -368,3 +368,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 | 2026-11-12 | Report output A | 受限独立验收通过 | 最终独立49 passed/11.56s，20SHA前后匹配；真实双格式单render/原文不变/审计关联、实际第二连接改报告或策略后409/403、故障全表回滚与commit后交付失败各有证明。真浏览器2正常下载+2真实commit后故障替换+1真实commit后身份迟响应丢弃，最终5审计；8独立客户端坏结构/错绑拒绝。实际2MiB报告及16MiB输出边界与其余缩小limit测试区别详见独立REPORT；未穷尽多worker/真实切案/全部变体。无服务端原件保存、无.mcase文件恢复、无签署认证；B仅计划，不部署不触W11。 |
+
+| Public two-role Pi research | 待测 | 2026-11-14：main独立研究切片，固定公开片段、两独立实际Pi会话、出处/不确定性并列、预算与hash-chain回执/完成清单；38项离线测试通过。fixture6模拟模型轮/4工具/0外发，不是真实DeepSeek能力验收。无可用安全凭据，不索取聊天密钥；不写案件/共识事实。冻结 `logs/expert-group-impl-hashes-frozen.txt`。 |
+| Public two-role Pi research | 工程范围验收通过 | 2026-11-14：主测38+独审20=58通过、零跳；freeze12/12。独审发现并关闭EG-D01至D04（回执终态、HTTP总deadline、管道停读预算、末端导出完整性）。实际Pi两role fixture6模拟轮/4工具/providerRequests0；真实DeepSeek与浏览器能力仍未验收，无可用安全凭据。见 `tests_acceptance/EXPERT_GROUP/INDEPENDENT.md`。 |
