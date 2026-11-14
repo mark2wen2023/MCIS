@@ -1,0 +1,53 @@
+import {useLayoutEffect,useMemo,useRef,useState} from 'react';
+import {canDiscuss,createRehearsalPort,latest,parse,type Command,type History,type JournalPort,type Kind} from './model';
+/** Unmounted trial component. Default disconnected; no credentials, old API or storage. */
+export function IssueWorkspace({caseId='CASE-ISSUE-FICTIONAL',port,rehearsal=false,contextKey='',issueId}:{caseId?:string,port?:JournalPort,rehearsal?:boolean,contextKey?:string,issueId?:string}){
+ const demo=useMemo(()=>rehearsal&&!port&&caseId==='CASE-ISSUE-FICTIONAL'?createRehearsalPort():undefined,[caseId,port,rehearsal,contextKey]);
+ const connection=(port&&contextKey.trim()&&contextKey.length<=128?port:undefined)??demo;const validCase=/^[A-Za-z0-9_-]{1,64}$/.test(caseId)&&(!issueId||/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(issueId));
+ const [history,setHistory]=useState<History>();const [note,setNote]=useState('');const [kind,setKind]=useState<Kind>('judgment');
+ const [outcome,setOutcome]=useState<'supports'|'refutes'|'inconclusive'>('inconclusive');
+ const [readBlocked,setReadBlocked]=useState(false);const issueRef=useRef<string|undefined>(undefined);
+ const [busy,setBusy]=useState(false);const [unknown,setUnknown]=useState(false);const [status,setStatus]=useState('未连接安全试验接口');
+ const baseline=useRef<History|undefined>(undefined);
+ const epoch=useRef(0),locked=useRef(false),pending=useRef<Command|undefined>(undefined);
+ useLayoutEffect(()=>{epoch.current++;locked.current=false;pending.current=undefined;issueRef.current=issueId;baseline.current=undefined;setReadBlocked(!!issueId);setHistory(undefined);setNote('');setKind('judgment');setUnknown(false);setBusy(false);setStatus(demo?'虚构内存试用：刷新即丢失，未写入数据库':connection?'试验接口已提供，非生产登录':'未连接安全试验接口');return ()=>{epoch.current++;pending.current=undefined;baseline.current=undefined}},[caseId,connection,demo,contextKey,issueId]);
+ async function save(retry=false){
+  if(locked.current||!connection||!validCase)return;
+  let command=pending.current;
+  if(!retry){
+   if(unknown||readBlocked||!note.trim()||note.length>8000||kind!=='judgment'&&!history||kind==='discussion'&&!canDiscuss(history))return;
+   command={caseId,issueId:history?.issueId??crypto.randomUUID(),operationId:crypto.randomUUID(),expectedRevision:history?.revision??0,
+    entry:{kind,note,sourceIds:[],outcome:kind==='verification'?outcome:null,againstJudgment:kind==='judgment'?null:latest(history)}};pending.current=command;
+  }
+  if(!command)return;issueRef.current=command.issueId;const mine=epoch.current;locked.current=true;setBusy(true);setStatus('正在提交工作记录，不代表事实审核');
+  try{const value=await connection.save(structuredClone(command));if(mine!==epoch.current)return;
+   const next=parse(value,caseId,command.issueId);
+   if(next.revision<command.expectedRevision+1||history&&JSON.stringify(next.events.slice(0,history.revision))!==JSON.stringify(history.events))throw Error('invalid history');
+   const recorded=next.events[command.expectedRevision];
+   if(JSON.stringify({kind:recorded.kind,note:recorded.note,sourceIds:recorded.sourceIds,outcome:recorded.outcome,againstJudgment:recorded.againstJudgment})!==JSON.stringify(command.entry))throw Error('mismatched receipt');
+   baseline.current=next;setHistory(next);pending.current=undefined;setUnknown(false);setNote('');setKind('judgment');setStatus(demo?'仅保存在本页内存；未写入数据库':'试验服务已返回工作记录，未审核');
+  }catch{if(mine===epoch.current){setUnknown(true);setStatus('结果未确认：保留原操作重试，勿改写后重复提交。')}}
+  finally{if(mine===epoch.current){locked.current=false;setBusy(false)}}
+ }
+ async function refresh(){
+  if(locked.current||!connection||!validCase||!issueRef.current||unknown)return;const mine=epoch.current;locked.current=true;setBusy(true);
+  try{const value=await connection.read(caseId,issueRef.current);if(mine!==epoch.current)return;const next=parse(value,caseId,issueRef.current);const known=baseline.current;if(known&&(next.revision<known.revision||JSON.stringify(next.events.slice(0,known.revision))!==JSON.stringify(known.events)))throw Error('changed history');baseline.current=next;setHistory(next);setReadBlocked(false);setStatus('已重新读取未审核历史')}
+  catch{if(mine===epoch.current){setHistory(undefined);setReadBlocked(true);setNote('');setKind('judgment');setStatus('读取未确认，已隐藏历史；不得据此认定记录已删除')}}
+  finally{if(mine===epoch.current){locked.current=false;setBusy(false)}}
+ }
+ const disabled=!connection||!validCase||busy||unknown||readBlocked;
+ return <section aria-label="问题研判工作区试验"><h2>问题研判记录 · 未审核</h2>
+ <p>{demo?'虚构数据、纯内存演练，不是数据库保存。':'独立非生产组件；尚非完整工作台或生产登录。'}</p>
+ <p>保留判断变化，不自动认定事实、责任或专家共识。核实结果也是调查员提交的工作意见。</p>
+ <p role="status">{status}</p>{issueId&&!history&&<p>指定问题卡须先重新读取；读取失败不代表可以另建或覆盖。</p>}<p>案件：{caseId}；版本：{history?.revision??0}</p>
+ <label>记录类型 <select aria-label="记录类型" disabled={disabled} value={kind} onChange={e=>setKind(e.target.value as Kind)}>
+ <option value="judgment">{history?'新的判断（保留旧判断）':'初步判断'}</option>
+ <option value="verification" disabled={!history}>核实记录</option><option value="discussion" disabled={!canDiscuss(history)}>讨论记录（须先核实最新判断）</option></select></label>
+ {kind==='verification'&&<label>核实结果 <select aria-label="核实结果" disabled={disabled} value={outcome} onChange={e=>setOutcome(e.target.value as typeof outcome)}><option value="inconclusive">未能确定</option><option value="supports">支持当前判断</option><option value="refutes">反驳当前判断</option></select></label>}
+ <label>意见与理由 <textarea aria-label="意见与理由" maxLength={8000} disabled={disabled} value={note} onChange={e=>setNote(e.target.value)}/></label>
+ <button type="button" disabled={disabled||!note.trim()} onClick={()=>void save()}>追加记录，不覆盖历史</button>
+ {unknown&&<button type="button" disabled={busy||!connection} onClick={()=>void save(true)}>按原操作重试</button>}
+ <button type="button" disabled={!connection||!validCase||!issueRef.current||busy||unknown} onClick={()=>void refresh()}>重新读取历史</button>
+ <ol>{history?.events.map(e=><li key={e.seq}><strong>#{e.seq} · {{judgment:'判断',verification:'核实记录',discussion:'讨论记录'}[e.kind]}</strong><p>{e.note}</p><small>{e.recordedUtc}{e.againstJudgment?` · 针对判断 #${e.againstJudgment}`:''}{e.outcome?` · ${{supports:'支持',refutes:'反驳',inconclusive:'未能确定'}[e.outcome]}`:''}</small>{!!e.sourceIds.length&&<p>历史来源引用：{e.sourceIds.join('、')}；不是当前原件有效性证明。</p>}</li>)}</ol>
+ <p>本页暂不录入来源附件、不归档；切换案件或接口会隐藏旧内容，但不撤销服务端可能已提交的操作。</p></section>;
+}
