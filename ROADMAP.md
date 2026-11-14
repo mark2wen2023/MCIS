@@ -402,3 +402,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-14 | Legacy expected checksum | 待独验 | 新双输入合同，严格base64后expected SHA格式/一致性校验，拒绝零写；原匹配忽略SHA测试按新合同更新并保留历史。冻结logs/legacy-evidence-checksum-impl-hashes-frozen.txt。 |
 
 | 2026-11-14 | Legacy expected checksum | 本地独验通过，保留基线限制 | focused220过2缺.NET跳；独审40过（含28自测重叠）；扩大622过5同名原基线失败2跳。新双字段合同，未知外部旧调用兼容风险明确，无提交推送合并部署。 |
+
+| 2026-11-14 | Bounded read early refusal + memory study | 待独验 | 仅现有limit早拒绝/增长检查，冻safe-read-budget-preflight；未增加旧GET/打包cap，聚合并发预算仍设计，不放松原锁与权限。 |
+
+| 2026-11-14 | Bounded read early refusal + memory study | 本地独验通过，聚合预算未实现 | 主235过1缺.NET跳；独验19过含TCP排队/受控发送持有与增长/FD/HTTP拒绝。32MiB源/8MiB预算拒绝Python峰16MiB→1724B单次；旧GET/ZIP无实用或聚合上限仍在，设计未启用，完整锁/权限不改。 |

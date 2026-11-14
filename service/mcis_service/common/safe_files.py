@@ -33,13 +33,16 @@ def read_regular_no_symlinks(path, limit):
     finally:
         os.close(parent)
     try:
-        if not stat.S_ISREG(os.fstat(fd).st_mode): raise ValueError('not regular file')
+        info = os.fstat(fd)
+        if not stat.S_ISREG(info.st_mode): raise ValueError('not regular file')
+        if info.st_size > limit: raise ReadBudgetExceeded('file budget')
         chunks, remaining = [], limit + 1
         while remaining:
             chunk = os.read(fd, min(remaining, 1024 * 1024))
             if not chunk: break
-            chunks.append(chunk)
             remaining -= len(chunk)
+            if remaining == 0: raise ReadBudgetExceeded('file budget')
+            chunks.append(chunk)
         raw = b''.join(chunks)
     finally:
         os.close(fd)

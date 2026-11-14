@@ -1,0 +1,1 @@
+{"elapsed_s": 0.0002, "file_mib": 32, "files": 1, "mode": "bounded", "outcome": "ReadBudgetExceeded", "pid": 27512, "python_current": 96, "python_peak": 1724, "rss_after": 15077376, "rss_before": 14880768, "rss_peak": 15859712, "rss_peak_before": 15859712, "synthetic": true, "workers": 4}

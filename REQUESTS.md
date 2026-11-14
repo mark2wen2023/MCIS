@@ -654,3 +654,13 @@ OpenAPI and proposal status updated; source/identity/whole-file memory unchanged
 
 Before independent handoff, corrected new422 response to existing components/responses/Problem
 reference (application/json); refreshed draft freeze. No product code changed by this correction.
+
+## 2026-11-14 Isolated file-memory measurement and bounded-read preflight
+Coordinator authorizes measurement and minimal budget/failure design without releasing
+security locks. Base390fd59. Synthetic fresh-process measurements show legacy sys.maxsize
+unbounded practical reads, chunks+join peak near2x, bounded rejection allocates near2xlimit,
+and same-process four reads queue instead of admission rejection. Modify frozen safe_files.py
+only: pinned-fd fstat size above EXISTING limit rejects before reads; growth limit checks
+reject before join. No new endpoint cap, no changed permission/transaction/HTTP mappings.
+Explicit aggregate/admission budgets are design only pending whole response lifetime and
+shared worker accounting; do not claim this preflight bounds overall RSS or legacy reads.
