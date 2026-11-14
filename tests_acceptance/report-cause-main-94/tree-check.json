@@ -1,0 +1,25 @@
+{
+  "main": "94d5e38",
+  "candidate": "01241b6",
+  "commonBase": "4585016",
+  "preservedMainFileCount": 2408,
+  "candidateUnchangedFiles": [
+    "DEFECTS/report-cause-provenance.md",
+    "contracts/report-recommendation-cause-labels.md",
+    "logs/report-cause-provenance-impl-hashes-frozen.txt",
+    "service/mcis_service/reports/sources.py",
+    "service/tests/test_report_cause_provenance.py",
+    "tests_acceptance/report-cause-provenance/after.txt",
+    "tests_acceptance/report-cause-provenance/baseline.txt",
+    "tests_acceptance/report-cause-provenance/focused.txt",
+    "tests_acceptance/report-cause-provenance/independent-hashes.txt",
+    "tests_acceptance/report-cause-provenance/independent-tests.txt",
+    "tests_acceptance/report-cause-provenance/independent.md",
+    "tests_acceptance/report-cause-provenance/main-control.txt"
+  ],
+  "exceptions": [
+    "REQUESTS.md",
+    "ROADMAP.md",
+    "tests_acceptance/report-cause-provenance/REPORT.md"
+  ]
+}

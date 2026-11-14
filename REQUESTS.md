@@ -647,3 +647,11 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## Report recommendation cause-label provenance (2026-11-14)
+Latest main4585016. New report sentences currently omit registered recommendation
+causeNodeIds. Add an explicit Draft sentence retaining exact ordered labels with
+unresolved/unchecked caveat and only a recommendation-register citation marked
+needsReview. No guessed evidence links, case/digest bindings, existing-report
+rewrite or report+recommendation archive enablement. Update reports/sources.py,
+contract note and real HTTP tests; renderer and permission policy unchanged.
