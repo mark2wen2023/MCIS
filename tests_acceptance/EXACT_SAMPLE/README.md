@@ -43,3 +43,11 @@ For remote publication, use GitHub's complete base tree
 snapshot's synthetic history. Local preparation notes above remain historical.
 Portable test command with the project's installed dependencies:
 `PYTHONPATH=service python -m pytest -q tests_acceptance/EXACT_SAMPLE`.
+
+## Coordinator regression boundary
+The coordinator independently reran the 14 focused tests successfully.
+An additional baseline test_cases_timeline run produced 6 setup errors because
+reports/yangze22/case.json was absent from that isolated checkout. This is an
+uncompleted baseline regression, not a passing full suite and not evidence of
+an interpolation regression. Duplicate-time database secondary ordering remains
+unspecified; outside-range clamping and long-gap behavior remain unchanged.
