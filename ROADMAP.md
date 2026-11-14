@@ -368,3 +368,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 | 2026-11-12 | Report output A | 受限独立验收通过 | 最终独立49 passed/11.56s，20SHA前后匹配；真实双格式单render/原文不变/审计关联、实际第二连接改报告或策略后409/403、故障全表回滚与commit后交付失败各有证明。真浏览器2正常下载+2真实commit后故障替换+1真实commit后身份迟响应丢弃，最终5审计；8独立客户端坏结构/错绑拒绝。实际2MiB报告及16MiB输出边界与其余缩小limit测试区别详见独立REPORT；未穷尽多worker/真实切案/全部变体。无服务端原件保存、无.mcase文件恢复、无签署认证；B仅计划，不部署不触W11。 |
+
+| Semantic offline main candidate | 待测 | 2026-11-14：远端main3aba2bf新分支，仅7运行文件与测试/资料；122项离线测试通过。无PR56祖先；原字节清单与冻结 `logs/semantic-main-candidate-impl-hashes-frozen.txt`。不宣称浏览器/身份/模型新验收。 |
+| Semantic offline main candidate | 范围内验收通过 | 2026-11-14：8项新独立+122原测试=130通过、零跳；40源文件逐字节/摘要匹配，冻结42/42，7runtime隔离CLI→实际JS→HTML导出验证。祖先不含PR56；保留原生浏览器/身份/来源真实性限制。仅准备本地审查提交，不推送。 |

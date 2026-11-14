@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "corpusSha256": "77cdbdf3f2656aa57b0772fadc909671bf5bbfbd7c480a3fcbb1cc79460ad19b",
+  "predictions": [
+    {
+      "itemId": "oil_approx_report",
+      "label": "supported",
+      "rationale": "脚本固定测试输出，仅用于运行接口；不是模型推断或专家意见。"
+    },
+    {
+      "itemId": "oil_false_precision",
+      "label": "insufficient",
+      "rationale": "脚本固定测试输出，仅用于运行接口；不是模型推断或专家意见。"
+    },
+    {
+      "itemId": "oil_wrong_vessel",
+      "label": "conflicted",
+      "rationale": "脚本固定测试输出，仅用于运行接口；不是模型推断或专家意见。"
+    },
+    {
+      "itemId": "oil_qualifier_omitted",
+      "label": "insufficient",
+      "rationale": "脚本固定测试输出，仅用于运行接口；不是模型推断或专家意见。"
+    },
+    {
+      "itemId": "rudder_columns_report",
+      "label": "supported",
+      "rationale": "脚本固定测试输出，仅用于运行接口；不是模型推断或专家意见。"
+    },
+    {
+      "itemId": "rudder_feedback_swapped",
+      "label": "conflicted",
+      "rationale": "脚本固定测试输出，仅用于运行接口；不是模型推断或专家意见。"
+    },
+    {
+      "itemId": "rudder_blank_means_none",
+      "label": "insufficient",
+      "rationale": "脚本固定测试输出，仅用于运行接口；不是模型推断或专家意见。"
+    },
+    {
+      "itemId": "rudder_blank_means_order",
+      "label": "insufficient",
+      "rationale": "脚本固定测试输出，仅用于运行接口；不是模型推断或专家意见。"
+    },
+    {
+      "itemId": "rudder_single_row_failure",
+      "label": "insufficient",
+      "rationale": "脚本固定测试输出，仅用于运行接口；不是模型推断或专家意见。"
+    },
+    {
+      "itemId": "system_normal_report",
+      "label": "supported",
+      "rationale": "脚本固定测试输出，仅用于运行接口；不是模型推断或专家意见。"
+    },
+    {
+      "itemId": "oil_quote_tampered",
+      "label": "insufficient",
+      "rationale": "脚本固定测试输出，仅用于运行接口；不是模型推断或专家意见。"
+    }
+  ],
+  "origin": "scripted_fixture"
+}
