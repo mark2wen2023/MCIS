@@ -39,3 +39,10 @@ test('independent: invalid stdin writes safe terminal without spawning Python',(
  assert.equal(cp.status,1);const meta=JSON.parse(cp.stdout.trim());const rows=lines(meta.receiptPath);assert.deepEqual(rows.map(x=>x.phase),['started','not_accepted']);assert.equal(rows.at(-1).errorCode,'MCIS_KEY_INVALID');assert(!cp.stderr.includes('MCIS_HOST_START'));
  }finally{rmSync(root,{recursive:true,force:true});}
 });
+test('independent: working rehearsal phase is metadata only, never accepts review text',()=>{
+ const root=mkdtempSync(join(tmpdir(),'pi-independent-'));
+ try{const r=createRunReceipt(root);
+ for(const value of [{note:'SECRET'},{reviewActor:'human'},{workingAcceptance:{saved:true}}])assert.throws(()=>r.append('working_review_verified',value));
+ r.append('working_review_verified',{proposals:2});r.append('accepted_pending_review',{models:3,tools:2,proposals:2,citations:2});r.close();const rows=lines(r.path);assert.equal(rows[1].phase,'working_review_verified');assert.equal(rows[1].saved,false);assert(!readFileSync(r.path,'utf8').includes('SECRET'));
+ }finally{rmSync(root,{recursive:true,force:true});}
+});

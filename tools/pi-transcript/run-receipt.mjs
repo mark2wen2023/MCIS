@@ -3,7 +3,7 @@ import {mkdirSync,openSync,writeSync,fsyncSync,closeSync,constants} from 'node:f
 import {join} from 'node:path';
 import {randomUUID} from 'node:crypto';
 const errors=new Set(['MCIS_KEY_TIMEOUT','MCIS_KEY_INVALID','MCIS_FINAL_UNVALIDATED_NO_VALIDATION','MCIS_FINAL_UNVALIDATED_FORMATTING','MCIS_FINAL_UNVALIDATED_CHANGED','MCIS_FINAL_INVALID','MCIS_RUN_FAILED','MCIS_TIMEOUT','MCIS_HOST_REJECTED','MCIS_PROBE_FAILED']);
-const phases=new Set(['started','host_ready','model_request_started','model_request_returned','tool_returned','accepted_pending_review','not_accepted']);
+const phases=new Set(['working_review_verified','started','host_ready','model_request_started','model_request_returned','tool_returned','accepted_pending_review','not_accepted']);
 export function createRunReceipt(root){
  const id=randomUUID(), dir=join(root,`pi-run-${id}`);
  mkdirSync(dir,{mode:0o700});
