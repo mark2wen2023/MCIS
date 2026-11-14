@@ -620,3 +620,11 @@ fail-closed handler; preserve original red assertions. Re-freeze as r1.
 Authorized combination of ced79f5/d26314b on10ec700. Exact source freeze matches;
 new actual gate+deadline tests prove dependency present. No live execution release.
 See research/expert_meeting/COORDINATION_INTEGRATED.md; original red evidence retained.
+
+## HFACS CLI source portability (2026-11-14)
+Replace tools/mcis-hfacs/test_cli.py's external ../mcis-w144 source comparison
+with fixed seven core hashes taken from committed W184 verified-impl-sha256.txt,
+not generated at runtime from candidate sources. Preserve manifest/local source
+comparison and concurrent real CLI rebuild equality. Add SDK-free mutation tests;
+missing/changed sources or receipt omissions fail. No production/build/core changes.
+Historical W184 report stays unchanged; its past environment is not current proof.

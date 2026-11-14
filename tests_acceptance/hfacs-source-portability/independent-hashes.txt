@@ -1,0 +1,3 @@
+tools/mcis-hfacs/test_cli.py: OK
+tools/mcis-hfacs/hfacs_source_integrity.py: OK
+tools/mcis-hfacs/test_source_integrity.py: OK
