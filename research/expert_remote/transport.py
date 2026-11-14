@@ -44,7 +44,7 @@ def _usage(value):
     return {'status': 'observed', 'value': fields}
 
 
-def _decode(raw):
+def _decode(raw, credential=None):
     def pairs(items):
         out = {}
         for key, value in items:
@@ -53,6 +53,19 @@ def _decode(raw):
         return out
     obj = json.loads(raw.decode('utf-8'), object_pairs_hook=pairs,
                      parse_constant=lambda _: (_ for _ in ()).throw(ValueError('nonfinite')))
+    # Reject the exact credential after JSON unescaping, including nested keys.
+    # This is a narrow no-echo boundary, not a detector for transformed secrets
+    # or the raw Vault secret unavailable to a placeholder-only process.
+    if credential:
+        pending = [obj]
+        while pending:
+            value = pending.pop()
+            if isinstance(value, str) and credential in value:
+                raise ValueError('credential_echo')
+            if isinstance(value, dict):
+                pending.extend(value.keys()); pending.extend(value.values())
+            elif isinstance(value, list):
+                pending.extend(value)
     if type(obj) is not dict or type(obj.get('choices')) is not list or len(obj['choices']) != 1:
         raise ValueError('response_shape')
     choice = obj['choices'][0]
@@ -83,6 +96,8 @@ async def request(messages, tools, *, key, deadline, cancel=None, managed_bindin
     dispatched = False
     task = None
     try:
+        if ENDPOINT != 'https://api.deepseek.com/chat/completions':
+            raise TransportError('endpoint_invalid')
         options = {}
         headers = {'Content-Type':'application/json','Accept':'application/json','Accept-Encoding':'identity'}
         if managed_binding is not None:
@@ -129,7 +144,7 @@ async def request(messages, tools, *, key, deadline, cancel=None, managed_bindin
                         if len(chunks)+len(chunk) > MAX_BYTES: raise TransportError('response_limit', True)
                         chunks.extend(chunk)
                     try:
-                        return _decode(bytes(chunks))
+                        return _decode(bytes(chunks), credential=key)
                     except Exception:
                         raise TransportError('response_invalid', True) from None
 

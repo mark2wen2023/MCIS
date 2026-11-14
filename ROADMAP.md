@@ -429,3 +429,7 @@ EXPERTCONNECTED r3待复验：embedded aria-live状态准确，34新增DOM/40旧
 | 2026-11-14 | EXPERTUISTATUS | 待独审 | c137ea2隔离；零响应标题与“已校验转换”过度断言红测后最小显示修复，停止/未知中文；43新增DOM、34会议/40旧/19来源断言及TS通过；freeze logs/EXPERTUISTATUS-impl-hashes-frozen.txt。无真实请求、不改协议/原文。 |
 
 | 2026-11-14 | EXPERTUISTATUS | 显示范围独审通过 | 9独立合成DOM场景network=0，3冻结一致；43新增+34会议+40旧+19来源断言、22Python导出和TS过。Playwright在导航前因SUID沙箱配置失败，无截图/原生交互/CSP验收。真实DeepSeek0/HOLD，未改源材料、协议、身份或案件。 |
+
+| 2026-11-14 | EXPERTWORKERBOUNDARY | 待独审/真实HOLD | f296f3d隔离；9红测后固定目标所有模式校验+JSON解码后精确credential回显拒绝，worker/Adapter保unknown/预算且不重试。11新增及相关回归共127过；freeze logs/EXPERTWORKERBOUNDARY-impl-hashes-frozen.txt。非全局DLP/网络封锁，managed无可信bootstrap不接线。 |
+
+| 2026-11-14 | EXPERTWORKERBOUNDARY | 受限独审通过/真实HOLD | 14独立测试、3冻结一致，旧content/id/model泄露红证据保留；相关合跑141通过。仅精确回显与配置漂移防护，非全面DLP；平台bootstrap、真实代理与模型未验，不推送/合并部署。 |
