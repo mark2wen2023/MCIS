@@ -59,6 +59,9 @@ def inputs(body, *, commit=False):
     if not isinstance(body,dict) or set(body)!=allowed:
         raise problem(422,'INTAKE_FIELDS','请求字段必须与数字文件副本登记合同一致')
     meta=metadata(body)
+    # New requests only: keep historical binding/receipt validation compatible.
+    if re.search(r'[\u061c\u200e\u200f\u202a-\u202e\u2066-\u2069]', body['fileName']):
+        raise problem(422,'INTAKE_FILENAME_DIRECTION','新上传文件名不得含双向文字控制符；请明确核对文件名后重新选择，系统不会自动改名')
     if commit and (body['confirmed'] is not True or not isinstance(body['requestDigest'],str) or not DIGEST.fullmatch(body['requestDigest'])):
         raise problem(422,'INTAKE_CONFIRM','必须明确确认并提供本次预览摘要')
     encoded=body['contentBase64']
