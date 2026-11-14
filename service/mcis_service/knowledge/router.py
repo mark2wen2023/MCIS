@@ -64,6 +64,26 @@ def validate_content(body):
         if not valid: raise problem(422, 'INVALID_SOURCE', '公开来源需HTTPS公共地址；链接不会自动核实')
     return tags
 
+def validate_new_source_host(source):
+    """Syntax-only guard for new writes; legacy archive validation is unchanged."""
+    if source['type'] != 'Public': return
+    host = urlsplit(source['url']).hostname or ''
+    try:
+        ipaddress.ip_address(host)
+        return  # Existing validate_content already enforces global-address rules.
+    except ValueError:
+        pass
+    try:
+        ascii_host = host.encode('idna').decode('ascii')
+        labels = ascii_host.rstrip('.').split('.')
+        valid = len(ascii_host.rstrip('.')) <= 253 and all(
+            re.fullmatch(r'[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?', label)
+            for label in labels)
+    except UnicodeError:
+        valid = False
+    if not valid:
+        raise problem(422, 'INVALID_SOURCE', '公开来源主机名格式无效；链接不会自动核实')
+
 def output(row, ctx):
     d = copy.deepcopy(row.doc)
     if ctx.role not in INTERNAL:
@@ -98,7 +118,7 @@ def search(ctx: Ctx = CtxDep, status: Literal['Published','Candidate','Rejected'
 
 @router.post('/cards', status_code=201)
 def create(body: dict = Body(...), ctx: Ctx = CtxDep):
-    internal(ctx); tags = validate_content(body)
+    internal(ctx); tags = validate_content(body); validate_new_source_host(body['source'])
     with WRITE_LOCK, ctx.db.session() as s:
         s.execute(text('BEGIN IMMEDIATE'))
         from ..knowledge_archive.service import prepare_write, capture
