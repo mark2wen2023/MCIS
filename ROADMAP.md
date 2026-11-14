@@ -389,3 +389,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-14 | EXPERTEXECUTOR r1 | 待独立复验 | 初始独审17项16过1红：Bridge审计失败未传播顶层/run完整标记。现聚合一次Bridge快照，任一上游不完整粘性污染复合完整性，issue无run也受限；意见不补造。19新+65原=84自测过，新10冻结待扩展独审复跑。 |
 
 | 2026-11-14 | EXPERTEXECUTOR r1 | 受限独立验收通过 | 独立25/25、相关合跑109/109（19新+65原+25独审），10冻结前后匹配。D01六Bridge审计故障阶段及粘性读取修复，初始红测保留。实际Pi进程配脚本提供方，取消/截止/进程组/共享预算回执经过协议验收；不等于真实DeepSeek/语义/身份/持久化能力。仅本地候选，不合并部署。 |
+
+| EXPERTRESEARCH-INTEGRATION | 待测 | 2026-11-14：隔离3125eaf与872815c依赖审计；15项离线整合测试；真实adapter仅设计，旧查看器未接会议；冻结logs/EXPERTRESEARCH-INTEGRATION-impl-hashes-frozen.txt |

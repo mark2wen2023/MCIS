@@ -576,3 +576,6 @@ Coordinator review found directory-leaf fdopen failure leaks a raw descriptor. R
 
 ## 2026-11-14 EXPERTEXECUTOR — 真Pi进程、脚本提供方的受控协议验收
 基于0a4bf22独立分支。新增research/expert_executor，固定调用a686 pi-runner.mjs和已锁定Pi1.5.2，净化环境/新进程组/非阻塞有界管道/取消及截止清理；提供方仍固定脚本，不读密钥、不支持远端模型或案件接口。申请原冻结Bridge仅加公开poll(ticket)复用既有guard，以便无输出子进程也受120/600秒合作式截止。收集操作系统进程退出观察与共享Bridge预算回执，区分真实Pi运行、脚本模型响应和父模拟状态。不得宣称真实DeepSeek多轮能力或操作系统安全沙箱。
+
+## 2026-11-14 EXPERTRESEARCH integration audit
+以3125eaf隔离检查649d865→0a4bf22→3125eaf，工作台872815c分叉a686c85。仅新增可复现跨模块测试与审查文档，不改运行代码、不真正merge/cherry-pick、不接服务。已发现工作台旧单轮result.json与新会议/预算/运行回执合同不兼容；保留拒绝，不能捏造旧manifest/runId混入。测试需区分链内一致、旧工作台仍可用、会议UI整合仍阻断，实际Pi始终脚本提供方。
