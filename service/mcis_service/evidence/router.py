@@ -57,7 +57,9 @@ def list_evidence(case_id: str, ctx: Ctx = CtxDep) -> list[dict[str, Any]]:
 
 @router.post("/evidence", status_code=201)
 def register_evidence(case_id: str, body: EvidenceIn, ctx: Ctx = CtxDep) -> dict[str, Any]:
-    with ctx.db.session() as s:
+    with WRITE_LOCK, ctx.db.session() as s:
+        from ..reports.access import begin
+        begin(s)
         load_case(s, case_id)
         require(ctx, s, case_id, "evidence_meta", write=True)
         eid = service.next_id(s, case_id)

@@ -406,3 +406,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-14 | Bounded read early refusal + memory study | 待独验 | 仅现有limit早拒绝/增长检查，冻safe-read-budget-preflight；未增加旧GET/打包cap，聚合并发预算仍设计，不放松原锁与权限。 |
 
 | 2026-11-14 | Bounded read early refusal + memory study | 本地独验通过，聚合预算未实现 | 主235过1缺.NET跳；独验19过含TCP排队/受控发送持有与增长/FD/HTTP拒绝。32MiB源/8MiB预算拒绝Python峰16MiB→1724B单次；旧GET/ZIP无实用或聚合上限仍在，设计未启用，完整锁/权限不改。 |
+
+| 2026-11-14 | Legacy registration serialization | 待独验 | aggregate实测重复编号/覆盖/500；仅写锁+SQLite预留包住旧登记入口，body内存预算与FS/DB原子性未解。冻registration-serialization。 |
+
+| 2026-11-14 | Legacy registration serialization | 本地独验通过 | 自测196过2缺.NET跳；独审86过（重叠）；三轮真实TCP4并发均4条一致，双进程共享SQLite8并发独验通过。完整锁保护ID/权限，不是内存准入或FS/DB崩溃原子性；未提交推送合并部署。 |

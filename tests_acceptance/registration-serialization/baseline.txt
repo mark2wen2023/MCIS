@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______ test_concurrent_registration_never_reuses_or_overwrites_identity _______
+
+local = (<starlette.testclient.TestClient object at 0x7f85bcf7e9f0>, <fastapi.applications.FastAPI object at 0x7f85bd3e4530>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f85bce061b0>
+
+    def test_concurrent_registration_never_reuses_or_overwrites_identity(local,monkeypatch):
+        c,app=local;barrier=threading.Barrier(4);original=service.next_id
+        def overlap(*args):
+            eid=original(*args)
+            try:barrier.wait(timeout=.3)
+            except threading.BrokenBarrierError:pass
+            return eid
+        monkeypatch.setattr(service,'next_id',overlap)
+        with ThreadPoolExecutor(4) as pool:
+            responses=list(pool.map(lambda i:c.post(URL+'/evidence',headers=H(),json=payload(i)),range(4)))
+        assert [r.status_code for r in responses]==[201]*4
+        ids=[r.json()['evidenceId'] for r in responses]
+>       assert len(set(ids))==4 and counts(app)==(4,4,4)
+E       AssertionError: assert (1 == 4)
+E        +  where 1 = len({'EV-001'})
+E        +    where {'EV-001'} = set(['EV-001', 'EV-001', 'EV-001', 'EV-001'])
+
+tests/test_registration_serialization.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_registration_serialization.py::test_concurrent_registration_never_reuses_or_overwrites_identity
+1 failed in 0.40s

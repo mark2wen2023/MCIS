@@ -664,3 +664,12 @@ only: pinned-fd fstat size above EXISTING limit rejects before reads; growth lim
 reject before join. No new endpoint cap, no changed permission/transaction/HTTP mappings.
 Explicit aggregate/admission budgets are design only pending whole response lifetime and
 shared worker accounting; do not claim this preflight bounds overall RSS or legacy reads.
+
+## 2026-11-14 Legacy evidence registration serialization
+Aggregate synthetic TCP study found concurrent legacy POST duplicate next_id,500 UNIQUE
+conflict and possible overwritten metadata despite201 with orphan files. User authorized
+safe independent small fixes. Modify frozen evidence/router.py registration entry only:
+reserve WRITE_LOCK and SQLite BEGIN IMMEDIATE before case/policy/next_id/file writes,
+retaining entire transaction. No automatic retry or new body/aggregate limits. This closes
+identity allocation and stale-policy window, not general filesystem/DB crash atomicity.
+Separate basea38d748 branch, no product changes mixed into aggregate study.
