@@ -1,0 +1,110 @@
+........................................................................ [ 41%]
+........................................................................ [ 83%]
+...............F.............                                            [100%]
+=================================== FAILURES ===================================
+___________ test_report_versions_full_review_gisis_and_hfacs_coexist ___________
+
+raw = b''
+
+    def strict_json(raw: bytes):
+        def pairs(items):
+            result = {}
+            for key, value in items:
+                if key in result:
+                    raise ValueError("duplicate key")
+                result[key] = value
+            return result
+        try:
+>           result = json.loads(raw.decode("utf-8"), object_pairs_hook=pairs,
+                                parse_constant=lambda _: (_ for _ in ()).throw(ValueError("nonfinite")))
+
+mcis_service/hfacs_drafts/router.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/__init__.py:359: in loads
+    return cls(**kw).decode(s)
+           ^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:338: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7f6c0b059cd0>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:356: JSONDecodeError
+
+During handling of the above exception, another exception occurred:
+
+payload = {'action': 'taxonomy'}
+
+    def run_core(payload):
+        def bad(): reject(503,'HFACS_CORE_UNAVAILABLE','人工分类核心不可用')
+        try: proc=subprocess.run([str(CLI)],input=canonical(payload),capture_output=True,timeout=30,check=False)
+        except (OSError,subprocess.TimeoutExpired): bad()
+        if len(proc.stdout)>256*1024: bad()
+>       try: output=strict_json(proc.stdout)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+mcis_service/hfacs_drafts/router.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+mcis_service/hfacs_drafts/router.py:77: in strict_json
+    reject()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+status = 422, code = 'INVALID_HFACS_INPUT', message = '人工分类草稿输入无效'
+
+    def reject(status=422, code="INVALID_HFACS_INPUT", message="人工分类草稿输入无效"):
+>       raise PreviewError(status, code, message)
+E       mcis_service.hfacs_drafts.router.PreviewError: (422, 'INVALID_HFACS_INPUT', '人工分类草稿输入无效')
+
+mcis_service/hfacs_drafts/router.py:37: PreviewError
+
+During handling of the above exception, another exception occurred:
+
+origin = (<starlette.testclient.TestClient object at 0x7f6c0b309df0>, (b'synthetic original evidence bytes\x00', {'caseId': 'CA...1b\x00\xf8\x06\x00\x00k%\x00\x00\x00\x00', PosixPath('/tmp/pytest-of-agent/pytest-82/test_report_versions_full_revi0'))
+
+    def test_report_versions_full_review_gisis_and_hfacs_coexist(origin):
+     from mcis_service.hfacs_drafts.router import run_core
+     c,details,raw,path=origin;*_,rpt=details
+     report=checked(c,'get',ROOT+'/reports/'+rpt).json()
+     section=report['sections'][0];sentence=section['sentences'][0]
+     checked(c,'patch',ROOT+'/reports/'+rpt+'/sections/'+section['sectionId'],{'action':'modify','sentenceId':sentence['sentenceId'],'reason':'Synthetic change','textZh':'合成修改','textEn':'Synthetic modified'})
+     regenerated=checked(c,'post',ROOT+'/reports/'+rpt+':generate',{'templateId':'imo-cic','lang':'bilingual'},201).json()
+     checked(c,'get',ROOT+'/reports/'+rpt+'/export?format=docx')
+     checked(c,'post',ROOT+'/gisis:validate',{'values':{},'export':True,'format':'json'},422)
+     checked(c,'get',ROOT+'/gisis/export?format=json')
+>    code=run_core({'action':'taxonomy'})['categories'][0]['code']
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_working_record_archive.py:220: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+mcis_service/hfacs_drafts/router.py:151: in run_core
+    except PreviewError: bad()
+                         ^^^^^
+mcis_service/hfacs_drafts/router.py:146: in bad
+    def bad(): reject(503,'HFACS_CORE_UNAVAILABLE','人工分类核心不可用')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+status = 503, code = 'HFACS_CORE_UNAVAILABLE', message = '人工分类核心不可用'
+
+    def reject(status=422, code="INVALID_HFACS_INPUT", message="人工分类草稿输入无效"):
+>       raise PreviewError(status, code, message)
+E       mcis_service.hfacs_drafts.router.PreviewError: (503, 'HFACS_CORE_UNAVAILABLE', '人工分类核心不可用')
+
+mcis_service/hfacs_drafts/router.py:37: PreviewError
+1 failed, 172 passed in 43.70s

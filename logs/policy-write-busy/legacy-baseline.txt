@@ -1,0 +1,81 @@
+F.F.FF.................................                                  [100%]
+=================================== FAILURES ===================================
+_________________________ test_interview_list_summary __________________________
+
+client = <starlette.testclient.TestClient object at 0x7f64c6afb590>
+
+    def test_interview_list_summary(client):
+        lst = client.get(f"{C}/interviews", headers=H()).json()
+>       assert [x["recordId"] for x in lst] == [f"IR-0{i}" for i in range(1, 7)]
+                ^^^^^^^^^^^^^
+E       TypeError: string indices must be integers, not 'str'
+
+tests/test_interviews_redaction.py:11: TypeError
+____________________________ test_redaction_by_role ____________________________
+
+client = <starlette.testclient.TestClient object at 0x7f64c668f7a0>
+
+    def test_redaction_by_role(client):
+        lead = client.get(f"{C}/interviews/IR-03", headers=H("LeadInvestigator"))
+        assert lead.headers["X-MCIS-Redaction"] == "none"
+        name = lead.json()["interviewee"]["name"]
+        ext = client.get(f"{C}/interviews/IR-03", headers=H("ExternalExpert"))
+>       assert "interviewee.name" in ext.headers["X-MCIS-Redaction"]
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_interviews_redaction.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Headers({'content-length': '63', 'content-type': 'application/json', 'cache-control': 'no-store', 'vary': 'Origin'})
+key = 'X-MCIS-Redaction'
+
+    def __getitem__(self, key: str) -> str:
+        """
+        Return a single header value.
+    
+        If there are multiple headers with the same key, then we concatenate
+        them with commas. See: https://tools.ietf.org/html/rfc7230#section-3.2.2
+        """
+        normalized_key = key.lower().encode(self.encoding)
+    
+        items = [
+            header_value.decode(self.encoding)
+            for _, header_key, header_value in self._list
+            if header_key == normalized_key
+        ]
+    
+        if items:
+            return ", ".join(items)
+    
+>       raise KeyError(key)
+E       KeyError: 'X-MCIS-Redaction'
+
+.venv/lib/python3.12/site-packages/httpx/_models.py:302: KeyError
+____________________ test_crosscheck_requires_confirmation _____________________
+
+client = <starlette.testclient.TestClient object at 0x7f64c54f6300>
+
+    def test_crosscheck_requires_confirmation(client):
+        cc = client.get(f"{C}/interviews/IR-03/crosscheck", headers=H()).json()
+>       assert all(c["state"] in ("PendingConfirmation", "Confirmed") for c in cc["results"])
+                                                                               ^^^^^^^^^^^^^
+E       KeyError: 'results'
+
+tests/test_interviews_redaction.py:59: KeyError
+________________________ test_statement_add_and_review _________________________
+
+client = <starlette.testclient.TestClient object at 0x7f64c51d0b30>
+
+    def test_statement_add_and_review(client):
+        d = client.get(f"{C}/interviews/IR-03", headers=H()).json()
+>       ans = d["turns"][1]["answer"]                      # 第 2 轮："有雾，能见度大约 1.5 海里。……"
+              ^^^^^^^^^^
+E       KeyError: 'turns'
+
+tests/test_interviews_redaction.py:82: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_interviews_redaction.py::test_interview_list_summary - Type...
+FAILED tests/test_interviews_redaction.py::test_redaction_by_role - KeyError:...
+FAILED tests/test_interviews_redaction.py::test_crosscheck_requires_confirmation
+FAILED tests/test_interviews_redaction.py::test_statement_add_and_review - Ke...
+4 failed, 35 passed in 17.03s

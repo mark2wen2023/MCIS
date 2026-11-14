@@ -157,8 +157,11 @@ def build_files(s: Session, blob_root: Path, case_id: str) -> dict[str, bytes]:
         rel = item.get("relativePath") or ""
         if rel:
             p = evidence_service.blob_path(blob_root, case_id, rel)
-            if p.exists():
-                files[rel] = p.read_bytes()
+            from ..evidence.recorded_content import read_recorded
+            try:
+                files[rel], _ = read_recorded(s, case_id, item, p)
+            except FileNotFoundError:
+                pass  # Preserve legacy metadata-only/missing local content export.
     files["analysis/timeline.json"] = _j({"events": list_docs(s, TimelineEventRow, case_id)})
     files["analysis/time-alignment.json"] = _j({"conflicts": list_docs(s, ConflictRow, case_id)})
     col = get_doc(s, ColregAnalysisRow, case_id, "current")
@@ -181,6 +184,8 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
     from ..manual_interviews.models import InterviewRequestReceiptRow
     from ..interviews.access import begin, require_content
     begin(s)
+    from .access import preflight
+    preflight(s, case_id, role)
     from ..recommendations.access import protect_package as protect_recommendations
     protect_recommendations(s, case_id, role)
     from ..working_records_archive.service import has_history, build as build_working
@@ -252,7 +257,12 @@ def export_case(s: Session, blob_root: Path, case_id: str, operator: str, role: 
     except PreviewError as exc: raise problem(exc.status, exc.code, exc.message)
     def assemble():
         files = build_files(s, blob_root, case_id)
+        from ..report_output.attachment_access import protect_container
+        for raw in files.values():
+            protect_container(s, case_id, role, raw)
         if extension is not None: files[hfacs_archive.PATH] = extension.raw
+        from .access import members
+        members(s, case_id, role, files)
         files["manifest.json"] = manifest_json(case_id, files, iso(parse_iso(row.created_utc)),
                                                 "1.1.0" if extension else "1.0.0").encode("utf-8")
         buf = io.BytesIO()

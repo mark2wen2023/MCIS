@@ -37,6 +37,8 @@ def put_access_policy(case_id: str, body: dict[str, Any] = Body(...), ctx: Ctx =
         raise problem(403, "FORBIDDEN", "只有首席调查官可以修改权限策略")
     contracts.validate("access-policy", body)
     with ctx.db.session() as s:
+        from .write_access import reserve_policy_write
+        reserve_policy_write(s)
         load_case(s, case_id)
         before = get_policy(s, case_id)
         put_doc(s, AccessPolicyRow, case_id, "policy", body)

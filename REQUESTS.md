@@ -561,3 +561,55 @@ The new endpoint adds conservative current-case evidence/interview visibility an
 The browser uses a fixed-profile ZIP_STORED and strict JSON verifier, actual member CRC/SHA, preview/request binding and original audit association. No object URL/download occurs until checks succeed. Unknown delivery persists only scoped metadata and never auto-retries. Explicit stop-wait discards even abort-ignoring late replies. After checking downloads the user can knowingly abandon an attempt and freshly preview a new generation; storage corruption/unavailability has an explicit scoped recovery check, never silent lock deletion or false success. Local headers and hashes are not authentication, signature, facts or complete audit-chain certification.
 
 Engineering caps are declared for report/output/audit/manifest/ZIP. A self-review removed an unintended2MiB policy-fingerprint limit by streaming its hash without adding a policy editing restriction. OpenAPI labels now match the two new report-output routes while preserving the old14-report-route test unchanged. The B retention plan allocates no archive version and remains unimplemented.
+
+## 2026-11-14 Safe read and final authorization prerequisite
+Authorized isolated security repair for evidence intake and working archive: descriptor-relative no-symlink reader and SQLite reservation before final commit authorization. No source-incarnation/timeline feature dependency. Frozen-file changes require independent review; logs/safe-read-prerequisite records actual baseline and remaining failures. Legacy evidence GET/package follow-up is excluded.
+
+## 2026-11-14 Legacy evidence GET/package descriptor reads
+Follow-up authorized for independent review branch based strictly on cb04aa6. Frozen evidence/router, package/mcase and common/safe_files changes: shared no-symlink descriptor reads, 1MiB syscall chunks, existing actual-byte digest and missing-file semantics preserved. No remote exploit capability asserted; no aggregate memory bound or inode immutability. See contracts/legacy-descriptor-read-candidate.md and logs/legacy-descriptor-read/ for actual tests and baseline failure.
+
+## 2026-11-14 Recorded-digest delivery research candidate
+Local-only follow-up to ee6071f. GET and legacy export compare the exact returned immutable bytes with a pinned recorded digest (original plus valid Change transitions). Missing/malformed recorded digest and mismatches409 before success audit; no computed digest used as its own reference. DB is a trusted anchor for this threat model, not authenticated provenance: digest-only registration/import provenance is not stored. Read and metadata policy decisions share SQLite reservation. Contract candidate, not integration approval.
+
+2026-11-14 follow-up authorization: publish the recorded-digest candidate as a separate review branch directly based on ee6071f; no merge/deployment. Product/test content unchanged from local review. Preserve rejected missing-digest legacy records, unmeasured long-read SQLite writer-lock cost, and actual159 passed/1 HFACS failure/1.NET skip plus51 independent passing checks.
+
+## 2026-11-14 Policy write lock outcome candidate
+Restrict retryable classification to access-policy PUT's initial SQLite writer reservation,
+before any policy/audit write. Map only sqlite3 BUSY/LOCKED numeric codes after successful
+rollback, never commit-phase exceptions or failed rollback. Existing content/digest/revocation
+transactions unchanged. Dedicated contract and cross-connection/unknown-commit tests required.
+
+2026-11-14 follow-up: authorized to publish unchanged policy writer-lock candidate/tests
+on a dedicated branch directly based on72269e3 for cross-environment review. Unknown commit
+outcomes remain unclassified, never not_committed/retryable; no automatic retry. No merge/deploy.
+
+## 2026-11-14 Main-based attachment safety integration (local only)
+Authorized six explicit single-commit deltas: cb04aa6,ee6071f,72269e3,13231d4, PR61 aad96d4,
+PR64 5d10b67. Base verified remote main3aba2bf; no PR56/97-commit stack, PR69 or low-lock
+research. Resolve evidence/router conflict by preserving read_recorded's verified bytes/current
+digest AND running protect_container on those same bytes before successful Access; existing
+WRITE_LOCK/BEGIN retained. PR61/64 historical progress-doc additions are consolidated here,
+not overwritten onto shared documents. Build/test/independent review only; no push/merge/deploy.
+
+Integration safety finding: legacy-register ZIP/DOCX in a fresh case (no intake/history/report
+rows) gets individualGET403 but old package export200 for Investigator. Reproduced two failing
+API tests. Minimal local closure: old export assemble applies existing protect_container to
+all assembled byte members before ZIP generation; keep transaction/digest and rollback audit.
+Working-history path already requires full content. This is a new integration-only gate,
+not silently attributed to PR64; independent review and baseline compatibility tests required.
+
+BLOCKED after wider policy check: non-container legacy export ignores committed Deny on
+Investigator evidence_meta/audit, returns actual member bytes/audit despite individual403.
+Independently reproduced on this combination and clean main3aba2bf. No broad export-ACL
+rewrite folded silently into six reviewed deltas; stop promotion pending separate contract/
+repair. Keep failing probes; prior scoped72pass does not establish full revocation coverage.
+
+## 2026-11-14 Follow-up: server-side legacy package policy repair integrated locally
+User authorized fixing the inherited evidence_meta/audit export blocker first. Reviewed
+repair from independent13231d4-based tree adds package/access.py and four mcase hook lines;
+new main-based tree retains all prior safe-read/digest/container/filename gates. Every raw
+legacy member classified, target policy and evidence visibility preflight, malformed policy
+and embedded foreign case binding fail closed (including TrackPointRow). Original BLOCKED
+report/evidence retained as history; new independent52pass closes original2 failing probes.
+Current header identity remains unverified; this is policy consistency, not production auth.
+No push/merge/deploy; no full-policy bypass to improve performance.

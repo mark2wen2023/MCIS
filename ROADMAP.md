@@ -368,3 +368,21 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 | 2026-11-12 | Report output A | 受限独立验收通过 | 最终独立49 passed/11.56s，20SHA前后匹配；真实双格式单render/原文不变/审计关联、实际第二连接改报告或策略后409/403、故障全表回滚与commit后交付失败各有证明。真浏览器2正常下载+2真实commit后故障替换+1真实commit后身份迟响应丢弃，最终5审计；8独立客户端坏结构/错绑拒绝。实际2MiB报告及16MiB输出边界与其余缩小limit测试区别详见独立REPORT；未穷尽多worker/真实切案/全部变体。无服务端原件保存、无.mcase文件恢复、无签署认证；B仅计划，不部署不触W11。 |
+
+| 2026-11-14 | Safe read / intake final authorization | 待独立安全复核 | main 3aba2bf 最小三文件依赖；42专项通过；扩展196通过/1既存HFACS失败/2缺.NET跳过。冻结哈希 logs/safe-read-prerequisite/impl-hashes-frozen.txt；尚未覆盖旧GET与打包读取，不构成集成放行。 |
+
+| 2026-11-14 | Legacy evidence/package safe read | 待独立审查 | 基于cb04aa6；四产品文件27增5删；保留原位文件修改/缺失文件省略/实际字节摘要语义限制；冻结hash logs/legacy-descriptor-read-impl-hashes-frozen.txt；基线HFACS失败与.NET跳过不隐去，不构成合并部署授权。 |
+
+| 2026-11-14 | Legacy evidence/package safe read | 独立窄范围复核完成，远端待审 | 新增独立12+复跑实现21共33通过；相关全回归161通过/1既存HFACS失败/1缺.NET跳过；四产品hash一致。DEFECTS/legacy-descriptor-read.md记录原位修改真实复现等KnownDefect；不构成附件集成或部署放行。 |
+
+| 2026-11-14 | Recorded digest delivery | 本地研究候选待审 | 基于ee6071f，交付同一bytes对比固定记录摘要；GET事务锁定记录；缺摘要/冲突/不符拒绝，非来源真实性证明。登记仅摘要及导入来源无法从历史schema辨别，不自动补写。测试证据/workspace/mcis-digest-results；不推送合并部署。 |
+
+| 2026-11-14 | Recorded digest delivery | 独立分支送审 | 基于ee6071f；冻结实现未变；相关159通过/1既存HFACS失败/1缺.NET跳过，独审51通过（计数有重叠）。logs/recorded-digest保留真实结果。旧缺摘要拒绝，长读写锁成本未验；不构成合并部署授权。 |
+
+| 2026-11-14 | Policy write lock outcome | 本地候选待独立审查 | 初始SQLite reservation数值BUSY/LOCKED且rollback完成才503未提交；提交阶段未知结果不转可重试；两产品文件冻结见logs/policy-write-busy-impl-hashes-frozen.txt。不减少授权/摘要事务保护，不推送合并部署。 |
+
+| 2026-11-14 | Policy write lock outcome | 独立分支送审 | 两产品冻结hash未变；独审16通过，保护35通过，慢读并发6通过；扩展247通过/4已复现基线旧笔录失败/1缺.NET跳过。logs/policy-write-busy保留实测记录，未知提交不转可安全重试；不改善长读写锁耗时，不放行合并部署。 |
+
+| 2026-11-14 | Main safety + PR61/64 integration | BLOCKED，本地未提交 | 真实main3aba2bf起始，仅六个单提交差分，14产品文件；冲突保留摘要+容器门，并补旧ZIP导出门。扩大495过/5基线失败/2缺.NET跳过；独审限定72过；后续普通legacy导出撤权2项失败，干净main同样失败，包内含被拒绝类别原文。禁止据此放行，不推送合并部署。 |
+
+| 2026-11-14 | Legacy package policy repair + main combination | 原阻断本地关闭，待协调复核 | 独立修复58过；新组合独审52过(含原2失败断言变403)；扩大537过/5原基线失败/2缺.NET跳过。旧BLOCKED证据原样保留；新增逐项policy/跨案/空审计/并发rollback门，无真实身份认证、性能或部署放行声明。 |

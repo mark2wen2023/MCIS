@@ -29,9 +29,11 @@ def content(case_id:str,evidence_id:str,ctx:Ctx=CtxDep):
         raw=read_blob(ctx.settings.blob_dir,case_id,meta['relativePath'])
         h=hashlib.sha256(raw).hexdigest()
         if h!=meta['sourceSha256']:fail('历史原件完整性异常','ARCHIVE_HISTORY_INTEGRITY',409)
+        from .filename import disposition
+        attachment = disposition(history, raw, case_id, evidence_id)
         evidence.append_custody(s,case_id=case_id,evidence_id=evidence_id,kind='Access',operator=ctx.operator,role=ctx.role,
                                sha256=h,detail='读取归档历史原件（非活跃导入回执）')
-    return Response(raw,media_type='application/octet-stream',headers={'Content-Disposition':'attachment; filename="historical-source.bin"','X-Sha256':h,'Cache-Control':'no-store'})
+    return Response(raw,media_type='application/octet-stream',headers={'Content-Disposition':attachment,'X-Sha256':h,'Cache-Control':'no-store'})
 
 @router.get('/provenance/{kind}/{record_id}')
 def provenance(case_id:str,kind:str,record_id:str,ctx:Ctx=CtxDep):
