@@ -717,3 +717,7 @@ Explicitly authorized real-model capability testing uses the public YANGZE22 rep
 
 ## Evidence quotation display and human verification reminder
 The real semantic blind run exposed qualifier preservation and blank-cell interpretation risks. Existing working/archive views keep quote strings but ordinary HTML blockquotes collapse whitespace. Add a shared read-only quotation component preserving exact text/newlines/spacing in presentation and a concise human-review notice: qualifiers must not be silently strengthened; absent/blank records prove neither occurrence nor non-occurrence; exact location is not semantic support. No automatic semantic verdict, quote rewriting, added review authority, RPC/schema change or model request. Archived content remains unverified history and displayed text is not a reconstruction of the original PDF table. Native implementation and independent UI tests precede Draft submission.
+
+
+## 2026-11-14 W19 duplicate preview
+Change request: add a bounded internal read-only exact duplicate inspection to existing knowledge router. Frozen W19 router change is explicitly scoped to the new route delegating to knowledge/duplicates.py. No existing create/review/archive behavior changes. See contracts/knowledge-duplicate-preview.md. Declared-role development boundary only, no production authentication claim.

@@ -172,3 +172,8 @@ def suggestion_preview(body: dict = Body(...), ctx: Ctx = CtxDep):
     internal(ctx)
     from .suggestions import suggest
     return suggest(body)
+
+@router.post('/duplicates:preview')
+def duplicate_preview(body: dict = Body(...), ctx: Ctx = CtxDep):
+    from .duplicates import preview
+    return preview(body, ctx)

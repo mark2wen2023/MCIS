@@ -1,0 +1,25 @@
+........................................................................ [ 52%]
+........................F........................................        [100%]
+=================================== FAILURES ===================================
+____________________ test_route_contract_without_real_seeds ____________________
+
+c = <starlette.testclient.TestClient object at 0x7f78a75ad7c0>
+
+    def test_route_contract_without_real_seeds(c):
+     import re,yaml
+     from mcis_service.config import PROJECT_ROOT
+     norm=lambda p:re.sub(r'\{[^}]+\}','{}',p)
+     spec=yaml.safe_load((PROJECT_ROOT/'contracts/openapi.yaml').read_text())
+     declared={(m.upper(),norm(p)) for p,item in spec['paths'].items() for m in item if m in ('get','post','put','patch','delete')}
+     actual={(m.upper(),norm(p)) for p,item in c.app.openapi()['paths'].items() for m in item}
+>    assert declared==actual
+E    AssertionError: assert {('GET', '/ap...kbench'), ...} == {('GET', '/ap...kbench'), ...}
+E      
+E      Extra items in the right set:
+E      ('POST', '/api/v1/cases/{}/timeline/registered-align-preview')
+E      Use -v to get more diff
+
+tests/test_knowledge_w192.py:74: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_knowledge_w192.py::test_route_contract_without_real_seeds
+1 failed, 136 passed in 28.12s
