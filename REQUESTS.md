@@ -640,3 +640,17 @@ hunks apply cleanly; shared REQUESTS/ROADMAP append-only entries preserved expli
 No added product changes. New combined hash records composition; historical standalone
 hashes remain historical, not falsely claimed to match the newly composed router.
 No commit/push/merge/deploy in this integration task.
+
+## 2026-11-14 Legacy dual-input expected checksum contract
+Coordinator authorizes isolated implementation on1759643 after caller review. Repository
+web EvidenceIntakePanel and tools/stage-demo use new evidence-intakes, not legacy POST.
+No used repository client found relying on ignored dual SHA. Existing independent test
+records old ignored-SHA behavior; update expectation explicitly for this new contract,
+retaining old reports/baseline. External callers not observable and not claimed compatible.
+Modify frozen evidence/router.py after strict Base64, before writes: provided nonnull SHA
+must be64 ASCII hex, matching decoded bytes case-insensitively; invalid/mismatch422 zero
+writes. Preserve content-only, SHA-only, null-as-absent and empty decoded file semantics.
+OpenAPI and proposal status updated; source/identity/whole-file memory unchanged.
+
+Before independent handoff, corrected new422 response to existing components/responses/Problem
+reference (application/json); refreshed draft freeze. No product code changed by this correction.

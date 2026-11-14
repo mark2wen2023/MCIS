@@ -398,3 +398,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-14 | GET visibility + Base64 composition | 待独验 | 0991857基线两兄弟单提交差分；产品仅router组合，无额外功能。冻结logs/content-base64-integration-impl-hashes-frozen.txt。 |
 
 | 2026-11-14 | GET visibility + Base64 composition | 本地组合复验通过，保留基线失败 | 扩大594过/5同名原基线失败/2缺.NET跳；独审23过。仅router两修复组合，原完整锁/摘要/容器门不变，未认证头与内存未解；无提交推送合并部署。 |
+
+| 2026-11-14 | Legacy expected checksum | 待独验 | 新双输入合同，严格base64后expected SHA格式/一致性校验，拒绝零写；原匹配忽略SHA测试按新合同更新并保留历史。冻结logs/legacy-evidence-checksum-impl-hashes-frozen.txt。 |
+
+| 2026-11-14 | Legacy expected checksum | 本地独验通过，保留基线限制 | focused220过2缺.NET跳；独审40过（含28自测重叠）；扩大622过5同名原基线失败2跳。新双字段合同，未知外部旧调用兼容风险明确，无提交推送合并部署。 |

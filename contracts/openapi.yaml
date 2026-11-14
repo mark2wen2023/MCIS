@@ -1735,10 +1735,10 @@ paths:
                 confidentiality: { type: string, enum: [Normal, Restricted] }
                 relativePath: { type: string, description: 'raw/ 下为只读，不可覆盖' }
                 fileName: { type: string }
-                contentBase64: { type: string }
-                sha256: { type: string, description: 无内容时必填 }
+                contentBase64: { type: [string, 'null'], description: '规范标准Base64；空字符串为零字节文件，null或省略视为无内容' }
+                sha256: { type: [string, 'null'], description: '无内容时必填（仅登记声明摘要）；有内容且非null时为期望SHA256，须64位ASCII十六进制且与解码字节一致，不区分大小写；格式错误或不匹配422且不写入。这是新增双字段校验合同' }
                 note: { type: string }
-      responses: { '201': { description: 已登记 }, '409': { $ref: '#/components/responses/Problem' } }
+      responses: { '201': { description: 已登记 }, '422': { $ref: '#/components/responses/Problem' }, '409': { $ref: '#/components/responses/Problem' } }
   /api/v1/cases/{caseId}/evidence/{evidenceId}:
     parameters: [{ $ref: '#/components/parameters/caseId' }, { $ref: '#/components/parameters/evidenceId' }]
     get: { tags: [evidence], summary: 单条证据, responses: { '200': { description: ok } } }

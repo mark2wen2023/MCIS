@@ -1,0 +1,238 @@
+......FFFFFFFFFFFFFF........                                             [100%]
+=================================== FAILURES ===================================
+______________________ test_mismatch_zero_writes[False-] _______________________
+
+local = (<starlette.testclient.TestClient object at 0x7fe4c4eaa600>, <fastapi.applications.FastAPI object at 0x7fe4c53b9370>)
+raw = b'', existing = False
+
+    @pytest.mark.parametrize('raw',[b'',b'synthetic source',b'\x00\xff'])
+    @pytest.mark.parametrize('existing',[False,True])
+    def test_mismatch_zero_writes(local,raw,existing):
+        c,app=local
+        if existing:
+            assert c.post(URL,json=body(base64.b64encode(b'existing synthetic').decode()),headers=H()).status_code==201
+        before=snap(app);b=body(base64.b64encode(raw).decode());b['sha256']='0'*64
+        r=c.post(URL,json=b,headers=H())
+>       assert r.status_code==422 and r.json()['code']=='EXPECTED_SHA256_MISMATCH'
+E       assert (201 == 422)
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_checksum.py:34: AssertionError
+______________ test_mismatch_zero_writes[False-synthetic source] _______________
+
+local = (<starlette.testclient.TestClient object at 0x7fe4c4ec4c50>, <fastapi.applications.FastAPI object at 0x7fe4c4e6f560>)
+raw = b'synthetic source', existing = False
+
+    @pytest.mark.parametrize('raw',[b'',b'synthetic source',b'\x00\xff'])
+    @pytest.mark.parametrize('existing',[False,True])
+    def test_mismatch_zero_writes(local,raw,existing):
+        c,app=local
+        if existing:
+            assert c.post(URL,json=body(base64.b64encode(b'existing synthetic').decode()),headers=H()).status_code==201
+        before=snap(app);b=body(base64.b64encode(raw).decode());b['sha256']='0'*64
+        r=c.post(URL,json=b,headers=H())
+>       assert r.status_code==422 and r.json()['code']=='EXPECTED_SHA256_MISMATCH'
+E       assert (201 == 422)
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_checksum.py:34: AssertionError
+__________________ test_mismatch_zero_writes[False-\x00\xff] ___________________
+
+local = (<starlette.testclient.TestClient object at 0x7fe4c43c06e0>, <fastapi.applications.FastAPI object at 0x7fe4c4e29bb0>)
+raw = b'\x00\xff', existing = False
+
+    @pytest.mark.parametrize('raw',[b'',b'synthetic source',b'\x00\xff'])
+    @pytest.mark.parametrize('existing',[False,True])
+    def test_mismatch_zero_writes(local,raw,existing):
+        c,app=local
+        if existing:
+            assert c.post(URL,json=body(base64.b64encode(b'existing synthetic').decode()),headers=H()).status_code==201
+        before=snap(app);b=body(base64.b64encode(raw).decode());b['sha256']='0'*64
+        r=c.post(URL,json=b,headers=H())
+>       assert r.status_code==422 and r.json()['code']=='EXPECTED_SHA256_MISMATCH'
+E       assert (201 == 422)
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_checksum.py:34: AssertionError
+_______________________ test_mismatch_zero_writes[True-] _______________________
+
+local = (<starlette.testclient.TestClient object at 0x7fe4c427fd40>, <fastapi.applications.FastAPI object at 0x7fe4c4358d40>)
+raw = b'', existing = True
+
+    @pytest.mark.parametrize('raw',[b'',b'synthetic source',b'\x00\xff'])
+    @pytest.mark.parametrize('existing',[False,True])
+    def test_mismatch_zero_writes(local,raw,existing):
+        c,app=local
+        if existing:
+            assert c.post(URL,json=body(base64.b64encode(b'existing synthetic').decode()),headers=H()).status_code==201
+        before=snap(app);b=body(base64.b64encode(raw).decode());b['sha256']='0'*64
+        r=c.post(URL,json=b,headers=H())
+>       assert r.status_code==422 and r.json()['code']=='EXPECTED_SHA256_MISMATCH'
+E       assert (409 == 422)
+E        +  where 409 = <Response [409 Conflict]>.status_code
+
+tests/test_legacy_evidence_checksum.py:34: AssertionError
+_______________ test_mismatch_zero_writes[True-synthetic source] _______________
+
+local = (<starlette.testclient.TestClient object at 0x7fe4c43960f0>, <fastapi.applications.FastAPI object at 0x7fe4c43cd610>)
+raw = b'synthetic source', existing = True
+
+    @pytest.mark.parametrize('raw',[b'',b'synthetic source',b'\x00\xff'])
+    @pytest.mark.parametrize('existing',[False,True])
+    def test_mismatch_zero_writes(local,raw,existing):
+        c,app=local
+        if existing:
+            assert c.post(URL,json=body(base64.b64encode(b'existing synthetic').decode()),headers=H()).status_code==201
+        before=snap(app);b=body(base64.b64encode(raw).decode());b['sha256']='0'*64
+        r=c.post(URL,json=b,headers=H())
+>       assert r.status_code==422 and r.json()['code']=='EXPECTED_SHA256_MISMATCH'
+E       assert (409 == 422)
+E        +  where 409 = <Response [409 Conflict]>.status_code
+
+tests/test_legacy_evidence_checksum.py:34: AssertionError
+___________________ test_mismatch_zero_writes[True-\x00\xff] ___________________
+
+local = (<starlette.testclient.TestClient object at 0x7fe4c44063f0>, <fastapi.applications.FastAPI object at 0x7fe4c4328d40>)
+raw = b'\x00\xff', existing = True
+
+    @pytest.mark.parametrize('raw',[b'',b'synthetic source',b'\x00\xff'])
+    @pytest.mark.parametrize('existing',[False,True])
+    def test_mismatch_zero_writes(local,raw,existing):
+        c,app=local
+        if existing:
+            assert c.post(URL,json=body(base64.b64encode(b'existing synthetic').decode()),headers=H()).status_code==201
+        before=snap(app);b=body(base64.b64encode(raw).decode());b['sha256']='0'*64
+        r=c.post(URL,json=b,headers=H())
+>       assert r.status_code==422 and r.json()['code']=='EXPECTED_SHA256_MISMATCH'
+E       assert (409 == 422)
+E        +  where 409 = <Response [409 Conflict]>.status_code
+
+tests/test_legacy_evidence_checksum.py:34: AssertionError
+________________ test_malformed_expected_checksum_zero_writes[] ________________
+
+local = (<starlette.testclient.TestClient object at 0x7fe4c42a66c0>, <fastapi.applications.FastAPI object at 0x7fe4c4ec6b70>)
+digest = ''
+
+    @pytest.mark.parametrize('digest',['','0'*63,'0'*65,'g'*64,' '+('0'*64),'0'*64+'\n','０'*64,'0'*32+'-'+('0'*31)])
+    def test_malformed_expected_checksum_zero_writes(local,digest):
+        c,app=local;before=snap(app);b=body('Zg==');b['sha256']=digest
+        r=c.post(URL,json=b,headers=H())
+>       assert r.status_code==422 and r.json()['code']=='INVALID_SHA256' and snap(app)==before
+E       assert (201 == 422)
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_checksum.py:42: AssertionError
+_ test_malformed_expected_checksum_zero_writes[000000000000000000000000000000000000000000000000000000000000000] _
+
+local = (<starlette.testclient.TestClient object at 0x7fe4c4ec40b0>, <fastapi.applications.FastAPI object at 0x7fe4c44220f0>)
+digest = '000000000000000000000000000000000000000000000000000000000000000'
+
+    @pytest.mark.parametrize('digest',['','0'*63,'0'*65,'g'*64,' '+('0'*64),'0'*64+'\n','０'*64,'0'*32+'-'+('0'*31)])
+    def test_malformed_expected_checksum_zero_writes(local,digest):
+        c,app=local;before=snap(app);b=body('Zg==');b['sha256']=digest
+        r=c.post(URL,json=b,headers=H())
+>       assert r.status_code==422 and r.json()['code']=='INVALID_SHA256' and snap(app)==before
+E       assert (201 == 422)
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_checksum.py:42: AssertionError
+_ test_malformed_expected_checksum_zero_writes[00000000000000000000000000000000000000000000000000000000000000000] _
+
+local = (<starlette.testclient.TestClient object at 0x7fe4c53b71a0>, <fastapi.applications.FastAPI object at 0x7fe4c423ddf0>)
+digest = '00000000000000000000000000000000000000000000000000000000000000000'
+
+    @pytest.mark.parametrize('digest',['','0'*63,'0'*65,'g'*64,' '+('0'*64),'0'*64+'\n','０'*64,'0'*32+'-'+('0'*31)])
+    def test_malformed_expected_checksum_zero_writes(local,digest):
+        c,app=local;before=snap(app);b=body('Zg==');b['sha256']=digest
+        r=c.post(URL,json=b,headers=H())
+>       assert r.status_code==422 and r.json()['code']=='INVALID_SHA256' and snap(app)==before
+E       assert (201 == 422)
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_checksum.py:42: AssertionError
+_ test_malformed_expected_checksum_zero_writes[gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg] _
+
+local = (<starlette.testclient.TestClient object at 0x7fe4c4f5d190>, <fastapi.applications.FastAPI object at 0x7fe4c532b0b0>)
+digest = 'gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg'
+
+    @pytest.mark.parametrize('digest',['','0'*63,'0'*65,'g'*64,' '+('0'*64),'0'*64+'\n','０'*64,'0'*32+'-'+('0'*31)])
+    def test_malformed_expected_checksum_zero_writes(local,digest):
+        c,app=local;before=snap(app);b=body('Zg==');b['sha256']=digest
+        r=c.post(URL,json=b,headers=H())
+>       assert r.status_code==422 and r.json()['code']=='INVALID_SHA256' and snap(app)==before
+E       assert (201 == 422)
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_checksum.py:42: AssertionError
+_ test_malformed_expected_checksum_zero_writes[ 0000000000000000000000000000000000000000000000000000000000000000] _
+
+local = (<starlette.testclient.TestClient object at 0x7fe4c442f980>, <fastapi.applications.FastAPI object at 0x7fe4c53ba870>)
+digest = ' 0000000000000000000000000000000000000000000000000000000000000000'
+
+    @pytest.mark.parametrize('digest',['','0'*63,'0'*65,'g'*64,' '+('0'*64),'0'*64+'\n','０'*64,'0'*32+'-'+('0'*31)])
+    def test_malformed_expected_checksum_zero_writes(local,digest):
+        c,app=local;before=snap(app);b=body('Zg==');b['sha256']=digest
+        r=c.post(URL,json=b,headers=H())
+>       assert r.status_code==422 and r.json()['code']=='INVALID_SHA256' and snap(app)==before
+E       assert (201 == 422)
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_checksum.py:42: AssertionError
+_ test_malformed_expected_checksum_zero_writes[0000000000000000000000000000000000000000000000000000000000000000\n] _
+
+local = (<starlette.testclient.TestClient object at 0x7fe4c54a63c0>, <fastapi.applications.FastAPI object at 0x7fe4c54ccfe0>)
+digest = '0000000000000000000000000000000000000000000000000000000000000000\n'
+
+    @pytest.mark.parametrize('digest',['','0'*63,'0'*65,'g'*64,' '+('0'*64),'0'*64+'\n','０'*64,'0'*32+'-'+('0'*31)])
+    def test_malformed_expected_checksum_zero_writes(local,digest):
+        c,app=local;before=snap(app);b=body('Zg==');b['sha256']=digest
+        r=c.post(URL,json=b,headers=H())
+>       assert r.status_code==422 and r.json()['code']=='INVALID_SHA256' and snap(app)==before
+E       assert (201 == 422)
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_checksum.py:42: AssertionError
+_ test_malformed_expected_checksum_zero_writes[\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10] _
+
+local = (<starlette.testclient.TestClient object at 0x7fe4c530fda0>, <fastapi.applications.FastAPI object at 0x7fe4c535dbb0>)
+digest = '００００００００００００００００００００００００００００００００００００００００００００００００００００００００００００００００'
+
+    @pytest.mark.parametrize('digest',['','0'*63,'0'*65,'g'*64,' '+('0'*64),'0'*64+'\n','０'*64,'0'*32+'-'+('0'*31)])
+    def test_malformed_expected_checksum_zero_writes(local,digest):
+        c,app=local;before=snap(app);b=body('Zg==');b['sha256']=digest
+        r=c.post(URL,json=b,headers=H())
+>       assert r.status_code==422 and r.json()['code']=='INVALID_SHA256' and snap(app)==before
+E       assert (201 == 422)
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_checksum.py:42: AssertionError
+_ test_malformed_expected_checksum_zero_writes[00000000000000000000000000000000-0000000000000000000000000000000] _
+
+local = (<starlette.testclient.TestClient object at 0x7fe4c5127dd0>, <fastapi.applications.FastAPI object at 0x7fe4c501c1d0>)
+digest = '00000000000000000000000000000000-0000000000000000000000000000000'
+
+    @pytest.mark.parametrize('digest',['','0'*63,'0'*65,'g'*64,' '+('0'*64),'0'*64+'\n','０'*64,'0'*32+'-'+('0'*31)])
+    def test_malformed_expected_checksum_zero_writes(local,digest):
+        c,app=local;before=snap(app);b=body('Zg==');b['sha256']=digest
+        r=c.post(URL,json=b,headers=H())
+>       assert r.status_code==422 and r.json()['code']=='INVALID_SHA256' and snap(app)==before
+E       assert (201 == 422)
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests/test_legacy_evidence_checksum.py:42: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_legacy_evidence_checksum.py::test_mismatch_zero_writes[False-]
+FAILED tests/test_legacy_evidence_checksum.py::test_mismatch_zero_writes[False-synthetic source]
+FAILED tests/test_legacy_evidence_checksum.py::test_mismatch_zero_writes[False-\x00\xff]
+FAILED tests/test_legacy_evidence_checksum.py::test_mismatch_zero_writes[True-]
+FAILED tests/test_legacy_evidence_checksum.py::test_mismatch_zero_writes[True-synthetic source]
+FAILED tests/test_legacy_evidence_checksum.py::test_mismatch_zero_writes[True-\x00\xff]
+FAILED tests/test_legacy_evidence_checksum.py::test_malformed_expected_checksum_zero_writes[]
+FAILED tests/test_legacy_evidence_checksum.py::test_malformed_expected_checksum_zero_writes[000000000000000000000000000000000000000000000000000000000000000]
+FAILED tests/test_legacy_evidence_checksum.py::test_malformed_expected_checksum_zero_writes[00000000000000000000000000000000000000000000000000000000000000000]
+FAILED tests/test_legacy_evidence_checksum.py::test_malformed_expected_checksum_zero_writes[gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg]
+FAILED tests/test_legacy_evidence_checksum.py::test_malformed_expected_checksum_zero_writes[ 0000000000000000000000000000000000000000000000000000000000000000]
+FAILED tests/test_legacy_evidence_checksum.py::test_malformed_expected_checksum_zero_writes[0000000000000000000000000000000000000000000000000000000000000000\n]
+FAILED tests/test_legacy_evidence_checksum.py::test_malformed_expected_checksum_zero_writes[\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10\uff10]
+FAILED tests/test_legacy_evidence_checksum.py::test_malformed_expected_checksum_zero_writes[00000000000000000000000000000000-0000000000000000000000000000000]
+14 failed, 14 passed in 3.32s

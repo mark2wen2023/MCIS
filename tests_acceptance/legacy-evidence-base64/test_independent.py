@@ -48,8 +48,8 @@ def test_valid_duplicate_file_still_cannot_overwrite(local):
 
 
 @pytest.mark.parametrize('raw',[b'',b'\x00\xff\xfe\x80\xc0\x00', bytes(range(256))*8192+b'\xff'])
-def test_canonical_binary_round_trip_and_digest_precedence(local,raw):
-    c,app=local;b=body(base64.b64encode(raw).decode());b['sha256']='0'*64
+def test_canonical_binary_round_trip_and_matching_expected_digest(local,raw):
+    c,app=local;b=body(base64.b64encode(raw).decode());b['sha256']=hashlib.sha256(raw).hexdigest()  # New dual-input contract; mismatch covered separately.
     r=c.post(URL,headers=H(),json=b)
     assert r.status_code==201,r.text
     expected=hashlib.sha256(raw).hexdigest()

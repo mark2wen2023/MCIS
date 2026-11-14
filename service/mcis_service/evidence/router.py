@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import base64
 import binascii
+import re
 from typing import Any
 
 from fastapi import APIRouter, Body
@@ -67,6 +68,11 @@ def register_evidence(case_id: str, body: EvidenceIn, ctx: Ctx = CtxDep) -> dict
                     raise ValueError("noncanonical encoding")
             except (binascii.Error, ValueError):
                 raise problem(422, "INVALID_BASE64", "文件内容必须为规范 Base64 编码") from None
+            if body.sha256 is not None:
+                if re.fullmatch(r"[0-9A-Fa-f]{64}", body.sha256) is None:
+                    raise problem(422, "INVALID_SHA256", "期望摘要必须为64位十六进制SHA256")
+                if body.sha256.lower() != service.sha256_hex(data):
+                    raise problem(422, "EXPECTED_SHA256_MISMATCH", "期望摘要与文件内容不一致")
             rel = body.relativePath or f"evidence/{eid}/{body.fileName or 'file.bin'}"
             sha = service.write_blob(ctx.settings.blob_dir, case_id, rel, data)
         elif body.sha256:

@@ -1,6 +1,7 @@
 # Proposal: explicit expected checksum for legacy dual-field registration
 
-Status: evaluated only; NOT implemented by the strict-Base64 patch. New contract rather
+Status: implemented by the isolated checksum follow-up on1759643; not part of the earlier
+strict-Base64 patch. This document preserves the originally evaluated design. New contract rather
 than an assertion about original behavior. OpenAPI at /cases/{case_id}/evidence currently
 says sha256 is required without content; current content branch ignores a supplied sha256.
 
