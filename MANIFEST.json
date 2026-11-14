@@ -1,0 +1,549 @@
+{
+  "schema": "mcis.public-evidence-archive.v1",
+  "date": "2026-11-14",
+  "notExecutionAuthorization": true,
+  "files": [
+    {
+      "path": "evidence/provenance/DEFECTS/EXPERTWORKBENCH_PROVENANCE.md",
+      "source": {
+        "commit": "43d9f62979082afebf4ab3dac413b452bd2a362d",
+        "path": "DEFECTS/EXPERTWORKBENCH_PROVENANCE.md"
+      },
+      "sourceSha256": "f80ba3ddf2405470395993a800b6cd48d0a8e158b719deadfaed523b33fdd9ba",
+      "archivedSha256": "4bb13c26610c6dca9d173ef388b75efc6f5e2c1541242258f30b76980a671f42",
+      "bytes": 1220,
+      "kind": "old independent review attachment",
+      "transformation": "historical warning prefixed",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/provenance/logs/EXPERTWORKBENCH-PROVENANCE-IMPLEMENTATION.md",
+      "source": {
+        "commit": "43d9f62979082afebf4ab3dac413b452bd2a362d",
+        "path": "logs/EXPERTWORKBENCH-PROVENANCE-IMPLEMENTATION.md"
+      },
+      "sourceSha256": "1fa47517818aca1dd97f07d16c86c94913b358db1d236731746b6720bf51e1ab",
+      "archivedSha256": "718ec2c774f16ad31514d1825d74bbefbc9ad630af987d017af2409f77f98c5c",
+      "bytes": 1402,
+      "kind": "old independent review attachment",
+      "transformation": "historical warning prefixed",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/provenance/logs/EXPERTWORKBENCH-PROVENANCE-impl-hashes-frozen.txt",
+      "source": {
+        "commit": "43d9f62979082afebf4ab3dac413b452bd2a362d",
+        "path": "logs/EXPERTWORKBENCH-PROVENANCE-impl-hashes-frozen.txt"
+      },
+      "sourceSha256": "89e1042520f65b54a22d075049c9d95b6ed141cd63df369cd7dfcb0c9411e517",
+      "archivedSha256": "89e1042520f65b54a22d075049c9d95b6ed141cd63df369cd7dfcb0c9411e517",
+      "bytes": 1127,
+      "kind": "old independent review attachment",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/provenance/logs/EXPERTWORKBENCH-PROVENANCE-selftest.txt",
+      "source": {
+        "commit": "43d9f62979082afebf4ab3dac413b452bd2a362d",
+        "path": "logs/EXPERTWORKBENCH-PROVENANCE-selftest.txt"
+      },
+      "sourceSha256": "d3b366513c24a95e45f138c17bf96e4831601f5ee4874b136c78ea96deb5975f",
+      "archivedSha256": "d3b366513c24a95e45f138c17bf96e4831601f5ee4874b136c78ea96deb5975f",
+      "bytes": 137,
+      "kind": "old independent review attachment",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/provenance/tests_acceptance/EXPERTWORKBENCH_PROVENANCE/REPORT.md",
+      "source": {
+        "commit": "43d9f62979082afebf4ab3dac413b452bd2a362d",
+        "path": "tests_acceptance/EXPERTWORKBENCH_PROVENANCE/REPORT.md"
+      },
+      "sourceSha256": "e702b6e4753ff9fa6f3e5a02a7bf457598ab035287320580d045dc93e3287ac0",
+      "archivedSha256": "af28e668c21a37eed1d49d58be249544715dc33974a21cb05cdeec69c013e80e",
+      "bytes": 3457,
+      "kind": "old independent review attachment",
+      "transformation": "historical warning prefixed",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/provenance/tests_acceptance/EXPERTWORKBENCH_PROVENANCE/hashes.txt",
+      "source": {
+        "commit": "43d9f62979082afebf4ab3dac413b452bd2a362d",
+        "path": "tests_acceptance/EXPERTWORKBENCH_PROVENANCE/hashes.txt"
+      },
+      "sourceSha256": "e432066092c9937624c84727a6f5f8cedb5a98e50a6efb42aa5ae1e8f8f3fc60",
+      "archivedSha256": "e432066092c9937624c84727a6f5f8cedb5a98e50a6efb42aa5ae1e8f8f3fc60",
+      "bytes": 445,
+      "kind": "old independent review attachment",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/provenance/tests_acceptance/EXPERTWORKBENCH_PROVENANCE/independent.mjs",
+      "source": {
+        "commit": "43d9f62979082afebf4ab3dac413b452bd2a362d",
+        "path": "tests_acceptance/EXPERTWORKBENCH_PROVENANCE/independent.mjs"
+      },
+      "sourceSha256": "0066b95b87f7abc63a444f95ab0cc72b5bb731c25f1d402e1f4bff8a1efef721",
+      "archivedSha256": "0066b95b87f7abc63a444f95ab0cc72b5bb731c25f1d402e1f4bff8a1efef721",
+      "bytes": 9384,
+      "kind": "old independent review attachment",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/provenance/tests_acceptance/EXPERTWORKBENCH_PROVENANCE/results.txt",
+      "source": {
+        "commit": "43d9f62979082afebf4ab3dac413b452bd2a362d",
+        "path": "tests_acceptance/EXPERTWORKBENCH_PROVENANCE/results.txt"
+      },
+      "sourceSha256": "017aba2a860a1b0c503f90f907692bdd7bbdce453d9bc1c13fbbc444f6a32f46",
+      "archivedSha256": "017aba2a860a1b0c503f90f907692bdd7bbdce453d9bc1c13fbbc444f6a32f46",
+      "bytes": 1166,
+      "kind": "old independent review attachment",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/provenance/source-delta.patch",
+      "source": {
+        "baseCommit": "872815c240b6b709d8a1b1182d252ffe28ceca92",
+        "headCommit": "43d9f62979082afebf4ab3dac413b452bd2a362d",
+        "paths": [
+          "research/expert_workbench/app.ts",
+          "research/expert_workbench/README.md",
+          "research/expert_workbench/test-provenance.mjs"
+        ]
+      },
+      "sourceSha256": "ba52ffbfcdd4da649700d33a5154c88a33079c777f29bf9fa7e046a1abd235cd",
+      "archivedSha256": "ba52ffbfcdd4da649700d33a5154c88a33079c777f29bf9fa7e046a1abd235cd",
+      "bytes": 8993,
+      "kind": "reconstructable public UI source delta, not an integration patch",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/report-addenda/ui-status-counts.patch",
+      "source": {
+        "baseCommit": "f296f3d08f90fc8e528d554d36e79638f085926f",
+        "workingTree": "mcis-expert-ui-status-20261114",
+        "paths": [
+          "DEFECTS/EXPERTUISTATUS.md",
+          "tests_acceptance/EXPERTUISTATUS/REPORT.md"
+        ]
+      },
+      "sourceSha256": "00cc856abbc425b4315977b46cb99e4eaf76b5fe3f973c0ecb2b64ea4ce4fbbe",
+      "archivedSha256": "00cc856abbc425b4315977b46cb99e4eaf76b5fe3f973c0ecb2b64ea4ce4fbbe",
+      "bytes": 1866,
+      "kind": "uncommitted report count addenda: 9 scenarios / 88 assertions",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/gap/REVIEW_AND_PLAN.md",
+      "source": {
+        "localEvidenceDirectory": "mcis-expert-gap-evidence",
+        "path": "REVIEW_AND_PLAN.md"
+      },
+      "sourceSha256": "1cdf30584cb3da9027829abbef83316c7857c29f88b9e1f2bc15cdc8abf5eb1d",
+      "archivedSha256": "5ab60be0e87a796a2fa8438f44817abfa412df27e401aeb5f9e908d5cbe88080",
+      "bytes": 10522,
+      "kind": "selected historical audit evidence",
+      "transformation": "historical warning prefixed",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/gap/PLANNED_RUN_SPEC.json",
+      "source": {
+        "localEvidenceDirectory": "mcis-expert-gap-evidence",
+        "path": "PLANNED_RUN_SPEC.json"
+      },
+      "sourceSha256": "a5176c57196165983b09384fab70b4faa77f4992d9c796e40af5831199903add",
+      "archivedSha256": "a5176c57196165983b09384fab70b4faa77f4992d9c796e40af5831199903add",
+      "bytes": 887,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/gap/no_egress.py",
+      "source": {
+        "localEvidenceDirectory": "mcis-expert-gap-evidence",
+        "path": "no_egress.py"
+      },
+      "sourceSha256": "dabeed9a205bf402c8e43817e2580cc8dec15eaadc8c5275fb52ca9d6bd8a209",
+      "archivedSha256": "dabeed9a205bf402c8e43817e2580cc8dec15eaadc8c5275fb52ca9d6bd8a209",
+      "bytes": 711,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/gap/offline-tests.txt",
+      "source": {
+        "localEvidenceDirectory": "mcis-expert-gap-evidence",
+        "path": "offline-tests.txt"
+      },
+      "sourceSha256": "2d3d813b043cf03808776f939cdef33cc979afc1386fa31e1d2b15231a7bc7b2",
+      "archivedSha256": "2d3d813b043cf03808776f939cdef33cc979afc1386fa31e1d2b15231a7bc7b2",
+      "bytes": 2579,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/readiness/single-role-pair/READINESS.md",
+      "source": {
+        "localEvidenceDirectory": "mcis-expert-live-readiness-20261114",
+        "path": "READINESS.md"
+      },
+      "sourceSha256": "06fde7da398b017cc94abbed57d9e83792fc1d489a35ee5d2ae8dcdf944701a4",
+      "archivedSha256": "bdc465077acb444bcbbddcb9f2e9dd364582bdfbe408df6290434ddb21e61836",
+      "bytes": 3468,
+      "kind": "selected historical audit evidence",
+      "transformation": "historical warning prefixed",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/readiness/single-role-pair/input-freeze.json",
+      "source": {
+        "localEvidenceDirectory": "mcis-expert-live-readiness-20261114",
+        "path": "input-freeze.json"
+      },
+      "sourceSha256": "9739b0916106a1b87e439c4a0da4bf8324102478e8da7b0a17b8f676fcffa02e",
+      "archivedSha256": "9739b0916106a1b87e439c4a0da4bf8324102478e8da7b0a17b8f676fcffa02e",
+      "bytes": 504,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/readiness/multiround/READINESS.md",
+      "source": {
+        "localEvidenceDirectory": "mcis-expert-multiround-readiness-20261114",
+        "path": "READINESS.md"
+      },
+      "sourceSha256": "67b802de0d03bb6ac340817c64b558aa240116eaa5ff3d15cf60d910c715631d",
+      "archivedSha256": "1ddb8744af8acc58786407a12c53bf7b921ae71c080063927fdcdfdbd47bf640",
+      "bytes": 5608,
+      "kind": "selected historical audit evidence",
+      "transformation": "historical warning prefixed",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/readiness/multiround/HOLD-OWNERSHIP.md",
+      "source": {
+        "localEvidenceDirectory": "mcis-expert-multiround-readiness-20261114",
+        "path": "HOLD-OWNERSHIP.md"
+      },
+      "sourceSha256": "61e474dace2cc1ec195fdfa576a38dffb93c1a392f12e042c3695a91cabab312",
+      "archivedSha256": "a29c0e7b307da0b4f90341efc3f023fa0108d85aa9b6ac61693f0e94ddbac308",
+      "bytes": 579,
+      "kind": "selected historical audit evidence",
+      "transformation": "historical warning prefixed",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/readiness/multiround/readiness.json",
+      "source": {
+        "localEvidenceDirectory": "mcis-expert-multiround-readiness-20261114",
+        "path": "readiness.json"
+      },
+      "sourceSha256": "97f229d94e3a25acdaf5feb110a8b12d960975c387c722b082f62a54b183e291",
+      "archivedSha256": "97f229d94e3a25acdaf5feb110a8b12d960975c387c722b082f62a54b183e291",
+      "bytes": 437,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/readiness/vault/READINESS.md",
+      "source": {
+        "localEvidenceDirectory": "mcis-personal-vault-readiness-20261114",
+        "path": "READINESS.md"
+      },
+      "sourceSha256": "d728f1fcaf2e52a3d27bfae7a9dd671199db72b4a564e9731984569a721146c8",
+      "archivedSha256": "2ff0e663a9cb2b54261dd7fd6d8405cbab21001a4f2442023c3efd003f019350",
+      "bytes": 6665,
+      "kind": "selected historical audit evidence",
+      "transformation": "historical warning prefixed",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/integration/REPORT.md",
+      "source": {
+        "localEvidenceDirectory": "mcis-integration-evidence",
+        "path": "REPORT.md"
+      },
+      "sourceSha256": "a003414f4f3d71e4ea39f472667836c8193991dc40912ef4766690ec7369cbe3",
+      "archivedSha256": "62e9255f7ccf282f05e7827aa700eb0f029fbc8b91f944228e027b3e056abc23",
+      "bytes": 7840,
+      "kind": "selected historical audit evidence",
+      "transformation": "historical warning prefixed",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/integration/heads.json",
+      "source": {
+        "localEvidenceDirectory": "mcis-integration-evidence",
+        "path": "heads.json"
+      },
+      "sourceSha256": "9569b360008e22617622fda732e8528f34e9cfd3afaac52ac6c8ad1b86b8ba9c",
+      "archivedSha256": "9569b360008e22617622fda732e8528f34e9cfd3afaac52ac6c8ad1b86b8ba9c",
+      "bytes": 370,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/integration/integration-apply.json",
+      "source": {
+        "localEvidenceDirectory": "mcis-integration-evidence",
+        "path": "integration-apply.json"
+      },
+      "sourceSha256": "4b0ca668d6224ae8e20da74a2ceedfed3c03bc1dfc1bcadc635bb28fd2b00d1e",
+      "archivedSha256": "4b0ca668d6224ae8e20da74a2ceedfed3c03bc1dfc1bcadc635bb28fd2b00d1e",
+      "bytes": 3925,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/integration/integrated-diff-numstat.txt",
+      "source": {
+        "localEvidenceDirectory": "mcis-integration-evidence",
+        "path": "integrated-diff-numstat.txt"
+      },
+      "sourceSha256": "94709a1ac389ff1db29f926bc2231ebae48151207f96ab7a349010c96b36254e",
+      "archivedSha256": "94709a1ac389ff1db29f926bc2231ebae48151207f96ab7a349010c96b36254e",
+      "bytes": 3392,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/integration/cross-regressions-final.txt",
+      "source": {
+        "localEvidenceDirectory": "mcis-integration-evidence",
+        "path": "cross-regressions-final.txt"
+      },
+      "sourceSha256": "ec15d8c27f6c6528ffd29be4732c568264fdf194f2e4727c956f7aa0877019b3",
+      "archivedSha256": "ec15d8c27f6c6528ffd29be4732c568264fdf194f2e4727c956f7aa0877019b3",
+      "bytes": 443,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/integration/integrated-service-final.txt",
+      "source": {
+        "localEvidenceDirectory": "mcis-integration-evidence",
+        "path": "integrated-service-final.txt"
+      },
+      "sourceSha256": "67f003b84c30e56a358412378b6ce50ff4c9fde5b3bd472736dc4eef967ac6dd",
+      "archivedSha256": "67f003b84c30e56a358412378b6ce50ff4c9fde5b3bd472736dc4eef967ac6dd",
+      "bytes": 261,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/integration/integrated-targeted-final.txt",
+      "source": {
+        "localEvidenceDirectory": "mcis-integration-evidence",
+        "path": "integrated-targeted-final.txt"
+      },
+      "sourceSha256": "0be3bfbe889a85531eb9903d2a68be0abc485bb023937aa44a629e7d8a855b3e",
+      "archivedSha256": "0be3bfbe889a85531eb9903d2a68be0abc485bb023937aa44a629e7d8a855b3e",
+      "bytes": 341,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/integration/main-only-non57.txt",
+      "source": {
+        "localEvidenceDirectory": "mcis-integration-evidence",
+        "path": "main-only-non57.txt"
+      },
+      "sourceSha256": "84b1fb0f26f87700059730552a1102507d02131dd9a4ea047cd4880c41a800ef",
+      "archivedSha256": "84b1fb0f26f87700059730552a1102507d02131dd9a4ea047cd4880c41a800ef",
+      "bytes": 261,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/integration/main-only-targeted-final.txt",
+      "source": {
+        "localEvidenceDirectory": "mcis-integration-evidence",
+        "path": "main-only-targeted-final.txt"
+      },
+      "sourceSha256": "f058c2faf6b1624ae95fee7705379444d6e59e3219c03f1131ee9fcaea564fff",
+      "archivedSha256": "f058c2faf6b1624ae95fee7705379444d6e59e3219c03f1131ee9fcaea564fff",
+      "bytes": 2386,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/integration/pr56-baseline-build-final.txt",
+      "source": {
+        "localEvidenceDirectory": "mcis-integration-evidence",
+        "path": "pr56-baseline-build-final.txt"
+      },
+      "sourceSha256": "8bd2012c715d815b7233d428eaac7ad592655807073056826bc1af9a40e4a100",
+      "archivedSha256": "8bd2012c715d815b7233d428eaac7ad592655807073056826bc1af9a40e4a100",
+      "bytes": 691,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/integration/filename-independent-ui.txt",
+      "source": {
+        "localEvidenceDirectory": "mcis-integration-evidence",
+        "path": "filename-independent-ui.txt"
+      },
+      "sourceSha256": "5353b23b3d103582fd819e59d2f0e583c112e43c2b45f58f68decb654a46f353",
+      "archivedSha256": "5353b23b3d103582fd819e59d2f0e583c112e43c2b45f58f68decb654a46f353",
+      "bytes": 71,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/integration/recommendation-independent-ui.txt",
+      "source": {
+        "localEvidenceDirectory": "mcis-integration-evidence",
+        "path": "recommendation-independent-ui.txt"
+      },
+      "sourceSha256": "e015eb4fbdfdeb248a8e02fb2ff1a201030a2b834f7472e73721800957825644",
+      "archivedSha256": "e015eb4fbdfdeb248a8e02fb2ff1a201030a2b834f7472e73721800957825644",
+      "bytes": 50,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/semantic-extraction/REPORT.md",
+      "source": {
+        "localEvidenceDirectory": "mcis-semantic-extraction-evidence",
+        "path": "REPORT.md"
+      },
+      "sourceSha256": "689c6887a1dd4399c610a82d795ecff5d83d350cca733b06371202c1fbb05777",
+      "archivedSha256": "124fcb79dba530a804771b61e2685e4e96cd950fde2203a27b9e190a182499d5",
+      "bytes": 7428,
+      "kind": "selected historical audit evidence",
+      "transformation": "historical warning prefixed",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/semantic-extraction/dependency-manifest.json",
+      "source": {
+        "localEvidenceDirectory": "mcis-semantic-extraction-evidence",
+        "path": "dependency-manifest.json"
+      },
+      "sourceSha256": "ec6647fea1a8acda93cb27608cb3c4851a43be9d9fc4ed4e548675aaa5d9f179",
+      "archivedSha256": "ec6647fea1a8acda93cb27608cb3c4851a43be9d9fc4ed4e548675aaa5d9f179",
+      "bytes": 5668,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/semantic-extraction/pr57-manifest.json",
+      "source": {
+        "localEvidenceDirectory": "mcis-semantic-extraction-evidence",
+        "path": "pr57-manifest.json"
+      },
+      "sourceSha256": "e4651751da7eb722c275618d059e9da06e508deed6d740b551439b5efe4fd4ae",
+      "archivedSha256": "e4651751da7eb722c275618d059e9da06e508deed6d740b551439b5efe4fd4ae",
+      "bytes": 3729,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/semantic-extraction/runtime-dependencies.json",
+      "source": {
+        "localEvidenceDirectory": "mcis-semantic-extraction-evidence",
+        "path": "runtime-dependencies.json"
+      },
+      "sourceSha256": "184d9ad1ba19861cf7d457a99c18bbd543fb2389b9cef8f7db23e75abd3ab710",
+      "archivedSha256": "184d9ad1ba19861cf7d457a99c18bbd543fb2389b9cef8f7db23e75abd3ab710",
+      "bytes": 141,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/semantic-extraction/reproduce.py",
+      "source": {
+        "localEvidenceDirectory": "mcis-semantic-extraction-evidence",
+        "path": "reproduce.py"
+      },
+      "sourceSha256": "6ecda1098f19ca75852cf51f410cd2827b5ea73c05185e59a391797c1cabc47e",
+      "archivedSha256": "6ecda1098f19ca75852cf51f410cd2827b5ea73c05185e59a391797c1cabc47e",
+      "bytes": 1423,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/semantic-extraction/seven-file-smoke.json",
+      "source": {
+        "localEvidenceDirectory": "mcis-semantic-extraction-evidence",
+        "path": "seven-file-smoke.json"
+      },
+      "sourceSha256": "e974c56b92a4b03c512c875c6315a1290163972f3800f78940ba047ef8a9872a",
+      "archivedSha256": "e974c56b92a4b03c512c875c6315a1290163972f3800f78940ba047ef8a9872a",
+      "bytes": 252,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/semantic-extraction/runtime-only-test.txt",
+      "source": {
+        "localEvidenceDirectory": "mcis-semantic-extraction-evidence",
+        "path": "runtime-only-test.txt"
+      },
+      "sourceSha256": "ca1f96396ae79e1100cc7baea9505ce753048ad1eaa5a61115b502b78bed4904",
+      "archivedSha256": "ca1f96396ae79e1100cc7baea9505ce753048ad1eaa5a61115b502b78bed4904",
+      "bytes": 2802,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/semantic-extraction/extracted-tests.txt",
+      "source": {
+        "localEvidenceDirectory": "mcis-semantic-extraction-evidence",
+        "path": "extracted-tests.txt"
+      },
+      "sourceSha256": "aeae4c7777dbcdaeec11a952f54bccf14465e25b87fcd12d3898f9fd243279bd",
+      "archivedSha256": "aeae4c7777dbcdaeec11a952f54bccf14465e25b87fcd12d3898f9fd243279bd",
+      "bytes": 180,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    },
+    {
+      "path": "evidence/semantic-extraction/reproduced-tests.txt",
+      "source": {
+        "localEvidenceDirectory": "mcis-semantic-extraction-evidence",
+        "path": "reproduced-tests.txt"
+      },
+      "sourceSha256": "9f34a7917b950f88b3faa0b3bff882c68a60e17b546dc6e935dcb32e593f7698",
+      "archivedSha256": "9f34a7917b950f88b3faa0b3bff882c68a60e17b546dc6e935dcb32e593f7698",
+      "bytes": 180,
+      "kind": "selected historical audit evidence",
+      "transformation": "byte-identical",
+      "executionStatus": "historical_only_not_rerun"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+14 independent frontend assertions passed; synthetic fetch, no browser

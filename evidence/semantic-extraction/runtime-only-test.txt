@@ -1,0 +1,41 @@
+
+==================================== ERRORS ====================================
+______ ERROR collecting research/semantic_support/test_browser_import.py _______
+ImportError while importing test module '/workspace/mcis-semantic-extraction-probe-20261114/research/semantic_support/test_browser_import.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+research/semantic_support/test_browser_import.py:8: in <module>
+    from test_browser_review import inputs
+research/semantic_support/test_browser_review.py:14: in <module>
+    from test_render_review_independent import Parser
+E   ModuleNotFoundError: No module named 'test_render_review_independent'
+_ ERROR collecting research/semantic_support/test_browser_import_independent.py _
+research/semantic_support/test_browser_import_independent.py:98: in <module>
+    @pytest.mark.parametrize('payload', list(bad_payloads()), ids=lambda x: hashlib.sha256(x).hexdigest()[:10])
+                                        ^^^^^^^^^^^^^^^^^^^^
+research/semantic_support/test_browser_import_independent.py:75: in bad_payloads
+    base = exporter.template(*inputs())
+                              ^^^^^^^^
+research/semantic_support/test_browser_import_independent.py:61: in inputs
+    corpus, cs = exporter.load(ROOT / 'jiangxin9-provisional.json')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+research/semantic_support/evaluate.py:56: in load
+    with Path(path).open('rb') as f:raw=f.read(MAX_BYTES+1)
+         ^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1013: in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/mcis-semantic-extraction-probe-20261114/research/semantic_support/jiangxin9-provisional.json'
+______ ERROR collecting research/semantic_support/test_browser_review.py _______
+ImportError while importing test module '/workspace/mcis-semantic-extraction-probe-20261114/research/semantic_support/test_browser_review.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+research/semantic_support/test_browser_review.py:14: in <module>
+    from test_render_review_independent import Parser
+E   ModuleNotFoundError: No module named 'test_render_review_independent'
+=========================== short test summary info ============================
+ERROR research/semantic_support/test_browser_import.py
+ERROR research/semantic_support/test_browser_import_independent.py - FileNotF...
+ERROR research/semantic_support/test_browser_review.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 3 errors during collection !!!!!!!!!!!!!!!!!!!!
+3 errors in 0.15s

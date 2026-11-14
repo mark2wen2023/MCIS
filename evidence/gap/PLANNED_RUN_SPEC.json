@@ -1,0 +1,14 @@
+{
+  "status": "proposal_only_not_implemented_or_authorized",
+  "modelCallsAllowedThisTurn": false,
+  "source": "future_frozen_public_report_excerpt_only",
+  "roles": ["source_attribution_review", "uncertainty_boundary_review"],
+  "roleMeaning": "model_perspectives_not_independent_human_experts",
+  "coordinator": "deterministic_no_model_consensus",
+  "proposedLimits": {"perRoleModelCalls": 4, "perRoleToolCalls": 8, "perRoleSeconds": 120, "totalModelCalls": 8, "totalToolCalls": 16, "totalSeconds": 240},
+  "automaticRetry": false,
+  "fixtureFallback": false,
+  "factActivationAllowed": false,
+  "productionIntegrationAllowed": false,
+  "pendingGates": ["role_and_source_contract", "offline_independent_safety_review", "explicit_egress_approval", "real_DeepSeek_Pi_version_pinned_run", "semantic_source_review", "sandboxed_browser_acceptance", "production_identity_and_file_safety"]
+}

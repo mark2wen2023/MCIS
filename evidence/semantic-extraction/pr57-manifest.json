@@ -1,0 +1,87 @@
+[
+  {
+    "path": "DEFECTS/SEMANTIC_BROWSER_EXPORT.md",
+    "sourceCommit": "2104fcbeef2d1fd296b046fbf44a972c43c351e1",
+    "sha256": "6497a048aecff9b9fda9728ae6cfb37b22cc3e545324aa999db3305639798a62"
+  },
+  {
+    "path": "logs/semantic-browser-export-impl-hashes-frozen.txt",
+    "sourceCommit": "2104fcbeef2d1fd296b046fbf44a972c43c351e1",
+    "sha256": "9272ab420046ae11689e7a2a467f04da114ba5dbc11279b7cba0ab65aedbeae1"
+  },
+  {
+    "path": "research/semantic_support/BROWSER_EXPORT.md",
+    "sourceCommit": "2104fcbeef2d1fd296b046fbf44a972c43c351e1",
+    "sha256": "9ce05baf5234f80be36aa048c28ab47219ca8ae5dd64fb9c17c18fe2c4a6e361"
+  },
+  {
+    "path": "research/semantic_support/BROWSER_RESTORE.md",
+    "sourceCommit": "2104fcbeef2d1fd296b046fbf44a972c43c351e1",
+    "sha256": "0aa9ca079b77cc7c1a72b2cd2ac968d49daebd3c91041842287fbbdf892b7a14"
+  },
+  {
+    "path": "research/semantic_support/BROWSER_RESTORE_INDEPENDENT.md",
+    "sourceCommit": "2104fcbeef2d1fd296b046fbf44a972c43c351e1",
+    "sha256": "2f389a4ffcb74d32a129574b84670c43a364b120528cad7ce392773fb78fbe61"
+  },
+  {
+    "path": "research/semantic_support/browser-import.test.cjs",
+    "sourceCommit": "2104fcbeef2d1fd296b046fbf44a972c43c351e1",
+    "sha256": "6bc9be589593dde83a6c1cdae0276d0356ddbec4ee2417f893c8f3311e8168e5"
+  },
+  {
+    "path": "research/semantic_support/browser-restore-hashes-frozen.txt",
+    "sourceCommit": "2104fcbeef2d1fd296b046fbf44a972c43c351e1",
+    "sha256": "25f7369601f7d8896629b8969f01b6b0681881a39b37a62893d80716afaa3cfa"
+  },
+  {
+    "path": "research/semantic_support/browser-review.test.cjs",
+    "sourceCommit": "2104fcbeef2d1fd296b046fbf44a972c43c351e1",
+    "sha256": "2b41de34d65474899844d178a2bc679fc474f3adba7d6bf82df79757265cbb14"
+  },
+  {
+    "path": "research/semantic_support/browser_import.js",
+    "sourceCommit": "2104fcbeef2d1fd296b046fbf44a972c43c351e1",
+    "sha256": "dc64103d43ff30bf2669916e24c14901b7cdc0ab34a50f03fc7021ad2269716d"
+  },
+  {
+    "path": "research/semantic_support/browser_review.js",
+    "sourceCommit": "2104fcbeef2d1fd296b046fbf44a972c43c351e1",
+    "sha256": "6657cb8e12f70bbf4a90a10c7f210217df38129c4007547ebb683644f7babe64"
+  },
+  {
+    "path": "research/semantic_support/render_browser_review.py",
+    "sourceCommit": "2104fcbeef2d1fd296b046fbf44a972c43c351e1",
+    "sha256": "7ddf8159e4c2424ed934cf74990c478c40185c3e97c166c78dee45f52baa48b2"
+  },
+  {
+    "path": "research/semantic_support/render_restore_review.py",
+    "sourceCommit": "2104fcbeef2d1fd296b046fbf44a972c43c351e1",
+    "sha256": "7fa4f482ccde3f870371f20d0cdbaedef16f7c071dbc8cba983191346b890262"
+  },
+  {
+    "path": "research/semantic_support/test_browser_import.py",
+    "sourceCommit": "2104fcbeef2d1fd296b046fbf44a972c43c351e1",
+    "sha256": "2b713881fbdd3a9436151ee8deeec15c66010a1774bc2d808ccbc46d6ffc8930"
+  },
+  {
+    "path": "research/semantic_support/test_browser_import_independent.py",
+    "sourceCommit": "2104fcbeef2d1fd296b046fbf44a972c43c351e1",
+    "sha256": "0c4a38cca95e8e08ceaf76cdadc2e7f933ae580fb3a81f0b54fd531a9d8f37da"
+  },
+  {
+    "path": "research/semantic_support/test_browser_review.py",
+    "sourceCommit": "2104fcbeef2d1fd296b046fbf44a972c43c351e1",
+    "sha256": "6c60c2789cc91a3cd17ff35a863c50f641881e47812e3012845ffb13c7876ed3"
+  },
+  {
+    "path": "tests_acceptance/SEMANTIC_BROWSER_EXPORT/REPORT.md",
+    "sourceCommit": "2104fcbeef2d1fd296b046fbf44a972c43c351e1",
+    "sha256": "9c9d994956ffc1e9b6daa94c92040a705edc3af8cae704464d207b8dbc800a22"
+  },
+  {
+    "path": "tests_acceptance/SEMANTIC_BROWSER_EXPORT/test_independent.py",
+    "sourceCommit": "2104fcbeef2d1fd296b046fbf44a972c43c351e1",
+    "sha256": "6da0ccbac6f7e62d9a7dbc47f3c91df2fc3ec617eb583a8d2da387abda533a10"
+  }
+]

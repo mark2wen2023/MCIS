@@ -1,0 +1,9 @@
+{
+  "runtimeFileCount": 7,
+  "sitePackagesDisabled": true,
+  "socketCreationForbidden": true,
+  "generateExit": 0,
+  "repeatRefusedExit": 2,
+  "permissions": "0600",
+  "outputSha256": "1c982326febec521af56ff34b698119acc4e64ffcfe1757274a5b980c89c2de6"
+}

@@ -1,0 +1,41 @@
+
+==================================== ERRORS ====================================
+________________________ ERROR collecting test session _________________________
+ImportError while importing test module '/workspace/mcis-main-patch-probe-20261114/research/semantic_support/test_browser_import.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+research/semantic_support/test_browser_import.py:7: in <module>
+    import render_restore_review as r
+research/semantic_support/render_restore_review.py:7: in <module>
+    from evaluate import load
+E   ModuleNotFoundError: No module named 'evaluate'
+________________________ ERROR collecting test session _________________________
+ImportError while importing test module '/workspace/mcis-main-patch-probe-20261114/research/semantic_support/test_browser_import_independent.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+research/semantic_support/test_browser_import_independent.py:13: in <module>
+    import export_review as exporter
+E   ModuleNotFoundError: No module named 'export_review'
+________________________ ERROR collecting test session _________________________
+ImportError while importing test module '/workspace/mcis-main-patch-probe-20261114/research/semantic_support/test_browser_review.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+research/semantic_support/test_browser_review.py:12: in <module>
+    import render_browser_review as b
+research/semantic_support/render_browser_review.py:9: in <module>
+    from export_review import template, write_new
+E   ModuleNotFoundError: No module named 'export_review'
+________________________ ERROR collecting test session _________________________
+ImportError while importing test module '/workspace/mcis-main-patch-probe-20261114/tests_acceptance/SEMANTIC_BROWSER_EXPORT/test_independent.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests_acceptance/SEMANTIC_BROWSER_EXPORT/test_independent.py:15: in <module>
+    import export_review as exporter
+E   ModuleNotFoundError: No module named 'export_review'
+=========================== short test summary info ============================
+ERROR service
+ERROR service
+ERROR service
+ERROR service
+!!!!!!!!!!!!!!!!!!! Interrupted: 4 errors during collection !!!!!!!!!!!!!!!!!!!!
+4 errors in 0.71s

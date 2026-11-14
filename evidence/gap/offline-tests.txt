@@ -1,0 +1,43 @@
+..............................F......................................... [ 32%]
+........................................................................ [ 64%]
+........................................................................ [ 96%]
+.........                                                                [100%]
+=================================== FAILURES ===================================
+______________ test_real_http_protocol_fake_server_not_real_model ______________
+
+client = <starlette.testclient.TestClient object at 0x7f69a18bc290>
+interview = {'recordId': 'IR-90', 'interviewee': {'intervieweeId': 'P90', 'name': '测试甲', 'role': '船员', 'affiliation': '虚构', ...}, 'startUtc': '2026-11-12T00:00:00Z', 'statements': [], ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f69a166bc80>
+
+    def test_real_http_protocol_fake_server_not_real_model(client, interview, monkeypatch):
+        requests = []
+        class Handler(BaseHTTPRequestHandler):
+            def log_message(self, *_): pass
+            def do_POST(self):
+                requests.append((self.path, json.loads(self.rfile.read(int(self.headers["Content-Length"]))), dict(self.headers)))
+                body = json.dumps({"choices": [{"finish_reason": "stop", "message": {"content": json.dumps({"statements": [ITEM]})}}]}).encode()
+                self.send_response(200);self.end_headers();self.wfile.write(body)
+        server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        thread = threading.Thread(target=server.serve_forever, daemon=True);thread.start()
+        monkeypatch.setenv("MCIS_AGENT_BASE_URL", f"http://127.0.0.1:{server.server_port}/v1")
+        monkeypatch.setenv("MCIS_AGENT_MODEL", "http-fixture-not-real-model")
+        try:
+>           d = execute(client)
+                ^^^^^^^^^^^^^^^
+
+service/tests/test_agents_w20.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+client = <starlette.testclient.TestClient object at 0x7f69a18bc290>
+
+    def execute(client):
+        r = client.post(PATH, headers=H())
+>       assert r.status_code == 201, r.text
+E       AssertionError: {"code":"INTERNAL_ERROR","message":"请求处理失败"}
+E       assert 500 == 201
+E        +  where 500 = <Response [500 Internal Server Error]>.status_code
+
+service/tests/test_agents_w20.py:69: AssertionError
+=========================== short test summary info ============================
+FAILED service/tests/test_agents_w20.py::test_real_http_protocol_fake_server_not_real_model
+1 failed, 224 passed in 90.26s (0:01:30)

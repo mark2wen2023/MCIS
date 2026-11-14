@@ -1,0 +1,14 @@
+{
+  "candidateCommit": "178c998aa6d0181985e686d4d0161a33728fa167",
+  "packetSha256": "1dc5f6ccd93da013863abfd399b8e3f8682d2532e62d335eaa23cd5e18d8790e",
+  "itemCount": 3,
+  "sourceHashesAndQuotes": "3/3 exact",
+  "referenceLabelsAndOpinionsAbsent": true,
+  "frozenImplementation": "12/12",
+  "modelCallsThisCheck": 0,
+  "credentialPresent": false,
+  "platformSecretBindingsPresent": false,
+  "platformOutboundIdentitiesPresent": false,
+  "coordinatorSafetyReview": "pending",
+  "liveRunStarted": false
+}

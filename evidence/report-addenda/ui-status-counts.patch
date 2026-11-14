@@ -1,0 +1,20 @@
+diff --git a/DEFECTS/EXPERTUISTATUS.md b/DEFECTS/EXPERTUISTATUS.md
+index e95fc58..388e6a1 100644
+--- a/DEFECTS/EXPERTUISTATUS.md
++++ b/DEFECTS/EXPERTUISTATUS.md
+@@ -3,3 +3,5 @@
+ 9个独立离线DOM场景通过，3/3冻结一致；本次显示文案范围未发现阻断缺陷。零响应不宣称响应观察、页面不冒称转换器已执行、四类停止与缺席/未知中文明确，完整回执不等于完成会议。两轮切换保留独立引文，MockHTTP明确非真实能力验收。
+ 
+ 报告与复现位于tests_acceptance/EXPERTUISTATUS。原生浏览器仍未验收；真实模型、凭据、原回执真实性不在此次通过范围，HOLD保持。未改实现或推送。
++
++最终精确计数：9个独立场景共88次实际执行断言，全部通过；不是开发43断言的重复计数。
+diff --git a/tests_acceptance/EXPERTUISTATUS/REPORT.md b/tests_acceptance/EXPERTUISTATUS/REPORT.md
+index a7904c3..17eceee 100644
+--- a/tests_acceptance/EXPERTUISTATUS/REPORT.md
++++ b/tests_acceptance/EXPERTUISTATUS/REPORT.md
+@@ -9,3 +9,5 @@
+ 另逐字核对model.ts、meeting.ts、export.py、public-packet.json、engine.py、pi-runner.mjs与父c137ea2一致，见unchanged.txt。未改原文或模型输入、未执行模型/服务/网络或读凭据，未修改实现。
+ 
+ 限制：输入是明确合成展示投影，非真实模型响应或原回执全链验收。本轮没有独立重复22项Python导出回归。父协调者报告受支持Playwright sandbox启动在导航前失败（SUID helper/crashpad），未绕过；本独审未重复原生浏览器。HappyDOM不能证明原生布局、键盘、辅助技术与CSP执行。真实调用HOLD保持，UI文字改善不认证提供方身份、语义能力或事实。
++
++最终精确计数：9个独立场景共88次实际执行断言，全部通过；不是开发43断言的重复计数。

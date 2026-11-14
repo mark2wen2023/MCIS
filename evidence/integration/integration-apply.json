@@ -1,0 +1,44 @@
+[
+  {
+    "pr": 57,
+    "exit": 0,
+    "conflicts": [],
+    "output": "Falling back to direct application...\nApplied patch to 'REQUESTS.md' cleanly.\nApplied patch to 'ROADMAP.md' cleanly.\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\n"
+  },
+  {
+    "pr": 58,
+    "exit": 1,
+    "conflicts": [
+      "REQUESTS.md",
+      "ROADMAP.md"
+    ],
+    "output": "Applied patch to 'REQUESTS.md' with conflicts.\nApplied patch to 'ROADMAP.md' with conflicts.\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nU REQUESTS.md\nU ROADMAP.md\n"
+  },
+  {
+    "pr": 61,
+    "exit": 1,
+    "conflicts": [
+      "REQUESTS.md",
+      "ROADMAP.md"
+    ],
+    "output": "Applied patch to 'REQUESTS.md' with conflicts.\nApplied patch to 'ROADMAP.md' with conflicts.\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nApplied patch to 'service/mcis_service/working_records_archive/router.py' cleanly.\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nApplied patch to 'web/src/evidenceIntake/EvidenceIntakePanel.tsx' cleanly.\nApplied patch to 'web/src/evidenceIntake/history.ts' cleanly.\nFalling back to direct application...\nU REQUESTS.md\nU ROADMAP.md\n"
+  },
+  {
+    "pr": 64,
+    "exit": 1,
+    "conflicts": [
+      "REQUESTS.md",
+      "ROADMAP.md"
+    ],
+    "output": "Applied patch to 'REQUESTS.md' with conflicts.\nApplied patch to 'ROADMAP.md' with conflicts.\nFalling back to direct application...\nFalling back to direct application...\nApplied patch to 'service/mcis_service/evidence/router.py' cleanly.\nApplied patch to 'service/mcis_service/evidence_intake/router.py' cleanly.\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nU REQUESTS.md\nU ROADMAP.md\n"
+  },
+  {
+    "pr": 67,
+    "exit": 1,
+    "conflicts": [
+      "REQUESTS.md",
+      "ROADMAP.md"
+    ],
+    "output": "Falling back to direct application...\nApplied patch to 'REQUESTS.md' with conflicts.\nApplied patch to 'ROADMAP.md' with conflicts.\nApplied patch to 'contracts/openapi.yaml' cleanly.\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nApplied patch to 'service/mcis_service/recommendations/router.py' cleanly.\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nApplied patch to 'web/src/pages/RecommendationsPage.tsx' cleanly.\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nU REQUESTS.md\nU ROADMAP.md\n"
+  }
+]

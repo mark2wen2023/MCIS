@@ -1,0 +1,74 @@
+diff --git a/research/expert_workbench/README.md b/research/expert_workbench/README.md
+index 882ad2b..584811a 100644
+--- a/research/expert_workbench/README.md
++++ b/research/expert_workbench/README.md
+@@ -41,3 +41,6 @@ Browser plugin/skill本环境未提供；支持的Playwright + Chromium `chromiu
+ ## r2 真实提供方部分结果
+ 
+ 只要真实提供方模式存在已完成角色，realModel必须为true，providerRequests至少覆盖所有已完成角色的modelCalls之和。否则其完成意见与组级请求声明矛盾，拒绝整份载入并保留旧视图。未完成角色允许调用前回执失败，因此部分组请求数仍可小于模型轮数总和；没有完成角色、请求发出但响应未知时，realModel=false仍可保留unknown状态。此校验只验证声明内部一致性，仍不是独立真实调用证据。
++
++## 显示来源澄清（872815c 后续独立切片）
++三条主张统一显示为“人工编写测试主张（含反例）”，不作为报告结论。它们均对应同一份报告同一页（PDF28/印刷26），不是三份独立证据。固定报告引用取packet.citation.quote，单独显示；两角色各自review.quote明确为模型选取引文，仍需人工审读。逐字引用来自冻结文本片段，PDF未重新认证。显示说明不进入模型提示或公开包，不增加逐条答案标签。查看器仍只读取旧单轮result.json，未接通会议结果/回执。
+diff --git a/research/expert_workbench/app.ts b/research/expert_workbench/app.ts
+index ef1c5df..1e6dc22 100644
+--- a/research/expert_workbench/app.ts
++++ b/research/expert_workbench/app.ts
+@@ -3,7 +3,7 @@ export function mount(root:HTMLElement) {
+   let result:Result|null=null, selected=packet.items[0].itemId, filter='all', generation=0
+   const el=(tag:string,text?:string,className?:string)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(className)n.className=className;return n}
+   const header=el('header');header.append(el('p','MCIS / PUBLIC RESEARCH','eyebrow'),el('h1','双视角审读工作台'),el('p','公开报告冻结片段 · 不是真人专家 · 全部意见未核实'))
+-  const notice=el('aside','仅在本地查看公开材料的结果 JSON。不接入案件、不运行模型、不上传。相同标签不是共识，分歧不自动裁决。','notice')
++  const notice=el('aside','仅在本地查看公开材料的结果 JSON。不接入案件、不运行模型、不上传。相同标签不是共识，分歧不自动裁决。三条人工编写测试主张（含反例）均对应同一份报告的同一页（PDF 第 28 页 / 印刷页 26），不是三份独立证据。','notice')
+   const controls=el('section',undefined,'toolbar'),label=el('label','选入 a686c85 的 result.json（最大 1 MiB） '),file=document.createElement('input');file.type='file';file.accept='.json,application/json';label.append(file)
+   const clear=el('button','清空结果') as HTMLButtonElement;clear.type='button';controls.append(label,clear)
+   const status=el('p','尚未载入结果。只接受冻结 YANGZE 22 公开片段，不接受其他案例。');status.setAttribute('role','status');status.setAttribute('aria-live','polite')
+@@ -26,14 +26,15 @@ export function mount(root:HTMLElement) {
+     const item=packet.items.find(i=>i.itemId===selected)
+     if(!item){detail.append(el('p','此筛选下没有主张；没有隐藏的自动裁决结果。'));return}
+     const view=comparison(r,item.itemId)
+-    detail.append(el('p',item.itemId,'eyebrow'),el('h2',item.claim),el('p','待审主张，非已认定事实。','warning'),el('p',view.kind==='different'?'标签分歧 · 两侧意见并列保留':view.kind==='same'?'标签相同 · 不是共识或事实确认':'意见不完整 · 不能判定一致或分歧','badge'))
++    detail.append(el('p',item.itemId,'eyebrow'),el('h2','人工编写测试主张（含反例）'),el('p',item.claim),el('p','这些主张由人工编写用于测试审读能力，不等于报告结论或已认定事实。','warning'),el('p',view.kind==='different'?'标签分歧 · 两侧意见并列保留':view.kind==='same'?'标签相同 · 不是共识或事实确认':'意见不完整 · 不能判定一致或分歧','badge'))
++    const reportQuote=el('section',undefined,'report-quote');reportQuote.append(el('h3','固定报告逐字引用'),el('p','来自冻结报告文本片段的逐字引用；与下方模型选取引文分别展示。PDF 未重新认证。'),el('pre',item.citation.quote));detail.append(reportQuote)
+     const columns=el('div',undefined,'columns')
+     r.roles.forEach((role,index)=>{const card=el('article',undefined,'card');card.append(el('h3',ROLE_NAMES[index]),el('p',`${role.status} · 模型轮次 ${role.modelCalls}/4 · 工具 ${role.toolCalls}/8`),el('p',role.runId,'mono'));const review=view.reviews[index]
+-      if(review){card.append(el('h4',`建议标签：${review.label}`),el('p',review.rationale),el('h4','不确定性'),el('p',review.uncertainty),el('h4','原文引用（精确子串，不代表语义正确）'),el('pre',review.quote))}
++      if(review){card.append(el('h4',`建议标签：${review.label}`),el('p',review.rationale),el('h4','不确定性'),el('p',review.uncertainty),el('h4','模型选取引文（精确子串不代表语义正确）'),el('pre',review.quote))}
+       else card.append(el('p','该角色没有已接受的完整意见，不补造答案。'))
+       columns.append(card)
+     });detail.append(columns)
+-    const source=el('details');source.append(el('summary','展开冻结原文与出处'))
++    const source=el('details');source.append(el('summary','展开同页冻结报告文本片段与出处'))
+     source.append(el('p',`PDF 第 ${item.sourceLocator.pdfPage} 页 / 印刷页 ${item.sourceLocator.printedPage} · ${item.sourceLocator.section}`),el('p',item.sourceLocator.url,'mono'),el('p',`PDF SHA-256（来源声明）：${item.sourceLocator.pdfSha256}`,'mono'),el('p',`片段 SHA-256：${item.sourceSha256}`,'mono'),el('pre',item.sourceText),el('p','公开报告来源声明，未重新下载或认证PDF。本页不打开外部链接。'))
+     detail.append(source)
+   }
+diff --git a/research/expert_workbench/test-provenance.mjs b/research/expert_workbench/test-provenance.mjs
+new file mode 100644
+index 0000000..c9bd681
+--- /dev/null
++++ b/research/expert_workbench/test-provenance.mjs
+@@ -0,0 +1,25 @@
++import assert from 'node:assert/strict'
++import {build} from '../../web/node_modules/esbuild/lib/main.js'
++import {readFileSync} from 'node:fs'
++import {execFileSync} from 'node:child_process'
++import {Window} from '/tmp/mcis-ui-deps/node_modules/happy-dom/lib/index.js'
++import {fixture} from './test.mjs'
++const output=await build({entryPoints:['research/expert_workbench/app.ts'],bundle:true,write:false,format:'esm',platform:'browser'})
++const {mount}=await import('data:text/javascript;base64,'+Buffer.from(output.outputFiles[0].text).toString('base64'))
++const packet=JSON.parse(readFileSync('research/expert_group/public-packet.json','utf8'))
++const w=new Window();globalThis.document=w.document;const root=document.createElement('main');mount(root)
++let count=0;const check=(fn)=>{fn();count++}
++check(()=>assert.match(root.textContent,/三条人工编写测试主张（含反例）.*同一份报告.*同一页.*不是三份独立证据/))
++const result=fixture();result.roles[0].reviews.forEach((r,i)=>r.quote=packet.items[i].sourceText.slice(0,20));result.roles[1].reviews.forEach((r,i)=>r.quote=packet.items[i].sourceText.slice(20,40))
++const data=new TextEncoder().encode(JSON.stringify(result));const input=root.querySelector('input');Object.defineProperty(input,'files',{value:[{size:data.length,arrayBuffer:async()=>data.buffer}]});input.dispatchEvent(new w.Event('change'));await new Promise(r=>setTimeout(r,0))
++for(let i=0;i<3;i++){
++ root.querySelectorAll('nav button')[i].click()
++ check(()=>assert.equal(root.querySelector('section[aria-label] h2').textContent,'人工编写测试主张（含反例）'))
++ check(()=>assert.equal(root.querySelector('.report-quote pre').textContent,packet.items[i].citation.quote))
++ check(()=>assert.deepEqual([...root.querySelectorAll('.card pre')].map(p=>p.textContent),result.roles.map(r=>r.reviews[i].quote)))
++ check(()=>assert.equal(root.querySelectorAll('.card h4')[2].textContent,'模型选取引文（精确子串不代表语义正确）'))
++}
++check(()=>assert.match(root.querySelector('.report-quote').textContent,/PDF 未重新认证/))
++check(()=>assert.match(root.textContent,/不等于报告结论或已认定事实/))
++for(const path of ['research/expert_workbench/model.ts','research/expert_group/public-packet.json','research/expert_group/engine.py','research/expert_group/pi-runner.mjs'])check(()=>assert.deepEqual(readFileSync(path),execFileSync('git',['show','872815c:'+path])))
++await w.happyDOM.close();console.log(`PROVENANCE ${count} assertions passed (display only; no model calls)`)

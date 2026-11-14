@@ -1,0 +1,16 @@
+PASS notice explains authored claims and single source before upload
+PASS item 1 fixed citation separate from role selected substrings
+PASS item 2 fixed citation separate from role selected substrings
+PASS item 3 fixed citation separate from role selected substrings
+PASS malicious model text is literal and never DOM elements
+PASS forged model quotation rejects replacement and keeps fixed citation
+PASS partial result retains report citation without fabricating missing role
+PASS meeting receipt public_expert_meeting_simulation rejected without degrading old source display
+PASS meeting receipt actual_pi_scripted_provider_protocol_receipt rejected without degrading old source display
+PASS meeting receipt meeting_result_with_rounds rejected without degrading old source display
+PASS legacy result cannot smuggle meeting rounds or answers as new fields
+PASS filters and clearing preserve provenance boundary
+PASS late file read after clear cannot resurrect citation panels
+PASS source and model runtime inputs unchanged from HEAD
+PASS generated offline HTML retains precise CSP hashes and connect prohibition
+INDEPENDENT 15 passed, 0 failed, 15 cases; network=0
