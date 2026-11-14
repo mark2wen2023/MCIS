@@ -1,0 +1,213 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile",
+    "version",
+    "source",
+    "transcript",
+    "artifactSha256"
+  ],
+  "properties": {
+    "profile": {
+      "const": "MCIS-AUDIO-TRANSCRIPT-1"
+    },
+    "version": {
+      "const": 1,
+      "type": "integer"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "caseId",
+        "evidenceId",
+        "registeredSha256",
+        "currentSha256",
+        "stateDigest",
+        "durationMs",
+        "trackIndex"
+      ],
+      "properties": {
+        "caseId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "evidenceId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "registeredSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "currentSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "stateDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600000
+        },
+        "trackIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        }
+      }
+    },
+    "transcript": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "revision",
+        "parentArtifactSha256",
+        "method",
+        "segments",
+        "unlocatedSegments",
+        "reviewStatus",
+        "timeBasis"
+      ],
+      "properties": {
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "parentArtifactSha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "method": {
+          "const": "manual_transcription"
+        },
+        "segments": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "text",
+              "speaker",
+              "startMs",
+              "endMs"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 16000
+              },
+              "speaker": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "status",
+                  "id"
+                ],
+                "properties": {
+                  "status": {
+                    "const": "unknown"
+                  },
+                  "id": {
+                    "type": "null"
+                  }
+                }
+              },
+              "startMs": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "endMs": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        "unlocatedSegments": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "text",
+              "speaker",
+              "reason"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 16000
+              },
+              "speaker": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "status",
+                  "id"
+                ],
+                "properties": {
+                  "status": {
+                    "const": "unknown"
+                  },
+                  "id": {
+                    "type": "null"
+                  }
+                }
+              },
+              "reason": {
+                "enum": [
+                  "time_unknown",
+                  "alignment_pending"
+                ]
+              }
+            }
+          }
+        },
+        "reviewStatus": {
+          "const": "pending"
+        },
+        "timeBasis": {
+          "const": "original_audio_ms"
+        }
+      }
+    },
+    "artifactSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Offline manual audio transcript sidecar v1",
+  "description": "Structural validation only. Must additionally call contract.validate for digest, revision, time bounds, uniqueness and byte budget. No authentication or ASR."
+}
