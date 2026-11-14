@@ -368,3 +368,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 | 2026-11-12 | Report output A | 受限独立验收通过 | 最终独立49 passed/11.56s，20SHA前后匹配；真实双格式单render/原文不变/审计关联、实际第二连接改报告或策略后409/403、故障全表回滚与commit后交付失败各有证明。真浏览器2正常下载+2真实commit后故障替换+1真实commit后身份迟响应丢弃，最终5审计；8独立客户端坏结构/错绑拒绝。实际2MiB报告及16MiB输出边界与其余缩小limit测试区别详见独立REPORT；未穷尽多worker/真实切案/全部变体。无服务端原件保存、无.mcase文件恢复、无签署认证；B仅计划，不部署不触W11。 |
+
+| 2026-11-14 | Report + timeline archive1.4 candidate | 冻结待独立验收 | f2eff95独立后裔；versioned timeline原行+镜像校验，工作记录v1同事务恢复；API三库往返、旧入口拒绝、未知状态拒绝、撤权并发/回滚。新26定向验证、既有范围另记；旧客户端拒绝1.4，未接UI/SSO。冻结 logs/report-timeline-impl-hashes-frozen.txt。 |
+
+| 2026-11-14 | Report + timeline archive1.4 candidate | 受限API独立验收通过 | 冻结9文件一致；独33通过/17.56s（开发26+独7）；冻结组合171通过2失败/60.11s，两项HFACS不可用父main分别复现。旧网页拒1.4，真实身份/长锁/内存/崩溃原子性未解决；其他状态仍拒绝，不部署。详见 tests_acceptance/report-timeline-independent/REPORT.md。 |
