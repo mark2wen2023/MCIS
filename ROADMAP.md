@@ -378,3 +378,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-14 | Recorded digest delivery | 本地研究候选待审 | 基于ee6071f，交付同一bytes对比固定记录摘要；GET事务锁定记录；缺摘要/冲突/不符拒绝，非来源真实性证明。登记仅摘要及导入来源无法从历史schema辨别，不自动补写。测试证据/workspace/mcis-digest-results；不推送合并部署。 |
 
 | 2026-11-14 | Recorded digest delivery | 独立分支送审 | 基于ee6071f；冻结实现未变；相关159通过/1既存HFACS失败/1缺.NET跳过，独审51通过（计数有重叠）。logs/recorded-digest保留真实结果。旧缺摘要拒绝，长读写锁成本未验；不构成合并部署授权。 |
+
+| 2026-11-14 | Policy write lock outcome | 本地候选待独立审查 | 初始SQLite reservation数值BUSY/LOCKED且rollback完成才503未提交；提交阶段未知结果不转可重试；两产品文件冻结见logs/policy-write-busy-impl-hashes-frozen.txt。不减少授权/摘要事务保护，不推送合并部署。 |
+
+| 2026-11-14 | Policy write lock outcome | 独立分支送审 | 两产品冻结hash未变；独审16通过，保护35通过，慢读并发6通过；扩展247通过/4已复现基线旧笔录失败/1缺.NET跳过。logs/policy-write-busy保留实测记录，未知提交不转可安全重试；不改善长读写锁耗时，不放行合并部署。 |

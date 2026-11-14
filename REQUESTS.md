@@ -572,3 +572,13 @@ Follow-up authorized for independent review branch based strictly on cb04aa6. Fr
 Local-only follow-up to ee6071f. GET and legacy export compare the exact returned immutable bytes with a pinned recorded digest (original plus valid Change transitions). Missing/malformed recorded digest and mismatches409 before success audit; no computed digest used as its own reference. DB is a trusted anchor for this threat model, not authenticated provenance: digest-only registration/import provenance is not stored. Read and metadata policy decisions share SQLite reservation. Contract candidate, not integration approval.
 
 2026-11-14 follow-up authorization: publish the recorded-digest candidate as a separate review branch directly based on ee6071f; no merge/deployment. Product/test content unchanged from local review. Preserve rejected missing-digest legacy records, unmeasured long-read SQLite writer-lock cost, and actual159 passed/1 HFACS failure/1.NET skip plus51 independent passing checks.
+
+## 2026-11-14 Policy write lock outcome candidate
+Restrict retryable classification to access-policy PUT's initial SQLite writer reservation,
+before any policy/audit write. Map only sqlite3 BUSY/LOCKED numeric codes after successful
+rollback, never commit-phase exceptions or failed rollback. Existing content/digest/revocation
+transactions unchanged. Dedicated contract and cross-connection/unknown-commit tests required.
+
+2026-11-14 follow-up: authorized to publish unchanged policy writer-lock candidate/tests
+on a dedicated branch directly based on72269e3 for cross-environment review. Unknown commit
+outcomes remain unclassified, never not_committed/retryable; no automatic retry. No merge/deploy.
