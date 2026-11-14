@@ -15,10 +15,10 @@ def main():
         mocked=sys.argv[1:]==['--mock']
         if sys.argv[1:] not in ([],['--mock']):raise ValueError()
         if mocked and 'managedBinding' in config:raise ValueError()
+        offline_transport=None
         if mocked:
             import httpx
             from research.expert_group.engine import _fixture, _packet, load_packet
-            original=httpx.AsyncClient
             def reply(request):
                 messages=json.loads(request.content)['messages'];step=sum(m['role']=='assistant' for m in messages)+1
                 candidate=None
@@ -27,8 +27,8 @@ def main():
                 message=_fixture(step,_packet(load_packet()),candidate)
                 return httpx.Response(200,json={'id':'synthetic-mock-request','model':'MOCK-NOT-DEEPSEEK',
                     'choices':[{'finish_reason':'tool_calls' if message.get('tool_calls') else 'stop','message':message}]})
-            transport.httpx.AsyncClient=lambda **kw:original(transport=httpx.MockTransport(reply),**kw)
-        result=asyncio.run(transport.request(config['messages'],config['tools'],key=config['key'],deadline=config['deadline'],managed_binding=config.get('managedBinding')))
+            offline_transport=httpx.MockTransport(reply)
+        result=asyncio.run(transport.request(config['messages'],config['tools'],key=config['key'],deadline=config['deadline'],managed_binding=config.get('managedBinding'),offline_transport=offline_transport))
         output={'ok':True,'result':result,'transportMocked':mocked}
     except transport.TransportError as exc:
         output={'ok':False,'code':exc.code,'dispatched':exc.dispatched}

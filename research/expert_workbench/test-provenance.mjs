@@ -21,7 +21,8 @@ for(let i=0;i<3;i++){
 }
 check(()=>assert.match(root.querySelector('.report-quote').textContent,/PDF 未重新认证/))
 check(()=>assert.match(root.textContent,/不等于报告结论或已认定事实/))
-// Exact frozen872815c blob hashes; no dependency on unrelated Git objects.
-const frozen={"research/expert_workbench/model.ts": "8423ce5ecef3372b6d7d98d9a091513730f8a8bedc1d87d8ade5a79562944f57", "research/expert_group/public-packet.json": "1dc5f6ccd93da013863abfd399b8e3f8682d2532e62d335eaa23cd5e18d8790e", "research/expert_group/engine.py": "6c86586633e7c7243e30d4ef2be1303a7b1a6636989169e240e86f789c7ddf31", "research/expert_group/pi-runner.mjs": "c826f7ac90fdb997c416505b67e9ee143cdcc56b9f32b0898eca2d7e5b7a5511"}
+// Frozen sources; engine hash updated only for authorized EXPERTRAWKEYHOLD.
+// Public packet, prompt model and Pi runner remain unchanged.
+const frozen={"research/expert_workbench/model.ts": "8423ce5ecef3372b6d7d98d9a091513730f8a8bedc1d87d8ade5a79562944f57", "research/expert_group/public-packet.json": "1dc5f6ccd93da013863abfd399b8e3f8682d2532e62d335eaa23cd5e18d8790e", "research/expert_group/engine.py": "50dca5c6098a310aa202e71174548864a942593d342dba987cc7177d6198b452", "research/expert_group/pi-runner.mjs": "c826f7ac90fdb997c416505b67e9ee143cdcc56b9f32b0898eca2d7e5b7a5511"}
 for(const [path,sha] of Object.entries(frozen))check(()=>assert.equal(createHash('sha256').update(readFileSync(path)).digest('hex'),sha))
 await w.happyDOM.close();console.log(`PROVENANCE ${count} assertions passed (display only; no model calls)`)

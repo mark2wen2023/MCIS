@@ -101,39 +101,8 @@ def _validate(args, packet):
     return args['reviews']
 
 def _remote(messages, key, timeout, check=lambda: None):
-    # asyncio's outer deadline covers connect, send, headers and every body byte.
-    # Cancellation closes the async request; no detached request thread survives.
-    import httpx
-    async def request():
-        async with httpx.AsyncClient(trust_env=False, follow_redirects=False, timeout=timeout) as client:
-            async with client.stream('POST', ENDPOINT, content=_dump({'model':MODEL,'messages':messages,'tools':TOOLS,'stream':False,'max_tokens':2400}).encode('utf-8'), headers={'Authorization':'Bearer '+key,'Content-Type':'application/json'}) as response:
-                if response.status_code != 200: raise GroupError('provider_http_rejected')
-                chunks, size = [], 0
-                async for chunk in response.aiter_bytes():
-                    size += len(chunk)
-                    if size > 262144: raise GroupError('provider_response_limit')
-                    chunks.append(chunk)
-                obj = _strict(b''.join(chunks).decode('utf-8'))
-                choices = obj.get('choices')
-                if not isinstance(choices,list) or len(choices)!=1 or choices[0].get('finish_reason') not in ('stop','tool_calls'): raise GroupError('provider_response_invalid')
-                return choices[0]['message']
-    async def bounded():
-        async with asyncio.timeout(timeout):
-            task = asyncio.create_task(request())
-            try:
-                while not task.done():
-                    check()
-                    await asyncio.wait({task}, timeout=.05)
-                return task.result()
-            finally:
-                if not task.done(): task.cancel()
-                await asyncio.gather(task, return_exceptions=True)
-    try:
-        return asyncio.run(bounded())
-    except GroupError:
-        raise
-    except Exception:
-        raise GroupError('provider_transport_unknown') from None
+    raise GroupError('raw_key_disabled')
+
 
 def _fixture(step, packet, candidate):
     if step == 1: name, args = 'read_packet', {}
@@ -161,6 +130,7 @@ def _assistant(message):
     return clean, pending
 
 def run_group(packet, *, fixture, key=None, emit=lambda _: None, cancel=None):
+    if fixture is not True: raise GroupError('raw_key_disabled')
     data = _packet(packet)
     if type(fixture) is not bool or (fixture and key is not None) or (not fixture and (not isinstance(key,str) or not key or len(key)>4096 or any(ord(c)<33 or ord(c)>126 for c in key))): raise GroupError('transport_configuration')
     spec = disclosure()

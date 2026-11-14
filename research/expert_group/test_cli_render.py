@@ -159,3 +159,14 @@ def test_fdopen_failure_closes_untransferred_read_and_write_fds(tmp_path, monkey
         with pytest.raises(OSError, match='wrapper failure'): receipt.verify_export(path)
         with pytest.raises(OSError, match='wrapper failure'): receipt.write_new(tmp_path/f'new-{index}', b'')
     assert len(os.listdir('/proc/self/fd')) == before
+
+
+def test_even_matching_approval_never_reads_secret(tmp_path, monkeypatch):
+    import hashlib
+    disclosure={'scope':'synthetic-fixed'}
+    monkeypatch.setitem(sys.modules,'engine',SimpleNamespace(disclosure=lambda:disclosure))
+    monkeypatch.setattr(cli,'read_secret',lambda:pytest.fail('credential reader reached'))
+    path=tmp_path/'blocked'
+    approval=hashlib.sha256(cli.canonical(disclosure)).hexdigest()
+    assert cli.main(['--approved-remote','--approved-disclosure',approval,'--output-dir',str(path)])==2
+    assert not path.exists()

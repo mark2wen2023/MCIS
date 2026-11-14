@@ -612,3 +612,6 @@ EXPERTCONNECTED r3：修独审提示的embedded已显示但aria-live仍称未载
 
 ## EXPERTWORKERBOUNDARY 2026-11-14
 基于f296f3d隔离审计：9红测复现响应字段原样/JSON转义回显传入credential被接受，以及固定目标仅managed模式显式校验。最小修改冻结transport.py，共用边界拒绝精确credential回显、所有模式固定目标；不改平台绑定stub/设置/预算/协议，不请求真实模型。此精确匹配不检测转码、分片或程序不可见的代理真实凭据。
+
+## EXPERTRAWKEYHOLD 2026-11-14
+授权核查并默认禁用旧raw-key在线入口。修改transport/isolated/worker/Executor及旧expert_group CLI/engine冻结文件：无真实凭据模式开关；managed仍需可信bootstrap并拒绝。仅显式httpx.MockTransport可运行合成协议测试，worker --mock传明确mock实例，不能伪装remote成功。旧离线测试fixture改为显式MockTransport，保留断言。旧approved-remote/remote调用兼容性刻意中断；公开packet/manifest不变，历史回执仍可只读验证。

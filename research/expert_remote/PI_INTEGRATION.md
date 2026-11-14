@@ -1,3 +1,5 @@
+> 2026-11-14 更新：专家旧raw-key在线入口已默认拒绝；下文旧在线能力描述仅为历史。参见 research/expert_remote/RAW_KEY_HOLD.md，真实运行仍HOLD。
+
 # 实际 Pi / 隔离提供方接通候选
 
 基线1b897f7。默认Executor仍scripted；真实模式只能显式组合：`Meeting(provider_mode='remote')`、`Bridge(meeting)`、`Executor(bridge, provider_mode='remote', key=安全注入值)`。这段API说明不授权执行；本轮没有读取凭据或调用真实DeepSeek。`remote_mock`是单独显式模式，使用固定MockTransport，顶层和逐次回执保留transportMocked=true、realDeepSeekExecuted=false，不能当能力验收。

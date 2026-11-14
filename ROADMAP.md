@@ -433,3 +433,7 @@ EXPERTCONNECTED r3待复验：embedded aria-live状态准确，34新增DOM/40旧
 | 2026-11-14 | EXPERTWORKERBOUNDARY | 待独审/真实HOLD | f296f3d隔离；9红测后固定目标所有模式校验+JSON解码后精确credential回显拒绝，worker/Adapter保unknown/预算且不重试。11新增及相关回归共127过；freeze logs/EXPERTWORKERBOUNDARY-impl-hashes-frozen.txt。非全局DLP/网络封锁，managed无可信bootstrap不接线。 |
 
 | 2026-11-14 | EXPERTWORKERBOUNDARY | 受限独审通过/真实HOLD | 14独立测试、3冻结一致，旧content/id/model泄露红证据保留；相关合跑141通过。仅精确回显与配置漂移防护，非全面DLP；平台bootstrap、真实代理与模型未验，不推送/合并部署。 |
+
+| 2026-11-14 | EXPERTRAWKEYHOLD | 待独审 | 75b3ef4隔离，旧raw-key在线默认拒绝，explicit MockTransport/remote_mock保留；相关253项回归+新增CLI匹配摘要拒绝测试通过，40旧/19来源DOM断言过。冻结logs/EXPERTRAWKEYHOLD-impl-hashes-frozen.txt；无真实凭据/模型/设置改动，managed仍无可信bootstrap。 |
+
+| 2026-11-14 | EXPERTRAWKEYHOLD | 限定门禁独审通过 | 16新增独审+14原回显独审通过、20冻结一致，最终相关合跑270过；40/19DOM断言过。raw在线默认拒绝，显式mock成功控制与历史只读兼容通过；真实模型0、managed缺绑定HOLD，不是OS网络沙箱。 |

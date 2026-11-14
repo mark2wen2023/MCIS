@@ -12,6 +12,12 @@ BODY='synthetic-body-that-must-not-leak'
 
 @pytest.fixture(autouse=True)
 def no_network(monkeypatch):
+    original_request=t.request
+    async def offline_request(*args,**kwargs):
+        if kwargs.get('managed_binding') is None:
+            kwargs['offline_transport']=httpx.MockTransport(lambda request:pytest.fail('missing test HTTP handler'))
+        return await original_request(*args,**kwargs)
+    monkeypatch.setattr(t,'request',offline_request)
     def deny(*a,**kw):raise AssertionError('network forbidden')
     # asyncio requires a local socketpair internally; block actual connect only.
     monkeypatch.setattr(socket.socket,'connect',deny)
@@ -26,13 +32,13 @@ def response(**changes):
 def install(monkeypatch,handler):
     original=httpx.AsyncClient;options=[]
     def factory(**kw):
-        options.append(kw);return original(transport=httpx.MockTransport(handler),**kw)
+        options.append(kw);return original(transport=httpx.MockTransport(handler),**{k:v for k,v in kw.items() if k!='transport'})
     monkeypatch.setattr(t.httpx,'AsyncClient',factory)
     return options
 
 
 def run(**kw):
-    return asyncio.run(t.request([{'role':'user','content':'public synthetic'}],[],key=SECRET,deadline=time.monotonic()+1,**kw))
+    return asyncio.run(t.request([{'role':'user','content':'public synthetic'}],[],key=SECRET,deadline=time.monotonic()+1,**{k:v for k,v in kw.items() if k!='transport'}))
 
 
 def test_fixed_destination_and_body(monkeypatch):

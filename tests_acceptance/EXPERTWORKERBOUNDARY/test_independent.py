@@ -9,14 +9,20 @@ from research.expert_remote import transport,managed
 KEY='INDEPENDENT-SYNTHETIC-NOT-SECRET'
 @pytest.fixture(autouse=True)
 def block(monkeypatch):
+    original_request=transport.request
+    async def offline_request(*args,**kwargs):
+        if kwargs.get('managed_binding') is None:
+            kwargs['offline_transport']=httpx.MockTransport(lambda request:pytest.fail('missing test HTTP handler'))
+        return await original_request(*args,**kwargs)
+    monkeypatch.setattr(transport,'request',offline_request)
     monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:pytest.fail('network'))
 def payload():return {'choices':[{'finish_reason':'stop','message':{'role':'assistant','content':'public answer'}}],'id':'public-id','model':'synthetic'}
 def install(monkeypatch,body):
     calls=[];original=httpx.AsyncClient
     def reply(req):calls.append(req);return httpx.Response(200,content=body)
-    monkeypatch.setattr(httpx,'AsyncClient',lambda **kw:original(transport=httpx.MockTransport(reply),**kw))
+    monkeypatch.setattr(httpx,'AsyncClient',lambda **kw:original(transport=httpx.MockTransport(reply),**{k:v for k,v in kw.items() if k!='transport'}))
     return calls
-def run(**kw):return asyncio.run(transport.request([{'role':'user','content':'public'}],[],key=KEY,deadline=time.monotonic()+1,**kw))
+def run(**kw):return asyncio.run(transport.request([{'role':'user','content':'public'}],[],key=KEY,deadline=time.monotonic()+1,**{k:v for k,v in kw.items() if k!='transport'}))
 @pytest.mark.parametrize('location',['content','id','model','nested_key','nested_list','escaped_key','escaped_value'])
 def test_echo_rejected_everywhere(monkeypatch,location):
     obj=payload()
@@ -56,7 +62,7 @@ def test_cancel_after_dispatch_is_unknown_single_attempt(monkeypatch):
         calls.append(req)
         try:await asyncio.sleep(10)
         finally:cancelled.append(True)
-    monkeypatch.setattr(httpx,'AsyncClient',lambda **kw:original(transport=httpx.MockTransport(reply),**kw))
+    monkeypatch.setattr(httpx,'AsyncClient',lambda **kw:original(transport=httpx.MockTransport(reply),**{k:v for k,v in kw.items() if k!='transport'}))
     with pytest.raises(transport.TransportError) as e:run(cancel=lambda:bool(calls))
     assert e.value.code=='cancelled' and e.value.dispatched and len(calls)==1 and cancelled==[True]
 
@@ -74,7 +80,7 @@ def test_adapter_reservation_not_refunded_and_no_retry(monkeypatch,failure):
         if failure=='cancel':a.cancel();await asyncio.sleep(10)
         obj=payload();obj['ignored']=[{KEY:'never release'}]
         return httpx.Response(200,json=obj)
-    monkeypatch.setattr(httpx,'AsyncClient',lambda **kw:original(transport=httpx.MockTransport(reply),**kw))
+    monkeypatch.setattr(httpx,'AsyncClient',lambda **kw:original(transport=httpx.MockTransport(reply),**{k:v for k,v in kw.items() if k!='transport'}))
     with pytest.raises(AdapterError):asyncio.run(a.dispatch(ticket))
     r=a.receipt();assert r['halted'] and r['attempts'][0]['status']=='unknown'
     assert r['attempts'][0]['responseMeta'] is None and KEY not in json.dumps(r)

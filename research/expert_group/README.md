@@ -1,3 +1,5 @@
+> 2026-11-14 更新：专家旧raw-key在线入口已默认拒绝；下文旧在线能力描述仅为历史。参见 research/expert_remote/RAW_KEY_HOLD.md，真实运行仍HOLD。
+
 # Two model perspectives on a frozen public report excerpt
 
 Research-only. Two independent Pi1.5.2 sessions examine the same fixed packet:

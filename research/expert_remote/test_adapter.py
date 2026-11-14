@@ -112,6 +112,10 @@ def test_real_transport_boundary_with_mock_http_and_cancellation_predicate(monke
     _,_,t,a=setup();seen=[]
     def handler(req):seen.append(req);return httpx.Response(200,json=response())
     install(monkeypatch,handler)
+    original_request=transport.request
+    async def offline_request(*args,**kw):
+        return await original_request(*args,offline_transport=httpx.MockTransport(handler),**kw)
+    monkeypatch.setattr(transport,'request',offline_request)
     result=asyncio.run(a.dispatch(t))
     assert len(seen)==1 and result['identityVerified'] is False
     assert a.receipt()['attempts'][0]['status']=='received_unverified'

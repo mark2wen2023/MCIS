@@ -80,62 +80,60 @@ def test_no_completion_without_host_candidate(monkeypatch):
 
 
 def test_remote_mode_receipt_before_call_and_isolated_history(monkeypatch):
-    events=[]; histories=[]; role_steps={}
-    def remote(messages,key,timeout,check):
-        assert key=='test-only-not-a-real-key'
-        assert events[-1]['phase']=='provider_request'
-        history=copy.deepcopy(messages); histories.append(history)
-        role=messages[0]['content']; step=role_steps.get(role,0)+1; role_steps[role]=step
-        candidate=json.loads(messages[-1]['content'])['candidateId'] if step==3 else None
-        return e._fixture(step,e._packet(e.load_packet()),candidate)
-    monkeypatch.setattr(e,'_remote',remote)
-    r=e.run_group(e.load_packet(),fixture=False,key='test-only-not-a-real-key',emit=events.append)
-    assert r['status']=='completed_unverified' and r['providerRequests']==6
-    assert len(histories[0])==len(histories[3])==2
-    assert histories[0][0]!=histories[3][0]
-    assert json.loads(histories[2][-1]['content'])['candidateId'] not in json.dumps(histories[3])
+    # Online raw-key compatibility intentionally removed. Protocol timeout/
+    # redirect/unknown behavior remains covered by expert_remote MockTransport.
+    import httpx
+    calls=[]
+    def forbidden(*args,**kw):
+        calls.append(1);pytest.fail('disabled legacy transport reached')
+    monkeypatch.setattr(httpx,'AsyncClient',forbidden)
+    with pytest.raises(e.GroupError,match='raw_key_disabled'):
+        e.run_group(e.load_packet(),fixture=False,key='synthetic')
+    assert calls==[]
 
 
 def test_failed_pre_request_receipt_prevents_transport(monkeypatch):
-    monkeypatch.setattr(e,'_remote',lambda *a:pytest.fail('receipt did not authorize request'))
-    def emit(event):
-        if event['phase']=='provider_request': raise OSError()
-    r=e.run_group(e.load_packet(),fixture=False,key='test-only',emit=emit)
-    assert r['status']=='not_accepted' and r['errorCode']=='receipt_write_failed'
+    # Online raw-key compatibility intentionally removed. Protocol timeout/
+    # redirect/unknown behavior remains covered by expert_remote MockTransport.
+    import httpx
+    calls=[]
+    def forbidden(*args,**kw):
+        calls.append(1);pytest.fail('disabled legacy transport reached')
+    monkeypatch.setattr(httpx,'AsyncClient',forbidden)
+    with pytest.raises(e.GroupError,match='raw_key_disabled'):
+        e.run_group(e.load_packet(),fixture=False,key='synthetic')
+    assert calls==[]
 
 
 def test_unknown_transport_never_retries(monkeypatch):
+    # Online raw-key compatibility intentionally removed. Protocol timeout/
+    # redirect/unknown behavior remains covered by expert_remote MockTransport.
+    import httpx
     calls=[]
-    def remote(*args):
-        calls.append(1); raise TimeoutError('secret must not appear')
-    monkeypatch.setattr(e,'_remote',remote)
-    r=e.run_group(e.load_packet(),fixture=False,key='test-only')
-    assert calls==[1] and r['outcome']=='unknown' and r['status']=='not_accepted'
-    assert 'secret' not in json.dumps(r)
+    def forbidden(*args,**kw):
+        calls.append(1);pytest.fail('disabled legacy transport reached')
+    monkeypatch.setattr(httpx,'AsyncClient',forbidden)
+    with pytest.raises(e.GroupError,match='raw_key_disabled'):
+        e.run_group(e.load_packet(),fixture=False,key='synthetic')
+    assert calls==[]
 
 
 def test_remote_absolute_timeout_closes_request(monkeypatch):
+    # Online raw-key compatibility intentionally removed. Protocol timeout/
+    # redirect/unknown behavior remains covered by expert_remote MockTransport.
     import httpx
-    closed=[]
-    class Client:
-        def __init__(self,**kw): assert kw['trust_env'] is False and kw['follow_redirects'] is False
-        async def __aenter__(self): return self
-        async def __aexit__(self,*args): closed.append(True)
-        def stream(self,*args,**kw): return self
-        async def aiter_bytes(self):
-            while True:
-                await asyncio.sleep(.02)
-                yield b' '
-        status_code=200
-    monkeypatch.setattr(httpx,'AsyncClient',Client)
-    start=e.time.monotonic()
-    with pytest.raises(e.GroupError,match='provider_transport_unknown'): e._remote([], 'fake', .06)
-    assert e.time.monotonic()-start<.3 and closed
+    calls=[]
+    def forbidden(*args,**kw):
+        calls.append(1);pytest.fail('disabled legacy transport reached')
+    monkeypatch.setattr(httpx,'AsyncClient',forbidden)
+    with pytest.raises(e.GroupError,match='raw_key_disabled'):
+        e._remote([], 'synthetic', .01)
+    assert calls==[]
 
 
 @pytest.mark.parametrize('fixture,key',[(True,'fake'),(False,None),(False,'bad\nkey'),('yes',None)])
 def test_no_implicit_key_or_transport_fallback(fixture,key):
-    with pytest.raises(e.GroupError,match='transport_configuration'): e.run_group(e.load_packet(),fixture=fixture,key=key)
+    with pytest.raises(e.GroupError,match='transport_configuration|raw_key_disabled'): e.run_group(e.load_packet(),fixture=fixture,key=key)
 
 
 def test_child_cannot_supply_provider_history(monkeypatch,tmp_path):
@@ -165,38 +163,29 @@ def test_duplicate_call_ids_fail_closed(monkeypatch):
 
 
 def test_provider_redirect_is_rejection_not_followed(monkeypatch):
+    # Online raw-key compatibility intentionally removed. Protocol timeout/
+    # redirect/unknown behavior remains covered by expert_remote MockTransport.
     import httpx
-    requests=[]
-    class Client:
-        def __init__(self,**kw): assert kw['follow_redirects'] is False
-        async def __aenter__(self): return self
-        async def __aexit__(self,*args): pass
-        def stream(self,*args,**kw): requests.append(args); return self
-        status_code=302
-    monkeypatch.setattr(httpx,'AsyncClient',Client)
-    with pytest.raises(e.GroupError,match='provider_http_rejected'): e._remote([], 'fake', .1)
-    assert len(requests)==1 and requests[0][1]==e.ENDPOINT
+    calls=[]
+    def forbidden(*args,**kw):
+        calls.append(1);pytest.fail('disabled legacy transport reached')
+    monkeypatch.setattr(httpx,'AsyncClient',forbidden)
+    with pytest.raises(e.GroupError,match='raw_key_disabled'):
+        e._remote([], 'synthetic', .01)
+    assert calls==[]
 
 
 def test_remote_cancel_closes_pending_request(monkeypatch):
+    # Online raw-key compatibility intentionally removed. Protocol timeout/
+    # redirect/unknown behavior remains covered by expert_remote MockTransport.
     import httpx
-    closed=[]
-    class Client:
-        def __init__(self,**kw): pass
-        async def __aenter__(self): return self
-        async def __aexit__(self,*args): closed.append(True)
-        def stream(self,*args,**kw): return self
-        async def aiter_bytes(self):
-            await asyncio.sleep(20)
-            yield b'{}'
-        status_code=200
-    monkeypatch.setattr(httpx,'AsyncClient',Client)
-    checks=[]
-    def check():
-        checks.append(1)
-        if len(checks)>1: raise e.GroupError('cancelled')
-    with pytest.raises(e.GroupError,match='cancelled'): e._remote([], 'fake', 10,check)
-    assert closed
+    calls=[]
+    def forbidden(*args,**kw):
+        calls.append(1);pytest.fail('disabled legacy transport reached')
+    monkeypatch.setattr(httpx,'AsyncClient',forbidden)
+    with pytest.raises(e.GroupError,match='raw_key_disabled'):
+        e._remote([], 'synthetic', .01)
+    assert calls==[]
 
 
 def test_nonreading_child_cannot_block_host_write_deadline(monkeypatch,tmp_path):

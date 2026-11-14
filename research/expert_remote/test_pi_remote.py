@@ -49,7 +49,7 @@ def test_actual_pi_two_rounds_isolated_mock_http_never_claims_real():
 def test_modes_require_explicit_matching_bridge_and_credentials():
     with pytest.raises(ExecutionError):Executor(Bridge(Meeting()),provider_mode='remote_mock')
     with pytest.raises(ExecutionError):Executor(Bridge(Meeting(provider_mode='remote')))
-    with pytest.raises(ValueError):Executor(Bridge(Meeting(provider_mode='remote')),provider_mode='remote')
+    with pytest.raises(ExecutionError,match='raw_key_disabled'):Executor(Bridge(Meeting(provider_mode='remote')),provider_mode='remote')
 
 
 def sleepy(monkeypatch):

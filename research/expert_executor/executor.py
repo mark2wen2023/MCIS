@@ -54,6 +54,7 @@ class Executor:
         if type(bridge) is not Bridge: raise ExecutionError('bridge_type')
         if provider_mode not in {'scripted','remote','remote_mock'}: raise ExecutionError('provider_mode')
         if (provider_mode == 'scripted') != (bridge.provider_mode == 'scripted'): raise ExecutionError('provider_mode_mismatch')
+        if provider_mode == 'remote': raise ExecutionError('raw_key_disabled')
         self.provider_mode = provider_mode
         self._adapter = None
         if provider_mode != 'scripted':

@@ -1,3 +1,5 @@
+> 2026-11-14 更新：专家旧raw-key在线入口已默认拒绝；下文旧在线能力描述仅为历史。参见 research/expert_remote/RAW_KEY_HOLD.md，真实运行仍HOLD。
+
 > 此文保留1b897f7的v1隔离边界说明。后续显式Pi接通及v2合同见 [PI_INTEGRATION.md](PI_INTEGRATION.md)；旧direct接口仍不自动完成角色。
 
 # 隔离 DeepSeek 提供方边界 v1

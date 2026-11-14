@@ -68,8 +68,7 @@ def main(argv=None):
         if not args.output_dir: raise ValueError('output directory required')
         if args.fixture and args.approved_disclosure is not None: raise ValueError('fixture scope')
         if args.approved_remote:
-            if args.approved_disclosure != disclosure_hash: raise ValueError('approval scope')
-            key = read_secret()
+            raise ValueError('raw_key_disabled')
         packet = Path(__file__).with_name('public-packet.json').read_bytes()
         # Exclusive directory plus anchored descriptors: never overwrite an old run.
         os.mkdir(args.output_dir, 0o700)

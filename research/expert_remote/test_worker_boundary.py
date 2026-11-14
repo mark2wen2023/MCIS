@@ -11,6 +11,12 @@ from research.expert_remote import transport
 SECRET='SYNTHETIC-BOUNDARY-NOT-A-REAL-KEY'
 @pytest.fixture(autouse=True)
 def no_network(monkeypatch):
+    original_request=transport.request
+    async def offline_request(*args,**kwargs):
+        if kwargs.get('managed_binding') is None:
+            kwargs['offline_transport']=httpx.MockTransport(lambda request:pytest.fail('missing test HTTP handler'))
+        return await original_request(*args,**kwargs)
+    monkeypatch.setattr(transport,'request',offline_request)
     def forbidden(*args,**kwargs):raise AssertionError('network forbidden')
     monkeypatch.setattr(socket.socket,'connect',forbidden)
     monkeypatch.setattr(socket,'create_connection',forbidden)
@@ -31,7 +37,7 @@ def test_credential_echo_rejected_before_result(monkeypatch,field):
     if field=='json_escaped':raw=raw.replace(SECRET.encode(),''.join('\\u%04x'%ord(c) for c in SECRET).encode())
     original=httpx.AsyncClient;seen=[]
     def reply(req):seen.append(req);return httpx.Response(200,content=raw)
-    monkeypatch.setattr(transport.httpx,'AsyncClient',lambda **kw:original(transport=httpx.MockTransport(reply),**kw))
+    monkeypatch.setattr(transport.httpx,'AsyncClient',lambda **kw:original(transport=httpx.MockTransport(reply),**{k:v for k,v in kw.items() if k!='transport'}))
     with pytest.raises(transport.TransportError,match='response_invalid') as caught:run()
     assert caught.value.dispatched and len(seen)==1
     assert SECRET not in ''.join(traceback.format_exception(caught.value))
@@ -50,7 +56,7 @@ def test_worker_stdout_does_not_release_echo(monkeypatch):
     from research.expert_remote import worker
     obj=payload();obj['id']=SECRET
     original=httpx.AsyncClient
-    monkeypatch.setattr(transport.httpx,'AsyncClient',lambda **kw:original(transport=httpx.MockTransport(lambda req:httpx.Response(200,json=obj)),**kw))
+    monkeypatch.setattr(transport.httpx,'AsyncClient',lambda **kw:original(transport=httpx.MockTransport(lambda req:httpx.Response(200,json=obj)),**{k:v for k,v in kw.items() if k!='transport'}))
     class Stream:
         def __init__(self,raw=b''):self.buffer=io.BytesIO(raw)
     config={'messages':[{'role':'user','content':'public synthetic'}],'tools':[], 'key':SECRET,'deadline':time.monotonic()+1}
@@ -73,7 +79,7 @@ def test_echo_keeps_budget_and_halts_without_retry(monkeypatch):
     original=httpx.AsyncClient;seen=[]
     obj=payload();obj['id']=SECRET
     def reply(req):seen.append(req);return httpx.Response(200,json=obj)
-    monkeypatch.setattr(transport.httpx,'AsyncClient',lambda **kw:original(transport=httpx.MockTransport(reply),**kw))
+    monkeypatch.setattr(transport.httpx,'AsyncClient',lambda **kw:original(transport=httpx.MockTransport(reply),**{k:v for k,v in kw.items() if k!='transport'}))
     with pytest.raises(AdapterError):asyncio.run(adapter.dispatch(ticket))
     receipt=adapter.receipt()
     assert receipt['halted'] and receipt['attempts'][0]['status']=='unknown'

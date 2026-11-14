@@ -85,7 +85,7 @@ def _decode(raw, credential=None):
             'identityVerified': False}
 
 
-async def request(messages, tools, *, key, deadline, cancel=None, managed_binding=None):
+async def request(messages, tools, *, key, deadline, cancel=None, managed_binding=None, offline_transport=None):
     """Return one bounded non-stream response; deadline is absolute monotonic time.
 
     Error.dispatched conservatively means dispatch may have begun, NOT that the
@@ -98,7 +98,13 @@ async def request(messages, tools, *, key, deadline, cancel=None, managed_bindin
     try:
         if ENDPOINT != 'https://api.deepseek.com/chat/completions':
             raise TransportError('endpoint_invalid')
-        options = {}
+        if offline_transport is not None and type(offline_transport) is not httpx.MockTransport:
+            raise TransportError('offline_transport_invalid')
+        if managed_binding is None and offline_transport is None:
+            raise TransportError('raw_key_disabled')
+        if managed_binding is not None and offline_transport is not None:
+            raise TransportError('managed_mode_invalid')
+        options = {'transport':offline_transport} if offline_transport is not None else {}
         headers = {'Content-Type':'application/json','Accept':'application/json','Accept-Encoding':'identity'}
         if managed_binding is not None:
             if key is not None or ENDPOINT != 'https://api.deepseek.com/chat/completions': raise TransportError('managed_mode_invalid')

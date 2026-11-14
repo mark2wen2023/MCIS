@@ -22,6 +22,7 @@ async def request(messages,tools,*,key,deadline,cancel=None,mocked=False,managed
     proc=None;sent=0;data=b'';result=None;error=None;observed=None;reaped=False
     try:
         if type(mocked) is not bool:raise TransportError('worker_mode')
+        if not mocked and managed_binding is None:raise TransportError('raw_key_disabled')
         if (cancel and cancel()) or time.monotonic()>=deadline:raise TransportError('cancelled')
         config={'messages':messages,'tools':tools,'key':key,'deadline':deadline}
         worker_env={'PATH':'/usr/bin:/bin','LANG':'C.UTF-8'}

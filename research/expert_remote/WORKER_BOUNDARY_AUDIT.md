@@ -1,3 +1,5 @@
+> 2026-11-14 更新：专家旧raw-key在线入口已默认拒绝；下文旧在线能力描述仅为历史。参见 research/expert_remote/RAW_KEY_HOLD.md，真实运行仍HOLD。
+
 # 真实 worker 路径离线审计（EXPERTWORKERBOUNDARY）
 
 基线 f296f3d，2026-11-14。真实 DeepSeek 请求为0，平台安全绑定HOLD。本轮只运行合成凭据与MockHTTP、安全进程测试，不读真实凭据、不改环境或网络配置。
