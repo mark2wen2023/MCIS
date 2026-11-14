@@ -584,3 +584,6 @@ Coordinator review found directory-leaf fdopen failure leaks a raw descriptor. R
 在93284d8独立分支新增显式DeepSeek传输、单控制器跨轮账本与版本化提供方会议回执校验。仅允许现有Bridge产生的规范请求与公开packet绑定，不改模拟完成路径；响应暂交调用者，Pi远程接通不在此切片。固定官方端点、不重定向重试、未知停止；真实请求本轮禁止。新增research/expert_remote，独立验收后仅本地提交。
 
 EXPERTREMOTE r1：独审发现空闲cancel未立即反映halted；自查BaseException未知行未粘性停止。修cancel及finally，保留独审红测并更新冻结复验。
+
+## EXPERTREMOTEPI 2026-11-14
+基于1b897f7隔离接通实际Pi角色的显式remote协议路径。登记跨冻结包：Meeting/Bridge增加模式隔离与真实响应动作；Executor保持默认脚本兼容，新增显式remote或remote_mock，复用原Pi退出/清理门禁；Adapter消费同一Bridge预留请求，新增版本化来源声明。固定Python提供方worker受父进程硬截止/取消与组回收，凭据仅IPC，不入Pi或环境。真实请求本轮禁止；只跑明确mockHTTP公共包协议测试，不称模型能力通过。

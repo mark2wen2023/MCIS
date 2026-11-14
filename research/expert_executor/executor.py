@@ -1,5 +1,6 @@
-"""Linux Pi process supervisor with a fixed scripted provider; no remote transport."""
+"""Linux Pi supervisor with explicit scripted or isolated provider modes."""
 from copy import deepcopy
+import asyncio
 import hashlib
 import json
 import os
@@ -55,8 +56,15 @@ def _cleanup(proc):
 
 class Executor:
     """One active turn; cancel() is nonblocking and may be called by another thread."""
-    def __init__(self, bridge: Bridge):
+    def __init__(self, bridge: Bridge, *, provider_mode="scripted", key=None):
         if type(bridge) is not Bridge: raise ExecutionError('bridge_type')
+        if provider_mode not in {'scripted','remote','remote_mock'}: raise ExecutionError('provider_mode')
+        if (provider_mode == 'scripted') != (bridge.provider_mode == 'scripted'): raise ExecutionError('provider_mode_mismatch')
+        self.provider_mode = provider_mode
+        self._adapter = None
+        if provider_mode != 'scripted':
+            from research.expert_remote.adapter import Adapter
+            self._adapter = Adapter(bridge,key=key if provider_mode=='remote' else 'synthetic-offline-placeholder',enabled=True,transport_mode=provider_mode)
         self.bridge = bridge
         self._cancelled = threading.Event()
         self._run_lock = threading.Lock()
@@ -68,6 +76,7 @@ class Executor:
 
     def cancel(self):
         self._cancelled.set()
+        if self._adapter is not None: self._adapter.cancel()
         return self.bridge.stop()
 
     def _record(self, run, phase, **values):
@@ -117,7 +126,7 @@ class Executor:
             ticket = issued['ticketId']
             run = {'ticketId': ticket, 'status': 'not_accepted', 'processStarted': False,
                    'exitObserved': None, 'groupKillSent': False, 'leaderReaped': False, 'runnerSha256': RUNNER_SHA,
-                   'runtime': 'Pi1.5.2', 'providerMode': 'scripted', 'realDeepSeekExecuted': False, 'receiptComplete': True}
+                   'runtime': 'Pi1.5.2', 'providerMode': self.provider_mode, 'realDeepSeekExecuted': False, 'receiptComplete': True}
             with self._receipt_lock: self._runs.append(run)
             self._check(ticket)
             command = _command()
@@ -146,11 +155,18 @@ class Executor:
                     messages += 1
                     if messages > 32: raise ExecutionError('message_budget')
                     answer = self.bridge.from_runner(ticket, line + b'\n')
-                    if answer.get('kind') == 'scripted_model_request':
+                    if answer.get('kind') in {'scripted_model_request','remote_model_request'}:
                         model_step += 1
-                        # Only a built-in deterministic fixture can supply responses here.
-                        model = _fixture(model_step, self._packet, candidate)
-                        reply = self.bridge.scripted_response(ticket, answer['requestId'], model)
+                        if self.provider_mode == 'scripted':
+                            model = _fixture(model_step, self._packet, candidate)
+                            reply = self.bridge.scripted_response(ticket, answer['requestId'], model)
+                        else:
+                            result = asyncio.run(self._adapter.dispatch(ticket,reserved_request=answer))
+                            self._check(ticket)
+                            run['realDeepSeekExecuted'] = self.provider_mode == 'remote'
+                            self._log(run,'provider_response_received',requestId=answer['requestId'],
+                                      responseDigest=digest(result['assistant']),transportMocked=self.provider_mode=='remote_mock')
+                            reply = self.bridge.provider_response(ticket,answer['requestId'],result['assistant'])
                         self._write(proc, ticket, reply)
                     elif answer.get('awaitingExit') is True:
                         done = True
@@ -218,6 +234,12 @@ class Executor:
                     if self._cancelled.is_set(): self.bridge.stop()
                     else: self.bridge.exited(ticket, -1)
                 except Exception: pass
+            if run is not None and self._adapter is not None:
+                try:
+                    audit=self._adapter.receipt()
+                    if any(r['ticketId']==ticket and r['status']=='unknown' for r in audit['attempts']):run['status']='unknown'
+                except Exception:
+                    self._receipt_complete=False;run['receiptComplete']=False
             raise ExecutionError('turn_not_accepted') from None
         finally:
             try:
@@ -244,12 +266,29 @@ class Executor:
                 if bridge_audit['auditComplete'] is not True:
                     self._receipt_complete = False
                     for run in self._runs: run['receiptComplete'] = False
-                return deepcopy({'schemaVersion': 1, 'kind': 'actual_pi_scripted_provider_protocol_receipt',
+                output = {'schemaVersion': 1, 'kind': 'actual_pi_scripted_provider_protocol_receipt',
                     'authenticityVerified': False, 'realDeepSeekExecuted': False,
                     'receiptComplete': self._receipt_complete,
                     'stateScope': 'meeting_and_bridge_are_scripted_protocol_state_not_process_observation',
                     'snapshotStatus': 'volatile_protocol_record_not_capability_acceptance',
                     'runs': self._runs, 'runtimeEvents': self._events, 'bridgeAudit': bridge_audit,
-                    'meetingSnapshot': json.loads(self.bridge.meeting.export())})
+                    'meetingSnapshot': json.loads(self.bridge.meeting.export())}
+                if self._adapter is not None:
+                    provider=self._adapter.receipt()
+                    if any(a['worker']['processStarted'] and not a['worker']['leaderReaped'] for a in provider['attempts']):
+                        self._receipt_complete=False
+                        for run in self._runs: run['receiptComplete']=False
+                    for run in self._runs:
+                        attempts=[r for r in provider['attempts'] if r['ticketId']==run['ticketId']]
+                        run['realDeepSeekExecuted']=self.provider_mode=='remote' and any(r['status']=='received_unverified' for r in attempts)
+                        sessions=[s for s in bridge_audit['sessions'] if s['ticketId']==run['ticketId']]
+                        if run['status']=='completed_unverified' and (len(sessions)!=1 or len(attempts)!=sessions[0]['modelAttempts'] or not attempts or any(r['status']!='received_unverified' for r in attempts)):
+                            self._receipt_complete=False;run['receiptComplete']=False
+                    output.update(schemaVersion=2,kind='actual_pi_provider_protocol_receipt',
+                        providerMode=self.provider_mode,transportMocked=self.provider_mode=='remote_mock',
+                        realDeepSeekExecuted=any(r['realDeepSeekExecuted'] for r in self._runs),
+                        receiptComplete=self._receipt_complete,providerReceipt=provider,
+                        stateScope='remote_protocol_state_plus_local_process_and_transport_observations_not_identity_proof')
+                return deepcopy(output)
         finally:
             self._run_lock.release()

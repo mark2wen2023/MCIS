@@ -33,19 +33,24 @@ def wire(value):
 
 
 class Bridge:
-    """Trusted local controller; responses and exit codes are simulated declarations."""
+    """Trusted protocol controller; mode/response/exit declarations are not execution proof."""
     def __init__(self, meeting: Meeting, *, clock=time.monotonic):
         if type(meeting) is not Meeting: raise ProtocolError('meeting_type')
         with _OWNERS_LOCK:
             if meeting in _OWNERS: raise ProtocolError('meeting_already_bound')
             _OWNERS[meeting] = True
         self.meeting = meeting
+        self._provider_mode = "remote" if meeting.snapshot()["mode"] == "remote_protocol_declared" else "scripted"
         self.clock = clock
         self.packet = _packet(load_packet())
         self._sessions = {}
         self._events = []
         self._lock = threading.RLock()
         self.audit_complete = True
+
+    @property
+    def provider_mode(self):
+        return self._provider_mode
 
     def _record(self, session, phase, **fields):
         row = {'seq': len(self._events) + 1,
@@ -86,6 +91,8 @@ class Bridge:
         session['lastClock'] = now
         if now - session['started'] >= 120: raise ProtocolError('turn_deadline')
         state = self.meeting.act({'type': 'tick'})
+        expected_mode = 'remote_protocol_declared' if self.provider_mode == 'remote' else 'simulation_only'
+        if state['mode'] != expected_mode: raise ProtocolError('provider_mode_changed')
         if state['phase'] != 'round_open' or not state['activeTurn'] or state['activeTurn']['ticketId'] != session['turn']['ticketId']:
             raise ProtocolError('meeting_no_longer_active')
         if state['activeTurn']['contextDigest'] != session['turn']['contextDigest']:
@@ -108,7 +115,7 @@ class Bridge:
                     raise ProtocolError('reissue_rejected') from None
             now = self.clock()
             session = {'turn': deepcopy(turn), 'phase': 'ready', 'models': 0, 'tools': 0,
-                       'pending': [], 'used': set(), 'waiting': None, 'read': False,
+                       'pending': [], 'used': set(), 'waiting': None, 'request': None, 'read': False,
                        'candidate': None, 'reviews': None, 'last': None, 'started': now, 'lastClock': now}
             self._sessions[ticket] = session
             try:
@@ -158,10 +165,11 @@ class Bridge:
                 s['models'] += 1
                 request_id = ticket + ':model:' + str(s['models'])
                 s['waiting'] = request_id
-                self._log(s, 'scripted_model_requested', inputDigest=digest(s['messages']))
-                return wire({'kind': 'scripted_model_request', 'requestId': request_id,
+                self._log(s, self.provider_mode + '_model_requested', inputDigest=digest(s['messages']))
+                s['request'] = wire({'kind': self.provider_mode + '_model_request', 'requestId': request_id,
                              'model': MODEL, 'maxTokens': 2400, 'messages': s['messages'],
                              'realProviderInvoked': False})
+                return deepcopy(s['request'])
             if set(request_) == {'op', 'id', 'name', 'args'} and request_['op'] == 'tool':
                 if not s['pending'] or request_ != {'op': 'tool', **s['pending'][0]}:
                     raise ProtocolError('unauthorized_tool')
@@ -194,14 +202,26 @@ class Bridge:
             raise ProtocolError('request_shape')
         return self._invoke(ticket, handle)
 
+    def pending_request(self, ticket):
+        """Guarded read of a reserved request; does not allocate or replay attempts."""
+        return self._invoke(ticket, lambda s: deepcopy(s['request']) if s['waiting'] is not None else None)
+
     def scripted_response(self, ticket, request_id, message):
+        return self._response(ticket, request_id, message, 'scripted')
+
+    def provider_response(self, ticket, request_id, message):
+        return self._response(ticket, request_id, message, 'remote')
+
+    def _response(self, ticket, request_id, message, mode):
         def handle(s):
+            if mode != self.provider_mode: raise ProtocolError('provider_mode_mismatch')
             if s['waiting'] is None or request_id != s['waiting']: raise ProtocolError('response_binding')
             last, pending = _assistant(wire(message))
             ids = [call['id'] for call in pending]
             if len(set(ids)) != len(ids) or any(id_ in s['used'] for id_ in ids): raise ProtocolError('duplicate_tool_id')
-            self._log(s, 'scripted_model_response', outputDigest=digest(last))
+            self._log(s, self.provider_mode + '_model_response', outputDigest=digest(last))
             s['waiting'] = None
+            s['request'] = None
             s['used'].update(ids)
             s['pending'], s['last'] = pending, last
             s['messages'].append(last)
@@ -214,14 +234,14 @@ class Bridge:
                 raise ProtocolError('exit_not_validated')
             # Record before parent commit: an audit failure must not publish an opinion.
             self._log(s, 'exit_zero_acceptance_attempt', outputDigest=digest(s['reviews']))
-            action = {'type': 'submit_simulated', 'ticketId': ticket,
+            action = {'type': 'submit_simulated' if self.provider_mode == 'scripted' else 'submit_provider_response', 'ticketId': ticket,
                       'contextDigest': s['turn']['contextDigest'], 'reviews': s['reviews']}
             state = self.meeting.act(action)
             accepted = [r for round_ in state['rounds'] for r in round_['responses'].values()
                         if r['ticketId'] == ticket and r['submissionDigest'] == digest(action)]
             if len(accepted) != 1: raise ProtocolError('meeting_did_not_accept')
             s['phase'] = 'completed_unverified'
-            return {'status': 'completed_unverified', 'source': 'scripted_protocol',
+            return {'status': 'completed_unverified', 'source': 'scripted_protocol' if self.provider_mode == 'scripted' else 'provider_protocol_declared',
                     'realPi': False, 'realModel': False, 'factActivated': False}
         return self._invoke(ticket, handle)
 
@@ -233,7 +253,7 @@ class Bridge:
 
     def audit(self):
         with self._lock:
-            return deepcopy({'mode': 'protocol_simulation_only', 'realPi': False, 'realModel': False,
+            return deepcopy({'mode': 'protocol_simulation_only' if self.provider_mode == 'scripted' else 'remote_protocol_declared', 'realPi': False, 'realModel': False,
                 'auditComplete': self.audit_complete, 'authenticityVerified': False,
                 'sessions': [{'ticketId': s['turn']['ticketId'], 'contextDigest': s['turn']['contextDigest'],
                               'phase': s['phase'], 'modelAttempts': s['models'], 'toolCalls': s['tools']}

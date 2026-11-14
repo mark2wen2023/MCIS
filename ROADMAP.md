@@ -397,3 +397,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-14 | EXPERTREMOTE r1 | 待复验 | 独审空闲cancel状态与BaseException未知保留修复；58开发测试过，更新5冻结；真实Pi接通/模型调用仍未验。 |
 
 EXPERTREMOTE r1冻结使用logs/EXPERTREMOTE-r1-impl-hashes-frozen.txt；原名保留初始红测对应哈希（按原始文件内容还原，独审对照初始记录核验）。
+
+| 2026-11-14 | EXPERTREMOTEPI | 待测 | 1b897f7上实际Pi接隔离提供方worker；remote/mock严格区别，共享预算/截止取消/unknown、schema2复合回执；全量194过后worker元数据补测10过（新增1例）；freeze logs/EXPERTREMOTEPI-impl-hashes-frozen.txt。仅MockHTTP无真实DeepSeek。 |
+
+| 2026-11-14 | EXPERTREMOTEPI | 受限独审通过 | 最终开发/回归195通过、独审17通过，15freeze匹配；实际Pi+隔离MockHTTP两轮、取消/硬截止/后代回收/unknown部分回执验证。未真实DeepSeek、未读凭据、未接正式案件或UI；仅本地候选。 |

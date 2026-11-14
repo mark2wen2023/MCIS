@@ -1,0 +1,15 @@
+research/expert_bridge/protocol.py: OK
+research/expert_bridge/test_remote_mode.py: OK
+research/expert_executor/executor.py: OK
+research/expert_meeting/machine.py: OK
+research/expert_remote/PI_INTEGRATION.md: OK
+research/expert_remote/README.md: OK
+research/expert_remote/adapter.py: OK
+research/expert_remote/isolated.py: OK
+research/expert_remote/receipt.py: OK
+research/expert_remote/test_adapter.py: OK
+research/expert_remote/test_composite_receipt.py: OK
+research/expert_remote/test_pi_remote.py: OK
+research/expert_remote/test_transport.py: OK
+research/expert_remote/transport.py: OK
+research/expert_remote/worker.py: OK

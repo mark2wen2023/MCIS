@@ -1,4 +1,4 @@
-"""Simulation-only chair: no executor, network, credentials or writes; reads frozen public packet."""
+"""Protocol chair: no executor, network, credentials or writes; mode is not execution proof."""
 from copy import deepcopy
 import hashlib
 import json
@@ -42,10 +42,12 @@ def strict(raw):
         raise MeetingError('invalid JSON') from exc
 
 
-def initial(meeting_id):
+def initial(meeting_id, provider_mode="scripted"):
+    if type(provider_mode) is not str or provider_mode not in {"scripted", "remote"}:
+        raise MeetingError("provider mode")
     if type(meeting_id) is not str or str(uuid.UUID(meeting_id)) != meeting_id:
         raise MeetingError('meeting id')
-    return {'meetingId': meeting_id, 'chair': '海青君（软件主持）', 'mode': 'simulation_only',
+    return {'meetingId': meeting_id, 'chair': '海青君（软件主持）', 'mode': 'simulation_only' if provider_mode == 'scripted' else 'remote_protocol_declared',
             'packetSha256': PACKET_SHA256, 'limits': dict(LIMITS), 'phase': 'ready',
             'rounds': [], 'activeTurn': None, 'interruptedTurn': None,
             'allocatedTurns': 0, 'allocatedModelAllowance': 0, 'allocatedToolAllowance': 0,
@@ -58,13 +60,14 @@ def _shape(action):
         raise MeetingError('action')
     fields = {'start_round': {'type'}, 'issue_turn': {'type', 'roleId'},
               'submit_simulated': {'type', 'ticketId', 'contextDigest', 'reviews'},
+              'submit_provider_response': {'type', 'ticketId', 'contextDigest', 'reviews'},
               'stop': {'type'}, 'fail_turn': {'type', 'ticketId', 'outcome'}, 'tick': {'type'}}
     if action['type'] not in fields or set(action) != fields[action['type']]:
         raise MeetingError('action fields')
     if len(canonical(action)) > 65536: raise MeetingError('action budget')
     if action['type'] == 'issue_turn' and (type(action['roleId']) is not str or action['roleId'] not in ROLES): raise MeetingError('role')
-    if action['type'] in {'submit_simulated', 'fail_turn'} and (type(action['ticketId']) is not str or len(action['ticketId']) > 160): raise MeetingError('ticket')
-    if action['type'] == 'submit_simulated' and (type(action['contextDigest']) is not str or not re.fullmatch('[a-f0-9]{64}', action['contextDigest'])): raise MeetingError('context digest')
+    if action['type'] in {'submit_simulated', 'submit_provider_response', 'fail_turn'} and (type(action['ticketId']) is not str or len(action['ticketId']) > 160): raise MeetingError('ticket')
+    if action['type'] in {'submit_simulated', 'submit_provider_response'} and (type(action['contextDigest']) is not str or not re.fullmatch('[a-f0-9]{64}', action['contextDigest'])): raise MeetingError('context digest')
     if action['type'] == 'fail_turn' and (type(action['outcome']) is not str or action['outcome'] not in {'failed', 'unknown'}): raise MeetingError('failure outcome')
 
 
@@ -72,13 +75,16 @@ def _transition(current, action, elapsed, packet):
     _shape(action)
     kind = action['type']
     state = deepcopy(current)
+    if kind in {'submit_simulated', 'submit_provider_response'}:
+        expected = 'submit_simulated' if state['mode'] == 'simulation_only' else 'submit_provider_response'
+        if kind != expected: raise MeetingError('provider mode mismatch')
     # An old accepted action must not keep another active slot alive past deadline.
     if state['phase'] not in TERMINAL and elapsed >= LIMITS['elapsedMilliseconds']:
         state['interruptedTurn'] = state['activeTurn']
         state.update(phase='timed_out', activeTurn=None)
         return state
     # Exact submit replay is a local no-op, not another slot or simulated execution.
-    if kind == 'submit_simulated':
+    if kind in {'submit_simulated', 'submit_provider_response'}:
         for round_ in state['rounds']:
             for accepted in round_['responses'].values():
                 if accepted['ticketId'] == action['ticketId']:
@@ -114,7 +120,7 @@ def _transition(current, action, elapsed, packet):
                    'opinionsAreUntrustedData': True, 'factActivated': False}
         state['activeTurn'] = {'ticketId': f"{state['meetingId']}:{round_['number']}:{action['roleId']}",
                                'roleId': action['roleId'], 'context': context, 'contextDigest': digest(context),
-                               'mode': 'simulation_only', 'modelAllowance': 4, 'toolAllowance': 8}
+                               'mode': state['mode'], 'modelAllowance': 4, 'toolAllowance': 8}
         state['allocatedTurns'] += 1
         state['allocatedModelAllowance'] += 4
         state['allocatedToolAllowance'] += 8
@@ -135,7 +141,7 @@ def _transition(current, action, elapsed, packet):
     round_ = state['rounds'][-1]
     round_['responses'][turn['roleId']] = {'ticketId': turn['ticketId'],
         'contextDigest': turn['contextDigest'], 'submissionDigest': digest(action),
-        'reviews': deepcopy(reviews), 'source': 'scripted_simulation', 'reviewStatus': 'unverified',
+        'reviews': deepcopy(reviews), 'source': 'scripted_simulation' if state['mode'] == 'simulation_only' else 'provider_response_declared', 'reviewStatus': 'unverified',
         'contextAcknowledgementProvesReading': False}
     state['activeTurn'] = None
     if len(round_['responses']) == len(ROLES):
@@ -151,14 +157,14 @@ def _transition(current, action, elapsed, packet):
 
 class Meeting:
     """Single-process serialized state. Budgets reserve slots; no actual calls are made."""
-    def __init__(self, *, clock=time.monotonic, meeting_id=None):
+    def __init__(self, *, clock=time.monotonic, meeting_id=None, provider_mode="scripted"):
         self._packet = _packet(load_packet())
         self._clock = clock
         self._started = clock()
         if type(self._started) not in {int, float} or not math.isfinite(self._started): raise MeetingError('clock')
         self._elapsed = 0
         self._observed = self._started
-        self._state = initial(meeting_id or str(uuid.uuid4()))
+        self._state = initial(meeting_id or str(uuid.uuid4()), provider_mode)
         self._events = []
         self._lock = threading.RLock()
 
@@ -189,7 +195,8 @@ class Meeting:
 
     def export(self):
         with self._lock:
-            data = {'schemaVersion': 1, 'kind': 'public_expert_meeting_simulation',
+            remote = self._state['mode'] == 'remote_protocol_declared'
+            data = {'schemaVersion': 2 if remote else 1, 'kind': 'public_expert_meeting_provider_protocol' if remote else 'public_expert_meeting_simulation',
                     'snapshotStatus': 'snapshot_only_not_execution_proof', 'authenticityVerified': False,
                     'state': self._state, 'events': self._events}
             raw = canonical(data)
@@ -203,11 +210,11 @@ def verify_snapshot(raw):
     data = strict(raw)
     if type(data) is not dict or set(data) != {'schemaVersion', 'kind', 'snapshotStatus', 'authenticityVerified', 'state', 'events'}:
         raise MeetingError('snapshot schema')
-    if type(data['schemaVersion']) is not int or data['schemaVersion'] != 1 or data['kind'] != 'public_expert_meeting_simulation' or data['snapshotStatus'] != 'snapshot_only_not_execution_proof' or data['authenticityVerified'] is not False:
+    if type(data['schemaVersion']) is not int or (data['schemaVersion'], data['kind']) not in ((1, 'public_expert_meeting_simulation'), (2, 'public_expert_meeting_provider_protocol')) or data['snapshotStatus'] != 'snapshot_only_not_execution_proof' or data['authenticityVerified'] is not False:
         raise MeetingError('snapshot boundary')
     if type(data['events']) is not list or len(data['events']) > 32: raise MeetingError('event budget')
     if type(data['state']) is not dict or 'meetingId' not in data['state']: raise MeetingError('snapshot state')
-    state = initial(data['state']['meetingId'])
+    state = initial(data['state']['meetingId'], 'remote' if data['schemaVersion'] == 2 else 'scripted')
     packet = _packet(load_packet())
     previous, elapsed = '0' * 64, 0
     for seq, row in enumerate(data['events'], 1):
@@ -221,4 +228,4 @@ def verify_snapshot(raw):
         state, previous, elapsed = next_, row['sha256'], row['elapsedMs']
     if canonical(state) != canonical(data['state']): raise MeetingError('snapshot mismatch')
     return {'localConsistencyVerified': True, 'authenticityVerified': False,
-            'mode': 'simulation_only', 'phase': state['phase'], 'factActivated': False}
+            'mode': state['mode'], 'phase': state['phase'], 'factActivated': False}
