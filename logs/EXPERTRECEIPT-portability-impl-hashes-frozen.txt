@@ -1,0 +1,1 @@
+060b89358ce5810379e9f448d1926dc0d040b9439d1d019ad27a042ba12a9a60  tests_acceptance/EXPERTRECEIPT/test_independent.py

@@ -1,0 +1,11 @@
+2026-11-14 isolated offline extraction
+GitHub main refs/heads/main = 4a6e72939c1d740707d65abb505b6eb90d585708
+Source expert = 1d5262c9f8a491fd7b1d8037c4dff8988865770c
+receipt.py equality with source: exact bytes; implementation unchanged.
+19 local artifact protocol tests passed; 24 main route-classification tests passed.
+Frozen hashes verified; git diff --check passed.
+Selected new files contain only source, documentation and synthetic test evidence;
+no credential patterns, personal/private case artifacts, environment dumps or caches.
+No complete expert-stack runtime/browser/authentication validation on new main.
+No network model calls. Real execution HOLD; trusted credential binding absent.
+No push, PR, merge, deployment or environment/security modification.
