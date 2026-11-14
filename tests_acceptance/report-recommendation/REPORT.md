@@ -28,3 +28,7 @@ These10 passes establish current behavior and rollback boundaries only. They are
 A safe active subset cannot simply omit causes: at least one cause label is required, and even Draft carries the unresolved association. A bounded new extension would need explicit typed cause binding or a separately designed read-only historical mode, plus citation/source routing and workflow semantics. Neither exists in this candidate. Therefore **no new successful format or whitelist relaxation is enabled**. The detailed reviewable draft is DESIGN-DRAFT.md; proposed future1.5 remains unknown/rejected and is not a released format.
 
 Keep report+recommendation export409 until those prerequisites are implemented and validated together. Existing1.4 and earlier restrictions, authenticated-identity absence, long locks/memory/DB-filesystem crash boundary and prior browser sandbox blocker remain. No merge/deployment; this branch is evidence/design, not a release candidate for added restoration capability.
+
+## Main advanced during parallel integration review
+
+Remote main advanced to4a6e729 (#75 exact AIS sample metadata and #76 environment fixture correction). The isolated combination in /workspace/mcis-aeb-main-integration preserves those main changes and applies exact aeb8cf1 production files. Running these same10 probes against that combination produced10 passed/5.66s (latest-main-combination.txt). This is additional coordinator evidence, not the earlier independent run or a newly implemented recommendation archive.
