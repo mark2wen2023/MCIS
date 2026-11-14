@@ -613,3 +613,10 @@ and embedded foreign case binding fail closed (including TrackPointRow). Origina
 report/evidence retained as history; new independent52pass closes original2 failing probes.
 Current header identity remains unverified; this is policy consistency, not production auth.
 No push/merge/deploy; no full-policy bypass to improve performance.
+
+## 2026-11-14 Legacy content GET evidence visibility consistency
+Coordinator authorizes repair of reproduced evidence.restricted Remove bypass before and
+after restore. Modify frozen evidence/router.py content GET only to reuse filter_evidence
+inside existing reserved transaction before descriptor/file read or Access audit. Preserve
+all existing category, digest, archive and ZIP gates; no new role semantics or trusted ID.
+Base0991857; no Base64 input changes in this independent branch.

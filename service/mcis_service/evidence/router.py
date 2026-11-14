@@ -164,6 +164,8 @@ def get_content(case_id: str, evidence_id: str, purpose: str = "查看原件", c
             historical_only()
         require(ctx, s, case_id, "evidence_meta")
         item = service.load_item(s, case_id, evidence_id)
+        if not filter_evidence([item], ctx.role, get_policy(s, case_id)):
+            raise problem(403, "FORBIDDEN", "受限证据")
         if item.get("confidentiality") == "Restricted" and level_of(get_policy(s, case_id), ctx.role, "testimony") not in ("ReadWrite", "ReadOnly"):
             raise problem(403, "FORBIDDEN", "受限证据原件仅调查组可调阅")
         rel = item.get("relativePath") or ""

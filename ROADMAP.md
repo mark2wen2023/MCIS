@@ -386,3 +386,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-14 | Main safety + PR61/64 integration | BLOCKED，本地未提交 | 真实main3aba2bf起始，仅六个单提交差分，14产品文件；冲突保留摘要+容器门，并补旧ZIP导出门。扩大495过/5基线失败/2缺.NET跳过；独审限定72过；后续普通legacy导出撤权2项失败，干净main同样失败，包内含被拒绝类别原文。禁止据此放行，不推送合并部署。 |
 
 | 2026-11-14 | Legacy package policy repair + main combination | 原阻断本地关闭，待协调复核 | 独立修复58过；新组合独审52过(含原2失败断言变403)；扩大537过/5原基线失败/2缺.NET跳过。旧BLOCKED证据原样保留；新增逐项policy/跨案/空审计/并发rollback门，无真实身份认证、性能或部署放行声明。 |
+
+| 2026-11-14 | Legacy evidence content visibility | 待独验 | 冻结logs/content-visibility-impl-hashes-frozen.txt；GET复用filter_evidence，维持原事务及摘要/容器门，无Base64修改。 |
+
+| 2026-11-14 | Legacy evidence content visibility | 本地独验通过 | 回归112过1缺.NET跳；独审10过，恢复前后原失败断言403且无Access写入；跨案/并发撤权不削弱事务。真实身份、长锁、内存未解；与Base64分支独立，未推送合并部署。 |
