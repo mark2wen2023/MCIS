@@ -561,3 +561,16 @@ The new endpoint adds conservative current-case evidence/interview visibility an
 The browser uses a fixed-profile ZIP_STORED and strict JSON verifier, actual member CRC/SHA, preview/request binding and original audit association. No object URL/download occurs until checks succeed. Unknown delivery persists only scoped metadata and never auto-retries. Explicit stop-wait discards even abort-ignoring late replies. After checking downloads the user can knowingly abandon an attempt and freshly preview a new generation; storage corruption/unavailability has an explicit scoped recovery check, never silent lock deletion or false success. Local headers and hashes are not authentication, signature, facts or complete audit-chain certification.
 
 Engineering caps are declared for report/output/audit/manifest/ZIP. A self-review removed an unintended2MiB policy-fingerprint limit by streaming its hash without adding a policy editing restriction. OpenAPI labels now match the two new report-output routes while preserving the old14-report-route test unchanged. The B retention plan allocates no archive version and remains unimplemented.
+
+
+## TL-INTERVAL (2026-11-14) timeline interval safety
+Authorized isolated maintenance of frozen timeline router: reject nonfinite or reversed request/event ranges; preserve inclusive endpoints including zero and negative relative seconds. Existing stored events are not migrated or rewritten. `endTimeSec` describes event duration, not uncertainty bounds. Source labels, evidence IDs, presumptive and confirmed flags remain untouched. No automatic credibility decision, clock correction, new UI or model capability claimed.
+
+## TL-SOURCE-DISPLAY (2026-11-14)
+Authorized isolated EvidencePage tooltip change: render existing sourceLabel and all evidenceIds as escaped plain text, expose existing presumptive/confirmed flags without inference. Missing flags show unknown, never infer truth from absent fields. No extra data fetch, evidence resolution, navigation, permission changes, AI, new uncertainty model or source mutations. Keep case display timezone formatter. New pure helper + tests; main EvidencePage edit is one import and one callback call.
+
+## TL-AXIS (2026-11-14), dependent on PR66
+Fix verified axis/API mismatch: existing negative event starts, CPA points, and conflict markers must be inside the configured time domain. Preserve zero and default positive range; extend only for finite recorded seconds without inference, rounding or timestamp mutation. A valid recorded event duration end can extend display domain but is not uncertainty. New iterative helper avoids spread-argument limits. No server or source changes.
+
+### TL-AXIS integration correction (2026-11-14)
+Root authorized correction on PR70 after combined testing reproduced fixed60-second tick exhaustion at multi-day spans and finite-endpoint overflow. Replace fixed ticks with adaptive splitNumber8 via one production axis factory shared with SSR tests. When span or displayed-date endpoints are not representable, return an explicit unavailable notice and do not mount ECharts, without clipping evidence or editing timestamps. Multi-day labels include date. Refreeze implementation; previous2 SSR checks lacked production interval and did not prove its tick safety.
