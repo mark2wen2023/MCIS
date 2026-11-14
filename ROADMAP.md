@@ -391,3 +391,9 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-14 | EXPERTEXECUTOR r1 | 受限独立验收通过 | 独立25/25、相关合跑109/109（19新+65原+25独审），10冻结前后匹配。D01六Bridge审计故障阶段及粘性读取修复，初始红测保留。实际Pi进程配脚本提供方，取消/截止/进程组/共享预算回执经过协议验收；不等于真实DeepSeek/语义/身份/持久化能力。仅本地候选，不合并部署。 |
 
 | EXPERTRESEARCH-INTEGRATION | 待测 | 2026-11-14：隔离3125eaf与872815c依赖审计；15项离线整合测试；真实adapter仅设计，旧查看器未接会议；冻结logs/EXPERTRESEARCH-INTEGRATION-impl-hashes-frozen.txt |
+
+| 2026-11-14 | EXPERTREMOTE | 待测 | 独立93284d8上显式固定DeepSeek传输+4/16账本+v1提供方会议回执校验；56离线协议测试；未接真实Pi完成路径、无真实调用；冻结logs/EXPERTREMOTE-impl-hashes-frozen.txt |
+
+| 2026-11-14 | EXPERTREMOTE r1 | 待复验 | 独审空闲cancel状态与BaseException未知保留修复；58开发测试过，更新5冻结；真实Pi接通/模型调用仍未验。 |
+
+EXPERTREMOTE r1冻结使用logs/EXPERTREMOTE-r1-impl-hashes-frozen.txt；原名保留初始红测对应哈希（按原始文件内容还原，独审对照初始记录核验）。

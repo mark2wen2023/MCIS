@@ -579,3 +579,8 @@ Coordinator review found directory-leaf fdopen failure leaks a raw descriptor. R
 
 ## 2026-11-14 EXPERTRESEARCH integration audit
 以3125eaf隔离检查649d865→0a4bf22→3125eaf，工作台872815c分叉a686c85。仅新增可复现跨模块测试与审查文档，不改运行代码、不真正merge/cherry-pick、不接服务。已发现工作台旧单轮result.json与新会议/预算/运行回执合同不兼容；保留拒绝，不能捏造旧manifest/runId混入。测试需区分链内一致、旧工作台仍可用、会议UI整合仍阻断，实际Pi始终脚本提供方。
+
+## EXPERTREMOTE 2026-11-14
+在93284d8独立分支新增显式DeepSeek传输、单控制器跨轮账本与版本化提供方会议回执校验。仅允许现有Bridge产生的规范请求与公开packet绑定，不改模拟完成路径；响应暂交调用者，Pi远程接通不在此切片。固定官方端点、不重定向重试、未知停止；真实请求本轮禁止。新增research/expert_remote，独立验收后仅本地提交。
+
+EXPERTREMOTE r1：独审发现空闲cancel未立即反映halted；自查BaseException未知行未粘性停止。修cancel及finally，保留独审红测并更新冻结复验。
