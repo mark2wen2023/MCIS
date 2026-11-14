@@ -210,3 +210,8 @@ Export also verifies the service's existing local source.mcase path, active inta
 Three-database acceptance uses supported known-version packages and checks structural association plus exact retained bytes under the unified budget; it does not claim cryptographic provenance authentication. Unknown inner versions and budget overflow explicitly fail with unchanged data.
 
 Review time precision clarification: review_section obtains its UTC before append_operation/audit obtains a separate UTC. Preserve both original valid UTC strings; they may cross a second boundary. Never require equality or invent a maximum time-difference threshold. Link by validated auditSeq/action/actor/reason/target/values, not timestamp coincidence.
+
+
+## 1.4.0 candidate amendment (2026-11-14)
+
+For the bounded working-v1 plus timeline combination only, see [report-timeline-archive-v1.md](report-timeline-archive-v1.md) and timeline-records-archive schema. That versioned contract supersedes this document’s timeline_events refusal and historical-version enumeration for1.4.0. Unknown states and all other guarantees remain unchanged; old versions retain their original meaning.

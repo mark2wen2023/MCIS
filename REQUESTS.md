@@ -566,3 +566,13 @@ Engineering caps are declared for report/output/audit/manifest/ZIP. A self-revie
 ## W9.2 test fixture policy alignment (2026-11-14)
 
 On main f2eff95, environment-only archive tests unintentionally export the seeded demonstration's restricted recommendation content, receive 403, then parse its JSON as ZIP. Scope the module to a synthetic empty case, assert export success before ZIP parsing, and explicitly retain the seeded-case denial regression. No product permissions, archive contracts, global fixtures or production settings change. This updates previously frozen W9.2 tests only.
+
+## Bounded working-record + timeline archive (2026-11-14)
+
+Propose outer MCIS-MCASE1.4.0 with working-record v1 plus timeline-records v1; retain old1.0–1.3 semantics. Authoritative timeline rows include key/document/exact created/updated UTC; mirror must equal authoritative documents. Validate case/time/unique ID/evidence/vessel references; preserve audits and restore transactionally. No timeline conflicts/recommendations/consultation/COLREG/agent states or track-history combination. Existing full-content permission and closed-world unknown-table rejection remain. Updates frozen archive/parser implementation only for this explicit contract and matching regressions; no identity or production configuration changes.
+
+## Web alignment for archive1.4 (2026-11-14)
+
+Separate descendant of reviewed fe36587. Align package preview/receipt validator with1.4 + working-v1 only, keep old versions and HFACS checks, render version-specific timeline scope and explicit unsupported combinations. No backend format/permissions or unknown-write retry changes. Validate actual browser→local service preview/confirmation/import/receipt and negative range. Changes to frozen package-intake frontend are limited to this contract alignment.
+
+The corresponding package export panel scope text is aligned too; download/commit/unknown-result control flow is unchanged. Browser validation is attempted with sandbox enabled; no sandbox-disabling fallback is permitted.

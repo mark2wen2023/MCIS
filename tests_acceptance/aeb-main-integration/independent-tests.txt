@@ -1,0 +1,13 @@
+
+==================================== ERRORS ====================================
+________________________ ERROR collecting test session _________________________
+ImportError while importing test module '/workspace/mcis-aeb-main-integration/tests_acceptance/EXACT_SAMPLE/test_independent.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests_acceptance/EXACT_SAMPLE/test_independent.py:10: in <module>
+    from test_exact_sample import samples
+E   ModuleNotFoundError: No module named 'test_exact_sample'
+=========================== short test summary info ============================
+ERROR service
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.21s
