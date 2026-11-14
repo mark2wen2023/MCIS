@@ -566,3 +566,9 @@ Engineering caps are declared for report/output/audit/manifest/ZIP. A self-revie
 ## W9.2 test fixture policy alignment (2026-11-14)
 
 On main f2eff95, environment-only archive tests unintentionally export the seeded demonstration's restricted recommendation content, receive 403, then parse its JSON as ZIP. Scope the module to a synthetic empty case, assert export success before ZIP parsing, and explicitly retain the seeded-case denial regression. No product permissions, archive contracts, global fixtures or production settings change. This updates previously frozen W9.2 tests only.
+
+## EXPERTRECEIPT — main-based offline extraction (2026-11-14)
+Propose only the reviewed expert receipt consistency foundation from 1d5262c on
+main 4a6e729; no application routes or provider access. See
+research/expert_group/RECEIPT_SCOPE.md for dependency splits and strict scope limits.
+Raw credential and real API execution remain HOLD. No merge/deployment requested.

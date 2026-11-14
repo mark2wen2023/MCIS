@@ -372,3 +372,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-14 | W9.2 test fixture policy alignment | 冻结待独立验收 | main f2eff95；观测归档测试改用模块独立合成空案，显式检查导出成功并保留演示案403回归。原组12失败57通过，修后70通过/16.94s。只改测试，不放宽权限；冻结 logs/test-root-causes-impl-hashes-frozen.txt。全套历史180失败104错误尚未全部修复。 |
 
 | 2026-11-14 | W9.2 test fixture policy alignment | 窄切片独立验收通过 | 独审原模块12失败57通过/26.31s，修后70通过/15.71s；冻结hash一致、原断言参数保留、产品代码不变。开发相邻74通过/5.24s。见 tests_acceptance/test-root-causes-independent/REPORT.md；非全套绿色、不部署。 |
+
+| EXPERTRECEIPT | 待测 | 2026-11-14：main 4a6e729 上仅提取离线工件一致性基础，19项自测通过；冻结 logs/EXPERTRECEIPT-impl-hashes-frozen.txt。不含专家产品接线，真实请求0/HOLD；完整依赖审计见 research/expert_group/RECEIPT_SCOPE.md。 |
+| EXPERTRECEIPT | 限定范围独审通过 | 2026-11-14：16项独立测试、3/3冻结一致；仅可信私有目录单写者离线一致性，见 DEFECTS/EXPERTRECEIPT.md。main路由回归24项通过；无整栈/真实模型/浏览器验收，HOLD。 |
