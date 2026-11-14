@@ -618,3 +618,8 @@ EXPERTCONNECTED r3：修独审提示的embedded已显示但aria-live仍称未载
 
 ## EXPERTINTENT 2026-11-14
 基于498f807补浏览器到执行器前的最小离线准备合同。工作台显式下载固定公开packet请求标识，不含材料正文/凭据/URL/预算/ready/授权；重复导出同页同ID。Python严格预检仅返回BLOCKED，不排队、不调用Executor、不连接平台。真正身份授权、可信凭据bootstrap、原子预算/幂等/取消及回执绑定仍缺；不得把请求或预检摘要当授权/执行凭证。修改冻结app.ts与新增研究接口，不改正式案件。
+
+## EXPERTCONNECTIONAUDIT 2026-11-14
+核对PR56历史Pi+DeepSeek成功及后续模拟Skill记录与4b09333专家候选。无可信平台绑定可供接线，不改运行路径；新增版本/来源差异审计与历史成功不能替代intent授权的离线回归。只存公开文件来源摘要和安全存在性布尔，不存实例标识或秘密，不调用API。
+
+EXPERTCONNECTIONAUDIT补充：审查范围扩展至旧read-only、working/reference与UI共5份公开JSONL，保留202d/f3ec拒绝和此前丢失第四次unknown，不以成功覆盖失败。新增historical-chain.json只摘要公开阶段/计数/源SHA，非新调用。

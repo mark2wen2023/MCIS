@@ -441,3 +441,7 @@ EXPERTCONNECTED r3待复验：embedded aria-live状态准确，34新增DOM/40旧
 | 2026-11-14 | EXPERTINTENT | 待独审/真实BLOCKED | 498f807隔离，既有工作台显式导出固定公开准备请求→纯离线严格预检；合法也BLOCKED，非授权/回执/预算预留。26预检+TS/Python DOM合同、43状态/34会议/40旧/19来源断言通过；freeze logs/EXPERTINTENT-impl-hashes-frozen.txt。无可信bootstrap/API/真实调用。 |
 
 | 2026-11-14 | EXPERTINTENT | 离线独审通过/真实BLOCKED | 16独立Python+7独立DOM场景、7冻结一致；相关合跑74过，前端合同/状态/来源与TS通过。请求只供离线准备，非认证/授权/执行回执/预算预留；真实服务与原生下载未验，无模型/API调用。 |
+
+| 2026-11-14 | EXPERTCONNECTIONAUDIT | 待独审/真实HOLD | 4b09333隔离，历史5d3b15事件/3请求与Skill模拟差异核对；当前无可信连接，运行代码不变。9新增与前置/raw/CLI合59过；冻结logs/EXPERTCONNECTIONAUDIT-impl-hashes-frozen.txt。旧记录不是当前授权/模型认证，无真实请求或凭据读取。 |
+
+| 2026-11-14 | EXPERTCONNECTIONAUDIT r1 | 离线审计通过/真实HOLD | 17独立用例、4冻结及6源文件/5旧回执核对一致；合跑76过。两拒绝三accepted历史分别保留，lost第四未知不覆盖；没有可运行trustedbinding，不改生产路径/不读取凭据/API。 |

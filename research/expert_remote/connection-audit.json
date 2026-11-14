@@ -1,0 +1,57 @@
+{
+  "schema": "mcis.expert-connection-audit.v1",
+  "currentCandidate": "4b093336b63545e40bd9fddbb8297a0953333c4e",
+  "sourceFiles": [
+    {
+      "commit": "254167e3e957784fd9d2d136a275731f33314d9b",
+      "path": "tests_acceptance/PI_PUBLIC_UI/LIVE_RESULT.md",
+      "sha256": "3172a652bf9e857b8c4af5058a8763725afd3438a9640ba60a2493984246443f"
+    },
+    {
+      "commit": "254167e3e957784fd9d2d136a275731f33314d9b",
+      "path": "tests_acceptance/PI_PUBLIC_UI/BROKER.md",
+      "sha256": "ba6101fc3169d7dc8772fa1f4e913771f8f4f4cf1ebbffe6960af728147e7332"
+    },
+    {
+      "commit": "254167e3e957784fd9d2d136a275731f33314d9b",
+      "path": "tests_acceptance/PI_PUBLIC_UI/receipts/public-ui-5d3b415b.jsonl",
+      "sha256": "2326a2741ec325be1da1a1029db17dac2cedf6454a7416097d65e618950c5f84"
+    },
+    {
+      "commit": "254167e3e957784fd9d2d136a275731f33314d9b",
+      "path": "tests_acceptance/PI_SKILL/REPORT.md",
+      "sha256": "7b0ae05dec0af2c7eec523f2033438adb427d8098fcaaed0ba57dfde4f33bf45"
+    },
+    {
+      "commit": "254167e3e957784fd9d2d136a275731f33314d9b",
+      "path": "tools/pi-transcript/public-ui-host.py",
+      "sha256": "9ffdc6c22a4c2e2c299716e46c1b49125770533fadc249d15ed516676023bb49"
+    },
+    {
+      "commit": "254167e3e957784fd9d2d136a275731f33314d9b",
+      "path": "service/mcis_service/agents/pi_deepseek_transport.py",
+      "sha256": "117fa57b201c812cc5fe69ba594413ce30db71fe96e708b9b5ac7603f5ef1ac5"
+    }
+  ],
+  "historicalRecordedRun": {
+    "runId": "5d3b415b-9e8b-4c5e-aa98-9c978834fd85",
+    "events": 15,
+    "terminalPhase": "accepted_pending_review",
+    "modelRequestStartedEvents": 3,
+    "modelRequestReturnedEvents": 3,
+    "terminalModels": 3,
+    "terminalTools": 2,
+    "terminalProposals": 6,
+    "terminalCitations": 6,
+    "rerunThisAudit": false,
+    "providerIdentityAuthenticatedByThisAudit": false
+  },
+  "currentSafeMetadataObservation": {
+    "observationsCurrent": true,
+    "secretBindingsPresent": false,
+    "sourceConfigPresent": false,
+    "runtimeVariablesPresent": false
+  },
+  "realRequestsThisAudit": 0,
+  "currentExecutionAuthorized": false
+}

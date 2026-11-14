@@ -1,0 +1,67 @@
+{
+  "status": "historical_records_not_current_authorization",
+  "providerIdentityAuthenticated": false,
+  "historicalLostFourthRunRemainsUnknown": true,
+  "runs": [
+    {
+      "sourceCommit": "254167e3e957784fd9d2d136a275731f33314d9b",
+      "path": "tests_acceptance/PI_TRANSCRIPT/receipts/public-probe-202d715c.jsonl",
+      "sha256": "e3b96b6e93bc981a86cdfe1f087202fa1138df95ec5856d4530b27d6b81c3350",
+      "runId": "202d715c-5123-44f0-8445-67cade98b96a",
+      "terminalPhase": "not_accepted",
+      "events": 11,
+      "modelRequestsRecorded": 3,
+      "toolsAtTerminal": null,
+      "proposalsAtTerminal": null,
+      "rerunThisAudit": false
+    },
+    {
+      "sourceCommit": "254167e3e957784fd9d2d136a275731f33314d9b",
+      "path": "tests_acceptance/PI_TRANSCRIPT/receipts/public-probe-be93095b.jsonl",
+      "sha256": "22ea4c6c9511962d1be98189d0a16b85d90ee4e6bfd17ee54d857c23ee8021af",
+      "runId": "be93095b-c8be-47e1-9579-f2a3788a23aa",
+      "terminalPhase": "accepted_pending_review",
+      "events": 14,
+      "modelRequestsRecorded": 4,
+      "toolsAtTerminal": 3,
+      "proposalsAtTerminal": 7,
+      "rerunThisAudit": false
+    },
+    {
+      "sourceCommit": "254167e3e957784fd9d2d136a275731f33314d9b",
+      "path": "tests_acceptance/PI_WORKING_LIVE/receipts/public-working-f3ecba87.jsonl",
+      "sha256": "f47771a5e35f947798db8c6bc1070492c75e2fc13a08bbb63f1c866e2318f1ef",
+      "runId": "f3ecba87-a33e-4927-92cd-55e2148dcf88",
+      "terminalPhase": "not_accepted",
+      "events": 14,
+      "modelRequestsRecorded": 4,
+      "toolsAtTerminal": null,
+      "proposalsAtTerminal": null,
+      "rerunThisAudit": false
+    },
+    {
+      "sourceCommit": "254167e3e957784fd9d2d136a275731f33314d9b",
+      "path": "tests_acceptance/PI_COMPLETION_REFERENCE/receipts/public-working-00975fc8.jsonl",
+      "sha256": "d295a4efbc9062dc8db8c3b6db992920cf81d27f96dda0c28a7111c843a058ce",
+      "runId": "00975fc8-2298-4132-add3-a323c55989c2",
+      "terminalPhase": "accepted_pending_review",
+      "events": 12,
+      "modelRequestsRecorded": 3,
+      "toolsAtTerminal": 2,
+      "proposalsAtTerminal": 7,
+      "rerunThisAudit": false
+    },
+    {
+      "sourceCommit": "254167e3e957784fd9d2d136a275731f33314d9b",
+      "path": "tests_acceptance/PI_PUBLIC_UI/receipts/public-ui-5d3b415b.jsonl",
+      "sha256": "2326a2741ec325be1da1a1029db17dac2cedf6454a7416097d65e618950c5f84",
+      "runId": "5d3b415b-9e8b-4c5e-aa98-9c978834fd85",
+      "terminalPhase": "accepted_pending_review",
+      "events": 15,
+      "modelRequestsRecorded": 3,
+      "toolsAtTerminal": 2,
+      "proposalsAtTerminal": 6,
+      "rerunThisAudit": false
+    }
+  ]
+}
