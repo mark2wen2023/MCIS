@@ -24,16 +24,7 @@ class LocalProvider:
     """Host supplies already selected config; never reads model/credential env."""
     config:model_client.ModelConfig
     def complete(self,messages):
-        cfg=self.config
-        try:
-            u=urlsplit(cfg.base_url)
-            valid=(type(cfg) is model_client.ModelConfig and u.scheme=='http' and u.hostname in ('127.0.0.1','::1')
-                and u.port is not None and 1<=u.port<=65535 and not u.username and not u.password
-                and not u.query and not u.fragment and u.path.rstrip('/')=='/v1'
-                and isinstance(cfg.model,str) and 0<len(cfg.model)<=200 and bool(cfg.model.strip()) and all(ord(x)>=32 for x in cfg.model))
-        except (ValueError,TypeError,AttributeError):valid=False
-        if not valid:raise problem(503,'HOST_MODEL_CONFIG_INVALID','模型端点配置无效')
-        return model_client.complete(cfg,messages)
+        return model_client.complete(model_client.validate_config(self.config),messages)
 
 
 def snapshot_in_session(s,db,settings,token,case_id,record_id):
