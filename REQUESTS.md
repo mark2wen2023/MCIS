@@ -565,3 +565,7 @@ Engineering caps are declared for report/output/audit/manifest/ZIP. A self-revie
 
 ## IQ-1A manual persistent investigation issue API (2026-11-13, pending independent verification)
 User confirmed evolving hypotheses → verification → recorded group discussion, no automatic judgment. Separate backend-only slice built on main 3aba2bf; PR44 proposal remains reference. Register changes to shared main/models_registry/package export and new contracts file. Conservative full-content access, current roles are self-reported local headers. Supports multiple hypotheses and round-bound verification; no timeline/LLM/UI. New business state blocks .mcase export explicitly (user acknowledgment required at creation), no silent omission. Full integration/independent acceptance required before merge.
+
+
+## IQ-1B read-only review snapshot (2026-11-14)
+Registered change to frozen IQ-1A router and OpenAPI: add GET /investigation-issues/{iid}/review; no mutation changes. Reuses full-content and all historical source checks. Existing authorization BEGIN IMMEDIATE reserves policy/state/event reads through response construction. New projection joins current hypothesis version/round to its full recorded verification event, preserving manual activity/result/source. No LLM, UI, identity authentication, semantic verdict or archive support. PR47 archive merge blocker remains. Independent branch only.

@@ -13,6 +13,7 @@ from ..interviews.access import source as protect_source
 from ..reports.access import NoStoreRoute,require_content
 from .models import IssueRow,EventRow,ReceiptRow
 from .domain import fail,obj,txt,uid,integer,parse,digest,refs,transition,MAX_BODY
+from .review import review_snapshot
 router=APIRouter(prefix='/api/v1/cases/{case_id}/investigation-issues',tags=['investigation-issues'],route_class=NoStoreRoute)
 
 def authorize(s,ctx,case_id,write=False):
@@ -115,6 +116,20 @@ def events(case_id:str,iid:str,after:int=Query(0,ge=0),limit:int=Query(50,ge=1,l
         rows=s.scalars(select(EventRow).where(EventRow.case_id==case_id,EventRow.issue_id==iid,EventRow.seq>after).order_by(EventRow.seq).limit(limit+1)).all()
         return {'items':[deepcopy(r.doc)for r in rows[:limit]],'nextAfter':rows[limit-1].seq if len(rows)>limit else None}
 
+@router.get('/{iid}/review')
+def review(case_id:str,iid:str,ctx:Ctx=CtxDep):
+    # Existing authorization reserves SQLite writer before policy/state/event reads.
+    # No new identity, evidence verdict, audit certification or archive capability.
+    with ctx.db.session() as s:
+        authorize(s,ctx,case_id)
+        row=issue(s,ctx,case_id,iid)
+        doc=view(s,ctx,case_id,row)
+        history=s.scalars(select(EventRow).where(
+            EventRow.case_id==case_id,EventRow.issue_id==iid,
+            EventRow.seq<=doc['revision']).order_by(EventRow.seq)).all()
+        return JSONResponse(review_snapshot(doc,[r.doc for r in history]),
+                            headers={'ETag':str(doc['revision'])})
+
 @router.post('/{iid}/events')
 async def append(case_id:str,iid:str,request:Request,ctx:Ctx=CtxDep):
     with ctx.db.session()as s:authorize(s,ctx,case_id,True)
@@ -145,3 +160,4 @@ def protect_export(s,case_id,role):
     if exists:
         require_content(s,case_id,role)
         raise problem(409,'ISSUE_ARCHIVE_UNSUPPORTED','案件包含调查问题历史，尚无完整归档支持，未生成部分案件包')
+
