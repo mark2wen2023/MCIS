@@ -67,15 +67,11 @@ def file_path(ctx,case_id,rel):
     return path
 
 
+from ..common.safe_files import SafeReadUnavailable, read_regular_no_symlinks
+
+
 def read_file(path):
-    # Reject special files, avoid unbounded reads. O_NOFOLLOW closes the leaf-link race.
-    import stat
-    fd=os.open(path,os.O_RDONLY|getattr(os,'O_NOFOLLOW',0)|getattr(os,'O_NONBLOCK',0))
-    with os.fdopen(fd,'rb') as f:
-        if not stat.S_ISREG(os.fstat(f.fileno()).st_mode): raise ValueError('not regular file')
-        raw=f.read(MAX_BYTES+1)
-    if len(raw)>MAX_BYTES: raise ValueError('file budget')
-    return raw
+    return read_regular_no_symlinks(path, MAX_BYTES)
 
 
 def exclusive_write(path: Path,raw,created):
@@ -138,6 +134,8 @@ def load_receipt(ctx,s,case_id,digest):
                  'registeredUtc':reg.utc,'registeredBy':reg.operator,'registeredRole':binding['role'],
                  'evidence':evidence.derive(item,events),'replayed':True}
         return receipt,raw
+    except SafeReadUnavailable:
+        raise problem(503,'INTAKE_SAFE_READ_UNAVAILABLE','当前平台不支持安全的登记原件读取；未降级读取') from None
     except (OSError,ValueError,KeyError,TypeError,UnicodeError,RecursionError,HTTPException):
         raise problem(409,'INTAKE_INTEGRITY','原件或登记快照/绑定信息缺失、篡改或不支持变更；未修复，也未核对为完整保存')
 
@@ -158,6 +156,8 @@ async def commit_input(case_id:str,request:Request,ctx:Ctx=CtxDep):
     with WRITE_LOCK:
         try:
             with ctx.db.session() as s:
+                from ..reports.access import begin
+                begin(s)
                 authorize(ctx,s,case_id,write=True)
                 result,binding=preview(body,raw,case_id,ctx.operator,ctx.role);digest=result['requestDigest']
                 if digest!=body['requestDigest']: raise problem(409,'INTAKE_STALE','原件、声明或操作身份变化，请重新预览')
