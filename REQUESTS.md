@@ -579,3 +579,11 @@ object. Reproduced in single-branch clone (15 pass/1 fail). Replace that Git loo
 with the SHA-256 pinned at reviewed extraction; preserve source commit provenance
 and stdlib assertion. No runtime change or history import. Source exports without
 .git pass, and modified source bytes fail the pinned digest assertion.
+
+## HFACS CLI source portability (2026-11-14)
+Replace tools/mcis-hfacs/test_cli.py's external ../mcis-w144 source comparison
+with fixed seven core hashes taken from committed W184 verified-impl-sha256.txt,
+not generated at runtime from candidate sources. Preserve manifest/local source
+comparison and concurrent real CLI rebuild equality. Add SDK-free mutation tests;
+missing/changed sources or receipt omissions fail. No production/build/core changes.
+Historical W184 report stays unchanged; its past environment is not current proof.
