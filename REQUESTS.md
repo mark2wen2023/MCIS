@@ -579,3 +579,10 @@ object. Reproduced in single-branch clone (15 pass/1 fail). Replace that Git loo
 with the SHA-256 pinned at reviewed extraction; preserve source commit provenance
 and stdlib assertion. No runtime change or history import. Source exports without
 .git pass, and modified source bytes fail the pinned digest assertion.
+
+## Audit test policy alignment (2026-11-14)
+On main 73fc800, test_audit.test_chain_valid_and_format receives403 for protected
+seed audit content with Investigator, then raises TypeError before checking the
+chain. Change only this module: use allowed LeadInvestigator for full-content
+assertions, assert response status, and retain explicit Investigator denial and
+summary-only verification. No global fixture, service/policy, archive or SDK changes.

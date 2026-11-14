@@ -9,9 +9,16 @@ from .conftest import C, H
 
 
 def test_chain_valid_and_format(client):
-    v = client.get(f"{C}/audit:verify", headers=H()).json()
+    verified = client.get(f"{C}/audit:verify", headers=H())
+    assert verified.status_code == 200, verified.text
+    v = verified.json()
     assert v["valid"] and v["count"] > 40
-    ev = client.get(f"{C}/audit", params={"limit": 2000}, headers=H()).json()
+    # Seed audit includes protected recommendation/consultation originals.
+    # Synthetic role headers exercise policy only; they are not authenticated SSO.
+    response = client.get(f"{C}/audit", params={"limit": 2000},
+                          headers=H("LeadInvestigator"))
+    assert response.status_code == 200, response.text
+    ev = response.json()
     assert [e["seq"] for e in ev] == list(range(1, len(ev) + 1))
     assert ev[0]["prevHash"] == ZERO_HASH
     for a, b in zip(ev, ev[1:]):
@@ -53,3 +60,17 @@ def test_tamper_detected_by_verify():
 
 def test_external_cannot_read_audit(client):
     assert client.get(f"{C}/audit", headers=H("ExternalExpert")).status_code == 403
+
+
+def test_investigator_can_verify_but_not_read_protected_seed_audit(client):
+    before = client.get(f"{C}/audit:verify", headers=H())
+    assert before.status_code == 200, before.text
+    assert before.json()["valid"]
+    denied = client.get(f"{C}/audit", params={"limit": 2000}, headers=H())
+    assert denied.status_code == 403, denied.text
+    assert denied.json()["code"] == "FORBIDDEN"
+    assert "no-store" in denied.headers["cache-control"]
+    assert "line" not in denied.json() and "events" not in denied.json()
+    after = client.get(f"{C}/audit:verify", headers=H())
+    assert after.status_code == 200, after.text
+    assert after.json() == before.json()
