@@ -12,7 +12,7 @@ from ..cases.service import load_case
 from ..common.context import Ctx, CtxDep, problem
 from ..common.timeutil import iso, now_utc, parse_iso
 from ..common import contracts
-from ..db import list_docs, put_doc
+from ..db import WRITE_LOCK, list_docs, put_doc
 from ..redaction.gateway import filter_evidence, get_policy, level_of, require
 from . import service
 from .models import EvidenceRow
@@ -153,7 +153,9 @@ def verify_all(case_id: str, ctx: Ctx = CtxDep) -> dict[str, Any]:
 
 @router.get("/evidence/{evidence_id}/content")
 def get_content(case_id: str, evidence_id: str, purpose: str = "查看原件", ctx: Ctx = CtxDep):
-    with ctx.db.session() as s:
+    with WRITE_LOCK, ctx.db.session() as s:
+        from ..reports.access import begin
+        begin(s)
         from ..working_records_archive.service import archived_evidence,historical_only
         from ..track_history.service import evidence_archived
         if archived_evidence(s,case_id,evidence_id=evidence_id) is not None or evidence_archived(s,case_id,evidence_id):
@@ -168,12 +170,11 @@ def get_content(case_id: str, evidence_id: str, purpose: str = "查看原件", c
         p = service.blob_path(ctx.settings.blob_dir, case_id, rel) if rel else None
         if p is None:
             raise problem(404, "NO_CONTENT", "证据文件不在本机存储")
-        from .safe_content import read_content
+        from .recorded_content import read_recorded
         try:
-            data = read_content(p)
+            data, cur = read_recorded(s, case_id, item, p)
         except FileNotFoundError as exc:
             raise problem(404, "NO_CONTENT", "证据文件不在本机存储") from exc
-        cur = service.derive(item, service.custody_events(s, case_id, evidence_id))["currentSha256"]
         service.append_custody(s, case_id=case_id, evidence_id=evidence_id, kind="Access", operator=ctx.operator,
                                role=ctx.role, sha256=cur, detail=purpose)
         return Response(content=data, media_type="application/octet-stream",

@@ -95,7 +95,7 @@ def test_io_failure_closes_content_fd_and_rolls_back(env, monkeypatch, route):
 
 @pytest.mark.parametrize('route', ['content', 'export'])
 def test_known_boundary_in_place_mutation_after_open(env, monkeypatch, route):
-    """KnownDefect boundary demonstration, not a promised immutability guarantee."""
+    """Updated only in digest candidate: old descriptor-only baseline returned200."""
     client, app, path = env
     replacement = b'independent changed synthetic bytes'
     original = os.open
@@ -110,16 +110,13 @@ def test_known_boundary_in_place_mutation_after_open(env, monkeypatch, route):
         return fd
     monkeypatch.setattr(os, 'open', opening)
     monkeypatch.setattr(os, 'supports_dir_fd', os.supports_dir_fd | {opening})
+    before = counts(app)
     r = fetch(client, route)
-    assert changed and r.status_code == 200, r.text
-    assert content(r, route) == replacement
-    from mcis_service.common.csjson import sha256_hex
-    if route == 'content': assert r.headers['x-sha256'] == sha256_hex(replacement)
-    else:
-        from mcis_service.package.mcase import read_zip, verify_files
-        assert verify_files(read_zip(r.content))['isValid']
-    verify = client.post(URL + '/evidence/EV-001/verify', headers=HEADERS)
-    assert verify.status_code == 200 and verify.json()['verifyMatched'] is False
+    # This isolated candidate supersedes the old limitation demonstration: same
+    # post-open mutation is now rejected against the trusted recorded digest.
+    assert changed and r.status_code == 409, r.text
+    assert r.json()['code'] == 'EVIDENCE_CONTENT_MISMATCH'
+    assert counts(app) == before
 
 
 @pytest.mark.parametrize('route', ['content', 'export'])

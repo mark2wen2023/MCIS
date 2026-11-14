@@ -374,3 +374,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-14 | Legacy evidence/package safe read | 待独立审查 | 基于cb04aa6；四产品文件27增5删；保留原位文件修改/缺失文件省略/实际字节摘要语义限制；冻结hash logs/legacy-descriptor-read-impl-hashes-frozen.txt；基线HFACS失败与.NET跳过不隐去，不构成合并部署授权。 |
 
 | 2026-11-14 | Legacy evidence/package safe read | 独立窄范围复核完成，远端待审 | 新增独立12+复跑实现21共33通过；相关全回归161通过/1既存HFACS失败/1缺.NET跳过；四产品hash一致。DEFECTS/legacy-descriptor-read.md记录原位修改真实复现等KnownDefect；不构成附件集成或部署放行。 |
+
+| 2026-11-14 | Recorded digest delivery | 本地研究候选待审 | 基于ee6071f，交付同一bytes对比固定记录摘要；GET事务锁定记录；缺摘要/冲突/不符拒绝，非来源真实性证明。登记仅摘要及导入来源无法从历史schema辨别，不自动补写。测试证据/workspace/mcis-digest-results；不推送合并部署。 |
+
+| 2026-11-14 | Recorded digest delivery | 独立分支送审 | 基于ee6071f；冻结实现未变；相关159通过/1既存HFACS失败/1缺.NET跳过，独审51通过（计数有重叠）。logs/recorded-digest保留真实结果。旧缺摘要拒绝，长读写锁成本未验；不构成合并部署授权。 |

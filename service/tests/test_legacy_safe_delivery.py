@@ -128,18 +128,12 @@ def test_pinned_directory_after_open(client, app, monkeypatch, tmp_path, route):
 
 
 @pytest.mark.parametrize('route', ['content', 'export'])
-def test_actual_hash_semantics_unchanged(client, app, route):
+def test_changed_bytes_rejected_before_actual_hash_delivery(client, app, route):
     item, p = setup_blob(client, app)
     changed = b'synthetic modified content'; p.write_bytes(changed)
     url = f'{C}/evidence/EV-001/content' if route == 'content' else f'{C}/export'
     r = client.get(url, headers=H('LeadInvestigator'))
-    assert r.status_code == 200, r.text
-    if route == 'content':
-        assert r.content == changed and r.headers['x-sha256'] == service.sha256_hex(changed)
-    else:
-        from mcis_service.package.mcase import read_zip, verify_files
-        files = read_zip(r.content)
-        assert files[item['relativePath']] == changed and verify_files(files)['isValid']
+    assert r.status_code == 409 and r.json()['code'] == 'EVIDENCE_CONTENT_MISMATCH'
     # Existing explicit evidence verification still detects registered digest mismatch.
     v = client.post(f'{C}/evidence/EV-001/verify', headers=H())
     assert v.status_code == 200 and v.json()['verifyMatched'] is False

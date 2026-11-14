@@ -567,3 +567,8 @@ Authorized isolated security repair for evidence intake and working archive: des
 
 ## 2026-11-14 Legacy evidence GET/package descriptor reads
 Follow-up authorized for independent review branch based strictly on cb04aa6. Frozen evidence/router, package/mcase and common/safe_files changes: shared no-symlink descriptor reads, 1MiB syscall chunks, existing actual-byte digest and missing-file semantics preserved. No remote exploit capability asserted; no aggregate memory bound or inode immutability. See contracts/legacy-descriptor-read-candidate.md and logs/legacy-descriptor-read/ for actual tests and baseline failure.
+
+## 2026-11-14 Recorded-digest delivery research candidate
+Local-only follow-up to ee6071f. GET and legacy export compare the exact returned immutable bytes with a pinned recorded digest (original plus valid Change transitions). Missing/malformed recorded digest and mismatches409 before success audit; no computed digest used as its own reference. DB is a trusted anchor for this threat model, not authenticated provenance: digest-only registration/import provenance is not stored. Read and metadata policy decisions share SQLite reservation. Contract candidate, not integration approval.
+
+2026-11-14 follow-up authorization: publish the recorded-digest candidate as a separate review branch directly based on ee6071f; no merge/deployment. Product/test content unchanged from local review. Preserve rejected missing-digest legacy records, unmeasured long-read SQLite writer-lock cost, and actual159 passed/1 HFACS failure/1.NET skip plus51 independent passing checks.
