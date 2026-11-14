@@ -1,6 +1,7 @@
-import { useState, useSyncExternalStore, type DragEvent } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore, type DragEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
+import { ApiError, api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
+import { RecommendationBodyEditor } from '../recommendationEdit/BodyEditor'
 import { RecommendationReview } from '../recommendationReview/RecommendationReview'
 import { ConsultationPanel } from '../consultation/ConsultationPanel'
 import { SERVICE_ADDR } from '../config'
@@ -49,6 +50,7 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
   const [dropCol, setDropCol] = useState<string | null>(null)
   const [pending, setPending] = useState<{ id: string; to: RecStatus } | null>(null)
   const [creating, setCreating] = useState(false)
+  const [bodyRevision, setBodyRevision] = useState(0)
 
   const all = (board.data?.columns ?? []).flatMap((c) => c.items)
   const sel = all.find((r) => r.id === selId)
@@ -123,7 +125,8 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
         </div>
       </Panel>
 
-      {sel && <RecommendationReview caseId={caseId} recId={sel.id} />}
+      {sel && <RecommendationBodyEditor caseId={caseId} recId={sel.id} onSaved={() => { setBodyRevision(v => v + 1); refresh() }} />}
+      {sel && <RecommendationReview key={bodyRevision} caseId={caseId} recId={sel.id} />}
 
       <div className="grid w7-columns">
         {sel ? (
@@ -182,10 +185,35 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
   const [lastId, setLastId] = useState(rec.id)
   if (lastId !== rec.id) { setLastId(rec.id); setPct(rec.progressPct); setParty(rec.addressee); setNote(''); setText('') }
 
-  const respond = () => run(async () => {
-    const r = await api.post(casePath(`/recommendations/${rec.id}/responses`, caseId), { party, text })
-    setText(''); props.onChanged(); props.onCancel(); return r
-  }, `${rec.id} 已登记回复${rec.status === 'Issued' ? '，状态 → 已回复' : ''}`)
+  const responseLock = useRef(false)
+  const responseAlive = useRef(true)
+  const responseIdentity = useRef(recommendationsIdentity())
+  const [responseState, setResponseState] = useState<'idle' | 'sending' | 'unknown'>('idle')
+  const [responseMessage, setResponseMessage] = useState('')
+  useEffect(() => { responseAlive.current = true; return () => { responseAlive.current = false } }, [])
+  const responseValid = () => responseAlive.current && recommendationsIdentity() === responseIdentity.current
+  const respond = async () => {
+    if (responseLock.current || !responseValid() || !party.trim() || !text.trim()) return
+    responseLock.current = true
+    setResponseState('sending'); setResponseMessage('正在登记；离开页面不会撤销已发出的请求。')
+    try {
+      await api.post(casePath(`/recommendations/${rec.id}/responses`, caseId), { party, text })
+      if (!responseValid()) return
+      setText(''); setResponseState('idle'); setResponseMessage('回复已登记。')
+      responseLock.current = false
+      try { props.onChanged(); props.onCancel() }
+      catch { setResponseMessage('回复已登记，但页面刷新失败；请重新读取核查，不要重复登记。') }
+    } catch (e) {
+      if (!responseValid()) return
+      if (e instanceof ApiError && [400, 403, 404, 409, 413, 422].includes(e.status)) {
+        responseLock.current = false; setResponseState('idle')
+        setResponseMessage(`本次登记被服务端拒绝（HTTP ${e.status}）；未自动重试。`)
+      } else {
+        setResponseState('unknown')
+        setResponseMessage('登记结果未知，原回复保留且本页禁止重复提交。请在完整内容核查中重新读取回复及审计，由有权人员核对；未查到不代表未提交。切换建议、案件或刷新会丢失本页锁，切勿用新请求补交。')
+      }
+    }
+  }
   const saveProgress = () => run(async () => {
     const r = await api.patch(casePath(`/recommendations/${rec.id}`, caseId), { progressPct: pct, note }); setNote(''); props.onChanged(); return r
   }, `${rec.id} 落实进度 → ${pct}%（审计 safetyrec.progress）`)
@@ -218,10 +246,11 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
         <div className="p6-card" style={{ marginTop: 8, borderColor: props.pending === 'Responded' ? 'var(--cyan)' : undefined }}>
           <div className="p6-dim" style={{ marginBottom: 4 }}>登记书面回复{rec.status === 'Issued' ? '（登记后进入“落实中”）' : '（追加，不改状态）'}</div>
           <div className="row-actions">
-            <input className="input" style={{ width: 130 }} value={party} onChange={(e) => setParty(e.target.value)} placeholder="回复方" />
-            <input className="input" style={{ flex: 1 }} value={text} onChange={(e) => setText(e.target.value)} placeholder="回复内容" />
-            <button className="btn btn-sm btn-primary" disabled={!party.trim() || !text.trim()} onClick={respond}>登记回复</button>
+            <input className="input" style={{ width: 130 }} value={party} disabled={responseState !== 'idle'} onChange={(e) => setParty(e.target.value)} placeholder="回复方" />
+            <input className="input" style={{ flex: 1 }} value={text} disabled={responseState !== 'idle'} onChange={(e) => setText(e.target.value)} placeholder="回复内容" />
+            <button className="btn btn-sm btn-primary" disabled={responseState !== 'idle' || !party.trim() || !text.trim()} onClick={() => void respond()}>登记回复</button>
           </div>
+          {responseMessage && <p role={responseState === 'unknown' ? 'alert' : 'status'}>{responseMessage}</p>}
         </div>
       )}
 
@@ -287,27 +316,50 @@ function ConsultationTable({ rounds }: { rounds: ConsultationRound[] }) {
 }
 
 function CreateForm({ caseId, onDone }: { caseId: string; onDone: (id?: string) => void }) {
-  const { run } = useToast()
   const [f, setF] = useState({ title: '', addressee: '', causeNodeIds: 'COLREG-R19', dueUtc: '2027-06-30', isInterim: false })
-  const submit = () => run(async () => {
-    const r = await api.post<Recommendation>(casePath('/recommendations', caseId), {
-      title: f.title, addressee: f.addressee, body: '', isInterim: f.isInterim,
-      causeNodeIds: f.causeNodeIds.split(/[,，\s]+/).filter(Boolean), dueUtc: `${f.dueUtc}T15:59:59Z`,
-    })
-    onDone(r.id)
-    return r
-  }, '已新建安全建议（草拟）')
+  const createLock = useRef(false), createAlive = useRef(true)
+  const createIdentity = useRef(recommendationsIdentity())
+  const [createState, setCreateState] = useState<'idle' | 'sending' | 'unknown' | 'created'>('idle')
+  const [createMessage, setCreateMessage] = useState('')
+  useEffect(() => { createAlive.current = true; return () => { createAlive.current = false } }, [])
+  const createValid = () => createAlive.current && recommendationsIdentity() === createIdentity.current
+  const submit = async () => {
+    if (createLock.current || !createValid() || !f.title.trim() || !f.addressee.trim()) return
+    createLock.current = true; setCreateState('sending')
+    setCreateMessage('正在创建；关闭表单或离开页面不会撤销已经发出的请求。')
+    try {
+      const r = await api.post<Recommendation>(casePath('/recommendations', caseId), {
+        title: f.title, addressee: f.addressee, body: '', isInterim: f.isInterim,
+        causeNodeIds: f.causeNodeIds.split(/[,，\s]+/).filter(Boolean), dueUtc: `${f.dueUtc}T15:59:59Z`,
+      })
+      if (!createValid()) return
+      if (!r || r.caseId !== caseId || typeof r.id !== 'string' || !/^SR-\d{4}-\d{2,}$/.test(r.id)) throw Error('create response mismatch')
+      setCreateState('created'); setCreateMessage(`草拟建议 ${r.id} 已创建；不是批准或对外发送。`)
+      try { onDone(r.id) }
+      catch { setCreateMessage(`草拟建议 ${r.id} 已创建，但页面刷新失败；请核查该编号，不要重复创建。`) }
+    } catch (e) {
+      if (!createValid()) return
+      if (e instanceof ApiError && [400, 403, 404, 409, 413, 422].includes(e.status)) {
+        createLock.current = false; setCreateState('idle')
+        setCreateMessage(`本次创建被服务端拒绝（HTTP ${e.status}）；未自动重试。`)
+      } else {
+        setCreateState('unknown')
+        setCreateMessage('创建结果未知，原表单保留且本页禁止重发。请由有权人员核查建议列表及审计；未查到不代表未创建。关闭表单、切换案件或刷新会丢失本页锁，切勿用新请求补交。')
+      }
+    }
+  }
   return (
     <div className="p6-card" style={{ marginBottom: 12, borderColor: 'var(--cyan)' }}>
       <div className="row-actions">
-        <input className="input" style={{ flex: 2 }} placeholder="建议标题" value={f.title} onChange={(e) => setF({ ...f, title: e.target.value })} />
-        <input className="input" style={{ flex: 1 }} placeholder="建议对象" value={f.addressee} onChange={(e) => setF({ ...f, addressee: e.target.value })} />
-        <input className="input" style={{ width: 160 }} placeholder="原因节点（逗号分隔）" value={f.causeNodeIds} onChange={(e) => setF({ ...f, causeNodeIds: e.target.value })} />
-        <input className="input" type="date" value={f.dueUtc} onChange={(e) => setF({ ...f, dueUtc: e.target.value })} />
-        <label className="p6-dim"><input type="checkbox" checked={f.isInterim} onChange={(e) => setF({ ...f, isInterim: e.target.checked })} /> 临时措施</label>
-        <button className="btn btn-sm btn-primary" disabled={!f.title.trim() || !f.addressee.trim()} onClick={submit}>保存</button>
-        <button className="btn btn-sm" onClick={() => onDone()}>取消</button>
+        <input className="input" style={{ flex: 2 }} placeholder="建议标题" disabled={createState !== 'idle'} value={f.title} onChange={(e) => setF({ ...f, title: e.target.value })} />
+        <input className="input" style={{ flex: 1 }} placeholder="建议对象" disabled={createState !== 'idle'} value={f.addressee} onChange={(e) => setF({ ...f, addressee: e.target.value })} />
+        <input className="input" style={{ width: 160 }} placeholder="原因节点（逗号分隔）" disabled={createState !== 'idle'} value={f.causeNodeIds} onChange={(e) => setF({ ...f, causeNodeIds: e.target.value })} />
+        <input className="input" type="date" disabled={createState !== 'idle'} value={f.dueUtc} onChange={(e) => setF({ ...f, dueUtc: e.target.value })} />
+        <label className="p6-dim"><input type="checkbox" disabled={createState !== 'idle'} checked={f.isInterim} onChange={(e) => setF({ ...f, isInterim: e.target.checked })} /> 临时措施</label>
+        <button className="btn btn-sm btn-primary" disabled={createState !== 'idle' || !f.title.trim() || !f.addressee.trim()} onClick={() => void submit()}>保存</button>
+        <button className="btn btn-sm" disabled={createState !== 'idle'} onClick={() => onDone()}>取消</button>
       </div>
+      {createMessage && <p role={createState === 'unknown' ? 'alert' : 'status'}>{createMessage}</p>}
     </div>
   )
 }

@@ -27,6 +27,7 @@ from ..reports.access import NoStoreRoute, begin, protect_events
 from ..interviews.access import protect_events as protect_interview_events
 from .models import ConsultationRoundRow, RecommendationRow
 from .access import require_content
+from . import body_edit
 
 router = APIRouter(prefix="/api/v1/cases/{case_id}", tags=["recommendations"], route_class=NoStoreRoute)
 
@@ -203,6 +204,22 @@ def get_rec(case_id: str, rec_id: str, ctx: Ctx = CtxDep) -> dict[str, Any]:
         return _with_derived(_load(s, case_id, rec_id))
 
 
+@router.get("/recommendations/{rec_id}/body-edit")
+def read_body_edit(case_id: str, rec_id: str, ctx: Ctx = CtxDep):
+    with ctx.db.session() as s:
+        require_content(s, case_id, ctx.role)
+        load_case(s, case_id)
+        return body_edit.view(s, _load(s, case_id, rec_id))
+
+
+@router.put("/recommendations/{rec_id}/body-edit")
+def save_body_edit(case_id: str, rec_id: str, body: body_edit.BodyEdit, ctx: Ctx = CtxDep):
+    with ctx.db.session() as s:
+        require_content(s, case_id, ctx.role, write_category="recommendations")
+        load_case(s, case_id)
+        return body_edit.save(s, ctx, _load(s, case_id, rec_id), body)
+
+
 @router.patch("/recommendations/{rec_id}")
 def patch_rec(case_id: str, rec_id: str, body: RecPatch, ctx: Ctx = CtxDep) -> dict[str, Any]:
     """progressPct 走 C# SetProgress 规则（仅 Responded、0–100，审计 safetyrec.progress）；
@@ -211,6 +228,8 @@ def patch_rec(case_id: str, rec_id: str, body: RecPatch, ctx: Ctx = CtxDep) -> d
         require_content(s, case_id, ctx.role, write_category="recommendations")
         cur = _load(s, case_id, rec_id)
         changes = body.model_dump(exclude_unset=True)
+        if "body" in changes:
+            raise problem(428, "safetyrec_body_version_required", "正文修改须使用带版本的 body-edit 接口")
         note = changes.pop("note", "")
         pct = changes.pop("progressPct", None)
         new = dict(cur)
