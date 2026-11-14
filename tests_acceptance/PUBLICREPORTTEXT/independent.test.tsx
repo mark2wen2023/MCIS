@@ -2,7 +2,8 @@ import assert from 'node:assert/strict'
 import { textHandoff, publicSource, downloadHandoff } from '../../web/src/reportTextHandoff/model'
 const metadata={title:'独立合成 <script>标题</script>',source:'声明\n原文 来源',extractedBy:'SECRET_PERSON',extractedUtc:'2026-01-01T00:00:00Z',category:'Document' as const,confidentiality:'Restricted' as const,note:'SECRET_NOTE'}
 const base={caseId:'INDEPENDENT',evidenceId:'EV-301',requestDigest:'a'.repeat(64),sourceSha256:'b'.repeat(64),fileName:'独立.pdf',byteLength:42,metadata,registeredUtc:'2026-11-14T00:00:00Z',registeredBy:'SECRET_REGISTRAR',registeredRole:'Investigator',replayed:false,evidence:{...metadata,caseId:'INDEPENDENT',evidenceId:'EV-301',sha256:'b'.repeat(64),status:'Verified',accessCount:0}}
-const source='https://example.org/报告.pdf?q=%20&x=1#page=28'
+const legacySource='https://example.org/报告.pdf?q=%20&x=1#page=28'
+const source='https://example.org/报告.pdf'
 const tests:Array<[string,()=>unknown|Promise<unknown>]> = []
 const test=(name:string,fn:()=>unknown|Promise<unknown>)=>tests.push([name,fn])
 const clone=()=>structuredClone(base)
@@ -30,6 +31,40 @@ test('malformed or mismatched receipts fail closed',()=>{
 test('URL admission preserves strings and rejects dangerous schemes/credentials',()=>{
  assert.equal(publicSource(source),source)
  for(const s of ['https://user:password@example.org','https://u%40x@example.org','https://x/\u0000','HTTPS://example.org','https:\\example.org','javascript:1','data:application/json,{}','https://x/\t','https://x/\u00a0']) assert.throws(()=>publicSource(s))
+})
+const originalUrlCases=[
+ 'https://127.0.0.1/report.pdf','https://192.168.1.1/report.pdf',
+ 'https://example.org/report?token=SYNTHETIC','https://localhost/report.pdf',
+ 'https://[::1]/report.pdf','https://2130706433/report.pdf','https://0x7f000001/report.pdf',
+ 'https://example.org/report#access_token=SYNTHETIC',
+]
+for(const value of originalUrlCases)test(`r2 rejects original reproduction ${value}`,()=>{
+ assert.throws(()=>publicSource(value));assert.throws(()=>textHandoff(base,value,true))
+})
+test('r2 retains former query fragment sample as explicit rejection',()=>{
+ for(const value of [legacySource,'https://example.org/report?','https://example.org/report#','https://example.org/report?public=1','https://example.org/report#page=28'])assert.throws(()=>publicSource(value))
+})
+test('r2 rejects local suffixes including case and root dot',()=>{
+ for(const name of ['localhost','local','localdomain','internal','lan','home.arpa'])for(const host of [name,`sub.${name}`,`SUB.${name.toUpperCase()}.`])assert.throws(()=>publicSource(`https://${host}/report.pdf`))
+ assert.throws(()=>publicSource('https://singlelabel/report.pdf'))
+})
+test('r2 rejects normalized IPv4 IPv6 and public IP literals',()=>{
+ for(const host of ['127.1','0177.0.0.1','0x7f.0.0.1','%31%32%37.0.0.1','１２７.０.０.１','[::ffff:127.0.0.1]','[2001:db8::1]','8.8.8.8'])assert.throws(()=>publicSource(`https://${host}/report.pdf`))
+})
+test('r2 preserves Unicode and encoded path without URL rewriting',()=>{
+ for(const value of ['https://例子.测试/海事/报告.pdf','https://example.org/报告%20副本.pdf','https://example.org/segment%3Fvalue%23anchor.pdf']){
+  assert.equal(publicSource(value),value);assert.equal(textHandoff(base,value,true).publicMaterial.sourceUrl,value)
+ }
+})
+test('r2 retains 2000 character boundary',()=>{
+ const prefix='https://example.org/';assert.equal(publicSource(prefix+'a'.repeat(2000-prefix.length)).length,2000)
+ assert.throws(()=>publicSource(prefix+'a'.repeat(2001-prefix.length)))
+})
+test('r2 accepted path stays unverified and never authorizes fetching',()=>{
+ const v=textHandoff(base,'https://example.org/SYNTHETIC-path-token/report.pdf',true)
+ assert.equal(v.publicMaterial.fetchAuthorized,false);assert.equal(v.publicMaterial.urlVerification,'not-performed')
+ assert.equal(v.publicMaterial.verified,false);assert.equal(v.publicMaterial.basis,'user-declaration-only')
+ assert.equal(v.review.factsConfirmed,false)
 })
 async function main(){
  const {Window}=await import('/tmp/mcis-ui-deps/node_modules/happy-dom/lib/index.js')
@@ -91,6 +126,23 @@ async function main(){
   document.createElement=(()=>{throw Error('synthetic element allocation failure')}) as any
   try {assert.throws(()=>downloadHandoff('{}'))}finally{document.createElement=create}
   await new Promise(resolve=>setTimeout(resolve,1100));assert.equal(blobs.length-allocated,revocations-released,'object URL survives failed element creation')
+ })
+ test('r2 rejected URLs retain input and cause no download or network',async()=>{
+  for(const value of [...originalUrlCases,legacySource]){
+   await init();await setSource(value);assert.equal(exportButton().disabled,true);await declare()
+   const downloads=blobs.length,requests=fetches.length,clicked=clicks
+   await click('导出未解析交接 JSON')
+   assert.equal(blobs.length,downloads);assert.equal(fetches.length,requests);assert.equal(clicks,clicked)
+   assert.equal((host.querySelector('input[type=url]') as HTMLInputElement).value,value)
+   assert.match(host.textContent!,/交接导出未完成/)
+  }
+  await setSource(source);assert.equal(exportButton().disabled,true);await declare();const n=blobs.length
+  await click('导出未解析交接 JSON');assert.equal(blobs.length,n+1)
+  const manifest=JSON.parse(await blobs.at(-1)!.text());assert.equal(manifest.publicMaterial.fetchAuthorized,false);assert.equal(manifest.publicMaterial.urlVerification,'not-performed')
+ })
+ test('r2 UI discloses path secrets and unverified network boundary',async()=>{
+  await init();assert.match(host.textContent!,/完整地址（含路径）/);assert.match(host.textContent!,/不授权抓取/)
+  assert.match(host.textContent!,/不能排除域名解析到私网/);assert.match(host.textContent!,/不能据此自动联网/)
  })
  let pass=0,failures=0
  for(const [name,fn] of tests){try{await fn();pass++;console.log('PASS '+name)}catch(e){failures++;console.log('FAIL '+name+' :: '+(e as Error).message)}}

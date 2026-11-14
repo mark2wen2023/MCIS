@@ -564,3 +564,6 @@ Engineering caps are declared for report/output/audit/manifest/ZIP. A self-revie
 
 ## 2026-11-14 PUBLICREPORTTEXT — 公开报告文本提取交接
 基线 main 3aba2bf；当前 W4.2 仅保全原字节，未运行文本解析/OCR。登记成功不应被理解为已读到正文。申请并实施对已冻结 web/src/evidenceIntake/EvidenceIntakePanel.tsx 的单点组件接入，其余实现放 web/src/reportTextHandoff。只在 Document 回执后提供“本入口未执行文本提取”的独立说明，以及用户明确声明公开材料/所列信息后本地导出未解析交接 JSON。无服务接口、原件、权限、时间线、数据集、专家候选改动；URL不访问，声明不改变Restricted，不认证公开性，不生成文本或事实。导出失败保留回执与表单，不重试网络或声称文件保存成功。本地导出结构见 docs/PUBLICREPORTTEXT.md。
+
+## 2026-11-14 PUBLICREPORTTEXT r2 — 来源地址声明边界
+协调独审发现仅字符串处理仍可导出loopback/私网定位与query/fragment令牌。独立离线复现8/8接受（无抓取，非已复现SSRF）。在原候选上最小收紧：拒任何查询串/片段、URL规范化后的任何IP literal和明显本地/单标签主机；不静默删参数、不DNS查询、不建立SSRF白名单。HTTPS域名及路径仍可能含私密内容或解析到私网，必须人工核查完整地址，未来消费者必须另行授权和服务端校验。添加fetchAuthorized=false和地址未校验声明，UI/合同明确以上限制。修改原冻结model/Panel/doc/test属于此次授权返工，保留r1证据。

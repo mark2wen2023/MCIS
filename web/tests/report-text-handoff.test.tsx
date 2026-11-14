@@ -8,7 +8,8 @@ check(manifest.extraction.status==='not-run'&&manifest.extraction.text===null&&m
 check(manifest.original.sourceSha256===receipt.sourceSha256&&manifest.original.requestDigest===receipt.requestDigest&&manifest.original.sourceDeclaration===metadata.source,'original provenance retained')
 check(JSON.stringify(manifest)===JSON.stringify(textHandoff(receipt,url,true)),'repeat deterministic')
 check(!JSON.stringify(manifest).includes('Excluded'),'person and note excluded')
-for(const bad of ['', 'http://example.org','https:example.org','https://user:secret@example.org','https://example.org/\na',' https://example.org','file:///tmp/report','javascript:alert(1)','https://example.org/\\a','a'.repeat(2001)]){assert.throws(()=>publicSource(bad));n++}
+check(manifest.publicMaterial.fetchAuthorized===false && manifest.publicMaterial.urlVerification==='not-performed','address not fetch authority')
+for(const bad of ['', 'http://example.org','https:example.org','https://user:secret@example.org','https://example.org/\na',' https://example.org','file:///tmp/report','javascript:alert(1)','https://example.org/\\a','a'.repeat(2001), 'https://127.0.0.1/r', 'https://192.168.1.1/r', 'https://[::1]/r', 'https://localhost/r', 'https://2130706433/r', 'https://0x7f000001/r', 'https://intranet/r', 'https://x.local/r', 'https://example.org/r?token=SYNTHETIC', 'https://example.org/r#token=SYNTHETIC', 'https://example.org/r?', 'https://example.org/r#']){assert.throws(()=>publicSource(bad));n++}
 for(const changed of [{...receipt,sourceSha256:'c'.repeat(64)},{...receipt,evidenceId:'EV-002'},{...receipt,metadata:{...metadata,category:'Other' as const}}]){assert.throws(()=>textHandoff(changed,url,true));n++}
 assert.throws(()=>textHandoff(receipt,url,false));n++
 async function main(){

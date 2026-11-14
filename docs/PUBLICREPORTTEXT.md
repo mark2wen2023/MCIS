@@ -4,7 +4,7 @@
 
 操作：登记文件或只读调阅已有回执 → 文本提取状态“本入口未解析” → 准备公开报告交接 → 填公开 HTTPS 来源 → 声明文件和所列字段均适合公开资料处理 → 导出 JSON。非公开材料不得用于该流程；公开性只能由操作人声明，系统无法认证。URL只作为字符串，不打开、不抓取、不上传。原存储 Restricted 不变。原件、提取人、登记人及备注不放入交接 JSON；标题/原来源等自由文本仍可能有人名，必须人工核查。
 
-JSON profile `mcis-public-report-text-handoff-v1`：original 包含 caseId/evidenceId/requestDigest/sourceSha256/fileName/byteLength/title/sourceDeclaration/registeredUtc，绑定当前已验证结构的回执；publicMaterial 包含原样来源地址与 user-declaration-only/verified=false；extraction 固定 this-intake-entry-only/not-run/text=null/modelCalled=false；review 固定 unverified/factsConfirmed=false/authorAuthenticated=false；preservation 固定 Restricted、originalIncluded=false、originalModified=false。这是未签名本地交接记录，不是完整回执、真实性认证或可恢复备份；两个摘要引用已有登记，不额外签署文件。后续工具须重新取得原件、核对摘要并自行记录版本、页码与提取结果，本片没有导入/消费器。
+JSON profile `mcis-public-report-text-handoff-v1`：original 包含 caseId/evidenceId/requestDigest/sourceSha256/fileName/byteLength/title/sourceDeclaration/registeredUtc，绑定当前已验证结构的回执；publicMaterial 包含原样来源地址与 user-declaration-only/verified=false/urlVerification=not-performed/fetchAuthorized=false；extraction 固定 this-intake-entry-only/not-run/text=null/modelCalled=false；review 固定 unverified/factsConfirmed=false/authorAuthenticated=false；preservation 固定 Restricted、originalIncluded=false、originalModified=false。这是未签名本地交接记录，不是完整回执、真实性认证或可恢复备份；两个摘要引用已有登记，不额外签署文件。后续工具须重新取得原件、核对摘要并自行记录版本、页码与提取结果，本片没有导入/消费器。
 
 失败：下载准备或点击异常仅显示失败，保留回执和交接输入；不会重复上传、删除原件或自动重试。浏览器请求下载成功也不证明磁盘保存成功。取消清空交接声明/地址，不撤销原登记。重复导出相同声明产生相同 JSON，不增服务登记。切案/身份关闭原面板，回执版本/元信息改变重置交接。其他工具是否解析过为未知，不宣称全局未解析或实际解析失败。
 
@@ -18,4 +18,10 @@ bash web/tests/run-evidence-intake-w42.sh
 npm --prefix web run build
 ```
 
-35 项新断言（纯模型和合成 DOM），旧 W4.2 88 项，TypeScript/Vite build。无模型、OCR或真实报告文本能力验收。正式浏览器下载和真实生产身份认证另列未验证。继承 main 文件访问/授权安全问题不在本片修复范围，本片不得因此宣称可部署。
+48 项新断言（纯模型和合成 DOM），旧 W4.2 88 项，TypeScript/Vite build。无模型、OCR或真实报告文本能力验收。正式浏览器下载和真实生产身份认证另列未验证。继承 main 文件访问/授权安全问题不在本片修复范围，本片不得因此宣称可部署。
+
+## r2 地址与后续消费边界
+
+来源地址是未经核实的定位字符串，不是公开性证明或SSRF白名单。独立离线复现旧版可原样导出8种本地/私网/参数地址；没有网络请求，不能称作已复现SSRF。现拒绝所有查询串或片段（包括空?/#）、规范化后IP字面量（包括IPv6、整数/十六进制IPv4）、单标签主机、localhost/local/localdomain/internal/lan/home.arpa及其子域。保守限制不自动删改地址，不尝试访问或DNS核验；合法但带参数的公开链接也暂不支持。
+
+通过校验的HTTPS域名仍可能解析到私网、重绑定、重定向到内部资源；路径也可能包含访问令牌或私人标识。不能自动保证无敏感信息，须人工检查完整地址及全部导出字段；不要通过改写或删去令牌伪造来源。JSON明确fetchAuthorized=false/urlVerification=not-performed，未来消费者不得把它当抓取许可；如未来增加抓取，须独立授权，并实现服务端DNS/连接目标、重定向与出口限制。本片不实现或声称完成这些网络防护。

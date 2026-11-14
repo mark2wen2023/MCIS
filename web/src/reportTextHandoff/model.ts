@@ -5,6 +5,10 @@ export function publicSource(value: string): string {
   let url: URL
   try { url = new URL(value) } catch { throw Error('请填写完整的公开来源 HTTPS 地址。') }
   if (!value.startsWith('https://') || url.protocol !== 'https:' || !url.hostname || url.username || url.password) throw Error('来源须为无账号口令的 HTTPS 地址；本页不会访问或认证该地址。')
+  // Conservative string admission only. Never DNS resolution or a fetch allowlist.
+  const host = url.hostname.toLowerCase().replace(/\.$/, '')
+  if (value.includes('?') || value.includes('#')) throw Error('不支持含查询串或片段的地址，避免把令牌随交接导出；不会自动删改地址。')
+  if (host.startsWith('[') || /^[0-9.]+$/.test(host) || !host.includes('.') || ['localhost', 'local', 'localdomain', 'internal', 'lan', 'home.arpa'].some(suffix => host === suffix || host.endsWith('.' + suffix))) throw Error('不支持 IP、本地或内网命名地址；通过此检查也不证明域名公开或允许抓取。')
   return value
 }
 
@@ -18,7 +22,7 @@ export function textHandoff(receipt: Receipt, sourceUrl: string, declaredPublic:
     original: { caseId: r.caseId, evidenceId: r.evidenceId, requestDigest: r.requestDigest,
       sourceSha256: r.sourceSha256, fileName: r.fileName, byteLength: r.byteLength,
       title: r.metadata.title, sourceDeclaration: r.metadata.source, registeredUtc: r.registeredUtc },
-    publicMaterial: { sourceUrl: source, basis: 'user-declaration-only', verified: false },
+    publicMaterial: { sourceUrl: source, basis: 'user-declaration-only', verified: false, urlVerification: 'not-performed', fetchAuthorized: false },
     extraction: { scope: 'this-intake-entry-only', status: 'not-run', text: null, modelCalled: false },
     review: { status: 'unverified', factsConfirmed: false, authorAuthenticated: false },
     preservation: { storageClassification: 'Restricted', originalIncluded: false, originalModified: false },

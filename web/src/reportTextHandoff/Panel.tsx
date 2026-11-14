@@ -27,11 +27,11 @@ function Handoff({ receipt }: { receipt: Receipt }) {
     <p>文件登记成功仅表示收到原字节；本入口未运行文本提取或 OCR，未产生可检索正文。证据哈希状态不能证明已解析，也不代表调查事实确认。其他工具是否解析过，本页未知。</p>
     {!open ? <button type="button" onClick={() => setOpen(true)}>准备公开报告待解析交接（本地）</button> : <div>
       <p>仅用于公开事故报告。导出含案件/证据编号、文件名、字节数、标题、原来源声明、登记 UTC、原件 SHA-256、请求摘要与下列地址；不含原件正文、提取人/登记人字段或登记备注。标题和原来源仍可能包含人员信息，请核查上述字段可用于公开资料处理，否则取消。不会改变 Restricted 存储标记。</p>
-      <label>公开报告来源 HTTPS 地址（不访问）<input type="url" maxLength={2000} value={source} onChange={e => { setSource(e.target.value); setConfirmed(false); setMessage('') }}/></label>
-      <label><input type="checkbox" checked={confirmed} onChange={e => { setConfirmed(e.target.checked); setMessage('') }}/>我声明这是公开事故报告，且所列交接字段可用于公开资料处理。此勾选不认证公开性、作者或事实。</label>
+      <label>公开报告来源 HTTPS 地址（不访问；不含查询串/片段）<input type="url" maxLength={2000} value={source} onChange={e => { setSource(e.target.value); setConfirmed(false); setMessage('') }}/></label>
+      <label><input type="checkbox" checked={confirmed} onChange={e => { setConfirmed(e.target.checked); setMessage('') }}/>我声明这是公开事故报告，且所列交接字段可用于公开资料处理。我已核查完整地址（含路径）不含口令、令牌或其他敏感信息。此勾选不认证公开性、作者或事实，也不授权抓取。</label>
       <button type="button" disabled={!confirmed || !source} onClick={exportJson}>导出未解析交接 JSON</button>
       <button type="button" onClick={reset}>取消并清空交接输入</button>
-      <p>仅显式本地导出；不会上传地址或调用解析服务。取消不删除已登记原件。重复导出相同内容不新增登记。</p>
+      <p>来源仅是未核实的定位字符串，不是公开性证明或 SSRF 白名单。拒绝明显本地/IP地址仍不能排除域名解析到私网；后续消费者须独立授权和校验，不能据此自动联网。仅显式本地导出；不会上传地址或调用解析服务。取消不删除已登记原件。重复导出相同内容不新增登记。</p>
       {message && <p role="status">{message}</p>}
     </div>}
   </section>

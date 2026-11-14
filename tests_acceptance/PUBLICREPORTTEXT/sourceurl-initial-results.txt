@@ -1,0 +1,9 @@
+{"input":"https://127.0.0.1/report.pdf","normalizedHost":"127.0.0.1","accepted":true,"exportedUnchanged":true,"verified":false}
+{"input":"https://192.168.1.1/report.pdf","normalizedHost":"192.168.1.1","accepted":true,"exportedUnchanged":true,"verified":false}
+{"input":"https://example.org/report?token=SYNTHETIC","normalizedHost":"example.org","accepted":true,"exportedUnchanged":true,"verified":false}
+{"input":"https://localhost/report.pdf","normalizedHost":"localhost","accepted":true,"exportedUnchanged":true,"verified":false}
+{"input":"https://[::1]/report.pdf","normalizedHost":"[::1]","accepted":true,"exportedUnchanged":true,"verified":false}
+{"input":"https://2130706433/report.pdf","normalizedHost":"127.0.0.1","accepted":true,"exportedUnchanged":true,"verified":false}
+{"input":"https://0x7f000001/report.pdf","normalizedHost":"127.0.0.1","accepted":true,"exportedUnchanged":true,"verified":false}
+{"input":"https://example.org/report#access_token=SYNTHETIC","normalizedHost":"example.org","accepted":true,"exportedUnchanged":true,"verified":false}
+{"cases":8,"passed":8,"networkCalls":0,"realSecretsUsed":false}

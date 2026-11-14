@@ -31,3 +31,22 @@
 D01 的文件名/字节数/登记UTC变更现清空声明；D02 创建元素失败不再分配Blob URL；C01 UI已明确“提取人/登记人字段”不导出、标题/来源可能含人员信息。缺陷关闭，受限独立验收通过。以上限制不变：不得把合成DOM通过解释为真实浏览器下载、认证、公开性核实或正文提取成功。
 
 测试计数不与实现自测混计：独审20个具名用例；实现者另报告35条新断言、88条旧W4.2回归和build通过，独审未将它们算作自身新增用例。
+
+## r2 URL限制独立复验（2026-11-14）
+
+前次只读审查对象提交 `c862419c8c2fb5d51fdf505c00afaecdccb30ae7`，8种地址均被接受并原样导出；这8项是行为复现，不是安全验收通过，且没有网络请求。原证据复制到 `sourceurl-initial-review.md`、`sourceurl-initial-results.txt`、`sourceurl-initial-repro.cjs`。历史复现脚本依赖当时编译的 `/tmp/PUBLICREPORTTEXT-sourceurl-model.cjs`；如重新复现，必须使用c862419版本的model.ts及其依赖编译，不能用r2替代旧版。
+
+根据明确的新支持范围裁定，原20个具名用例全部保留，成功流程的来源从带query/fragment改为 `https://example.org/报告.pdf`。旧原值保留为 `legacySource`，新增独立拒绝断言；没有静默删掉原输入覆盖。
+
+最终独立 **36 passed / 0 failed**（原20 + 新16具名用例），见 `r2-results.txt`。新冻结 `logs/PUBLICREPORTTEXT-r2-impl-hashes-frozen.txt` **6/6匹配**，见 `r2-hashes.txt`，复验后再次匹配。
+
+新增验证：
+- 初始8个loopback/private/query-token/localhost/IPv6/numeric-IP/fragment-token复现值全部拒绝，函数与完整交接入口均拒绝。
+- 原合法带参数值转为拒绝；空?/#、普通查询及页码fragment同样拒绝，符合保守支持范围。
+- localhost/local/localdomain/internal/lan/home.arpa本身及子域、大小写/根点变体、单标签拒绝；缩写/八进制/十六进制/percent/fullwidth IPv4、IPv4-mapped IPv6及公网IP literal也拒绝。
+- Unicode域名/路径、编码后的路径字符保持原样；%3F/%23作为路径字符不当作查询或fragment，不意味着内容已脱敏。2000字符允许、2001拒绝。
+- 接受的普通域名/含合成路径token地址仍严格 `fetchAuthorized=false`、`urlVerification=not-performed`、`verified=false`；不假装字符串过滤已识别所有秘密。
+- DOM中逐一输入原8例和旧query/fragment地址：拒绝后不分配Blob、不点击下载、不调用fetch，保留输入；改回支持的Unicode路径需重新声明，实际Blob回读含新增false/not-performed字段。
+- UI明确完整路径可能有敏感信息、不授权抓取、域名仍可能私网、不得自动联网。
+
+裁定：D03当前有限字符串入口及文案返工验收通过，没有新增阻断。它仍不是SSRF网络防护、公开性认证或秘密检测器。未执行DNS解析/联网/模型/服务；已有导出文件不会被追溯修改，旧v1缺少新增字段也不能被未来消费者当作授权。历史与新JSON均未经签名；未来抓取必须另行授权和服务端防护。本轮未重跑全库或浏览器，原浏览器/真实身份/磁盘下载限制不变。

@@ -374,3 +374,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-14 | PUBLICREPORTTEXT r1 | 修复后待复验 | 初始独审20用例16过4失败：导出字段fileName/byteLength/registeredUtc变更未重置声明、createElement失败泄漏对象URL。已补绑定并在分配URL前构造元素，澄清人员字段不导出但自由文本仍须核查。35+88自测与build复过；新冻结 logs/PUBLICREPORTTEXT-r1-impl-hashes-frozen.txt，初始失败证据保留，待独立原断言复跑。 |
 
 | 2026-11-14 | PUBLICREPORTTEXT r1 | 受限独立验收通过 | 原20具名用例原样20/20过，6冻结前后匹配；D01声明失效/D02对象URL清理关闭，C01措辞澄清。新35合成DOM/模型与旧W4.2 88另计；正式面板回执→交接→身份切换在DOM/API-double验证，无新增请求。真实Chromium在导航前因SUID sandbox配置退出，磁盘保存/生产身份/公开性认证及OCR均未验证。详tests_acceptance/PUBLICREPORTTEXT/REPORT.md，不推送部署合并。 |
+
+| 2026-11-14 | PUBLICREPORTTEXT r2 | 待独立验收 | 独立离线复现旧URL边界8/8可导出，非已复现SSRF。收紧查询串/片段/IP/明显本地主机，保留域名解析与路径敏感信息限制，UI/合同/JSON明确未核验且不授权抓取。48新断言、旧88、build过；r2冻结待复验，不联网认证、不推送。 |
+
+| 2026-11-14 | PUBLICREPORTTEXT r2 | 受限独立验收通过 | 原20保留、新16，共36具名独审通过；r2冻结6/6前后匹配。旧8地址全拒绝、Unicode保留、DOM拒绝不下载/不请求、恢复合法导出false许可字段均验证。D03关闭；不声称SSRF防护/敏感值自动识别/公开性认证完成。仅本地候选修订，未推送部署。 |
