@@ -1,0 +1,72 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_________ test_exact_labels_have_only_register_citation_and_stay_draft _________
+
+client = <starlette.testclient.TestClient object at 0x7f24c9b96e70>
+
+    def test_exact_labels_have_only_register_citation_and_stay_draft(client):
+        labels = [' A ', 'A', 'A', 'EV-001', '<script>unsafe</script>', 'x\ny']
+        rid = rec(client, labels)
+>       sentence = cause_sentence(report(client), rid)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_report_cause_provenance.py:30:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+doc = {'reportId': 'RPT-27031926c40f458f8ed3', 'familyId': 'RPT-27031926c40f458f8ed3', 'parentReportId': None, 'caseId': 'CASE-2026-DEMO-LILY-MARY', ...}
+rid = 'SR-2026-08'
+
+    def cause_sentence(doc, rid):
+>       return next(s for section in doc['sections'] for s in section['sentences']
+                    if s['sentenceId'] == 'recommendation-causes-' + rid)
+E       StopIteration
+
+service/tests/test_report_cause_provenance.py:23: StopIteration
+_________ test_saved_report_keeps_original_labels_after_register_edit __________
+
+client = <starlette.testclient.TestClient object at 0x7f24c9eec9b0>
+
+    def test_saved_report_keeps_original_labels_after_register_edit(client):
+        rid = rec(client, ['ORIGINAL'])
+        old = report(client)
+>       old_sentence = cause_sentence(old, rid)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_report_cause_provenance.py:45:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+doc = {'reportId': 'RPT-53451831dfaf4feabc0d', 'familyId': 'RPT-53451831dfaf4feabc0d', 'parentReportId': None, 'caseId': 'CASE-2026-DEMO-LILY-MARY', ...}
+rid = 'SR-2026-08'
+
+    def cause_sentence(doc, rid):
+>       return next(s for section in doc['sections'] for s in section['sentences']
+                    if s['sentenceId'] == 'recommendation-causes-' + rid)
+E       StopIteration
+
+service/tests/test_report_cause_provenance.py:23: StopIteration
+_________ test_unresolved_labels_do_not_grant_access_or_enable_archive _________
+
+client = <starlette.testclient.TestClient object at 0x7f24c85d6300>
+
+    def test_unresolved_labels_do_not_grant_access_or_enable_archive(client):
+        rid = rec(client, ['UNRESOLVED'])
+        doc = report(client)
+>       cause_sentence(doc, rid)
+
+service/tests/test_report_cause_provenance.py:58:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+doc = {'reportId': 'RPT-5d53414457c04296843b', 'familyId': 'RPT-5d53414457c04296843b', 'parentReportId': None, 'caseId': 'CASE-2026-DEMO-LILY-MARY', ...}
+rid = 'SR-2026-08'
+
+    def cause_sentence(doc, rid):
+>       return next(s for section in doc['sections'] for s in section['sentences']
+                    if s['sentenceId'] == 'recommendation-causes-' + rid)
+E       StopIteration
+
+service/tests/test_report_cause_provenance.py:23: StopIteration
+=========================== short test summary info ============================
+FAILED service/tests/test_report_cause_provenance.py::test_exact_labels_have_only_register_citation_and_stay_draft
+FAILED service/tests/test_report_cause_provenance.py::test_saved_report_keeps_original_labels_after_register_edit
+FAILED service/tests/test_report_cause_provenance.py::test_unresolved_labels_do_not_grant_access_or_enable_archive
+3 failed in 1.49s

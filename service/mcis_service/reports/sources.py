@@ -8,6 +8,7 @@ SOURCE_ADAPTERS 中对应 callable；协议是 (session, case) ->
 from __future__ import annotations
 
 from copy import deepcopy
+import json
 from math import isfinite
 from typing import Any, Callable
 from urllib.parse import quote
@@ -394,6 +395,15 @@ def build_sections(s: Session, case: dict[str, Any], template: dict[str, Any]) -
             f'Safety recommendation {rid}: status={status}; due UTC={rec.get("dueUtc") or "Missing data"}; source title="{rec.get("title") or "Missing data"}"; addressee (source text)="{rec.get("addressee") or "Missing data"}".',
             refs, source_status=status)
         grouped['recommendations'].append(sentence)
+        labels = rec.get('causeNodeIds')
+        label_text = json.dumps(labels, ensure_ascii=False)
+        grouped['recommendations'].append(_sentence(
+            'recommendation-causes-' + rid,
+            f'安全建议 {rid} 登记的原因标签（按原顺序）={label_text}；未核验其证据关联或因果判断。',
+            f'Registered cause labels for recommendation {rid} (original order)={label_text}; evidence links and causal findings are not verified.',
+            [_citation('recommendation', rid, _url('recs', case=case_id, id=rid),
+                       source_ref=f'recommendations/{rid}', needs_review=True)],
+            missing=not labels, source_status='RegisteredLabelsUnresolved'))
         if status in ('Implemented', 'Closed'):
             grouped['actions'].append(_sentence(
                 'actions-' + rid,
