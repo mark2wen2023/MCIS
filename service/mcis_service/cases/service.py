@@ -51,6 +51,10 @@ def state_at(points: list[dict[str, Any]], t: float) -> dict[str, Any] | None:
         return dict(points[0])
     for a, b in zip(points, points[1:]):
         if a["timeSec"] <= t <= b["timeSec"]:
+            # An exact recorded sample is not an interpolation. Preserve its metadata.
+            # For duplicate timestamps, the first encountered recorded point wins.
+            if t == b["timeSec"]:
+                return dict(b)
             span = b["timeSec"] - a["timeSec"] or 1.0
             f = (t - a["timeSec"]) / span
             out = dict(a)
