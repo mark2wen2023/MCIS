@@ -44,6 +44,8 @@ export function parseResult(bytes:Uint8Array):Result {
   if(r.providerRequests>r.roles.reduce((n:number,role:Role)=>n+role.modelCalls,0)) fail()
   if(r.transportMocked&&(r.realModel||r.providerRequests!==0)) fail()
   if(r.realModel&&r.providerRequests===0) fail()
+  const completedCalls=r.roles.filter((role:Role)=>role.status==='completed_unverified').reduce((n:number,role:Role)=>n+role.modelCalls,0)
+  if(!r.transportMocked&&completedCalls>0&&(!r.realModel||r.providerRequests<completedCalls)) fail()
   if(r.status==='completed_unverified') {
     if(!r.transportMocked&&r.providerRequests!==r.roles.reduce((n:number,role:Role)=>n+role.modelCalls,0)) fail()
     if(r.outcome!=='completed'||r.roles.some((role:Role)=>role.status!=='completed_unverified')||(!r.transportMocked&&!r.realModel)||r.errorCode!==undefined) fail()

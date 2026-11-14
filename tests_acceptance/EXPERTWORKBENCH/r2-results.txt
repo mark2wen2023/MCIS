@@ -1,0 +1,60 @@
+PASS valid synthetic fixture
+PASS EW-D01 not_started nonzero model
+PASS EW-D01 completed zero model
+PASS EW-D01 completed zero tools
+PASS EW-D01 remote completed requests mismatch
+PASS not_started tool counter rejected independently
+PASS completed one model rejected
+PASS completed one tool rejected
+PASS complete without Pi rejected
+PASS EW-D02 remote partial completed without response rejected
+PASS EW-D02 remote partial completed false realModel with requests rejected
+PASS EW-D02 remote partial completed request shortfall rejected
+PASS EW-D02 both completed partial sums both role requests
+PASS both completed final receipt failure with all requests accepted
+PASS remote partial completed exact requests despite unfinished attempt accepted
+PASS remote unknown request without completed role or response accepted
+PASS partial pre-receipt failure preserves fewer requests
+PASS minimum complete two model two tools
+PASS alien packet
+PASS alien manifest
+PASS unknown provider
+PASS changed Pi
+PASS identity asserted
+PASS facts asserted
+PASS consensus asserted
+PASS source verified
+PASS mock with real model
+PASS same run ids
+PASS swapped roles
+PASS altered quote
+PASS duplicate item
+PASS unknown row field
+PASS unknown group field
+PASS model budget
+PASS tool budget
+PASS partial reviews forbidden
+PASS success with error
+PASS duplicate JSON member rejected
+PASS malformed UTF8 rejected
+PASS oversized bytes rejected
+PASS initial no result
+PASS DOM literal hostile markup and provenance
+PASS different filter selects one
+PASS same filter two never consensus
+PASS missing empty selection removes stale cards
+PASS invalid import preserves previous result
+PASS EW-D02 contradictory partial import preserves prior simulated result
+PASS repeat import replaces not appends
+PASS newer load beats older delayed load
+PASS failed newer load still invalidates pending old
+PASS clear invalidates pending read
+PASS remote remains declaration not authentication
+PASS partial role missing filter retains accepted role only
+PASS oversized file rejected before read preserves result
+PASS read error handled preserving loaded content
+PASS zero network and storage writes
+PASS build CSP exact script and style hashes
+PASS build self contained no external resource attributes
+PASS frozen nine files match
+{"passed":59,"failed":0}
