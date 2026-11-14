@@ -130,7 +130,8 @@ def _save_checked(db,settings,token,case_id,record_id,operation_id,expected_bind
         _final(s,db,settings,token,case_id,record_id,expected_binding,before,True)
         return response
 
-def append_review(db,settings,token,case_id,proposal_id,operation_id,expected_revision,decisions):
+def append_review(db,settings,token,case_id,proposal_id,operation_id,expected_revision,decisions,*,review_origin='user_submission_unverified'):
+    if type(review_origin) is not str or review_origin not in ('user_submission_unverified','scripted_test'):raise ValueError()
     j.canonical_id(proposal_id);j.canonical_id(operation_id)
     if type(expected_revision) is not int or not 0<=expected_revision<100:raise ValueError()
     if not isinstance(decisions,list) or len(decisions)>20:raise ValueError()
@@ -141,14 +142,16 @@ def append_review(db,settings,token,case_id,proposal_id,operation_id,expected_re
         if row is None:raise problem(404,'WORKING_NOT_FOUND','工作提案不存在')
         _snapshot(s,db,settings,token,case_id,row.record_id,row.binding)
         if [x['index'] for x in decisions]!=list(range(1,len(row.doc['result']['proposals'])+1)):raise ValueError()
-        digest=extraction.digest({'actor':authority.subject_id,'expectedRevision':expected_revision,'decisions':decisions})
+        digest=extraction.digest({'actor':authority.subject_id,'expectedRevision':expected_revision,'decisions':decisions,'reviewOrigin':review_origin})
         history=_history(s,generation,proposal_id);prior=next((r for r in history if r.operation_id==operation_id),None)
         if prior:
-            if prior.digest!=digest:raise problem(409,'WORKING_OPERATION_CONFLICT','操作编号内容冲突')
+            legacy_digest=extraction.digest({'actor':authority.subject_id,'expectedRevision':expected_revision,'decisions':decisions})
+            legacy_retry='reviewOrigin' not in prior.doc and review_origin=='user_submission_unverified' and prior.digest==legacy_digest
+            if prior.digest!=digest and not legacy_retry:raise problem(409,'WORKING_OPERATION_CONFLICT','操作编号内容冲突')
         else:
             if len(history)!=expected_revision:raise problem(409,'WORKING_REVISION_CONFLICT','请读取最新复核版本')
             event=WorkingReview(incarnation=generation,proposal_id=proposal_id,seq=expected_revision+1,operation_id=operation_id,digest=digest,
-                doc={'revision':expected_revision+1,'authorSubjectId':authority.subject_id,'recordedUtc':iso(now_utc()),'decisions':decisions,'reviewedAsWorkingOnly':True,'factVerified':False})
+                doc={'revision':expected_revision+1,'authorSubjectId':authority.subject_id,'recordedUtc':iso(now_utc()),'decisions':decisions,'reviewedAsWorkingOnly':True,'factVerified':False,'reviewOrigin':review_origin})
             s.add(event);s.flush()
         response=_view(s,row);response['replayed']=prior is not None
         _final(s,db,settings,token,case_id,row.record_id,row.binding,before,True)

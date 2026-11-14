@@ -4,6 +4,7 @@ import threading
 import uuid
 from . import extraction as e, extraction_working_store as w
 from .pi_transcript_remote import RemoteTranscriptHost
+from .pi_working_result import validate_current
 
 class PiWorkingHost:
     def __init__(self,db,settings,session_token,case_id,record_id,cfg,*,approved_disclosure_digest,completion_mode='exact'):
@@ -43,9 +44,10 @@ class PiWorkingHost:
                 or result['status']!='PendingReview' or result['saved'] is not False
                 or result['factVerified'] is not False or result['providerMode']!='remote-deepseek'
                 or result['fixture'] is not False or result['inferencePerformed'] is not True):raise ValueError('Pi result mismatch')
-        return w._bounded({**result,'execution':{'profile':'pi-working-trial-v1','runId':self.__run,
+        frozen=w._bounded({**result,'execution':{'profile':'pi-working-trial-v1','runId':self.__run,
             'completionMode':result['completionMode'],'trace':copy.deepcopy(self.__trace),'outputDigest':e.digest(parsed),
             'traceMeaning':'trusted_host_protocol_metadata_not_signed_audit','runtimeIdentityVerified':False}})
+        return validate_current(frozen,snapshot,record_id)
 
     def save(self,operation_id):
         with self.__lock:

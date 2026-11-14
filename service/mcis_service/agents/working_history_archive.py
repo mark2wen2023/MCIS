@@ -15,7 +15,8 @@ from ..common.context import problem
 from ..interviews.service import utf16_len
 
 MAX_BYTES=8*1024*1024
-FORMAT='extraction-working-supplement-v1'
+FORMAT='extraction-working-supplement-v2'
+LEGACY_FORMAT='extraction-working-supplement-v1'
 AUTHORITY='historical-untrusted-no-activation'
 COVERAGE='proposals-reviews-citations-only-no-originals-no-identities-no-permissions'
 class ArchiveBase(DeclarativeBase):pass
@@ -82,7 +83,11 @@ def pairs(values):
         out[k]=v
     return out
 
-def _validate_result(result,record_id,binding):
+def _validate_result(result,record_id,binding,allow_pi=False):
+    if allow_pi and type(result) is dict and result.get('providerMode')=='remote-deepseek':
+        from .pi_working_result import validate_shape
+        validate_shape(result,record_id,binding)
+        return
     keys(result,'status inferencePerformed fixture proposals citations receipt saved citationMeaning')
     if result['status']!='PendingReview' or result['saved'] is not False or result['citationMeaning']!='exact_quote_match_only_not_fact_verification':reject()
     receipt=result['receipt'];keys(receipt,'bindingDigest promptDigest outputDigest providerMode modelIdentityVerified configuredModel persistentAudit signature sourceScope runChecksum')
@@ -117,22 +122,23 @@ def validate(raw):
         keys(wrapper,'sha256 payload');hash_value(wrapper['sha256']);p=wrapper['payload']
         if extraction.digest(p)!=wrapper['sha256']:reject()
         keys(p,'format caseId originCaseIncarnation exportCaseEpochUtc authority coverage proposals')
-        if p['format']!=FORMAT or p['authority']!=AUTHORITY or p['coverage']!=COVERAGE or not isinstance(p['caseId'],str) or not re.fullmatch('[A-Za-z0-9_-]{1,64}',p['caseId']):reject()
+        if p['format'] not in (FORMAT,LEGACY_FORMAT) or p['authority']!=AUTHORITY or p['coverage']!=COVERAGE or not isinstance(p['caseId'],str) or not re.fullmatch('[A-Za-z0-9_-]{1,64}',p['caseId']):reject()
         j.canonical_id(p['originCaseIncarnation']);utc(p['exportCaseEpochUtc']);seq(p['proposals'],0,50);ids=set()
         for item in p['proposals']:
             keys(item,'proposalId recordId bindingDigest generatedBySubjectId storedUtc result reviews sourceDeclaration')
             j.canonical_id(item['proposalId']);j.canonical_id(item['generatedBySubjectId']);utc(item['storedUtc']);hash_value(item['bindingDigest'])
             if not isinstance(item['recordId'],str) or not re.fullmatch('[A-Za-z0-9_-]{1,64}',item['recordId']) or item['proposalId'] in ids:reject()
-            ids.add(item['proposalId']);_validate_result(item['result'],item['recordId'],item['bindingDigest']);seq(item['reviews'],0,100)
+            ids.add(item['proposalId']);_validate_result(item['result'],item['recordId'],item['bindingDigest'],p['format']==FORMAT);seq(item['reviews'],0,100)
             source=item['sourceDeclaration']
-            if item['result']['receipt']['sourceScope']=='interview_document_only':
+            if (item['result']['sourceScope'] if item['result'].get('providerMode')=='remote-deepseek' else item['result']['receipt']['sourceScope'])=='interview_document_only':
                 if source is not None:reject()
             else:
                 keys(source,'evidenceId sourceIncarnation sourceSha256')
                 if not isinstance(source['evidenceId'],str) or not re.fullmatch('[A-Za-z0-9_-]{1,64}',source['evidenceId']):reject()
                 j.canonical_id(source['sourceIncarnation']);hash_value(source['sourceSha256'])
             for index,review in enumerate(item['reviews'],1):
-                keys(review,'revision authorSubjectId recordedUtc decisions reviewedAsWorkingOnly factVerified')
+                keys(review,'revision authorSubjectId recordedUtc decisions reviewedAsWorkingOnly factVerified'+(' reviewOrigin' if p['format']==FORMAT and 'reviewOrigin' in review else ''))
+                if 'reviewOrigin' in review and review['reviewOrigin'] not in ('user_submission_unverified','scripted_test'):reject()
                 if type(review['revision']) is not int or review['revision']!=index or review['reviewedAsWorkingOnly'] is not True or review['factVerified'] is not False:reject()
                 j.canonical_id(review['authorSubjectId']);utc(review['recordedUtc']);seq(review['decisions'],1,20)
                 decisions=[Decision.model_validate(d).model_dump() for d in review['decisions']]
@@ -148,7 +154,10 @@ def export_bundle(db,settings,token,case_id):
         p={'format':FORMAT,'caseId':case_id,'originCaseIncarnation':before[1],'exportCaseEpochUtc':epoch,'authority':AUTHORITY,'coverage':COVERAGE,'proposals':[]}
         for row in rows:
             snap=w._snapshot(s,db,settings,token,case_id,row.record_id,row.binding)
-            w._validate_generated(row.doc['result'],snap,row.record_id)
+            if row.doc['result'].get('providerMode')=='remote-deepseek':
+                from .pi_working_result import validate_current
+                validate_current(row.doc['result'],snap,row.record_id)
+            else:w._validate_generated(row.doc['result'],snap,row.record_id)
             declaration=None
             if snap[1].get('evidenceId'):
                 ctx=SimpleNamespace(db=db,settings=settings,role=before[0].role,operator=before[0].subject_id)

@@ -12,8 +12,9 @@ from mcis_service.agents import extraction_working_store as w
 
 def test_independent_working_rehearsal_marks_script_and_preserves_original(working,monkeypatch):
     a,_=working;h,result=accepted(working,monkeypatch);seen=[];real_append=w.append_review
-    def append(*args):
-        seen.extend(copy.deepcopy(args[-1]));return real_append(*args)
+    def append(*args,**kwargs):
+        assert kwargs.get("review_origin")=="scripted_test"
+        seen.extend(copy.deepcopy(args[-1]));return real_append(*args,**kwargs)
     monkeypatch.setattr(w,'append_review',append)
     outcome=p.working_acceptance(h,a,result)
     assert outcome=={'workingSaved':True,'reopenedRead':True,'reviewRevision':1,'reviewActor':'scripted_test_not_human','factActivated':False,'persistentDuringProbe':True,'storage':'temporary_sqlite_deleted_after_probe'}
@@ -24,7 +25,7 @@ def test_independent_working_rehearsal_marks_script_and_preserves_original(worki
 
 def test_independent_working_rehearsal_failure_never_reports_success(working,monkeypatch):
     a,_=working;h,result=accepted(working,monkeypatch)
-    monkeypatch.setattr(w,'append_review',lambda *a: (_ for _ in ()).throw(HTTPException(403,'script denied')))
+    monkeypatch.setattr(w,'append_review',lambda *a,**kw: (_ for _ in ()).throw(HTTPException(403,'script denied')))
     with pytest.raises(HTTPException):p.working_acceptance(h,a,result)
     records=w.list_records(*a[:4]);assert len(records['items'])==1
     assert w.read(*a[:4],records['items'][0]['proposalId'])['revision']==0

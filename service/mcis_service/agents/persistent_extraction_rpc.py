@@ -61,7 +61,7 @@ class PersistentExtractionRPC:
                 body={k:copy.deepcopy(result[k]) for k in ('proposalId','recordId','revision','status','saved','persistence','factActivated')}
                 if 'replayed' in result:body['replayed']=result['replayed']
                 p=result['proposal'];body['proposal']={k:copy.deepcopy(p[k]) for k in ('result','bindingDigest','storedUtc')}
-                body['reviews']=[{**{k:copy.deepcopy(e[k]) for k in ('revision','recordedUtc','decisions','reviewedAsWorkingOnly','factVerified')},'authorRef':e['authorSubjectId']} for e in result['reviews']]
+                body['reviews']=[{**{k:copy.deepcopy(e[k]) for k in ('revision','recordedUtc','decisions','reviewedAsWorkingOnly','factVerified')},'authorRef':e['authorSubjectId'],**({'reviewOrigin':e['reviewOrigin']} if 'reviewOrigin' in e else {})} for e in result['reviews']]
             elif req.action=='list':
                 body={k:result[k] for k in ('caseId','persistence','factActivated')}
                 body['items']=[{k:e[k] for k in ('proposalId','recordId','revision','status')} for e in result['items']]

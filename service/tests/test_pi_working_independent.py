@@ -61,9 +61,11 @@ def test_independent_closed_host_cannot_replay_saved_operation(working,monkeypat
     with pytest.raises(ValueError):h.dispatch({'op':'model_start'})
     assert count(a)==1
 
-def test_independent_pi_archive_unsupported_fail_closed_not_silent_loss(working,monkeypatch):
+def test_independent_pi_archive_v2_preserves_result_without_activation(working,monkeypatch):
     a,_=working;archive.initialize(a[0]);h,_=accepted(working,monkeypatch);saved=h.save(str(uuid.uuid4()))
-    with pytest.raises((ValueError,HTTPException)):archive.export_bundle(*a[:4])
+    raw=archive.export_bundle(*a[:4]);_,payload=archive.validate(raw)
+    assert payload['format']==archive.FORMAT and payload['authority']=='historical-untrusted-no-activation'
+    assert payload['proposals'][0]['result']['providerMode']=='remote-deepseek'
     assert w.read(*a[:4],saved['proposalId'])['saved'] and count(a)==1;h.close()
 
 def test_independent_revoked_session_cannot_read_saved_pi_history(working,monkeypatch):

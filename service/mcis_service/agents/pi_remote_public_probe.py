@@ -70,7 +70,7 @@ def working_acceptance(host,args,accepted):
         before=working.read(reopened,settings,token,case,pid)
         if before['revision']!=0 or before['proposal']['result']!=original:raise ValueError()
         decisions=[{'index':i,'decision':'needs_verification','note':'自动化验收脚本：待调查员核实；非人工判断或事实确认。'} for i in range(1,len(original['proposals'])+1)]
-        reviewed=working.append_review(reopened,settings,token,case,pid,str(uuid.uuid4()),0,decisions)
+        reviewed=working.append_review(reopened,settings,token,case,pid,str(uuid.uuid4()),0,decisions,review_origin='scripted_test')
         if reviewed['revision']!=1 or reviewed['factActivated']:raise ValueError()
     finally:reopened.engine.dispose()
     reopened=Database(settings.resolved_db_url)
