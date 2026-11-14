@@ -599,3 +599,24 @@ Read-only static local HTML export atop citation candidate5322d92 (depends PR81)
 Validate raw snapshot before rendering, escape all dynamic content, keep URL inert
 and unknown/partial states visible. No runtime/provider/browser-server integration.
 Scope research/expert_meeting/CITATION_HTML.md; existing freezes unchanged.
+
+## EXPERTDEADLINE (2026-11-14)
+Reopen frozen PR81 machine.py for actual deadline bug inherited by10ec700:
+start4194262.256341955 plus600 yields elapsed int599999; deterministic red2/8.
+Use a fixed absolute monotonic deadline, then bound recorded integer elapsed to
+its correct side. No epsilon/grace delay and no moving test beyonddeadline.
+Retain red assertions and before-deadline nextafter checks; new r1 freeze.
+
+## EXPERTCOORDINATION (2026-11-14)
+Add isolated cooperative deadline/budget boundary on10ec700. All public accesses
+refresh Meeting tick; expired pending attempts stay unknown and budgets do not
+refund. No old executor/transport extraction or execution permission; hard timeout
+and actual provider usage remain unmet. Contract research/expert_meeting/COORDINATION.md.
+EXPERTCOORDINATION D01 revision: independent second-sample NaN red tests exposed
+uncaught control/settlement exceptions. Centralize all Meeting.act calls through
+fail-closed handler; preserve original red assertions. Re-freeze as r1.
+
+## EXPERTCOORDINTEGRATED (2026-11-14)
+Authorized combination of ced79f5/d26314b on10ec700. Exact source freeze matches;
+new actual gate+deadline tests prove dependency present. No live execution release.
+See research/expert_meeting/COORDINATION_INTEGRATED.md; original red evidence retained.

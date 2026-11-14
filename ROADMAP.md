@@ -383,3 +383,9 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTCITATION | 只读投影独审通过 | 2026-11-14：12项独审、3/3冻结一致；无.git副本83项通过。失败/未知/上下文绑定/Unicode歧义及supported不升级语义已验；见 DEFECTS/EXPERTCITATION.md。非浏览器/事实/模型验收，真实0/HOLD。 |
 | EXPERTCITATIONHTML | 待测 | 2026-11-14：5322d92上静态离线审阅导出，89项自测/回归通过；冻结 logs/EXPERTCITATIONHTML-impl-hashes-frozen.txt。无真实浏览器/模型验收，不接正式案件；真实0/HOLD。 |
 | EXPERTCITATIONHTML | 静态导出独审通过 | 2026-11-14：10项独审、3/3冻结一致，无.git源码89项通过。完整/部分/未知/超时、转义及CLI限界已验；见 DEFECTS/EXPERTCITATIONHTML.md。HTMLParser非真实浏览器；真实模型0/HOLD。 |
+| EXPERTDEADLINE | 待测 | 2026-11-14：10ec700上修正绝对截止时间浮点量化缺陷，原红测保留；97项通过。冻结 logs/EXPERTDEADLINE-impl-hashes-frozen.txt；仍依赖tick/action，非硬取消/模型执行。 |
+| EXPERTDEADLINE | 独审通过 | 2026-11-14：21独审通过、3/3冻结；保留原红测，97源码回归通过。隔离临时组合d26314b协调边界135项通过，非实际分支集成/硬取消；见 DEFECTS/EXPERTDEADLINE.md，真实0/HOLD。 |
+| EXPERTCOORDINATION | 待测 | 2026-11-14：协作式tick/预算协调边界96项回归通过；冻结 logs/EXPERTCOORDINATION-impl-hashes-frozen.txt。非后台看门狗/硬取消，不授权真实调用，DeepSeek0/HOLD。 |
+| EXPERTCOORDINATION r1 | 限定复验通过/依赖HOLD | 2026-11-14：10独审通过，D01二次时钟采样异常封闭原红测转绿；冻结 logs/EXPERTCOORDINATION-r1-impl-hashes-frozen.txt。继承浮点deadline另分支修复中，不晋级精确截止或真实执行。 |
+| EXPERTCOORDINTEGRATED | 待独审 | 2026-11-14：10ec700上实际组合截止修复+协调r1；139项通过（含二次采样3项另复跑）。两源冻结保持，新增实际gate精确截止4测；冻结 logs/EXPERTCOORDINTEGRATED-impl-hashes-frozen.txt。真实0/HOLD，非硬取消。 |
+| EXPERTCOORDINTEGRATED | 离线组合独审通过 | 2026-11-14：独立139项通过；两源各3/3、组合4/4冻结；实际加载新machine、源改动逐字一致，原NaN3红和fractional截止4测通过。缺失截止依赖已在本组合关闭；不放行真实模型/硬取消。 |

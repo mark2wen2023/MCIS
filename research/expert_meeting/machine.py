@@ -162,6 +162,9 @@ class Meeting:
         self._clock = clock
         self._started = clock()
         if type(self._started) not in {int, float} or not math.isfinite(self._started): raise MeetingError('clock')
+        self._deadline = self._started + LIMITS['elapsedMilliseconds'] / 1000
+        if not math.isfinite(self._deadline) or self._deadline <= self._started:
+            raise MeetingError('clock range')
         self._elapsed = 0
         self._observed = self._started
         self._state = initial(meeting_id or str(uuid.uuid4()), provider_mode)
@@ -180,7 +183,11 @@ class Meeting:
             if now < self._observed: raise MeetingError('clock reversed')
             milliseconds = (now - self._started) * 1000
             if not math.isfinite(milliseconds): raise MeetingError('clock range')
+            # Absolute monotonic deadline is authoritative. Subtracting floats then
+            # flooring milliseconds can lose the boundary (600000 -> 599999).
             elapsed = int(milliseconds)
+            limit = LIMITS['elapsedMilliseconds']
+            elapsed = max(elapsed, limit) if now >= self._deadline else min(elapsed, limit - 1)
             self._observed = now
             next_ = _transition(self._state, action, elapsed, self._packet)
             if next_ == self._state: return deepcopy(self._state)

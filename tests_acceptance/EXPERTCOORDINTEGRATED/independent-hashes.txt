@@ -1,0 +1,10 @@
+research/expert_meeting/machine.py: OK
+research/expert_meeting/DEADLINE.md: OK
+tests_acceptance/EXPERTDEADLINE/test_boundary.py: OK
+research/expert_meeting/coordination.py: OK
+research/expert_meeting/test_coordination.py: OK
+research/expert_meeting/COORDINATION.md: OK
+research/expert_meeting/machine.py: OK
+research/expert_meeting/coordination.py: OK
+research/expert_meeting/COORDINATION_INTEGRATED.md: OK
+tests_acceptance/EXPERTCOORDINTEGRATED/test_integration.py: OK

@@ -1,0 +1,5 @@
+Temporary source-only composition: current deadline machine + d26314b coordination.
+Neither branch changed; no Git merge or runtime/model call.
+........................................................................ [ 53%]
+...............................................................          [100%]
+135 passed in 0.75s
