@@ -31,7 +31,7 @@ try{
  await act(async()=>root.render(<ExtractionWorking/>));await act(async()=>root.render(<ExtractionWorking port={port}/>));
  await click('刷新工作提案目录');for(let i=0;i<100&&!container.querySelector('button[aria-label^="打开 "]');i++)await act(async()=>{await new Promise(r=>setTimeout(r,30))});
  await click('打开工作提案');for(let i=0;i<100&&container.querySelectorAll('article').length!==2;i++)await act(async()=>{await new Promise(r=>setTimeout(r,30))});
- assert.match(container.textContent!,/虚构试验理由 0/);assert.match(container.textContent!,/调查员标识/);
+ assert.match(container.textContent!,/虚构试验理由 0/);assert.match(container.textContent!,/主体标识/);
  await act(async()=>{[...container.querySelectorAll('textarea')].forEach((t,i)=>{t.value='追加第二版 '+i;t.dispatchEvent(new window.Event('input',{bubbles:true}))})});await click('追加工作复核，不覆盖历史');
  for(let i=0;i<100&&!container.textContent!.includes('当前工作复核版本：2');i++)await act(async()=>{await new Promise(r=>setTimeout(r,30))});assert.match(container.textContent!,/当前工作复核版本：2/);assert.match(container.textContent!,/虚构试验理由 0/);assert.match(container.textContent!,/追加第二版 0/);
  assert.equal(window.localStorage.length,0);assert.equal(window.sessionStorage.length,0);assert.equal(errors,'');
