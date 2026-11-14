@@ -1,0 +1,7 @@
+{
+  "returncode": 1,
+  "stdoutBytes": 0,
+  "missingExecutable": true,
+  "mentionsDefaultDotnet": true,
+  "coreOutputProduced": false
+}

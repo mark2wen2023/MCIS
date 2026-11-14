@@ -579,3 +579,9 @@ object. Reproduced in single-branch clone (15 pass/1 fail). Replace that Git loo
 with the SHA-256 pinned at reviewed extraction; preserve source commit provenance
 and stdlib assertion. No runtime change or history import. Source exports without
 .git pass, and modified source bytes fail the pinned digest assertion.
+
+## HFACS environment diagnosis (2026-11-14)
+On main 73fc800, distinguish missing pinned SDK from product/archive regressions.
+Add an offline prerequisite checker and extend tools/mcis-hfacs/README.md;
+no service contract, core, build recipe, fixture or inference fallback changes.
+Existing HFACS_CORE_UNAVAILABLE remains fail-closed. No automatic installation.

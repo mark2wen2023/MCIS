@@ -1,0 +1,3 @@
+# HFACS environment diagnostic independent disposition
+
+Limited offline diagnostic: PASS (11 unit tests,3 frozen hashes verified). Actual environment: SDK_MISSING, checker exit1 and coreValidated=false. Real HFACS functionality remains BLOCKED, not fixed by this diagnostic. Coordinator's real two archive scenarios remain2 failures; no skips or substitute implementation added. See tests_acceptance/hfacs-environment/independent.md and independent-environment.json for execution and evidence boundaries. Genuine SDK provisioning and successful real core/workflow reruns remain required. No product or frozen implementation changes by reviewer.

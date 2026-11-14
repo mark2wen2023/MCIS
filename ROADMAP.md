@@ -377,3 +377,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTRECEIPT | 限定范围独审通过 | 2026-11-14：16项独立测试、3/3冻结一致；仅可信私有目录单写者离线一致性，见 DEFECTS/EXPERTRECEIPT.md。main路由回归24项通过；无整栈/真实模型/浏览器验收，HOLD。 |
 | EXPERTRECEIPT portability | 待复核 | 2026-11-14：修复非祖先Git对象测试依赖；单分支及无.git导出35项通过，篡改来源摘要断言拒绝；运行源码未改。冻结 logs/EXPERTRECEIPT-portability-impl-hashes-frozen.txt。 |
 | EXPERTRECEIPT portability | 独审通过 | 2026-11-14：独立重算源提交摘要一致，无.git最小副本35过，篡改摘要断言拒绝；见 tests_acceptance/EXPERTRECEIPT/PORTABILITY_REVIEW.md。真实请求0/HOLD。 |
+
+| HFACS environment diagnosis | 待测 | main 73fc800; offline prerequisite checker, no production fallback; logs/hfacs-environment-impl-hashes-frozen.txt |
+| HFACS environment diagnosis | 诊断候选独审通过；核心验收阻断 | 11 unit passes independently; real SDK_MISSING and 2 retained workflow failures; tests_acceptance/hfacs-environment/REPORT.md |
