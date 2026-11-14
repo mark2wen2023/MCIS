@@ -228,9 +228,13 @@ async def download(case_id:str,digest:str,request:Request,ctx:Ctx=CtxDep):
     except (ValueError,UnicodeError):raise problem(422,'INTAKE_PURPOSE','下载必须提供有效有限长度的访问目的及操作人（操作人不超过200字符且无控制符）')
     with WRITE_LOCK:
         with ctx.db.session() as s:
+            from ..reports.access import begin
+            begin(s)
             authorize(ctx,s,case_id);found=load_receipt(ctx,s,case_id,digest)
             if not found:raise problem(404,'INTAKE_NOT_FOUND','未找到登记原件')
             receipt,raw=found
+            from ..report_output.attachment_access import protect_container
+            protect_container(s,case_id,ctx.role,raw)
             evidence.append_custody(s,case_id=case_id,evidence_id=receipt['evidenceId'],kind='Access',
                        operator=ctx.operator,role=ctx.role,sha256=receipt['sourceSha256'],detail=purpose)
         return Response(raw,media_type='application/octet-stream',headers={
