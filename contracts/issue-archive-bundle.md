@@ -66,3 +66,33 @@ or in active evidence storage. There is no automatic resumption of old operation
 Users still need the existing case/evidence package for a full case workflow.
 This supplemental bundle does not yet integrate with that package or browser UI.
 No actual LLM, production login, deployment or merge is involved.
+
+## Explicit trial HTTP transport
+
+Only the nonproduction `create_identity_trial_app` exposes these paths:
+
+- GET `/api/v1/trial/cases/{caseId}/issue-archives/export`: exact UTF-8 JSON bundle
+  bytes, fixed `mcis-issue-history.json` attachment filename, no double encoding.
+- POST `/api/v1/trial/cases/{caseId}/issue-archives/import`: raw application/json
+  bundle, returns only digest/count/replay/inactive summary, not source bytes.
+- GET `/api/v1/trial/cases/{caseId}/issue-archives`: bounded historical summaries.
+- GET `/api/v1/trial/cases/{caseId}/issue-archives/{sha256}`: authorized inert history.
+
+Explicit host initialization remains required. No credential provisioning, grant
+creation, active-event restoration or old-route passthrough is exposed. Export and
+history reads require current membership/full-content access; import additionally
+requires issue write grant. Authorization happens before receiving body and again
+in the transaction. One Bearer header is required; Origin, Cookie, old role/operator
+headers, compressed or transfer-encoded bodies are rejected.
+
+Input limit8MiB enforced from Content-Length and actual chunks, with30-second total
+body deadline. Duplicate headers/JSON keys, invalid UTF-8, nonfinite numbers and
+all invalid bundle content fail closed. GET accepts no request body. Exact paths,
+no query variants, unsupported methods/HEAD receive no archive. Responses are
+no-store/nosniff; historical response envelope capped at8MiB+1024bytes.
+
+Disconnect during receiving does not import. Once synchronous service execution
+starts, loss of response does not prove rollback; retry the same bundle digest to
+confirm without duplication. Do not reinterpret an import receipt as live-system
+recovery or evidence approval. This is ASGI trial HTTP, not a production browser
+session, public listener, UI or deployment.
