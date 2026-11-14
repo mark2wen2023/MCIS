@@ -1,0 +1,27 @@
+import assert from 'node:assert/strict';
+import {fixture,id,rid,scope} from './pi-independent-fixture';
+import {frozenProposal,createExtractionWorkingPort} from '../src/extractionWorking/hostPort';
+import {createWorkingArchivePort,PROFILE as ARCHIVE} from '../src/workingArchive/hostPort';
+const ref={id:'historical.unknown',version:'999.01.2',contentDigest:'d'.repeat(64)};
+const originalQuote='  约  171.053 吨\n\t空白：  \n船🚢 e\u0301 <img src="https://example.invalid/x" onerror="boom()"> <script>boom()</script>  ';
+function current():any{const p=fixture();p.proposals[0].quote=originalQuote;p.proposals[0].span.length=originalQuote.length;p.citations[0].quote=originalQuote;p.execution.profile='pi-working-trial-v2';p.execution.skillRef=structuredClone(ref);return p}
+let n=0;
+function body(result:any,origin='scripted_test'):any{return {proposalId:id,recordId:rid,revision:1,status:'working_unreviewed',saved:true,persistence:'working_record_only',factActivated:false,proposal:{bindingDigest:result.bindingDigest,storedUtc:'2026-11-14T00:00:00Z',result},reviews:[{revision:1,authorRef:id,recordedUtc:'2026-11-14T00:00:01Z',decisions:[{index:1,decision:'needs_verification',note:'script only'}],reviewedAsWorkingOnly:true,factVerified:false,reviewOrigin:origin}]}}
+let next=body(current());let requests:string[]=[];const send=async(m:any)=>{requests.push(m.action);return {...scope,requestId:m.requestId,ok:true,body:structuredClone(next)}};
+const ascope={profile:ARCHIVE,contextId:id,caseId:scope.caseId,productionLogin:false} as const,hash='c'.repeat(64);
+function history(result:any):any{return {sha256:hash,status:'imported_untrusted_history',activated:false,targetCaseEpochUtc:'2026-11-14T00:00:00Z',historicalClaimsVerified:false,payload:{format:'extraction-working-supplement-v2',caseId:scope.caseId,originCaseIncarnation:id,exportCaseEpochUtc:'2026-11-14T00:00:00Z',authority:'historical-untrusted-no-activation',coverage:'proposals-reviews-citations-only-no-originals-no-identities-no-permissions',proposals:[{proposalId:id,recordId:rid,bindingDigest:result.bindingDigest,generatedBySubjectId:id,storedUtc:'2026-11-14T00:00:00Z',sourceDeclaration:null,result,reviews:body(result).reviews.map(({authorRef,...r}:any)=>({...r,authorSubjectId:authorRef}))}]}}}
+let h=history(current());
+const {Window}=await import(process.env.MCIS_HAPPY_DOM_PATH||'happy-dom');const win=new Window({url:'http://localhost'});for(const k of ['window','document','navigator','HTMLElement','Event'])Object.defineProperty(globalThis,k,{value:(win as any)[k]??win,configurable:true,writable:true});(globalThis as any).IS_REACT_ACT_ENVIRONMENT=true;
+let fetches=0;globalThis.fetch=async()=>{fetches++;throw Error('No external lookup permitted')};
+const React=require('react'),{act}=React,{createRoot}=require('react-dom/client'),{ExtractionWorking}=require('../src/extractionWorking/ExtractionWorking'),{WorkingArchive}=require('../src/workingArchive/WorkingArchive');
+const el=document.createElement('div');document.body.append(el);const root=createRoot(el);
+function quoteCheck(historical:boolean){const q=el.querySelector('blockquote')!;assert(q);assert.equal(q.textContent,originalQuote);assert.equal((q as HTMLElement).style.whiteSpace,'pre-wrap');assert.equal(q.querySelectorAll('script,img,a,style').length,0);assert.equal(q.children.length,0);const section=q.parentElement!;assert(section.textContent!.includes('人工核对'));assert(section.textContent!.includes('空白或未记录不证明有，也不证明无'));assert(section.textContent!.includes('引用定位通过不等于语义支持'));assert(!section.closest('details'));if(historical)assert(section.textContent!.includes('历史包声明，未经认证'));n++;}
+try{
+ await act(async()=>root.render(<ExtractionWorking/>));assert([...el.querySelectorAll('button')].every(b=>b.disabled));assert.equal(requests.length,0);n++;
+ await act(async()=>root.render(<ExtractionWorking port={createExtractionWorkingPort(scope,send,'remote-deepseek')}/>));assert.equal(requests.length,0);n++;
+ await act(async()=>[...el.querySelectorAll('button')].find(b=>b.textContent==='生成并保存未审核提案')!.click());quoteCheck(false);assert(el.textContent!.includes('非真人审核'));assert.equal(requests.filter(x=>x==='review').length,0);const before=requests.length;await act(async()=>root.render(<ExtractionWorking port={createExtractionWorkingPort(scope,send,'remote-deepseek')}/>));assert.equal(requests.length,before);n++;
+ let archiveCalls:string[]=[];const uiPort=createWorkingArchivePort(ascope,async(m:any)=>{archiveCalls.push(m.action);return {...ascope,requestId:m.requestId,ok:true,body:m.action==='list'?{caseId:scope.caseId,items:[{sha256:hash,proposals:1,status:'imported_untrusted_history',activated:false}]}:structuredClone(h)}});
+ await act(async()=>root.render(<WorkingArchive port={uiPort}/>));assert.equal(archiveCalls.length,0);await act(async()=>[...el.querySelectorAll('button')].find(b=>b.textContent==='刷新历史目录')!.click());await act(async()=>[...el.querySelectorAll('button')].find(b=>b.textContent==='打开历史补充包')!.click());quoteCheck(true);assert(el.textContent!.includes('非真人审核'));assert.deepEqual(archiveCalls,['list','read']);n++;
+ await act(async()=>root.render(<WorkingArchive/>));assert([...el.querySelectorAll('button')].every(b=>b.disabled));assert(!el.querySelector('blockquote'));assert.equal(fetches,0);n++;
+}finally{await act(async()=>root.unmount());await win.happyDOM.abort();win.close()}
+console.log(`PASS ${n} independent quote UI checks; no provider/network calls`);process.exit(0);
