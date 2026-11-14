@@ -1,0 +1,977 @@
+{
+  "type": "object",
+  "required": [
+    "approvalGranted",
+    "authorizationVerified",
+    "bindings",
+    "candidate",
+    "captureUtc",
+    "declarationMeaning",
+    "distribution",
+    "formalDatabaseUsed",
+    "freshness",
+    "locator",
+    "materialId",
+    "materialVersion",
+    "modelUsed",
+    "networkUsed",
+    "ocrUsed",
+    "profile",
+    "reviewRecords",
+    "sourceAuthenticity",
+    "sourceDeclaration",
+    "sourcePreview",
+    "worksheet"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "approvalGranted": {
+      "const": false,
+      "type": "boolean"
+    },
+    "authorizationVerified": {
+      "const": false,
+      "type": "boolean"
+    },
+    "bindings": {
+      "type": "object",
+      "required": [
+        "candidateDigest",
+        "excerptSha256",
+        "sourceFileSha256",
+        "sourceSnapshotDigest"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "candidateDigest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "excerptSha256": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "sourceFileSha256": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "sourceSnapshotDigest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        }
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "required": [
+        "content",
+        "contentDigest",
+        "creatorIdentity",
+        "method",
+        "status"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "content": {
+          "type": "object"
+        },
+        "contentDigest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "creatorIdentity": {
+          "const": "not_authenticated",
+          "type": "string"
+        },
+        "method": {
+          "const": "deterministic_original_excerpt_not_LLM",
+          "type": "string"
+        },
+        "status": {
+          "const": "Candidate",
+          "type": "string"
+        }
+      }
+    },
+    "captureUtc": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100000
+    },
+    "declarationMeaning": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100000
+    },
+    "distribution": {
+      "const": "research_internal_pending",
+      "type": "string"
+    },
+    "formalDatabaseUsed": {
+      "const": false,
+      "type": "boolean"
+    },
+    "freshness": {
+      "type": "object",
+      "required": [
+        "approvalChanged",
+        "candidateContentDigest",
+        "candidateSourceCapturedUtc",
+        "captureTimesVerified",
+        "changedFields",
+        "comparison",
+        "comparisonScope",
+        "modelUsed",
+        "networkUsed",
+        "observedSourceCapturedUtc",
+        "observedSourceDigest",
+        "originalSourceDigest",
+        "persisted",
+        "profile",
+        "recheckRequired",
+        "reviewRequired",
+        "sourceAuthenticity",
+        "sourceCurrentnessVerified",
+        "warning"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "approvalChanged": {
+          "const": false,
+          "type": "boolean"
+        },
+        "candidateContentDigest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "candidateSourceCapturedUtc": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "captureTimesVerified": {
+          "const": false,
+          "type": "boolean"
+        },
+        "changedFields": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 0,
+          "prefixItems": [],
+          "items": false
+        },
+        "comparison": {
+          "const": "unchanged_snapshot",
+          "type": "string"
+        },
+        "comparisonScope": {
+          "const": "exact_supplied_source_fields",
+          "type": "string"
+        },
+        "modelUsed": {
+          "const": false,
+          "type": "boolean"
+        },
+        "networkUsed": {
+          "const": false,
+          "type": "boolean"
+        },
+        "observedSourceCapturedUtc": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "observedSourceDigest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "originalSourceDigest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "persisted": {
+          "const": false,
+          "type": "boolean"
+        },
+        "profile": {
+          "const": "MCIS-KNOWLEDGE-SOURCE-FRESHNESS-1",
+          "type": "string"
+        },
+        "recheckRequired": {
+          "const": false,
+          "type": "boolean"
+        },
+        "reviewRequired": {
+          "const": true,
+          "type": "boolean"
+        },
+        "sourceAuthenticity": {
+          "const": "not_verified",
+          "type": "string"
+        },
+        "sourceCurrentnessVerified": {
+          "const": false,
+          "type": "boolean"
+        },
+        "warning": {
+          "const": "仅比较调用方提供的来源快照。相同不证明当前来源有效、真实或可公开；变更不自动否定卡片。仍须人工核验。",
+          "type": "string"
+        }
+      }
+    },
+    "locator": {
+      "type": "object",
+      "required": [
+        "exactExcerpt",
+        "excerptSha256",
+        "extractionMode",
+        "extractionTool",
+        "note",
+        "pageExtractedText",
+        "pageTextSha256",
+        "pdfPage",
+        "printedPage",
+        "visualReview"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "exactExcerpt": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "excerptSha256": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "extractionMode": {
+          "const": "embedded_text_not_OCR",
+          "type": "string"
+        },
+        "extractionTool": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "pageExtractedText": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "pageTextSha256": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "pdfPage": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "printedPage": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "visualReview": {
+          "const": "pending",
+          "type": "string"
+        }
+      }
+    },
+    "materialId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100000
+    },
+    "materialVersion": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100000
+    },
+    "modelUsed": {
+      "const": false,
+      "type": "boolean"
+    },
+    "networkUsed": {
+      "const": false,
+      "type": "boolean"
+    },
+    "ocrUsed": {
+      "const": false,
+      "type": "boolean"
+    },
+    "profile": {
+      "const": "MCIS-OFFLINE-PENDING-PACKET-1",
+      "type": "string"
+    },
+    "reviewRecords": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 0,
+      "prefixItems": [],
+      "items": false
+    },
+    "sourceAuthenticity": {
+      "const": "not_verified",
+      "type": "string"
+    },
+    "sourceDeclaration": {
+      "type": "object",
+      "required": [
+        "fileSha256",
+        "locators",
+        "profile",
+        "publicationDate",
+        "publisher",
+        "sourceUrl",
+        "title"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "fileSha256": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "locators": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "prefixItems": [
+            {
+              "type": "object",
+              "required": [
+                "label",
+                "pdfPage",
+                "printedPage"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100000
+                },
+                "pdfPage": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "printedPage": {
+                  "const": "22",
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "items": false
+        },
+        "profile": {
+          "const": "MCIS-PUBLIC-REPORT-MANIFEST-1",
+          "type": "string"
+        },
+        "publicationDate": {
+          "const": null,
+          "type": "null"
+        },
+        "publisher": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "sourceUrl": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        }
+      }
+    },
+    "sourcePreview": {
+      "type": "object",
+      "required": [
+        "byteLength",
+        "caseWritten",
+        "fileSha256",
+        "manifest",
+        "manifestDigest",
+        "modelUsed",
+        "networkUsed",
+        "pageLocatorsVerified",
+        "pdfStructureValidated",
+        "profile",
+        "reviewRequired",
+        "sourceAuthenticity",
+        "warning"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "byteLength": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "caseWritten": {
+          "const": false,
+          "type": "boolean"
+        },
+        "fileSha256": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "manifest": {
+          "type": "object",
+          "required": [
+            "fileSha256",
+            "locators",
+            "profile",
+            "publicationDate",
+            "publisher",
+            "sourceUrl",
+            "title"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "fileSha256": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100000
+            },
+            "locators": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "type": "object",
+                  "required": [
+                    "label",
+                    "pdfPage",
+                    "printedPage"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "label": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 100000
+                    },
+                    "pdfPage": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "printedPage": {
+                      "const": "22",
+                      "type": "string"
+                    }
+                  }
+                }
+              ],
+              "items": false
+            },
+            "profile": {
+              "const": "MCIS-PUBLIC-REPORT-MANIFEST-1",
+              "type": "string"
+            },
+            "publicationDate": {
+              "const": null,
+              "type": "null"
+            },
+            "publisher": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100000
+            },
+            "sourceUrl": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100000
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100000
+            }
+          }
+        },
+        "manifestDigest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "modelUsed": {
+          "const": false,
+          "type": "boolean"
+        },
+        "networkUsed": {
+          "const": false,
+          "type": "boolean"
+        },
+        "pageLocatorsVerified": {
+          "const": false,
+          "type": "boolean"
+        },
+        "pdfStructureValidated": {
+          "const": false,
+          "type": "boolean"
+        },
+        "profile": {
+          "const": "MCIS-PUBLIC-REPORT-PREVIEW-1",
+          "type": "string"
+        },
+        "reviewRequired": {
+          "const": true,
+          "type": "boolean"
+        },
+        "sourceAuthenticity": {
+          "const": "not_verified",
+          "type": "string"
+        },
+        "warning": {
+          "const": "文件摘要匹配不证明来源真实性、PDF有效性或页码内容正确。发布者、日期、URL和页码均为录入声明，须人工核实。",
+          "type": "string"
+        }
+      }
+    },
+    "worksheet": {
+      "type": "object",
+      "required": [
+        "approvalGranted",
+        "checks",
+        "content",
+        "contentDigest",
+        "distribution",
+        "modelUsed",
+        "networkUsed",
+        "persisted",
+        "profile",
+        "requiredReleaseApprovals",
+        "reviewRequired",
+        "sourceClassification",
+        "warning"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "approvalGranted": {
+          "const": false,
+          "type": "boolean"
+        },
+        "checks": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "prefixItems": [
+            {
+              "type": "object",
+              "required": [
+                "contentPaths",
+                "guidance",
+                "id",
+                "status",
+                "title"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "contentPaths": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "prefixItems": [
+                    {
+                      "const": "source.title",
+                      "type": "string"
+                    },
+                    {
+                      "const": "source.url",
+                      "type": "string"
+                    }
+                  ],
+                  "items": false
+                },
+                "guidance": {
+                  "const": "公开分类或链接本身不证明来源真实或权威。",
+                  "type": "string"
+                },
+                "id": {
+                  "const": "source_identity",
+                  "type": "string"
+                },
+                "status": {
+                  "const": "pending",
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100000
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "contentPaths",
+                "guidance",
+                "id",
+                "status",
+                "title"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "contentPaths": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "prefixItems": [
+                    {
+                      "const": "source.locator",
+                      "type": "string"
+                    },
+                    {
+                      "const": "source.excerpt",
+                      "type": "string"
+                    }
+                  ],
+                  "items": false
+                },
+                "guidance": {
+                  "const": "回到原件核对；页码定位存在不代表已核查。",
+                  "type": "string"
+                },
+                "id": {
+                  "const": "source_locator",
+                  "type": "string"
+                },
+                "status": {
+                  "const": "pending",
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100000
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "contentPaths",
+                "guidance",
+                "id",
+                "status",
+                "title"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "contentPaths": {
+                  "type": "array",
+                  "minItems": 3,
+                  "maxItems": 3,
+                  "prefixItems": [
+                    {
+                      "const": "summary",
+                      "type": "string"
+                    },
+                    {
+                      "const": "body",
+                      "type": "string"
+                    },
+                    {
+                      "const": "source.excerpt",
+                      "type": "string"
+                    }
+                  ],
+                  "items": false
+                },
+                "guidance": {
+                  "const": "区分原文事实、作者判断与整理者推断，保留反证。",
+                  "type": "string"
+                },
+                "id": {
+                  "const": "claim_support",
+                  "type": "string"
+                },
+                "status": {
+                  "const": "pending",
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100000
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "contentPaths",
+                "guidance",
+                "id",
+                "status",
+                "title"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "contentPaths": {
+                  "type": "array",
+                  "minItems": 3,
+                  "maxItems": 3,
+                  "prefixItems": [
+                    {
+                      "const": "kind",
+                      "type": "string"
+                    },
+                    {
+                      "const": "applicability",
+                      "type": "string"
+                    },
+                    {
+                      "const": "tags",
+                      "type": "string"
+                    }
+                  ],
+                  "items": false
+                },
+                "guidance": {
+                  "const": "相似案例或方法不自动适用于本案。",
+                  "type": "string"
+                },
+                "id": {
+                  "const": "applicability",
+                  "type": "string"
+                },
+                "status": {
+                  "const": "pending",
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100000
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "contentPaths",
+                "guidance",
+                "id",
+                "status",
+                "title"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "contentPaths": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "prefixItems": [
+                    {
+                      "const": "source.rightsNote",
+                      "type": "string"
+                    }
+                  ],
+                  "items": false
+                },
+                "guidance": {
+                  "const": "公开可读不等于允许任意再发布或训练。",
+                  "type": "string"
+                },
+                "id": {
+                  "const": "use_rights",
+                  "type": "string"
+                },
+                "status": {
+                  "const": "pending",
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100000
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "contentPaths",
+                "guidance",
+                "id",
+                "status",
+                "title"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "contentPaths": {
+                  "type": "array",
+                  "minItems": 4,
+                  "maxItems": 4,
+                  "prefixItems": [
+                    {
+                      "const": "title",
+                      "type": "string"
+                    },
+                    {
+                      "const": "summary",
+                      "type": "string"
+                    },
+                    {
+                      "const": "body",
+                      "type": "string"
+                    },
+                    {
+                      "const": "source",
+                      "type": "string"
+                    }
+                  ],
+                  "items": false
+                },
+                "guidance": {
+                  "const": "发布前逐项核对内容和受众；不得仅凭Public标签发布。",
+                  "type": "string"
+                },
+                "id": {
+                  "const": "release_scope",
+                  "type": "string"
+                },
+                "status": {
+                  "const": "pending",
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100000
+                }
+              }
+            }
+          ],
+          "items": false
+        },
+        "content": {
+          "type": "object"
+        },
+        "contentDigest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "distribution": {
+          "const": "internal_review_only",
+          "type": "string"
+        },
+        "modelUsed": {
+          "const": false,
+          "type": "boolean"
+        },
+        "networkUsed": {
+          "const": false,
+          "type": "boolean"
+        },
+        "persisted": {
+          "const": false,
+          "type": "boolean"
+        },
+        "profile": {
+          "const": "MCIS-KNOWLEDGE-REVIEW-WORKSHEET-1",
+          "type": "string"
+        },
+        "requiredReleaseApprovals": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "prefixItems": [
+            {
+              "type": "object",
+              "required": [
+                "field",
+                "status"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "field": {
+                  "const": "sourceVerified",
+                  "type": "string"
+                },
+                "status": {
+                  "const": "pending",
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "field",
+                "status"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "field": {
+                  "const": "rightsVerified",
+                  "type": "string"
+                },
+                "status": {
+                  "const": "pending",
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "field",
+                "status"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "field": {
+                  "const": "releaseApproved",
+                  "type": "string"
+                },
+                "status": {
+                  "const": "pending",
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "items": false
+        },
+        "reviewRequired": {
+          "const": true,
+          "type": "boolean"
+        },
+        "sourceClassification": {
+          "const": "Public",
+          "type": "string"
+        },
+        "warning": {
+          "const": "这是待填写审核工作单，不是审核记录或批准凭证。导出不发布、不修改卡片；必须经现有权限和版本校验完成正式审核。合成样本不得作为真实事故证据。",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}
