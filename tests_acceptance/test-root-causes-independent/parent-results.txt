@@ -1,0 +1,1130 @@
+F........................................................FFFFFFFFFFF.    [100%]
+=================================== FAILURES ===================================
+_____________________ test_empty_create_unknown_roundtrip ______________________
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+>           with zipfile.ZipFile(io.BytesIO(data)) as z:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/mcis_service/package/mcase.py:292:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1371: in __init__
+    self._RealGetContents()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <zipfile.ZipFile [closed]>
+
+    def _RealGetContents(self):
+        """Read in the table of contents for the ZIP file."""
+        fp = self.fp
+        try:
+            endrec = _EndRecData(fp)
+        except OSError:
+            raise BadZipFile("File is not a zip file")
+        if not endrec:
+>           raise BadZipFile("File is not a zip file")
+E           zipfile.BadZipFile: File is not a zip file
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1438: BadZipFile
+
+The above exception was the direct cause of the following exception:
+
+client = <starlette.testclient.TestClient object at 0x7f44efb1bc50>
+empty_client = <starlette.testclient.TestClient object at 0x7f44ef9b3b90>
+
+    def test_empty_create_unknown_roundtrip(client, empty_client):
+        assert client.get(URL).json() == []
+        body=changed(windSpeedMps=0, windFromDirDeg=None, visibilityNm=0, currentToDirDeg=360)
+        r=client.post(URL,json=body)
+        assert r.status_code==201,r.text
+        assert r.json()==body
+        assert client.get(URL).json()==[body]
+        assert 'currentSpeedKn' not in client.get(URL).json()[0]
+        data=client.get(C+'/export').content
+>       files=read_zip(data)
+              ^^^^^^^^^^^^^^
+
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+            with zipfile.ZipFile(io.BytesIO(data)) as z:
+                members = []
+                seen = set()
+                for info in z.infolist():
+                    name, directory = _zip_member_name(info)
+                    key = name.rstrip("/").lower()
+                    if key in seen:
+                        raise problem(422, "BAD_PACKAGE", "案件包包含重复或歧义路径")
+                    seen.add(key)
+                    if info.flag_bits & 1:
+                        raise problem(422, "BAD_PACKAGE", "不支持加密案件包")
+                    members.append((info, name, directory))
+                file_keys = {name.lower() for _, name, directory in members if not directory}
+                for _, name, _ in members:
+                    parts = name.rstrip("/").lower().split("/")
+                    for end in range(1, len(parts)):
+                        if "/".join(parts[:end]) in file_keys:
+                            raise problem(422, "BAD_PACKAGE", "案件包包含文件与目录路径冲突")
+                return {name: z.read(info) for info, name, directory in members if not directory}
+        except (zipfile.BadZipFile, zipfile.LargeZipFile, NotImplementedError,
+                RuntimeError, EOFError, ValueError, OSError, zlib.error, lzma.LZMAError) as e:
+            # Corrupt CRC/compression/header errors must not escape as HTTP 500 or
+            # expose parser internals. HTTPException from validation is not caught.
+>           raise problem(422, "BAD_PACKAGE", "不是有效或受支持的 .mcase（ZIP）文件") from e
+E           fastapi.exceptions.HTTPException: 422: {'code': 'BAD_PACKAGE', 'message': '不是有效或受支持的 .mcase（ZIP）文件'}
+
+service/mcis_service/package/mcase.py:315: HTTPException
+_________________ test_bad_package_environment_atomic[items0] __________________
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+>           with zipfile.ZipFile(io.BytesIO(data)) as z:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/mcis_service/package/mcase.py:292:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1371: in __init__
+    self._RealGetContents()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <zipfile.ZipFile [closed]>
+
+    def _RealGetContents(self):
+        """Read in the table of contents for the ZIP file."""
+        fp = self.fp
+        try:
+            endrec = _EndRecData(fp)
+        except OSError:
+            raise BadZipFile("File is not a zip file")
+        if not endrec:
+>           raise BadZipFile("File is not a zip file")
+E           zipfile.BadZipFile: File is not a zip file
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1438: BadZipFile
+
+The above exception was the direct cause of the following exception:
+
+client = <starlette.testclient.TestClient object at 0x7f44edb6e030>
+empty_client = <starlette.testclient.TestClient object at 0x7f44ee7cd040>
+items = {}
+
+    @pytest.mark.parametrize('items',[
+     {},[None],[changed(caseId='other')],[observation(),observation()],
+     [changed(windSpeedMps=-1)],[changed(observedAtUtc='2026-02-30T00:00:00Z')],
+    ])
+    def test_bad_package_environment_atomic(client,empty_client,items):
+>       data=package(client,items)
+             ^^^^^^^^^^^^^^^^^^^^^
+
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:152:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:136: in package
+    files=read_zip(client.get(C+'/export').content);files.pop('manifest.json')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+            with zipfile.ZipFile(io.BytesIO(data)) as z:
+                members = []
+                seen = set()
+                for info in z.infolist():
+                    name, directory = _zip_member_name(info)
+                    key = name.rstrip("/").lower()
+                    if key in seen:
+                        raise problem(422, "BAD_PACKAGE", "案件包包含重复或歧义路径")
+                    seen.add(key)
+                    if info.flag_bits & 1:
+                        raise problem(422, "BAD_PACKAGE", "不支持加密案件包")
+                    members.append((info, name, directory))
+                file_keys = {name.lower() for _, name, directory in members if not directory}
+                for _, name, _ in members:
+                    parts = name.rstrip("/").lower().split("/")
+                    for end in range(1, len(parts)):
+                        if "/".join(parts[:end]) in file_keys:
+                            raise problem(422, "BAD_PACKAGE", "案件包包含文件与目录路径冲突")
+                return {name: z.read(info) for info, name, directory in members if not directory}
+        except (zipfile.BadZipFile, zipfile.LargeZipFile, NotImplementedError,
+                RuntimeError, EOFError, ValueError, OSError, zlib.error, lzma.LZMAError) as e:
+            # Corrupt CRC/compression/header errors must not escape as HTTP 500 or
+            # expose parser internals. HTTPException from validation is not caught.
+>           raise problem(422, "BAD_PACKAGE", "不是有效或受支持的 .mcase（ZIP）文件") from e
+E           fastapi.exceptions.HTTPException: 422: {'code': 'BAD_PACKAGE', 'message': '不是有效或受支持的 .mcase（ZIP）文件'}
+
+service/mcis_service/package/mcase.py:315: HTTPException
+_________________ test_bad_package_environment_atomic[items1] __________________
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+>           with zipfile.ZipFile(io.BytesIO(data)) as z:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/mcis_service/package/mcase.py:292:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1371: in __init__
+    self._RealGetContents()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <zipfile.ZipFile [closed]>
+
+    def _RealGetContents(self):
+        """Read in the table of contents for the ZIP file."""
+        fp = self.fp
+        try:
+            endrec = _EndRecData(fp)
+        except OSError:
+            raise BadZipFile("File is not a zip file")
+        if not endrec:
+>           raise BadZipFile("File is not a zip file")
+E           zipfile.BadZipFile: File is not a zip file
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1438: BadZipFile
+
+The above exception was the direct cause of the following exception:
+
+client = <starlette.testclient.TestClient object at 0x7f44ee7ce930>
+empty_client = <starlette.testclient.TestClient object at 0x7f44ee7e72c0>
+items = [None]
+
+    @pytest.mark.parametrize('items',[
+     {},[None],[changed(caseId='other')],[observation(),observation()],
+     [changed(windSpeedMps=-1)],[changed(observedAtUtc='2026-02-30T00:00:00Z')],
+    ])
+    def test_bad_package_environment_atomic(client,empty_client,items):
+>       data=package(client,items)
+             ^^^^^^^^^^^^^^^^^^^^^
+
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:152:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:136: in package
+    files=read_zip(client.get(C+'/export').content);files.pop('manifest.json')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+            with zipfile.ZipFile(io.BytesIO(data)) as z:
+                members = []
+                seen = set()
+                for info in z.infolist():
+                    name, directory = _zip_member_name(info)
+                    key = name.rstrip("/").lower()
+                    if key in seen:
+                        raise problem(422, "BAD_PACKAGE", "案件包包含重复或歧义路径")
+                    seen.add(key)
+                    if info.flag_bits & 1:
+                        raise problem(422, "BAD_PACKAGE", "不支持加密案件包")
+                    members.append((info, name, directory))
+                file_keys = {name.lower() for _, name, directory in members if not directory}
+                for _, name, _ in members:
+                    parts = name.rstrip("/").lower().split("/")
+                    for end in range(1, len(parts)):
+                        if "/".join(parts[:end]) in file_keys:
+                            raise problem(422, "BAD_PACKAGE", "案件包包含文件与目录路径冲突")
+                return {name: z.read(info) for info, name, directory in members if not directory}
+        except (zipfile.BadZipFile, zipfile.LargeZipFile, NotImplementedError,
+                RuntimeError, EOFError, ValueError, OSError, zlib.error, lzma.LZMAError) as e:
+            # Corrupt CRC/compression/header errors must not escape as HTTP 500 or
+            # expose parser internals. HTTPException from validation is not caught.
+>           raise problem(422, "BAD_PACKAGE", "不是有效或受支持的 .mcase（ZIP）文件") from e
+E           fastapi.exceptions.HTTPException: 422: {'code': 'BAD_PACKAGE', 'message': '不是有效或受支持的 .mcase（ZIP）文件'}
+
+service/mcis_service/package/mcase.py:315: HTTPException
+_________________ test_bad_package_environment_atomic[items2] __________________
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+>           with zipfile.ZipFile(io.BytesIO(data)) as z:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/mcis_service/package/mcase.py:292:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1371: in __init__
+    self._RealGetContents()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <zipfile.ZipFile [closed]>
+
+    def _RealGetContents(self):
+        """Read in the table of contents for the ZIP file."""
+        fp = self.fp
+        try:
+            endrec = _EndRecData(fp)
+        except OSError:
+            raise BadZipFile("File is not a zip file")
+        if not endrec:
+>           raise BadZipFile("File is not a zip file")
+E           zipfile.BadZipFile: File is not a zip file
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1438: BadZipFile
+
+The above exception was the direct cause of the following exception:
+
+client = <starlette.testclient.TestClient object at 0x7f44ed0582c0>
+empty_client = <starlette.testclient.TestClient object at 0x7f44edc77710>
+items = [{'observationId': 'ENV-test', 'caseId': 'other', 'observedAtUtc': None, 'locationDescription': None, ...}]
+
+    @pytest.mark.parametrize('items',[
+     {},[None],[changed(caseId='other')],[observation(),observation()],
+     [changed(windSpeedMps=-1)],[changed(observedAtUtc='2026-02-30T00:00:00Z')],
+    ])
+    def test_bad_package_environment_atomic(client,empty_client,items):
+>       data=package(client,items)
+             ^^^^^^^^^^^^^^^^^^^^^
+
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:152:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:136: in package
+    files=read_zip(client.get(C+'/export').content);files.pop('manifest.json')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+            with zipfile.ZipFile(io.BytesIO(data)) as z:
+                members = []
+                seen = set()
+                for info in z.infolist():
+                    name, directory = _zip_member_name(info)
+                    key = name.rstrip("/").lower()
+                    if key in seen:
+                        raise problem(422, "BAD_PACKAGE", "案件包包含重复或歧义路径")
+                    seen.add(key)
+                    if info.flag_bits & 1:
+                        raise problem(422, "BAD_PACKAGE", "不支持加密案件包")
+                    members.append((info, name, directory))
+                file_keys = {name.lower() for _, name, directory in members if not directory}
+                for _, name, _ in members:
+                    parts = name.rstrip("/").lower().split("/")
+                    for end in range(1, len(parts)):
+                        if "/".join(parts[:end]) in file_keys:
+                            raise problem(422, "BAD_PACKAGE", "案件包包含文件与目录路径冲突")
+                return {name: z.read(info) for info, name, directory in members if not directory}
+        except (zipfile.BadZipFile, zipfile.LargeZipFile, NotImplementedError,
+                RuntimeError, EOFError, ValueError, OSError, zlib.error, lzma.LZMAError) as e:
+            # Corrupt CRC/compression/header errors must not escape as HTTP 500 or
+            # expose parser internals. HTTPException from validation is not caught.
+>           raise problem(422, "BAD_PACKAGE", "不是有效或受支持的 .mcase（ZIP）文件") from e
+E           fastapi.exceptions.HTTPException: 422: {'code': 'BAD_PACKAGE', 'message': '不是有效或受支持的 .mcase（ZIP）文件'}
+
+service/mcis_service/package/mcase.py:315: HTTPException
+_________________ test_bad_package_environment_atomic[items3] __________________
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+>           with zipfile.ZipFile(io.BytesIO(data)) as z:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/mcis_service/package/mcase.py:292:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1371: in __init__
+    self._RealGetContents()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <zipfile.ZipFile [closed]>
+
+    def _RealGetContents(self):
+        """Read in the table of contents for the ZIP file."""
+        fp = self.fp
+        try:
+            endrec = _EndRecData(fp)
+        except OSError:
+            raise BadZipFile("File is not a zip file")
+        if not endrec:
+>           raise BadZipFile("File is not a zip file")
+E           zipfile.BadZipFile: File is not a zip file
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1438: BadZipFile
+
+The above exception was the direct cause of the following exception:
+
+client = <starlette.testclient.TestClient object at 0x7f44ef9453a0>
+empty_client = <starlette.testclient.TestClient object at 0x7f44ed320560>
+items = [{'observationId': 'ENV-test', 'caseId': 'CASE-2026-DEMO-LILY-MARY', 'observedAtUtc': None, 'locationDescription': Non...rvationId': 'ENV-test', 'caseId': 'CASE-2026-DEMO-LILY-MARY', 'observedAtUtc': None, 'locationDescription': None, ...}]
+
+    @pytest.mark.parametrize('items',[
+     {},[None],[changed(caseId='other')],[observation(),observation()],
+     [changed(windSpeedMps=-1)],[changed(observedAtUtc='2026-02-30T00:00:00Z')],
+    ])
+    def test_bad_package_environment_atomic(client,empty_client,items):
+>       data=package(client,items)
+             ^^^^^^^^^^^^^^^^^^^^^
+
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:152:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:136: in package
+    files=read_zip(client.get(C+'/export').content);files.pop('manifest.json')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+            with zipfile.ZipFile(io.BytesIO(data)) as z:
+                members = []
+                seen = set()
+                for info in z.infolist():
+                    name, directory = _zip_member_name(info)
+                    key = name.rstrip("/").lower()
+                    if key in seen:
+                        raise problem(422, "BAD_PACKAGE", "案件包包含重复或歧义路径")
+                    seen.add(key)
+                    if info.flag_bits & 1:
+                        raise problem(422, "BAD_PACKAGE", "不支持加密案件包")
+                    members.append((info, name, directory))
+                file_keys = {name.lower() for _, name, directory in members if not directory}
+                for _, name, _ in members:
+                    parts = name.rstrip("/").lower().split("/")
+                    for end in range(1, len(parts)):
+                        if "/".join(parts[:end]) in file_keys:
+                            raise problem(422, "BAD_PACKAGE", "案件包包含文件与目录路径冲突")
+                return {name: z.read(info) for info, name, directory in members if not directory}
+        except (zipfile.BadZipFile, zipfile.LargeZipFile, NotImplementedError,
+                RuntimeError, EOFError, ValueError, OSError, zlib.error, lzma.LZMAError) as e:
+            # Corrupt CRC/compression/header errors must not escape as HTTP 500 or
+            # expose parser internals. HTTPException from validation is not caught.
+>           raise problem(422, "BAD_PACKAGE", "不是有效或受支持的 .mcase（ZIP）文件") from e
+E           fastapi.exceptions.HTTPException: 422: {'code': 'BAD_PACKAGE', 'message': '不是有效或受支持的 .mcase（ZIP）文件'}
+
+service/mcis_service/package/mcase.py:315: HTTPException
+_________________ test_bad_package_environment_atomic[items4] __________________
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+>           with zipfile.ZipFile(io.BytesIO(data)) as z:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/mcis_service/package/mcase.py:292:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1371: in __init__
+    self._RealGetContents()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <zipfile.ZipFile [closed]>
+
+    def _RealGetContents(self):
+        """Read in the table of contents for the ZIP file."""
+        fp = self.fp
+        try:
+            endrec = _EndRecData(fp)
+        except OSError:
+            raise BadZipFile("File is not a zip file")
+        if not endrec:
+>           raise BadZipFile("File is not a zip file")
+E           zipfile.BadZipFile: File is not a zip file
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1438: BadZipFile
+
+The above exception was the direct cause of the following exception:
+
+client = <starlette.testclient.TestClient object at 0x7f44ece62b10>
+empty_client = <starlette.testclient.TestClient object at 0x7f44ee6e13a0>
+items = [{'observationId': 'ENV-test', 'caseId': 'CASE-2026-DEMO-LILY-MARY', 'observedAtUtc': None, 'locationDescription': None, ...}]
+
+    @pytest.mark.parametrize('items',[
+     {},[None],[changed(caseId='other')],[observation(),observation()],
+     [changed(windSpeedMps=-1)],[changed(observedAtUtc='2026-02-30T00:00:00Z')],
+    ])
+    def test_bad_package_environment_atomic(client,empty_client,items):
+>       data=package(client,items)
+             ^^^^^^^^^^^^^^^^^^^^^
+
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:152:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:136: in package
+    files=read_zip(client.get(C+'/export').content);files.pop('manifest.json')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+            with zipfile.ZipFile(io.BytesIO(data)) as z:
+                members = []
+                seen = set()
+                for info in z.infolist():
+                    name, directory = _zip_member_name(info)
+                    key = name.rstrip("/").lower()
+                    if key in seen:
+                        raise problem(422, "BAD_PACKAGE", "案件包包含重复或歧义路径")
+                    seen.add(key)
+                    if info.flag_bits & 1:
+                        raise problem(422, "BAD_PACKAGE", "不支持加密案件包")
+                    members.append((info, name, directory))
+                file_keys = {name.lower() for _, name, directory in members if not directory}
+                for _, name, _ in members:
+                    parts = name.rstrip("/").lower().split("/")
+                    for end in range(1, len(parts)):
+                        if "/".join(parts[:end]) in file_keys:
+                            raise problem(422, "BAD_PACKAGE", "案件包包含文件与目录路径冲突")
+                return {name: z.read(info) for info, name, directory in members if not directory}
+        except (zipfile.BadZipFile, zipfile.LargeZipFile, NotImplementedError,
+                RuntimeError, EOFError, ValueError, OSError, zlib.error, lzma.LZMAError) as e:
+            # Corrupt CRC/compression/header errors must not escape as HTTP 500 or
+            # expose parser internals. HTTPException from validation is not caught.
+>           raise problem(422, "BAD_PACKAGE", "不是有效或受支持的 .mcase（ZIP）文件") from e
+E           fastapi.exceptions.HTTPException: 422: {'code': 'BAD_PACKAGE', 'message': '不是有效或受支持的 .mcase（ZIP）文件'}
+
+service/mcis_service/package/mcase.py:315: HTTPException
+_________________ test_bad_package_environment_atomic[items5] __________________
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+>           with zipfile.ZipFile(io.BytesIO(data)) as z:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/mcis_service/package/mcase.py:292:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1371: in __init__
+    self._RealGetContents()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <zipfile.ZipFile [closed]>
+
+    def _RealGetContents(self):
+        """Read in the table of contents for the ZIP file."""
+        fp = self.fp
+        try:
+            endrec = _EndRecData(fp)
+        except OSError:
+            raise BadZipFile("File is not a zip file")
+        if not endrec:
+>           raise BadZipFile("File is not a zip file")
+E           zipfile.BadZipFile: File is not a zip file
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1438: BadZipFile
+
+The above exception was the direct cause of the following exception:
+
+client = <starlette.testclient.TestClient object at 0x7f44efab1cd0>
+empty_client = <starlette.testclient.TestClient object at 0x7f44ed0583e0>
+items = [{'observationId': 'ENV-test', 'caseId': 'CASE-2026-DEMO-LILY-MARY', 'observedAtUtc': '2026-02-30T00:00:00Z', 'locationDescription': None, ...}]
+
+    @pytest.mark.parametrize('items',[
+     {},[None],[changed(caseId='other')],[observation(),observation()],
+     [changed(windSpeedMps=-1)],[changed(observedAtUtc='2026-02-30T00:00:00Z')],
+    ])
+    def test_bad_package_environment_atomic(client,empty_client,items):
+>       data=package(client,items)
+             ^^^^^^^^^^^^^^^^^^^^^
+
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:152:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:136: in package
+    files=read_zip(client.get(C+'/export').content);files.pop('manifest.json')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+            with zipfile.ZipFile(io.BytesIO(data)) as z:
+                members = []
+                seen = set()
+                for info in z.infolist():
+                    name, directory = _zip_member_name(info)
+                    key = name.rstrip("/").lower()
+                    if key in seen:
+                        raise problem(422, "BAD_PACKAGE", "案件包包含重复或歧义路径")
+                    seen.add(key)
+                    if info.flag_bits & 1:
+                        raise problem(422, "BAD_PACKAGE", "不支持加密案件包")
+                    members.append((info, name, directory))
+                file_keys = {name.lower() for _, name, directory in members if not directory}
+                for _, name, _ in members:
+                    parts = name.rstrip("/").lower().split("/")
+                    for end in range(1, len(parts)):
+                        if "/".join(parts[:end]) in file_keys:
+                            raise problem(422, "BAD_PACKAGE", "案件包包含文件与目录路径冲突")
+                return {name: z.read(info) for info, name, directory in members if not directory}
+        except (zipfile.BadZipFile, zipfile.LargeZipFile, NotImplementedError,
+                RuntimeError, EOFError, ValueError, OSError, zlib.error, lzma.LZMAError) as e:
+            # Corrupt CRC/compression/header errors must not escape as HTTP 500 or
+            # expose parser internals. HTTPException from validation is not caught.
+>           raise problem(422, "BAD_PACKAGE", "不是有效或受支持的 .mcase（ZIP）文件") from e
+E           fastapi.exceptions.HTTPException: 422: {'code': 'BAD_PACKAGE', 'message': '不是有效或受支持的 .mcase（ZIP）文件'}
+
+service/mcis_service/package/mcase.py:315: HTTPException
+____________ test_bad_encoding_or_unlisted_environment[{oops-True] _____________
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+>           with zipfile.ZipFile(io.BytesIO(data)) as z:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/mcis_service/package/mcase.py:292:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1371: in __init__
+    self._RealGetContents()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <zipfile.ZipFile [closed]>
+
+    def _RealGetContents(self):
+        """Read in the table of contents for the ZIP file."""
+        fp = self.fp
+        try:
+            endrec = _EndRecData(fp)
+        except OSError:
+            raise BadZipFile("File is not a zip file")
+        if not endrec:
+>           raise BadZipFile("File is not a zip file")
+E           zipfile.BadZipFile: File is not a zip file
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1438: BadZipFile
+
+The above exception was the direct cause of the following exception:
+
+client = <starlette.testclient.TestClient object at 0x7f44ed633800>
+empty_client = <starlette.testclient.TestClient object at 0x7f44edb22210>
+raw = b'{oops', listed = True
+
+    @pytest.mark.parametrize('raw,listed',[(b'{oops',True),(b'\xff',True),(b'[]',False)])
+    def test_bad_encoding_or_unlisted_environment(client,empty_client,raw,listed):
+>       data=package(client,raw=raw,listed=listed)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:161:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:136: in package
+    files=read_zip(client.get(C+'/export').content);files.pop('manifest.json')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+            with zipfile.ZipFile(io.BytesIO(data)) as z:
+                members = []
+                seen = set()
+                for info in z.infolist():
+                    name, directory = _zip_member_name(info)
+                    key = name.rstrip("/").lower()
+                    if key in seen:
+                        raise problem(422, "BAD_PACKAGE", "案件包包含重复或歧义路径")
+                    seen.add(key)
+                    if info.flag_bits & 1:
+                        raise problem(422, "BAD_PACKAGE", "不支持加密案件包")
+                    members.append((info, name, directory))
+                file_keys = {name.lower() for _, name, directory in members if not directory}
+                for _, name, _ in members:
+                    parts = name.rstrip("/").lower().split("/")
+                    for end in range(1, len(parts)):
+                        if "/".join(parts[:end]) in file_keys:
+                            raise problem(422, "BAD_PACKAGE", "案件包包含文件与目录路径冲突")
+                return {name: z.read(info) for info, name, directory in members if not directory}
+        except (zipfile.BadZipFile, zipfile.LargeZipFile, NotImplementedError,
+                RuntimeError, EOFError, ValueError, OSError, zlib.error, lzma.LZMAError) as e:
+            # Corrupt CRC/compression/header errors must not escape as HTTP 500 or
+            # expose parser internals. HTTPException from validation is not caught.
+>           raise problem(422, "BAD_PACKAGE", "不是有效或受支持的 .mcase（ZIP）文件") from e
+E           fastapi.exceptions.HTTPException: 422: {'code': 'BAD_PACKAGE', 'message': '不是有效或受支持的 .mcase（ZIP）文件'}
+
+service/mcis_service/package/mcase.py:315: HTTPException
+_____________ test_bad_encoding_or_unlisted_environment[\xff-True] _____________
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+>           with zipfile.ZipFile(io.BytesIO(data)) as z:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/mcis_service/package/mcase.py:292:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1371: in __init__
+    self._RealGetContents()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <zipfile.ZipFile [closed]>
+
+    def _RealGetContents(self):
+        """Read in the table of contents for the ZIP file."""
+        fp = self.fp
+        try:
+            endrec = _EndRecData(fp)
+        except OSError:
+            raise BadZipFile("File is not a zip file")
+        if not endrec:
+>           raise BadZipFile("File is not a zip file")
+E           zipfile.BadZipFile: File is not a zip file
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1438: BadZipFile
+
+The above exception was the direct cause of the following exception:
+
+client = <starlette.testclient.TestClient object at 0x7f44ed71da90>
+empty_client = <starlette.testclient.TestClient object at 0x7f44ecec8b00>
+raw = b'\xff', listed = True
+
+    @pytest.mark.parametrize('raw,listed',[(b'{oops',True),(b'\xff',True),(b'[]',False)])
+    def test_bad_encoding_or_unlisted_environment(client,empty_client,raw,listed):
+>       data=package(client,raw=raw,listed=listed)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:161:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:136: in package
+    files=read_zip(client.get(C+'/export').content);files.pop('manifest.json')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+            with zipfile.ZipFile(io.BytesIO(data)) as z:
+                members = []
+                seen = set()
+                for info in z.infolist():
+                    name, directory = _zip_member_name(info)
+                    key = name.rstrip("/").lower()
+                    if key in seen:
+                        raise problem(422, "BAD_PACKAGE", "案件包包含重复或歧义路径")
+                    seen.add(key)
+                    if info.flag_bits & 1:
+                        raise problem(422, "BAD_PACKAGE", "不支持加密案件包")
+                    members.append((info, name, directory))
+                file_keys = {name.lower() for _, name, directory in members if not directory}
+                for _, name, _ in members:
+                    parts = name.rstrip("/").lower().split("/")
+                    for end in range(1, len(parts)):
+                        if "/".join(parts[:end]) in file_keys:
+                            raise problem(422, "BAD_PACKAGE", "案件包包含文件与目录路径冲突")
+                return {name: z.read(info) for info, name, directory in members if not directory}
+        except (zipfile.BadZipFile, zipfile.LargeZipFile, NotImplementedError,
+                RuntimeError, EOFError, ValueError, OSError, zlib.error, lzma.LZMAError) as e:
+            # Corrupt CRC/compression/header errors must not escape as HTTP 500 or
+            # expose parser internals. HTTPException from validation is not caught.
+>           raise problem(422, "BAD_PACKAGE", "不是有效或受支持的 .mcase（ZIP）文件") from e
+E           fastapi.exceptions.HTTPException: 422: {'code': 'BAD_PACKAGE', 'message': '不是有效或受支持的 .mcase（ZIP）文件'}
+
+service/mcis_service/package/mcase.py:315: HTTPException
+_____________ test_bad_encoding_or_unlisted_environment[[]-False] ______________
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+>           with zipfile.ZipFile(io.BytesIO(data)) as z:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/mcis_service/package/mcase.py:292:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1371: in __init__
+    self._RealGetContents()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <zipfile.ZipFile [closed]>
+
+    def _RealGetContents(self):
+        """Read in the table of contents for the ZIP file."""
+        fp = self.fp
+        try:
+            endrec = _EndRecData(fp)
+        except OSError:
+            raise BadZipFile("File is not a zip file")
+        if not endrec:
+>           raise BadZipFile("File is not a zip file")
+E           zipfile.BadZipFile: File is not a zip file
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1438: BadZipFile
+
+The above exception was the direct cause of the following exception:
+
+client = <starlette.testclient.TestClient object at 0x7f44ecd7c890>
+empty_client = <starlette.testclient.TestClient object at 0x7f44ed244fb0>
+raw = b'[]', listed = False
+
+    @pytest.mark.parametrize('raw,listed',[(b'{oops',True),(b'\xff',True),(b'[]',False)])
+    def test_bad_encoding_or_unlisted_environment(client,empty_client,raw,listed):
+>       data=package(client,raw=raw,listed=listed)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:161:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:136: in package
+    files=read_zip(client.get(C+'/export').content);files.pop('manifest.json')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+            with zipfile.ZipFile(io.BytesIO(data)) as z:
+                members = []
+                seen = set()
+                for info in z.infolist():
+                    name, directory = _zip_member_name(info)
+                    key = name.rstrip("/").lower()
+                    if key in seen:
+                        raise problem(422, "BAD_PACKAGE", "案件包包含重复或歧义路径")
+                    seen.add(key)
+                    if info.flag_bits & 1:
+                        raise problem(422, "BAD_PACKAGE", "不支持加密案件包")
+                    members.append((info, name, directory))
+                file_keys = {name.lower() for _, name, directory in members if not directory}
+                for _, name, _ in members:
+                    parts = name.rstrip("/").lower().split("/")
+                    for end in range(1, len(parts)):
+                        if "/".join(parts[:end]) in file_keys:
+                            raise problem(422, "BAD_PACKAGE", "案件包包含文件与目录路径冲突")
+                return {name: z.read(info) for info, name, directory in members if not directory}
+        except (zipfile.BadZipFile, zipfile.LargeZipFile, NotImplementedError,
+                RuntimeError, EOFError, ValueError, OSError, zlib.error, lzma.LZMAError) as e:
+            # Corrupt CRC/compression/header errors must not escape as HTTP 500 or
+            # expose parser internals. HTTPException from validation is not caught.
+>           raise problem(422, "BAD_PACKAGE", "不是有效或受支持的 .mcase（ZIP）文件") from e
+E           fastapi.exceptions.HTTPException: 422: {'code': 'BAD_PACKAGE', 'message': '不是有效或受支持的 .mcase（ZIP）文件'}
+
+service/mcis_service/package/mcase.py:315: HTTPException
+_____________________________ test_legacy_absence ______________________________
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+>           with zipfile.ZipFile(io.BytesIO(data)) as z:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/mcis_service/package/mcase.py:292:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1371: in __init__
+    self._RealGetContents()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <zipfile.ZipFile [closed]>
+
+    def _RealGetContents(self):
+        """Read in the table of contents for the ZIP file."""
+        fp = self.fp
+        try:
+            endrec = _EndRecData(fp)
+        except OSError:
+            raise BadZipFile("File is not a zip file")
+        if not endrec:
+>           raise BadZipFile("File is not a zip file")
+E           zipfile.BadZipFile: File is not a zip file
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1438: BadZipFile
+
+The above exception was the direct cause of the following exception:
+
+client = <starlette.testclient.TestClient object at 0x7f44ecf8e0c0>
+empty_client = <starlette.testclient.TestClient object at 0x7f44ecd46660>
+
+    def test_legacy_absence(client,empty_client):
+>       data=package(client)
+             ^^^^^^^^^^^^^^^
+
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:167:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:136: in package
+    files=read_zip(client.get(C+'/export').content);files.pop('manifest.json')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+            with zipfile.ZipFile(io.BytesIO(data)) as z:
+                members = []
+                seen = set()
+                for info in z.infolist():
+                    name, directory = _zip_member_name(info)
+                    key = name.rstrip("/").lower()
+                    if key in seen:
+                        raise problem(422, "BAD_PACKAGE", "案件包包含重复或歧义路径")
+                    seen.add(key)
+                    if info.flag_bits & 1:
+                        raise problem(422, "BAD_PACKAGE", "不支持加密案件包")
+                    members.append((info, name, directory))
+                file_keys = {name.lower() for _, name, directory in members if not directory}
+                for _, name, _ in members:
+                    parts = name.rstrip("/").lower().split("/")
+                    for end in range(1, len(parts)):
+                        if "/".join(parts[:end]) in file_keys:
+                            raise problem(422, "BAD_PACKAGE", "案件包包含文件与目录路径冲突")
+                return {name: z.read(info) for info, name, directory in members if not directory}
+        except (zipfile.BadZipFile, zipfile.LargeZipFile, NotImplementedError,
+                RuntimeError, EOFError, ValueError, OSError, zlib.error, lzma.LZMAError) as e:
+            # Corrupt CRC/compression/header errors must not escape as HTTP 500 or
+            # expose parser internals. HTTPException from validation is not caught.
+>           raise problem(422, "BAD_PACKAGE", "不是有效或受支持的 .mcase（ZIP）文件") from e
+E           fastapi.exceptions.HTTPException: 422: {'code': 'BAD_PACKAGE', 'message': '不是有效或受支持的 .mcase（ZIP）文件'}
+
+service/mcis_service/package/mcase.py:315: HTTPException
+___________________ test_case_insensitive_package_extension ____________________
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+>           with zipfile.ZipFile(io.BytesIO(data)) as z:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/mcis_service/package/mcase.py:292:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1371: in __init__
+    self._RealGetContents()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <zipfile.ZipFile [closed]>
+
+    def _RealGetContents(self):
+        """Read in the table of contents for the ZIP file."""
+        fp = self.fp
+        try:
+            endrec = _EndRecData(fp)
+        except OSError:
+            raise BadZipFile("File is not a zip file")
+        if not endrec:
+>           raise BadZipFile("File is not a zip file")
+E           zipfile.BadZipFile: File is not a zip file
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1438: BadZipFile
+
+The above exception was the direct cause of the following exception:
+
+client = <starlette.testclient.TestClient object at 0x7f44ecf8cd70>
+empty_client = <starlette.testclient.TestClient object at 0x7f44ed2f5190>
+
+    def test_case_insensitive_package_extension(client,empty_client):
+>       data=package(client,[observation()],path='Environment/Observations.JSON')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:174:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests_acceptance/test-root-causes-independent/test_parent_snapshot.py:136: in package
+    files=read_zip(client.get(C+'/export').content);files.pop('manifest.json')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = b'{"code":"FORBIDDEN","message":"\xe5\xae\x8c\xe6\x95\xb4\xe5\xae\x89\xe5\x85\xa8\xe5\xbb\xba\xe8\xae\xae\xe6\x88\x96\xe5\xbe\x81\xe6\xb1\x82\xe6\x84\x8f\xe8\xa7\x81\xe5\x86\x85\xe5\xae\xb9\xe4\xb8\x8d\xe5\x8f\xaf\xe8\xae\xbf\xe9\x97\xae"}'
+
+    def read_zip(data: bytes) -> dict[str, bytes]:
+        """Decode an unambiguous ZIP in memory; do not extract archive paths.
+
+        Backslashes remain supported for Unity packages. Case-insensitive collisions
+        are rejected because integrity verification already uses that comparison.
+        This decoder is not an upload/decompression resource budget.
+        """
+        try:
+            with zipfile.ZipFile(io.BytesIO(data)) as z:
+                members = []
+                seen = set()
+                for info in z.infolist():
+                    name, directory = _zip_member_name(info)
+                    key = name.rstrip("/").lower()
+                    if key in seen:
+                        raise problem(422, "BAD_PACKAGE", "案件包包含重复或歧义路径")
+                    seen.add(key)
+                    if info.flag_bits & 1:
+                        raise problem(422, "BAD_PACKAGE", "不支持加密案件包")
+                    members.append((info, name, directory))
+                file_keys = {name.lower() for _, name, directory in members if not directory}
+                for _, name, _ in members:
+                    parts = name.rstrip("/").lower().split("/")
+                    for end in range(1, len(parts)):
+                        if "/".join(parts[:end]) in file_keys:
+                            raise problem(422, "BAD_PACKAGE", "案件包包含文件与目录路径冲突")
+                return {name: z.read(info) for info, name, directory in members if not directory}
+        except (zipfile.BadZipFile, zipfile.LargeZipFile, NotImplementedError,
+                RuntimeError, EOFError, ValueError, OSError, zlib.error, lzma.LZMAError) as e:
+            # Corrupt CRC/compression/header errors must not escape as HTTP 500 or
+            # expose parser internals. HTTPException from validation is not caught.
+>           raise problem(422, "BAD_PACKAGE", "不是有效或受支持的 .mcase（ZIP）文件") from e
+E           fastapi.exceptions.HTTPException: 422: {'code': 'BAD_PACKAGE', 'message': '不是有效或受支持的 .mcase（ZIP）文件'}
+
+service/mcis_service/package/mcase.py:315: HTTPException
+=============================== warnings summary ===============================
+service/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /workspace/mcis-test-root-causes/service/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests_acceptance/test-root-causes-independent/test_parent_snapshot.py::test_empty_create_unknown_roundtrip
+FAILED tests_acceptance/test-root-causes-independent/test_parent_snapshot.py::test_bad_package_environment_atomic[items0]
+FAILED tests_acceptance/test-root-causes-independent/test_parent_snapshot.py::test_bad_package_environment_atomic[items1]
+FAILED tests_acceptance/test-root-causes-independent/test_parent_snapshot.py::test_bad_package_environment_atomic[items2]
+FAILED tests_acceptance/test-root-causes-independent/test_parent_snapshot.py::test_bad_package_environment_atomic[items3]
+FAILED tests_acceptance/test-root-causes-independent/test_parent_snapshot.py::test_bad_package_environment_atomic[items4]
+FAILED tests_acceptance/test-root-causes-independent/test_parent_snapshot.py::test_bad_package_environment_atomic[items5]
+FAILED tests_acceptance/test-root-causes-independent/test_parent_snapshot.py::test_bad_encoding_or_unlisted_environment[{oops-True]
+FAILED tests_acceptance/test-root-causes-independent/test_parent_snapshot.py::test_bad_encoding_or_unlisted_environment[\xff-True]
+FAILED tests_acceptance/test-root-causes-independent/test_parent_snapshot.py::test_bad_encoding_or_unlisted_environment[[]-False]
+FAILED tests_acceptance/test-root-causes-independent/test_parent_snapshot.py::test_legacy_absence
+FAILED tests_acceptance/test-root-causes-independent/test_parent_snapshot.py::test_case_insensitive_package_extension
+12 failed, 57 passed, 1 warning in 26.31s

@@ -1,0 +1,212 @@
+EEE                                                                      [100%]
+==================================== ERRORS ====================================
+_________________ ERROR at setup of test_disabled_no_inference _________________
+
+client = <starlette.testclient.TestClient object at 0x7f95cdfa2f90>
+
+    @pytest.fixture()
+    def interview(client):
+        doc = {"recordId": RECORD, "interviewee": {"intervieweeId": "P90", "name": "测试甲", "role": "船员",
+            "affiliation": "虚构", "phone": "13812345678", "idNumber": "123456789012345678"},
+            "startUtc": "2026-11-12T00:00:00Z", "turns": [{"round": 1, "question": "请说明行动。",
+            "answer": "我是测试甲，电话13812345678。😀随后右满舵避让。私人片段", "sensitiveFragments": ["私人片段"]}], "statements": []}
+        r = client.post(f"{C}/interviews", json=doc, headers=H())
+>       assert r.status_code == 201, r.text
+E       AssertionError: {"code":"FORBIDDEN","message":"完整笔录内容不可访问"}
+E       assert 403 == 201
+E        +  where 403 = <Response [403 Forbidden]>.status_code
+
+service/tests/test_agents_w20.py:34: AssertionError
+_____________ ERROR at setup of test_real_context_and_empty_draft ______________
+
+raw = b''
+
+    def strict_json(raw: bytes):
+        def pairs(items):
+            result = {}
+            for key, value in items:
+                if key in result:
+                    raise ValueError("duplicate key")
+                result[key] = value
+            return result
+        try:
+>           result = json.loads(raw.decode("utf-8"), object_pairs_hook=pairs,
+                                parse_constant=lambda _: (_ for _ in ()).throw(ValueError("nonfinite")))
+
+service/mcis_service/hfacs_drafts/router.py:61:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/__init__.py:359: in loads
+    return cls(**kw).decode(s)
+           ^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:338: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <json.decoder.JSONDecoder object at 0x7f95cdb44110>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:356: JSONDecodeError
+
+During handling of the above exception, another exception occurred:
+
+payload = {'action': 'taxonomy'}
+
+    def run_core(payload):
+        def bad(): reject(503,'HFACS_CORE_UNAVAILABLE','人工分类核心不可用')
+        try: proc=subprocess.run([str(CLI)],input=canonical(payload),capture_output=True,timeout=30,check=False)
+        except (OSError,subprocess.TimeoutExpired): bad()
+        if len(proc.stdout)>256*1024: bad()
+>       try: output=strict_json(proc.stdout)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/mcis_service/hfacs_drafts/router.py:150:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+service/mcis_service/hfacs_drafts/router.py:77: in strict_json
+    reject()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+status = 422, code = 'INVALID_HFACS_INPUT', message = '人工分类草稿输入无效'
+
+    def reject(status=422, code="INVALID_HFACS_INPUT", message="人工分类草稿输入无效"):
+>       raise PreviewError(status, code, message)
+E       mcis_service.hfacs_drafts.router.PreviewError: (422, 'INVALID_HFACS_INPUT', '人工分类草稿输入无效')
+
+service/mcis_service/hfacs_drafts/router.py:37: PreviewError
+
+During handling of the above exception, another exception occurred:
+
+    @pytest.fixture(scope='module')
+>   def taxonomy(): return api.run_core({'action':'taxonomy'})
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_hfacs_drafts.py:28:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+service/mcis_service/hfacs_drafts/router.py:151: in run_core
+    except PreviewError: bad()
+                         ^^^^^
+service/mcis_service/hfacs_drafts/router.py:146: in bad
+    def bad(): reject(503,'HFACS_CORE_UNAVAILABLE','人工分类核心不可用')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+status = 503, code = 'HFACS_CORE_UNAVAILABLE', message = '人工分类核心不可用'
+
+    def reject(status=422, code="INVALID_HFACS_INPUT", message="人工分类草稿输入无效"):
+>       raise PreviewError(status, code, message)
+E       mcis_service.hfacs_drafts.router.PreviewError: (503, 'HFACS_CORE_UNAVAILABLE', '人工分类核心不可用')
+
+service/mcis_service/hfacs_drafts/router.py:37: PreviewError
+_ ERROR at setup of test_complete_roundtrip_inert_receipts_then_continue_history _
+
+raw = b''
+
+    def strict_json(raw: bytes):
+        def pairs(items):
+            result = {}
+            for key, value in items:
+                if key in result:
+                    raise ValueError("duplicate key")
+                result[key] = value
+            return result
+        try:
+>           result = json.loads(raw.decode("utf-8"), object_pairs_hook=pairs,
+                                parse_constant=lambda _: (_ for _ in ()).throw(ValueError("nonfinite")))
+
+service/mcis_service/hfacs_drafts/router.py:61:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/__init__.py:359: in loads
+    return cls(**kw).decode(s)
+           ^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:338: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <json.decoder.JSONDecoder object at 0x7f95cdcfdeb0>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:356: JSONDecodeError
+
+During handling of the above exception, another exception occurred:
+
+payload = {'action': 'taxonomy'}
+
+    def run_core(payload):
+        def bad(): reject(503,'HFACS_CORE_UNAVAILABLE','人工分类核心不可用')
+        try: proc=subprocess.run([str(CLI)],input=canonical(payload),capture_output=True,timeout=30,check=False)
+        except (OSError,subprocess.TimeoutExpired): bad()
+        if len(proc.stdout)>256*1024: bad()
+>       try: output=strict_json(proc.stdout)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/mcis_service/hfacs_drafts/router.py:150:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+service/mcis_service/hfacs_drafts/router.py:77: in strict_json
+    reject()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+status = 422, code = 'INVALID_HFACS_INPUT', message = '人工分类草稿输入无效'
+
+    def reject(status=422, code="INVALID_HFACS_INPUT", message="人工分类草稿输入无效"):
+>       raise PreviewError(status, code, message)
+E       mcis_service.hfacs_drafts.router.PreviewError: (422, 'INVALID_HFACS_INPUT', '人工分类草稿输入无效')
+
+service/mcis_service/hfacs_drafts/router.py:37: PreviewError
+
+During handling of the above exception, another exception occurred:
+
+    @pytest.fixture(scope='module')
+>   def code(): return run_core({'action':'taxonomy'})['categories'][0]['code']
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_hfacs_package_extension.py:23:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+service/mcis_service/hfacs_drafts/router.py:151: in run_core
+    except PreviewError: bad()
+                         ^^^^^
+service/mcis_service/hfacs_drafts/router.py:146: in bad
+    def bad(): reject(503,'HFACS_CORE_UNAVAILABLE','人工分类核心不可用')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+status = 503, code = 'HFACS_CORE_UNAVAILABLE', message = '人工分类核心不可用'
+
+    def reject(status=422, code="INVALID_HFACS_INPUT", message="人工分类草稿输入无效"):
+>       raise PreviewError(status, code, message)
+E       mcis_service.hfacs_drafts.router.PreviewError: (503, 'HFACS_CORE_UNAVAILABLE', '人工分类核心不可用')
+
+service/mcis_service/hfacs_drafts/router.py:37: PreviewError
+=========================== short test summary info ============================
+ERROR service/tests/test_agents_w20.py::test_disabled_no_inference - Assertio...
+ERROR service/tests/test_hfacs_drafts.py::test_real_context_and_empty_draft
+ERROR service/tests/test_hfacs_package_extension.py::test_complete_roundtrip_inert_receipts_then_continue_history
+3 errors in 2.43s
