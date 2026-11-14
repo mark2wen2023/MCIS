@@ -1,5 +1,6 @@
 """Synthetic-only isolated core contract tests."""
 import concurrent.futures,hashlib,json,os,pathlib,subprocess,unittest
+from hfacs_source_integrity import verify_sources
 HERE=pathlib.Path(__file__).resolve().parent;ROOT=HERE.parents[1]
 def entry(id='a',code='UA-ERR-DEC'):return dict(id=id,categoryCode=code,description='Synthetic draft',rationale='Human hypothesis')
 def request():return dict(action='validate',draft=dict(scope='Synthetic work context',entries=[entry()]))
@@ -36,10 +37,12 @@ class Tests(unittest.TestCase):
   r=request();r['draft']['entries']=[entry('c'+str(i),c['code']) for i,c in enumerate(result(dict(action='taxonomy'))['categories'])]
   a=result(r);self.assertEqual(len(a['entries']),32);self.assertEqual(a,result(r))
  def test_rebuild_concurrent_source_hashes(self):
-  path=HERE/'out/build-manifest.json';before=json.loads(path.read_text());path.unlink()
+  path=HERE/'out/build-manifest.json';before=json.loads(path.read_text())
+  verify_sources(ROOT,before['inputs'])
+  path.unlink()
   with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:rs=list(pool.map(result,[request()]*3))
   self.assertEqual(rs[0],rs[1]);self.assertEqual(rs[1],rs[2]);self.assertEqual(before,json.loads(path.read_text()))
   for f,h in before['inputs'].items():
    self.assertEqual(hashlib.sha256((ROOT/f).read_bytes()).hexdigest(),h)
-   if f.startswith('unity/'):self.assertEqual(hashlib.sha256((ROOT.parent/'mcis-w144'/f).read_bytes()).hexdigest(),h)
+  verify_sources(ROOT,json.loads(path.read_text())['inputs'])
 if __name__=='__main__':unittest.main()

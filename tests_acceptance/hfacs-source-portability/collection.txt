@@ -1,0 +1,9 @@
+tools/mcis-hfacs/test_cli.py::Tests::test_core_all_or_nothing
+tools/mcis-hfacs/test_cli.py::Tests::test_full_catalog_batch_and_idempotent
+tools/mcis-hfacs/test_cli.py::Tests::test_protocol
+tools/mcis-hfacs/test_cli.py::Tests::test_rebuild_concurrent_source_hashes
+tools/mcis-hfacs/test_cli.py::Tests::test_root_group_leaf
+tools/mcis-hfacs/test_cli.py::Tests::test_taxonomy
+tools/mcis-hfacs/test_cli.py::Tests::test_unicode_boundaries
+
+7 tests collected in 0.01s

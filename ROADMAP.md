@@ -389,3 +389,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTCOORDINATION r1 | 限定复验通过/依赖HOLD | 2026-11-14：10独审通过，D01二次时钟采样异常封闭原红测转绿；冻结 logs/EXPERTCOORDINATION-r1-impl-hashes-frozen.txt。继承浮点deadline另分支修复中，不晋级精确截止或真实执行。 |
 | EXPERTCOORDINTEGRATED | 待独审 | 2026-11-14：10ec700上实际组合截止修复+协调r1；139项通过（含二次采样3项另复跑）。两源冻结保持，新增实际gate精确截止4测；冻结 logs/EXPERTCOORDINTEGRATED-impl-hashes-frozen.txt。真实0/HOLD，非硬取消。 |
 | EXPERTCOORDINTEGRATED | 离线组合独审通过 | 2026-11-14：独立139项通过；两源各3/3、组合4/4冻结；实际加载新machine、源改动逐字一致，原NaN3红和fractional截止4测通过。缺失截止依赖已在本组合关闭；不放行真实模型/硬取消。 |
+| HFACS source portability | 待测 | fixed W184 seven-source pins replace missing sibling dependency; logs/hfacs-source-portability-impl-hashes-frozen.txt; real core remains blocked |
+| HFACS source portability | 局部独审通过 | self19pass/independent19pass; 7realCLI collection only; SDK/core blocked; tests_acceptance/hfacs-source-portability/REPORT.md |
