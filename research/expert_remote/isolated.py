@@ -9,6 +9,7 @@ import time
 from research.expert_meeting.machine import canonical, strict
 from research.expert_remote.transport import TransportError, MAX_BYTES, validate_meta
 from research.expert_group.engine import _assistant
+from research.expert_executor.ownership import require_support, observe, exit_code, cleanup
 
 ROOT=Path(__file__).resolve().parents[2]
 
@@ -24,6 +25,7 @@ async def request(messages,tools,*,key,deadline,cancel=None,mocked=False):
         if (cancel and cancel()) or time.monotonic()>=deadline:raise TransportError('cancelled')
         payload=canonical({'messages':messages,'tools':tools,'key':key,'deadline':deadline})
         if len(payload)>MAX_BYTES+16384:raise TransportError('request_limit')
+        require_support()
         proc=subprocess.Popen(_command(mocked),cwd=ROOT,env={'PATH':'/usr/bin:/bin','LANG':'C.UTF-8'},
              stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.DEVNULL,start_new_session=True,bufsize=0)
         os.set_blocking(proc.stdin.fileno(),False);os.set_blocking(proc.stdout.fileno(),False)
@@ -37,14 +39,12 @@ async def request(messages,tools,*,key,deadline,cancel=None,mocked=False):
             except BlockingIOError:chunk=b''
             data+=chunk
             if len(data)>MAX_BYTES:raise TransportError('worker_output_limit',True)
-            status=os.waitid(os.P_PID,proc.pid,os.WEXITED|os.WNOHANG|os.WNOWAIT)
+            status=observe(proc)
             if status is not None:
-                observed=status.si_status if status.si_code==os.CLD_EXITED else -status.si_status
+                observed=exit_code(status)
                 if observed!=0:raise TransportError('worker_exit',True)
                 # Kill any owned descendants before draining, preserving PID ownership.
-                try:os.killpg(proc.pid,signal.SIGKILL)
-                except ProcessLookupError:pass
-                proc.wait(timeout=5);reaped=True
+                observed=cleanup(proc);reaped=True
                 while True:
                     try:tail=os.read(proc.stdout.fileno(),65536)
                     except BlockingIOError:break
@@ -68,9 +68,7 @@ async def request(messages,tools,*,key,deadline,cancel=None,mocked=False):
         if proc is not None:
             try:
                 if not reaped:
-                    try:os.killpg(proc.pid,signal.SIGKILL)
-                    except ProcessLookupError:pass
-                    observed=proc.wait(timeout=5);reaped=True
+                    observed=cleanup(proc);reaped=True
             except Exception:
                 error=TransportError('worker_cleanup_unknown',True)
             finally:

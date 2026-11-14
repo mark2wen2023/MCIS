@@ -1,0 +1,46 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+___________ test_unimplemented_waitid_refused_before_spawn[failure0] ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f20832b1640>
+failure = NotImplementedError()
+
+    @pytest.mark.parametrize('failure',[NotImplementedError(),OSError(38,'SYNTHETIC_ENOSYS')])
+    def test_unimplemented_waitid_refused_before_spawn(monkeypatch,failure):
+        calls=[]
+        monkeypatch.setattr(os,'waitid',lambda *a:(_ for _ in ()).throw(failure))
+        def spawn(*a,**kw):calls.append(True);raise RuntimeError('no actual child in this fault test')
+        monkeypatch.setattr(subprocess,'Popen',spawn)
+        with pytest.raises(TransportError):asyncio.run(isolated.request([],[],key='SYNTHETIC',deadline=time.monotonic()+1,mocked=True))
+>       assert calls==[], 'waitid exists but is unsupported: child spawn was attempted'
+E       AssertionError: waitid exists but is unsupported: child spawn was attempted
+E       assert [True] == []
+E         
+E         Left contains one more item: True
+E         Use -v to get more diff
+
+tests_acceptance/EXPERTOWNERSHIP/test_independent.py:149: AssertionError
+___________ test_unimplemented_waitid_refused_before_spawn[failure1] ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f2082dc4950>
+failure = OSError(38, 'SYNTHETIC_ENOSYS')
+
+    @pytest.mark.parametrize('failure',[NotImplementedError(),OSError(38,'SYNTHETIC_ENOSYS')])
+    def test_unimplemented_waitid_refused_before_spawn(monkeypatch,failure):
+        calls=[]
+        monkeypatch.setattr(os,'waitid',lambda *a:(_ for _ in ()).throw(failure))
+        def spawn(*a,**kw):calls.append(True);raise RuntimeError('no actual child in this fault test')
+        monkeypatch.setattr(subprocess,'Popen',spawn)
+        with pytest.raises(TransportError):asyncio.run(isolated.request([],[],key='SYNTHETIC',deadline=time.monotonic()+1,mocked=True))
+>       assert calls==[], 'waitid exists but is unsupported: child spawn was attempted'
+E       AssertionError: waitid exists but is unsupported: child spawn was attempted
+E       assert [True] == []
+E         
+E         Left contains one more item: True
+E         Use -v to get more diff
+
+tests_acceptance/EXPERTOWNERSHIP/test_independent.py:149: AssertionError
+=========================== short test summary info ============================
+FAILED tests_acceptance/EXPERTOWNERSHIP/test_independent.py::test_unimplemented_waitid_refused_before_spawn[failure0]
+FAILED tests_acceptance/EXPERTOWNERSHIP/test_independent.py::test_unimplemented_waitid_refused_before_spawn[failure1]
+2 failed, 14 deselected in 0.11s

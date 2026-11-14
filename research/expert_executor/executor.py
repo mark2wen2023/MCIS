@@ -12,6 +12,7 @@ import signal
 import subprocess
 import threading
 
+from research.expert_executor.ownership import require_support, observe, exit_code, cleanup
 from research.expert_bridge.protocol import Bridge, ProtocolError, MAX_WIRE
 from research.expert_group.engine import _fixture, _packet, load_packet
 from research.expert_meeting.machine import canonical, digest
@@ -39,19 +40,12 @@ def _command():
 
 
 def _status(proc):
-    # Keep the leader unreaped, reserving its PID/PGID until owned-group cleanup.
-    observed = os.waitid(os.P_PID, proc.pid, os.WEXITED | os.WNOHANG | os.WNOWAIT)
-    if observed is None: return None
-    if observed.si_code == os.CLD_EXITED: return observed.si_status
-    return -observed.si_status
+    status = observe(proc)
+    return None if status is None else exit_code(status)
 
 
 def _cleanup(proc):
-    # start_new_session guarantees this is our group, not the shell's process group.
-    try: os.killpg(proc.pid, signal.SIGKILL)
-    except ProcessLookupError: pass
-    code = proc.wait(timeout=5)
-    return code
+    return cleanup(proc)
 
 
 class Executor:
@@ -129,6 +123,7 @@ class Executor:
                    'runtime': 'Pi1.5.2', 'providerMode': self.provider_mode, 'realDeepSeekExecuted': False, 'receiptComplete': True}
             with self._receipt_lock: self._runs.append(run)
             self._check(ticket)
+            require_support()
             command = _command()
             self._log(run, 'spawn_attempt')
             proc = subprocess.Popen(command, cwd=ROOT, env=dict(ENV), stdin=subprocess.PIPE,
@@ -249,8 +244,12 @@ class Executor:
                     if proc is not None:
                         try:
                             if not reaped:
-                                code = _cleanup(proc)
-                                if run is not None: run.update(exitObserved=code, groupKillSent=True, leaderReaped=True)
+                                try:
+                                    code = _cleanup(proc)
+                                    if run is not None: run.update(exitObserved=code, groupKillSent=True, leaderReaped=True)
+                                except Exception:
+                                    self._receipt_complete = False
+                                    if run is not None: run.update(status='unknown', receiptComplete=False, errorCode='process_ownership_or_cleanup_unknown')
                         finally:
                             if proc.stdin and not proc.stdin.closed: proc.stdin.close()
                             if proc.stdout and not proc.stdout.closed: proc.stdout.close()

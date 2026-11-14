@@ -587,3 +587,7 @@ EXPERTREMOTE r1：独审发现空闲cancel未立即反映halted；自查BaseExce
 
 ## EXPERTREMOTEPI 2026-11-14
 基于1b897f7隔离接通实际Pi角色的显式remote协议路径。登记跨冻结包：Meeting/Bridge增加模式隔离与真实响应动作；Executor保持默认脚本兼容，新增显式remote或remote_mock，复用原Pi退出/清理门禁；Adapter消费同一Bridge预留请求，新增版本化来源声明。固定Python提供方worker受父进程硬截止/取消与组回收，凭据仅IPC，不入Pi或环境。真实请求本轮禁止；只跑明确mockHTTP公共包协议测试，不称模型能力通过。
+
+## EXPERTOWNERSHIP 2026-11-14 HOLD
+协调独审发现SIGCHLD=SIG_IGN导致自动回收后killpg(pid)存在PGID复用风险。8f2fa05真实运行HOLD。跨冻结包修Executor/isolated共享所有权检查：启动前要求waitid/WNOWAIT及SIGCHLD默认行为；ECHILD、已回收或配置变化后粘性失去所有权，不再killpg。保留宿主独占reaper且运行期间不得改变SIGCHLD的约束。仅离线验收，不推送或真实调用。
+EXPERTOWNERSHIP r1：独审扩展确认仅callable/常量不能证明waitid内核可用；启动前加对当前自身PID的无子进程probe（必须ECHILD），拒绝NotImplementedError/ENOSYS/异常返回，避免spawn后才发现无法监管。保留初始冻结，新增r1冻结复验。

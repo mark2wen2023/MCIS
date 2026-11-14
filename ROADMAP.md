@@ -401,3 +401,9 @@ EXPERTREMOTE r1冻结使用logs/EXPERTREMOTE-r1-impl-hashes-frozen.txt；原名�
 | 2026-11-14 | EXPERTREMOTEPI | 待测 | 1b897f7上实际Pi接隔离提供方worker；remote/mock严格区别，共享预算/截止取消/unknown、schema2复合回执；全量194过后worker元数据补测10过（新增1例）；freeze logs/EXPERTREMOTEPI-impl-hashes-frozen.txt。仅MockHTTP无真实DeepSeek。 |
 
 | 2026-11-14 | EXPERTREMOTEPI | 受限独审通过 | 最终开发/回归195通过、独审17通过，15freeze匹配；实际Pi+隔离MockHTTP两轮、取消/硬截止/后代回收/unknown部分回执验证。未真实DeepSeek、未读凭据、未接正式案件或UI；仅本地候选。 |
+
+| 2026-11-14 | EXPERTOWNERSHIP | 待复验/HOLD真实运行 | 修SIGCHLD自动回收后PGID复用风险；Pi/provider共用启动/所有权检查，ECHILD后不killpg；保留独占reaper约束。冻结logs/EXPERTOWNERSHIP-impl-hashes-frozen.txt。 |
+
+| 2026-11-14 | EXPERTOWNERSHIP r1 | 待复验/HOLD | 增实际waitid自PID能力probe，无子进程；初始冻结保留，r1冻结logs/EXPERTOWNERSHIP-r1-impl-hashes-frozen.txt。 |
+
+| 2026-11-14 | EXPERTOWNERSHIP r1 | 受限复验通过/HOLD协调放行 | 回归225通过，独审18通过，新5冻结匹配；ENOSYS红测保留，独占reaper约束不变；未真实调用、未推送。 |

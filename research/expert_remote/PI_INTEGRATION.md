@@ -25,3 +25,9 @@ Executor远程复合回执schema2含providerReceipt、Bridge预算和Meeting快�
 ## 本轮实际验证
 
 安全协议测试使用公开冻结packet、显式MockHTTP及合成占位凭据。实际4个Pi进程、12个worker完成两轮，上一轮意见数量0/0/2/2；默认旧脚本流程继续回归。另用不合作的睡眠worker证明硬截止和取消回收，保留未知请求。没有真实DeepSeek、没有模型质量验收，没有部署合并。真实验收仍须可用安全凭据、独立审查和有限公开案例运行。
+
+## 所有权修订 HOLD（8f2fa05协调独审后）
+
+8f2fa05发现SIGCHLD=SIG_IGN时leader可能被自动回收，随后以旧PID发送killpg有复用风险；真实运行保持HOLD。修订在Pi与provider启动前要求POSIX waitid/WNOWAIT能力（自PID无子进程probe必须返回ECHILD，拒绝ENOSYS/NotImplementedError/异常返回）和SIGCHLD=SIG_DFL，发组信号前再次以WNOWAIT核对leader。ECHILD、Popen.returncode已设置或信号处理配置变化后粘性标记所有权丢失，不再killpg、不伪造已回收；回执保留unknown并标不完整。
+
+宿主必须独占这些子进程的reaper：禁止其他线程/信号处理器调用wait/waitpid/poll回收它们，禁止运行期间修改SIGCHLD或安装SA_NOCLDWAIT。检查与kill之间不是原子PID能力，不能把这些检查说成支持并发外部reaper；不符合约束的宿主不得启动。不会主动改变宿主信号处理器以绕过限制。失去所有权时宁可不清理未知组，也不能对可能复用的PGID发信号。
