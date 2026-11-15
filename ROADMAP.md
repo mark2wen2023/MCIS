@@ -409,3 +409,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Archive scope wording/test alignment | 待测 | cf80623 descendant; obsolete literal assertions corrected without removing guards, four notices aligned to bounded1.4; W18.6/29guard/68bounded/16source/148W16 and build passed; developer-only, browser and independent frozen-build handoff unverified; logs/archive-scope-copy-fix-hashes.txt |
 
 | Consultation archive readiness | 阻断/待审设计 | 4099d235 descendant;4 ordinary synthetic characterization tests passed; no runtime/archive support enabled; missing immutable circulated-report binding and consultation-only legacy export gap documented; browser/LLM/full suite not run |
+
+| Consultation-only export refusal | 待测 | 8dd3dc9 descendant; existing preflight rejects unsupported consultation-only state409, roles still403;96 selected backend passed plus final5 consultation tests with blob snapshots passed; no restore expansion/browser/full-suite; logs/consultation-export-refusal-hashes.txt |

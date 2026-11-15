@@ -57,6 +57,8 @@ def full_access(s,ctx,case_id):
 
 
 def has_history(s,case_id):
+    from ..recommendations.models import ConsultationRoundRow
+    if s.scalars(select(ConsultationRoundRow).where(ConsultationRoundRow.case_id==case_id).limit(1)).first()is not None:return True
     from ..timeline.models import TimelineEventRow
     if s.scalars(select(TimelineEventRow).where(TimelineEventRow.case_id==case_id).limit(1)).first()is not None:return True
     from ..track_history.models import LocalReceipt

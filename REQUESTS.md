@@ -686,3 +686,11 @@ document binding. Existing free version/optional SHA cannot prove report associa
 Synthetic ordinary tests also characterize consultation-only legacy export200 then
 restricted restore422; this branch does not fix that selection gap. Preserve mixed
 state refusal and permissions. See research/trajectory/NEXT_ARCHIVE_CONSULTATION_DESIGN.md.
+
+## Fail closed for consultation-only export
+
+Follow-up to8dd3dc9 ordinary reproduction: include ConsultationRoundRow presence in
+history-aware preflight selection. The existing unsupported-table check rejects;
+no allowlist/parser/permission expansion. Replace the known-gap characterization
+expectation with409/no database or blob mutation, retain mixed-state refusal and add
+unauthorized-role checks. Existing supported roundtrips remain regression targets.

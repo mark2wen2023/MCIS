@@ -215,3 +215,12 @@ Review time precision clarification: review_section obtains its UTC before appen
 ## 1.4.0 candidate amendment (2026-11-14)
 
 For the bounded working-v1 plus timeline combination only, see [report-timeline-archive-v1.md](report-timeline-archive-v1.md) and timeline-records-archive schema. That versioned contract supersedes this document’s timeline_events refusal and historical-version enumeration for1.4.0. Unknown states and all other guarantees remain unchanged; old versions retain their original meaning.
+
+## Standalone consultation export preflight
+
+A case containing consultation_rounds must enter the existing history-aware export
+preflight even if it has no reports, interviews or timeline. Consultation remains
+unsupported: after existing full-content authorization, export returns409
+ARCHIVE_RESTORE_UNSUPPORTED without a partial ZIP or export audit write. Default
+unauthorized roles retain403. This does not introduce consultation restoration,
+accept legacy nonempty consultation packages, or change1.0–1.4 parsing.
