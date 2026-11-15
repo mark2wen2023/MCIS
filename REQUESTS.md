@@ -751,3 +751,6 @@ On04b793a, define closed member v1 and offline dependency validation only. Exist
 
 ## Conflict envelope boundary, offline only
 On0511bf8 add bounded ZIP/manifest/member and dependency inspection seam. Experimental envelope tag is not normal intake support; restore_ready=false. No export/import wiring or permission change. Synthetic ordinary exception rollback injection tests existing transaction only. See contracts/conflict-envelope-boundary-v1.md.
+
+## Disposable conflict restoration candidate
+On1d41874 implement new temporary SQLite-only frozen snapshot restoration and candidate re-export. All source/member BLOBs share DB transaction; exact conflict timestamps/journal/audit linkage preserved, legacy history stays unknown. No product roots, routes, permissions or export protection changed. See contracts/conflict-temporary-restore-v1.md; live continuation/import-lineage remain unsupported.
