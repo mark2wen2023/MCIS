@@ -663,3 +663,9 @@ test-only delta from e91e4cf on latest main; explicitly authorized Lead renders
 real public-report font assertions, Investigator creation/export remain403.
 No source/renderer/font/global fixture changes. Fresh validation and independent
 review required on this current-main candidate, not inferred from the old review.
+
+## Report recommendation historical binding (2026-11-15)
+Authorized isolated candidate on PR95 0c18257: extend report/citation contracts and sources,
+read validation, exporter and report view with versioned generation-time recommendation
+field snapshots. Preserve current-register links, existing full-content policy and audit
+transaction. Legacy snapshots are unavailable, never reconstructed. No archive enablement.

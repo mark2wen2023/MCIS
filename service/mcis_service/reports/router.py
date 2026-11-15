@@ -67,7 +67,7 @@ def list_reports(case_id: str, ctx: Ctx = CtxDep) -> dict:
             return {'caseId': case_id, 'realDataStatus': service.data_status(case),
                     'reports': [], 'blockedReason': 'report_case_not_imported'}
         return {'caseId': case_id, 'realDataStatus': service.data_status(case),
-                'reports': list_docs(s, ReportRow, case_id)}
+                'reports': [service.get_report(s, case_id, r['reportId']) for r in list_docs(s, ReportRow, case_id)]}
 
 
 @router.post('/cases/{case_id}/reports', status_code=201)

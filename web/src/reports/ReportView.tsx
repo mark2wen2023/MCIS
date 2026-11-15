@@ -111,7 +111,10 @@ export function ReportView(props: ReportViewProps) {
 
 function CitationLink({ citation }: { citation: Citation }) {
   const missing = citation.unregistered || citation.registration !== 'registered'
-  return <a className={`rpt-citation ${missing ? 'rpt-citation-alert' : ''}`} href={citation.href} title={citation.registration === 'unregistered' ? '该引用未在本案登记，请核对来源' : citation.registration === 'missing' ? '来源数据未提供' : `查看 ${citation.kind} ${citation.id}`} data-unregistered={citation.unregistered ? citation.id : undefined}>[{citation.id}] {citation.registration === 'unregistered' ? <span>未登记</span> : citation.registration === 'missing' ? <span>缺数据</span> : citation.needsReview ? <span>需复核</span> : null}</a>
+  const link = <a className={`rpt-citation ${missing ? 'rpt-citation-alert' : ''}`} href={citation.href} title={citation.registration === 'unregistered' ? '该引用未在本案登记，请核对来源' : citation.registration === 'missing' ? '来源数据未提供' : `查看 ${citation.kind} ${citation.id}`} data-unregistered={citation.unregistered ? citation.id : undefined}>[{citation.id}] {citation.registration === 'unregistered' ? <span>未登记</span> : citation.registration === 'missing' ? <span>缺数据</span> : citation.needsReview ? <span>需复核</span> : null}</a>
+  if (citation.kind !== 'recommendation') return link
+  const history = citation.historicalSource
+  return <div>{history ? <details><summary>生成时授权字段快照（未核验原因） · {history.payload.capturedUtc}</summary><p>SHA-256: {history.sha256}</p><pre>{JSON.stringify(history.payload, null, 2)}</pre></details> : <span>历史来源快照不可用；</span>}<span>当前台账（可能已变化）：{link}</span></div>
 }
 
 /** confirm/dismiss 只提交动作与理由，永远不夹带新文本。 */

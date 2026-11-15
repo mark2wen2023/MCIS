@@ -1,6 +1,8 @@
 """用同一报告快照生成 PDF/DOCX：中文、双语、状态及来源均不依赖 LLM。"""
 from __future__ import annotations
 
+from .history import label as history_label
+
 import io
 from functools import lru_cache
 from html import escape
@@ -153,7 +155,7 @@ def render_pdf(report: dict, lang: str, *, include_glossary=True) -> bytes:
     if not refs:
         flow.append(p("缺数据：未提供引用 / Missing data: no references provided"))
     for citation in refs:
-        flow.append(p(f"{_reference_label(citation)} {citation['kind']} — {citation['href']} | {citation.get('sourceRef', '')}", small))
+        flow.append(p(f"{_reference_label(citation)} {citation['kind']} — {history_label(citation)} {citation['href']} | {citation.get('sourceRef', '')}", small))
     if include_glossary:
         flow.append(p("术语表 / SMCP glossary（中文为项目译文）", heading))
         flow.extend(p(f"{term['termZh']} / {term['termEn']}", small) for term in GLOSSARY)
@@ -214,7 +216,7 @@ def render_docx(report: dict, lang: str, *, include_glossary=True) -> bytes:
     if not refs:
         document.add_paragraph("缺数据：未提供引用 / Missing data: no references provided")
     for citation in refs:
-        document.add_paragraph(f"{_reference_label(citation)} {citation['kind']} — {citation['href']} | {citation.get('sourceRef', '')}")
+        document.add_paragraph(f"{_reference_label(citation)} {citation['kind']} — {history_label(citation)} {citation['href']} | {citation.get('sourceRef', '')}")
     if include_glossary:
         document.add_heading("术语表 / SMCP glossary（中文为项目译文）", level=1)
         table = document.add_table(rows=1, cols=2)

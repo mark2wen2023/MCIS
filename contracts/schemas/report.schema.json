@@ -97,6 +97,9 @@
         },
         "reportHref": {
           "type": "string"
+        },
+        "sourceHistoryVersion": {
+          "const": 1
         }
       },
       "additionalProperties": false
@@ -331,6 +334,62 @@
         },
         "needsReview": {
           "type": "boolean"
+        },
+        "historicalSource": {
+          "type": "object",
+          "required": [
+            "payload",
+            "sha256"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "payload": {
+              "type": "object",
+              "required": [
+                "version",
+                "caseId",
+                "reportId",
+                "capturedUtc",
+                "sourceId",
+                "fields"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "version": {
+                  "const": 1
+                },
+                "caseId": {
+                  "type": "string"
+                },
+                "reportId": {
+                  "type": "string"
+                },
+                "capturedUtc": {
+                  "type": "string"
+                },
+                "sourceId": {
+                  "type": "string"
+                },
+                "fields": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "title": {},
+                    "addressee": {},
+                    "status": {},
+                    "dueUtc": {},
+                    "verificationNote": {},
+                    "causeNodeIds": {},
+                    "evidenceIds": {}
+                  }
+                }
+              }
+            }
+          }
         }
       },
       "additionalProperties": false

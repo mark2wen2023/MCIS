@@ -54,7 +54,8 @@ def get_report(s, case_id: str, report_id: str) -> dict:
     doc = get_doc(s, ReportRow, case_id, report_id)
     if doc is None:
         raise problem(404, 'report_not_found', f'报告不存在：{report_id}')
-    return deepcopy(doc)
+    from .history import verify
+    return verify(deepcopy(doc))
 
 
 def template_for(template_id: str, case_id: str | None = None) -> dict:
@@ -101,7 +102,8 @@ def create_report(s, ctx, case: dict, template_id: str, lang: str, *, parent: di
     report_id = 'RPT-' + uuid4().hex[:20]
     family_id = parent['familyId'] if parent else report_id
     versions = [r['version'] for r in list_docs(s, ReportRow, case['caseId']) if r['familyId'] == family_id]
-    sections = build_sections(s, case, template)
+    captured_utc = iso(now_utc())
+    sections = build_sections(s, case, template, report_id=report_id, captured_utc=captured_utc)
     if colreg_only:
         section = next(x for x in sections if x['sectionId'] == 'analysis')
         section['titleZh'], section['titleEn'] = '避碰规则分析', 'Collision avoidance rules analysis'
@@ -117,7 +119,8 @@ def create_report(s, ctx, case: dict, template_id: str, lang: str, *, parent: di
     report = {'reportId': report_id, 'familyId': family_id, 'parentReportId': parent['reportId'] if parent else None,
               'caseId': case['caseId'], 'templateId': template_id, 'lang': lang, 'version': max(versions or [0]) + 1,
               'status': 'Draft', 'isFictionalDemo': is_fictional(case), 'realDataStatus': data_status(case),
-              'createdBy': ctx.operator, 'createdUtc': iso(now_utc()), 'sections': sections,
+              'createdBy': ctx.operator, 'createdUtc': captured_utc, 'sections': sections,
+              'sourceHistoryVersion': 1,
               'disclaimerZh': DISCLAIMER_ZH, 'disclaimerEn': DISCLAIMER_EN,
               'reportHref': '#/report?' + urlencode({'case': case['caseId'], 'report': report_id})}
     contracts.validate('report', report)

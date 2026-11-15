@@ -9,6 +9,7 @@ export interface Citation {
   kind: 'evidence' | 'colreg-check' | 'recommendation' | 'interview-crosscheck' | 'whatif' | 'systemic'
   id: string; href: string; registration: 'registered' | 'unregistered' | 'missing'; unregistered: boolean
   sourceRef?: string; needsReview?: boolean
+  historicalSource?: { sha256: string; payload: { version: 1; caseId: string; reportId: string; capturedUtc: string; sourceId: string; fields: Record<string, unknown> } }
 }
 export interface ReviewRecord {
   action: ReviewAction; operator: string; utc: string; reason: string

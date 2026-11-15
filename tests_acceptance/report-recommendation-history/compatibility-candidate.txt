@@ -1,0 +1,1894 @@
+............................F...............FFFFFFFFFF.FFFFFFFFFFFFFFFFF [ 66%]
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFF....F.F.                                    [100%]
+=================================== FAILURES ===================================
+___________ test_report_versions_full_review_gisis_and_hfacs_coexist ___________
+
+raw = b''
+
+    def strict_json(raw: bytes):
+        def pairs(items):
+            result = {}
+            for key, value in items:
+                if key in result:
+                    raise ValueError("duplicate key")
+                result[key] = value
+            return result
+        try:
+>           result = json.loads(raw.decode("utf-8"), object_pairs_hook=pairs,
+                                parse_constant=lambda _: (_ for _ in ()).throw(ValueError("nonfinite")))
+
+service/mcis_service/hfacs_drafts/router.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/__init__.py:359: in loads
+    return cls(**kw).decode(s)
+           ^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:338: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7f43ce0283b0>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:356: JSONDecodeError
+
+During handling of the above exception, another exception occurred:
+
+payload = {'action': 'taxonomy'}
+
+    def run_core(payload):
+        def bad(): reject(503,'HFACS_CORE_UNAVAILABLE','人工分类核心不可用')
+        try: proc=subprocess.run([str(CLI)],input=canonical(payload),capture_output=True,timeout=30,check=False)
+        except (OSError,subprocess.TimeoutExpired): bad()
+        if len(proc.stdout)>256*1024: bad()
+>       try: output=strict_json(proc.stdout)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/mcis_service/hfacs_drafts/router.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/mcis_service/hfacs_drafts/router.py:77: in strict_json
+    reject()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+status = 422, code = 'INVALID_HFACS_INPUT', message = '人工分类草稿输入无效'
+
+    def reject(status=422, code="INVALID_HFACS_INPUT", message="人工分类草稿输入无效"):
+>       raise PreviewError(status, code, message)
+E       mcis_service.hfacs_drafts.router.PreviewError: (422, 'INVALID_HFACS_INPUT', '人工分类草稿输入无效')
+
+service/mcis_service/hfacs_drafts/router.py:37: PreviewError
+
+During handling of the above exception, another exception occurred:
+
+origin = (<starlette.testclient.TestClient object at 0x7f43cda0ae10>, (b'synthetic original evidence bytes\x00', {'caseId': 'CA...b\x00\xf8\x06\x00\x00b%\x00\x00\x00\x00', PosixPath('/tmp/pytest-of-agent/pytest-237/test_report_versions_full_revi0'))
+
+    def test_report_versions_full_review_gisis_and_hfacs_coexist(origin):
+     from mcis_service.hfacs_drafts.router import run_core
+     c,details,raw,path=origin;*_,rpt=details
+     report=checked(c,'get',ROOT+'/reports/'+rpt).json()
+     section=report['sections'][0];sentence=section['sentences'][0]
+     checked(c,'patch',ROOT+'/reports/'+rpt+'/sections/'+section['sectionId'],{'action':'modify','sentenceId':sentence['sentenceId'],'reason':'Synthetic change','textZh':'合成修改','textEn':'Synthetic modified'})
+     regenerated=checked(c,'post',ROOT+'/reports/'+rpt+':generate',{'templateId':'imo-cic','lang':'bilingual'},201).json()
+     checked(c,'get',ROOT+'/reports/'+rpt+'/export?format=docx')
+     checked(c,'post',ROOT+'/gisis:validate',{'values':{},'export':True,'format':'json'},422)
+     checked(c,'get',ROOT+'/gisis/export?format=json')
+>    code=run_core({'action':'taxonomy'})['categories'][0]['code']
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_working_record_archive.py:220: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/mcis_service/hfacs_drafts/router.py:151: in run_core
+    except PreviewError: bad()
+                         ^^^^^
+service/mcis_service/hfacs_drafts/router.py:146: in bad
+    def bad(): reject(503,'HFACS_CORE_UNAVAILABLE','人工分类核心不可用')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+status = 503, code = 'HFACS_CORE_UNAVAILABLE', message = '人工分类核心不可用'
+
+    def reject(status=422, code="INVALID_HFACS_INPUT", message="人工分类草稿输入无效"):
+>       raise PreviewError(status, code, message)
+E       mcis_service.hfacs_drafts.router.PreviewError: (503, 'HFACS_CORE_UNAVAILABLE', '人工分类核心不可用')
+
+service/mcis_service/hfacs_drafts/router.py:37: PreviewError
+______ test_snapshot_ref_round_trip_retains_full_reason_values_and_chain _______
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d41297c0>, role='Investigator', operator='快照调查员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43d4186f30>))
+
+    def test_snapshot_ref_round_trip_retains_full_reason_values_and_chain(ctx):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w161_snapshot.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w161_snapshot.py:27: in create
+    return router.create_report(CASE, {'templateId': 'imo-cic', 'lang': 'bilingual'}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+_________________ test_snapshot_missing_is_404_and_case_scoped _________________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43cdaee960>, role='Investigator', operator='快照调查员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cef834a0>))
+
+    def test_snapshot_missing_is_404_and_case_scoped(ctx):
+>       create(ctx)
+
+service/tests/test_reports_w161_snapshot.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w161_snapshot.py:27: in create
+    return router.create_report(CASE, {'templateId': 'imo-cic', 'lang': 'bilingual'}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+____________ test_snapshot_restricted_roles_are_403[ExternalExpert] ____________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43cefc1af0>, role='Investigator', operator='快照调查员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43d4525cd0>))
+role = 'ExternalExpert'
+
+    @pytest.mark.parametrize('role', ['ExternalExpert', 'InterestedState', 'AgentService', 'Public'])
+    def test_snapshot_restricted_roles_are_403(ctx, role):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w161_snapshot.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w161_snapshot.py:27: in create
+    return router.create_report(CASE, {'templateId': 'imo-cic', 'lang': 'bilingual'}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+___________ test_snapshot_restricted_roles_are_403[InterestedState] ____________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d4eefe30>, role='Investigator', operator='快照调查员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43d510f920>))
+role = 'InterestedState'
+
+    @pytest.mark.parametrize('role', ['ExternalExpert', 'InterestedState', 'AgentService', 'Public'])
+    def test_snapshot_restricted_roles_are_403(ctx, role):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w161_snapshot.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w161_snapshot.py:27: in create
+    return router.create_report(CASE, {'templateId': 'imo-cic', 'lang': 'bilingual'}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+_____________ test_snapshot_restricted_roles_are_403[AgentService] _____________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43cdd71a00>, role='Investigator', operator='快照调查员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cdd71a60>))
+role = 'AgentService'
+
+    @pytest.mark.parametrize('role', ['ExternalExpert', 'InterestedState', 'AgentService', 'Public'])
+    def test_snapshot_restricted_roles_are_403(ctx, role):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w161_snapshot.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w161_snapshot.py:27: in create
+    return router.create_report(CASE, {'templateId': 'imo-cic', 'lang': 'bilingual'}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+________________ test_snapshot_restricted_roles_are_403[Public] ________________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d4f60740>, role='Investigator', operator='快照调查员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43ce63d8b0>))
+role = 'Public'
+
+    @pytest.mark.parametrize('role', ['ExternalExpert', 'InterestedState', 'AgentService', 'Public'])
+    def test_snapshot_restricted_roles_are_403(ctx, role):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w161_snapshot.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w161_snapshot.py:27: in create
+    return router.create_report(CASE, {'templateId': 'imo-cic', 'lang': 'bilingual'}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+__________ test_snapshot_investigator_roles_allowed[LeadInvestigator] __________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d50eac90>, role='Investigator', operator='快照调查员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43d4f608c0>))
+role = 'LeadInvestigator'
+
+    @pytest.mark.parametrize('role', ['LeadInvestigator', 'Investigator'])
+    def test_snapshot_investigator_roles_allowed(ctx, role):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w161_snapshot.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w161_snapshot.py:27: in create
+    return router.create_report(CASE, {'templateId': 'imo-cic', 'lang': 'bilingual'}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+____________ test_snapshot_investigator_roles_allowed[Investigator] ____________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43cda87dd0>, role='Investigator', operator='快照调查员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cdfb2180>))
+role = 'Investigator'
+
+    @pytest.mark.parametrize('role', ['LeadInvestigator', 'Investigator'])
+    def test_snapshot_investigator_roles_allowed(ctx, role):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w161_snapshot.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w161_snapshot.py:27: in create
+    return router.create_report(CASE, {'templateId': 'imo-cic', 'lang': 'bilingual'}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+_ test_real_snapshot_missing_or_not_imported_without_any_database_change[CASE-2025-HAILI5-WANA17] _
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43ce083350>, role='Investigator', operator='快照调查员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43d42bac30>))
+case_id = 'CASE-2025-HAILI5-WANA17'
+
+    @pytest.mark.parametrize('case_id', sorted(service.REAL_CASE_IDS))
+    def test_real_snapshot_missing_or_not_imported_without_any_database_change(ctx, case_id):
+        from .test_reports_w16_direct import snapshot_db
+        before = snapshot_db(ctx)
+>       assert_error(404, 'report_snapshot_not_found',
+                     lambda: router.get_snapshot(case_id, 'RA-absent', ctx))
+
+service/tests/test_reports_w161_snapshot.py:117: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+status = 404, code = 'report_snapshot_not_found'
+callback = <function test_real_snapshot_missing_or_not_imported_without_any_database_change.<locals>.<lambda> at 0x7f43cef5c180>
+
+    def assert_error(status, code, callback):
+        with pytest.raises(HTTPException) as caught:
+            callback()
+>       assert caught.value.status_code == status
+E       AssertionError: assert 403 == 404
+E        +  where 403 = HTTPException(status_code=403, detail={'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}).status_code
+E        +    where HTTPException(status_code=403, detail={'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}) = <ExceptionInfo HTTPException(status_code=403, detail={'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}) tblen=6>.value
+
+service/tests/test_reports_w161_snapshot.py:33: AssertionError
+_ test_real_snapshot_missing_or_not_imported_without_any_database_change[CJK-2024-1230-YangZe22-VegaDream] _
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d419ecf0>, role='Investigator', operator='快照调查员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43d503df40>))
+case_id = 'CJK-2024-1230-YangZe22-VegaDream'
+
+    @pytest.mark.parametrize('case_id', sorted(service.REAL_CASE_IDS))
+    def test_real_snapshot_missing_or_not_imported_without_any_database_change(ctx, case_id):
+        from .test_reports_w16_direct import snapshot_db
+        before = snapshot_db(ctx)
+>       assert_error(404, 'report_snapshot_not_found',
+                     lambda: router.get_snapshot(case_id, 'RA-absent', ctx))
+
+service/tests/test_reports_w161_snapshot.py:117: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+status = 404, code = 'report_snapshot_not_found'
+callback = <function test_real_snapshot_missing_or_not_imported_without_any_database_change.<locals>.<lambda> at 0x7f43ce01eca0>
+
+    def assert_error(status, code, callback):
+        with pytest.raises(HTTPException) as caught:
+            callback()
+>       assert caught.value.status_code == status
+E       AssertionError: assert 403 == 404
+E        +  where 403 = HTTPException(status_code=403, detail={'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}).status_code
+E        +    where HTTPException(status_code=403, detail={'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}) = <ExceptionInfo HTTPException(status_code=403, detail={'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}) tblen=6>.value
+
+service/tests/test_reports_w161_snapshot.py:33: AssertionError
+___ test_legacy_report_snapshot_gets_reference_without_rewriting_audit_line ____
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43cdbac500>, role='Investigator', operator='快照调查员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cdf449b0>))
+
+    def test_legacy_report_snapshot_gets_reference_without_rewriting_audit_line(ctx):
+        from mcis_service.db import put_doc
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w161_snapshot.py:139: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w161_snapshot.py:27: in create
+    return router.create_report(CASE, {'templateId': 'imo-cic', 'lang': 'bilingual'}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+__________ test_direct_all_templates_languages_and_schema[zh-imo-cic] __________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43cdb09c70>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43ceff26c0>))
+template = 'imo-cic', lang = 'zh'
+
+    @pytest.mark.parametrize('template', ['imo-cic', 'maib', 'cn-msa'])
+    @pytest.mark.parametrize('lang', ['zh', 'en', 'bilingual'])
+    def test_direct_all_templates_languages_and_schema(ctx, template, lang):
+>       report = create(ctx, template, lang)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+___________ test_direct_all_templates_languages_and_schema[zh-maib] ____________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d503ef90>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43d5048ad0>))
+template = 'maib', lang = 'zh'
+
+    @pytest.mark.parametrize('template', ['imo-cic', 'maib', 'cn-msa'])
+    @pytest.mark.parametrize('lang', ['zh', 'en', 'bilingual'])
+    def test_direct_all_templates_languages_and_schema(ctx, template, lang):
+>       report = create(ctx, template, lang)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+__________ test_direct_all_templates_languages_and_schema[zh-cn-msa] ___________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43ce49a600>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cda0a180>))
+template = 'cn-msa', lang = 'zh'
+
+    @pytest.mark.parametrize('template', ['imo-cic', 'maib', 'cn-msa'])
+    @pytest.mark.parametrize('lang', ['zh', 'en', 'bilingual'])
+    def test_direct_all_templates_languages_and_schema(ctx, template, lang):
+>       report = create(ctx, template, lang)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+__________ test_direct_all_templates_languages_and_schema[en-imo-cic] __________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43ce0e1e80>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cdbcc290>))
+template = 'imo-cic', lang = 'en'
+
+    @pytest.mark.parametrize('template', ['imo-cic', 'maib', 'cn-msa'])
+    @pytest.mark.parametrize('lang', ['zh', 'en', 'bilingual'])
+    def test_direct_all_templates_languages_and_schema(ctx, template, lang):
+>       report = create(ctx, template, lang)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+___________ test_direct_all_templates_languages_and_schema[en-maib] ____________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43ce33e960>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43d45039e0>))
+template = 'maib', lang = 'en'
+
+    @pytest.mark.parametrize('template', ['imo-cic', 'maib', 'cn-msa'])
+    @pytest.mark.parametrize('lang', ['zh', 'en', 'bilingual'])
+    def test_direct_all_templates_languages_and_schema(ctx, template, lang):
+>       report = create(ctx, template, lang)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+__________ test_direct_all_templates_languages_and_schema[en-cn-msa] ___________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43cdcd1850>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43ce49aa50>))
+template = 'cn-msa', lang = 'en'
+
+    @pytest.mark.parametrize('template', ['imo-cic', 'maib', 'cn-msa'])
+    @pytest.mark.parametrize('lang', ['zh', 'en', 'bilingual'])
+    def test_direct_all_templates_languages_and_schema(ctx, template, lang):
+>       report = create(ctx, template, lang)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+______ test_direct_all_templates_languages_and_schema[bilingual-imo-cic] _______
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43ce03d9d0>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cdbadf40>))
+template = 'imo-cic', lang = 'bilingual'
+
+    @pytest.mark.parametrize('template', ['imo-cic', 'maib', 'cn-msa'])
+    @pytest.mark.parametrize('lang', ['zh', 'en', 'bilingual'])
+    def test_direct_all_templates_languages_and_schema(ctx, template, lang):
+>       report = create(ctx, template, lang)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+________ test_direct_all_templates_languages_and_schema[bilingual-maib] ________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d419fec0>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cdbeee40>))
+template = 'maib', lang = 'bilingual'
+
+    @pytest.mark.parametrize('template', ['imo-cic', 'maib', 'cn-msa'])
+    @pytest.mark.parametrize('lang', ['zh', 'en', 'bilingual'])
+    def test_direct_all_templates_languages_and_schema(ctx, template, lang):
+>       report = create(ctx, template, lang)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+_______ test_direct_all_templates_languages_and_schema[bilingual-cn-msa] _______
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43ce50f530>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43ce2217f0>))
+template = 'cn-msa', lang = 'bilingual'
+
+    @pytest.mark.parametrize('template', ['imo-cic', 'maib', 'cn-msa'])
+    @pytest.mark.parametrize('lang', ['zh', 'en', 'bilingual'])
+    def test_direct_all_templates_languages_and_schema(ctx, template, lang):
+>       report = create(ctx, template, lang)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+____ test_direct_confirm_dismiss_reject_new_fields_even_null[text-confirm] _____
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43ce5c82c0>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43ce50fc20>))
+action = 'confirm', key = 'text'
+
+    @pytest.mark.parametrize('action', ['confirm', 'dismiss'])
+    @pytest.mark.parametrize('key', ['text', 'textZh', 'textEn', 'newValue', 'newText', 'generatedText'])
+    def test_direct_confirm_dismiss_reject_new_fields_even_null(ctx, action, key):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+____ test_direct_confirm_dismiss_reject_new_fields_even_null[text-dismiss] _____
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d51f4fe0>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cda260c0>))
+action = 'dismiss', key = 'text'
+
+    @pytest.mark.parametrize('action', ['confirm', 'dismiss'])
+    @pytest.mark.parametrize('key', ['text', 'textZh', 'textEn', 'newValue', 'newText', 'generatedText'])
+    def test_direct_confirm_dismiss_reject_new_fields_even_null(ctx, action, key):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+___ test_direct_confirm_dismiss_reject_new_fields_even_null[textZh-confirm] ____
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d419e420>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43d50f2330>))
+action = 'confirm', key = 'textZh'
+
+    @pytest.mark.parametrize('action', ['confirm', 'dismiss'])
+    @pytest.mark.parametrize('key', ['text', 'textZh', 'textEn', 'newValue', 'newText', 'generatedText'])
+    def test_direct_confirm_dismiss_reject_new_fields_even_null(ctx, action, key):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+___ test_direct_confirm_dismiss_reject_new_fields_even_null[textZh-dismiss] ____
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d4501640>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43d4500e90>))
+action = 'dismiss', key = 'textZh'
+
+    @pytest.mark.parametrize('action', ['confirm', 'dismiss'])
+    @pytest.mark.parametrize('key', ['text', 'textZh', 'textEn', 'newValue', 'newText', 'generatedText'])
+    def test_direct_confirm_dismiss_reject_new_fields_even_null(ctx, action, key):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+___ test_direct_confirm_dismiss_reject_new_fields_even_null[textEn-confirm] ____
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d51f1b80>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43d51ee720>))
+action = 'confirm', key = 'textEn'
+
+    @pytest.mark.parametrize('action', ['confirm', 'dismiss'])
+    @pytest.mark.parametrize('key', ['text', 'textZh', 'textEn', 'newValue', 'newText', 'generatedText'])
+    def test_direct_confirm_dismiss_reject_new_fields_even_null(ctx, action, key):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+___ test_direct_confirm_dismiss_reject_new_fields_even_null[textEn-dismiss] ____
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43ce3a4410>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cd92bec0>))
+action = 'dismiss', key = 'textEn'
+
+    @pytest.mark.parametrize('action', ['confirm', 'dismiss'])
+    @pytest.mark.parametrize('key', ['text', 'textZh', 'textEn', 'newValue', 'newText', 'generatedText'])
+    def test_direct_confirm_dismiss_reject_new_fields_even_null(ctx, action, key):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+__ test_direct_confirm_dismiss_reject_new_fields_even_null[newValue-confirm] ___
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d4178560>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cdbef890>))
+action = 'confirm', key = 'newValue'
+
+    @pytest.mark.parametrize('action', ['confirm', 'dismiss'])
+    @pytest.mark.parametrize('key', ['text', 'textZh', 'textEn', 'newValue', 'newText', 'generatedText'])
+    def test_direct_confirm_dismiss_reject_new_fields_even_null(ctx, action, key):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+__ test_direct_confirm_dismiss_reject_new_fields_even_null[newValue-dismiss] ___
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43cda85f70>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43d50e7860>))
+action = 'dismiss', key = 'newValue'
+
+    @pytest.mark.parametrize('action', ['confirm', 'dismiss'])
+    @pytest.mark.parametrize('key', ['text', 'textZh', 'textEn', 'newValue', 'newText', 'generatedText'])
+    def test_direct_confirm_dismiss_reject_new_fields_even_null(ctx, action, key):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+___ test_direct_confirm_dismiss_reject_new_fields_even_null[newText-confirm] ___
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43cdf8d4f0>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cdf1f680>))
+action = 'confirm', key = 'newText'
+
+    @pytest.mark.parametrize('action', ['confirm', 'dismiss'])
+    @pytest.mark.parametrize('key', ['text', 'textZh', 'textEn', 'newValue', 'newText', 'generatedText'])
+    def test_direct_confirm_dismiss_reject_new_fields_even_null(ctx, action, key):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+___ test_direct_confirm_dismiss_reject_new_fields_even_null[newText-dismiss] ___
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d41b5310>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43ce6e7c20>))
+action = 'dismiss', key = 'newText'
+
+    @pytest.mark.parametrize('action', ['confirm', 'dismiss'])
+    @pytest.mark.parametrize('key', ['text', 'textZh', 'textEn', 'newValue', 'newText', 'generatedText'])
+    def test_direct_confirm_dismiss_reject_new_fields_even_null(ctx, action, key):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+_ test_direct_confirm_dismiss_reject_new_fields_even_null[generatedText-confirm] _
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43cda158e0>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cdc06660>))
+action = 'confirm', key = 'generatedText'
+
+    @pytest.mark.parametrize('action', ['confirm', 'dismiss'])
+    @pytest.mark.parametrize('key', ['text', 'textZh', 'textEn', 'newValue', 'newText', 'generatedText'])
+    def test_direct_confirm_dismiss_reject_new_fields_even_null(ctx, action, key):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+_ test_direct_confirm_dismiss_reject_new_fields_even_null[generatedText-dismiss] _
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43ce1b6450>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cda17dd0>))
+action = 'dismiss', key = 'generatedText'
+
+    @pytest.mark.parametrize('action', ['confirm', 'dismiss'])
+    @pytest.mark.parametrize('key', ['text', 'textZh', 'textEn', 'newValue', 'newText', 'generatedText'])
+    def test_direct_confirm_dismiss_reject_new_fields_even_null(ctx, action, key):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+__________________ test_direct_reason_required[None-dismiss] ___________________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d4162780>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cef97dd0>))
+action = 'dismiss', reason = None
+
+    @pytest.mark.parametrize('action', ['dismiss', 'modify'])
+    @pytest.mark.parametrize('reason', [None, '', ' \t\n\u3000'])
+    def test_direct_reason_required(ctx, action, reason):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+___________________ test_direct_reason_required[None-modify] ___________________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43ce49a300>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43ce49bb90>))
+action = 'modify', reason = None
+
+    @pytest.mark.parametrize('action', ['dismiss', 'modify'])
+    @pytest.mark.parametrize('reason', [None, '', ' \t\n\u3000'])
+    def test_direct_reason_required(ctx, action, reason):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+____________________ test_direct_reason_required[-dismiss] _____________________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43cdae33b0>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cdae1dc0>))
+action = 'dismiss', reason = ''
+
+    @pytest.mark.parametrize('action', ['dismiss', 'modify'])
+    @pytest.mark.parametrize('reason', [None, '', ' \t\n\u3000'])
+    def test_direct_reason_required(ctx, action, reason):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+_____________________ test_direct_reason_required[-modify] _____________________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d4e84b60>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43ce03fdd0>))
+action = 'modify', reason = ''
+
+    @pytest.mark.parametrize('action', ['dismiss', 'modify'])
+    @pytest.mark.parametrize('reason', [None, '', ' \t\n\u3000'])
+    def test_direct_reason_required(ctx, action, reason):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+_______________ test_direct_reason_required[ \t\n\u3000-dismiss] _______________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43ce1e04a0>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cef26270>))
+action = 'dismiss', reason = ' \t\n\u3000'
+
+    @pytest.mark.parametrize('action', ['dismiss', 'modify'])
+    @pytest.mark.parametrize('reason', [None, '', ' \t\n\u3000'])
+    def test_direct_reason_required(ctx, action, reason):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+_______________ test_direct_reason_required[ \t\n\u3000-modify] ________________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43ce257380>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43ce5c88c0>))
+action = 'modify', reason = ' \t\n\u3000'
+
+    @pytest.mark.parametrize('action', ['dismiss', 'modify'])
+    @pytest.mark.parametrize('reason', [None, '', ' \t\n\u3000'])
+    def test_direct_reason_required(ctx, action, reason):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+______ test_direct_review_originals_full_reason_operator_and_regeneration ______
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43cda0f5f0>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cda091c0>))
+
+    def test_direct_review_originals_full_reason_operator_and_regeneration(ctx):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+_______ test_direct_modify_same_and_missing_text_and_sentence_originals ________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43ce461700>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43d4eb92e0>))
+
+    def test_direct_modify_same_and_missing_text_and_sentence_originals(ctx):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+______________ test_direct_malformed_sentence_identifier_is_422[] ______________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43cda3f2f0>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cda0ee40>))
+sentence_id = ''
+
+    @pytest.mark.parametrize('sentence_id', ['', 5, {}])
+    def test_direct_malformed_sentence_identifier_is_422(ctx, sentence_id):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+_____________ test_direct_malformed_sentence_identifier_is_422[5] ______________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d516b0b0>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cda3fdd0>))
+sentence_id = 5
+
+    @pytest.mark.parametrize('sentence_id', ['', 5, {}])
+    def test_direct_malformed_sentence_identifier_is_422(ctx, sentence_id):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+________ test_direct_malformed_sentence_identifier_is_422[sentence_id2] ________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d4eec590>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43d510f920>))
+sentence_id = {}
+
+    @pytest.mark.parametrize('sentence_id', ['', 5, {}])
+    def test_direct_malformed_sentence_identifier_is_422(ctx, sentence_id):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+_________________________ test_direct_not_found_errors _________________________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43cda0aff0>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43ce5714f0>))
+
+    def test_direct_not_found_errors(ctx):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:138: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+__________ test_direct_unknown_real_case_stays_pending_without_writes __________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43ce429e80>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43d41320f0>))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f43ce4b5df0>
+
+    def test_direct_unknown_real_case_stays_pending_without_writes(ctx, monkeypatch):
+        case_id = 'unapproved-real-case'
+        monkeypatch.setattr(service, 'case_info', lambda s, cid: {'caseId': cid, 'isFictionalDemo': False})
+        before = snapshot_db(ctx)
+>       assert router.get_templates(case_id, ctx)['realDataStatus'] == 'pending-confirmation'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/mcis_service/reports/router.py:49: in get_templates
+    require_content(s, caseId, ctx.role)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+________________ test_direct_colreg_draft_has_sources_and_audit ________________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43cdf8e060>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43ce5e3b00>))
+
+    def test_direct_colreg_draft_has_sources_and_audit(ctx):
+>       draft = router.colreg_draft(CASE, {}, ctx)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:173: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/mcis_service/reports/router.py:84: in colreg_draft
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+__________ test_direct_colreg_draft_regeneration_keeps_chapter_scope ___________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d42512b0>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43d443e180>))
+
+    def test_direct_colreg_draft_regeneration_keeps_chapter_scope(ctx):
+>       draft = router.colreg_draft(CASE, {}, ctx)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:182: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/mcis_service/reports/router.py:84: in colreg_draft
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+____________ test_direct_report_export_headers_hash_and_audit[pdf] _____________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43cd9c0da0>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43ce420ce0>))
+format = 'pdf'
+
+    @pytest.mark.parametrize('format', ['pdf', 'docx'])
+    def test_direct_report_export_headers_hash_and_audit(ctx, format):
+>       report = create(ctx, lang='zh')
+                 ^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:190: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+____________ test_direct_report_export_headers_hash_and_audit[docx] ____________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43ce517da0>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cefc2780>))
+format = 'docx'
+
+    @pytest.mark.parametrize('format', ['pdf', 'docx'])
+    def test_direct_report_export_headers_hash_and_audit(ctx, format):
+>       report = create(ctx, lang='zh')
+                 ^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:190: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+___________ test_direct_gisis_missing_validation_and_download_audit ____________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43ce17c680>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cd9c1e80>))
+
+    def test_direct_gisis_missing_validation_and_download_audit(ctx):
+>       doc = router.get_gisis(CASE, ctx)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:204: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/mcis_service/reports/router.py:169: in get_gisis
+    return gisis_doc(s, check_access(s, ctx, case_id))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+____ test_direct_validated_gisis_export_temporary_values_do_not_change_case ____
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43cdbad820>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43cd95d0a0>))
+
+    def test_direct_validated_gisis_export_temporary_values_do_not_change_case(ctx):
+>       doc = router.get_gisis(CASE, ctx)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:225: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/mcis_service/reports/router.py:169: in get_gisis
+    return gisis_doc(s, check_access(s, ctx, case_id))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+_______ test_direct_review_audit_failure_rolls_back_report_and_snapshots _______
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d4286390>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43d42846b0>))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f43ce50fc50>
+
+    def test_direct_review_audit_failure_rolls_back_report_and_snapshots(ctx, monkeypatch):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:247: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+_ test_direct_external_roles_cannot_read_restricted_report_content[ExternalExpert] _
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43ce063500>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43ce220e90>))
+role = 'ExternalExpert'
+
+    @pytest.mark.parametrize('role', ['ExternalExpert', 'InterestedState', 'AgentService', 'Public'])
+    def test_direct_external_roles_cannot_read_restricted_report_content(ctx, role):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:262: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+_ test_direct_external_roles_cannot_read_restricted_report_content[InterestedState] _
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43d4ebb260>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43ce063e00>))
+role = 'InterestedState'
+
+    @pytest.mark.parametrize('role', ['ExternalExpert', 'InterestedState', 'AgentService', 'Public'])
+    def test_direct_external_roles_cannot_read_restricted_report_content(ctx, role):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:262: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+_ test_direct_external_roles_cannot_read_restricted_report_content[AgentService] _
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43cda09070>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43ce44e8a0>))
+role = 'AgentService'
+
+    @pytest.mark.parametrize('role', ['ExternalExpert', 'InterestedState', 'AgentService', 'Public'])
+    def test_direct_external_roles_cannot_read_restricted_report_content(ctx, role):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:262: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+___ test_direct_external_roles_cannot_read_restricted_report_content[Public] ___
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43ce1e3cb0>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43ce44f470>))
+role = 'Public'
+
+    @pytest.mark.parametrize('role', ['ExternalExpert', 'InterestedState', 'AgentService', 'Public'])
+    def test_direct_external_roles_cannot_read_restricted_report_content(ctx, role):
+>       report = create(ctx)
+                 ^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:262: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+___________ test_direct_generate_audit_failure_rolls_back_new_report ___________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43ce54d970>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43ce03df40>))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f43cdfb14f0>
+
+    def test_direct_generate_audit_failure_rolls_back_new_report(ctx, monkeypatch):
+        with ctx.db.session() as s:
+            before_reports = len(list_docs(s, ReportRow, CASE))
+            before_snapshots = len(list_docs(s, ReportAuditRow, CASE))
+        def fail_audit(*_args, **_kwargs):
+            raise RuntimeError('模拟生成审计失败')
+        monkeypatch.setattr(audit_service, 'append', fail_audit)
+        with pytest.raises(RuntimeError, match='模拟生成审计失败'):
+>           create(ctx)
+
+service/tests/test_reports_w16_direct.py:294: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/tests/test_reports_w16_direct.py:33: in create
+    return router.create_report(CASE, {'templateId': template, 'lang': lang}, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:76: in create_report
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+__________ test_direct_colreg_draft_data_sources_match_chapter_scope ___________
+
+ctx = namespace(db=<mcis_service.db.Database object at 0x7f43cf10f110>, role='Investigator', operator='报告直调员', settings=Sett...t_s=60.0, host='127.0.0.1', port=8765), request=namespace(app=<fastapi.applications.FastAPI object at 0x7f43ce462870>))
+
+    def test_direct_colreg_draft_data_sources_match_chapter_scope(ctx):
+        """W6 页面显示 dataSources；规则分析章节只含核查项句子，不应宣称取自 W14/W15/询问比对。"""
+>       section = router.colreg_draft(CASE, {}, ctx)['section']
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+service/tests/test_reports_w16_direct.py:319: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+service/mcis_service/reports/router.py:84: in colreg_draft
+    case = check_access(s, ctx, case_id, write=True, available=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+service/mcis_service/reports/router.py:30: in check_access
+    require_content(s, case_id, ctx.role, write=write)
+service/mcis_service/reports/access.py:47: in require_content
+    if any(levels.get(c) not in ('ReadOnly', 'ReadWrite') for c in CATEGORIES): deny()
+                                                                                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def deny():
+>       raise problem(403, 'FORBIDDEN', '完整报告内容不可访问')
+E       fastapi.exceptions.HTTPException: 403: {'code': 'FORBIDDEN', 'message': '完整报告内容不可访问'}
+
+service/mcis_service/reports/access.py:27: HTTPException
+=========================== short test summary info ============================
+FAILED service/tests/test_working_record_archive.py::test_report_versions_full_review_gisis_and_hfacs_coexist
+FAILED service/tests/test_reports_w161_snapshot.py::test_snapshot_ref_round_trip_retains_full_reason_values_and_chain
+FAILED service/tests/test_reports_w161_snapshot.py::test_snapshot_missing_is_404_and_case_scoped
+FAILED service/tests/test_reports_w161_snapshot.py::test_snapshot_restricted_roles_are_403[ExternalExpert]
+FAILED service/tests/test_reports_w161_snapshot.py::test_snapshot_restricted_roles_are_403[InterestedState]
+FAILED service/tests/test_reports_w161_snapshot.py::test_snapshot_restricted_roles_are_403[AgentService]
+FAILED service/tests/test_reports_w161_snapshot.py::test_snapshot_restricted_roles_are_403[Public]
+FAILED service/tests/test_reports_w161_snapshot.py::test_snapshot_investigator_roles_allowed[LeadInvestigator]
+FAILED service/tests/test_reports_w161_snapshot.py::test_snapshot_investigator_roles_allowed[Investigator]
+FAILED service/tests/test_reports_w161_snapshot.py::test_real_snapshot_missing_or_not_imported_without_any_database_change[CASE-2025-HAILI5-WANA17]
+FAILED service/tests/test_reports_w161_snapshot.py::test_real_snapshot_missing_or_not_imported_without_any_database_change[CJK-2024-1230-YangZe22-VegaDream]
+FAILED service/tests/test_reports_w161_snapshot.py::test_legacy_report_snapshot_gets_reference_without_rewriting_audit_line
+FAILED service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[zh-imo-cic]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[zh-maib]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[zh-cn-msa]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[en-imo-cic]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[en-maib]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[en-cn-msa]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[bilingual-imo-cic]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[bilingual-maib]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_all_templates_languages_and_schema[bilingual-cn-msa]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[text-confirm]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[text-dismiss]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[textZh-confirm]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[textZh-dismiss]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[textEn-confirm]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[textEn-dismiss]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[newValue-confirm]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[newValue-dismiss]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[newText-confirm]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[newText-dismiss]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[generatedText-confirm]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_confirm_dismiss_reject_new_fields_even_null[generatedText-dismiss]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_reason_required[None-dismiss]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_reason_required[None-modify]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_reason_required[-dismiss]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_reason_required[-modify]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_reason_required[ \t\n\u3000-dismiss]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_reason_required[ \t\n\u3000-modify]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_review_originals_full_reason_operator_and_regeneration
+FAILED service/tests/test_reports_w16_direct.py::test_direct_modify_same_and_missing_text_and_sentence_originals
+FAILED service/tests/test_reports_w16_direct.py::test_direct_malformed_sentence_identifier_is_422[]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_malformed_sentence_identifier_is_422[5]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_malformed_sentence_identifier_is_422[sentence_id2]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_not_found_errors
+FAILED service/tests/test_reports_w16_direct.py::test_direct_unknown_real_case_stays_pending_without_writes
+FAILED service/tests/test_reports_w16_direct.py::test_direct_colreg_draft_has_sources_and_audit
+FAILED service/tests/test_reports_w16_direct.py::test_direct_colreg_draft_regeneration_keeps_chapter_scope
+FAILED service/tests/test_reports_w16_direct.py::test_direct_report_export_headers_hash_and_audit[pdf]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_report_export_headers_hash_and_audit[docx]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_gisis_missing_validation_and_download_audit
+FAILED service/tests/test_reports_w16_direct.py::test_direct_validated_gisis_export_temporary_values_do_not_change_case
+FAILED service/tests/test_reports_w16_direct.py::test_direct_review_audit_failure_rolls_back_report_and_snapshots
+FAILED service/tests/test_reports_w16_direct.py::test_direct_external_roles_cannot_read_restricted_report_content[ExternalExpert]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_external_roles_cannot_read_restricted_report_content[InterestedState]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_external_roles_cannot_read_restricted_report_content[AgentService]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_external_roles_cannot_read_restricted_report_content[Public]
+FAILED service/tests/test_reports_w16_direct.py::test_direct_generate_audit_failure_rolls_back_new_report
+FAILED service/tests/test_reports_w16_direct.py::test_direct_colreg_draft_data_sources_match_chapter_scope
+59 failed, 50 passed in 43.52s

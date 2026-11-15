@@ -187,7 +187,7 @@ def _clone(sentence: dict[str, Any], identifier: str) -> dict[str, Any]:
     return out
 
 
-def build_sections(s: Session, case: dict[str, Any], template: dict[str, Any]) -> list[dict[str, Any]]:
+def build_sections(s: Session, case: dict[str, Any], template: dict[str, Any], *, report_id: str | None = None, captured_utc: str | None = None) -> list[dict[str, Any]]:
     """从当前已存档来源创建全 Draft 章节，绝不调用 COLREG evaluate / runs.ensure。
 
     案件与船舶字段属于元数据，不伪装为有证据支持的结论；其 citations 可为空，
@@ -479,4 +479,13 @@ def build_sections(s: Session, case: dict[str, Any], template: dict[str, Any]) -
                    'missing': any(x['missing'] for x in sentences), 'sentences': sentences}
         contracts.validate('report#/$defs/section', section)
         sections.append(section)
+    if report_id is None or captured_utc is None:
+        return sections  # Source previews have no persisted report identity.
+    from .history import capture
+    histories = {rec['id']: capture(rec, case_id, report_id, captured_utc) for rec in recommendations}
+    for section in sections:
+        for sentence in section['sentences']:
+            for citation in sentence['citations']:
+                if citation['kind'] == 'recommendation':
+                    citation['historicalSource'] = deepcopy(histories[citation['id']])
     return sections

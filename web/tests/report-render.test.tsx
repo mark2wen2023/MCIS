@@ -182,3 +182,18 @@ async function clientContractTests() {
   console.log(`ok ${assertions} assertions (W16 三模板×三语言、引用、复核、导出、GISIS、真实锁定与请求合同)`)
 }
 void clientContractTests().catch((error: Error) => { console.error(error); process.exitCode = 1 })
+
+// Synthetic SSR only: distinguish generation snapshot from current navigation.
+{
+  const copy = structuredClone(report)
+  const citation = { kind: 'recommendation' as const, id: 'REC-HISTORY', href: '#/recs?case=synthetic', registration: 'registered' as const, unregistered: false }
+  copy.sections[0]!.sentences[0]!.citations = [citation]
+  assert(html({ report: copy }).includes('历史来源快照不可用'), 'legacy history explicitly unavailable')
+  copy.sections[0]!.sentences[0]!.citations = [{ ...citation, historicalSource: { sha256: 'a'.repeat(64), payload: { version: 1, caseId, reportId: copy.reportId, sourceId: citation.id, capturedUtc: '2026-01-01T00:00:00Z', fields: { causeNodeIds: ['<script>synthetic</script>'] } } } }]
+  const rendered = html({ report: copy })
+  assert(rendered.includes('生成时授权字段快照') && rendered.includes('当前台账（可能已变化）'), 'separate historical projection and current link')
+  assert(rendered.includes('a'.repeat(64)) && rendered.includes('2026-01-01T00:00:00Z'), 'generation identity and checksum visible')
+  assert(!rendered.includes('<script>synthetic</script>') && rendered.includes('&lt;script&gt;'), 'source fields escaped')
+}
+
+console.log("historical-source SSR assertions completed")
