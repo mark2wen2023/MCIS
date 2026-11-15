@@ -409,3 +409,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTWORKERLIFECYCLE | 待测 | 离线声明与四席共享次数账本；150开发合成通过（含新增11）；不启动worker/不证明所有权或硬取消，真实执行HOLD | logs/EXPERTWORKERLIFECYCLE-hashes.txt |
 
 | EXPERTLOCALWORKER | 待测 | 固定本地Python进程观测/回收与账本；159开发测试含9新增，非Pi/真实模型；所有权宿主前置与未知状态保留 | logs/EXPERTLOCALWORKER-hashes.txt |
+
+| EXPERTREQUESTBUDGET | 待测 | 请求级持久预留/票据上下文回执绑定；172开发测试含13新增，无网络合成回执；未接Pi/provider且HOLD | logs/EXPERTREQUESTBUDGET-hashes.txt |

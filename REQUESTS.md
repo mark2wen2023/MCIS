@@ -677,3 +677,8 @@ On70993cc add real fixed local Python child supervision with exact historical
 ownership dependency, bounded output/deadline and commit-before-spawn. No changes
 to previous frozen modules, Pi or real provider entrypoints. Local fixture budget
 is not model cost authority. See expert-owned-local-worker-v1 contract; live HOLD.
+
+## Request-level durable model budget prerequisite
+On0ae2338 introduce separate per-request/ticket/context SQLite schema, retaining
+2 per role-round/16 total limits. No old protocol or live transport changes.
+Contract expert-request-budget-v1.md; actual provider wiring still HOLD.
