@@ -429,3 +429,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | CONFLICTSOURCERECEIPT | 设计阻断 | 权限等价回执签发/旧客户端与未知来源流程尚未齐备；未改保存行为，测试矩阵仅计划 | research/conflict_source_intent/RECEIPT_DESIGN.md |
 
 | REGISTRYRECEIPTCONTRACT | 待测/未接生产 | 12开发合成通过含9新增；仅登记版本临时回执比较，非原件/用户已读，权限等价仍阻断 | logs/REGISTRYRECEIPTCONTRACT-hashes.txt |
+
+| SOURCERECEIPTINTEGRATIONGATE | 阻断/待复核 | 权限不等价已合成复现；5开发测试含3新增验证现有回滚/旧客户端拒绝，未接生产，原缺口保留 | logs/SOURCERECEIPTINTEGRATIONGATE-hashes.txt |

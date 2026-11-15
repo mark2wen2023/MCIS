@@ -758,3 +758,8 @@ Onaad6f7e add executable research contract using existing full source gate plus
 timeline permission; stricter, not proven equivalent to editable access. No product
 imports/saving/permission changes. Unknown and stale conservatively reject in research
 only. See research/conflict_source_intent/REGISTRY_CONTRACT.md.
+
+## Source receipt production integration gate blocked
+On781ca9e ordinary policy test proves editable200 vs receipt403 for Investigator.
+Added registered-source/current/revision/audit rollback regression; production wiring
+stopped, no policy changed. See INTEGRATION_GATE_RESULT.md in conflict_source_intent.
