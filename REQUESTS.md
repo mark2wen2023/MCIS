@@ -687,3 +687,10 @@ test-only delta from e91e4cf on latest main; explicitly authorized Lead renders
 real public-report font assertions, Investigator creation/export remain403.
 No source/renderer/font/global fixture changes. Fresh validation and independent
 review required on this current-main candidate, not inferred from the old review.
+
+## Supported synthetic archive fixtures for PR104 residual ordinary tests
+Reopen only two W8.4/W9.1 ordinary roundtrip tests to use newly POST-created
+seed=False supported cases; keep all prior assertion structures and add explicit
+Lead audit/export statuses. Other tests/production permissions unchanged. Retain
+separate complex-seed409/no-partial-package and Investigator403/zero-change checks.
+See tests_acceptance/supported-archive-workflows/REPORT.md; no archive support expansion.

@@ -404,3 +404,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Report registered cause-label snapshot | 待测 | no inferred links or archive enablement; logs/report-cause-provenance-impl-hashes-frozen.txt |
 | Report registered cause-label snapshot | 局部独审通过 | focused5pass; expanded95pass2baselinefail; clean-main2fail reproduced; independent17pass; tests_acceptance/report-cause-provenance/REPORT.md |
 | PDF font-test identity on main94d5e38 | 待测 | exact e91e4cf test delta on complete latest main; logs/pdf-font-policy-main-94-frozen.txt; independent current-candidate review pending |
+
+| SUPPORTEDARCHIVEWORKFLOWTESTS | 待测 | 两项普通往返改用独立合成案件并保留原断言；复杂案件409与默认403保留；191过1失败0跳，HFACS真实核心仍不可用；仅开发测试 | logs/SUPPORTEDARCHIVEWORKFLOWTESTS-impl-hashes-frozen.txt |
