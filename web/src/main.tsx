@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { createHashRouter, createRoutesFromElements, Navigate, Route, RouterProvider } from 'react-router-dom'
+import {ObservationNavigationGuard} from './timeline/ObservationNavigationGuard'
 import './styles.css'
 import './styles/w16.css' // W16 报告页样式（独立文件，不再追加共享 styles.css）
 import { CaseInfoPage } from './pages/CaseInfoPage'
@@ -45,21 +46,16 @@ const LIVE: Record<string, () => React.ReactElement> = {
   analysis: () => <AnalysisPage />,
 }
 
+const router=createHashRouter(createRoutesFromElements(
+  <Route element={<ObservationNavigationGuard><Layout /></ObservationNavigationGuard>}>
+    <Route index element={<Navigate to="/lobby" replace />} />
+    {ROUTES.map((r)=><Route key={r.path} path={r.path} element={LIVE[r.path]?.() ?? <Placeholder route={r} />} />)}
+    <Route path="*" element={<Navigate to="/lobby" replace />} />
+  </Route>,
+))
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ToastProvider>
-      <HashRouter>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route index element={<Navigate to="/lobby" replace />} />
-            {ROUTES.map((r) => (
-              <Route key={r.path} path={r.path} element={LIVE[r.path]?.() ?? <Placeholder route={r} />} />
-            ))}
-            <Route path="*" element={<Navigate to="/lobby" replace />} />
-          </Route>
-        </Routes>
-      </HashRouter>
-    </ToastProvider>
+    <ToastProvider><RouterProvider router={router} /></ToastProvider>
   </StrictMode>,
 )
-

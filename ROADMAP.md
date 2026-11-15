@@ -461,3 +461,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | CONFLICTPUBLICATIONRECOVERYPLAN | 待测 | 只读设计：缺持久操作回执/统一就绪隔离/跨重启协调；不新增模拟层，未运行测试，restore_ready=false | logs/CONFLICTPUBLICATIONRECOVERYPLAN-hashes.txt |
 
 | CONFLICTCOMMITOBSERVER | 待测 | 同库操作/提交标记与只读新进程核对，66开发合成过含6新增；有既有IntakeReceipt，发布/就绪协议未完，restore_ready=false | logs/CONFLICTCOMMITOBSERVER-hashes.txt |
+
+| OBSERVATIONDRAFTNAVIGATION | 待测 | 长文本失败保留与应用导航提示；162/16/15/30断言及2项HTTP为开发侧，构建过；真实浏览器未验，身份切换不拦截 | logs/OBSERVATIONDRAFTNAVIGATION-impl-hashes-frozen.txt |

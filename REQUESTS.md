@@ -903,3 +903,12 @@ All results restore_ready=false/retryAllowed=false/deleteAllowed=false; no produ
 wiring or automatic cleanup.6new tests passed5.62s; expanded66passed18.22s includes6.
 Lost-response hook follows actual commit, not actual crash/uncertain-SQLite proof.
 See research/conflict_source_intent/COMMIT_OBSERVER_RESULT.md for entry inventory.
+
+## Observation editor unsaved navigation candidate
+Reopen existing observationEditing/ObservationEditor and associated test for
+long-text failure preservation and dirty-state comparison. Shared main.tsx moves
+the unchanged route table from HashRouter to data createHashRouter to support
+useBlocker; no permissions changed. New guard requests leave confirmation and
+beforeunload, no storage/autosave/retry. Identity switch remains unguarded and
+visibly disclosed. See contracts/observation-draft-navigation.md. Real browser
+and independent acceptance pending; main.tsx excluded from package freeze.

@@ -13,15 +13,18 @@ const hash=(v:unknown)=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v)
 export class ObservationEditing {
   private listeners=new Set<()=>void>()
   private generation=0
+  private confirmedText:{a:string;b:string}
   state:{current:EditableConflict;draft:{a:Observation;b:Observation};allowed:boolean;busy:boolean;receipt:Receipt|null;error:string;message:string}
   private caseId:string
   private http:Transport
   private saved:()=>void
   private now:()=>number
   constructor(caseId:string,row:EditableConflict,http:Transport,saved:()=>void,now=()=>Date.now()){
+    this.confirmedText={a:row.a.valueText,b:row.b.valueText}
     this.caseId=caseId;this.http=http;this.saved=saved;this.now=now
     this.state={current:structuredClone(row),draft:structuredClone({a:row.a,b:row.b}),allowed:false,busy:false,receipt:null,error:'',message:''}
   }
+  hasUnsavedInput=()=>this.state.draft.a.valueText!==this.confirmedText.a||this.state.draft.b.valueText!==this.confirmedText.b
   subscribe=(fn:()=>void)=>{this.listeners.add(fn);return ()=>{this.listeners.delete(fn)}}
   snapshot=()=>this.state
   private update(p:Partial<typeof this.state>){this.state={...this.state,...p};this.listeners.forEach(f=>f())}
@@ -46,7 +49,7 @@ export class ObservationEditing {
     if(!next)throw Error('missing')
     if((['a','b'] as const).some(side=>next[side].evidenceId!==this.state.draft[side].evidenceId))throw Error('source identity changed')
     const draft={a:{...next.a,valueText:this.state.draft.a.valueText},b:{...next.b,valueText:this.state.draft.b.valueText}}
-    if(g===this.generation)this.update({current:next,draft,receipt:null,message:'已读取当前记录并采用其编辑版本；草稿未覆盖。请逐侧比对后重新取得登记回执。'})
+    if(g===this.generation){this.confirmedText={a:next.a.valueText,b:next.b.valueText};this.update({current:next,draft,receipt:null,message:'已读取当前记录并采用其编辑版本；草稿未覆盖。请逐侧比对后重新取得登记回执。'})}
   })
   issue=()=>this.action(async g=>{
     if(!this.state.allowed)throw Error('permission')
@@ -77,6 +80,6 @@ export class ObservationEditing {
     const response=await this.http.post(this.path(),{...expected,expectedVersion,sourceReceiptId:r.receiptId})
     // Server returns the persisted conflict document, without request-only fields.
     if(canonical(response)!==canonical(expected))throw Error('unconfirmed save response')
-    if(g===this.generation){this.update({receipt:null,allowed:false,message:'观察修改已保存；不代表原件核验或事实批准。草稿仍保留，继续编辑前须显式读取当前记录。'});this.saved()}
+    if(g===this.generation){this.confirmedText={a:expected.a.valueText,b:expected.b.valueText};this.update({receipt:null,allowed:false,message:'观察修改已保存；不代表原件核验或事实批准。草稿仍保留，继续编辑前须显式读取当前记录。'});this.saved()}
   })
 }

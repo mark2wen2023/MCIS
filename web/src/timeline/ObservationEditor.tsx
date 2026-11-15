@@ -1,14 +1,17 @@
 import {useEffect,useState,useSyncExternalStore} from 'react'
 import {api,onIdentityChange} from '../api'
 import type {EditableConflict} from './conflictEditing'
+import {registerObservationDraft} from './observationDraftGuard'
 import {ObservationEditing} from './observationEditing'
 export function ObservationEditor({caseId,conflict,onSaved}:{caseId:string;conflict:EditableConflict;onSaved:()=>void}){
   const [editor]=useState(()=>new ObservationEditing(caseId,conflict,api,onSaved))
   const s=useSyncExternalStore(editor.subscribe,editor.snapshot,editor.snapshot)
+  useEffect(()=>registerObservationDraft(editor.hasUnsavedInput),[editor])
   useEffect(()=>onIdentityChange(editor.identityChanged),[editor])
   return <section aria-label={`${conflict.conflictId} 观察修改`} onClick={e=>e.stopPropagation()}>
     <button type="button" disabled={s.busy} onClick={editor.check}>检查来源权限以修改观察</button>
     <p>仅修改观察文字，来源标识不变。登记回执不证明用户已读、原件真实性或事实批准。草稿仅保留在本页，离开或重载会丢失。</p>
+    <p>未确认保存的观察会触发应用导航确认；刷新／关闭提示由浏览器决定，不能保证始终弹出。身份切换不在导航护栏范围；请先处理草稿。</p>
     {s.error&&<div role="alert">{s.error}</div>}{s.message&&<div role="status">{s.message}</div>}
     {s.allowed&&<div>
       {(['a','b'] as const).map(side=><div key={side}>
