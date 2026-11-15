@@ -661,3 +661,10 @@ final optional-field discretion copy rechecked with focused SSR. No backend writ
 inference, LLM/OCR/core or browser run. Browser remains unverified under previously known
 Chromium-missing environment; no installation or denied-operation retry. This is a derived
 read-only current-revision checklist, not a persisted question ledger or historical snapshot.
+
+## Metadata gap optional labels follow-up (2026-11-15)
+Independent review of6191f06 passed96/SSR/build and requested per-row optional markings.
+Amend frozen GapSummary/test only: title mandatory, other four fields optional. Preserve
+saved-only derivation and existing update validation; no persistence or permissions change.
+Follow-up self-check: per-row required/optional SSR cases, prior saved/draft isolation
+regressions, existing96 W8.4 checks and build passed. No browser or LLM claims.

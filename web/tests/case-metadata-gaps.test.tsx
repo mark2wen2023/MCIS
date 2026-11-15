@@ -29,3 +29,11 @@ assert.ok(!all.includes('已核实') && !all.includes('<input') && !all.includes
 const escaped=renderToStaticMarkup(<GapSummary snapshot={{...base,case:{...base.case,caseId:'<script>synthetic</script>'}}}/>)
 assert.ok(!escaped.includes('<script>') && escaped.includes('&lt;script&gt;'))
 console.log('Saved metadata gap logic/SSR passed with synthetic data; no request or decision write')
+
+const allMissing=renderToStaticMarkup(<GapSummary snapshot={{...base,case:{...base.case,title:''}}}/>).replace(/<!--.*?-->/g,'')
+for(const [key,label] of fields) assert.ok(allMissing.includes(`${label}（${key==='title'?'必填':'选填，可保留空白'}）`),label)
+assert.equal((allMissing.match(/选填，可保留空白/g)||[]).length,4)
+assert.equal((allMissing.match(/（必填）/g)||[]).length,1)
+const invalidOptional=renderToStaticMarkup(<GapSummary snapshot={{...complete,case:{...complete.case,agencyName:null}}}/>).replace(/<!--.*?-->/g,'')
+assert.ok(invalidOptional.includes('调查机构（选填，可保留空白）：字段格式异常'))
+console.log('Per-row optional/required labels passed; saved-field boundary assertions retained')
