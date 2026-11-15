@@ -885,3 +885,11 @@ note/status PATCH revisions and row-based re-export into another temporary DB.
 No product layout/routes/receipt activation or policy changes.11new ordinary tests
 passed3.65s; expanded60passed12.51s. Fault checkpoints rollback all DB/BLOB rows;
 no crash/unknown-result guarantee. See temporary-continuation contract/research result.
+
+## Publication recovery prerequisite decision
+Onf864976 read actual temporary lifetime, product import rename/commit/cleanup,
+DB session and direct case readers. Cannot establish durable unknown-commit recovery
+or application-wide pending-case isolation from existing scaffold; no simulator or
+runtime patch added. Specify durable operation/commit marker, owned publication,
+readiness gating and recovery evidence table in PUBLICATION_RECOVERY_PLAN.md. No
+new tests; previous60not filesystem recovery evidence. Product protections unchanged.

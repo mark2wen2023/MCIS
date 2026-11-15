@@ -457,3 +457,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | CONFLICTARCHIVEENVELOPEV2 | 待测 | 离线实验v1/v2ZIP封装与清单/关联；49开发合成过，restore_ready=false，产品仍拒绝，非完整恢复/浏览器验收 | logs/CONFLICTARCHIVEENVELOPEV2-hashes.txt |
 
 | CONFLICTTEMPORARYCONTINUATIONV2 | 待测 | 临时SQLite恢复→说明修订→再导出→再恢复，inactive回执/原审计保留；60开发合成过，restore_ready=false，非产品办案恢复 | logs/CONFLICTTEMPORARYCONTINUATIONV2-hashes.txt |
+
+| CONFLICTPUBLICATIONRECOVERYPLAN | 待测 | 只读设计：缺持久操作回执/统一就绪隔离/跨重启协调；不新增模拟层，未运行测试，restore_ready=false | logs/CONFLICTPUBLICATIONRECOVERYPLAN-hashes.txt |
