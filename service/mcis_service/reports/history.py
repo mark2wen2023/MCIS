@@ -53,3 +53,31 @@ def label(citation):
         return '历史来源快照不可用 / Historical snapshot unavailable; 当前台账 / Current register:'
     return (f"生成时字段快照 / Generation field snapshot {history['payload']['capturedUtc']} "
             f"SHA-256={history['sha256']}; 当前台账 / Current register:")
+
+
+def has_history(value):
+    if isinstance(value, dict):
+        return ('historicalSource' in value or 'sourceHistoryVersion' in value or
+                any(has_history(v) for v in value.values()))
+    return isinstance(value, list) and any(has_history(v) for v in value)
+
+
+def verify_value(value, context):
+    """Check nested report/section/sentence review values against external ownership."""
+    if isinstance(value, list):
+        for item in value:
+            verify_value(item, context)
+    elif isinstance(value, dict):
+        if 'sections' in value and 'reportId' in value:
+            if any(value.get(k) != context.get(k) for k in
+                   ('caseId', 'reportId', 'createdUtc', 'sourceHistoryVersion')):
+                raise problem(409, 'report_source_history_invalid', '报告历史来源归属不一致')
+        if value.get('kind') == 'recommendation' and 'href' in value:
+            # A review snapshot contains only a sentence/section, so its context
+            # must come from the owning report, never from the supplied payload.
+            wrapped = {**context, 'sections': [{'sentences': [{'citations': [value]}]}]}
+            if 'historicalSource' in value and context.get('sourceHistoryVersion') != 1:
+                raise problem(409, 'report_source_history_invalid', '历史来源版本缺失')
+            verify(wrapped)
+        for item in value.values():
+            verify_value(item, context)

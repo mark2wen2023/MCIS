@@ -22,3 +22,15 @@ recommendation archive restrictions, authentication, long-lock or memory limits.
 role headers are not production identity. Old consumers ignore optional properties; strict
 external schema consumers must update. PDF/DOCX contain history metadata alongside current
 links; JSON report contains full fields. No new HTTP endpoint or automatic retry.
+
+## Audit read follow-up
+
+Report audit-list and report-snapshots reads also verify history recursively in beforeValue
+and afterValue (including review sentences/sections). Context comes from the case-scoped
+persisted owner report, not the supplied historical payload. Audit event entity and its
+snapshot_ref must identify that owner and snapshot row. Regeneration beforeValue is bound
+to the owner's parent report; afterValue is bound to the new report. Missing ownership or
+inconsistent v1 binding fails 409. Existing content/audit permissions still run first.
+Legacy data without v1 metadata and historicalSource is not reconstructed or rewritten.
+This does not add a signature over all audit fields or defeat coordinated database edits.
+Recommendation archive support remains blocked; no archive permission/format change.

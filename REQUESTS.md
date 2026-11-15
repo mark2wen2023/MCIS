@@ -669,3 +669,9 @@ Authorized isolated candidate on PR95 0c18257: extend report/citation contracts 
 read validation, exporter and report view with versioned generation-time recommendation
 field snapshots. Preserve current-register links, existing full-content policy and audit
 transaction. Legacy snapshots are unavailable, never reconstructed. No archive enablement.
+
+## Historical report audit integrity follow-up (2026-11-15)
+Independent acceptance found audit-list and report-snapshot reads bypassed v1 binding checks.
+Extend existing history/service frozen files on the isolated candidate: validate nested
+before/after values against persisted report context and audit snapshot ownership, including
+regeneration's parent before-value. Preserve permissions and legacy data without invention.

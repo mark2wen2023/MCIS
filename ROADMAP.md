@@ -401,3 +401,4 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Report registered cause-label snapshot | 局部独审通过 | focused5pass; expanded95pass2baselinefail; clean-main2fail reproduced; independent17pass; tests_acceptance/report-cause-provenance/REPORT.md |
 | PDF font-test identity on main94d5e38 | 待测 | exact e91e4cf test delta on complete latest main; logs/pdf-font-policy-main-94-frozen.txt; independent current-candidate review pending |
 | Report recommendation history v1 | 待测 | 2026-11-15：PR95 后裔独立候选；授权字段快照/摘要与当前台账分开；专项最终13过、选定127过；扩展与精确父均50过59失败，失败名单一致。冻结 logs/report-recommendation-history-impl-hashes-frozen.txt。无真实浏览器/SSO/模型/生产性能验收，不启用建议归档。 |
+| Report history audit integrity | 待独审 | 2026-11-15：ac0dfe1 后续修复审计/独立快照递归摘要及归属验证；专项24过、选定140过；既有扩展50过59失败仅名单同，原因未逐项查明。冻结 logs/report-history-audit-integrity-impl-hashes-frozen.txt；不称权限绕过或全量通过。 |

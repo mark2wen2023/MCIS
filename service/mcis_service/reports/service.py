@@ -54,8 +54,10 @@ def get_report(s, case_id: str, report_id: str) -> dict:
     doc = get_doc(s, ReportRow, case_id, report_id)
     if doc is None:
         raise problem(404, 'report_not_found', f'报告不存在：{report_id}')
-    from .history import verify
-    return verify(deepcopy(doc))
+    from .history import verify, verify_value
+    result = verify(deepcopy(doc))
+    verify_value(result, result)
+    return result
 
 
 def template_for(template_id: str, case_id: str | None = None) -> dict:
@@ -235,6 +237,7 @@ def report_audit(s, case_id: str, report_id: str) -> list[dict]:
     for snapshot in entries:
         entry = snapshot.doc
         row = s.scalars(select(AuditEventRow).where(AuditEventRow.case_id == case_id, AuditEventRow.seq == entry['auditSeq'])).first()
+        verify_operation(s, case_id, snapshot.key, entry, row)
         out.append({**{k: v for k, v in entry.items() if k != 'auditSeq'},
                     'snapshotRef': 'report-snapshot:' + snapshot.key, 'auditEvent': audit.to_doc(row)})
     return out
@@ -244,4 +247,26 @@ def get_snapshot(s, case_id: str, snapshot_id: str) -> dict:
     snapshot = get_doc(s, ReportAuditRow, case_id, snapshot_id)
     if snapshot is None:
         raise problem(404, 'report_snapshot_not_found', f'报告快照不存在：{snapshot_id}')
+    row = s.scalars(select(AuditEventRow).where(AuditEventRow.case_id == case_id, AuditEventRow.seq == snapshot['auditSeq'])).first()
+    verify_operation(s, case_id, snapshot_id, snapshot, row)
     return {'snapshotId': snapshot_id, **deepcopy(snapshot)}
+
+
+def verify_operation(s, case_id, snapshot_id, entry, event):
+    from .history import has_history, verify_value
+    owner = get_doc(s, ReportRow, case_id, entry.get('reportId')) if entry.get('reportId') else None
+    if not (has_history(entry) or (owner and 'sourceHistoryVersion' in owner)):
+        return  # Legacy has no guaranteed history; never reconstruct it.
+    def invalid():
+        raise problem(409, 'report_source_history_invalid', '报告历史快照绑定不一致')
+    if (owner is None or event is None or event.entity_id != entry['reportId'] or
+        event.entity_type != 'report' or audit.to_doc(event).get('snapshotRef') != 'report-snapshot:' + snapshot_id or
+        owner.get('caseId') != case_id or owner.get('reportId') != entry['reportId']):
+        invalid()
+    for key in ('beforeValue', 'afterValue'):
+        context = owner
+        if key == 'beforeValue' and event.action == 'report.regenerate':
+            context = get_doc(s, ReportRow, case_id, owner.get('parentReportId'))
+            if context is None:
+                invalid()
+        verify_value(entry.get(key), context)

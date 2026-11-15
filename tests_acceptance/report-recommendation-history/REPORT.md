@@ -3,8 +3,9 @@
 Base: PR95 head 0c182570107079794af048bfaf4e19a64b70dd63, parent
  a2dcc757c41afec029a450d02ad20abd304a4508. Complete main ancestor remains
 94d5e38c926fda232bb987b60fa9145e4bcf01a7 (fetched 2026-11-15).
-Independent branch feat/report-recommendation-history; local candidate, not pushed,
-merged or deployed. PR95/93/94 untouched. Independent acceptance pending.
+Independent branch feat/report-recommendation-history; original ac0dfe1 was pushed
+for independent review. The audit-integrity follow-up is local pending review, not merged
+or deployed. PR95/93/94 untouched. Independent acceptance pending.
 
 ## Implemented scope
 
@@ -58,5 +59,5 @@ Long authorization write locks are retained. No automatic retries or cleanup.
 
 Exact base 0c18257 rerun: 50 passed / 59 failed, 38.79s. All 59 failing node IDs
 match candidate exactly (asserted programmatically). Baseline log retained. These failures
-remain unresolved: HFACS core unavailable and old report fixtures blocked by permissions;
-no new passing claim for these groups.
+remain unresolved; individual causes have NOT been fully diagnosed. Matching failed node
+IDs do not establish identical root causes or full-suite success.
