@@ -54,10 +54,31 @@ def get_report(s, case_id: str, report_id: str) -> dict:
     doc = get_doc(s, ReportRow, case_id, report_id)
     if doc is None:
         raise problem(404, 'report_not_found', f'报告不存在：{report_id}')
-    from .history import verify, verify_value
-    result = verify(deepcopy(doc))
-    verify_value(result, result)
-    return result
+    from .history import verify, verify_value, has_history, source_set, invalid
+    # The generation audit is an independent stored context: removing the live
+    # version marker must not silently turn an already captured report into legacy.
+    events = list(s.scalars(select(AuditEventRow).where(
+        AuditEventRow.case_id == case_id, AuditEventRow.entity_id == report_id,
+        AuditEventRow.action.in_(('report.generate', 'report.colreg.draft', 'report.regenerate')))))
+    originals = []
+    for event in events:
+        ref = audit.to_doc(event).get('snapshotRef')
+        if isinstance(ref, str) and ref.startswith('report-snapshot:'):
+            saved = get_doc(s, ReportAuditRow, case_id, ref.split(':', 1)[1])
+            if saved is None:
+                invalid()
+            originals.append(saved.get('afterValue'))
+    if has_history(doc) or any(has_history(original) for original in originals):
+        if (len(originals) != 1 or not isinstance(originals[0], dict) or
+            originals[0].get('sourceHistoryVersion') != 1 or
+            not contracts.validator('report').is_valid(originals[0])):
+            invalid()
+        original = verify(originals[0])
+        context = {**doc, **{k: original[k] for k in ('caseId', 'reportId', 'createdUtc', 'sourceHistoryVersion')}}
+        verify_value(doc, context)
+        if source_set(doc) != source_set(original):
+            invalid()
+    return verify(deepcopy(doc))
 
 
 def template_for(template_id: str, case_id: str | None = None) -> dict:
@@ -230,13 +251,18 @@ def review_section(s, ctx, report: dict, section_id: str, body: dict) -> dict:
 
 
 def report_audit(s, case_id: str, report_id: str) -> list[dict]:
-    entries = [r for r in s.scalars(select(ReportAuditRow).where(ReportAuditRow.case_id == case_id))
-               if r.doc['reportId'] == report_id]
-    entries.sort(key=lambda r: r.doc['auditSeq'])
+    all_entries = list(s.scalars(select(ReportAuditRow).where(ReportAuditRow.case_id == case_id)))
+    refs = {audit.to_doc(e).get('snapshotRef') for e in s.scalars(select(AuditEventRow).where(
+        AuditEventRow.case_id == case_id, AuditEventRow.entity_type == 'report', AuditEventRow.entity_id == report_id))}
+    keys = {ref.split(':', 1)[1] for ref in refs if isinstance(ref, str) and ref.startswith('report-snapshot:')}
+    if keys - {r.key for r in all_entries}:
+        raise problem(409, 'report_source_history_invalid', '报告历史快照缺失')
+    entries = [r for r in all_entries if r.doc.get('reportId') == report_id or r.key in keys]
+    entries.sort(key=lambda r: r.doc.get('auditSeq') if type(r.doc.get('auditSeq')) is int else -1)
     out = []
     for snapshot in entries:
         entry = snapshot.doc
-        row = s.scalars(select(AuditEventRow).where(AuditEventRow.case_id == case_id, AuditEventRow.seq == entry['auditSeq'])).first()
+        row = s.scalars(select(AuditEventRow).where(AuditEventRow.case_id == case_id, AuditEventRow.seq == entry.get('auditSeq'))).first()
         verify_operation(s, case_id, snapshot.key, entry, row)
         out.append({**{k: v for k, v in entry.items() if k != 'auditSeq'},
                     'snapshotRef': 'report-snapshot:' + snapshot.key, 'auditEvent': audit.to_doc(row)})
@@ -247,19 +273,33 @@ def get_snapshot(s, case_id: str, snapshot_id: str) -> dict:
     snapshot = get_doc(s, ReportAuditRow, case_id, snapshot_id)
     if snapshot is None:
         raise problem(404, 'report_snapshot_not_found', f'报告快照不存在：{snapshot_id}')
-    row = s.scalars(select(AuditEventRow).where(AuditEventRow.case_id == case_id, AuditEventRow.seq == snapshot['auditSeq'])).first()
+    row = s.scalars(select(AuditEventRow).where(AuditEventRow.case_id == case_id, AuditEventRow.seq == snapshot.get('auditSeq'))).first()
     verify_operation(s, case_id, snapshot_id, snapshot, row)
     return {'snapshotId': snapshot_id, **deepcopy(snapshot)}
 
 
 def verify_operation(s, case_id, snapshot_id, entry, event):
     from .history import has_history, verify_value
-    owner = get_doc(s, ReportRow, case_id, entry.get('reportId')) if entry.get('reportId') else None
+    # Recover immutable event ownership independently of mutable snapshot auditSeq/reportId.
+    anchors = [e for e in s.scalars(select(AuditEventRow).where(
+        AuditEventRow.case_id == case_id, AuditEventRow.line.contains(snapshot_id)))
+        if audit.to_doc(e).get('snapshotRef') == 'report-snapshot:' + snapshot_id]
+    if anchors:
+        if len(anchors) != 1 or event is None or event.seq != anchors[0].seq:
+            raise problem(409, 'report_source_history_invalid', '报告历史审计绑定不一致')
+        owner_id = anchors[0].entity_id
+    else:
+        owner_id = entry.get('reportId')
+    owner = get_doc(s, ReportRow, case_id, owner_id) if owner_id else None
+    if owner is not None:
+        owner = get_report(s, case_id, owner_id)
     if not (has_history(entry) or (owner and 'sourceHistoryVersion' in owner)):
         return  # Legacy has no guaranteed history; never reconstruct it.
     def invalid():
         raise problem(409, 'report_source_history_invalid', '报告历史快照绑定不一致')
-    if (owner is None or event is None or event.entity_id != entry['reportId'] or
+    if not contracts.validator('report#/$defs/snapshot').is_valid({'snapshotId': snapshot_id, **entry}):
+        invalid()
+    if (owner is None or event is None or event.entity_id != entry.get('reportId') or
         event.entity_type != 'report' or audit.to_doc(event).get('snapshotRef') != 'report-snapshot:' + snapshot_id or
         owner.get('caseId') != case_id or owner.get('reportId') != entry['reportId']):
         invalid()
@@ -269,4 +309,19 @@ def verify_operation(s, case_id, snapshot_id, entry, event):
             context = get_doc(s, ReportRow, case_id, owner.get('parentReportId'))
             if context is None:
                 invalid()
-        verify_value(entry.get(key), context)
+            context = get_report(s, case_id, owner['parentReportId'])
+        action = event.action
+        if action in ('report.generate', 'report.colreg.draft', 'report.regenerate'):
+            if key == 'beforeValue' and action != 'report.regenerate':
+                if entry.get(key) is not None:
+                    invalid()
+            else:
+                verify_value(entry.get(key), context, 'report')
+        elif action in ('report.review.confirm', 'report.review.dismiss', 'report.review.modify'):
+            shape = 'sentence' if entry.get('sentenceId') else 'section'
+            verify_value(entry.get(key), context, shape, review_value=True)
+            identifier = 'sentenceId' if shape == 'sentence' else 'sectionId'
+            if entry[key][identifier] != entry.get(identifier):
+                invalid()
+        elif has_history(entry.get(key)):
+            invalid()  # Export/GISIS metadata has no historical-source slots.

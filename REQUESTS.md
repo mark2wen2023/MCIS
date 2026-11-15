@@ -675,3 +675,9 @@ Independent acceptance found audit-list and report-snapshot reads bypassed v1 bi
 Extend existing history/service frozen files on the isolated candidate: validate nested
 before/after values against persisted report context and audit snapshot ownership, including
 regeneration's parent before-value. Preserve permissions and legacy data without invention.
+
+## Fail-closed v1 history structure (2026-11-15)
+Independent review reproduced href deletion bypass in efbf517 audit reads. Replace
+shape inference with action-selected contract validation and typed traversal, including
+review before/after values. Reject malformed/misplaced v1 bindings and missing structures;
+legacy compatibility must be determined by external owner context, not the supplied value.

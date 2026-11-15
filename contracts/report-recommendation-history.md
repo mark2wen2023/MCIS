@@ -34,3 +34,19 @@ inconsistent v1 binding fails 409. Existing content/audit permissions still run 
 Legacy data without v1 metadata and historicalSource is not reconstructed or rewritten.
 This does not add a signature over all audit fields or defeat coordinated database edits.
 Recommendation archive support remains blocked; no archive permission/format change.
+
+## Strict structural validation follow-up
+
+Protected v1 reads validate report/section/sentence/citation schemas before walking known
+slots; missing href/kind/id or malformed structures cannot disable checks. Review values
+use their explicit action/section/sentence shape and restore only the intentionally omitted
+reviews array for schema checking. Unexpected historicalSource placement fails closed.
+Required source inventory and structural identities are compared with stored owner/review
+context so removing citations or containers cannot silently discard historical bindings.
+
+Generation audit context also prevents removing the live version marker and all bindings
+from turning that report into legacy. Snapshot ownership is recovered via the audit event's
+snapshot_ref independently of mutable snapshot reportId/auditSeq; referenced missing rows
+block audit listing. True legacy records without v1 history remain unchanged. Coordinated
+rewrites of all mutable historical contexts are not defeated by these unsigned checks;
+this is not an authenticated append-only object store or production identity solution.

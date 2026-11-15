@@ -44,7 +44,10 @@ def test_generation_snapshot_integrity(client, mode):
         assert response.status_code == 409, response.text
         assert response.json()['code'] == 'report_source_history_invalid'
         assert 'FORGED' not in response.text
-    assert client.get(C + '/reports/' + a['reportId'], headers=H('LeadInvestigator')).status_code == 200
+    # A corrupt generation anchor also blocks live reads rather than trusting a
+    # disconnected current copy. Owner-only tampering leaves original afterValue intact.
+    expected = 200 if mode == 'owner-transplant' else 409
+    assert client.get(C + '/reports/' + a['reportId'], headers=H('LeadInvestigator')).status_code == expected
 
 
 @pytest.mark.parametrize('field', ['beforeValue', 'afterValue'])
@@ -110,3 +113,129 @@ def test_legacy_snapshots_remain_unchanged_without_history(client):
         response = client.get(path, headers=H('LeadInvestigator'))
         assert response.status_code == 200, response.text
         assert 'historicalSource' not in response.text
+
+
+@pytest.mark.parametrize('mutation', [
+    'href', 'kind', 'id', 'history', 'history-type', 'payload-type', 'fields-type',
+    'citations-missing', 'citations-type', 'citations-empty', 'sentences-missing',
+    'sections-empty', 'sections-missing', 'root-type', 'downgrade', 'misplaced',
+])
+def test_v1_structure_cannot_skip_validation(client, mutation):
+    rid = rec(client, ['A'])
+    a = report(client)
+    key = snapshots(client, a)[0]['snapshotRef'].split(':')[1]
+    def mutate(value):
+        doc = value['afterValue']
+        sentence = cause_sentence(doc, rid)
+        citation = sentence['citations'][0]
+        citation['historicalSource']['payload']['fields']['causeNodeIds'] = ['FORGED-STRUCTURE']
+        if mutation in ('href', 'kind', 'id'): citation.pop(mutation)
+        elif mutation == 'history': citation.pop('historicalSource')
+        elif mutation == 'history-type': citation['historicalSource'] = []
+        elif mutation == 'payload-type': citation['historicalSource']['payload'] = []
+        elif mutation == 'fields-type': citation['historicalSource']['payload']['fields'] = []
+        elif mutation == 'citations-missing': sentence.pop('citations')
+        elif mutation == 'citations-type': sentence['citations'] = {}
+        elif mutation == 'citations-empty': sentence['citations'] = []
+        elif mutation == 'sentences-missing':
+            next(x for x in doc['sections'] if sentence in x['sentences']).pop('sentences')
+        elif mutation == 'sections-empty': doc['sections'] = []
+        elif mutation == 'sections-missing': doc.pop('sections')
+        elif mutation == 'root-type': value['afterValue'] = []
+        elif mutation == 'downgrade':
+            doc.pop('sourceHistoryVersion')
+            for section in doc['sections']:
+                for line in section['sentences']:
+                    for item in line['citations']: item.pop('historicalSource', None)
+        elif mutation == 'misplaced':
+            sentence['generatedText']['historicalSource'] = citation.pop('historicalSource')
+    replace(client, key, mutate)
+    for path in paths(a, key):
+        response = client.get(path, headers=H('LeadInvestigator'))
+        assert response.status_code == 409, (mutation, response.text)
+        assert response.json()['code'] == 'report_source_history_invalid'
+        assert 'FORGED-STRUCTURE' not in response.text
+
+
+@pytest.mark.parametrize('location', ['review-before', 'review-after', 'nested-review'])
+def test_missing_href_in_partial_and_nested_history(client, location):
+    rid = rec(client, ['A'])
+    a = report(client)
+    section = next(x for x in a['sections'] if any(y['sentenceId'] == 'recommendation-causes-' + rid for y in x['sentences']))
+    response = client.patch(C + '/reports/' + a['reportId'] + '/sections/' + section['sectionId'], headers=H('LeadInvestigator'), json={'action': 'confirm', 'sentenceId': 'recommendation-causes-' + rid})
+    assert response.status_code == 200
+    if location == 'nested-review':
+        response = client.post(C + '/reports/' + a['reportId'] + ':generate', headers=H('LeadInvestigator'), json={})
+        assert response.status_code == 201
+        target = response.json()
+        key = snapshots(client, target)[0]['snapshotRef'].split(':')[1]
+        def mutate(value):
+            line = cause_sentence(value['beforeValue'], rid)['reviews'][0]['beforeValue']
+            citation = line['citations'][0]
+            citation.pop('href')
+            citation['historicalSource']['payload']['fields']['causeNodeIds'] = ['FORGED-NESTED']
+    else:
+        target = a
+        key = snapshots(client, a)[-1]['snapshotRef'].split(':')[1]
+        def mutate(value):
+            citation = value['beforeValue' if location == 'review-before' else 'afterValue']['citations'][0]
+            citation.pop('href')
+            citation['historicalSource']['payload']['fields']['causeNodeIds'] = ['FORGED-NESTED']
+    replace(client, key, mutate)
+    for path in paths(target, key):
+        response = client.get(path, headers=H('LeadInvestigator'))
+        assert response.status_code == 409, response.text
+        assert 'FORGED-NESTED' not in response.text
+
+
+def test_legitimate_section_edit_retains_history(client):
+    rid = rec(client, ['A'])
+    a = report(client)
+    section = next(x for x in a['sections'] if any(y['sentenceId'] == 'recommendation-causes-' + rid for y in x['sentences']))
+    response = client.patch(C + '/reports/' + a['reportId'] + '/sections/' + section['sectionId'], headers=H('LeadInvestigator'), json={'action': 'modify', 'reason': 'Synthetic review', 'textZh': 'Synthetic edited section'})
+    assert response.status_code == 200, response.text
+    assert client.get(C + '/reports/' + a['reportId'], headers=H('LeadInvestigator')).status_code == 200
+    entries = snapshots(client, a)
+    for entry in entries:
+        assert client.get(C + '/report-snapshots/' + entry['snapshotRef'].split(':')[1], headers=H('LeadInvestigator')).status_code == 200
+
+
+@pytest.mark.parametrize('mode', ['erase-owner', 'change-seq', 'delete-row'])
+def test_protected_snapshot_cannot_become_legacy_or_disappear(client, mode):
+    rid = rec(client, ['A'])
+    a = report(client)
+    key = snapshots(client, a)[0]['snapshotRef'].split(':')[1]
+    if mode == 'delete-row':
+        with client.app.state.db.session() as s:
+            s.query(ReportAuditRow).filter_by(case_id=CASE, key=key).delete()
+        response = client.get(paths(a, key)[0], headers=H('LeadInvestigator'))
+        assert response.status_code == 409
+        return
+    def mutate(value):
+        value['beforeValue'] = None
+        value['afterValue'] = {'legacy': True}
+        value['reportId'] = None
+        if mode == 'change-seq': value['auditSeq'] = 1
+    replace(client, key, mutate)
+    for path in paths(a, key):
+        response = client.get(path, headers=H('LeadInvestigator'))
+        assert response.status_code == 409, response.text
+
+
+def test_live_version_and_bindings_cannot_be_erased_to_claim_legacy(client):
+    rid = rec(client, ['A'])
+    a = report(client)
+    key = snapshots(client, a)[0]['snapshotRef'].split(':')[1]
+    def strip(value):
+        if isinstance(value, dict):
+            value.pop('sourceHistoryVersion', None)
+            value.pop('historicalSource', None)
+            for child in value.values(): strip(child)
+        elif isinstance(value, list):
+            for child in value: strip(child)
+    strip(a)
+    with client.app.state.db.session() as s:
+        put_doc(s, ReportRow, CASE, a['reportId'], a)
+    for path in [C + '/reports/' + a['reportId'], *paths(a, key)]:
+        response = client.get(path, headers=H('LeadInvestigator'))
+        assert response.status_code == 409, response.text

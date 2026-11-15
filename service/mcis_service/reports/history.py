@@ -19,29 +19,12 @@ def capture(rec, case_id, report_id, captured_utc):
     return {'payload': payload, 'sha256': digest(payload)}
 
 
+def invalid():
+    raise problem(409, 'report_source_history_invalid', '报告历史来源结构、摘要或归属不一致')
+
+
 def verify(report):
-    if 'sourceHistoryVersion' not in report:
-        return report  # No invented history for legacy documents.
-    try:
-        if type(report['sourceHistoryVersion']) is not int or report['sourceHistoryVersion'] != 1:
-            raise ValueError()
-        for section in report['sections']:
-            for sentence in section['sentences']:
-                for citation in sentence['citations']:
-                    if citation['kind'] != 'recommendation':
-                        continue
-                    history = citation['historicalSource']
-                    payload = history['payload']
-                    if (set(history) != {'payload', 'sha256'} or
-                        set(payload) != {'version', 'caseId', 'reportId', 'capturedUtc', 'sourceId', 'fields'} or
-                        type(payload['version']) is not int or payload['version'] != 1 or
-                        payload['caseId'] != report['caseId'] or payload['reportId'] != report['reportId'] or
-                        payload['capturedUtc'] != report['createdUtc'] or payload['sourceId'] != citation['id'] or
-                        not isinstance(payload['fields'], dict) or set(payload['fields']) - set(FIELDS) or
-                        digest(payload) != history['sha256']):
-                        raise ValueError()
-    except (KeyError, TypeError, ValueError, OverflowError):
-        raise problem(409, 'report_source_history_invalid', '报告历史来源不一致；禁止以当前台账补造历史')
+    verify_value(report, report)
     return report
 
 
@@ -62,22 +45,110 @@ def has_history(value):
     return isinstance(value, list) and any(has_history(v) for v in value)
 
 
-def verify_value(value, context):
-    """Check nested report/section/sentence review values against external ownership."""
-    if isinstance(value, list):
+def source_set(value):
+    """Inventory for removal detection, independent of mutable navigation fields."""
+    found = set()
+    if isinstance(value, dict):
+        if 'historicalSource' in value:
+            item = value['historicalSource']
+            found.add((value.get('id'), item['sha256']))
+        for item in value.values():
+            found.update(source_set(item))
+    elif isinstance(value, list):
         for item in value:
-            verify_value(item, context)
-    elif isinstance(value, dict):
-        if 'sections' in value and 'reportId' in value:
+            found.update(source_set(item))
+    return found
+
+
+def matching_nodes(value, identifier, expected):
+    if isinstance(value, dict):
+        if value.get(identifier) == expected:
+            yield value
+        for item in value.values():
+            yield from matching_nodes(item, identifier, expected)
+    elif isinstance(value, list):
+        for item in value:
+            yield from matching_nodes(item, identifier, expected)
+
+
+def verify_value(value, context, shape='report', *, review_value=False):
+    """Validate a known contract shape; never infer trust from optional fields."""
+    from ..common import contracts
+    protected = context.get('sourceHistoryVersion') == 1
+    if not protected:
+        if 'sourceHistoryVersion' in context or has_history(context) or has_history(value):
+            invalid()
+        return  # Truly legacy owner/value: no fabricated source history.
+    if type(context['sourceHistoryVersion']) is not int:
+        invalid()
+    try:
+        checked = value
+        if review_value and isinstance(value, dict):
+            # Stored before/after review projections intentionally omit reviews.
+            if 'reviews' in value:
+                invalid()
+            checked = {**value, 'reviews': []}
+        if not contracts.validator('report#/$defs/' + shape).is_valid(checked):
+            invalid()
+        if shape == 'report':
             if any(value.get(k) != context.get(k) for k in
                    ('caseId', 'reportId', 'createdUtc', 'sourceHistoryVersion')):
-                raise problem(409, 'report_source_history_invalid', '报告历史来源归属不一致')
-        if value.get('kind') == 'recommendation' and 'href' in value:
-            # A review snapshot contains only a sentence/section, so its context
-            # must come from the owning report, never from the supplied payload.
-            wrapped = {**context, 'sections': [{'sentences': [{'citations': [value]}]}]}
-            if 'historicalSource' in value and context.get('sourceHistoryVersion') != 1:
-                raise problem(409, 'report_source_history_invalid', '历史来源版本缺失')
-            verify(wrapped)
-        for item in value.values():
-            verify_value(item, context)
+                invalid()
+            for section in value['sections']:
+                verify_value(section, context, 'section')
+            allowed = {'sections', 'sourceHistoryVersion'}
+        elif shape in ('section', 'sentence'):
+            if shape == 'section':
+                for sentence in value['sentences']:
+                    verify_value(sentence, context, 'sentence')
+                allowed = {'sentences', 'reviews'}
+            else:
+                for citation in value['citations']:
+                    verify_value(citation, context, 'citation')
+                allowed = {'citations', 'reviews'}
+            for review in value.get('reviews', []):
+                for key in ('beforeValue', 'afterValue'):
+                    verify_value(review[key], context, shape, review_value=True)
+                    identifier = 'sectionId' if shape == 'section' else 'sentenceId'
+                    if review[key][identifier] != value[identifier]:
+                        invalid()
+        elif shape == 'citation':
+            allowed = {'historicalSource'}
+            if value['kind'] != 'recommendation':
+                if 'historicalSource' in value:
+                    invalid()
+            else:
+                history = value['historicalSource']
+                payload = history['payload']
+                if (type(payload['version']) is not int or payload['version'] != 1 or
+                    payload['caseId'] != context['caseId'] or payload['reportId'] != context['reportId'] or
+                    payload['capturedUtc'] != context['createdUtc'] or payload['sourceId'] != value['id'] or
+                    digest(payload) != history['sha256'] or has_history(payload['fields'])):
+                    invalid()
+        else:
+            invalid()
+        if shape == 'report':
+            if (source_set(value) != source_set(context) or
+                [x['sectionId'] for x in value['sections']] != [x['sectionId'] for x in context['sections']]):
+                invalid()
+        elif shape in ('section', 'sentence'):
+            identifier = 'sectionId' if shape == 'section' else 'sentenceId'
+            # Current report retains review before-values when section editing
+            # replaces its sentences, so old sentence coverage stays available.
+            expected = set()
+            matches = list(matching_nodes(context, identifier, value[identifier]))
+            if not matches:
+                invalid()
+            if shape == 'section' and not any(
+                [x['sentenceId'] for x in value['sentences']] == [x['sentenceId'] for x in node['sentences']]
+                for node in matches):
+                invalid()
+            for node in matches:
+                expected.update(source_set(node))
+            if source_set(value) != expected:
+                invalid()
+        # Contract-open metadata must not hide an unchecked historicalSource.
+        if any(has_history(item) for key, item in value.items() if key not in allowed):
+            invalid()
+    except (KeyError, TypeError, ValueError, OverflowError, RecursionError):
+        invalid()

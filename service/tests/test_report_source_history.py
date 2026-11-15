@@ -72,6 +72,14 @@ def test_legacy_no_history_is_not_reconstructed(client):
                 citation.pop('historicalSource', None)
     with client.app.state.db.session() as s:
         put_doc(s, ReportRow, CASE, doc['reportId'], doc)
+        # Genuine legacy fixture: generation record also predates v1. Erasing
+        # only the current report is now explicitly tested as downgrade tampering.
+        from mcis_service.reports.models import ReportAuditRow
+        row = s.query(ReportAuditRow).filter_by(case_id=CASE).filter(
+            ReportAuditRow.doc['reportId'].as_string() == doc['reportId']).one()
+        audit_doc = deepcopy(row.doc)
+        audit_doc['afterValue'] = deepcopy(doc)
+        put_doc(s, ReportAuditRow, CASE, row.key, audit_doc)
     read = client.get(C + '/reports/' + doc['reportId'], headers=H('LeadInvestigator'))
     assert read.status_code == 200 and read.json() == doc
     assert 'unavailable' in label(cause_sentence(doc, rid)['citations'][0])
