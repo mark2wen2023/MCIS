@@ -1,3 +1,4 @@
+import { PublicTextLocation } from './PublicTextLocation'
 import { useState } from 'react'
 import { Panel } from '../components/Panel'
 import { SERVICE_ADDR } from '../config'
@@ -84,12 +85,12 @@ export function ReportView(props: ReportViewProps) {
             <div className="rpt-preview-head">{lang !== 'en' && <span>中文</span>}{lang !== 'zh' && <span>English</span>}</div>
             {selected.sentences.map((sentence) => <div className={`rpt-sentence rpt-${lang} ${sentence.missing ? 'rpt-has-missing' : ''}`} key={sentence.sentenceId} data-sentence={sentence.sentenceId}>
               <div className="rpt-preview-pair">{lang !== 'en' && <p>{sentence.textZh}</p>}{lang !== 'zh' && <p lang="en">{sentence.textEn}</p>}</div>
-              <div className="rpt-sentence-meta"><div className="rpt-citations">{sentence.citations.map((citation) => <CitationLink key={`${citation.kind}:${citation.id}`} citation={citation} />)}{!sentence.citations.length && <span className="rpt-missing">缺引用</span>}</div><Status status={sentence.status} /></div>
+              <div className="rpt-sentence-meta"><div className="rpt-citations">{sentence.citations.map((citation) => <CitationLink key={`${citation.kind}:${citation.id}`} citation={citation} caseId={!blocked && report?.caseId === caseId ? caseId : undefined} />)}{!sentence.citations.length && <span className="rpt-missing">缺引用</span>}</div><Status status={sentence.status} /></div>
               <details className="rpt-sentence-review"><summary>句子复核 · {sentence.sentenceId}{sentence.sourceStatus ? ` · 来源 ${sentence.sourceStatus}` : ''}</summary><div className="rpt-toolbar">{(Object.keys(ACTION_LABEL) as ReviewAction[]).map((action) => <button className="btn btn-sm" key={action} disabled={busy || pending || blocked} onClick={() => onReview(action, { sectionId: selected.sectionId, sentenceId: sentence.sentenceId, title: `句子 ${sentence.sentenceId}`, textZh: sentence.textZh, textEn: sentence.textEn })}>{ACTION_LABEL[action]}</button>)}</div></details>
             </div>)}
             {selected.source === 'Investigator' && <details className="rpt-original"><summary>调查员修改 · 原生成文本</summary><p>{selected.generatedText.textZh}</p><p lang="en">{selected.generatedText.textEn}</p></details>}
             <div className="rpt-review-actions"><b>章节复核</b>{(Object.keys(ACTION_LABEL) as ReviewAction[]).map((action) => <button className={`btn btn-sm ${action === 'confirm' ? 'btn-primary' : action === 'dismiss' ? 'btn-danger' : ''}`} key={action} disabled={busy || pending || blocked} onClick={() => onReview(action, targetOf(selected))}>{ACTION_LABEL[action]}</button>)}{selected.reviewedBy && <span className="p6-note">{selected.reviewedBy} · {selected.reviewedAt}</span>}</div>
-            <details className="rpt-source-details"><summary>章节来源与引用表（{distinctCitations.length}）</summary><p className="p6-note">数据源：{selected.dataSources.join(' / ')}</p><table className="p6-table"><thead><tr><th>引用</th><th>类型</th><th>状态</th><th>来源定位</th></tr></thead><tbody>{distinctCitations.map((c) => <tr key={`${c.kind}:${c.id}:${c.sourceRef || ''}`}><td><CitationLink citation={c} /></td><td>{c.kind}</td><td>{c.registration === 'unregistered' ? '未登记' : c.registration === 'missing' ? '缺数据' : c.needsReview ? '证据需复核' : '已登记'}</td><td style={{ overflowWrap: 'anywhere' }}>{c.sourceRef || '未提供'}</td></tr>)}</tbody></table></details>
+            <details className="rpt-source-details"><summary>章节来源与引用表（{distinctCitations.length}）</summary><p className="p6-note">数据源：{selected.dataSources.join(' / ')}</p><table className="p6-table"><thead><tr><th>引用</th><th>类型</th><th>状态</th><th>来源定位</th></tr></thead><tbody>{distinctCitations.map((c) => <tr key={`${c.kind}:${c.id}:${c.sourceRef || ''}`}><td><CitationLink citation={c} caseId={!blocked && report?.caseId === caseId ? caseId : undefined} /></td><td>{c.kind}</td><td>{c.registration === 'unregistered' ? '未登记' : c.registration === 'missing' ? '缺数据' : c.needsReview ? '证据需复核' : '已登记'}</td><td style={{ overflowWrap: 'anywhere' }}>{c.sourceRef || '未提供'}</td></tr>)}</tbody></table></details>
           </> : <div className="rpt-empty">{pending ? '真实案例报告功能待确认' : '选择模板和语言，生成可逐节复核的报告草稿。W14 采用已核验的虚构案例分析种子；W15 暂以缺数据保留。'}</div>}
           <div className="rpt-export" aria-label="报告导出">
             <button className="btn btn-sm" disabled={busy || pending || blocked || !report} onClick={() => props.onExport('pdf', 'zh')}>PDF 中文</button>
@@ -109,9 +110,9 @@ export function ReportView(props: ReportViewProps) {
   )
 }
 
-function CitationLink({ citation }: { citation: Citation }) {
+function CitationLink({ citation, caseId }: { citation: Citation; caseId?: string }) {
   const missing = citation.unregistered || citation.registration !== 'registered'
-  return <a className={`rpt-citation ${missing ? 'rpt-citation-alert' : ''}`} href={citation.href} title={citation.registration === 'unregistered' ? '该引用未在本案登记，请核对来源' : citation.registration === 'missing' ? '来源数据未提供' : `查看 ${citation.kind} ${citation.id}`} data-unregistered={citation.unregistered ? citation.id : undefined}>[{citation.id}] {citation.registration === 'unregistered' ? <span>未登记</span> : citation.registration === 'missing' ? <span>缺数据</span> : citation.needsReview ? <span>需复核</span> : null}</a>
+  return <><a className={`rpt-citation ${missing ? 'rpt-citation-alert' : ''}`} href={citation.href} title={citation.registration === 'unregistered' ? '该引用未在本案登记，请核对来源' : citation.registration === 'missing' ? '来源数据未提供' : `查看 ${citation.kind} ${citation.id}`} data-unregistered={citation.unregistered ? citation.id : undefined}>[{citation.id}] {citation.registration === 'unregistered' ? <span>未登记</span> : citation.registration === 'missing' ? <span>缺数据</span> : citation.needsReview ? <span>需复核</span> : null}</a>{caseId && <PublicTextLocation citation={citation} caseId={caseId} />}</>
 }
 
 /** confirm/dismiss 只提交动作与理由，永远不夹带新文本。 */

@@ -647,3 +647,6 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## 报告公开文本固定版本行定位（2026-11-15）
+重新核对远端 main94d5e38。现有公开摘录sourceRef已有SHA/行号/页码，但CitationLink仅打开EV-201。新增独立只读定位组件及固定文本行页索引，修改冻结ReportView接入；保留原条目链接、权限和现有合同，不改报告sources.py（PR93/95同文件在途）或受限历史来源代码。链接仅指向已核验c6113bee固定Git提交的YANGZE22公开文本，不是PDF跳页或当前证据版本认证；跨案/非匹配SHA/非法范围无精确链接。构造拒绝测试与真实公开文本索引测试区分。
