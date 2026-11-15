@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { api, ApiError, casePath, getRole, getOperator, onIdentityChange } from '../api'
 import { Panel } from '../components/Panel'
-import { blankSource, KINDS, KIND_LABEL, mayPreview, previewPayload } from './model'
+import { appendBlankSource, blankSource, KINDS, KIND_LABEL, mayPreview, previewPayload } from './model'
 import type { AlignPreview, PreviewKind, PreviewSource } from './types'
 import '../styles/w4.css'
 const identity = () => `${getRole()}\n${getOperator()}`
@@ -61,7 +61,7 @@ export function AlignPreviewPanel({caseId}:{caseId:string}) {
           <button type="button" className="btn btn-sm" disabled={s.csvMapping.columns.length>=16} onClick={()=>change(i,x=>({...x,csvMapping:{...x.csvMapping,columns:[...x.csvMapping.columns,{column:'',kind:'CourseOverGround'}]}}))}>添加值列</button>{' '}
           <button type="button" className="btn btn-sm" disabled={sources.length===1} onClick={()=>{setSources(old=>old.filter((_,j)=>j!==i));setResult(null)}}>移除数据源</button>
         </fieldset>)}
-        <button type="button" className="btn" disabled={busy||sources.length>=4} onClick={()=>{setSources(old=>[...old,blankSource(old.length+1)]);setResult(null)}}>添加CSV源</button>
+        <button type="button" className="btn" disabled={busy||sources.length>=4} onClick={()=>{setSources(appendBlankSource);setResult(null)}}>添加CSV源</button>
         <label className="w4-ack"><input type="checkbox" disabled={busy} checked={ack} onChange={e=>setAck(e.target.checked)}/>我确认时间列按UTC解释，航向为度、航速为节；这只是临时预览。</label>
         <button className="btn btn-primary" disabled={busy||!ack}>{busy?'正在计算…':'计算临时预览'}</button>
       </form>}

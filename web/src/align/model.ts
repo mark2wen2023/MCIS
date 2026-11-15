@@ -2,6 +2,14 @@ import type { PreviewRequest, PreviewSource } from './types'
 export const KINDS = ['Heading', 'CourseOverGround', 'SpeedOverGround'] as const
 export const KIND_LABEL = { Heading: '船首向（度）', CourseOverGround: '对地航向（度）', SpeedOverGround: '对地航速（节）' }
 export function blankSource(index: number): PreviewSource { return { sourceId: `SOURCE-${index}`, text: '', csvMapping: { timeColumn: '', columns: [{column:'',kind:'CourseOverGround'}] } } }
+/** Temporary form labels only: never infer source identity or rewrite existing declarations. */
+export function appendBlankSource(sources: PreviewSource[]): PreviewSource[] {
+  if (sources.length >= 4) return sources
+  const used = new Set(sources.map(source => source.sourceId))
+  let index = 1
+  while (used.has(`SOURCE-${index}`)) index++
+  return [...sources, blankSource(index)]
+}
 export function previewPayload(sources: PreviewSource[]): PreviewRequest {
   if (!sources.length || sources.length > 4) throw new Error('需要1至4个CSV数据源')
   const ids = new Set<string>(); let total = 0
