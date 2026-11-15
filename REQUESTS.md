@@ -677,3 +677,12 @@ assertions while matching the actual disclaimer and versioned1.2/1.3/1.4 contrac
 Align the existing report/interview/export version notices to bounded1.4, explicitly
 rejecting timeline plus track-import history; no backend or validator changes.
 See research/trajectory/ARCHIVE_SCOPE_COPY_FIX.md. Browser not executed.
+
+## Next archive consultation readiness (design only)
+
+Inventory recommendations/consultations/agent drafts; prioritize closed consultation
+rounds but do not implement an archive profile without immutable server-side sent-
+document binding. Existing free version/optional SHA cannot prove report association.
+Synthetic ordinary tests also characterize consultation-only legacy export200 then
+restricted restore422; this branch does not fix that selection gap. Preserve mixed
+state refusal and permissions. See research/trajectory/NEXT_ARCHIVE_CONSULTATION_DESIGN.md.

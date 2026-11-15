@@ -407,3 +407,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Timeline-only archive profile fix | 待测 | b23c7b6 descendant; nonempty timeline selects existing bounded1.4 path; synthetic two-restoration workflow and refusal/permission/empty-case regressions;91 selected backend passed; browser/full suite not run; logs/timeline-only-profile-fix-hashes.txt |
 
 | Archive scope wording/test alignment | 待测 | cf80623 descendant; obsolete literal assertions corrected without removing guards, four notices aligned to bounded1.4; W18.6/29guard/68bounded/16source/148W16 and build passed; developer-only, browser and independent frozen-build handoff unverified; logs/archive-scope-copy-fix-hashes.txt |
+
+| Consultation archive readiness | 阻断/待审设计 | 4099d235 descendant;4 ordinary synthetic characterization tests passed; no runtime/archive support enabled; missing immutable circulated-report binding and consultation-only legacy export gap documented; browser/LLM/full suite not run |
