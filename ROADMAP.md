@@ -399,3 +399,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTTRACE | 测试增量独审通过 | 2026-11-14：独立无.git副本10过；临时断开taskId触发5红、伪认证flag触发1红，恢复10过；冻结2/2，运行文件无差异。见 DEFECTS/EXPERTTRACE.md。真实模型0/HOLD。 |
 
 | Expert durable reservation prerequisite | 待测/真实执行HOLD | main94d5e38;11 new synthetic ledger cases and existing meeting/receipt combined112 passed. No Pi/DeepSeek/browser execution; not authorization/hard cancel, not wired to four-role runtime. logs/expert-durable-reservation-hashes.txt |
+
+| Expert durable coordination | 待测/真实执行HOLD | c1597bc descendant; actual offline two-role controller wrapper,122 combined synthetic passed then final12 controller tests passed. Not four-expert execution, token/cost/auth/hard-cancel absent; logs/expert-durable-coordination-hashes.txt |

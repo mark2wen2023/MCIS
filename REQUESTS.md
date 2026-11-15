@@ -650,3 +650,6 @@ Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD
 
 ## Four-expert durable reservation prerequisite
 Base main94d5e38. Add separate offline SQLite reservation ledger with four existing proposed maritime roles and fixed16-attempt budget; no model transport, credentials, permission or existing protocol changes. Current raw-key and managed-bootstrap holds must remain. See contracts/expert-durable-reservation-v1.md and research/expert_budget/README.md.
+
+## Durable existing-controller observations
+Onc1597bc wrap real main two-role Coordination with SQLite committed metadata boundaries and no-resume ownership. Four-role ledger is not silently mapped or altered; no real Pi/provider/auth/credential integration. Protocol/storage failure blocks new wrapper; execution HOLD remains. See contracts/expert-controller-observation-v1.md.
