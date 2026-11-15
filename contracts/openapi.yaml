@@ -1776,6 +1776,19 @@ paths:
     parameters: [{ $ref: '#/components/parameters/caseId' }]
     get: { tags: [evidence], summary: 校验保管链 prev 哈希链, responses: { '200': { description: '{valid, count, brokenAt}' } } }
 
+  /api/v1/cases/{caseId}/conflicts/{conflictId}/revisions:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+      - { name: conflictId, in: path, required: true, schema: { type: string } }
+    get:
+      tags: [timeline]
+      summary: 完整冲突修订（既有完整内容权限；旧历史缺失明确未知）
+      description: 见 contracts/conflict-revisions-v1.md；登记版本不等于原件核验，身份自报，冲突归档仍拒绝。
+      responses:
+        '200': { description: '{caseId, conflictId, coverage, identityMode, revisions}' }
+        '403': { description: 无完整内容或来源权限 }
+        '404': { description: 案件或冲突不存在 }
+        '409': { description: 当前记录或修订关联不一致 }
   /api/v1/cases/{caseId}/timeline:
     parameters:
       - { $ref: '#/components/parameters/caseId' }

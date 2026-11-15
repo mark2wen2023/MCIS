@@ -12,7 +12,7 @@ def body(value='Synthetic A'):
             'b':{'sourceLabel':'Synthetic source B','valueText':'Synthetic B'}}
 
 
-def test_replaced_long_resolution_is_not_full_history(tmp_path):
+def test_replaced_long_resolution_now_has_full_forward_history(tmp_path):
     with client_at(tmp_path/'a',True) as c:
         checked(c,'post',ROOT+'/conflicts',body(),201)
         original='Synthetic long explanation '*30+'SYNTHETIC_TAIL_NOT_RETAINED'
@@ -23,14 +23,16 @@ def test_replaced_long_resolution_is_not_full_history(tmp_path):
         assert len(events[0]['after'])==400 and len(events[1]['before'])==400
         assert original not in json.dumps(events)
         # Plain temporary database snapshot: no private case source is read.
-        assert 'SYNTHETIC_TAIL_NOT_RETAINED' not in repr(snapshot(c))
+        revisions=checked(c,'get',ROOT+'/conflicts/C-01/revisions').json()['revisions']
+        assert revisions[1]['after']['resolution']==original
+        assert revisions[2]['before']['resolution']==original
         current=checked(c,'get',ROOT+'/conflicts').json()[0]
         assert current['resolution']=='Synthetic final explanation'
         assert checked(c,'get',ROOT+'/audit:verify').json()['valid']
         before=state(c);checked(c,'get',ROOT+'/export',status=409);assert state(c)==before
 
 
-def test_existing_id_post_does_not_preserve_prior_observation(tmp_path):
+def test_existing_id_post_now_preserves_prior_observation(tmp_path):
     with client_at(tmp_path/'a',True) as c:
         checked(c,'post',ROOT+'/conflicts',body('SYNTHETIC_OLD_OBSERVATION'),201)
         checked(c,'post',ROOT+'/conflicts',body('Synthetic replacement observation'),201)
@@ -39,7 +41,9 @@ def test_existing_id_post_does_not_preserve_prior_observation(tmp_path):
             assert len(rows)==1 and rows[0].doc['a']['valueText']=='Synthetic replacement observation'
         events=checked(c,'get',ROOT+'/audit?action=conflict.add').json()
         assert len(events)==2
-        assert 'SYNTHETIC_OLD_OBSERVATION' not in repr(snapshot(c))
+        revisions=checked(c,'get',ROOT+'/conflicts/C-01/revisions').json()['revisions']
+        assert revisions[0]['after']['a']['valueText']=='SYNTHETIC_OLD_OBSERVATION'
+        assert revisions[1]['before']['a']['valueText']=='SYNTHETIC_OLD_OBSERVATION'
         assert checked(c,'get',ROOT+'/audit:verify').json()['valid']
 
 

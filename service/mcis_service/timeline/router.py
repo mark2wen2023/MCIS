@@ -11,11 +11,13 @@ from ..common import contracts
 from ..common.context import Ctx, CtxDep, problem
 from ..common.crud import diff_summary, next_key
 from ..common.timeutil import sim_to_utc
-from ..db import get_doc, list_docs, put_doc
+from ..db import get_doc, list_docs, put_doc, WRITE_LOCK
 from ..redaction.gateway import require
 from .models import ConflictRow, TimelineEventRow
+from . import revisions
+from ..reports.access import begin, NoStoreRoute
 
-router = APIRouter(prefix="/api/v1/cases/{case_id}", tags=["timeline"])
+router = APIRouter(prefix="/api/v1/cases/{case_id}", tags=["timeline"], route_class=NoStoreRoute)
 
 
 class ConflictPatch(BaseModel):
@@ -69,7 +71,8 @@ def get_conflicts(case_id: str, ctx: Ctx = CtxDep, status: str | None = None) ->
 
 @router.post("/conflicts", status_code=201)
 def add_conflict(case_id: str, body: dict[str, Any] = Body(...), ctx: Ctx = CtxDep) -> dict[str, Any]:
-    with ctx.db.session() as s:
+    with WRITE_LOCK, ctx.db.session() as s:
+        begin(s)
         load_case(s, case_id)
         require(ctx, s, case_id, "timeline", write=True)
         c = dict(body)
@@ -77,28 +80,48 @@ def add_conflict(case_id: str, body: dict[str, Any] = Body(...), ctx: Ctx = CtxD
         c.setdefault("conflictId", next_key([x["conflictId"] for x in list_docs(s, ConflictRow, case_id)], "C-"))
         c.setdefault("status", "Open")
         contracts.validate("conflict", c)
+        before = get_doc(s, ConflictRow, case_id, c["conflictId"])
+        prepared = revisions.prepare(s, case_id, c["conflictId"], before)
         put_doc(s, ConflictRow, case_id, c["conflictId"], c)
-        audit.append(s, case_id=case_id, operator=ctx.operator, role=ctx.role, action="conflict.add", category="Timeline",
+        audit_row = audit.append(s, case_id=case_id, operator=ctx.operator, role=ctx.role, action="conflict.add", category="Timeline",
                      command=f"登记数据冲突 {c['conflictId']}", after=c["summary"], entity_type="conflict", entity_id=c["conflictId"])
+        revisions.capture(s, case_id, c["conflictId"], before, c, prepared, audit_row)
         return c
 
 
 @router.patch("/conflicts/{conflict_id}")
 def patch_conflict(case_id: str, conflict_id: str, body: ConflictPatch, ctx: Ctx = CtxDep) -> dict[str, Any]:
-    with ctx.db.session() as s:
+    with WRITE_LOCK, ctx.db.session() as s:
+        begin(s)
         require(ctx, s, case_id, "timeline", write=True)
         c = get_doc(s, ConflictRow, case_id, conflict_id)
         if c is None:
             raise problem(404, "NOT_FOUND", f"冲突不存在：{conflict_id}")
+        prepared = revisions.prepare(s, case_id, conflict_id, c)
         new = dict(c)
         for k, v in body.model_dump(exclude_none=True).items():
             new[k] = v
         contracts.validate("conflict", new)
         b, a = diff_summary(c, new, ["status", "resolution"])
         put_doc(s, ConflictRow, case_id, conflict_id, new)
-        audit.append(s, case_id=case_id, operator=ctx.operator, role=ctx.role, action="conflict.update", category="Timeline",
+        audit_row = audit.append(s, case_id=case_id, operator=ctx.operator, role=ctx.role, action="conflict.update", category="Timeline",
                      command=f"更新冲突处理 {conflict_id}", before=b, after=a, entity_type="conflict", entity_id=conflict_id)
+        revisions.capture(s, case_id, conflict_id, c, new, prepared, audit_row)
         return new
+
+
+@router.get("/conflicts/{conflict_id}/revisions")
+def conflict_revisions(case_id: str, conflict_id: str, ctx: Ctx = CtxDep):
+    with WRITE_LOCK, ctx.db.session() as s:
+        begin(s)
+        load_case(s, case_id)
+        require(ctx, s, case_id, "timeline")
+        from ..reports.access import require_content
+        require_content(s, case_id, ctx.role)
+        current = get_doc(s, ConflictRow, case_id, conflict_id)
+        if current is None:
+            raise problem(404, "NOT_FOUND", "冲突不存在")
+        return revisions.history(s, ctx, case_id, conflict_id, current)
 
 # New guarded preview only; existing persistence routes and legacy core endpoint are unchanged.
 from .align_preview import router as preview_router

@@ -415,3 +415,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Standalone unsupported-state preflight | 待测 | a7ce17b descendant; six synthetic standalone cases now refused through existing guard;13 new tests,109 selected backend total passed; no whitelist/permission widening; explicit untested inventory in research/trajectory/STANDALONE_ARCHIVE_PREFLIGHT.md; logs/standalone-archive-preflight-hashes.txt |
 
 | Conflict complete-history archive design | 阻断/待审 | 8833984 descendant;3 ordinary synthetic characterization tests passed; missing old observation/full resolution and source-version binding; no new archive support, browser/core/LLM not run; research/trajectory/CONFLICT_ARCHIVE_DESIGN.md |
+
+| Conflict forward revision capture | 待测 | 3ee41de descendant; full before/after plus registry source binding, legacy history unknown;118 selected synthetic backend tests passed; no source-byte/SSO/browser/production acceptance, conflict archive still refused; logs/conflict-revision-capture-hashes.txt |

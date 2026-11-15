@@ -711,3 +711,13 @@ Three ordinary synthetic tests confirm missing full preimage history and unbound
 source evidence; do not pretend current rows plus summarized audit are complete.
 No runtime support enabled. Forward full-revision/source capture and honest legacy
 migration contract required first. See research/trajectory/CONFLICT_ARCHIVE_DESIGN.md.
+
+## Conflict forward revision capture
+
+Implement append-only full preimage/postimage capture for existing conflict creates,
+same-ID replacements and patches, within reserved SQLite transaction and existing
+write policy. Add protected full-history read; no legacy history fabrication or new
+archive support. Registry-version binding is NOT file-byte verification. Contract:
+contracts/conflict-revisions-v1.md. Existing records receive unknown-before-capture;
+existing source/permission gates remain for full-history reads. New table is not
+archive-whitelisted. No restricted security/ECFC tests authorized by this change.

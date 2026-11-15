@@ -25,3 +25,5 @@ from .knowledge_archive.models import Archive, Epoch, Snapshot  # noqa: F401
 from .track_history.models import LocalReceipt  # noqa: F401
 
 from .timeline.origin import TimelineImportOrigin  # derived import membership
+
+from .timeline.revisions import ConflictRevision  # full forward history
