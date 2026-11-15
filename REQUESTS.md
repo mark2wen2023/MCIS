@@ -912,3 +912,12 @@ useBlocker; no permissions changed. New guard requests leave confirmation and
 beforeunload, no storage/autosave/retry. Identity switch remains unguarded and
 visibly disclosed. See contracts/observation-draft-navigation.md. Real browser
 and independent acceptance pending; main.tsx excluded from package freeze.
+
+## Isolated product-layout observation for conflict archive recovery
+On5c303df reuse d6dd764 persisted claim/commit/source BLOB instead of a new ledger.
+Read-only publication_observer derives the existing raw/evidence/source.mcase
+mapping and checks an operation-bound research marker plus exact file inventory.
+No product route/model/permission changes: every result restore_ready=false,
+retryAllowed=false/deleteAllowed=false. Matching does not prove atomic FS/DB
+publication or gate case visibility. See contracts/conflict-publication-observation.md.
+Synthetic fixtures create files, no publisher enabled; no restricted probes.
