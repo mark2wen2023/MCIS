@@ -647,3 +647,17 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## CSV preview source numbering (2026-11-15)
+Main94d5e38: remove middle source then add currently duplicates SOURCE-3 and blocks preview.
+Use first unoccupied temporary form identifier for new blank sources, preserve existing
+user identifiers/content/mappings, and enforce existing four-source limit in updater.
+Scope web/src/align only; no PR97/79/69 evidence-page/intake/timeline blocks. No original
+file access, OCR/AI, backend policy or persisted timeline change; human confirmation remains.
+Verification: the original length+1 expression yields SOURCE-1/SOURCE-3/SOURCE-3 after
+middle removal, and real previewPayload rejects it (synthetic static reproduction, not
+browser). New removal/addition, custom IDs, four-source bound, nonmutation and validation
+regressions pass; existing W4.1 32 model/static-render checks and TypeScript/Vite build pass.
+No .NET alignment, real AIS, LLM/OCR or browser interaction executed. Existing browser
+Chromium missing condition remains; no installation or restriction bypass. Function files
+do not overlap PR97/79/69; REQUESTS/ROADMAP append-only integration still needs review.
