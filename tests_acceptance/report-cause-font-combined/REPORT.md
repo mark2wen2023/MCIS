@@ -35,8 +35,10 @@ Investigator denial. Old logs describe old snapshots, not this new combination.
 
 PR94 description distinguishes developer103 selection from coordinator-reported
 independent97 permission checks; independent review did not repeat full103.
-The new combined120 is developer verification only, requires independent review,
-and is not full repository or CI acceptance. No new reviewer agent was spawned.
+At the original checkpoint the combined120 was developer verification only.
+The coordinator subsequently reports independent complete-tree validation and
+120/120 selected tests using the exact main font blob. This is not full repository,
+production or browser acceptance. No new reviewer agent was spawned in this line.
 
 No genuine browser/visual layout, real AIS/model/HFACS or production SSO test.
 Real PDFs/text extraction are narrower than visual inspection. Synthetic roles
@@ -44,4 +46,14 @@ and local fixtures are not actual investigation findings. Cause labels remain
 unverified; citation targets current register, not historical version/digest.
 Report+recommendation archive remains blocked. Existing lock/memory constraints
 unchanged. No software installation, protection bypass, merge or deployment.
-Combination remains local for review; no update to either PR head.
+Combination a2dcc757c41afec029a450d02ad20abd304a4508 was subsequently pushed
+to integration/report-cause-font-combined. PR93 and PR94 heads remain unchanged.
+This documentation-only follow-up corrects the earlier local-only status. The
+combined PR is the sole candidate for this increment; do not merge PR93/94 again.
+
+At follow-up, main remains94d5e38 and remote combination remainsa2dcc757.
+Branch-protection inspection returned403 Resource not accessible by integration;
+branch-rules query returned403 with a repository-plan limitation. These responses
+do not establish that there are no protections. Until all required conditions
+can be confirmed, the combined candidate must remain unmerged. Normal visible CI
+results will be recorded on its draft PR; no bypass/admin merge or deployment.
