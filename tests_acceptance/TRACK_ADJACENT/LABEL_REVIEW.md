@@ -1,0 +1,5 @@
+# Track numbering clarity candidate
+
+Based on main25b9df6e1e8c554b043547afc9cd298eb4a5ff6e. Incorporates PR77 selected-point original-returned predecessor behavior without altering PR77. Table header/caption, accessible button labels and plot titles identify filtered-result numbering; detail labels original returned position and filtered-result position separately. Original returned records are not certified raw AIS.
+
+Validation: isolated exact component/model dependencies; SSR assertions and mounted HappyDOM205-point filtering/pagination/select102->original203/predecessor202 passed, including escaping and unchanged input. The earlier SSR expected-heading assertion failed after intentional copy change, then was updated to the new exact heading; all predecessor assertions retained. No true browser keyboard/narrow-screen validation, full application build, API or real AIS acceptance. CUA could not reach sandbox loopback despite same-process HTTP200; no sandbox weakening or public exposure attempted. No deployment. Keep Draft for independent review.
