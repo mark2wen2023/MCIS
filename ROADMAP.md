@@ -399,3 +399,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTTRACE | 测试增量独审通过 | 2026-11-14：独立无.git副本10过；临时断开taskId触发5红、伪认证flag触发1红，恢复10过；冻结2/2，运行文件无差异。见 DEFECTS/EXPERTTRACE.md。真实模型0/HOLD。 |
 
 | BOUNDEDTIMELINEMAIN | API候选待独审 / 不可合并 | 复用7aa9b9f的1.4工作记录v1+时间线事件后端，来源/行时间戳/审计/历史包保留，其他状态仍拒绝；普通及旧格式回归81过。网页1.4未接，安全/真实身份/浏览器/HFACS/完整组合未验，冻结logs/bounded-timeline-main-hashes.txt。 |
+
+| BOUNDEDTIMELINEWEB | 待独审 / 浏览器未验 | 有限1.4前端模型及范围提示接线；70新检查、旧W8.5/ArchiveB模型、构建及6后端普通测试过；HFACS面板/归档提示2既有文案失败保留。复杂案例/航迹历史混合不支持，权限未改。冻结logs/bounded-timeline-web-hashes.txt。 |

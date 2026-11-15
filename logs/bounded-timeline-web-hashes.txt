@@ -1,0 +1,4 @@
+a337f643c84feb8b79073f4f2a0a593edb9e857cdeed0f5e8cdef417ad6c3de4  web/src/packageIntake/model.ts
+dc2c9615396e1be40cd356b48074582840f0d7404666777394ecf60d9f275a28  web/src/packageIntake/PackageIntakePanel.tsx
+fe6b9763badda89a10c346d95dffd8be71f46ab4f1c67c46ba9c0459922b270d  web/tests/bounded-timeline-intake.test.tsx
+98846d04da5238e23c016e274c314d46e40ac1f7ed6862b150e9fd8cb8ea118b  research/trajectory/BOUNDED_TIMELINE_WEB.md

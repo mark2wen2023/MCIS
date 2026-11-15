@@ -650,3 +650,6 @@ Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD
 
 ## BOUNDEDTIMELINEMAIN（2026-11-15）
 基于最新main94d5e38复用既有7aa9b9f报告+时间线1.4后端切片；涉及冻结package/working-record文件，保留其他模块状态拒绝及原权限，不复制旧提交栈或网页改动。原归档基础文件自73fc800未变。候选及验证范围research/trajectory/BOUNDED_TIMELINE_MAIN.md；不进行受限历史完整性复验/ECFC操作，API候选未准合并部署。
+
+## BOUNDEDTIMELINEWEB（2026-11-15）
+在2cb43812后裔独立分支复用既有7aa9b9f前端两个文件，冻结packageIntake/model与面板改动：只接有限1.4+working-v1，拒绝working-v2/track混合摘要、非法版本/计数/回执，并显示范围限制；后端权限和预检不变。新70检查（含2真实合成HTTP响应）及旧W8.5/ArchiveB模型、构建通过；两项文案回归在精确父版同失败。浏览器未执行，详见research/trajectory/BOUNDED_TIMELINE_WEB.md。
