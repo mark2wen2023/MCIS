@@ -1,0 +1,2 @@
+7e8f2dc1c8301d8f30a656e5becc76693d54b4e9af561c71d04014862fa1bdff  research/source_location/INTERNAL_READINESS.md
+7353dec7dea24325ef728d72e95d897d6405195876794fe219aa31d01f7ac696  service/tests/test_internal_text_location_readiness.py

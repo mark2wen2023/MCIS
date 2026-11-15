@@ -647,3 +647,6 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## 内网公开文本定位前置评估（2026-11-15）
+从最新main94d5e38独立评估，不接入PR103外链替代UI。EV-201原文存在但无intake回执；旧GET的响应摘要不等于当前版本原子核验，policy过滤与元数据路径不一致。保存普通HTTP特征测试与research/source_location/INTERNAL_READINESS.md，先报告服务端依赖，不强行启用。无生产权限变更/受限复验。
