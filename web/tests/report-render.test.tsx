@@ -76,6 +76,24 @@ assert(recsSource.includes('📄 国际格式报告 →') && recsSource.includes
 const reportPageSource = readFileSync('src/pages/ReportPage.tsx', 'utf8')
 assert(reportPageSource.includes('reportApi.create(caseId, templateId, generateLang)'), '页头生成动作沿用当前模板并接受指定语言')
 let generatedLanguage: string | undefined
+// Synthetic investigator wording: notice is visible, including legacy stale sourceStatus.
+for (const status of ['Modified', 'Confirmed', 'Dismissed'] as const) {
+  const edited = structuredClone(report)
+  const item = edited.sections[0]!.sentences[0]!
+  item.source = 'Investigator'; item.status = status; item.sourceStatus = 'PublicReportExcerpt'
+  const before = JSON.stringify(edited)
+  for (const lang of ['zh', 'en', 'bilingual'] as const) {
+    const rendered = html({report: edited, lang})
+    const visible = rendered.replace(/<details\b[^>]*>[\s\S]*?<\/details>/g, '')
+    assert(visible.includes('inherited-citation-notice'), '继承引用说明始终可见')
+    assert(visible.includes('不自动证明修改文字') === (lang !== 'en'), '中文说明遵循显示语言')
+    assert(visible.includes('References are inherited') === (lang !== 'zh'), '英文说明遵循显示语言')
+  }
+  assert(JSON.stringify(edited) === before, '呈现不改写正文/引用/历史')
+  item.citations = []
+  assert(!html({report: edited}).includes('inherited-citation-notice'), '无引用不虚称继承引用')
+}
+assert(!html().includes('inherited-citation-notice'), '未改的生成内容不标作调查员修改')
 const view = ReportView({ cases:[{caseId:YANGZE_CASE_ID,label:'YANGZE 22（公开报告）'}], caseId, templates, templateId: 'maib', lang: 'zh', report, reports: [report], gisis, audit: [], selectedSectionId: 'analysis', busy: false, onSelectSection: () => {}, onSwitchCase: () => {}, onTemplate: () => {}, onLang: () => {}, onSelectReport: () => {}, onCreate: (language) => { generatedLanguage = language }, onRegenerate: () => {}, onReview: () => {}, onExport: () => {}, onGisisExport: () => {}, onGisisValidate: () => {}, onGlossary: () => {} })
 function findHeaderButton(node: unknown): { onClick: () => void; disabled: boolean } | undefined {
   if (!node || typeof node !== 'object') return undefined

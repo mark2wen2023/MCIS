@@ -695,3 +695,12 @@ Investigator, retaining generatedText/citations/language/history; no permission 
 old-report migration. See contracts/report-sentence-review-provenance.md and
  tests_acceptance/report-sentence-source-status/REPORT.md. Five new ordinary tests,
 public excerpt + explicitly synthetic edited wording; no restricted probes.
+
+## Investigator-edited sentence inherited-reference disclosure
+Reopen reports/exporter.py, ReportView.tsx, report-render.test.tsx and the
+report-sentence-review-provenance contract following independent review of db928a2.
+Add always-visible bilingual disclosure for Investigator sentences with citations:
+references remain traceability context, not automatic support or original quotation.
+Keep body, generatedText, references, review history and permissions unchanged.
+The prior source-status contract freeze is refreshed only for this documented addition.
+No browser, external model, restricted integrity probes or original-file access.

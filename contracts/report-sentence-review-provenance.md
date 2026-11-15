@@ -18,3 +18,13 @@ No migration rewrites existing saved reports or past audit snapshots. Previously
 saved inconsistent labels remain as stored until a subsequent legitimate text
 change; ordinary reads do not silently repair history. No permission change,
 new citation type, source fetch, historical binding or archive-support expansion.
+
+## Visible inherited-reference disclosure
+For a sentence with source=Investigator and nonempty citations, the report view
+and PDF/DOCX place a language-matched, always-visible notice next to that sentence's
+citations: inherited context for traceability, not automatic support for edited
+wording and not a claim the edit remains an original quotation. Human comparison
+is required. This also applies after confirm/dismiss and to older stored reports
+whose sourceStatus is stale; it does not rewrite stored documents. Generated
+sentences or sentences without citations do not get a false inherited-reference
+label. Source/citation/history data and existing permission checks remain intact.

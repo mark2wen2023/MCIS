@@ -406,3 +406,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | PDF font-test identity on main94d5e38 | 待测 | exact e91e4cf test delta on complete latest main; logs/pdf-font-policy-main-94-frozen.txt; independent current-candidate review pending |
 
 | REPORTSENTENCESOURCESTATUS | 待测 | 单句modify来源状态与Investigator一致，保留原文/引用/历史；91开发回归过含5新增；旧存储不迁移，浏览器/独立未验，PDF仅原候选4页开发抽查 | logs/REPORTSENTENCESOURCESTATUS-impl-hashes-frozen.txt |
+
+| REPORTINHERITEDCITATION | 待测 | db928a2上呈现继承引用限制，99后端回归、182 SSR断言及构建为开发侧通过；不改原文/引用/历史/权限，真实浏览器及视觉/独立未验。冻结 logs/REPORTINHERITEDCITATION-impl-hashes-frozen.txt |
