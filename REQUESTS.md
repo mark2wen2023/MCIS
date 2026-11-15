@@ -893,3 +893,13 @@ or application-wide pending-case isolation from existing scaffold; no simulator 
 runtime patch added. Specify durable operation/commit marker, owned publication,
 readiness gating and recovery evidence table in PUBLICATION_RECOVERY_PLAN.md. No
 new tests; previous60not filesystem recovery evidence. Product protections unchanged.
+
+## Durable research operation and read-only commit observation
+Clarification: product IntakeReceipt already persists import success metadata;
+missing protocol binds staging/publication/DB-commit/readiness, not all receipts.
+On6608740 add owned retained-directory SQLite operation claim/one-attempt marker,
+commit evidence within actual restore transaction, fresh-process mode=ro observer.
+All results restore_ready=false/retryAllowed=false/deleteAllowed=false; no product
+wiring or automatic cleanup.6new tests passed5.62s; expanded66passed18.22s includes6.
+Lost-response hook follows actual commit, not actual crash/uncertain-SQLite proof.
+See research/conflict_source_intent/COMMIT_OBSERVER_RESULT.md for entry inventory.
