@@ -1,3 +1,4 @@
+import {ObservationEditor} from '../timeline/ObservationEditor'
 import {SourceReviewNotice} from '../timeline/SourceReviewNotice'
 import {selectDraft, changeDraft, acknowledgeDraft, compareDraft, type ConflictDraft, type ConflictDrafts, editableRows, conflictWriteBody, CONFLICT_REFRESH_NOTICE, type EditableConflict, type VersionedConflict} from '../timeline/conflictEditing'
 import {OriginNotice, type EventOrigins} from '../timeline/OriginNotice'
@@ -253,6 +254,7 @@ function ConflictPanel({ caseId, conflicts, epoch, onChanged, offsetMinutes }: {
               <td>
                 <div>{c.summary}</div>
                 <div className="p6-muted" style={{ fontSize: 10 }}>{c.a.sourceLabel}：{c.a.valueText} ／ {c.b.sourceLabel}：{c.b.valueText}</div>
+                <ObservationEditor key={`${caseId}:${c.conflictId}`} caseId={caseId} conflict={c} onSaved={onChanged} />
                 {editing === c.conflictId && (
                   <div className="row-actions" style={{ marginTop: 4 }} onClick={(e) => e.stopPropagation()}>
                     <input className="input" style={{ flex: 1 }} placeholder="处理说明（resolution）" value={drafts[c.conflictId]?.note ?? c.resolution} onChange={(e) => setDrafts(current => changeDraft(current,c,e.target.value))} />

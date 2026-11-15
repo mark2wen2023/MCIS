@@ -799,3 +799,17 @@ revision/audit association and consumption; no-receipt409 and timeline-only PATC
 Reopen timeline/router/revisions, models registry and write/OpenAPI contracts. No actual
 source bytes or user-read claims. Existing source-policy path reused without loosening;
 archive support unchanged. See conflict-source-receipt-v1.md.
+
+## Observation text editor with server registry receipts
+On58720e6 mount independent ObservationEditor in EvidencePage, leaving existing
+note/status/draft handlers untouched. Existing full-history GET gates source form;
+strict server receipt and submission policy remains authoritative. Fixed sourceIDs,
+valueText edit, explicit current-version adoption, receipt metadata display/submit;
+refusals and unknown outcomes retain draft, no auto retry. No browser invocation or
+restricted test retry. See conflict-observation-editor-v1.md.
+Developer validation:44 new synthetic transport/model/SSR assertions,15 existing
+draft-state assertions;2 ordinary backend HTTP tests passed0.41s. Build initially
+failed TS1294 constructor parameter properties; fixed to explicit fields, subsequent
+npm run build passed with large-chunk warning. Existing installed dependencies reused,
+not independent build acceptance; real browser and full frontend/backend HTTP E2E not
+performed. Mock transport tests are not real user interaction or real authentication.

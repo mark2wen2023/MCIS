@@ -439,3 +439,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | CONFLICTOBSERVATIONGUARD | 待测 | 产品同ID观察变更409零写；说明权限保留，旧史不绑定当前登记；10普通开发测试通过，非新回执/原件核验 | logs/CONFLICTOBSERVATIONGUARD-hashes.txt |
 
 | CONFLICTREGISTRYRECEIPTSUBMIT | 待测 | 后端持久登记回执+观察变更同事务；18普通开发测试，过期/ABA/回滚/并发；无前端来源编辑、非原件/人已读 | logs/CONFLICTREGISTRYRECEIPTSUBMIT-hashes.txt |
+
+| CONFLICTOBSERVATIONEDITOR | 待测 | 前端观察文字→登记回执显示→显式提交，拒绝保留草稿；44合成/SSR+15草稿+2HTTP开发通过，构建过，真实浏览器未验 | logs/CONFLICTOBSERVATIONEDITOR-hashes.txt |
