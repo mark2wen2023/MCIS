@@ -1,0 +1,4 @@
+# IQ-1 prototype follow-up
+Fixed independent finding: old verification IDs must not satisfy a new verification round after MoreVerification or reopen.
+17 unittest tests pass, including three new regression cases. History and prior discussion packets remain unchanged; current-round IDs reset without deleting events. Idempotent replay of MoreVerification does not reset subsequent new evidence.
+Independent reviewer subsequently reran all 17 tests and confirmed the fresh-round regression fix. Only in-memory mechanics; no production authentication, persistence, concurrency locks, strict schemas or archives. Exact AgentService string check is a fixture guard, not an identity security boundary. Multiple hypotheses remain a design requirement and are not implemented here. This prototype is saved only in Draft PR #44; no production integration, merge or deployment.
