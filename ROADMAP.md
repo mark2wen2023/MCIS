@@ -397,3 +397,4 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTREVIEWMAIN | 最小整合独审通过 | 2026-11-14：main25b9df6前缀及其他跟踪文件保留，12源文件逐字；独立无.git副本164项通过，新/原冻结各4/4。见 DEFECTS/EXPERTREVIEWMAIN.md；仅离线pending人审，真实0/HOLD。 |
 | EXPERTTRACE | 待独审 | 2026-11-14：PR87head99b44f0上新增10跨视图追溯/反认证回归，组合174项通过；冻结 logs/EXPERTTRACE-impl-hashes-frozen.txt。不改运行代码；真模型0/HOLD，非浏览器或事实验收。 |
 | EXPERTTRACE | 测试增量独审通过 | 2026-11-14：独立无.git副本10过；临时断开taskId触发5红、伪认证flag触发1红，恢复10过；冻结2/2，运行文件无差异。见 DEFECTS/EXPERTTRACE.md。真实模型0/HOLD。 |
+| Evidence register local filters | 待独审/浏览器待验 | 2026-11-15：main94d5e38独立候选；编号/标题/来源/提取人文本、哈希状态、需复核标注筛选，保留选择并提示隐藏。纯逻辑/SSR及W4.2原88断言、构建过；Playwright缺Chromium未验真实浏览器。PR79/69同文件需组合审查；冻结 logs/evidence-register-filters-impl-hashes-frozen.txt。 |

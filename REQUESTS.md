@@ -647,3 +647,19 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## Evidence register local filters (2026-11-15)
+On main94d5e38, add bounded user-facing register search/status/review filters over already
+returned evidence metadata. Preserve current selection, explicitly mark hidden selection,
+and do not fetch files or change permissions/registration. EvidencePage changes confined to
+register UI/state; no timeline/PR79, upload/PR69, or historical-integrity candidate changes.
+
+Evidence register filter candidate verification: new synthetic pure filtering/SSR tests
+passed; existing W4.2 model/API/render 88 assertions passed; TypeScript/Vite build passed
+(existing chunk warning). Browser plugin absent; installed Python Playwright 1.62.0 could
+not launch because its bundled Chromium executable is missing. No download/install or
+sandbox relaxation; browser interactions/screenshots/console/mobile remain unverified.
+PR79 b32f4fb and PR69 d5f78c4 also touch EvidencePage.tsx; this diff is register-only,
+not their timeline/upload blocks. No combined-branch validation claimed. No LLM/OCR/AIS
+or file-content interpretation; only returned metadata is filtered. No production rights
+change, no hidden selection replacement, no registration/custody writes by filter controls.
