@@ -647,3 +647,6 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## Four-expert durable reservation prerequisite
+Base main94d5e38. Add separate offline SQLite reservation ledger with four existing proposed maritime roles and fixed16-attempt budget; no model transport, credentials, permission or existing protocol changes. Current raw-key and managed-bootstrap holds must remain. See contracts/expert-durable-reservation-v1.md and research/expert_budget/README.md.
