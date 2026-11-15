@@ -29,6 +29,7 @@ class FourChair:
         self._last = self._started = clock()
         if not isinstance(self._last, (int, float)) or not math.isfinite(self._last):
             raise ChairError('clock')
+        self._deadline = self._started + 600
         # Exclusive fresh file: no resume, no second controller for this ledger.
         # A failed constructor leaves its file in place; never deletes uncertain state.
         try:
@@ -54,7 +55,7 @@ class FourChair:
             return
         if not isinstance(now, (int, float)) or not math.isfinite(now) or now < self._last:
             self._halt('stopped_clock')
-        elif now - self._started >= 600 and self._phase in ('ready', 'active'):
+        elif now >= self._deadline and self._phase in ('ready', 'active'):
             self._halt('timed_out')
         self._last = now
 

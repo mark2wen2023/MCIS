@@ -659,3 +659,9 @@ On2a04125 add a separate four-role controller using existing durable ledger;
 old two-role protocol and production unchanged. Fixed public claims, simulated
 opinions only, full previous-round context, preserved disagreement, memory-only
 opinions and no restart. Real execution HOLD. Contract expert-four-chair-simulation-v1.md.
+
+## EXPERTFOURCHAIR deadline correction
+Independent review of ff310ad reproduced cancellation-sensitive subtraction at
+start4194262.256341955, now=start+600. Reopen frozen four_chair.py and its tests
+only to compare against an absolute deadline; preserve unknown/no-refund semantics.
+New correction freeze is separate from the original reviewed freeze.

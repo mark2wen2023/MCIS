@@ -403,3 +403,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Expert durable coordination | 待测/真实执行HOLD | c1597bc descendant; actual offline two-role controller wrapper,122 combined synthetic passed then final12 controller tests passed. Not four-expert execution, token/cost/auth/hard-cancel absent; logs/expert-durable-coordination-hashes.txt |
 
 | EXPERTFOURCHAIR | 待测 | 2a04125后裔：四席模拟主持接现有持久次数账本；136项开发合成通过，非真实会议/独立验收；观点仅内存、真实执行HOLD | logs/EXPERTFOURCHAIR-impl-hashes-frozen.txt |
+
+| EXPERTFOURCHAIR deadline | 待测 | ff310ad后裔：绝对截止时刻比较；浮点前/到点/后3项，选定139项开发合成通过；真实执行HOLD | logs/EXPERTFOURCHAIR-deadline-hashes.txt |
