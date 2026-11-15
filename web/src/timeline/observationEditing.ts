@@ -1,8 +1,15 @@
 import type {Observation} from '../types'
 import type {EditableConflict,VersionedConflict} from './conflictEditing'
 import {editableRows} from './conflictEditing'
-export type Receipt={receiptId:string;caseId:string;conflictId:string;conflictVersion:string;expiresUtc:string;kind:string;bytesVerified:false;humanReadVerified:false;identityVerified:false;sources:Record<string,{sha256:string;custodyHeadSeq:number|null;bytesVerified:false}>}
+export type Receipt={receiptId:string;caseId:string;conflictId:string;conflictVersion:string;expiresUtc:string;kind:string;bytesVerified:false;humanReadVerified:false;identityVerified:false;sources:Record<string,{sha256:string;registryDocSha256:string;custodyHeadSeq:number|null;custodyHeadSha256:string|null;bytesVerified:false}>}
 type Transport={get:(path:string)=>Promise<unknown>;post:(path:string,body:unknown)=>Promise<unknown>}
+// Compare JSON values independent of object key order; do not coerce response types.
+function canonical(v:unknown):string {
+  if(Array.isArray(v))return '['+v.map(canonical).join(',')+']'
+  if(v!==null&&typeof v==='object')return '{'+Object.entries(v).sort(([a],[b])=>a<b?-1:a>b?1:0).map(([k,x])=>JSON.stringify(k)+':'+canonical(x)).join(',')+'}'
+  return JSON.stringify(v)
+}
+const hash=(v:unknown)=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v)
 export class ObservationEditing {
   private listeners=new Set<()=>void>()
   private generation=0
@@ -43,16 +50,33 @@ export class ObservationEditing {
   })
   issue=()=>this.action(async g=>{
     if(!this.state.allowed)throw Error('permission')
-    const raw=await this.http.post(this.path(`/${encodeURIComponent(this.state.current.conflictId)}/source-receipts`),{expectedVersion:this.state.current.expectedVersion,observations:this.state.draft}) as Receipt
-    if(!raw||raw.kind!=='registry-observation-v1'||raw.caseId!==this.caseId||raw.conflictId!==this.state.current.conflictId||raw.conflictVersion!==this.state.current.expectedVersion||!/^[a-f0-9-]{36}$/.test(raw.receiptId)||raw.bytesVerified!==false||raw.humanReadVerified!==false||raw.identityVerified!==false||!Number.isFinite(Date.parse(raw.expiresUtc))||Date.parse(raw.expiresUtc)<=this.now()||!raw.sources||typeof raw.sources!=='object'||Array.isArray(raw.sources)||!Object.keys(raw.sources).length)throw Error('receipt')
-    for(const source of Object.values(raw.sources))if(!source||!/^[a-f0-9]{64}$/.test(source.sha256)||source.bytesVerified!==false)throw Error('source')
+    const observations=structuredClone(this.state.draft)
+    const refs=new Set<string>()
+    for(const side of ['a','b'] as const)if(canonical(this.state.current[side])!==canonical(observations[side])){
+      for(const obs of [this.state.current[side],observations[side]]){
+        if(typeof obs.evidenceId!=='string'||!obs.evidenceId)throw Error('unknown source')
+        refs.add(obs.evidenceId)
+      }
+    }
+    if(!refs.size)throw Error('unchanged observations')
+    const raw=await this.http.post(this.path(`/${encodeURIComponent(this.state.current.conflictId)}/source-receipts`),{expectedVersion:this.state.current.expectedVersion,observations}) as Receipt
+    if(!raw||raw.kind!=='registry-observation-v1'||raw.caseId!==this.caseId||raw.conflictId!==this.state.current.conflictId||raw.conflictVersion!==this.state.current.expectedVersion||typeof raw.receiptId!=='string'||!/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/.test(raw.receiptId)||raw.bytesVerified!==false||raw.humanReadVerified!==false||raw.identityVerified!==false||typeof raw.expiresUtc!=='string'||!Number.isFinite(Date.parse(raw.expiresUtc))||Date.parse(raw.expiresUtc)<=this.now()||!raw.sources||typeof raw.sources!=='object'||Array.isArray(raw.sources)||!Object.keys(raw.sources).length)throw Error('receipt')
+    if(!hash(raw.conflictVersion)||Object.keys(raw.sources).length!==refs.size||Object.keys(raw.sources).some(id=>!refs.has(id)))throw Error('source set')
+    for(const source of Object.values(raw.sources)){
+      if(!source||typeof source!=='object'||Array.isArray(source)||!hash(source.sha256)||!hash(source.registryDocSha256)||source.bytesVerified!==false)throw Error('source')
+      if(source.custodyHeadSeq===null){if(source.custodyHeadSha256!==null)throw Error('custody')}
+      else if(!Number.isSafeInteger(source.custodyHeadSeq)||source.custodyHeadSeq<1||!hash(source.custodyHeadSha256))throw Error('custody')
+    }
     if(g===this.generation)this.update({receipt:structuredClone(raw),message:'登记回执已取得；请核对下列版本后显式提交。这不证明您已读原件。'})
   })
   submit=()=>this.action(async g=>{
     const r=this.state.receipt
     if(!this.state.allowed||!r||Date.parse(r.expiresUtc)<=this.now())throw Error('expired')
     const {expectedVersion,...current}=this.state.current
-    await this.http.post(this.path(),{...current,...this.state.draft,expectedVersion,sourceReceiptId:r.receiptId})
+    const expected={...current,...structuredClone(this.state.draft),caseId:this.caseId}
+    const response=await this.http.post(this.path(),{...expected,expectedVersion,sourceReceiptId:r.receiptId})
+    // Server returns the persisted conflict document, without request-only fields.
+    if(canonical(response)!==canonical(expected))throw Error('unconfirmed save response')
     if(g===this.generation){this.update({receipt:null,allowed:false,message:'观察修改已保存；不代表原件核验或事实批准。草稿仍保留，继续编辑前须显式读取当前记录。'});this.saved()}
   })
 }

@@ -813,3 +813,12 @@ failed TS1294 constructor parameter properties; fixed to explicit fields, subseq
 npm run build passed with large-chunk warning. Existing installed dependencies reused,
 not independent build acceptance; real browser and full frontend/backend HTTP E2E not
 performed. Mock transport tests are not real user interaction or real authentication.
+
+## Observation editor response validation correction
+Reopen frozen observationEditing.ts and its synthetic test after independent mock
+response counterexample. Match receipt source set to changed observation references;
+check registry/custody types and conflict context. Require exact persisted document
+response before showing saved. No backend or permissions change. Counterexample is
+synthetic frontend behavior, not observed real backend malfunction. Developer tests:
+127 synthetic model/SSR assertions and15 existing draft assertions; build passed
+with existing large-chunk warning. No browser/full HTTP integration/restricted tests.

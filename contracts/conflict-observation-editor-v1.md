@@ -30,3 +30,15 @@ further editing; no original verification or fact approval claim.
 This is no PDF viewer/source-file read receipt and not human-reading evidence. Source
 metadata only, no wider permissions. New-source assignment and unknown-source review
 remain unsupported by this UI. Backend legacy-client rules unchanged.
+
+Response validation correction: receipt sources must exactly match the old/new
+source ID union for changed observations (not all unchanged sides). Digests must
+be lowercase SHA256 strings. Custody head is either positive safe integer plus
+head SHA256, or null plus null. Conflict version, case and conflict ID must match
+the request context. No-change/unknown-source requests are not sent by this editor.
+The save route returns the persisted conflict document, excluding request-only
+expectedVersion/sourceReceiptId. The editor compares the complete returned JSON
+value with the submitted document independently of key order. A 2xx with unrelated,
+missing or changed content is an unconfirmed result, not a failed transaction or
+saved confirmation. Inputs remain and no automatic retry occurs. These checks do
+not independently authenticate a response or prove original bytes/user reading.

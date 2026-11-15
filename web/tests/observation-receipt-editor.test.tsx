@@ -7,21 +7,35 @@ let checks=0
 const ok=(condition:unknown)=>{assert.ok(condition);checks++}
 async function main(){
  function setup(){
-  let fail=0,saved=0,now=0;const calls:{path:string;body:any}[]=[]
+  let fail=0,saved=0,now=0;let saveResponse:unknown=undefined;const calls:{path:string;body:any}[]=[]
   let current=structuredClone(row)
-  const receipt={kind:'registry-observation-v1',receiptId:'12345678-1234-4234-9234-123456789012',caseId:'SYNTHETIC',conflictId:'C-01',conflictVersion:row.expectedVersion,expiresUtc:'2030-01-01T00:00:00Z',bytesVerified:false,humanReadVerified:false,identityVerified:false,sources:{'EV-A':{sha256:'b'.repeat(64),custodyHeadSeq:2,bytesVerified:false}}}
-  const http={get:async(path:string)=>{if(fail)throw {status:fail};return path.endsWith(':editable')?[{conflict:current,version:current.expectedVersion}]:{caseId:'SYNTHETIC',conflictId:'C-01',revisions:[]}},post:async(path:string,body:unknown)=>{calls.push({path,body:structuredClone(body)});if(fail)throw {status:fail};return path.endsWith('/source-receipts')?structuredClone(receipt):row}}
+  const receipt={kind:'registry-observation-v1',receiptId:'12345678-1234-4234-9234-123456789012',caseId:'SYNTHETIC',conflictId:'C-01',conflictVersion:row.expectedVersion,expiresUtc:'2030-01-01T00:00:00Z',bytesVerified:false,humanReadVerified:false,identityVerified:false,sources:{'EV-A':{sha256:'b'.repeat(64),registryDocSha256:'c'.repeat(64),custodyHeadSha256:'d'.repeat(64),custodyHeadSeq:2,bytesVerified:false}}}
+  const http={get:async(path:string)=>{if(fail)throw {status:fail};return path.endsWith(':editable')?[{conflict:current,version:current.expectedVersion}]:{caseId:'SYNTHETIC',conflictId:'C-01',revisions:[]}},post:async(path:string,body:unknown)=>{calls.push({path,body:structuredClone(body)});if(fail)throw {status:fail};return path.endsWith('/source-receipts')?structuredClone(receipt):(saveResponse===undefined?Object.fromEntries(Object.entries(body as object).filter(([k])=>!['expectedVersion','sourceReceiptId'].includes(k))):saveResponse)}}
   const model=new ObservationEditing('SYNTHETIC',row,http,()=>{saved++},()=>now)
-  return {model,calls,receipt,setFail:(s:number)=>{fail=s},setNow:(n:number)=>{now=n},setCurrent:(v:EditableConflict)=>{current=v},saved:()=>saved}
+  return {model,calls,receipt,setResponse:(r:unknown)=>{saveResponse=r},setFail:(s:number)=>{fail=s},setNow:(n:number)=>{now=n},setCurrent:(v:EditableConflict)=>{current=v},saved:()=>saved}
  }
  {const x=setup();await x.model.issue();ok(x.calls.length===0);await x.model.check();ok(x.model.state.allowed);x.model.edit('a','proposed');await x.model.issue();ok(x.calls[0].path.endsWith('/source-receipts'));ok(x.calls[0].body.observations.a.valueText==='proposed');ok(x.model.state.receipt?.sources['EV-A'].sha256==='b'.repeat(64));await x.model.submit();ok(x.calls[1].body.sourceReceiptId===x.receipt.receiptId);ok(x.calls[1].body.a.valueText==='proposed');ok(x.saved()===1);ok(!x.model.state.receipt)}
  for(const status of [403,409,412]){const x=setup();await x.model.check();x.model.edit('a','retain');await x.model.issue();x.setFail(status);await x.model.submit();ok(x.model.state.draft.a.valueText==='retain');ok(x.saved()===0);ok(x.calls.length===2);ok(!x.model.state.receipt);if(status===403)ok(!x.model.state.allowed)}
  {const x=setup();await x.model.check();x.model.edit('a','retain');await x.model.issue();x.setNow(Date.parse(x.receipt.expiresUtc));await x.model.submit();ok(x.calls.length===1);ok(x.model.state.draft.a.valueText==='retain');ok(!x.model.state.receipt)}
- {const x=setup();await x.model.check();await x.model.issue();x.model.edit('b','new text');ok(!x.model.state.receipt);x.setCurrent({...row,expectedVersion:'c'.repeat(64),resolution:'new server note'});await x.model.refresh();ok(x.model.state.draft.b.valueText==='new text');ok(x.model.state.current.expectedVersion==='c'.repeat(64));ok(x.calls.length===1)}
+ {const x=setup();await x.model.check();x.model.edit('a','changed');await x.model.issue();x.model.edit('b','new text');ok(!x.model.state.receipt);x.setCurrent({...row,expectedVersion:'c'.repeat(64),resolution:'new server note'});await x.model.refresh();ok(x.model.state.draft.b.valueText==='new text');ok(x.model.state.current.expectedVersion==='c'.repeat(64));ok(x.calls.length===1)}
  {const x=setup();await x.model.check();x.model.edit('a','keep');await x.model.issue();x.model.identityChanged();ok(!x.model.state.allowed&&!x.model.state.receipt);ok(x.model.state.draft.a.valueText==='keep')}
  {const x=setup();await x.model.check();x.model.edit('a','keep');x.setCurrent({...row,a:{...row.a,evidenceId:'EV-OTHER'}});await x.model.refresh();ok(x.model.state.current.a.evidenceId==='EV-A');ok(x.model.state.draft.a.valueText==='keep');ok(Boolean(x.model.state.error))}
  {const x=setup();await x.model.check();x.model.edit('a','pending unknown');await x.model.issue();x.setFail(500);await x.model.submit();ok(x.model.state.error.includes('结果未确认'));ok(x.model.state.draft.a.valueText==='pending unknown');ok(x.calls.length===2);ok(x.saved()===0)}
  {const x=setup();x.setFail(403);await x.model.check();ok(!x.model.state.allowed);ok(x.calls.length===0)}
+ // Malformed synthetic server responses: no assertion of real backend behavior.
+ for(const mutate of [
+  (r:any)=>{r.sources={'EV-UNRELATED':{...r.sources['EV-A'],custodyHeadSeq:'bad'}}},
+  (r:any)=>{r.sources['EV-EXTRA']=r.sources['EV-A']},
+  (r:any)=>{r.sources={}},
+  ...['2',-1,0,1.5,true,undefined].map(v=>(r:any)=>{r.sources['EV-A'].custodyHeadSeq=v}),
+  (r:any)=>{r.sources['EV-A'].registryDocSha256=123},
+  (r:any)=>{r.sources['EV-A'].custodyHeadSha256=null},
+  (r:any)=>{r.conflictVersion='e'.repeat(64)},
+  (r:any)=>{r.caseId='OTHER'},
+  (r:any)=>{r.conflictId='C-02'},
+ ]){const x=setup();await x.model.check();x.model.edit('a','retain');mutate(x.receipt);await x.model.issue();ok(!x.model.state.receipt);ok(x.model.state.draft.a.valueText==='retain');await x.model.submit();ok(x.calls.length===1);ok(x.saved()===0)}
+ for(const response of [null,{},[],{...row,caseId:'OTHER'},row]){const x=setup();await x.model.check();x.model.edit('a','retain');await x.model.issue();x.setResponse(response);await x.model.submit();ok(x.saved()===0);ok(!x.model.state.receipt);ok(x.model.state.error.includes('结果未确认'));ok(x.model.state.draft.a.valueText==='retain');ok(x.calls.length===2)}
+ {const x=setup();await x.model.check();x.model.edit('a','new A');x.model.edit('b','new B');Object.assign(x.receipt.sources,{'EV-B':{...x.receipt.sources['EV-A'],custodyHeadSeq:null,custodyHeadSha256:null}});await x.model.issue();ok(Boolean(x.model.state.receipt));await x.model.submit();ok(x.saved()===1)}
  Object.defineProperty(globalThis,'localStorage',{value:{getItem:()=>null,setItem:()=>{}}})
  const {renderToStaticMarkup}=await import('react-dom/server')
  const {ObservationEditor}=await import('../src/timeline/ObservationEditor')
