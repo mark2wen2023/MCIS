@@ -742,3 +742,8 @@ non-concurrency fixture helper supplies fresh versions only for those test inten
 
 ## Conflict draft preservation after stale-write refusal
 Parent6e493f1 row selection replaced local note/version and any patch success closed editor. Amend EvidencePage and conflictEditing within existing version-conflict workflow: per-record page-local drafts, no silent retoken on refresh/reselection, status success cannot clear draft, note success clears only identical submitted draft. Explicit compare action adopts displayed token without saving. No storage persistence, backend/policy/archive change.
+
+## Human judgment source-version intent assessment
+Onbe93cfa add ordinary synthetic regression showing conflict edit token does not
+bind the reviewer-visible evidence registry version. Existing capture-time source
+binding remains intact; no product/permission change. See research/conflict_source_intent/ASSESSMENT.md.
