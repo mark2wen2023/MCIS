@@ -32,9 +32,14 @@ capture time, not the historical creation date. No guessed historical associatio
 
 GET /cases/{caseId}/conflicts/{conflictId}/revisions is new, no-store. Requires existing
 timeline access AND existing full-content policy, then rechecks referenced evidence
-using the existing source gate, including historical preimages. Default Investigator
-is therefore403, LeadInvestigator can read permitted sources. Missing/inaccessible
-referenced originals fail closed; do not strip history and claim complete. Digest,
+using the existing source gate, including historical preimages. This gate checks
+same-case evidence registration existence and its visibility under the current policy.
+Default Investigator is therefore403; LeadInvestigator may read permitted revision
+metadata. Missing or policy-invisible evidence registrations fail closed; do not strip
+history and claim complete. It does not open source files, check their existence or
+readability, hash file bytes, or detect missing/modified original files. bytesVerified=false
+remains false on history reads. Stored registry digests are not compared with returned
+file bytes, and a successful history response does not certify source-file integrity. Digest,
 revision sequence, preimage/postimage, case and audit binding are checked before return.
 Existing conflict list/read behavior is unchanged; no frontend integration claimed.
 

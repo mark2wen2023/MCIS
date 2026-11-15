@@ -23,9 +23,11 @@ Contract: contracts/conflict-revisions-v1.md; OpenAPI adds revisions GET.
   bytesVerified=false. Missing references remain unresolved, no guessed SHA or zero.
   Legacy beforeSources=null; a later capture does not invent a historical version.
 - Full-history endpoint requires timeline AND existing full-content access, then
-  existing source gate for referenced old/new observations. Current row/sequence/hash/
-  audit link checked before return. Missing/inaccessible referenced originals refuse
-  rather than hide a revision. New endpoint and timeline router use existing no-store
+  existing source gate for referenced old/new observations: same-case registration
+  existence and current policy visibility only. Current row/sequence/hash/audit link
+  checked before return. Missing or invisible registrations refuse rather than hide
+  a revision. Source files are not opened; file existence, readability, byte digest
+  and missing/modified originals are not checked. bytesVerified=false remains false. New endpoint and timeline router use existing no-store
   response wrapper. Existing ordinary conflict list schema/permission is unchanged.
 - Journal is not accepted by current archive. Conflicts already select the closed-
   world preflight; refusal remains. No claim of complete conflict backup/restore.
@@ -69,6 +71,16 @@ with no added filesystem writes. Non-SQLite capture returns503, not a weaker pat
 
 No UI/front-end integration or browser validation; new history API only. No full
 suite/HFACS/core/model run, independent review or production acceptance. Old missing
-history stays unknown and may block a future complete archive contract. Source-read
-failures can block history for unresolved/deleted references; no partial success is
+history stays unknown and may block a future complete archive contract. Registration lookup/visibility
+failures can block history for unresolved/deleted evidence registrations; no partial success is
 presented. Do not deploy before independent review of these semantics.
+
+### Registry-only wording correction
+
+Follow-up on exact parent a5bbbbc: read-only code inspection of revisions.history and
+interviews.access.source confirms registration lookup/filtering only. Clarified the
+contract/OpenAPI/report; no runtime changes or original-file reads/probes. Frontend
+search found no revision-history UI integration to amend. Offline command:
+`service/.venv/bin/pytest -q service/tests/test_conflict_revision_wording.py`
+3 passed in0.26s. These are wording tests, not new runtime/security acceptance;
+prior118 tests not rerun. Browser/production/independent acceptance remain unverified.

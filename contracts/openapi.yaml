@@ -1783,7 +1783,7 @@ paths:
     get:
       tags: [timeline]
       summary: 完整冲突修订（既有完整内容权限；旧历史缺失明确未知）
-      description: 见 contracts/conflict-revisions-v1.md；登记版本不等于原件核验，身份自报，冲突归档仍拒绝。
+      description: 见 contracts/conflict-revisions-v1.md；来源检查仅限同案登记存在及当前策略可见性，不读取原件，不检测文件缺失或字节变化；bytesVerified=false，身份自报，冲突归档仍拒绝。
       responses:
         '200': { description: '{caseId, conflictId, coverage, identityMode, revisions}' }
         '403': { description: 无完整内容或来源权限 }

@@ -721,3 +721,11 @@ archive support. Registry-version binding is NOT file-byte verification. Contrac
 contracts/conflict-revisions-v1.md. Existing records receive unknown-before-capture;
 existing source/permission gates remain for full-history reads. New table is not
 archive-whitelisted. No restricted security/ECFC tests authorized by this change.
+
+## Conflict revision registry-only wording correction
+
+Independent review identified an overbroad original-file claim. source() checks only
+same-case registration presence/current policy visibility. Correct contract, OpenAPI
+and implementation report: no file open/existence/readability/byte-integrity check,
+bytesVerified remains false. No runtime or permission changes; no original-file
+probe. Add offline wording regression; no corresponding frontend integration found.

@@ -417,3 +417,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Conflict complete-history archive design | 阻断/待审 | 8833984 descendant;3 ordinary synthetic characterization tests passed; missing old observation/full resolution and source-version binding; no new archive support, browser/core/LLM not run; research/trajectory/CONFLICT_ARCHIVE_DESIGN.md |
 
 | Conflict forward revision capture | 待测 | 3ee41de descendant; full before/after plus registry source binding, legacy history unknown;118 selected synthetic backend tests passed; no source-byte/SSO/browser/production acceptance, conflict archive still refused; logs/conflict-revision-capture-hashes.txt |
+
+| Conflict registry-only wording | 待测 | a5bbbbc descendant; precise registration/visibility boundary and bytesVerified=false;3 offline wording tests passed; no original-file probe/runtime/UI change; logs/conflict-registry-wording-hashes.txt |
