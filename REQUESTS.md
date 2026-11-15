@@ -834,3 +834,11 @@ FRONTEND_HTTP_INTEGRATION.md for exact chain, command and limits.
 Final developer run (including rejected-submit state equality):2 passed in1.08s.
 Remote read confirmed main94d5e38 and candidate6102b0b unchanged. These are new
 limited HTTP integration tests, not independent/browser or full-system acceptance.
+
+## Saved observation report citation gap
+On8b69e21 add ordinary synthetic API diagnostic only. Receipt-save/revision works,
+but report source builder never loads conflict revision; citation schema has no
+versioned conflict kind/resolver. Report evidence links remain current-item links
+across synthetic registry A->B, with observation absent.1 developer test passed0.40s
+means gap reproduced, not feature completed. No product/policy changes or restricted
+probes. See research/conflict_source_intent/REPORT_CITATION_GAP.md for prerequisites.
