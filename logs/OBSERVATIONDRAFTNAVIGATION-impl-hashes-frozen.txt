@@ -5,3 +5,4 @@ b4dc230fa10e393077ad44049c4e2b91d0656221b365ffa64594cfd9217616d0  web/src/timeli
 15491abf14ee3047da899d656ba9d099d96b578c109f5a13f5ac90339ad9af22  web/src/timeline/observationEditing.ts
 598ea3e18434c5e7c2d92c74f3a1bbda7447f46e221ba801bb88115c5b30e649  web/tests/observation-receipt-editor.test.tsx
 62880b86a112b09cfdab87126629854f0bdfe16ce9ce92b5ad350f06b719c792  web/tests/observation-navigation-guard.test.ts
+c4ae98e274e061a2dc1365b2a4db1e026395a3f7f05f3246baef4b133f5a6864  web/src/main.tsx
