@@ -647,3 +647,6 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## BOUNDEDTIMELINEMAIN（2026-11-15）
+基于最新main94d5e38复用既有7aa9b9f报告+时间线1.4后端切片；涉及冻结package/working-record文件，保留其他模块状态拒绝及原权限，不复制旧提交栈或网页改动。原归档基础文件自73fc800未变。候选及验证范围research/trajectory/BOUNDED_TIMELINE_MAIN.md；不进行受限历史完整性复验/ECFC操作，API候选未准合并部署。
