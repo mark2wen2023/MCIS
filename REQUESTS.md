@@ -748,3 +748,6 @@ On be93cfa, assess complete available conflict journal preservation and proposed
 
 ## Isolated conflict archive member contract/parser
 On04b793a, define closed member v1 and offline dependency validation only. Existing mcase versions, routes, permissions and export refusal remain unchanged until complete restoration passes. Preserve unknown history, registered versions and bytesVerified=false. See contracts/conflict-archive-member-v1.md and research/trajectory/CONFLICT_ARCHIVE_PARSER.md.
+
+## Conflict envelope boundary, offline only
+On0511bf8 add bounded ZIP/manifest/member and dependency inspection seam. Experimental envelope tag is not normal intake support; restore_ready=false. No export/import wiring or permission change. Synthetic ordinary exception rollback injection tests existing transaction only. See contracts/conflict-envelope-boundary-v1.md.

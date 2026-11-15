@@ -427,3 +427,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Conflict revision archive prerequisites | 方案待审/未启用 | be93cfa descendant;3 synthetic dependency tests passed; new strict profile/schema/restorer, source availability semantics and preview pending. No successful conflict restore/browser/production acceptance; logs/conflict-revision-archive-plan-hashes.txt |
 
 | Conflict archive member parser | 待测/未接线 | 04b793a descendant;56 selected tests plus1 new PATCH constraint test passed, developer synthetic only. No restore/export enabling, browser/production/independent acceptance; logs/conflict-archive-parser-hashes.txt |
+
+| Conflict envelope boundary | 待测/未接线 | 0511bf8 descendant;127 ordinary synthetic tests passed including member dependencies, existing parser compatibility and test-injected pre-publication rollback. Experimental inspection only; conflict export409/intake422 unchanged, restore/second-roundtrip/browser unverified; logs/conflict-envelope-boundary-hashes.txt |
