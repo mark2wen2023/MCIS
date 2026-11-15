@@ -411,3 +411,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTLOCALWORKER | 待测 | 固定本地Python进程观测/回收与账本；159开发测试含9新增，非Pi/真实模型；所有权宿主前置与未知状态保留 | logs/EXPERTLOCALWORKER-hashes.txt |
 
 | EXPERTREQUESTBUDGET | 待测 | 请求级持久预留/票据上下文回执绑定；172开发测试含13新增，无网络合成回执；未接Pi/provider且HOLD | logs/EXPERTREQUESTBUDGET-hashes.txt |
+
+| EXPERTREQUESTHANDSHAKE | 待测 | 实际固定子进程逐请求接SQLite预留/回执；180开发测试含8新增，保留完成席位/未完成；非Pi/模型HOLD | logs/EXPERTREQUESTHANDSHAKE-hashes.txt |

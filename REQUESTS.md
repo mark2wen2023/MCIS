@@ -682,3 +682,8 @@ is not model cost authority. See expert-owned-local-worker-v1 contract; live HOL
 On0ae2338 introduce separate per-request/ticket/context SQLite schema, retaining
 2 per role-round/16 total limits. No old protocol or live transport changes.
 Contract expert-request-budget-v1.md; actual provider wiring still HOLD.
+
+## Actual local request handshake into durable request budget
+On2b0fa0b connect fixed IPC child REQUEST/GRANT/RESPONSE to existing RequestBudget
+and owned cleanup; no extra ledger or modified quotas. First-round fixture completion
+only, not FourChair/Pi/provider. Contract expert-worker-request-handshake-v1.md.
