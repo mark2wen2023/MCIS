@@ -869,3 +869,11 @@ receipt declarations as inactive-history, checks issuance/consumption/source/aud
 associations. No importer/active table writes/product allowlist change.21new+1existing
 ordinary synthetic tests passed4.20s; whole ZIP compatibility/restore not claimed.
 See contracts/conflict-archive-receipts-v2.md and research result for limits.
+
+## Offline conflict ZIP v2 boundary
+On1cc8d29 add research builder/inspector for explicit experimentalv1/v2 mapping,
+exact manifest+source member/history/receipt linkage. In-memory byte input only;
+restore_ready=false, inactive-history receipts. No product parser or permissions
+change. Final49developer synthetic tests passed9.02s (27new+21member+1diagnostic);
+re-envelope is not restore/edit/export, full product recovery remains blocked.
+See contracts/conflict-archive-envelope-v2.md and research result for boundaries.

@@ -453,3 +453,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | CONFLICTLIVERESTORECURRENT | 待测 | 旧归档schema拒绝新回执修订；1开发合成诊断过，恢复/再导出仍阻断，未改产品权限或防丢保护 | logs/CONFLICTLIVERESTORECURRENT-hashes.txt |
 
 | CONFLICTARCHIVERECEIPTSV2 | 待测 | 离线v2回执历史schema/关联校验；22开发合成过，旧v1保留，非活跃授权，产品导出恢复仍拒绝 | logs/CONFLICTARCHIVERECEIPTSV2-hashes.txt |
+
+| CONFLICTARCHIVEENVELOPEV2 | 待测 | 离线实验v1/v2ZIP封装与清单/关联；49开发合成过，restore_ready=false，产品仍拒绝，非完整恢复/浏览器验收 | logs/CONFLICTARCHIVEENVELOPEV2-hashes.txt |
