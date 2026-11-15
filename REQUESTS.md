@@ -739,3 +739,6 @@ Workbench preserves edit-start version and local note on conflict, offers manual
 refresh/compare without automatic retry. No permission/archive expansion. Contract:
 contracts/conflict-expected-version-v1.md. Ordinary tests use explicit stale tokens;
 non-concurrency fixture helper supplies fresh versions only for those test intents.
+
+## Conflict draft preservation after stale-write refusal
+Parent6e493f1 row selection replaced local note/version and any patch success closed editor. Amend EvidencePage and conflictEditing within existing version-conflict workflow: per-record page-local drafts, no silent retoken on refresh/reselection, status success cannot clear draft, note success clears only identical submitted draft. Explicit compare action adopts displayed token without saving. No storage persistence, backend/policy/archive change.

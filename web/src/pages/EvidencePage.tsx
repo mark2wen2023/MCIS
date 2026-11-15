@@ -1,4 +1,4 @@
-import {editableRows, conflictWriteBody, CONFLICT_REFRESH_NOTICE, type EditableConflict, type VersionedConflict} from '../timeline/conflictEditing'
+import {selectDraft, changeDraft, acknowledgeDraft, compareDraft, type ConflictDraft, type ConflictDrafts, editableRows, conflictWriteBody, CONFLICT_REFRESH_NOTICE, type EditableConflict, type VersionedConflict} from '../timeline/conflictEditing'
 import {OriginNotice, type EventOrigins} from '../timeline/OriginNotice'
 import { useMemo, useState, useSyncExternalStore } from 'react'
 import { useSearchParams } from 'react-router-dom'
@@ -222,14 +222,14 @@ function CustodyPanel({ caseId, item, events, onChanged, offsetMinutes }: { offs
 function ConflictPanel({ caseId, conflicts, epoch, onChanged, offsetMinutes }: { offsetMinutes: number; caseId: string; conflicts: EditableConflict[]; epoch?: string; onChanged: () => void }) {
   const { run } = useToast()
   const [editing, setEditing] = useState<string | null>(null)
-  const [note, setNote] = useState('')
-  const [editVersion, setEditVersion] = useState<string>()
+  const [drafts, setDrafts] = useState<ConflictDrafts>({})
   const [saveError, setSaveError] = useState('')
-  const patch = (c: EditableConflict, body: Partial<Conflict>, ok: string, version: string | undefined) =>
+  const patch = (c: EditableConflict, body: Partial<Conflict>, ok: string, version: string | undefined, sent?: ConflictDraft) =>
     run(async () => {
       try {
         const r = await api.patch(casePath(`/conflicts/${c.conflictId}`, caseId), conflictWriteBody(version, body))
-        setSaveError(''); setEditing(null); onChanged(); return r
+        if(sent) { setDrafts(current => acknowledgeDraft(current,c.conflictId,sent)); setSaveError('') }
+        onChanged(); return r
       } catch(error) {
         if(error instanceof ApiError && (error.status === 412 || error.status === 428)) setSaveError(CONFLICT_REFRESH_NOTICE)
         throw error
@@ -237,12 +237,13 @@ function ConflictPanel({ caseId, conflicts, epoch, onChanged, offsetMinutes }: {
     }, ok)
   return (
     <Panel title="多源时间对齐 · 冲突清单" meta={<span>状态变更写审计 conflict.update</span>} bodyStyle={{ padding: 0, maxHeight: 272 }}>
+      <div className="p6-muted">本页草稿在切换记录、刷新列表及状态修改后保留；离开页面或重新加载网页不保留，请先保存。保存说明后请刷新列表核对。</div>
       {saveError && <div role="alert">{saveError}<button type="button" onClick={onChanged}>刷新以比对（不自动保存）</button></div>}
       <table className="p6-table">
         <thead><tr><th>冲突</th><th>内容（A ／ B）</th><th>差值</th><th>处理</th></tr></thead>
         <tbody>
           {conflicts.map((c) => (
-            <tr key={c.conflictId} className={editing === c.conflictId ? 'sel' : ''} onClick={() => { setEditing(c.conflictId); setNote(c.resolution); setEditVersion(c.expectedVersion) }}>
+            <tr key={c.conflictId} className={editing === c.conflictId ? 'sel' : ''} onClick={() => { setEditing(c.conflictId); setDrafts(current => selectDraft(current,c)) }}>
               <td className="mono" style={{ color: 'var(--cyan)' }}>
                 {c.conflictId}
                 <div className="p6-muted" style={{ fontSize: 9.5 }}>{c.timeSec != null && epoch ? simToClock(epoch, c.timeSec, true, offsetMinutes) : ''}</div>
@@ -252,8 +253,10 @@ function ConflictPanel({ caseId, conflicts, epoch, onChanged, offsetMinutes }: {
                 <div className="p6-muted" style={{ fontSize: 10 }}>{c.a.sourceLabel}：{c.a.valueText} ／ {c.b.sourceLabel}：{c.b.valueText}</div>
                 {editing === c.conflictId && (
                   <div className="row-actions" style={{ marginTop: 4 }} onClick={(e) => e.stopPropagation()}>
-                    <input className="input" style={{ flex: 1 }} placeholder="处理说明（resolution）" value={note} onChange={(e) => setNote(e.target.value)} />
-                    <button className="btn btn-sm" onClick={() => patch(c, { resolution: note }, `${c.conflictId} 处理说明已保存`, editVersion)}>保存</button>
+                    <input className="input" style={{ flex: 1 }} placeholder="处理说明（resolution）" value={drafts[c.conflictId]?.note ?? c.resolution} onChange={(e) => setDrafts(current => changeDraft(current,c,e.target.value))} />
+                    <span>当前已保存说明：{c.resolution || '（空）'}</span>
+                    {drafts[c.conflictId] && drafts[c.conflictId].version !== c.expectedVersion && <button type="button" onClick={() => setDrafts(current => compareDraft(current,c))}>已比对当前记录，保留草稿采用此版本（不保存）</button>}
+                    <button className="btn btn-sm" onClick={() => patch(c, { resolution: drafts[c.conflictId]?.note ?? c.resolution }, `${c.conflictId} 处理说明已保存`, drafts[c.conflictId]?.version, drafts[c.conflictId])}>保存</button>
                   </div>
                 )}
               </td>
