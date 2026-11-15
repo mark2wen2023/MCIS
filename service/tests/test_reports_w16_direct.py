@@ -25,7 +25,9 @@ REAL = 'CASE-2025-HAILI5-WANA17'
 
 @pytest.fixture()
 def ctx(app):
-    return SimpleNamespace(db=app.state.db, role='Investigator', operator='报告直调员',
+    # Full report business tests need an explicitly permitted test principal.
+    # Default Investigator is denied by the unchanged medical/field policy.
+    return SimpleNamespace(db=app.state.db, role='LeadInvestigator', operator='报告直调员',
                            settings=app.state.settings, request=SimpleNamespace(app=app))
 
 
@@ -328,3 +330,25 @@ def test_direct_yangze22_canonical_case_id():
     assert service.YANGZE22_CASE_ID == 'CJK-2024-1230-YangZe22-VegaDream'
     assert service.YANGZE22_CASE_ID in service.REAL_CASE_IDS
     assert 'CASE-REAL-YANGZE22' not in service.REAL_CASE_IDS
+
+
+def test_direct_default_investigator_denied_without_report_writes(ctx):
+    """Role eligibility alone does not grant full-content policy authorization."""
+    report = create(ctx)
+    reference = router.audit_list(CASE, report['reportId'], ctx)[0]['snapshotRef']
+    ctx.role = 'Investigator'
+    before = snapshot_db(ctx)
+    operations = [
+        lambda: create(ctx),
+        lambda: router.list_reports(CASE, ctx),
+        lambda: router.get_report(CASE, report['reportId'], ctx),
+        lambda: router.get_report(CASE, 'absent', ctx),
+        lambda: review(ctx, report, {'action': 'confirm'}),
+        lambda: router.regenerate(CASE, report['reportId'], ctx),
+        lambda: router.export_report(CASE, report['reportId'], 'pdf', 'zh', ctx),
+        lambda: router.audit_list(CASE, report['reportId'], ctx),
+        lambda: router.get_snapshot(CASE, reference.split(':', 1)[1], ctx),
+    ]
+    for operation in operations:
+        fails('FORBIDDEN', operation, status=403)
+    assert snapshot_db(ctx) == before
