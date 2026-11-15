@@ -12,9 +12,11 @@ require receipt for all currently permitted conflict work. No production route a
 
 Confirmed useful existing transaction boundary: POST/PATCH reserve SQLite writer
 before current/policy reads, then current conflict, audit append and full revision
-(including afterSources) share Database.session commit/rollback. New injected failure
-AFTER source binding plus audit capture yielded500 with unchanged current store and
-identical full revision history. This is actual temporary SQLite/HTTP execution with
+(including afterSources) share Database.session commit/rollback. The resolution-only injected failure preserves existing source A rather than
+creating any new receipt association. Original cafcdf2 assertions inside the fault
+callback could themselves become500: that run was insufficient to prove the intended
+fault point. The corrected test records capture return, copied revision/current/audit
+and an explicit injection marker, checks all outside the route, then checks rollback. This is actual temporary SQLite/HTTP execution with
 synthetic data, not proof of crash durability or untested concurrency scenarios.
 
 Legacy missing expectedVersion returns428 with current document unchanged. Existing
@@ -41,3 +43,16 @@ registered-source rollback case. All developer synthetic, independent review pen
 No restricted history/security/ECFC operations, original files, network model or
 credentials. Original A→B source intent gap still reproduced, not repaired. No
 production/real browser acceptance, no deployment/merge/push this turn.
+
+## Correction after independent static review
+Only the corrected ordinary rollback node was rerun:
+PYTHONPATH=.. .venv/bin/pytest -q tests/test_source_receipt_integration_gates.py::test_resolution_only_registered_source_revision_audit_rollback_together
+1 passed in0.47s. No permission/security/ECFC test rerun. External assertions require
+new revision ordinal, changed resolution, in-transaction current/postimage agreement,
+actual conflict.update audit row, retained exact prior afterSources A and
+bytesVerified=false. Missing observations or an earlier exception cannot be hidden
+by the route500. History/current state then remain unchanged after rollback.
+This does NOT test new source receipt persistence/consumption or source-change
+submission. A→B gap and production integration blockers remain unchanged.
+Original five-test report remains historical, with its callback false-positive
+weakness disclosed above; it is not the corrected candidate's test count.

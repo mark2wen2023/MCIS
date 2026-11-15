@@ -763,3 +763,8 @@ only. See research/conflict_source_intent/REGISTRY_CONTRACT.md.
 On781ca9e ordinary policy test proves editable200 vs receipt403 for Investigator.
 Added registered-source/current/revision/audit rollback regression; production wiring
 stopped, no policy changed. See INTEGRATION_GATE_RESULT.md in conflict_source_intent.
+
+## Correct rollback fault-point evidence
+Reopen cafcdf2 frozen ordinary resolution-only rollback test: external observation
+assertions now prove capture returned, revision/current/audit were visible and the
+specific injected failure was reached. Retains prior sourceA, no new receipt test.

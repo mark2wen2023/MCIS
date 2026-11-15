@@ -35,7 +35,7 @@ def test_legacy_missing_version_write_rejected_with_current_unchanged(tmp_path):
         assert next(row for row in listing.json() if row['conflictId']=='C-01')==created.json()
 
 
-def test_registered_source_revision_audit_rollback_together(tmp_path,monkeypatch):
+def test_resolution_only_registered_source_revision_audit_rollback_together(tmp_path,monkeypatch):
     from mcis_service.timeline import revisions
     from .test_consultation_archive_readiness import state
     with client_at(tmp_path/'c',True) as c:
@@ -49,15 +49,43 @@ def test_registered_source_revision_audit_rollback_together(tmp_path,monkeypatch
         before=state(c)
         history_before=c.get(ROOT+'/conflicts/C-01/revisions',headers=HEAD)
         assert history_before.status_code==200
+        from copy import deepcopy
+        from sqlalchemy import select
+        from mcis_service.audit.models import AuditEventRow
+        from mcis_service.timeline.models import ConflictRow
+        from mcis_service.db import get_doc
         original=revisions.capture
+        observed={"phases":[]}
+        class SyntheticAfterCaptureFailure(RuntimeError):
+            pass
         def fail_after_capture(s,case,key,*args):
             original(s,case,key,*args)
+            observed['phases'].append('capture_returned')
             captured=revisions.last(s,case,key)
-            assert captured.doc['afterSources']['a']['sha256']=='a'*64
-            assert captured.doc['auditSeq'] is not None
-            raise RuntimeError('Synthetic rollback after source binding and audit capture')
+            observed['revision']=deepcopy(captured.doc)
+            observed['current']=deepcopy(get_doc(s,ConflictRow,case,key))
+            audit_row=s.scalars(select(AuditEventRow).where(
+                AuditEventRow.case_id==case,AuditEventRow.seq==captured.doc['auditSeq'])).first()
+            observed['audit']=None if audit_row is None else {
+                'entity_type':audit_row.entity_type,'entity_id':audit_row.entity_id,'action':audit_row.action}
+            observed['phases'].append('injected_after_capture_failure')
+            raise SyntheticAfterCaptureFailure('Synthetic failure after successful capture and observations')
         monkeypatch.setattr(revisions,'capture',fail_after_capture)
         reply=c.patch(ROOT+'/conflicts/C-01',headers=HEAD,json={'expectedVersion':token,'resolution':'Synthetic failed judgment'})
+        # These assertions run OUTSIDE the route's exception-to-500 wrapper.
+        # A capture exception, missing row, or premature AssertionError cannot pass.
+        assert observed['phases']==['capture_returned','injected_after_capture_failure']
+        previous=history_before.json()['revisions'][-1]
+        captured=observed['revision']
+        assert captured['revision']==previous['revision']+1
+        assert captured['after']['resolution']=='Synthetic failed judgment'
+        assert observed['current']==captured['after']
+        assert captured['before']==previous['after']
+        assert captured['afterSources']==previous['afterSources']
+        assert captured['afterSources']['a']['sha256']=='a'*64
+        assert captured['afterSources']['a']['bytesVerified'] is False
+        assert captured['auditSeq']>previous['auditSeq']
+        assert observed['audit']=={'entity_type':'conflict','entity_id':'C-01','action':'conflict.update'}
         assert reply.status_code==500
         assert state(c)==before
         history_after=c.get(ROOT+'/conflicts/C-01/revisions',headers=HEAD)

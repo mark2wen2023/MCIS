@@ -431,3 +431,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | REGISTRYRECEIPTCONTRACT | 待测/未接生产 | 12开发合成通过含9新增；仅登记版本临时回执比较，非原件/用户已读，权限等价仍阻断 | logs/REGISTRYRECEIPTCONTRACT-hashes.txt |
 
 | SOURCERECEIPTINTEGRATIONGATE | 阻断/待复核 | 权限不等价已合成复现；5开发测试含3新增验证现有回滚/旧客户端拒绝，未接生产，原缺口保留 | logs/SOURCERECEIPTINTEGRATIONGATE-hashes.txt |
+
+| SOURCERECEIPTROLLBACKCORRECTION | 待测 | 仅1项普通回滚测试开发通过；消除内部assert转500假阳性，沿用A非新回执，原缺口仍在 | logs/SOURCERECEIPTROLLBACKCORRECTION-hashes.txt |
