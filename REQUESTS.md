@@ -747,3 +747,8 @@ Parent6e493f1 row selection replaced local note/version and any patch success cl
 Onbe93cfa add ordinary synthetic regression showing conflict edit token does not
 bind the reviewer-visible evidence registry version. Existing capture-time source
 binding remains intact; no product/permission change. See research/conflict_source_intent/ASSESSMENT.md.
+
+## Source-observation receipt design (not implemented)
+After652ef41 specify proposed source-read/submit version comparisons and blockers,
+without new API, permission change or source disclosure. Existing capture-time
+behavior remains. See research/conflict_source_intent/RECEIPT_DESIGN.md.

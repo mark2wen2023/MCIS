@@ -425,3 +425,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Conflict draft preservation | 待测 | 6e493f1 descendant; parent callback reproduction3, synthetic draft/wiring15 and prior version8 assertions passed; TypeScript/Vite build passed, large bundle warning retained. No browser/backend rerun/production acceptance; logs/conflict-draft-preservation-hashes.txt |
 
 | CONFLICTSOURCEINTENT | 待测/方案阻断 | 3项开发合成测试：登记A→B不改变冲突编辑票据，修改观察绑定保存时B；非人工已读版本证明；未改生产 | logs/CONFLICTSOURCEINTENT-hashes.txt |
+
+| CONFLICTSOURCERECEIPT | 设计阻断 | 权限等价回执签发/旧客户端与未知来源流程尚未齐备；未改保存行为，测试矩阵仅计划 | research/conflict_source_intent/RECEIPT_DESIGN.md |
