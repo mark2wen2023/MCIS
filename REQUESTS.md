@@ -647,3 +647,42 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+
+## TL-INTERVAL (2026-11-14) timeline interval safety
+Authorized isolated maintenance of frozen timeline router: reject nonfinite or reversed request/event ranges; preserve inclusive endpoints including zero and negative relative seconds. Existing stored events are not migrated or rewritten. `endTimeSec` describes event duration, not uncertainty bounds. Source labels, evidence IDs, presumptive and confirmed flags remain untouched. No automatic credibility decision, clock correction, new UI or model capability claimed.
+
+## TL-SOURCE-DISPLAY (2026-11-14)
+Authorized isolated EvidencePage tooltip change: render existing sourceLabel and all evidenceIds as escaped plain text, expose existing presumptive/confirmed flags without inference. Missing flags show unknown, never infer truth from absent fields. No extra data fetch, evidence resolution, navigation, permission changes, AI, new uncertainty model or source mutations. Keep case display timezone formatter. New pure helper + tests; main EvidencePage edit is one import and one callback call.
+
+## TL-AXIS (2026-11-14), dependent on PR66
+Fix verified axis/API mismatch: existing negative event starts, CPA points, and conflict markers must be inside the configured time domain. Preserve zero and default positive range; extend only for finite recorded seconds without inference, rounding or timestamp mutation. A valid recorded event duration end can extend display domain but is not uncertainty. New iterative helper avoids spread-argument limits. No server or source changes.
+
+### TL-AXIS integration correction (2026-11-14)
+Root authorized correction on PR70 after combined testing reproduced fixed60-second tick exhaustion at multi-day spans and finite-endpoint overflow. Replace fixed ticks with adaptive splitNumber8 via one production axis factory shared with SSR tests. When span or displayed-date endpoints are not representable, return an explicit unavailable notice and do not mount ECharts, without clipping evidence or editing timestamps. Multi-day labels include date. Refreeze implementation; previous2 SSR checks lacked production interval and did not prove its tick safety.
+
+## Opaque upload metadata and unparsed-step disclosure
+New independent branch from254167e. Existing intake stores arbitrary bytes/category declarations without MIME or parsing; prominent status is missing outside collapsed help. New-upload filenames currently allow bidi controls that disguise extensions. Tighten only inputs() and client intakeBody for new previews/commits (no historical metadata()/binding validator change); old names remain readable/exportable under existing permissions. Add isolated disclosure component mounted in EvidencePage, not PR61 intake/history or PR64 download routers. This reports the file-registration step only, never absence of all later analysis. No MIME sniffing, OCR/ASR/visual inference, execution, preview URLs or schema changes. Register frozen parser.py/model.ts and EvidencePage mount before editing; no timeline logic change.
+
+## Evidence register local filters (2026-11-15)
+On main94d5e38, add bounded user-facing register search/status/review filters over already
+returned evidence metadata. Preserve current selection, explicitly mark hidden selection,
+and do not fetch files or change permissions/registration. EvidencePage changes confined to
+register UI/state; no timeline/PR79, upload/PR69, or historical-integrity candidate changes.
+
+Evidence register filter candidate verification: new synthetic pure filtering/SSR tests
+passed; existing W4.2 model/API/render 88 assertions passed; TypeScript/Vite build passed
+(existing chunk warning). Browser plugin absent; installed Python Playwright 1.62.0 could
+not launch because its bundled Chromium executable is missing. No download/install or
+sandbox relaxation; browser interactions/screenshots/console/mobile remain unverified.
+PR79 b32f4fb and PR69 d5f78c4 also touch EvidencePage.tsx; this diff is register-only,
+not their timeline/upload blocks. No combined-branch validation claimed. No LLM/OCR/AIS
+or file-content interpretation; only returned metadata is filtered. No production rights
+change, no hidden selection replacement, no registration/custody writes by filter controls.
+
+## 证据工作台三 PR 主线组合（2026-11-15，待独立验收）
+完整父 main 94d5e38c926fda232bb987b60fa9145e4bcf01a7。仅组合 PR79 b32f4fb3375ce4fc98db7ae66d321ccfadb85555、PR69 d5f78c405676a8b281c7f7d3247bdaf431503ae0、PR97 93487486122a817dae13cbf656f5965702e0933f 各自单提交增量，不引入 PR69 的旧开发栈。初次共同祖先差异试装发现夹带无关祖先改动，已丢弃试装树，从完整 main 重建。三个 head 与 main 保存前再次远端核对未变。
+共同冻结文件 EvidencePage.tsx 组合：保留主线身份/案件重置、权限请求与保管链选择；筛选只影响行，sel 仍来自完整清单；OpaqueUploadStatus 使用同一 sel；时间轴和 tooltip 使用 PR79 实现。PR69 原插入上下文含当前 main 不存在的 RegisteredPreviewPanel，仅移植新增组件，未恢复该旧栈入口。非共同功能/测试文件逐字等于各 PR head，双方历史文档追加完整保留。
+开发侧组合测试：筛选 pure/SSR 通过；上传状态28项及既有独立脚本32项通过；时间线六脚本59项通过；W4.2 88项通过；npm run build通过（保留大分块警告）。上传状态独立脚本首次因仓外 JSX runtime 搜索路径失败，NODE_PATH 指向现有 web/node_modules 后通过；不安装依赖。后端区间/上传专项64通过，原登记/案件时间线90通过1跳（缺既有.NET SDK）。这些是在开发环境复跑，不等于新独立验收或全套通过。
+Browser plugin 不可用；Python Playwright 正常启用 chromium_sandbox=True 启动失败：chromium_headless_shell-1234 可执行文件缺失。未安装、未关闭沙箱。筛选/隐藏选择/时间线/上传状态真实浏览器联动、视觉与控制台未验。没有真实 LLM/OCR、身份认证或来源真实性验收，未触及受限历史复验/保护查询，未合并部署。
+各 PR 原冻结清单保留历史含义；共同 EvidencePage 的组合哈希以 logs/evidence-workbench-combined-impl-hashes-frozen.txt 为准。

@@ -1,7 +1,11 @@
+import { OpaqueUploadStatus } from '../evidenceIntake/OpaqueUploadStatus'
+import { timelineDomain, timelineAxis } from '../timeline/domain'
+import { timelineEventTooltip } from '../timeline/tooltip'
 import { useMemo, useState, useSyncExternalStore } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import type { EChartsOption } from 'echarts'
 import { api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
+import { EMPTY_FILTER, filterEvidence, RegisterFilters } from '../evidenceRegister/filters'
 import { EvidenceIntakePanel } from '../evidenceIntake/EvidenceIntakePanel'
 import { announceEvidenceSelection } from '../evidenceIntake/navigation'
 import { AlignPreviewPanel } from '../align/AlignPreviewPanel'
@@ -62,7 +66,9 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
   const conflicts = useLoad(() => api.get<Conflict[]>(casePath('/conflicts', caseId)))
   const cpa = useLoad(() => loadEvidenceCpa(caseId))
   const [selId, setSelId] = useState<string>(requestedId || 'EV-001')
+  const [registerFilter, setRegisterFilter] = useState({ ...EMPTY_FILTER })
   const items = ev.data ?? []
+  const visibleItems = filterEvidence(items, registerFilter)
   const sel = items.find((e) => e.evidenceId === selId) ?? (requestedId ? undefined : items[0])
   const custody = useLoad(async () => ({ evidenceId: sel?.evidenceId, events: sel ? await api.get<CustodyEvent[]>(casePath(`/evidence/${sel.evidenceId}/custody`, caseId)) : [] }), [sel?.evidenceId])
 
@@ -105,6 +111,8 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
 
       <EvidenceIntakePanel caseId={caseId} caseTitle={caseRes.data?.title} who={evidenceIdentity()} selectedEvidenceId={sel?.evidenceId} onRegistered={id=>{setSelId(id);refreshEvidence()}} onRefresh={refreshEvidence}/>
 
+      <OpaqueUploadStatus caseId={caseId} evidence={sel} />
+
       <details className="w4-preview-disclosure">
         <summary>临时CSV预览，未入库</summary>
         <AlignPreviewPanel caseId={caseId} />
@@ -124,12 +132,14 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
 
       <div className="grid w4-columns" style={{ marginBottom: 12 }}>
         <Panel title="证据清单（Evidence Register）" meta={<><span>caseId · EV-NNN</span><span>点击行查看保管链</span></>} bodyStyle={{ padding: 0, maxHeight: 300 }}>
+          <RegisterFilters value={registerFilter} onChange={setRegisterFilter} count={visibleItems.length} total={items.length}
+            ready={!!ev.data} hiddenSelection={sel && !visibleItems.some(item => item.evidenceId === sel.evidenceId) ? sel.evidenceId : undefined} />
           <table className="p6-table">
             <thead>
               <tr><th>编号</th><th>证据</th><th>来源 / 提取人</th><th>提取时间</th><th>SHA-256</th><th>访问</th><th>标记</th><th>状态</th></tr>
             </thead>
             <tbody>
-              {items.map((e) => (
+              {visibleItems.map((e) => (
                 <tr key={e.evidenceId} className={sel?.evidenceId === e.evidenceId ? 'sel' : ''} onClick={() => selectEvidence(e.evidenceId)}>
                   <td className="mono" style={{ color: 'var(--cyan)' }}>{e.evidenceId}</td>
                   <td><button type="button" className="w42-evidence-select" onClick={event=>{event.stopPropagation();selectEvidence(e.evidenceId)}}>{e.title}</button></td>
@@ -144,6 +154,7 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
                   <td><span className={`st ${STATUS_BADGE[e.status][0]}`}>{STATUS_BADGE[e.status][1]}</span></td>
                 </tr>
               ))}
+              {!!items.length && !visibleItems.length && <tr><td colSpan={8} className="empty">没有匹配的证据；可调整条件或清除筛选，原清单未改变。</td></tr>}
               {!items.length && <tr><td colSpan={8} className="empty">{ev.error ? '无权限或后端不可用' : ev.data ? '暂无证据，请添加调查证据。' : '加载中…'}</td></tr>}
             </tbody>
           </table>
@@ -272,7 +283,9 @@ const KIND_STYLE: Record<TimelineEvent['kind'], { color: string; symbol: string;
 }
 
 function TimelineChart({ fictional, epoch, events, conflicts, cpa, offsetMinutes }: { offsetMinutes: number; fictional: boolean; epoch: string; events: TimelineEvent[]; conflicts: Conflict[]; cpa: CpaPoint[] }) {
-  const option = useMemo<EChartsOption>(() => {
+  const axis = useMemo(() => timelineAxis(timelineDomain(fictional, events, cpa, conflicts), epoch, offsetMinutes), [fictional, events, cpa, conflicts, epoch, offsetMinutes])
+  const option = useMemo<EChartsOption | null>(() => {
+    if (!axis.ok) return null
     const vesselIds = [...new Set(events.map((e) => e.vesselId).filter((id): id is string => Boolean(id)))]
     const lanes = fictional ? LANES : ['双方 / 环境', ...vesselIds]
     const lane = (e: TimelineEvent) => fictional ? (e.vesselId === 'vessel_lily' ? 2 : e.vesselId === 'vessel_mary' ? 1 : 0) : (e.vesselId ? vesselIds.indexOf(e.vesselId) + 1 : 0)
@@ -300,19 +313,14 @@ function TimelineChart({ fictional, epoch, events, conflicts, cpa, offsetMinutes
       grid: { left: 78, right: 44, top: 40, bottom: 24 },
       legend: { top: 2, left: 78, textStyle: { color: '#8da4c4', fontSize: 10 }, itemWidth: 10, itemHeight: 8 },
       tooltip: {
-        trigger: 'item', backgroundColor: 'rgba(10,20,35,.95)', borderColor: 'rgba(59,227,255,.4)', textStyle: { color: '#e6f1ff', fontSize: 11 },
+        trigger: 'item', confine: true, enterable: true, backgroundColor: 'rgba(10,20,35,.95)', borderColor: 'rgba(59,227,255,.4)', textStyle: { color: '#e6f1ff', fontSize: 11 },
         formatter: (p: unknown) => {
           const d = (p as { data: { raw?: TimelineEvent; value: number[] } }).data
-          if (d.raw) return `${simToClock(epoch, d.raw.timeSec, true, offsetMinutes)} ${d.raw.title}<br/><span style="color:#8da4c4">${d.raw.sourceLabel ?? ''}</span>`
+          if (d.raw) return timelineEventTooltip(d.raw, simToClock(epoch, d.raw.timeSec, true, offsetMinutes))
           return distanceTooltip(epoch, d.value[0], d.value[1], offsetMinutes)
         },
       },
-      xAxis: {
-        type: 'value', min: 0, max: fictional ? 780 : Math.max(60, ...events.map((e) => e.timeSec), ...cpa.map((p) => p.timeSec)), interval: 60,
-        axisLabel: { color: '#8da4c4', fontSize: 10, formatter: (v: number) => simToClock(epoch, v, false, offsetMinutes) },
-        axisLine: { lineStyle: { color: 'rgba(59,227,255,.3)' } },
-        splitLine: { lineStyle: { color: 'rgba(141,164,196,.08)' } },
-      },
+      xAxis: axis.axis,
       yAxis: [
         { type: 'category', data: lanes, axisLabel: { color: '#c9d8ee', fontSize: 10.5 }, axisLine: { lineStyle: { color: 'rgba(59,227,255,.3)' } },
           splitLine: { show: true, lineStyle: { color: 'rgba(141,164,196,.1)' } } },
@@ -332,6 +340,7 @@ function TimelineChart({ fictional, epoch, events, conflicts, cpa, offsetMinutes
         ...evSeries,
       ],
     }
-  }, [fictional, epoch, events, conflicts, cpa, offsetMinutes])
-  return <EChart option={option} height={262} />
+  }, [fictional, epoch, events, conflicts, cpa, offsetMinutes, axis])
+  if (!axis.ok) return <div className="empty" role="alert">{axis.message}</div>
+  return <EChart option={option!} height={262} />
 }

@@ -397,3 +397,21 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTREVIEWMAIN | 最小整合独审通过 | 2026-11-14：main25b9df6前缀及其他跟踪文件保留，12源文件逐字；独立无.git副本164项通过，新/原冻结各4/4。见 DEFECTS/EXPERTREVIEWMAIN.md；仅离线pending人审，真实0/HOLD。 |
 | EXPERTTRACE | 待独审 | 2026-11-14：PR87head99b44f0上新增10跨视图追溯/反认证回归，组合174项通过；冻结 logs/EXPERTTRACE-impl-hashes-frozen.txt。不改运行代码；真模型0/HOLD，非浏览器或事实验收。 |
 | EXPERTTRACE | 测试增量独审通过 | 2026-11-14：独立无.git副本10过；临时断开taskId触发5红、伪认证flag触发1红，恢复10过；冻结2/2，运行文件无差异。见 DEFECTS/EXPERTTRACE.md。真实模型0/HOLD。 |
+
+
+| TL-INTERVAL | 待测 | 2026-11-14 | 时间线区间与零边界修复；实现哈希 logs/tl-interval-impl-hashes-frozen.txt；不改存量数据，不提供时间不确定性推理。 |
+| TL-INTERVAL | 受限独立验收通过 | 2026-11-14 | 37/37 本地 API 测试（22新增+6旧+9独立）；不是CI/UI/真实模型验收。存量异常区间未自动修复；未部署。见 tests_acceptance/TL_INTERVAL/INDEPENDENT.md。 |
+
+| TL-SOURCE-DISPLAY | 待测 | 2026-11-14 | 时间线多证据引用与已有状态标记展示；HTML转义；冻结 logs/tl-source-display-frozen.txt。 |
+| TL-SOURCE-DISPLAY | 代码受限独审通过/浏览器待验 | 2026-11-14 | 20项tooltip测试和完整tsc通过；浏览器127.0.0.1连接拒绝，未验证hover/scroll/窄屏。仅显示已有来源与标记，不推断事实或调用模型。 |
+
+| TL-AXIS | 待测 | 2026-11-14 | 基于PR66，修正负秒显示范围；15单测，冻结logs/tl-axis-frozen.txt。 |
+| TL-AXIS | 受限代码独审通过/浏览器待验 | 2026-11-14 | 23域单测+2真实ECharts SVG SSR过、完整tsc过；浏览器loopback连接拒绝。依赖PR66，未合并部署。 |
+
+| TL-AXIS修订 | 待复验 | 2026-11-14 | 修固定ticks超限/溢出，生产轴工厂SSR10项通过；原2项SSR未含生产interval，不能证明其安全。 |
+| TL-AXIS修订 | 受限独审通过/浏览器待验 | 2026-11-14 | 最终39项（15域+8独立域+10生产轴SSR/guard+6独立轴）通过，tsc通过；显式无法绘制分支仅源码验证。保持草稿。 |
+
+| 2026-11-14 | Opaque upload metadata / unparsed-step disclosure | 自测及独审通过／待协调验收 | 新请求禁12种bidi文件名控制符，旧绑定回执读取兼容；同案精确intake路径显式说明人工类别/类型未验证/未OCR视觉等，路径不等于保存成功。旧代码12拒绝用例全败，最终Python117过1.NET跳（含独12），前端主28+独32+旧88；独审发现并修正末尾换行路径匹配。app TS关闭noUnusedLocals后通过，全TS既有4未使用React错；浏览器SUID sandbox启动失败未绕过。无解析能力/全量/部署合并。报告tests_acceptance/OPAQUE_UPLOAD_METADATA；冻结logs/opaque-upload-metadata-impl-hashes-frozen.txt。 |
+| Evidence register local filters | 待独审/浏览器待验 | 2026-11-15：main94d5e38独立候选；编号/标题/来源/提取人文本、哈希状态、需复核标注筛选，保留选择并提示隐藏。纯逻辑/SSR及W4.2原88断言、构建过；Playwright缺Chromium未验真实浏览器。PR79/69同文件需组合审查；冻结 logs/evidence-register-filters-impl-hashes-frozen.txt。 |
+
+| 证据工作台 PR79/69/97 组合 | 待测 / 待独立验收 | 完整 main94d5e38 后裔；只移植三个 PR 单提交增量，保留文档追加及权限。前端相关专项/88登记断言/构建通过，后端154过1跳（.NET缺失）。真实浏览器缺执行文件，联动未验；无真实LLM/OCR验收。冻结 logs/evidence-workbench-combined-impl-hashes-frozen.txt；原PR冻结仅作历史记录。 |
