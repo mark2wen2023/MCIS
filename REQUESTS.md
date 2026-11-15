@@ -842,3 +842,13 @@ versioned conflict kind/resolver. Report evidence links remain current-item link
 across synthetic registry A->B, with observation absent.1 developer test passed0.40s
 means gap reproduced, not feature completed. No product/policy changes or restricted
 probes. See research/conflict_source_intent/REPORT_CITATION_GAP.md for prerequisites.
+
+## Exact conflict revision reference prerequisite
+On1350a4c define standalone versioned reference contract/schema and add exact
+revision+digest GET by calling unchanged existing complete authorized history
+reader. No source files, permissions/whitelist/report schemas/generator changed.
+Report citation integration remains blocked on complete conflict archive/history
+compatibility; do not mistake resolver for report completion. First selected run
+8failed/1passed due missing schema$id; corrected, final9passed2.26s (6new exact
+lookup+1report gap+2actual HTTP). Ordinary synthetic only, no restricted operations.
+See research/conflict_source_intent/EXACT_REVISION_REFERENCE.md.

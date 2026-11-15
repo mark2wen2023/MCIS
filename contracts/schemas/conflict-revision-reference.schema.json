@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pinned conflict revision reference (not yet a report citation)",
+  "type": "object",
+  "required": [
+    "format",
+    "caseId",
+    "conflictId",
+    "revision",
+    "revisionSha256"
+  ],
+  "properties": {
+    "format": {
+      "const": "MCIS-CONFLICT-REFERENCE-1"
+    },
+    "caseId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "conflictId": {
+      "type": "string",
+      "pattern": "^C-[0-9]{2,}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "revisionSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "additionalProperties": false,
+  "$id": "https://mcis.local/contracts/v1/conflict-revision-reference.schema.json"
+}

@@ -1789,6 +1789,22 @@ paths:
         '403': { description: 无完整内容或来源权限 }
         '404': { description: 案件或冲突不存在 }
         '409': { description: 当前记录或修订关联不一致 }
+  /api/v1/cases/{caseId}/conflicts/{conflictId}/revisions/{revision}:
+    parameters:
+      - { $ref: '#/components/parameters/caseId' }
+      - { name: conflictId, in: path, required: true, schema: { type: string } }
+      - { name: revision, in: path, required: true, schema: { type: integer, minimum: 1 } }
+      - { name: sha256, in: query, required: true, schema: { type: string, pattern: '^[a-f0-9]{64}$' } }
+    get:
+      tags: [timeline]
+      summary: 按固定修订及摘要读取观察历史（报告引用尚未启用）
+      description: 复用完整历史权限与来源检查；不回退当前值，不读取原件。见conflict-revision-reference-v1.md。
+      responses:
+        '200': { description: 'MCIS-CONFLICT-REFERENCE-RESOLUTION-1；固定reference和revision，bytesVerified/humanReadVerified/identityVerified=false' }
+        '403': { description: 既有完整历史权限不满足 }
+        '404': { description: 案件、冲突或已捕获修订不存在 }
+        '409': { description: 指定摘要不一致或既有历史关联检查失败 }
+        '422': { description: 修订或摘要参数格式无效 }
   /api/v1/cases/{caseId}/timeline:
     parameters:
       - { $ref: '#/components/parameters/caseId' }

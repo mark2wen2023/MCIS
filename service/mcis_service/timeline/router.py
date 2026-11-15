@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any, Literal
 
-from fastapi import APIRouter, Body
+from fastapi import APIRouter, Body, Path, Query
 from pydantic import BaseModel
 
 from ..audit import service as audit
@@ -173,6 +173,26 @@ def conflict_revisions(case_id: str, conflict_id: str, ctx: Ctx = CtxDep):
         if current is None:
             raise problem(404, "NOT_FOUND", "冲突不存在")
         return revisions.history(s, ctx, case_id, conflict_id, current)
+
+@router.get("/conflicts/{conflict_id}/revisions/{revision}")
+def exact_conflict_revision(case_id: str, conflict_id: str,
+                            revision: int = Path(ge=1),
+                            sha256: str = Query(pattern="^[a-f0-9]{64}$"),
+                            ctx: Ctx = CtxDep):
+    # Reuse the complete authorized/verified history operation, not a direct row
+    # lookup that could omit its current source visibility or chain checks.
+    captured = conflict_revisions(case_id, conflict_id, ctx)
+    found = next((d for d in captured['revisions'] if d['revision'] == revision), None)
+    if found is None:
+        raise problem(404, "CONFLICT_REVISION_NOT_CAPTURED", "该修订没有已捕获历史；不能用当前值补造")
+    if found['sha256'] != sha256:
+        raise problem(409, "CONFLICT_REFERENCE_MISMATCH", "引用摘要与指定修订不一致；不能回退到当前记录")
+    return {'format': 'MCIS-CONFLICT-REFERENCE-RESOLUTION-1',
+            'reference': {'format': 'MCIS-CONFLICT-REFERENCE-1', 'caseId': case_id,
+                          'conflictId': conflict_id, 'revision': revision, 'revisionSha256': sha256},
+            'revision': found, 'coverage': captured['coverage'],
+            'bytesVerified': False, 'humanReadVerified': False, 'identityVerified': False}
+
 
 # New guarded preview only; existing persistence routes and legacy core endpoint are unchanged.
 from .align_preview import router as preview_router
