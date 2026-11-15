@@ -704,3 +704,12 @@ references remain traceability context, not automatic support or original quotat
 Keep body, generatedText, references, review history and permissions unchanged.
 The prior source-status contract freeze is refreshed only for this documented addition.
 No browser, external model, restricted integrity probes or original-file access.
+
+## Public-report PDF pagination and text-excerpt layout
+Reopen exporter.py for section-heading pagination and public_text.py/sources.py for
+newly generated, hash-pinned public excerpts only. Preserve raw quote/line/hash/page
+references; omit only a proven source page-footer line immediately before form feed,
+with matching original body-page number. Retain all other numbers and footnotes.
+Mark retained figure captions as source captions whose images are not included.
+Do not rewrite existing stored reports, invent images, change authorization, or
+remove draft/review/missing-coverage notices. Base bbafa560; PR104 stays unchanged.

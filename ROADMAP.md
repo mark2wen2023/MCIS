@@ -408,3 +408,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | REPORTSENTENCESOURCESTATUS | 待测 | 单句modify来源状态与Investigator一致，保留原文/引用/历史；91开发回归过含5新增；旧存储不迁移，浏览器/独立未验，PDF仅原候选4页开发抽查 | logs/REPORTSENTENCESOURCESTATUS-impl-hashes-frozen.txt |
 
 | REPORTINHERITEDCITATION | 待测 | db928a2上呈现继承引用限制，99后端回归、182 SSR断言及构建为开发侧通过；不改原文/引用/历史/权限，真实浏览器及视觉/独立未验。冻结 logs/REPORTINHERITEDCITATION-impl-hashes-frozen.txt |
+
+| REPORTPUBLICPDFLAYOUT | 待独审 | bbafa560上PDF标题分页/公开文本页码与无图图题说明；111项开发回归通过，原/新PDF各18页开发逐页查看；旧报告不迁移、浏览器/独立视觉未验，冻结 logs/REPORTPUBLICPDFLAYOUT-impl-hashes-frozen.txt。 |
