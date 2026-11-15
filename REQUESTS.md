@@ -671,3 +671,19 @@ regressions pass; existing W4.1 32 model/static-render checks and TypeScript/Vit
 No .NET alignment, real AIS, LLM/OCR or browser interaction executed. Existing browser
 Chromium missing condition remains; no installation or restriction bypass. Function files
 do not overlap PR97/79/69; REQUESTS/ROADMAP append-only integration still needs review.
+
+## Report recommendation cause-label provenance (2026-11-14)
+Latest main4585016. New report sentences currently omit registered recommendation
+causeNodeIds. Add an explicit Draft sentence retaining exact ordered labels with
+unresolved/unchecked caveat and only a recommendation-register citation marked
+needsReview. No guessed evidence links, case/digest bindings, existing-report
+rewrite or report+recommendation archive enablement. Update reports/sources.py,
+contract note and real HTTP tests; renderer and permission policy unchanged.
+
+## PDF font-test identity repair on main94d5e38 (2026-11-14)
+Independent diagnosis confirms two test failures before rendering: Investigator
+has medical=Deny and applicable FR-02. Preserve production gates. Reuse the exact
+test-only delta from e91e4cf on latest main; explicitly authorized Lead renders
+real public-report font assertions, Investigator creation/export remain403.
+No source/renderer/font/global fixture changes. Fresh validation and independent
+review required on this current-main candidate, not inferred from the old review.

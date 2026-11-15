@@ -401,3 +401,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 | 共享轨迹输入契约 v1 前置 | 待测 / 待独立验收 | 2026-11-15：新增独立JSON契约与离线语义校验，保留来源/校时/缺失/艏向航迹向/示意比例；45构造测试+70既有W10.2回归通过。不改现有接口/权限，不是二维/Unity适配或三维实现。冻结 logs/shared-trajectory-v1-impl-hashes-frozen.txt。 |
 | CSV preview source numbering | 待独审 | 2026-11-15：main94d5e38独立修复移除后新增编号冲突；保留源声明/文本/映射、四源限制及人工确认。新增回归/原W4.1 32项/构建过；无真实浏览器/核心/AI验收。冻结 logs/csv-preview-source-numbering-impl-hashes-frozen.txt；功能区域不与PR97/79/69重叠。 |
+| Report registered cause-label snapshot | 待测 | no inferred links or archive enablement; logs/report-cause-provenance-impl-hashes-frozen.txt |
+| Report registered cause-label snapshot | 局部独审通过 | focused5pass; expanded95pass2baselinefail; clean-main2fail reproduced; independent17pass; tests_acceptance/report-cause-provenance/REPORT.md |
+| PDF font-test identity on main94d5e38 | 待测 | exact e91e4cf test delta on complete latest main; logs/pdf-font-policy-main-94-frozen.txt; independent current-candidate review pending |
