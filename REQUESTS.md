@@ -650,3 +650,6 @@ Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD
 
 ## 内网公开文本定位前置评估（2026-11-15）
 从最新main94d5e38独立评估，不接入PR103外链替代UI。EV-201原文存在但无intake回执；旧GET的响应摘要不等于当前版本原子核验，policy过滤与元数据路径不一致。保存普通HTTP特征测试与research/source_location/INTERNAL_READINESS.md，先报告服务端依赖，不强行启用。无生产权限变更/受限复验。
+
+### 同次读取绑定后续研究（2026-11-15）
+原3b4e8fe评估按授权推送供复验。补充SAME_READ_BINDING_PROPOSAL.md，明确同一事务/同一字节缓冲/Access摘要/退出事务后响应，以及未知提交不可自动重试。仅扩充普通公开文本Access断言；主线reader及policy一致性前置未齐，不改运行时或权限，不进行受限安全复验。

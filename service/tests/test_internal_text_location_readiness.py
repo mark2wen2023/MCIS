@@ -23,6 +23,12 @@ def test_public_text_available_but_response_digest_is_not_verification_status(cl
     assert after['status'] == meta.json()['status'] == 'Unverified'
     assert after['accessCount'] == meta.json()['accessCount'] + 1
     assert 'x-current-sha256' not in response.headers
+    custody = client.get(URL + '/custody', headers=H('LeadInvestigator'))
+    assert custody.status_code == 200
+    events = custody.json()
+    assert events[-1]['kind'] == 'Access'
+    assert events[-1]['sha256'] == hashlib.sha256(response.content).hexdigest()
+    assert all(event['kind'] != 'Verify' for event in events)
 
 
 def test_seeded_public_text_has_no_intake_receipt(client):

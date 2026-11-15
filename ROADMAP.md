@@ -399,3 +399,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTTRACE | 测试增量独审通过 | 2026-11-14：独立无.git副本10过；临时断开taskId触发5红、伪认证flag触发1红，恢复10过；冻结2/2，运行文件无差异。见 DEFECTS/EXPERTTRACE.md。真实模型0/HOLD。 |
 
 | INTERNALTEXTREADINESS | 前置依赖阻断 / 待独审 | 普通HTTP现状及相关回归89通过；有公开文本、无intake回执，旧内容GET未提供一致policy/原子版本核验，暂不接内网查看器。research/source_location/INTERNAL_READINESS.md；无运行时/权限修改。 |
+
+| INTERNALTEXTREADINESS | 研究已推送 / 实施仍阻断 | 同次读取绑定最小事务方案与普通Access摘要断言；开发侧89项通过。尚无运行时改动；安全reader/policy一致性前置、真实身份、浏览器及并发安全验收未完成。 |
