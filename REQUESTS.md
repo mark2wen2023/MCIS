@@ -647,3 +647,12 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## 报告公开文本固定版本行定位（2026-11-15）
+重新核对远端 main94d5e38。现有公开摘录sourceRef已有SHA/行号/页码，但CitationLink仅打开EV-201。新增独立只读定位组件及固定文本行页索引，修改冻结ReportView接入；保留原条目链接、权限和现有合同，不改报告sources.py（PR93/95同文件在途）或受限历史来源代码。链接仅指向已核验c6113bee固定Git提交的YANGZE22公开文本，不是PDF跳页或当前证据版本认证；跨案/非匹配SHA/非法范围无精确链接。构造拒绝测试与真实公开文本索引测试区分。
+
+### PUBLICTEXTLOCATION 边界返工（2026-11-15）
+独立验收复现末尾换页符L1156被计为不存在的PDF54页。修改冻结定位器与索引：显式记录公开PDF总页数53并拒绝越界页，保留内部换页符计数（不折叠空页），不把末尾分隔符重新映射为第53页。补最后页、终止符、跨页及空白行回归；不改权限或后端生产逻辑。
+
+### PUBLICTEXTLOCATION 触屏说明返工（2026-11-15）
+按独立复审建议修改冻结组件的可见说明：始终显示“未核验当前证据版本；未自动核对引文内容”，不依赖title悬停；不改定位、权限或功能范围。增加去除HTML标签/属性后的可见文本断言。
