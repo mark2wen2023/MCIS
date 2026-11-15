@@ -647,3 +647,17 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## Interview source disclosure (2026-11-15)
+On main94d5e38, display existing authorized interview evidenceId/sourceSha256 projections
+with honest missing/invalid metadata cues and case-scoped evidence register navigation.
+No source reconstruction, verification, download, new requests, authorization changes or
+human decision writes. Open PR92–98 and other open draft functional paths checked: no
+InterviewView/new disclosure module overlap. Shared process notes require append merging.
+Source disclosure validation: synthetic SSR covers complete/absent/null/invalid reference
+and hash, case-query encoding, text escaping and hash-without-ID (no invented link).
+Existing interview-render 40 assertions and TypeScript/Vite build passed; final nullable
+metadata handling rechecked with SSR and TypeScript. Backend already projects these fields
+from its redacted record; no API/permission/data writes changed. Metadata is not an original
+file, verified hash, preserved source or historical snapshot. Real browser/layout/link
+interaction remains unverified (existing Chromium missing); no retry/install/bypass.

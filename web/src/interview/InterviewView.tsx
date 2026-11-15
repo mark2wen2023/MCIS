@@ -1,3 +1,4 @@
+import { SourceDisclosure } from './SourceDisclosure'
 import { useState } from 'react'
 import { Panel } from '../components/Panel'
 import { SERVICE_ADDR } from '../config'
@@ -108,6 +109,7 @@ function Transcript({ page, selected, onSelect }: { page: IcPage; selected: stri
         询问人 {(rec.interviewers ?? []).join('、') || '—'} · 记录人 {rec.recorder || '—'} · 地点 {rec.location || '—'} · 开始 {shipDate(rec.startUtc)}
         {rec.durationMin != null && ` · 用时 ${Math.round(rec.durationMin)} min`}{rec.evidenceId && ` · 证据 ${rec.evidenceId}`}
       </div>
+      <SourceDisclosure caseId={page.caseId} evidenceId={rec.evidenceId} sourceSha256={rec.sourceSha256} />
       <div className="ic-legend">
         {LEGEND.map((k) => <span key={k} className={`ic-hl ${KIND_CLASS[k]}`}>{KIND_LABEL[k]}</span>)}
         <span className="ic-hl ic-contra">与数据矛盾（已确认）</span>
