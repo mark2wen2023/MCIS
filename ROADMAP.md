@@ -449,3 +449,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | CONFLICTREPORTCITATIONGAP | 待测 | 合成真实ASGI诊断1过：冲突修订未进入报告句级来源；仅方案，未接产品，非浏览器/原件/独立验收 | logs/CONFLICTREPORTCITATIONGAP-hashes.txt |
 
 | CONFLICTEXACTREFERENCE | 待测 | 固定案件/冲突/修订/摘要解析，复用既有完整历史权限；9开发普通测试通过；报告自动引用与归档仍未接，浏览器/独立未验 | logs/CONFLICTEXACTREFERENCE-hashes.txt |
+
+| CONFLICTLIVERESTORECURRENT | 待测 | 旧归档schema拒绝新回执修订；1开发合成诊断过，恢复/再导出仍阻断，未改产品权限或防丢保护 | logs/CONFLICTLIVERESTORECURRENT-hashes.txt |

@@ -1,0 +1,531 @@
+{
+  "type": "object",
+  "properties": {
+    "format": {
+      "const": "MCIS-CONFLICT-ARCHIVE"
+    },
+    "version": {
+      "const": 1,
+      "type": "integer"
+    },
+    "caseId": {
+      "type": "string"
+    },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "createdUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "doc": {
+            "$ref": "conflict.schema.json"
+          },
+          "coverage": {
+            "enum": [
+              "captured-from-creation",
+              "unknown-before-capture"
+            ]
+          },
+          "revisions": {
+            "type": "array",
+            "maxItems": 4096,
+            "items": {
+              "type": "object",
+              "properties": {
+                "format": {
+                  "const": "MCIS-CONFLICT-REVISION-1"
+                },
+                "caseId": {
+                  "type": "string"
+                },
+                "conflictId": {
+                  "type": "string"
+                },
+                "revision": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "coverage": {
+                  "enum": [
+                    "captured-from-creation",
+                    "unknown-before-capture"
+                  ]
+                },
+                "operator": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
+                },
+                "identityMode": {
+                  "const": "unverified-self-reported"
+                },
+                "utc": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "auditSeq": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "auditLineSha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "operation": {
+                  "enum": [
+                    "conflict.add",
+                    "conflict.update"
+                  ]
+                },
+                "before": {
+                  "anyOf": [
+                    {
+                      "$ref": "conflict.schema.json"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "after": {
+                  "$ref": "conflict.schema.json"
+                },
+                "beforeSources": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "a": {
+                          "oneOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "evidenceId": {
+                                  "type": "null"
+                                },
+                                "status": {
+                                  "const": "unregistered"
+                                },
+                                "bytesVerified": {
+                                  "const": false
+                                }
+                              },
+                              "required": [
+                                "evidenceId",
+                                "status",
+                                "bytesVerified"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "evidenceId": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "status": {
+                                  "const": "registered-version"
+                                },
+                                "bytesVerified": {
+                                  "const": false
+                                },
+                                "sha256": {
+                                  "type": "string",
+                                  "pattern": "^[0-9a-f]{64}$"
+                                },
+                                "registrationSha256": {
+                                  "type": "string",
+                                  "pattern": "^[0-9a-f]{64}$"
+                                },
+                                "registryDocSha256": {
+                                  "type": "string",
+                                  "pattern": "^[0-9a-f]{64}$"
+                                },
+                                "custodyHeadSeq": {
+                                  "anyOf": [
+                                    {
+                                      "type": "integer",
+                                      "minimum": 1
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "custodyHeadSha256": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string",
+                                      "pattern": "^[0-9a-f]{64}$"
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "evidenceId",
+                                "status",
+                                "bytesVerified",
+                                "sha256",
+                                "registrationSha256",
+                                "registryDocSha256",
+                                "custodyHeadSeq",
+                                "custodyHeadSha256"
+                              ],
+                              "additionalProperties": false
+                            }
+                          ]
+                        },
+                        "b": {
+                          "oneOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "evidenceId": {
+                                  "type": "null"
+                                },
+                                "status": {
+                                  "const": "unregistered"
+                                },
+                                "bytesVerified": {
+                                  "const": false
+                                }
+                              },
+                              "required": [
+                                "evidenceId",
+                                "status",
+                                "bytesVerified"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "evidenceId": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "status": {
+                                  "const": "registered-version"
+                                },
+                                "bytesVerified": {
+                                  "const": false
+                                },
+                                "sha256": {
+                                  "type": "string",
+                                  "pattern": "^[0-9a-f]{64}$"
+                                },
+                                "registrationSha256": {
+                                  "type": "string",
+                                  "pattern": "^[0-9a-f]{64}$"
+                                },
+                                "registryDocSha256": {
+                                  "type": "string",
+                                  "pattern": "^[0-9a-f]{64}$"
+                                },
+                                "custodyHeadSeq": {
+                                  "anyOf": [
+                                    {
+                                      "type": "integer",
+                                      "minimum": 1
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "custodyHeadSha256": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string",
+                                      "pattern": "^[0-9a-f]{64}$"
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "evidenceId",
+                                "status",
+                                "bytesVerified",
+                                "sha256",
+                                "registrationSha256",
+                                "registryDocSha256",
+                                "custodyHeadSeq",
+                                "custodyHeadSha256"
+                              ],
+                              "additionalProperties": false
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "a",
+                        "b"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "afterSources": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "evidenceId": {
+                              "type": "null"
+                            },
+                            "status": {
+                              "const": "unregistered"
+                            },
+                            "bytesVerified": {
+                              "const": false
+                            }
+                          },
+                          "required": [
+                            "evidenceId",
+                            "status",
+                            "bytesVerified"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "evidenceId": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "status": {
+                              "const": "registered-version"
+                            },
+                            "bytesVerified": {
+                              "const": false
+                            },
+                            "sha256": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{64}$"
+                            },
+                            "registrationSha256": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{64}$"
+                            },
+                            "registryDocSha256": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{64}$"
+                            },
+                            "custodyHeadSeq": {
+                              "anyOf": [
+                                {
+                                  "type": "integer",
+                                  "minimum": 1
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "custodyHeadSha256": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "pattern": "^[0-9a-f]{64}$"
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "evidenceId",
+                            "status",
+                            "bytesVerified",
+                            "sha256",
+                            "registrationSha256",
+                            "registryDocSha256",
+                            "custodyHeadSeq",
+                            "custodyHeadSha256"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "b": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "evidenceId": {
+                              "type": "null"
+                            },
+                            "status": {
+                              "const": "unregistered"
+                            },
+                            "bytesVerified": {
+                              "const": false
+                            }
+                          },
+                          "required": [
+                            "evidenceId",
+                            "status",
+                            "bytesVerified"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "evidenceId": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "status": {
+                              "const": "registered-version"
+                            },
+                            "bytesVerified": {
+                              "const": false
+                            },
+                            "sha256": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{64}$"
+                            },
+                            "registrationSha256": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{64}$"
+                            },
+                            "registryDocSha256": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{64}$"
+                            },
+                            "custodyHeadSeq": {
+                              "anyOf": [
+                                {
+                                  "type": "integer",
+                                  "minimum": 1
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "custodyHeadSha256": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "pattern": "^[0-9a-f]{64}$"
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "evidenceId",
+                            "status",
+                            "bytesVerified",
+                            "sha256",
+                            "registrationSha256",
+                            "registryDocSha256",
+                            "custodyHeadSeq",
+                            "custodyHeadSha256"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ],
+                  "additionalProperties": false
+                },
+                "previousSha256": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "format",
+                "caseId",
+                "conflictId",
+                "revision",
+                "coverage",
+                "operator",
+                "role",
+                "identityMode",
+                "utc",
+                "auditSeq",
+                "auditLineSha256",
+                "operation",
+                "before",
+                "after",
+                "beforeSources",
+                "afterSources",
+                "previousSha256",
+                "sha256"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "key",
+          "createdUtc",
+          "updatedUtc",
+          "doc",
+          "coverage",
+          "revisions"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "format",
+    "version",
+    "caseId",
+    "records"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/conflict-archive.schema.json",
+  "title": "Isolated conflict archive member v1; not an enabled mcase profile"
+}

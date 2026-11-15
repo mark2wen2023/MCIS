@@ -852,3 +852,12 @@ compatibility; do not mistake resolver for report completion. First selected run
 8failed/1passed due missing schema$id; corrected, final9passed2.26s (6new exact
 lookup+1report gap+2actual HTTP). Ordinary synthetic only, no restricted operations.
 See research/conflict_source_intent/EXACT_REVISION_REFERENCE.md.
+
+## Current conflict restoration prerequisite incompatibility
+On70d751a inspect a812d38 immutable source and current product layout. New source
+receipt revisions fail old archive schema; preserve original field/history, no
+allowlist changes. Add frozen code-only schema outside runtime loader and1 ordinary
+synthetic compatibility diagnostic (passed0.23s after fixing test schema registry).
+No usable product restoration or continued-work export enabled. Durable publication/
+readiness, inactive archived receipts and imported-prefix mapping remain necessary.
+See research/conflict_source_intent/LIVE_RESTORE_CURRENT_BLOCKERS.md.
