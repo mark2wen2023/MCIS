@@ -27,3 +27,5 @@ from .track_history.models import LocalReceipt  # noqa: F401
 from .timeline.origin import TimelineImportOrigin  # derived import membership
 
 from .timeline.revisions import ConflictRevision  # full forward history
+
+from .timeline.source_receipts import ConflictSourceReceipt  # registry-only receipt binding

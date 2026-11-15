@@ -3,7 +3,8 @@
 Existing POST /cases/{id}/conflicts and PATCH /conflicts/{id} retain input/response
 data schema and timeline write authorization. Updates and same-ID POST now require
 expectedVersion (see conflict-expected-version-v1.md); response documents stay unchanged.
-Same-ID POST now rejects a/b observation changes409 (conflict-observation-guard-v1.md).
+Same-ID POST rejects a/b observation changes409 without an applicable server registry receipt
+(conflict-source-receipt-v1.md); stricter source permissions are rechecked for receipted changes.
 Allowed unchanged-observation updates preserve full preimage/postimage. No automatic historical approval.
 SQLite only: reserve writer before policy/current/source reads; current row, existing
 summary audit, and append-only conflict_revisions row commit/rollback together.
@@ -50,3 +51,9 @@ No old rows are rewritten/backfilled. Existing conflict archive refusal remains;
 new journal table is NOT whitelisted. This is a prerequisite for a future reviewed
 archive format, NOT conflict backup support. Full evidence bytes are not snapshotted
 here and later file availability is not guaranteed by the stored registry digest.
+
+Receipted forward changes add sourceReceiptId to the revision hash-covered doc.
+The linked durable receipt is consumed with that revision in the same transaction.
+Old revision records are unchanged. A first receipted change on a legacy row retains
+beforeSources=null/unknown coverage; only the newly changed side obtains a new
+capture-time registry binding. No old association is reconstructed.

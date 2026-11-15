@@ -27,3 +27,9 @@ retain their drafts. New-record POST remains existing declared registration beha
 not a source-read receipt/human confirmation. This change does not establish same-read
 original bytes, authenticity of actor, complete source review or generic A→B prevention
 across all modules. Existing archive refusal and visibility policies are unchanged.
+
+## Subsequent limited receipt path
+conflict-source-receipt-v1.md adds explicit server-issued registry receipts for
+authorized users. The409 guard remains when no receipt is supplied. Changed-side
+original/new references must both be known and currently visible under stricter
+source policy. No caller digest bypass. Note/status PATCH remains unchanged.

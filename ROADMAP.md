@@ -437,3 +437,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | CONFLICTSOURCENOTICE | 待测 | 实际冲突页常显来源复核边界及保守操作指引；13 SSR+15既有草稿断言、构建通过（大包警告）；浏览器未验、A→B未修 | logs/CONFLICTSOURCENOTICE-hashes.txt |
 
 | CONFLICTOBSERVATIONGUARD | 待测 | 产品同ID观察变更409零写；说明权限保留，旧史不绑定当前登记；10普通开发测试通过，非新回执/原件核验 | logs/CONFLICTOBSERVATIONGUARD-hashes.txt |
+
+| CONFLICTREGISTRYRECEIPTSUBMIT | 待测 | 后端持久登记回执+观察变更同事务；18普通开发测试，过期/ABA/回滚/并发；无前端来源编辑、非原件/人已读 | logs/CONFLICTREGISTRYRECEIPTSUBMIT-hashes.txt |

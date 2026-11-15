@@ -14,7 +14,7 @@ from ..common.timeutil import sim_to_utc
 from ..db import get_doc, list_docs, put_doc, WRITE_LOCK
 from ..redaction.gateway import require
 from .models import ConflictRow, TimelineEventRow
-from . import revisions
+from . import revisions, source_receipts
 from ..reports.access import begin, NoStoreRoute
 
 router = APIRouter(prefix="/api/v1/cases/{case_id}", tags=["timeline"], route_class=NoStoreRoute)
@@ -88,6 +88,8 @@ def add_conflict(case_id: str, body: dict[str, Any] = Body(...), ctx: Ctx = CtxD
         require(ctx, s, case_id, "timeline", write=True)
         c = dict(body)
         expected = c.pop("expectedVersion", None)
+        receipt_id = c.pop("sourceReceiptId", None)
+        receipt = None
         c["caseId"] = case_id
         c.setdefault("conflictId", next_key([x["conflictId"] for x in list_docs(s, ConflictRow, case_id)], "C-"))
         c.setdefault("status", "Open")
@@ -95,17 +97,46 @@ def add_conflict(case_id: str, body: dict[str, Any] = Body(...), ctx: Ctx = CtxD
         before = get_doc(s, ConflictRow, case_id, c["conflictId"])
         if before is not None:
             revisions.expect_version(s, case_id, c["conflictId"], before, expected)
-            if any(before.get(side) != c.get(side) for side in ('a', 'b')):
-                raise problem(409, "CONFLICT_SOURCE_REVIEW_REQUIRED",
-                              "观察内容或来源更改尚无可验证版本核对；未保存，请保留草稿和原记录。处理说明或状态仍可单独编辑。")
+            if source_receipts.changed(before, c):
+                if receipt_id is None:
+                    raise problem(409, "CONFLICT_SOURCE_REVIEW_REQUIRED",
+                                  "观察更改需取得适用来源登记回执；保留草稿，未保存。说明或状态仍可单独编辑。")
+                receipt = source_receipts.accept(s, ctx, case_id, c["conflictId"], before, c, receipt_id, expected)
+            elif receipt_id is not None:
+                raise problem(422, "SOURCE_RECEIPT_UNEXPECTED", "未改变观察，无需回执")
         elif expected is not None:
             raise problem(412, "CONFLICT_VERSION_CHANGED", "记录已不存在，未按旧版本新建")
+        if before is None and receipt_id is not None:
+            raise problem(422, "SOURCE_RECEIPT_UNEXPECTED", "新记录不能消费已有观察修改回执")
         prepared = revisions.prepare(s, case_id, c["conflictId"], before)
         put_doc(s, ConflictRow, case_id, c["conflictId"], c)
         audit_row = audit.append(s, case_id=case_id, operator=ctx.operator, role=ctx.role, action="conflict.add", category="Timeline",
                      command=f"登记数据冲突 {c['conflictId']}", after=c["summary"], entity_type="conflict", entity_id=c["conflictId"])
-        revisions.capture(s, case_id, c["conflictId"], before, c, prepared, audit_row)
+        revisions.capture(s, case_id, c["conflictId"], before, c, prepared, audit_row,
+                          source_receipt_id=receipt.id if receipt else None)
+        if receipt is not None:
+            receipt.consumed_revision = revisions.last(s, case_id, c["conflictId"]).revision
+            s.flush()
         return c
+
+
+@router.post("/conflicts/{conflict_id}/source-receipts", status_code=201)
+def issue_source_receipt(case_id: str, conflict_id: str, body: dict[str, Any] = Body(...), ctx: Ctx = CtxDep):
+    with WRITE_LOCK, ctx.db.session() as s:
+        begin(s)
+        load_case(s, case_id)
+        require(ctx, s, case_id, "timeline", write=True)
+        if set(body) != {"expectedVersion", "observations"} or not isinstance(body["observations"], dict) or set(body["observations"]) != {"a", "b"}:
+            raise problem(422, "SOURCE_RECEIPT_INPUT", "须提交冲突版本和完整a/b观察")
+        current = get_doc(s, ConflictRow, case_id, conflict_id)
+        if current is None: raise problem(404, "NOT_FOUND", "冲突不存在")
+        proposed = {**current, **body["observations"]}
+        contracts.validate("conflict", proposed)
+        result = source_receipts.issue(s, ctx, case_id, conflict_id, current, proposed, body["expectedVersion"])
+        audit.append(s, case_id=case_id, operator=ctx.operator, role=ctx.role,
+                     action="conflict.sourceReceipt", category="Timeline", command="返回来源登记版本（非原件或已读核验）",
+                     after=result["receiptId"], entity_type="conflict", entity_id=conflict_id)
+        return result
 
 
 @router.patch("/conflicts/{conflict_id}")

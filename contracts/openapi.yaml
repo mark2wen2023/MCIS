@@ -1843,9 +1843,37 @@ paths:
       responses: { '200': { description: ok, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/Conflict' } } } } } }
     post:
       tags: [timeline]
-      summary: 登记冲突（新ID无版本；同ID覆盖必须expectedVersion）
+      summary: 登记冲突（同ID须expectedVersion；改变a/b另须有效sourceReceiptId与来源权限）
       requestBody: { required: true, content: { application/json: { schema: { $ref: 'schemas/conflict-write.schema.json' } } } }
       responses: { '201': { description: ok } }
+  /api/v1/cases/{caseId}/conflicts/{conflictId}/source-receipts:
+    parameters: [{ $ref: '#/components/parameters/caseId' }, { name: conflictId, in: path, required: true, schema: { type: string } }]
+    post:
+      tags: [timeline]
+      summary: 签发拟修改观察的登记版本回执（严格来源权限，非原件/用户已读核验）
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [expectedVersion, observations]
+              properties:
+                expectedVersion: { type: string, pattern: '^[a-f0-9]{64}$' }
+                observations:
+                  type: object
+                  additionalProperties: false
+                  required: [a, b]
+                  properties:
+                    a: { $ref: 'schemas/conflict.schema.json#/$defs/observation' }
+                    b: { $ref: 'schemas/conflict.schema.json#/$defs/observation' }
+      responses:
+        '201': { description: '持久登记回执，10分钟有效；完整合同见conflict-source-receipt-v1.md' }
+        '403': { description: 来源不可见 }
+        '409': { description: 来源未知或回执不适用，保留输入 }
+        '412': { description: 冲突版本已改变，未签发 }
+        '428': { description: 缺少冲突版本 }
   /api/v1/cases/{caseId}/conflicts/{conflictId}:
     parameters: [{ $ref: '#/components/parameters/caseId' }, { name: conflictId, in: path, required: true, schema: { type: string } }]
     patch:

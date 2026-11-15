@@ -792,3 +792,10 @@ POST observation a/b changes rejected409 before mutation, since source-view rece
 not implemented. Status/resolution edits retain original timeline permission. Legacy
 first capture of unchanged observation remains unresolved/unregistered, no fabricated
 current registry binding. Intentional old observation-write compatibility tightening.
+
+## Durable registry receipts for explicitly authorized observation changes
+Onaa107b5 add opt-in strict-source-permission issue route and same-transaction compare,
+revision/audit association and consumption; no-receipt409 and timeline-only PATCH stay.
+Reopen timeline/router/revisions, models registry and write/OpenAPI contracts. No actual
+source bytes or user-read claims. Existing source-policy path reused without loosening;
+archive support unchanged. See conflict-source-receipt-v1.md.

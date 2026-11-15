@@ -58,7 +58,7 @@ def bindings(s,case_id,doc,before,previous):
         observation=doc.get(side,{})
         evidence_id=observation.get('evidenceId')
         value={'evidenceId':evidence_id,'status':'unregistered','bytesVerified':False}
-        if before is not None and previous is None:
+        if before is not None and previous is None and before.get(side)==doc.get(side):
             # Legacy observation's original registry version is unknown. A note/status
             # edit must not manufacture a historic association from today's registry.
             if evidence_id: value['status']='unresolved'
@@ -78,7 +78,7 @@ def bindings(s,case_id,doc,before,previous):
     return out
 
 
-def capture(s,case_id,key,before,after,prepared,audit_row):
+def capture(s,case_id,key,before,after,prepared,audit_row,*,source_receipt_id=None):
     previous,coverage=prepared
     before_sources=deepcopy(previous.doc['afterSources']) if previous else None
     doc={'format':'MCIS-CONFLICT-REVISION-1','caseId':case_id,'conflictId':key,
@@ -88,6 +88,7 @@ def capture(s,case_id,key,before,after,prepared,audit_row):
          'before':deepcopy(before),'after':deepcopy(after),
          'beforeSources':before_sources,'afterSources':bindings(s,case_id,after,before,previous),
          'previousSha256':previous.doc['sha256'] if previous else None}
+    if source_receipt_id is not None: doc['sourceReceiptId']=source_receipt_id
     doc['sha256']=digest(doc)
     s.add(ConflictRevision(case_id=case_id,conflict_id=key,revision=doc['revision'],doc=doc))
     s.flush()

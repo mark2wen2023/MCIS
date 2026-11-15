@@ -150,6 +150,11 @@
     "expectedVersion": {
       "type": "string",
       "pattern": "^[a-f0-9]{64}$"
+    },
+    "sourceReceiptId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "服务端登记版本回执；仅现有观察变更消费，不证明已读/原件核验"
     }
   },
   "additionalProperties": false
