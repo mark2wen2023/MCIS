@@ -745,3 +745,6 @@ Parent6e493f1 row selection replaced local note/version and any patch success cl
 
 ## Conflict revision archive assessment
 On be93cfa, assess complete available conflict journal preservation and proposed new bounded profile; no runtime enabling. Preserve legacy unknown prefix and registration-only source semantics. Three synthetic dependency tests, plan research/trajectory/CONFLICT_REVISION_ARCHIVE_PLAN.md.
+
+## Isolated conflict archive member contract/parser
+On04b793a, define closed member v1 and offline dependency validation only. Existing mcase versions, routes, permissions and export refusal remain unchanged until complete restoration passes. Preserve unknown history, registered versions and bytesVerified=false. See contracts/conflict-archive-member-v1.md and research/trajectory/CONFLICT_ARCHIVE_PARSER.md.
