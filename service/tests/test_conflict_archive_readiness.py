@@ -1,8 +1,9 @@
+from .conflict_version_helpers import checked
 """Ordinary synthetic conflict writes; no report-integrity or ECFC probes."""
 import json
 from sqlalchemy import select
 from mcis_service.timeline.models import ConflictRow
-from .test_working_record_archive import client_at,checked,ROOT,CID,snapshot
+from .test_working_record_archive import client_at,ROOT,CID,snapshot
 from .test_consultation_archive_readiness import state
 
 

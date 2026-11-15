@@ -1,8 +1,9 @@
+import {editableRows, conflictWriteBody, CONFLICT_REFRESH_NOTICE, type EditableConflict, type VersionedConflict} from '../timeline/conflictEditing'
 import {OriginNotice, type EventOrigins} from '../timeline/OriginNotice'
 import { useMemo, useState, useSyncExternalStore } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import type { EChartsOption } from 'echarts'
-import { api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
+import { ApiError, api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
 import { EvidenceIntakePanel } from '../evidenceIntake/EvidenceIntakePanel'
 import { announceEvidenceSelection } from '../evidenceIntake/navigation'
 import { AlignPreviewPanel } from '../align/AlignPreviewPanel'
@@ -60,7 +61,7 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
   const ev = useLoad(() => api.get<EvidenceItem[]>(casePath('/evidence', caseId)))
   const chain = useLoad(() => api.get<ChainCheck>(casePath('/custody:verify-chain', caseId)))
   const tl = useLoad(() => api.get<TimelineResp>(casePath('/timeline', caseId)))
-  const conflicts = useLoad(() => api.get<Conflict[]>(casePath('/conflicts', caseId)))
+  const conflicts = useLoad(() => api.get<VersionedConflict[]>(casePath('/conflicts:editable', caseId)).then(editableRows))
   const cpa = useLoad(() => loadEvidenceCpa(caseId))
   const [selId, setSelId] = useState<string>(requestedId || 'EV-001')
   const items = ev.data ?? []
@@ -218,19 +219,30 @@ function CustodyPanel({ caseId, item, events, onChanged, offsetMinutes }: { offs
   )
 }
 
-function ConflictPanel({ caseId, conflicts, epoch, onChanged, offsetMinutes }: { offsetMinutes: number; caseId: string; conflicts: Conflict[]; epoch?: string; onChanged: () => void }) {
+function ConflictPanel({ caseId, conflicts, epoch, onChanged, offsetMinutes }: { offsetMinutes: number; caseId: string; conflicts: EditableConflict[]; epoch?: string; onChanged: () => void }) {
   const { run } = useToast()
   const [editing, setEditing] = useState<string | null>(null)
   const [note, setNote] = useState('')
-  const patch = (c: Conflict, body: Partial<Conflict>, ok: string) =>
-    run(async () => { const r = await api.patch(casePath(`/conflicts/${c.conflictId}`, caseId), body); onChanged(); return r }, ok)
+  const [editVersion, setEditVersion] = useState<string>()
+  const [saveError, setSaveError] = useState('')
+  const patch = (c: EditableConflict, body: Partial<Conflict>, ok: string, version: string | undefined) =>
+    run(async () => {
+      try {
+        const r = await api.patch(casePath(`/conflicts/${c.conflictId}`, caseId), conflictWriteBody(version, body))
+        setSaveError(''); setEditing(null); onChanged(); return r
+      } catch(error) {
+        if(error instanceof ApiError && (error.status === 412 || error.status === 428)) setSaveError(CONFLICT_REFRESH_NOTICE)
+        throw error
+      }
+    }, ok)
   return (
     <Panel title="多源时间对齐 · 冲突清单" meta={<span>状态变更写审计 conflict.update</span>} bodyStyle={{ padding: 0, maxHeight: 272 }}>
+      {saveError && <div role="alert">{saveError}<button type="button" onClick={onChanged}>刷新以比对（不自动保存）</button></div>}
       <table className="p6-table">
         <thead><tr><th>冲突</th><th>内容（A ／ B）</th><th>差值</th><th>处理</th></tr></thead>
         <tbody>
           {conflicts.map((c) => (
-            <tr key={c.conflictId} className={editing === c.conflictId ? 'sel' : ''} onClick={() => { setEditing(c.conflictId); setNote(c.resolution) }}>
+            <tr key={c.conflictId} className={editing === c.conflictId ? 'sel' : ''} onClick={() => { setEditing(c.conflictId); setNote(c.resolution); setEditVersion(c.expectedVersion) }}>
               <td className="mono" style={{ color: 'var(--cyan)' }}>
                 {c.conflictId}
                 <div className="p6-muted" style={{ fontSize: 9.5 }}>{c.timeSec != null && epoch ? simToClock(epoch, c.timeSec, true, offsetMinutes) : ''}</div>
@@ -241,7 +253,7 @@ function ConflictPanel({ caseId, conflicts, epoch, onChanged, offsetMinutes }: {
                 {editing === c.conflictId && (
                   <div className="row-actions" style={{ marginTop: 4 }} onClick={(e) => e.stopPropagation()}>
                     <input className="input" style={{ flex: 1 }} placeholder="处理说明（resolution）" value={note} onChange={(e) => setNote(e.target.value)} />
-                    <button className="btn btn-sm" onClick={() => patch(c, { resolution: note }, `${c.conflictId} 处理说明已保存`)}>保存</button>
+                    <button className="btn btn-sm" onClick={() => patch(c, { resolution: note }, `${c.conflictId} 处理说明已保存`, editVersion)}>保存</button>
                   </div>
                 )}
               </td>
@@ -250,7 +262,7 @@ function ConflictPanel({ caseId, conflicts, epoch, onChanged, offsetMinutes }: {
                 <span className={`st ${CONFLICT_STATUS[c.status][0]}`}>{CONFLICT_STATUS[c.status][1]}</span>
                 <div style={{ marginTop: 3 }}>
                   <select className="select" style={{ fontSize: 10.5, padding: '1px 4px' }} value={c.status}
-                    onChange={(e) => patch(c, { status: e.target.value as ConflictStatus }, `${c.conflictId} → ${CONFLICT_STATUS[e.target.value as ConflictStatus][1]}`)}>
+                    onChange={(e) => patch(c, { status: e.target.value as ConflictStatus }, `${c.conflictId} → ${CONFLICT_STATUS[e.target.value as ConflictStatus][1]}`, c.expectedVersion)}>
                     {(Object.keys(CONFLICT_STATUS) as ConflictStatus[]).map((s) => <option key={s} value={s}>{CONFLICT_STATUS[s][1]}</option>)}
                   </select>
                 </div>

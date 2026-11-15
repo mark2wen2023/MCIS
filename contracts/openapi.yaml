@@ -1829,6 +1829,12 @@ paths:
       summary: 新增时间线事件（utc 由 timeSec 推导）
       requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/TimelineEvent' } } } }
       responses: { '201': { description: ok } }
+  /api/v1/cases/{caseId}/conflicts:editable:
+    parameters: [{ $ref: '#/components/parameters/caseId' }]
+    get:
+      tags: [timeline]
+      summary: 同次读取冲突内容及写入版本（现有timeline权限）
+      responses: { '200': { description: '[{conflict, version}]；版本必须随保存提交，不可自动刷新后重试' } }
   /api/v1/cases/{caseId}/conflicts:
     parameters: [{ $ref: '#/components/parameters/caseId' }, { name: status, in: query, schema: { type: string } }]
     get:
@@ -1837,15 +1843,15 @@ paths:
       responses: { '200': { description: ok, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/Conflict' } } } } } }
     post:
       tags: [timeline]
-      summary: 登记冲突（W2 钟差/冲突检测结果入库）
-      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/Conflict' } } } }
+      summary: 登记冲突（新ID无版本；同ID覆盖必须expectedVersion）
+      requestBody: { required: true, content: { application/json: { schema: { $ref: 'schemas/conflict-write.schema.json' } } } }
       responses: { '201': { description: ok } }
   /api/v1/cases/{caseId}/conflicts/{conflictId}:
     parameters: [{ $ref: '#/components/parameters/caseId' }, { name: conflictId, in: path, required: true, schema: { type: string } }]
     patch:
       tags: [timeline]
-      summary: 更新冲突处理状态
-      requestBody: { content: { application/json: { schema: { type: object, properties: { status: { type: string }, resolution: { type: string } } } } } }
+      summary: 更新冲突处理状态（必须expectedVersion；缺少428，陈旧412）
+      requestBody: { content: { application/json: { schema: { type: object, properties: { status: { type: string }, resolution: { type: string }, expectedVersion: { type: string, pattern: "^[a-f0-9]{64}$" } } } } } }
       responses: { '200': { description: ok } }
 
   /api/v1/cases/{caseId}/interviews:

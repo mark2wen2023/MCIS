@@ -1,3 +1,4 @@
+from .conflict_version_helpers import checked
 """Synthetic ordinary API/concurrency/rollback; no historical-security probes."""
 from concurrent.futures import ThreadPoolExecutor
 from sqlalchemy import select
@@ -5,7 +6,7 @@ from mcis_service.db import put_doc
 from mcis_service.timeline.models import ConflictRow
 from mcis_service.evidence.models import EvidenceRow
 from mcis_service.evidence.service import append_custody
-from .test_working_record_archive import client_at,checked,ROOT,CID
+from .test_working_record_archive import client_at,ROOT,CID
 from .test_conflict_archive_readiness import body
 from .test_consultation_archive_readiness import state
 from .conftest import H
@@ -80,13 +81,16 @@ def test_failure_rolls_back_row_revision_and_audit(tmp_path,monkeypatch):
 def test_concurrent_same_id_updates_keep_all_preimages(tmp_path):
     with client_at(tmp_path/'a',True) as c:
         checked(c,'post',ROOT+'/conflicts',body(),201)
+        from .test_working_record_archive import HEAD
+        token=checked(c,'get',ROOT+'/conflicts:editable').json()[0]['version']
         def update(n):
-            return checked(c,'patch',ROOT+'/conflicts/C-01',{'resolution':f'Synthetic {n}'}).json()
+            return c.patch(ROOT+'/conflicts/C-01',headers=HEAD,json={'resolution':f'Synthetic {n}','expectedVersion':token})
         with ThreadPoolExecutor(max_workers=2) as executor:
             results=list(executor.map(update,range(2)))
-        rs=history(c)['revisions'];assert len(rs)==3
-        assert {r['after']['resolution'] for r in rs[1:]}=={r['resolution'] for r in results}
-        assert rs[2]['before']==rs[1]['after']
+        assert sorted(r.status_code for r in results)==[200,412]
+        rs=history(c)['revisions'];assert len(rs)==2
+        assert rs[-1]['after']==next(r.json() for r in results if r.status_code==200)
+        assert rs[1]['before']==rs[0]['after']
         assert checked(c,'get',ROOT+'/audit:verify').json()['valid']
 
 

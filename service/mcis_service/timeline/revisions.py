@@ -116,3 +116,18 @@ def history(s,ctx,case_id,key,current):
     return {'caseId':case_id,'conflictId':key,
         'coverage':previous['coverage'] if previous else 'unknown-before-capture',
         'identityMode':'unverified-self-reported','revisions':[r.doc for r in rows]}
+
+
+def write_version(s,case_id,key,current):
+    previous=last(s,case_id,key)
+    return digest({'caseId':case_id,'conflictId':key,'current':current,
+                   'revisionSha256':previous.doc['sha256'] if previous else None})
+
+
+def expect_version(s,case_id,key,current,expected):
+    if expected is None:
+        raise problem(428,'CONFLICT_VERSION_REQUIRED','请重新读取带版本的冲突记录；旧客户端须升级后保存')
+    if not isinstance(expected,str) or not re.fullmatch('[0-9a-f]{64}',expected):
+        raise problem(422,'CONFLICT_VERSION_INVALID','冲突版本格式无效')
+    if expected!=write_version(s,case_id,key,current):
+        raise problem(412,'CONFLICT_VERSION_CHANGED','记录已更新；请保留本地说明，刷新并比对后重新编辑，未保存本次更改')

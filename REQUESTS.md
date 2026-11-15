@@ -729,3 +729,13 @@ same-case registration presence/current policy visibility. Correct contract, Ope
 and implementation report: no file open/existence/readability/byte-integrity check,
 bytesVerified remains false. No runtime or permission changes; no original-file
 probe. Add offline wording regression; no corresponding frontend integration found.
+
+## Conflict stale-screen write precondition
+
+Add content+version read and mandatory expectedVersion for existing conflict PATCH
+and same-ID POST, compared inside existing SQLite transaction. Missing old-client
+version428, stale412/no writes; new-ID creation and old read shape stay compatible.
+Workbench preserves edit-start version and local note on conflict, offers manual
+refresh/compare without automatic retry. No permission/archive expansion. Contract:
+contracts/conflict-expected-version-v1.md. Ordinary tests use explicit stale tokens;
+non-concurrency fixture helper supplies fresh versions only for those test intents.

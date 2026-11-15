@@ -21,6 +21,7 @@ router = APIRouter(prefix="/api/v1/cases/{case_id}", tags=["timeline"], route_cl
 
 
 class ConflictPatch(BaseModel):
+    expectedVersion: str | None = None
     status: Literal["Open", "PendingInterview", "ClockCorrected", "Annotated", "Resolved", "AcceptedAsIs"] | None = None
     resolution: str | None = None
 
@@ -69,6 +70,16 @@ def get_conflicts(case_id: str, ctx: Ctx = CtxDep, status: str | None = None) ->
         return [c for c in out if status is None or c["status"] == status]
 
 
+@router.get("/conflicts:editable")
+def editable_conflicts(case_id: str, ctx: Ctx = CtxDep):
+    with WRITE_LOCK, ctx.db.session() as s:
+        begin(s)
+        load_case(s, case_id)
+        require(ctx, s, case_id, "timeline")
+        return [{"conflict": doc, "version": revisions.write_version(s,case_id,doc["conflictId"],doc)}
+                for doc in list_docs(s,ConflictRow,case_id)]
+
+
 @router.post("/conflicts", status_code=201)
 def add_conflict(case_id: str, body: dict[str, Any] = Body(...), ctx: Ctx = CtxDep) -> dict[str, Any]:
     with WRITE_LOCK, ctx.db.session() as s:
@@ -76,11 +87,16 @@ def add_conflict(case_id: str, body: dict[str, Any] = Body(...), ctx: Ctx = CtxD
         load_case(s, case_id)
         require(ctx, s, case_id, "timeline", write=True)
         c = dict(body)
+        expected = c.pop("expectedVersion", None)
         c["caseId"] = case_id
         c.setdefault("conflictId", next_key([x["conflictId"] for x in list_docs(s, ConflictRow, case_id)], "C-"))
         c.setdefault("status", "Open")
         contracts.validate("conflict", c)
         before = get_doc(s, ConflictRow, case_id, c["conflictId"])
+        if before is not None:
+            revisions.expect_version(s, case_id, c["conflictId"], before, expected)
+        elif expected is not None:
+            raise problem(412, "CONFLICT_VERSION_CHANGED", "记录已不存在，未按旧版本新建")
         prepared = revisions.prepare(s, case_id, c["conflictId"], before)
         put_doc(s, ConflictRow, case_id, c["conflictId"], c)
         audit_row = audit.append(s, case_id=case_id, operator=ctx.operator, role=ctx.role, action="conflict.add", category="Timeline",
@@ -97,9 +113,10 @@ def patch_conflict(case_id: str, conflict_id: str, body: ConflictPatch, ctx: Ctx
         c = get_doc(s, ConflictRow, case_id, conflict_id)
         if c is None:
             raise problem(404, "NOT_FOUND", f"冲突不存在：{conflict_id}")
+        revisions.expect_version(s, case_id, conflict_id, c, body.expectedVersion)
         prepared = revisions.prepare(s, case_id, conflict_id, c)
         new = dict(c)
-        for k, v in body.model_dump(exclude_none=True).items():
+        for k, v in body.model_dump(exclude_none=True, exclude={"expectedVersion"}).items():
             new[k] = v
         contracts.validate("conflict", new)
         b, a = diff_summary(c, new, ["status", "resolution"])

@@ -1,12 +1,14 @@
 # Forward conflict revision capture v1 (candidate)
 
 Existing POST /cases/{id}/conflicts and PATCH /conflicts/{id} retain input/response
-schema and timeline write authorization. Same-ID POST still replaces current data,
+data schema and timeline write authorization. Updates and same-ID POST now require
+expectedVersion (see conflict-expected-version-v1.md); response documents stay unchanged.
+Same-ID POST still replaces current data,
 but now preserves full preimage/postimage. No automatic historical approval.
 SQLite only: reserve writer before policy/current/source reads; current row, existing
 summary audit, and append-only conflict_revisions row commit/rollback together.
-No non-SQLite fallback. Concurrent writes are serialized, not optimistic client CAS;
-last accepted update wins but every accepted preimage is retained. No auto retry.
+No non-SQLite fallback. Concurrent writes are serialized and expectedVersion is compared in that transaction;
+stale updates reject412 without writes. Every accepted preimage is retained. No auto retry.
 
 A revision contains case/conflict ID, ordinal, complete before/after documents,
 actor/role declarations, UTC, auditSeq and original audit-line SHA256, source bindings,

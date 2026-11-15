@@ -419,3 +419,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Conflict forward revision capture | 待测 | 3ee41de descendant; full before/after plus registry source binding, legacy history unknown;118 selected synthetic backend tests passed; no source-byte/SSO/browser/production acceptance, conflict archive still refused; logs/conflict-revision-capture-hashes.txt |
 
 | Conflict registry-only wording | 待测 | a5bbbbc descendant; precise registration/visibility boundary and bytesVerified=false;3 offline wording tests passed; no original-file probe/runtime/UI change; logs/conflict-registry-wording-hashes.txt |
+
+| Conflict expected-version writes | 待测 | 207e3a6 descendant; existing-ID writes require captured version, stale412/missing428;125 selected backend plus1 existing audit test passed,8 frontend model assertions and build passed; synthetic developer tests only, browser/independent/production unverified; logs/conflict-expected-version-impl-hashes-frozen.txt |

@@ -53,7 +53,9 @@ def test_timeline_filter_add(client):
 def test_conflicts_patch_audited(client):
     cs = client.get(f"{C}/conflicts").json()
     assert [c["conflictId"] for c in cs] == ["C-01", "C-02", "C-03", "C-04"]
-    r = client.patch(f"{C}/conflicts/C-01", json={"status": "Resolved", "resolution": "补充询问后确认 14:22:15"}, headers=H())
+    editable = client.get(f"{C}/conflicts:editable", headers=H()).json()
+    version = next(row["version"] for row in editable if row["conflict"]["conflictId"] == "C-01")
+    r = client.patch(f"{C}/conflicts/C-01", json={"status": "Resolved", "resolution": "补充询问后确认 14:22:15", "expectedVersion": version}, headers=H())
     assert r.status_code == 200 and r.json()["status"] == "Resolved"
     last = client.get(f"{C}/audit", params={"entityId": "C-01"}).json()[-1]
     assert last["action"] == "conflict.update" and "PendingInterview" in last["before"] and "Resolved" in last["after"]

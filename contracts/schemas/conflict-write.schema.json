@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/conflict-write.schema.json",
+  "title": "Conflict write request",
+  "description": "New IDs omit expectedVersion; replacement of an existing ID requires its current version. Never persisted as a conflict field.",
+  "type": "object",
+  "required": [
+    "conflictId",
+    "caseId",
+    "summary",
+    "a",
+    "b",
+    "status"
+  ],
+  "$defs": {
+    "observation": {
+      "type": "object",
+      "required": [
+        "sourceLabel",
+        "valueText"
+      ],
+      "properties": {
+        "sourceLabel": {
+          "type": "string",
+          "description": "如 VDR / 笔录 IR-03 / ECDIS / AIS"
+        },
+        "valueText": {
+          "type": "string"
+        },
+        "value": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "timeSec": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "evidenceId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "conflictId": {
+      "type": "string",
+      "pattern": "^C-[0-9]{2,}$"
+    },
+    "caseId": {
+      "$ref": "common.schema.json#/$defs/caseId"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "trackKind": {
+      "type": "string",
+      "enum": [
+        "Position",
+        "SpeedOverGround",
+        "CourseOverGround",
+        "Heading",
+        "RateOfTurn",
+        "RudderAngle",
+        "EngineTelegraph",
+        "TargetRange",
+        "TargetBearing",
+        "TargetPosition",
+        "Audio",
+        "RadarImage",
+        "EcdisImage",
+        "Other",
+        "EventTime"
+      ]
+    },
+    "vesselId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "timeSec": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "a": {
+      "$ref": "#/$defs/observation"
+    },
+    "b": {
+      "$ref": "#/$defs/observation"
+    },
+    "delta": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "deltaUnit": {
+      "type": "string",
+      "description": "s / kn / deg / m / nm"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Open",
+        "PendingInterview",
+        "ClockCorrected",
+        "Annotated",
+        "Resolved",
+        "AcceptedAsIs"
+      ]
+    },
+    "resolution": {
+      "type": "string",
+      "description": "处理说明，如 标注·采信 AIS"
+    },
+    "detectedBy": {
+      "type": "string",
+      "enum": [
+        "RuleEngine",
+        "Investigator",
+        "Agent"
+      ],
+      "default": "RuleEngine"
+    },
+    "resolvedBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "处理人（调查员 ID 或 Agent 名）"
+    },
+    "resolvedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "处理时间 ISO-8601（含时区）"
+    },
+    "expectedVersion": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "additionalProperties": false
+}
