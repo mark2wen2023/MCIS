@@ -398,3 +398,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTTRACE | 待独审 | 2026-11-14：PR87head99b44f0上新增10跨视图追溯/反认证回归，组合174项通过；冻结 logs/EXPERTTRACE-impl-hashes-frozen.txt。不改运行代码；真模型0/HOLD，非浏览器或事实验收。 |
 | EXPERTTRACE | 测试增量独审通过 | 2026-11-14：独立无.git副本10过；临时断开taskId触发5红、伪认证flag触发1红，恢复10过；冻结2/2，运行文件无差异。见 DEFECTS/EXPERTTRACE.md。真实模型0/HOLD。 |
 | Ordinary report functional test principals | 待独审 | 2026-11-15：main94d5e38 独立测试修复；普通两文件58败9过→69过，原权限回归80过；新增默认Investigator拒绝/零写断言，生产权限不改。HFACS缺依赖单列未跑，不含受限历史完整性复验。冻结 logs/report-functional-test-policy-impl-hashes-frozen.txt。 |
+
+| 共享轨迹输入契约 v1 前置 | 待测 / 待独立验收 | 2026-11-15：新增独立JSON契约与离线语义校验，保留来源/校时/缺失/艏向航迹向/示意比例；45构造测试+70既有W10.2回归通过。不改现有接口/权限，不是二维/Unity适配或三维实现。冻结 logs/shared-trajectory-v1-impl-hashes-frozen.txt。 |
