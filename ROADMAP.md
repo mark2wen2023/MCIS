@@ -401,3 +401,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | PUBLICTEXTLOCATION | 待测 / 待独审 | 固定公开文本版本与LF行定位；保留原证据链接与权限。26新断言、148 W16断言、86后端测试及构建自测；真实浏览器/PDF跳页未验，非当前证据原件认证。冻结：logs/public-text-line-location-impl-hashes-frozen.txt。 |
 
 | PUBLICTEXTLOCATION | 返工后待独审 | PR103终止换页符不能生成PDF54页；显式53页上限，空白行/跨页/末页回归。32前端计数检查及页边界断言、148 W16、87后端通过，构建通过；浏览器仍未验。冻结清单已更新。 |
+
+| PUBLICTEXTLOCATION | 触屏说明返工后待独审 | 当前证据版本未核验、引文内容未自动核对改为始终可见；35检查及148 W16断言、构建自测通过，真实触屏/浏览器未验；定位与权限不变。 |

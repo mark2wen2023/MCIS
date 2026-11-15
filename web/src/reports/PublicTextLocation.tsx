@@ -35,5 +35,5 @@ export function PublicTextLocation({ citation, caseId }: { citation: Citation; c
   if (!location) return null
   return <span className="p6-note"> · <a href={location.href} target="_blank" rel="noopener noreferrer"
     title={`固定公开文本 SHA256=${location.sha256}；不是当前证据原件核验；不是 PDF 跳页`}>
-    固定版本公开文本 L{location.start}–L{location.end}</a>（外部 GitHub；需核对原文，非 PDF 跳页）</span>
+    固定版本公开文本 L{location.start}–L{location.end}</a>（外部 GitHub；非 PDF 跳页；未核验当前证据版本；未自动核对引文内容，请人工复核）</span>
 }

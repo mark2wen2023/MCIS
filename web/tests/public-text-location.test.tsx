@@ -43,6 +43,11 @@ ok(publicTextLocation(c,'OTHER')===null)
 const html=renderToStaticMarkup(<PublicTextLocation citation={c} caseId={index.caseId}/>)
 ok(html.includes('L1026–L1033'))
 ok(html.includes('非 PDF 跳页')&&html.includes('不是当前证据原件核验'))
+// Strip tags/attributes: tooltip-only disclosures must not satisfy these checks.
+const visibleText=html.replace(/<[^>]*>/g,'')
+ok(visibleText.includes('未核验当前证据版本'))
+ok(visibleText.includes('未自动核对引文内容'))
+ok(visibleText.includes('请人工复核'))
 ok(html.includes('noopener noreferrer'))
 ok(renderToStaticMarkup(<PublicTextLocation citation={c} caseId="OTHER"/>)==='')
 // Actual terminal separator: never label it PDF54, nor silently clamp to PDF53.

@@ -56,3 +56,15 @@ Final developer rerun: 32 counted frontend checks plus source/page-boundary
 assertions, 148 W16 assertions, 87 backend tests, build pass (same chunk warning).
 Browser interaction and independent re-acceptance still pending. No PDF uploaded
 or production permission/backend change.
+
+## Always-visible disclosure follow-up
+
+The link's visible text now explicitly says “未核验当前证据版本” and
+“未自动核对引文内容，请人工复核”. These limitations no longer depend on
+hover/title access. SSR regression strips HTML tags and attributes before checking
+both disclosures and the human-review instruction. No location or permission
+logic changed. Developer rerun: 35 counted checks plus existing boundary assertions,
+148 W16 assertions and build pass. Real touch/browser interaction remains untested.
+An initial build command used repository root rather than web and could not find
+esbuild; rerunning from web succeeded. Backend unchanged; prior 87-pass result
+was not rerun for this text-only change.

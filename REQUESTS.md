@@ -653,3 +653,6 @@ Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD
 
 ### PUBLICTEXTLOCATION 边界返工（2026-11-15）
 独立验收复现末尾换页符L1156被计为不存在的PDF54页。修改冻结定位器与索引：显式记录公开PDF总页数53并拒绝越界页，保留内部换页符计数（不折叠空页），不把末尾分隔符重新映射为第53页。补最后页、终止符、跨页及空白行回归；不改权限或后端生产逻辑。
+
+### PUBLICTEXTLOCATION 触屏说明返工（2026-11-15）
+按独立复审建议修改冻结组件的可见说明：始终显示“未核验当前证据版本；未自动核对引文内容”，不依赖title悬停；不改定位、权限或功能范围。增加去除HTML标签/属性后的可见文本断言。
