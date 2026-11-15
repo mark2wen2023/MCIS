@@ -403,3 +403,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | BOUNDEDTIMELINEWEB | 待独审 / 浏览器未验 | 有限1.4前端模型及范围提示接线；70新检查、旧W8.5/ArchiveB模型、构建及6后端普通测试过；HFACS面板/归档提示2既有文案失败保留。复杂案例/航迹历史混合不支持，权限未改。冻结logs/bounded-timeline-web-hashes.txt。 |
 
 | Timeline latest-import origin | 待测 | e68bacc descendant; server-derived case/event/source binding, visible historical-not-current-review notices;87 selected backend tests,9 new SSR assertions,68 intake assertions and build passed; browser/HFACS/full suite not run; logs/timeline-import-origin-impl-hashes-frozen.txt; no merge/deploy |
+
+| Timeline-only archive profile fix | 待测 | b23c7b6 descendant; nonempty timeline selects existing bounded1.4 path; synthetic two-restoration workflow and refusal/permission/empty-case regressions;91 selected backend passed; browser/full suite not run; logs/timeline-only-profile-fix-hashes.txt |

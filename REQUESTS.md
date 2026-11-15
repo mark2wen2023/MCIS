@@ -661,3 +661,11 @@ recomputed each import, checked against retained source before export. Original
 packages/receipts/audit remain authoritative and unchanged. Timeline API adds an
 origin map; existing event schema and permission checks remain unchanged. No backfill
 inference for pre-index databases. See contracts/timeline-import-origin.md.
+
+## Timeline-only archive format selection
+
+Ordinary independent review found bounded1.4 excluded timeline-only cases from
+has_history, producing non-restorable1.0 exports. Add TimelineEventRow detection
+before existing archive assembly; no parser, table whitelist, permission, or
+unsupported-combination relaxation. Supersedes the previous timeline-only legacy
+selection clause. Record: research/trajectory/TIMELINE_ONLY_PROFILE_FIX.md.
