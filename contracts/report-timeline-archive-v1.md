@@ -23,3 +23,10 @@ mentioned above belongs to another unmerged candidate, not this branch. Current
 web still rejects1.4. Fresh ordinary tests are recorded in
 research/trajectory/BOUNDED_TIMELINE_MAIN.md; no inherited security/browser results
 are claimed as current acceptance.
+
+### Latest-import origin candidate
+
+The descendant described in `timeline-import-origin.md` adds a local derived origin
+index and visible per-event notices. It supersedes the earlier statement that no
+historical-status marker exists, without changing the1.4 member or event schema.
+Original declarations remain unreviewed by import; no new review endpoint is added.

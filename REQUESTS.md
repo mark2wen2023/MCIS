@@ -653,3 +653,11 @@ Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD
 
 ## BOUNDEDTIMELINEWEB（2026-11-15）
 在2cb43812后裔独立分支复用既有7aa9b9f前端两个文件，冻结packageIntake/model与面板改动：只接有限1.4+working-v1，拒绝working-v2/track混合摘要、非法版本/计数/回执，并显示范围限制；后端权限和预检不变。新70检查（含2真实合成HTTP响应）及旧W8.5/ArchiveB模型、构建通过；两项文案回归在精确父版同失败。浏览器未执行，详见research/trajectory/BOUNDED_TIMELINE_WEB.md。
+
+## Timeline import origin candidate
+Authorize a derived, server-built per-event index of the most recent validated1.4
+import; no new review assertion. Index contains only package and exact-row digests,
+recomputed each import, checked against retained source before export. Original
+packages/receipts/audit remain authoritative and unchanged. Timeline API adds an
+origin map; existing event schema and permission checks remain unchanged. No backfill
+inference for pre-index databases. See contracts/timeline-import-origin.md.

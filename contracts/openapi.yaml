@@ -1785,7 +1785,7 @@ paths:
     get:
       tags: [timeline, unity]
       summary: 取时间线（Unity 回放轴标记 + 网页时间线）
-      responses: { '200': { description: '{caseId, caseEpochUtc, displayTimeZoneOffsetMinutes, durationSec, events: TimelineEvent[]}' } }
+      responses: { '200': { description: '{caseId, caseEpochUtc, displayTimeZoneOffsetMinutes, durationSec, events: TimelineEvent[], eventOrigins: per-event latest import membership (contracts/timeline-import-origin.md)}' } }
   /api/v1/cases/{caseId}/timeline/align-preview:
     parameters: [{ $ref: '#/components/parameters/caseId' }]
     post:

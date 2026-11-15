@@ -32,10 +32,12 @@ def get_timeline(case_id: str, ctx: Ctx = CtxDep, fromSec: float | None = None, 
         evs = list_docs(s, TimelineEventRow, case_id)
         evs = [e for e in evs if (fromSec is None or (e.get("endTimeSec") or e["timeSec"]) >= fromSec)
                and (toSec is None or e["timeSec"] <= toSec) and (includeDrafts or e.get("confirmed", True))]
+        from .origin import listing
+        origins = listing(s, case_id, evs)
         evs.sort(key=lambda e: (e["timeSec"], e["eventId"]))
         return {"caseId": case_id, "caseEpochUtc": case["caseEpochUtc"],
                 "displayTimeZoneOffsetMinutes": case["displayTimeZoneOffsetMinutes"],
-                "durationSec": case.get("durationSec"), "events": evs}
+                "durationSec": case.get("durationSec"), "events": evs, "eventOrigins": origins}
 
 
 @router.post("/timeline/events", status_code=201)

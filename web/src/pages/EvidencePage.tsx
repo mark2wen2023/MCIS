@@ -1,3 +1,4 @@
+import {OriginNotice, type EventOrigins} from '../timeline/OriginNotice'
 import { useMemo, useState, useSyncExternalStore } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import type { EChartsOption } from 'echarts'
@@ -29,7 +30,7 @@ const CONFLICT_STATUS: Record<ConflictStatus, [string, string]> = {
   Resolved: ['st-info', '已解决'],
 }
 
-interface TimelineResp { caseEpochUtc: string; durationSec: number; events: TimelineEvent[] }
+interface TimelineResp { caseId: string; eventOrigins?: EventOrigins; caseEpochUtc: string; durationSec: number; events: TimelineEvent[] }
 interface CpaResp { results: CpaPoint[] }
 interface TracksResp { tracks: { vesselId: string; points: unknown[] }[] }
 
@@ -156,6 +157,7 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
           {cpa.data?.status === 'missing-tracks' && <div className="empty">轨迹数据不足：尚无两艘船的非空轨迹，CPA / 两船距离未运行。</div>}
           {cpa.error && <div className="empty">轨迹或 CPA 加载失败：{cpa.error}</div>}
           {!cpa.data && !cpa.error && <div className="empty">正在检查轨迹数据…</div>}
+          {tl.data?.caseId === caseId && <OriginNotice caseId={caseId} events={tl.data.events} origins={tl.data.eventOrigins} />}
           {tl.data && tl.data.events.length === 0 && <div className="empty">尚无事件时间线数据。</div>}
           {caseRes.data && tl.data && (tl.data.events.length > 0 || (cpa.data?.results.length ?? 0) > 0) ? (
             <TimelineChart fictional={caseId === CASE_ID && caseRes.data.isFictionalDemo} offsetMinutes={offsetMinutes} epoch={caseRes.data.caseEpochUtc} events={tl.data.events} conflicts={conflicts.data ?? []} cpa={cpa.data?.results ?? []} />

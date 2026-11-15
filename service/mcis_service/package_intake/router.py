@@ -202,6 +202,8 @@ def commit_sync(ctx,data):
                     f.write(data); f.flush(); os.fsync(f.fileno())
                 result.update(importedUtc=iso(now_utc()), replayed=False)
                 s.add(IntakeReceipt(case_id=case_id, key=digest, doc=result))
+                from ..timeline.origin import record
+                record(s, case_id, digest, parsed.files)
                 s.flush()
                 # Single service process lock; never merge with an existing directory.
                 if target.exists() or target.is_symlink():

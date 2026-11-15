@@ -15,7 +15,7 @@ from .models import ArchivedManualReceiptRow,ArchiveImportHistoryRow,ArchiveArti
 from .validation import PATH,FORMAT,MAX_BYTES,canonical,fail,sha
 
 ALLOWED_TABLES={'cases','vessels','track_points','evidence_items','custody_events','audit_events','environment_observations',
-'access_policies','interviews','investigation_reports','report_operation_snapshots','interview_request_receipts',
+'timeline_import_origins','access_policies','interviews','investigation_reports','report_operation_snapshots','interview_request_receipts',
 'archived_manual_interview_receipts','archive_import_history','archive_historical_artifacts','package_intake_receipts',
 'track_local_receipts','hfacs_worksheets','hfacs_worksheet_audit','hfacs_worksheet_requests','hfacs_archived_requests'}
 GLOBALS={'knowledge_cards','knowledge_audit','knowledge_archives','knowledge_audit_snapshots','knowledge_audit_snapshot_epoch','sqlite_sequence'}
@@ -58,6 +58,8 @@ def full_access(s,ctx,case_id):
 
 def has_history(s,case_id):
     from ..track_history.models import LocalReceipt
+    from ..timeline.origin import TimelineImportOrigin
+    if s.scalars(select(TimelineImportOrigin).where(TimelineImportOrigin.case_id==case_id).limit(1)).first()is not None:return True
     from ..audit.models import AuditEventRow
     if s.scalars(select(TrackPointRow).where(TrackPointRow.case_id==case_id,TrackPointRow.doc['source'].as_string().startswith('CSV:')).limit(1)).first() is not None:return True
     if s.scalars(select(AuditEventRow).where(AuditEventRow.case_id==case_id,AuditEventRow.action=='track.import').limit(1)).first() is not None:return True
@@ -119,9 +121,12 @@ def build(s,root,ctx,case_id):
         files[r.doc['relativePath']]=read_blob(root,case_id,r.doc['relativePath'])
     current=s.scalars(select(IntakeReceipt).where(IntakeReceipt.case_id==case_id)).all()
     if len(current)>1:fail()
+    from ..timeline.origin import validate_export
+    if not current:validate_export(s,case_id,None,None)
     for r in current:
         h=r.key;sha(h);raw=read_blob(root,case_id,'_package_intake/source.mcase')
         if hashlib.sha256(raw).hexdigest()!=h or r.doc.get('sourceSha256')!=h or r.doc.get('byteLength')!=len(raw)or r.doc.get('caseId')!=case_id:fail('原包与当前导入记录不一致','ARCHIVE_HISTORY_INTEGRITY',409)
+        validate_export(s,case_id,raw,h)
         if ('package-intake',h)in histories:fail('当前导入与已归档请求重复')
         parents=sorted(set(nodes)-{p for ps in nodes.values()for p in ps})
         if h in nodes and nodes[h]!=parents:fail()
