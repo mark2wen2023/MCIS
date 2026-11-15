@@ -665,3 +665,9 @@ Independent review of ff310ad reproduced cancellation-sensitive subtraction at
 start4194262.256341955, now=start+600. Reopen frozen four_chair.py and its tests
 only to compare against an absolute deadline; preserve unknown/no-refund semantics.
 New correction freeze is separate from the original reviewed freeze.
+
+## Offline worker lifecycle / shared ledger ordering
+Afterc87035f, add separate synthetic lifecycle gate, no change to frozen existing
+protocols or worker. Trusted execution remains unavailable/HOLD. Requires result,
+exit and cleanup declarations before unverified settlement, retains pending unknown
+and shared role budget. See contracts/expert-worker-lifecycle-offline-v1.md.
