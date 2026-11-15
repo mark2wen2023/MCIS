@@ -657,3 +657,17 @@ No production permissions, historical-integrity candidates/retests, or HFACS sub
 ## 共享轨迹交换前置契约（2026-11-15）
 远端核对 main 94d5e38；新增独立 contracts/shared-trajectory-v1.md、JSON Schema 与纯 Python 校验器及构造测试。保留 W10.2/track-point 原合同，不改现有导入、权限、存储或网页。用于未来二维/Unity适配的显式来源、校时、HDG/COG、缺口与显示比例语义；不实现三维/动力学，不把视觉重叠当碰撞结论。仅本开发线；不含OCR/PDF/图片或凭证。
 自测：`cd service && .venv/bin/pytest -q tests/test_shared_trajectory.py tests/test_tracks_import_w102.py` 最终115通过（新增45、既有70）。全部新增数据为构造，不是AIS/LLM/三维实测。远端main与开放PR功能路径已核查；仓库树无相关.agents/skills。未修改生产权限；待独立契约、跨语言和真实来源适配验收。早期schema生成脚本括号错误已修正，最终schema自身合法性测试通过。
+
+## CSV preview source numbering (2026-11-15)
+Main94d5e38: remove middle source then add currently duplicates SOURCE-3 and blocks preview.
+Use first unoccupied temporary form identifier for new blank sources, preserve existing
+user identifiers/content/mappings, and enforce existing four-source limit in updater.
+Scope web/src/align only; no PR97/79/69 evidence-page/intake/timeline blocks. No original
+file access, OCR/AI, backend policy or persisted timeline change; human confirmation remains.
+Verification: the original length+1 expression yields SOURCE-1/SOURCE-3/SOURCE-3 after
+middle removal, and real previewPayload rejects it (synthetic static reproduction, not
+browser). New removal/addition, custom IDs, four-source bound, nonmutation and validation
+regressions pass; existing W4.1 32 model/static-render checks and TypeScript/Vite build pass.
+No .NET alignment, real AIS, LLM/OCR or browser interaction executed. Existing browser
+Chromium missing condition remains; no installation or restriction bypass. Function files
+do not overlap PR97/79/69; REQUESTS/ROADMAP append-only integration still needs review.

@@ -400,3 +400,4 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Ordinary report functional test principals | 待独审 | 2026-11-15：main94d5e38 独立测试修复；普通两文件58败9过→69过，原权限回归80过；新增默认Investigator拒绝/零写断言，生产权限不改。HFACS缺依赖单列未跑，不含受限历史完整性复验。冻结 logs/report-functional-test-policy-impl-hashes-frozen.txt。 |
 
 | 共享轨迹输入契约 v1 前置 | 待测 / 待独立验收 | 2026-11-15：新增独立JSON契约与离线语义校验，保留来源/校时/缺失/艏向航迹向/示意比例；45构造测试+70既有W10.2回归通过。不改现有接口/权限，不是二维/Unity适配或三维实现。冻结 logs/shared-trajectory-v1-impl-hashes-frozen.txt。 |
+| CSV preview source numbering | 待独审 | 2026-11-15：main94d5e38独立修复移除后新增编号冲突；保留源声明/文本/映射、四源限制及人工确认。新增回归/原W4.1 32项/构建过；无真实浏览器/核心/AI验收。冻结 logs/csv-preview-source-numbering-impl-hashes-frozen.txt；功能区域不与PR97/79/69重叠。 |
