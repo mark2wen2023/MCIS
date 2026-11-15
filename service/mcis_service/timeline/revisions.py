@@ -58,6 +58,11 @@ def bindings(s,case_id,doc,before,previous):
         observation=doc.get(side,{})
         evidence_id=observation.get('evidenceId')
         value={'evidenceId':evidence_id,'status':'unregistered','bytesVerified':False}
+        if before is not None and previous is None:
+            # Legacy observation's original registry version is unknown. A note/status
+            # edit must not manufacture a historic association from today's registry.
+            if evidence_id: value['status']='unresolved'
+            out[side]=value;continue
         if evidence_id:
             row=s.scalars(select(EvidenceRow).where(EvidenceRow.case_id==case_id,EvidenceRow.key==evidence_id)).first()
             value['status']='unresolved'

@@ -22,11 +22,11 @@ def test_edit_token_does_not_bind_reviewed_evidence_version(tmp_path):
         assert next(row['version'] for row in listing.json() if row['conflict']['conflictId']=='C-01')==version
         value['a']['valueText']='Synthetic observation written from earlier screen'
         response=c.post(ROOT+'/conflicts',headers=HEAD,json={**value,'expectedVersion':version})
-        assert response.status_code==201
+        assert response.status_code==409
+        assert response.json()["code"]=="CONFLICT_SOURCE_REVIEW_REQUIRED"
         history=c.get(ROOT+'/conflicts/C-01/revisions',headers=HEAD)
         assert history.status_code==200
         revisions=history.json()['revisions']
         assert revisions[0]['afterSources']['a']['sha256']=='a'*64
-        assert revisions[1]['beforeSources']['a']['sha256']=='a'*64
-        assert revisions[1]['afterSources']['a']['sha256']=='b'*64
-        assert revisions[1]['afterSources']['a']['bytesVerified'] is False
+        assert len(revisions)==1
+        assert revisions[0]['afterSources']['a']['bytesVerified'] is False

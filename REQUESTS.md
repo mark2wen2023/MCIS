@@ -785,3 +785,10 @@ symlink; no installation, source copied from another branch or independent build
 No browser invocation: prior sandbox/browser blockers not retried; SSR is not browser
 visual/interaction acceptance. Browser plugin/skill absent; no browser QA claimed.
 No backend permissions/security/ECFC tests rerun, original files/model untouched.
+
+## Conservative observation mutation guard
+On39b3113 reopen conflict router/revisions contracts and ordinary tests: same-ID
+POST observation a/b changes rejected409 before mutation, since source-view receipt
+not implemented. Status/resolution edits retain original timeline permission. Legacy
+first capture of unchanged observation remains unresolved/unregistered, no fabricated
+current registry binding. Intentional old observation-write compatibility tightening.

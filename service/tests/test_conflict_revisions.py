@@ -18,7 +18,8 @@ def history(c):return checked(c,'get',ROOT+'/conflicts/C-01/revisions').json()
 def test_full_overwrite_and_long_revision_chain(tmp_path):
     with client_at(tmp_path/'a',True) as c:
         old=checked(c,'post',ROOT+'/conflicts',body('Synthetic old observation'),201).json()
-        replacement=checked(c,'post',ROOT+'/conflicts',body('Synthetic replacement'),201).json()
+        replacement_body=body('Synthetic old observation');replacement_body['summary']='Synthetic updated summary'
+        replacement=checked(c,'post',ROOT+'/conflicts',replacement_body,201).json()
         explanation='Synthetic unicode解释 '*500
         final=checked(c,'patch',ROOT+'/conflicts/C-01',{'resolution':explanation,'status':'Annotated'}).json()
         result=history(c);rs=result['revisions']
@@ -59,10 +60,11 @@ def test_source_version_kept_when_only_resolution_changes(tmp_path):
         assert rs[0]['afterSources']['a']['sha256']=='a'*64
         assert rs[1]['afterSources']['a']==rs[0]['afterSources']['a']
         value['a']['valueText']='Synthetic newly observed value'
-        checked(c,'post',ROOT+'/conflicts',value,201)
+        before_state=state(c)
+        checked(c,'post',ROOT+'/conflicts',value,409)
+        assert state(c)==before_state
         newest=history(c)['revisions'][-1]['afterSources']['a']
-        assert newest['sha256']=='b'*64 and newest['bytesVerified'] is False
-        assert newest['custodyHeadSeq'] is not None
+        assert newest==rs[0]['afterSources']['a']
 
 
 def test_failure_rolls_back_row_revision_and_audit(tmp_path,monkeypatch):

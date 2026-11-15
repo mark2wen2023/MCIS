@@ -36,15 +36,15 @@ def test_replaced_long_resolution_now_has_full_forward_history(tmp_path):
 def test_existing_id_post_now_preserves_prior_observation(tmp_path):
     with client_at(tmp_path/'a',True) as c:
         checked(c,'post',ROOT+'/conflicts',body('SYNTHETIC_OLD_OBSERVATION'),201)
-        checked(c,'post',ROOT+'/conflicts',body('Synthetic replacement observation'),201)
+        checked(c,'post',ROOT+'/conflicts',body('Synthetic replacement observation'),409)
         with c.app.state.db.session() as s:
             rows=list(s.scalars(select(ConflictRow).where(ConflictRow.case_id==CID)))
-            assert len(rows)==1 and rows[0].doc['a']['valueText']=='Synthetic replacement observation'
+            assert len(rows)==1 and rows[0].doc['a']['valueText']=='SYNTHETIC_OLD_OBSERVATION'
         events=checked(c,'get',ROOT+'/audit?action=conflict.add').json()
-        assert len(events)==2
+        assert len(events)==1
         revisions=checked(c,'get',ROOT+'/conflicts/C-01/revisions').json()['revisions']
         assert revisions[0]['after']['a']['valueText']=='SYNTHETIC_OLD_OBSERVATION'
-        assert revisions[1]['before']['a']['valueText']=='SYNTHETIC_OLD_OBSERVATION'
+        assert len(revisions)==1
         assert checked(c,'get',ROOT+'/audit:verify').json()['valid']
 
 

@@ -3,8 +3,8 @@
 Existing POST /cases/{id}/conflicts and PATCH /conflicts/{id} retain input/response
 data schema and timeline write authorization. Updates and same-ID POST now require
 expectedVersion (see conflict-expected-version-v1.md); response documents stay unchanged.
-Same-ID POST still replaces current data,
-but now preserves full preimage/postimage. No automatic historical approval.
+Same-ID POST now rejects a/b observation changes409 (conflict-observation-guard-v1.md).
+Allowed unchanged-observation updates preserve full preimage/postimage. No automatic historical approval.
 SQLite only: reserve writer before policy/current/source reads; current row, existing
 summary audit, and append-only conflict_revisions row commit/rollback together.
 No non-SQLite fallback. Concurrent writes are serialized and expectedVersion is compared in that transaction;
@@ -27,10 +27,10 @@ Per-observation afterSources records the current SAME-CASE evidence registry dig
 and custody-head sequence/hash at capture, if available. It is a registered-version,
 not proof the observation originally came from those bytes: bytesVerified=false,
 no file I/O. Missing evidence is unresolved; absent ID is unregistered. Unchanged
-observation keeps prior binding even if custody later changes. New/changed observation
-captures the then-current registered version. An old baseline has beforeSources=null
-because its original evidence version is unknown. Its first after binding refers to
-capture time, not the historical creation date. No guessed historical association.
+observation keeps prior binding even if custody later changes. New-record observation
+captures the then-current registered version; changes to existing observations now reject409. An old baseline has beforeSources=null
+because its original evidence version is unknown. Its first unchanged-observation after binding remains unresolved/unregistered with no
+digest; current registry data is not used to invent a historical association. No guessed historical association.
 
 GET /cases/{caseId}/conflicts/{conflictId}/revisions is new, no-store. Requires existing
 timeline access AND existing full-content policy, then rechecks referenced evidence

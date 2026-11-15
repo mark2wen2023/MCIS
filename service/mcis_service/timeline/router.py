@@ -95,6 +95,9 @@ def add_conflict(case_id: str, body: dict[str, Any] = Body(...), ctx: Ctx = CtxD
         before = get_doc(s, ConflictRow, case_id, c["conflictId"])
         if before is not None:
             revisions.expect_version(s, case_id, c["conflictId"], before, expected)
+            if any(before.get(side) != c.get(side) for side in ('a', 'b')):
+                raise problem(409, "CONFLICT_SOURCE_REVIEW_REQUIRED",
+                              "观察内容或来源更改尚无可验证版本核对；未保存，请保留草稿和原记录。处理说明或状态仍可单独编辑。")
         elif expected is not None:
             raise problem(412, "CONFLICT_VERSION_CHANGED", "记录已不存在，未按旧版本新建")
         prepared = revisions.prepare(s, case_id, c["conflictId"], before)
