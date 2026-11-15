@@ -671,3 +671,9 @@ Afterc87035f, add separate synthetic lifecycle gate, no change to frozen existin
 protocols or worker. Trusted execution remains unavailable/HOLD. Requires result,
 exit and cleanup declarations before unverified settlement, retains pending unknown
 and shared role budget. See contracts/expert-worker-lifecycle-offline-v1.md.
+
+## Owned fixed local worker ledger experiment
+On70993cc add real fixed local Python child supervision with exact historical
+ownership dependency, bounded output/deadline and commit-before-spawn. No changes
+to previous frozen modules, Pi or real provider entrypoints. Local fixture budget
+is not model cost authority. See expert-owned-local-worker-v1 contract; live HOLD.

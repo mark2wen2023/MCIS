@@ -407,3 +407,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTFOURCHAIR deadline | 待测 | ff310ad后裔：绝对截止时刻比较；浮点前/到点/后3项，选定139项开发合成通过；真实执行HOLD | logs/EXPERTFOURCHAIR-deadline-hashes.txt |
 
 | EXPERTWORKERLIFECYCLE | 待测 | 离线声明与四席共享次数账本；150开发合成通过（含新增11）；不启动worker/不证明所有权或硬取消，真实执行HOLD | logs/EXPERTWORKERLIFECYCLE-hashes.txt |
+
+| EXPERTLOCALWORKER | 待测 | 固定本地Python进程观测/回收与账本；159开发测试含9新增，非Pi/真实模型；所有权宿主前置与未知状态保留 | logs/EXPERTLOCALWORKER-hashes.txt |
