@@ -1,0 +1,2 @@
+ec060568802090d4345f2620ed8ede50be4f8bb9c2a69fa80beb64148e4a0187  service/tests/test_conflict_archive_readiness.py
+763c4882a818fe80312c88df317ed82f0a68f29096b735a3be6af4dae476d317  research/trajectory/CONFLICT_ARCHIVE_DESIGN.md

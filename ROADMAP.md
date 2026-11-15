@@ -413,3 +413,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Consultation-only export refusal | 待测 | 8dd3dc9 descendant; existing preflight rejects unsupported consultation-only state409, roles still403;96 selected backend passed plus final5 consultation tests with blob snapshots passed; no restore expansion/browser/full-suite; logs/consultation-export-refusal-hashes.txt |
 
 | Standalone unsupported-state preflight | 待测 | a7ce17b descendant; six synthetic standalone cases now refused through existing guard;13 new tests,109 selected backend total passed; no whitelist/permission widening; explicit untested inventory in research/trajectory/STANDALONE_ARCHIVE_PREFLIGHT.md; logs/standalone-archive-preflight-hashes.txt |
+
+| Conflict complete-history archive design | 阻断/待审 | 8833984 descendant;3 ordinary synthetic characterization tests passed; missing old observation/full resolution and source-version binding; no new archive support, browser/core/LLM not run; research/trajectory/CONFLICT_ARCHIVE_DESIGN.md |

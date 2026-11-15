@@ -703,3 +703,11 @@ rows and persistent simulation commands. Select the existing closed-world prefli
 for these registered tables; preserve permission checks, table refusal and parsing.
 No new restoration support/active command replay. Scope and exclusions recorded in
 research/trajectory/STANDALONE_ARCHIVE_PREFLIGHT.md; no ECFC/restricted operations.
+
+## Next complete archive slice: conflict readiness
+
+After standalone refusal, choose conflicts as the least-coupled next versioned design.
+Three ordinary synthetic tests confirm missing full preimage history and unbound
+source evidence; do not pretend current rows plus summarized audit are complete.
+No runtime support enabled. Forward full-revision/source capture and honest legacy
+migration contract required first. See research/trajectory/CONFLICT_ARCHIVE_DESIGN.md.
