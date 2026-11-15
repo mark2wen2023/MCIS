@@ -106,3 +106,68 @@ def test_complex_seed_refuses_partial_archive_without_losing_state(client, app, 
         assert 'content-disposition' not in response.headers
         assert not response.content.startswith(b'PK')
         assert state(app) == before  # includes audit: no successful export event
+
+
+@pytest.mark.parametrize('mode', ['omitted', 'cleared'])
+def test_legacy_normalization_requires_fresh_revision_preserves_audit(tmp_path, mode):
+    """W8.4 §旧包兼容: normalized representation has a new concurrency token."""
+    with ExitStack() as stack:
+        clients = []
+        apps = []
+        for name in ('source', 'restored'):
+            folder = tmp_path / name
+            folder.mkdir()
+            app = create_app(make_settings(folder, seed=False))
+            apps.append(app)
+            clients.append(stack.enter_context(TestClient(app)))
+        source, restored = clients
+        case = {'schemaVersion': '1.0.0', 'caseId': SYNTHETIC,
+                'title': 'Synthetic normalization', 'accidentType': 'Collision',
+                'caseEpochUtc': '2026-01-01T00:00:00Z', 'incidentTimeUtc': '2026-01-01T00:00:00Z',
+                'incidentLocation': {'lonDeg': 0.0, 'latDeg': 0.0},
+                'displayTimeZoneOffsetMinutes': 0, 'isFictionalDemo': True}
+        if mode == 'cleared':
+            case.update(leadInvestigator='Synthetic name', agencyName='Synthetic agency')
+        checked(source, 'post', '/api/v1/cases', 201, json=case, headers=H())
+        initial = checked(source, 'get', BASE + '/metadata').json()
+        changes = {'summaryNotes': 'Nonempty synthetic source text must survive', 'placeName': 'Synthetic place'}
+        if mode == 'cleared':
+            changes.update(leadInvestigator=None, agencyName=None)
+        before = checked(source, 'patch', BASE + '/metadata', headers=H(operator='Synthetic writer'), json={
+            'operationId': 'before-archive', 'expectedRevision': initial['revision'], 'changes': changes,
+            'sourceLabel': 'Constructed normalization fixture', 'changeReason': 'Test old package contract'}).json()
+        assert 'leadInvestigator' not in before['case'] and 'agencyName' not in before['case']
+        archive = checked(source, 'get', BASE + '/export', headers=LEAD).content
+        # Export itself must not rewrite the live case or its metadata revision.
+        assert checked(source, 'get', BASE + '/metadata').json() == before
+        source_lines = read_zip(archive)['audit/audit.jsonl'].splitlines()
+        checked(restored, 'post', '/api/v1/cases:import', 201, headers=LEAD, content=archive)
+        after = checked(restored, 'get', BASE + '/metadata').json()
+        assert after['revision'] != before['revision']
+        assert after['lastChange'] == before['lastChange']
+        expected_case = {**before['case'], 'accidentCode': '', 'accidentGrade': '',
+                         'leadInvestigator': '', 'agencyName': '', 'seaLevelOffsetM': 0.0,
+                         'incidentLocation': {**before['case']['incidentLocation'], 'heightM': 0.0}}
+        assert after['case'] == expected_case
+        events = checked(restored, 'get', BASE + '/audit', headers=LEAD).json()
+        assert isinstance(events, list)
+        assert [e['line'].encode() for e in events][:len(source_lines)] == source_lines
+        event = next(e for e in events if e['action'] == 'case.metadata.update')
+        reason = json.loads(json.loads(event['line'])['reason'])
+        assert reason['after']['summaryNotes']['value'] == changes['summaryNotes']
+        if mode == 'cleared':
+            assert reason['before']['leadInvestigator'] == {'present': True, 'value': 'Synthetic name'}
+            assert reason['after']['leadInvestigator'] == {'present': False, 'value': None}
+        update = {'operationId': 'after-archive', 'expectedRevision': before['revision'],
+                  'changes': {'title': 'Synthetic fresh edit'}, 'sourceLabel': 'Constructed follow-up',
+                  'changeReason': 'Use freshly read token'}
+        unchanged = state(apps[1])
+        response = checked(restored, 'patch', BASE + '/metadata', 409, headers=H(), json=update)
+        assert response.json()['code'] == 'CASE_METADATA_CONFLICT'
+        assert state(apps[1]) == unchanged
+        fresh = checked(restored, 'patch', BASE + '/metadata', headers=H(),
+                        json={**update, 'expectedRevision': after['revision']}).json()
+        assert fresh['case']['title'] == 'Synthetic fresh edit'
+        assert fresh['revision'] != after['revision']
+        assert fresh['lastChange']['operationId'] == 'after-archive'
+        assert checked(restored, 'get', BASE + '/audit:verify', headers=LEAD).json()['valid'] is True

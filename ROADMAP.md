@@ -399,3 +399,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTTRACE | 测试增量独审通过 | 2026-11-14：独立无.git副本10过；临时断开taskId触发5红、伪认证flag触发1红，恢复10过；冻结2/2，运行文件无差异。见 DEFECTS/EXPERTTRACE.md。真实模型0/HOLD。 |
 
 | ARCHIVEBOUNDARYTESTS | 待独审 | 新增3普通测试通过：最小显式合成案件两次恢复/再导出，复杂演示不完整导出拒绝且状态不变。组合193项190过3原失败0跳；原190未修。稀疏字段规范化/复杂恢复/HFACS/浏览器未验，冻结logs/archive-boundary-tests-hashes.txt。 |
+
+| ARCHIVEREVISION | 待独审 | W8.4已约定规范化revision变化；新增省略/清除字段、历史保留、旧token409/新token更新2测试，连同前片5过；W8.4组合48过1既有失败。无生产修复/归档扩容；原190状态未重新全跑。冻结logs/archive-revision-tests-hashes.txt。 |
