@@ -2,6 +2,7 @@ import { useMemo, useState, useSyncExternalStore } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import type { EChartsOption } from 'echarts'
 import { api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
+import { EMPTY_FILTER, filterEvidence, RegisterFilters } from '../evidenceRegister/filters'
 import { EvidenceIntakePanel } from '../evidenceIntake/EvidenceIntakePanel'
 import { announceEvidenceSelection } from '../evidenceIntake/navigation'
 import { AlignPreviewPanel } from '../align/AlignPreviewPanel'
@@ -62,7 +63,9 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
   const conflicts = useLoad(() => api.get<Conflict[]>(casePath('/conflicts', caseId)))
   const cpa = useLoad(() => loadEvidenceCpa(caseId))
   const [selId, setSelId] = useState<string>(requestedId || 'EV-001')
+  const [registerFilter, setRegisterFilter] = useState({ ...EMPTY_FILTER })
   const items = ev.data ?? []
+  const visibleItems = filterEvidence(items, registerFilter)
   const sel = items.find((e) => e.evidenceId === selId) ?? (requestedId ? undefined : items[0])
   const custody = useLoad(async () => ({ evidenceId: sel?.evidenceId, events: sel ? await api.get<CustodyEvent[]>(casePath(`/evidence/${sel.evidenceId}/custody`, caseId)) : [] }), [sel?.evidenceId])
 
@@ -124,12 +127,14 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
 
       <div className="grid w4-columns" style={{ marginBottom: 12 }}>
         <Panel title="证据清单（Evidence Register）" meta={<><span>caseId · EV-NNN</span><span>点击行查看保管链</span></>} bodyStyle={{ padding: 0, maxHeight: 300 }}>
+          <RegisterFilters value={registerFilter} onChange={setRegisterFilter} count={visibleItems.length} total={items.length}
+            ready={!!ev.data} hiddenSelection={sel && !visibleItems.some(item => item.evidenceId === sel.evidenceId) ? sel.evidenceId : undefined} />
           <table className="p6-table">
             <thead>
               <tr><th>编号</th><th>证据</th><th>来源 / 提取人</th><th>提取时间</th><th>SHA-256</th><th>访问</th><th>标记</th><th>状态</th></tr>
             </thead>
             <tbody>
-              {items.map((e) => (
+              {visibleItems.map((e) => (
                 <tr key={e.evidenceId} className={sel?.evidenceId === e.evidenceId ? 'sel' : ''} onClick={() => selectEvidence(e.evidenceId)}>
                   <td className="mono" style={{ color: 'var(--cyan)' }}>{e.evidenceId}</td>
                   <td><button type="button" className="w42-evidence-select" onClick={event=>{event.stopPropagation();selectEvidence(e.evidenceId)}}>{e.title}</button></td>
@@ -144,6 +149,7 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
                   <td><span className={`st ${STATUS_BADGE[e.status][0]}`}>{STATUS_BADGE[e.status][1]}</span></td>
                 </tr>
               ))}
+              {!!items.length && !visibleItems.length && <tr><td colSpan={8} className="empty">没有匹配的证据；可调整条件或清除筛选，原清单未改变。</td></tr>}
               {!items.length && <tr><td colSpan={8} className="empty">{ev.error ? '无权限或后端不可用' : ev.data ? '暂无证据，请添加调查证据。' : '加载中…'}</td></tr>}
             </tbody>
           </table>
