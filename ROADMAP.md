@@ -431,3 +431,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Conflict envelope boundary | 待测/未接线 | 0511bf8 descendant;127 ordinary synthetic tests passed including member dependencies, existing parser compatibility and test-injected pre-publication rollback. Experimental inspection only; conflict export409/intake422 unchanged, restore/second-roundtrip/browser unverified; logs/conflict-envelope-boundary-hashes.txt |
 
 | Temporary conflict restore | 待测/非产品接线 | 1d41874 descendant;145 expanded ordinary synthetic tests passed, final test-only three-revision/invalid-preparation pair2 passed. Temporary frozen SQLite clone only, restore_ready=false; product export/intake refusal unchanged, browser/independent/production unverified; logs/conflict-temporary-restore-hashes.txt |
+
+| Conflict product continuation prerequisites | 阻断/方案待审 | 2acbb27 descendant;3 synthetic ordinary domain tests passed. No product file layout, durable cross-resource recovery, editable re-export/import provenance or trusted identity integration. Product refusals unchanged; logs/conflict-live-restore-prerequisites-hashes.txt |

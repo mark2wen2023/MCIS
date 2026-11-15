@@ -754,3 +754,6 @@ On0511bf8 add bounded ZIP/manifest/member and dependency inspection seam. Experi
 
 ## Disposable conflict restoration candidate
 On1d41874 implement new temporary SQLite-only frozen snapshot restoration and candidate re-export. All source/member BLOBs share DB transaction; exact conflict timestamps/journal/audit linkage preserved, legacy history stays unknown. No product roots, routes, permissions or export protection changed. See contracts/conflict-temporary-restore-v1.md; live continuation/import-lineage remain unsupported.
+
+## Product conflict continuation prerequisites
+On2acbb27 assess durable product layout, cross-resource commit/recovery, import lineage, preserved journal continuation/CAS and existing policy. Three ordinary temporary-domain tests confirm append behavior but frozen re-export refusal and absent product layout/receipt. No runtime implementation or protection widening; see research/trajectory/CONFLICT_LIVE_RESTORE_PREREQUISITES.md.
