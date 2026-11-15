@@ -443,3 +443,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | CONFLICTOBSERVATIONEDITOR | 待测 | 前端观察文字→登记回执显示→显式提交，拒绝保留草稿；44合成/SSR+15草稿+2HTTP开发通过，构建过，真实浏览器未验 | logs/CONFLICTOBSERVATIONEDITOR-hashes.txt |
 
 | CONFLICTOBSERVATIONRESPONSE | 待测 | 回执来源集合/类型及保存响应核对；127合成SSR+15草稿开发断言，非真实后端故障，浏览器/完整联动未验 | logs/CONFLICTOBSERVATIONRESPONSE-hashes.txt |
+
+| OBSERVATIONRECEIPTHTTP | 待测 | 实际api.ts/控制器→loopback FastAPI/临时SQLite，未变保存历史与A→B412保留草稿；2开发合成联调过，非浏览器/独立验收 | logs/OBSERVATIONRECEIPTHTTP-hashes.txt |

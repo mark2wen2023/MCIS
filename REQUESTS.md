@@ -822,3 +822,15 @@ response before showing saved. No backend or permissions change. Counterexample 
 synthetic frontend behavior, not observed real backend malfunction. Developer tests:
 127 synthetic model/SSR assertions and15 existing draft assertions; build passed
 with existing large-chunk warning. No browser/full HTTP integration/restricted tests.
+
+## Actual loopback observation receipt integration
+On6102b0b, add ordinary synthetic integration harness only. Production api.ts and
+ObservationEditing execute in Node over real loopback HTTP to FastAPI/temporary
+SQLite, no mocked backend responses. Check unchanged-save/revision and A->B412,
+draft retention/no retry/unchanged documents-audit/unconsumed receipt. Existing
+role headers, not trusted identity. No original bytes or restricted tests; no
+browser/DOM/React mounting lifecycle acceptance. See research/conflict_source_intent/
+FRONTEND_HTTP_INTEGRATION.md for exact chain, command and limits.
+Final developer run (including rejected-submit state equality):2 passed in1.08s.
+Remote read confirmed main94d5e38 and candidate6102b0b unchanged. These are new
+limited HTTP integration tests, not independent/browser or full-system acceptance.
