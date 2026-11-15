@@ -877,3 +877,11 @@ restore_ready=false, inactive-history receipts. No product parser or permissions
 change. Final49developer synthetic tests passed9.02s (27new+21member+1diagnostic);
 re-envelope is not restore/edit/export, full product recovery remains blocked.
 See contracts/conflict-archive-envelope-v2.md and research result for boundaries.
+
+## Temporary SQLite v2 continuation
+On6f7eb94 reuse a812d38 owned temporary restore scaffold, preserve imported revision/
+audit prefixes, store full receipts only in inactive research table; allow existing
+note/status PATCH revisions and row-based re-export into another temporary DB.
+No product layout/routes/receipt activation or policy changes.11new ordinary tests
+passed3.65s; expanded60passed12.51s. Fault checkpoints rollback all DB/BLOB rows;
+no crash/unknown-result guarantee. See temporary-continuation contract/research result.
