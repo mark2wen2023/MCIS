@@ -647,3 +647,9 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## Ordinary report test authorization fixtures (2026-11-15)
+On clean main 94d5e38, adjust only ordinary report/direct-handler and snapshot functional
+fixtures whose intent is authorized business behavior to explicit LeadInvestigator.
+Retain/add Investigator denial assertions under the unchanged full-content policy.
+No production permissions, historical-integrity candidates/retests, or HFACS substitutions.
