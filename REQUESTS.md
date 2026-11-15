@@ -687,3 +687,11 @@ test-only delta from e91e4cf on latest main; explicitly authorized Lead renders
 real public-report font assertions, Investigator creation/export remain403.
 No source/renderer/font/global fixture changes. Fresh validation and independent
 review required on this current-main candidate, not inferred from the old review.
+
+## PR104 sentence text replacement provenance
+Reopen reports/service.py modify path: single-sentence changes left generated
+sourceStatus after source became Investigator. Set current sentence sourceStatus
+Investigator, retaining generatedText/citations/language/history; no permission or
+old-report migration. See contracts/report-sentence-review-provenance.md and
+ tests_acceptance/report-sentence-source-status/REPORT.md. Five new ordinary tests,
+public excerpt + explicitly synthetic edited wording; no restricted probes.

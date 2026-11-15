@@ -1,0 +1,3 @@
+cd388b03bae841c28b31a17fb37caec599ee27f635b6a7bbb5f735fd400afba6  contracts/report-sentence-review-provenance.md
+a7890f2fb753a52fd5252f06ff740cef09959dd4c76746e383bdcc6b8dbe8ea7  service/mcis_service/reports/service.py
+7970747820a3aac4b493d1ec01d8409cf99fb533e26b67a864379331c2da305a  service/tests/test_report_sentence_source_status.py
