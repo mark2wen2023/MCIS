@@ -427,3 +427,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | CONFLICTSOURCEINTENT | 待测/方案阻断 | 3项开发合成测试：登记A→B不改变冲突编辑票据，修改观察绑定保存时B；非人工已读版本证明；未改生产 | logs/CONFLICTSOURCEINTENT-hashes.txt |
 
 | CONFLICTSOURCERECEIPT | 设计阻断 | 权限等价回执签发/旧客户端与未知来源流程尚未齐备；未改保存行为，测试矩阵仅计划 | research/conflict_source_intent/RECEIPT_DESIGN.md |
+
+| REGISTRYRECEIPTCONTRACT | 待测/未接生产 | 12开发合成通过含9新增；仅登记版本临时回执比较，非原件/用户已读，权限等价仍阻断 | logs/REGISTRYRECEIPTCONTRACT-hashes.txt |

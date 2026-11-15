@@ -752,3 +752,9 @@ binding remains intact; no product/permission change. See research/conflict_sour
 After652ef41 specify proposed source-read/submit version comparisons and blockers,
 without new API, permission change or source disclosure. Existing capture-time
 behavior remains. See research/conflict_source_intent/RECEIPT_DESIGN.md.
+
+## Registry-only isolated receipt contract
+Onaad6f7e add executable research contract using existing full source gate plus
+timeline permission; stricter, not proven equivalent to editable access. No product
+imports/saving/permission changes. Unknown and stale conservatively reject in research
+only. See research/conflict_source_intent/REGISTRY_CONTRACT.md.
