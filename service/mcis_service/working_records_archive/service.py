@@ -57,10 +57,15 @@ def full_access(s,ctx,case_id):
 
 
 def has_history(s,case_id):
-    from ..recommendations.models import ConsultationRoundRow
-    if s.scalars(select(ConsultationRoundRow).where(ConsultationRoundRow.case_id==case_id).limit(1)).first()is not None:return True
-    from ..timeline.models import TimelineEventRow
-    if s.scalars(select(TimelineEventRow).where(TimelineEventRow.case_id==case_id).limit(1)).first()is not None:return True
+    from ..recommendations.models import ConsultationRoundRow, RecommendationRow
+    from ..timeline.models import TimelineEventRow, ConflictRow
+    from ..agents.models import AgentDraftRow
+    from ..colreg.models import ColregAnalysisRow
+    from ..sim.models import SimCommandRow
+    # Select the existing closed-world preflight, never grant archive support.
+    for model in (ConsultationRoundRow, TimelineEventRow, RecommendationRow,
+                  ConflictRow, AgentDraftRow, ColregAnalysisRow, SimCommandRow):
+        if s.scalars(select(model).where(model.case_id==case_id).limit(1)).first()is not None:return True
     from ..track_history.models import LocalReceipt
     from ..timeline.origin import TimelineImportOrigin
     if s.scalars(select(TimelineImportOrigin).where(TimelineImportOrigin.case_id==case_id).limit(1)).first()is not None:return True

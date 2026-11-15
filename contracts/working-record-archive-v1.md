@@ -224,3 +224,14 @@ unsupported: after existing full-content authorization, export returns409
 ARCHIVE_RESTORE_UNSUPPORTED without a partial ZIP or export audit write. Default
 unauthorized roles retain403. This does not introduce consultation restoration,
 accept legacy nonempty consultation packages, or change1.0–1.4 parsing.
+
+## Standalone unsupported-state preflight selection
+
+Presence in the selected case of recommendations, timeline_conflicts, agent_drafts,
+colreg_analyses (any key, not just current), or sim_commands also selects the existing
+history-aware preflight. These tables remain unsupported and whole export refuses;
+no whitelist or import grammar is widened. Persisted simulation commands must not be
+silently omitted or restored as live commands. Empty cases and supported profiles
+retain their existing paths. This is a refusal/compatibility tightening, not new
+backup support or permission grants. Global knowledge and transient in-memory playback
+state are not made part of case archive by this change.

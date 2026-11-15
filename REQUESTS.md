@@ -694,3 +694,12 @@ history-aware preflight selection. The existing unsupported-table check rejects;
 no allowlist/parser/permission expansion. Replace the known-gap characterization
 expectation with409/no database or blob mutation, retain mixed-state refusal and add
 unauthorized-role checks. Existing supported roundtrips remain regression targets.
+
+## Standalone unsupported-state export selection
+
+Systematic serializer/parser comparison found six ordinary synthetic states that
+bypass preflight when alone: recommendations, conflicts, drafts, COLREG current/input
+rows and persistent simulation commands. Select the existing closed-world preflight
+for these registered tables; preserve permission checks, table refusal and parsing.
+No new restoration support/active command replay. Scope and exclusions recorded in
+research/trajectory/STANDALONE_ARCHIVE_PREFLIGHT.md; no ECFC/restricted operations.
