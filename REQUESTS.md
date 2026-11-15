@@ -921,3 +921,11 @@ No product route/model/permission changes: every result restore_ready=false,
 retryAllowed=false/deleteAllowed=false. Matching does not prove atomic FS/DB
 publication or gate case visibility. See contracts/conflict-publication-observation.md.
 Synthetic fixtures create files, no publisher enabled; no restricted probes.
+
+## Isolated durable pending readiness / shared gate
+On68c3e4a inventory confirms load_case alone cannot cover export, digest receipts,
+evidence direct reads and preview modules. Add research-only pending row in actual
+restore transaction and shared conservative decision; real list/load exercised
+through isolated wrappers, no product wiring. Old ordinary cases keep normal
+policy path; no ready promotion until publication/migration/global gates proven.
+See contracts/conflict-readiness-gate-research.md and READINESS_GATE_RESULT.md.
