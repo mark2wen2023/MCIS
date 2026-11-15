@@ -653,3 +653,9 @@ Base main94d5e38. Add separate offline SQLite reservation ledger with four exist
 
 ## Durable existing-controller observations
 Onc1597bc wrap real main two-role Coordination with SQLite committed metadata boundaries and no-resume ownership. Four-role ledger is not silently mapped or altered; no real Pi/provider/auth/credential integration. Protocol/storage failure blocks new wrapper; execution HOLD remains. See contracts/expert-controller-observation-v1.md.
+
+## Four-seat offline chair simulation
+On2a04125 add a separate four-role controller using existing durable ledger;
+old two-role protocol and production unchanged. Fixed public claims, simulated
+opinions only, full previous-round context, preserved disagreement, memory-only
+opinions and no restart. Real execution HOLD. Contract expert-four-chair-simulation-v1.md.

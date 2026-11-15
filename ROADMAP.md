@@ -401,3 +401,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Expert durable reservation prerequisite | 待测/真实执行HOLD | main94d5e38;11 new synthetic ledger cases and existing meeting/receipt combined112 passed. No Pi/DeepSeek/browser execution; not authorization/hard cancel, not wired to four-role runtime. logs/expert-durable-reservation-hashes.txt |
 
 | Expert durable coordination | 待测/真实执行HOLD | c1597bc descendant; actual offline two-role controller wrapper,122 combined synthetic passed then final12 controller tests passed. Not four-expert execution, token/cost/auth/hard-cancel absent; logs/expert-durable-coordination-hashes.txt |
+
+| EXPERTFOURCHAIR | 待测 | 2a04125后裔：四席模拟主持接现有持久次数账本；136项开发合成通过，非真实会议/独立验收；观点仅内存、真实执行HOLD | logs/EXPERTFOURCHAIR-impl-hashes-frozen.txt |
