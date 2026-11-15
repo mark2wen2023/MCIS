@@ -423,3 +423,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Conflict expected-version writes | 待测 | 207e3a6 descendant; existing-ID writes require captured version, stale412/missing428;125 selected backend plus1 existing audit test passed,8 frontend model assertions and build passed; synthetic developer tests only, browser/independent/production unverified; logs/conflict-expected-version-impl-hashes-frozen.txt |
 
 | Conflict draft preservation | 待测 | 6e493f1 descendant; parent callback reproduction3, synthetic draft/wiring15 and prior version8 assertions passed; TypeScript/Vite build passed, large bundle warning retained. No browser/backend rerun/production acceptance; logs/conflict-draft-preservation-hashes.txt |
+
+| Conflict revision archive prerequisites | 方案待审/未启用 | be93cfa descendant;3 synthetic dependency tests passed; new strict profile/schema/restorer, source availability semantics and preview pending. No successful conflict restore/browser/production acceptance; logs/conflict-revision-archive-plan-hashes.txt |
