@@ -21,7 +21,10 @@ export function publicTextLocation(citation: Citation, caseId: string) {
   if (![start, end, pageStart, pageEnd, printedStart, printedEnd].every(Number.isSafeInteger)
       || start > end || end > index.lineCount) return null
   const pageAt = (line: number) => 1 + index.pageBreakLines.filter(boundary => boundary <= line).length
-  if (pageStart !== pageAt(start) || pageEnd !== pageAt(end)
+  // The final form feed terminates the PDF; it does not create a new page.
+  // Keep internal breaks (including blank pages); never clamp to the last page.
+  if (pageStart > index.pdfPageCount || pageEnd > index.pdfPageCount
+      || pageStart !== pageAt(start) || pageEnd !== pageAt(end)
       || printedStart !== pageStart - 2 || printedEnd !== pageEnd - 2) return null
   return { start, end, pageStart, pageEnd, sha256: index.sha256,
     href: `https://github.com/mark2wen2023/MCIS/blob/${index.commit}/${index.path}#L${start}-L${end}` }

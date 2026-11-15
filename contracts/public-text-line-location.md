@@ -37,3 +37,22 @@ No real browser/GitHub anchor interaction, real model, OCR or PDF viewer tested.
 No restricted historical integrity verification performed. Main base 94d5e38;
 open PR93/95 sources.py changes are not included. Additive progress documents may
 conflict on merge and must preserve both histories.
+
+## PR103 terminal-page correction
+
+Independent review found L1156 (only a terminal form feed) was incorrectly
+accepted as PDF54/body52. The pinned index now declares pdfPageCount=53;
+locations beyond that bound are rejected, including ranges ending on L1156.
+No clamping or remapping to page53. Internal form feeds remain in the index:
+blank physical lines keep their page and interior empty pages are not collapsed.
+Actual source has no empty physical page; the empty-segment check is synthetic.
+All interior body-page crossing ranges and the final real page are regression
+checked, plus rejection of both PDF54 and a falsely relabeled PDF53 terminal line.
+
+Local pdfinfo confirms 53 pages on the public PDF SHA256
+99084b8e672da6e2f8d9809bea25a92fe5fcf31c318554832e14339610015d7f.
+The optional pypdf import was unavailable; no dependency was installed.
+Final developer rerun: 32 counted frontend checks plus source/page-boundary
+assertions, 148 W16 assertions, 87 backend tests, build pass (same chunk warning).
+Browser interaction and independent re-acceptance still pending. No PDF uploaded
+or production permission/backend change.

@@ -45,4 +45,24 @@ ok(html.includes('L1026–L1033'))
 ok(html.includes('非 PDF 跳页')&&html.includes('不是当前证据原件核验'))
 ok(html.includes('noopener noreferrer'))
 ok(renderToStaticMarkup(<PublicTextLocation citation={c} caseId="OTHER"/>)==='')
+// Actual terminal separator: never label it PDF54, nor silently clamp to PDF53.
+assert.equal(lines[1155], '\f')
+ok(publicTextLocation(citation(1156,1156),index.caseId)===null)
+ok(publicTextLocation(citation(1155,1156),index.caseId)===null)
+ok(publicTextLocation({...citation(1156,1156),sourceRef:citation(1156,1156).sourceRef!.replace('54–54','53–53').replace('52–52','51–51')},index.caseId)===null)
+ok(publicTextLocation(citation(1155,1155),index.caseId)?.pageEnd===53)
+// Blank physical lines retain their real page; they do not create/remove pages.
+const blank=lines.findIndex((line,i)=>i>100&&!line.trim()&&!line.includes('\f'))+1
+ok(publicTextLocation(citation(blank,blank),index.caseId)?.pageStart===pageAt(blank))
+const physicalPages=raw.toString('utf8').split('\f')
+assert.equal(physicalPages.pop(),'') // only the terminal fragment is discarded
+assert.equal(physicalPages.length,index.pdfPageCount)
+assert.equal(physicalPages.filter(page=>!page.trim()).length,0) // no actual empty PDF page claimed tested
+for(const b of index.pageBreakLines.filter(n=>n<1156&&pageAt(n-1)>=3)) {
+ const location=publicTextLocation(citation(b-1,b+1),index.caseId)
+ assert.ok(location)
+ assert.equal(location.pageStart,pageAt(b-1))
+ assert.equal(location.pageEnd,pageAt(b+1))
+}
+ok(renderToStaticMarkup(<PublicTextLocation citation={citation(1156,1156)} caseId={index.caseId}/>)==='')
 console.log(`${checks} public text location assertions passed (actual source + constructed rejection/SSR; no browser)`)

@@ -399,3 +399,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTTRACE | 测试增量独审通过 | 2026-11-14：独立无.git副本10过；临时断开taskId触发5红、伪认证flag触发1红，恢复10过；冻结2/2，运行文件无差异。见 DEFECTS/EXPERTTRACE.md。真实模型0/HOLD。 |
 
 | PUBLICTEXTLOCATION | 待测 / 待独审 | 固定公开文本版本与LF行定位；保留原证据链接与权限。26新断言、148 W16断言、86后端测试及构建自测；真实浏览器/PDF跳页未验，非当前证据原件认证。冻结：logs/public-text-line-location-impl-hashes-frozen.txt。 |
+
+| PUBLICTEXTLOCATION | 返工后待独审 | PR103终止换页符不能生成PDF54页；显式53页上限，空白行/跨页/末页回归。32前端计数检查及页边界断言、148 W16、87后端通过，构建通过；浏览器仍未验。冻结清单已更新。 |
