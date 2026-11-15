@@ -647,3 +647,6 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## ARCHIVEBOUNDARYTESTS（2026-11-15）
+新增独立普通功能测试：完整显式字段的最小合成案件导出/恢复/再导出及再次恢复；原复杂演示案件保留全部业务状态，修改元数据或新增船舶后403/409不返回包且状态不变。无生产代码/策略/白名单修改，不替代原190项失败；首轮稀疏案件默认值规范化造成revision变化如实记录。见research/trajectory/SUPPORTED_ARCHIVE_BOUNDARY_TESTS.md。
