@@ -433,3 +433,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | SOURCERECEIPTINTEGRATIONGATE | 阻断/待复核 | 权限不等价已合成复现；5开发测试含3新增验证现有回滚/旧客户端拒绝，未接生产，原缺口保留 | logs/SOURCERECEIPTINTEGRATIONGATE-hashes.txt |
 
 | SOURCERECEIPTROLLBACKCORRECTION | 待测 | 仅1项普通回滚测试开发通过；消除内部assert转500假阳性，沿用A非新回执，原缺口仍在 | logs/SOURCERECEIPTROLLBACKCORRECTION-hashes.txt |
+
+| CONFLICTSOURCENOTICE | 待测 | 实际冲突页常显来源复核边界及保守操作指引；13 SSR+15既有草稿断言、构建通过（大包警告）；浏览器未验、A→B未修 | logs/CONFLICTSOURCENOTICE-hashes.txt |

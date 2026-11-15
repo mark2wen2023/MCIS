@@ -768,3 +768,20 @@ stopped, no policy changed. See INTEGRATION_GATE_RESULT.md in conflict_source_in
 Reopen cafcdf2 frozen ordinary resolution-only rollback test: external observation
 assertions now prove capture returned, revision/current/audit were visible and the
 specific injected failure was reached. Retains prior sourceA, no new receipt test.
+
+## Conservative conflict handling workflow notice
+Onbe6fd55 reopen EvidencePage.tsx only to mount visible SourceReviewNotice and
+label handling state as distinct from source verification. Existing draft/edit/status
+request bodies and permissions unchanged. Users unable to inspect source are told
+they may retain handling notes under current permissions, note unresolved issues and
+seek appropriately authorized review. No fabricated read receipt or version status.
+Source-review notices are always rendered, not hover-only. This is UI guidance, not
+a backend A→B fix or proof a particular source is verified/unverified.
+Validation from web: esbuild tests/conflict-source-notice.test.tsx (bundle node/cjs,
+jsx automatic) then node:13 SSR/workflow assertions; conflict-drafts.test.ts:15 prior
+synthetic state/wiring assertions. npm run build passed with existing large-chunk
+warning. Reused installed /workspace/mcis/web/node_modules via untracked/ignored
+symlink; no installation, source copied from another branch or independent build claim.
+No browser invocation: prior sandbox/browser blockers not retried; SSR is not browser
+visual/interaction acceptance. Browser plugin/skill absent; no browser QA claimed.
+No backend permissions/security/ECFC tests rerun, original files/model untouched.

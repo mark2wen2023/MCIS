@@ -1,3 +1,4 @@
+import {SourceReviewNotice} from '../timeline/SourceReviewNotice'
 import {selectDraft, changeDraft, acknowledgeDraft, compareDraft, type ConflictDraft, type ConflictDrafts, editableRows, conflictWriteBody, CONFLICT_REFRESH_NOTICE, type EditableConflict, type VersionedConflict} from '../timeline/conflictEditing'
 import {OriginNotice, type EventOrigins} from '../timeline/OriginNotice'
 import { useMemo, useState, useSyncExternalStore } from 'react'
@@ -237,10 +238,11 @@ function ConflictPanel({ caseId, conflicts, epoch, onChanged, offsetMinutes }: {
     }, ok)
   return (
     <Panel title="多源时间对齐 · 冲突清单" meta={<span>状态变更写审计 conflict.update</span>} bodyStyle={{ padding: 0, maxHeight: 272 }}>
+      <SourceReviewNotice />
       <div className="p6-muted">本页草稿在切换记录、刷新列表及状态修改后保留；离开页面或重新加载网页不保留，请先保存。保存说明后请刷新列表核对。</div>
       {saveError && <div role="alert">{saveError}<button type="button" onClick={onChanged}>刷新以比对（不自动保存）</button></div>}
       <table className="p6-table">
-        <thead><tr><th>冲突</th><th>内容（A ／ B）</th><th>差值</th><th>处理</th></tr></thead>
+        <thead><tr><th>冲突</th><th>内容（A ／ B）</th><th>差值</th><th>处理状态（非来源核验）</th></tr></thead>
         <tbody>
           {conflicts.map((c) => (
             <tr key={c.conflictId} className={editing === c.conflictId ? 'sel' : ''} onClick={() => { setEditing(c.conflictId); setDrafts(current => selectDraft(current,c)) }}>
