@@ -17,7 +17,7 @@ try:
   p.route('**/api/v1/**',route);p.goto('http://127.0.0.1:15854/#/lobby');p.get_by_label('导出案件包：Archive synthetic',exact=True).click()
   p.get_by_text('整个案件包导出已拒绝',exact=False).wait_for();assert not downloads;assert 'private detail' not in p.locator('body').inner_text()
   p.goto('http://127.0.0.1:15854/#/report?case=SYNTHETIC');p.get_by_text('报告文件导出不等于案件备份',exact=False).wait_for()
-  p.goto('http://127.0.0.1:15854/#/interview?case=SYNTHETIC');p.get_by_text('笔录仅在1.2.0受限归档全部校验通过时支持同案号新案恢复',exact=False).wait_for()
+  p.goto('http://127.0.0.1:15854/#/interview?case=SYNTHETIC');p.get_by_text('笔录仅在匹配版本的受限归档全部校验通过时支持同案号新案恢复',exact=False).wait_for()
   p.unroute_all(behavior='ignoreErrors');b.close()
  print('Archive guard browser:409 refused/no download;report/interview warnings visible(API doubles)')
 finally:os.killpg(s.pid,signal.SIGTERM);s.wait()

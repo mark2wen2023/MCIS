@@ -669,3 +669,11 @@ has_history, producing non-restorable1.0 exports. Add TimelineEventRow detection
 before existing archive assembly; no parser, table whitelist, permission, or
 unsupported-combination relaxation. Supersedes the previous timeline-only legacy
 selection clause. Record: research/trajectory/TIMELINE_ONLY_PROFILE_FIX.md.
+
+## Archive scope copy and ordinary UI test correction
+
+Two inherited UI tests require obsolete literal wording. Preserve the backup/refusal
+assertions while matching the actual disclaimer and versioned1.2/1.3/1.4 contract.
+Align the existing report/interview/export version notices to bounded1.4, explicitly
+rejecting timeline plus track-import history; no backend or validator changes.
+See research/trajectory/ARCHIVE_SCOPE_COPY_FIX.md. Browser not executed.

@@ -1,7 +1,7 @@
 """Narrow source-copy regression; not browser rendering or backend acceptance."""
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]/'src'
-text='无W10时1.2.0工作记录扩展；含W10时须1.3.0'
+text='无航迹导入历史且无时间线时1.2.0；含航迹导入历史但无时间线时1.3.0；含时间线但无航迹导入历史时1.4.0；两者组合不支持'
 for path,count,limits in [
  ('pages/ReportPage.tsx',1,['完整性校验不等于可恢复','原始资料须独立保管','报告PDF/DOCX原导出文件']),
  ('pages/InterviewPage.tsx',1,['未知内容整包拒绝','原始资料须独立保管','过往签署与确认不代表本次认证']),
