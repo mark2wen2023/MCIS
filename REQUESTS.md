@@ -861,3 +861,11 @@ synthetic compatibility diagnostic (passed0.23s after fixing test schema registr
 No usable product restoration or continued-work export enabled. Durable publication/
 readiness, inactive archived receipts and imported-prefix mapping remain necessary.
 See research/conflict_source_intent/LIVE_RESTORE_CURRENT_BLOCKERS.md.
+
+## Offline conflict archive v2 inactive receipt declarations
+On4e5863a introduce standalone research schema/parser, preserve exact original v1
+schema and revision bytes/JSON fields/hash meanings. v2 carries consumed+unused
+receipt declarations as inactive-history, checks issuance/consumption/source/audit
+associations. No importer/active table writes/product allowlist change.21new+1existing
+ordinary synthetic tests passed4.20s; whole ZIP compatibility/restore not claimed.
+See contracts/conflict-archive-receipts-v2.md and research result for limits.
