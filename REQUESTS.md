@@ -662,3 +662,6 @@ User authorized replacing the public-demo hash allowlist with existing authorize
 
 ## Archive preflight convergence on audio candidate — 2026-11-16
 Authorized ordinary-business review of 8833984 against 658f877. Change previously frozen working-record archive service only to select its existing closed-world preflight for standalone consultation, timeline, recommendation, conflict, agent draft, COLREG and simulation-command state. Do not transplant the old branch's 1.4 support/origin model or change permissions, parser, allowlist or media restoration. Separate candidate; no product recovery enablement. New freeze supersedes this service file's prior hash for this candidate only.
+
+## Media archive member/index research — 2026-11-16
+Authorized after independent25-test preflight review: isolated contract and ordinary synthetic validation only. Base b1d2861; read image91962113 without merging it. New research module preserves original members and captured histories, declares task execution forbidden, and always reports restore_ready=false. No product permission/route/allowlist/parser change; source extraction, native semantic validation, unique audit association and product recovery remain prerequisites. No ASR/OCR/model/browser execution or restricted suite.
