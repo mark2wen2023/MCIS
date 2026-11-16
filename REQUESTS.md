@@ -689,3 +689,6 @@ Authorized pure-function versioned completion claims and eight explicit new synt
 
 ## Audio generation persistence — 2026-11-16
 Authorized optional-app generation and unknown/incomplete observations in existing task/audit transactions. No response fields, permissions, archive support, cleanup or replay changes. Six explicit new ordinary synthetic tests; no paused/safety/write-refusal tests. Legacy unfilled, writers unknown, not actual crash/commit-uncertainty verification.
+
+## Generation/observation linkage candidate — 2026-11-16
+Authorized isolated same-case/same-transaction association checker and eight explicit new ordinary synthetic nodes. No existing table whitelist, permission, extraction or restore changes. Missing history rejects as unknown; associations never grant readiness. No paused or write-refusal/security tests.

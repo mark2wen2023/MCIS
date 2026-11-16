@@ -425,3 +425,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Audio completion manifest protocol | 待独验 |8 new developer pure-function nodes pass; supplied claims only, no real completion persistence/closure proof. Legacy held; export/restore/retry/delete false. See research/audio_completion_manifest/PROTOCOL.md. |
 
 | Audio generation observations | 待独验 |6 unique new ordinary developer nodes pass (4+2). Optional app DB observations, no writer closure or archive readiness; legacy not backfilled. Actual crash/migration/concurrency/browser unverified. |
+
+| Audio generation linkage | 待独验 |8 new ordinary developer nodes (6+2); same-session native association plus synthetic row checks. Old extractors still refuse new tables; no member preservation or readiness. See research/audio_generation_links/RESULT.md. |
