@@ -687,3 +687,11 @@ Contract expert-request-budget-v1.md; actual provider wiring still HOLD.
 On2b0fa0b connect fixed IPC child REQUEST/GRANT/RESPONSE to existing RequestBudget
 and owned cleanup; no extra ledger or modified quotas. First-round fixture completion
 only, not FourChair/Pi/provider. Contract expert-worker-request-handshake-v1.md.
+
+## 2026-11-16 Host model reservation protocol candidate
+
+Authorized isolated four-expert prerequisite on 14ef270: add strict host request-ID
+adapter and use it in the existing fixed worker reservation/receipt path. No Pi,
+provider or authorization activation. Keep shared ownership and current quotas;
+no changes to production. See tests_acceptance/HOST_MODEL_PROTOCOL/REPORT.md.
+Only six explicitly selected new ordinary synthetic tests run; paused tests not run.

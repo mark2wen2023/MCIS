@@ -413,3 +413,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTREQUESTBUDGET | 待测 | 请求级持久预留/票据上下文回执绑定；172开发测试含13新增，无网络合成回执；未接Pi/provider且HOLD | logs/EXPERTREQUESTBUDGET-hashes.txt |
 
 | EXPERTREQUESTHANDSHAKE | 待测 | 实际固定子进程逐请求接SQLite预留/回执；180开发测试含8新增，保留完成席位/未完成；非Pi/模型HOLD | logs/EXPERTREQUESTHANDSHAKE-hashes.txt |
+
+| 2026-11-16 | HOST_MODEL_PROTOCOL | 待测 | 固定worker host接请求ID/持久预留适配；6项新合成节点开发通过，未跑进程/Pi/独验，真实四席HOLD；logs/HOST_MODEL_PROTOCOL-impl-hashes-frozen.txt |

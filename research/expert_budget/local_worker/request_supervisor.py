@@ -12,6 +12,7 @@ import time
 import uuid
 from . import ownership
 from research.expert_budget.request_budget import RequestBudget
+from research.expert_budget.host_protocol import HostModelProtocol
 from research.expert_budget.ledger import ROLES
 from research.expert_group.packet import PACKET_SHA256, _digest
 
@@ -60,7 +61,7 @@ class RequestWorker:
             deadline = time.monotonic()+timeout
             reason = 'unknown'
             try:
-                self.budget.bind_ticket(self.meeting,ticket,role,1,context)
+                protocol = HostModelProtocol(self.budget,self.meeting,ticket,role,1,context)
                 proc = subprocess.Popen([sys.executable,'-I',str(FIXTURE),mode],cwd=FIXTURE.parent,
                                         env={'LANG':'C.UTF-8'},stdin=subprocess.PIPE,stdout=subprocess.PIPE,
                                         stderr=subprocess.DEVNULL,start_new_session=True,bufsize=0)
@@ -79,7 +80,7 @@ class RequestWorker:
                         if re.fullmatch(rb'REQUEST [1-3]',line):
                             if pending: raise HandshakeError('pending')
                             n=int(line[-1:]); request=f'{ticket}:model:{n}'
-                            try: reservation=self.budget.reserve(self.meeting,ticket,context,request)
+                            try: reservation=protocol.request({'op':'model','requestId':request})
                             except Exception: db_unknown=True; raise
                             if not reservation['newReservation']:
                                 reason=reservation['status']; raise HandshakeError(reason)
@@ -93,7 +94,7 @@ class RequestWorker:
                         elif re.fullmatch(rb'RESPONSE [1-3]',line):
                             request=f'{ticket}:model:{int(line[-1:])}'
                             if pending!=request: raise HandshakeError('response_binding')
-                            try: self.budget.settle(self.meeting,ticket,context,request,'received_unverified',hashlib.sha256(line).hexdigest())
+                            try: protocol.received(request,hashlib.sha256(line).hexdigest())
                             except Exception: db_unknown=True; raise
                             pending=None; row['responses']+=1
                         elif line==b'DONE' and pending is None and row['responses']==2:
