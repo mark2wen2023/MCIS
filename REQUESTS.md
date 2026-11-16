@@ -719,3 +719,6 @@ Authorized independent combination of exact image91962113 and audiocc0cdc7. Only
 
 ## Explicit combined review demo — 2026-11-16
 Authorized reuse of module registration functions with a single isolated app/db; new factory accepts settings only and keeps both runtimes None. Main app/permissions/archive unchanged. Five new ordinary synthetic nodes; no paused/write-refusal/browser/model tests. Caller responsible for isolated settings; not a production entry.
+
+## Fresh media demo preparation — 2026-11-16
+Authorized new-directory-only API preparation script. Generated image fallback; optional pinned public FunASR sample/license/saved output, no inference. Four new ordinary synthetic nodes plus one actual saved-result preparation. No materials/DB in repo, no paused/write-refusal/browser tests; formal archive unchanged.

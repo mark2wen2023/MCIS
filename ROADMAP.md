@@ -442,3 +442,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Frozen image/audio candidates | 待独验 |Exact91962113+cc0cdc7 combined; four developer synthetic nodes pass. Separate optional factories, default runtime disabled; mixed-case archive refusal retained. Browser/real model/concurrency/production recovery unverified. |
 
 | Explicit combined media demo | 待独验 |5 developer synthetic nodes pass; one optional app with separate review pages and shared DB/audit, runtimes off with no enable arguments. TestClient page responses only, no browser/real models; formal archive closed. New freeze supersedes two app files at current head only. |
+
+| Fresh media demo preparer | 待独验 |4 new ordinary nodes pass after UTC-format correction; one developer preparation imports pinned existing public audio output, image remains generated schematic. New temporary DB only, model/server/browser not started; formal archive unsupported. |
