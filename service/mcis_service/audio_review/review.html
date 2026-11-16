@@ -1,8 +1,9 @@
 <!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>音频逐段核对候选</title>
 <style>body{font:16px sans-serif;max-width:1100px;margin:2em auto;padding:1em}label{display:block;margin:.7em 0}input,textarea{padding:.5em;max-width:95%}textarea{width:95%}pre{white-space:pre-wrap;overflow-wrap:anywhere}button{padding:.6em;margin:.3em}article{border-top:1px solid #aaa;padding:1em 0}.notice{background:#fff1d6;padding:1em}audio{width:100%}</style>
-<h1>原音与逐段核对 · 隔离候选</h1><p class="notice">未接真实ASR自动执行入口；可导入离线SenseVoiceSmall输出，页面不证明执行。机器时间戳若有也是估计，情绪标签不是事实。机器草稿仅为待核对输入，合成数据不是识别结果。听不清保持空文字，时间未知不补零；说话人未知。人工核对不等于事实认证或批准笔录。仅支持短PCM WAV；本候选案件暂不支持整包归档。</p>
+<h1>原音与逐段核对 · 隔离候选</h1><p class="notice">本地SenseVoice任务须显式发起且由服务端配置；目前仅公开演示样本可执行。也可导入离线结果；页面不证明人已听或原件真实性。机器时间戳若有也是估计，情绪标签不是事实。机器草稿仅为待核对输入，合成数据不是识别结果。听不清保持空文字，时间未知不补零；说话人未知。人工核对不等于事实认证或批准笔录。仅支持短PCM WAV；本候选案件暂不支持整包归档。</p>
 <label>案件ID<input id="case"></label><label>核对运行ID<input id="run"></label><button id="list">列出已保存运行</button><button id="load">读取运行</button><pre id="runs"></pre>
 <details><summary>关联已登记原音与v2机器草稿</summary><label>原音登记回执<input id="audio-digest"></label><button id="source">读取来源绑定（不证明人已听）</button><pre id="source-context"></pre><label>机器草稿JSON登记回执<input id="draft-digest"></label><label><input type="checkbox" id="ack">确认归档限制并保留原音、机器原稿</label><button id="attach">建立核对运行</button></details>
+<details><summary>显式本地SenseVoice任务（仅公开演示样本）</summary><p>先填写上方原音登记回执。仅使用本地模型，不上传音频。开始即占用任务号；超时或未知时查询状态，不盲重试。成功仅生成待核对草稿，仍禁止整包归档。</p><label>任务号<input id="task-id"></label><button id="new-task">生成任务号</button><label><input id="task-confirm" type="checkbox">确认本地执行与归档限制</label><button id="start-task">启动本地识别</button><button id="task-status">查询任务</button><button id="task-list">列出本案任务</button><button id="open-task">打开成功任务的待核对草稿</button><pre id="task-output" role="status"></pre></details>
 <p id="status" role="status"></p><h2>回听原音</h2><p>显式载入会记录下载访问，不证明实际听取。片段按相对原音毫秒定位，浏览器停止时机不保证采样级精度。时间未知只能回听整段原音，不猜定位。</p><button id="listen">授权载入原音</button><button id="clear">清除原音</button><audio id="player" controls preload="metadata"></audio><p id="play-status" role="status"></p><pre id="metadata"></pre><div id="segments"></div>
 <script>
 'use strict';
@@ -17,6 +18,15 @@ async function action(fn){if(busy)return;busy=true;try{await fn();}catch(e){el('
 function active(){if(!state||context!==el('case').value||state.runId!==el('run').value)throw Error('案件或运行已变化，请先读取；原输入尚未保存');}
 function canReplace(){return !dirty||confirm('未保存输入仅在页面内存，继续读取将丢失。继续？');}
 function checked(d,c){if(d?.caseId!==c||typeof d.runId!=='string'||!Number.isInteger(d.revision)||!Array.isArray(d.humanRevisions)||!d.initial?.machineDraft)throw Error('响应不能确认');return d;}
+
+let taskBusy=false,taskResult=null;
+function taskChecked(d,c,id){if(d?.caseId!==c||d?.taskId!==id||!['running_or_unknown','interrupted_unknown','failed','succeeded'].includes(d.status)||(d.status==='succeeded'&&typeof d.runId!=='string'))throw Error('任务响应无法确认，查询状态，不重复提交');return d;}
+el('new-task').onclick=()=>{if(taskBusy||el('task-id').value){el('task-output').textContent='保留现有任务号，先查询状态；新任务需人工明确清空。';return;}el('task-id').value=crypto.randomUUID().replaceAll('-','');};
+el('start-task').onclick=async()=>{if(taskBusy)return;const c=el('case').value,id=el('task-id').value;taskBusy=true;taskResult=null;try{if(!/^[a-f0-9]{32}$/.test(id)||!el('task-confirm').checked)throw Error('须生成任务号并确认');el('task-output').textContent='已请求本地执行；可查询状态，不重试。';const d=taskChecked(await json(base(c)+'/audio-asr-tasks',{taskId:id,audioReceipt:el('audio-digest').value,confirmed:true}),c,id);if(c!==el('case').value||id!==el('task-id').value)return;taskResult=d;el('task-output').textContent=JSON.stringify(d,null,2);}catch(e){el('task-output').textContent=e.message+'；保留任务号，查询状态，不自动重试。';}finally{taskBusy=false;}};
+el('task-status').onclick=()=>action(async()=>{const c=el('case').value,id=el('task-id').value;const d=taskChecked(await json(base(c)+'/audio-asr-tasks/'+encodeURIComponent(id)),c,id);if(c!==el('case').value||id!==el('task-id').value)return;taskResult=d;el('task-output').textContent=JSON.stringify(d,null,2);});
+el('task-list').onclick=()=>action(async()=>{el('task-output').textContent=JSON.stringify(await json(base(el('case').value)+'/audio-asr-tasks'),null,2);});
+el('open-task').onclick=()=>{if(!taskResult||taskResult.caseId!==el('case').value||taskResult.taskId!==el('task-id').value||taskResult.status!=='succeeded'){el('task-output').textContent='先查询确认本案任务成功；未知不是成功。';return;}if(!canReplace())return;el('run').value=taskResult.runId;el('load').onclick();};
+
 el('source').onclick=()=>action(async()=>{const c=el('case').value;el('source-context').textContent=JSON.stringify(await json(base(c)+'/audio-reviews/source/'+encodeURIComponent(el('audio-digest').value)),null,2);});
 el('list').onclick=()=>action(async()=>{el('runs').textContent=JSON.stringify(await json(base(el('case').value)+'/audio-reviews'),null,2);});
 el('load').onclick=()=>action(async()=>{if(!canReplace())return;const c=el('case').value,id=el('run').value;const d=checked(await json(base(c)+'/audio-reviews/'+encodeURIComponent(id)),c);if(d.runId!==id)throw Error('运行不符');state=d;context=c;render();});

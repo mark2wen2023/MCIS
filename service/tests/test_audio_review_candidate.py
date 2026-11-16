@@ -125,6 +125,6 @@ def test_default_app_and_explicit_candidate_page(tmp_path,local):
     with TestClient(app) as c:assert c.get('/audio-review-lab').status_code==404
     assert 'audio_review_revisions' not in inspect(app.state.db.engine).get_table_names()
     c,_,_=local;page=c.get('/audio-review-lab');assert page.status_code==200
-    for word in ['未接真实ASR','时间未知不补零','听不清','<audio','授权载入原音','追加本段人工修订','不自动重试']:
+    for word in ['本地SenseVoice任务须显式发起','目前仅公开演示样本可执行','时间未知不补零','听不清','<audio','授权载入原音','追加本段人工修订','不自动重试']:
         assert word in page.text
     assert 'innerHTML' not in page.text and 'localStorage' not in page.text and '<script src=' not in page.text

@@ -1,0 +1,20 @@
+# Developer verification — not independent acceptance
+
+Base9a02e15edb30ceda391a5e19bf8de450faec0039. Branch candidate/audio-sensevoice-tasks. Optional host-configured local execution; default product unchanged, candidate default runtimeNone refuses503. No install/download required by code. Existing installed official CPU model reused; only the exact public demo SHA accepted. No broader private-audio execution claimed.
+
+## Commands and results
+```sh
+PYTHONPATH=.:service /workspace/mcis-pr104-supported-archive/service/.venv/bin/python -m pytest -q service/tests/test_audio_review_candidate.py service/tests/test_audio_sensevoice_candidate.py service/tests/test_audio_sensevoice_tasks.py --tb=short
+node --test tests_acceptance/audio-review-candidate/page.test.cjs
+PYTHONPATH=.:service /workspace/mcis-pr104-supported-archive/service/.venv/bin/python tests_acceptance/audio-sensevoice-tasks/run_public_task.py /workspace/mcis-sensevoice-trial/sample/asr_example.wav /workspace/mcis-sensevoice-trial/venv/bin/python /workspace/mcis-sensevoice-trial/model /workspace/mcis-sensevoice-trial/task-link
+```
+26service tests pass (20inherited,6new lifecycle);6DOM doubles pass (4inherited,2new). Counts overlap earlier reported suites; not full repository regression. Lifecycle tests stub the executor and are explicitly synthetic, including injected timeout and final-audit failure. Final fault is observed after flush/Revision count1, proving rollback reached the intended point; not actual process crash/ambiguous SQLite commit. Concurrent ordinary test observes persisted running status and second-task409 before releasing fake worker. No prior restricted security/ECFC/browser suite rerun.
+
+Initial test failures: prior page text asserted noASR despite newly explicit task wording; updated assertion requires explicit/public-only execution notice. New DOM test initially lacked lazy fake task input elements; fixed fixture, final6pass. Neither was a browser finding.
+
+Actual public task test invokes REAL fixed subprocess through the HTTP task route using TestClient/tempSQLite. No mocked model response in this command. FunASR1.2.6, torch/torchaudio2.6.0+cpu, numpy1.26.4, CPU4threads; exact model revision3847d57b6bdf2dd8875cb1508d2af43d80a16bf7; manifests inherited from parent. Model load3.791434s, inference0.597413s on this run; these are per-run observations, not production benchmarks. Text matches upstream reference; no independent human listening. Raw19timestamp pairs retained, final5550ms exceeds exact5546.6875ms, no words field; draft remains unlocated. Speaker unknown, NEUTRAL tag not a fact.
+
+Actual chain PASS: original intake -> durable task -> subprocess -> final succeeded/task+pendingRevision+audit -> status/read -> raw/candidate artifact hash downloads -> pending human input -> identical original byte download -> duplicate-ID409 without redispatch -> restart task/run read -> archive409. Manual input explicitly marked pending/reference-only, not listened/approved. Outputs and worker log in /workspace/mcis-sensevoice-trial/task-link; public audio and models kept outsideGit. Test temporary store intentionally cleaned after exporting its developer result; application task code never auto-deletes unknown jobs.
+
+## Limits
+POST waits for the worker in a thread, not a durable queue. Status is separately queryable; restart never resumes unknown work. Same ID always rejects; unknown/running blocks other tasks in that DB. No unknown-result cleanup/retry endpoint, no hard cancel/descendant guarantee, no whole-machine memory/disk/performance budget. Clean child environment excludes inherited credentials; explicit local model and offline flags/no remote code prevent intentional remote use, but no network packet capture or sandbox security certification performed. Existing self-reported-role authentication limitations unchanged. Full production identity, browser playback/controls, actual crash recovery, external concurrency and archive restore NOT accepted. Existing409/422 protections remain. No merge/deploy.

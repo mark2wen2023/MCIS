@@ -653,3 +653,6 @@ Parent/user authorized original-audio binding, time-ranged machine draft and app
 
 ## SenseVoiceSmall audio candidate — 2026-11-16
 Explicit user model change stops faster-whisper work; retained separately, not part of this branch. Extend cf9e78d isolated audio candidate to accept exact PCM frame/rate durations without changing originals. New v3 draft retains raw local SenseVoice output; v2 remains exact-integral-ms only. Changes to previously frozen candidate app/page are authorized here; new freeze supersedes their old hashes only. No shared product entry, permission or archive allowance change. Public sample inference is local; no browser/restricted suites.
+
+## Explicit local SenseVoice task candidate — 2026-11-16
+Authorized continuation of audio minimum loop: optional host-configured fixed CPU worker, durable task ID/status, successful task artifacts + pending review run in one final transaction. No default enablement, extra model downloads, or permissions changes. Reuse existing intake authorization and exact PCM source. Public demo SHA only until separately reviewed; no arbitrary private audio execution. Previously frozen audio files may change under this request; separate new freeze required.

@@ -73,12 +73,16 @@ def rows(s,case_id,run_id):
 def check(ctx,s,case_id,initial):
     current,fmt=source(ctx,s,case_id,initial['audioReceipt'])
     if not matched_source(initial['machineDraft'],current,fmt):raise problem(409,'AUDIO_SOURCE_STALE','原音版本不符，保留原稿，不静默重绑定')
+    if 'artifactTaskId' in initial:
+        from .tasks import verify_task_binding
+        verify_task_binding(s,case_id,initial)
+        return
     _,raw=receipt(ctx,s,case_id,initial['draftReceipt'])
     if sha(raw)!=initial['draftBytesSha256']:raise problem(409,'AUDIO_DRAFT_STALE','机器原稿版本不符')
 
 def result(rs):
     return {'caseId':rs[0].case_id,'runId':rs[0].run_id,'revision':rs[-1].revision,'initial':rs[0].doc,
-            'humanRevisions':[r.doc for r in rs[1:]],'asrExecutedByService':False,'factVerified':False,'archiveSupported':False}
+            'humanRevisions':[r.doc for r in rs[1:]],'asrExecutedByService':'artifactTaskId' in rs[0].doc,'factVerified':False,'archiveSupported':False}
 
 def strict(raw):
     if len(raw)>262144:raise ValueError('draft budget')
@@ -158,13 +162,15 @@ async def revise(case_id:str,run_id:str,request:Request,ctx:Ctx=CtxDep):
         out=result(rows(s,case_id,run_id))
     return out
 
-def create_audio_review_app(settings):
+def create_audio_review_app(settings, *, sensevoice_runtime=None):
     from ..main import create_app
-    app=create_app(settings);Storage.metadata.create_all(app.state.db.engine)
+    from . import tasks
+    app=create_app(settings);app.state.audio_asr_runtime=sensevoice_runtime
+    Storage.metadata.create_all(app.state.db.engine)
     with app.state.db.engine.begin() as c:
         for op in ('UPDATE','DELETE'):
             c.execute(sql(f"CREATE TRIGGER IF NOT EXISTS audio_review_no_{op.lower()} BEFORE {op} ON audio_review_revisions BEGIN SELECT RAISE(ABORT,'append-only audio review'); END;"))
-    app.include_router(router)
+    app.include_router(router);app.include_router(tasks.router)
     @app.get('/audio-review-lab',response_class=HTMLResponse)
     def page():return HTMLResponse(Path(__file__).with_name('review.html').read_text(),headers={'Cache-Control':'no-store'})
     return app

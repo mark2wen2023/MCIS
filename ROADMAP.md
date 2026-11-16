@@ -401,3 +401,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Audio review candidate | 待测 | Isolated PCM source + imported machine draft + append-only per-segment review/replay basics; 13 ordinary service tests and 4 synthetic DOM tests pass on developer side. No ASR/browser/archive acceptance. Freeze: `logs/audio-review-candidate-impl-hashes-frozen.txt`. |
 
 | SenseVoiceSmall audio candidate | 待独验 | v3 exact frame/rate source + retained raw recognizer result + pending human revision; local public sample integration and ordinary synthetic tests only. No product ASR task/browser/archive. Freeze: logs/audio-sensevoice-impl-hashes-frozen.txt. |
+
+| Explicit SenseVoice task candidate | 待独验 | Optional fixed local CPU task; public demo only; durable status and atomic pending-draft publication. Developer26service +6syntheticDOM pass and actual public subprocess chain pass. Browser/production/archive unverified. Freeze: logs/audio-sensevoice-tasks-impl-hashes-frozen.txt. |
