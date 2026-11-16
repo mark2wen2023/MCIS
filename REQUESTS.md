@@ -732,3 +732,10 @@ user_version=3 and require receiptDigest for results; old revision2 read-only re
 retains original semantics. Preserve initial terminal causes, explicit no-new-grant
 on duplicate operations, durable duplicate-request stop. No dispatch or migration.
 See tests_acceptance/LEDGER_RECEIPT_STOP/REPORT.md; six new ordinary nodes only.
+
+## 2026-11-16 Simulated V2 host single-ledger adapter
+
+Authorized isolated adapter on 019f379; maps simulated host messages solely to
+revision-3 ledger, outer duplicate checked before historical result, whole-call
+exceptions block locally without retries. No v1 dual write or process/provider.
+Six new ordinary nodes only; tests_acceptance/V2_HOST_PROTOCOL/REPORT.md.

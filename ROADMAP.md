@@ -425,3 +425,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-16 | MEETING_LEDGER_V2 | 待测 | 新会议v2状态/操作/审计同事务，只读重开不派发；6新合成节点开发通过，真实故障/并发未验；logs/MEETING_LEDGER_V2-impl-hashes-frozen.txt |
 
 | 2026-11-16 | LEDGER_RECEIPT_STOP | 待测 | v2家族合同修订3保存摘要/停止原因，旧修订2只读且缺摘要未知；6新节点开发通过，旧写调用需适配；logs/LEDGER_RECEIPT_STOP-impl-hashes-frozen.txt |
+
+| 2026-11-16 | V2_HOST_PROTOCOL | 待测 | 模拟host单接新账本，重复/异常阻断，6新节点开发通过；真实提交故障/进程/Pi未验，HOLD；logs/V2_HOST_PROTOCOL-impl-hashes-frozen.txt |
