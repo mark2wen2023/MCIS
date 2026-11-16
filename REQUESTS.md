@@ -949,3 +949,9 @@ Reopen readiness_gate empty-list branch: schema shape alone cannot establish emp
 state; classify IDs present in operation/commit/readiness ledgers. Unknown bindings
 raise, normal empty stores and held pending claims retain prior semantics. No product
 wiring, authorization, retry/delete or ready-state changes.
+
+## Research listings inspect ledger IDs regardless of case count
+Extend prior empty-list association check to marked/expected-identity lists with
+ordinary cases. Unknown orphan commit/pending elsewhere makes whole listing unknown;
+individual ordinary-case reads remain scoped and legitimate held claims stay held.
+No production permission/state change or claim of full-database integrity.

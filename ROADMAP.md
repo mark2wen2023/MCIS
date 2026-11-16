@@ -473,3 +473,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | RESTORECLASSIFIEDENTRIES | 待测 | 隔离load/list/scoped_call接classify；45开发合成通过，未接产品/新案登记 | logs/RESTORECLASSIFIEDENTRIES-impl-hashes-frozen.txt |
 
 | RESTOREEMPTYLEDGER | 待测 | 空cases关联标记未知不显示空库；50开发合成通过，研究未接产品 | logs/RESTOREEMPTYLEDGER-impl-hashes-frozen.txt |
+
+| RESTORELISTLEDGER | 待测 | 非空普通案列表亦校验孤立标记；53开发合成通过，非全库一致性证明 | logs/RESTORELISTLEDGER-impl-hashes-frozen.txt |

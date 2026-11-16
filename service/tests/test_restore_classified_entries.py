@@ -100,3 +100,27 @@ def test_empty_cases_with_consistent_unattempted_claim_stays_held():
             s.execute(text("INSERT INTO offline_restore_operation VALUES ('synthetic-op','SYNTHETIC-PENDING',:sha,0)"),{'sha':'a'*64})
             assert classify(s,'SYNTHETIC-PENDING',expected_database_id='synthetic-db')=='hold'
             assert list_cases(s,expected_database_id='synthetic-db')==[]
+
+
+@pytest.mark.parametrize('kind',['commit','pending'])
+def test_nonempty_legacy_list_with_other_orphan_is_unknown(kind):
+    with MigratingResearchStore() as store:
+        with store.db.session() as s:legacy(s)
+        store.activate('synthetic-db')
+        with store.db.session() as s:
+            if kind=='commit':
+                s.execute(text("INSERT INTO offline_restore_commit VALUES ('synthetic-orphan','SYNTHETIC-ORPHAN',:sha,0,0)"),{'sha':'a'*64})
+            else:
+                s.execute(text("INSERT INTO offline_restore_readiness VALUES ('SYNTHETIC-ORPHAN','synthetic-orphan',:sha,'waiting_publication')"),{'sha':'a'*64})
+            assert load_case(s,'SYNTHETIC-OLD',expected_database_id='synthetic-db')['caseId']=='SYNTHETIC-OLD'
+            with pytest.raises(ReadinessUnknown):list_cases(s,expected_database_id='synthetic-db')
+
+
+def test_nonempty_legacy_list_preserves_consistent_pending_claim():
+    with MigratingResearchStore() as store:
+        with store.db.session() as s:legacy(s)
+        store.activate('synthetic-db')
+        with store.db.session() as s:
+            s.execute(text("INSERT INTO offline_restore_operation VALUES ('synthetic-pending','SYNTHETIC-PENDING',:sha,0)"),{'sha':'a'*64})
+            assert [r['caseId'] for r in list_cases(s,expected_database_id='synthetic-db')]==['SYNTHETIC-OLD']
+            with pytest.raises(CaseNotReady):load_case(s,'SYNTHETIC-PENDING',expected_database_id='synthetic-db')

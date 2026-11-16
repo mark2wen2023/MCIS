@@ -76,16 +76,16 @@ def list_cases(session, *, expected_database_id=None, explicit_legacy=False):
     initial = _entry_decision(session, '', expected_database_id=expected_database_id,
                               explicit_legacy=explicit_legacy)
     # A marked, well-formed DB classifies an unregistered identifier as unknown.
-    # Therefore validate actual rows below; empty-list validation uses a scoped
-    # protocol identity check rather than treating that sentinel as an entity.
+    # Validate protocol and all ledger IDs independently of case-row count;
+    # the sentinel is not a real entity or proof of whole-list consistency.
     rows = cases.list_cases(session)
-    if not rows and (initial == 'unknown' or expected_database_id is not None):
+    if initial == 'unknown' or expected_database_id is not None:
         from .migration_protocol import REQUIRED
         try:
             names = set(inspect(session.connection()).get_table_names())
             marker = session.execute(text('SELECT singleton,version,database_id FROM offline_restore_protocol')).all() if REQUIRED <= names else []
             if explicit_legacy or not expected_database_id or marker != [(1,1,expected_database_id)]:
-                raise ReadinessUnknown('readiness unknown; no empty successful listing')
+                raise ReadinessUnknown('readiness unknown; no successful listing')
             session.execute(text('SELECT case_id FROM offline_restore_legacy_cases LIMIT 0'))
             ledger_ids = set()
             for table in ('offline_restore_operation', 'offline_restore_commit', 'offline_restore_readiness'):
@@ -93,9 +93,9 @@ def list_cases(session, *, expected_database_id=None, explicit_legacy=False):
                 ledger_ids.update(session.execute(text('SELECT DISTINCT case_id FROM '+table)).scalars())
             for case_id in ledger_ids:
                 if _entry_decision(session, case_id, expected_database_id=expected_database_id) == 'unknown':
-                    raise ReadinessUnknown('orphan or inconsistent ledger; no empty successful listing')
+                    raise ReadinessUnknown('orphan or inconsistent ledger; no successful listing')
         except SQLAlchemyError as exc:
-            raise ReadinessUnknown('readiness unknown; no empty successful listing') from exc
+            raise ReadinessUnknown('readiness unknown; no successful listing') from exc
     result = []
     for row in rows:
         state = _entry_decision(session, row['caseId'], expected_database_id=expected_database_id,

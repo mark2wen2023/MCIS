@@ -54,3 +54,9 @@ Even when cases is empty, listing inspects IDs present in operation, commit and
 readiness ledgers, not only their column shape. Orphan/inconsistent bindings raise
 unknown. A well-formed empty store still returns[], as does a store containing only
 consistent held claims; the latter means no visible cases, not no pending operations.
+
+The ledger-ID check also applies to nonempty marked/expected-identity listings.
+An unrelated orphan commit or readiness row makes the complete list unknown, even
+if all actual case rows are classified ordinary. A consistent held claim does not
+block listing ordinary cases. Individual case reads remain case-scoped; this is
+not a global integrity certification, and unmarked legacy behavior is unchanged.
