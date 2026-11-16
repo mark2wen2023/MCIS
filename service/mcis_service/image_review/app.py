@@ -1,5 +1,5 @@
 """Isolated candidate using real product SQLite, intake authorization and downloads.
-No default app mounting, model calls, new file writes or automatic retries.
+No default app mounting. Local tasks require explicit host configuration; no automatic retries.
 """
 from pathlib import Path
 from uuid import uuid4
@@ -101,6 +101,9 @@ def read(case_id: str, run_id: str, ctx: Ctx = CtxDep):
         begin(s); authorize(ctx, s, case_id)
         rows = records(s, case_id, run_id)
         receipts(ctx, s, case_id, rows[0].doc['bindings'])
+        if 'artifactTaskId' in rows[0].doc:
+            from .tasks import verify_task_binding
+            verify_task_binding(s, case_id, rows[0].doc)
         return result(rows)
 
 
@@ -118,6 +121,9 @@ async def review(case_id: str, run_id: str, request: Request, ctx: Ctx = CtxDep)
         begin(s); authorize(ctx, s, case_id, write=True)
         rows = records(s, case_id, run_id)
         receipts(ctx, s, case_id, rows[0].doc['bindings'])
+        if 'artifactTaskId' in rows[0].doc:
+            from .tasks import verify_task_binding
+            verify_task_binding(s, case_id, rows[0].doc)
         if rows[-1].revision != b['expectedRevision']: raise problem(412, 'OCR_REVISION', '版本已变化；保留输入并重新核对，不自动重试')
         if not 0 <= b['lineIndex'] < len(rows[0].doc['candidate']['text_lines']): raise problem(422, 'OCR_LINE', '行号不存在')
         if rows[-1].revision >= 1000: raise problem(409, 'OCR_BUDGET', '本运行最多1000次人工修订，不自动截断')
@@ -128,14 +134,17 @@ async def review(case_id: str, run_id: str, request: Request, ctx: Ctx = CtxDep)
         return result(records(s, case_id, run_id))
 
 
-def create_image_review_app(settings):
+def create_image_review_app(settings, ocr_runtime=None):
     from ..main import create_app
     app = create_app(settings)
+    from .tasks import router as tasks_router
+    app.state.image_ocr_runtime = ocr_runtime
     Storage.metadata.create_all(app.state.db.engine)
     with app.state.db.engine.begin() as c:
         for op in ('UPDATE', 'DELETE'):
             c.execute(sql(f"CREATE TRIGGER IF NOT EXISTS image_ocr_no_{op.lower()} BEFORE {op} ON image_ocr_review_records BEGIN SELECT RAISE(ABORT, 'OCR history is append-only'); END;"))
     app.include_router(router)
+    app.include_router(tasks_router)
     @app.get('/image-review-lab/preview.js')
     def preview_script():
         return Response(Path(__file__).with_name('preview.js').read_text(), media_type='text/javascript', headers={'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff'})

@@ -656,3 +656,6 @@ Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD
 
 ## 2026-11-16 公开页图真实本地OCR接线
 按授权实际运行已安装PP-OCRv5 CPU并将本轮44条输出转换、登记到隔离候选；增加显式公开样本runner与离线适配器。默认服务/权限/归档保护不变，无外部OCR、安装或浏览器重试；模型版本及结果摘要见tests_acceptance/image-ocr-local-run/REPORT.md。网页自动识别未实现，服务仍仅导入结果。
+
+## 2026-11-16 隔离页面显式本地OCR任务
+按授权从界面显式启动既有固定公开页本地runner，持久任务号/状态，成功同事务关联原始结果与人工核对记录；未知不重试/清理，不开放生产、不更改权限。新增结果授权下载与审计，原PDF/页图下载保持原入口。仅公开第6页、依赖主机显式配置。详见contracts/image-ocr-review-candidate.md及tests_acceptance/image-ocr-task/REPORT.md。

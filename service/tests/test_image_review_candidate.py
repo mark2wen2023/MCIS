@@ -177,7 +177,7 @@ def test_page_contains_caveats_and_no_remote_scripts(tmp_path):
     with TestClient(app) as c:
         response=c.get('/image-review-lab');assert response.status_code==200
         html=response.text
-        for text in ['已有OCR输出导入，不重新识别','不是事实确认','未自动验证','草稿仅页面内存','授权下载','不自动重试']:
+        for text in ['可导入已有OCR输出','不是事实确认','未自动验证','草稿仅页面内存','授权下载','不自动重试']:
             assert text in html
         assert '<script src="/image-review-lab/preview.js"></script>' in html
         assert '<script src="http' not in html and 'innerHTML' not in html and 'localStorage' not in html
