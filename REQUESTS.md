@@ -671,3 +671,6 @@ Authorized read-only native-row enumeration and unique revision/audit matching o
 
 ## Supplied audio byte consistency research — 2026-11-16
 Authorized continuation of media archive research: in-memory PCM bytes + native v3/raw result/declaration consistency, reusing existing offline validators/converter. No native product file reads or route/permission/export/restore changes. Image/PDF and unsupported v2 explicitly refused; generated PCM/fabricated ASR results only. No existing frozen implementation modified; new files have separate freeze.
+
+## Image/PDF supplied-byte consistency research — 2026-11-16
+Authorized continuation with ONLY new explicitly selected ordinary nodes. New isolated PDF/PNG and line-OCR consistency checker; snapshot image91962113 line contract without app integration. Existing Pillow/Poppler only; generated assets/fabricated OCR, no model or product data. No preflight whole file/full suite/write-refusal or paused tests. Source/render authenticity unverified; export/restore remain false.

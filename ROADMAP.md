@@ -413,3 +413,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Media archive native preflight research | 待独验 |57 ordinary developer synthetic tests (42 index+15 inventory); read-only case-scoped rows and unique audit matching only. Unscoped tables/bytes/product recovery unverified; restore_ready=false. Freeze: `logs/media-archive-preflight-impl-hashes-frozen.txt`. |
 
 | Media supplied audio-byte consistency | 待独验 |83 developer synthetic tests (42+26+15 unique selection); actual generated PCM bytes, no ASR. Audio-v3 only; PDF/image unsupported, caller-provided provenance, restore/export remain false. Freeze: `logs/media-byte-consistency-impl-hashes-frozen.txt`. |
+
+| Image/PDF supplied-byte research | 待独验 |12 individually selected new ordinary developer tests pass; generated PDF/PNG + fabricated OCR. Actual page-count/dimension checks, no render lineage/OCR/browser. Restore/export false; no paused tests. Freeze: `logs/image-pdf-byte-consistency-impl-hashes-frozen.txt`. |
