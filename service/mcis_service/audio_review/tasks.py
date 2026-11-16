@@ -16,6 +16,7 @@ from ..evidence_intake.router import authorize, body_bounded
 from ..evidence_intake.parser import sha, canonical, text
 from ..audit import service as audit
 from .app import Storage, Revision, source, sample_source, receipt, strict, inspect_draft
+from . import generation
 from tools.audio_transcript_contract.sensevoice_candidate import convert
 
 
@@ -85,7 +86,8 @@ async def start(case_id:str,request:Request,ctx:Ctx=CtxDep):
             raise problem(422,'ASR_WAV_SCOPE','本地任务仅支持1–30秒、16kHz单声道16位PCM WAV，最多1MiB；不自动转换原音')
         doc={'taskId':task_id,'caseId':case_id,'audioReceipt':b['audioReceipt'],'source':binding,'status':'running_or_unknown','utc':iso(now_utc()),'operator':ctx.operator,'role':ctx.role,'runId':None,'factVerified':False,'archiveSupported':False}
         s.add(Task(task_id=task_id,case_id=case_id,doc=doc))
-        audit.append(s,case_id=case_id,operator=ctx.operator,role=ctx.role,action='asr.task.start',category='Evidence',command=task_id,entity_id=task_id)
+        event=audit.append(s,case_id=case_id,operator=ctx.operator,role=ctx.role,action='asr.task.start',category='Evidence',command=task_id,entity_id=task_id)
+        generation_id=generation.register(s,case_id,task_id,binding,event)
     try:
         raw=await asyncio.to_thread(execute,runtime,ctx.settings.data_dir/'audio-asr-jobs'/task_id,audio,task_id)
         converted=convert(raw,binding);draft=converted['draft'];encoded=canonical(draft)
@@ -93,7 +95,8 @@ async def start(case_id:str,request:Request,ctx:Ctx=CtxDep):
         with WRITE_LOCK,ctx.db.session() as s:
             begin(s);row=get_task(s,case_id,task_id)
             row.doc={**row.doc,'status':'interrupted_unknown' if isinstance(exc,subprocess.TimeoutExpired) else 'failed','errorCode':'LOCAL_ASR_FAILED','message':'本地结果未发布；原音保留，不自动重试','finishedUtc':iso(now_utc())}
-            audit.append(s,case_id=case_id,operator=ctx.operator,role=ctx.role,action='asr.task.incomplete',category='Evidence',command=task_id,entity_id=task_id)
+            event=audit.append(s,case_id=case_id,operator=ctx.operator,role=ctx.role,action='asr.task.incomplete',category='Evidence',command=task_id,entity_id=task_id)
+            generation.observe(s,generation_id,'timeout-observed' if isinstance(exc,subprocess.TimeoutExpired) else 'execution-or-conversion-exception-observed',event)
         raise problem(409,'LOCAL_ASR_FAILED','本地任务未完成，请查询状态，不自动重试')
     # Never classify authorization/final transaction failure as a safely retryable worker failure.
     with WRITE_LOCK,ctx.db.session() as s:
@@ -108,7 +111,8 @@ async def start(case_id:str,request:Request,ctx:Ctx=CtxDep):
         s.add(Revision(case_id=case_id,run_id=run_id,revision=0,doc=initial))
         row.doc={**row.doc,'status':'succeeded','runId':run_id,'finishedUtc':iso(now_utc()),'raw':raw,'candidate':draft,'conversionInspection':converted['inspection'],
                  'artifacts':{'raw':{'sha256':sha(canonical(raw))},'candidate':{'sha256':sha(encoded)}},'asrExecutedByService':True}
-        audit.append(s,case_id=case_id,operator=ctx.operator,role=ctx.role,action='asr.task.succeeded',category='Evidence',command=task_id,entity_id=run_id)
+        event=audit.append(s,case_id=case_id,operator=ctx.operator,role=ctx.role,action='asr.task.succeeded',category='Evidence',command=task_id,entity_id=run_id)
+        generation.observe(s,generation_id,'result-converted-and-source-rechecked',event)
         out=public_doc(row)
     return out
 

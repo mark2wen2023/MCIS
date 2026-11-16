@@ -686,3 +686,6 @@ Authorized isolated read-only expected-job checks. No global directory enumerati
 
 ## New-task completion manifest research — 2026-11-16
 Authorized pure-function versioned completion claims and eight explicit new synthetic nodes. No persistence/worker/file/DB operations or product entry; old tasks and unknown completion held, no historical proof manufactured. No paused tests or write-refusal probes.
+
+## Audio generation persistence — 2026-11-16
+Authorized optional-app generation and unknown/incomplete observations in existing task/audit transactions. No response fields, permissions, archive support, cleanup or replay changes. Six explicit new ordinary synthetic tests; no paused/safety/write-refusal tests. Legacy unfilled, writers unknown, not actual crash/commit-uncertainty verification.
