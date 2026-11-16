@@ -469,3 +469,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | CONFLICTREADINESSGATE | 待测 | 隔离同事务waiting_publication及统一保守判定；85开发合成过含8新增；无ready提升/产品接线，旧库迁移与全入口/发布原子性仍阻断 | logs/CONFLICTREADINESSGATE-impl-hashes-frozen.txt |
 
 | RESTOREMIGRATIONRESEARCH | 待测 | 隔离迁移标识/保守重启协议；40项开发合成通过，未接产品 | logs/RESTOREMIGRATIONRESEARCH-impl-hashes-frozen.txt |
+
+| RESTORECLASSIFIEDENTRIES | 待测 | 隔离load/list/scoped_call接classify；45开发合成通过，未接产品/新案登记 | logs/RESTORECLASSIFIEDENTRIES-impl-hashes-frozen.txt |

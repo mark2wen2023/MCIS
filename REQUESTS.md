@@ -936,3 +936,10 @@ existing claims, commit and pending rows. Require external expected database ide
 or explicit legacy mode; never infer legacy from absence when identity is expected.
 No product imports/routes, publication, ready promotion, retry/delete or authorization
 change. Contracts: restore-migration-protocol-research.md. Synthetic tests only.
+
+## Research entry gate consistency
+Reopen readiness_gate.py wrappers only: route load/list/scoped_call through migration
+classification when an identity/mode is explicit or migration metadata is present.
+Missing identity on marked stores is unknown, never legacy fallback. Preserve prior
+unmarked research compatibility and product code. Unknown listing raises instead
+of silently returning an incomplete success. No new ordinary-case registration.

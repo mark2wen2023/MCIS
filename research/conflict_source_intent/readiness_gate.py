@@ -40,20 +40,66 @@ def decision(session, case_id):
         raise ReadinessUnknown('readiness unavailable; no retry/delete or success') from exc
 
 
-def scoped_call(session, case_id, operation, *args, **kwargs):
-    if decision(session,case_id)!='legacy_policy_required':
+def _entry_decision(session, case_id, *, expected_database_id=None, explicit_legacy=False):
+    # Lazy import: migration store subclasses this module's pending store.
+    from .migration_protocol import classify, TABLES
+    try:
+        marked = bool(TABLES & set(inspect(session.connection()).get_table_names()))
+        if expected_database_id is not None or explicit_legacy or marked:
+            return classify(session, case_id, expected_database_id=expected_database_id,
+                            explicit_legacy=explicit_legacy)
+        # Backwards compatibility ONLY for unmarked research callers. Deployment
+        # must retain/pass expected identity to distinguish total metadata loss.
+        return decision(session, case_id)
+    except SQLAlchemyError as exc:
+        raise ReadinessUnknown('readiness unavailable; no success') from exc
+
+
+def scoped_call(session, case_id, operation, *args, expected_database_id=None,
+                explicit_legacy=False, **kwargs):
+    state = _entry_decision(session, case_id, expected_database_id=expected_database_id,
+                            explicit_legacy=explicit_legacy)
+    if state == 'unknown':
+        raise ReadinessUnknown('readiness unknown; no business call')
+    if state != 'legacy_policy_required':
         raise CaseNotReady('restoration pending; not authorized for use by readiness')
-    return operation(session,case_id,*args,**kwargs)
+    return operation(session, case_id, *args, **kwargs)
 
 
-def load_case(session,case_id):
-    return scoped_call(session,case_id,cases.load_case)
+def load_case(session, case_id, *, expected_database_id=None, explicit_legacy=False):
+    return scoped_call(session, case_id, cases.load_case,
+                       expected_database_id=expected_database_id, explicit_legacy=explicit_legacy)
 
 
-def list_cases(session):
-    # Never convert unknown DB state into a misleading empty successful listing.
-    return [row for row in cases.list_cases(session)
-            if decision(session,row['caseId'])=='legacy_policy_required']
+def list_cases(session, *, expected_database_id=None, explicit_legacy=False):
+    # Check schema/identity even for an empty database; no false empty success.
+    initial = _entry_decision(session, '', expected_database_id=expected_database_id,
+                              explicit_legacy=explicit_legacy)
+    # A marked, well-formed DB classifies an unregistered identifier as unknown.
+    # Therefore validate actual rows below; empty-list validation uses a scoped
+    # protocol identity check rather than treating that sentinel as an entity.
+    rows = cases.list_cases(session)
+    if not rows and initial == 'unknown':
+        from .migration_protocol import REQUIRED
+        try:
+            names = set(inspect(session.connection()).get_table_names())
+            marker = session.execute(text('SELECT singleton,version,database_id FROM offline_restore_protocol')).all() if REQUIRED <= names else []
+            if explicit_legacy or not expected_database_id or marker != [(1,1,expected_database_id)]:
+                raise ReadinessUnknown('readiness unknown; no empty successful listing')
+            session.execute(text('SELECT case_id FROM offline_restore_legacy_cases LIMIT 0'))
+            for table in ('offline_restore_operation', 'offline_restore_commit', 'offline_restore_readiness'):
+                session.execute(text('SELECT case_id,operation_id,source_sha256 FROM '+table+' LIMIT 0'))
+        except SQLAlchemyError as exc:
+            raise ReadinessUnknown('readiness unknown; no empty successful listing') from exc
+    result = []
+    for row in rows:
+        state = _entry_decision(session, row['caseId'], expected_database_id=expected_database_id,
+                                explicit_legacy=explicit_legacy)
+        if state == 'unknown':
+            raise ReadinessUnknown('readiness unknown; no partial successful listing')
+        if state == 'legacy_policy_required':
+            result.append(row)
+    return result
 
 
 class PendingReadinessStore(DurableObservedConflictStore):

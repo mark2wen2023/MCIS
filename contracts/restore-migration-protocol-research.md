@@ -32,3 +32,20 @@ case registration, all product access gates, owned no-replace publication/durabi
 writer exclusion and real crash tests. Until then product experimental import/export
 refusals and authorization remain unchanged. Ordinary cases are not filtered in the
 product. This protocol is implemented only on self-created temporary research stores.
+
+## Research read entry strategy
+load_case/list_cases/scoped_call in readiness_gate now accept expected_database_id
+and explicit_legacy keywords. A present migration marker forces classify even if
+the caller omits identity (unknown). Expected identity forces classify even when
+all metadata is missing. Only unmarked, no-identity research callers retain the old
+decision path for backwards compatibility; this cannot detect total metadata loss
+without externally retained identity. Direct decision/product calls remain outside
+these wrappers. Same session does not itself prove a SQLite snapshot; callers must
+keep explicit transaction and existing policy for business operations.
+
+Known pending cases are excluded from research listings; any unknown row or invalid
+empty-store metadata raises ReadinessUnknown, never a successful incomplete/empty
+list. A captured ordinary case remains individually readable under its original
+policy even when another unknown case blocks a complete list. New ordinary cases
+after migration are unknown until a future atomic normal-registration path exists;
+this limitation prevents production deployment, not a reason to infer legacy.
