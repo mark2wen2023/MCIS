@@ -739,3 +739,11 @@ Authorized isolated adapter on 019f379; maps simulated host messages solely to
 revision-3 ledger, outer duplicate checked before historical result, whole-call
 exceptions block locally without retries. No v1 dual write or process/provider.
 Six new ordinary nodes only; tests_acceptance/V2_HOST_PROTOCOL/REPORT.md.
+
+## 2026-11-16 Isolated Pi-shaped message contract adapter
+
+Authorized single-turn message adapter on 7182e13, only revision3 host writer;
+reuses packet validators and pinned pure assistant validator from 6f8f429. No old
+Meeting, lifecycle acceptance or provider. Tool transcript stays memory-only; no
+full four-seat claim. Five new ordinary synthetic nodes; see
+ tests_acceptance/PI_MESSAGE_ADAPTER/REPORT.md.
