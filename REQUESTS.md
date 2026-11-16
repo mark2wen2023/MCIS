@@ -722,3 +722,8 @@ Authorized reuse of module registration functions with a single isolated app/db;
 
 ## Fresh media demo preparation — 2026-11-16
 Authorized new-directory-only API preparation script. Generated image fallback; optional pinned public FunASR sample/license/saved output, no inference. Four new ordinary synthetic nodes plus one actual saved-result preparation. No materials/DB in repo, no paused/write-refusal/browser tests; formal archive unchanged.
+
+## MEDIA_DEMO_LAUNCHER
+Explicit isolated demo launcher: bounded complete preparation manifest, explicit
+root/database and read-only case/run binding checks before app construction.
+No role injection, runtime enablement, default DB fallback or automatic retry.
