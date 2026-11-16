@@ -713,3 +713,10 @@ with matching original body-page number. Retain all other numbers and footnotes.
 Mark retained figure captions as source captions whose images are not included.
 Do not rewrite existing stored reports, invent images, change authorization, or
 remove draft/review/missing-coverage notices. Base bbafa560; PR104 stays unchanged.
+
+## Supported synthetic archive fixtures for PR104 residual ordinary tests
+Reopen only two W8.4/W9.1 ordinary roundtrip tests to use newly POST-created
+seed=False supported cases; keep all prior assertion structures and add explicit
+Lead audit/export statuses. Other tests/production permissions unchanged. Retain
+separate complex-seed409/no-partial-package and Investigator403/zero-change checks.
+See tests_acceptance/supported-archive-workflows/REPORT.md; no archive support expansion.

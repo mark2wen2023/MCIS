@@ -6,6 +6,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from .conftest import CASE, C, H, make_settings
+from .archive_workflow_fixtures import supported_archive_client
 from mcis_service.main import create_app
 from mcis_service.audit import service as audit
 from mcis_service.common import contracts
@@ -22,7 +23,8 @@ def request(client,changes=None,**kw):
             'sourceLabel':'虚构资料 p.2','changeReason':'修正测试文字',**kw}
 
 
-def test_read_update_audit_original_and_roundtrip(client,empty_client):
+def test_read_update_audit_original_and_roundtrip(supported_archive_client,empty_client):
+    client=supported_archive_client
     original=client.get(C).json();before=client.get(URL).json()
     assert before['case']==original and before['lastChange'] is None
     frozen={key:client.get(C+key).json() for key in ['/vessels','/tracks','/evidence','/environment-observations']}
@@ -36,13 +38,18 @@ def test_read_update_audit_original_and_roundtrip(client,empty_client):
     assert all(saved['case'][k]==v for k,v in body['changes'].items())
     assert {k:v for k,v in original.items() if k not in body['changes']}=={k:v for k,v in saved['case'].items() if k not in body['changes']}
     for key,value in frozen.items():assert client.get(C+key).json()==value
-    events=client.get(C+'/audit').json();event=next(x for x in events if x['action']=='case.metadata.update')
+    response=client.get(C+'/audit',headers=H('LeadInvestigator'))
+    assert response.status_code==200,response.text
+    events=response.json();assert isinstance(events,list)
+    event=next(x for x in events if x['action']=='case.metadata.update')
     reason=json.loads(json.loads(event['line'])['reason'])
     assert reason['after']['summaryNotes']['value']==body['changes']['summaryNotes']
     assert reason['before']['title']=={'present':True,'value':original['title']}
     assert audit.verify_chain([e['line'] for e in events])['valid']
-    data=client.get(C+'/export').content
-    r=empty_client.post('/api/v1/cases:import',content=data);assert r.status_code==201,r.text
+    response=client.get(C+'/export',headers=H('LeadInvestigator'))
+    assert response.status_code==200,response.text
+    data=response.content
+    r=empty_client.post('/api/v1/cases:import',content=data,headers=H('LeadInvestigator'));assert r.status_code==201,r.text
     assert empty_client.get(URL).json()==saved
 
 

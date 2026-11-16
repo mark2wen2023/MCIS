@@ -410,3 +410,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | REPORTINHERITEDCITATION | 待测 | db928a2上呈现继承引用限制，99后端回归、182 SSR断言及构建为开发侧通过；不改原文/引用/历史/权限，真实浏览器及视觉/独立未验。冻结 logs/REPORTINHERITEDCITATION-impl-hashes-frozen.txt |
 
 | REPORTPUBLICPDFLAYOUT | 待独审 | bbafa560上PDF标题分页/公开文本页码与无图图题说明；111项开发回归通过，原/新PDF各18页开发逐页查看；旧报告不迁移、浏览器/独立视觉未验，冻结 logs/REPORTPUBLICPDFLAYOUT-impl-hashes-frozen.txt。 |
+
+| SUPPORTEDARCHIVEWORKFLOWTESTS | 待测 | 两项普通往返改用独立合成案件并保留原断言；复杂案件409与默认403保留；191过1失败0跳，HFACS真实核心仍不可用；仅开发测试 | logs/SUPPORTEDARCHIVEWORKFLOWTESTS-impl-hashes-frozen.txt |
+| PR104 supported archive ordinary tests | 待独审 | e564581+b89d3fd隔离组合，仅两份文档追加冲突；生产代码不变、四测试文件原冻结匹配。191通过/1明确排除HFACS，复杂seed409和默认403保留；开发合成结果，未更新PR104或主线。 |
