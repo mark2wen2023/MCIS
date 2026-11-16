@@ -695,3 +695,10 @@ adapter and use it in the existing fixed worker reservation/receipt path. No Pi,
 provider or authorization activation. Keep shared ownership and current quotas;
 no changes to production. See tests_acceptance/HOST_MODEL_PROTOCOL/REPORT.md.
 Only six explicitly selected new ordinary synthetic tests run; paused tests not run.
+
+## 2026-11-16 Stable four-seat ticket / partial-state protocol
+
+User-authorized pure isolated candidate on 989c7e1: stable UUID tickets bind meeting,
+role and round with checked context; separate incomplete and unstarted seats.
+Two requests/turn and sixteen/meeting retained. No persistent recovery, provider,
+Pi or process integration. See tests_acceptance/STABLE_MEETING_PROTOCOL/REPORT.md.

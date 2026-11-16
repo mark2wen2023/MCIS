@@ -415,3 +415,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTREQUESTHANDSHAKE | 待测 | 实际固定子进程逐请求接SQLite预留/回执；180开发测试含8新增，保留完成席位/未完成；非Pi/模型HOLD | logs/EXPERTREQUESTHANDSHAKE-hashes.txt |
 
 | 2026-11-16 | HOST_MODEL_PROTOCOL | 待测 | 固定worker host接请求ID/持久预留适配；6项新合成节点开发通过，未跑进程/Pi/独验，真实四席HOLD；logs/HOST_MODEL_PROTOCOL-impl-hashes-frozen.txt |
+
+| 2026-11-16 | STABLE_MEETING_PROTOCOL | 待测 | 纯内存稳定票据/部分状态合同；8新普通纯函数节点开发通过；未接持久账本/Pi/provider，HOLD；logs/STABLE_MEETING_PROTOCOL-impl-hashes-frozen.txt |
