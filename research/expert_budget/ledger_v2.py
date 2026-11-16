@@ -3,6 +3,7 @@ from contextlib import closing
 from copy import deepcopy
 import hashlib
 import json
+import re
 from pathlib import Path
 import sqlite3
 import uuid
@@ -33,7 +34,7 @@ def event(seq, op, action, before, after, result, previous):
             'afterDigest':digest(after),'result':result,'previousDigest':previous}
 
 
-def advance(state, action):
+def legacy_advance(state, action):
     if type(action) is dict and action.get('type')=='stop':
         require(set(action)=={'type','reason'} and action['reason']=='operator_stop','stop_action')
         require(state['status']=='open','meeting_closed')
@@ -45,6 +46,47 @@ def advance(state, action):
                 if request['outcome']=='pending': request['outcome']='unknown'
         return after, {'status':'stopped_declared','dispatchAuthorized':False}
     return step(state,action)
+
+
+def advance(state, action):
+    """Receipt contract revision 3; legacy revision 2 replay remains unchanged."""
+    require(type(action) is dict,'action')
+    kind=action.get('type')
+    if kind=='stop':
+        require(set(action)=={'type','reason'} and action['reason'] in
+                ('operator_stop','protocol_duplicate','protocol_unknown'),'stop_action')
+        if state['status']!='open':
+            return deepcopy(state), {'status':state['status'],'stopReason':state.get('stopReason'),
+                                     'dispatchAuthorized':False}
+        after,result=legacy_advance(state,{'type':'stop','reason':'operator_stop'})
+        after['stopReason']=action['reason']
+        return after,{**result,'stopReason':action['reason']}
+    if kind=='result':
+        require(set(action)=={'type','ticketId','requestId','outcome','receiptDigest'},'result_shape')
+        receipt=action['receiptDigest']
+        require((type(receipt) is str and re.fullmatch('[a-f0-9]{64}',receipt) is not None)
+                if action['outcome']=='received_unverified' else receipt is None,'receipt_digest')
+        reduced={k:v for k,v in action.items() if k!='receiptDigest'}
+        old=[r for t in state['turns'] if t['ticketId']==action['ticketId']
+             for r in t['requests'] if r['requestId']==action['requestId']]
+        if old and old[0]['outcome']!='pending':
+            require(old[0].get('receiptDigest')==receipt,'receipt_changed')
+        after,result=step(state,reduced)
+        for t in after['turns']:
+            if t['ticketId']==action['ticketId']:
+                for r in t['requests']:
+                    if r['requestId']==action['requestId']: r['receiptDigest']=receipt
+        if state['status']=='open' and after['status']=='stopped_unknown':
+            after['stopReason']='request_unknown'
+        return after,result
+    after,result=step(state,action)
+    if kind=='request' and result.get('status')=='existing_no_redispatch':
+        if state['status']=='open':
+            after,_=advance(after,{'type':'stop','reason':'protocol_duplicate'})
+        result={**result,'newReservation':False,'stopReason':after.get('stopReason')}
+    if state['status']=='open' and after['status']=='partial_budget_exhausted':
+        after['stopReason']='budget_exhausted'
+    return after,result
 
 
 class NewMeetingLedger:
@@ -62,7 +104,7 @@ class NewMeetingLedger:
             db.execute('CREATE TABLE current (id INTEGER PRIMARY KEY, revision INTEGER NOT NULL, state TEXT NOT NULL)')
             db.execute('CREATE TABLE operations (op TEXT PRIMARY KEY, input_digest TEXT NOT NULL, seq INTEGER UNIQUE NOT NULL, result TEXT NOT NULL)')
             db.execute('CREATE TABLE audit (seq INTEGER PRIMARY KEY, op TEXT UNIQUE NOT NULL, body TEXT NOT NULL, digest TEXT NOT NULL)')
-            db.execute('PRAGMA user_version=2')
+            db.execute('PRAGMA user_version=3')
             db.execute('INSERT INTO meta VALUES(1,?,?,?)',(str(uuid.uuid4()),meeting_id,PACKET_SHA256))
             db.execute('INSERT INTO current VALUES(1,0,?)',(canonical(state),))
             db.commit()
@@ -80,7 +122,7 @@ class NewMeetingLedger:
                 if old:
                     require(old[0]==digest(action),'operation_changed')
                     db.rollback()
-                    return {'duplicate':True,'recordedResult':json.loads(old[1]),'dispatchAllowed':False}
+                    return {'duplicate':True,'recordedResult':json.loads(old[1]),'dispatchAllowed':False,'newDispatchGrant':False}
                 revision,raw_state=db.execute('SELECT revision,state FROM current WHERE id=1').fetchone()
                 require(revision<MAX_OPERATIONS,'operation_limit')
                 before=json.loads(raw_state)
@@ -94,7 +136,7 @@ class NewMeetingLedger:
                 db.execute('INSERT INTO audit VALUES(?,?,?,?)',(seq,op,canonical(body),digest(body)))
                 db.execute('UPDATE current SET revision=?,state=? WHERE id=1',(seq,canonical(after)))
                 db.commit()
-                return {'duplicate':False,'recordedResult':result,'dispatchAllowed':False}
+                return {'duplicate':False,'recordedResult':result,'dispatchAllowed':False,'newDispatchGrant':False}
             except BaseException:
                 self.blocked=True
                 # Closing rolls back if possible. No compensating write or retry.
@@ -108,7 +150,8 @@ def inspect_v2(path, expected_meeting, expected_ledger=None):
     try:
         with closing(sqlite3.connect(Path(path).absolute().as_uri()+'?mode=ro',uri=True,timeout=1)) as db:
             db.execute('BEGIN')
-            require(db.execute('PRAGMA user_version').fetchone()[0]==2,'version_not_v2')
+            version=db.execute('PRAGMA user_version').fetchone()[0]
+            require(version in (2,3),'version_not_v2_family')
             tables={r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
             require(tables=={'meta','current','operations','audit'},'tables')
             meta=db.execute('SELECT id,ledger,meeting,packet FROM meta LIMIT 2').fetchall()
@@ -132,7 +175,7 @@ def inspect_v2(path, expected_meeting, expected_ledger=None):
                 require(op not in seen and seq==aseq==index and op==aop,'operation_link')
                 seen.add(op)
                 body=json.loads(raw_body); action=body['action']
-                after,result=advance(state,action)
+                after,result=(legacy_advance if version==2 else advance)(state,action)
                 result={**result,'dispatchAllowed':False,'executionVerified':False}
                 expected=event(index,op,action,state,after,result,previous)
                 require(body==expected and digest(body)==body_digest and digest(action)==input_digest and
@@ -141,7 +184,8 @@ def inspect_v2(path, expected_meeting, expected_ledger=None):
             require(json.loads(raw_state)==state,'state_consistency')
             pending=any(r['outcome'] in ('pending','unknown') for t in state['turns'] for r in t['requests'])
             return {**base,'classification':'blocked_unknown' if pending or state['status']=='open' else 'recorded_terminal_only',
-                    'ledgerId':ledger,'revision':revision,'state':state,
+                    'ledgerId':ledger,'revision':revision,'state':state,'contractRevision':version,
+                    'receiptCoverage':('unknown_legacy' if version==2 else 'recorded_digests_not_response_verification'),
                     'reason':'no_execution_resume','roleProgress':'recorded_declarations_only'}
     except (sqlite3.Error,ValueError,TypeError,KeyError,OSError):
         return {**base,'classification':'blocked_unverified','reason':'snapshot_not_verified'}

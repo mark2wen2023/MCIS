@@ -724,3 +724,11 @@ Authorized isolated v2 state/operation/audit transaction and read-only replay.
 New files only, v1 unchanged; every reopen forbids dispatch. Pure declared progress,
 no provider/process/recovery. Six new ordinary synthetic nodes. Details and limits:
 tests_acceptance/MEETING_LEDGER_V2/REPORT.md.
+
+## 2026-11-16 Ledger receipt/stop contract revision
+
+Authorized isolated revision of frozen ledger_v2.py on cc54921: new databases use
+user_version=3 and require receiptDigest for results; old revision2 read-only replay
+retains original semantics. Preserve initial terminal causes, explicit no-new-grant
+on duplicate operations, durable duplicate-request stop. No dispatch or migration.
+See tests_acceptance/LEDGER_RECEIPT_STOP/REPORT.md; six new ordinary nodes only.
