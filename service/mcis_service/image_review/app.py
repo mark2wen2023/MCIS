@@ -4,7 +4,7 @@ No default app mounting, model calls, new file writes or automatic retries.
 from pathlib import Path
 from uuid import uuid4
 from fastapi import APIRouter, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, Response
 from sqlalchemy import Column, Integer, String, JSON, UniqueConstraint, select, text as sql
 from sqlalchemy.orm import DeclarativeBase
 from ..common.context import Ctx, CtxDep, problem
@@ -136,6 +136,9 @@ def create_image_review_app(settings):
         for op in ('UPDATE', 'DELETE'):
             c.execute(sql(f"CREATE TRIGGER IF NOT EXISTS image_ocr_no_{op.lower()} BEFORE {op} ON image_ocr_review_records BEGIN SELECT RAISE(ABORT, 'OCR history is append-only'); END;"))
     app.include_router(router)
+    @app.get('/image-review-lab/preview.js')
+    def preview_script():
+        return Response(Path(__file__).with_name('preview.js').read_text(), media_type='text/javascript', headers={'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff'})
     @app.get('/image-review-lab', response_class=HTMLResponse)
     def page():
         return HTMLResponse(Path(__file__).with_name('review.html').read_text(), headers={'Cache-Control': 'no-store'})

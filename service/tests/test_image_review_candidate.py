@@ -179,4 +179,17 @@ def test_page_contains_caveats_and_no_remote_scripts(tmp_path):
         html=response.text
         for text in ['已有OCR输出导入，不重新识别','不是事实确认','未自动验证','草稿仅页面内存','授权下载','不自动重试']:
             assert text in html
-        assert '<script src=' not in html and 'innerHTML' not in html and 'localStorage' not in html
+        assert '<script src="/image-review-lab/preview.js"></script>' in html
+        assert '<script src="http' not in html and 'innerHTML' not in html and 'localStorage' not in html
+
+
+def test_preview_script_is_local_and_page_has_review_controls(tmp_path):
+    app,_=new_app(tmp_path)
+    with TestClient(app) as c:
+        r=c.get('/image-review-lab/preview.js')
+        assert r.status_code==200 and 'text/javascript' in r.headers['content-type']
+        assert r.headers['cache-control']=='no-store'
+        page=c.get('/image-review-lab').text
+        for marker in ['登记页图与局部核对','在页图中定位行','page-image','选中行邻近原图','只预览PNG','未自动验证']:
+            assert marker in page
+        assert 'innerHTML' not in page and '<script src="http' not in page
