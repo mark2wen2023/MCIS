@@ -702,3 +702,11 @@ User-authorized pure isolated candidate on 989c7e1: stable UUID tickets bind mee
 role and round with checked context; separate incomplete and unstarted seats.
 Two requests/turn and sixteen/meeting retained. No persistent recovery, provider,
 Pi or process integration. See tests_acceptance/STABLE_MEETING_PROTOCOL/REPORT.md.
+
+## 2026-11-16 Stable durable host prerequisite
+
+Isolated candidate on 797a588 connects deterministic four-seat ticket binding to
+HostModelProtocol/RequestBudget. SQLite alone owns request allowance and outcomes;
+completion declarations remain memory-only. No actual dispatch, recovery or
+production change. Six selected new ordinary synthetic tests; see
+ tests_acceptance/STABLE_DURABLE_HOST/REPORT.md for precise boundaries.
