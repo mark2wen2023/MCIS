@@ -674,3 +674,6 @@ Authorized continuation of media archive research: in-memory PCM bytes + native 
 
 ## Image/PDF supplied-byte consistency research — 2026-11-16
 Authorized continuation with ONLY new explicitly selected ordinary nodes. New isolated PDF/PNG and line-OCR consistency checker; snapshot image91962113 line contract without app integration. Existing Pillow/Poppler only; generated assets/fabricated OCR, no model or product data. No preflight whole file/full suite/write-refusal or paused tests. Source/render authenticity unverified; export/restore remain false.
+
+## Pure offline restore observation model — 2026-11-16
+Authorized synthetic state-machine contract only: no file/DB operations, product integration or permission changes. Unknown commit/identity and missing files remain held, retry/delete/access flags always false.13 explicitly selected new pure-function tests only; no paused nodes or write-refusal probes. Future action labels are descriptions, not execution authority; no durable recovery proof.

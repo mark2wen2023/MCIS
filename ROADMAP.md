@@ -415,3 +415,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Media supplied audio-byte consistency | 待独验 |83 developer synthetic tests (42+26+15 unique selection); actual generated PCM bytes, no ASR. Audio-v3 only; PDF/image unsupported, caller-provided provenance, restore/export remain false. Freeze: `logs/media-byte-consistency-impl-hashes-frozen.txt`. |
 
 | Image/PDF supplied-byte research | 待独验 |12 individually selected new ordinary developer tests pass; generated PDF/PNG + fabricated OCR. Actual page-count/dimension checks, no render lineage/OCR/browser. Restore/export false; no paused tests. Freeze: `logs/image-pdf-byte-consistency-impl-hashes-frozen.txt`. |
+
+| Pure offline restore observation model | 待独验 |13 developer pure-function nodes pass; no file/DB/process operations. Unknown held, simulated ready never grants product access or restore; external identity/persistence unimplemented. Freeze: `logs/offline-restore-state-machine-impl-hashes-frozen.txt`. |
