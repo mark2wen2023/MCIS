@@ -647,3 +647,6 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## Audio review isolated candidate — 2026-11-16
+Parent/user authorized original-audio binding, time-ranged machine draft and append-only human review/replay basics, with synthetic tests only. Contract: `contracts/audio-review-candidate.md`. Separate factory/table/page; no default application, shared EvidencePage, permissions or archive allowance changes. Imports v2 revision-1 drafts, not ASR. Cases containing these rows remain archive-blocked. Image PR69/97 regions untouched. Browser/restricted suites remain paused.
