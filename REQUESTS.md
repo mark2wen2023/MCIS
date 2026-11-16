@@ -765,3 +765,8 @@ New isolated ledger revision 5: first-round per-ticket transcripts and explicit
 simulated/unverified sealing, never expert completion. Reuse revision-4 tool
 validation and shared transactions; old reducers unchanged. No second round,
 dispatch, migration or runner. Read-only inspection adds explicit coverage label.
+
+## FOUR_SEAT_MESSAGES
+Isolated first-round synthetic adapter over revision5 only. Explicit ticket/request
+binding; separate host issue/seal operations, no completion inferred from messages.
+Reuse revision4 framing, envelope and commit guard. No runner/provider or resume.
