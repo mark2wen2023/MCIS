@@ -701,3 +701,18 @@ Authorized new isolated assembler/inventory; original extractor/preflight and fo
 
 ## Audio archive consolidation — 2026-11-16
 Authorized behavior-preserving shared inventory/assembly extraction on de207b3 candidate, without another feature branch. Strict fixed old/new profiles; no ignore-unknown switch or product access changes. Five new explicit ordinary parity nodes only; parent implementation read via git, no old tests run. No paused/write-refusal/security/browser tests.
+
+## 2026-11-16 图片OCR核对隔离候选
+用户明确授权PDF版本/页图/已有OCR输出/逐条人工核对闭环。新增独立工厂、只追加SQLite记录和独立页面，默认服务与EvidencePage不变；不覆盖PR69/97。不改变权限/归档白名单。来源页码是声明，不认证渲染关系或事实。详见contracts/image-ocr-review-candidate.md。
+
+## 2026-11-16 图片页图并排核对增量
+在dc0538隔离候选上，经用户授权扩展该候选页面为PNG并排查看、逐行框与局部图核对。复用授权下载及字节摘要校验，不改证据接口、权限或PR69/97页面；无自动OCR/PDF跳页。旧冻结清单保留为历史，新增预览冻结清单标识本次修改。环境中断后原修改恢复，普通专项重新验证；不重试受阻浏览器/安全操作。
+
+## 2026-11-16 公开页图真实本地OCR接线
+按授权实际运行已安装PP-OCRv5 CPU并将本轮44条输出转换、登记到隔离候选；增加显式公开样本runner与离线适配器。默认服务/权限/归档保护不变，无外部OCR、安装或浏览器重试；模型版本及结果摘要见tests_acceptance/image-ocr-local-run/REPORT.md。网页自动识别未实现，服务仍仅导入结果。
+
+## 2026-11-16 隔离页面显式本地OCR任务
+按授权从界面显式启动既有固定公开页本地runner，持久任务号/状态，成功同事务关联原始结果与人工核对记录；未知不重试/清理，不开放生产、不更改权限。新增结果授权下载与审计，原PDF/页图下载保持原入口。仅公开第6页、依赖主机显式配置。详见contracts/image-ocr-review-candidate.md及tests_acceptance/image-ocr-task/REPORT.md。
+
+## Frozen image/audio combination — 2026-11-16
+Authorized independent combination of exact image91962113 and audiocc0cdc7. Only two append-document conflicts; all feature files preserved. Four new ordinary synthetic combination nodes, separate factories/shared temporary DB, mixed-case export refusal. No default routes, models, permissions or archive support enabled; no paused/write-refusal/browser tests.
