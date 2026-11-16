@@ -475,3 +475,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | RESTOREEMPTYLEDGER | 待测 | 空cases关联标记未知不显示空库；50开发合成通过，研究未接产品 | logs/RESTOREEMPTYLEDGER-impl-hashes-frozen.txt |
 
 | RESTORELISTLEDGER | 待测 | 非空普通案列表亦校验孤立标记；53开发合成通过，非全库一致性证明 | logs/RESTORELISTLEDGER-impl-hashes-frozen.txt |
+
+| RESTORENORMALREGISTRATION | 待测 | 临时库新案/建案审计/身份登记同事务；64开发合成通过，生产未接 | logs/RESTORENORMALREGISTRATION-impl-hashes-frozen.txt |

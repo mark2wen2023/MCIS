@@ -53,7 +53,16 @@ def classify(session, case_id, *, expected_database_id=None, explicit_legacy=Fal
                 return 'unknown'
             return 'hold'
         legacy = session.execute(text('SELECT 1 FROM offline_restore_legacy_cases WHERE case_id=:cid'),{'cid':case_id}).first()
-        return 'legacy_policy_required' if legacy else 'unknown'
+        if legacy:
+            return 'legacy_policy_required'
+        if 'offline_normal_case_registration' not in names:
+            return 'unknown'
+        registered = session.execute(text('SELECT database_id,audit_seq FROM offline_normal_case_registration WHERE case_id=:cid'), {'cid':case_id}).all()
+        if len(registered) != 1 or registered[0][0] != expected_database_id:
+            return 'unknown'
+        case = session.execute(text('SELECT 1 FROM cases WHERE case_id=:cid AND key=:cid'), {'cid':case_id}).all()
+        event = session.execute(text("SELECT 1 FROM audit_events WHERE case_id=:cid AND seq=:seq AND action='case.create' AND entity_type='case' AND entity_id=:cid"), {'cid':case_id,'seq':registered[0][1]}).all()
+        return 'legacy_policy_required' if len(case)==1 and len(event)==1 else 'unknown'
     except SQLAlchemyError:
         return 'unknown'
 

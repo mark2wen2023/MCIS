@@ -955,3 +955,10 @@ Extend prior empty-list association check to marked/expected-identity lists with
 ordinary cases. Unknown orphan commit/pending elsewhere makes whole listing unknown;
 individual ordinary-case reads remain scoped and legitimate held claims stay held.
 No production permission/state change or claim of full-database integrity.
+
+## Isolated atomic ordinary new-case registration
+Oncab1da3 reuse existing case schema, CaseRow and audit append under explicit SQLite
+writer transaction. Add distinct normal-registration identity/audit-sequence binding;
+never put new cases into captured legacy inventory or adopt existing unknown rows.
+Research classify recognizes only matching case/create-event/binding without restore
+claims. No product route/permission/migration/publisher changes.

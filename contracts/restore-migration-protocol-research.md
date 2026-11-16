@@ -60,3 +60,22 @@ An unrelated orphan commit or readiness row makes the complete list unknown, eve
 if all actual case rows are classified ordinary. A consistent held claim does not
 block listing ordinary cases. Individual case reads remain case-scoped; this is
 not a global integrity certification, and unmarked legacy behavior is unchanged.
+
+## Isolated ordinary creation extension
+A separate optional offline_normal_case_registration table binds new case ID to
+expected database identity and its case.create audit sequence. The temporary-only
+creator uses existing case schema validation and the same allowed role names as
+POST/cases, then holds WRITE_LOCK and BEGIN IMMEDIATE through case, audit and binding
+commit. This does not authenticate the supplied role/operator or expose a route.
+Any existing case, prior audit, legacy inventory entry or restore ledger entry for
+that ID refuses creation; no backfill/adoption API. New cases are not mislabeled
+as captured legacy. The historical legacy_policy_required return string means only
+continue existing policy, including for these explicitly registered new cases.
+
+Classification checks DB identity, matching CaseRow and matching case.create audit
+sequence/entity. Restore state takes precedence. Missing extension table/binding
+keeps unregistered new cases unknown, so old unextended readers remain conservative.
+This is not an audit-chain/content authenticity proof. Exceptions before commit
+roll back all three writes; actual unknown commit/response loss must not be retried
+blindly. No original file is created. External identity durability, normal product
+creation wiring, actor authentication and independent migration remain prerequisites.
