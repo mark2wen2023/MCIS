@@ -204,7 +204,8 @@ def validate(index, payloads):
         need(type(task['auditSeqs']) is list and len(task['auditSeqs']) >= 1 and len(set(task['auditSeqs'])) == len(task['auditSeqs']), 'task audit')
         prefix = 'ocr' if sources[task['sourceId']]['kind'] == 'page-image' else 'asr'
         for seq in task['auditSeqs']:
-            audit_link(seq, task['id'], tuple(prefix+'.task.'+s for s in ('start', 'succeeded', 'failed', 'unknown')))
+            audit_link(seq, task['id'], tuple(prefix+'.task.'+s for s in
+                       (('start', 'succeeded', 'incomplete') if prefix == 'asr' else ('start', 'succeeded', 'failed', 'unknown'))))
     need(used == set(payloads), 'unreferenced member')
     return {'restore_ready': False, 'execution_allowed': False, 'scope': 'offline-index-and-member-consistency-only',
             'sourceCount': len(sources), 'runCount': len(runs), 'taskCount': len(tasks)}

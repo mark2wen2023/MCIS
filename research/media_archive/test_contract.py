@@ -143,3 +143,13 @@ def test_audit_gap_is_not_reconstructed():
 def test_extra_member_is_not_silently_dropped():
     i,b,put=fixture(); put('unmapped',{'synthetic':True})
     with pytest.raises(ValueError): validate(i,b)
+
+
+@pytest.mark.parametrize('status',['failed','interrupted_unknown'])
+def test_native_asr_incomplete_action_retained(status):
+    i,b,put=fixture('audio',status)
+    previous=digest(b[i['audit'][-1]['member']])
+    member=put('audit-incomplete',dict(seq=2,prev=previous,command='TASK',action='asr.task.incomplete'))
+    i['audit'].append(dict(caseId='SYN',seq=2,member=member))
+    i['tasks'][0]['auditSeqs'].append(2)
+    assert validate(i,b)['execution_allowed'] is False

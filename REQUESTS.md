@@ -665,3 +665,6 @@ Authorized ordinary-business review of 8833984 against 658f877. Change previousl
 
 ## Media archive member/index research — 2026-11-16
 Authorized after independent25-test preflight review: isolated contract and ordinary synthetic validation only. Base b1d2861; read image91962113 without merging it. New research module preserves original members and captured histories, declares task execution forbidden, and always reports restore_ready=false. No product permission/route/allowlist/parser change; source extraction, native semantic validation, unique audit association and product recovery remain prerequisites. No ASR/OCR/model/browser execution or restricted suite.
+
+## Media archive native inventory research — 2026-11-16
+Authorized read-only native-row enumeration and unique revision/audit matching on temporary synthetic databases. Separate branch from3f6445ff; no product wiring or permission change. Correct the research contract's ASR audit action to actual asr.task.incomplete; this changes previously frozen contract.py/test_contract.py only under a new candidate freeze. Image native code read but not merged/executed. No original-byte verification, archive approval or worker dispatch supplied.
