@@ -717,3 +717,10 @@ Isolated candidate on 751d32c adds read-only v1 structural inspection, never res
 or dispatch. Old role progress unknown, unresolved/inconsistent records blocked;
 no existing ledger initialization/migration. Eight new ordinary synthetic nodes,
 no write-refusal probes. See tests_acceptance/LEDGER_READONLY_INSPECTION/REPORT.md.
+
+## 2026-11-16 New-meeting v2 ledger candidate
+
+Authorized isolated v2 state/operation/audit transaction and read-only replay.
+New files only, v1 unchanged; every reopen forbids dispatch. Pure declared progress,
+no provider/process/recovery. Six new ordinary synthetic nodes. Details and limits:
+tests_acceptance/MEETING_LEDGER_V2/REPORT.md.
