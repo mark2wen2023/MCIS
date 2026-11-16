@@ -770,3 +770,8 @@ dispatch, migration or runner. Read-only inspection adds explicit coverage label
 Isolated first-round synthetic adapter over revision5 only. Explicit ticket/request
 binding; separate host issue/seal operations, no completion inferred from messages.
 Reuse revision4 framing, envelope and commit guard. No runner/provider or resume.
+
+## ROUND_TWO_VIEW
+Isolated revision6: first-round revision5 behavior plus explicit host binding of
+complete first-round sealed candidates into a read-only second-round material view.
+Client supplies no opinion or digest. No second-round requests, migration or resume.

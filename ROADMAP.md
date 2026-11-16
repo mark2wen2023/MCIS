@@ -437,3 +437,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-16 | FOUR_SEAT_ROUND_ONE | 待测 | 修订5第一轮四席独立记录/显式模拟封存，不代表专家完成；4新普通合成节点开发通过，未接消息适配/真实执行；logs/FOUR_SEAT_ROUND_ONE-impl-hashes-frozen.txt |
 
 | 2026-11-16 | FOUR_SEAT_MESSAGES | 待测 | 第一轮四席模拟消息显式票据/请求绑定、主持封存，5新普通合成节点开发通过；未接Pi/真实执行，HOLD；logs/FOUR_SEAT_MESSAGES-impl-hashes-frozen.txt |
+
+| 2026-11-16 | ROUND_TWO_VIEW | 待测 | 修订6首轮原观点绑定/只读完整展开；4新普通合成节点开发通过，不开放第二轮请求/真实派发；logs/ROUND_TWO_VIEW-impl-hashes-frozen.txt |
