@@ -698,3 +698,6 @@ Authorized offline explicit generation/observation members with audit links; v1 
 
 ## Internal generation-aware audio assembly — 2026-11-16
 Authorized new isolated assembler/inventory; original extractor/preflight and formal whitelist unchanged. Same reserved session, complete generation/observation members plus old audio history; six explicit new ordinary synthetic nodes. No completion proof, task-directory archive or export/restore permission. No paused/write-refusal/security/browser tests.
+
+## Audio archive consolidation — 2026-11-16
+Authorized behavior-preserving shared inventory/assembly extraction on de207b3 candidate, without another feature branch. Strict fixed old/new profiles; no ignore-unknown switch or product access changes. Five new explicit ordinary parity nodes only; parent implementation read via git, no old tests run. No paused/write-refusal/security/browser tests.

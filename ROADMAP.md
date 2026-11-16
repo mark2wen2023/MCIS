@@ -431,3 +431,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Media generation research v2 | 待独验 |9 unique developer nodes pass after fixture-only correction; audio-only envelope with explicit generation/observation members. No native extraction/ZIP/product restore; old v1 remains history unknown, readiness false. |
 
 | Generation-aware internal audio assembly | 待独验 |6 new developer ordinary nodes (5+1); preserves explicit generation/observation and captured audio histories in v2 memory members. Old entry unchanged; directory completion and formal archive remain blocked. Duplicated extraction/inventory logic needs review. |
+
+| Audio inventory/assembly consolidation | 待独验 |5 new ordinary parity nodes pass against exact de207b3 implementation; old/new strict entry behavior preserved in selected cases. Shared code replaces duplicate bodies; prior source freezes apply only at their commits. No additional archive readiness. |
