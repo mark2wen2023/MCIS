@@ -417,3 +417,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Image/PDF supplied-byte research | 待独验 |12 individually selected new ordinary developer tests pass; generated PDF/PNG + fabricated OCR. Actual page-count/dimension checks, no render lineage/OCR/browser. Restore/export false; no paused tests. Freeze: `logs/image-pdf-byte-consistency-impl-hashes-frozen.txt`. |
 
 | Pure offline restore observation model | 待独验 |13 developer pure-function nodes pass; no file/DB/process operations. Unknown held, simulated ready never grants product access or restore; external identity/persistence unimplemented. Freeze: `logs/offline-restore-state-machine-impl-hashes-frozen.txt`. |
+
+| Native audio-v3 archive component | 待独验 |9 explicit new developer ordinary nodes pass; same native session, one cached receipt read per original, complete captured revisions/raw/audit. No HTTP/ZIP/restore; unknown states held, real ASR/browser/concurrency unverified. Freeze: `logs/audio-v3-archive-adapter-impl-hashes-frozen.txt`. |

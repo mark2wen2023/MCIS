@@ -677,3 +677,6 @@ Authorized continuation with ONLY new explicitly selected ordinary nodes. New is
 
 ## Pure offline restore observation model — 2026-11-16
 Authorized synthetic state-machine contract only: no file/DB operations, product integration or permission changes. Unknown commit/identity and missing files remain held, retry/delete/access flags always false.13 explicitly selected new pure-function tests only; no paused nodes or write-refusal probes. Future action labels are descriptions, not execution authority; no durable recovery proof.
+
+## Native audio-v3 internal archive adapter — 2026-11-16
+Authorized isolated same-session adapter: reuse existing intake plus full-archive checks, cached single registered-source read, retain complete native revisions/task results/audit. New internal module only; no route/permissions/whitelist/product export changes. Narrow successful local v3 scope; unknown/unsupported states refuse.9 explicitly selected new ordinary nodes, generated PCM/stub recognizer; no paused or write-refusal/security tests. File safety/concurrency/whole-case recovery not certified.
