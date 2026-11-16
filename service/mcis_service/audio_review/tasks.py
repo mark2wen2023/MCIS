@@ -18,7 +18,6 @@ from ..audit import service as audit
 from .app import Storage, Revision, source, sample_source, receipt, strict, inspect_draft
 from tools.audio_transcript_contract.sensevoice_candidate import convert
 
-PUBLIC_SHA='a1bd32dc78493c123f9625a66deee562aed2895f53fbc39f2cca3be7e6f4f20f'
 
 @dataclass(frozen=True)
 class LocalRuntime:
@@ -57,12 +56,12 @@ def execute(runtime,job,audio,task_id):
     worker=Path(__file__).resolve().parents[3]/'tools/audio_transcript_contract/run_sensevoice_task.py'
     env={'PATH':'/usr/local/bin:/usr/bin:/bin','HOME':str(job/'home'),'HF_HUB_OFFLINE':'1','TRANSFORMERS_OFFLINE':'1','HF_HUB_DISABLE_TELEMETRY':'1'}
     with (job/'worker.log').open('xb') as log:
-        r=subprocess.run([str(runtime.python),str(worker),'--model',str(runtime.models),'--audio',str(job/'source.wav'),'--output',str(job/'raw.json'),'--task-id',task_id],env=env,stdout=log,stderr=subprocess.STDOUT,timeout=120,check=False)
+        r=subprocess.run([str(runtime.python),str(worker),'--model',str(runtime.models),'--audio',str(job/'source.wav'),'--output',str(job/'raw.json'),'--task-id',task_id,'--input-sha256',sha(audio)],env=env,stdout=log,stderr=subprocess.STDOUT,timeout=120,check=False)
     if r.returncode:raise ValueError('worker exit')
     path=job/'raw.json'
     if path.stat().st_size>262144:raise ValueError('output budget')
     result=strict(path.read_bytes())
-    if result['inputSha256']!=PUBLIC_SHA or result['taskId']!=task_id or result['modelRevision']!='3847d57b6bdf2dd8875cb1508d2af43d80a16bf7':raise ValueError('worker binding')
+    if result['inputSha256']!=sha(audio) or result['taskId']!=task_id or result['modelRevision']!='3847d57b6bdf2dd8875cb1508d2af43d80a16bf7':raise ValueError('worker binding')
     return result
 
 @router.post('',status_code=201)
@@ -82,7 +81,8 @@ async def start(case_id:str,request:Request,ctx:Ctx=CtxDep):
         if sum(t.case_id==case_id for t in all_tasks)>=20:raise problem(409,'ASR_TASK_LIMIT','每案最多20任务')
         if len(s.scalars(select(Revision.id).where(Revision.case_id==case_id,Revision.revision==0)).all())>=20:raise problem(409,'ASR_RUN_LIMIT','核对运行额度已满')
         snap,fmt=source(ctx,s,case_id,b['audioReceipt']);_,audio=receipt(ctx,s,case_id,b['audioReceipt']);binding=sample_source(snap,fmt)
-        if sha(audio)!=PUBLIC_SHA:raise problem(422,'ASR_PUBLIC_SAMPLE_ONLY','本执行器仅支持已核实的公开FunASR普通话演示样本')
+        if fmt['channels']!=1 or fmt['sampleWidthBytes']!=2 or fmt['sampleRateHz']!=16000 or fmt['frames']>480000 or len(audio)>1048576:
+            raise problem(422,'ASR_WAV_SCOPE','本地任务仅支持1–30秒、16kHz单声道16位PCM WAV，最多1MiB；不自动转换原音')
         doc={'taskId':task_id,'caseId':case_id,'audioReceipt':b['audioReceipt'],'source':binding,'status':'running_or_unknown','utc':iso(now_utc()),'operator':ctx.operator,'role':ctx.role,'runId':None,'factVerified':False,'archiveSupported':False}
         s.add(Task(task_id=task_id,case_id=case_id,doc=doc))
         audit.append(s,case_id=case_id,operator=ctx.operator,role=ctx.role,action='asr.task.start',category='Evidence',command=task_id,entity_id=task_id)

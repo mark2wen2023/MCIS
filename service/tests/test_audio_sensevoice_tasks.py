@@ -1,5 +1,5 @@
 """Ordinary synthetic task lifecycle tests; execution stub is NOT an ASR model."""
-import hashlib,json,subprocess
+import hashlib,json,subprocess,io,wave
 from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
@@ -10,8 +10,10 @@ from mcis_service.audio_review.app import create_audio_review_app,Revision
 
 @pytest.fixture
 def configured(local,monkeypatch):
-    c,app,settings=local;audio=tone();digest=intake(c,audio,'synthetic-task.wav')
-    monkeypatch.setattr(tasks,'PUBLIC_SHA',hashlib.sha256(audio).hexdigest())
+    c,app,settings=local;buf=io.BytesIO()
+    with wave.open(buf,'wb') as wav:
+        wav.setnchannels(1);wav.setsampwidth(2);wav.setframerate(16000);wav.writeframes(b'\0\0'*16000)
+    audio=buf.getvalue();digest=intake(c,audio,'synthetic-task.wav')
     app.state.audio_asr_runtime=tasks.LocalRuntime(Path('/synthetic/python'),Path('/synthetic/model'))
     calls=[]
     source=c.get(BASE+'/audio-reviews/source/'+digest).json()['sampleSource']
@@ -82,3 +84,24 @@ def test_running_status_is_readable_and_second_task_does_not_dispatch(configured
         finally:release.set()
         assert pending.result(timeout=5).status_code==201
     assert calls==[b['taskId']]
+
+
+def test_other_supported_registration_is_not_fixed_demo_hash(configured):
+    c,app,_,b,calls=configured
+    # Fixture source is generated silence and is not the former public-demo SHA.
+    r=c.post(BASE+'/audio-asr-tasks',json=b)
+    assert r.status_code==201 and calls==[b['taskId']]
+
+
+@pytest.mark.parametrize('rate,channels,width,seconds,extra',[(8000,1,2,1,False),(16000,2,2,1,False),(16000,1,3,1,False),(16000,1,2,31,False),(16000,1,2,1,True)])
+def test_outside_worker_format_does_not_dispatch_or_create_task(configured,rate,channels,width,seconds,extra):
+    c,app,_,b,calls=configured;buf=io.BytesIO()
+    with wave.open(buf,'wb') as wav:
+        wav.setnchannels(channels);wav.setsampwidth(width);wav.setframerate(rate);wav.writeframes(b'\0'*(rate*seconds*channels*width))
+    audio=buf.getvalue()+(b'\0'*1048576 if extra else b'')
+    receipt=intake(c,audio,'synthetic-outside-task-scope.wav')
+    r=c.post(BASE+'/audio-asr-tasks',json={**b,'audioReceipt':receipt})
+    assert r.status_code==422 and r.json()['code']=='ASR_WAV_SCOPE' and calls==[]
+    with app.state.db.session() as s:assert s.query(tasks.Task).count()==0
+    # Existing broader read/review format remains available, no destructive conversion.
+    assert c.get(BASE+'/audio-reviews/source/'+receipt).status_code==200

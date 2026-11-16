@@ -31,7 +31,7 @@ def timestamp_inspection(row, source):
 
 
 def convert(result, source):
-    if result.get('scope')!='actual-local-SenseVoiceSmall-public-noncase-sample':raise ValueError('unsupported record scope')
+    if result.get('scope') not in ('actual-local-SenseVoiceSmall-public-noncase-sample','actual-local-SenseVoiceSmall-registered-audio'):raise ValueError('unsupported record scope')
     if result['inputSha256']!=source['currentSha256']:raise ValueError('different source bytes')
     rows=result['raw']
     if not isinstance(rows,list) or not 1<=len(rows)<=256:raise ValueError('empty or excessive recognition')

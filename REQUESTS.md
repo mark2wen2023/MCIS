@@ -656,3 +656,6 @@ Explicit user model change stops faster-whisper work; retained separately, not p
 
 ## Explicit local SenseVoice task candidate — 2026-11-16
 Authorized continuation of audio minimum loop: optional host-configured fixed CPU worker, durable task ID/status, successful task artifacts + pending review run in one final transaction. No default enablement, extra model downloads, or permissions changes. Reuse existing intake authorization and exact PCM source. Public demo SHA only until separately reviewed; no arbitrary private audio execution. Previously frozen audio files may change under this request; separate new freeze required.
+
+## Registered short WAV task extension — 2026-11-16
+User authorized replacing the public-demo hash allowlist with existing authorized registration/source binding. Small execution scope: complete mono16bit16000Hz PCM WAV,1–30seconds and<=1MiB, no conversion or resampling; wider existing manual review remains unchanged. Worker verifies server-calculated input SHA before model invocation, no HTTP-controlled file/model path. Real public speech and generated silence will be tested locally. No permission/default-route/archive change. Previously frozen task files may change under this request.
