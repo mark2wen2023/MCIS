@@ -647,3 +647,6 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## 2026-11-16 图片OCR核对隔离候选
+用户明确授权PDF版本/页图/已有OCR输出/逐条人工核对闭环。新增独立工厂、只追加SQLite记录和独立页面，默认服务与EvidencePage不变；不覆盖PR69/97。不改变权限/归档白名单。来源页码是声明，不认证渲染关系或事实。详见contracts/image-ocr-review-candidate.md。
