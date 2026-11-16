@@ -695,3 +695,6 @@ Authorized isolated same-case/same-transaction association checker and eight exp
 
 ## Media generation format v2 — 2026-11-16
 Authorized offline explicit generation/observation members with audit links; v1 delegated unchanged, missing history rejected. No original extractor/whitelist/permissions/export changes. Nine new ordinary synthetic nodes only, no paused or write-refusal tests.
+
+## Internal generation-aware audio assembly — 2026-11-16
+Authorized new isolated assembler/inventory; original extractor/preflight and formal whitelist unchanged. Same reserved session, complete generation/observation members plus old audio history; six explicit new ordinary synthetic nodes. No completion proof, task-directory archive or export/restore permission. No paused/write-refusal/security/browser tests.

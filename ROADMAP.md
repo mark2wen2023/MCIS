@@ -429,3 +429,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Audio generation linkage | 待独验 |8 new ordinary developer nodes (6+2); same-session native association plus synthetic row checks. Old extractors still refuse new tables; no member preservation or readiness. See research/audio_generation_links/RESULT.md. |
 
 | Media generation research v2 | 待独验 |9 unique developer nodes pass after fixture-only correction; audio-only envelope with explicit generation/observation members. No native extraction/ZIP/product restore; old v1 remains history unknown, readiness false. |
+
+| Generation-aware internal audio assembly | 待独验 |6 new developer ordinary nodes (5+1); preserves explicit generation/observation and captured audio histories in v2 memory members. Old entry unchanged; directory completion and formal archive remain blocked. Duplicated extraction/inventory logic needs review. |
