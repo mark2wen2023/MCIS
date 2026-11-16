@@ -405,3 +405,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Explicit SenseVoice task candidate | 待独验 | Optional fixed local CPU task; public demo only; durable status and atomic pending-draft publication. Developer26service +6syntheticDOM pass and actual public subprocess chain pass. Browser/production/archive unverified. Freeze: logs/audio-sensevoice-tasks-impl-hashes-frozen.txt. |
 
 | Registered WAV local task candidate | 待独验 | Replaces fixed public hash with registered/authorized1–30s mono16bit16kHz WAV<=1MiB. Developer32service +6syntheticDOM pass; actual public speech and synthetic silence executed. Silence hallucination retained pending; no browser/production acceptance. Freeze: logs/audio-registered-wav-impl-hashes-frozen.txt. |
+
+| Archive preflight on audio base | 待独验 | Adapt 8833984 seven-model detection only; unsupported states still refused, no 1.4/media restore. Developer25 ordinary synthetic tests pass (1.0/1.2/1.3 bounded flows), no HFACS/browser/production validation. Freeze: `logs/archive-preflight-audio-base-impl-hashes-frozen.txt`. |

@@ -659,3 +659,6 @@ Authorized continuation of audio minimum loop: optional host-configured fixed CP
 
 ## Registered short WAV task extension — 2026-11-16
 User authorized replacing the public-demo hash allowlist with existing authorized registration/source binding. Small execution scope: complete mono16bit16000Hz PCM WAV,1–30seconds and<=1MiB, no conversion or resampling; wider existing manual review remains unchanged. Worker verifies server-calculated input SHA before model invocation, no HTTP-controlled file/model path. Real public speech and generated silence will be tested locally. No permission/default-route/archive change. Previously frozen task files may change under this request.
+
+## Archive preflight convergence on audio candidate — 2026-11-16
+Authorized ordinary-business review of 8833984 against 658f877. Change previously frozen working-record archive service only to select its existing closed-world preflight for standalone consultation, timeline, recommendation, conflict, agent draft, COLREG and simulation-command state. Do not transplant the old branch's 1.4 support/origin model or change permissions, parser, allowlist or media restoration. Separate candidate; no product recovery enablement. New freeze supersedes this service file's prior hash for this candidate only.
