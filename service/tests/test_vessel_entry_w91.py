@@ -6,6 +6,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from .conftest import C, H, CASE, make_settings
+from .archive_workflow_fixtures import supported_archive_client
 from mcis_service.main import create_app
 from mcis_service.audit import service as audit
 from mcis_service.db import put_doc
@@ -17,7 +18,8 @@ def vessel(**extra):
     return {'caseId': CASE, 'vesselId': 'new-ship', 'name': '虚构测试船', **extra}
 
 
-def test_create_reopen_export_and_audit(client):
+def test_create_reopen_export_and_audit(supported_archive_client,empty_client):
+    client=supported_archive_client
     body=vessel(loaM=123.4,draftForeM=0,mmsi='001234567',parameterSources={'loaM':{'sourceLabel':'虚构资料第2页','kind':'Estimated'}})
     before=client.get(C+'/vessels').json()
     r=client.post(C+'/vessels',json=body,headers=H(operator='测试调查员'))
@@ -25,15 +27,24 @@ def test_create_reopen_export_and_audit(client):
     assert r.json()==body
     assert client.get(C+'/vessels').json()==before+[body]
     assert client.get(C+'/overview').json()['counts']['vessels']==len(before)+1
-    events=client.get(C+'/audit',headers=H()).json()
-    # Audit endpoint is a bare list in this contract.
-    if isinstance(events,dict): events=events['events']
+    response=client.get(C+'/audit',headers=H('LeadInvestigator'))
+    assert response.status_code==200,response.text
+    events=response.json();assert isinstance(events,list)
+    assert audit.verify_chain([e['line'] for e in events])['valid']
     added=[e for e in events if e['action']=='vessel.create']
     assert len(added)==1 and added[0]['entityId']=='new-ship'
     assert added[0]['operator']=='测试调查员'
     from mcis_service.package.mcase import read_zip
-    exported=read_zip(client.get(C+'/export').content)
+    response=client.get(C+'/export',headers=H('LeadInvestigator'))
+    assert response.status_code==200,response.text
+    exported=read_zip(response.content)
     assert body in json.loads(exported['vessels.json'])
+    restored=empty_client.post('/api/v1/cases:import',content=response.content,headers=H('LeadInvestigator'))
+    assert restored.status_code==201,restored.text
+    assert empty_client.get(C+'/vessels').json()==before+[body]
+    again=empty_client.get(C+'/export',headers=H('LeadInvestigator'))
+    assert again.status_code==200,again.text
+    assert json.loads(read_zip(again.content)['vessels.json'])==json.loads(exported['vessels.json'])
 
 
 @pytest.mark.parametrize('role',['LeadInvestigator','Investigator'])

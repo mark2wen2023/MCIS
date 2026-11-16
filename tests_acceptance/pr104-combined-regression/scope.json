@@ -1,0 +1,7 @@
+{
+  "report_selected": 368,
+  "archive_selected": 191,
+  "overlap": 0,
+  "union_selected": 559,
+  "excluded": "--deselect=tests/test_track_history.py::test_real_hfacs_and_report_optional_extension_three_generations"
+}

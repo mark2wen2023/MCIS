@@ -1,0 +1,2 @@
+6d218f170fe30031c65fdc80a8f9383334dcd23499753041ed492e1fa6405cfa  /tmp/mcis-source-status-before.txt
+d79f4d855c1829f51ddd2aed5c178f58df1d0a91f0c2ee222872c17ea54dc15b  /tmp/mcis-source-status-after.txt

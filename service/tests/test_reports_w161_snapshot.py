@@ -19,7 +19,9 @@ from .conftest import CASE
 
 @pytest.fixture()
 def ctx(app):
-    return SimpleNamespace(db=app.state.db, role='Investigator', operator='快照调查员',
+    # Full report business tests need an explicitly permitted test principal.
+    # Default Investigator is denied by the unchanged medical/field policy.
+    return SimpleNamespace(db=app.state.db, role='LeadInvestigator', operator='快照调查员',
                            settings=app.state.settings, request=SimpleNamespace(app=app))
 
 
@@ -102,12 +104,15 @@ def test_snapshot_restricted_roles_are_403(ctx, role):
     assert_error(403, 'FORBIDDEN', lambda: router.get_snapshot(CASE, reference.split(':', 1)[1], ctx))
 
 
-@pytest.mark.parametrize('role', ['LeadInvestigator', 'Investigator'])
-def test_snapshot_investigator_roles_allowed(ctx, role):
+@pytest.mark.parametrize('role, permitted', [('LeadInvestigator', True), ('Investigator', False)])
+def test_snapshot_investigator_roles_follow_content_policy(ctx, role, permitted):
     report = create(ctx)
     reference = router.audit_list(CASE, report['reportId'], ctx)[0]['snapshotRef']
     ctx.role = role
-    assert router.get_snapshot(CASE, reference.split(':', 1)[1], ctx)['afterValue'] == report
+    if permitted:
+        assert router.get_snapshot(CASE, reference.split(':', 1)[1], ctx)['afterValue'] == report
+    else:
+        assert_error(403, 'FORBIDDEN', lambda: router.get_snapshot(CASE, reference.split(':', 1)[1], ctx))
 
 
 @pytest.mark.parametrize('case_id', sorted(service.REAL_CASE_IDS))
@@ -154,3 +159,12 @@ def test_legacy_report_snapshot_gets_reference_without_rewriting_audit_line(ctx)
     assert router.get_snapshot(CASE, snapshot_id, ctx)['afterValue'] == {'legacy': True}
     with ctx.db.session() as s:
         assert audit.verify_chain(audit.all_lines(s, CASE))['valid'] is True
+
+
+def test_investigator_denied_before_snapshot_existence_disclosure(ctx):
+    from .test_reports_w16_direct import snapshot_db
+    ctx.role = 'Investigator'
+    before = snapshot_db(ctx)
+    for case_id in (CASE, *sorted(service.REAL_CASE_IDS)):
+        assert_error(403, 'FORBIDDEN', lambda: router.get_snapshot(case_id, 'RA-absent', ctx))
+    assert snapshot_db(ctx) == before
