@@ -753,3 +753,9 @@ Extend the shared ledger transaction/replay implementation with a new revision 4
 old revisions retain their reducers. Persist bounded single-seat synthetic context,
 normalized responses, ordered tool results and unverified candidates atomically with
 audit/operation/state. No dispatch, completion, migration, provider or resume authority.
+
+## SINGLE_SEAT_MESSAGES_V4
+Isolated revision-4-only synthetic message adapter. Preserve old adapter/host;
+no dual write or runner. Use committed transcript state/results, canonical ledger
+hashes and existing bounds. Exceptions and duplicate outcomes stop this owner;
+read-only reopening never authorizes dispatch.

@@ -431,3 +431,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-16 | PI_MESSAGE_ADAPTER | 待测 | 单首轮消息适配，新账本关联请求/摘要；5新合成节点通过；工具记录仅内存、未接Pi/生命周期/四席，HOLD；logs/PI_MESSAGE_ADAPTER-impl-hashes-frozen.txt |
 
 | 2026-11-16 | SINGLE_SEAT_TRANSCRIPT | 待测 | 修订4单席正文/工具/未核实候选同事务保存，只读重开禁止派发；7新普通合成节点开发通过，未接Pi/现有host/四席；logs/SINGLE_SEAT_TRANSCRIPT-impl-hashes-frozen.txt |
+
+| 2026-11-16 | SINGLE_SEAT_MESSAGES_V4 | 待测 | 隔离消息单接修订4账本、规范化摘要、提交后工具结果；6新普通合成节点开发通过，真实提交故障/Pi/四席未验，HOLD；logs/SINGLE_SEAT_MESSAGES_V4-impl-hashes-frozen.txt |
