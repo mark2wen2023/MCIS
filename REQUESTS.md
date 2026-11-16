@@ -692,3 +692,6 @@ Authorized optional-app generation and unknown/incomplete observations in existi
 
 ## Generation/observation linkage candidate — 2026-11-16
 Authorized isolated same-case/same-transaction association checker and eight explicit new ordinary synthetic nodes. No existing table whitelist, permission, extraction or restore changes. Missing history rejects as unknown; associations never grant readiness. No paused or write-refusal/security tests.
+
+## Media generation format v2 — 2026-11-16
+Authorized offline explicit generation/observation members with audit links; v1 delegated unchanged, missing history rejected. No original extractor/whitelist/permissions/export changes. Nine new ordinary synthetic nodes only, no paused or write-refusal tests.

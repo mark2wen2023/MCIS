@@ -1,0 +1,13 @@
+# Media generation research format 2
+
+Parent e93432bd94374cff767572bacb332b45f93588d8. New independent offline validator; existing v1 contract, native preflight, extraction component, permissions and formal export/restore unchanged.
+
+Envelope exact fields: format=MCIS-MEDIA-ARCHIVE-RESEARCH-2, caseId, archiveReady=false, base (complete v1 index), members (complete union descriptors), generations (member references), observations (member references). Each generation member preserves case_id/generation_id/task_id/doc; each observation preserves case_id/generation_id/ordinal/doc. Full doc content is retained, not replaced by a current-state summary. Envelope and members must be preserved together; there is no ZIP implementation or product import.
+
+All bytes are bounded and matched to size/SHA descriptors; base descriptors must agree. No duplicate or unreferenced history members. Existing v1 checks cover base members and audit chain. The generation association validator matches every supplied task with one generation and all required observation ordinals, references exact audit sequence/line hash and checks status/action/source consistency. Source snapshots also bind to base source descriptor case/evidence/registered/current digests. v2 currently audio-only; image/mixed sources reject rather than omit them. Historical missing generation rejects; unsupported observation schemas reject.
+
+A true v1 input is delegated unchanged to v1 validation, returns generationHistory=unknown-not-upgraded, and gains no completion or restore authority. v2 is not automatically inferred from extra members. No historical source or generation data is manufactured. Serialized-envelope roundtrip in tests is not restoration to a product database.
+
+Accepted v2 returns archiveReady=false, restore_ready=false, export_allowed=false and execution_allowed=false. Preserved task and audit states are historical declarations, not execution instructions. writers remains unknown and manifest not captured. Current supplied hashes are integrity comparisons, not independent historical provenance or original authenticity. Complete extraction from a live database, task directories, writer closure, publication/crash handling, schema migration and product restore remain unimplemented. Exact supplied membership cannot prove omitted unknown database history does not exist; the existing native inventory is still required and still refuses the new tables.
+
+The module reuses the service association checker and therefore requires its Python dependencies; it is offline in I/O behavior, not a standalone dependency-free distribution. No production old-package corpus, real audio, browser or model execution tested.
