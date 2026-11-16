@@ -929,3 +929,10 @@ restore transaction and shared conservative decision; real list/load exercised
 through isolated wrappers, no product wiring. Old ordinary cases keep normal
 policy path; no ready promotion until publication/migration/global gates proven.
 See contracts/conflict-readiness-gate-research.md and READINESS_GATE_RESULT.md.
+
+## Isolated restore migration identity and observation protocol
+On2b4edd9 add research-only explicit migration marker/legacy case inventory, retaining
+existing claims, commit and pending rows. Require external expected database identity
+or explicit legacy mode; never infer legacy from absence when identity is expected.
+No product imports/routes, publication, ready promotion, retry/delete or authorization
+change. Contracts: restore-migration-protocol-research.md. Synthetic tests only.
