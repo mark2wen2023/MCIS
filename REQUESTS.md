@@ -759,3 +759,9 @@ Isolated revision-4-only synthetic message adapter. Preserve old adapter/host;
 no dual write or runner. Use committed transcript state/results, canonical ledger
 hashes and existing bounds. Exceptions and duplicate outcomes stop this owner;
 read-only reopening never authorizes dispatch.
+
+## FOUR_SEAT_ROUND_ONE
+New isolated ledger revision 5: first-round per-ticket transcripts and explicit
+simulated/unverified sealing, never expert completion. Reuse revision-4 tool
+validation and shared transactions; old reducers unchanged. No second round,
+dispatch, migration or runner. Read-only inspection adds explicit coverage label.

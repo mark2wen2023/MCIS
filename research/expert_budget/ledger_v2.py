@@ -154,7 +154,7 @@ def inspect_v2(path, expected_meeting, expected_ledger=None):
         with closing(sqlite3.connect(Path(path).absolute().as_uri()+'?mode=ro',uri=True,timeout=1)) as db:
             db.execute('BEGIN')
             version=db.execute('PRAGMA user_version').fetchone()[0]
-            require(version in (2,3,4),'version_not_v2_family')
+            require(version in (2,3,4,5),'version_not_v2_family')
             tables={r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
             require(tables=={'meta','current','operations','audit'},'tables')
             meta=db.execute('SELECT id,ledger,meeting,packet FROM meta LIMIT 2').fetchall()
@@ -174,6 +174,9 @@ def inspect_v2(path, expected_meeting, expected_ledger=None):
             if version == 4:
                 from research.expert_budget.single_seat_transcript import advance_transcript
                 reducer = advance_transcript
+            if version == 5:
+                from research.expert_budget.four_seat_transcript import advance_four
+                reducer = advance_four
             state=initial(meeting); previous='0'*64; seen=set()
             for index,(operation,audit) in enumerate(zip(ops,audits),1):
                 op,input_digest,seq,raw_result=operation
@@ -194,7 +197,8 @@ def inspect_v2(path, expected_meeting, expected_ledger=None):
             return {**base,'classification':'blocked_unknown' if pending or state['status']=='open' else 'recorded_terminal_only',
                     'ledgerId':ledger,'revision':revision,'state':state,'contractRevision':version,
                     'receiptCoverage':('unknown_legacy' if version==2 else 'recorded_digests_not_response_verification'),
-                    'transcriptCoverage':('recorded_synthetic_only' if version==4 else 'unknown_legacy'),
+                    'transcriptCoverage':('recorded_synthetic_only' if version in (4,5) else 'unknown_legacy'),
+                    'fourSeatCoverage':('recorded_first_round_simulated_only' if version==5 else 'unknown_legacy'),
                     'reason':'no_execution_resume','roleProgress':'recorded_declarations_only'}
     except (sqlite3.Error,ValueError,TypeError,KeyError,OSError,GroupError):
         return {**base,'classification':'blocked_unverified','reason':'snapshot_not_verified'}
