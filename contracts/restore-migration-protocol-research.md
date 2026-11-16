@@ -49,3 +49,8 @@ list. A captured ordinary case remains individually readable under its original
 policy even when another unknown case blocks a complete list. New ordinary cases
 after migration are unknown until a future atomic normal-registration path exists;
 this limitation prevents production deployment, not a reason to infer legacy.
+
+Even when cases is empty, listing inspects IDs present in operation, commit and
+readiness ledgers, not only their column shape. Orphan/inconsistent bindings raise
+unknown. A well-formed empty store still returns[], as does a store containing only
+consistent held claims; the latter means no visible cases, not no pending operations.

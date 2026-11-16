@@ -79,7 +79,7 @@ def list_cases(session, *, expected_database_id=None, explicit_legacy=False):
     # Therefore validate actual rows below; empty-list validation uses a scoped
     # protocol identity check rather than treating that sentinel as an entity.
     rows = cases.list_cases(session)
-    if not rows and initial == 'unknown':
+    if not rows and (initial == 'unknown' or expected_database_id is not None):
         from .migration_protocol import REQUIRED
         try:
             names = set(inspect(session.connection()).get_table_names())
@@ -87,8 +87,13 @@ def list_cases(session, *, expected_database_id=None, explicit_legacy=False):
             if explicit_legacy or not expected_database_id or marker != [(1,1,expected_database_id)]:
                 raise ReadinessUnknown('readiness unknown; no empty successful listing')
             session.execute(text('SELECT case_id FROM offline_restore_legacy_cases LIMIT 0'))
+            ledger_ids = set()
             for table in ('offline_restore_operation', 'offline_restore_commit', 'offline_restore_readiness'):
                 session.execute(text('SELECT case_id,operation_id,source_sha256 FROM '+table+' LIMIT 0'))
+                ledger_ids.update(session.execute(text('SELECT DISTINCT case_id FROM '+table)).scalars())
+            for case_id in ledger_ids:
+                if _entry_decision(session, case_id, expected_database_id=expected_database_id) == 'unknown':
+                    raise ReadinessUnknown('orphan or inconsistent ledger; no empty successful listing')
         except SQLAlchemyError as exc:
             raise ReadinessUnknown('readiness unknown; no empty successful listing') from exc
     result = []

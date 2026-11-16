@@ -72,3 +72,31 @@ def test_empty_database_malformed_ledger_is_not_empty_success():
             s.execute(text('DROP TABLE offline_restore_commit'))
             s.execute(text('CREATE TABLE offline_restore_commit (wrong_column TEXT)'))
             with pytest.raises(ReadinessUnknown):list_cases(s,expected_database_id='synthetic-db')
+
+
+@pytest.mark.parametrize('kind',['commit','pending'])
+@pytest.mark.parametrize('sentinel_claim',[False,True])
+def test_empty_cases_with_orphan_ledger_is_unknown(kind,sentinel_claim):
+    from research.conflict_source_intent.migration_protocol import classify
+    with MigratingResearchStore() as store:
+        store.activate('synthetic-db')
+        with store.db.session() as s:
+            if sentinel_claim:
+                s.execute(text("INSERT INTO offline_restore_operation VALUES ('synthetic-sentinel','',:sha,0)"),{'sha':'b'*64})
+            if kind=='commit':
+                s.execute(text("INSERT INTO offline_restore_commit VALUES ('synthetic-op','SYNTHETIC-ORPHAN',:sha,0,0)"),{'sha':'a'*64})
+            else:
+                s.execute(text("INSERT INTO offline_restore_readiness VALUES ('SYNTHETIC-ORPHAN','synthetic-op',:sha,'waiting_publication')"),{'sha':'a'*64})
+            assert s.execute(text('SELECT count(*) FROM cases')).scalar_one()==0
+            assert classify(s,'SYNTHETIC-ORPHAN',expected_database_id='synthetic-db')=='unknown'
+            with pytest.raises(ReadinessUnknown):list_cases(s,expected_database_id='synthetic-db')
+
+
+def test_empty_cases_with_consistent_unattempted_claim_stays_held():
+    from research.conflict_source_intent.migration_protocol import classify
+    with MigratingResearchStore() as store:
+        store.activate('synthetic-db')
+        with store.db.session() as s:
+            s.execute(text("INSERT INTO offline_restore_operation VALUES ('synthetic-op','SYNTHETIC-PENDING',:sha,0)"),{'sha':'a'*64})
+            assert classify(s,'SYNTHETIC-PENDING',expected_database_id='synthetic-db')=='hold'
+            assert list_cases(s,expected_database_id='synthetic-db')==[]

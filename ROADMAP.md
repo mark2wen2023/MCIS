@@ -471,3 +471,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | RESTOREMIGRATIONRESEARCH | 待测 | 隔离迁移标识/保守重启协议；40项开发合成通过，未接产品 | logs/RESTOREMIGRATIONRESEARCH-impl-hashes-frozen.txt |
 
 | RESTORECLASSIFIEDENTRIES | 待测 | 隔离load/list/scoped_call接classify；45开发合成通过，未接产品/新案登记 | logs/RESTORECLASSIFIEDENTRIES-impl-hashes-frozen.txt |
+
+| RESTOREEMPTYLEDGER | 待测 | 空cases关联标记未知不显示空库；50开发合成通过，研究未接产品 | logs/RESTOREEMPTYLEDGER-impl-hashes-frozen.txt |

@@ -943,3 +943,9 @@ classification when an identity/mode is explicit or migration metadata is presen
 Missing identity on marked stores is unknown, never legacy fallback. Preserve prior
 unmarked research compatibility and product code. Unknown listing raises instead
 of silently returning an incomplete success. No new ordinary-case registration.
+
+## Empty research listing must inspect orphan ledger bindings
+Reopen readiness_gate empty-list branch: schema shape alone cannot establish empty
+state; classify IDs present in operation/commit/readiness ledgers. Unknown bindings
+raise, normal empty stores and held pending claims retain prior semantics. No product
+wiring, authorization, retry/delete or ready-state changes.
