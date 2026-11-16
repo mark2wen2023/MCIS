@@ -411,3 +411,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Media archive member/index research | 待独验 | Offline proposed contract +40 ordinary synthetic tests; no product extraction/ZIP/restore/worker execution, restore_ready=false. Native audit uniqueness and complete inventory remain prerequisites. Freeze: `logs/media-archive-research-impl-hashes-frozen.txt`. |
 
 | Media archive native preflight research | 待独验 |57 ordinary developer synthetic tests (42 index+15 inventory); read-only case-scoped rows and unique audit matching only. Unscoped tables/bytes/product recovery unverified; restore_ready=false. Freeze: `logs/media-archive-preflight-impl-hashes-frozen.txt`. |
+
+| Media supplied audio-byte consistency | 待独验 |83 developer synthetic tests (42+26+15 unique selection); actual generated PCM bytes, no ASR. Audio-v3 only; PDF/image unsupported, caller-provided provenance, restore/export remain false. Freeze: `logs/media-byte-consistency-impl-hashes-frozen.txt`. |

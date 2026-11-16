@@ -668,3 +668,6 @@ Authorized after independent25-test preflight review: isolated contract and ordi
 
 ## Media archive native inventory research — 2026-11-16
 Authorized read-only native-row enumeration and unique revision/audit matching on temporary synthetic databases. Separate branch from3f6445ff; no product wiring or permission change. Correct the research contract's ASR audit action to actual asr.task.incomplete; this changes previously frozen contract.py/test_contract.py only under a new candidate freeze. Image native code read but not merged/executed. No original-byte verification, archive approval or worker dispatch supplied.
+
+## Supplied audio byte consistency research — 2026-11-16
+Authorized continuation of media archive research: in-memory PCM bytes + native v3/raw result/declaration consistency, reusing existing offline validators/converter. No native product file reads or route/permission/export/restore changes. Image/PDF and unsupported v2 explicitly refused; generated PCM/fabricated ASR results only. No existing frozen implementation modified; new files have separate freeze.
