@@ -413,3 +413,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 | SUPPORTEDARCHIVEWORKFLOWTESTS | 待测 | 两项普通往返改用独立合成案件并保留原断言；复杂案件409与默认403保留；191过1失败0跳，HFACS真实核心仍不可用；仅开发测试 | logs/SUPPORTEDARCHIVEWORKFLOWTESTS-impl-hashes-frozen.txt |
 | PR104 supported archive ordinary tests | 待独审 | e564581+b89d3fd隔离组合，仅两份文档追加冲突；生产代码不变、四测试文件原冻结匹配。191通过/1明确排除HFACS，复杂seed409和默认403保留；开发合成结果，未更新PR104或主线。 |
+
+| REPORTDOCXHEADERS | 待测 | DOCX重复表头/非完整翻译提示/标题分页；开发31通过，Writer23页，非Word验收 | logs/REPORTDOCXHEADERS-impl-hashes-frozen.txt |

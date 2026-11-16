@@ -20,3 +20,10 @@ content. Content may continue across pages; entire long sections need not fit on
 one page. This changes pagination, not stored report text. DOCX uses its existing
 heading behavior. PDF text/geometry tests are distinct from developer visual review
 and neither constitutes independent browser, production or factual acceptance.
+
+DOCX bilingual section tables and the glossary mark their first row as an OOXML
+repeating table header. The section-table English column explicitly allows
+original-language excerpts and states they are not fully translated. This is a
+display label, not a translation or evidence-validation claim. Glossary terminology
+keeps its existing project-translation label. Stored sentences/citations are unchanged.
+The DOCX missing-data notice stays with the following content so it does not interrupt the heading keep-with-next chain.

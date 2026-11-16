@@ -720,3 +720,6 @@ seed=False supported cases; keep all prior assertion structures and add explicit
 Lead audit/export statuses. Other tests/production permissions unchanged. Retain
 separate complex-seed409/no-partial-package and Investigator403/zero-change checks.
 See tests_acceptance/supported-archive-workflows/REPORT.md; no archive support expansion.
+
+## DOCX continuation headers and language-label scope
+Reopen report exporter only for repeated table header rows and an accurate English-column label: original-language excerpts are not a complete translation. Preserve stored text, references, history and permissions. Validate XML and actual installed Writer rendering; do not claim Microsoft Word verification.

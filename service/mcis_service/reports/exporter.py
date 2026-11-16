@@ -188,6 +188,12 @@ def _docx_font(style):
     fonts.set(qn("w:eastAsia"), "Noto Sans SC")
 
 
+def _repeat_docx_header(row):
+    """OOXML header row; office applications repeat it on continuation pages."""
+    header = OxmlElement("w:tblHeader")
+    row._tr.get_or_add_trPr().append(header)
+
+
 def render_docx(report: dict, lang: str, *, include_glossary=True) -> bytes:
     document = Document()
     for name in ("Normal", "Title", "Heading 1", "Heading 2"):
@@ -210,12 +216,14 @@ def render_docx(report: dict, lang: str, *, include_glossary=True) -> bytes:
             title = f"{section_data.get('titleZh', '')} / {section_data.get('titleEn', '')}"
         document.add_heading(f"{number}. {title} [{_status(section_data.get('status', 'Draft'))}]", level=1)
         if section_data.get("missing"):
-            document.add_paragraph("含缺数据项 / Contains missing data")
+            notice = document.add_paragraph("含缺数据项 / Contains missing data")
+            notice.paragraph_format.keep_with_next = True
         if lang == "bilingual":
             table = document.add_table(rows=1, cols=2)
             table.style = "Table Grid"
             table.rows[0].cells[0].text = "中文"
-            table.rows[0].cells[1].text = "English"
+            table.rows[0].cells[1].text = "English / original-language excerpts（原文摘录非完整翻译 / excerpts are not fully translated）"
+            _repeat_docx_header(table.rows[0])
             for sentence in _sentences(section_data):
                 cells = table.add_row().cells
                 cells[0].text = _sentence_text(sentence, "zh")
@@ -234,6 +242,7 @@ def render_docx(report: dict, lang: str, *, include_glossary=True) -> bytes:
         table = document.add_table(rows=1, cols=2)
         table.rows[0].cells[0].text = "中文（项目译文）"
         table.rows[0].cells[1].text = "English"
+        _repeat_docx_header(table.rows[0])
         for term in GLOSSARY:
             cells = table.add_row().cells
             cells[0].text = term["termZh"]
