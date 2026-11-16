@@ -419,3 +419,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Pure offline restore observation model | 待独验 |13 developer pure-function nodes pass; no file/DB/process operations. Unknown held, simulated ready never grants product access or restore; external identity/persistence unimplemented. Freeze: `logs/offline-restore-state-machine-impl-hashes-frozen.txt`. |
 
 | Native audio-v3 archive component | 待独验 |9 explicit new developer ordinary nodes pass; same native session, one cached receipt read per original, complete captured revisions/raw/audit. No HTTP/ZIP/restore; unknown states held, real ASR/browser/concurrency unverified. Freeze: `logs/audio-v3-archive-adapter-impl-hashes-frozen.txt`. |
+
+| Per-case audio job observations | 待独验 |7 new ordinary developer nodes pass; current expected-directory observations only. Real worker home/log remain unclassified and blocked, no atomic filesystem snapshot/global orphan proof. Export/restore disabled. Freeze: `logs/audio-job-inventory-impl-hashes-frozen.txt`. |

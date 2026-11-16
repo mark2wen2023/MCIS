@@ -680,3 +680,6 @@ Authorized synthetic state-machine contract only: no file/DB operations, product
 
 ## Native audio-v3 internal archive adapter — 2026-11-16
 Authorized isolated same-session adapter: reuse existing intake plus full-archive checks, cached single registered-source read, retain complete native revisions/task results/audit. New internal module only; no route/permissions/whitelist/product export changes. Narrow successful local v3 scope; unknown/unsupported states refuse.9 explicitly selected new ordinary nodes, generated PCM/stub recognizer; no paused or write-refusal/security tests. File safety/concurrency/whole-case recovery not certified.
+
+## Per-case audio task directory inventory — 2026-11-16
+Authorized isolated read-only expected-job checks. No global directory enumeration, original reads, task execution, deletion or product integration. Unclassified/missing/uncertain members held; current hashes are not historical proof. Seven individually selected new ordinary synthetic nodes only, no paused/security/write-refusal probes.
