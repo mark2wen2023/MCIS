@@ -419,3 +419,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-16 | STABLE_MEETING_PROTOCOL | 待测 | 纯内存稳定票据/部分状态合同；8新普通纯函数节点开发通过；未接持久账本/Pi/provider，HOLD；logs/STABLE_MEETING_PROTOCOL-impl-hashes-frozen.txt |
 
 | 2026-11-16 | STABLE_DURABLE_HOST | 待测 | 稳定票据接HostModelProtocol/SQLite；6新合成节点开发通过；无实际派发/进程/恢复，HOLD；logs/STABLE_DURABLE_HOST-impl-hashes-frozen.txt |
+
+| 2026-11-16 | LEDGER_READONLY_INSPECTION | 待测 | 独立只读快照结构核对，全部禁止派发/恢复；8新节点开发通过，无实际崩溃/并发/WAL验收；logs/LEDGER_READONLY_INSPECTION-impl-hashes-frozen.txt |

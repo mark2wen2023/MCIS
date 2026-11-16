@@ -710,3 +710,10 @@ HostModelProtocol/RequestBudget. SQLite alone owns request allowance and outcome
 completion declarations remain memory-only. No actual dispatch, recovery or
 production change. Six selected new ordinary synthetic tests; see
  tests_acceptance/STABLE_DURABLE_HOST/REPORT.md for precise boundaries.
+
+## 2026-11-16 Read-only ledger inspection
+
+Isolated candidate on 751d32c adds read-only v1 structural inspection, never resume
+or dispatch. Old role progress unknown, unresolved/inconsistent records blocked;
+no existing ledger initialization/migration. Eight new ordinary synthetic nodes,
+no write-refusal probes. See tests_acceptance/LEDGER_READONLY_INSPECTION/REPORT.md.
