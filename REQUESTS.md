@@ -653,3 +653,6 @@ Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD
 
 ## 2026-11-16 图片页图并排核对增量
 在dc0538隔离候选上，经用户授权扩展该候选页面为PNG并排查看、逐行框与局部图核对。复用授权下载及字节摘要校验，不改证据接口、权限或PR69/97页面；无自动OCR/PDF跳页。旧冻结清单保留为历史，新增预览冻结清单标识本次修改。环境中断后原修改恢复，普通专项重新验证；不重试受阻浏览器/安全操作。
+
+## 2026-11-16 公开页图真实本地OCR接线
+按授权实际运行已安装PP-OCRv5 CPU并将本轮44条输出转换、登记到隔离候选；增加显式公开样本runner与离线适配器。默认服务/权限/归档保护不变，无外部OCR、安装或浏览器重试；模型版本及结果摘要见tests_acceptance/image-ocr-local-run/REPORT.md。网页自动识别未实现，服务仍仅导入结果。

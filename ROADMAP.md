@@ -400,3 +400,4 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 | 图片逐行OCR核对隔离候选 | 待独审 / 不接生产 | 2026-11-16：main94d5e38上独立工厂、四文件摘要关联、逐行追加修订及授权下载；导入已有公开OCR输出，未重跑模型。15项开发测试，真实浏览器未验；整案归档继续拒绝，详见tests_acceptance/image-ocr-review-candidate/REPORT.md。 |
 | 图片页图并排核对 | 待独审 / 浏览器未验 | 2026-11-16：dc0538后新增PNG canvas预览、行框和局部图，显式授权载入与清除；无自动OCR/PDF跳页，权限与产品启用状态不变。见tests_acceptance/image-ocr-preview/REPORT.md。 |
+| 图片本地真实OCR到候选 | 开发验证 / 待独审 | 2026-11-16：已有官方缓存PP-OCRv5 CPU真实识别公开PDF6页，44行，经离线适配器进入隔离登记/修订/重启读取；19项开发测试，最终runner输出另1项重叠复验。非网页自动OCR/浏览器/生产或归档验收。 |
