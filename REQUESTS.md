@@ -683,3 +683,6 @@ Authorized isolated same-session adapter: reuse existing intake plus full-archiv
 
 ## Per-case audio task directory inventory — 2026-11-16
 Authorized isolated read-only expected-job checks. No global directory enumeration, original reads, task execution, deletion or product integration. Unclassified/missing/uncertain members held; current hashes are not historical proof. Seven individually selected new ordinary synthetic nodes only, no paused/security/write-refusal probes.
+
+## New-task completion manifest research — 2026-11-16
+Authorized pure-function versioned completion claims and eight explicit new synthetic nodes. No persistence/worker/file/DB operations or product entry; old tasks and unknown completion held, no historical proof manufactured. No paused tests or write-refusal probes.

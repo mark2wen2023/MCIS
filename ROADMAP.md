@@ -421,3 +421,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Native audio-v3 archive component | 待独验 |9 explicit new developer ordinary nodes pass; same native session, one cached receipt read per original, complete captured revisions/raw/audit. No HTTP/ZIP/restore; unknown states held, real ASR/browser/concurrency unverified. Freeze: `logs/audio-v3-archive-adapter-impl-hashes-frozen.txt`. |
 
 | Per-case audio job observations | 待独验 |7 new ordinary developer nodes pass; current expected-directory observations only. Real worker home/log remain unclassified and blocked, no atomic filesystem snapshot/global orphan proof. Export/restore disabled. Freeze: `logs/audio-job-inventory-impl-hashes-frozen.txt`. |
+
+| Audio completion manifest protocol | 待独验 |8 new developer pure-function nodes pass; supplied claims only, no real completion persistence/closure proof. Legacy held; export/restore/retry/delete false. See research/audio_completion_manifest/PROTOCOL.md. |
