@@ -716,3 +716,6 @@ Authorized behavior-preserving shared inventory/assembly extraction on de207b3 c
 
 ## Frozen image/audio combination — 2026-11-16
 Authorized independent combination of exact image91962113 and audiocc0cdc7. Only two append-document conflicts; all feature files preserved. Four new ordinary synthetic combination nodes, separate factories/shared temporary DB, mixed-case export refusal. No default routes, models, permissions or archive support enabled; no paused/write-refusal/browser tests.
+
+## Explicit combined review demo — 2026-11-16
+Authorized reuse of module registration functions with a single isolated app/db; new factory accepts settings only and keeps both runtimes None. Main app/permissions/archive unchanged. Five new ordinary synthetic nodes; no paused/write-refusal/browser/model tests. Caller responsible for isolated settings; not a production entry.

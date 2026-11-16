@@ -440,3 +440,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 图片显式本地任务候选 | 待独审 / 不启用生产 | 2026-11-16：新增持久任务与可配置固定本地worker，25项开发选定测试含真实公开单页OCR；归档断言另1项重叠复跑、10项前端合成。浏览器/崩溃恢复/生产身份未验；未知保持阻断。 |
 
 | Frozen image/audio candidates | 待独验 |Exact91962113+cc0cdc7 combined; four developer synthetic nodes pass. Separate optional factories, default runtime disabled; mixed-case archive refusal retained. Browser/real model/concurrency/production recovery unverified. |
+
+| Explicit combined media demo | 待独验 |5 developer synthetic nodes pass; one optional app with separate review pages and shared DB/audit, runtimes off with no enable arguments. TestClient page responses only, no browser/real models; formal archive closed. New freeze supersedes two app files at current head only. |

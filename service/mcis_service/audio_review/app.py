@@ -162,10 +162,12 @@ async def revise(case_id:str,run_id:str,request:Request,ctx:Ctx=CtxDep):
         out=result(rows(s,case_id,run_id))
     return out
 
-def create_audio_review_app(settings, *, sensevoice_runtime=None):
-    from ..main import create_app
+def register_audio_review(app, *, sensevoice_runtime=None):
+    """Register the isolated module once on an existing application."""
+    if getattr(app.state, 'audio_review_registered', False):
+        raise ValueError('audio review already registered')
     from . import tasks
-    app=create_app(settings);app.state.audio_asr_runtime=sensevoice_runtime
+    app.state.audio_asr_runtime=sensevoice_runtime
     Storage.metadata.create_all(app.state.db.engine)
     with app.state.db.engine.begin() as c:
         for op in ('UPDATE','DELETE'):
@@ -173,4 +175,10 @@ def create_audio_review_app(settings, *, sensevoice_runtime=None):
     app.include_router(router);app.include_router(tasks.router)
     @app.get('/audio-review-lab',response_class=HTMLResponse)
     def page():return HTMLResponse(Path(__file__).with_name('review.html').read_text(),headers={'Cache-Control':'no-store'})
+    app.state.audio_review_registered = True
     return app
+
+
+def create_audio_review_app(settings, *, sensevoice_runtime=None):
+    from ..main import create_app
+    return register_audio_review(create_app(settings), sensevoice_runtime=sensevoice_runtime)

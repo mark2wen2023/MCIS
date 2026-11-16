@@ -134,9 +134,10 @@ async def review(case_id: str, run_id: str, request: Request, ctx: Ctx = CtxDep)
         return result(records(s, case_id, run_id))
 
 
-def create_image_review_app(settings, ocr_runtime=None):
-    from ..main import create_app
-    app = create_app(settings)
+def register_image_review(app, *, ocr_runtime=None):
+    """Register the isolated module once on an existing application."""
+    if getattr(app.state, 'image_review_registered', False):
+        raise ValueError('image review already registered')
     from .tasks import router as tasks_router
     app.state.image_ocr_runtime = ocr_runtime
     Storage.metadata.create_all(app.state.db.engine)
@@ -151,4 +152,10 @@ def create_image_review_app(settings, ocr_runtime=None):
     @app.get('/image-review-lab', response_class=HTMLResponse)
     def page():
         return HTMLResponse(Path(__file__).with_name('review.html').read_text(), headers={'Cache-Control': 'no-store'})
+    app.state.image_review_registered = True
     return app
+
+
+def create_image_review_app(settings, ocr_runtime=None):
+    from ..main import create_app
+    return register_image_review(create_app(settings), ocr_runtime=ocr_runtime)
