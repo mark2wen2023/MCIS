@@ -747,3 +747,9 @@ reuses packet validators and pinned pure assistant validator from 6f8f429. No ol
 Meeting, lifecycle acceptance or provider. Tool transcript stays memory-only; no
 full four-seat claim. Five new ordinary synthetic nodes; see
  tests_acceptance/PI_MESSAGE_ADAPTER/REPORT.md.
+
+## SINGLE_SEAT_TRANSCRIPT — isolated contract proposal
+Extend the shared ledger transaction/replay implementation with a new revision 4 reducer;
+old revisions retain their reducers. Persist bounded single-seat synthetic context,
+normalized responses, ordered tool results and unverified candidates atomically with
+audit/operation/state. No dispatch, completion, migration, provider or resume authority.

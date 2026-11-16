@@ -8,7 +8,7 @@ from pathlib import Path
 import sqlite3
 import uuid
 from research.expert_budget.stable_protocol import initial, step
-from research.expert_group.packet import PACKET_SHA256
+from research.expert_group.packet import PACKET_SHA256, GroupError
 
 MAX_OPERATIONS = 128
 
@@ -91,6 +91,9 @@ def advance(state, action):
 
 class NewMeetingLedger:
     """One serialized owner; existing files cannot be opened for further writes."""
+    contract_version = 3
+    reducer = staticmethod(advance)
+
     def __init__(self, path, meeting_id):
         state=initial(meeting_id)
         with open(path,'xb'): pass
@@ -104,7 +107,7 @@ class NewMeetingLedger:
             db.execute('CREATE TABLE current (id INTEGER PRIMARY KEY, revision INTEGER NOT NULL, state TEXT NOT NULL)')
             db.execute('CREATE TABLE operations (op TEXT PRIMARY KEY, input_digest TEXT NOT NULL, seq INTEGER UNIQUE NOT NULL, result TEXT NOT NULL)')
             db.execute('CREATE TABLE audit (seq INTEGER PRIMARY KEY, op TEXT UNIQUE NOT NULL, body TEXT NOT NULL, digest TEXT NOT NULL)')
-            db.execute('PRAGMA user_version=3')
+            db.execute(f'PRAGMA user_version={self.contract_version}')
             db.execute('INSERT INTO meta VALUES(1,?,?,?)',(str(uuid.uuid4()),meeting_id,PACKET_SHA256))
             db.execute('INSERT INTO current VALUES(1,0,?)',(canonical(state),))
             db.commit()
@@ -126,7 +129,7 @@ class NewMeetingLedger:
                 revision,raw_state=db.execute('SELECT revision,state FROM current WHERE id=1').fetchone()
                 require(revision<MAX_OPERATIONS,'operation_limit')
                 before=json.loads(raw_state)
-                after,result=advance(before,action)
+                after,result=self.reducer(before,action)
                 # A pure reducer reservation is only a declaration until this commit.
                 result={**result,'dispatchAllowed':False,'executionVerified':False}
                 seq=revision+1
@@ -151,7 +154,7 @@ def inspect_v2(path, expected_meeting, expected_ledger=None):
         with closing(sqlite3.connect(Path(path).absolute().as_uri()+'?mode=ro',uri=True,timeout=1)) as db:
             db.execute('BEGIN')
             version=db.execute('PRAGMA user_version').fetchone()[0]
-            require(version in (2,3),'version_not_v2_family')
+            require(version in (2,3,4),'version_not_v2_family')
             tables={r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
             require(tables=={'meta','current','operations','audit'},'tables')
             meta=db.execute('SELECT id,ledger,meeting,packet FROM meta LIMIT 2').fetchall()
@@ -167,6 +170,10 @@ def inspect_v2(path, expected_meeting, expected_ledger=None):
             ops=db.execute('SELECT op,input_digest,seq,result FROM operations ORDER BY seq LIMIT 129').fetchall()
             audits=db.execute('SELECT seq,op,body,digest FROM audit ORDER BY seq LIMIT 129').fetchall()
             require(len(ops)==len(audits)==revision,'counts')
+            reducer = legacy_advance if version == 2 else advance
+            if version == 4:
+                from research.expert_budget.single_seat_transcript import advance_transcript
+                reducer = advance_transcript
             state=initial(meeting); previous='0'*64; seen=set()
             for index,(operation,audit) in enumerate(zip(ops,audits),1):
                 op,input_digest,seq,raw_result=operation
@@ -175,7 +182,8 @@ def inspect_v2(path, expected_meeting, expected_ledger=None):
                 require(op not in seen and seq==aseq==index and op==aop,'operation_link')
                 seen.add(op)
                 body=json.loads(raw_body); action=body['action']
-                after,result=(legacy_advance if version==2 else advance)(state,action)
+                require(len(canonical(action))<=4096,'action_size')
+                after,result=reducer(state,action)
                 result={**result,'dispatchAllowed':False,'executionVerified':False}
                 expected=event(index,op,action,state,after,result,previous)
                 require(body==expected and digest(body)==body_digest and digest(action)==input_digest and
@@ -186,6 +194,7 @@ def inspect_v2(path, expected_meeting, expected_ledger=None):
             return {**base,'classification':'blocked_unknown' if pending or state['status']=='open' else 'recorded_terminal_only',
                     'ledgerId':ledger,'revision':revision,'state':state,'contractRevision':version,
                     'receiptCoverage':('unknown_legacy' if version==2 else 'recorded_digests_not_response_verification'),
+                    'transcriptCoverage':('recorded_synthetic_only' if version==4 else 'unknown_legacy'),
                     'reason':'no_execution_resume','roleProgress':'recorded_declarations_only'}
-    except (sqlite3.Error,ValueError,TypeError,KeyError,OSError):
+    except (sqlite3.Error,ValueError,TypeError,KeyError,OSError,GroupError):
         return {**base,'classification':'blocked_unverified','reason':'snapshot_not_verified'}
