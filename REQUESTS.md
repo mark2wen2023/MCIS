@@ -650,3 +650,6 @@ Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD
 
 ## Audio review isolated candidate — 2026-11-16
 Parent/user authorized original-audio binding, time-ranged machine draft and append-only human review/replay basics, with synthetic tests only. Contract: `contracts/audio-review-candidate.md`. Separate factory/table/page; no default application, shared EvidencePage, permissions or archive allowance changes. Imports v2 revision-1 drafts, not ASR. Cases containing these rows remain archive-blocked. Image PR69/97 regions untouched. Browser/restricted suites remain paused.
+
+## SenseVoiceSmall audio candidate — 2026-11-16
+Explicit user model change stops faster-whisper work; retained separately, not part of this branch. Extend cf9e78d isolated audio candidate to accept exact PCM frame/rate durations without changing originals. New v3 draft retains raw local SenseVoice output; v2 remains exact-integral-ms only. Changes to previously frozen candidate app/page are authorized here; new freeze supersedes their old hashes only. No shared product entry, permission or archive allowance change. Public sample inference is local; no browser/restricted suites.

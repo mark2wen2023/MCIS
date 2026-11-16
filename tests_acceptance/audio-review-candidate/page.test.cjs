@@ -6,7 +6,7 @@ function setup(){
  const elements={};let calls=[];let response;
  const ctx=vm.createContext({document:{getElementById:id=>elements[id]??(elements[id]=new Element()),createElement:()=>new Element()},window:{addEventListener(){}},URL:{revokeObjectURL(){}},confirm:()=>true,fetch:async(path,options)=>{calls.push({path,options});return response;}});
  vm.runInContext(script,ctx);
- vm.runInContext(`state={caseId:'SYNTHETIC',runId:'AR-fixture',revision:0,initial:{machineDraft:{source:{durationMs:1000},transcript:{segments:[{id:'s1',text:'synthetic',startMs:0,endMs:500}],unlocatedSegments:[{id:'u1',text:'unlocated',reason:'time_unknown'}]}}},humanRevisions:[]};context='SYNTHETIC';el('case').value=context;el('run').value=state.runId;render();`,ctx);
+ vm.runInContext(`state={caseId:'SYNTHETIC',runId:'AR-fixture',revision:0,initial:{audio:{frames:8000,sampleRateHz:8000},machineDraft:{source:{durationMs:1000},transcript:{segments:[{id:'s1',text:'synthetic',startMs:0,endMs:500}],unlocatedSegments:[{id:'u1',text:'unlocated',reason:'time_unknown'}]}}},humanRevisions:[]};context='SYNTHETIC';el('case').value=context;el('run').value=state.runId;render();`,ctx);
  return {ctx,elements,calls,response:r=>response=r,boxes:()=>elements.segments.children};
 }
 test('unknown time cannot play and is not converted to zero',async()=>{const s=setup(),b=s.boxes()[1];assert.equal(b.children[3].value,'');assert.equal(b.children[4].value,'');await b.children[6].onclick();assert.match(s.elements.status.textContent,/时间未知/);assert.equal(s.calls.length,0)});

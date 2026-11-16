@@ -399,3 +399,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTTRACE | 测试增量独审通过 | 2026-11-14：独立无.git副本10过；临时断开taskId触发5红、伪认证flag触发1红，恢复10过；冻结2/2，运行文件无差异。见 DEFECTS/EXPERTTRACE.md。真实模型0/HOLD。 |
 
 | Audio review candidate | 待测 | Isolated PCM source + imported machine draft + append-only per-segment review/replay basics; 13 ordinary service tests and 4 synthetic DOM tests pass on developer side. No ASR/browser/archive acceptance. Freeze: `logs/audio-review-candidate-impl-hashes-frozen.txt`. |
+
+| SenseVoiceSmall audio candidate | 待独验 | v3 exact frame/rate source + retained raw recognizer result + pending human revision; local public sample integration and ordinary synthetic tests only. No product ASR task/browser/archive. Freeze: logs/audio-sensevoice-impl-hashes-frozen.txt. |

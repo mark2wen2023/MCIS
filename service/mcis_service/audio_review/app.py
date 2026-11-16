@@ -8,7 +8,8 @@ from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 from sqlalchemy import Column, Integer, String, JSON, UniqueConstraint, select, text as sql
 from sqlalchemy.orm import DeclarativeBase
-from tools.audio_transcript_contract.machine_contract import validate, inspect as inspect_draft
+from tools.audio_transcript_contract.machine_contract import validate as validate_v2, inspect as inspect_v2
+from tools.audio_transcript_contract.sample_machine_contract import validate as validate_v3, inspect as inspect_v3
 from ..common.context import Ctx, CtxDep, problem
 from ..common.timeutil import iso, now_utc
 from ..db import WRITE_LOCK
@@ -40,15 +41,29 @@ def source(ctx,s,case_id,digest):
     try:
         with wave.open(io.BytesIO(raw),'rb') as w:
             channels,width,rate,frames=w.getnchannels(),w.getsampwidth(),w.getframerate(),w.getnframes()
-            if w.getcomptype()!='NONE' or channels not in (1,2) or width not in (1,2,3,4) or not 8000<=rate<=48000 or not rate<=frames<=rate*60 or frames*1000%rate:
+            if w.getcomptype()!='NONE' or channels not in (1,2) or width not in (1,2,3,4) or not 8000<=rate<=48000 or not rate<=frames<=rate*60:
                 raise ValueError('bounded PCM required')
             if len(w.readframes(frames))!=frames*channels*width:raise ValueError('truncated PCM')
-    except (wave.Error,EOFError,ValueError):raise problem(422,'AUDIO_FORMAT','本候选仅支持1至60秒、整毫秒时长的完整PCM WAV，8000–48000Hz单/双声道')
+    except (wave.Error,EOFError,ValueError):raise problem(422,'AUDIO_FORMAT','本候选仅支持1至60秒的完整PCM WAV，8000–48000Hz单/双声道')
     actual=sha(raw)
     if actual!=r['sourceSha256'] or actual!=r['evidence']['currentSha256']:raise problem(409,'AUDIO_VERSION','实际字节与登记版本不一致')
     state={'caseId':case_id,'evidenceId':r['evidenceId'],'requestDigest':digest,'registeredSha256':r['sourceSha256'],'currentSha256':actual}
     return {'caseId':case_id,'evidenceId':r['evidenceId'],'registeredSha256':r['sourceSha256'],'currentSha256':actual,
-            'stateDigest':sha(canonical(state)),'durationMs':frames*1000//rate,'trackIndex':0}, {'channels':channels,'sampleWidthBytes':width,'sampleRateHz':rate,'frames':frames,'format':'PCM_WAV'}
+            'stateDigest':sha(canonical(state)),'durationMs':(frames*1000+rate-1)//rate,'trackIndex':0}, {'channels':channels,'sampleWidthBytes':width,'sampleRateHz':rate,'frames':frames,'format':'PCM_WAV'}
+
+def sample_source(snapshot, audio):
+    return {**snapshot, 'frameCount':audio['frames'], 'sampleRateHz':audio['sampleRateHz']}
+
+def matched_source(draft, snapshot, audio):
+    if draft['version'] == 3:
+        return draft['source'] == sample_source(snapshot, audio)
+    return audio['frames']*1000 % audio['sampleRateHz'] == 0 and draft['source'] == snapshot
+
+def validate(document):
+    return validate_v3(document) if isinstance(document,dict) and document.get('version') == 3 else validate_v2(document)
+
+def inspect_draft(document):
+    return inspect_v3(document) if document['version'] == 3 else inspect_v2(document)
 
 def rows(s,case_id,run_id):
     result=s.scalars(select(Revision).where(Revision.case_id==case_id,Revision.run_id==run_id).order_by(Revision.revision)).all()
@@ -56,8 +71,8 @@ def rows(s,case_id,run_id):
     return result
 
 def check(ctx,s,case_id,initial):
-    current,_=source(ctx,s,case_id,initial['audioReceipt'])
-    if current!=initial['machineDraft']['source']:raise problem(409,'AUDIO_SOURCE_STALE','原音版本不符，保留原稿，不静默重绑定')
+    current,fmt=source(ctx,s,case_id,initial['audioReceipt'])
+    if not matched_source(initial['machineDraft'],current,fmt):raise problem(409,'AUDIO_SOURCE_STALE','原音版本不符，保留原稿，不静默重绑定')
     _,raw=receipt(ctx,s,case_id,initial['draftReceipt'])
     if sha(raw)!=initial['draftBytesSha256']:raise problem(409,'AUDIO_DRAFT_STALE','机器原稿版本不符')
 
@@ -80,7 +95,7 @@ def source_context(case_id:str,digest:str,ctx:Ctx=CtxDep):
     with WRITE_LOCK,ctx.db.session() as s:
         begin(s);authorize(ctx,s,case_id)
         snap,fmt=source(ctx,s,case_id,digest)
-        return {'source':snap,'audio':fmt,'scope':'registered-byte-binding-only','humanListened':False,'authenticityVerified':False}
+        return {'source':snap if fmt['frames']*1000%fmt['sampleRateHz']==0 else None,'sampleSource':sample_source(snap,fmt),'audio':fmt,'scope':'registered-byte-binding-only','humanListened':False,'authenticityVerified':False}
 
 @router.post('',status_code=201)
 async def attach(case_id:str,request:Request,ctx:Ctx=CtxDep):
@@ -92,8 +107,8 @@ async def attach(case_id:str,request:Request,ctx:Ctx=CtxDep):
         begin(s);authorize(ctx,s,case_id,write=True)
         snap,fmt=source(ctx,s,case_id,b['audioReceipt']);_,raw=receipt(ctx,s,case_id,b['draftReceipt'])
         try:draft=validate(strict(raw))
-        except (ValueError,TypeError,KeyError,UnicodeError,RecursionError):raise problem(422,'AUDIO_MACHINE_DRAFT','不是有效v2机器待核对草稿')
-        if draft['source']!=snap:raise problem(409,'AUDIO_SOURCE_STALE','草稿来源与本次登记字节绑定不一致')
+        except (ValueError,TypeError,KeyError,UnicodeError,RecursionError):raise problem(422,'AUDIO_MACHINE_DRAFT','不是有效v2/v3机器待核对草稿')
+        if not matched_source(draft,snap,fmt):raise problem(409,'AUDIO_SOURCE_STALE','草稿来源与本次登记字节绑定不一致')
         if draft['transcript']['revision']!=1:raise problem(422,'AUDIO_HISTORY_UNSUPPORTED','尚不接收缺少父链的旧版本机器草稿')
         if len(s.scalars(select(Revision.id).where(Revision.case_id==case_id,Revision.revision==0)).all())>=20:raise problem(409,'AUDIO_LIMIT','每案最多20个核对运行')
         run_id='AR-'+uuid4().hex
@@ -132,7 +147,7 @@ async def revise(case_id:str,run_id:str,request:Request,ctx:Ctx=CtxDep):
         transcript=initial['machineDraft']['transcript'];segments=transcript['segments']+transcript['unlocatedSegments']
         if b['segmentId'] not in {r['id'] for r in segments}:raise problem(422,'AUDIO_SEGMENT','片段不存在')
         duration=initial['machineDraft']['source']['durationMs'];start,end=b['startMs'],b['endMs']
-        if not (start is None and end is None) and not (type(start)is int and type(end)is int and 0<=start<end<=duration):raise problem(422,'AUDIO_TIME','保留双空未知，或提供原音范围内的相对毫秒')
+        if not (start is None and end is None) and not (type(start)is int and type(end)is int and 0<=start<end<=duration and end*initial['audio']['sampleRateHz']<=initial['audio']['frames']*1000):raise problem(422,'AUDIO_TIME','保留双空未知，或提供原音范围内的相对毫秒')
         if rs[-1].revision>=1000:raise problem(409,'AUDIO_LIMIT','最多1000次修订')
         n=rs[-1].revision+1
         doc={**b,'revision':n,'timeStatus':'unknown' if start is None else 'operator_declared','speaker':{'status':'unknown','id':None},
