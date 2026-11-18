@@ -1,0 +1,92 @@
+"""REVIEW DRAFT ONLY. Not executed. No CLI; promotion requires separate review.
+This is preparation only, never imports MCIS, opens a database or generates a report.
+Run only in caller-owned non-shared directories after full import/resource review.
+Path checks do not provide adversarial concurrent filesystem race protection.
+"""
+from pathlib import Path, PurePosixPath
+import hashlib
+import json
+import stat
+import subprocess
+
+BASE = '3fed64892327c59902cd6b339d23b1fd2f5f2486'
+CID = 'CASE-SYNTHETIC-REPORT-ISOLATION'
+SAMPLE = b'SYNTHETIC evidence text only; not an accident record.\n'
+
+
+def plain_path(path):
+    path = Path(path).absolute()
+    for part in (path, *path.parents):
+        if part.is_symlink():
+            raise ValueError('symlink path forbidden')
+    return path
+
+
+def prepare(source, destination, allowlist, synthetic_seed):
+    source = plain_path(source)
+    destination = plain_path(destination)
+    if destination.exists() or not destination.parent.is_dir():
+        raise ValueError('require absent destination in existing controlled parent')
+    if destination == source or source in destination.parents or destination in source.parents:
+        raise ValueError('source and destination must be disjoint')
+    actual = subprocess.check_output(['git', '-C', str(source), 'rev-parse', 'HEAD'], text=True).strip()
+    if actual != BASE:
+        raise ValueError('wrong source checkout')
+    entries = []
+    seen = set()
+    for line in plain_path(allowlist).read_text().splitlines():
+        digest, name = line.split('\t')
+        rel = PurePosixPath(name)
+        if rel.is_absolute() or '..' in rel.parts or name in seen:
+            raise ValueError('invalid or duplicate member')
+        if not (len(digest) == 64 and all(c in '0123456789abcdef' for c in digest)):
+            raise ValueError('invalid digest')
+        # This shape check does not add members: only exact reviewed TSV entries copy.
+        if not ((name.startswith('service/mcis_service/') and name.endswith('.py')
+                 and rel.name not in ('build_seed.py', '__main__.py'))
+                or (name.startswith('contracts/schemas/') and name.endswith('.schema.json'))):
+            raise ValueError('unexpected member class')
+        p = plain_path(source / name)
+        if not stat.S_ISREG(p.stat().st_mode):
+            raise ValueError('nonregular source')
+        raw = p.read_bytes()
+        if hashlib.sha256(raw).hexdigest() != digest:
+            raise ValueError('source changed')
+        seen.add(name)
+        entries.append((name, raw))
+    if not entries:
+        raise ValueError('empty inventory')
+    seed = plain_path(synthetic_seed).read_bytes()
+    expected = {'cases': [{'caseId': CID, 'isFictionalDemo': True,
+                          'sourceRefs': [], 'whatif': {'rows': []}}]}
+    if json.loads(seed) != expected:
+        raise ValueError('seed must match exact synthetic structure')
+    # Validate everything before creating the destination; no cleanup/retry on failure.
+    destination.mkdir(mode=0o700)
+    for name, raw in entries:
+        target = destination / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        with target.open('xb') as out:
+            out.write(raw)
+    data = destination / 'service/mcis_service/analysis/data'
+    data.mkdir(parents=True, exist_ok=True)
+    digest = hashlib.sha256(seed).hexdigest()
+    for name, raw in [('w12-analysis-seed.json', seed),
+                      ('w12-analysis-seed.sha256', (digest+'  w12-analysis-seed.json\n').encode())]:
+        with (data/name).open('xb') as out:
+            out.write(raw)
+    fixtures = destination / 'synthetic-fixtures'
+    fixtures.mkdir()
+    with (fixtures/'source.txt').open('xb') as out:
+        out.write(SAMPLE)
+    record = {'sourceCommit': BASE, 'caseId': CID, 'seedSha256': digest,
+              'sampleSha256': hashlib.sha256(SAMPLE).hexdigest(),
+              'sourceMembers': [name for name, _ in entries],
+              'reviewOnly': True, 'generationApproved': False}
+    with (destination/'preparation.json').open('x') as out:
+        json.dump(record, out, indent=2)
+    return record
+
+
+if __name__ == '__main__':
+    raise SystemExit('REVIEW HOLD: not approved for execution; no files copied')

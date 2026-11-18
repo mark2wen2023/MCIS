@@ -1,0 +1,57 @@
+"""REVIEW DRAFT: future fresh-process preflight only; no app creation or requests.
+Must be promoted only after import-side-effect/resource review, not in this task.
+Use existing trusted interpreter with -I -S; dependency roots need separate review.
+A reviewed bootstrap must add only approved third-party paths before calling inspect.
+This draft itself adds COPY/service, never the source checkout.
+"""
+from pathlib import Path
+import hashlib
+import json
+import sys
+
+CID = 'CASE-SYNTHETIC-REPORT-ISOLATION'
+
+
+def inspect(copy_root):
+    root = Path(copy_root).absolute()
+    def inside(path):
+        p = Path(path).absolute()
+        assert not any(q.is_symlink() for q in (p, *p.parents))
+        assert p.resolve().is_relative_to(root.resolve())
+        return p.resolve()
+    inside(root)
+    assert not any(n == 'mcis_service' or n.startswith('mcis_service.') for n in sys.modules)
+    sys.path.insert(0, str(inside(root/'service')))
+    import mcis_service
+    from mcis_service import config
+    from mcis_service.common import contracts
+    from mcis_service.analysis import router
+    from mcis_service.reports import sources
+    from mcis_service.main import create_app  # import only; no database/schema creation
+    for name, module in tuple(sys.modules.items()):
+        if name == 'mcis_service' or name.startswith('mcis_service.'):
+            assert getattr(module, '__file__', None), name
+            inside(module.__file__)
+    assert config.PROJECT_ROOT.resolve() == root.resolve()
+    assert contracts.SCHEMA_DIR.resolve() == inside(root/'contracts/schemas')
+    expected_seed = inside(root/'service/mcis_service/analysis/data/w12-analysis-seed.json')
+    expected_side = inside(expected_seed.with_suffix('.sha256'))
+    assert router.load_seed.__defaults__ == (expected_seed, expected_side)
+    assert sources.load_seed is router.load_seed
+    manifest = json.loads((root/'preparation.json').read_text())
+    raw = expected_seed.read_bytes()
+    digest = hashlib.sha256(raw).hexdigest()
+    assert digest == manifest['seedSha256'] == expected_side.read_text().split()[0]
+    # Call the REAL loader directly, outside _whatif's exception-catching path.
+    seed, loaded_digest = router.load_seed()
+    assert loaded_digest == digest
+    assert seed == {'cases': [{'caseId': CID, 'isFictionalDemo': True,
+                             'sourceRefs': [], 'whatif': {'rows': []}}]}
+    sample = inside(root/'synthetic-fixtures/source.txt').read_bytes()
+    assert sample == b'SYNTHETIC evidence text only; not an accident record.\n'
+    assert hashlib.sha256(sample).hexdigest() == manifest['sampleSha256']
+    return {'seedSha256': digest, 'uniqueCase': CID, 'generationExecuted': False}
+
+
+if __name__ == '__main__':
+    raise SystemExit('REVIEW HOLD: not approved for execution; no imports performed')
