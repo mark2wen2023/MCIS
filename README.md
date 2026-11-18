@@ -1,5 +1,7 @@
 # MCIS · 海事事故调查仿真系统
 
+> **本分支为待验候选，不是主线或生产版本。** 同事请先读 [UI + PR104 固定版本合成交接](docs/handoffs/ui-pr104-synthetic-review.md)：固定 `f7f4070bbc31756930662b29ad58d96c5680efd9`，仅允许限定合成复验，禁止真实数据、模型、合并及部署。下方通用快速开始不是本候选验收流程。
+
 Mark Wen（WMU）硕士论文项目，依据论文《Design and application research of maritime casualty investigation simulation based on Unity 3D》。目标是做一套完整、接近游戏体验、高端 UI 的海事事故调查仿真系统：Unity 6 + URP 三维回放与推演（Cesium、Dynamic Water 2、Enviro 3、AIS/VDR），加调查工作台（证据、询问比对、COLREG、分析、What-if、系统分析、人为因素、报告）。原型里的每个 UI 功能都要实现。正式产品定位为内网联机版，另有离线单机现场版，同一代码库。
 
 > **接手开发请先读 [docs/HANDOFF-STAGE1.md](docs/HANDOFF-STAGE1.md)**（阶段性交接），再读 [AGENTS.md](AGENTS.md) 和 [ROADMAP.md](ROADMAP.md)。
