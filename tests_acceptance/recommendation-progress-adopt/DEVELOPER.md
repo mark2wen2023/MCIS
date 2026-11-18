@@ -38,3 +38,35 @@ Reviewed exact commands from web, existing dependencies:
 No browser/visual, real HTTP/backend, permissions/denial tests, real data/seeds, models,
 HFACS, paused nodes or write-refusal probes. Existing backend checks unchanged.
 Independent review pending. No merge/deploy.
+
+## Follow-up: isolate source comparison from read-failure gating (2026-11-18)
+
+Base7702e62aca3f30a209bb01d76161bc369181af9d; test-only branch
+ test/recommendation-adopt-source-guard. No product code changed.
+Independent review correctly found that previous source50→source60 test updated parent
+props but did not render Detail before invoking old adoption. The latestProgress ref
+could still contain readReady=false from the previous failure render. That pass did
+not specifically establish that source comparison blocked the callback.
+
+The test now renders Detail at ready/source60 FIRST, asserts readReady=true, current
+percentage60, and a non-disabled current adoption button, then invokes source50's old
+adoption callback. Original draft percentage and exact note remain, with zero requests.
+For edited mode it also captures an originally enabled save at source25/draft35,
+then invokes that old save after ready/source60 Detail render; dispatch remains zero.
+Thus the old-save check is not an already-disabled equal-value or sourceChanged closure.
+Normal current adoption/save remains covered by the note-only path.
+
+Reviewed commands from web:
+- node tests/recommendation-progress-snapshot.test.cjs: strengthened5 passed;
+  rerun after adding old-save assertion, still5 (not extra additive cases).
+- node tests/recommendation-progress-flight.test.cjs: adjacent7 passed.
+- npm run build: TypeScript/Vite passed,768 modules,JS1867.00kB/gzip603.34kB,
+  existing chunk warning. Build preceded final test-only old-save assertion; product
+  unchanged throughout this follow-up.
+
+Not covered: source A→B→A with identical observed fields, or reload invocation to
+Detail rerender window. These are not closed by this evidence. No server version
+control, multi-user consistency, browser scheduling/visual or real HTTP claim.
+No backend/security/refusal/paused tests, model, seed/case reads or real data.
+Independent review pending; no merge/deploy. Follow-up freeze:
+logs/recommendation-adopt-source-guard-test-hashes-frozen.txt.

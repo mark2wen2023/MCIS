@@ -28,6 +28,8 @@ async function scenario(mode){
  if(mode!=='clean')note().props.onChange({target:{value:'synthetic unsaved note'}})
  if(['edited','unknown','sending'].includes(mode))range().props.onChange({target:{value:'35'}})
  let pending
+ const oldSave=save().props.onClick
+ if(mode==='edited')assert.equal(save().props.disabled,false,'source25/edited35 save originally eligible')
  if(mode==='sending')pending=save().props.onClick()
  if(mode==='unknown'){pending=save().props.onClick();reject(new Error('synthetic transport failure'));await pending}
  // Reload pending / ordinary read failure retains exact old props. Same mounted Detail.
@@ -51,7 +53,18 @@ async function scenario(mode){
  }else if(mode!=='clean'){
   const staleAdopt=adopt().props.onClick
   for(const state of ['loading','failure']){readState=state;updateFromParent();assert.equal(adopt().props.disabled,true);adopt().props.onClick();assert.equal(range().props.value,mode==='note'?25:35)}
-  boardRec={...boardRec,progressPct:60};readState='ready';updateFromParent();staleAdopt();assert.equal(range().props.value,mode==='note'?25:35,'old snapshot callback must not adopt')
+  boardRec={...boardRec,progressPct:60};readState='ready';updateFromParent()
+  const readyTree=render() // Commit latestProgress from ready/source60 before invoking source50.
+  assert.equal(detail.props.readReady,true,'read failure gate is no longer active')
+  assert.equal(detail.props.rec.progressPct,60)
+  const readyAdopt=nodes(readyTree).find(n=>n.type==='button'&&n.props.children==='采用当前已读取进度，保留说明')
+  assert.equal(readyAdopt.props.disabled,false,'current source60 adoption is enabled')
+  assert.notEqual(readyAdopt.props.onClick,staleAdopt)
+  if(mode==='edited'){await oldSave();assert.equal(sent.length,0,'eligible source25 save cannot dispatch after ready/source60 render')}
+  staleAdopt()
+  assert.equal(range().props.value,mode==='note'?25:35,'source50 callback must not adopt after ready/source60 Detail render')
+  assert.equal(note().props.value,'synthetic unsaved note')
+  assert.equal(sent.length,0,'stale adoption sends no request')
   if(mode==='edited'){
    const late=adopt().props.onClick;for(const f of cleanups)f();late();assert.equal(range().props.value,35,'unmounted session cannot adopt')
   }else{

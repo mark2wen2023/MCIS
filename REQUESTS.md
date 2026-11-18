@@ -870,3 +870,6 @@ Reproduced hidden unknown notice after same-ID non-Responded snapshot using exac
 
 ## Explicit observed progress adoption (2026-11-18)
 Reproduced note-only old percentage dispatch after new snapshot. Block known-source-change save; explicitly adopt current observed percentage while retaining note, without request. Loading/error/pending/unknown do not adopt/unlock. Same-percentage note cannot save alone. Selected synthetic5/7/10/5 and build passed; local UI guard only. See tests_acceptance/recommendation-progress-adopt/DEVELOPER.md.
+
+## Progress source-guard test attribution (2026-11-18)
+Test-only correction: render ready/source60 Detail and verify current adoption enabled before invoking old source50 adoption; also verify previously eligible source25 save dispatches nothing. Strengthened5+adjacent7/build passed, product unchanged. A→B→A and reload-before-rerender remain unverified. See adoption DEVELOPER follow-up.
