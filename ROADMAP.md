@@ -518,3 +518,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | source-declaration aggregate identity | 待测 | One interview/snapshot; 7 new pure groups and existing 13 separately pass development; no application wiring | logs/source-declaration-aggregate-impl-hashes-frozen.txt |
 
 | source-declaration display | 待测 | 9 development synthetic rendering groups pass; browser unverified; no wiring | logs/source-declaration-display-impl-hashes-frozen.txt |
+
+| declaration display aggregate copy | 待测 | 10 synthetic development groups; browser unverified | logs/source-display-aggregate-copy-frozen.txt |

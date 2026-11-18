@@ -18,4 +18,5 @@ let groups=0;
  mountPrototype(root);const [select,out]=root.children;assert.ok(out.innerHTML.includes('整体：声明一致'));
  select.value='同案不同笔录';select.change();assert.ok(out.innerHTML.includes('INTERVIEW-B'));assert.ok(out.innerHTML.includes('interview_record_mismatch'));
  select.value='多角色一致';select.change();assert.ok(!out.innerHTML.includes('INTERVIEW-B'));assert.ok(!out.innerHTML.includes('interview_record_mismatch'));assert.ok(out.innerHTML.includes('整体：声明一致'));groups++}
+{const html=selectScenario('ID及摘要多错');assert.ok(html.includes('无额外聚合问题；请查看各声明项问题。'));assert.ok(html.includes('id_mismatch'));assert.ok(html.includes('digest_mismatch'));assert.ok(!html.includes('<p>无报告问题；'));groups++}
 console.log(`PASS ${groups} synthetic display groups; string rendering / DOM stand-in only`);

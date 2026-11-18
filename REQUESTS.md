@@ -813,3 +813,5 @@ Authorized pure research implementation of 06a7e8b design, fixed candidate revis
 - Authorized isolated source-comparison correction: aggregate is one interview declaration snapshot; amend frozen compare.mjs without application wiring; preserve pair diagnostics and unavailable payload boundary.
 
 - Authorized standalone synthetic declaration display; fixed pairing and conservative skipped rows, no application/API/association integration. Comparator 2e95936 unchanged.
+
+- Authorized display copy correction distinguishes empty aggregate issues from pair errors; comparator unchanged.
