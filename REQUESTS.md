@@ -975,3 +975,6 @@ claims. No product route/permission/migration/publisher changes.
 
 ## Health handler extraction
 Authorized minimal extraction only; same GET /api/v1/health and response, no configuration or factory change. Isolated source execution and main AST checks; no HTTP or startup acceptance.
+
+## Review-only health factory
+Authorized isolated factory reuses health; only GET /api/v1/health and docs disabled. No CLI/config/main change, no real FastAPI construction or HTTP. Three synthetic collector/AST checks passed.

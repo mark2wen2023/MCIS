@@ -489,3 +489,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | source policy Settings order | 待测 | synthetic constructor and AST checks pass; no app imports, seed default remains True | logs/source-policy-settings-order-frozen.txt |
 
 | Health handler extraction | 待独验 | Three selected isolated function/AST checks passed; no HTTP or service startup. logs/health-handler-extraction-frozen.txt |
+
+| Health-only factory | 待独验/启动暂停 | Three handmade collector/AST checks passed; actual framework/HTTP and dependency closure unverified. logs/health-only-factory-frozen.txt |
