@@ -1,0 +1,50 @@
+# Restore-to-business entry gates: static inventory
+
+2026-11-18. Inspected parent `aee63aeeee644a3107e054e870f8531ed11fda57` on research/restore-normal-case-registration. **Read-only source review, no endpoint calls/tests/recovery/model execution.** This is a bounded entry inventory, not an exhaustive security audit or implementation. All module paths below are relative to service/mcis_service/ unless marked research.
+
+## Finding and trust boundary
+
+A source search for `readiness_gate`, `migration_protocol`, `scoped_call` within service/mcis_service returned no matches. main.py:create_app (49-103) registers ordinary routers and initializes/seeds the DB but adds no research restoration-readiness middleware. Existing authorization, source-integrity checks and WRITE_LOCK are NOT a common restoration state check.
+
+common/context.py:get_ctx reads role/operator from headers, defaults role to Investigator, and validates the role vocabulary; its docstring explicitly says identity is unauthenticated. Thus current policy enforcement must be preserved but cannot be described as trusted production identity. redaction/gateway.py:require (29-36) checks category permission, not restore operation/readiness. Cases existence checks also do not establish readiness.
+
+## Confirmed entry families
+
+| Entry / identity resolution | Existing checks and behavior (code anchors) | Restore-readiness coverage / required review point |
+|---|---|---|
+| GET cases list and GET case/overview; URL case ID | cases/service.py:load_case (13-17) gets CaseRow; list_cases (20-21) queries all cases. cases/router.py:get_case, overview use those services | No readiness. List needs a coherent per-case classification, not just a load_case patch; unknown handling must not masquerade as empty/complete list. |
+| Case creation; body case ID | cases/router.py:create_case validates contract, role and duplicate, writes CaseRow and audit | No durable protocol identity binding. Existing normal-case compatibility and research normal registration must be reconciled before gating. |
+| Metadata GET/PATCH | case_metadata/router.py:readable/get_metadata/update_metadata checks existence, ais_sim policy, writer role and revision; update writes case+audit | No readiness; same transaction must cover proposed state and existing write checks, without treating readiness as permission. |
+| Evidence list/register/get/patch/custody/access/verify/content; URL case and evidence IDs | evidence/router.py:list_evidence/register_evidence call load_case; get_evidence/patch_evidence/get_custody and get_content use direct evidence services with category checks. Access/content can append custody. Anchors 48-177 | No common readiness. Direct evidence paths bypass case loader. Downloads/read-side audit writes need gating too; unchanged permission rules remain mandatory. No verify endpoint was invoked here. |
+| Supplied-file evidence preview/commit/receipt/download; URL case, digest/evidence ID | evidence_intake/router.py:authorize, commit_input, load_receipt, receipt_evidence, download. Commit rechecks authorization in session, binds input digest and writes registered bytes/custody | No readiness. Receipt-derived identity and final commit must be classified, not only initial preview. |
+| Archived original content/provenance | working_records_archive/router.py:content (20-34), provenance; full-content/source checks, historical registry/path/digest comparison; content appends custody Access | No readiness. A valid archived source relation does not imply entire restored case is ready. |
+| Case export and legacy import | package/router.py:export/import_package; export WRITE_LOCK+BEGIN IMMEDIATE, mcase.export_case checks supported state/policy; import resolves case ID from package | No readiness. Preserve all unsupported-state refusals. Import target reservation is distinct from existing-case read access; do not reject legitimate creation merely because no case exists yet. |
+| Strict package preview/commit/receipt | package_intake/router.py:commit_sync and receipt (93 onward); digest resolves IntakeReceipt case, checks retained original ZIP and access; commit stages, writes receipt and publishes | No unified hold gate. Gate digest-derived case after resolution; pending result must not become ordinary replay success. Parsing a HFACS package can call core validation; this review executed none. |
+| Reports create/read/review/audit/snapshot/export | reports/router.py:check_access and listed route functions; existing case/content/availability rules; service mutations/audit, exporter returns bytes | No readiness. “available” in report checks is not research publication readiness. Both reads and audit-producing exports require classification. |
+| Output container preview/generate | report_output/router.py:gate/snapshot, generate (218 onward). Snapshot under lock, renderer outside session, final recheck under lock | No readiness. If added, state/version must be rechecked after rendering, immediately before audit/output release; initial check is insufficient. |
+| Agent draft/apply/extract | agents/router.py:review/_apply; extract_interview (207 onward) opens multiple sessions around extraction, rechecks source/access, writes drafts and failure audit | No readiness. It is request-driven computation, not evidence of an autonomous scheduled worker. Final success AND failure/audit writes need a defined pending-case policy. No extraction/model was run. |
+| Initialization/non-request writes | main.py:create_app (50-59) creates schema and optionally calls seed functions; db.py:session commits caller writes | No readiness or request context at this layer. Migration/seed ownership and legitimate normal-case treatment must be specified; do not globally block old normal DBs. |
+
+Additional registered families from main.py: timeline, interviews/manual interviews, recommendations, colreg, audit, redaction/access workbench, sim, track-history/import, environment, knowledge/archive, analysis/interview comparison and human-factors/bowtie/nomoto/HFACS preview/drafts. Global source search establishes no direct research gate imports, but individual transitive calls, all source/file accesses and final writes in these families were NOT exhaustively reviewed here. They are required inventory work before universal gating can be claimed. Health/glossary/template-only responses without case content should not be indiscriminately blocked; case-specific template variants need identity review.
+
+## Deferred/background write distinction
+
+Source search for Thread/BackgroundTasks/executor/create_task/subprocess in this tree found synchronous subprocess clients in preview/analysis modules, not proof of a registered autonomous worker scheduler. timeline/align_preview.py explicitly closes a session before CPU/subprocess work; report_output.generate and agents.extract_interview split work across transactions. This creates re-entry points even without a background queue. Repository-wide absence of workers is NOT proven. Separate image/audio/Pi candidate apps are outside this tree and need their own task owner, final-write, cancellation and audit inventory before integration. No runtime process was started.
+
+## Research gate versus proposed integration
+
+research/conflict_source_intent/readiness_gate.py:scoped_call/load_case/list_cases and migration_protocol.py:classify are isolated wrappers. They preserve ordinary policy routing for classified normal cases, hold restore claims and do not promote ready. They are not used by the product routers above. A load_case-only replacement would miss direct row lookup, list, digest/body identity, and transaction re-entry paths.
+
+Minimum integration work after design approval:
+
+1. Freeze this entry matrix per actual application factory; expand remaining registered families, special resolvers and background workers. Record case identity origin, transaction boundary, files and writes per handler.
+2. Define one trusted state resolver with externally retained DB identity, migration/normal-case compatibility and held-operation binding; keep authorization separate. No current header becomes trusted through this resolver.
+3. Apply classification inside the same business transaction, then existing permissions; wherever work leaves the transaction, revalidate state and versions before returning bytes or committing any success/failure audit. Define ordering so no inaccessible content is disclosed through state errors.
+4. Define separately list consistency, new-case reservation and digest receipt reconciliation. Do not silently hide unknown entries, turn a pending receipt into success or reactivate historical receipts.
+5. Before ready publication, demonstrate exclusion through final verification/ready and handoff to all ordinary writers as required by archive-publication-restart-plan.md. No middleware-only or UI-only shortcut proves this.
+
+These are unimplemented prerequisites, not permission to change policies or enable experimental restore. Missing uniform gating blocks a safe ready transition; it is not a demonstrated remote exploit or reproduced data loss. No crash, unknown-commit or identity guarantees established.
+
+## Delivery scope
+
+Only this document; source reads and diff/whitespace checks. No service calls, tests, HFACS, permission/refusal probes, real data, credentials, databases or media. No product logic or safety setting changed. No merge/deployment. Independent review pending.
