@@ -1,0 +1,7 @@
+# Validate render containers before accepting response
+Base: df2617366d7abb44807a320089d7ba992bf9afd0.
+Eleven individually reviewed ordinary synthetic nodes: image source/line/history containers and audio transcript/segment/history containers, plus normal rereads. Baseline 9 assertion failures / 2 passed: malformed response replaced state before renderer threw. Final 11 passed; state and previous editor remain intact.
+`node --test tests_acceptance/media-render-response/image.test.cjs tests_acceptance/media-render-response/audio.test.cjs`
+Adjacent `node --test tests_acceptance/media-created-run-contract/image.test.cjs tests_acceptance/media-created-run-contract/audio.test.cjs tests_acceptance/image-save-context/page.test.cjs tests_acceptance/audio-save-context/page.test.cjs`: 20 passed.
+Actual FastAPI/page-JS normal workflow rerun after this code change using the exact two nodeids and interpreter in ../media-fastapi-page-contract/DEVELOPER-VERIFICATION.md: **2 passed, 1 existing Starlette httpx warning in 3.05s**. This uses real ASGI/temporary SQLite API responses, synthetic DOM; no TCP/browser/model.
+Only render-required container shapes and non-null object entries validated; not complete field/semantic/source integrity validation or a transactional DOM renderer. Does not prove all malformed responses safe, nor indicate a real backend fault. Developer-only, independent pending; no paused/security/write-refusal probes, real data, permission/archive changes. No schema or production behavior outside these frontend checks changed.

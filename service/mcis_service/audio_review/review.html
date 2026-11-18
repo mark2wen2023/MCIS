@@ -20,7 +20,8 @@ async function json(path,body){const r=await fetch(path,{method:body?'POST':'GET
 async function action(fn){if(busy)return;busy=true;try{await fn();}catch(e){el('status').textContent=e.message+'；输入保留，不自动重试。';}finally{busy=false;}}
 function active(){if(!state||context!==el('case').value||state.runId!==el('run').value)throw Error('案件或运行已变化，请先读取；原输入尚未保存');}
 function canReplace(){return !dirty||confirm('未保存输入仅在页面内存，继续读取将丢失。继续？');}
-function checked(d,c){if(d?.caseId!==c||typeof d.runId!=='string'||!Number.isInteger(d.revision)||!Array.isArray(d.humanRevisions)||!d.initial?.machineDraft)throw Error('响应不能确认');return d;}
+function isRecord(v){return v!==null&&typeof v==='object'&&!Array.isArray(v);}
+function checked(d,c){const t=d?.initial?.machineDraft?.transcript;if(d?.caseId!==c||typeof d.runId!=='string'||!Number.isInteger(d.revision)||!Array.isArray(d.humanRevisions)||!d.humanRevisions.every(isRecord)||!isRecord(t)||!Array.isArray(t.segments)||!Array.isArray(t.unlocatedSegments)||!t.segments.every(isRecord)||!t.unlocatedSegments.every(isRecord))throw Error('响应不能确认，请保留输入并核查');return d;}
 
 let taskBusy=false,taskResult=null;
 function taskResponseGuard(){const c=el('case').value,r=el('run').value,id=el('task-id').value,selection=selectionVersion,edit=editVersion,form=attachFormVersion,taskForm=taskFormVersion,message=++taskMessageVersion;return ()=>c===el('case').value&&r===el('run').value&&id===el('task-id').value&&selection===selectionVersion&&edit===editVersion&&form===attachFormVersion&&taskForm===taskFormVersion&&message===taskMessageVersion;}

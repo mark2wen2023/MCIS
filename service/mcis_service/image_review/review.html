@@ -22,7 +22,8 @@ window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.return
 function reset(){if(dirty&&!confirm('未保存文字只在当前页面，切换会丢失。继续？'))return false;return true;}
 function base(c){return '/api/v1/cases/'+encodeURIComponent(c);}
 async function json(url,body){const r=await fetch(url,{method:body?'POST':'GET',headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined,cache:'no-store'});const d=await r.json();if(!r.ok)throw Error(d.message||'请求未成功');return d;}
-function valid(d,c){if(!d||d.caseId!==c||typeof d.runId!=='string'||!Number.isInteger(d.revision)||!Array.isArray(d.reviews)||!d.initial?.candidate?.text_lines)throw Error('响应无法确认，请保留输入并核查结果');return d;}
+function isRecord(v){return v!==null&&typeof v==='object'&&!Array.isArray(v);}
+function valid(d,c){const candidate=d?.initial?.candidate;if(!d||d.caseId!==c||typeof d.runId!=='string'||!Number.isInteger(d.revision)||!Array.isArray(d.reviews)||!d.reviews.every(isRecord)||!isRecord(candidate?.source)||!Array.isArray(candidate?.text_lines)||!candidate.text_lines.every(isRecord))throw Error('响应无法确认，请保留输入并核查结果');return d;}
 async function action(fn){if(busy)return;busy=true;try{await fn();}catch(e){el('status').textContent=e.message+'；不自动重试，未保存输入保留。';}finally{busy=false;}}
 function showTask(d,c,id){if(el('case').value!==c||el('task').value!==id)return;if(d?.caseId!==c||d?.taskId!==id||!['running_or_unknown','interrupted_unknown','failed','succeeded'].includes(d.status))throw Error('任务响应未知，保留任务号查询');el('task-status').textContent=JSON.stringify(d,null,2);if(d.status==='succeeded'&&typeof d.runId==='string'){selectionVersion++;preview.clear();el('run').value=d.runId;el('status').textContent='任务完成，点击读取进入人工核对；不是事实确认。';}}
 el('new-task').onclick=()=>{if(busy)return;taskSelectionVersion++;el('task').value=crypto.randomUUID().replaceAll('-','');};

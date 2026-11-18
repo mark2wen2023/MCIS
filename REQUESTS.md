@@ -777,3 +777,5 @@ Synthetic red1 reproduced new input lost on late load render. Track edits and se
 - Clear stale list/task/source summary caches on changed selection without clearing drafts; 5 new + 22 adjacent developer synthetic passed. See tests_acceptance/media-stale-summary/DEVELOPER-VERIFICATION.md.
 
 - List/source late errors now use success context guards; 8 new + 15 adjacent developer synthetic checks passed. See tests_acceptance/media-list-errors/DEVELOPER-VERIFICATION.md.
+
+- Validate media render containers before state replacement: 11 new + 20 adjacent synthetic checks and 2 real ASGI/page-JS normal workflows passed (developer; DOM double). See tests_acceptance/media-render-response/DEVELOPER-VERIFICATION.md.
