@@ -18,10 +18,15 @@ export function ReportPage() {
   const [revision, setRevision] = useState(0)
   const contextKey = JSON.stringify([params.get('case'),params.get('report'),params.get('reportId'),params.get('template'),params.get('lang'),identity])
   const selection = useRef<{ contextKey: string; value?: ReportSelection }>({ contextKey })
-  if (selection.current.contextKey !== contextKey) selection.current = { contextKey }
+  const initialSelection = selection.current.contextKey === contextKey ? selection.current.value : undefined
   const key = JSON.stringify([contextKey, revision])
-  const active = useRef(key); active.current = key
-  return <ReportSession key={key} identity={identity} isActive={() => active.current === key && identity === JSON.stringify([getRole(),getOperator()])} initialSelection={selection.current.value} refresh={(value) => {
+  const active = useRef<string | null>(null)
+  useLayoutEffect(() => {
+    active.current = key
+    if (selection.current.contextKey !== contextKey) selection.current = { contextKey }
+    return () => { if (active.current === key) active.current = null }
+  }, [key, contextKey])
+  return <ReportSession key={key} identity={identity} isActive={() => active.current === key && identity === JSON.stringify([getRole(),getOperator()])} initialSelection={initialSelection} refresh={(value) => {
     if (active.current !== key || identity !== JSON.stringify([getRole(),getOperator()])) return
     selection.current = { contextKey, value }; setRevision(v => v + 1)
   }} />

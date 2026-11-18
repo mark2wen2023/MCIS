@@ -10,7 +10,6 @@ export function useLoad<T>(loader: () => Promise<T>) {
   const generation = useRef(0)
   const alive = useRef(true)
   const identity = useRef(JSON.stringify([getRole(), getOperator()]))
-  const source = useRef(loader); source.current = loader
   const current = () => alive.current && identity.current === JSON.stringify([getRole(), getOperator()])
   useLayoutEffect(() => { alive.current = true; return () => { alive.current = false; generation.current++ } }, [])
   const reload = () => {
@@ -23,7 +22,7 @@ export function useLoad<T>(loader: () => Promise<T>) {
     const valid = () => active && current() && version === generation.current
     void (async () => {
       try {
-        const result = await source.current()
+        const result = await loader()
         if (valid()) { setData(result); setError(null); setLoading(false) }
       } catch (e) {
         if (valid()) {

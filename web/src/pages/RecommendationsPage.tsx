@@ -235,7 +235,9 @@ function Detail(props: { readCurrent: () => boolean; readReady: boolean; caseId:
   const [progressState, setProgressState] = useState<'idle' | 'sending' | 'unknown'>('idle')
   const [progressNotice, setProgressNotice] = useState('')
   const latestProgress = useRef({ source: progressSource, ready: props.readReady, status: rec.status })
-  latestProgress.current = { source: progressSource, ready: props.readReady, status: rec.status }
+  useLayoutEffect(() => {
+    latestProgress.current = { source: progressSource, ready: props.readReady, status: rec.status }
+  }, [progressSource, props.readReady, rec.status])
   const observedCurrent = () => current() && props.readCurrent() && latestProgress.current.ready &&
     latestProgress.current.source === progressSource && latestProgress.current.status === 'Responded'
   const adoptProgress = () => {

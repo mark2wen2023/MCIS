@@ -541,3 +541,5 @@ Combined exact 139f188 and b4df823; only document append conflicts, both preserv
 
 | 2026-11-18 | Progress source-guard attribution | 待独验 | Test-only on7702e62; ready/source60 rendered before stale callbacks; strengthened5/adjacent7/build; no server CAS claim |
 | 2026-11-18 | ui-review-series | 仅代码审查 / 待独审 | 被测661d73f双父13d7311/23d347a，排除be1c887；70来源文件匹配，文档原文与新增完整保留；限定前端/SSR/TS/Vite开发通过。render写ref及ABA仍未解决，非生产/浏览器/HTTP。冻结 logs/ui-review-series-impl-hashes-frozen.txt |
+
+| UI commit-phase refs | 待测 | 3 new synthetic groups, adjacent read lifecycle, TS/Vite pass; real React/browser unverified | logs/ui-commit-phase-frozen.txt |
