@@ -482,3 +482,21 @@ Combined 0a6d0bd and 16f159b on main 94d5e38; functional regions combined withou
 ## Three UI groups — pending combined acceptance
 
 Combined 076eec1 / 2064675 / 81a308c on 94d5e38, preserving all group document appends and exact source blobs. Developer 19 selected synthetic scripts plus build passed. Not integrated with PR104; browser/visual/backend/production permissions unverified. Evidence: tests_acceptance/ui-three-groups/DEVELOPER.md; freeze: logs/ui-three-groups-impl-hashes-frozen.txt. Do not merge or deploy.
+| Ordinary report functional test principals | 待独审 | 2026-11-15：main94d5e38 独立测试修复；普通两文件58败9过→69过，原权限回归80过；新增默认Investigator拒绝/零写断言，生产权限不改。HFACS缺依赖单列未跑，不含受限历史完整性复验。冻结 logs/report-functional-test-policy-impl-hashes-frozen.txt。 |
+
+| 共享轨迹输入契约 v1 前置 | 待测 / 待独立验收 | 2026-11-15：新增独立JSON契约与离线语义校验，保留来源/校时/缺失/艏向航迹向/示意比例；45构造测试+70既有W10.2回归通过。不改现有接口/权限，不是二维/Unity适配或三维实现。冻结 logs/shared-trajectory-v1-impl-hashes-frozen.txt。 |
+| CSV preview source numbering | 待独审 | 2026-11-15：main94d5e38独立修复移除后新增编号冲突；保留源声明/文本/映射、四源限制及人工确认。新增回归/原W4.1 32项/构建过；无真实浏览器/核心/AI验收。冻结 logs/csv-preview-source-numbering-impl-hashes-frozen.txt；功能区域不与PR97/79/69重叠。 |
+| Report registered cause-label snapshot | 待测 | no inferred links or archive enablement; logs/report-cause-provenance-impl-hashes-frozen.txt |
+| Report registered cause-label snapshot | 局部独审通过 | focused5pass; expanded95pass2baselinefail; clean-main2fail reproduced; independent17pass; tests_acceptance/report-cause-provenance/REPORT.md |
+| PDF font-test identity on main94d5e38 | 待测 | exact e91e4cf test delta on complete latest main; logs/pdf-font-policy-main-94-frozen.txt; independent current-candidate review pending |
+
+| REPORTSENTENCESOURCESTATUS | 待测 | 单句modify来源状态与Investigator一致，保留原文/引用/历史；91开发回归过含5新增；旧存储不迁移，浏览器/独立未验，PDF仅原候选4页开发抽查 | logs/REPORTSENTENCESOURCESTATUS-impl-hashes-frozen.txt |
+
+| REPORTINHERITEDCITATION | 待测 | db928a2上呈现继承引用限制，99后端回归、182 SSR断言及构建为开发侧通过；不改原文/引用/历史/权限，真实浏览器及视觉/独立未验。冻结 logs/REPORTINHERITEDCITATION-impl-hashes-frozen.txt |
+
+| REPORTPUBLICPDFLAYOUT | 待独审 | bbafa560上PDF标题分页/公开文本页码与无图图题说明；111项开发回归通过，原/新PDF各18页开发逐页查看；旧报告不迁移、浏览器/独立视觉未验，冻结 logs/REPORTPUBLICPDFLAYOUT-impl-hashes-frozen.txt。 |
+
+| SUPPORTEDARCHIVEWORKFLOWTESTS | 待测 | 两项普通往返改用独立合成案件并保留原断言；复杂案件409与默认403保留；191过1失败0跳，HFACS真实核心仍不可用；仅开发测试 | logs/SUPPORTEDARCHIVEWORKFLOWTESTS-impl-hashes-frozen.txt |
+| PR104 supported archive ordinary tests | 待独审 | e564581+b89d3fd隔离组合，仅两份文档追加冲突；生产代码不变、四测试文件原冻结匹配。191通过/1明确排除HFACS，复杂seed409和默认403保留；开发合成结果，未更新PR104或主线。 |
+
+| REPORTDOCXHEADERS | 待测 | DOCX重复表头/非完整翻译提示/标题分页；开发31通过，Writer23页，非Word验收 | logs/REPORTDOCXHEADERS-impl-hashes-frozen.txt |

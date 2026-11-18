@@ -15,11 +15,13 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
+from reportlab.platypus import CondPageBreak, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
 from ..config import PROJECT_ROOT
 from .templates import DISCLAIMER_EN, DISCLAIMER_ZH, GLOSSARY, TEMPLATES
 
+_INHERITED_ZH = "引用沿用原生成内容，仅用于追溯；不自动证明修改文字，也不表示修改文字仍是原文。请人工核对支持关系。"
+_INHERITED_EN = "References are inherited from the generated text for traceability only; they do not automatically support the edited wording or identify it as an original quotation. Review the support manually."
 _FONT = "MCIS-NotoSansSC-W16"
 _STATUS_ZH = {"Draft": "草稿", "Confirmed": "已确认", "Modified": "已修改", "Dismissed": "已驳回"}
 
@@ -74,7 +76,10 @@ def _sentence_text(sentence, lang):
     if sentence.get("status") == "Dismissed":
         text = ("已驳回内容：" if lang == "zh" else "Dismissed content: ") + text
     citations = " ".join(_reference_label(c) for c in sentence.get("citations", []))
-    return text + (" " + citations if citations else "")
+    text += " " + citations if citations else ""
+    if sentence.get("source") == "Investigator" and citations:
+        text += "\n" + (_INHERITED_ZH if lang == "zh" else _INHERITED_EN)
+    return text
 
 
 def _sentences(section):
@@ -97,6 +102,7 @@ def render_pdf(report: dict, lang: str, *, include_glossary=True) -> bytes:
     buffer = io.BytesIO()
     body = ParagraphStyle("rpt-body", fontName=font, fontSize=9, leading=14, wordWrap="CJK", spaceAfter=5)
     heading = ParagraphStyle("rpt-heading", parent=body, fontSize=12, leading=18, spaceBefore=12, spaceAfter=8)
+    section_heading = ParagraphStyle("rpt-section-heading", parent=heading, keepWithNext=True)
     cover = ParagraphStyle("rpt-cover", parent=body, fontSize=17, leading=25, alignment=TA_CENTER, spaceAfter=15)
     small = ParagraphStyle("rpt-small", parent=body, fontSize=7.5, leading=11)
     page_width, page_height = A4
@@ -132,7 +138,15 @@ def render_pdf(report: dict, lang: str, *, include_glossary=True) -> bytes:
         section_title = section.get("titleZh") if lang == "zh" else section.get("titleEn")
         if lang == "bilingual":
             section_title = f"{section.get('titleZh', '')} / {section.get('titleEn', '')}"
-        flow.append(p(f"{number}. {section_title} [{_status(section.get('status', 'Draft'))}]", heading))
+        title = p(f"{number}. {section_title} [{_status(section.get('status', 'Draft'))}]", heading)
+        # Reserve only a beginning, not the whole (possibly multi-page) table.
+        # KeepWithNext on heading + table would move whole short sections.
+        title_height = title.wrap(available, page_height)[1]
+        beginning = 3 * body.leading + 8 + (small.leading + 8 if lang == "bilingual" else 0)
+        if section.get("missing"):
+            beginning += small.leading + small.spaceAfter
+        flow.append(CondPageBreak(title_height + heading.spaceBefore + heading.spaceAfter + beginning))
+        flow.append(title)
         if section.get("missing"):
             flow.append(p("含缺数据项 / Contains missing data", small))
         if lang == "bilingual":
@@ -148,14 +162,14 @@ def render_pdf(report: dict, lang: str, *, include_glossary=True) -> bytes:
             flow.append(table)
         else:
             flow.extend(p(_sentence_text(sentence, lang)) for sentence in _sentences(section))
-    flow.append(p("引用表 / References", heading))
+    flow.append(p("引用表 / References", section_heading))
     refs = _references(report)
     if not refs:
         flow.append(p("缺数据：未提供引用 / Missing data: no references provided"))
     for citation in refs:
         flow.append(p(f"{_reference_label(citation)} {citation['kind']} — {citation['href']} | {citation.get('sourceRef', '')}", small))
     if include_glossary:
-        flow.append(p("术语表 / SMCP glossary（中文为项目译文）", heading))
+        flow.append(p("术语表 / SMCP glossary（中文为项目译文）", section_heading))
         flow.extend(p(f"{term['termZh']} / {term['termEn']}", small) for term in GLOSSARY)
     doc = SimpleDocTemplate(buffer, pagesize=A4, rightMargin=42, leftMargin=42, topMargin=48, bottomMargin=46,
                             title=f"{report.get('reportId', '')} {_state(report)}", author="MCIS 调查工作台")
@@ -172,6 +186,12 @@ def _docx_font(style):
         fonts = OxmlElement("w:rFonts")
         rpr.insert(0, fonts)
     fonts.set(qn("w:eastAsia"), "Noto Sans SC")
+
+
+def _repeat_docx_header(row):
+    """OOXML header row; office applications repeat it on continuation pages."""
+    header = OxmlElement("w:tblHeader")
+    row._tr.get_or_add_trPr().append(header)
 
 
 def render_docx(report: dict, lang: str, *, include_glossary=True) -> bytes:
@@ -196,12 +216,14 @@ def render_docx(report: dict, lang: str, *, include_glossary=True) -> bytes:
             title = f"{section_data.get('titleZh', '')} / {section_data.get('titleEn', '')}"
         document.add_heading(f"{number}. {title} [{_status(section_data.get('status', 'Draft'))}]", level=1)
         if section_data.get("missing"):
-            document.add_paragraph("含缺数据项 / Contains missing data")
+            notice = document.add_paragraph("含缺数据项 / Contains missing data")
+            notice.paragraph_format.keep_with_next = True
         if lang == "bilingual":
             table = document.add_table(rows=1, cols=2)
             table.style = "Table Grid"
             table.rows[0].cells[0].text = "中文"
-            table.rows[0].cells[1].text = "English"
+            table.rows[0].cells[1].text = "English / original-language excerpts（原文摘录非完整翻译 / excerpts are not fully translated）"
+            _repeat_docx_header(table.rows[0])
             for sentence in _sentences(section_data):
                 cells = table.add_row().cells
                 cells[0].text = _sentence_text(sentence, "zh")
@@ -220,6 +242,7 @@ def render_docx(report: dict, lang: str, *, include_glossary=True) -> bytes:
         table = document.add_table(rows=1, cols=2)
         table.rows[0].cells[0].text = "中文（项目译文）"
         table.rows[0].cells[1].text = "English"
+        _repeat_docx_header(table.rows[0])
         for term in GLOSSARY:
             cells = table.add_row().cells
             cells[0].text = term["termZh"]

@@ -1,0 +1,40 @@
+{
+  "base": "94d5e38",
+  "pr93": "09400ef",
+  "fontCandidate": "78256f4",
+  "mainUnchangedFileCount": 2407,
+  "docResolution": "full PR93 docs plus exact font candidate suffix relative to main",
+  "candidateAPaths": [
+    "DEFECTS/report-cause-provenance.md",
+    "REQUESTS.md",
+    "ROADMAP.md",
+    "contracts/report-recommendation-cause-labels.md",
+    "logs/report-cause-provenance-impl-hashes-frozen.txt",
+    "service/mcis_service/reports/sources.py",
+    "service/tests/test_report_cause_provenance.py",
+    "tests_acceptance/report-cause-main-94/REPORT.md",
+    "tests_acceptance/report-cause-main-94/frozen-check.txt",
+    "tests_acceptance/report-cause-main-94/main-control.txt",
+    "tests_acceptance/report-cause-main-94/tests.txt",
+    "tests_acceptance/report-cause-main-94/tree-check.json",
+    "tests_acceptance/report-cause-provenance/REPORT.md",
+    "tests_acceptance/report-cause-provenance/after.txt",
+    "tests_acceptance/report-cause-provenance/baseline.txt",
+    "tests_acceptance/report-cause-provenance/focused.txt",
+    "tests_acceptance/report-cause-provenance/independent-hashes.txt",
+    "tests_acceptance/report-cause-provenance/independent-tests.txt",
+    "tests_acceptance/report-cause-provenance/independent.md",
+    "tests_acceptance/report-cause-provenance/main-control.txt"
+  ],
+  "candidateBPaths": [
+    "REQUESTS.md",
+    "ROADMAP.md",
+    "logs/pdf-font-policy-main-94-frozen.txt",
+    "service/tests/test_reports_font_coverage.py",
+    "tests_acceptance/pdf-font-policy-main-94/REPORT.md",
+    "tests_acceptance/pdf-font-policy-main-94/baseline.txt",
+    "tests_acceptance/pdf-font-policy-main-94/font.json",
+    "tests_acceptance/pdf-font-policy-main-94/scope.json",
+    "tests_acceptance/pdf-font-policy-main-94/tests.txt"
+  ]
+}

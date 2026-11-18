@@ -86,6 +86,10 @@ export function ReportView(props: ReportViewProps) {
             {selected.sentences.map((sentence) => <div className={`rpt-sentence rpt-${lang} ${sentence.missing ? 'rpt-has-missing' : ''}`} key={sentence.sentenceId} data-sentence={sentence.sentenceId}>
               <div className="rpt-preview-pair">{lang !== 'en' && <p>{sentence.textZh}</p>}{lang !== 'zh' && <p lang="en">{sentence.textEn}</p>}</div>
               <div className="rpt-sentence-meta"><div className="rpt-citations">{sentence.citations.map((citation) => <CitationLink key={`${citation.kind}:${citation.id}`} citation={citation} />)}{!sentence.citations.length && <span className="rpt-missing">缺引用</span>}</div><Status status={sentence.status} /></div>
+              {sentence.source === 'Investigator' && sentence.citations.length > 0 && <div className="p6-note" data-testid="inherited-citation-notice">
+                {lang !== 'en' && <p>引用沿用原生成内容，仅用于追溯；不自动证明修改文字，也不表示修改文字仍是原文。请人工核对支持关系。</p>}
+                {lang !== 'zh' && <p lang="en">References are inherited from the generated text for traceability only; they do not automatically support the edited wording or identify it as an original quotation. Review the support manually.</p>}
+              </div>}
               <details className="rpt-sentence-review"><summary>句子复核 · {sentence.sentenceId}{sentence.sourceStatus ? ` · 来源 ${sentence.sourceStatus}` : ''}</summary><div className="rpt-toolbar">{(Object.keys(ACTION_LABEL) as ReviewAction[]).map((action) => <button className="btn btn-sm" key={action} disabled={busy || pending || blocked} onClick={() => onReview(action, { sectionId: selected.sectionId, sentenceId: sentence.sentenceId, title: `句子 ${sentence.sentenceId}`, textZh: sentence.textZh, textEn: sentence.textEn })}>{ACTION_LABEL[action]}</button>)}</div></details>
             </div>)}
             {selected.source === 'Investigator' && <details className="rpt-original"><summary>调查员修改 · 原生成文本</summary><p>{selected.generatedText.textZh}</p><p lang="en">{selected.generatedText.textEn}</p></details>}

@@ -8,6 +8,7 @@ SOURCE_ADAPTERS 中对应 callable；协议是 (session, case) ->
 from __future__ import annotations
 
 from copy import deepcopy
+import json
 from math import isfinite
 from typing import Any, Callable
 from urllib.parse import quote
@@ -394,6 +395,15 @@ def build_sections(s: Session, case: dict[str, Any], template: dict[str, Any]) -
             f'Safety recommendation {rid}: status={status}; due UTC={rec.get("dueUtc") or "Missing data"}; source title="{rec.get("title") or "Missing data"}"; addressee (source text)="{rec.get("addressee") or "Missing data"}".',
             refs, source_status=status)
         grouped['recommendations'].append(sentence)
+        labels = rec.get('causeNodeIds')
+        label_text = json.dumps(labels, ensure_ascii=False)
+        grouped['recommendations'].append(_sentence(
+            'recommendation-causes-' + rid,
+            f'安全建议 {rid} 登记的原因标签（按原顺序）={label_text}；未核验其证据关联或因果判断。',
+            f'Registered cause labels for recommendation {rid} (original order)={label_text}; evidence links and causal findings are not verified.',
+            [_citation('recommendation', rid, _url('recs', case=case_id, id=rid),
+                       source_ref=f'recommendations/{rid}', needs_review=True)],
+            missing=not labels, source_status='RegisteredLabelsUnresolved'))
         if status in ('Implemented', 'Closed'):
             grouped['actions'].append(_sentence(
                 'actions-' + rid,
@@ -443,13 +453,13 @@ def build_sections(s: Session, case: dict[str, Any], template: dict[str, Any]) -
                 citation['unregistered'] = True
             citation['sourceRef'] = excerpt['sourceRef']
             citation['needsReview'] = True
-            display_quote = public_text.display_quote(excerpt['quote'])
+            display_quote = excerpt['displayQuote']
             quoted = _sentence(
                 identifier + '-public-report-excerpt',
-                '【直接】原公开报告记载（引用，有限摘录，非完整章节；仅分页及控制字符排版正规化；不代表系统重新作出责任认定）：\n'
+                '【直接】原公开报告记载（引用，有限摘录，非完整章节；分页及控制字符排版正规化，省略可确认的原页码；原文图题另标图片未附；不代表系统重新作出责任认定）：\n'
                 + display_quote,
                 'Direct quotation from the published investigation report (limited excerpt, not the full section; '
-                'original Chinese retained, page breaks and control characters normalized for display; '
+                'original Chinese retained, page breaks and control characters normalized; verified page footers omitted; source captions marked as images not included; '
                 'not an official English translation; '
                 'not a new determination of responsibility by this system):\n' + display_quote,
                 [citation], source_status='PublicReportExcerpt')
