@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { api, ApiError, CASE_ID } from '../api'
 import { ColregView } from '../colreg/ColregView'
@@ -25,29 +25,54 @@ const REVIEW_ERR: Record<string, string> = {
 }
 
 export function ColregPage() {
-  const { run, show } = useToast()
-  const [params, setParams] = useSearchParams()
-  const caseId = params.get('case') || CASE_ID
-  const [sel, setSel] = useState<string | null>(null)
-  const [evaluating, setEvaluating] = useState(false)
-  const [viewRunId, setViewRunId] = useState<string | null>(null)
+  const [params] = useSearchParams()
+  return <ColregWorkspace key={params.get('case') || CASE_ID} />
+}
+
+type WorkspaceState = {
+  compare: ColregCompare | null; setCompare: Dispatch<SetStateAction<ColregCompare | null>>
+  draft: DraftDisplay | null; setDraft: Dispatch<SetStateAction<DraftDisplay | null>>
+  draftNotice: string | null; setDraftNotice: Dispatch<SetStateAction<string | null>>
+}
+
+// Case-scoped work survives version navigation; fetched version state remains isolated.
+function ColregWorkspace() {
+  const [params] = useSearchParams()
   const [compare, setCompare] = useState<ColregCompare | null>(null)
   const [draft, setDraft] = useState<DraftDisplay | null>(null)
   const [draftNotice, setDraftNotice] = useState<string | null>(null)
+  return <ColregSession key={JSON.stringify([params.get('check'), params.get('run')])}
+    compare={compare} setCompare={setCompare} draft={draft} setDraft={setDraft}
+    draftNotice={draftNotice} setDraftNotice={setDraftNotice} />
+}
+
+function ColregSession({ compare, setCompare, draft, setDraft, draftNotice, setDraftNotice }: WorkspaceState) {
+  const { run, show } = useToast()
+  const [params, setParams] = useSearchParams()
+  const caseId = params.get('case') || CASE_ID
+  const [sel, setSel] = useState<string | null>(params.get('check') || null)
+  const [evaluating, setEvaluating] = useState(false)
+  const [viewRunId, setViewRunId] = useState<string | null>(params.get('run') === 'active' ? null : params.get('run') || null)
+  const workRequests = useRef({ active: true, draft: 0, compare: 0 })
+  useEffect(() => {
+    const requests = workRequests.current
+    requests.active = true
+    return () => { requests.active = false; requests.draft++; requests.compare++ }
+  }, [caseId, viewRunId])
 
   const cases = useLoad(() => api.get<CaseListItem[]>('/cases'))
   const caseRes = useLoad(() => api.get<CaseDef>(`/cases/${caseId}`), [caseId])
   const vessels = useLoad(() => api.get<Vessel[]>(`/cases/${caseId}/vessels`), [caseId])
   const runs = useLoad(() => api.get<ColregRunList>(`/cases/${caseId}/colreg/runs`), [caseId])
-  const runView = useLoad(() => api.get<ColregRunView>(`/cases/${caseId}/colreg/runs/${viewRunId ?? 'active'}`), [caseId, viewRunId])
+  const runView = useLoad(() => api.get<ColregRunView>(`/cases/${caseId}/colreg/runs/${encodeURIComponent(viewRunId ?? 'active')}`), [caseId, viewRunId])
   const current = useLoad(() => api.get<ColregAnalysis>(`/cases/${caseId}/colreg`), [caseId])
   const evidence = useLoad(() => api.get<EvidenceItem[]>(`/cases/${caseId}/evidence`), [caseId])
   const audit = useLoad(() => api.get<AuditEvent[]>(`/cases/${caseId}/audit?action=colreg.review&order=asc&limit=500`), [caseId])
   const timeline = useLoad(() => api.get<{ events: TimelineEvent[] }>(`/cases/${caseId}/timeline`), [caseId])
   const cpa = useLoad(() => api.get<CpaSeries>(`/cases/${caseId}/cpa?stepSec=10`), [caseId])
 
-  // 版本接口不可用（旧服务）时退回当前文档
-  const analysis = runView.data?.analysis ?? current.data
+  // 仅未指定版本时兼容旧服务；明确版本不得静默回退当前文档。
+  const analysis = viewRunId ? runView.data?.analysis : runView.data?.analysis ?? current.data
 
   const switcher = useMemo(() => {
     const list = cases.data ?? []
@@ -110,20 +135,35 @@ export function ColregPage() {
   }
 
   const onCompare = (baseRunId: string, otherRunId: string) => {
-    void run(async () => {
-      setCompare(await api.get<ColregCompare>(`/cases/${caseId}/colreg/compare?base=${baseRunId}&other=${otherRunId}`))
-    }, '版本对比已生成')
+    const requests = workRequests.current
+    const requestId = ++requests.compare
+    const isCurrent = () => requests.active && requests.compare === requestId
+    void (async () => {
+      try {
+        const result = await api.get<ColregCompare>(`/cases/${caseId}/colreg/compare?base=${baseRunId}&other=${otherRunId}`)
+        if (!isCurrent()) return
+        setCompare(result)
+        show('版本对比已生成', 'ok')
+      } catch (e) {
+        if (isCurrent()) show(e instanceof ApiError ? `${e.code}：${e.message}` : String(e), 'err')
+      }
+    })()
   }
 
   const onGenerateDraft = () => {
+    const requests = workRequests.current
+    const requestId = ++requests.draft
+    const isCurrent = () => requests.active && requests.draft === requestId
     void (async () => {
       try {
         // 请求体按 openapi（additionalProperties=false）：只传 lang
         const d = normalizeDraftResponse(await api.post<unknown>(REPORT_DRAFT_PATH(caseId), { lang: 'zh' }))
+        if (!isCurrent()) return
         setDraft(d)
         setDraftNotice(null)
         show(`已生成章节草稿（${d.status}）`)
       } catch (e) {
+        if (!isCurrent()) return
         if (e instanceof ApiError && [404, 405, 501].includes(e.status)) {
           setDraftNotice(DRAFT_UNAVAILABLE)
           show('章节草稿服务尚未上线（W16），已在页面给出说明')
@@ -134,10 +174,20 @@ export function ColregPage() {
     })()
   }
 
-  const err = caseRes.error || (current.error && runView.error) || vessels.error
+  const draftBoundaryNote = <p role="note">草稿请求若在切版前尚未返回，迟到结果不会用于更新此页，但不代表服务未生成报告；请到报告页核对，勿自动重试。草稿接口按服务当前台账生成，未绑定此处查看的版本，不能据此认定其历史来源。</p>
+  const citation = params.has('check') || params.has('run')
+  const targetUnavailable = viewRunId && (runView.error || (runView.data && (runView.data.runId !== viewRunId || runView.data.analysis.caseId !== caseId)))
+  const missingCheck = analysis && sel && !analysis.checks.some(c => c.checkId === sel)
+  if (targetUnavailable || missingCheck) return <div role="alert" className="p6-card">
+    {draftBoundaryNote}
+    <p>{targetUnavailable ? '指定核查版本暂不可读取或返回版本不符。' : '指定核查项不在已读取的版本中。'}未自动改选当前版本或其他核查项。</p>
+    <button type="button" onClick={() => setParams({ case: caseId })}>离开引用定位，查看本案当前核查</button>
+  </div>
+  const err = caseRes.error || (viewRunId ? runView.error : current.error && runView.error) || vessels.error
   if (!caseRes.data || !analysis) {
     return (
       <div>
+        {draftBoundaryNote}
         {err && <div className="p6-card" style={{ borderColor: 'var(--red)' }}>后端错误：{err}</div>}
         {!err && <div className="empty">正在载入避碰规则对照…</div>}
       </div>
@@ -145,6 +195,10 @@ export function ColregPage() {
   }
 
   return (
+    <>
+    {citation && <p role="note">引用定位仅打开本案登记的版本与核查项，不证明生成报告时的内容或原始证据已核验。未带版本或使用 active 别名的引用仅打开当前台账。</p>}
+    {draftBoundaryNote}
+    {(draft || draftNotice || compare) && <p role="note">本案已有草稿、提示及对比结果在切换查看版本时保留，不会自动更新为所选版本。离开本案或刷新后不保留页面状态。</p>}
     <ColregView
       caseDef={caseRes.data}
       vessels={vessels.data ?? []}
@@ -160,7 +214,7 @@ export function ColregPage() {
       onSwitchCase={(id) => { setSel(null); setViewRunId(null); setCompare(null); setDraft(null); setDraftNotice(null); setParams(id === CASE_ID ? {} : { case: id }); show(`已切换到 ${id}`) }}
       runs={runs.data}
       runView={runView.data}
-      onViewRun={(id) => { setSel(null); setViewRunId(id) }}
+      onViewRun={(id) => setParams({ case: caseId, run: id })}
       onActivateRun={onActivateRun}
       compare={compare}
       onCompare={onCompare}
@@ -172,5 +226,6 @@ export function ColregPage() {
       draft={draft}
       draftNotice={draftNotice}
     />
+    </>
   )
 }

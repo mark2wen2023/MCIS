@@ -1,0 +1,3 @@
+34f1a288b306d0c3ffd8483a23df6af000919eae4f9fa5d09d2a31ae2daa24df  service/mcis_service/reports/exporter.py
+9294da3f15711f50d1fb7c3b2d50431513cef487d80f11781e54ba324408df98  service/tests/test_report_docx_headers.py
+3bb820eb1202fbf991984e69316c003908f0e274de8d72598a74e73fe0b47efa  contracts/report-public-excerpt-layout.md

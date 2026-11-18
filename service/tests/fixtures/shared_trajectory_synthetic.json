@@ -1,0 +1,167 @@
+{
+  "format": "MCIS-SHARED-TRAJECTORY-1",
+  "caseId": "SYNTHETIC-ONLY",
+  "coordinateSystem": "WGS84-geographic",
+  "units": {
+    "position": "decimal-degrees",
+    "angles": "degrees-true-north-clockwise",
+    "speed": "knots",
+    "dimensions": "metres",
+    "time": "UTC-seconds"
+  },
+  "sources": [
+    {
+      "sourceId": "synthetic-ais",
+      "type": "AIS",
+      "recordLocator": "constructed fixture rows 1-2",
+      "description": "SYNTHETIC; not real AIS capture"
+    },
+    {
+      "sourceId": "synthetic-manual",
+      "type": "manual",
+      "recordLocator": "constructed dimensions",
+      "description": "SYNTHETIC manual assumption"
+    }
+  ],
+  "vessel": {
+    "vesselId": "synthetic-vessel",
+    "identityStatus": "operator_asserted",
+    "identifiers": [
+      {
+        "scheme": "local",
+        "value": "synthetic-vessel",
+        "sourceIds": [
+          "synthetic-manual"
+        ]
+      }
+    ],
+    "identityBasis": "Constructed test identity; not authentication",
+    "lengthM": {
+      "value": 100,
+      "kind": "manual_assumption",
+      "sourceIds": [
+        "synthetic-manual"
+      ],
+      "basis": "Constructed fixture only; no real AIS or model inference"
+    },
+    "beamM": {
+      "value": null,
+      "kind": "missing",
+      "sourceIds": [
+        "synthetic-manual"
+      ],
+      "basis": "Constructed fixture only; no real AIS or model inference"
+    }
+  },
+  "display": {
+    "scaleMultiplier": 3,
+    "purpose": "visibility_only",
+    "note": "Screen visibility only, not physical dimensions or collision evidence"
+  },
+  "sampling": {
+    "expectedIntervalSeconds": 10,
+    "gapThresholdSeconds": 30,
+    "basis": "Synthetic test policy, not AIS standard",
+    "missingIntervals": []
+  },
+  "points": [
+    {
+      "pointId": "p1",
+      "time": {
+        "sourceRecordTime": "2026-01-01T00:00:00Z",
+        "sourceUtc": "2026-01-01T00:00:00Z",
+        "alignedUtc": "2026-01-01T00:00:00Z",
+        "status": "referenced",
+        "correctionSeconds": 0,
+        "basis": "Synthetic UTC clock declaration; not verified",
+        "sourceIds": [
+          "synthetic-ais"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": 31.0,
+          "lonDeg": 121.0
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-ais"
+        ],
+        "basis": "Constructed fixture only; no real AIS or model inference"
+      },
+      "headingDeg": {
+        "value": null,
+        "kind": "missing",
+        "sourceIds": [
+          "synthetic-ais"
+        ],
+        "basis": "Constructed fixture only; no real AIS or model inference"
+      },
+      "courseDeg": {
+        "value": 90,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-ais"
+        ],
+        "basis": "Constructed fixture only; no real AIS or model inference"
+      },
+      "speedKn": {
+        "value": 5,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-ais"
+        ],
+        "basis": "Constructed fixture only; no real AIS or model inference"
+      }
+    },
+    {
+      "pointId": "p2",
+      "time": {
+        "sourceRecordTime": "2026-01-01T00:00:10Z",
+        "sourceUtc": "2026-01-01T00:00:10Z",
+        "alignedUtc": "2026-01-01T00:00:10Z",
+        "status": "referenced",
+        "correctionSeconds": 0,
+        "basis": "Synthetic UTC clock declaration; not verified",
+        "sourceIds": [
+          "synthetic-ais"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": 31.0,
+          "lonDeg": 121.0
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-ais"
+        ],
+        "basis": "Constructed fixture only; no real AIS or model inference"
+      },
+      "headingDeg": {
+        "value": 80,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-ais"
+        ],
+        "basis": "Constructed fixture only; no real AIS or model inference"
+      },
+      "courseDeg": {
+        "value": 90,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-ais"
+        ],
+        "basis": "Constructed fixture only; no real AIS or model inference"
+      },
+      "speedKn": {
+        "value": 5,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-ais"
+        ],
+        "basis": "Constructed fixture only; no real AIS or model inference"
+      }
+    }
+  ]
+}

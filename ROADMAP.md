@@ -409,3 +409,111 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-18 | environment-pending-input | 待独立验收 | 新4合成等待序列及既有3来源流程、TS/Vite开发通过；真实React/浏览器/HTTP未验；冻结 logs/environment-pending-input-impl-hashes-frozen.txt |
 | 2026-11-18 | environment-input-generation | 待独审 | 事件阶段表单代次保护旧输入回调；新6场景及相邻4/3合成测试、TS/Vite开发通过；非真实React重放/浏览器/HTTP，未改后端。冻结 logs/environment-input-generation-impl-hashes-frozen.txt |
 | 2026-11-18 | interview-environment-integration | 待独审 / DO NOT MERGE | 被测组合2908363保留b1c4564/813f946完整链，产品文件逐字匹配，文档双方追加保留；5限定脚本/2来源SSR/TS/Vite开发通过，不累计场景；非浏览器/HTTP/生产验收。冻结 logs/interview-environment-integration-impl-hashes-frozen.txt |
+
+| CASE-LOAD-STATUS | 2026-11-18 | 待测：案件资料载入状态不再误称服务ONLINE/OFFLINE；5合成SSR场景/27断言、30导航断言及构建为开发自测；浏览器/视觉未验 | logs/case-load-status-impl-hashes-frozen.txt；tests_acceptance/case-load-status/DEVELOPER.md |
+
+| CASE-LOAD-STATUS transition | 2026-11-18 | 待测：案件读取结果绑定caseId；6合成生命周期断言、27相邻SSR断言与构建开发通过，浏览器未验 | tests_acceptance/case-load-status/TRANSITION-DEVELOPER.md；logs/case-load-transition-impl-hashes-frozen.txt |
+
+| TOAST-LIFETIME | 2026-11-18 | 待测：同文提示各自到期，五项合成时钟场景及构建开发自测通过；浏览器/视觉未验 | tests_acceptance/toast-lifetime/DEVELOPER.md；logs/toast-lifetime-impl-hashes-frozen.txt |
+
+| TOAST-ACCESSIBILITY | 2026-11-18 | 待测：保存反馈状态/警报语义；合成结构检查、5定时器场景及构建开发通过；读屏/浏览器/视觉未验 | tests_acceptance/toast-accessibility/DEVELOPER.md；logs/toast-accessibility-impl-hashes-frozen.txt |
+
+| INTERVIEW-REPORT-LINK | 2026-11-18 | 待测：兼容报告笔录id链接，保留record优先与案件上下文；6合成选择场景/30导航断言及构建开发通过；浏览器未验，不含句级定位 | tests_acceptance/interview-report-link/DEVELOPER.md；logs/interview-report-link-impl-hashes-frozen.txt |
+
+| COLREG-REPORT-LINK | 2026-11-18 | 待测：报告check/run链接接通，指定版本不静默回退；9合成页面场景/12断言、30导航断言及构建开发通过，浏览器/历史完整性未验 | tests_acceptance/colreg-report-link/DEVELOPER.md；logs/colreg-report-link-impl-hashes-frozen.txt |
+
+| COLREG version transition | 2026-11-18 | 待测：手动切版重建读取会话，active别名按当前处理；5合成生命周期断言/12相邻断言与构建开发通过；浏览器未验 | tests_acceptance/colreg-report-link/TRANSITION-DEVELOPER.md；logs/colreg-version-transition-impl-hashes-frozen.txt |
+
+
+## COLREG case work retained across version navigation — pending independent review
+
+Follow-up to 0b53fce: preserve case-scoped draft, notice and comparison while resetting only version-scoped reads. No permissions or service changes. Developer synthetic tests and build passed; browser unverified. Evidence: tests_acceptance/colreg-report-link/RETAINED-WORK-DEVELOPER.md; freeze: logs/colreg-retained-work-impl-hashes-frozen.txt. Prior freezes remain historical.
+
+
+## COLREG stale work response suppression — pending independent review
+Following f492182, case-retained work rejects late session and out-of-order UI responses; no backend cancellation/retry guarantee. Draft current-ledger provenance is explicitly distinguished from viewed run. Developer synthetic regressions and build passed; browser unverified. See tests_acceptance/colreg-report-link/ASYNC-WORK-DEVELOPER.md and logs/colreg-async-work-impl-hashes-frozen.txt.
+
+
+## First pending COLREG draft guidance — pending independent review
+Make conditional unknown-result guidance visible even before any draft/notice/compare exists, including loading/unavailable states. No job state or backend changes. Developer five new synthetic assertions, adjacent tests/build passed. See tests_acceptance/colreg-report-link/FIRST-DRAFT-DEVELOPER.md and logs/colreg-first-draft-impl-hashes-frozen.txt; browser unverified.
+
+| ANALYSIS-MISSING-SCENARIO | 2026-11-18 | 待测：缺失方案不静默退回基线；8合成断言与构建开发通过，浏览器/历史核验未验 | tests_acceptance/analysis-missing-scenario/DEVELOPER.md；logs/analysis-missing-scenario-impl-hashes-frozen.txt |
+
+
+## UI first-group integration — pending acceptance
+
+Combined case status, toast, interview link, COLREG and missing-analysis candidates without functional edits; all document append histories retained. Developer selected 12 synthetic scripts and build passed; browser, visual, real-data and independent combined acceptance remain unverified. See tests_acceptance/ui-navigation-group-one/DEVELOPER.md. Do not merge or deploy.
+
+
+## Missing recommendation citation feedback — pending independent review
+Current-board missing explicit report reference is now reported without automatic reselection or historical verification claims. Developer synthetic 6 states/10 assertions and build passed; browser unverified. See tests_acceptance/recommendation-missing-citation/DEVELOPER.md and logs/recommendation-missing-citation-impl-hashes-frozen.txt.
+
+
+## Recommendation transition note preservation — pending independent review
+Only clear submitted explanation after a returned success result; retain on swallowed transport error and retain differing newer text. Developer four synthetic scenarios/build passed. See tests_acceptance/recommendation-transition-note/DEVELOPER.md and logs/recommendation-transition-note-impl-hashes-frozen.txt; browser unverified.
+
+
+## Recommendation reply/progress draft retention — pending independent review
+Preserve input edited during reply/progress requests using local edit counters; payloads and permissions unchanged. Developer 9 new synthetic scenarios, 4 adjacent and build passed. See tests_acceptance/recommendation-transition-note/FORM-SAVE-DEVELOPER.md and logs/recommendation-form-save-impl-hashes-frozen.txt; browser unverified.
+
+
+## Transition note ABA retention — pending independent review
+Reuse existing edit counter so changing away and back does not authorize clearing. Five transition and nine adjacent developer synthetic scenarios/build passed. See tests_acceptance/recommendation-transition-note/ABA-DEVELOPER.md and logs/recommendation-transition-aba-impl-hashes-frozen.txt. Browser unverified.
+
+
+## Recommendation progress draft group — pending independent review
+Percentage edits invalidate clearing of the shared submitted explanation. Proven synthetic 25% request / 50% new input case; 10 form and 5 transition developer scenarios/build pass. See tests_acceptance/recommendation-transition-note/PROGRESS-GROUP-DEVELOPER.md and logs/recommendation-progress-group-impl-hashes-frozen.txt. Browser unverified.
+
+
+## UI recommendations group two — pending acceptance
+
+Combined 8d4c86a and 92265a9 on main 94d5e38; only document append conflicts, both histories retained. Three reviewed synthetic scripts and build passed on combined code (developer evidence). Browser/visual, cross-page/backend and production permissions unverified. See tests_acceptance/ui-recommendations-group-two/DEVELOPER.md and logs/ui-recommendations-group-two-impl-hashes-frozen.txt. Do not merge or deploy.
+
+
+## Report review pending input — pending independent review
+Prevent editing text/reason while existing saving state is true; retain on failure, explain waiting. Developer modify/dismiss synthetic 14 assertions and build passed; browser unverified. See tests_acceptance/report-review-pending/DEVELOPER.md and logs/report-review-pending-impl-hashes-frozen.txt. No policy or report content changes.
+
+
+## GISIS stale validation feedback — pending independent review
+Editing fields invalidates displayed prior validation object while retaining input; prompts explicit revalidation. Developer 4 synthetic flows/40 assertions and build passed; browser unverified. See tests_acceptance/gisis-stale-validation/DEVELOPER.md and logs/gisis-stale-validation-impl-hashes-frozen.txt. No API, permission or consultation changes.
+
+
+## GISIS parent input revision binding — pending independent review
+Capture frontend input revision/request when validating; editing clears old result/global notice and stale success cannot certify new input. Four parent synthetic callback flows and four panel flows/44 assertions, build passed; not full browser/HTTP lifecycle. See tests_acceptance/gisis-stale-validation/PARENT-DEVELOPER.md and logs/gisis-parent-validation-impl-hashes-frozen.txt. No backend/permission or consultation changes.
+
+
+## GISIS scoped error and notice feedback — pending independent review
+Reproduced stale ordinary error and unrelated-notice removal; scope GISIS feedback and compare input/request before ordinary error display. 403 routes to existing denial handler; no permission changes. Developer 3 new synthetic flows, adjacent tests/build pass. See tests_acceptance/gisis-stale-validation/FEEDBACK-SCOPE-DEVELOPER.md and logs/gisis-feedback-scope-impl-hashes-frozen.txt; browser unverified.
+
+
+## UI reports group three — pending acceptance
+
+Combined 0a6d0bd and 16f159b on main 94d5e38; functional regions combined without conflict; both document tails retained. Developer four selected synthetic scripts and build passed. PR104 not integrated; browser/visual, real backend and production permissions unverified. See tests_acceptance/ui-reports-group-three/DEVELOPER.md and logs/ui-reports-group-three-impl-hashes-frozen.txt. Do not merge or deploy.
+
+
+## Three UI groups — pending combined acceptance
+
+Combined 076eec1 / 2064675 / 81a308c on 94d5e38, preserving all group document appends and exact source blobs. Developer 19 selected synthetic scripts plus build passed. Not integrated with PR104; browser/visual/backend/production permissions unverified. Evidence: tests_acceptance/ui-three-groups/DEVELOPER.md; freeze: logs/ui-three-groups-impl-hashes-frozen.txt. Do not merge or deploy.
+| Ordinary report functional test principals | 待独审 | 2026-11-15：main94d5e38 独立测试修复；普通两文件58败9过→69过，原权限回归80过；新增默认Investigator拒绝/零写断言，生产权限不改。HFACS缺依赖单列未跑，不含受限历史完整性复验。冻结 logs/report-functional-test-policy-impl-hashes-frozen.txt。 |
+
+| 共享轨迹输入契约 v1 前置 | 待测 / 待独立验收 | 2026-11-15：新增独立JSON契约与离线语义校验，保留来源/校时/缺失/艏向航迹向/示意比例；45构造测试+70既有W10.2回归通过。不改现有接口/权限，不是二维/Unity适配或三维实现。冻结 logs/shared-trajectory-v1-impl-hashes-frozen.txt。 |
+| CSV preview source numbering | 待独审 | 2026-11-15：main94d5e38独立修复移除后新增编号冲突；保留源声明/文本/映射、四源限制及人工确认。新增回归/原W4.1 32项/构建过；无真实浏览器/核心/AI验收。冻结 logs/csv-preview-source-numbering-impl-hashes-frozen.txt；功能区域不与PR97/79/69重叠。 |
+| Report registered cause-label snapshot | 待测 | no inferred links or archive enablement; logs/report-cause-provenance-impl-hashes-frozen.txt |
+| Report registered cause-label snapshot | 局部独审通过 | focused5pass; expanded95pass2baselinefail; clean-main2fail reproduced; independent17pass; tests_acceptance/report-cause-provenance/REPORT.md |
+| PDF font-test identity on main94d5e38 | 待测 | exact e91e4cf test delta on complete latest main; logs/pdf-font-policy-main-94-frozen.txt; independent current-candidate review pending |
+
+| REPORTSENTENCESOURCESTATUS | 待测 | 单句modify来源状态与Investigator一致，保留原文/引用/历史；91开发回归过含5新增；旧存储不迁移，浏览器/独立未验，PDF仅原候选4页开发抽查 | logs/REPORTSENTENCESOURCESTATUS-impl-hashes-frozen.txt |
+
+| REPORTINHERITEDCITATION | 待测 | db928a2上呈现继承引用限制，99后端回归、182 SSR断言及构建为开发侧通过；不改原文/引用/历史/权限，真实浏览器及视觉/独立未验。冻结 logs/REPORTINHERITEDCITATION-impl-hashes-frozen.txt |
+
+| REPORTPUBLICPDFLAYOUT | 待独审 | bbafa560上PDF标题分页/公开文本页码与无图图题说明；111项开发回归通过，原/新PDF各18页开发逐页查看；旧报告不迁移、浏览器/独立视觉未验，冻结 logs/REPORTPUBLICPDFLAYOUT-impl-hashes-frozen.txt。 |
+
+| SUPPORTEDARCHIVEWORKFLOWTESTS | 待测 | 两项普通往返改用独立合成案件并保留原断言；复杂案件409与默认403保留；191过1失败0跳，HFACS真实核心仍不可用；仅开发测试 | logs/SUPPORTEDARCHIVEWORKFLOWTESTS-impl-hashes-frozen.txt |
+| PR104 supported archive ordinary tests | 待独审 | e564581+b89d3fd隔离组合，仅两份文档追加冲突；生产代码不变、四测试文件原冻结匹配。191通过/1明确排除HFACS，复杂seed409和默认403保留；开发合成结果，未更新PR104或主线。 |
+
+| REPORTDOCXHEADERS | 待测 | DOCX重复表头/非完整翻译提示/标题分页；开发31通过，Writer23页，非Word验收 | logs/REPORTDOCXHEADERS-impl-hashes-frozen.txt |
+
+
+## UI + PR104 — pending combined acceptance
+
+Combined exact 139f188 and b4df823; only document append conflicts, both preserved. Developer 19 UI scripts, new synthetic SSR (3 cases), pure formatting (6 cases) and build passed; counts not cumulative. No real material, paused/refusal probes, HFACS or browser run. See tests_acceptance/ui-pr104/DEVELOPER.md; freeze logs/ui-pr104-impl-hashes-frozen.txt. Real backend/production permissions/visual/independent acceptance pending. Do not merge or deploy.

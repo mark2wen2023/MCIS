@@ -1,0 +1,46 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_public_report_production_font_and_pdf_preserve_chinese[CASE-2025-HAILI5-WANA17] _
+
+client = <starlette.testclient.TestClient object at 0x7f9fab1d35f0>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-230/test_public_report_production_0')
+case_id = 'CASE-2025-HAILI5-WANA17'
+
+    @pytest.mark.parametrize('case_id', [
+        'CASE-2025-HAILI5-WANA17',
+        'CJK-2024-1230-YangZe22-VegaDream',
+    ])
+    def test_public_report_production_font_and_pdf_preserve_chinese(client, tmp_path, case_id):
+        prefix = f'/api/v1/cases/{case_id}'
+        response = client.post(prefix + '/reports', headers=H(),
+                               json={'templateId': 'cn-msa', 'lang': 'bilingual'})
+>       assert response.status_code == 201, response.text
+E       AssertionError: {"code":"FORBIDDEN","message":"完整报告内容不可访问"}
+E       assert 403 == 201
+E        +  where 403 = <Response [403 Forbidden]>.status_code
+
+service/tests/test_reports_font_coverage.py:23: AssertionError
+_ test_public_report_production_font_and_pdf_preserve_chinese[CJK-2024-1230-YangZe22-VegaDream] _
+
+client = <starlette.testclient.TestClient object at 0x7f9fab2d2600>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-230/test_public_report_production_1')
+case_id = 'CJK-2024-1230-YangZe22-VegaDream'
+
+    @pytest.mark.parametrize('case_id', [
+        'CASE-2025-HAILI5-WANA17',
+        'CJK-2024-1230-YangZe22-VegaDream',
+    ])
+    def test_public_report_production_font_and_pdf_preserve_chinese(client, tmp_path, case_id):
+        prefix = f'/api/v1/cases/{case_id}'
+        response = client.post(prefix + '/reports', headers=H(),
+                               json={'templateId': 'cn-msa', 'lang': 'bilingual'})
+>       assert response.status_code == 201, response.text
+E       AssertionError: {"code":"FORBIDDEN","message":"完整报告内容不可访问"}
+E       assert 403 == 201
+E        +  where 403 = <Response [403 Forbidden]>.status_code
+
+service/tests/test_reports_font_coverage.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED service/tests/test_reports_font_coverage.py::test_public_report_production_font_and_pdf_preserve_chinese[CASE-2025-HAILI5-WANA17]
+FAILED service/tests/test_reports_font_coverage.py::test_public_report_production_font_and_pdf_preserve_chinese[CJK-2024-1230-YangZe22-VegaDream]
+2 failed in 0.84s

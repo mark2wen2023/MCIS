@@ -23,6 +23,7 @@ export interface ReportViewProps {
   onCreate: (language?: ReportLanguage) => void; onRegenerate: () => void; onReview: (action: ReviewAction, target: ReviewTarget) => void
   onExport: (format: 'pdf' | 'docx', lang: ReportLanguage) => void; onGlossary: () => void
   onGisisExport: (format: 'json' | 'csv') => void; onGisisValidate: (values: Record<string, unknown>, exportFile: boolean) => void
+  onGisisEdit?: () => void
   onRefresh?: () => void
 }
 
@@ -85,6 +86,10 @@ export function ReportView(props: ReportViewProps) {
             {selected.sentences.map((sentence) => <div className={`rpt-sentence rpt-${lang} ${sentence.missing ? 'rpt-has-missing' : ''}`} key={sentence.sentenceId} data-sentence={sentence.sentenceId}>
               <div className="rpt-preview-pair">{lang !== 'en' && <p>{sentence.textZh}</p>}{lang !== 'zh' && <p lang="en">{sentence.textEn}</p>}</div>
               <div className="rpt-sentence-meta"><div className="rpt-citations">{sentence.citations.map((citation) => <CitationLink key={`${citation.kind}:${citation.id}`} citation={citation} />)}{!sentence.citations.length && <span className="rpt-missing">缺引用</span>}</div><Status status={sentence.status} /></div>
+              {sentence.source === 'Investigator' && sentence.citations.length > 0 && <div className="p6-note" data-testid="inherited-citation-notice">
+                {lang !== 'en' && <p>引用沿用原生成内容，仅用于追溯；不自动证明修改文字，也不表示修改文字仍是原文。请人工核对支持关系。</p>}
+                {lang !== 'zh' && <p lang="en">References are inherited from the generated text for traceability only; they do not automatically support the edited wording or identify it as an original quotation. Review the support manually.</p>}
+              </div>}
               <details className="rpt-sentence-review"><summary>句子复核 · {sentence.sentenceId}{sentence.sourceStatus ? ` · 来源 ${sentence.sourceStatus}` : ''}</summary><div className="rpt-toolbar">{(Object.keys(ACTION_LABEL) as ReviewAction[]).map((action) => <button className="btn btn-sm" key={action} disabled={busy || pending || blocked} onClick={() => onReview(action, { sectionId: selected.sectionId, sentenceId: sentence.sentenceId, title: `句子 ${sentence.sentenceId}`, textZh: sentence.textZh, textEn: sentence.textEn })}>{ACTION_LABEL[action]}</button>)}</div></details>
             </div>)}
             {selected.source === 'Investigator' && <details className="rpt-original"><summary>调查员修改 · 原生成文本</summary><p>{selected.generatedText.textZh}</p><p lang="en">{selected.generatedText.textEn}</p></details>}
@@ -100,7 +105,7 @@ export function ReportView(props: ReportViewProps) {
           </div>
           {draft && !pending && <div className="rpt-draft-note">DRAFT 草稿 · 尚有章节未经人工确认，导出保留草稿标注。重新生成保留当前版本和复核记录。</div>}
         </Panel>
-        <GisisPanel key={caseId} data={props.gisis} busy={busy} pending={pending || blocked} validation={props.validation} onExport={props.onGisisExport} onValidate={props.onGisisValidate} />
+        <GisisPanel key={caseId} data={props.gisis} busy={busy} pending={pending || blocked} validation={props.validation} onExport={props.onGisisExport} onValidate={props.onGisisValidate} onEdit={props.onGisisEdit} />
       </div>
       <Panel title="报告审计" meta={<span>操作人 · 时间 · 原值/新值 · 理由全文</span>}>
         {props.audit.length ? <div className="rpt-audit-list">{props.audit.map((a) => <details key={a.auditEvent.seq} className="rpt-audit"><summary><span className="mono">#{a.auditEvent.seq} · {a.auditEvent.utc}</span> <b>{a.auditEvent.operator}</b> · {a.auditEvent.action} · {a.sectionId || '报告'}{a.sentenceId ? ` / ${a.sentenceId}` : ''}</summary><p>{a.summary}</p>{a.reason && <div className="rpt-reason"><b>理由全文：</b>{a.reason}</div>}<div className="rpt-audit-values"><div><b>原值</b><pre>{JSON.stringify(a.beforeValue, null, 2)}</pre></div><div><b>新值</b><pre>{JSON.stringify(a.afterValue, null, 2)}</pre></div></div></details>)}</div> : <div className="rpt-empty">{pending ? '真实案例待确认，无报告操作' : '暂无报告审计记录'}</div>}
@@ -140,9 +145,10 @@ export function ReviewDialog({ action, target, busy, error, onCancel, onSubmit }
   const problem = reviewProblem(action, reason, target, textZh, textEn)
   return <div className="rpt-modal-backdrop"><form className="rpt-modal" role="dialog" aria-modal="true" aria-labelledby="rpt-review-title" onSubmit={(e) => { e.preventDefault(); if (!problem && !busy) void onSubmit(reviewPayload(action, target, reason, textZh, textEn)) }}>
     <h2 id="rpt-review-title">{ACTION_LABEL[action]} · {target.title}</h2>
-    {action === 'modify' && <div className="rpt-edit-pair"><label>中文<textarea className="input" value={textZh} rows={7} onChange={(e) => setTextZh(e.target.value)} /></label><label>English<textarea className="input" lang="en" value={textEn} rows={7} onChange={(e) => setTextEn(e.target.value)} /></label></div>}
-    {action !== 'confirm' ? <label className="rpt-reason-label">理由（必填）<textarea autoFocus className="input" rows={4} required value={reason} onChange={(e) => setReason(e.target.value)} placeholder="填写调查依据和理由，全文写入审计" /></label> : <p>确认此内容，保留原生成文本并记录操作人和时间。</p>}
+    {action === 'modify' && <div className="rpt-edit-pair"><label>中文<textarea readOnly={busy} className="input" value={textZh} rows={7} onChange={(e) => { if (!busy) setTextZh(e.target.value) }} /></label><label>English<textarea readOnly={busy} className="input" lang="en" value={textEn} rows={7} onChange={(e) => { if (!busy) setTextEn(e.target.value) }} /></label></div>}
+    {action !== 'confirm' ? <label className="rpt-reason-label">理由（必填）<textarea readOnly={busy} autoFocus className="input" rows={4} required value={reason} onChange={(e) => { if (!busy) setReason(e.target.value) }} placeholder="填写调查依据和理由，全文写入审计" /></label> : <p>确认此内容，保留原生成文本并记录操作人和时间。</p>}
     {problem && action === 'modify' && reason && <p className="rpt-error" role="alert">{problem}</p>}
+    {busy && <p role="status">正在保存本次复核，正文和理由暂为只读；请等待结果后再修改。</p>}
     {error && <p className="rpt-error" role="alert">{error}</p>}
     <div className="rpt-toolbar rpt-dialog-actions"><button className="btn" type="button" disabled={busy} onClick={onCancel}>取消</button><button className="btn btn-primary" type="submit" disabled={busy || !!problem}>{busy ? '保存中…' : `保存${ACTION_LABEL[action]}`}</button></div>
   </form></div>
@@ -158,8 +164,15 @@ function parseFieldValue(field: GisisField, text: string): unknown {
   return text
 }
 
-function GisisPanel({ data, busy, pending, validation, onExport, onValidate }: { data: GisisDocument | null; busy: boolean; pending: boolean; validation?: GisisValidation | null; onExport: (format: 'json' | 'csv') => void; onValidate: (values: Record<string, unknown>, exportFile: boolean) => void }) {
+function GisisPanel({ data, busy, pending, validation, onExport, onValidate, onEdit }: { data: GisisDocument | null; busy: boolean; pending: boolean; validation?: GisisValidation | null; onExport: (format: 'json' | 'csv') => void; onValidate: (values: Record<string, unknown>, exportFile: boolean) => void; onEdit?: () => void }) {
   const [edits, setEdits] = useState<Record<string, string>>({})
+  const [staleValidation, setStaleValidation] = useState<GisisValidation | null | undefined>(undefined)
+  const changeField = (id: string, value: string) => {
+    onEdit?.()
+    setStaleValidation(validation)
+    setEdits((old) => ({ ...old, [id]: value }))
+  }
+  const validationIsStale = !!validation && validation === staleValidation
   const values = () => Object.fromEntries((data?.fields ?? []).filter((f) => f.id in edits).map((f) => [f.id, parseFieldValue(f, edits[f.id]!)]))
   return <Panel title="GISIS 上报字段" meta={<span>Marine Casualties</span>}>
     <p className="rpt-gisis-note">{data?.notice || '本地准备字段，不表示已提交 IMO GISIS。'} 缺值按 null / missing 保留。</p>
@@ -169,7 +182,7 @@ function GisisPanel({ data, busy, pending, validation, onExport, onValidate }: {
       const inputId = `rpt-gisis-${field.id}`
       const needsMappingCheck = field.mappingStatus === 'pending' || field.mappingNote?.includes('待核')
       return <div key={field.id} className="rpt-gisis-field"><label htmlFor={inputId}>{field.labelZh}{field.required && <b className="rpt-required"> *</b>}<small>{field.labelEn}{field.vesselId ? ` · ${field.vesselId}` : ''}</small></label>
-        {options ? <select id={inputId} className="select" value={text} disabled={busy || pending} onChange={(e) => setEdits((old) => ({ ...old, [field.id]: e.target.value }))}><option value="">缺数据</option>{options.map((v) => <option key={String(v)} value={String(v)}>{String(v)}</option>)}</select> : <input id={inputId} className="input" value={text} disabled={busy || pending} aria-label={`${field.labelZh} ${field.vesselId || ''}`} placeholder="缺数据（null）" onChange={(e) => setEdits((old) => ({ ...old, [field.id]: e.target.value }))} />}
+        {options ? <select id={inputId} className="select" value={text} disabled={busy || pending} onChange={(e) => changeField(field.id, e.target.value)}><option value="">缺数据</option>{options.map((v) => <option key={String(v)} value={String(v)}>{String(v)}</option>)}</select> : <input id={inputId} className="input" value={text} disabled={busy || pending} aria-label={`${field.labelZh} ${field.vesselId || ''}`} placeholder="缺数据（null）" onChange={(e) => changeField(field.id, e.target.value)} />}
         {field.missing && !(field.id in edits) && <span className="rpt-missing">{field.missingLabel || '缺数据'} · null</span>}
         <div className="rpt-field-mapping">{field.gisisRef && <span>{field.gisisRef}</span>}{field.mappingStatus && <span className={`rpt-mapping-tag${field.mappingStatus === 'pending' ? ' rpt-mapping-pending' : ''}`}>{MAPPING_LABEL[field.mappingStatus]}</span>}{needsMappingCheck && field.mappingStatus !== 'pending' && <span className="rpt-mapping-tag rpt-mapping-pending">待核</span>}{field.mappingNote && <small>{field.mappingNote}</small>}</div>
         <small className="rpt-field-source">来源：{field.sourceRefs.length ? field.sourceRefs.join(' / ') : '缺数据'}</small>
@@ -177,7 +190,8 @@ function GisisPanel({ data, busy, pending, validation, onExport, onValidate }: {
       </div>
     })}{!data?.fields.length && <div className="rpt-empty">{pending ? '真实案例字段待确认' : '正在载入 GISIS 字段…'}</div>}</div>
     {Object.keys(edits).length > 0 && <p className="rpt-gisis-note">编辑值只用于本次校验与导出，不写回案件。JSON / CSV 按已登记案件字段导出。</p>}
-    {validation && <div className={validation.valid ? 'rpt-notice' : 'rpt-error'} role="status">{validation.valid ? '校验通过' : `校验未通过（${validation.errors.length} 项）`}{validation.errors.length > 0 && <ul>{validation.errors.map((e, i) => <li key={i}>{e.fieldId || e.field || e.id || ''} · {e.message}</li>)}</ul>}</div>}
+    {validationIsStale && <p role="status" className="rpt-gisis-note">字段已修改，先前校验结果不再适用于当前输入，请重新校验。</p>}
+    {validation && !validationIsStale && <div className={validation.valid ? 'rpt-notice' : 'rpt-error'} role="status">{validation.valid ? '校验通过' : `校验未通过（${validation.errors.length} 项）`}{validation.errors.length > 0 && <ul>{validation.errors.map((e, i) => <li key={i}>{e.fieldId || e.field || e.id || ''} · {e.message}</li>)}</ul>}</div>}
     <div className="rpt-export"><button className="btn btn-sm" disabled={busy || pending || !data} onClick={() => onExport('json')}>JSON</button><button className="btn btn-sm" disabled={busy || pending || !data} onClick={() => onExport('csv')}>CSV</button><button className="btn btn-sm" disabled={busy || pending || !data} onClick={() => onValidate(values(), false)}>校验字段</button><button className="btn btn-sm btn-primary" disabled={busy || pending || !data} onClick={() => onValidate(values(), true)}>校验并导出</button></div>
   </Panel>
 }

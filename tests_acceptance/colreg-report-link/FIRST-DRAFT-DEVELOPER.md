@@ -1,0 +1,8 @@
+# First draft request: boundary notice (developer check)
+Base 3716478616cccec4ea901cb0471d3629055672df. A synthetic first-ever deferred draft request followed by version navigation reproduced absence of the server-outcome warning, since all retained values were null. The new test failed on the exact missing notice.
+
+The conditional outcome guidance is now a reusable, always-visible note in the session's loading, unavailable-target and loaded branches. It says IF a request has not returned before switching, ignored response does not prove no server report; manually check reports, do not automatically retry. It is general workflow guidance, not a claimed pending job/status. No fabricated request state or persistence added. Retained-results note remains conditional. No backend/permission changes.
+
+Developer commands from web: node tests/colreg-first-draft-notice.test.cjs (5 assertions); node tests/colreg-async-work.test.cjs (8); node tests/colreg-version-transition.test.cjs (5); node tests/colreg-report-link.test.cjs (9 scenarios/12 assertions); npm run build. All passed, build retains large chunk warning. Existing deps reused.
+
+Actual page/useLoad with synthetic hooks/router/promises; no HTTP or browser. Covers initial pending navigation/loading, loaded empty workspace, delayed result suppression and unavailable target. No paused/refusal/security tests, model, real data or service. No independent, browser/visual/accessibility, full CI or server cancellation/commit verification. Notes do not persist an unknown-outcome task across refresh. Prior manifests historical; this slice has its own freeze.

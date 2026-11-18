@@ -674,3 +674,196 @@ Authorized narrow synchronous gate for new-observation input callbacks during ex
 
 ## Environment input generation (2026-11-18)
 Authorized narrow follow-up on frozen 368b3d1: event-only form callback generation, separate from request epoch, prevents retained callbacks changing completed/new/unknown form state. No contract, backend or permission change. Evidence: tests_acceptance/environment-input-generation/DEVELOPER.md.
+
+## CASE-LOAD-STATUS (2026-11-18)
+Authorized bounded UI feedback correction on main94d5e38: Layout's case-fetch
+result is not service health. Replace ONLINE/OFFLINE with explicit case-data
+states; retain navigation, requests and permissions. Shared Layout change,
+synthetic SSR validation and build only; browser/visual acceptance pending.
+
+## CASE-LOAD-STATUS transition follow-up (2026-11-18)
+Independent review prompted an actual Layout-function synthetic lifecycle check.
+Before effects run, switching from failed case A to B retained false status.
+Bind load result to case ID; preserve existing cancellation and requests.
+
+## TOAST-LIFETIME (2026-11-18)
+Bounded UI feedback fix: expire the specific notification instance, not any later
+notification with the same text. No request/permission changes. Synthetic hook
+and clock regression only; browser/visual acceptance pending.
+
+## TOAST-ACCESSIBILITY (2026-11-18)
+Bounded save-feedback accessibility: existing evidence/recommendation operations
+use Toast with no live-region semantics. Add persistent empty status/alert
+regions, retaining messages, timeout and focus. No API or permission changes.
+
+## INTERVIEW-REPORT-LINK (2026-11-18)
+Report citations already encode interview record as id (reports/sources.py),
+while InterviewPage only consumed record. Accept id only when record is absent;
+preserve explicit record priority, case context and missing-record behavior.
+No API/permission changes, statement positioning or historical version claims.
+
+## COLREG-REPORT-LINK (2026-11-18)
+Existing report links carry check/run; current page ignored both. Bind query to
+session and initial selection; explicit run lookup may not fall back to current
+analysis. Missing/mismatched target is shown, not replaced. No API/permission or
+historical integrity claims; browser acceptance pending.
+
+## COLREG-REPORT-LINK loading follow-up (2026-11-18)
+Actual useLoad synthetic lifecycle reproduces stale A misreported as mismatched B
+on manual version selection. Route version selection through keyed query session;
+normalize active endpoint alias to current semantics. No loader/global/API changes.
+
+
+## COLREG case work retained across version navigation — pending independent review
+
+Follow-up to 0b53fce: preserve case-scoped draft, notice and comparison while resetting only version-scoped reads. No permissions or service changes. Developer synthetic tests and build passed; browser unverified. Evidence: tests_acceptance/colreg-report-link/RETAINED-WORK-DEVELOPER.md; freeze: logs/colreg-retained-work-impl-hashes-frozen.txt. Prior freezes remain historical.
+
+
+## COLREG stale work response suppression — pending independent review
+Following f492182, case-retained work rejects late session and out-of-order UI responses; no backend cancellation/retry guarantee. Draft current-ledger provenance is explicitly distinguished from viewed run. Developer synthetic regressions and build passed; browser unverified. See tests_acceptance/colreg-report-link/ASYNC-WORK-DEVELOPER.md and logs/colreg-async-work-impl-hashes-frozen.txt.
+
+
+## First pending COLREG draft guidance — pending independent review
+Make conditional unknown-result guidance visible even before any draft/notice/compare exists, including loading/unavailable states. No job state or backend changes. Developer five new synthetic assertions, adjacent tests/build passed. See tests_acceptance/colreg-report-link/FIRST-DRAFT-DEVELOPER.md and logs/colreg-first-draft-impl-hashes-frozen.txt; browser unverified.
+
+## ANALYSIS-MISSING-SCENARIO (2026-11-18)
+Existing report analysis links specify scenario; AnalysisView silently displayed
+baseline for absent scenario. Show missing target with explicit baseline action;
+valid/default views unchanged. No source/version verification or permission change.
+
+
+## UI first-group integration — pending acceptance
+
+Combined case status, toast, interview link, COLREG and missing-analysis candidates without functional edits; all document append histories retained. Developer selected 12 synthetic scripts and build passed; browser, visual, real-data and independent combined acceptance remain unverified. See tests_acceptance/ui-navigation-group-one/DEVELOPER.md. Do not merge or deploy.
+
+
+## Missing recommendation citation feedback — pending independent review
+Current-board missing explicit report reference is now reported without automatic reselection or historical verification claims. Developer synthetic 6 states/10 assertions and build passed; browser unverified. See tests_acceptance/recommendation-missing-citation/DEVELOPER.md and logs/recommendation-missing-citation-impl-hashes-frozen.txt.
+
+
+## Recommendation transition note preservation — pending independent review
+Only clear submitted explanation after a returned success result; retain on swallowed transport error and retain differing newer text. Developer four synthetic scenarios/build passed. See tests_acceptance/recommendation-transition-note/DEVELOPER.md and logs/recommendation-transition-note-impl-hashes-frozen.txt; browser unverified.
+
+
+## Recommendation reply/progress draft retention — pending independent review
+Preserve input edited during reply/progress requests using local edit counters; payloads and permissions unchanged. Developer 9 new synthetic scenarios, 4 adjacent and build passed. See tests_acceptance/recommendation-transition-note/FORM-SAVE-DEVELOPER.md and logs/recommendation-form-save-impl-hashes-frozen.txt; browser unverified.
+
+
+## Transition note ABA retention — pending independent review
+Reuse existing edit counter so changing away and back does not authorize clearing. Five transition and nine adjacent developer synthetic scenarios/build passed. See tests_acceptance/recommendation-transition-note/ABA-DEVELOPER.md and logs/recommendation-transition-aba-impl-hashes-frozen.txt. Browser unverified.
+
+
+## Recommendation progress draft group — pending independent review
+Percentage edits invalidate clearing of the shared submitted explanation. Proven synthetic 25% request / 50% new input case; 10 form and 5 transition developer scenarios/build pass. See tests_acceptance/recommendation-transition-note/PROGRESS-GROUP-DEVELOPER.md and logs/recommendation-progress-group-impl-hashes-frozen.txt. Browser unverified.
+
+
+## UI recommendations group two — pending acceptance
+
+Combined 8d4c86a and 92265a9 on main 94d5e38; only document append conflicts, both histories retained. Three reviewed synthetic scripts and build passed on combined code (developer evidence). Browser/visual, cross-page/backend and production permissions unverified. See tests_acceptance/ui-recommendations-group-two/DEVELOPER.md and logs/ui-recommendations-group-two-impl-hashes-frozen.txt. Do not merge or deploy.
+
+
+## Report review pending input — pending independent review
+Prevent editing text/reason while existing saving state is true; retain on failure, explain waiting. Developer modify/dismiss synthetic 14 assertions and build passed; browser unverified. See tests_acceptance/report-review-pending/DEVELOPER.md and logs/report-review-pending-impl-hashes-frozen.txt. No policy or report content changes.
+
+
+## GISIS stale validation feedback — pending independent review
+Editing fields invalidates displayed prior validation object while retaining input; prompts explicit revalidation. Developer 4 synthetic flows/40 assertions and build passed; browser unverified. See tests_acceptance/gisis-stale-validation/DEVELOPER.md and logs/gisis-stale-validation-impl-hashes-frozen.txt. No API, permission or consultation changes.
+
+
+## GISIS parent input revision binding — pending independent review
+Capture frontend input revision/request when validating; editing clears old result/global notice and stale success cannot certify new input. Four parent synthetic callback flows and four panel flows/44 assertions, build passed; not full browser/HTTP lifecycle. See tests_acceptance/gisis-stale-validation/PARENT-DEVELOPER.md and logs/gisis-parent-validation-impl-hashes-frozen.txt. No backend/permission or consultation changes.
+
+
+## GISIS scoped error and notice feedback — pending independent review
+Reproduced stale ordinary error and unrelated-notice removal; scope GISIS feedback and compare input/request before ordinary error display. 403 routes to existing denial handler; no permission changes. Developer 3 new synthetic flows, adjacent tests/build pass. See tests_acceptance/gisis-stale-validation/FEEDBACK-SCOPE-DEVELOPER.md and logs/gisis-feedback-scope-impl-hashes-frozen.txt; browser unverified.
+
+
+## UI reports group three — pending acceptance
+
+Combined 0a6d0bd and 16f159b on main 94d5e38; functional regions combined without conflict; both document tails retained. Developer four selected synthetic scripts and build passed. PR104 not integrated; browser/visual, real backend and production permissions unverified. See tests_acceptance/ui-reports-group-three/DEVELOPER.md and logs/ui-reports-group-three-impl-hashes-frozen.txt. Do not merge or deploy.
+
+
+## Three UI groups — pending combined acceptance
+
+Combined 076eec1 / 2064675 / 81a308c on 94d5e38, preserving all group document appends and exact source blobs. Developer 19 selected synthetic scripts plus build passed. Not integrated with PR104; browser/visual/backend/production permissions unverified. Evidence: tests_acceptance/ui-three-groups/DEVELOPER.md; freeze: logs/ui-three-groups-impl-hashes-frozen.txt. Do not merge or deploy.
+
+## Ordinary report test authorization fixtures (2026-11-15)
+On clean main 94d5e38, adjust only ordinary report/direct-handler and snapshot functional
+fixtures whose intent is authorized business behavior to explicit LeadInvestigator.
+Retain/add Investigator denial assertions under the unchanged full-content policy.
+No production permissions, historical-integrity candidates/retests, or HFACS substitutions.
+
+## 共享轨迹交换前置契约（2026-11-15）
+远端核对 main 94d5e38；新增独立 contracts/shared-trajectory-v1.md、JSON Schema 与纯 Python 校验器及构造测试。保留 W10.2/track-point 原合同，不改现有导入、权限、存储或网页。用于未来二维/Unity适配的显式来源、校时、HDG/COG、缺口与显示比例语义；不实现三维/动力学，不把视觉重叠当碰撞结论。仅本开发线；不含OCR/PDF/图片或凭证。
+自测：`cd service && .venv/bin/pytest -q tests/test_shared_trajectory.py tests/test_tracks_import_w102.py` 最终115通过（新增45、既有70）。全部新增数据为构造，不是AIS/LLM/三维实测。远端main与开放PR功能路径已核查；仓库树无相关.agents/skills。未修改生产权限；待独立契约、跨语言和真实来源适配验收。早期schema生成脚本括号错误已修正，最终schema自身合法性测试通过。
+
+## CSV preview source numbering (2026-11-15)
+Main94d5e38: remove middle source then add currently duplicates SOURCE-3 and blocks preview.
+Use first unoccupied temporary form identifier for new blank sources, preserve existing
+user identifiers/content/mappings, and enforce existing four-source limit in updater.
+Scope web/src/align only; no PR97/79/69 evidence-page/intake/timeline blocks. No original
+file access, OCR/AI, backend policy or persisted timeline change; human confirmation remains.
+Verification: the original length+1 expression yields SOURCE-1/SOURCE-3/SOURCE-3 after
+middle removal, and real previewPayload rejects it (synthetic static reproduction, not
+browser). New removal/addition, custom IDs, four-source bound, nonmutation and validation
+regressions pass; existing W4.1 32 model/static-render checks and TypeScript/Vite build pass.
+No .NET alignment, real AIS, LLM/OCR or browser interaction executed. Existing browser
+Chromium missing condition remains; no installation or restriction bypass. Function files
+do not overlap PR97/79/69; REQUESTS/ROADMAP append-only integration still needs review.
+
+## Report recommendation cause-label provenance (2026-11-14)
+Latest main4585016. New report sentences currently omit registered recommendation
+causeNodeIds. Add an explicit Draft sentence retaining exact ordered labels with
+unresolved/unchecked caveat and only a recommendation-register citation marked
+needsReview. No guessed evidence links, case/digest bindings, existing-report
+rewrite or report+recommendation archive enablement. Update reports/sources.py,
+contract note and real HTTP tests; renderer and permission policy unchanged.
+
+## PDF font-test identity repair on main94d5e38 (2026-11-14)
+Independent diagnosis confirms two test failures before rendering: Investigator
+has medical=Deny and applicable FR-02. Preserve production gates. Reuse the exact
+test-only delta from e91e4cf on latest main; explicitly authorized Lead renders
+real public-report font assertions, Investigator creation/export remain403.
+No source/renderer/font/global fixture changes. Fresh validation and independent
+review required on this current-main candidate, not inferred from the old review.
+
+## PR104 sentence text replacement provenance
+Reopen reports/service.py modify path: single-sentence changes left generated
+sourceStatus after source became Investigator. Set current sentence sourceStatus
+Investigator, retaining generatedText/citations/language/history; no permission or
+old-report migration. See contracts/report-sentence-review-provenance.md and
+ tests_acceptance/report-sentence-source-status/REPORT.md. Five new ordinary tests,
+public excerpt + explicitly synthetic edited wording; no restricted probes.
+
+## Investigator-edited sentence inherited-reference disclosure
+Reopen reports/exporter.py, ReportView.tsx, report-render.test.tsx and the
+report-sentence-review-provenance contract following independent review of db928a2.
+Add always-visible bilingual disclosure for Investigator sentences with citations:
+references remain traceability context, not automatic support or original quotation.
+Keep body, generatedText, references, review history and permissions unchanged.
+The prior source-status contract freeze is refreshed only for this documented addition.
+No browser, external model, restricted integrity probes or original-file access.
+
+## Public-report PDF pagination and text-excerpt layout
+Reopen exporter.py for section-heading pagination and public_text.py/sources.py for
+newly generated, hash-pinned public excerpts only. Preserve raw quote/line/hash/page
+references; omit only a proven source page-footer line immediately before form feed,
+with matching original body-page number. Retain all other numbers and footnotes.
+Mark retained figure captions as source captions whose images are not included.
+Do not rewrite existing stored reports, invent images, change authorization, or
+remove draft/review/missing-coverage notices. Base bbafa560; PR104 stays unchanged.
+
+## Supported synthetic archive fixtures for PR104 residual ordinary tests
+Reopen only two W8.4/W9.1 ordinary roundtrip tests to use newly POST-created
+seed=False supported cases; keep all prior assertion structures and add explicit
+Lead audit/export statuses. Other tests/production permissions unchanged. Retain
+separate complex-seed409/no-partial-package and Investigator403/zero-change checks.
+See tests_acceptance/supported-archive-workflows/REPORT.md; no archive support expansion.
+
+## DOCX continuation headers and language-label scope
+Reopen report exporter only for repeated table header rows and an accurate English-column label: original-language excerpts are not a complete translation. Preserve stored text, references, history and permissions. Validate XML and actual installed Writer rendering; do not claim Microsoft Word verification.
+
+
+## UI + PR104 — pending combined acceptance
+
+Combined exact 139f188 and b4df823; only document append conflicts, both preserved. Developer 19 UI scripts, new synthetic SSR (3 cases), pure formatting (6 cases) and build passed; counts not cumulative. No real material, paused/refusal probes, HFACS or browser run. See tests_acceptance/ui-pr104/DEVELOPER.md; freeze logs/ui-pr104-impl-hashes-frozen.txt. Real backend/production permissions/visual/independent acceptance pending. Do not merge or deploy.
