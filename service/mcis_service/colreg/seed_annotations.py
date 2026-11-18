@@ -10,24 +10,38 @@ from ..common.demo_case_ids import HAILI5_CASE_ID as HAILI5_CASE
 LILY_MARY_CASE = "CASE-2026-DEMO-LILY-MARY"
 
 # 虚构 Lily/Mary：EV-001 Mary VDR、EV-002 Lily S-VDR、EV-003 VTS AIS、EV-005 车钟/舵角记录
-LILY_MARY_BAND_EVIDENCE: dict[str, list[str]] = {
-    "B1": ["EV-003", "EV-001"],
-    "B2": ["EV-003", "EV-001"],
-    "B3": ["EV-001", "EV-002"],
-    "B4": ["EV-001", "EV-002", "EV-005"],
-    "B5": ["EV-001", "EV-002", "EV-003"],
-}
+LILY_MARY_# Materialize real dicts only when the public mapping is explicitly requested.
+from ..common.lazy_exports import LazyExports
 
-BAND_EVIDENCE: dict[str, dict[str, list[str]]] = {
-    LILY_MARY_CASE: LILY_MARY_BAND_EVIDENCE,
-}
+
+def _load_haili5_mapping():
+    from .haili5_seed import BAND_EVIDENCE
+    return BAND_EVIDENCE
+
+
+def _load_all_mappings():
+    return {
+        LILY_MARY_CASE: LILY_MARY_BAND_EVIDENCE,
+        HAILI5_CASE: _exports.get("HAILI5_BAND_EVIDENCE"),
+    }
+
+
+_exports = LazyExports(globals(), {
+    "HAILI5_BAND_EVIDENCE": _load_haili5_mapping,
+    "BAND_EVIDENCE": _load_all_mappings,
+})
+__all__ = ["HAILI5_CASE", "LILY_MARY_CASE", "LILY_MARY_BAND_EVIDENCE",
+           "HAILI5_BAND_EVIDENCE", "BAND_EVIDENCE", "seed_band_evidence"]
+
+
+def __getattr__(name):
+    return _exports.get(name)
+
+
+def __dir__():
+    return sorted(set(globals()) | set(__all__))
 
 
 def seed_band_evidence(case_id: str) -> dict[str, list[str]]:
-    if case_id == HAILI5_CASE:
-        # Real Seed annotations remain available on demand, not during startup.
-        from .haili5_seed import BAND_EVIDENCE as haili5_band_evidence
-        source = haili5_band_evidence
-    else:
-        source = BAND_EVIDENCE.get(case_id, {})
+    source = _exports.get("BAND_EVIDENCE").get(case_id, {})
     return {k: list(v) for k, v in source.items()}

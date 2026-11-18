@@ -962,3 +962,5 @@ writer transaction. Add distinct normal-registration identity/audit-sequence bin
 never put new cases into captured legacy inventory or adopt existing unknown rows.
 Research classify recognizes only matching case/create-event/binding without restore
 claims. No product route/permission/migration/publisher changes.
+
+- Authorized lazy named annotation mapping compatibility atop aa02d61; actual startup remains unverified, reflection before materialization differs; synthetic helper-only test.
