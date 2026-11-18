@@ -518,3 +518,25 @@ Combined 076eec1 / 2064675 / 81a308c on 94d5e38, preserving all group document a
 
 Combined exact 139f188 and b4df823; only document append conflicts, both preserved. Developer 19 UI scripts, new synthetic SSR (3 cases), pure formatting (6 cases) and build passed; counts not cumulative. No real material, paused/refusal probes, HFACS or browser run. See tests_acceptance/ui-pr104/DEVELOPER.md; freeze logs/ui-pr104-impl-hashes-frozen.txt. Real backend/production permissions/visual/independent acceptance pending. Do not merge or deploy.
 | 2026-11-18 | ui-pr104-interview-environment | 待独审 / DO NOT MERGE | 被测组合82e01b0双父e22079d/9cc3ece，212来源文件逐字匹配，两文档追加完整；限定5脚本/2来源SSR/原19UI脚本/继承引用SSR/TS/Vite开发通过，不累计历史计数；后端启动暂停，非浏览器/HTTP/生产。冻结 logs/ui-pr104-interview-environment-impl-hashes-frozen.txt |
+
+| 2026-11-18 | Report refresh section continuity | 待独验 | Developer synthetic7 lifecycle +4 adjacent callback flows and build passed; no browser/real backend; logs/report-refresh-section-impl-hashes-frozen.txt |
+
+| 2026-11-18 | Report refresh callback / pending selection follow-up | 待独验 | Developer 12 synthetic scenarios (includes prior 7), 4 adjacent flows and build passed; browser/real HTTP unverified; logs/report-refresh-section-r2-impl-hashes-frozen.txt |
+
+| 2026-11-18 | Recommendation pending operation context | 待独验 | Base80b0756; synthetic14 and adjacent5/10, build passed; no browser/real HTTP; no cancellation or concurrency serialization |
+
+| 2026-11-18 | Current-page progress single-flight | 待独验 | Base1a01a49; new5 synthetic and existing10/14/5 passed, build passed; not multi-user consistency, no browser/backend test |
+
+| 2026-11-18 | Progress callback failure draft preservation | 待独验 | Parent2e3f3ad; frontend synthetic7+adjacent10 and build; no in-place unknown unlock or confirmed reload |
+
+| 2026-11-18 | Recommendation read lifecycle | 待独验 | Local hook6 and display5 plus selected adjacent synthetic tests/build; shared hook unchanged, no browser/HTTP |
+
+| 2026-11-18 | Same-ID progress snapshot/draft distinction | 待独验 | Base d7447db; continuous synthetic4 plus scoped adjacent tests/build; no browser/HTTP, unknown lock retained |
+
+| 2026-11-18 | Case metadata failure label | 待独验 | Base a5086d9; synthetic3+adjacent5/build; refresh remains board/audit only |
+
+| 2026-11-18 | Unknown progress notice across status | 待独验 | Base717c683; enhanced synthetic7+adjacent4/build; source-change advice not conflict blocking |
+
+| 2026-11-18 | Explicit observed progress adoption | 待独验 | Baseba7e59e; selected synthetic5/7/10/5/build; no server CAS or browser acceptance |
+
+| 2026-11-18 | Progress source-guard attribution | 待独验 | Test-only on7702e62; ready/source60 rendered before stale callbacks; strengthened5/adjacent7/build; no server CAS claim |

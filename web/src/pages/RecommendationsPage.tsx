@@ -1,13 +1,13 @@
-import { useRef, useState, useSyncExternalStore, type DragEvent } from 'react'
+import { useLayoutEffect, useRef, useState, useSyncExternalStore, type DragEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
+import { api, ApiError, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
 import { RecommendationReview } from '../recommendationReview/RecommendationReview'
 import { ConsultationPanel } from '../consultation/ConsultationPanel'
 import { SERVICE_ADDR } from '../config'
 import { Metric, Panel } from '../components/Panel'
 import { useToast } from '../components/Toast'
 import { daysUntil, toLocal } from '../format'
-import { useLoad } from '../hooks'
+import { useLoad } from '../recommendationReview/useBoardLoad'
 import type { AuditEvent, CaseDef, Board, ConsultationRound, PartyStatus, Recommendation, RecStatus } from '../types'
 
 const STATUS_LABEL: Record<RecStatus, string> = {
@@ -32,6 +32,27 @@ async function loadAudit(caseId: string): Promise<AuditEvent[]> {
 
 const recommendationsIdentity = () => `${getRole()}\n${getOperator()}`
 
+// Local display lifetime only: a stale completion may still have committed remotely.
+function useScopedActions() {
+  const { show } = useToast()
+  const alive = useRef(true)
+  const identity = useRef(recommendationsIdentity())
+  useLayoutEffect(() => { alive.current = true; return () => { alive.current = false } }, [])
+  const current = () => alive.current && identity.current === recommendationsIdentity()
+  async function run<T>(work: () => Promise<T>, message: string): Promise<T | undefined> {
+    if (!current()) return
+    try {
+      const result = await work()
+      if (!current()) return
+      show(message, 'ok'); return result
+    } catch (e) {
+      if (current()) show(e instanceof ApiError ? `${e.code}：${e.message}` : String(e), 'err')
+      return undefined
+    }
+  }
+  return { run, show, current }
+}
+
 export function RecommendationsPage() {
   const who = useSyncExternalStore(onIdentityChange, recommendationsIdentity, recommendationsIdentity)
   const [params] = useSearchParams()
@@ -41,7 +62,7 @@ export function RecommendationsPage() {
 }
 
 function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requestedId: string }) {
-  const { run, show } = useToast()
+  const { run, show, current } = useScopedActions()
   const caseRes = useLoad(() => api.get<CaseDef>(casePath('', caseId)))
   const board = useLoad(() => api.get<Board>(casePath('/recommendations:board', caseId)))
   const audit = useLoad(() => loadAudit(caseId))
@@ -53,10 +74,17 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
   const all = (board.data?.columns ?? []).flatMap((c) => c.items)
   const sel = all.find((r) => r.id === selId)
   const missingReference = requestedId && selId === requestedId && board.data && !board.error && !sel
-  const refresh = () => { board.reload(); audit.reload() }
+  // Invalidate captured progress callbacks before React renders loading state.
+  const boardActionEpoch = useRef(0)
+  const renderedBoardEpoch = boardActionEpoch.current
+  const readCurrent = () => current() && boardActionEpoch.current === renderedBoardEpoch
+  const refresh = () => { if (current()) { boardActionEpoch.current++; board.reload(); audit.reload() } }
+  const clearPending = (expected: typeof pending) => {
+    if (current()) setPending(value => value === expected ? null : value)
+  }
 
   const transition = (id: string, to: RecStatus, note = '') =>
-    run(async () => { const r = await api.post<Recommendation>(casePath(`/recommendations/${id}:transition`, caseId), { to, note }); refresh(); setPending(null); return r },
+    run(async () => { const r = await api.post<Recommendation>(casePath(`/recommendations/${id}:transition`, caseId), { to, note }); refresh(); clearPending(pending); return r },
       `${id} → ${STATUS_LABEL[to]}（已写审计 safetyrec.transition）`)
 
   const onDrop = (colKey: string, e: DragEvent) => {
@@ -89,7 +117,7 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
     <div className="w7-page">
       <div className="page-head">
         <div>
-          <div className="page-title">安全建议跟踪 · 报告草案征求意见 <span className="p6-tag">{caseRes.data ? (caseRes.data.isFictionalDemo ? '示例数据（虚构）' : '真实案例（公开报告）') : '案件信息加载中'}</span><span className="p6-tag cyan">LIVE · {SERVICE_ADDR}</span></div>
+          <div className="page-title">安全建议跟踪 · 报告草案征求意见 <span className="p6-tag">{caseRes.data ? (caseRes.data.isFictionalDemo ? '示例数据（虚构）' : '真实案例（公开报告）') : caseRes.error ? '案件信息读取失败' : caseRes.loading ? '案件信息加载中' : '案件信息尚未取得'}</span><span className="p6-tag cyan">LIVE · {SERVICE_ADDR}</span></div>
           <div className="page-sub">
             状态机与 C# SafetyRecommendationBoard 一致：草拟 → 已发布 → 已回复（只能经登记回复）→ 已落实 / 未采纳（须理由）/ 已关闭。
             拖动卡片或在详情中操作；每次变更写入不可改的审计链（audit/audit.jsonl）。
@@ -101,18 +129,23 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
         </div>
       </div>
 
+      {caseRes.error && <p role="alert">案件信息读取失败：{caseRes.error}。“重新读取看板与审计”仅刷新看板和审计，该按钮不重读案件信息。</p>}
+      <p role="note">看板和审计分别读取，不是同一时点快照。</p>
+      <button className="btn btn-sm" onClick={refresh}>重新读取看板与审计</button>
+      {board.loading && <p role="status">{board.data ? '看板正在重载，以下为上次读取的旧快照；输入草稿保留。' : '看板正在读取，建议数量尚未确定。'}</p>}
+      {board.error && board.data && <p role="status">重载失败，以下保留旧快照，不代表当前状态。</p>}
       {board.error && <div className="p6-card" style={{ borderColor: 'var(--red)', marginBottom: 12 }}>后端错误：{board.error}</div>}
       {creating && <CreateForm caseId={caseId} onDone={(id) => { setCreating(false); if (id) { setSelId(id); refresh() } }} />}
 
-      <div className="grid w7-metrics" style={{ marginBottom: 12 }}>
+      {board.data && <div className="grid w7-metrics" style={{ marginBottom: 12 }}>
         <Metric label="安全建议" value={totals.total} unit="条" />
         <Metric label="已发布 · 待回复" value={totals.awaiting} unit="条" tone="amber" />
         <Metric label="落实中 · 平均进度" value={avg} unit={`% · ${totals.inProgress.length} 条`} tone="pur" />
         <Metric label="逾期（已发布/落实中）" value={totals.overdue} unit="条" tone={totals.overdue ? 'red' : 'green'} />
         <Metric label="已关闭" value={totals.closed} unit="条" tone="green" />
-      </div>
+      </div>}
 
-      <Panel title={`安全建议看板（${totals.total} 条）`} meta={<span>拖动卡片改变状态 · 已关闭 = 已落实 / 未采纳 / 已关闭</span>} style={{ marginBottom: 12 }}>
+      <Panel title={board.data ? `安全建议看板（${totals.total} 条）` : '安全建议看板（尚未取得数据）'} meta={<span>拖动卡片改变状态 · 已关闭 = 已落实 / 未采纳 / 已关闭</span>} style={{ marginBottom: 12 }}>
         <div className="kanban">
           {(board.data?.columns ?? []).map((col) => (
             <div key={col.key} className={`kb-col ${dropCol === col.key ? 'drop' : ''}`}
@@ -128,11 +161,13 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
 
       <div className="grid w7-columns">
         {sel ? (
-          <Detail key={sel.id} caseId={caseId} rec={sel} allowed={board.data?.allowed[sel.status] ?? []} pending={pending?.id === sel.id ? pending.to : null}
-            onTransition={transition} onChanged={refresh} onCancel={() => setPending(null)} />
+          <Detail key={sel.id} readCurrent={readCurrent} readReady={!board.loading && !board.error && !!board.data} caseId={caseId} rec={sel} allowed={board.data?.allowed[sel.status] ?? []} pending={pending?.id === sel.id ? pending.to : null}
+            onTransition={transition} onChanged={refresh} onCancel={() => clearPending(pending)} />
         ) : <Panel title="建议详情"><div className="empty">{missingReference ? <span role="status">当前案件看板未找到指定安全建议 {requestedId}。未自动选择其他建议；请核对引用或手动选择卡片。此处只查看当前记录，不证明历史版本已核验。</span> : '选择一张卡片'}</div></Panel>}
         <ConsultationPanel caseId={caseId} renderMatrix={(rounds) => <ConsultationTable rounds={rounds} />} onChanged={() => audit.reload()} />
         <Panel title="审计记录（安全建议 / 征求意见）" meta={<span>append-only · SHA-256 链</span>} bodyStyle={{ padding: 0, maxHeight: 330 }}>
+          {audit.loading && <p role="status">{audit.data ? '审计正在重载，以下为旧摘要。' : '审计正在读取。'}</p>}
+          {audit.error && <p role="alert">审计读取失败：{audit.error}{audit.data ? '；以下为旧摘要，不代表最新结果。' : '；不能据此认定没有审计记录。'}</p>}
           <table className="p6-table">
             <thead><tr><th>时间 · #</th><th>操作 / 变更</th></tr></thead>
             <tbody>
@@ -147,7 +182,7 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
                   </td>
                 </tr>
               ))}
-              {audit.error && <tr><td colSpan={2} className="empty">当前角色无审计查看权限</td></tr>}
+
             </tbody>
           </table>
         </Panel>
@@ -173,32 +208,66 @@ function Card({ rec, selected, onClick }: { rec: Recommendation; selected: boole
   )
 }
 
-function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus[]; pending: RecStatus | null; onTransition: (id: string, to: RecStatus, note?: string) => Promise<unknown>; onChanged: () => void; onCancel: () => void }) {
+function Detail(props: { readCurrent: () => boolean; readReady: boolean; caseId: string; rec: Recommendation; allowed: RecStatus[]; pending: RecStatus | null; onTransition: (id: string, to: RecStatus, note?: string) => Promise<unknown>; onChanged: () => void; onCancel: () => void }) {
   const { caseId, rec, allowed } = props
-  const { run } = useToast()
+  const { run, current } = useScopedActions()
   const edits = useRef({ response: 0, note: 0 })
   const [note, setNote] = useState('')
   const [party, setParty] = useState(rec.addressee)
   const [text, setText] = useState('')
-  const [pct, setPct] = useState(rec.progressPct)
+  const progressSource = JSON.stringify([rec.id, rec.progressPct, rec.status, rec.updatedUtc ?? null])
+  const [progressDraft, setProgressDraft] = useState<{ pct: number; source: string } | null>(null)
+  const pct = progressDraft?.pct ?? rec.progressPct
+  const sourceChanged = progressDraft !== null && progressDraft.source !== progressSource
   const [lastId, setLastId] = useState(rec.id)
-  if (lastId !== rec.id) { setLastId(rec.id); setPct(rec.progressPct); setParty(rec.addressee); setNote(''); setText('') }
+  if (lastId !== rec.id) { setLastId(rec.id); setProgressDraft(null); setParty(rec.addressee); setNote(''); setText('') }
 
   const respond = () => {
     const revision = edits.current.response
     return run(async () => {
       const r = await api.post(casePath(`/recommendations/${rec.id}/responses`, caseId), { party, text })
+      if (!current()) return undefined
       if (edits.current.response === revision) setText('')
       props.onChanged(); props.onCancel(); return r
     }, `${rec.id} 已登记回复${rec.status === 'Issued' ? '，状态 → 已回复' : ''}`)
   }
+  const progressLock = useRef(false)
+  const [progressState, setProgressState] = useState<'idle' | 'sending' | 'unknown'>('idle')
+  const [progressNotice, setProgressNotice] = useState('')
+  const latestProgress = useRef({ source: progressSource, ready: props.readReady, status: rec.status })
+  latestProgress.current = { source: progressSource, ready: props.readReady, status: rec.status }
+  const observedCurrent = () => current() && props.readCurrent() && latestProgress.current.ready &&
+    latestProgress.current.source === progressSource && latestProgress.current.status === 'Responded'
+  const adoptProgress = () => {
+    if (!observedCurrent() || progressLock.current || progressState !== 'idle') return
+    edits.current.note++
+    setProgressDraft({ pct: rec.progressPct, source: progressSource })
+    setProgressNotice('已采用当前已读取进度，说明保留在本地且尚未保存；同百分比不能单独保存说明。此操作没有发送请求。')
+  }
   const saveProgress = () => {
+    if (!observedCurrent() || progressLock.current || sourceChanged || pct === rec.progressPct) return
+    progressLock.current = true
+    setProgressState('sending'); setProgressNotice('正在保存进度；可继续编辑，当前新输入不会自动提交。')
     const revision = edits.current.note
     return run(async () => {
-      const r = await api.patch(casePath(`/recommendations/${rec.id}`, caseId), { progressPct: pct, note })
-      if (edits.current.note === revision) setNote('')
-      props.onChanged(); return r
-    }, `${rec.id} 落实进度 → ${pct}%（审计 safetyrec.progress）`)
+      try {
+        const r = await api.patch(casePath(`/recommendations/${rec.id}`, caseId), { progressPct: pct, note })
+        if (!current()) return undefined
+        props.onChanged()
+        if (!current()) return undefined
+        const unchanged = edits.current.note === revision
+        if (unchanged) { setNote(''); setProgressDraft(null) }
+        setProgressNotice(unchanged ? `进度 ${pct}% 的保存请求已返回；已请求重载，尚未确认读回。` : `进度 ${pct}% 的保存请求已返回；已请求重载，尚未确认读回；后来编辑的内容尚未保存。`)
+        setProgressState('idle'); progressLock.current = false
+        return r
+      } catch (e) {
+        if (current()) {
+          setProgressState('unknown')
+          setProgressNotice('保存结果未知，输入已保留；请先复制草稿并核对当前记录及审计，再决定后续操作。当前没有原地解锁入口；本页不会自动重试，也不表示请求未提交。')
+        }
+        throw e
+      }
+    }, `${rec.id} 进度保存请求已返回；请以当前记录和审计为准。`)
   }
   const closeTargets = allowed.filter((s) => s !== 'Responded')
   const showResponse = rec.status === 'Issued' || rec.status === 'Responded'
@@ -214,13 +283,20 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
         {rec.verificationNote && <><dt>核实说明</dt><dd>{rec.verificationNote}</dd></>}
       </dl>
 
+      {progressNotice && <p role={progressState === 'unknown' ? 'alert' : 'status'}>{progressNotice}</p>}
+      {sourceChanged && <p role="status">来源数据已变化；当前保留您基于先前快照编辑的进度和说明，已暂停提交进度，请核对后采用当前已读取值。这里只防范页面已知旧快照，不代表服务端版本核验，也不会解除结果未知锁。</p>}
+      {sourceChanged && <div>
+        <p>当前已读取进度：{rec.progressPct}%；本地草稿：{pct}%。</p>
+        <button className="btn btn-sm" disabled={!props.readReady || progressState !== 'idle' || rec.status !== 'Responded'} onClick={adoptProgress}>采用当前已读取进度，保留说明</button>
+      </div>}
+      {progressDraft && pct === rec.progressPct && note && <p role="note">说明尚未保存；现有接口不支持同百分比单独保存说明。请勿为保存说明而改变实际进度。</p>}
       {rec.status === 'Responded' && (
         <div className="p6-card" style={{ marginTop: 8 }}>
           <div className="row-actions">
             <span className="p6-dim">落实进度</span>
-            <input type="range" min={0} max={100} step={5} value={pct} onChange={(e) => { edits.current.note++; setPct(Number(e.target.value)) }} style={{ flex: 1 }} />
+            <input type="range" min={0} max={100} step={5} value={pct} onChange={(e) => { const nextPct = Number(e.target.value); edits.current.note++; setProgressDraft(old => ({ pct: nextPct, source: old?.source ?? progressSource })) }} style={{ flex: 1 }} />
             <b className="mono">{pct}%</b>
-            <button className="btn btn-sm" disabled={pct === rec.progressPct} onClick={saveProgress}>保存进度</button>
+            <button className="btn btn-sm" disabled={!props.readReady || sourceChanged || progressState !== 'idle' || pct === rec.progressPct} onClick={saveProgress}>保存进度</button>
           </div>
         </div>
       )}
@@ -239,7 +315,7 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
       <div className="p6-card" style={{ marginTop: 8, borderColor: props.pending && props.pending !== 'Responded' ? 'var(--cyan)' : undefined }}>
         <div className="p6-dim" style={{ marginBottom: 4 }}>状态变更（允许：{allowed.map((s) => STATUS_LABEL[s]).join('、') || '无，已终结'}）</div>
         <div className="row-actions">
-          <input className="input" style={{ flex: 1, minWidth: 120 }} value={note} onChange={(e) => { edits.current.note++; setNote(e.target.value) }} placeholder="说明（未采纳必填）" />
+          <input className="input" style={{ flex: 1, minWidth: 120 }} value={note} onChange={(e) => { edits.current.note++; setProgressDraft(old => old ?? { pct, source: progressSource }); setNote(e.target.value) }} placeholder="说明（未采纳必填）" />
           {closeTargets.map((s) => (
             <button key={s} className={`btn btn-sm ${s === 'NotAdopted' ? 'btn-danger' : s === props.pending ? 'btn-primary' : ''}`}
               disabled={s === 'NotAdopted' && !note.trim()} onClick={async () => {

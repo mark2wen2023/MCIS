@@ -867,3 +867,36 @@ Reopen report exporter only for repeated table header rows and an accurate Engli
 ## UI + PR104 — pending combined acceptance
 
 Combined exact 139f188 and b4df823; only document append conflicts, both preserved. Developer 19 UI scripts, new synthetic SSR (3 cases), pure formatting (6 cases) and build passed; counts not cumulative. No real material, paused/refusal probes, HFACS or browser run. See tests_acceptance/ui-pr104/DEVELOPER.md; freeze logs/ui-pr104-impl-hashes-frozen.txt. Real backend/production permissions/visual/independent acceptance pending. Do not merge or deploy.
+
+## Report refresh section continuity (2026-11-18)
+Confirmed on UI+PR104 9cc3ece: review save remount returned the selected second section to first. Preserve a same-context, same-report section hint across refresh; validate it against loaded sections. Product change confined to ReportPage.tsx. Synthetic lifecycle7 and adjacent GISIS4 passed; build passed; browser/backend unverified. See tests_acceptance/report-refresh-section/DEVELOPER.md.
+
+## Report refresh callback and pending section selection (2026-11-18)
+Follow-up to 2f2bba3: reproduced actual refresh-button event misuse and stale section capture during pending review. Explicit event-free refresh and latest-section ref preserve user selection; inactive sessions cannot refresh. Developer 12 synthetic lifecycle scenarios, 4 adjacent GISIS flows and build passed; no real browser/HTTP validation. See tests_acceptance/report-refresh-section/DEVELOPER.md; independent review pending.
+
+## Recommendation pending operation context (2026-11-18)
+Reproduced old transition completion clearing a newly opened confirmation. Exact pending-object comparison plus local session lifetime guards preserve later actions and suppress stale completion notifications; no request cancellation or retry. Base80b0756, independent fix/recommendation-pending-context. Developer synthetic14 plus existing5/10 and build passed; browser/HTTP unverified. See tests_acceptance/recommendation-pending-context/DEVELOPER.md.
+
+## Progress save single-flight (2026-11-18)
+Synthetic before-render double click reproduced two PATCH dispatches. Add synchronous current-page lock, visible sending/unknown state and newer-unsaved-input notice; keep editable drafts and existing counters. Unknown does not retry or claim rollback. Developer new5 plus existing10/14/5 and build passed. See tests_acceptance/recommendation-progress-flight/DEVELOPER.md; no browser/backend acceptance.
+
+## Progress refresh callback failure (2026-11-18)
+Reproduced cleared note when synchronous onChanged throws after mock save success. Move clearing after callback return, keep unknown lock and original/newer input on failure. Clarify no in-place unlock and reload not confirmed readback. Frontend synthetic7 and adjacent10 plus build passed; no backend/browser tests. See progress-flight DEVELOPER follow-up.
+
+## Recommendation board read lifecycle (2026-11-18)
+Reproduced stale response between reload and passive cleanup. Recommendation-only hook synchronously invalidates; explicit unread/stale/failure notices preserve Detail identity with retained data. Shared hook unchanged; independent board/audit reads not one snapshot. See tests_acceptance/recommendation-read-lifecycle/DEVELOPER.md for selected synthetic tests and build; browser/HTTP unverified.
+
+## Same-ID recommendation progress snapshot (2026-11-18)
+Reproduced unedited25 remaining after snapshot50. Derive clean value from snapshot; preserve edited percentage/note with explicit source-change notice and unchanged unknown lock. Base d7447db, selected synthetic tests/build; see tests_acceptance/recommendation-progress-snapshot/DEVELOPER.md. No server version or browser claim.
+
+## Recommendation case read failure label (2026-11-18)
+Synthetic initial error reproduced misleading loading title. Distinguish failed/unavailable/loading metadata and explicitly limit refresh button to board/audit. Request behavior unchanged. New3/adjacent5 synthetic and build passed; no browser/HTTP. See tests_acceptance/recommendation-case-read-label/DEVELOPER.md.
+
+## Unknown progress notice outside status controls (2026-11-18)
+Reproduced hidden unknown notice after same-ID non-Responded snapshot using exact notice assertion. Move notice outside status condition; lock unchanged and remains after return to Responded. Synthetic7 enhanced and adjacent4/build passed. See tests_acceptance/recommendation-unknown-status-notice/DEVELOPER.md; no browser/HTTP claim.
+
+## Explicit observed progress adoption (2026-11-18)
+Reproduced note-only old percentage dispatch after new snapshot. Block known-source-change save; explicitly adopt current observed percentage while retaining note, without request. Loading/error/pending/unknown do not adopt/unlock. Same-percentage note cannot save alone. Selected synthetic5/7/10/5 and build passed; local UI guard only. See tests_acceptance/recommendation-progress-adopt/DEVELOPER.md.
+
+## Progress source-guard test attribution (2026-11-18)
+Test-only correction: render ready/source60 Detail and verify current adoption enabled before invoking old source50 adoption; also verify previously eligible source25 save dispatches nothing. Strengthened5+adjacent7/build passed, product unchanged. A→B→A and reload-before-rerender remain unverified. See adoption DEVELOPER follow-up.
