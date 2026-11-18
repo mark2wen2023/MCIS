@@ -753,3 +753,5 @@ Synthetic red1 reproduced new input lost on late load render. Track edits and se
 - Audio attach pending-input guard: preserve new drafts/selection after late success, explicitly require result checking without retry. New 5 synthetic developer nodes pass; see tests_acceptance/audio-attach-race/DEVELOPER-VERIFICATION.md. Real browser/backend unverified.
 
 - Image import async guard: preserve pending edits and selection on late response. Developer 5 new, 5 reread, 4 save-context checks passed; independent/browser pending. See tests_acceptance/image-create-race/DEVELOPER-VERIFICATION.md.
+
+- Image run-list response selection guard; new 3 developer synthetic nodes passed, browser/backend not verified. See tests_acceptance/image-list-context/DEVELOPER-VERIFICATION.md.
