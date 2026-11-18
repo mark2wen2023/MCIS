@@ -905,3 +905,6 @@ Test-only correction: render ready/source60 Detail and verify current adoption e
 
 ## UI effect harness correction
 Authorized limited repair of three frozen synthetic harnesses: dependency-aware commit/cleanup and unfinished-loop failure detection. Original business assertions retained; product unchanged. See tests_acceptance/ui-effect-harness/README.md.
+
+## Offline actual ReportView preview
+Authorized independent read-only synthetic visual preview based on 3edb1a55; no product changes, API, backend, browser launch or model. Build script and handoff: web/preview/report/README.md. Static HTML only; not functional workflow acceptance.

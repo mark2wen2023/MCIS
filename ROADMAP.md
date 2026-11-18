@@ -547,3 +547,5 @@ Combined exact 139f188 and b4df823; only document append conflicts, both preserv
 | UI commit-phase evidence follow-up | 待测 | isolated unmount + observable adoption positive/negative controls pass; TS/Vite pass; product unchanged | logs/ui-commit-phase-evidence-followup-frozen.txt |
 
 | UI effect harness correction | 待独验 | 08fc47b product unchanged; 24 selected Node scripts + TS/Vite passed; three corrected scripts also pass original 49fc5b0 source. logs/ui-effect-harness-hashes-frozen.txt; integration unchanged; no browser/backend acceptance. |
+
+| Offline actual ReportView preview | 待独验/待浏览器 | Three synthetic static pages built; dependency and HTML checks passed; browser/visual/workflow unverified. logs/ui-offline-report-preview-frozen.txt |
