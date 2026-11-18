@@ -800,3 +800,6 @@ Synthetic red1 reproduced new input lost on late load render. Track edits and se
 
 ## Audio save feedback (2026-11-18)
 Authorized narrow revision to frozen audio page: distinguish prior confirmation/current draft/waiting/unknown without changing submitted-snapshot validation, selection checks or request behavior. See tests_acceptance/audio-save-feedback/DEVELOPER.md. No backend/permissions/archive changes; browser unverified.
+
+## Media unknown-save guidance (2026-11-18)
+Authorized frontend-only amendment to frozen audio/image pages: retain page-memory unknown reminder outside row rendering, explicit copy/check/read-replacement/resave risk. No receipt, retry or authorization change. Evidence: tests_acceptance/media-unknown-guidance/DEVELOPER.md.
