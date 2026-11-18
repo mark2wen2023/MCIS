@@ -745,3 +745,5 @@ Synthetic late success after changing case updated old page state. Capture case/
 
 ## Image pending reread correction (2026-11-18)
 Synthetic red1 reproduced new input lost on late load render. Track edits and selection epochs before applying reread; five ordinary synthetic cases pass, including normal reread. No permission/API change; see tests_acceptance/image-read-race/DEVELOPER-VERIFICATION.md. Not browser acceptance.
+
+- Image review save-context guard: delayed responses after selection change retain drafts; synthetic developer checks 4+3+5 passed. See tests_acceptance/image-save-context/DEVELOPER-VERIFICATION.md. Browser/backend unverified.
