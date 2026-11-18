@@ -975,3 +975,6 @@ claims. No product route/permission/migration/publisher changes.
 
 ## Minimal startup inventory research
 Authorized first-step path inventory and default-deny checker only, base 6d5069b. No executable closure or product edits; three self-made temporary-directory nodes passed. research/minimal-startup-inventory/README.md records gaps.
+
+## Inventory scanner error correction
+Authorized same-scope correction: explicit onerror/incomplete result, synthetic scanner replacements only, manifest/root/stability/hard-link prerequisites documented. No product or startup change.

@@ -59,3 +59,20 @@ python -B -m unittest test_synthetic.SyntheticInventory.test_empty_inventory_doe
 Fixtures are self-created temporary text. No write-refusal, permission, symlink, tamper,
 fault, recovery, application, model or paused tests. Checks prove only inventory report
 semantics, not startup acceptance. No runnable package produced or published.
+
+## Scan-error correction and trust preconditions
+os.walk now receives an onerror callback which raises; enumeration/lstat OSError
+returns SCAN_INCOMPLETE with inventory_matches=false and startup_allowed=false.
+Three added tests use wholly invented scanner functions: callback error before any
+entries, error after a synthetic entry, and an iterator exception. No actual permission
+changes, inaccessible directories or OS fault probes. All six explicitly selected
+synthetic nodes passed; first invocation from the repository root found no test module,
+then the documented test-directory invocation succeeded.
+
+The manifest is ALSO caller-supplied input, not a trusted certificate. Schema/path/digest
+checks do not establish its authority or make supplied digests trustworthy. Reviewer must
+establish the manifest provenance and independently trusted root/ancestor directories.
+Directories and manifest must remain stable and exclusively controlled throughout inspection.
+Hard links can alias data outside the selected root: this checker does not detect or
+establish their provenance. No hard-link isolation guarantee, concurrent-writer protection,
+sandbox or startup permission is provided. These are prerequisites, not implemented controls.

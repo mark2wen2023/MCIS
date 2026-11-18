@@ -35,16 +35,23 @@ def inspect(root, manifest):
         result["reasons"].append("INVALID_ROOT")
         return result
     found = {}
-    # Metadata inventory first: never read unexpected files or traverse links.
-    for parent, dirs, names in os.walk(root, followlinks=False):
-        for name in dirs + names:
-            path = Path(parent) / name
-            mode = path.lstat().st_mode
-            if stat.S_ISLNK(mode) or not (stat.S_ISDIR(mode) or stat.S_ISREG(mode)):
-                result["reasons"].append("UNSUPPORTED_MEMBER")
-                return result
-            if stat.S_ISREG(mode):
-                found[path.relative_to(root).as_posix()] = path
+    def scan_error(error):
+        raise error
+
+    try:
+        # Metadata inventory first: never read unexpected files or traverse links.
+        for parent, dirs, names in os.walk(root, followlinks=False, onerror=scan_error):
+            for name in dirs + names:
+                path = Path(parent) / name
+                mode = path.lstat().st_mode
+                if stat.S_ISLNK(mode) or not (stat.S_ISDIR(mode) or stat.S_ISREG(mode)):
+                    result["reasons"].append("UNSUPPORTED_MEMBER")
+                    return result
+                if stat.S_ISREG(mode):
+                    found[path.relative_to(root).as_posix()] = path
+    except OSError:
+        result["reasons"].append("SCAN_INCOMPLETE")
+        return result
     if set(found) != set(expected):
         result["reasons"].append("FILE_SET_INCOMPLETE_OR_EXTRA")
         return result

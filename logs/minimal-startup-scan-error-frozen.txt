@@ -1,0 +1,3 @@
+4ad6a9822fb59c4431f6fe9b76e0baa61b0080142e82b8a2471faf8420934875  research/minimal-startup-inventory/README.md
+5b88f3832c91c41672785bb5e82695eff29e352a99c615feae69c7fe14f2a151  research/minimal-startup-inventory/check_inventory.py
+83a854e191735946d81e9685c8ab0c32d6501d558472ebf9090dffa3e756f63e  research/minimal-startup-inventory/test_synthetic.py

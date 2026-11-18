@@ -489,3 +489,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | source policy Settings order | 待测 | synthetic constructor and AST checks pass; no app imports, seed default remains True | logs/source-policy-settings-order-frozen.txt |
 
 | Minimal startup inventory | 研究待审/启动阻断 | Three ordinary synthetic inventory nodes passed; startup_allowed always false; no service execution or package. logs/minimal-startup-inventory-frozen.txt |
+
+| Minimal inventory scan errors | 待独验 | Six selected synthetic nodes pass (three new scanner replacements); startup remains blocked. logs/minimal-startup-scan-error-frozen.txt |
