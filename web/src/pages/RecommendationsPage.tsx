@@ -1,4 +1,4 @@
-import { useState, useSyncExternalStore, type DragEvent } from 'react'
+import { useRef, useState, useSyncExternalStore, type DragEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
 import { RecommendationReview } from '../recommendationReview/RecommendationReview'
@@ -52,6 +52,7 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
 
   const all = (board.data?.columns ?? []).flatMap((c) => c.items)
   const sel = all.find((r) => r.id === selId)
+  const missingReference = requestedId && selId === requestedId && board.data && !board.error && !sel
   const refresh = () => { board.reload(); audit.reload() }
 
   const transition = (id: string, to: RecStatus, note = '') =>
@@ -129,7 +130,7 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
         {sel ? (
           <Detail key={sel.id} caseId={caseId} rec={sel} allowed={board.data?.allowed[sel.status] ?? []} pending={pending?.id === sel.id ? pending.to : null}
             onTransition={transition} onChanged={refresh} onCancel={() => setPending(null)} />
-        ) : <Panel title="建议详情"><div className="empty">选择一张卡片</div></Panel>}
+        ) : <Panel title="建议详情"><div className="empty">{missingReference ? <span role="status">当前案件看板未找到指定安全建议 {requestedId}。未自动选择其他建议；请核对引用或手动选择卡片。此处只查看当前记录，不证明历史版本已核验。</span> : '选择一张卡片'}</div></Panel>}
         <ConsultationPanel caseId={caseId} renderMatrix={(rounds) => <ConsultationTable rounds={rounds} />} onChanged={() => audit.reload()} />
         <Panel title="审计记录（安全建议 / 征求意见）" meta={<span>append-only · SHA-256 链</span>} bodyStyle={{ padding: 0, maxHeight: 330 }}>
           <table className="p6-table">
@@ -175,6 +176,7 @@ function Card({ rec, selected, onClick }: { rec: Recommendation; selected: boole
 function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus[]; pending: RecStatus | null; onTransition: (id: string, to: RecStatus, note?: string) => Promise<unknown>; onChanged: () => void; onCancel: () => void }) {
   const { caseId, rec, allowed } = props
   const { run } = useToast()
+  const edits = useRef({ response: 0, note: 0 })
   const [note, setNote] = useState('')
   const [party, setParty] = useState(rec.addressee)
   const [text, setText] = useState('')
@@ -182,13 +184,22 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
   const [lastId, setLastId] = useState(rec.id)
   if (lastId !== rec.id) { setLastId(rec.id); setPct(rec.progressPct); setParty(rec.addressee); setNote(''); setText('') }
 
-  const respond = () => run(async () => {
-    const r = await api.post(casePath(`/recommendations/${rec.id}/responses`, caseId), { party, text })
-    setText(''); props.onChanged(); props.onCancel(); return r
-  }, `${rec.id} 已登记回复${rec.status === 'Issued' ? '，状态 → 已回复' : ''}`)
-  const saveProgress = () => run(async () => {
-    const r = await api.patch(casePath(`/recommendations/${rec.id}`, caseId), { progressPct: pct, note }); setNote(''); props.onChanged(); return r
-  }, `${rec.id} 落实进度 → ${pct}%（审计 safetyrec.progress）`)
+  const respond = () => {
+    const revision = edits.current.response
+    return run(async () => {
+      const r = await api.post(casePath(`/recommendations/${rec.id}/responses`, caseId), { party, text })
+      if (edits.current.response === revision) setText('')
+      props.onChanged(); props.onCancel(); return r
+    }, `${rec.id} 已登记回复${rec.status === 'Issued' ? '，状态 → 已回复' : ''}`)
+  }
+  const saveProgress = () => {
+    const revision = edits.current.note
+    return run(async () => {
+      const r = await api.patch(casePath(`/recommendations/${rec.id}`, caseId), { progressPct: pct, note })
+      if (edits.current.note === revision) setNote('')
+      props.onChanged(); return r
+    }, `${rec.id} 落实进度 → ${pct}%（审计 safetyrec.progress）`)
+  }
   const closeTargets = allowed.filter((s) => s !== 'Responded')
   const showResponse = rec.status === 'Issued' || rec.status === 'Responded'
 
@@ -207,7 +218,7 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
         <div className="p6-card" style={{ marginTop: 8 }}>
           <div className="row-actions">
             <span className="p6-dim">落实进度</span>
-            <input type="range" min={0} max={100} step={5} value={pct} onChange={(e) => setPct(Number(e.target.value))} style={{ flex: 1 }} />
+            <input type="range" min={0} max={100} step={5} value={pct} onChange={(e) => { edits.current.note++; setPct(Number(e.target.value)) }} style={{ flex: 1 }} />
             <b className="mono">{pct}%</b>
             <button className="btn btn-sm" disabled={pct === rec.progressPct} onClick={saveProgress}>保存进度</button>
           </div>
@@ -218,8 +229,8 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
         <div className="p6-card" style={{ marginTop: 8, borderColor: props.pending === 'Responded' ? 'var(--cyan)' : undefined }}>
           <div className="p6-dim" style={{ marginBottom: 4 }}>登记书面回复{rec.status === 'Issued' ? '（登记后进入“落实中”）' : '（追加，不改状态）'}</div>
           <div className="row-actions">
-            <input className="input" style={{ width: 130 }} value={party} onChange={(e) => setParty(e.target.value)} placeholder="回复方" />
-            <input className="input" style={{ flex: 1 }} value={text} onChange={(e) => setText(e.target.value)} placeholder="回复内容" />
+            <input className="input" style={{ width: 130 }} value={party} onChange={(e) => { edits.current.response++; setParty(e.target.value) }} placeholder="回复方" />
+            <input className="input" style={{ flex: 1 }} value={text} onChange={(e) => { edits.current.response++; setText(e.target.value) }} placeholder="回复内容" />
             <button className="btn btn-sm btn-primary" disabled={!party.trim() || !text.trim()} onClick={respond}>登记回复</button>
           </div>
         </div>
@@ -228,10 +239,14 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
       <div className="p6-card" style={{ marginTop: 8, borderColor: props.pending && props.pending !== 'Responded' ? 'var(--cyan)' : undefined }}>
         <div className="p6-dim" style={{ marginBottom: 4 }}>状态变更（允许：{allowed.map((s) => STATUS_LABEL[s]).join('、') || '无，已终结'}）</div>
         <div className="row-actions">
-          <input className="input" style={{ flex: 1, minWidth: 120 }} value={note} onChange={(e) => setNote(e.target.value)} placeholder="说明（未采纳必填）" />
+          <input className="input" style={{ flex: 1, minWidth: 120 }} value={note} onChange={(e) => { edits.current.note++; setNote(e.target.value) }} placeholder="说明（未采纳必填）" />
           {closeTargets.map((s) => (
             <button key={s} className={`btn btn-sm ${s === 'NotAdopted' ? 'btn-danger' : s === props.pending ? 'btn-primary' : ''}`}
-              disabled={s === 'NotAdopted' && !note.trim()} onClick={() => props.onTransition(rec.id, s, note).then(() => setNote(''))}>
+              disabled={s === 'NotAdopted' && !note.trim()} onClick={async () => {
+                const revision = edits.current.note
+                const result = await props.onTransition(rec.id, s, note)
+                if (result !== undefined && edits.current.note === revision) setNote('')
+              }}>
               → {STATUS_LABEL[s]}
             </button>
           ))}

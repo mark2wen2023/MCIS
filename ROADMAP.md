@@ -431,3 +431,28 @@ Make conditional unknown-result guidance visible even before any draft/notice/co
 ## UI first-group integration — pending acceptance
 
 Combined case status, toast, interview link, COLREG and missing-analysis candidates without functional edits; all document append histories retained. Developer selected 12 synthetic scripts and build passed; browser, visual, real-data and independent combined acceptance remain unverified. See tests_acceptance/ui-navigation-group-one/DEVELOPER.md. Do not merge or deploy.
+
+
+## Missing recommendation citation feedback — pending independent review
+Current-board missing explicit report reference is now reported without automatic reselection or historical verification claims. Developer synthetic 6 states/10 assertions and build passed; browser unverified. See tests_acceptance/recommendation-missing-citation/DEVELOPER.md and logs/recommendation-missing-citation-impl-hashes-frozen.txt.
+
+
+## Recommendation transition note preservation — pending independent review
+Only clear submitted explanation after a returned success result; retain on swallowed transport error and retain differing newer text. Developer four synthetic scenarios/build passed. See tests_acceptance/recommendation-transition-note/DEVELOPER.md and logs/recommendation-transition-note-impl-hashes-frozen.txt; browser unverified.
+
+
+## Recommendation reply/progress draft retention — pending independent review
+Preserve input edited during reply/progress requests using local edit counters; payloads and permissions unchanged. Developer 9 new synthetic scenarios, 4 adjacent and build passed. See tests_acceptance/recommendation-transition-note/FORM-SAVE-DEVELOPER.md and logs/recommendation-form-save-impl-hashes-frozen.txt; browser unverified.
+
+
+## Transition note ABA retention — pending independent review
+Reuse existing edit counter so changing away and back does not authorize clearing. Five transition and nine adjacent developer synthetic scenarios/build passed. See tests_acceptance/recommendation-transition-note/ABA-DEVELOPER.md and logs/recommendation-transition-aba-impl-hashes-frozen.txt. Browser unverified.
+
+
+## Recommendation progress draft group — pending independent review
+Percentage edits invalidate clearing of the shared submitted explanation. Proven synthetic 25% request / 50% new input case; 10 form and 5 transition developer scenarios/build pass. See tests_acceptance/recommendation-transition-note/PROGRESS-GROUP-DEVELOPER.md and logs/recommendation-progress-group-impl-hashes-frozen.txt. Browser unverified.
+
+
+## UI recommendations group two — pending acceptance
+
+Combined 8d4c86a and 92265a9 on main 94d5e38; only document append conflicts, both histories retained. Three reviewed synthetic scripts and build passed on combined code (developer evidence). Browser/visual, cross-page/backend and production permissions unverified. See tests_acceptance/ui-recommendations-group-two/DEVELOPER.md and logs/ui-recommendations-group-two-impl-hashes-frozen.txt. Do not merge or deploy.
