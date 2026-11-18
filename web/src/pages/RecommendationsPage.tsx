@@ -217,14 +217,32 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
       props.onChanged(); props.onCancel(); return r
     }, `${rec.id} 已登记回复${rec.status === 'Issued' ? '，状态 → 已回复' : ''}`)
   }
+  const progressLock = useRef(false)
+  const [progressState, setProgressState] = useState<'idle' | 'sending' | 'unknown'>('idle')
+  const [progressNotice, setProgressNotice] = useState('')
   const saveProgress = () => {
+    if (!current() || progressLock.current || pct === rec.progressPct) return
+    progressLock.current = true
+    setProgressState('sending'); setProgressNotice('正在保存进度；可继续编辑，当前新输入不会自动提交。')
     const revision = edits.current.note
     return run(async () => {
-      const r = await api.patch(casePath(`/recommendations/${rec.id}`, caseId), { progressPct: pct, note })
-      if (!current()) return undefined
-      if (edits.current.note === revision) setNote('')
-      props.onChanged(); return r
-    }, `${rec.id} 落实进度 → ${pct}%（审计 safetyrec.progress）`)
+      try {
+        const r = await api.patch(casePath(`/recommendations/${rec.id}`, caseId), { progressPct: pct, note })
+        if (!current()) return undefined
+        const unchanged = edits.current.note === revision
+        if (unchanged) setNote('')
+        props.onChanged()
+        setProgressNotice(unchanged ? `已保存本次提交的进度 ${pct}%。` : `已保存本次提交的进度 ${pct}%；后来编辑的内容尚未保存。`)
+        setProgressState('idle'); progressLock.current = false
+        return r
+      } catch (e) {
+        if (current()) {
+          setProgressState('unknown')
+          setProgressNotice('保存结果未知，输入已保留；请先复制草稿并核对当前记录及审计，再决定后续操作。本页不会自动重试，也不表示请求未提交。')
+        }
+        throw e
+      }
+    }, `${rec.id} 进度保存请求已返回；请以当前记录和审计为准。`)
   }
   const closeTargets = allowed.filter((s) => s !== 'Responded')
   const showResponse = rec.status === 'Issued' || rec.status === 'Responded'
@@ -246,8 +264,9 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
             <span className="p6-dim">落实进度</span>
             <input type="range" min={0} max={100} step={5} value={pct} onChange={(e) => { edits.current.note++; setPct(Number(e.target.value)) }} style={{ flex: 1 }} />
             <b className="mono">{pct}%</b>
-            <button className="btn btn-sm" disabled={pct === rec.progressPct} onClick={saveProgress}>保存进度</button>
+            <button className="btn btn-sm" disabled={progressState !== 'idle' || pct === rec.progressPct} onClick={saveProgress}>保存进度</button>
           </div>
+          {progressNotice && <p role={progressState === 'unknown' ? 'alert' : 'status'}>{progressNotice}</p>}
         </div>
       )}
 

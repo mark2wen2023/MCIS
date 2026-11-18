@@ -849,3 +849,6 @@ Follow-up to 2f2bba3: reproduced actual refresh-button event misuse and stale se
 
 ## Recommendation pending operation context (2026-11-18)
 Reproduced old transition completion clearing a newly opened confirmation. Exact pending-object comparison plus local session lifetime guards preserve later actions and suppress stale completion notifications; no request cancellation or retry. Base80b0756, independent fix/recommendation-pending-context. Developer synthetic14 plus existing5/10 and build passed; browser/HTTP unverified. See tests_acceptance/recommendation-pending-context/DEVELOPER.md.
+
+## Progress save single-flight (2026-11-18)
+Synthetic before-render double click reproduced two PATCH dispatches. Add synchronous current-page lock, visible sending/unknown state and newer-unsaved-input notice; keep editable drafts and existing counters. Unknown does not retry or claim rollback. Developer new5 plus existing10/14/5 and build passed. See tests_acceptance/recommendation-progress-flight/DEVELOPER.md; no browser/backend acceptance.

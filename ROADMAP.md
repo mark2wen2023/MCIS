@@ -511,3 +511,5 @@ Combined exact 139f188 and b4df823; only document append conflicts, both preserv
 | 2026-11-18 | Report refresh callback / pending selection follow-up | 待独验 | Developer 12 synthetic scenarios (includes prior 7), 4 adjacent flows and build passed; browser/real HTTP unverified; logs/report-refresh-section-r2-impl-hashes-frozen.txt |
 
 | 2026-11-18 | Recommendation pending operation context | 待独验 | Base80b0756; synthetic14 and adjacent5/10, build passed; no browser/real HTTP; no cancellation or concurrency serialization |
+
+| 2026-11-18 | Current-page progress single-flight | 待独验 | Base1a01a49; new5 synthetic and existing10/14/5 passed, build passed; not multi-user consistency, no browser/backend test |

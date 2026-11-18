@@ -1,4 +1,4 @@
-// Actual Detail and actual useToast.run; synthetic hooks/promises. No HTTP/browser.
+// Actual Detail and actual useScopedActions.run; synthetic hooks/promises. No HTTP/browser.
 const assert=require('node:assert/strict'),vm=require('node:vm'),{buildSync}=require('esbuild')
 const bundle=p=>buildSync({entryPoints:[p],bundle:true,platform:'node',format:'cjs',jsx:'automatic',external:['*'],write:false}).outputFiles[0].text
 const pageCode=bundle('src/pages/RecommendationsPage.tsx'),toastCode=bundle('src/components/Toast.tsx')
