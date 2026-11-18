@@ -658,3 +658,8 @@ historical integrity claims; browser acceptance pending.
 Actual useLoad synthetic lifecycle reproduces stale A misreported as mismatched B
 on manual version selection. Route version selection through keyed query session;
 normalize active endpoint alias to current semantics. No loader/global/API changes.
+
+
+## COLREG case work retained across version navigation — pending independent review
+
+Follow-up to 0b53fce: preserve case-scoped draft, notice and comparison while resetting only version-scoped reads. No permissions or service changes. Developer synthetic tests and build passed; browser unverified. Evidence: tests_acceptance/colreg-report-link/RETAINED-WORK-DEVELOPER.md; freeze: logs/colreg-retained-work-impl-hashes-frozen.txt. Prior freezes remain historical.

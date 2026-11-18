@@ -401,3 +401,8 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | COLREG-REPORT-LINK | 2026-11-18 | 待测：报告check/run链接接通，指定版本不静默回退；9合成页面场景/12断言、30导航断言及构建开发通过，浏览器/历史完整性未验 | tests_acceptance/colreg-report-link/DEVELOPER.md；logs/colreg-report-link-impl-hashes-frozen.txt |
 
 | COLREG version transition | 2026-11-18 | 待测：手动切版重建读取会话，active别名按当前处理；5合成生命周期断言/12相邻断言与构建开发通过；浏览器未验 | tests_acceptance/colreg-report-link/TRANSITION-DEVELOPER.md；logs/colreg-version-transition-impl-hashes-frozen.txt |
+
+
+## COLREG case work retained across version navigation — pending independent review
+
+Follow-up to 0b53fce: preserve case-scoped draft, notice and comparison while resetting only version-scoped reads. No permissions or service changes. Developer synthetic tests and build passed; browser unverified. Evidence: tests_acceptance/colreg-report-link/RETAINED-WORK-DEVELOPER.md; freeze: logs/colreg-retained-work-impl-hashes-frozen.txt. Prior freezes remain historical.

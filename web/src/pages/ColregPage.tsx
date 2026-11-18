@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type Dispatch, type SetStateAction } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { api, ApiError, CASE_ID } from '../api'
 import { ColregView } from '../colreg/ColregView'
@@ -26,19 +26,33 @@ const REVIEW_ERR: Record<string, string> = {
 
 export function ColregPage() {
   const [params] = useSearchParams()
-  return <ColregSession key={JSON.stringify([params.get('case'), params.get('check'), params.get('run')])} />
+  return <ColregWorkspace key={params.get('case') || CASE_ID} />
 }
 
-function ColregSession() {
+type WorkspaceState = {
+  compare: ColregCompare | null; setCompare: Dispatch<SetStateAction<ColregCompare | null>>
+  draft: DraftDisplay | null; setDraft: Dispatch<SetStateAction<DraftDisplay | null>>
+  draftNotice: string | null; setDraftNotice: Dispatch<SetStateAction<string | null>>
+}
+
+// Case-scoped work survives version navigation; fetched version state remains isolated.
+function ColregWorkspace() {
+  const [params] = useSearchParams()
+  const [compare, setCompare] = useState<ColregCompare | null>(null)
+  const [draft, setDraft] = useState<DraftDisplay | null>(null)
+  const [draftNotice, setDraftNotice] = useState<string | null>(null)
+  return <ColregSession key={JSON.stringify([params.get('check'), params.get('run')])}
+    compare={compare} setCompare={setCompare} draft={draft} setDraft={setDraft}
+    draftNotice={draftNotice} setDraftNotice={setDraftNotice} />
+}
+
+function ColregSession({ compare, setCompare, draft, setDraft, draftNotice, setDraftNotice }: WorkspaceState) {
   const { run, show } = useToast()
   const [params, setParams] = useSearchParams()
   const caseId = params.get('case') || CASE_ID
   const [sel, setSel] = useState<string | null>(params.get('check') || null)
   const [evaluating, setEvaluating] = useState(false)
   const [viewRunId, setViewRunId] = useState<string | null>(params.get('run') === 'active' ? null : params.get('run') || null)
-  const [compare, setCompare] = useState<ColregCompare | null>(null)
-  const [draft, setDraft] = useState<DraftDisplay | null>(null)
-  const [draftNotice, setDraftNotice] = useState<string | null>(null)
 
   const cases = useLoad(() => api.get<CaseListItem[]>('/cases'))
   const caseRes = useLoad(() => api.get<CaseDef>(`/cases/${caseId}`), [caseId])
@@ -159,6 +173,7 @@ function ColregSession() {
   return (
     <>
     {citation && <p role="note">引用定位仅打开本案登记的版本与核查项，不证明生成报告时的内容或原始证据已核验。未带版本或使用 active 别名的引用仅打开当前台账。</p>}
+    {(draft || draftNotice || compare) && <p role="note">本案已有草稿、提示及对比结果在切换查看版本时保留，不会自动更新为所选版本；离开本案或刷新后不保留页面状态。</p>}
     <ColregView
       caseDef={caseRes.data}
       vessels={vessels.data ?? []}

@@ -24,8 +24,8 @@ function render(query,mode='ready'){
  '../hooks':{useLoad:f=>{const data=f();return {data:data?.syntheticError?null:data,error:data?.syntheticError?'synthetic unavailable':null,reload:()=>{}}}},'../styles/w6.css':{}}
  const box={exports:{}}
  vm.runInNewContext(code,{module:box,exports:box.exports,require:n=>{assert.ok(n in modules,n);return modules[n]}})
- let node=box.exports.ColregPage();const sessionKey=node.key
- while(typeof node.type==='function'&&node.type!==View)node=node.type(node.props)
+ let node=box.exports.ColregPage();let sessionKey=node.key
+ while(typeof node.type==='function'&&node.type!==View){node=node.type(node.props);sessionKey+=':'+node.key}
  function find(n){if(!n)return null;if(Array.isArray(n))return n.map(find).find(Boolean);if(n.type===View)return n;return find(n.props?.children)}
  return {node:find(node)||node,paths,View,sessionKey}
 }
