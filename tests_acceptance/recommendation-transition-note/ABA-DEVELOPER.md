@@ -1,0 +1,4 @@
+# Transition note edit-away-and-back
+Base 0c1d9351a6608ea19f12d62b3d3a2c72a66f1d1f. Added ordinary synthetic scenario: submit explanation, change text, restore identical text, resolve success. Actual Detail+useToast with synthetic hooks/promise reproduced empty input on base. Reuses existing note edit counter instead of text equality; does not change request or permission semantics.
+
+Developer: `node tests/recommendation-transition-note.test.cjs` five scenarios passed; `node tests/recommendation-form-save.test.cjs` nine passed; `npm run build` passed (existing chunk warning). No browser, HTTP, actual backend, real data/model or paused/refusal tests. Previous records remain historical; this closes only the old transition same-text limitation. No broader concurrent writes or persistence guarantee. Independent/visual verification pending.

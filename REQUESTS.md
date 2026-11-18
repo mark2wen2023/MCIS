@@ -655,3 +655,7 @@ Only clear submitted explanation after a returned success result; retain on swal
 
 ## Recommendation reply/progress draft retention — pending independent review
 Preserve input edited during reply/progress requests using local edit counters; payloads and permissions unchanged. Developer 9 new synthetic scenarios, 4 adjacent and build passed. See tests_acceptance/recommendation-transition-note/FORM-SAVE-DEVELOPER.md and logs/recommendation-form-save-impl-hashes-frozen.txt; browser unverified.
+
+
+## Transition note ABA retention — pending independent review
+Reuse existing edit counter so changing away and back does not authorize clearing. Five transition and nine adjacent developer synthetic scenarios/build passed. See tests_acceptance/recommendation-transition-note/ABA-DEVELOPER.md and logs/recommendation-transition-aba-impl-hashes-frozen.txt. Browser unverified.

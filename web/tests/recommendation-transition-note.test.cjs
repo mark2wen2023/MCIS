@@ -22,10 +22,11 @@ async function scenario(mode,editDuring=false){
  const button=nodes(render()).find(n=>n.type==='button'&&n.props.className?.includes('btn-danger'))
  const pending=button.props.onClick()
  if(editDuring)input(render()).props.onChange({target:{value:'newer explanation'}})
+ if(editDuring==='aba')input(render()).props.onChange({target:{value:'unsaved explanation'}})
  if(mode==='failure')reject(new Error('synthetic transport unavailable'));else resolve(rec)
  await pending
- const expected=editDuring?'newer explanation':mode==='failure'?'unsaved explanation':''
+ const expected=editDuring==='aba'?'unsaved explanation':editDuring?'newer explanation':mode==='failure'?'unsaved explanation':''
  assert.equal(input(render()).props.value,expected,'read current rendered input after completion')
  assert.equal(notices.at(-1)[1],mode==='failure'?'err':'ok')
 }
-;(async()=>{await scenario('failure');await scenario('success');await scenario('success',true);await scenario('failure',true);console.log('Recommendation note: 4 synthetic completion scenarios passed')})().catch(e=>{console.error(e);process.exitCode=1})
+;(async()=>{await scenario('failure');await scenario('success');await scenario('success',true);await scenario('failure',true);await scenario('success','aba');console.log('Recommendation note: 5 synthetic completion scenarios passed')})().catch(e=>{console.error(e);process.exitCode=1})
