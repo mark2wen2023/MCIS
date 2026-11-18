@@ -407,3 +407,20 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | TOAST-ACCESSIBILITY | 2026-11-18 | 待测：保存反馈状态/警报语义；合成结构检查、5定时器场景及构建开发通过；读屏/浏览器/视觉未验 | tests_acceptance/toast-accessibility/DEVELOPER.md；logs/toast-accessibility-impl-hashes-frozen.txt |
 
 | INTERVIEW-REPORT-LINK | 2026-11-18 | 待测：兼容报告笔录id链接，保留record优先与案件上下文；6合成选择场景/30导航断言及构建开发通过；浏览器未验，不含句级定位 | tests_acceptance/interview-report-link/DEVELOPER.md；logs/interview-report-link-impl-hashes-frozen.txt |
+
+| COLREG-REPORT-LINK | 2026-11-18 | 待测：报告check/run链接接通，指定版本不静默回退；9合成页面场景/12断言、30导航断言及构建开发通过，浏览器/历史完整性未验 | tests_acceptance/colreg-report-link/DEVELOPER.md；logs/colreg-report-link-impl-hashes-frozen.txt |
+
+| COLREG version transition | 2026-11-18 | 待测：手动切版重建读取会话，active别名按当前处理；5合成生命周期断言/12相邻断言与构建开发通过；浏览器未验 | tests_acceptance/colreg-report-link/TRANSITION-DEVELOPER.md；logs/colreg-version-transition-impl-hashes-frozen.txt |
+
+
+## COLREG case work retained across version navigation — pending independent review
+
+Follow-up to 0b53fce: preserve case-scoped draft, notice and comparison while resetting only version-scoped reads. No permissions or service changes. Developer synthetic tests and build passed; browser unverified. Evidence: tests_acceptance/colreg-report-link/RETAINED-WORK-DEVELOPER.md; freeze: logs/colreg-retained-work-impl-hashes-frozen.txt. Prior freezes remain historical.
+
+
+## COLREG stale work response suppression — pending independent review
+Following f492182, case-retained work rejects late session and out-of-order UI responses; no backend cancellation/retry guarantee. Draft current-ledger provenance is explicitly distinguished from viewed run. Developer synthetic regressions and build passed; browser unverified. See tests_acceptance/colreg-report-link/ASYNC-WORK-DEVELOPER.md and logs/colreg-async-work-impl-hashes-frozen.txt.
+
+
+## First pending COLREG draft guidance — pending independent review
+Make conditional unknown-result guidance visible even before any draft/notice/compare exists, including loading/unavailable states. No job state or backend changes. Developer five new synthetic assertions, adjacent tests/build passed. See tests_acceptance/colreg-report-link/FIRST-DRAFT-DEVELOPER.md and logs/colreg-first-draft-impl-hashes-frozen.txt; browser unverified.

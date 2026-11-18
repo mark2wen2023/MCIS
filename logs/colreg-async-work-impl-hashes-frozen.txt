@@ -1,0 +1,5 @@
+4f7c2b99dc8e1f0cd03127e4a831a36ea04c1a400f2aa5863879707e2c4eb432  web/src/pages/ColregPage.tsx
+9ac93de26d716420c908c5d56de9763e7da4b6492b1b3313d53e28c6907735db  web/tests/colreg-async-work.test.cjs
+d154f31fc881439e8952ee473d7a83afa09f9158b2659658e9d3e0c404f3fa14  web/tests/colreg-retained-work.test.cjs
+7afb26dc7e25473888a2eb4866dcc1247a426d6464a59542fc04528692e33a4b  web/tests/colreg-version-transition.test.cjs
+ea9ae977f78569a2865f8a1fc46cbe93ffdab436da7e99b149abb108dcbb080d  web/tests/colreg-report-link.test.cjs

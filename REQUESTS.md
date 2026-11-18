@@ -674,3 +674,27 @@ Report citations already encode interview record as id (reports/sources.py),
 while InterviewPage only consumed record. Accept id only when record is absent;
 preserve explicit record priority, case context and missing-record behavior.
 No API/permission changes, statement positioning or historical version claims.
+
+## COLREG-REPORT-LINK (2026-11-18)
+Existing report links carry check/run; current page ignored both. Bind query to
+session and initial selection; explicit run lookup may not fall back to current
+analysis. Missing/mismatched target is shown, not replaced. No API/permission or
+historical integrity claims; browser acceptance pending.
+
+## COLREG-REPORT-LINK loading follow-up (2026-11-18)
+Actual useLoad synthetic lifecycle reproduces stale A misreported as mismatched B
+on manual version selection. Route version selection through keyed query session;
+normalize active endpoint alias to current semantics. No loader/global/API changes.
+
+
+## COLREG case work retained across version navigation — pending independent review
+
+Follow-up to 0b53fce: preserve case-scoped draft, notice and comparison while resetting only version-scoped reads. No permissions or service changes. Developer synthetic tests and build passed; browser unverified. Evidence: tests_acceptance/colreg-report-link/RETAINED-WORK-DEVELOPER.md; freeze: logs/colreg-retained-work-impl-hashes-frozen.txt. Prior freezes remain historical.
+
+
+## COLREG stale work response suppression — pending independent review
+Following f492182, case-retained work rejects late session and out-of-order UI responses; no backend cancellation/retry guarantee. Draft current-ledger provenance is explicitly distinguished from viewed run. Developer synthetic regressions and build passed; browser unverified. See tests_acceptance/colreg-report-link/ASYNC-WORK-DEVELOPER.md and logs/colreg-async-work-impl-hashes-frozen.txt.
+
+
+## First pending COLREG draft guidance — pending independent review
+Make conditional unknown-result guidance visible even before any draft/notice/compare exists, including loading/unavailable states. No job state or backend changes. Developer five new synthetic assertions, adjacent tests/build passed. See tests_acceptance/colreg-report-link/FIRST-DRAFT-DEVELOPER.md and logs/colreg-first-draft-impl-hashes-frozen.txt; browser unverified.

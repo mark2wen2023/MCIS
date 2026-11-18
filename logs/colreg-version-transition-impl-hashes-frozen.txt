@@ -1,0 +1,2 @@
+3c338828714d3f136cb978a14c320239bafb12852074faf6ebf66aaf6fea2ebb  web/src/pages/ColregPage.tsx
+32398300105889e84c6f209a5d5e061a0b2e4b8c66a317e38336ef34351fc83f  web/tests/colreg-version-transition.test.cjs
