@@ -655,3 +655,7 @@ Editing fields invalidates displayed prior validation object while retaining inp
 
 ## GISIS parent input revision binding — pending independent review
 Capture frontend input revision/request when validating; editing clears old result/global notice and stale success cannot certify new input. Four parent synthetic callback flows and four panel flows/44 assertions, build passed; not full browser/HTTP lifecycle. See tests_acceptance/gisis-stale-validation/PARENT-DEVELOPER.md and logs/gisis-parent-validation-impl-hashes-frozen.txt. No backend/permission or consultation changes.
+
+
+## GISIS scoped error and notice feedback — pending independent review
+Reproduced stale ordinary error and unrelated-notice removal; scope GISIS feedback and compare input/request before ordinary error display. 403 routes to existing denial handler; no permission changes. Developer 3 new synthetic flows, adjacent tests/build pass. See tests_acceptance/gisis-stale-validation/FEEDBACK-SCOPE-DEVELOPER.md and logs/gisis-feedback-scope-impl-hashes-frozen.txt; browser unverified.

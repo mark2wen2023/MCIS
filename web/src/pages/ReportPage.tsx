@@ -45,6 +45,8 @@ function ReportSession({identity, isActive, refresh}: {identity:string; isActive
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
+  const [gisisNotice, setGisisNotice] = useState<string | null>(null)
+  const [gisisError, setGisisError] = useState<string | null>(null)
   const gisisInputs = useRef({ revision: 0, request: 0 })
   const [validation, setValidation] = useState<GisisValidation | null>(null)
   const [blockedReason, setBlockedReason] = useState<'report_case_not_imported' | undefined>()
@@ -54,7 +56,7 @@ function ReportSession({identity, isActive, refresh}: {identity:string; isActive
   function handleError(e: unknown) {
     if (!current()) return
     if (e instanceof ReportApiError && e.status === 403) {
-      setDenied(true); setReport(null); setReports([]); setGisis(null); setAudit([]); setReview(null); setValidation(null); setTemplates([]); setSelectedSection(null); setNotice(null)
+      setDenied(true); setReport(null); setReports([]); setGisis(null); setAudit([]); setReview(null); setValidation(null); setTemplates([]); setSelectedSection(null); setNotice(null); setGisisNotice(null); setGisisError(null)
       setError('当前身份无权访问完整报告内容。本版本仅支持满足完整资料权限的原文报告，尚未提供字段级脱敏报告；默认 Investigator 受限是有意的访问边界变更。请联系授权管理员按单位规则处理；本页不会自动修改策略。')
     } else setError((e as Error).message)
   }
@@ -93,7 +95,7 @@ function ReportSession({identity, isActive, refresh}: {identity:string; isActive
 
   async function perform(work: () => Promise<void>, message?: string) {
     if (!current() || denied || saving) return
-    setSaving(true); setError(null); setNotice(null)
+    setSaving(true); setError(null); setNotice(null); setGisisNotice(null); setGisisError(null)
     try { await work(); if (current() && message) setNotice(message) }
     catch (e) {
       if (current()) {
@@ -133,7 +135,7 @@ function ReportSession({identity, isActive, refresh}: {identity:string; isActive
     {report && <ArchiveProvenance caseId={caseId} kind="report" recordId={report.reportId} revision={report} onDenied={()=>handleError(new ReportApiError(403,'FORBIDDEN','',null))}/>}
     {casesError && <p role="alert">{casesError}</p>}
     {auditError && <p role="alert">{auditError}</p>}
-    <ReportView cases={cases} accessDenied={denied} blockedReason={blockedReason} caseId={caseId} templates={templates} templateId={templateId} lang={lang} report={report} reports={reports} gisis={gisis} audit={audit} realDataStatus={realDataStatus} selectedSectionId={selectedSection} busy={loading || saving} error={error} notice={notice || (loading ? '正在载入报告数据…' : null)} validation={validation}
+    <ReportView cases={cases} accessDenied={denied} blockedReason={blockedReason} caseId={caseId} templates={templates} templateId={templateId} lang={lang} report={report} reports={reports} gisis={gisis} audit={audit} realDataStatus={realDataStatus} selectedSectionId={selectedSection} busy={loading || saving} error={error || gisisError} notice={notice || gisisNotice || (loading ? '正在载入报告数据…' : null)} validation={validation}
       onSelectSection={setSelectedSection} onSwitchCase={(id) => { setNotice(null); setSelectedSection(null); setParams({ case: id, template: templateId, lang }) }}
       onTemplate={(id) => changeOptions(id, lang)} onLang={(next) => changeOptions(templateId, next)} onSelectReport={(id) => setParams({ case: caseId, report: id })}
       onCreate={(generateLang = lang) => { void perform(async () => navigateReport(await reportApi.create(caseId, templateId, generateLang)), '已生成 Draft 报告。').catch(() => {}) }}
@@ -142,7 +144,7 @@ function ReportSession({identity, isActive, refresh}: {identity:string; isActive
       onExport={(format, exportLang) => { if (report) void perform(async () => { const file = await reportApi.export(caseId, report.reportId, format, exportLang); setNotice(`已导出 ${file.filename}${file.sha256 ? ` · SHA-256 ${file.sha256}` : ''}`); refresh() }).catch(() => {}) }}
       onGlossary={() => { void perform(async () => { await reportApi.glossary() }, '已下载 IMO 标准航海用语术语表（中文为项目译文）。').catch(() => {}) }}
       onGisisExport={(format) => { void perform(async () => { await reportApi.gisisExport(caseId, format); refresh() }, `已导出 GISIS ${format.toUpperCase()} 本地草稿字段。`).catch(() => {}) }}
-      onGisisEdit={() => { gisisInputs.current.revision++; setValidation(null); setNotice(null) }}
+      onGisisEdit={() => { gisisInputs.current.revision++; setValidation(null); setGisisNotice(null); setGisisError(null) }}
       onGisisValidate={(values, exportFile) => {
         if (!current() || denied || saving) return
         const revision = gisisInputs.current.revision
@@ -150,13 +152,26 @@ function ReportSession({identity, isActive, refresh}: {identity:string; isActive
         void perform(async () => {
           setValidation(null)
           const changed = () => revision !== gisisInputs.current.revision
-          const unknown = () => { setValidation(null); setNotice('输入已变化，此次结果不作为当前字段的校验结论。先前请求可能已处理或下载，请核对，勿自动重试。') }
+          const unknown = () => { setValidation(null); setGisisNotice('输入已变化，此次结果不作为当前字段的校验结论。先前请求可能已处理或下载，请核对，勿自动重试。') }
           let result: GisisValidation | undefined
-          if (exportFile) await reportApi.gisisValidateExport(caseId, values)
-          else result = await reportApi.gisisValidate(caseId, values)
+          try {
+            if (exportFile) await reportApi.gisisValidateExport(caseId, values)
+            else result = await reportApi.gisisValidate(caseId, values)
+          } catch (e) {
+            // Authorization failures always retain the existing full-report denial handling.
+            if (e instanceof ReportApiError && e.status === 403) throw e
+            if (!current() || request !== gisisInputs.current.request) return
+            if (changed()) { unknown(); return }
+            setGisisError((e as Error).message)
+            if (e instanceof ReportApiError && e.code === 'report_gisis_validation_failed') {
+              const detail = e.detail as { errors?: GisisValidation['errors']; fields?: GisisValidation['fields'] } | null
+              if (detail?.errors) setValidation({ valid: false, errors: detail.errors, fields: detail.fields ?? [] })
+            }
+            return
+          }
           if (!current() || request !== gisisInputs.current.request) return
           if (changed()) { unknown(); return }
-          if (exportFile) setNotice('GISIS 字段校验通过并已导出。')
+          if (exportFile) setGisisNotice('GISIS 字段校验通过并已导出。')
           else setValidation(result!)
           if (report) { try { setAudit(await reportApi.audit(caseId, report.reportId)) } catch (e) { if (current()) { setAudit([]); setAuditError(`审计读取失败：${(e as Error).message}`) } } }
         }).catch(() => {})
