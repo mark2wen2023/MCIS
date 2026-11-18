@@ -647,3 +647,9 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## INTERVIEW-REPORT-LINK (2026-11-18)
+Report citations already encode interview record as id (reports/sources.py),
+while InterviewPage only consumed record. Accept id only when record is absent;
+preserve explicit record priority, case context and missing-record behavior.
+No API/permission changes, statement positioning or historical version claims.

@@ -29,7 +29,8 @@ function InterviewCasePage({ caseId }: { caseId: string }) {
 function InterviewAllowed({caseId,onDenied}:{caseId:string;onDenied:()=>void}){
   const [who]=useState(contentIdentity)
   const [params,setParams]=useSearchParams()
-  const recordId=params.get('record')
+  // Existing report citations use id; manual selection continues to use record.
+  const recordId=params.get('record') ?? params.get('id')
   const setRecordId=(id:string)=>{setParams({case:caseId,record:id})}
   const roster = useContentLoad(async (signal) => {
     const result = await contentRequest<IcRoster>(casePath('/interview-compare', caseId),who,undefined,signal)
