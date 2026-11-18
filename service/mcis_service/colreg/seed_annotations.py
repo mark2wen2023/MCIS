@@ -5,7 +5,7 @@ colreg.schema.json 的 band 不允许 evidenceIds（additionalProperties=false�
 """
 from __future__ import annotations
 
-from .haili5_seed import BAND_EVIDENCE as HAILI5_BAND_EVIDENCE, CASE_ID as HAILI5_CASE
+from ..common.demo_case_ids import HAILI5_CASE_ID as HAILI5_CASE
 
 LILY_MARY_CASE = "CASE-2026-DEMO-LILY-MARY"
 
@@ -20,9 +20,14 @@ LILY_MARY_BAND_EVIDENCE: dict[str, list[str]] = {
 
 BAND_EVIDENCE: dict[str, dict[str, list[str]]] = {
     LILY_MARY_CASE: LILY_MARY_BAND_EVIDENCE,
-    HAILI5_CASE: HAILI5_BAND_EVIDENCE,
 }
 
 
 def seed_band_evidence(case_id: str) -> dict[str, list[str]]:
-    return {k: list(v) for k, v in BAND_EVIDENCE.get(case_id, {}).items()}
+    if case_id == HAILI5_CASE:
+        # Real Seed annotations remain available on demand, not during startup.
+        from .haili5_seed import BAND_EVIDENCE as haili5_band_evidence
+        source = haili5_band_evidence
+    else:
+        source = BAND_EVIDENCE.get(case_id, {})
+    return {k: list(v) for k, v in source.items()}

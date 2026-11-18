@@ -37,9 +37,6 @@ from .package_intake.router import router as package_intake_router
 from .recommendations.router import router as recommendations_router
 from .reports.router import router as reports_router
 from .redaction.router import router as redaction_router
-from .colreg.haili5_seed import seed as seed_haili5
-from .seed.lily_mary import seed
-from .seed.yangze22 import seed as seed_yangze22
 from .sim.router import router as sim_router
 from .timeline.router import router as timeline_router
 from .analysis.router import router as analysis_router  # W12 分析页（只读种子）
@@ -53,6 +50,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     db = Database(settings.resolved_db_url)
     db.create_all()
     if settings.seed_demo:
+        from .colreg.haili5_seed import seed as seed_haili5
+        from .seed.lily_mary import seed
+        from .seed.yangze22 import seed as seed_yangze22
         with db.session() as s:
             seed(s, settings.blob_dir)
             seed_haili5(s, settings.blob_dir)
