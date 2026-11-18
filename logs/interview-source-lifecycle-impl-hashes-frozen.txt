@@ -1,0 +1,4 @@
+58c1d06fbea04ba832783c49f7ce896a2ef39be494f901ceb4c5825806cefb3b  web/tests/interview-source-lifecycle.cjs
+4615f63b7457ba039ffeb004ac9add988a9a73503c0dd310be0fcd2f573aa0dd  web/src/interview/contentAccess.ts
+e1d0a6eab0c457290dfe34774a4e947a953f011c3e8fcc98094a463fe16896b2  web/src/interview/SourceDisclosure.tsx
+b2a76de1eedb96077cab4c7b73763d19bd2214ac9a4afba242f1ca0e4b86c5e4  web/src/pages/InterviewPage.tsx
