@@ -21,3 +21,11 @@ Existing node_modules copied from the UI candidate worktree; no installation, br
 ## Remaining limits
 
 No actual React concurrent interruption/aborted work, StrictMode scheduling, child-layout-effect ordering, event replay, browser/visual/accessibility, HTTP/backend or multi-user acceptance. No claim that all render/ref or state risks are solved; ReportPage still reads refs to derive initial selection and existing Detail render-phase conditional setState is unchanged. Server progress versions and ABA protection remain unresolved. Startup/archive holds and seed risks remain; these frontend tests do not lift them. The old integration handoff describes its pinned old product head; this separate candidate has not been merged into it. Independent review pending. Do not merge or deploy.
+
+## Independent-review coverage follow-up (product unchanged from 2c82203)
+
+Strengthened only the synthetic check.cjs evidence. ReportPage first separately checks identity invalidation, then restores the unchanged original identity and asserts isActive=true immediately before cleanup. Unmount alone must turn it false; old refresh must produce zero state writes, and an uncommitted synthetic inspection render must show no injected selection. That inspection is a harness observation, not a real React render-after-unmount claim.
+
+Detail starts with visible local draft50 and committed candidate60. With readCurrent=false, invoking the captured adoption callback must retain percentage50 and the note (not merely issue zero requests). With readCurrent=true and the same callback/candidate, a positive control changes percentage to60 while retaining the note; neither sends a request. The test distinguishes blocked adoption from a no-op callback. No new product defect was found, no product edits.
+
+After static review ran only node tests_acceptance/ui-commit-phase/check.cjs (same three groups, strengthened assertions, PASS), web/node_modules/.bin/tsc -b --force and vite build from web (both PASS; same >1500kB warning, JS1869.90kB). Did not rerun the adjacent lifecycle script in this round or add counts across rounds. No app/backend/browser/HTTP/data/model/paused or write-probe execution. Real React cleanup/event/concurrency and full workflows remain unverified; new test revision awaits independent review.

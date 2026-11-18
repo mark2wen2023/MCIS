@@ -4,10 +4,10 @@ const {buildSync}=require('../../web/node_modules/esbuild');
 globalThis.fetch=()=>{throw Error('network forbidden')};
 const jsx=(type,props,key)=>({type,props,key});
 const compile=(path,extra='')=>buildSync({stdin:{contents:fs.readFileSync(path,'utf8')+extra,resolveDir:process.cwd(),loader:'tsx'},bundle:true,platform:'node',format:'cjs',jsx:'automatic',external:['*'],write:false}).outputFiles[0].text;
-function harness(){let cells=[],index=0,pending=[];const hooks={useRef(v){const i=index++;return cells[i]??(cells[i]={current:v})},useState(v){const i=index++;if(!(i in cells))cells[i]=typeof v==='function'?v():v;return[cells[i],n=>cells[i]=typeof n==='function'?n(cells[i]):n]},useSyncExternalStore:(_,f)=>f(),useMemo:f=>f(),useCallback:f=>f()};
+function harness(){let cells=[],index=0,pending=[],stateWrites=0;const hooks={useRef(v){const i=index++;return cells[i]??(cells[i]={current:v})},useState(v){const i=index++;if(!(i in cells))cells[i]=typeof v==='function'?v():v;return[cells[i],n=>{stateWrites++;cells[i]=typeof n==='function'?n(cells[i]):n}]},useSyncExternalStore:(_,f)=>f(),useMemo:f=>f(),useCallback:f=>f()};
  function effect(f,deps){const i=index++,old=cells[i];if(!old||!deps||deps.some((d,j)=>d!==old.deps[j]))pending.push(()=>{old?.cleanup?.();cells[i]={deps,cleanup:f()}})}
  hooks.useLayoutEffect=effect;hooks.useEffect=effect;
- return {hooks,render(f){index=0;pending=[];return f()},commit(){const list=pending;pending=[];list.forEach(f=>f())},discard(){pending=[]},unmount(){cells.forEach(c=>c?.cleanup?.())}};
+ return {hooks,get stateWrites(){return stateWrites},render(f){index=0;pending=[];return f()},commit(){const list=pending;pending=[];list.forEach(f=>f())},discard(){pending=[]},unmount(){cells.forEach(c=>c?.cleanup?.())}};
 }
 function load(code,mods){const box={exports:{}};vm.runInNewContext(code,{module:box,exports:box.exports,require:n=>{assert.ok(n in mods,n);return mods[n]},AbortController});return box.exports}
 const nodes=n=>!n?[]:Array.isArray(n)?n.flatMap(nodes):typeof n==='object'?[n,...nodes(n.props?.children)]:[];
@@ -22,7 +22,15 @@ const runtime=h=>({react:h.hooks,'react/jsx-runtime':{jsx,jsxs:jsx}});
  query='case=B';const abandoned=render();assert.equal(abandoned.props.initialSelection,undefined);assert.equal(abandoned.props.isActive(),false);assert.equal(a.props.isActive(),true);h.discard();
  query='case=A';const retained=render();assert.equal(retained.props.initialSelection.sectionId,'second');h.commit();
  query='case=B';let b=render();h.commit();assert.equal(a.props.isActive(),false);assert.equal(b.props.isActive(),true);a.props.refresh({reportId:'BAD',sectionId:'bad'});b=render();assert.equal(b.props.initialSelection,undefined);h.commit();
- identity='changed';assert.equal(b.props.isActive(),false);h.unmount();assert.equal(b.props.isActive(),false);
+ identity='changed';assert.equal(b.props.isActive(),false);
+ // Restore the same identity before isolating unmount as the sole invalidation.
+ identity='synthetic';assert.equal(b.props.isActive(),true,'identity valid immediately before unmount');
+ const writesBeforeUnmount=h.stateWrites;
+ h.unmount();assert.equal(identity,'synthetic');assert.equal(b.props.isActive(),false,'unmount alone invalidates old context');
+ b.props.refresh({reportId:'AFTER-UNMOUNT',sectionId:'must-not-apply'});
+ assert.equal(h.stateWrites,writesBeforeUnmount,'old refresh must not schedule state after unmount');
+ // Read-only synthetic render (no commit) also detects an illicit selection-ref write.
+ const afterUnmount=render();assert.equal(afterUnmount.props.initialSelection,undefined);h.discard();
 }
 {
  const h=harness(),sent=[];let active=true;
@@ -39,7 +47,17 @@ const runtime=h=>({react:h.hooks,'react/jsx-runtime':{jsx,jsxs:jsx}});
  // Abandoned 60 must not invalidate the committed 50 callback.
  adopt();props={...props,rec:{...props.rec,progressPct:50}};tree=render();h.commit();assert.equal(nodes(tree).find(n=>n.props?.type==='range').props.value,50);assert.equal(input(tree).props.value,'keep draft');
  props={...props,rec:{...props.rec,progressPct:60}};tree=render();h.commit();adopt();tree=render();h.commit();assert.equal(nodes(tree).find(n=>n.props?.type==='range').props.value,50);
- active=false;const currentAdopt=nodes(tree).find(n=>n.type==='button'&&n.props.children==='采用当前已读取进度，保留说明').props.onClick;currentAdopt();assert.equal(sent.length,0);assert.equal(input(render()).props.value,'keep draft');
+ const rangeValue=t=>nodes(t).find(n=>n.props?.type==='range').props.value;
+ assert.equal(rangeValue(tree),50,'local draft differs from candidate60');
+ assert.equal(props.rec.progressPct,60);
+ const currentAdopt=nodes(tree).find(n=>n.type==='button'&&n.props.children==='采用当前已读取进度，保留说明').props.onClick;
+ active=false;currentAdopt();tree=render();h.commit();
+ assert.equal(rangeValue(tree),50,'readCurrent=false must not replace draft50 with candidate60');
+ assert.equal(input(tree).props.value,'keep draft');assert.equal(sent.length,0);
+ // Same callback and candidate are effective when the only changed gate becomes true.
+ active=true;currentAdopt();tree=render();h.commit();
+ assert.equal(rangeValue(tree),60,'positive control: adoption genuinely changes draft50 to candidate60');
+ assert.equal(input(tree).props.value,'keep draft');assert.equal(sent.length,0);
 }
 (async()=>{
  const h=harness(),calls=[];
