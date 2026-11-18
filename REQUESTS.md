@@ -647,3 +647,8 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## TOAST-LIFETIME (2026-11-18)
+Bounded UI feedback fix: expire the specific notification instance, not any later
+notification with the same text. No request/permission changes. Synthetic hook
+and clock regression only; browser/visual acceptance pending.

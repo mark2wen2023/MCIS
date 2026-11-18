@@ -7,8 +7,9 @@ const Ctx = createContext<(t: string, kind?: 'ok' | 'err') => void>(() => {})
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toast, setToast] = useState<ToastState | null>(null)
   const show = useCallback((text: string, kind: 'ok' | 'err' = 'ok') => {
-    setToast({ text, kind })
-    window.setTimeout(() => setToast((cur) => (cur?.text === text ? null : cur)), 3800)
+    const next = { text, kind }
+    setToast(next)
+    window.setTimeout(() => setToast((cur) => (cur === next ? null : cur)), 3800)
   }, [])
   return (
     <Ctx.Provider value={show}>
