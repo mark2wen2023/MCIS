@@ -507,3 +507,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 - 待测：image-task-waiting-edit，基于fa9e118；单文件15项纯Node开发合成通过（新增4项，不累计历史），dirty保留；浏览器/HTTP未验，启动/归档暂停不变。
 
 - 待测：image-save-feedback，基于c76afd3；新增5项、另跑相邻26项纯Node开发合成均通过，不称全量；浏览器/HTTP未验，后端启动/归档仍暂停。见 tests_acceptance/image-save-feedback/DEVELOPER.md。
+
+| 2026-11-18 | audio-save-feedback | 待独立验收 | 新7节点与相邻7节点分别开发合成通过；保存提示区分上次确认、草稿、等待和未知；无浏览器/HTTP/真实音频验证。冻结 logs/audio-save-feedback-impl-hashes-frozen.txt |
