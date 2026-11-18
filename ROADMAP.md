@@ -516,3 +516,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-18 | source-declaration-comparison | 待独审 / 隔离纯函数 | 13组合成测试开发通过；仅调用者声明比较，显式历史非服务端证明，无页面/后端/关联；冻结 logs/source-declaration-comparison-impl-hashes-frozen.txt |
 
 | source-declaration aggregate identity | 待测 | One interview/snapshot; 7 new pure groups and existing 13 separately pass development; no application wiring | logs/source-declaration-aggregate-impl-hashes-frozen.txt |
+
+| source-declaration display | 待测 | 9 development synthetic rendering groups pass; browser unverified; no wiring | logs/source-declaration-display-impl-hashes-frozen.txt |
