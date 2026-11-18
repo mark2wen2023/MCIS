@@ -763,3 +763,5 @@ Synthetic red1 reproduced new input lost on late load render. Track edits and se
 - Task-result programmatic selection now advances selection epoch in image/audio pages; 2 new developer synthetic nodes and 8 query regression nodes passed. See tests_acceptance/media-programmatic-selection/DEVELOPER-VERIFICATION.md.
 
 - Image/audio creation response checks follow existing server ID and initial revision contract. 12 new developer synthetic + 17 adjacent passed; no global uniqueness claim or backend defect claim. See tests_acceptance/media-created-run-contract/DEVELOPER-VERIFICATION.md.
+
+- List/source late-success context guards: 12 developer synthetic checks passed; browser/backend pending. See tests_acceptance/media-list-selection/DEVELOPER-VERIFICATION.md.

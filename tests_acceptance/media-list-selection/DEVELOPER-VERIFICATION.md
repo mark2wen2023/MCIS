@@ -1,0 +1,4 @@
+# List/source selection responses
+Base: 0d15d52cb2a93e83454df3b8b97608abb8e14ea6.
+12 new individually reviewed ordinary synthetic nodes: audio task list, run list, source lookup, image task list; changed case, away/back, unchanged success. Corrected audio response fixture to list/source shape before baseline: 7 assertion failures, 5 passed. A first patch string match failed before writing; same baseline repeated, no behavior change then.
+Final command: `node --test tests_acceptance/media-list-selection/audio.test.cjs tests_acceptance/media-list-selection/image.test.cjs` — 12 passed. Developer DOM/HTTP doubles, not browser/backend acceptance. No real data/model/security/write-refusal/paused nodes. Guards prevent late successful display; existing displayed content is not automatically cleared. Ordinary transport-error display on these action wrappers not covered. No permission changes.
