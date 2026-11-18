@@ -485,3 +485,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 - Audio cached task invalidation on changed selection/receipts/confirmation; 7 new + 10 adjacent synthetic developer checks passed. See tests_acceptance/audio-task-cache/DEVELOPER-VERIFICATION.md.
 
 - Clear stale list/task/source summary caches on changed selection without clearing drafts; 5 new + 22 adjacent developer synthetic passed. See tests_acceptance/media-stale-summary/DEVELOPER-VERIFICATION.md.
+
+- List/source late errors now use success context guards; 8 new + 15 adjacent developer synthetic checks passed. See tests_acceptance/media-list-errors/DEVELOPER-VERIFICATION.md.
