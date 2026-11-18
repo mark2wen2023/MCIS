@@ -401,3 +401,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 环境观测来源口径解释 | 待测 / 待独立验收 | main 94d5e38 上的只读逐条人工核对提示；三口径合成 SSR、既有103断言、前端构建通过。真实浏览器/LLM/原件未验，无权限或写入变化。冻结：`logs/environment-origin-guidance-impl-hashes-frozen.txt` |
 
 | 2026-11-18 | environment-explicit-origin | 待独立验收 | 新3来源合成生命周期、既有来源SSR、TS/Vite开发通过；新表单显式选择，旧记录不改；浏览器/HTTP未验；冻结 logs/environment-explicit-origin-impl-hashes-frozen.txt |
+
+| 2026-11-18 | environment-pending-input | 待独立验收 | 新4合成等待序列及既有3来源流程、TS/Vite开发通过；真实React/浏览器/HTTP未验；冻结 logs/environment-pending-input-impl-hashes-frozen.txt |

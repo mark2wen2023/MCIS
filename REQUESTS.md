@@ -654,3 +654,6 @@ Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD
 
 ## Environment explicit origin (2026-11-18)
 Authorized new-form-only change on PR101 base: no default Direct, explicit enum selection required in builder. Persistent/server contract unchanged; old clients may still default Direct. Evidence tests_acceptance/environment-explicit-origin/DEVELOPER.md.
+
+## Environment pending input (2026-11-18)
+Authorized narrow synchronous gate for new-observation input callbacks during existing busy state; no server/old-record changes. Evidence tests_acceptance/environment-pending-input/DEVELOPER.md.
