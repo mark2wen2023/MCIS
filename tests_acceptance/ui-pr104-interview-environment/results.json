@@ -1,0 +1,358 @@
+[
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/interview-source-lifecycle.cjs"
+    ],
+    "exit_code": 0,
+    "output": "PASS 4 synthetic source lifecycle scenarios; parent keys checked statically only; no React/browser/HTTP acceptance\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/interview-parent-source-lifecycle.cjs"
+    ],
+    "exit_code": 0,
+    "output": "PASS 5 actual parent-function synthetic scenarios; memory transport and simulated key/cleanup, not React/browser/HTTP\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/environment-explicit-origin.cjs"
+    ],
+    "exit_code": 0,
+    "output": "PASS 3 synthetic origin lifecycles: explicit selection, empty submit no dispatch, unchanged records, zero/unknown, continue-new reset\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/environment-pending-input.cjs"
+    ],
+    "exit_code": 0,
+    "output": "PASS 4 synthetic pending-input scenarios: normal, origin, numeric, all inputs; confirmed snapshot, busy fieldset and continue-new\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/environment-input-generation.cjs"
+    ],
+    "exit_code": 0,
+    "output": "PASS 6 synthetic form-generation scenarios; explicit hook rerenders, not React replay/browser/HTTP\n"
+  },
+  {
+    "command": [
+      "node_modules/.bin/esbuild",
+      "tests/interview-source-disclosure.test.tsx",
+      "--bundle",
+      "--platform=node",
+      "--format=esm",
+      "--packages=external",
+      "--jsx=automatic",
+      "--loader:.css=empty",
+      "--outfile=tests/.tmp-combined-interview-source-disclosure.mjs"
+    ],
+    "exit_code": 0,
+    "output": "\n  tests/.tmp-combined-interview-source-disclosure.mjs  4.7kb\n\n⚡ Done in 3ms\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/.tmp-combined-interview-source-disclosure.mjs"
+    ],
+    "exit_code": 0,
+    "output": "Interview source disclosure synthetic SSR checks passed; no file/API/model calls\n"
+  },
+  {
+    "command": [
+      "node_modules/.bin/esbuild",
+      "tests/environment-origin-guidance.test.tsx",
+      "--bundle",
+      "--platform=node",
+      "--format=esm",
+      "--packages=external",
+      "--jsx=automatic",
+      "--loader:.css=empty",
+      "--outfile=tests/.tmp-combined-environment-origin-guidance.mjs"
+    ],
+    "exit_code": 0,
+    "output": "\n  tests/.tmp-combined-environment-origin-guidance.mjs  30.1kb\n\n⚡ Done in 5ms\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/.tmp-combined-environment-origin-guidance.mjs"
+    ],
+    "exit_code": 0,
+    "output": "PASS environment origin guidance: three origins, escaped source, unchanged records, zero/unknown and empty list (synthetic SSR)\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/layout-case-transition.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "Layout transitions: 6 synthetic lifecycle assertions passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/toast-lifetime.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "toast lifetime: 5 synthetic scenarios passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/toast-accessibility.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "toast accessibility: initial, success, error and expiry structure passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/interview-report-link.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "interview report link: 6 synthetic actual-page selection scenarios passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/colreg-report-link.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "COLREG link: 9 synthetic page scenarios / 12 assertions passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/colreg-version-transition.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "COLREG transition: 5 synthetic lifecycle assertions passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/colreg-retained-work.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "COLREG retained work: draft/notice/compare survive version changes, reset across cases; synthetic lifecycle passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/colreg-async-work.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "COLREG async work: 8 synthetic delayed/ordered response assertions passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/colreg-first-draft-notice.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "COLREG first draft: 5 synthetic lifecycle assertions passed\n"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/esbuild",
+      "tests/case-load-status.test.tsx",
+      "--bundle",
+      "--platform=node",
+      "--format=cjs",
+      "--jsx=automatic",
+      "--outfile=/tmp/mcis-combined-case-load-status.cjs"
+    ],
+    "exit_code": 0,
+    "output": "\n  ../../mcis-combined-case-load-status.cjs  1.4mb ⚠️\n\n⚡ Done in 37ms\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "/tmp/mcis-combined-case-load-status.cjs"
+    ],
+    "exit_code": 0,
+    "output": "case load status: 5 synthetic SSR scenarios, 27 assertions passed\n"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/esbuild",
+      "tests/analysis-missing-scenario.test.tsx",
+      "--bundle",
+      "--platform=node",
+      "--format=cjs",
+      "--jsx=automatic",
+      "--outfile=/tmp/mcis-combined-analysis-missing-scenario.cjs"
+    ],
+    "exit_code": 0,
+    "output": "\n  ../../mcis-combined-analysis-missing-scenario.cjs  4.2mb ⚠️\n\n⚡ Done in 277ms\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "/tmp/mcis-combined-analysis-missing-scenario.cjs"
+    ],
+    "exit_code": 0,
+    "output": "analysis scenario: 8 synthetic rendering/action assertions passed\n"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/esbuild",
+      "tests/case-context.test.ts",
+      "--bundle",
+      "--platform=node",
+      "--format=cjs",
+      "--jsx=automatic",
+      "--outfile=/tmp/mcis-combined-case-context.cjs"
+    ],
+    "exit_code": 0,
+    "output": "\n  ../../mcis-combined-case-context.cjs  1.6kb\n\n⚡ Done in 4ms\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "/tmp/mcis-combined-case-context.cjs"
+    ],
+    "exit_code": 0,
+    "output": "case context: 30 assertions passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/recommendation-missing-citation.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "Recommendation citation: 6 synthetic states / 10 assertions passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/recommendation-transition-note.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "Recommendation note: 5 synthetic completion scenarios passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/recommendation-form-save.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "Recommendation form saves: 10 synthetic scenarios passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/report-review-pending.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "Report review pending: 2 synthetic flows / 14 assertions passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/gisis-stale-validation.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "GISIS validation: 4 synthetic flows / 44 assertions passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/gisis-parent-validation.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "GISIS parent: 4 synthetic deferred callback flows passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/gisis-feedback-scope.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "GISIS feedback scope: 3 synthetic callback flows passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "--require",
+      "/tmp/mcis-combined-no-fetch.cjs",
+      "tests/ui-pr104-inherited-citation.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "Combined report inherited citation: 3 synthetic SSR cases / 15 assertions passed\n"
+  },
+  {
+    "command": [
+      "node_modules/.bin/tsc",
+      "-b",
+      "--force"
+    ],
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "node_modules/.bin/vite",
+      "build"
+    ],
+    "exit_code": 0,
+    "output": "vite v8.3.8 building client environment for production...\ntransforming...\n✓ 769 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                     0.42 kB │ gzip:   0.32 kB\ndist/assets/index-D5reRpCB.css     76.01 kB │ gzip:  15.13 kB\ndist/assets/index-B8XMaQ6j.js   1,864.80 kB │ gzip: 602.63 kB\n\n[plugin builtin:vite-reporter] \n(!) Some chunks are larger than 1500 kB after minification. Consider:\n- Using dynamic import() to code-split the application\n- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting\n- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.\n✓ built in 739ms\n"
+  }
+]
