@@ -493,3 +493,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 - Image saved-response continuity now checks unchanged initial content and all prior reviews before success; 4 new + 7 adjacent synthetic and 2 actual ASGI/page-JS normal nodes passed (developer). See tests_acceptance/image-save-response-contract/DEVELOPER-VERIFICATION.md.
 
 - Programmatic new-task IDs reuse summary/cache invalidation; 2 new + 20 adjacent developer synthetic checks pass after correcting an independently reproduced stale test fixture. See tests_acceptance/media-new-task-summary/DEVELOPER-VERIFICATION.md.
+
+- 待测：audio-source-declaration，基于 d1f2593；音频运行来源声明可读展示，4 项纯 Node 开发合成测试通过，浏览器/原件/笔录匹配未验。冻结清单 logs/audio-source-declaration-impl-hashes-frozen.txt；说明 tests_acceptance/audio-source-declaration/DEVELOPER.md。
