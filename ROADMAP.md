@@ -401,3 +401,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | CASE-LOAD-STATUS | 2026-11-18 | 待测：案件资料载入状态不再误称服务ONLINE/OFFLINE；5合成SSR场景/27断言、30导航断言及构建为开发自测；浏览器/视觉未验 | logs/case-load-status-impl-hashes-frozen.txt；tests_acceptance/case-load-status/DEVELOPER.md |
 
 | CASE-LOAD-STATUS transition | 2026-11-18 | 待测：案件读取结果绑定caseId；6合成生命周期断言、27相邻SSR断言与构建开发通过，浏览器未验 | tests_acceptance/case-load-status/TRANSITION-DEVELOPER.md；logs/case-load-transition-impl-hashes-frozen.txt |
+
+| TOAST-LIFETIME | 2026-11-18 | 待测：同文提示各自到期，五项合成时钟场景及构建开发自测通过；浏览器/视觉未验 | tests_acceptance/toast-lifetime/DEVELOPER.md；logs/toast-lifetime-impl-hashes-frozen.txt |
+
+| TOAST-ACCESSIBILITY | 2026-11-18 | 待测：保存反馈状态/警报语义；合成结构检查、5定时器场景及构建开发通过；读屏/浏览器/视觉未验 | tests_acceptance/toast-accessibility/DEVELOPER.md；logs/toast-accessibility-impl-hashes-frozen.txt |

@@ -7,13 +7,19 @@ const Ctx = createContext<(t: string, kind?: 'ok' | 'err') => void>(() => {})
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toast, setToast] = useState<ToastState | null>(null)
   const show = useCallback((text: string, kind: 'ok' | 'err' = 'ok') => {
-    setToast({ text, kind })
-    window.setTimeout(() => setToast((cur) => (cur?.text === text ? null : cur)), 3800)
+    const next = { text, kind }
+    setToast(next)
+    window.setTimeout(() => setToast((cur) => (cur === next ? null : cur)), 3800)
   }, [])
   return (
     <Ctx.Provider value={show}>
       {children}
-      {toast && <div className={`toast ${toast.kind}`}>{toast.text}</div>}
+      <div role="status" aria-atomic={true} className={toast?.kind === 'ok' ? 'toast ok' : undefined}>
+        {toast?.kind === 'ok' ? toast.text : ''}
+      </div>
+      <div role="alert" aria-atomic={true} className={toast?.kind === 'err' ? 'toast err' : undefined}>
+        {toast?.kind === 'err' ? toast.text : ''}
+      </div>
     </Ctx.Provider>
   )
 }

@@ -658,3 +658,13 @@ synthetic SSR validation and build only; browser/visual acceptance pending.
 Independent review prompted an actual Layout-function synthetic lifecycle check.
 Before effects run, switching from failed case A to B retained false status.
 Bind load result to case ID; preserve existing cancellation and requests.
+
+## TOAST-LIFETIME (2026-11-18)
+Bounded UI feedback fix: expire the specific notification instance, not any later
+notification with the same text. No request/permission changes. Synthetic hook
+and clock regression only; browser/visual acceptance pending.
+
+## TOAST-ACCESSIBILITY (2026-11-18)
+Bounded save-feedback accessibility: existing evidence/recommendation operations
+use Toast with no live-region semantics. Add persistent empty status/alert
+regions, retaining messages, timeout and focus. No API or permission changes.
