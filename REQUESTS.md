@@ -727,3 +727,6 @@ Authorized new-directory-only API preparation script. Generated image fallback; 
 Explicit isolated demo launcher: bounded complete preparation manifest, explicit
 root/database and read-only case/run binding checks before app construction.
 No role injection, runtime enablement, default DB fallback or automatic retry.
+
+## MEDIA_DEMO_NO_ROLE_HEADER
+Remove unnecessary LeadInvestigator header from isolated synthetic preparation. Existing default Investigator policy already permits these ordinary routes. Keep operator explicitly synthetic; no new identity, dependency override, policy grant or production authentication claim. Verify only new ordinary synthetic node, no refusal/security probes.

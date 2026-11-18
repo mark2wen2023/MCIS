@@ -446,3 +446,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Fresh media demo preparer | 待独验 |4 new ordinary nodes pass after UTC-format correction; one developer preparation imports pinned existing public audio output, image remains generated schematic. New temporary DB only, model/server/browser not started; formal archive unsupported. |
 
 | 2026-11-16 | MEDIA_DEMO_LAUNCHER | 待测 | 显式隔离清单/DB关联预检与本机启动器，模型关闭；3新普通合成节点开发通过，未启动服务/浏览器，授权未验；logs/media-demo-launcher-impl-hashes-frozen.txt |
+
+| MEDIA_DEMO_NO_ROLE_HEADER | 待独验 | 仅移除合成准备脚本的LeadInvestigator头，沿用原默认Investigator及权限；1个新普通接口合成节点通过。非可信身份/浏览器验收，模型与归档关闭；冻结 logs/MEDIA_DEMO_NO_ROLE_HEADER-impl-hashes-frozen.txt，仅本地。 |

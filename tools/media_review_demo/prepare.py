@@ -96,7 +96,7 @@ def prepare(parent, public_paths=None):
         if app.state.image_ocr_runtime is not None or app.state.audio_asr_runtime is not None:raise ValueError('runtime unexpectedly configured')
         with TestClient(app) as client:
             def call(method,path,body=None,status=200):
-                response=client.request(method,path,json=body,headers={'X-MCIS-Role':'LeadInvestigator','X-MCIS-Operator':'Synthetic demo preparer'})
+                response=client.request(method,path,json=body,headers={'X-MCIS-Operator':'Synthetic demo preparer'})
                 if response.status_code!=status:raise ValueError('demo API failed: '+str(response.status_code))
                 return response.json()
             call('POST','/api/v1/cases',dict(caseId=CID,schemaVersion='1.0.0',title='合成图音核对演示（非事故案件）',
