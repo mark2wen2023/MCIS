@@ -471,3 +471,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 - Audio attach form epoch: receipt/ack changes invalidate pending UI response. Developer 7 new + 5 adjacent synthetic passed; see tests_acceptance/audio-attach-form/DEVELOPER-VERIFICATION.md.
 
 - Task-result programmatic selection now advances selection epoch in image/audio pages; 2 new developer synthetic nodes and 8 query regression nodes passed. See tests_acceptance/media-programmatic-selection/DEVELOPER-VERIFICATION.md.
+
+- Image/audio creation response checks follow existing server ID and initial revision contract. 12 new developer synthetic + 17 adjacent passed; no global uniqueness claim or backend defect claim. See tests_acceptance/media-created-run-contract/DEVELOPER-VERIFICATION.md.

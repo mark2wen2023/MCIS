@@ -4,7 +4,7 @@ const script=fs.readFileSync('service/mcis_service/audio_review/review.html','ut
 function setup(){
  class Element{constructor(){this.value='';this.textContent='';this.children=[];}addEventListener(n,f){(this.events??={})[n]=f;}setAttribute(){}removeAttribute(){}load(){}pause(){}append(...xs){this.children.push(...xs)}replaceChildren(){this.children=[]}}
  const elements={},events={};let release,requests=0;
- const ctx=vm.createContext({document:{getElementById:id=>elements[id]??(elements[id]=new Element()),createElement:()=>new Element()},window:{addEventListener:(name,fn)=>events[name]=fn},URL:{revokeObjectURL(){}},confirm:()=>false,fetch:async()=>{requests++;const prior=JSON.parse(vm.runInContext('JSON.stringify(state)',ctx));return new Promise(resolve=>{release=()=>resolve({ok:true,json:async()=>prior})})}});
+ const ctx=vm.createContext({document:{getElementById:id=>elements[id]??(elements[id]=new Element()),createElement:()=>new Element()},window:{addEventListener:(name,fn)=>events[name]=fn},URL:{revokeObjectURL(){}},confirm:()=>false,fetch:async()=>{requests++;const prior=JSON.parse(vm.runInContext('JSON.stringify(state)',ctx));return new Promise(resolve=>{release=()=>resolve({ok:true,json:async()=>({...prior,runId:"AR-"+"1".repeat(32)})})})}});
  vm.runInContext(script,ctx);
  vm.runInContext(`state={caseId:'SYNTHETIC',runId:'AR-fixture',revision:0,initial:{audio:{frames:8000,sampleRateHz:8000},machineDraft:{transcript:{segments:[{id:'s1',text:'synthetic',startMs:0,endMs:500},{id:'s2',text:'other',startMs:500,endMs:1000}],unlocatedSegments:[]}}},humanRevisions:[]};context='SYNTHETIC';el('case').value=context;el('run').value=state.runId;render();`,ctx);
  return {ctx,elements,boxes:elements.segments.children,release:()=>release(),requests:()=>requests,warning:()=>{let warned=false;events.beforeunload({preventDefault(){warned=true}});return warned;}};
@@ -24,5 +24,5 @@ test('audio attach ignores selection away and back',async()=>{
 });
 test('audio attach unchanged context renders result',async()=>{
  const s=setup(),row=s.boxes[0],pending=s.elements.attach.onclick();s.release();await pending;
- assert.notEqual(s.elements.segments.children[0],row);assert.equal(s.elements.run.value,'AR-fixture');assert.equal(s.warning(),false);assert.equal(s.requests(),1);
+ assert.notEqual(s.elements.segments.children[0],row);assert.equal(s.elements.run.value,'AR-'+'1'.repeat(32));assert.equal(s.warning(),false);assert.equal(s.requests(),1);
 });
