@@ -755,3 +755,5 @@ Synthetic red1 reproduced new input lost on late load render. Track edits and se
 - Image import async guard: preserve pending edits and selection on late response. Developer 5 new, 5 reread, 4 save-context checks passed; independent/browser pending. See tests_acceptance/image-create-race/DEVELOPER-VERIFICATION.md.
 
 - Image run-list response selection guard; new 3 developer synthetic nodes passed, browser/backend not verified. See tests_acceptance/image-list-context/DEVELOPER-VERIFICATION.md.
+
+- Image task detail query guards edit/selection epochs and query ordering; new 8 developer synthetic nodes passed (including ordinary transport failures). See tests_acceptance/image-task-query-context/DEVELOPER-VERIFICATION.md; real tasks/browser unverified.

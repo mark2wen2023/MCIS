@@ -1,0 +1,6 @@
+# Image task query context and ordering
+Base: 512100e549125a891b81dd060c625a23fcdb8942.
+All eight nodes individually reviewed: synthetic DOM, delayed successful GET and two ordinary transport-error doubles only; no task execution, HTTP server, model, browser, database, permissions or write-refusal probes.
+Initial harness assumed a task input listener existed; corrected optional event invocation before baseline. Corrected six-node baseline: 5 assertion failures, 1 normal pass. Old response changed run after new edits, case/run/task away-back, or overtaken query.
+Fix only task detail query: capture edits, selection epochs, current IDs and query serial; ignore stale success/error. Normal query still displays success; current transport error says not to retry or infer non-submission.
+`node --test tests_acceptance/image-task-query-context/page.test.cjs`: 8 passed. Adjacent image-create-race 5 and image-list-context 3 passed before adding the final two transport-only tests; runtime unchanged thereafter. Developer synthetic only, no independent/browser/backend acceptance. Start-task and task-list handlers are not changed or validated here. No claims about cancellation or real task outcomes.
