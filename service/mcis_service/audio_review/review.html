@@ -8,7 +8,8 @@
 <script>
 'use strict';
 const el=id=>document.getElementById(id);let state=null,context=null,dirty=false,busy=false,url=null,generation=0,stopAt=null;
-const dirtySegments=new Set();let editVersion=0,selectionVersion=0,attachFormVersion=0;
+const dirtySegments=new Set();let editVersion=0,selectionVersion=0,attachFormVersion=0,taskFormVersion=0,taskMessageVersion=0;
+for(const id of ['task-id','task-confirm'])el(id).addEventListener('input',()=>{taskFormVersion++;});
 for(const id of ['audio-digest','draft-digest','ack'])el(id).addEventListener('input',()=>{attachFormVersion++;});
 function clearAudio(){generation++;el('player').pause();el('player').removeAttribute('src');el('player').load();if(url)URL.revokeObjectURL(url);url=null;stopAt=null;el('play-status').textContent='原音未载入';}
 window.addEventListener('pagehide',clearAudio);for(const id of ['case','run'])el(id).addEventListener('input',()=>{selectionVersion++;clearAudio();});
@@ -22,9 +23,10 @@ function canReplace(){return !dirty||confirm('未保存输入仅在页面内存�
 function checked(d,c){if(d?.caseId!==c||typeof d.runId!=='string'||!Number.isInteger(d.revision)||!Array.isArray(d.humanRevisions)||!d.initial?.machineDraft)throw Error('响应不能确认');return d;}
 
 let taskBusy=false,taskResult=null;
+function taskResponseGuard(){const c=el('case').value,r=el('run').value,id=el('task-id').value,selection=selectionVersion,edit=editVersion,form=attachFormVersion,taskForm=taskFormVersion,message=++taskMessageVersion;return ()=>c===el('case').value&&r===el('run').value&&id===el('task-id').value&&selection===selectionVersion&&edit===editVersion&&form===attachFormVersion&&taskForm===taskFormVersion&&message===taskMessageVersion;}
 function taskChecked(d,c,id){if(d?.caseId!==c||d?.taskId!==id||!['running_or_unknown','interrupted_unknown','failed','succeeded'].includes(d.status)||(d.status==='succeeded'&&typeof d.runId!=='string'))throw Error('任务响应无法确认，查询状态，不重复提交');return d;}
-el('new-task').onclick=()=>{if(taskBusy||el('task-id').value){el('task-output').textContent='保留现有任务号，先查询状态；新任务需人工明确清空。';return;}el('task-id').value=crypto.randomUUID().replaceAll('-','');};
-el('start-task').onclick=async()=>{if(taskBusy)return;const c=el('case').value,id=el('task-id').value;taskBusy=true;taskResult=null;try{if(!/^[a-f0-9]{32}$/.test(id)||!el('task-confirm').checked)throw Error('须生成任务号并确认');el('task-output').textContent='已请求本地执行；可查询状态，不重试。';const d=taskChecked(await json(base(c)+'/audio-asr-tasks',{taskId:id,audioReceipt:el('audio-digest').value,confirmed:true}),c,id);if(c!==el('case').value||id!==el('task-id').value)return;taskResult=d;el('task-output').textContent=JSON.stringify(d,null,2);}catch(e){el('task-output').textContent=e.message+'；保留任务号，查询状态，不自动重试。';}finally{taskBusy=false;}};
+el('new-task').onclick=()=>{if(taskBusy||el('task-id').value){el('task-output').textContent='保留现有任务号，先查询状态；新任务需人工明确清空。';return;}taskFormVersion++;el('task-id').value=crypto.randomUUID().replaceAll('-','');};
+el('start-task').onclick=async()=>{if(taskBusy)return;const c=el('case').value,id=el('task-id').value,current=taskResponseGuard();taskBusy=true;taskResult=null;try{if(!/^[a-f0-9]{32}$/.test(id)||!el('task-confirm').checked)throw Error('须生成任务号并确认');el('task-output').textContent='已请求本地执行；可查询状态，不重试。';const d=taskChecked(await json(base(c)+'/audio-asr-tasks',{taskId:id,audioReceipt:el('audio-digest').value,confirmed:true}),c,id);if(!current())return;taskResult=d;el('task-output').textContent=JSON.stringify(d,null,2);}catch(e){if(current())el('task-output').textContent=e.message+'；保留任务号，查询状态，不自动重试。';}finally{taskBusy=false;}};
 el('task-status').onclick=()=>action(async()=>{const c=el('case').value,id=el('task-id').value;const d=taskChecked(await json(base(c)+'/audio-asr-tasks/'+encodeURIComponent(id)),c,id);if(c!==el('case').value||id!==el('task-id').value)return;taskResult=d;el('task-output').textContent=JSON.stringify(d,null,2);});
 el('task-list').onclick=()=>action(async()=>{const c=el('case').value,selection=selectionVersion;const d=await json(base(c)+'/audio-asr-tasks');if(selection!==selectionVersion||c!==el('case').value)return;el('task-output').textContent=JSON.stringify(d,null,2);});
 el('open-task').onclick=()=>{if(!taskResult||taskResult.caseId!==el('case').value||taskResult.taskId!==el('task-id').value||taskResult.status!=='succeeded'){el('task-output').textContent='先查询确认本案任务成功；未知不是成功。';return;}if(!canReplace())return;selectionVersion++;clearAudio();el('run').value=taskResult.runId;el('load').onclick();};
