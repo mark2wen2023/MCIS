@@ -1,0 +1,27 @@
+# Caller-supplied declaration comparison — isolated research, NOT application wiring
+
+Base/design: 06a7e8b5eabd6e85b3d65c9be98a5938431ea3c5, docs/design/MEDIA-INTERVIEW-SOURCE-CONTRACT.md. No UI/backend imports or registration. compare.mjs has no imports and does not access network, filesystem, database, clock or random source. Pure functions return new results, do not create associations, audit, authorize reads or authenticate callers. Existing GET endpoints can have audit/byte-read effects; they are not called here.
+
+## Input scope and revision basis
+
+Inputs are caller-provided plain, acyclic JSON-like declarations (optional/missing properties supported); not arbitrary JS proxies/getters, cyclic objects or executable data. No API adapter is supplied. ComparePair accepts interview/media envelopes `{state:'available',data}` or unread/unavailable, explicit selection `{caseId,mediaKind,runId,reviewRevision,sourceRole}`, roleDeclaration and historyEvents. Unavailable payloads are not traversed/echoed. Data paths follow the design's fixed media baseline 76d6c22c474172a28f7b2da9ae45021e8d573b82. Do not feed lists as detail responses.
+
+Review revision validation is **integer 0..1000** for this fixed candidate only: contracts/audio-review-candidate.md and contracts/image-ocr-review-candidate.md describe initial revision 0 / maximum 1000 human revisions; audio_review/app.py initial insertion is revision=0 (line121), append cap/increment lines155–157; image_review/app.py initial line84, cap/increment lines129–131. This is a pinned candidate output range, NOT a new server API constraint or a guarantee for future/legacy arbitrary data. Boolean, string, negative/fractional/out-of-range and absent revisions cannot compare equal. Machine transcript revision is not used. Whole-interview stable revision is unavailable; an optional caller-supplied `version` is opaque snapshot material only, never certified as a server version. No persistent association is supported.
+
+Roles: audio, pdf, image (page image), image_raw_output, image_candidate. No default role. RoleDeclaration requires role, nonblank basisText, declaredAt and declarerProvenance plus boundSnapshot from declarationSnapshot(interview data). Timestamp/provenance are opaque assertions, not clock/identity verification. The snapshot binds identity, evidence ID, source hash and optional version, retaining presence/null semantics. An empty historyEvents array means only “caller reported no intervening change”, NOT complete history. observeDeclaration consumes explicit snapshot_observed events; any differing snapshot invalidates permanently through A→B→A. Invalid/missing event history is unknown. No event collection, persistence, trusted sequence, server history or React observation guarantee exists.
+
+Audio uses currentSha256, not registeredSha256/stateDigest. PDF/page-image/raw require both specified hashes; candidate uses its independent sourceVersions hash. Each missing/null/empty/invalid/present field is separate. Valid digest comparison lowercases hex, never trims; IDs remain exact and evidence comparison uses only EV-digits subset, not all server ID validity. Internal mismatches and ID/digest differences are independent issues; mismatches do not mean tampering. Across cases source payload comparison is skipped; case/identity input fields still reported. Unsupported audio machine output role is invalid/indeterminate.
+
+compareDeclarations accepts `{requiredRoles, pairs}`. Each pair explicitly identifies a candidate; no array-position/hash/name pairing. Duplicate roles are ambiguous even for equal claims or different runs/revisions. Missing/unexpected required roles block overall equality. Mixed cases block overall equality. Each pair result remains visible; one equal pair never hides another failure. Consumers must interpret `declarations_equal` only as caller-supplied declaration equality, not current bytes, authenticity, reading/listening, approval or interview linkage. Outputs always have association=not_established and verification=not_performed. This is not an untrusted-input security parser.
+
+## Development validation only
+
+After static safety review, ran only:
+
+```sh
+node research/source-declarations/compare.test.mjs
+```
+
+13 synthetic groups passed: five roles; digest case/ID distinction; independent missing/null/empty/invalid states; multiple errors; dual-image hashes; audio hash non-substitution and task artifact missing ID; revision bounds/selection; role missing/mismatch; explicit history ABA/unknown; unavailable payload non-access; duplicate/required roles and reordered explicit pairs; deep-frozen input unchanged; stale snapshot, wrong selected run and mixed-case group. Test data is handmade, no stored case/media or backend imports. Global fetch throws. Node's normal source-module loading is the only file reading required to run the test; comparator itself has no I/O. Earlier 12-group pass preceded an added explicit stale/selection/mixed-case group; do not sum counts.
+
+No browser, HTTP, application startup, model, byte verification, permission/refusal, paused, archive or recovery tests ran. No new dependencies. No service aggregation, audit/association writes, automatic role inference or persisted authorization. This candidate awaits independent review; not production-ready, no merge/deployment. Repository checkout is not sanitized data. No original materials are included in this increment.

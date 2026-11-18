@@ -806,3 +806,6 @@ Authorized frontend-only amendment to frozen audio/image pages: retain page-memo
 
 ## Media unknown accumulation wording (2026-11-18)
 Authorized clarification of both frozen page banners only; no Set/request/receipt behavior change. New pure Node accumulation coverage in tests_acceptance/media-unknown-guidance/ACCUMULATION.md.
+
+## Isolated source declaration comparison (2026-11-18)
+Authorized pure research implementation of 06a7e8b design, fixed candidate revision range 0..1000 with documented source basis. Caller JSON only, no API aggregation/association/audit or application integration; explicit history is not server proof. See research/source-declarations/README.md.

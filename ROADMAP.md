@@ -513,3 +513,4 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-18 | media-unknown-guidance | 待独立验收 | 两页新2生命周期节点通过，另12相邻开发合成通过；仅页面内存风险提醒，非回执/浏览器/HTTP验收；冻结 logs/media-unknown-guidance-impl-hashes-frozen.txt |
 
 | 2026-11-18 | media-unknown-accumulation | 待独立验收 | 8新+2既有Node合成节点通过；仅累计提醒文案，非逐次操作清单/浏览器/后端验收；冻结 logs/media-unknown-accumulation-impl-hashes-frozen.txt |
+| 2026-11-18 | source-declaration-comparison | 待独审 / 隔离纯函数 | 13组合成测试开发通过；仅调用者声明比较，显式历史非服务端证明，无页面/后端/关联；冻结 logs/source-declaration-comparison-impl-hashes-frozen.txt |

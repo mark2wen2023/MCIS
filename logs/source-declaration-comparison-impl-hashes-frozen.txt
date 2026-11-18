@@ -1,0 +1,2 @@
+1d2486ab1b09daedb1ae65db449ff3049a7b5940e985fe90f9e5999eb2c307de  research/source-declarations/compare.mjs
+a89ffc54fe98f9e139de7b763c61cd4890a1cfe0edbab7c94fda2ebb73944728  research/source-declarations/compare.test.mjs
