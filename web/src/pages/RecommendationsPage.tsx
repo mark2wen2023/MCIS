@@ -113,7 +113,7 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
     <div className="w7-page">
       <div className="page-head">
         <div>
-          <div className="page-title">安全建议跟踪 · 报告草案征求意见 <span className="p6-tag">{caseRes.data ? (caseRes.data.isFictionalDemo ? '示例数据（虚构）' : '真实案例（公开报告）') : '案件信息加载中'}</span><span className="p6-tag cyan">LIVE · {SERVICE_ADDR}</span></div>
+          <div className="page-title">安全建议跟踪 · 报告草案征求意见 <span className="p6-tag">{caseRes.data ? (caseRes.data.isFictionalDemo ? '示例数据（虚构）' : '真实案例（公开报告）') : caseRes.error ? '案件信息读取失败' : caseRes.loading ? '案件信息加载中' : '案件信息尚未取得'}</span><span className="p6-tag cyan">LIVE · {SERVICE_ADDR}</span></div>
           <div className="page-sub">
             状态机与 C# SafetyRecommendationBoard 一致：草拟 → 已发布 → 已回复（只能经登记回复）→ 已落实 / 未采纳（须理由）/ 已关闭。
             拖动卡片或在详情中操作；每次变更写入不可改的审计链（audit/audit.jsonl）。
@@ -125,7 +125,7 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
         </div>
       </div>
 
-      {caseRes.error && <p role="alert">案件信息读取失败：{caseRes.error}</p>}
+      {caseRes.error && <p role="alert">案件信息读取失败：{caseRes.error}。“重新读取看板与审计”仅刷新看板和审计，该按钮不重读案件信息。</p>}
       <p role="note">看板和审计分别读取，不是同一时点快照。</p>
       <button className="btn btn-sm" onClick={refresh}>重新读取看板与审计</button>
       {board.loading && <p role="status">{board.data ? '看板正在重载，以下为上次读取的旧快照；输入草稿保留。' : '看板正在读取，建议数量尚未确定。'}</p>}

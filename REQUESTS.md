@@ -861,3 +861,6 @@ Reproduced stale response between reload and passive cleanup. Recommendation-onl
 
 ## Same-ID recommendation progress snapshot (2026-11-18)
 Reproduced unedited25 remaining after snapshot50. Derive clean value from snapshot; preserve edited percentage/note with explicit source-change notice and unchanged unknown lock. Base d7447db, selected synthetic tests/build; see tests_acceptance/recommendation-progress-snapshot/DEVELOPER.md. No server version or browser claim.
+
+## Recommendation case read failure label (2026-11-18)
+Synthetic initial error reproduced misleading loading title. Distinguish failed/unavailable/loading metadata and explicitly limit refresh button to board/audit. Request behavior unchanged. New3/adjacent5 synthetic and build passed; no browser/HTTP. See tests_acceptance/recommendation-case-read-label/DEVELOPER.md.

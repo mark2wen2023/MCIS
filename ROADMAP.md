@@ -519,3 +519,5 @@ Combined exact 139f188 and b4df823; only document append conflicts, both preserv
 | 2026-11-18 | Recommendation read lifecycle | 待独验 | Local hook6 and display5 plus selected adjacent synthetic tests/build; shared hook unchanged, no browser/HTTP |
 
 | 2026-11-18 | Same-ID progress snapshot/draft distinction | 待独验 | Base d7447db; continuous synthetic4 plus scoped adjacent tests/build; no browser/HTTP, unknown lock retained |
+
+| 2026-11-18 | Case metadata failure label | 待独验 | Base a5086d9; synthetic3+adjacent5/build; refresh remains board/audit only |
