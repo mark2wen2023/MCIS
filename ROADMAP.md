@@ -448,3 +448,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-16 | MEDIA_DEMO_LAUNCHER | 待测 | 显式隔离清单/DB关联预检与本机启动器，模型关闭；3新普通合成节点开发通过，未启动服务/浏览器，授权未验；logs/media-demo-launcher-impl-hashes-frozen.txt |
 
 | MEDIA_DEMO_NO_ROLE_HEADER | 待独验 | 仅移除合成准备脚本的LeadInvestigator头，沿用原默认Investigator及权限；1个新普通接口合成节点通过。非可信身份/浏览器验收，模型与归档关闭；冻结 logs/MEDIA_DEMO_NO_ROLE_HEADER-impl-hashes-frozen.txt，仅本地。 |
+
+| Audio saved-draft marker | 待独验 | 2026-11-18：成功保存后逐段清除误报标记，保留其他段及提交期间新输入；普通合成红1→绿3，非浏览器/真实服务验收，不改变权限或归档。 |

@@ -730,3 +730,6 @@ No role injection, runtime enablement, default DB fallback or automatic retry.
 
 ## MEDIA_DEMO_NO_ROLE_HEADER
 Remove unnecessary LeadInvestigator header from isolated synthetic preparation. Existing default Investigator policy already permits these ordinary routes. Keep operator explicitly synthetic; no new identity, dependency override, policy grant or production authentication claim. Verify only new ordinary synthetic node, no refusal/security probes.
+
+## Audio saved-draft marker correction (2026-11-18)
+On media demo f001a6d, change audio review page only: confirmed successful save clears that segment's dirty marker only if current fields still match the submitted body. Preserve other drafts and edits during pending requests; no permission/API change. New ordinary synthetic DOM/HTTP tests: one baseline failure, final3 pass; not browser or real-backend acceptance. Details tests_acceptance/audio-saved-draft-state/DEVELOPER-VERIFICATION.md.
