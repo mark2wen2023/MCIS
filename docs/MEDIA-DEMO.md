@@ -14,11 +14,11 @@ cd MCIS-media-demo
 git rev-parse HEAD
 git status --short
 # 固定本指南已核对的完整提交；不要以可移动分支名代替版本记录。
-git switch --detach 568d8544661c5ee69ff8b969242436a48bce0813
+git switch --detach 03a76a54dc178727585d859d7bd8db98a14b78c7
 git rev-parse HEAD
 ```
 
-应确认最后输出严格等于 `568d8544661c5ee69ff8b969242436a48bce0813`，且工作树干净；不符、提交不存在或有本地修改时停止核查，不强制覆盖。该提交的运行时代码与下文实跑基线 `e3b913ff6585650cbe91a5998a65cc3522ef46a8` 一致，差异仅为README及本指南。分支以后可能前移，不能把新头称为同一已验版本；本次指南补充也不构成新运行时验收。
+应确认最后输出严格等于 `03a76a54dc178727585d859d7bd8db98a14b78c7`，且工作树干净；不符、提交不存在或有本地修改时停止核查，不强制覆盖。该提交的运行时代码与下文实跑基线 `e3b913ff6585650cbe91a5998a65cc3522ef46a8` 一致，差异仅为README、本指南及开发验证记录。最近3个普通节点实际被测头为 `1450bb2829a6c2ca0db9b83861c16aa8201ed0a2`；固定的 `03a76a5` 后续头仅增加该验证记录，没有另一次运行时测试。分支以后可能前移，不能把新头称为同一已验版本；本次指南补充也不构成新运行时验收。
 
 以下命令面向 Linux/macOS 的 Bash，在仓库根目录执行。Windows流程未验证。需要 Python（本次复核使用3.12.14）、venv及 `service/requirements.txt` 中的服务依赖。此演示不需要前端npm构建、.NET SDK、PaddleOCR、SenseVoice或模型下载。
 
@@ -113,7 +113,7 @@ PY
 
 2026-11-18，基于精确运行时代码 `e3b913ff6585650cbe91a5998a65cc3522ef46a8` 创建全新独立Git工作树，复用已有服务虚拟环境，未安装依赖或模型：
 
-| 步骤 | 本轮实际结果 |
+| 步骤 | 上述回环服务验证的实际结果 |
 |---|---|
 | 新源码检出 | 本地Git worktree检出成功；未重做网络clone |
 | Python依赖导入 | Python3.12.14，所列导入成功；非全新安装验收 |
@@ -126,4 +126,17 @@ PY
 
 准备和启动出现已有Starlette/httpx弃用警告，命令仍成功；本轮没有安装替代库或修改依赖。此前Chromium尝试因环境SUID沙箱配置错误中止，本轮未重试、未修权限或关闭沙箱。须由环境管理方提供受支持且保留沙箱的浏览器环境后再验收。
 
-既有新增普通合成接口测试1项通过属于先前开发证据，不是本轮浏览器结果。本轮未运行pytest或暂停测试。说明参见 [移除高权限头记录](../research/media_demo_no_role_header/RESULT.md) 和 [此前演示尝试](../research/media_demo_no_role_header/DEMO-ATTEMPT.md)。
+上述回环服务验证没有运行pytest；更早新增普通合成接口测试1项通过属于先前开发证据，不与下面的新回归计数相加。历史说明参见 [移除高权限头记录](../research/media_demo_no_role_header/RESULT.md) 和 [此前演示尝试](../research/media_demo_no_role_header/DEMO-ATTEMPT.md)。
+
+
+### 后续定向合成回归（开发方，2026-11-18）
+
+精确被测版本：`1450bb2829a6c2ca0db9b83861c16aa8201ed0a2`。随后 `03a76a54dc178727585d859d7bd8db98a14b78c7` 仅保存[命令与验证记录](../tests_acceptance/media-demo-current/DEVELOPER-VERIFICATION.md)，未改运行时。静态审阅节点及其fixture/helper后，以下三个指定节点实际 **3 passed in 2.06s**，无失败/跳过：
+
+- `test_media_demo_no_role_header.py::test_synthetic_prepare_and_readback_without_role_header`
+- `test_media_demo_launch.py::test_prepared_manifest_metadata_and_disabled_app`
+- `test_media_review_demo.py::test_same_app_edits_audit_and_reopen_preserve_both_histories`
+
+这些文件位于 `service/tests/`。仅覆盖合成准备、不附加角色头的接口读取及下载摘要头、显式清单预检、模型关闭、同应用图音修订/审计以及重新构造应用后重读；原始机器草稿保留。使用临时库和TestClient进程内ASGI调用，**不是浏览器、实际网络服务重跑或真人回听**，也不是进程崩溃恢复、全套原件字节完整性或独立验收。
+
+该回归未运行同文件其他节点、导出拒绝、写入拒绝探测、暂停测试、真实资料或模型，未重新启动服务/浏览器。本次指南同步仅只读核对代码差异和已有结果，没有再跑测试。干净安装、完整客户端联动、可靠停止日志、真实浏览器显示/声音/人工审核及正式媒体归档恢复的缺项均保持。
