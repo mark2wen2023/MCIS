@@ -972,3 +972,6 @@ claims. No product route/permission/migration/publisher changes.
 - Authorized candidate source-read contract: two instance flags default False; analysis disabled=503 analysis_seed_disabled before read; report disabled-source missing text distinct from read failure. Legacy direct load_seed needs explicit policy; whatif custom callback shape retained but skipped when disabled. Existing reports unchanged. See tests_acceptance/source-read-policy/REVIEW.md; no startup permission.
 
 - Source policy Settings correction: preserve original seven positional fields, append flags; synthetic class-only construction verified. seed_demo default remains True; new flags are not environment-parsed.
+
+## Health handler extraction
+Authorized minimal extraction only; same GET /api/v1/health and response, no configuration or factory change. Isolated source execution and main AST checks; no HTTP or startup acceptance.

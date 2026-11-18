@@ -487,3 +487,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | instance source-read policy | 待测 | synthetic helper and AST wiring checks pass; actual app/HTTP/report output untested, startup/archive hold | logs/source-read-policy-frozen.txt |
 
 | source policy Settings order | 待测 | synthetic constructor and AST checks pass; no app imports, seed default remains True | logs/source-policy-settings-order-frozen.txt |
+
+| Health handler extraction | 待独验 | Three selected isolated function/AST checks passed; no HTTP or service startup. logs/health-handler-extraction-frozen.txt |

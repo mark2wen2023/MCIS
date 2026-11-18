@@ -12,6 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from . import __version__
+from .health import health
 from .knowledge.router import router as knowledge_router
 from .agents.router import router as agents_router
 from .audit.router import router as audit_router
@@ -80,9 +81,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         return JSONResponse(status_code=422, content={"code": "VALIDATION_ERROR", "message": "请求参数不合法",
                                                       "detail": [{"loc": list(e["loc"]), "msg": e["msg"]} for e in exc.errors()]})
 
-    @app.get("/api/v1/health", tags=["meta"])
-    def health():
-        return {"status": "ok", "service": "mcis-service", "version": __version__}
+    # Liveness only: does not certify business readiness or data integrity.
+    app.get("/api/v1/health", tags=["meta"])(health)
 
     for r in (cases_router, evidence_router, timeline_router, interviews_router, manual_interviews_router, recommendations_router, colreg_router,
               audit_router, redaction_router, agents_router, sim_router, package_router, reports_router):
