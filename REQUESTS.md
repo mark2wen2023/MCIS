@@ -835,3 +835,8 @@ See tests_acceptance/supported-archive-workflows/REPORT.md; no archive support e
 
 ## DOCX continuation headers and language-label scope
 Reopen report exporter only for repeated table header rows and an accurate English-column label: original-language excerpts are not a complete translation. Preserve stored text, references, history and permissions. Validate XML and actual installed Writer rendering; do not claim Microsoft Word verification.
+
+
+## UI + PR104 — pending combined acceptance
+
+Combined exact 139f188 and b4df823; only document append conflicts, both preserved. Developer 19 UI scripts, new synthetic SSR (3 cases), pure formatting (6 cases) and build passed; counts not cumulative. No real material, paused/refusal probes, HFACS or browser run. See tests_acceptance/ui-pr104/DEVELOPER.md; freeze logs/ui-pr104-impl-hashes-frozen.txt. Real backend/production permissions/visual/independent acceptance pending. Do not merge or deploy.

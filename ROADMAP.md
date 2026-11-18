@@ -500,3 +500,8 @@ Combined 076eec1 / 2064675 / 81a308c on 94d5e38, preserving all group document a
 | PR104 supported archive ordinary tests | 待独审 | e564581+b89d3fd隔离组合，仅两份文档追加冲突；生产代码不变、四测试文件原冻结匹配。191通过/1明确排除HFACS，复杂seed409和默认403保留；开发合成结果，未更新PR104或主线。 |
 
 | REPORTDOCXHEADERS | 待测 | DOCX重复表头/非完整翻译提示/标题分页；开发31通过，Writer23页，非Word验收 | logs/REPORTDOCXHEADERS-impl-hashes-frozen.txt |
+
+
+## UI + PR104 — pending combined acceptance
+
+Combined exact 139f188 and b4df823; only document append conflicts, both preserved. Developer 19 UI scripts, new synthetic SSR (3 cases), pure formatting (6 cases) and build passed; counts not cumulative. No real material, paused/refusal probes, HFACS or browser run. See tests_acceptance/ui-pr104/DEVELOPER.md; freeze logs/ui-pr104-impl-hashes-frozen.txt. Real backend/production permissions/visual/independent acceptance pending. Do not merge or deploy.
