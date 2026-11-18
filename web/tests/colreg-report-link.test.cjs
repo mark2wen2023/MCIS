@@ -16,7 +16,7 @@ function render(query,mode='ready'){
   if(path.endsWith('/'+caseId))return {caseId,title:'synthetic case'}
   return []
  }
- const modules={react:{useState:v=>[typeof v==='function'?v():v,()=>{}],useMemo:f=>f()},
+ const modules={react:{useEffect:()=>{},useRef:v=>({current:v}),useState:v=>[typeof v==='function'?v():v,()=>{}],useMemo:f=>f()},
  'react/jsx-runtime':{jsx,jsxs:jsx},'react-router-dom':{useSearchParams:()=>[params,()=>{}]},
  '../api':{api:{get},ApiError:class extends Error{},CASE_ID:'SYNTHETIC-DEMO'},
  '../colreg/ColregView':{ColregView:View},'../colreg/derive':{},

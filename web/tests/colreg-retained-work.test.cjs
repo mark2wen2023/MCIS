@@ -8,7 +8,7 @@ const requests=[]
 const analysis={caseId:'SYNTHETIC',checks:[{checkId:'CK-1'}],bands:[]}
 const api={get:path=>new Promise(resolve=>requests.push({path,resolve})),post:async()=>({title:'synthetic draft',text:'keep this draft',status:'Draft'})}
 const apiModule={api,CASE_ID:'DEMO',ApiError:class extends Error{},onIdentityChange:()=>()=>{}}
-const modules={react:{useState:v=>{const store=values,i=index++;if(!(i in store))store[i]=typeof v==='function'?v():v;return[store[i],v=>store[i]=typeof v==='function'?v(store[i]):v]},useMemo:f=>f(),useCallback:f=>f,
+const modules={react:{useRef:v=>{const store=values,n=index++;if(!(n in store))store[n]={current:v};return store[n]},useState:v=>{const store=values,i=index++;if(!(i in store))store[i]=typeof v==='function'?v():v;return[store[i],v=>store[i]=typeof v==='function'?v(store[i]):v]},useMemo:f=>f(),useCallback:f=>f,
 useEffect:(fn,deps)=>{const store=effects,i=ei++,old=store[i];if(!old||deps.some((d,j)=>d!==old.deps[j]))queued.push(()=>{old?.cleanup?.();store[i]={deps,cleanup:fn()}})}},
 'react/jsx-runtime':{jsx,jsxs:jsx},'react-router-dom':{useSearchParams:()=>[params,q=>{params=new URLSearchParams(q)}]},'../api':apiModule,'./api':apiModule,'../colreg/ColregView':{ColregView:View},'../colreg/derive':{normalizeDraftResponse:v=>v},'../components/Toast':{useToast:()=>({show:()=>{},run:async f=>f()})},'../styles/w6.css':{}}
 const box={exports:{}};vm.runInNewContext(code,{module:box,exports:box.exports,require:n=>{assert.ok(n in modules,n);return modules[n]}})
