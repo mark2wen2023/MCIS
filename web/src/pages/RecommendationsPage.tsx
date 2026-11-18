@@ -1,6 +1,6 @@
-import { useRef, useState, useSyncExternalStore, type DragEvent } from 'react'
+import { useLayoutEffect, useRef, useState, useSyncExternalStore, type DragEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
+import { api, ApiError, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
 import { RecommendationReview } from '../recommendationReview/RecommendationReview'
 import { ConsultationPanel } from '../consultation/ConsultationPanel'
 import { SERVICE_ADDR } from '../config'
@@ -32,6 +32,27 @@ async function loadAudit(caseId: string): Promise<AuditEvent[]> {
 
 const recommendationsIdentity = () => `${getRole()}\n${getOperator()}`
 
+// Local display lifetime only: a stale completion may still have committed remotely.
+function useScopedActions() {
+  const { show } = useToast()
+  const alive = useRef(true)
+  const identity = useRef(recommendationsIdentity())
+  useLayoutEffect(() => { alive.current = true; return () => { alive.current = false } }, [])
+  const current = () => alive.current && identity.current === recommendationsIdentity()
+  async function run<T>(work: () => Promise<T>, message: string): Promise<T | undefined> {
+    if (!current()) return
+    try {
+      const result = await work()
+      if (!current()) return
+      show(message, 'ok'); return result
+    } catch (e) {
+      if (current()) show(e instanceof ApiError ? `${e.code}：${e.message}` : String(e), 'err')
+      return undefined
+    }
+  }
+  return { run, show, current }
+}
+
 export function RecommendationsPage() {
   const who = useSyncExternalStore(onIdentityChange, recommendationsIdentity, recommendationsIdentity)
   const [params] = useSearchParams()
@@ -41,7 +62,7 @@ export function RecommendationsPage() {
 }
 
 function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requestedId: string }) {
-  const { run, show } = useToast()
+  const { run, show, current } = useScopedActions()
   const caseRes = useLoad(() => api.get<CaseDef>(casePath('', caseId)))
   const board = useLoad(() => api.get<Board>(casePath('/recommendations:board', caseId)))
   const audit = useLoad(() => loadAudit(caseId))
@@ -53,10 +74,13 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
   const all = (board.data?.columns ?? []).flatMap((c) => c.items)
   const sel = all.find((r) => r.id === selId)
   const missingReference = requestedId && selId === requestedId && board.data && !board.error && !sel
-  const refresh = () => { board.reload(); audit.reload() }
+  const refresh = () => { if (current()) { board.reload(); audit.reload() } }
+  const clearPending = (expected: typeof pending) => {
+    if (current()) setPending(value => value === expected ? null : value)
+  }
 
   const transition = (id: string, to: RecStatus, note = '') =>
-    run(async () => { const r = await api.post<Recommendation>(casePath(`/recommendations/${id}:transition`, caseId), { to, note }); refresh(); setPending(null); return r },
+    run(async () => { const r = await api.post<Recommendation>(casePath(`/recommendations/${id}:transition`, caseId), { to, note }); refresh(); clearPending(pending); return r },
       `${id} → ${STATUS_LABEL[to]}（已写审计 safetyrec.transition）`)
 
   const onDrop = (colKey: string, e: DragEvent) => {
@@ -129,7 +153,7 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
       <div className="grid w7-columns">
         {sel ? (
           <Detail key={sel.id} caseId={caseId} rec={sel} allowed={board.data?.allowed[sel.status] ?? []} pending={pending?.id === sel.id ? pending.to : null}
-            onTransition={transition} onChanged={refresh} onCancel={() => setPending(null)} />
+            onTransition={transition} onChanged={refresh} onCancel={() => clearPending(pending)} />
         ) : <Panel title="建议详情"><div className="empty">{missingReference ? <span role="status">当前案件看板未找到指定安全建议 {requestedId}。未自动选择其他建议；请核对引用或手动选择卡片。此处只查看当前记录，不证明历史版本已核验。</span> : '选择一张卡片'}</div></Panel>}
         <ConsultationPanel caseId={caseId} renderMatrix={(rounds) => <ConsultationTable rounds={rounds} />} onChanged={() => audit.reload()} />
         <Panel title="审计记录（安全建议 / 征求意见）" meta={<span>append-only · SHA-256 链</span>} bodyStyle={{ padding: 0, maxHeight: 330 }}>
@@ -175,7 +199,7 @@ function Card({ rec, selected, onClick }: { rec: Recommendation; selected: boole
 
 function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus[]; pending: RecStatus | null; onTransition: (id: string, to: RecStatus, note?: string) => Promise<unknown>; onChanged: () => void; onCancel: () => void }) {
   const { caseId, rec, allowed } = props
-  const { run } = useToast()
+  const { run, current } = useScopedActions()
   const edits = useRef({ response: 0, note: 0 })
   const [note, setNote] = useState('')
   const [party, setParty] = useState(rec.addressee)
@@ -188,6 +212,7 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
     const revision = edits.current.response
     return run(async () => {
       const r = await api.post(casePath(`/recommendations/${rec.id}/responses`, caseId), { party, text })
+      if (!current()) return undefined
       if (edits.current.response === revision) setText('')
       props.onChanged(); props.onCancel(); return r
     }, `${rec.id} 已登记回复${rec.status === 'Issued' ? '，状态 → 已回复' : ''}`)
@@ -196,6 +221,7 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
     const revision = edits.current.note
     return run(async () => {
       const r = await api.patch(casePath(`/recommendations/${rec.id}`, caseId), { progressPct: pct, note })
+      if (!current()) return undefined
       if (edits.current.note === revision) setNote('')
       props.onChanged(); return r
     }, `${rec.id} 落实进度 → ${pct}%（审计 safetyrec.progress）`)

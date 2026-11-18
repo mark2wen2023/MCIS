@@ -846,3 +846,6 @@ Confirmed on UI+PR104 9cc3ece: review save remount returned the selected second 
 
 ## Report refresh callback and pending section selection (2026-11-18)
 Follow-up to 2f2bba3: reproduced actual refresh-button event misuse and stale section capture during pending review. Explicit event-free refresh and latest-section ref preserve user selection; inactive sessions cannot refresh. Developer 12 synthetic lifecycle scenarios, 4 adjacent GISIS flows and build passed; no real browser/HTTP validation. See tests_acceptance/report-refresh-section/DEVELOPER.md; independent review pending.
+
+## Recommendation pending operation context (2026-11-18)
+Reproduced old transition completion clearing a newly opened confirmation. Exact pending-object comparison plus local session lifetime guards preserve later actions and suppress stale completion notifications; no request cancellation or retry. Base80b0756, independent fix/recommendation-pending-context. Developer synthetic14 plus existing5/10 and build passed; browser/HTTP unverified. See tests_acceptance/recommendation-pending-context/DEVELOPER.md.
