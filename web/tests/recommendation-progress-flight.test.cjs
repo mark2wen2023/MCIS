@@ -54,6 +54,16 @@ async function scenario(kind,mode,edit='none'){
   await save.props.onClick();assert.equal(sent.length,1,'unknown result must not retry')
  }
  if(mode==='success')assert.ok(nodes(render()).some(n=>typeof n.props?.children==='string'&&n.props.children.includes('尚未确认读回')))
+ if(mode==='failure'){
+  const originalRec=detail.props.rec
+  detail.props.rec={...originalRec,status:'Implemented',progressPct:100}
+  assert.ok(nodes(render()).some(n=>typeof n.props?.children==='string'&&n.props.children.startsWith('保存结果未知')),'unknown must remain visible outside Responded')
+  assert.ok(!nodes(render()).some(n=>n.type==='button'&&n.props.children==='保存进度'))
+  detail.props.rec=originalRec
+  const restored=nodes(render()).find(n=>n.type==='button'&&n.props.children==='保存进度')
+  assert.equal(restored.props.disabled,true,'status changes must not unlock')
+  await restored.props.onClick();assert.equal(sent.length,1)
+ }
  if(mode==='refresh-throw')assert.equal(refreshCalls,1,'successful response reached refresh callback')
  if(edit==='percent'&&mode!=='refresh-throw')assert.ok(nodes(render()).some(n=>typeof n.props?.children==='string'&&n.props.children.includes('尚未保存')))
 

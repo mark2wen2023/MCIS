@@ -864,3 +864,6 @@ Reproduced unedited25 remaining after snapshot50. Derive clean value from snapsh
 
 ## Recommendation case read failure label (2026-11-18)
 Synthetic initial error reproduced misleading loading title. Distinguish failed/unavailable/loading metadata and explicitly limit refresh button to board/audit. Request behavior unchanged. New3/adjacent5 synthetic and build passed; no browser/HTTP. See tests_acceptance/recommendation-case-read-label/DEVELOPER.md.
+
+## Unknown progress notice outside status controls (2026-11-18)
+Reproduced hidden unknown notice after same-ID non-Responded snapshot using exact notice assertion. Move notice outside status condition; lock unchanged and remains after return to Responded. Synthetic7 enhanced and adjacent4/build passed. See tests_acceptance/recommendation-unknown-status-notice/DEVELOPER.md; no browser/HTTP claim.

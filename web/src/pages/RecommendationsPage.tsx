@@ -269,6 +269,7 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
         {rec.verificationNote && <><dt>核实说明</dt><dd>{rec.verificationNote}</dd></>}
       </dl>
 
+      {progressNotice && <p role={progressState === 'unknown' ? 'alert' : 'status'}>{progressNotice}</p>}
       {sourceChanged && <p role="status">来源数据已变化；当前保留您基于先前快照编辑的进度和说明，请与最新记录核对。此提示不代表服务端版本核验，也不会解除结果未知锁。</p>}
       {rec.status === 'Responded' && (
         <div className="p6-card" style={{ marginTop: 8 }}>
@@ -278,7 +279,6 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
             <b className="mono">{pct}%</b>
             <button className="btn btn-sm" disabled={progressState !== 'idle' || pct === rec.progressPct} onClick={saveProgress}>保存进度</button>
           </div>
-          {progressNotice && <p role={progressState === 'unknown' ? 'alert' : 'status'}>{progressNotice}</p>}
         </div>
       )}
 
