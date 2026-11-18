@@ -400,3 +400,4 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Interview source metadata disclosure | 待独审 | 2026-11-15：main94d5e38独立只读提示来源缺项/异常及本案证据定位；保留返回摘要与人工判断，不等于原件保全/核验。新SSR、原40断言、构建/最终类型检查过；真实浏览器/LLM/OCR未验。冻结 logs/interview-source-disclosure-impl-hashes-frozen.txt；功能文件无当前开放PR重叠。 |
 
 | 2026-11-18 | interview-source-lifecycle | 待独立验收 | 4普通合成生命周期场景及TS/Vite开发通过；父key仅静态、卸载显式模拟，非真实React/浏览器/HTTP；未改产品；冻结 logs/interview-source-lifecycle-impl-hashes-frozen.txt |
+| 2026-11-18 | interview-parent-source-lifecycle | 待独立验收 | 实际父组件函数5个合成正常/身份一致性场景、TS/Vite开发通过；key/cleanup为显式替身，非真实React/浏览器/HTTP；无产品改动。冻结 logs/interview-parent-source-lifecycle-impl-hashes-frozen.txt |
