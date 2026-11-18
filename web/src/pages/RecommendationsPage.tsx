@@ -231,7 +231,7 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
           <input className="input" style={{ flex: 1, minWidth: 120 }} value={note} onChange={(e) => setNote(e.target.value)} placeholder="说明（未采纳必填）" />
           {closeTargets.map((s) => (
             <button key={s} className={`btn btn-sm ${s === 'NotAdopted' ? 'btn-danger' : s === props.pending ? 'btn-primary' : ''}`}
-              disabled={s === 'NotAdopted' && !note.trim()} onClick={() => props.onTransition(rec.id, s, note).then(() => setNote(''))}>
+              disabled={s === 'NotAdopted' && !note.trim()} onClick={() => props.onTransition(rec.id, s, note).then((result) => { if (result !== undefined) setNote((current) => current === note ? '' : current) })}>
               → {STATUS_LABEL[s]}
             </button>
           ))}

@@ -647,3 +647,7 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+
+## Recommendation transition note preservation — pending independent review
+Only clear submitted explanation after a returned success result; retain on swallowed transport error and retain differing newer text. Developer four synthetic scenarios/build passed. See tests_acceptance/recommendation-transition-note/DEVELOPER.md and logs/recommendation-transition-note-impl-hashes-frozen.txt; browser unverified.
