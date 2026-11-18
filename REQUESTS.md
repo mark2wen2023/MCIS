@@ -647,3 +647,7 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+
+## Missing recommendation citation feedback — pending independent review
+Current-board missing explicit report reference is now reported without automatic reselection or historical verification claims. Developer synthetic 6 states/10 assertions and build passed; browser unverified. See tests_acceptance/recommendation-missing-citation/DEVELOPER.md and logs/recommendation-missing-citation-impl-hashes-frozen.txt.

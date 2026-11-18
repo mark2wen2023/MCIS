@@ -52,6 +52,7 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
 
   const all = (board.data?.columns ?? []).flatMap((c) => c.items)
   const sel = all.find((r) => r.id === selId)
+  const missingReference = requestedId && selId === requestedId && board.data && !board.error && !sel
   const refresh = () => { board.reload(); audit.reload() }
 
   const transition = (id: string, to: RecStatus, note = '') =>
@@ -129,7 +130,7 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
         {sel ? (
           <Detail key={sel.id} caseId={caseId} rec={sel} allowed={board.data?.allowed[sel.status] ?? []} pending={pending?.id === sel.id ? pending.to : null}
             onTransition={transition} onChanged={refresh} onCancel={() => setPending(null)} />
-        ) : <Panel title="建议详情"><div className="empty">选择一张卡片</div></Panel>}
+        ) : <Panel title="建议详情"><div className="empty">{missingReference ? <span role="status">当前案件看板未找到指定安全建议 {requestedId}。未自动选择其他建议；请核对引用或手动选择卡片。此处只查看当前记录，不证明历史版本已核验。</span> : '选择一张卡片'}</div></Panel>}
         <ConsultationPanel caseId={caseId} renderMatrix={(rounds) => <ConsultationTable rounds={rounds} />} onChanged={() => audit.reload()} />
         <Panel title="审计记录（安全建议 / 征求意见）" meta={<span>append-only · SHA-256 链</span>} bodyStyle={{ padding: 0, maxHeight: 330 }}>
           <table className="p6-table">
