@@ -657,3 +657,6 @@ Authorized new-form-only change on PR101 base: no default Direct, explicit enum 
 
 ## Environment pending input (2026-11-18)
 Authorized narrow synchronous gate for new-observation input callbacks during existing busy state; no server/old-record changes. Evidence tests_acceptance/environment-pending-input/DEVELOPER.md.
+
+## Environment input generation (2026-11-18)
+Authorized narrow follow-up on frozen 368b3d1: event-only form callback generation, separate from request epoch, prevents retained callbacks changing completed/new/unknown form state. No contract, backend or permission change. Evidence: tests_acceptance/environment-input-generation/DEVELOPER.md.

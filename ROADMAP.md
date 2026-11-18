@@ -403,3 +403,4 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-18 | environment-explicit-origin | 待独立验收 | 新3来源合成生命周期、既有来源SSR、TS/Vite开发通过；新表单显式选择，旧记录不改；浏览器/HTTP未验；冻结 logs/environment-explicit-origin-impl-hashes-frozen.txt |
 
 | 2026-11-18 | environment-pending-input | 待独立验收 | 新4合成等待序列及既有3来源流程、TS/Vite开发通过；真实React/浏览器/HTTP未验；冻结 logs/environment-pending-input-impl-hashes-frozen.txt |
+| 2026-11-18 | environment-input-generation | 待独审 | 事件阶段表单代次保护旧输入回调；新6场景及相邻4/3合成测试、TS/Vite开发通过；非真实React重放/浏览器/HTTP，未改后端。冻结 logs/environment-input-generation-impl-hashes-frozen.txt |

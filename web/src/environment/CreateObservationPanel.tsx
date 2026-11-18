@@ -7,13 +7,15 @@ export function CreateObservationPanel({caseId,who,onCreated}:{caseId:string;who
   const [open,setOpen]=useState(false),[form,setForm]=useState(emptyForm)
   const [busy,setBusy]=useState(false),[message,setMessage]=useState('')
   const [pending,setPending]=useState<Observation|null>(null),[saved,setSaved]=useState<Observation|null>(null)
-  const gate=useRef({alive:true,busy:false,epoch:0})
+  const gate=useRef({alive:true,busy:false,epoch:0,formEpoch:0})
   useEffect(()=>{const g=gate.current;g.alive=true;return()=>{g.alive=false;g.epoch++}},[])
+  // Capture only; advance in events, never during render. Separate from request validity.
+  const formEpoch=gate.current.formEpoch
   const live=(n:number)=>gate.current.alive&&gate.current.epoch===n&&caseIdentity()===who
-  const begin=()=>{if(gate.current.busy||caseIdentity()!==who)return null;gate.current.busy=true;setBusy(true);return ++gate.current.epoch}
-  const finish=(n:number)=>{if(live(n)){gate.current.busy=false;setBusy(false)}}
+  const begin=()=>{if(gate.current.busy||caseIdentity()!==who)return null;gate.current.formEpoch++;gate.current.busy=true;setBusy(true);return ++gate.current.epoch}
+  const finish=(n:number)=>{if(live(n)){gate.current.formEpoch++;gate.current.busy=false;setBusy(false)}}
   const editForm=(update:(f:ObservationForm)=>ObservationForm)=>{
-    if(gate.current.busy||!gate.current.alive||caseIdentity()!==who||pending||saved)return
+    if(gate.current.formEpoch!==formEpoch||gate.current.busy||!gate.current.alive||caseIdentity()!==who||pending||saved)return
     setForm(update)
   }
   const success=(v:Observation)=>{setSaved(v);setPending(null);setMessage('');onCreated(v)}
@@ -46,7 +48,7 @@ export function CreateObservationPanel({caseId,who,onCreated}:{caseId:string;who
     }catch{if(live(n))setMessage('暂时无法核查。恢复连接或权限后请再核查，不会重发保存请求。')}
     finally{finish(n)}
   }
-  const reset=(next:boolean)=>{if(gate.current.busy)return;gate.current.epoch++;setOpen(next);setForm(emptyForm());setPending(null);setSaved(null);setMessage('')}
+  const reset=(next:boolean)=>{if(gate.current.busy)return;gate.current.formEpoch++;gate.current.epoch++;setOpen(next);setForm(emptyForm());setPending(null);setSaved(null);setMessage('')}
   if(!open)return <button type="button" onClick={()=>reset(true)}>＋ 新增环境记录</button>
   return <section className="w92-create" aria-labelledby="observation-form-title">
     <div className="w92-heading"><h2 id="observation-form-title">新增环境观测记录</h2><button type="button" disabled={busy} onClick={()=>reset(false)}>{pending?'关闭表单（不撤销已发请求）':'取消 / 关闭'}</button></div>
