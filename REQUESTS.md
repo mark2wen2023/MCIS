@@ -902,3 +902,6 @@ Reproduced note-only old percentage dispatch after new snapshot. Block known-sou
 Test-only correction: render ready/source60 Detail and verify current adoption enabled before invoking old source50 adoption; also verify previously eligible source25 save dispatches nothing. Strengthened5+adjacent7/build passed, product unchanged. A→B→A and reload-before-rerender remain unverified. See adoption DEVELOPER follow-up.
 
 - Authorized UI commit-phase ref correction from 49fc5b0; ReportPage/Detail publish refs in layout effects, board loader uses committed closure. Existing synchronous reload invalidation retained; only synthetic validation, real React scheduling unverified.
+
+## UI effect harness correction
+Authorized limited repair of three frozen synthetic harnesses: dependency-aware commit/cleanup and unfinished-loop failure detection. Original business assertions retained; product unchanged. See tests_acceptance/ui-effect-harness/README.md.

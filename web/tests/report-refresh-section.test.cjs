@@ -7,9 +7,11 @@ const nodes=n=>!n?[]:Array.isArray(n)?n.flatMap(nodes):typeof n==='object'?[n,..
 async function scenario(mode){
  let query=mode==='latest'?'case=SYNTHETIC':'case=SYNTHETIC&report=R1',role='synthetic',reportId='R1',sectionIds=['first','second'],reviewCalls=0
  let release; const delayed=mode.startsWith('race-'); const wait=()=>delayed?new Promise(resolve=>{release=resolve}):Promise.resolve()
- let currentStore,index=0,effects=[],cleanups=[],sessionKey,sessionProps,Session,parentStore=[],sessionStore=[]
+ let currentStore,index=0,effects=[],sessionKey,sessionProps,Session,parentStore=[],sessionStore=[]
  const react={useState:v=>{const a=currentStore,i=index++;if(!(i in a))a[i]=typeof v==='function'?v():v;return[a[i],v=>a[i]=typeof v==='function'?v(a[i]):v]},useRef:v=>{const a=currentStore,i=index++;if(!(i in a))a[i]={current:v};return a[i]},useMemo:f=>f(),useSyncExternalStore:(_,f)=>f(),useEffect:effect,useLayoutEffect:effect}
- function effect(f){const a=currentStore,i=index++;if(!(i in a)){a[i]=true;effects.push(f)}}
+ function effect(f,deps){const a=currentStore,i=index++,old=a[i];if(!old||!deps||deps.some((v,j)=>!Object.is(v,old.deps?.[j]))){effects.push(()=>{old?.cleanup?.();a[i]={deps,cleanup:f()}})}}
+ function commit(){for(const f of effects.splice(0))f()}
+ function unmount(store){for(const item of store)item?.cleanup?.()}
  const document=()=>({reportId,caseId:new URLSearchParams(query).get('case'),templateId:'imo-cic',lang:'bilingual',createdUtc:'2026-01-01',version:1,sections:sectionIds.map(sectionId=>({sectionId,sentences:[],dataSources:[],status:'Draft'}))})
  const api={cases:async()=>[],templates:async()=>({templates:[]}),list:async()=>({reports:[document()],realDataStatus:'fictional'}),gisis:async()=>({fields:[]}),get:async()=>document(),audit:async()=>[],review:async(c,r,s)=>{reviewCalls++;await wait();return {sectionId:s,sentences:[],dataSources:[],status:'Modified'}},export:async()=>{await wait();return {filename:'synthetic.pdf'}},gisisExport:async()=>{await wait()}}
  const modules={react,'react/jsx-runtime':{jsx,jsxs:jsx},'react-router-dom':{useSearchParams:()=>[new URLSearchParams(query),()=>{}]},'../reports/api':{createReportApi:()=>api,ReportApiError:class extends Error{}},'../reports/ReportView':{ReportView:View,ReviewDialog:Dialog},'../api':{getRole:()=>role,getOperator:()=> 'synthetic',onIdentityChange:()=>()=>{}},'../cases/model':{parseCases:v=>v},'../reportOutput/Panel':{ReportOutputPanel:()=>null},'../archiveProvenance/Provenance':{ArchiveProvenance:()=>null},'../reports/types':{DEMO_CASE_ID:'SYNTHETIC'}}
@@ -17,10 +19,10 @@ async function scenario(mode){
  const realViewBox={exports:{}}; const viewModules={react,'react/jsx-runtime':{jsx,jsxs:jsx},'../components/Panel':{Panel:()=>null},'../config':{SERVICE_ADDR:'synthetic'},'./types':{DEMO_CASE_ID:'SYNTHETIC'}}
  vm.runInNewContext(viewCode,{module:realViewBox,exports:realViewBox.exports,require:n=>{assert.ok(n in viewModules,n);return viewModules[n]}})
  function button(label){return nodes(realViewBox.exports.ReportView(view())).find(n=>n.type==='button'&&n.props.children===label)}
- function parent(){currentStore=parentStore;index=0;const element=box.exports.ReportPage();if(element.key!==sessionKey){for(const f of cleanups)f();cleanups=[];sessionStore=[];sessionKey=element.key}sessionProps=element.props;Session=element.type}
- function tree(){currentStore=sessionStore;index=0;return Session(sessionProps)}
+ function parent(){currentStore=parentStore;index=0;const element=box.exports.ReportPage();if(element.key!==sessionKey){unmount(sessionStore);sessionStore=[];sessionKey=element.key}sessionProps=element.props;Session=element.type}
+ function tree(){currentStore=sessionStore;index=0;const result=Session(sessionProps);commit();return result}
  function view(){return nodes(tree()).find(n=>n.type===View).props}
- async function loaded(){parent();tree();for(const f of effects.splice(0)){const clean=f();if(clean)cleanups.push(clean)}await new Promise(setImmediate);return view()}
+ async function loaded(){parent();tree();commit();await new Promise(setImmediate);return view()}
  let v=await loaded();assert.equal(v.selectedSectionId,'first');v.onSelectSection('second');assert.equal(view().selectedSectionId,'second')
  const before=sessionKey
  let pending
@@ -46,4 +48,5 @@ async function scenario(mode){
  assert.equal(v.selectedSectionId,['save','export','manual'].includes(mode)?'second':'first',mode)
  assert.equal(reviewCalls,['export','manual','race-export','race-gisis'].includes(mode)?0:1,'no duplicate mutation')
 }
-;(async()=>{for(const mode of (process.argv[2]?[process.argv[2]]:['save','export','missing','case','report','latest','identity','manual','race-save','race-export','race-gisis','race-case']))await scenario(mode);console.log('report section refresh: selected synthetic lifecycle scenarios passed (full selection: 12)')})().catch(e=>{console.error(e);process.exitCode=1})
+let complete=false;process.on('beforeExit',()=>{if(!complete){console.error('FAIL: report scenarios unfinished');process.exitCode=1}})
+;(async()=>{for(const mode of (process.argv[2]?[process.argv[2]]:['save','export','missing','case','report','latest','identity','manual','race-save','race-export','race-gisis','race-case']))await scenario(mode);complete=true;console.log('report section refresh: selected synthetic lifecycle scenarios passed (full selection: 12)')})().catch(e=>{console.error(e);process.exitCode=1})

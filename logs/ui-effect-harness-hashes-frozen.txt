@@ -1,0 +1,3 @@
+a5cf6e7643b8743b580ce6cdb4fdf9275dc8d1ea37e488f897be798edf3dbe93  web/tests/report-refresh-section.test.cjs
+948891eaef268a7ac726a1a7f523a78f38044ff4cfe0b9cda8814662ad68b174  web/tests/recommendation-progress-snapshot.test.cjs
+3f5107d856aac13d586301d7dee12d9c5b90ded5d53e1699e407462056b25471  web/tests/recommendation-reload-action-window.test.cjs
