@@ -216,9 +216,15 @@ function Detail(props: { readCurrent: () => boolean; readReady: boolean; caseId:
   const [party, setParty] = useState(rec.addressee)
   const [text, setText] = useState('')
   const progressSource = JSON.stringify([rec.id, rec.progressPct, rec.status, rec.updatedUtc ?? null])
-  const [progressDraft, setProgressDraft] = useState<{ pct: number; source: string } | null>(null)
+  // Local observed-content generation, not a server revision. Equal rerenders do not advance it.
+  const observedSource = useRef({ source: progressSource, generation: 0 })
+  if (props.readReady && observedSource.current.source !== progressSource) {
+    observedSource.current = { source: progressSource, generation: observedSource.current.generation + 1 }
+  }
+  const sourceGeneration = observedSource.current.generation
+  const [progressDraft, setProgressDraft] = useState<{ pct: number; source: string; generation: number } | null>(null)
   const pct = progressDraft?.pct ?? rec.progressPct
-  const sourceChanged = progressDraft !== null && progressDraft.source !== progressSource
+  const sourceChanged = progressDraft !== null && (progressDraft.source !== progressSource || progressDraft.generation !== sourceGeneration)
   const [lastId, setLastId] = useState(rec.id)
   if (lastId !== rec.id) { setLastId(rec.id); setProgressDraft(null); setParty(rec.addressee); setNote(''); setText('') }
 
@@ -237,11 +243,12 @@ function Detail(props: { readCurrent: () => boolean; readReady: boolean; caseId:
   const latestProgress = useRef({ source: progressSource, ready: props.readReady, status: rec.status })
   latestProgress.current = { source: progressSource, ready: props.readReady, status: rec.status }
   const observedCurrent = () => current() && props.readCurrent() && latestProgress.current.ready &&
+    observedSource.current.generation === sourceGeneration &&
     latestProgress.current.source === progressSource && latestProgress.current.status === 'Responded'
   const adoptProgress = () => {
     if (!observedCurrent() || progressLock.current || progressState !== 'idle') return
     edits.current.note++
-    setProgressDraft({ pct: rec.progressPct, source: progressSource })
+    setProgressDraft({ pct: rec.progressPct, source: progressSource, generation: sourceGeneration })
     setProgressNotice('已采用当前已读取进度，说明保留在本地且尚未保存；同百分比不能单独保存说明。此操作没有发送请求。')
   }
   const saveProgress = () => {
@@ -294,7 +301,7 @@ function Detail(props: { readCurrent: () => boolean; readReady: boolean; caseId:
         <div className="p6-card" style={{ marginTop: 8 }}>
           <div className="row-actions">
             <span className="p6-dim">落实进度</span>
-            <input type="range" min={0} max={100} step={5} value={pct} onChange={(e) => { const nextPct = Number(e.target.value); edits.current.note++; setProgressDraft(old => ({ pct: nextPct, source: old?.source ?? progressSource })) }} style={{ flex: 1 }} />
+            <input type="range" min={0} max={100} step={5} value={pct} onChange={(e) => { const nextPct = Number(e.target.value); edits.current.note++; setProgressDraft(old => ({ pct: nextPct, source: old?.source ?? progressSource, generation: old?.generation ?? sourceGeneration })) }} style={{ flex: 1 }} />
             <b className="mono">{pct}%</b>
             <button className="btn btn-sm" disabled={!props.readReady || sourceChanged || progressState !== 'idle' || pct === rec.progressPct} onClick={saveProgress}>保存进度</button>
           </div>
@@ -315,7 +322,7 @@ function Detail(props: { readCurrent: () => boolean; readReady: boolean; caseId:
       <div className="p6-card" style={{ marginTop: 8, borderColor: props.pending && props.pending !== 'Responded' ? 'var(--cyan)' : undefined }}>
         <div className="p6-dim" style={{ marginBottom: 4 }}>状态变更（允许：{allowed.map((s) => STATUS_LABEL[s]).join('、') || '无，已终结'}）</div>
         <div className="row-actions">
-          <input className="input" style={{ flex: 1, minWidth: 120 }} value={note} onChange={(e) => { edits.current.note++; setProgressDraft(old => old ?? { pct, source: progressSource }); setNote(e.target.value) }} placeholder="说明（未采纳必填）" />
+          <input className="input" style={{ flex: 1, minWidth: 120 }} value={note} onChange={(e) => { edits.current.note++; setProgressDraft(old => old ?? { pct, source: progressSource, generation: sourceGeneration }); setNote(e.target.value) }} placeholder="说明（未采纳必填）" />
           {closeTargets.map((s) => (
             <button key={s} className={`btn btn-sm ${s === 'NotAdopted' ? 'btn-danger' : s === props.pending ? 'btn-primary' : ''}`}
               disabled={s === 'NotAdopted' && !note.trim()} onClick={async () => {
