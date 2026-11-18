@@ -1,0 +1,34 @@
+[
+  {
+    "command": [
+      "node",
+      "tests/report-review-pending.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "Report review pending: 2 synthetic flows / 14 assertions passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "tests/gisis-stale-validation.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "GISIS validation: 4 synthetic flows / 44 assertions passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "tests/gisis-parent-validation.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "GISIS parent: 4 synthetic deferred callback flows passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "tests/gisis-feedback-scope.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "GISIS feedback scope: 3 synthetic callback flows passed\n"
+  }
+]

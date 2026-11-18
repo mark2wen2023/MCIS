@@ -456,3 +456,24 @@ Percentage edits invalidate clearing of the shared submitted explanation. Proven
 ## UI recommendations group two — pending acceptance
 
 Combined 8d4c86a and 92265a9 on main 94d5e38; only document append conflicts, both histories retained. Three reviewed synthetic scripts and build passed on combined code (developer evidence). Browser/visual, cross-page/backend and production permissions unverified. See tests_acceptance/ui-recommendations-group-two/DEVELOPER.md and logs/ui-recommendations-group-two-impl-hashes-frozen.txt. Do not merge or deploy.
+
+
+## Report review pending input — pending independent review
+Prevent editing text/reason while existing saving state is true; retain on failure, explain waiting. Developer modify/dismiss synthetic 14 assertions and build passed; browser unverified. See tests_acceptance/report-review-pending/DEVELOPER.md and logs/report-review-pending-impl-hashes-frozen.txt. No policy or report content changes.
+
+
+## GISIS stale validation feedback — pending independent review
+Editing fields invalidates displayed prior validation object while retaining input; prompts explicit revalidation. Developer 4 synthetic flows/40 assertions and build passed; browser unverified. See tests_acceptance/gisis-stale-validation/DEVELOPER.md and logs/gisis-stale-validation-impl-hashes-frozen.txt. No API, permission or consultation changes.
+
+
+## GISIS parent input revision binding — pending independent review
+Capture frontend input revision/request when validating; editing clears old result/global notice and stale success cannot certify new input. Four parent synthetic callback flows and four panel flows/44 assertions, build passed; not full browser/HTTP lifecycle. See tests_acceptance/gisis-stale-validation/PARENT-DEVELOPER.md and logs/gisis-parent-validation-impl-hashes-frozen.txt. No backend/permission or consultation changes.
+
+
+## GISIS scoped error and notice feedback — pending independent review
+Reproduced stale ordinary error and unrelated-notice removal; scope GISIS feedback and compare input/request before ordinary error display. 403 routes to existing denial handler; no permission changes. Developer 3 new synthetic flows, adjacent tests/build pass. See tests_acceptance/gisis-stale-validation/FEEDBACK-SCOPE-DEVELOPER.md and logs/gisis-feedback-scope-impl-hashes-frozen.txt; browser unverified.
+
+
+## UI reports group three — pending acceptance
+
+Combined 0a6d0bd and 16f159b on main 94d5e38; functional regions combined without conflict; both document tails retained. Developer four selected synthetic scripts and build passed. PR104 not integrated; browser/visual, real backend and production permissions unverified. See tests_acceptance/ui-reports-group-three/DEVELOPER.md and logs/ui-reports-group-three-impl-hashes-frozen.txt. Do not merge or deploy.
