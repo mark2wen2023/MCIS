@@ -12,5 +12,5 @@ function setup(){
 function change(row,text){row.children[2].value=text;row.children[2].oninput();row.children[4].value='synthetic correction';row.children[4].oninput();}
 const pairs=[['case', ['runs', 'task-status']], ['task', ['task-status']]];
 for(const [field,outputs] of pairs)test('selection clears cached summaries '+field+' without losing draft',()=>{
- const s=setup(),row=s.boxes[0];change(row,'kept draft');for(const id of outputs)vm.runInContext("el('"+id+"').textContent='old summary'",s.ctx);s.elements[field].value='OTHER';s.elements[field].events.input();for(const id of outputs)assert.equal(s.elements[id].textContent,'');assert.equal(s.boxes[0],row);assert.equal(s.warning(),true);assert.equal(s.requests(),0);
+ const s=setup(),row=s.boxes[0];change(row,'kept draft');for(const id of outputs)vm.runInContext("el('"+id+"').textContent='old summary'",s.ctx);s.elements[field].value='OTHER';s.elements[field].events.input();for(const id of outputs)assert.equal(s.elements[id].textContent,'');const current=s.elements.lines.children[0];assert.equal(current,row);assert.equal(s.elements.lines.children.length,2);assert.equal(current.children[2].value,'kept draft');assert.equal(current.children[4].value,'synthetic correction');assert.equal(s.warning(),true);assert.equal(s.requests(),0);
 });
