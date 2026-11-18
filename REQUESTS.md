@@ -754,3 +754,8 @@ Reproduced stale ordinary error and unrelated-notice removal; scope GISIS feedba
 ## UI reports group three — pending acceptance
 
 Combined 0a6d0bd and 16f159b on main 94d5e38; functional regions combined without conflict; both document tails retained. Developer four selected synthetic scripts and build passed. PR104 not integrated; browser/visual, real backend and production permissions unverified. See tests_acceptance/ui-reports-group-three/DEVELOPER.md and logs/ui-reports-group-three-impl-hashes-frozen.txt. Do not merge or deploy.
+
+
+## Three UI groups — pending combined acceptance
+
+Combined 076eec1 / 2064675 / 81a308c on 94d5e38, preserving all group document appends and exact source blobs. Developer 19 selected synthetic scripts plus build passed. Not integrated with PR104; browser/visual/backend/production permissions unverified. Evidence: tests_acceptance/ui-three-groups/DEVELOPER.md; freeze: logs/ui-three-groups-impl-hashes-frozen.txt. Do not merge or deploy.
