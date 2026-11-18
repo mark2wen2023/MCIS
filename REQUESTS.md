@@ -668,3 +668,9 @@ and clock regression only; browser/visual acceptance pending.
 Bounded save-feedback accessibility: existing evidence/recommendation operations
 use Toast with no live-region semantics. Add persistent empty status/alert
 regions, retaining messages, timeout and focus. No API or permission changes.
+
+## INTERVIEW-REPORT-LINK (2026-11-18)
+Report citations already encode interview record as id (reports/sources.py),
+while InterviewPage only consumed record. Accept id only when record is absent;
+preserve explicit record priority, case context and missing-record behavior.
+No API/permission changes, statement positioning or historical version claims.

@@ -405,3 +405,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | TOAST-LIFETIME | 2026-11-18 | 待测：同文提示各自到期，五项合成时钟场景及构建开发自测通过；浏览器/视觉未验 | tests_acceptance/toast-lifetime/DEVELOPER.md；logs/toast-lifetime-impl-hashes-frozen.txt |
 
 | TOAST-ACCESSIBILITY | 2026-11-18 | 待测：保存反馈状态/警报语义；合成结构检查、5定时器场景及构建开发通过；读屏/浏览器/视觉未验 | tests_acceptance/toast-accessibility/DEVELOPER.md；logs/toast-accessibility-impl-hashes-frozen.txt |
+
+| INTERVIEW-REPORT-LINK | 2026-11-18 | 待测：兼容报告笔录id链接，保留record优先与案件上下文；6合成选择场景/30导航断言及构建开发通过；浏览器未验，不含句级定位 | tests_acceptance/interview-report-link/DEVELOPER.md；logs/interview-report-link-impl-hashes-frozen.txt |
