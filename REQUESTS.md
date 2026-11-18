@@ -858,3 +858,6 @@ Reproduced cleared note when synchronous onChanged throws after mock save succes
 
 ## Recommendation board read lifecycle (2026-11-18)
 Reproduced stale response between reload and passive cleanup. Recommendation-only hook synchronously invalidates; explicit unread/stale/failure notices preserve Detail identity with retained data. Shared hook unchanged; independent board/audit reads not one snapshot. See tests_acceptance/recommendation-read-lifecycle/DEVELOPER.md for selected synthetic tests and build; browser/HTTP unverified.
+
+## Same-ID recommendation progress snapshot (2026-11-18)
+Reproduced unedited25 remaining after snapshot50. Derive clean value from snapshot; preserve edited percentage/note with explicit source-change notice and unchanged unknown lock. Base d7447db, selected synthetic tests/build; see tests_acceptance/recommendation-progress-snapshot/DEVELOPER.md. No server version or browser claim.

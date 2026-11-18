@@ -211,9 +211,12 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
   const [note, setNote] = useState('')
   const [party, setParty] = useState(rec.addressee)
   const [text, setText] = useState('')
-  const [pct, setPct] = useState(rec.progressPct)
+  const progressSource = JSON.stringify([rec.id, rec.progressPct, rec.status, rec.updatedUtc ?? null])
+  const [progressDraft, setProgressDraft] = useState<{ pct: number; source: string } | null>(null)
+  const pct = progressDraft?.pct ?? rec.progressPct
+  const sourceChanged = progressDraft !== null && progressDraft.source !== progressSource
   const [lastId, setLastId] = useState(rec.id)
-  if (lastId !== rec.id) { setLastId(rec.id); setPct(rec.progressPct); setParty(rec.addressee); setNote(''); setText('') }
+  if (lastId !== rec.id) { setLastId(rec.id); setProgressDraft(null); setParty(rec.addressee); setNote(''); setText('') }
 
   const respond = () => {
     const revision = edits.current.response
@@ -239,7 +242,7 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
         props.onChanged()
         if (!current()) return undefined
         const unchanged = edits.current.note === revision
-        if (unchanged) setNote('')
+        if (unchanged) { setNote(''); setProgressDraft(null) }
         setProgressNotice(unchanged ? `进度 ${pct}% 的保存请求已返回；已请求重载，尚未确认读回。` : `进度 ${pct}% 的保存请求已返回；已请求重载，尚未确认读回；后来编辑的内容尚未保存。`)
         setProgressState('idle'); progressLock.current = false
         return r
@@ -266,11 +269,12 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
         {rec.verificationNote && <><dt>核实说明</dt><dd>{rec.verificationNote}</dd></>}
       </dl>
 
+      {sourceChanged && <p role="status">来源数据已变化；当前保留您基于先前快照编辑的进度和说明，请与最新记录核对。此提示不代表服务端版本核验，也不会解除结果未知锁。</p>}
       {rec.status === 'Responded' && (
         <div className="p6-card" style={{ marginTop: 8 }}>
           <div className="row-actions">
             <span className="p6-dim">落实进度</span>
-            <input type="range" min={0} max={100} step={5} value={pct} onChange={(e) => { edits.current.note++; setPct(Number(e.target.value)) }} style={{ flex: 1 }} />
+            <input type="range" min={0} max={100} step={5} value={pct} onChange={(e) => { const nextPct = Number(e.target.value); edits.current.note++; setProgressDraft(old => ({ pct: nextPct, source: old?.source ?? progressSource })) }} style={{ flex: 1 }} />
             <b className="mono">{pct}%</b>
             <button className="btn btn-sm" disabled={progressState !== 'idle' || pct === rec.progressPct} onClick={saveProgress}>保存进度</button>
           </div>
@@ -292,7 +296,7 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
       <div className="p6-card" style={{ marginTop: 8, borderColor: props.pending && props.pending !== 'Responded' ? 'var(--cyan)' : undefined }}>
         <div className="p6-dim" style={{ marginBottom: 4 }}>状态变更（允许：{allowed.map((s) => STATUS_LABEL[s]).join('、') || '无，已终结'}）</div>
         <div className="row-actions">
-          <input className="input" style={{ flex: 1, minWidth: 120 }} value={note} onChange={(e) => { edits.current.note++; setNote(e.target.value) }} placeholder="说明（未采纳必填）" />
+          <input className="input" style={{ flex: 1, minWidth: 120 }} value={note} onChange={(e) => { edits.current.note++; setProgressDraft(old => old ?? { pct, source: progressSource }); setNote(e.target.value) }} placeholder="说明（未采纳必填）" />
           {closeTargets.map((s) => (
             <button key={s} className={`btn btn-sm ${s === 'NotAdopted' ? 'btn-danger' : s === props.pending ? 'btn-primary' : ''}`}
               disabled={s === 'NotAdopted' && !note.trim()} onClick={async () => {
