@@ -12,10 +12,10 @@
 const el=id=>document.getElementById(id);let state=null,context=null,dirty=false,busy=false;
 const dirtyLines=new Set();let editVersion=0,selectionVersion=0,taskSelectionVersion=0,taskQueryVersion=0,createFormVersion=0;
 for(const id of ['pdf','image','raw','candidate','ack'])el(id).addEventListener('input',()=>{createFormVersion++;});
-for(const id of ['task','task-ack'])el(id).addEventListener('input',()=>{taskSelectionVersion++;});
+for(const id of ['task','task-ack'])el(id).addEventListener('input',()=>{taskSelectionVersion++;el('task-status').textContent='';});
 const preview=OcrPagePreview.create({page:el('page-image'),crop:el('crop'),message:el('preview-status'),decode:blob=>createImageBitmap(blob)});
 window.addEventListener('pagehide',()=>preview.clear());
-for(const id of ['case','run'])el(id).addEventListener('input',()=>{selectionVersion++;preview.clear();});
+for(const id of ['case','run'])el(id).addEventListener('input',()=>{selectionVersion++;el('runs').textContent='';el('task-status').textContent='';preview.clear();});
 el('clear-image').onclick=()=>preview.clear();
 el('show-image').onclick=()=>action(async()=>{if(!state||el('case').value!==context||el('run').value!==state.runId)throw Error('请先读取当前案件与运行');await preview.load(()=>readOriginal('image'),state.initial.candidate.source);});
 window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});

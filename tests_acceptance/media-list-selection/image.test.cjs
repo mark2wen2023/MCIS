@@ -13,7 +13,7 @@ function change(row,text){row.children[2].value=text;row.children[2].oninput();r
 const buttons=[['list-tasks', 'task-status']];
 for(const [button,output] of buttons){
  for(const back of [false,true])test(button+' ignores case change back='+back,async()=>{
- const s=setup();vm.runInContext("el('"+output+"').textContent='unchanged'",s.ctx);const p=s.elements[button].onclick();s.elements.case.value='OTHER';s.elements.case.events.input();if(back){s.elements.case.value='SYNTHETIC';s.elements.case.events.input();}s.release();await p;assert.equal(s.elements[output].textContent,'unchanged');assert.equal(s.requests(),1);
+ const s=setup();vm.runInContext("el('"+output+"').textContent='unchanged'",s.ctx);const p=s.elements[button].onclick();s.elements.case.value='OTHER';s.elements.case.events.input();if(back){s.elements.case.value='SYNTHETIC';s.elements.case.events.input();}const afterSelection=s.elements[output].textContent;s.release();await p;assert.equal(s.elements[output].textContent,afterSelection);assert.equal(s.requests(),1);
  });
  test(button+' normal response displays',async()=>{const s=setup(),p=s.elements[button].onclick();s.release();await p;assert.match(s.elements[output].textContent,/SYNTHETIC/);assert.equal(s.requests(),1);});
 }

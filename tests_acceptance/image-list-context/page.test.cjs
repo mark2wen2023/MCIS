@@ -11,8 +11,8 @@ function setup(){
 }
 function change(row,text){row.children[2].value=text;row.children[2].oninput();row.children[4].value='synthetic correction';row.children[4].oninput();}
 for(const back of [false,true])test('image list ignores changed case '+back,async()=>{
- const s=setup();vm.runInContext("el('runs').textContent='previous list'",s.ctx);const p=s.elements.list.onclick();s.elements.case.value='OTHER';s.elements.case.events.input();if(back){s.elements.case.value='SYNTHETIC';s.elements.case.events.input();}s.release();await p;
- assert.equal(s.elements.runs.textContent,'previous list');assert.equal(s.requests(),1);
+ const s=setup();vm.runInContext("el('runs').textContent='previous list'",s.ctx);const p=s.elements.list.onclick();s.elements.case.value='OTHER';s.elements.case.events.input();if(back){s.elements.case.value='SYNTHETIC';s.elements.case.events.input();}const afterSelection=s.elements.runs.textContent;s.release();await p;
+ assert.equal(s.elements.runs.textContent,afterSelection);assert.equal(s.requests(),1);
 });
 test('image list unchanged context displays result',async()=>{
  const s=setup(),p=s.elements.list.onclick();s.release();await p;assert.match(s.elements.runs.textContent,/OCR-fixture/);assert.equal(s.requests(),1);
