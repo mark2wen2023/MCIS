@@ -1,0 +1,3 @@
+e1d0a6eab0c457290dfe34774a4e947a953f011c3e8fcc98094a463fe16896b2  web/src/interview/SourceDisclosure.tsx
+5f971d246395be134a90e01f14174c5ba93029958f5a7c88725cdf32a6eb6c7d  web/src/interview/InterviewView.tsx
+644f9ea60711bf685ba2752d6dafa961f3a917176a276010c699dda7a0f7aa20  web/tests/interview-source-disclosure.test.tsx
