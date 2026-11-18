@@ -7,7 +7,7 @@ import { SERVICE_ADDR } from '../config'
 import { Metric, Panel } from '../components/Panel'
 import { useToast } from '../components/Toast'
 import { daysUntil, toLocal } from '../format'
-import { useLoad } from '../hooks'
+import { useLoad } from '../recommendationReview/useBoardLoad'
 import type { AuditEvent, CaseDef, Board, ConsultationRound, PartyStatus, Recommendation, RecStatus } from '../types'
 
 const STATUS_LABEL: Record<RecStatus, string> = {
@@ -125,18 +125,23 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
         </div>
       </div>
 
+      {caseRes.error && <p role="alert">案件信息读取失败：{caseRes.error}</p>}
+      <p role="note">看板和审计分别读取，不是同一时点快照。</p>
+      <button className="btn btn-sm" onClick={refresh}>重新读取看板与审计</button>
+      {board.loading && <p role="status">{board.data ? '看板正在重载，以下为上次读取的旧快照；输入草稿保留。' : '看板正在读取，建议数量尚未确定。'}</p>}
+      {board.error && board.data && <p role="status">重载失败，以下保留旧快照，不代表当前状态。</p>}
       {board.error && <div className="p6-card" style={{ borderColor: 'var(--red)', marginBottom: 12 }}>后端错误：{board.error}</div>}
       {creating && <CreateForm caseId={caseId} onDone={(id) => { setCreating(false); if (id) { setSelId(id); refresh() } }} />}
 
-      <div className="grid w7-metrics" style={{ marginBottom: 12 }}>
+      {board.data && <div className="grid w7-metrics" style={{ marginBottom: 12 }}>
         <Metric label="安全建议" value={totals.total} unit="条" />
         <Metric label="已发布 · 待回复" value={totals.awaiting} unit="条" tone="amber" />
         <Metric label="落实中 · 平均进度" value={avg} unit={`% · ${totals.inProgress.length} 条`} tone="pur" />
         <Metric label="逾期（已发布/落实中）" value={totals.overdue} unit="条" tone={totals.overdue ? 'red' : 'green'} />
         <Metric label="已关闭" value={totals.closed} unit="条" tone="green" />
-      </div>
+      </div>}
 
-      <Panel title={`安全建议看板（${totals.total} 条）`} meta={<span>拖动卡片改变状态 · 已关闭 = 已落实 / 未采纳 / 已关闭</span>} style={{ marginBottom: 12 }}>
+      <Panel title={board.data ? `安全建议看板（${totals.total} 条）` : '安全建议看板（尚未取得数据）'} meta={<span>拖动卡片改变状态 · 已关闭 = 已落实 / 未采纳 / 已关闭</span>} style={{ marginBottom: 12 }}>
         <div className="kanban">
           {(board.data?.columns ?? []).map((col) => (
             <div key={col.key} className={`kb-col ${dropCol === col.key ? 'drop' : ''}`}
@@ -157,6 +162,8 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
         ) : <Panel title="建议详情"><div className="empty">{missingReference ? <span role="status">当前案件看板未找到指定安全建议 {requestedId}。未自动选择其他建议；请核对引用或手动选择卡片。此处只查看当前记录，不证明历史版本已核验。</span> : '选择一张卡片'}</div></Panel>}
         <ConsultationPanel caseId={caseId} renderMatrix={(rounds) => <ConsultationTable rounds={rounds} />} onChanged={() => audit.reload()} />
         <Panel title="审计记录（安全建议 / 征求意见）" meta={<span>append-only · SHA-256 链</span>} bodyStyle={{ padding: 0, maxHeight: 330 }}>
+          {audit.loading && <p role="status">{audit.data ? '审计正在重载，以下为旧摘要。' : '审计正在读取。'}</p>}
+          {audit.error && <p role="alert">审计读取失败：{audit.error}{audit.data ? '；以下为旧摘要，不代表最新结果。' : '；不能据此认定没有审计记录。'}</p>}
           <table className="p6-table">
             <thead><tr><th>时间 · #</th><th>操作 / 变更</th></tr></thead>
             <tbody>
@@ -171,7 +178,7 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
                   </td>
                 </tr>
               ))}
-              {audit.error && <tr><td colSpan={2} className="empty">当前角色无审计查看权限</td></tr>}
+
             </tbody>
           </table>
         </Panel>

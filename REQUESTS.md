@@ -855,3 +855,6 @@ Synthetic before-render double click reproduced two PATCH dispatches. Add synchr
 
 ## Progress refresh callback failure (2026-11-18)
 Reproduced cleared note when synchronous onChanged throws after mock save success. Move clearing after callback return, keep unknown lock and original/newer input on failure. Clarify no in-place unlock and reload not confirmed readback. Frontend synthetic7 and adjacent10 plus build passed; no backend/browser tests. See progress-flight DEVELOPER follow-up.
+
+## Recommendation board read lifecycle (2026-11-18)
+Reproduced stale response between reload and passive cleanup. Recommendation-only hook synchronously invalidates; explicit unread/stale/failure notices preserve Detail identity with retained data. Shared hook unchanged; independent board/audit reads not one snapshot. See tests_acceptance/recommendation-read-lifecycle/DEVELOPER.md for selected synthetic tests and build; browser/HTTP unverified.

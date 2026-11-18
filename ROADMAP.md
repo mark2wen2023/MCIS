@@ -515,3 +515,5 @@ Combined exact 139f188 and b4df823; only document append conflicts, both preserv
 | 2026-11-18 | Current-page progress single-flight | 待独验 | Base1a01a49; new5 synthetic and existing10/14/5 passed, build passed; not multi-user consistency, no browser/backend test |
 
 | 2026-11-18 | Progress callback failure draft preservation | 待独验 | Parent2e3f3ad; frontend synthetic7+adjacent10 and build; no in-place unknown unlock or confirmed reload |
+
+| 2026-11-18 | Recommendation read lifecycle | 待独验 | Local hook6 and display5 plus selected adjacent synthetic tests/build; shared hook unchanged, no browser/HTTP |

@@ -9,13 +9,13 @@ function scenario(query,mode='ready') {
  let i=0,li=0
  const board={columns:[{key:'Draft',title:'draft',items:[row]}],allowed:{Draft:[]}}
  const modules={
-  react:{useState:v=>{const n=i++;if(!(n in values))values[n]=v;return[values[n],v=>values[n]=v]},useSyncExternalStore:(_,snapshot)=>snapshot()},
+  react:{useLayoutEffect:()=>{},useRef:v=>{const n=i++;if(!(n in values))values[n]={current:v};return values[n]},useState:v=>{const n=i++;if(!(n in values))values[n]=v;return[values[n],v=>values[n]=v]},useSyncExternalStore:(_,snapshot)=>snapshot()},
   'react/jsx-runtime':{jsx,jsxs:jsx},'react-router-dom':{useSearchParams:()=>[params,()=>{}]},
   '../api':{CASE_ID:'SYNTHETIC',casePath:(p,c)=>`/cases/${c}${p}`,getRole:()=> 'synthetic-role',getOperator:()=> 'synthetic-operator',onIdentityChange:()=>()=>{}},
   '../recommendationReview/RecommendationReview':{RecommendationReview:()=>null},'../consultation/ConsultationPanel':{ConsultationPanel:()=>null},
   '../config':{SERVICE_ADDR:'synthetic'},'../components/Panel':{Panel:()=>null,Metric:()=>null},
   '../components/Toast':{useToast:()=>({run:()=>{throw Error('unexpected mutation')},show:()=>{}})},'../format':{daysUntil:()=>0,toLocal:v=>v},
-  '../hooks':{useLoad:()=>{const n=li++;loads.push(n);return n===0?{data:{isFictionalDemo:true}}:n===1?{data:mode==='loading'||mode==='error'?null:board,error:mode==='error'?'synthetic unavailable':null}:{data:[]}}}
+  '../recommendationReview/useBoardLoad':{useLoad:()=>{const n=li++;loads.push(n);return n===0?{data:{isFictionalDemo:true}}:n===1?{data:mode==='loading'||mode==='error'?null:board,error:mode==='error'?'synthetic unavailable':null}:{data:[]}}}
  }
  const box={exports:{}};vm.runInNewContext(code,{module:box,exports:box.exports,require:n=>{assert.ok(n in modules,n);return modules[n]}})
  function render(){i=0;li=0;const root=box.exports.RecommendationsPage();return root.type(root.props)}
