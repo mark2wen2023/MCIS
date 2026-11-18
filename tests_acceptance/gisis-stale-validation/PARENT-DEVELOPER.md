@@ -1,0 +1,11 @@
+# GISIS asynchronous parent input binding — developer verification
+Base 490433596e8175205096a00fa94093a983325e8d. Actual ReportSession callbacks under synthetic hooks/deferred API reproduced a successful validation for submitted A being displayed after an edit event. A preliminary private-panel test also reproduced this limitation; it was replaced by the stronger retained parent-callback test (not committed as a failing duplicate).
+
+Fix: field edit notifies parent through ReportView, increments page-local input revision and clears validation/global notice. Validation request captures revision and sequence; late success only applies when session/request/revision match. Changed input keeps result unconfirmed and explicitly warns earlier request may have processed/downloaded; no auto retry. New request clears old validation. Original perform/handleError path, including permissions, is unchanged: this patch does not suppress error handling or certify error-response ordering. No backend cancellation, authorization, version binding or persistence.
+
+Developer commands from web, existing dependencies:
+- node tests/gisis-parent-validation.test.cjs: four deferred callback flows (validate/export × input changed/unchanged), current result/global notice invalidation and no auto retry passed.
+- node tests/gisis-stale-validation.test.cjs: four panel flows / 44 assertions passed, including parent edit notifications.
+- npm run build: passed with existing chunk warning.
+
+Parent test executes actual ReportSession callback/perform code with synthetic state, but skips startup effects/network and substitutes ReportView. Panel test executes actual private GisisPanel; static inspection verifies ReportView wires its onEdit prop. Not a mounted end-to-end React tree, real HTTP, DOM/browser, download, visual/independent acceptance or full CI. The queued-input-before-busy scenario is synthetic, not a measured browser schedule. Full startup/identity transition, actual report audit refresh, overlapping error paths and real download behavior remain unverified. UI ignores stale success, not server execution. No paused/refusal probes, real cases/model/service; consultation unchanged. Same-file PR104 and report busy candidate not combined.
