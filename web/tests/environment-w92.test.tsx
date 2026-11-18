@@ -4,7 +4,7 @@ import {navigationForCase,supportsCaseContext} from '../src/caseContext'
 let checks=0
 const ok=(v:unknown,m:string)=>{if(!v)throw Error(m);checks++}
 const bad=(fn:()=>unknown,m:string)=>{let rejected=false;try{fn()}catch{rejected=true}ok(rejected,m)}
-const f=emptyForm();f.observationId='OBS-1';f.sourceLabel='Synthetic source p.1';f.description=' 东北风4级，能见度良好\n保留原文 '
+const f=emptyForm();f.valueOrigin='Direct';f.observationId='OBS-1';f.sourceLabel='Synthetic source p.1';f.description=' 东北风4级，能见度良好\n保留原文 '
 const r=buildObservation(f,'CASE-A');ok(r.description===f.description,'verbatim');ok(r.observedAtUtc===null&&r.locationDescription===null,'unknown context null');ok(fields.every(([k])=>!(k in r)),'unknown quantities absent')
 ok(matchesObservation(r,r),'exact match');ok(quantity(0,'nm')==='0 nm','zero visible');ok(quantity(null,'kn')==='未知'&&quantity(undefined,'m/s')==='未知','null missing unknown')
 for(const role of ['Public','AgentService','ExternalExpert','InterestedState','other'])ok(!canCreate(role),'readonly '+role)

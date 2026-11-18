@@ -54,7 +54,7 @@ export function CreateObservationPanel({caseId,who,onCreated}:{caseId:string;who
           <label>观测时刻（UTC，可选）<input placeholder="2026-01-02T03:04:05Z" value={form.observedAtUtc} onChange={e=>setForm(f=>({...f,observedAtUtc:e.target.value}))}/><small>须明确换算为 UTC；不知道时留空，不默认事故时刻</small></label>
           <label>观测地点 / 台站（可选）<input maxLength={500} value={form.locationDescription} onChange={e=>setForm(f=>({...f,locationDescription:e.target.value}))}/><small>留空为未知，不默认事故地点</small></label>
           <label>资料来源（必填）<input maxLength={1000} placeholder="资料名称、页码或记录编号" value={form.sourceLabel} onChange={e=>setForm(f=>({...f,sourceLabel:e.target.value}))}/></label>
-          <label>整条记录的来源口径<select value={form.valueOrigin} onChange={e=>setForm(f=>({...f,valueOrigin:e.target.value as Origin}))}>{Object.entries(origins).map(([value,label])=><option key={value} value={value}>{label}</option>)}</select></label>
+          <label>整条记录的来源口径（必选）<select value={form.valueOrigin} onChange={e=>setForm(f=>({...f,valueOrigin:e.target.value as Origin|''}))}><option value="" disabled>请选择来源口径</option>{Object.entries(origins).map(([value,label])=><option key={value} value={value}>{label}</option>)}</select></label>
         </div>
         <label>原文与说明（必填）<textarea rows={4} maxLength={4000} placeholder="保留原文；注明测量高度、平均时段、流层 / 深度及不确定性。推算 / 估计须写明方法。" value={form.description} onChange={e=>setForm(f=>({...f,description:e.target.value}))}/></label>
         <p className="w92-direction">方向：以真北为 0° / 360°，顺时针；东 90°、南 180°、西 270°。风填「从哪里来」，水流填「向哪里去」。磁北、相对方向或基准未知时，只保留文字，不填方向数字。</p>
