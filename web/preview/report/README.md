@@ -2,6 +2,28 @@
 
 产品基线固定为 3edb1a55bc60fdaa13980e84597da2f357663231。此入口直接渲染该版本实际 ReportView、Panel 与原有 styles.css/w16.css；不使用 ReportPage、路由、API 或后端。只提供三个手造合成报告状态，不宣称整个调查流程已可试用。
 
+
+## 固定版本与免安装交付
+- 综合 UI 代码审查候选：integration/ui-review-series，固定 3edb1a55bc60fdaa13980e84597da2f357663231。
+- 本次预览构建来源：candidate/ui-offline-report-preview，固定 87dfd2584294893319751e29ec240ca7d7e54c81；其后三页已获独立重建及静态检查通过。后续交接文档提交不改变该制品来源。
+- ZIP 名称：MCIS-report-preview-87dfd25.zip。解压后直接用正常浏览器打开三个 HTML，无需依赖或服务。下载由交接线程提供；GitHub 构建路径仍为下节固定版本脚本，不要将滚动分支视为同一制品。
+- 三页只复用综合 UI 的报告展示组件，并不打包完整 UI。浏览器、视觉、真实交互仍未验；后端启动和归档恢复继续暂停，不可据此启动应用或用于生产。
+- ZIP 仅含下列四个文件，无仓库、依赖、数据库、媒体或其他数据；OPEN.txt 内也附三页摘要。
+
+ZIP 大小：29517 bytes；SHA-256：
+```text
+c45744d6c1e9a8315f0dcc85426789f651de23dfe9be3617682cf6923fa21b8d
+```
+
+| 文件 | 字节数 | SHA-256 |
+| --- | ---: | --- |
+| draft.html | 40013 | 649a19a3c14f5f11d0174c201c35a287a93cf16c5cefd26a9c6a6f2158e49a43 |
+| modified.html | 41214 | a24685f0b918ed701a579d78f4c53e90283ee654539639feec1d499ee03a18f4 |
+| missing.html | 39068 | a0a8b2d074576711ecf1483e75b06faa181a1bdf2a8d99e3cc1f3ef4a2789cd6 |
+| OPEN.txt | 1233 | c1c79a4fbb0ad04619cadd18773dedd0684654625dd582432400309326a742a8 |
+
+开发方从固定预览提交重新构建，ZIP CRC 检查通过，成员清单精确匹配，三份解压 HTML 与构建输出逐字节相同。打包检查不代替浏览器验收；未启动服务、发布站点或部署。
+
 ## 构建与本地查看
 需要已有兼容 Node、React、react-dom、esbuild 依赖（web/package-lock.json）。开发方复用现有 node_modules；未验证全新安装。不要启动 run_dev、Vite 主应用或 Python 服务；后端启动及归档暂停不变。
 
