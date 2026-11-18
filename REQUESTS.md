@@ -771,3 +771,5 @@ Synthetic red1 reproduced new input lost on late load render. Track edits and se
 - Task start response guards on image/audio pages; 16 new + 10 adjacent developer synthetic passed. No real task execution; see tests_acceptance/media-task-start-context/DEVELOPER-VERIFICATION.md.
 
 - Audio task status/list/start message ordering: 9 new + 17 adjacent developer synthetic checks passed; see tests_acceptance/audio-task-message-order/DEVELOPER-VERIFICATION.md. No real task/browser acceptance.
+
+- Audio cached task invalidation on changed selection/receipts/confirmation; 7 new + 10 adjacent synthetic developer checks passed. See tests_acceptance/audio-task-cache/DEVELOPER-VERIFICATION.md.

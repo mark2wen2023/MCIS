@@ -9,10 +9,10 @@
 'use strict';
 const el=id=>document.getElementById(id);let state=null,context=null,dirty=false,busy=false,url=null,generation=0,stopAt=null;
 const dirtySegments=new Set();let editVersion=0,selectionVersion=0,attachFormVersion=0,taskFormVersion=0,taskMessageVersion=0;
-for(const id of ['task-id','task-confirm'])el(id).addEventListener('input',()=>{taskFormVersion++;});
-for(const id of ['audio-digest','draft-digest','ack'])el(id).addEventListener('input',()=>{attachFormVersion++;});
+for(const id of ['task-id','task-confirm'])el(id).addEventListener('input',()=>{taskFormVersion++;taskResult=null;});
+for(const id of ['audio-digest','draft-digest','ack'])el(id).addEventListener('input',()=>{attachFormVersion++;taskResult=null;});
 function clearAudio(){generation++;el('player').pause();el('player').removeAttribute('src');el('player').load();if(url)URL.revokeObjectURL(url);url=null;stopAt=null;el('play-status').textContent='原音未载入';}
-window.addEventListener('pagehide',clearAudio);for(const id of ['case','run'])el(id).addEventListener('input',()=>{selectionVersion++;clearAudio();});
+window.addEventListener('pagehide',clearAudio);for(const id of ['case','run'])el(id).addEventListener('input',()=>{selectionVersion++;taskResult=null;clearAudio();});
 window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
 el('clear').onclick=clearAudio;el('player').addEventListener('timeupdate',()=>{if(stopAt!==null&&el('player').currentTime>=stopAt){el('player').pause();stopAt=null;}});
 const base=c=>'/api/v1/cases/'+encodeURIComponent(c);
