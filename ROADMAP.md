@@ -457,3 +457,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Image pending reread | 待独验 | 2026-11-18：读取等待期输入及选择变化不应用旧响应，合成红1→绿5；非浏览器/真实后端，归档仍关闭。 |
 
 - Image review save-context guard: delayed responses after selection change retain drafts; synthetic developer checks 4+3+5 passed. See tests_acceptance/image-save-context/DEVELOPER-VERIFICATION.md. Browser/backend unverified.
+
+- Audio reread selection epoch: away/back late response ignored; developer synthetic 1 new + 2 adjacent passed. See tests_acceptance/audio-read-selection/DEVELOPER-VERIFICATION.md; no browser acceptance.
