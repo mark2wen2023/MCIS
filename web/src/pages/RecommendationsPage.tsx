@@ -157,7 +157,7 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
 
       <div className="grid w7-columns">
         {sel ? (
-          <Detail key={sel.id} caseId={caseId} rec={sel} allowed={board.data?.allowed[sel.status] ?? []} pending={pending?.id === sel.id ? pending.to : null}
+          <Detail key={sel.id} readReady={!board.loading && !board.error && !!board.data} caseId={caseId} rec={sel} allowed={board.data?.allowed[sel.status] ?? []} pending={pending?.id === sel.id ? pending.to : null}
             onTransition={transition} onChanged={refresh} onCancel={() => clearPending(pending)} />
         ) : <Panel title="建议详情"><div className="empty">{missingReference ? <span role="status">当前案件看板未找到指定安全建议 {requestedId}。未自动选择其他建议；请核对引用或手动选择卡片。此处只查看当前记录，不证明历史版本已核验。</span> : '选择一张卡片'}</div></Panel>}
         <ConsultationPanel caseId={caseId} renderMatrix={(rounds) => <ConsultationTable rounds={rounds} />} onChanged={() => audit.reload()} />
@@ -204,7 +204,7 @@ function Card({ rec, selected, onClick }: { rec: Recommendation; selected: boole
   )
 }
 
-function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus[]; pending: RecStatus | null; onTransition: (id: string, to: RecStatus, note?: string) => Promise<unknown>; onChanged: () => void; onCancel: () => void }) {
+function Detail(props: { readReady: boolean; caseId: string; rec: Recommendation; allowed: RecStatus[]; pending: RecStatus | null; onTransition: (id: string, to: RecStatus, note?: string) => Promise<unknown>; onChanged: () => void; onCancel: () => void }) {
   const { caseId, rec, allowed } = props
   const { run, current } = useScopedActions()
   const edits = useRef({ response: 0, note: 0 })
@@ -230,8 +230,18 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
   const progressLock = useRef(false)
   const [progressState, setProgressState] = useState<'idle' | 'sending' | 'unknown'>('idle')
   const [progressNotice, setProgressNotice] = useState('')
+  const latestProgress = useRef({ source: progressSource, ready: props.readReady, status: rec.status })
+  latestProgress.current = { source: progressSource, ready: props.readReady, status: rec.status }
+  const observedCurrent = () => current() && latestProgress.current.ready &&
+    latestProgress.current.source === progressSource && latestProgress.current.status === 'Responded'
+  const adoptProgress = () => {
+    if (!observedCurrent() || progressLock.current || progressState !== 'idle') return
+    edits.current.note++
+    setProgressDraft({ pct: rec.progressPct, source: progressSource })
+    setProgressNotice('已采用当前已读取进度，说明保留在本地且尚未保存；同百分比不能单独保存说明。此操作没有发送请求。')
+  }
   const saveProgress = () => {
-    if (!current() || progressLock.current || pct === rec.progressPct) return
+    if (!observedCurrent() || progressLock.current || sourceChanged || pct === rec.progressPct) return
     progressLock.current = true
     setProgressState('sending'); setProgressNotice('正在保存进度；可继续编辑，当前新输入不会自动提交。')
     const revision = edits.current.note
@@ -270,14 +280,19 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
       </dl>
 
       {progressNotice && <p role={progressState === 'unknown' ? 'alert' : 'status'}>{progressNotice}</p>}
-      {sourceChanged && <p role="status">来源数据已变化；当前保留您基于先前快照编辑的进度和说明，请与最新记录核对。此提示不代表服务端版本核验，也不会解除结果未知锁。</p>}
+      {sourceChanged && <p role="status">来源数据已变化；当前保留您基于先前快照编辑的进度和说明，已暂停提交进度，请核对后采用当前已读取值。这里只防范页面已知旧快照，不代表服务端版本核验，也不会解除结果未知锁。</p>}
+      {sourceChanged && <div>
+        <p>当前已读取进度：{rec.progressPct}%；本地草稿：{pct}%。</p>
+        <button className="btn btn-sm" disabled={!props.readReady || progressState !== 'idle' || rec.status !== 'Responded'} onClick={adoptProgress}>采用当前已读取进度，保留说明</button>
+      </div>}
+      {progressDraft && pct === rec.progressPct && note && <p role="note">说明尚未保存；现有接口不支持同百分比单独保存说明。请勿为保存说明而改变实际进度。</p>}
       {rec.status === 'Responded' && (
         <div className="p6-card" style={{ marginTop: 8 }}>
           <div className="row-actions">
             <span className="p6-dim">落实进度</span>
             <input type="range" min={0} max={100} step={5} value={pct} onChange={(e) => { const nextPct = Number(e.target.value); edits.current.note++; setProgressDraft(old => ({ pct: nextPct, source: old?.source ?? progressSource })) }} style={{ flex: 1 }} />
             <b className="mono">{pct}%</b>
-            <button className="btn btn-sm" disabled={progressState !== 'idle' || pct === rec.progressPct} onClick={saveProgress}>保存进度</button>
+            <button className="btn btn-sm" disabled={!props.readReady || sourceChanged || progressState !== 'idle' || pct === rec.progressPct} onClick={saveProgress}>保存进度</button>
           </div>
         </div>
       )}

@@ -867,3 +867,6 @@ Synthetic initial error reproduced misleading loading title. Distinguish failed/
 
 ## Unknown progress notice outside status controls (2026-11-18)
 Reproduced hidden unknown notice after same-ID non-Responded snapshot using exact notice assertion. Move notice outside status condition; lock unchanged and remains after return to Responded. Synthetic7 enhanced and adjacent4/build passed. See tests_acceptance/recommendation-unknown-status-notice/DEVELOPER.md; no browser/HTTP claim.
+
+## Explicit observed progress adoption (2026-11-18)
+Reproduced note-only old percentage dispatch after new snapshot. Block known-source-change save; explicitly adopt current observed percentage while retaining note, without request. Loading/error/pending/unknown do not adopt/unlock. Same-percentage note cannot save alone. Selected synthetic5/7/10/5 and build passed; local UI guard only. See tests_acceptance/recommendation-progress-adopt/DEVELOPER.md.

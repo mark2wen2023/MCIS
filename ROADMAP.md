@@ -523,3 +523,5 @@ Combined exact 139f188 and b4df823; only document append conflicts, both preserv
 | 2026-11-18 | Case metadata failure label | 待独验 | Base a5086d9; synthetic3+adjacent5/build; refresh remains board/audit only |
 
 | 2026-11-18 | Unknown progress notice across status | 待独验 | Base717c683; enhanced synthetic7+adjacent4/build; source-change advice not conflict blocking |
+
+| 2026-11-18 | Explicit observed progress adoption | 待独验 | Baseba7e59e; selected synthetic5/7/10/5/build; no server CAS or browser acceptance |
