@@ -23,7 +23,7 @@ for(const outcome of ['success','failure'])test(`A ${outcome}: pending B is igno
  await aWork;await new Promise(resolve=>setImmediate(resolve));
  assert.equal(vm.runInContext('busy',s.ctx),false);assert.equal(s.calls.length,1,'ignored B must not replay after A settles');
  if(outcome==='success')assert.equal(s.elements['play-status'].textContent,'回听片段 s1，输入范围 100–400ms；不构成已听证明。');
- else {assert.match(s.elements.status.textContent,/synthetic A playback failure/);assert.equal(s.elements['play-status'].textContent,previousMessage)}
+ else {assert.match(s.elements.status.textContent,/synthetic A playback failure/);assert.match(s.elements['play-status'].textContent,/播放器未确认开始播放/)}
  const bWork=b.children[6].onclick();
  assert.equal(s.calls.length,2,'only explicit second B click starts playback');assert.equal(s.calls[1].time,0.6);
  assert.equal(player.currentTime,0.6);assert.equal(vm.runInContext('stopAt',s.ctx),0.9);

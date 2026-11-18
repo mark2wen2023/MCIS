@@ -499,3 +499,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 - 待测：audio-loaded-context，基于 baabeed；4 新增与10相邻纯 Node 合成节点开发通过（合计14，不累计旧轮次），来源/元数据共同标识已载入运行与未载入目标。浏览器/HTTP/原件未验；tests_acceptance/audio-loaded-context/DEVELOPER.md。
 
 - 待测：image-loaded-context，基于 4ec789e；5 项新增纯 Node 开发合成回归通过，涵盖任务选 B、等待/失败/成功、迟到 B 时已选 C 和手动切换。浏览器/HTTP/图片解码/下载未验；见 tests_acceptance/image-loaded-context/DEVELOPER.md。
+
+- 待测：audio-playback-waiting，基于59559cc；8新增及10相邻纯Node开发合成节点通过，共18不累计历史；真实播放/浏览器未验，后端启动/归档仍暂停。见 tests_acceptance/audio-playback-waiting/DEVELOPER.md。
