@@ -9,16 +9,24 @@ import { ArchiveProvenance } from '../archiveProvenance/Provenance'
 import { DEMO_CASE_ID } from '../reports/types'
 import type { GisisDocument, GisisValidation, RealDataStatus, Report, ReportAudit, ReportLanguage, ReportTemplate, ReportTemplateId, ReviewAction, ReviewPayload, ReviewTarget } from '../reports/types'
 
+type ReportSelection = { reportId: string; sectionId: string | null }
+
 /** W16 数据与动作入口；纯展示组件可脱离浏览器和后端独立测试。 */
 export function ReportPage() {
   const [params] = useSearchParams()
   const identity = useSyncExternalStore(onIdentityChange, () => JSON.stringify([getRole(), getOperator()]))
   const [revision, setRevision] = useState(0)
-  const key = JSON.stringify([params.get('case'),params.get('report'),params.get('reportId'),params.get('template'),params.get('lang'),identity,revision])
+  const contextKey = JSON.stringify([params.get('case'),params.get('report'),params.get('reportId'),params.get('template'),params.get('lang'),identity])
+  const selection = useRef<{ contextKey: string; value?: ReportSelection }>({ contextKey })
+  if (selection.current.contextKey !== contextKey) selection.current = { contextKey }
+  const key = JSON.stringify([contextKey, revision])
   const active = useRef(key); active.current = key
-  return <ReportSession key={key} identity={identity} isActive={() => active.current === key && identity === JSON.stringify([getRole(),getOperator()])} refresh={() => setRevision(v => v + 1)} />
+  return <ReportSession key={key} identity={identity} isActive={() => active.current === key && identity === JSON.stringify([getRole(),getOperator()])} initialSelection={selection.current.value} refresh={(value) => {
+    if (active.current !== key || identity !== JSON.stringify([getRole(),getOperator()])) return
+    selection.current = { contextKey, value }; setRevision(v => v + 1)
+  }} />
 }
-function ReportSession({identity, isActive, refresh}: {identity:string; isActive:()=>boolean; refresh:()=>void}) {
+function ReportSession({identity, isActive, refresh, initialSelection}: {identity:string; isActive:()=>boolean; refresh:(selection?:ReportSelection)=>void; initialSelection?:ReportSelection}) {
   const mounted = useRef(true)
   useLayoutEffect(() => { mounted.current = true; return () => { mounted.current = false } }, [])
   const current = () => mounted.current && isActive()
@@ -85,7 +93,10 @@ function ReportSession({identity, isActive, refresh}: {identity:string; isActive
           try { const events = await reportApi.audit(caseId, chosen, signal); if (current()) setAudit(events) }
           catch (e) { if (current()) { setAudit([]); setAuditError(`审计未获读取或读取失败：${(e as Error).message}`) } }
           if (!current() || signal.aborted) return
-          setSelectedSection((old) => document.sections.some((s) => s.sectionId === old) ? old : document.sections[0]?.sectionId ?? null)
+          setSelectedSection((old) => {
+            const preferred = old ?? (initialSelection?.reportId === document.reportId ? initialSelection.sectionId : null)
+            return document.sections.some((s) => s.sectionId === preferred) ? preferred : document.sections[0]?.sectionId ?? null
+          })
         }
       } catch (e) { if (!signal.aborted) handleError(e) }
       finally { if (!signal.aborted && current()) setLoading(false) }
@@ -124,7 +135,7 @@ function ReportSession({identity, isActive, refresh}: {identity:string; isActive
         const section = await reportApi.review(caseId, report.reportId, review.target.sectionId, body)
         if (!current()) return
         setReport((current) => current ? { ...current, sections: current.sections.map((s) => s.sectionId === section.sectionId ? section : s) } : null)
-        setReview(null); refresh()
+        setReview(null); refresh({ reportId: report.reportId, sectionId: selectedSection })
       }, '复核已保存，理由、原值和新值已写入审计。')
     } catch { /* 保留对话框内的输入，后端错误显示于页面。 */ }
   }
@@ -141,9 +152,9 @@ function ReportSession({identity, isActive, refresh}: {identity:string; isActive
       onCreate={(generateLang = lang) => { void perform(async () => navigateReport(await reportApi.create(caseId, templateId, generateLang)), '已生成 Draft 报告。').catch(() => {}) }}
       onRegenerate={() => { if (report) void perform(async () => navigateReport(await reportApi.regenerate(caseId, report.reportId)), '已生成新版本；旧版本及复核记录保留。').catch(() => {}) }}
       onReview={(action, target) => { setError(null); setReview({ action, target }) }}
-      onExport={(format, exportLang) => { if (report) void perform(async () => { const file = await reportApi.export(caseId, report.reportId, format, exportLang); setNotice(`已导出 ${file.filename}${file.sha256 ? ` · SHA-256 ${file.sha256}` : ''}`); refresh() }).catch(() => {}) }}
+      onExport={(format, exportLang) => { if (report) void perform(async () => { const file = await reportApi.export(caseId, report.reportId, format, exportLang); setNotice(`已导出 ${file.filename}${file.sha256 ? ` · SHA-256 ${file.sha256}` : ''}`); refresh({ reportId: report.reportId, sectionId: selectedSection }) }).catch(() => {}) }}
       onGlossary={() => { void perform(async () => { await reportApi.glossary() }, '已下载 IMO 标准航海用语术语表（中文为项目译文）。').catch(() => {}) }}
-      onGisisExport={(format) => { void perform(async () => { await reportApi.gisisExport(caseId, format); refresh() }, `已导出 GISIS ${format.toUpperCase()} 本地草稿字段。`).catch(() => {}) }}
+      onGisisExport={(format) => { void perform(async () => { await reportApi.gisisExport(caseId, format); refresh(report ? { reportId: report.reportId, sectionId: selectedSection } : undefined) }, `已导出 GISIS ${format.toUpperCase()} 本地草稿字段。`).catch(() => {}) }}
       onGisisEdit={() => { gisisInputs.current.revision++; setValidation(null); setGisisNotice(null); setGisisError(null) }}
       onGisisValidate={(values, exportFile) => {
         if (!current() || denied || saving) return

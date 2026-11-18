@@ -840,3 +840,6 @@ Reopen report exporter only for repeated table header rows and an accurate Engli
 ## UI + PR104 — pending combined acceptance
 
 Combined exact 139f188 and b4df823; only document append conflicts, both preserved. Developer 19 UI scripts, new synthetic SSR (3 cases), pure formatting (6 cases) and build passed; counts not cumulative. No real material, paused/refusal probes, HFACS or browser run. See tests_acceptance/ui-pr104/DEVELOPER.md; freeze logs/ui-pr104-impl-hashes-frozen.txt. Real backend/production permissions/visual/independent acceptance pending. Do not merge or deploy.
+
+## Report refresh section continuity (2026-11-18)
+Confirmed on UI+PR104 9cc3ece: review save remount returned the selected second section to first. Preserve a same-context, same-report section hint across refresh; validate it against loaded sections. Product change confined to ReportPage.tsx. Synthetic lifecycle7 and adjacent GISIS4 passed; build passed; browser/backend unverified. See tests_acceptance/report-refresh-section/DEVELOPER.md.
