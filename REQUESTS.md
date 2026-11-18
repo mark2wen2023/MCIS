@@ -759,3 +759,5 @@ Synthetic red1 reproduced new input lost on late load render. Track edits and se
 - Image task detail query guards edit/selection epochs and query ordering; new 8 developer synthetic nodes passed (including ordinary transport failures). See tests_acceptance/image-task-query-context/DEVELOPER-VERIFICATION.md; real tasks/browser unverified.
 
 - Audio attach form epoch: receipt/ack changes invalidate pending UI response. Developer 7 new + 5 adjacent synthetic passed; see tests_acceptance/audio-attach-form/DEVELOPER-VERIFICATION.md.
+
+- Task-result programmatic selection now advances selection epoch in image/audio pages; 2 new developer synthetic nodes and 8 query regression nodes passed. See tests_acceptance/media-programmatic-selection/DEVELOPER-VERIFICATION.md.
