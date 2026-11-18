@@ -647,3 +647,8 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## ANALYSIS-MISSING-SCENARIO (2026-11-18)
+Existing report analysis links specify scenario; AnalysisView silently displayed
+baseline for absent scenario. Show missing target with explicit baseline action;
+valid/default views unchanged. No source/version verification or permission change.
