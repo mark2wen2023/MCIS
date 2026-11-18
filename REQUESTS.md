@@ -972,3 +972,6 @@ claims. No product route/permission/migration/publisher changes.
 - Authorized candidate source-read contract: two instance flags default False; analysis disabled=503 analysis_seed_disabled before read; report disabled-source missing text distinct from read failure. Legacy direct load_seed needs explicit policy; whatif custom callback shape retained but skipped when disabled. Existing reports unchanged. See tests_acceptance/source-read-policy/REVIEW.md; no startup permission.
 
 - Source policy Settings correction: preserve original seven positional fields, append flags; synthetic class-only construction verified. seed_demo default remains True; new flags are not environment-parsed.
+
+## Minimal startup inventory research
+Authorized first-step path inventory and default-deny checker only, base 6d5069b. No executable closure or product edits; three self-made temporary-directory nodes passed. research/minimal-startup-inventory/README.md records gaps.

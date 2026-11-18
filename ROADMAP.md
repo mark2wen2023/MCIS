@@ -487,3 +487,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | instance source-read policy | 待测 | synthetic helper and AST wiring checks pass; actual app/HTTP/report output untested, startup/archive hold | logs/source-read-policy-frozen.txt |
 
 | source policy Settings order | 待测 | synthetic constructor and AST checks pass; no app imports, seed default remains True | logs/source-policy-settings-order-frozen.txt |
+
+| Minimal startup inventory | 研究待审/启动阻断 | Three ordinary synthetic inventory nodes passed; startup_allowed always false; no service execution or package. logs/minimal-startup-inventory-frozen.txt |

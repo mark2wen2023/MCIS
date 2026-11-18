@@ -1,0 +1,58 @@
+{
+  "format": 1,
+  "source_commit": "6d5069b9d320dcaddab28b95f8ed265bfc567b67",
+  "purpose": "Incomplete source inventory; NOT executable closure; do not prepare or launch",
+  "files": [
+    {
+      "path": "service/mcis_service/__init__.py",
+      "sha256": "0af1ae7229694ada406cc87b5cbaaf195441620cb48e8dda54df83a3f6295480"
+    }
+  ],
+  "dependencies": {
+    "Python+stdlib+native runtime": {
+      "version": null,
+      "artifact_sha256": null,
+      "status": "not_pinned"
+    },
+    "fastapi": {
+      "version": null,
+      "artifact_sha256": null,
+      "status": "not_pinned"
+    },
+    "starlette": {
+      "version": null,
+      "artifact_sha256": null,
+      "status": "not_pinned"
+    },
+    "pydantic": {
+      "version": null,
+      "artifact_sha256": null,
+      "status": "not_pinned"
+    },
+    "pydantic-core": {
+      "version": null,
+      "artifact_sha256": null,
+      "status": "not_pinned"
+    },
+    "anyio": {
+      "version": null,
+      "artifact_sha256": null,
+      "status": "not_pinned"
+    },
+    "uvicorn": {
+      "version": null,
+      "artifact_sha256": null,
+      "status": "not_pinned"
+    },
+    "sqlalchemy": {
+      "version": null,
+      "artifact_sha256": null,
+      "status": "not_pinned"
+    },
+    "greenlet": {
+      "version": null,
+      "artifact_sha256": null,
+      "status": "not_pinned"
+    }
+  }
+}
