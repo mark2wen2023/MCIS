@@ -13,7 +13,12 @@ git clone --single-branch --branch candidate/media-demo-launcher https://github.
 cd MCIS-media-demo
 git rev-parse HEAD
 git status --short
+# 固定本指南已核对的完整提交；不要以可移动分支名代替版本记录。
+git switch --detach 568d8544661c5ee69ff8b969242436a48bce0813
+git rev-parse HEAD
 ```
+
+应确认最后输出严格等于 `568d8544661c5ee69ff8b969242436a48bce0813`，且工作树干净；不符、提交不存在或有本地修改时停止核查，不强制覆盖。该提交的运行时代码与下文实跑基线 `e3b913ff6585650cbe91a5998a65cc3522ef46a8` 一致，差异仅为README及本指南。分支以后可能前移，不能把新头称为同一已验版本；本次指南补充也不构成新运行时验收。
 
 以下命令面向 Linux/macOS 的 Bash，在仓库根目录执行。Windows流程未验证。需要 Python（本次复核使用3.12.14）、venv及 `service/requirements.txt` 中的服务依赖。此演示不需要前端npm构建、.NET SDK、PaddleOCR、SenseVoice或模型下载。
 
@@ -66,6 +71,10 @@ printf 'root=%s\nmanifest=%s\n' "$MCIS_DEMO_ROOT" "$MCIS_DEMO_MANIFEST"
 "$MCIS_DEMO_PY" -m tools.media_review_demo.launch --root "$MCIS_DEMO_ROOT" --manifest "$MCIS_DEMO_MANIFEST" --serve
 ```
 
+**`--serve` 不是只读预检。** `checked_app` 先结束 `check_manifest` 的只读数据库连接，再调用隔离工厂；工厂调用 `create_app`，其中 `Database.create_all()` 可创建缺失表及触发器等数据库模式元数据，并创建所需目录。关闭种子和模型不等于禁止这些写入。代码依据：[启动器](../tools/media_review_demo/launch.py)、[演示工厂](../service/mcis_service/media_review_demo.py)、[应用初始化](../service/mcis_service/main.py)及[数据库初始化](../service/mcis_service/db.py)。
+
+**预检到启动并非同一原子操作，也不保证文件在这段时间不变。** 只使用自己控制的新临时目录及其中数据库；不要使用共享、他人可修改、正式或需要保全的目录，不要在预检与启动之间改动清单/文件或让其他进程并行写入。无法确认目录归属与使用状态时停止，不能以预检通过替代一致性保证。
+
 等待 `Application startup complete` 和 `Uvicorn running on http://127.0.0.1:8766`。启动器固定单worker、关闭reload、模型和种子；没有允许开启模型的参数。不要用README主产品的 `run_dev.sh` 替代本启动器。
 
 正常结束时在启动终端按 **Ctrl+C**，等待 `Application shutdown complete` 和 `Finished server process`。不需要删除数据；未知状态不要自动清理或重启。不要暴露端口、配置公网转发或关闭浏览器沙箱。
@@ -99,6 +108,8 @@ PY
 任何403、授权障碍、未知结果或工具安全阻拦都应停止记录，不注入角色头、改案件策略、换工具或关闭沙箱继续。本指南不授权重试此前暂停的测试、写入拒绝探测或受限操作。不要运行全仓测试以“验证演示”。
 
 ## 6. 本指南的核验范围
+
+**以下近期实跑均为开发方记录，不是独立复验。** 同事对指南、参数和远端提交的只读复核，不等于独立重跑服务、浏览器或模型。
 
 2026-11-18，基于精确运行时代码 `e3b913ff6585650cbe91a5998a65cc3522ef46a8` 创建全新独立Git工作树，复用已有服务虚拟环境，未安装依赖或模型：
 
