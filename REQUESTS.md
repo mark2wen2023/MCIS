@@ -803,3 +803,6 @@ Authorized narrow revision to frozen audio page: distinguish prior confirmation/
 
 ## Media unknown-save guidance (2026-11-18)
 Authorized frontend-only amendment to frozen audio/image pages: retain page-memory unknown reminder outside row rendering, explicit copy/check/read-replacement/resave risk. No receipt, retry or authorization change. Evidence: tests_acceptance/media-unknown-guidance/DEVELOPER.md.
+
+## Media unknown accumulation wording (2026-11-18)
+Authorized clarification of both frozen page banners only; no Set/request/receipt behavior change. New pure Node accumulation coverage in tests_acceptance/media-unknown-guidance/ACCUMULATION.md.

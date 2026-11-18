@@ -9,7 +9,7 @@
 'use strict';
 const unknownSaves=new Set();
 const unknownGuidance='先复制草稿并人工核对。重新读取会替换本地输入，且不能证明原请求结果；再次保存可能追加修订。不自动重试，也不表示请求已取消。此提醒仅在当前页面内存，刷新或离开不会持久保留。';
-function rememberUnknownSave(label){unknownSaves.add(label);el('save-unknown').textContent='以下保存结果仍未知（读取或后续保存不会自动核实这些请求）：'+[...unknownSaves].join('；')+'。'+unknownGuidance;}
+function rememberUnknownSave(label){unknownSaves.add(label);el('save-unknown').textContent='本页面累计的未知保存涉及以下记录（可能涉及其他案件/运行；同一记录可能多次提交，不是逐次操作清单；读取或后续保存不会自动核实这些请求）：'+[...unknownSaves].join('；')+'。'+unknownGuidance;}
 const el=id=>document.getElementById(id);let state=null,context=null,dirty=false,busy=false,url=null,generation=0,stopAt=null;
 const dirtySegments=new Set();let editVersion=0,selectionVersion=0,attachFormVersion=0,taskFormVersion=0,taskMessageVersion=0;
 function invalidateTaskSelection(){taskFormVersion++;taskResult=null;el('task-output').textContent='';}
