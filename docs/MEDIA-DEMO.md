@@ -16,12 +16,12 @@
 
 | 固定提交 | 限定范围与记录 |
 |---|---|
-| [25fc8e7](https://github.com/mark2wen2023/MCIS/commit/25fc8e78b4d877bd060cfa889a9c66a15632ca50) | 音频播放迟到提示；[开发命令与边界](../tests_acceptance/audio-playback-late-status/DEVELOPER.md) |
-| [9bc2f3d](https://github.com/mark2wen2023/MCIS/commit/9bc2f3d95db37798cebd0d334d83673e432102ce) | 两片段播放串行、不排队；[记录](../tests_acceptance/audio-playback-serialization/DEVELOPER.md) |
-| [d1f2593](https://github.com/mark2wen2023/MCIS/commit/d1f2593f98364bc54ee12ec02f8a3b1ccfdd0327) | 输入事件、dirty及模拟离页处理；[记录](../tests_acceptance/audio-draft-lifecycle/DEVELOPER.md) |
-| [baabeed](https://github.com/mark2wen2023/MCIS/commit/baabeed48bf59c322f77dfdc91ed262500843ab8) | 音频运行来源声明、缺失未知；[记录](../tests_acceptance/audio-source-declaration/DEVELOPER.md) |
-| [4ec789e](https://github.com/mark2wen2023/MCIS/commit/4ec789e288dffad7284944ea9e1b9206e4c6f042) | 音频已载入与目标运行提示、保留草稿；[记录](../tests_acceptance/audio-loaded-context/DEVELOPER.md) |
-| [53e59ca](https://github.com/mark2wen2023/MCIS/commit/53e59cac17542975eb697770cb3ac5c7345af129) | 图片来源、草稿、下载归属提示；[记录](../tests_acceptance/image-loaded-context/DEVELOPER.md) |
+| [25fc8e7](https://github.com/mark2wen2023/MCIS/commit/25fc8e78b4d877bd060cfa889a9c66a15632ca50) | 音频播放迟到提示；[开发命令与边界](https://github.com/mark2wen2023/MCIS/blob/25fc8e78b4d877bd060cfa889a9c66a15632ca50/tests_acceptance/audio-playback-late-status/DEVELOPER.md) |
+| [9bc2f3d](https://github.com/mark2wen2023/MCIS/commit/9bc2f3d95db37798cebd0d334d83673e432102ce) | 两片段播放串行、不排队；[记录](https://github.com/mark2wen2023/MCIS/blob/9bc2f3d95db37798cebd0d334d83673e432102ce/tests_acceptance/audio-playback-serialization/DEVELOPER.md) |
+| [d1f2593](https://github.com/mark2wen2023/MCIS/commit/d1f2593f98364bc54ee12ec02f8a3b1ccfdd0327) | 输入事件、dirty及模拟离页处理；[记录](https://github.com/mark2wen2023/MCIS/blob/d1f2593f98364bc54ee12ec02f8a3b1ccfdd0327/tests_acceptance/audio-draft-lifecycle/DEVELOPER.md) |
+| [baabeed](https://github.com/mark2wen2023/MCIS/commit/baabeed48bf59c322f77dfdc91ed262500843ab8) | 音频运行来源声明、缺失未知；[记录](https://github.com/mark2wen2023/MCIS/blob/baabeed48bf59c322f77dfdc91ed262500843ab8/tests_acceptance/audio-source-declaration/DEVELOPER.md) |
+| [4ec789e](https://github.com/mark2wen2023/MCIS/commit/4ec789e288dffad7284944ea9e1b9206e4c6f042) | 音频已载入与目标运行提示、保留草稿；[记录](https://github.com/mark2wen2023/MCIS/blob/4ec789e288dffad7284944ea9e1b9206e4c6f042/tests_acceptance/audio-loaded-context/DEVELOPER.md) |
+| [53e59ca](https://github.com/mark2wen2023/MCIS/commit/53e59cac17542975eb697770cb3ac5c7345af129) | 图片来源、草稿、下载归属提示；[记录](https://github.com/mark2wen2023/MCIS/blob/53e59cac17542975eb697770cb3ac5c7345af129/tests_acceptance/image-loaded-context/DEVELOPER.md) |
 
 链接的 DEVELOPER 文件保留当时开发执行记录及当时待独验状态，不能冒充独立报告；此表补充后来收到的独验结论，不追加未提供的计数。来源声明不证明真实性或与笔录匹配；模拟提示不证明原生离页弹窗、实际声音、解码或下载。历史网页/服务测试不得因这些前端结果自动恢复执行。
 
@@ -45,7 +45,7 @@ git rev-parse HEAD
 
 以下命令面向 Linux/macOS 的 Bash，在仓库根目录执行。Windows流程未验证。需要 Python（本次复核使用3.12.14）、venv及 `service/requirements.txt` 中的服务依赖。此演示不需要前端npm构建、.NET SDK、PaddleOCR、SenseVoice或模型下载。
 
-如没有已批准且满足要求的环境，可在正常允许的网络下按仓库既有流程创建环境：
+**历史命令，当前不执行。** 以下仅保留原环境创建与依赖安装步骤，不是安装许可：
 
 ```bash
 python3 -m venv service/.venv
@@ -54,7 +54,7 @@ service/.venv/bin/python -m pip install -r service/requirements.txt
 
 **本轮未执行上述安装命令。** requirements使用版本下限而非锁文件，不能保证重新安装得到已验版本；网络、安装或权限失败时停止，不更换来源绕过。已有合适虚拟环境可直接选用，不必重新安装。
 
-在同一终端设置所选解释器及源码路径：
+**历史命令，当前不执行。** 以下仅保留原解释器、源码路径设置及依赖导入检查：
 
 ```bash
 set -e
