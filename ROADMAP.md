@@ -401,3 +401,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 ## Recommendation transition note preservation — pending independent review
 Only clear submitted explanation after a returned success result; retain on swallowed transport error and retain differing newer text. Developer four synthetic scenarios/build passed. See tests_acceptance/recommendation-transition-note/DEVELOPER.md and logs/recommendation-transition-note-impl-hashes-frozen.txt; browser unverified.
+
+
+## Recommendation reply/progress draft retention — pending independent review
+Preserve input edited during reply/progress requests using local edit counters; payloads and permissions unchanged. Developer 9 new synthetic scenarios, 4 adjacent and build passed. See tests_acceptance/recommendation-transition-note/FORM-SAVE-DEVELOPER.md and logs/recommendation-form-save-impl-hashes-frozen.txt; browser unverified.
