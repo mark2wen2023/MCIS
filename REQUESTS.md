@@ -736,3 +736,6 @@ On media demo f001a6d, change audio review page only: confirmed successful save 
 
 ## Image saved-draft marker correction (2026-11-18)
 On media demo3507b9f, ordinary synthetic test reproduced dirty remaining true after a matching successful image-line save. Track dirty lines; clear only the successfully checked line, preserve other drafts. Existing pending-edit response mismatch remains unknown/no retry. Baseline1fail, final3pass; no browser/model/original bytes or paused tests. See tests_acceptance/image-saved-draft-state/DEVELOPER-VERIFICATION.md.
+
+## Audio reread pending edits (2026-11-18)
+Confirmed synthetic old-response render lost edits typed during reread. Capture edit version and selected case/run; retain input on change, no retry. New ordinary DOM/HTTP tests red1→green2; tests_acceptance/audio-read-race/DEVELOPER-VERIFICATION.md. No permissions/backend change.

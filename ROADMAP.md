@@ -452,3 +452,4 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Audio saved-draft marker | 待独验 | 2026-11-18：成功保存后逐段清除误报标记，保留其他段及提交期间新输入；普通合成红1→绿3，非浏览器/真实服务验收，不改变权限或归档。 |
 
 | Image saved-draft marker | 待独验 | 2026-11-18：仅图片页逐行清除成功保存后的误报，其他行及保存期间输入保留；合成红1→绿3，非浏览器/真实服务验收，权限及归档保护不变。 |
+| Audio pending reread | 待独验 | 2026-11-18：读取等待期间新草稿保留，合成红1→绿2，非浏览器/真实后端验收。 |
