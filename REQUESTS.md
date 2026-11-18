@@ -652,3 +652,8 @@ Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD
 Bounded UI feedback fix: expire the specific notification instance, not any later
 notification with the same text. No request/permission changes. Synthetic hook
 and clock regression only; browser/visual acceptance pending.
+
+## TOAST-ACCESSIBILITY (2026-11-18)
+Bounded save-feedback accessibility: existing evidence/recommendation operations
+use Toast with no live-region semantics. Add persistent empty status/alert
+regions, retaining messages, timeout and focus. No API or permission changes.

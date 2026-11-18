@@ -14,7 +14,12 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <Ctx.Provider value={show}>
       {children}
-      {toast && <div className={`toast ${toast.kind}`}>{toast.text}</div>}
+      <div role="status" aria-atomic={true} className={toast?.kind === 'ok' ? 'toast ok' : undefined}>
+        {toast?.kind === 'ok' ? toast.text : ''}
+      </div>
+      <div role="alert" aria-atomic={true} className={toast?.kind === 'err' ? 'toast err' : undefined}>
+        {toast?.kind === 'err' ? toast.text : ''}
+      </div>
     </Ctx.Provider>
   )
 }
