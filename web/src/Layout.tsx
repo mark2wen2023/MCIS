@@ -20,12 +20,14 @@ export function Layout() {
   const [caseRevision, setCaseRevision] = useState(0)
   const [role, setRole] = useState<Role>(getRole())
   const [caseDef, setCaseDef] = useState<CaseDef | null>(null)
-  const [caseLoaded, setCaseLoaded] = useState<boolean | null>(null)
+  const [caseLoadResult, setCaseLoadResult] = useState<{ caseId: string; loaded: boolean | null } | null>(null)
   const loc = useLocation()
   const [params] = useSearchParams()
   const onLobby = loc.pathname.endsWith('/lobby')
   const onAnalysis = loc.pathname.endsWith('/analysis') // W12：分析页也按 ?case= 显示当前案件
   const caseId = caseForLocation(loc.pathname, params.toString(), CASE_ID)
+  const caseLoaded = caseLoadResult?.caseId === caseId ? caseLoadResult.loaded : null
+  const setCaseLoaded = (loaded: boolean | null) => setCaseLoadResult({ caseId, loaded })
   useEffect(() => onCaseMetadataChanged(caseId, () => { if (!onLobby) setCaseRevision(n => n + 1) }), [caseId, onLobby])
   useEffect(() => {
     if (onLobby) { setCaseDef(null); setCaseLoaded(null); return }

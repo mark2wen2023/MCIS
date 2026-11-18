@@ -653,3 +653,8 @@ Authorized bounded UI feedback correction on main94d5e38: Layout's case-fetch
 result is not service health. Replace ONLINE/OFFLINE with explicit case-data
 states; retain navigation, requests and permissions. Shared Layout change,
 synthetic SSR validation and build only; browser/visual acceptance pending.
+
+## CASE-LOAD-STATUS transition follow-up (2026-11-18)
+Independent review prompted an actual Layout-function synthetic lifecycle check.
+Before effects run, switching from failed case A to B retained false status.
+Bind load result to case ID; preserve existing cancellation and requests.
