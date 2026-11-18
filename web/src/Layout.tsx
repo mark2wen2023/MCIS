@@ -3,6 +3,7 @@ import { NavLink, Outlet, useLocation, useSearchParams } from 'react-router-dom'
 import { api, CASE_ID, getOperator, getRole, setIdentity } from './api'
 import { onCaseMetadataChanged } from './caseMetadata/events'
 import { ROUTES } from './routes'
+import { CaseLoadStatus } from './components/CaseLoadStatus'
 import type { CaseDef, Role } from './types'
 import { SERVICE_ADDR } from './config'
 import { caseForLocation, navigationForCase } from './caseContext'
@@ -19,7 +20,7 @@ export function Layout() {
   const [caseRevision, setCaseRevision] = useState(0)
   const [role, setRole] = useState<Role>(getRole())
   const [caseDef, setCaseDef] = useState<CaseDef | null>(null)
-  const [online, setOnline] = useState<boolean | null>(null)
+  const [caseLoaded, setCaseLoaded] = useState<boolean | null>(null)
   const loc = useLocation()
   const [params] = useSearchParams()
   const onLobby = loc.pathname.endsWith('/lobby')
@@ -27,21 +28,21 @@ export function Layout() {
   const caseId = caseForLocation(loc.pathname, params.toString(), CASE_ID)
   useEffect(() => onCaseMetadataChanged(caseId, () => { if (!onLobby) setCaseRevision(n => n + 1) }), [caseId, onLobby])
   useEffect(() => {
-    if (onLobby) { setCaseDef(null); setOnline(null); return }
+    if (onLobby) { setCaseDef(null); setCaseLoaded(null); return }
     let cancelled = false
-    setCaseDef(null); setOnline(null)
+    setCaseDef(null); setCaseLoaded(null)
     api.get<CaseDef>(`/cases/${encodeURIComponent(caseId)}`).then((c) => {
-      if (!cancelled) { setCaseDef(c); setOnline(true) }
+      if (!cancelled) { setCaseDef(c); setCaseLoaded(true) }
     }).catch(() => {
       if (cancelled) return
-      if (!onAnalysis) { setOnline(false); return }
+      if (!onAnalysis) { setCaseLoaded(false); return }
       // Analysis-only historical cases can still be identified without a DB record.
       api.get<{ cases: { caseId: string; title: string; isFictionalDemo: boolean }[] }>('/analysis/cases')
         .then((l) => {
           if (cancelled) return
           const c = l.cases.find((x) => x.caseId === caseId)
-          setCaseDef(c ? ({ ...c } as CaseDef) : null); setOnline(Boolean(c))
-        }).catch(() => { if (!cancelled) setOnline(false) })
+          setCaseDef(c ? ({ ...c } as CaseDef) : null); setCaseLoaded(Boolean(c))
+        }).catch(() => { if (!cancelled) setCaseLoaded(false) })
     })
     return () => { cancelled = true }
   }, [caseId, onAnalysis, onLobby, caseRevision])
@@ -52,7 +53,7 @@ export function Layout() {
   const currentCase = caseDef?.caseId === caseId ? caseDef : null
   const fictional = currentCase?.isFictionalDemo === true
   const unknown = !currentCase
-  const unknownLabel = onLobby ? '请选择案件' : online === false ? '案件信息不可用' : '案件信息载入中'
+  const unknownLabel = onLobby ? '请选择案件' : caseLoaded === false ? '案件信息不可用' : '案件信息载入中'
   return (
     <div className="app">
       <aside className="sidebar">
@@ -76,7 +77,7 @@ export function Layout() {
         </nav>
         <div className="sidebar-foot">
           <span>service {SERVICE_ADDR}</span>
-          <span className={online ? 'dot-ok' : 'dot-bad'}>{online === null ? '…' : online ? '● ONLINE' : '● OFFLINE'}</span>
+          <CaseLoadStatus onLobby={onLobby} loaded={caseLoaded === true && !currentCase ? null : caseLoaded} />
         </div>
       </aside>
       <header className="topbar">

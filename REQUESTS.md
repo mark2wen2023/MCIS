@@ -647,3 +647,9 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## CASE-LOAD-STATUS (2026-11-18)
+Authorized bounded UI feedback correction on main94d5e38: Layout's case-fetch
+result is not service health. Replace ONLINE/OFFLINE with explicit case-data
+states; retain navigation, requests and permissions. Shared Layout change,
+synthetic SSR validation and build only; browser/visual acceptance pending.
