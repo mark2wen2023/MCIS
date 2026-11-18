@@ -852,3 +852,6 @@ Reproduced old transition completion clearing a newly opened confirmation. Exact
 
 ## Progress save single-flight (2026-11-18)
 Synthetic before-render double click reproduced two PATCH dispatches. Add synchronous current-page lock, visible sending/unknown state and newer-unsaved-input notice; keep editable drafts and existing counters. Unknown does not retry or claim rollback. Developer new5 plus existing10/14/5 and build passed. See tests_acceptance/recommendation-progress-flight/DEVELOPER.md; no browser/backend acceptance.
+
+## Progress refresh callback failure (2026-11-18)
+Reproduced cleared note when synchronous onChanged throws after mock save success. Move clearing after callback return, keep unknown lock and original/newer input on failure. Clarify no in-place unlock and reload not confirmed readback. Frontend synthetic7 and adjacent10 plus build passed; no backend/browser tests. See progress-flight DEVELOPER follow-up.

@@ -41,3 +41,31 @@ Corrected prior test header references from useToast.run to useScopedActions.run
 Counts describe selected developer synthetic evidence, not independent/full-suite
 acceptance. No browser, HTTP, backend tests, real data, models, HFACS, paused nodes
 or write-refusal probes. No merge/deploy; independent review pending.
+
+## Follow-up: synchronous refresh callback failure (2026-11-18)
+
+Parent 2e3f3ad38f75f847c53ee604e1de9825a4b5b158. Independent review found
+note clearing preceded onChanged. New frontend-only synthetic callback throws after
+successful mock PATCH; before product fix the current input was empty instead of
+submitted text. This is not backend fault injection or a real service failure.
+
+Move clearing after normal onChanged return and recheck current lifetime/edit revision.
+A synchronous throw leaves original or newer note intact and the unknown lock retained.
+Success copy explicitly says reload requested, readback not confirmed. Unknown copy
+explicitly states no in-place unlock: copy draft and manually check record/audit first.
+Neither successful callback return nor asynchronous reload initiation proves readback.
+This does not implement reload completion tracking, recovery or a server commit guarantee.
+
+Reviewed/executed commands from web:
+- node tests/recommendation-progress-flight.test.cjs: 7 passed (prior5 plus callback
+  throw with original note and with newer note); checks current rendered note, callback
+  reached once, locked repeat, notices/no unlock, and unconfirmed readback wording.
+- node tests/recommendation-form-save.test.cjs: adjacent10 passed.
+- npm run build: TypeScript/Vite passed; 767 modules, JS1863.84kB/gzip602.32kB,
+  existing chunk-size warning. No further product/test changes after verification.
+
+Developer synthetic evidence only; no backend, browser, real data, paused/refusal
+probes, model or HFACS execution. Previous14/5 tests were not rerun this follow-up;
+counts must not be accumulated as new coverage. Independent review pending.
+Original freeze remains parent evidence; follow-up freeze is
+logs/recommendation-progress-flight-r2-impl-hashes-frozen.txt. No merge/deploy.

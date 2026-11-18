@@ -15,7 +15,8 @@ async function scenario(kind,mode,edit='none'){
  const modules={react,'react/jsx-runtime':{jsx,jsxs:jsx},'react-router-dom':{useSearchParams:()=>[new URLSearchParams('case=SYNTHETIC&id=REC-SYNTHETIC')]},'../api':{api,ApiError:class extends Error{},CASE_ID:'SYNTHETIC',casePath:(p,c)=>`/cases/${c}${p}`,getRole:()=> 'synthetic',getOperator:()=> 'synthetic',onIdentityChange:()=>()=>{}},'../recommendationReview/RecommendationReview':{RecommendationReview:()=>null},'../consultation/ConsultationPanel':{ConsultationPanel:()=>null},'../config':{SERVICE_ADDR:'synthetic'},'../components/Panel':{Panel:()=>null,Metric:()=>null},'../components/Toast':toast,'../format':{daysUntil:()=>0,toLocal:v=>v},'../hooks':{useLoad:()=>({data:loadIndex++===0?{}:loadIndex===2?{columns:[{key:'Draft',items:[rec]}],allowed:{Responded:['NotAdopted']}}:[]})}}
  const page=evaluate(pageCode,modules);let root=page.RecommendationsPage();let tree=root.type(root.props)
  const detail=nodes(tree).find(n=>n.type?.name==='Detail');assert.ok(detail)
- detail.props.onChanged=()=>{};detail.props.onCancel=()=>{}
+ let refreshCalls=0
+ detail.props.onChanged=()=>{refreshCalls++;if(mode==='refresh-throw')throw new Error('synthetic refresh callback failed')};detail.props.onCancel=()=>{}
  values=[];cleanups=[]
  const render=()=>{index=0;return detail.type(detail.props)}
  const input=(tree,placeholder)=>nodes(tree).find(n=>n.type==='input'&&n.props.placeholder===placeholder)
@@ -40,18 +41,21 @@ async function scenario(kind,mode,edit='none'){
  if(mode==='unmount')for(const f of cleanups)f()
  if(mode==='failure')reject(new Error('synthetic transport unavailable'));else resolve(rec)
  await pending
- const expected=edit==='different'?'new draft':edit!=='none'||(mode==='failure'||mode==='unmount')?'submitted text':''
+ const expected=edit==='different'?'new draft':edit!=='none'||(mode==='failure'||mode==='unmount'||mode==='refresh-throw')?'submitted text':''
  assert.equal(input(render(),field).props.value,expected,'inspect current rendered input')
  if(edit==='percent')assert.equal(nodes(render()).find(n=>n.type==='input'&&n.props.type==='range').props.value,50)
  if(mode==='unmount'){assert.equal(notices.length,0);return}
- assert.equal(notices.at(-1)[1],mode==='failure'?'err':'ok')
+ assert.equal(notices.at(-1)[1],['failure','refresh-throw'].includes(mode)?'err':'ok')
  const save=nodes(render()).find(n=>n.type==='button'&&n.props.children==='保存进度')
- if(mode==='failure'){
+ if(['failure','refresh-throw'].includes(mode)){
   assert.equal(save.props.disabled,true)
   assert.ok(nodes(render()).some(n=>typeof n.props?.children==='string'&&n.props.children.includes('结果未知')))
+  assert.ok(nodes(render()).some(n=>typeof n.props?.children==='string'&&n.props.children.includes('没有原地解锁')))
   await save.props.onClick();assert.equal(sent.length,1,'unknown result must not retry')
  }
- if(edit==='percent')assert.ok(nodes(render()).some(n=>typeof n.props?.children==='string'&&n.props.children.includes('尚未保存')))
+ if(mode==='success')assert.ok(nodes(render()).some(n=>typeof n.props?.children==='string'&&n.props.children.includes('尚未确认读回')))
+ if(mode==='refresh-throw')assert.equal(refreshCalls,1,'successful response reached refresh callback')
+ if(edit==='percent'&&mode!=='refresh-throw')assert.ok(nodes(render()).some(n=>typeof n.props?.children==='string'&&n.props.children.includes('尚未保存')))
 
 }
-;(async()=>{await scenario('progress','success');await scenario('progress','success','percent');await scenario('progress','success','aba');await scenario('progress','failure','different');await scenario('progress','unmount');console.log('Progress flight: 5 synthetic scenarios passed')})().catch(e=>{console.error(e);process.exitCode=1})
+;(async()=>{await scenario('progress','success');await scenario('progress','success','percent');await scenario('progress','success','aba');await scenario('progress','failure','different');await scenario('progress','unmount');await scenario('progress','refresh-throw');await scenario('progress','refresh-throw','different');console.log('Progress flight: 7 synthetic scenarios passed')})().catch(e=>{console.error(e);process.exitCode=1})

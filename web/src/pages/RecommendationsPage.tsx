@@ -229,16 +229,17 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
       try {
         const r = await api.patch(casePath(`/recommendations/${rec.id}`, caseId), { progressPct: pct, note })
         if (!current()) return undefined
+        props.onChanged()
+        if (!current()) return undefined
         const unchanged = edits.current.note === revision
         if (unchanged) setNote('')
-        props.onChanged()
-        setProgressNotice(unchanged ? `已保存本次提交的进度 ${pct}%。` : `已保存本次提交的进度 ${pct}%；后来编辑的内容尚未保存。`)
+        setProgressNotice(unchanged ? `进度 ${pct}% 的保存请求已返回；已请求重载，尚未确认读回。` : `进度 ${pct}% 的保存请求已返回；已请求重载，尚未确认读回；后来编辑的内容尚未保存。`)
         setProgressState('idle'); progressLock.current = false
         return r
       } catch (e) {
         if (current()) {
           setProgressState('unknown')
-          setProgressNotice('保存结果未知，输入已保留；请先复制草稿并核对当前记录及审计，再决定后续操作。本页不会自动重试，也不表示请求未提交。')
+          setProgressNotice('保存结果未知，输入已保留；请先复制草稿并核对当前记录及审计，再决定后续操作。当前没有原地解锁入口；本页不会自动重试，也不表示请求未提交。')
         }
         throw e
       }
