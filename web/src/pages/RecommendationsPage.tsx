@@ -74,7 +74,11 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
   const all = (board.data?.columns ?? []).flatMap((c) => c.items)
   const sel = all.find((r) => r.id === selId)
   const missingReference = requestedId && selId === requestedId && board.data && !board.error && !sel
-  const refresh = () => { if (current()) { board.reload(); audit.reload() } }
+  // Invalidate captured progress callbacks before React renders loading state.
+  const boardActionEpoch = useRef(0)
+  const renderedBoardEpoch = boardActionEpoch.current
+  const readCurrent = () => current() && boardActionEpoch.current === renderedBoardEpoch
+  const refresh = () => { if (current()) { boardActionEpoch.current++; board.reload(); audit.reload() } }
   const clearPending = (expected: typeof pending) => {
     if (current()) setPending(value => value === expected ? null : value)
   }
@@ -157,7 +161,7 @@ function RecommendationsCasePage({ caseId, requestedId }: { caseId: string; requ
 
       <div className="grid w7-columns">
         {sel ? (
-          <Detail key={sel.id} readReady={!board.loading && !board.error && !!board.data} caseId={caseId} rec={sel} allowed={board.data?.allowed[sel.status] ?? []} pending={pending?.id === sel.id ? pending.to : null}
+          <Detail key={sel.id} readCurrent={readCurrent} readReady={!board.loading && !board.error && !!board.data} caseId={caseId} rec={sel} allowed={board.data?.allowed[sel.status] ?? []} pending={pending?.id === sel.id ? pending.to : null}
             onTransition={transition} onChanged={refresh} onCancel={() => clearPending(pending)} />
         ) : <Panel title="建议详情"><div className="empty">{missingReference ? <span role="status">当前案件看板未找到指定安全建议 {requestedId}。未自动选择其他建议；请核对引用或手动选择卡片。此处只查看当前记录，不证明历史版本已核验。</span> : '选择一张卡片'}</div></Panel>}
         <ConsultationPanel caseId={caseId} renderMatrix={(rounds) => <ConsultationTable rounds={rounds} />} onChanged={() => audit.reload()} />
@@ -204,7 +208,7 @@ function Card({ rec, selected, onClick }: { rec: Recommendation; selected: boole
   )
 }
 
-function Detail(props: { readReady: boolean; caseId: string; rec: Recommendation; allowed: RecStatus[]; pending: RecStatus | null; onTransition: (id: string, to: RecStatus, note?: string) => Promise<unknown>; onChanged: () => void; onCancel: () => void }) {
+function Detail(props: { readCurrent: () => boolean; readReady: boolean; caseId: string; rec: Recommendation; allowed: RecStatus[]; pending: RecStatus | null; onTransition: (id: string, to: RecStatus, note?: string) => Promise<unknown>; onChanged: () => void; onCancel: () => void }) {
   const { caseId, rec, allowed } = props
   const { run, current } = useScopedActions()
   const edits = useRef({ response: 0, note: 0 })
@@ -232,7 +236,7 @@ function Detail(props: { readReady: boolean; caseId: string; rec: Recommendation
   const [progressNotice, setProgressNotice] = useState('')
   const latestProgress = useRef({ source: progressSource, ready: props.readReady, status: rec.status })
   latestProgress.current = { source: progressSource, ready: props.readReady, status: rec.status }
-  const observedCurrent = () => current() && latestProgress.current.ready &&
+  const observedCurrent = () => current() && props.readCurrent() && latestProgress.current.ready &&
     latestProgress.current.source === progressSource && latestProgress.current.status === 'Responded'
   const adoptProgress = () => {
     if (!observedCurrent() || progressLock.current || progressState !== 'idle') return
