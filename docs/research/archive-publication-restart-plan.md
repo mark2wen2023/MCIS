@@ -44,7 +44,7 @@ These are conservative proposed classifications, not automatic repair instructio
 | Both staging and final present | ambiguous ownership/publication; hold, retain both; do not choose by timestamp |
 | Committed rows but missing/incomplete/unexpected files | hold/inconsistent; no partial success, no reconstruction from guessed bytes |
 | Final directory present without matching committed marker | unknown/orphan observation; do not delete or adopt, even if package digest matches |
-| Ready marker present but inventory/identity differs | unknown, not success; escalation under established policy, no silent repair |
+| Ready marker present but publication binding/identity differs without a validated subsequent business revision | unknown, not success; escalation under established policy, no silent repair. Legitimate later changes are classified separately below. |
 | Response lost after verified final ready commit | proposed receipt reconciliation could return the recorded result under unchanged authorization, not execute the import again; not supported by current research ready capability |
 
 ## Reuse, gaps and implementation gates
@@ -62,3 +62,42 @@ Next bounded work after design review: extend the isolated expected-layout contr
 ## Review performed
 
 Read-only source comparison, mapping review and document diff/whitespace check only. No runtime tests or recovery executed. All statements about failure windows are static inferences, not reproduced failures. Only this document is delivered; no credentials, databases, media or private case material. Production protections and existing restoration logic unchanged; no merge/deploy.
+
+
+## Review clarification: publication baseline versus a living case
+
+Added after independent static review of parent `3b273bee4ba486f1100a91c08a53e0257d530957`. Still design only. The first-publication manifest describes an immutable **historical baseline**, not an eternal expected image of the entire case directory/database. Preserve that manifest and its operation/commit binding; never rewrite it to make later bytes appear originally published.
+
+Normal business can change the case: `case_metadata/router.py:update_metadata` writes CaseRow and an audit event; `working_records_archive/router.py:content` even appends a custody Access event during an authorized read. Evidence intake adds files/rows; subsequent package export can retain another original-package artifact. Consequently, ready must not require all current rows/files to remain equal to the first-publication snapshot. Conversely, a change cannot be accepted merely because it occurred after ready. Distinguish immutable historical members, mutable/current records, and append-only history with explicit existing version/audit linkage. The complete classification of file writers and a trustworthy current revision/checkpoint protocol are unresolved; do not enable the proposed ready state until this is specified. No present audit entry alone is asserted to prove file authenticity.
+
+### Ownership must span the handoff
+
+A single-writer claim must cover staging, final-byte verification, the ready transaction, AND transfer to ordinary entrypoints. Releasing ownership between verification and ready leaves a race; releasing after ready but before normal writers inherit the same exclusion discipline also leaves a race. A proposed durable generation/fencing token must bind operation, database and storage identity; every writer must check it or be otherwise excluded. The mechanism, lease/owner-death rules and storage durability are not implemented or selected here. A PID, age, process-local WRITE_LOCK or fixture marker is insufficient proof. An old owner must not resume after ownership changes. Multiple service processes and worker descendants must be included before calling this exclusive.
+
+### Additional state distinctions
+
+| State/evidence | Classification / constraint |
+|---|---|
+| Claim commit unconfirmed | unknown claim; inspect exact identity, do not create a replacement claim or retry |
+| Confirmed claim, preparation incomplete | preparing/held; partial files are not a completed inventory; no success or automatic cleanup |
+| Prepared manifest exists, writer closure or durable preparation not proven | prepared-unverified/held, even if hashes currently match |
+| DB held commit confirmed, publication pending | pending publication, not business-ready; any future continuation must satisfy all conditions below |
+| Final verification complete but ready commit unconfirmed | ready outcome unknown; read-only reconciliation only, no import or publication replay |
+| Ready commit confirmed, no later business revisions | initial publication baseline may be compared under ownership; ready does not replace authorization |
+| Ready followed by linked, authorized business changes | active modified case; retain baseline, inspect current version/history separately; do not classify expected changes as failed initial publication |
+| Claimed later change lacks required version/history binding | unknown current consistency; no assumption that ready makes it legitimate |
+| Competing owner, stale fencing generation or conflicting operation for same case | ownership conflict/hold; timestamps do not choose a winner; no overwrite or automatic takeover |
+| Genuine old normal DB with explicit migration inventory/identity | retain established normal policy path; do not invent historical ready evidence |
+| Restored/copied old DB missing or conflicting external identity or migration state | unknown migration/recovery provenance; neither new claim adoption nor automatic legacy fallback. Backup of DB and external identity must itself have a defined recovery contract |
+
+### Three separate gates; no implicit permission to resume
+
+1. **Business authorization**: existing actor/case/source permissions still apply at the time of every action. A protocol marker or operator approval does not grant these permissions. Production trusted identity remains unresolved.
+2. **Protocol preconditions**: matching operation/source/manifest/database identities, unambiguous commit observation, exclusive current ownership, supported layout and all-entry gating. Passing authorization does not establish these facts.
+3. **Operational approval**: any future recovery mutation needs an explicit, auditable operational procedure and authorized approval for that exact operation/action. Manual approval cannot waive unknown commit, missing bytes, ownership or business authorization. Current task authorizes documentation only.
+
+Current implementation has NO supported interrupted-publication continuation API: `commit_observer.py:restore_once` permits only an unattempted claim; subsequent attempts are inspect-only, and readiness wrappers never promote ready. Thus all interrupted operations remain read-only/held today.
+
+A future narrowly bounded continuation could be considered only for a confirmed held DB transaction and a fully bound prepared inventory, with target-state evidence, exclusive fenced ownership, current authorization and explicit approval. It would complete the missing publication/ready transition, not reconstruct business rows or reactivate historical receipts. Unknown commit, conflicting paths/owners, missing immutable bytes or incomplete history prohibit continuation. Returning a recorded result after a proven commit is reconciliation, not re-execution. The persistence of continuation intent/result, allowable idempotent substeps and crash boundaries need a separately reviewed contract before implementation; no automatic retry/delete is proposed.
+
+No runtime tests or fault injection accompanied these clarifications. No change to product logic, migration, permissions or archive protection.
