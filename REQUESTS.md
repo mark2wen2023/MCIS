@@ -647,3 +647,9 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## COLREG-REPORT-LINK (2026-11-18)
+Existing report links carry check/run; current page ignored both. Bind query to
+session and initial selection; explicit run lookup may not fall back to current
+analysis. Missing/mismatched target is shown, not replaced. No API/permission or
+historical integrity claims; browser acceptance pending.

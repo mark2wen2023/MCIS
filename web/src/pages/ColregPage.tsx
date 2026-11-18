@@ -25,12 +25,17 @@ const REVIEW_ERR: Record<string, string> = {
 }
 
 export function ColregPage() {
+  const [params] = useSearchParams()
+  return <ColregSession key={JSON.stringify([params.get('case'), params.get('check'), params.get('run')])} />
+}
+
+function ColregSession() {
   const { run, show } = useToast()
   const [params, setParams] = useSearchParams()
   const caseId = params.get('case') || CASE_ID
-  const [sel, setSel] = useState<string | null>(null)
+  const [sel, setSel] = useState<string | null>(params.get('check') || null)
   const [evaluating, setEvaluating] = useState(false)
-  const [viewRunId, setViewRunId] = useState<string | null>(null)
+  const [viewRunId, setViewRunId] = useState<string | null>(params.get('run') || null)
   const [compare, setCompare] = useState<ColregCompare | null>(null)
   const [draft, setDraft] = useState<DraftDisplay | null>(null)
   const [draftNotice, setDraftNotice] = useState<string | null>(null)
@@ -39,15 +44,15 @@ export function ColregPage() {
   const caseRes = useLoad(() => api.get<CaseDef>(`/cases/${caseId}`), [caseId])
   const vessels = useLoad(() => api.get<Vessel[]>(`/cases/${caseId}/vessels`), [caseId])
   const runs = useLoad(() => api.get<ColregRunList>(`/cases/${caseId}/colreg/runs`), [caseId])
-  const runView = useLoad(() => api.get<ColregRunView>(`/cases/${caseId}/colreg/runs/${viewRunId ?? 'active'}`), [caseId, viewRunId])
+  const runView = useLoad(() => api.get<ColregRunView>(`/cases/${caseId}/colreg/runs/${encodeURIComponent(viewRunId ?? 'active')}`), [caseId, viewRunId])
   const current = useLoad(() => api.get<ColregAnalysis>(`/cases/${caseId}/colreg`), [caseId])
   const evidence = useLoad(() => api.get<EvidenceItem[]>(`/cases/${caseId}/evidence`), [caseId])
   const audit = useLoad(() => api.get<AuditEvent[]>(`/cases/${caseId}/audit?action=colreg.review&order=asc&limit=500`), [caseId])
   const timeline = useLoad(() => api.get<{ events: TimelineEvent[] }>(`/cases/${caseId}/timeline`), [caseId])
   const cpa = useLoad(() => api.get<CpaSeries>(`/cases/${caseId}/cpa?stepSec=10`), [caseId])
 
-  // 版本接口不可用（旧服务）时退回当前文档
-  const analysis = runView.data?.analysis ?? current.data
+  // 仅未指定版本时兼容旧服务；明确版本不得静默回退当前文档。
+  const analysis = viewRunId ? runView.data?.analysis : runView.data?.analysis ?? current.data
 
   const switcher = useMemo(() => {
     const list = cases.data ?? []
@@ -134,7 +139,14 @@ export function ColregPage() {
     })()
   }
 
-  const err = caseRes.error || (current.error && runView.error) || vessels.error
+  const citation = params.has('check') || params.has('run')
+  const targetUnavailable = viewRunId && (runView.error || (runView.data && (runView.data.runId !== viewRunId || runView.data.analysis.caseId !== caseId)))
+  const missingCheck = analysis && sel && !analysis.checks.some(c => c.checkId === sel)
+  if (targetUnavailable || missingCheck) return <div role="alert" className="p6-card">
+    <p>{targetUnavailable ? '指定核查版本暂不可读取或返回版本不符。' : '指定核查项不在已读取的版本中。'}未自动改选当前版本或其他核查项。</p>
+    <button type="button" onClick={() => setParams({ case: caseId })}>离开引用定位，查看本案当前核查</button>
+  </div>
+  const err = caseRes.error || (viewRunId ? runView.error : current.error && runView.error) || vessels.error
   if (!caseRes.data || !analysis) {
     return (
       <div>
@@ -145,6 +157,8 @@ export function ColregPage() {
   }
 
   return (
+    <>
+    {citation && <p role="note">引用定位仅打开本案登记的版本与核查项，不证明生成报告时的内容或原始证据已核验。未带版本的旧引用仅打开当前台账。</p>}
     <ColregView
       caseDef={caseRes.data}
       vessels={vessels.data ?? []}
@@ -172,5 +186,6 @@ export function ColregPage() {
       draft={draft}
       draftNotice={draftNotice}
     />
+    </>
   )
 }
