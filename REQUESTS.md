@@ -663,3 +663,8 @@ Capture frontend input revision/request when validating; editing clears old resu
 
 ## GISIS scoped error and notice feedback — pending independent review
 Reproduced stale ordinary error and unrelated-notice removal; scope GISIS feedback and compare input/request before ordinary error display. 403 routes to existing denial handler; no permission changes. Developer 3 new synthetic flows, adjacent tests/build pass. See tests_acceptance/gisis-stale-validation/FEEDBACK-SCOPE-DEVELOPER.md and logs/gisis-feedback-scope-impl-hashes-frozen.txt; browser unverified.
+
+
+## UI reports group three — pending acceptance
+
+Combined 0a6d0bd and 16f159b on main 94d5e38; functional regions combined without conflict; both document tails retained. Developer four selected synthetic scripts and build passed. PR104 not integrated; browser/visual, real backend and production permissions unverified. See tests_acceptance/ui-reports-group-three/DEVELOPER.md and logs/ui-reports-group-three-impl-hashes-frozen.txt. Do not merge or deploy.
