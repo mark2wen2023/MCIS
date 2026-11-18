@@ -140,9 +140,10 @@ export function ReviewDialog({ action, target, busy, error, onCancel, onSubmit }
   const problem = reviewProblem(action, reason, target, textZh, textEn)
   return <div className="rpt-modal-backdrop"><form className="rpt-modal" role="dialog" aria-modal="true" aria-labelledby="rpt-review-title" onSubmit={(e) => { e.preventDefault(); if (!problem && !busy) void onSubmit(reviewPayload(action, target, reason, textZh, textEn)) }}>
     <h2 id="rpt-review-title">{ACTION_LABEL[action]} · {target.title}</h2>
-    {action === 'modify' && <div className="rpt-edit-pair"><label>中文<textarea className="input" value={textZh} rows={7} onChange={(e) => setTextZh(e.target.value)} /></label><label>English<textarea className="input" lang="en" value={textEn} rows={7} onChange={(e) => setTextEn(e.target.value)} /></label></div>}
-    {action !== 'confirm' ? <label className="rpt-reason-label">理由（必填）<textarea autoFocus className="input" rows={4} required value={reason} onChange={(e) => setReason(e.target.value)} placeholder="填写调查依据和理由，全文写入审计" /></label> : <p>确认此内容，保留原生成文本并记录操作人和时间。</p>}
+    {action === 'modify' && <div className="rpt-edit-pair"><label>中文<textarea readOnly={busy} className="input" value={textZh} rows={7} onChange={(e) => { if (!busy) setTextZh(e.target.value) }} /></label><label>English<textarea readOnly={busy} className="input" lang="en" value={textEn} rows={7} onChange={(e) => { if (!busy) setTextEn(e.target.value) }} /></label></div>}
+    {action !== 'confirm' ? <label className="rpt-reason-label">理由（必填）<textarea readOnly={busy} autoFocus className="input" rows={4} required value={reason} onChange={(e) => { if (!busy) setReason(e.target.value) }} placeholder="填写调查依据和理由，全文写入审计" /></label> : <p>确认此内容，保留原生成文本并记录操作人和时间。</p>}
     {problem && action === 'modify' && reason && <p className="rpt-error" role="alert">{problem}</p>}
+    {busy && <p role="status">正在保存本次复核，正文和理由暂为只读；请等待结果后再修改。</p>}
     {error && <p className="rpt-error" role="alert">{error}</p>}
     <div className="rpt-toolbar rpt-dialog-actions"><button className="btn" type="button" disabled={busy} onClick={onCancel}>取消</button><button className="btn btn-primary" type="submit" disabled={busy || !!problem}>{busy ? '保存中…' : `保存${ACTION_LABEL[action]}`}</button></div>
   </form></div>

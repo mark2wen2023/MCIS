@@ -647,3 +647,7 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+
+## Report review pending input — pending independent review
+Prevent editing text/reason while existing saving state is true; retain on failure, explain waiting. Developer modify/dismiss synthetic 14 assertions and build passed; browser unverified. See tests_acceptance/report-review-pending/DEVELOPER.md and logs/report-review-pending-impl-hashes-frozen.txt. No policy or report content changes.
