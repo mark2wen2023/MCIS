@@ -703,3 +703,8 @@ Make conditional unknown-result guidance visible even before any draft/notice/co
 Existing report analysis links specify scenario; AnalysisView silently displayed
 baseline for absent scenario. Show missing target with explicit baseline action;
 valid/default views unchanged. No source/version verification or permission change.
+
+
+## UI first-group integration — pending acceptance
+
+Combined case status, toast, interview link, COLREG and missing-analysis candidates without functional edits; all document append histories retained. Developer selected 12 synthetic scripts and build passed; browser, visual, real-data and independent combined acceptance remain unverified. See tests_acceptance/ui-navigation-group-one/DEVELOPER.md. Do not merge or deploy.
