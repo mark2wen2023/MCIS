@@ -24,7 +24,7 @@ test('unchanged task query displays succeeded run',async()=>{
 });
 
 test('task query late transport error leaves current status',async()=>{
- const s=setup();vm.runInContext("el('task-status').textContent='current context'",s.ctx);const p=s.elements['check-task'].onclick();s.elements.case.value='OTHER';s.elements.case.events.input();s.fail();await p;assert.equal(s.elements['task-status'].textContent,'current context');assert.equal(s.requests(),1);
+ const s=setup();vm.runInContext("el('task-status').textContent='current context'",s.ctx);const p=s.elements['check-task'].onclick();s.elements.case.value='OTHER';s.elements.case.events.input();s.elements['task-status'].textContent='current context';s.fail();await p;assert.equal(s.elements['task-status'].textContent,'current context');assert.equal(s.requests(),1);
 });
 test('task query current transport error is explicit without retry',async()=>{
  const s=setup(),p=s.elements['check-task'].onclick();s.fail();await p;assert.match(s.elements['task-status'].textContent,/不得据此重试/);assert.equal(s.elements.run.value,'OCR-fixture');assert.equal(s.requests(),1);

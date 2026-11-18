@@ -781,3 +781,5 @@ Synthetic red1 reproduced new input lost on late load render. Track edits and se
 - Validate media render containers before state replacement: 11 new + 20 adjacent synthetic checks and 2 real ASGI/page-JS normal workflows passed (developer; DOM double). See tests_acceptance/media-render-response/DEVELOPER-VERIFICATION.md.
 
 - Image saved-response continuity now checks unchanged initial content and all prior reviews before success; 4 new + 7 adjacent synthetic and 2 actual ASGI/page-JS normal nodes passed (developer). See tests_acceptance/image-save-response-contract/DEVELOPER-VERIFICATION.md.
+
+- Programmatic new-task IDs reuse summary/cache invalidation; 2 new + 20 adjacent developer synthetic checks pass after correcting an independently reproduced stale test fixture. See tests_acceptance/media-new-task-summary/DEVELOPER-VERIFICATION.md.
