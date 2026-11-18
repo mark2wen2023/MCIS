@@ -505,3 +505,8 @@ Combined 076eec1 / 2064675 / 81a308c on 94d5e38, preserving all group document a
 ## UI + PR104 — pending combined acceptance
 
 Combined exact 139f188 and b4df823; only document append conflicts, both preserved. Developer 19 UI scripts, new synthetic SSR (3 cases), pure formatting (6 cases) and build passed; counts not cumulative. No real material, paused/refusal probes, HFACS or browser run. See tests_acceptance/ui-pr104/DEVELOPER.md; freeze logs/ui-pr104-impl-hashes-frozen.txt. Real backend/production permissions/visual/independent acceptance pending. Do not merge or deploy.
+
+
+## Synthetic report review service-to-parent replay — pending acceptance
+
+On 9cc3ece, one new ordinary TestClient PATCH/GET test uses schema-valid synthetic stored report, no seed/generation. Actual response replayed into ReportSession and ReportView SSR; 1 developer pytest node passed. Fixture setup is not generation; replay is not browser/live connection; role headers are not production authentication. See tests_acceptance/report-review-service-ui/DEVELOPER.md and logs/report-review-service-ui-impl-hashes-frozen.txt. No product/permission changes; no merge/deploy.
