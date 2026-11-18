@@ -485,3 +485,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | seed lazy item lookup | 待测 | fabricated helper tests/static wrapper checks pass; actual startup and report/analysis isolation unverified | logs/seed-lazy-item-lookup-frozen.txt |
 
 | instance source-read policy | 待测 | synthetic helper and AST wiring checks pass; actual app/HTTP/report output untested, startup/archive hold | logs/source-read-policy-frozen.txt |
+
+| source policy Settings order | 待测 | synthetic constructor and AST checks pass; no app imports, seed default remains True | logs/source-policy-settings-order-frozen.txt |

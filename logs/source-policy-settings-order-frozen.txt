@@ -1,0 +1,2 @@
+16528150a2ebf265ae1740f0e6958fb578560f9003e0acfa32798d264fdbd4b0  service/mcis_service/config.py
+6a5453c661593b0f3879bff491f8c4ea3ea28dc9f59f836dfac47529208cf944  tests_acceptance/source-read-policy/test_settings_constructor.py
