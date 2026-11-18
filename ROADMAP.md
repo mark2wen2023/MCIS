@@ -399,3 +399,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTTRACE | 测试增量独审通过 | 2026-11-14：独立无.git副本10过；临时断开taskId触发5红、伪认证flag触发1红，恢复10过；冻结2/2，运行文件无差异。见 DEFECTS/EXPERTTRACE.md。真实模型0/HOLD。 |
 
 | COLREG-REPORT-LINK | 2026-11-18 | 待测：报告check/run链接接通，指定版本不静默回退；9合成页面场景/12断言、30导航断言及构建开发通过，浏览器/历史完整性未验 | tests_acceptance/colreg-report-link/DEVELOPER.md；logs/colreg-report-link-impl-hashes-frozen.txt |
+
+| COLREG version transition | 2026-11-18 | 待测：手动切版重建读取会话，active别名按当前处理；5合成生命周期断言/12相邻断言与构建开发通过；浏览器未验 | tests_acceptance/colreg-report-link/TRANSITION-DEVELOPER.md；logs/colreg-version-transition-impl-hashes-frozen.txt |

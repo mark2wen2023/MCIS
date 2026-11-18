@@ -653,3 +653,8 @@ Existing report links carry check/run; current page ignored both. Bind query to
 session and initial selection; explicit run lookup may not fall back to current
 analysis. Missing/mismatched target is shown, not replaced. No API/permission or
 historical integrity claims; browser acceptance pending.
+
+## COLREG-REPORT-LINK loading follow-up (2026-11-18)
+Actual useLoad synthetic lifecycle reproduces stale A misreported as mismatched B
+on manual version selection. Route version selection through keyed query session;
+normalize active endpoint alias to current semantics. No loader/global/API changes.

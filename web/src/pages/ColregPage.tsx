@@ -35,7 +35,7 @@ function ColregSession() {
   const caseId = params.get('case') || CASE_ID
   const [sel, setSel] = useState<string | null>(params.get('check') || null)
   const [evaluating, setEvaluating] = useState(false)
-  const [viewRunId, setViewRunId] = useState<string | null>(params.get('run') || null)
+  const [viewRunId, setViewRunId] = useState<string | null>(params.get('run') === 'active' ? null : params.get('run') || null)
   const [compare, setCompare] = useState<ColregCompare | null>(null)
   const [draft, setDraft] = useState<DraftDisplay | null>(null)
   const [draftNotice, setDraftNotice] = useState<string | null>(null)
@@ -158,7 +158,7 @@ function ColregSession() {
 
   return (
     <>
-    {citation && <p role="note">引用定位仅打开本案登记的版本与核查项，不证明生成报告时的内容或原始证据已核验。未带版本的旧引用仅打开当前台账。</p>}
+    {citation && <p role="note">引用定位仅打开本案登记的版本与核查项，不证明生成报告时的内容或原始证据已核验。未带版本或使用 active 别名的引用仅打开当前台账。</p>}
     <ColregView
       caseDef={caseRes.data}
       vessels={vessels.data ?? []}
@@ -174,7 +174,7 @@ function ColregSession() {
       onSwitchCase={(id) => { setSel(null); setViewRunId(null); setCompare(null); setDraft(null); setDraftNotice(null); setParams(id === CASE_ID ? {} : { case: id }); show(`已切换到 ${id}`) }}
       runs={runs.data}
       runView={runView.data}
-      onViewRun={(id) => { setSel(null); setViewRunId(id) }}
+      onViewRun={(id) => setParams({ case: caseId, run: id })}
       onActivateRun={onActivateRun}
       compare={compare}
       onCompare={onCompare}
