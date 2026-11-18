@@ -1,0 +1,6 @@
+# Recommendation transition note: developer synthetic regression
+Base main 94d5e38c926fda232bb987b60fa9145e4bcf01a7. Detail chained unconditional setNote after onTransition; actual useToast.run catches errors and returns undefined. Baseline synthetic transport failure cleared unsaved explanation. Fixed only this callback: undefined preserves input; successful result clears only input still equal to submitted text, preserving different text entered while waiting.
+
+Commands from web: `node tests/recommendation-transition-note.test.cjs` (4 scenarios passed: success/failure, each with/without newer text); `npm run build` passed, existing large chunk warning. Test evaluates actual Detail and actual useToast.run with synthetic React hooks/deferred promises; rereads current rendered input. Initial incomplete synthetic fixture was corrected to include history before baseline reproduction.
+
+No HTTP, browser, permissions, paused/refusal probes, real data or models. No backend cancellation or safe retry claim. Does not solve edit-away-and-back-to-identical-text detection, other form callbacks or concurrent backend operations. Browser/visual/independent verification outstanding. Main-based independent candidate, not an integration of PR67 or missing-reference candidate; same file overlaps require later review.

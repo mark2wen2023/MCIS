@@ -1,0 +1,6 @@
+# Progress percentage and explanation are one submitted draft
+Base fe064bc98382326714057f6f441c780bcb9db05d. Existing saveProgress sends {progressPct, note} together. Synthetic case submits 25% with explanation, edits percentage to 50% while awaiting completion, resolves old success. Baseline cleared explanation despite unsaved 50%. Added assertion failed before fix.
+
+The range input now increments the same existing edit counter as note changes. Old success preserves both displayed 50% and explanation, while submitted payload is asserted still 25%. No automatic resubmission, request mutation, permission/API/backend changes. Conservatively, percentage editing also prevents a pending status-transition completion from clearing the shared explanation. No claim of detecting user's semantic intent or solving concurrent backend saves.
+
+Developer: `node tests/recommendation-form-save.test.cjs` 10 synthetic scenarios passed; `node tests/recommendation-transition-note.test.cjs` 5 passed; `npm run build` passed, existing chunk warning. These repeat earlier scenarios; do not add them to prior totals as unique coverage. Actual Detail/useToast with synthetic hooks/API promises, rereading current input. No HTTP/browser/visual/independent acceptance, real data, models or paused/refusal tests. Old freezes remain historical. Draft remains page memory only.
