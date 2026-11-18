@@ -489,3 +489,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 - List/source late errors now use success context guards; 8 new + 15 adjacent developer synthetic checks passed. See tests_acceptance/media-list-errors/DEVELOPER-VERIFICATION.md.
 
 - Validate media render containers before state replacement: 11 new + 20 adjacent synthetic checks and 2 real ASGI/page-JS normal workflows passed (developer; DOM double). See tests_acceptance/media-render-response/DEVELOPER-VERIFICATION.md.
+
+- Image saved-response continuity now checks unchanged initial content and all prior reviews before success; 4 new + 7 adjacent synthetic and 2 actual ASGI/page-JS normal nodes passed (developer). See tests_acceptance/image-save-response-contract/DEVELOPER-VERIFICATION.md.
