@@ -453,3 +453,4 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 | Image saved-draft marker | 待独验 | 2026-11-18：仅图片页逐行清除成功保存后的误报，其他行及保存期间输入保留；合成红1→绿3，非浏览器/真实服务验收，权限及归档保护不变。 |
 | Audio pending reread | 待独验 | 2026-11-18：读取等待期间新草稿保留，合成红1→绿2，非浏览器/真实后端验收。 |
+| Audio save context | 待独验 | 2026-11-18：切案/运行后迟到保存响应不更新旧状态，原提交可能成功须核查；合成红1→新绿4，相邻2/3通过，非浏览器或真实后端验收。 |

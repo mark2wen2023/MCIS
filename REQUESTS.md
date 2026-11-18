@@ -739,3 +739,6 @@ On media demo3507b9f, ordinary synthetic test reproduced dirty remaining true af
 
 ## Audio reread pending edits (2026-11-18)
 Confirmed synthetic old-response render lost edits typed during reread. Capture edit version and selected case/run; retain input on change, no retry. New ordinary DOM/HTTP tests red1→green2; tests_acceptance/audio-read-race/DEVELOPER-VERIFICATION.md. No permissions/backend change.
+
+## Audio save response context (2026-11-18)
+Synthetic late success after changing case updated old page state. Capture case/run and selection epoch, discard late result after change with explicit possibly-saved/verify message; no retry or permission change. New4 plus adjacent2/3 synthetic pass, not browser/backend acceptance. See tests_acceptance/audio-save-context/DEVELOPER-VERIFICATION.md.
