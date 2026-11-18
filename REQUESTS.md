@@ -795,3 +795,5 @@ Synthetic red1 reproduced new input lost on late load render. Track edits and se
 - image-task-waiting：已授权在图片任务查询发起时替换旧JSON为等待反馈，不改查询次数、代次或最新响应优先，不新增轮询/重试/任务执行；新冻结 logs/image-task-waiting-impl-hashes-frozen.txt，旧清单仅历史版本。
 
 - image-task-waiting-edit：授权补齐新查询先完成的时序证据及等待中草稿input反馈；确认两项提示滞留后最小标记修复，不取消请求/不自动重试。旧冻结为历史，新清单 logs/image-task-waiting-edit-impl-hashes-frozen.txt。
+
+- image-save-feedback：授权修复旧保存成功反馈残留及通信结果未知提示，按已载入案/运行/行保留上次确认、当前草稿和等待/未知；既有响应校验与手动操作规则不变，不新增自动重试或未知锁。新冻结 logs/image-save-feedback-impl-hashes-frozen.txt，旧清单仅历史。

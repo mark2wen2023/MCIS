@@ -505,3 +505,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 - 待测：image-task-waiting，基于fe92743；11项新增纯Node合成开发测试通过，正常/unknown/失败/迟到/切上下文；浏览器、HTTP、任务执行未验，后端启动/归档仍暂停。见 tests_acceptance/image-task-waiting/DEVELOPER.md。
 
 - 待测：image-task-waiting-edit，基于fa9e118；单文件15项纯Node开发合成通过（新增4项，不累计历史），dirty保留；浏览器/HTTP未验，启动/归档暂停不变。
+
+- 待测：image-save-feedback，基于c76afd3；新增5项、另跑相邻26项纯Node开发合成均通过，不称全量；浏览器/HTTP未验，后端启动/归档仍暂停。见 tests_acceptance/image-save-feedback/DEVELOPER.md。
