@@ -667,3 +667,8 @@ Reuse existing edit counter so changing away and back does not authorize clearin
 
 ## Recommendation progress draft group — pending independent review
 Percentage edits invalidate clearing of the shared submitted explanation. Proven synthetic 25% request / 50% new input case; 10 form and 5 transition developer scenarios/build pass. See tests_acceptance/recommendation-transition-note/PROGRESS-GROUP-DEVELOPER.md and logs/recommendation-progress-group-impl-hashes-frozen.txt. Browser unverified.
+
+
+## UI recommendations group two — pending acceptance
+
+Combined 8d4c86a and 92265a9 on main 94d5e38; only document append conflicts, both histories retained. Three reviewed synthetic scripts and build passed on combined code (developer evidence). Browser/visual, cross-page/backend and production permissions unverified. See tests_acceptance/ui-recommendations-group-two/DEVELOPER.md and logs/ui-recommendations-group-two-impl-hashes-frozen.txt. Do not merge or deploy.

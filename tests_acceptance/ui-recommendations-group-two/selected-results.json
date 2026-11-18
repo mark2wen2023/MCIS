@@ -1,0 +1,26 @@
+[
+  {
+    "command": [
+      "node",
+      "tests/recommendation-missing-citation.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "Recommendation citation: 6 synthetic states / 10 assertions passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "tests/recommendation-transition-note.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "Recommendation note: 5 synthetic completion scenarios passed\n"
+  },
+  {
+    "command": [
+      "node",
+      "tests/recommendation-form-save.test.cjs"
+    ],
+    "exit_code": 0,
+    "output": "Recommendation form saves: 10 synthetic scenarios passed\n"
+  }
+]
