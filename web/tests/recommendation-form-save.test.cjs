@@ -26,18 +26,22 @@ async function scenario(kind,mode,edit='none'){
  const button=nodes(render()).find(n=>n.type==='button'&&n.props.children===(kind==='reply'?'登记回复':'保存进度'))
  const pending=button.props.onClick()
  assert.equal(sent.length,1)
+ if(kind==='progress')assert.equal(sent[0].body.progressPct,25)
  assert.equal(kind==='reply'?sent[0].body.text:sent[0].body.note,'submitted text')
  if(edit==='different')change(field,'new draft')
  if(edit==='aba'){change(field,'intermediate');change(field,'submitted text')}
+ if(edit==='percent')nodes(render()).find(n=>n.type==='input'&&n.props.type==='range').props.onChange({target:{value:'50'}})
  if(edit==='party')change('回复方','new party')
  if(mode==='failure')reject(new Error('synthetic transport unavailable'));else resolve(rec)
  await pending
  const expected=edit==='different'?'new draft':edit!=='none'||mode==='failure'?'submitted text':''
  assert.equal(input(render(),field).props.value,expected,'inspect current rendered input')
+ if(edit==='percent')assert.equal(nodes(render()).find(n=>n.type==='input'&&n.props.type==='range').props.value,50)
  assert.equal(notices.at(-1)[1],mode==='failure'?'err':'ok')
 }
 ;(async()=>{
  for(const kind of ['reply','progress'].filter(k=>!process.argv[2]||process.argv[2]===k)){await scenario(kind,'success','different');await scenario(kind,'success');await scenario(kind,'failure');await scenario(kind,'success','aba')}
  if(!process.argv[2]||process.argv[2]==='reply')await scenario('reply','success','party')
- console.log('Recommendation form saves: 9 synthetic scenarios passed')
+ if(!process.argv[2]||process.argv[2]==='progress')await scenario('progress','success','percent')
+ console.log('Recommendation form saves: 10 synthetic scenarios passed')
 })().catch(e=>{console.error(e);process.exitCode=1})

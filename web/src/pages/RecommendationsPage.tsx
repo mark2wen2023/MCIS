@@ -217,7 +217,7 @@ function Detail(props: { caseId: string; rec: Recommendation; allowed: RecStatus
         <div className="p6-card" style={{ marginTop: 8 }}>
           <div className="row-actions">
             <span className="p6-dim">落实进度</span>
-            <input type="range" min={0} max={100} step={5} value={pct} onChange={(e) => setPct(Number(e.target.value))} style={{ flex: 1 }} />
+            <input type="range" min={0} max={100} step={5} value={pct} onChange={(e) => { edits.current.note++; setPct(Number(e.target.value)) }} style={{ flex: 1 }} />
             <b className="mono">{pct}%</b>
             <button className="btn btn-sm" disabled={pct === rec.progressPct} onClick={saveProgress}>保存进度</button>
           </div>

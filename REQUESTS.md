@@ -659,3 +659,7 @@ Preserve input edited during reply/progress requests using local edit counters; 
 
 ## Transition note ABA retention — pending independent review
 Reuse existing edit counter so changing away and back does not authorize clearing. Five transition and nine adjacent developer synthetic scenarios/build passed. See tests_acceptance/recommendation-transition-note/ABA-DEVELOPER.md and logs/recommendation-transition-aba-impl-hashes-frozen.txt. Browser unverified.
+
+
+## Recommendation progress draft group — pending independent review
+Percentage edits invalidate clearing of the shared submitted explanation. Proven synthetic 25% request / 50% new input case; 10 form and 5 transition developer scenarios/build pass. See tests_acceptance/recommendation-transition-note/PROGRESS-GROUP-DEVELOPER.md and logs/recommendation-progress-group-impl-hashes-frozen.txt. Browser unverified.
