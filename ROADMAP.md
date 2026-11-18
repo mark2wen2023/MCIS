@@ -549,3 +549,5 @@ Combined exact 139f188 and b4df823; only document append conflicts, both preserv
 | UI effect harness correction | 待独验 | 08fc47b product unchanged; 24 selected Node scripts + TS/Vite passed; three corrected scripts also pass original 49fc5b0 source. logs/ui-effect-harness-hashes-frozen.txt; integration unchanged; no browser/backend acceptance. |
 
 | Offline actual ReportView preview | 待独验/待浏览器 | Three synthetic static pages built; dependency and HTML checks passed; browser/visual/workflow unverified. logs/ui-offline-report-preview-frozen.txt |
+
+| Offline report preview fixture correction | 待独验 | Three pages rebuilt; original disclosure and loaded/null GISIS assertions pass. Browser unverified. logs/ui-offline-report-preview-fixture-frozen.txt |

@@ -908,3 +908,6 @@ Authorized limited repair of three frozen synthetic harnesses: dependency-aware 
 
 ## Offline actual ReportView preview
 Authorized independent read-only synthetic visual preview based on 3edb1a55; no product changes, API, backend, browser launch or model. Build script and handoff: web/preview/report/README.md. Static HTML only; not functional workflow acceptance.
+
+## Offline preview fixture correction
+Independent review identified missing section originals and perpetual GISIS loading in 1a977d1. Only handmade preview fixtures and output assertions corrected; production UI unchanged.
