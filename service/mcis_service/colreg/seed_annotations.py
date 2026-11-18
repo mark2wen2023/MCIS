@@ -10,7 +10,15 @@ from ..common.demo_case_ids import HAILI5_CASE_ID as HAILI5_CASE
 LILY_MARY_CASE = "CASE-2026-DEMO-LILY-MARY"
 
 # 虚构 Lily/Mary：EV-001 Mary VDR、EV-002 Lily S-VDR、EV-003 VTS AIS、EV-005 车钟/舵角记录
-LILY_MARY_# Materialize real dicts only when the public mapping is explicitly requested.
+LILY_MARY_BAND_EVIDENCE: dict[str, list[str]] = {
+    "B1": ["EV-003", "EV-001"],
+    "B2": ["EV-003", "EV-001"],
+    "B3": ["EV-001", "EV-002"],
+    "B4": ["EV-001", "EV-002", "EV-005"],
+    "B5": ["EV-001", "EV-002", "EV-003"],
+}
+
+# Materialize real dicts only when the public mapping is explicitly requested.
 from ..common.lazy_exports import LazyExports
 
 

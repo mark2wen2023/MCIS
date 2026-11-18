@@ -479,3 +479,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | RESTORENORMALREGISTRATION | 待测 | 临时库新案/建案审计/身份登记同事务；64开发合成通过，生产未接 | logs/RESTORENORMALREGISTRATION-impl-hashes-frozen.txt |
 
 | seed lazy mapping compatibility | 待测 | helper-only synthetic assertions pass; startup/archive hold unchanged | logs/seed-lazy-compat-impl-hashes-frozen.txt |
+
+| seed lazy wrapper correction | 待测 | 8ec4421 unusable; prefix restored/static checked, synthetic helper passed; startup hold remains | logs/seed-lazy-wrapper-correction-frozen.txt |

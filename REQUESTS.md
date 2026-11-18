@@ -964,3 +964,5 @@ Research classify recognizes only matching case/create-event/binding without res
 claims. No product route/permission/migration/publisher changes.
 
 - Authorized lazy named annotation mapping compatibility atop aa02d61; actual startup remains unverified, reflection before materialization differs; synthetic helper-only test.
+
+- Blocking correction: 8ec4421 deleted original mapping through unanchored edit. Restore exact aa02d61 wrapper prefix; correct preservation claim; no actual wrapper/startup execution.
