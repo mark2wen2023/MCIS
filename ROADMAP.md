@@ -479,3 +479,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 - Image create form epoch: four receipts and acknowledgment changes invalidate pending UI application. 11 new + 11 adjacent developer synthetic passed; see tests_acceptance/image-create-form/DEVELOPER-VERIFICATION.md.
 
 - Task start response guards on image/audio pages; 16 new + 10 adjacent developer synthetic passed. No real task execution; see tests_acceptance/media-task-start-context/DEVELOPER-VERIFICATION.md.
+
+- Audio task status/list/start message ordering: 9 new + 17 adjacent developer synthetic checks passed; see tests_acceptance/audio-task-message-order/DEVELOPER-VERIFICATION.md. No real task/browser acceptance.

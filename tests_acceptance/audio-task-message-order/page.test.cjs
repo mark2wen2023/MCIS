@@ -1,0 +1,18 @@
+// New ordinary synthetic successful-save tests. DOM/HTTP doubles, not a browser or ASR.
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const script=fs.readFileSync('service/mcis_service/audio_review/review.html','utf8').split('<script>')[1].split('</script>')[0];
+function setup(){
+ class Element{constructor(){this.value='';this.textContent='';this.children=[];}addEventListener(n,f){(this.events??={})[n]=f;}setAttribute(){}removeAttribute(){}load(){}pause(){}append(...xs){this.children.push(...xs)}replaceChildren(){this.children=[]}}
+ const elements={},events={};const releases=[],failures=[];let requests=0;
+ const ctx=vm.createContext({document:{getElementById:id=>elements[id]??(elements[id]=new Element()),createElement:()=>new Element()},window:{addEventListener:(name,fn)=>events[name]=fn},URL:{revokeObjectURL(){}},confirm:()=>false,fetch:async(url,options)=>{requests++;const prior=JSON.parse(vm.runInContext('JSON.stringify(state)',ctx));return new Promise((resolve,reject)=>{failures.push(()=>reject(Error("synthetic transport error")));releases.push(()=>resolve({ok:true,json:async()=>{const d={caseId:prior.caseId,taskId:"1".repeat(32),status:"succeeded",runId:"AR-new"};return url.endsWith("/audio-asr-tasks")&&!options?.body?[d]:d;}}));})}});
+ vm.runInContext(script,ctx);
+ vm.runInContext(`state={caseId:'SYNTHETIC',runId:'AR-fixture',revision:0,initial:{audio:{frames:8000,sampleRateHz:8000},machineDraft:{transcript:{segments:[{id:'s1',text:'synthetic',startMs:0,endMs:500},{id:'s2',text:'other',startMs:500,endMs:1000}],unlocatedSegments:[]}}},humanRevisions:[]};context='SYNTHETIC';el('task-id').value='1'.repeat(32);el('task-confirm').checked=true;el('case').value=context;el('run').value=state.runId;render();`,ctx);
+ return {ctx,elements,boxes:elements.segments.children,release:(i=0)=>releases[i](),fail:(i=0)=>failures[i](),requests:()=>requests,warning:()=>{let warned=false;events.beforeunload({preventDefault(){warned=true}});return warned;}};
+}
+function change(row,text){row.children[1].value=text;row.children[1].oninput();row.children[5].value='synthetic correction';row.children[5].oninput();}
+for(const field of ['case','run','task-id'])test('status ignores away-back '+field,async()=>{const s=setup(),p=s.elements['task-status'].onclick(),x=s.elements[field],old=x.value;x.value='OTHER';x.events?.input?.();x.value=old;x.events?.input?.();s.release();await p;assert.equal(vm.runInContext('taskResult',s.ctx),null);assert.equal(s.requests(),1);});
+for(const [first,second] of [['start-task','task-status'],['task-status','start-task'],['task-list','start-task'],['start-task','task-list']])test(first+' cannot overtake '+second,async()=>{
+ const s=setup(),a=s.elements[first].onclick(),b=s.elements[second].onclick();vm.runInContext("el('task-output').textContent='newer pending'",s.ctx);s.release(0);await a;assert.equal(s.elements['task-output'].textContent,'newer pending');s.release(1);await b;assert.match(s.elements['task-output'].textContent,/succeeded/);assert.equal(s.requests(),2);
+});
+test('status normal response retained',async()=>{const s=setup(),p=s.elements['task-status'].onclick();s.release();await p;assert.equal(vm.runInContext('taskResult.status',s.ctx),'succeeded');});
+test('status late error does not overwrite new context status',async()=>{const s=setup(),p=s.elements['task-status'].onclick();s.elements.case.value='OTHER';s.elements.case.events.input();s.elements.status.textContent='current';s.fail();await p;assert.equal(s.elements.status.textContent,'current');});
