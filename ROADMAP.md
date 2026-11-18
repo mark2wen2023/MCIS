@@ -397,3 +397,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTREVIEWMAIN | 最小整合独审通过 | 2026-11-14：main25b9df6前缀及其他跟踪文件保留，12源文件逐字；独立无.git副本164项通过，新/原冻结各4/4。见 DEFECTS/EXPERTREVIEWMAIN.md；仅离线pending人审，真实0/HOLD。 |
 | EXPERTTRACE | 待独审 | 2026-11-14：PR87head99b44f0上新增10跨视图追溯/反认证回归，组合174项通过；冻结 logs/EXPERTTRACE-impl-hashes-frozen.txt。不改运行代码；真模型0/HOLD，非浏览器或事实验收。 |
 | EXPERTTRACE | 测试增量独审通过 | 2026-11-14：独立无.git副本10过；临时断开taskId触发5红、伪认证flag触发1红，恢复10过；冻结2/2，运行文件无差异。见 DEFECTS/EXPERTTRACE.md。真实模型0/HOLD。 |
+| Saved case metadata gap summary | 待独审 | 2026-11-15：main94d5e38只读五项文字待补清单，标案号/读取修订，未保存草稿不作补齐、可选项由人工决定。新逻辑/SSR、原W8.4 96项及构建过；不代表全案完整性/问题关闭，真实浏览器/LLM未验。冻结 logs/case-metadata-gap-summary-impl-hashes-frozen.txt；功能文件无已查开放PR重叠。 |
+| Saved metadata gap summary r2 | 待复核 | 2026-11-15：6191f06独审建议逐条标选填已落实；案件名称必填、其余四项选填，含异常格式项。新增SSR/旧96项/构建过；只读已保存字段边界不变。冻结 logs/case-metadata-gap-summary-r2-impl-hashes-frozen.txt；浏览器/LLM未验。 |

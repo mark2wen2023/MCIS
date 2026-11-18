@@ -647,3 +647,24 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## Saved case metadata gap summary (2026-11-15)
+Main94d5e38: show a scoped checklist for five existing editable text fields on CaseInfoPage.
+Use only loaded saved Snapshot, never unsaved Form; include case/revision context, blank
+versus invalid field distinction, no inference or completion/verification status writes.
+Existing human metadata edits still require source/reason. No functional-file overlap in
+inspected open PRs including PR95–99; no restricted validation/protection query.
+Gap-summary self-test: synthetic missing/whitespace/invalid fields, partial saved update,
+unsaved-form isolation, unchanged input, all-text-present non-verification wording and
+escaping passed. Existing W8.4 96 model/render assertions and TypeScript/Vite build passed;
+final optional-field discretion copy rechecked with focused SSR. No backend write, source
+inference, LLM/OCR/core or browser run. Browser remains unverified under previously known
+Chromium-missing environment; no installation or denied-operation retry. This is a derived
+read-only current-revision checklist, not a persisted question ledger or historical snapshot.
+
+## Metadata gap optional labels follow-up (2026-11-15)
+Independent review of6191f06 passed96/SSR/build and requested per-row optional markings.
+Amend frozen GapSummary/test only: title mandatory, other four fields optional. Preserve
+saved-only derivation and existing update validation; no persistence or permissions change.
+Follow-up self-check: per-row required/optional SSR cases, prior saved/draft isolation
+regressions, existing96 W8.4 checks and build passed. No browser or LLM claims.
