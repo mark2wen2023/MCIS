@@ -19,6 +19,6 @@ test('missing and malformed source fields stay explicitly unknown',()=>{
 test('literal declarations are text, digests remain distinct, and disclosure claims no matching or verification',()=>{
  const s=setup(),v=source('<b>synthetic</b>','a');v.currentSha256='b'.repeat(64);const output=s.render('AR-C',v);assert.ok(output.includes('<b>synthetic</b>'));assert.equal(s.elements['record-source'].children.length,0);assert.ok(output.includes('登记 SHA-256：'+'a'.repeat(64)));assert.ok(output.includes('当时当前 SHA-256：'+'b'.repeat(64)));assert.ok(html.includes('本展示未自动核验原件或当前登记版本，也未与笔录匹配'));assert.equal(s.fetches(),0);
 });
-test('editing case or run clears the displayed declaration until another record is accepted',()=>{
- for(const id of ['case','run']){const s=setup();s.render('AR-A',source('EV-001','a'));s.elements[id].value='OTHER';s.elements[id].fire('input');assert.equal(s.elements['record-source'].textContent,'');assert.equal(s.fetches(),0);}
+test('editing case or run labels retained declarations as the loaded record',()=>{
+ for(const id of ['case','run']){const s=setup();s.render('AR-A',source('EV-001','a'));s.elements[id].value='OTHER';s.elements[id].fire('input');assert.match(s.elements['record-source'].textContent,/EV-001/);assert.match(s.elements['loaded-context'].textContent,/未载入/);assert.match(s.elements['loaded-context'].textContent,/AR-A/);assert.equal(s.fetches(),0);}
 });

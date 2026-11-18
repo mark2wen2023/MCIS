@@ -26,3 +26,7 @@ and case/run input invalidation. Direct render fixtures do not validate HTTP acc
 permissions or source truth. This does not verify browser layout, accessibility, listening,
 original bytes, present registry state or matching with interview records. No full build/suite:
 standalone HTML source, not the Vite frontend. No merge/deployment or archive enablement.
+
+Follow-up audio-loaded-context supersedes the input-clear behavior above: both source displays
+are retained with an explicit loaded-versus-target notice. The corresponding synthetic expectation
+was updated; see ../audio-loaded-context/DEVELOPER.md for the separate developer run.

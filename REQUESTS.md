@@ -785,3 +785,5 @@ Synthetic red1 reproduced new input lost on late load render. Track edits and se
 - Programmatic new-task IDs reuse summary/cache invalidation; 2 new + 20 adjacent developer synthetic checks pass after correcting an independently reproduced stale test fixture. See tests_acceptance/media-new-task-summary/DEVELOPER-VERIFICATION.md.
 
 - audio-source-declaration：用户授权在图音隔离候选的既有 review.html 增加运行来源声明可读展示；不依赖 #99，不新增 API、跳转、笔录写入或核验承诺。原 JSON 元数据保留，新增冻结清单见 logs/audio-source-declaration-impl-hashes-frozen.txt；仅纯 Node 合成开发验证，待独验。
+
+- audio-loaded-context：已授权修正程序化/手动选运行后来源归属提示；保留已载入记录的两块来源与草稿，明确目标未载入，不改 API/权限。更新先前来源展示的清除预期，原冻结版本保留作历史；新清单 logs/audio-loaded-context-impl-hashes-frozen.txt。
