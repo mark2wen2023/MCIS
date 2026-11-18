@@ -809,3 +809,5 @@ Authorized clarification of both frozen page banners only; no Set/request/receip
 
 ## Isolated source declaration comparison (2026-11-18)
 Authorized pure research implementation of 06a7e8b design, fixed candidate revision range 0..1000 with documented source basis. Caller JSON only, no API aggregation/association/audit or application integration; explicit history is not server proof. See research/source-declarations/README.md.
+
+- Authorized isolated source-comparison correction: aggregate is one interview declaration snapshot; amend frozen compare.mjs without application wiring; preserve pair diagnostics and unavailable payload boundary.

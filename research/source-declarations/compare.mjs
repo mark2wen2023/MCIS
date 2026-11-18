@@ -96,6 +96,14 @@ export function compareDeclarations(input){
  const counts=new Map();
  const cases=new Set(results.flatMap(r=>r.fields.filter(f=>f.path==='interview.caseId'&&ok(f)).map(f=>f.raw)));
  if(cases.size>1)issues.push({code:'case_mismatch'});
+ // One interview declaration snapshot per aggregate; never choose/merge candidates.
+ // Match comparePair's early read-state gate before touching either payload.
+ const snapshots=(Array.isArray(input?.pairs)?input.pairs:[])
+  .filter(p=>p?.interview?.state==='available'&&p?.media?.state==='available')
+  .map(p=>snapshot(p.interview.data));
+ const recordIds=new Set(snapshots.map(s=>s.recordId).filter(valid.id));
+ if(recordIds.size>1)issues.push({code:'interview_record_mismatch'});
+ if(snapshots.some(s=>!equal(s,snapshots[0])))issues.push({code:'interview_snapshot_mismatch'});
  for(const pair of Array.isArray(input?.pairs)?input.pairs:[]){const role=pair?.selection?.sourceRole;counts.set(role,(counts.get(role)??0)+1)}
  for(const [role,count]of counts)if(count>1)issues.push({code:'duplicate_role',role});
  if(Array.isArray(required))for(const role of required)if(!counts.has(role))issues.push({code:'required_role_missing',role});
