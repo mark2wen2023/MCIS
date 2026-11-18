@@ -510,3 +510,5 @@ Combined exact 139f188 and b4df823; only document append conflicts, both preserv
 ## Synthetic report review service-to-parent replay — pending acceptance
 
 On 9cc3ece, one new ordinary TestClient PATCH/GET test uses schema-valid synthetic stored report, no seed/generation. Actual response replayed into ReportSession and ReportView SSR; 1 developer pytest node passed. Fixture setup is not generation; replay is not browser/live connection; role headers are not production authentication. See tests_acceptance/report-review-service-ui/DEVELOPER.md and logs/report-review-service-ui-impl-hashes-frozen.txt. No product/permission changes; no merge/deploy.
+
+| 2026-11-18 | Recommendation save/board UI+service coverage | 待独验 | Developer1 synthetic normal node passed; real TestClient then captured-response UI replay, no browser/model/source verification; product unchanged. logs/recommendation-save-board-ui-impl-hashes-frozen.txt |
