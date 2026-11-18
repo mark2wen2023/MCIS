@@ -647,3 +647,7 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+
+## GISIS stale validation feedback — pending independent review
+Editing fields invalidates displayed prior validation object while retaining input; prompts explicit revalidation. Developer 4 synthetic flows/40 assertions and build passed; browser unverified. See tests_acceptance/gisis-stale-validation/DEVELOPER.md and logs/gisis-stale-validation-impl-hashes-frozen.txt. No API, permission or consultation changes.
