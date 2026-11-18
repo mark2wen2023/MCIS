@@ -507,3 +507,5 @@ Combined 076eec1 / 2064675 / 81a308c on 94d5e38, preserving all group document a
 Combined exact 139f188 and b4df823; only document append conflicts, both preserved. Developer 19 UI scripts, new synthetic SSR (3 cases), pure formatting (6 cases) and build passed; counts not cumulative. No real material, paused/refusal probes, HFACS or browser run. See tests_acceptance/ui-pr104/DEVELOPER.md; freeze logs/ui-pr104-impl-hashes-frozen.txt. Real backend/production permissions/visual/independent acceptance pending. Do not merge or deploy.
 
 | 2026-11-18 | Report refresh section continuity | 待独验 | Developer synthetic7 lifecycle +4 adjacent callback flows and build passed; no browser/real backend; logs/report-refresh-section-impl-hashes-frozen.txt |
+
+| 2026-11-18 | Report refresh callback / pending selection follow-up | 待独验 | Developer 12 synthetic scenarios (includes prior 7), 4 adjacent flows and build passed; browser/real HTTP unverified; logs/report-refresh-section-r2-impl-hashes-frozen.txt |

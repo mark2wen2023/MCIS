@@ -32,3 +32,32 @@ No paused tests, refusal probes, HFACS, models, real records, service/browser, s
 scripts or production dirs executed. No full CI, browser visual/accessibility, actual network
 save/reload, identity authentication, concurrent actions or production acceptance claimed.
 Counts are separate evidence types, not full-suite totals. DO NOT MERGE or deploy.
+
+## Follow-up: click event and pending-operation selection (2026-11-18)
+
+Exact parent: `2f2bba3810a4c147071ff69f21464e848250a5eb`.
+Independent review identified two remaining defects. Before this product change,
+`node tests/report-refresh-section.test.cjs manual` failed first != second, and
+`node tests/report-refresh-section.test.cjs race-save` failed second != first.
+The test now invokes actual ReportView button handlers with a synthetic click event
+and section-chip clicks while deferred API callbacks are pending.
+
+Refresh now discards click arguments explicitly. A synchronously updated section ref
+preserves the latest user selection when review/PDF/GISIS export resolves, rather
+than the section captured before the request. Refresh and export notice updates
+check the current session; old-case save cannot refresh the new session.
+No backend or permission behavior changes, and section navigation remains available.
+
+Reviewed exact developer commands from web:
+- `node tests/report-refresh-section.test.cjs`: 12 synthetic scenarios passed,
+  including original 7, actual refresh callback, delayed review/export/GISIS, and
+  case switch during pending review. These replace, not add to, the original 7.
+- `node tests/gisis-parent-validation.test.cjs`: 4 adjacent synthetic flows passed.
+- `npm run build`: TypeScript and Vite passed; 767 modules, JS 1,862.59 kB,
+  gzip 601.84 kB; existing large-chunk warning remains.
+
+Synthetic hooks/API are not React browser scheduling, real HTTP, downloads,
+production identity or visual acceptance. Follow-up independent review pending.
+No paused tests, refusal probes, real data, models, HFACS or browser executed.
+The original frozen hash record documents the parent; follow-up inputs are in
+`logs/report-refresh-section-r2-impl-hashes-frozen.txt`. No merge/deploy.

@@ -843,3 +843,6 @@ Combined exact 139f188 and b4df823; only document append conflicts, both preserv
 
 ## Report refresh section continuity (2026-11-18)
 Confirmed on UI+PR104 9cc3ece: review save remount returned the selected second section to first. Preserve a same-context, same-report section hint across refresh; validate it against loaded sections. Product change confined to ReportPage.tsx. Synthetic lifecycle7 and adjacent GISIS4 passed; build passed; browser/backend unverified. See tests_acceptance/report-refresh-section/DEVELOPER.md.
+
+## Report refresh callback and pending section selection (2026-11-18)
+Follow-up to 2f2bba3: reproduced actual refresh-button event misuse and stale section capture during pending review. Explicit event-free refresh and latest-section ref preserve user selection; inactive sessions cannot refresh. Developer 12 synthetic lifecycle scenarios, 4 adjacent GISIS flows and build passed; no real browser/HTTP validation. See tests_acceptance/report-refresh-section/DEVELOPER.md; independent review pending.
