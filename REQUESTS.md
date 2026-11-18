@@ -787,3 +787,5 @@ Synthetic red1 reproduced new input lost on late load render. Track edits and se
 - audio-source-declaration：用户授权在图音隔离候选的既有 review.html 增加运行来源声明可读展示；不依赖 #99，不新增 API、跳转、笔录写入或核验承诺。原 JSON 元数据保留，新增冻结清单见 logs/audio-source-declaration-impl-hashes-frozen.txt；仅纯 Node 合成开发验证，待独验。
 
 - audio-loaded-context：已授权修正程序化/手动选运行后来源归属提示；保留已载入记录的两块来源与草稿，明确目标未载入，不改 API/权限。更新先前来源展示的清除预期，原冻结版本保留作历史；新清单 logs/audio-loaded-context-impl-hashes-frozen.txt。
+
+- image-loaded-context：用户授权修复图片页已载入/目标运行归属提示；来源、草稿及下载明确归属已载入运行，保留 dirty，不变更读取/下载/权限。新增冻结 logs/image-loaded-context-impl-hashes-frozen.txt，旧冻结清单仅对应历史版本。

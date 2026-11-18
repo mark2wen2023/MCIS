@@ -497,3 +497,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 - 待测：audio-source-declaration，基于 d1f2593；音频运行来源声明可读展示，4 项纯 Node 开发合成测试通过，浏览器/原件/笔录匹配未验。冻结清单 logs/audio-source-declaration-impl-hashes-frozen.txt；说明 tests_acceptance/audio-source-declaration/DEVELOPER.md。
 
 - 待测：audio-loaded-context，基于 baabeed；4 新增与10相邻纯 Node 合成节点开发通过（合计14，不累计旧轮次），来源/元数据共同标识已载入运行与未载入目标。浏览器/HTTP/原件未验；tests_acceptance/audio-loaded-context/DEVELOPER.md。
+
+- 待测：image-loaded-context，基于 4ec789e；5 项新增纯 Node 开发合成回归通过，涵盖任务选 B、等待/失败/成功、迟到 B 时已选 C 和手动切换。浏览器/HTTP/图片解码/下载未验；见 tests_acceptance/image-loaded-context/DEVELOPER.md。
