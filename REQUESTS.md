@@ -791,3 +791,5 @@ Synthetic red1 reproduced new input lost on late load render. Track edits and se
 - image-loaded-context：用户授权修复图片页已载入/目标运行归属提示；来源、草稿及下载明确归属已载入运行，保留 dirty，不变更读取/下载/权限。新增冻结 logs/image-loaded-context-impl-hashes-frozen.txt，旧冻结清单仅对应历史版本。
 
 - audio-playback-waiting：授权补充播放器等待/失败反馈，保持 busy、不排队、不超时解锁和不自动重试；原串行测试只更新失败提示预期，旧冻结清单保留历史，新清单 logs/audio-playback-waiting-impl-hashes-frozen.txt。
+
+- image-task-waiting：已授权在图片任务查询发起时替换旧JSON为等待反馈，不改查询次数、代次或最新响应优先，不新增轮询/重试/任务执行；新冻结 logs/image-task-waiting-impl-hashes-frozen.txt，旧清单仅历史版本。

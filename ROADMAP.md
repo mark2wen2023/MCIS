@@ -501,3 +501,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 - 待测：image-loaded-context，基于 4ec789e；5 项新增纯 Node 开发合成回归通过，涵盖任务选 B、等待/失败/成功、迟到 B 时已选 C 和手动切换。浏览器/HTTP/图片解码/下载未验；见 tests_acceptance/image-loaded-context/DEVELOPER.md。
 
 - 待测：audio-playback-waiting，基于59559cc；8新增及10相邻纯Node开发合成节点通过，共18不累计历史；真实播放/浏览器未验，后端启动/归档仍暂停。见 tests_acceptance/audio-playback-waiting/DEVELOPER.md。
+
+- 待测：image-task-waiting，基于fe92743；11项新增纯Node合成开发测试通过，正常/unknown/失败/迟到/切上下文；浏览器、HTTP、任务执行未验，后端启动/归档仍暂停。见 tests_acceptance/image-task-waiting/DEVELOPER.md。
