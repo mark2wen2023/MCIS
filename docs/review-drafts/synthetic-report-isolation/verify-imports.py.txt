@@ -1,57 +1,124 @@
-"""REVIEW DRAFT: future fresh-process preflight only; no app creation or requests.
-Must be promoted only after import-side-effect/resource review, not in this task.
-Use existing trusted interpreter with -I -S; dependency roots need separate review.
-A reviewed bootstrap must add only approved third-party paths before calling inspect.
-This draft itself adds COPY/service, never the source checkout.
+"""REVIEW HOLD. No execution approved. All checks use explicit failure.
+Pre-import filesystem checks are a prerequisite, not an OS containment guarantee.
+No concurrent writers permitted. Runtime dependency lock remains unresolved.
 """
 from pathlib import Path
 import hashlib
 import json
+import os
+import stat
 import sys
 
+ALLOWLIST_SHA256 = '9e261e44cc7820724579f7f1fc0f3639b46150bc91f467d299c3022a1cd487cd'
+# Intentionally unresolved: fail before MCIS imports. Never accept caller's own trust pin.
+RUNTIME_LOCK_SHA256 = None
 CID = 'CASE-SYNTHETIC-REPORT-ISOLATION'
 
+def need(condition, message):
+    if not condition:
+        raise ValueError(message)
 
-def inspect(copy_root):
-    root = Path(copy_root).absolute()
-    def inside(path):
-        p = Path(path).absolute()
-        assert not any(q.is_symlink() for q in (p, *p.parents))
-        assert p.resolve().is_relative_to(root.resolve())
-        return p.resolve()
-    inside(root)
-    assert not any(n == 'mcis_service' or n.startswith('mcis_service.') for n in sys.modules)
-    sys.path.insert(0, str(inside(root/'service')))
-    import mcis_service
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+def plain(path, *, file=False):
+    p = Path(path)
+    need(p.is_absolute() and '..' not in p.parts, 'canonical absolute path required')
+    for q in (p, *p.parents):
+        need(not q.is_symlink(), 'symlink forbidden')
+    if file:
+        need(stat.S_ISREG(p.lstat().st_mode), 'regular file required')
+    return p
+
+def exact_tree(root, expected):
+    root = plain(root)
+    need(root.is_dir(), 'root missing')
+    actual = set()
+    allowed_dirs = {'.'}
+    for name in expected:
+        p = Path(name)
+        need(not p.is_absolute() and '..' not in p.parts and p.as_posix() == name, 'invalid inventory path')
+        allowed_dirs.update(x.as_posix() for x in p.parents)
+    for parent, dirs, files in os.walk(root, followlinks=False):
+        for name in dirs:
+            p = plain(Path(parent)/name)
+            need(stat.S_ISDIR(p.lstat().st_mode), 'non-directory')
+            need(p.relative_to(root).as_posix() in allowed_dirs, 'extra directory')
+        for name in files:
+            p = plain(Path(parent)/name, file=True)
+            rel = p.relative_to(root).as_posix()
+            need(rel in expected, 'extra member: '+rel)
+            need(sha(p.read_bytes()) == expected[rel], 'hash mismatch: '+rel)
+            actual.add(rel)
+    need(actual == set(expected), 'missing files')
+
+def inspect(root, allowlist, runtime_lock):
+    root = plain(root)
+    raw = plain(allowlist, file=True).read_bytes()
+    need(sha(raw) == ALLOWLIST_SHA256, 'unapproved allowlist')
+    members = {}
+    for line in raw.decode().splitlines():
+        digest, name = line.split('\t')
+        need(name not in members, 'duplicate allowlist path')
+        members[name] = digest
+    need(len(members) == 170, 'wrong inventory count')
+    # Construct expected preparation data rather than trusting an external manifest.
+    seed = {'cases':[{'caseId':CID,'isFictionalDemo':True,'sourceRefs':[],'whatif':{'rows':[]}}]}
+    seed_raw = (json.dumps(seed,sort_keys=True,separators=(',',':'))+'\n').encode()
+    sample = b'SYNTHETIC evidence text only; not an accident record.\n'
+    manifest = {'profile':'synthetic-report-preparation-v1','sourceCommit':'3fed64892327c59902cd6b339d23b1fd2f5f2486',
+                'caseId':CID,'seedSha256':sha(seed_raw),'sampleSha256':sha(sample),
+                'sourceMembers':sorted(members),'reviewOnly':True,'generationApproved':False}
+    manifest_path = plain(root/'preparation.json',file=True)
+    manifest_raw = manifest_path.read_bytes()
+    expected_manifest = (json.dumps(manifest,sort_keys=True,separators=(',',':'))+'\n').encode()
+    need(manifest_raw == expected_manifest, 'manifest fields/types/bytes mismatch')
+    data = 'service/mcis_service/analysis/data/'
+    expected = dict(members)
+    expected.update({data+'w12-analysis-seed.json':sha(seed_raw),
+                     data+'w12-analysis-seed.sha256':sha((sha(seed_raw)+'  w12-analysis-seed.json\n').encode()),
+                     'synthetic-fixtures/source.txt':sha(sample),'preparation.json':sha(expected_manifest)})
+    exact_tree(root, expected)  # rejects extra source, pyc/cache, symlinks, files/directories BEFORE imports
+    need(RUNTIME_LOCK_SHA256 is not None, 'runtime lock unresolved; DO NOT IMPORT MCIS')
+    lock_raw = plain(runtime_lock,file=True).read_bytes()
+    need(sha(lock_raw) == RUNTIME_LOCK_SHA256, 'unapproved runtime lock')
+    lock = json.loads(lock_raw)
+    need(set(lock) == {'interpreter','interpreterSha256','pythonVersion','dependencyRoots','distributions','startupPaths'}, 'lock fields')
+    executable = plain(lock['interpreter'],file=True)
+    need(Path(sys.executable) == executable, 'wrong interpreter')
+    need(sha(executable.read_bytes()) == lock['interpreterSha256'], 'interpreter changed')
+    need(sys.version == lock['pythonVersion'], 'wrong Python version')
+    need(sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode, 'require -I -S -B')
+    need(sys.path == lock['startupPaths'], 'unexpected startup paths')
+    # Lock must inventory every dependency file, metadata/version and exact roots;
+    # editable installs/.pth/sitecustomize/usercustomize are not permitted in reviewed roots.
+    for entry in lock['dependencyRoots']:
+        need(set(entry) == {'path','files'}, 'dependency entry fields')
+        dependency_root = plain(entry['path'])
+        need(dependency_root != root and root not in dependency_root.parents, 'dependency overlaps copy')
+        for name in entry['files']:
+            need(not name.endswith(('.pth','.pyc')) and '__pycache__' not in Path(name).parts
+                 and not any(x in name for x in ('__editable__','sitecustomize','usercustomize','.egg-link')), 'unapproved dependency mechanism')
+        exact_tree(dependency_root, entry['files'])
+    # All dependencyRoot paths, startupPaths and distributions still require static approval.
+    sys.path[:] = [str(root/'service'), *[e['path'] for e in lock['dependencyRoots']], *lock['startupPaths']]
+    need(not any(n=='mcis_service' or n.startswith('mcis_service.') for n in sys.modules), 'cached MCIS')
     from mcis_service import config
     from mcis_service.common import contracts
     from mcis_service.analysis import router
     from mcis_service.reports import sources
-    from mcis_service.main import create_app  # import only; no database/schema creation
+    from mcis_service.main import create_app
     for name, module in tuple(sys.modules.items()):
-        if name == 'mcis_service' or name.startswith('mcis_service.'):
-            assert getattr(module, '__file__', None), name
-            inside(module.__file__)
-    assert config.PROJECT_ROOT.resolve() == root.resolve()
-    assert contracts.SCHEMA_DIR.resolve() == inside(root/'contracts/schemas')
-    expected_seed = inside(root/'service/mcis_service/analysis/data/w12-analysis-seed.json')
-    expected_side = inside(expected_seed.with_suffix('.sha256'))
-    assert router.load_seed.__defaults__ == (expected_seed, expected_side)
-    assert sources.load_seed is router.load_seed
-    manifest = json.loads((root/'preparation.json').read_text())
-    raw = expected_seed.read_bytes()
-    digest = hashlib.sha256(raw).hexdigest()
-    assert digest == manifest['seedSha256'] == expected_side.read_text().split()[0]
-    # Call the REAL loader directly, outside _whatif's exception-catching path.
-    seed, loaded_digest = router.load_seed()
-    assert loaded_digest == digest
-    assert seed == {'cases': [{'caseId': CID, 'isFictionalDemo': True,
-                             'sourceRefs': [], 'whatif': {'rows': []}}]}
-    sample = inside(root/'synthetic-fixtures/source.txt').read_bytes()
-    assert sample == b'SYNTHETIC evidence text only; not an accident record.\n'
-    assert hashlib.sha256(sample).hexdigest() == manifest['sampleSha256']
-    return {'seedSha256': digest, 'uniqueCase': CID, 'generationExecuted': False}
-
+        if name=='mcis_service' or name.startswith('mcis_service.'):
+            p = plain(module.__file__,file=True)
+            need(p.is_relative_to(root/'service/mcis_service'), 'module outside copy')
+    need(config.PROJECT_ROOT == root and contracts.SCHEMA_DIR == root/'contracts/schemas','wrong roots')
+    need(router.load_seed.__defaults__ == (root/data/'w12-analysis-seed.json',root/data/'w12-analysis-seed.sha256'),'wrong defaults')
+    need(sources.load_seed is router.load_seed,'loader replaced')
+    loaded,digest = router.load_seed()
+    need(loaded == seed and digest == manifest['seedSha256'],'actual seed load failed')
+    exact_tree(root, expected)  # read-only preflight must not have produced files
+    return {'root':root,'caseId':CID,'sample':sample,'manifest':manifest}
 
 if __name__ == '__main__':
-    raise SystemExit('REVIEW HOLD: not approved for execution; no imports performed')
+    raise SystemExit('REVIEW HOLD: not approved for execution')

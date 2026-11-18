@@ -1,0 +1,110 @@
+"""REVIEW HOLD: concrete NORMAL requests only; never executed.
+Does not supply a substitute report builder/adapter or modify authorization.
+Requires a separately reviewed launch/bootstrap and exclusive temporary directories.
+"""
+from pathlib import Path
+import base64
+import hashlib
+import runpy
+from urllib.parse import urlsplit, parse_qs
+
+# Filled from the exact draft bytes, not caller-controlled.
+PREFLIGHT_SHA256 = 'a4292683a36a15cbfdc95b78354d34f42c4f4fa8c76033567e06b734a51a10a6'
+
+def need(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+def drive(copy_root, allowlist, runtime_lock, runtime_dir):
+    # Read/check preflight draft before evaluating it; its __main__ guard remains inactive.
+    preflight = Path(__file__).absolute().with_name('verify-imports.py.txt')
+    need(not any(p.is_symlink() for p in (preflight,*preflight.parents)), 'preflight symlink')
+    need(preflight.is_file(), 'preflight missing')
+    raw = preflight.read_bytes()
+    need(hashlib.sha256(raw).hexdigest() == PREFLIGHT_SHA256, 'preflight changed')
+    module = runpy.run_path(str(preflight),run_name='review_preflight')
+    verified = module['inspect'](copy_root,allowlist,runtime_lock)
+    # inspect currently always stops at unresolved runtime lock. No requests can follow.
+    root,cid = verified['root'],verified['caseId']
+    runtime = module['plain'](runtime_dir)
+    need(not runtime.exists() and runtime.parent.is_dir(), 'fresh runtime directory required')
+    need(runtime != root and root not in runtime.parents and runtime not in root.parents,'overlapping runtime')
+    from fastapi.testclient import TestClient
+    from mcis_service.config import Settings
+    from mcis_service.main import create_app
+    from mcis_service.common import contracts
+    settings = Settings(data_dir=runtime,db_url='sqlite:///'+str(runtime/'test.db'),seed_demo=False,
+                        core_cmd=str(runtime/'NO_CORE_INSTALLED'),host='127.0.0.1',port=8765)
+    app = create_app(settings)  # registers all ORM tables/triggers; no seed/core execution
+    headers = {'X-MCIS-Role':'LeadInvestigator','X-MCIS-Operator':'Synthetic review only'}
+    case = {'schemaVersion':'1.0.0','caseId':cid,'title':'Synthetic isolation only','accidentType':'Collision',
+            'caseEpochUtc':'2026-01-01T00:00:00Z','incidentTimeUtc':'2026-01-01T00:00:00Z',
+            'incidentLocation':{'lonDeg':0,'latDeg':0,'heightM':0},
+            'displayTimeZoneOffsetMinutes':0,'isFictionalDemo':True}
+    base='/api/v1/cases/'+cid
+    with TestClient(app) as client:
+        def call(method,path,expected=200,body=None):
+            kwargs = {'headers':headers}
+            if body is not None:
+                kwargs['json'] = body
+            result = client.request(method,path,**kwargs)
+            # Do not dump arbitrary response content or retry/change identity on errors.
+            need(result.status_code == expected,'unexpected status at '+method+' '+path+': '+str(result.status_code))
+            return result.json()
+        need(call('POST','/api/v1/cases',201,case) == case,'case response')
+        listed=call('GET','/api/v1/cases')
+        need(len(listed)==1 and listed[0]['caseId']==cid and listed[0]['isFictionalDemo'] is True,'lobby list')
+        need(call('GET',base)==case,'case reread')
+        sample=verified['sample']
+        body={'title':'Synthetic evidence only','source':'Constructed regression fixture',
+              'extractedBy':'Synthetic collector','extractedUtc':'2026-01-01T00:00:00Z','category':'Other',
+              'confidentiality':'Normal','fileName':'source.txt',
+              'contentBase64':base64.b64encode(sample).decode(),'note':'Not a real incident'}
+        evidence=call('POST',base+'/evidence',201,body)
+        eid=evidence['evidenceId']
+        need(evidence['caseId']==cid and evidence['sha256']==hashlib.sha256(sample).hexdigest(),'registered source')
+        need(evidence['status']=='Unverified','must not claim verified')
+        need(call('GET',base+'/evidence')==[evidence],'evidence list')
+        need(call('GET',base+'/evidence/'+eid)==evidence,'evidence reread')
+        from mcis_service.analysis.router import load_seed
+        seed,digest=load_seed()
+        need(seed=={'cases':[{'caseId':cid,'isFictionalDemo':True,'sourceRefs':[],'whatif':{'rows':[]}}]}
+             and digest==verified['manifest']['seedSha256'],'direct loader before generation')
+        report=call('POST',base+'/reports',201,{'templateId':'imo-cic','lang':'bilingual'})
+        contracts.validate('report',report)
+        need(report['caseId']==cid and report['status']=='Draft' and report['isFictionalDemo'] is True
+             and report['realDataStatus']=='fictional','report scope')
+        sentences=[]
+        for section in report['sections']:
+            need(section['status']=='Draft','section status')
+            for sentence in section['sentences']:
+                need(sentence['status']=='Draft','sentence status')
+                sentences.append(sentence)
+        for sid in ('facts-evidence-'+eid,'appendix-evidence-'+eid):
+            matches=[s for s in sentences if s['sentenceId']==sid]
+            need(len(matches)==1 and matches[0]['sourceStatus']=='Unverified','source sentence')
+            refs=matches[0]['citations']
+            need(len(refs)==1,'citation count')
+            ref=refs[0]
+            need(ref['kind']=='evidence' and ref['id']==eid and ref['registration']=='registered'
+                 and ref['sourceRef']=='evidence/'+eid,'citation binding')
+            url=urlsplit(ref['href']); fragment=url.fragment
+            page,query=fragment.split('?',1)
+            need(not url.scheme and not url.netloc and not url.path and page=='/evidence'
+                 and parse_qs(query)=={'case':[cid],'id':[eid]},'citation navigation')
+        missing=[s for s in sentences if s['sentenceId']=='analysis-whatif-missing']
+        need(len(missing)==1 and missing[0]['missing'] is True,'no invented whatif')
+        need(not any(s.get('sourceStatus')=='PublicReportExcerpt' for s in sentences),'unexpected public excerpt')
+        rid=report['reportId']
+        need(call('GET',base+'/reports/'+rid)==report,'report reread')
+        need(call('GET',base+'/evidence/'+eid)==evidence,'citation target reread')
+        events=call('GET',base+'/reports/'+rid+'/audit')
+        need(len(events)==1,'report event count')
+        entry=events[0];event=entry['auditEvent']
+        need(entry['reportId']==rid and entry['beforeValue'] is None and entry['afterValue']==report,'audit snapshot')
+        need(entry['snapshotRef'].startswith('report-snapshot:') and event['action']=='report.generate'
+             and event['caseId']==cid and event['entityId']==rid,'audit association')
+    return {'caseId':cid,'evidenceId':eid,'reportId':rid,'syntheticOnly':True,'browserVerified':False}
+
+if __name__ == '__main__':
+    raise SystemExit('REVIEW HOLD: requests not approved for execution')
