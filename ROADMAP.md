@@ -400,3 +400,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Interview source metadata disclosure | 待独审 | 2026-11-15：main94d5e38独立只读提示来源缺项/异常及本案证据定位；保留返回摘要与人工判断，不等于原件保全/核验。新SSR、原40断言、构建/最终类型检查过；真实浏览器/LLM/OCR未验。冻结 logs/interview-source-disclosure-impl-hashes-frozen.txt；功能文件无当前开放PR重叠。 |
 | Saved case metadata gap summary | 待独审 | 2026-11-15：main94d5e38只读五项文字待补清单，标案号/读取修订，未保存草稿不作补齐、可选项由人工决定。新逻辑/SSR、原W8.4 96项及构建过；不代表全案完整性/问题关闭，真实浏览器/LLM未验。冻结 logs/case-metadata-gap-summary-impl-hashes-frozen.txt；功能文件无已查开放PR重叠。 |
 | Saved metadata gap summary r2 | 待复核 | 2026-11-15：6191f06独审建议逐条标选填已落实；案件名称必填、其余四项选填，含异常格式项。新增SSR/旧96项/构建过；只读已保存字段边界不变。冻结 logs/case-metadata-gap-summary-r2-impl-hashes-frozen.txt；浏览器/LLM未验。 |
+
+| 环境观测来源口径解释 | 待测 / 待独立验收 | main 94d5e38 上的只读逐条人工核对提示；三口径合成 SSR、既有103断言、前端构建通过。真实浏览器/LLM/原件未验，无权限或写入变化。冻结：`logs/environment-origin-guidance-impl-hashes-frozen.txt` |
