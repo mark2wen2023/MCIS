@@ -32,7 +32,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),os=require('nod
  });
  const panel=page.locator('.w92-page');
  const open=async()=>{await panel.getByRole('button',{name:'＋ 新增环境记录'}).click()};
- const fill=async(id)=>{await panel.getByLabel('观测编号（必填，案件内唯一）').fill(id);await panel.getByLabel('资料来源（必填）').fill('Synthetic source p. 1');await panel.getByLabel('原文与说明（必填）').fill('东北风4级，能见度良好\n保留原文')};
+ const fill=async(id)=>{await panel.getByLabel('整条记录的来源口径（必选）').selectOption('Direct');await panel.getByLabel('观测编号（必填，案件内唯一）').fill(id);await panel.getByLabel('资料来源（必填）').fill('Synthetic source p. 1');await panel.getByLabel('原文与说明（必填）').fill('东北风4级，能见度良好\n保留原文')};
  const save=()=>panel.getByRole('button',{name:'保存环境记录',exact:true});
  const ready=()=>panel.getByRole('button',{name:'＋ 新增环境记录'}).waitFor();
  const goto=async(id)=>{await page.evaluate(x=>location.hash='#/env?case='+x,id);await ready()};

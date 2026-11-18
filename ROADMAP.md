@@ -401,3 +401,10 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 | 2026-11-18 | interview-source-lifecycle | 待独立验收 | 4普通合成生命周期场景及TS/Vite开发通过；父key仅静态、卸载显式模拟，非真实React/浏览器/HTTP；未改产品；冻结 logs/interview-source-lifecycle-impl-hashes-frozen.txt |
 | 2026-11-18 | interview-parent-source-lifecycle | 待独立验收 | 实际父组件函数5个合成正常/身份一致性场景、TS/Vite开发通过；key/cleanup为显式替身，非真实React/浏览器/HTTP；无产品改动。冻结 logs/interview-parent-source-lifecycle-impl-hashes-frozen.txt |
+
+| 环境观测来源口径解释 | 待测 / 待独立验收 | main 94d5e38 上的只读逐条人工核对提示；三口径合成 SSR、既有103断言、前端构建通过。真实浏览器/LLM/原件未验，无权限或写入变化。冻结：`logs/environment-origin-guidance-impl-hashes-frozen.txt` |
+
+| 2026-11-18 | environment-explicit-origin | 待独立验收 | 新3来源合成生命周期、既有来源SSR、TS/Vite开发通过；新表单显式选择，旧记录不改；浏览器/HTTP未验；冻结 logs/environment-explicit-origin-impl-hashes-frozen.txt |
+
+| 2026-11-18 | environment-pending-input | 待独立验收 | 新4合成等待序列及既有3来源流程、TS/Vite开发通过；真实React/浏览器/HTTP未验；冻结 logs/environment-pending-input-impl-hashes-frozen.txt |
+| 2026-11-18 | environment-input-generation | 待独审 | 事件阶段表单代次保护旧输入回调；新6场景及相邻4/3合成测试、TS/Vite开发通过；非真实React重放/浏览器/HTTP，未改后端。冻结 logs/environment-input-generation-impl-hashes-frozen.txt |

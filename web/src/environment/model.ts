@@ -11,10 +11,10 @@ export type Observation = {
 } & Partial<Record<Field,number|null>>
 export type ObservationForm = {
   observationId:string;observedAtUtc:string;locationDescription:string;description:string;sourceLabel:string;
-  valueOrigin:Origin;values:Record<Field,string>;
+  valueOrigin:Origin|'';values:Record<Field,string>;
 }
 export function emptyForm():ObservationForm {
-  return {observationId:'',observedAtUtc:'',locationDescription:'',description:'',sourceLabel:'',valueOrigin:'Direct',values:Object.fromEntries(fields.map(([k])=>[k,''])) as Record<Field,string>}
+  return {observationId:'',observedAtUtc:'',locationDescription:'',description:'',sourceLabel:'',valueOrigin:'',values:Object.fromEntries(fields.map(([k])=>[k,''])) as Record<Field,string>}
 }
 export const canCreate = (role:string) => ['LeadInvestigator','Investigator'].includes(role)
 export function validUtc(value:string):boolean {
@@ -42,6 +42,7 @@ export function parseObservations(value:unknown,caseId:string):Observation[] {
   })
 }
 export function buildObservation(form:ObservationForm,caseId:string):Observation {
+  if(form.valueOrigin==='')throw Error('请选择来源口径。')
   // Preserve source text verbatim; only trim structured ID/time and numeric input.
   const result:Observation={caseId,observationId:form.observationId.trim(),observedAtUtc:form.observedAtUtc.trim()||null,
     locationDescription:form.locationDescription.trim()?form.locationDescription:null,description:form.description,sourceLabel:form.sourceLabel,valueOrigin:form.valueOrigin}

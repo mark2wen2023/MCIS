@@ -661,3 +661,16 @@ metadata handling rechecked with SSR and TypeScript. Backend already projects th
 from its redacted record; no API/permission/data writes changed. Metadata is not an original
 file, verified hash, preserved source or historical snapshot. Real browser/layout/link
 interaction remains unverified (existing Chromium missing); no retry/install/bypass.
+
+## 环境观测来源口径解释（2026-11-15）
+基于 main 94d5e38，开放草稿未涉及 EnvironmentPage.tsx。申请修改已冻结环境列表的只读展示：逐记录解释已登记来源口径与人工核对步骤；保留原始来源标签/原文，不认定原件核验、不自动计算或更改权限。新增独立组件与 SSR 回归；无接口/持久化变更。真实浏览器及 LLM 未验。
+验证：三种口径合成 SSR（原文转义、零值/未知、空列表、输入不变）通过；原有 W9.2 103 断言通过；npm run build 通过（保留大分块警告）。首次新测试因 Node localStorage 夹具缺失失败，按现有测试方式补齐后通过。仅静态渲染，不替代真实浏览器展开交互/视觉验收；没有 LLM、OCR、真实观测核验或后端权限改动。当前浏览器缺 Chromium，未安装/绕过。待独立验收。
+
+## Environment explicit origin (2026-11-18)
+Authorized new-form-only change on PR101 base: no default Direct, explicit enum selection required in builder. Persistent/server contract unchanged; old clients may still default Direct. Evidence tests_acceptance/environment-explicit-origin/DEVELOPER.md.
+
+## Environment pending input (2026-11-18)
+Authorized narrow synchronous gate for new-observation input callbacks during existing busy state; no server/old-record changes. Evidence tests_acceptance/environment-pending-input/DEVELOPER.md.
+
+## Environment input generation (2026-11-18)
+Authorized narrow follow-up on frozen 368b3d1: event-only form callback generation, separate from request epoch, prevents retained callbacks changing completed/new/unknown form state. No contract, backend or permission change. Evidence: tests_acceptance/environment-input-generation/DEVELOPER.md.
