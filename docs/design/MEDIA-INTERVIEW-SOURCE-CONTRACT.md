@@ -26,7 +26,7 @@
 
 1. 两侧均须由各自现有授权读取。不可用只报告不可用，不推断资料不存在或泄露被限制的字段；不借任一入口扩大另一入口可见性。
 2. 案件 ID 精确相等才可进入比较；跨案为 `case_mismatch`，不搜索另一案件。
-3. 来源角色必须显式且可确定；笔录现有 evidenceId/sourceSha256 并不自行说明是原音还是 PDF。笔录来源角色无现成 API 字段，不得从正在打开的音频页反推。拟议人工声明须包含 role、basisText（判定依据）、declaredAt、所针对的 caseId/recordId/来源字段快照和声明者出处；页面演示身份不能冒充可信操作者。未建立此声明时为 `role_unknown`。人工声明本身也不是来源验证；未来持久化须有服务端身份/版本/审计。角色不同为 `role_mismatch`，不得依文件名、文字或摘要猜角色。
+3. 来源角色必须显式且可确定；笔录现有 evidenceId/sourceSha256 并不自行说明是原音还是 PDF。笔录来源角色无现成 API 字段，不得从正在打开的音频页反推。拟议人工声明须包含 role、basisText（判定依据）、declaredAt、所针对的 caseId/recordId/来源字段快照和声明者出处；页面演示身份不能冒充可信操作者。未建立此声明时为 `role_unknown`。声明绑定的案件/笔录身份、来源字段快照或已取得的版本任一变化，即失效为 `role_declaration_stale`，要求重新声明；旧声明仅作历史，不自动套用新快照。即使后来字段变回旧值，也不能自动恢复旧声明有效性。人工声明本身也不是来源验证；未来持久化须有服务端身份/版本/审计。角色不同为 `role_mismatch`，不得依文件名、文字或摘要猜角色。
 4. ID 按下面独立字段规则判定；完整合法 ID 不同为 `id_mismatch`。不可静默修剪、改大小写或补造 ID。#99 的 EV 编号显示约束不是新增服务端授权规则。
 5. SHA-256 仅接受完整 64 位十六进制；验证后统一 ASCII 小写比较，原返回值保留，不 trim。相同 ID 不同摘要为 `digest_mismatch`，不能称篡改。摘要对应字段须按下表，不能挑一个相等的摘要代替。
 6. 只有同案、同来源角色、同 ID、同摘要才可标记 `declarations_equal`（来源声明一致）；**不证明原件真实性、字节当前仍可用、文本内容一致、人已阅读/听取、人工批准或笔录已引用该运行**。
@@ -40,7 +40,10 @@
 | 原音 | 固定音频运行 source.currentSha256 | currentSha256 是该来源快照记录的实际字节摘要；registeredSha256 是登记回执 sourceSha256。source() 检查二者相等，但二者语义仍须分别展示，不能在缺 currentSha256 时回退。stateDigest 是含案件、证据、requestDigest 和两个摘要的规范化状态摘要，不是原音摘要。 |
 | PDF | candidate.source.pdf_sha256，对照 sourceVersions.pdf.sha256 | PDF 与页图分别比较；同角色内部两份声明不一致记 source_inconsistent，不任选其一。 |
 | 页图 | candidate.source.image_sha256，对照 sourceVersions.image.sha256 | 图片摘要不能与 PDF 摘要互换，摘要一致也不证明 PDF→页图渲染关系或页码。 |
-| 原始识别/候选产物 | 该明确角色的 sourceVersions 摘要 | 任务产物可能没有 evidenceId，保持缺项，不借用原音/PDF 的 ID；不能由文本相似认定笔录来源。 |
+| 图片原始识别输出（image_raw_output） | initial.sourceVersions.raw.sha256，并核对 initial.candidate.source.raw_sha256 | evidenceId 仅取 initial.sourceVersions.raw.evidenceId；本地任务产物可能无此键，不补造。 |
+| 图片结构化候选产物（image_candidate） | initial.sourceVersions.candidate.sha256 | evidenceId 仅取 initial.sourceVersions.candidate.evidenceId；不是 raw 摘要，也不是 candidate.source 内的 PDF/页图摘要。任务产物可能没有 evidenceId，保持缺项。 |
+
+上表图片路径均在运行 initial 中（PDF/页图行省略 initial 前缀）。每个 PDF 或页图比较要求该角色的 candidate.source 摘要和 sourceVersions 摘要均存在且合法；任一缺失/null/非法为不可确定，不得仅凭另一摘要与笔录相等给出一致。要求多个角色的整体比较时，任一必要角色缺项也阻止整体一致。音频机器草稿/识别输出作为笔录来源的独立角色与路径尚未定义，不套用图片路径、不回退原音摘要，暂不可比较。
 
 每个字段独立输出状态和原因，不以首个错误覆盖其他字段：键不存在为 missing；显式 null 为 unknown_null；空字符串为 empty；纯空白、外围空白、非法类型/格式为 invalid；合法值为 present。原始值保留。只有各必要字段均 present 且符合比较条件才可声明一致。不可用响应不继续解析或泄露其字段。
 
@@ -62,7 +65,7 @@
 
 ## 拟议合成验收（本轮未执行）
 
-- 无网络纯函数：同案同角色同 ID 同摘要；摘要大小写一致但 ID 大小写不折叠；缺键/null/空串/空白/非法分别记录；多字段同时错误；音频 current/registered/stateDigest 不互代；PDF/页图分开；笔录角色无声明时未知；重复角色、乱序数组、多候选多修订不自动配对；显式选择一项不掩盖其他缺项。
+- 无网络纯函数：同案同角色同 ID 同摘要；摘要大小写一致但 ID 大小写不折叠；缺键/null/空串/空白/非法分别记录；多字段同时错误；音频 current/registered/stateDigest 不互代；PDF/页图分开；笔录角色无声明时未知、绑定快照变化失效且旧声明仅历史；PDF/页图任一必要摘要缺失或非法不以另一个相等通过；图片 raw 与 candidate 独立角色/路径；重复角色、乱序数组、多候选多修订不自动配对；显式选择一项不掩盖其他缺项。
 - 合成前端：多运行、多修订、切案/切运行及迟到响应不误归属；声明一致不显示“原件已验/人工批准”，不自动写入笔录；缺失字段不表示原件不存在。
 - 未来单独授权的服务验收：固定历史可读、版本变化不静默重绑定、关联与审计原子、权限交集、旧数据未知、归档往返。当前种子导入/后端启动暂停及既有受限测试禁令不因本清单解除。
 
