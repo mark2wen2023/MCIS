@@ -18,7 +18,20 @@ export interface AnalysisViewProps {
 
 const CASE_LABEL: Record<string, string> = { 'lily-mary': 'Lily / Mary（虚构）', haili5: '海力5', yangze22: 'YANGZE 22' }
 
-export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, serviceAddr, charts = true }: AnalysisViewProps) {
+export function AnalysisView(props: AnalysisViewProps) {
+  const { data, selected, onSelect } = props
+  if (selected !== BASELINE && !data.whatif?.rows.some(r => r.id === selected)) {
+    return <div className="p6-card" role="alert" data-testid="analysis-missing-scenario">
+      <h2>指定分析方案未找到</h2>
+      <p>当前案件：{data.caseId} · 请求方案：{selected}</p>
+      <p>未自动替换为基线或其他方案。引用可能已失效或本案未提供该方案；本页不证明历史版本已核验。</p>
+      <button type="button" onClick={() => onSelect(BASELINE)}>离开方案引用，查看本案基线</button>
+    </div>
+  }
+  return <AnalysisContent {...props} />
+}
+
+function AnalysisContent({ data, cases, selected, onSelect, onSwitchCase, serviceAddr, charts = true }: AnalysisViewProps) {
   const w = data.whatif
   const sel = w && selected !== BASELINE && w.rows.some((r) => r.id === selected) ? selected : BASELINE
   const picked = pickSeries(data, sel)

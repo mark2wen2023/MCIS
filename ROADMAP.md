@@ -424,3 +424,5 @@ Following f492182, case-retained work rejects late session and out-of-order UI r
 
 ## First pending COLREG draft guidance — pending independent review
 Make conditional unknown-result guidance visible even before any draft/notice/compare exists, including loading/unavailable states. No job state or backend changes. Developer five new synthetic assertions, adjacent tests/build passed. See tests_acceptance/colreg-report-link/FIRST-DRAFT-DEVELOPER.md and logs/colreg-first-draft-impl-hashes-frozen.txt; browser unverified.
+
+| ANALYSIS-MISSING-SCENARIO | 2026-11-18 | 待测：缺失方案不静默退回基线；8合成断言与构建开发通过，浏览器/历史核验未验 | tests_acceptance/analysis-missing-scenario/DEVELOPER.md；logs/analysis-missing-scenario-impl-hashes-frozen.txt |
