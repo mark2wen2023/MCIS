@@ -137,13 +137,8 @@
 建议命名 `progress-request-v1`：固定字段集合，拒绝未知字段、重复JSON键与非预期类型；
 百分比只能为整数0–100（布尔值不是整数）；说明为Unicode字符串，不trim、不做
 Unicode正规化，保留换行；拒绝非法Unicode，v1草案规定说明UTF-8最多8192字节，超限拒绝而非截断。
-固定摘要输入为UTF-8 JSON数组，按顺序为：规范化版本、epoch、subjectId、caseId、
-recommendationId、action、expectedRevision整数、progressPct整数、note字符串。
-数组不含额外空白；整数用无前导零十进制；字符串仅转义双引号、反斜线和U+0000–001F，
-控制字符统一用小写四位\u转义，其余Unicode标量直接UTF-8，禁止孤立代理项。
-对这些字节计算SHA-256；规范更改须提升版本，不能默默改变已有摘要。
-上线前须跨语言固定向量验证，此处是待批准的明确v1选择，不是现有实现。主体与epoch
-由服务端补入绑定，不接受客户端伪造；摘要覆盖动作、对象、expected令牌与完整载荷。
+摘要拆为下述两个有域标记的规范化数组；不再使用一个未命名摘要同时指代载荷和绑定。
+具体字节、字段必填与边界见下一节，均为待验证设计，不是现有接口。
 
 所有终态共同字段：schemaVersion、epoch、operationId、bindingDigest、payloadDigest、
 canonicalizationVersion、subjectId、caseId、recommendationId、action、expectedRevision、
@@ -191,3 +186,119 @@ terminalState、terminalUtc、稳定resultCode。禁止用缺字段猜测状态�
 补充上线前验证：旧库恢复/克隆epoch不复用、领取与终结原子性、busy/提交异常不伪记
 业务拒绝、终态不可覆盖、规范化固定向量、全写入口版本参与和旧客户端切换。
 这里只列设计验收前置，不授权运行恢复、故障注入或此前暂停的安全/拒写测试。
+
+
+## 第二次独立审查：摘要与数据库合同细化（仅设计）
+
+本节替代此前未区分binding/payload的摘要描述；没有新增接口、迁移或数据库约束。
+以下选择仍须跨语言和实际数据库验证，不能据文档宣布可上线。
+
+### 两个摘要的唯一输入及字段规则
+
+定义 `C(x)` 为下文规范化JSON字节，`H(x)`为SHA-256小写64位十六进制。
+签发请求的外部字段仅为 `caseId, recommendationId, action, expectedRevision,
+progressPct, note`，全部必填且不允许null；禁止未知字段、重复JSON键和类型强转。
+服务端由已验证身份与实例登记补入epoch、subjectId并生成operationId；这些值不接受
+客户端覆盖。执行请求只允许operationId及同一组外部字段，全部重新核对。
+
+- `payloadDigest = H(C(["progress-payload-v1", progressPct, note]))`。
+- `bindingDigest = H(C(["progress-binding-v1", "progress-request-v1", epoch,
+  subjectId, caseId, recommendationId, action, expectedRevision, operationId,
+  payloadDigest]))`。
+
+载荷摘要仅标识百分比和完整说明；相同载荷可以有相同payloadDigest，但不同主体、
+对象、版本或操作ID必有不同规范化绑定输入。绑定摘要覆盖载荷摘要，不递归包含自身。
+摘要不是MAC/签名，不证明身份或授权；服务端必须用持久绑定重新计算和核对，
+不能相信客户端自报摘要。回执保存上述字段和原始规范化载荷；校验时两摘要均须匹配。
+规范化版本固定为 `progress-request-v1`，action固定为 `progress.update`。
+
+字段合同：
+- 所有ID为非空Unicode标量字符串，UTF-8最多256字节；逐字节、区分大小写比较，
+  不trim、不正规化。禁止控制字符、孤立代理项；可信主体标识的命名空间与稳定性
+  需身份系统审定，现有角色头不满足。epoch/operationId的实际生成算法仍是前置。
+- expectedRevision为JSON整数词法，范围1至9007199254740990，拒绝布尔、字符串、
+  浮点词法（包括1.0）、指数及负零。业务revision初值1，最大9007199254740991；
+  到最大值后不能继续签发写操作，不能回绕、归零或复用。此范围保证JS安全整数及
+  一次递增，迁移中超范围数据需明确阻断，不截断。
+- progressPct同样只接受整数词法，范围0至100；note为字符串、可为空但不可缺失/null，
+  UTF-8最多8192字节。不trim、不换行折叠、不做Unicode正规化。
+- 缺字段与显式null都为合同错误；不能默认为空说明、当前版本或0%。校验失败
+  不自动等于持久rejected回执，尤其签发前尚无操作ID；沿用前文终态事务规则。
+
+`C`使用UTF-8无BOM，数组按上述固定顺序，无额外空白或结尾换行。整数用普通十进制；
+字符串仅转义双引号、反斜线及U+0000–001F，控制字符统一写成小写四位\u形式
+（换行写\u000a而非\n）；其余Unicode标量直接编码，斜线不转义。
+不得直接依赖各语言默认JSON序列化器：它们的Unicode和控制字符策略可能不同。
+
+跨语言固定向量要求（下列是审阅用预期字节文本，不是已运行的测试或摘要结果）：
+
+| 输入 | C(payload)应有的精确UTF-8文本 |
+| --- | --- |
+| pct=0，空说明 | `["progress-payload-v1",0,""]` |
+| pct=50，中文说明 | `["progress-payload-v1",50,"说明"]` |
+| pct=50，a、换行、b | `["progress-payload-v1",50,"a\u000ab"]` |
+| pct=100，单个反斜线 | `["progress-payload-v1",100,"\\"]` |
+| pct=50，预组é | `["progress-payload-v1",50,"é"]` |
+| pct=50，e后接U+0301 | `["progress-payload-v1",50,"é"]`（与上一行字节不同） |
+
+绑定向量固定epoch=`epoch-test-1`、subject=`subject-test-1`、case=`case-test-1`、
+recommendation=`rec-test-1`、operation=`op-test-1`、expectedRevision=1：
+`["progress-binding-v1","progress-request-v1","epoch-test-1","subject-test-1","case-test-1","rec-test-1","progress.update",1,"op-test-1","<上述空说明向量的64位payloadDigest>"]`。
+尖括号内容仅为设计占位，不是合法摘要或可执行向量。实现前须将每行UTF-8十六进制、
+payloadDigest及完整bindingDigest固化为审定向量，由至少两种目标语言独立核对；
+本轮没有计算或运行它们。还须列入双引号、CRLF、emoji、U+2028、最大整数、
+缺失/null、重复键、1.0/1e0/-0/布尔、孤立代理项及超字节限的接受/拒绝向量。
+这些未完成项是实施门槛，不能把当前示例表称为跨语言一致性已验证。
+
+### 同epoch删除/重建：选择禁止复用并永久保留身份行
+
+v1选择同epoch内禁止复用 `(epoch, caseId, recommendationId)`，不引入隐式重建。
+建议身份表保留一行：主键为该三元组，含revision、deleted标记；删除业务正文时
+同事务递增revision并置deleted，身份行及操作回执不可硬删。重新创建同ID因主键已存在
+失败；不能用UPSERT清掉deleted。新建议必须是新ID；恢复包中的同名对象不借此规则
+自动变成新对象，仍受独立epoch/导入合同约束。
+
+操作表外键指向身份行，删除策略RESTRICT；审计和回执不得级联删除。操作ID终结后
+仍保留原主键，防止删除后复用。若保留政策要求删除正文，应另审定最小身份墓碑及
+隐私方案；在未定前不允许清除身份后复用ID。外部管理员SQL或关闭约束可破坏保证，
+必须列入写入口治理；不能仅靠文档宣称所有维护者受约束。
+
+### SQLite首个候选的约束、领取与CAS（尚未实现）
+
+设计仅针对待固定版本的SQLite，不推断其他数据库的隔离级别。要求每连接启用并
+核对外键约束，约束迁移覆盖旧连接/池；现有部署版本和连接配置未据本稿验证。
+候选表约束至少包括：
+- 身份表三元主键；revision整数且1..9007199254740991；deleted仅0/1。
+- 操作表 `(epoch, operationId)` 主键，必填绑定NOT NULL，状态CHECK限定issued及
+  已定义终态；整数类型不能只依赖SQLite类型亲和，需typeof与范围CHECK。
+- 完整结果一对一引用操作主键；业务审计关联用 `(epoch,caseId,auditSeq)`，
+  committed必须有唯一操作审计关联，no_change/conflict/rejected不能伪造业务审计。
+- 触发器或等价不可绕开的约束拒绝修改签发绑定、删除操作行和修改任何已终结行；
+  状态只允许issued→终态。终态字段组合按前文逐态约束；应用级检查仍需保留。
+  完整DDL、触发器与现有审计表适配未编写，不能声称已有这些数据库保证。
+
+执行事务明确用 `BEGIN IMMEDIATE`，不是先普通SELECT后靠Python锁领取。
+成功获得SQLite写事务后，读取issued绑定及身份行；同一数据库的其他写者不能同时
+完成领取。领取不另行持久化为running，也不跨事务保留租约。业务更新采用带
+三元身份、deleted=0及revision=expectedRevision的条件UPDATE并检查影响行数恰为1，
+新revision为expectedRevision+1；零行走可确认的冲突/删除条件，超过1行视不一致。
+审计、结果及issued→终态条件UPDATE在同事务完成，终态UPDATE亦须恰为1行。
+已有终态只能读取；不产生新的派发许可。所有其他业务写入口也必须参加版本递增，
+单个入口的CAS不能补偿绕开版本的写者。
+
+SQLite的写事务串行化只约束同一数据库，不提供文件发布锁、跨库锁或恢复epoch
+可信性。禁止共享缓存/dirty-read前提下，只读核对用显式BEGIN读取同一快照中的
+操作、结果、身份及审计；观察标识只标记此次读取，不是持续锁或持久全库序号。
+驱动的隐式事务、Session已有事务、连接池、WAL及锁忙配置须逐项适配验证，不能
+嵌套BEGIN或宣称ORM会自动满足。不得为了接线修改现有安全设置。
+
+BEGIN/UPDATE/COMMIT遇busy、异常或结果不明时，不自动重试写入、不另写rejected，
+保持未知并按授权只读核对；真正回滚后的issued也不能仅凭超时重派。
+未知COMMIT的连接须隔离处置并由驱动语义确认，不假设close就证明未提交。
+这些是待验证要求，不是本轮故障实验结论。
+
+### 下一步门槛
+
+先审定身份/epoch来源、ID墓碑保留政策及所有写入口，再交付精确DDL、驱动事务方案、
+完整跨语言向量及迁移/旧客户端安排供审查。之后仅在另行允许的范围验证；本稿没有
+授权执行恢复、故障注入、数据库、权限或此前暂停测试，没有解除现有unknown锁。
