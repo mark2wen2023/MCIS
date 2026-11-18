@@ -174,10 +174,12 @@ function ColregSession({ compare, setCompare, draft, setDraft, draftNotice, setD
     })()
   }
 
+  const draftBoundaryNote = <p role="note">草稿请求若在切版前尚未返回，迟到结果不会用于更新此页，但不代表服务未生成报告；请到报告页核对，勿自动重试。草稿接口按服务当前台账生成，未绑定此处查看的版本，不能据此认定其历史来源。</p>
   const citation = params.has('check') || params.has('run')
   const targetUnavailable = viewRunId && (runView.error || (runView.data && (runView.data.runId !== viewRunId || runView.data.analysis.caseId !== caseId)))
   const missingCheck = analysis && sel && !analysis.checks.some(c => c.checkId === sel)
   if (targetUnavailable || missingCheck) return <div role="alert" className="p6-card">
+    {draftBoundaryNote}
     <p>{targetUnavailable ? '指定核查版本暂不可读取或返回版本不符。' : '指定核查项不在已读取的版本中。'}未自动改选当前版本或其他核查项。</p>
     <button type="button" onClick={() => setParams({ case: caseId })}>离开引用定位，查看本案当前核查</button>
   </div>
@@ -185,6 +187,7 @@ function ColregSession({ compare, setCompare, draft, setDraft, draftNotice, setD
   if (!caseRes.data || !analysis) {
     return (
       <div>
+        {draftBoundaryNote}
         {err && <div className="p6-card" style={{ borderColor: 'var(--red)' }}>后端错误：{err}</div>}
         {!err && <div className="empty">正在载入避碰规则对照…</div>}
       </div>
@@ -194,7 +197,8 @@ function ColregSession({ compare, setCompare, draft, setDraft, draftNotice, setD
   return (
     <>
     {citation && <p role="note">引用定位仅打开本案登记的版本与核查项，不证明生成报告时的内容或原始证据已核验。未带版本或使用 active 别名的引用仅打开当前台账。</p>}
-    {(draft || draftNotice || compare) && <p role="note">本案已有草稿、提示及对比结果在切换查看版本时保留，不会自动更新为所选版本。草稿接口按服务当前台账生成，未绑定此处查看的版本，不能据此认定其历史来源；切版前未返回的结果不用于更新此页，不代表服务未生成报告，请到报告页核对，勿自动重试。离开本案或刷新后不保留页面状态。</p>}
+    {draftBoundaryNote}
+    {(draft || draftNotice || compare) && <p role="note">本案已有草稿、提示及对比结果在切换查看版本时保留，不会自动更新为所选版本。离开本案或刷新后不保留页面状态。</p>}
     <ColregView
       caseDef={caseRes.data}
       vessels={vessels.data ?? []}

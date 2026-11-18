@@ -1,0 +1,2 @@
+65a26c6017ac6755daf2a71552f684fd6fe43a56c9d7b90ebb0b3b250a2482fc  web/src/pages/ColregPage.tsx
+ff556a09cccb44910c2e64cad3b7b6489b01c5759d63ba8d8e75f5c512b48eeb  web/tests/colreg-first-draft-notice.test.cjs
