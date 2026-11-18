@@ -97,6 +97,29 @@ def test_historical_artifact_files_rows_and_lineage_survive_two_restores(tmp_pat
         intake(third, raw2)
         assert_destinations(third, {sha0: raw0, sha1: raw1}, {sha0: [], sha1: [sha0]})
         raw3 = export(third)
-        with zipfile.ZipFile(io.BytesIO(raw3)) as archive:
-            assert archive.read('history/artifacts/' + sha0 + '.bin') == raw0
-            assert archive.read('history/artifacts/' + sha1 + '.bin') == raw1
+    sha2 = hashlib.sha256(raw2).hexdigest()
+    originals = {sha0: raw0, sha1: raw1, sha2: raw2}
+    parents = {sha0: [], sha1: [sha0], sha2: [sha1]}
+    with zipfile.ZipFile(io.BytesIO(raw3)) as archive:
+        working = json.loads(archive.read('working-records/backup.v1.json'))
+        artifacts = working['historicalArtifacts']
+        assert len(artifacts) == 3
+        assert {a['sha256'] for a in artifacts} == set(originals)
+        assert {p for p in archive.namelist() if p.startswith('history/artifacts/')} == {
+            'history/artifacts/' + sha + '.bin' for sha in originals}
+        for artifact in artifacts:
+            sha = artifact['sha256']
+            assert artifact['relativePath'] == 'history/artifacts/' + sha + '.bin'
+            assert artifact['sizeBytes'] == len(originals[sha])
+            assert archive.read(artifact['relativePath']) == originals[sha]
+        nodes = working['lineage']['nodes']
+        assert len(nodes) == 3
+        assert {n['artifactSha256']: n['parentArtifactSha256s'] for n in nodes} == parents
+        histories = working['importHistory']
+        assert len(histories) == 3
+        assert {(h['kind'], h['key'], h['sourceArtifactSha256']) for h in histories} == {
+            ('package-intake', sha, sha) for sha in originals}
+    # A fourth fresh store exercises the same supported importer, no new capability.
+    with store(tmp_path / 'fourth') as fourth:
+        intake(fourth, raw3)
+        assert_destinations(fourth, originals, parents)
