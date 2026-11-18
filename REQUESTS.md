@@ -742,3 +742,6 @@ Confirmed synthetic old-response render lost edits typed during reread. Capture 
 
 ## Audio save response context (2026-11-18)
 Synthetic late success after changing case updated old page state. Capture case/run and selection epoch, discard late result after change with explicit possibly-saved/verify message; no retry or permission change. New4 plus adjacent2/3 synthetic pass, not browser/backend acceptance. See tests_acceptance/audio-save-context/DEVELOPER-VERIFICATION.md.
+
+## Image pending reread correction (2026-11-18)
+Synthetic red1 reproduced new input lost on late load render. Track edits and selection epochs before applying reread; five ordinary synthetic cases pass, including normal reread. No permission/API change; see tests_acceptance/image-read-race/DEVELOPER-VERIFICATION.md. Not browser acceptance.
