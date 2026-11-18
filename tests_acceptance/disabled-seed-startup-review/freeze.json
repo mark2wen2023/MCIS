@@ -1,0 +1,18 @@
+{
+  "status": "BLOCKED_NOT_EXECUTABLE",
+  "sourceCommit": "aa02d61bf2f1e8f1805531a2af2b1f0326f3b8a7",
+  "interpreter": {
+    "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+    "versionFromPyvenvConfig": "3.12.14",
+    "versionExecutedThisRound": false
+  },
+  "dependencyMetadataRoot": "/workspace/mcis-pr104-supported-archive/service/.venv/lib/python3.12/site-packages",
+  "dependencyOrigin": "existing local venv; upstream artifacts and installation provenance not independently established",
+  "dependencyPayloadTreeSha256": null,
+  "stdlibAndNativeLibrariesSha256": null,
+  "completeNonCaseSourceClosureApproved": false,
+  "caseBearingSourceExcludedFromCopy": true,
+  "source-allowlist.tsvSha256": "5cc60d8be9ecd4e52e285e221db9a0be67e5608e2d5a410f4506066b0ce73b42",
+  "dependency-metadata.tsvSha256": "e9c1b324059bbe1b233bfca59fd8a1634db5cabe5003f6979e1c788059402883"
+}

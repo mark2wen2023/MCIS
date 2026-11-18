@@ -1,0 +1,59 @@
+raise SystemExit('REVIEW ONLY: execution is not authorized; do not remove this gate.')
+# Proposed pre-import checks, not a runnable preparation tool.
+import hashlib
+import json
+from pathlib import Path
+
+
+def fail(message):
+    raise RuntimeError(message)
+
+
+def regular(root, relative):
+    p = Path(relative)
+    if p.is_absolute() or '..' in p.parts or not p.parts:
+        fail('invalid manifest path')
+    target = root / p
+    for part in (target, *target.parents):
+        if part.is_symlink():
+            fail('symlink in input path')
+        if part == root:
+            break
+    if not target.is_file():
+        fail('missing regular file')
+    return target
+
+
+def verify_exact_tree(root, entries):
+    # entries must come from separately approved, digest-pinned manifests.
+    expected = set(entries)
+    actual = {p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file()}
+    if actual != expected or any(p.is_symlink() for p in root.rglob('*')):
+        fail('extra/missing files or symlinks')
+    for name, digest in entries.items():
+        if hashlib.sha256(regular(root, name).read_bytes()).hexdigest() != digest:
+            fail('input digest mismatch')
+
+
+def reject_bootstrap_files(root):
+    for p in root.rglob('*'):
+        if p.name.endswith(('.pth', '.egg-link')) or p.name in ('sitecustomize.py', 'usercustomize.py'):
+            fail('startup hook/editable metadata present; do not delete or silently omit')
+        if p.name == 'direct_url.json':
+            data = json.loads(p.read_text())
+            if data.get('dir_info', {}).get('editable'):
+                fail('editable install')
+        if p.name == '__pycache__' or p.suffix in ('.pyc', '.pyo'):
+            fail('unapproved bytecode cache')
+
+# Required missing wiring before any MCIS import:
+# - verify freeze.json itself against an independently recorded approved digest;
+# - exact schema/type/path checks before using any manifest fields, no assert checks;
+# - complete approved stdlib/native/dependency payload manifests and trusted artifact origins;
+# - resolve symlinks during review, freeze actual payloads, never copy an editable checkout;
+# - complete non-case source closure (current six-file list is insufficient by design);
+# - create a new owner-controlled temporary root, never reuse/clean an existing directory;
+# - copy only approved regular files and rehash; no whole checkout or whole site-packages copy;
+# - reject concurrent writers; hash checking alone is subject to TOCTOU;
+# - run only pinned interpreter with -I -S -B and an explicitly reviewed sys.path.
+# No copying, process launch, dependency installation or application import is implemented here.

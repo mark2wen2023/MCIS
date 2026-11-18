@@ -50,3 +50,15 @@ Previous archive-test statements that no seed modules were loaded were inaccurat
 imports loaded them even with seed_demo=False. This candidate does not retroactively fix those
 runs. No seed body or case data included in this commit; only identifier constants and code/docs.
 No merge/deployment.
+
+## Explicit module-global API changes (static review follow-up)
+
+1. HAILI5_BAND_EVIDENCE alias is no longer exported by seed_annotations.
+2. BAND_EVIDENCE no longer eagerly contains the real-case key.
+3. Overriding that mapping key no longer controls the real-case function result, which loads
+   the actual seed mapping on demand. This is not externally compatible with the old globals.
+
+Tracked-code symbol search (1104 files, excluded seed bodies) found only colreg/runs.py
+importing seed_band_evidence; no known tool/test direct mapping consumers were found.
+Dynamic references and external consumers remain unknown. Treating globals as internal is a
+proposed API boundary, not an approved compatibility guarantee. No lazy mapping implemented.

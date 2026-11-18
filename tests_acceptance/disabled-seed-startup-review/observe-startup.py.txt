@@ -1,0 +1,54 @@
+raise SystemExit('REVIEW ONLY: execution is not authorized; do not remove this gate.')
+# Draft observer core. Not executed; incomplete launcher/manifest prerequisites remain.
+import sys
+import json
+
+
+def install_observer(stream):
+    # stream must already refer to a new metadata-only log outside the input trees.
+    # Never serialize arbitrary event arguments, code constants or file contents.
+    def emit(row):
+        stream.write(json.dumps(row, ensure_ascii=True) + '\n')
+        stream.flush()
+    def hook(event, args):
+        if event == 'import':
+            emit({'event':event, 'module':args[0],
+                  'filename':args[1] if isinstance(args[1],str) else None})
+        elif event == 'open':
+            emit({'event':event, 'path':args[0] if isinstance(args[0],(str,int)) else '<non-path>',
+                  'mode':args[1], 'flags':args[2]})
+        elif event == 'exec':
+            emit({'event':event, 'filename':getattr(args[0],'co_filename',None)})
+        elif event == 'compile':
+            emit({'event':event, 'filename':args[1]})  # Never log args[0] source.
+        elif event in ('subprocess.Popen','os.system','socket.connect'):
+            emit({'event':event, 'unexpected':True})  # No command/env/address details.
+    sys.addaudithook(hook)
+    emit({'event':'baseline-modules', 'modules':sorted(sys.modules)})
+    return emit
+
+
+def proposed_application_step(temp_data_root):
+    # Only after all manifests, origins, closure and environment checks are approved.
+    from mcis_service.config import Settings
+    from mcis_service.main import create_app
+    st = Settings()
+    st.data_dir = temp_data_root
+    st.db_url = 'sqlite:///' + str(temp_data_root / 'startup.sqlite')
+    st.seed_demo = False
+    app = create_app(st)
+    if app.state.settings.seed_demo is not False:
+        raise RuntimeError('seed not disabled')
+    # No TestClient, requests, lifespan runner, uvicorn, report/analysis/Seed calls.
+    return app
+
+# Launcher draft, NOT an instruction to run:
+# <pinned-real-interpreter> -I -S -B <approved-driver>
+# Driver must replace sys.path with approved source/dependency/stdlib roots only (not append),
+# verify those roots before import, set explicit fresh paths and sanitize process environment.
+# Record interpreter identity, all manifest digests, import/open/compile/exec events, final
+# module __file__/spec origins and temporary output path inventory (never DB/content dumps).
+# Close/dispose app DB on confirmed normal completion; do not blindly delete uncertain outputs.
+# Observer is passive: it neither blocks loads nor proves complete native/OS file access.
+# Standard-library imports before hook installation are outside its observation window.
+# Final sys.modules alone cannot detect transient loads or establish absence of case bytes.
