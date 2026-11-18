@@ -14,6 +14,9 @@ class Settings:
     data_dir: Path = field(default_factory=lambda: Path(os.environ.get("MCIS_DATA_DIR", SERVICE_ROOT / "data")))
     db_url: str | None = field(default_factory=lambda: os.environ.get("MCIS_DB_URL"))
     seed_demo: bool = field(default_factory=lambda: os.environ.get("MCIS_SEED_DEMO", "1") != "0")
+    # Independent of seed population; only explicit application configuration enables reads.
+    allow_analysis_seed_reads: bool = False
+    allow_public_report_reads: bool = False
     core_cmd: str = field(default_factory=lambda: os.environ.get("MCIS_CORE", str(PROJECT_ROOT / "tools" / "mcis-core" / "mcis-core.sh")))
     core_timeout_s: float = field(default_factory=lambda: float(os.environ.get("MCIS_CORE_TIMEOUT", "60")))
     host: str = "127.0.0.1"

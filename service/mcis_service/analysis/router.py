@@ -11,9 +11,10 @@ import threading
 from pathlib import Path
 from typing import Any
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 
 from ..common.context import problem
+from ..common.source_policy import SourceDisabled, read_analysis
 
 DATA = Path(__file__).resolve().parent / "data"
 SEED = DATA / "w12-analysis-seed.json"
@@ -33,7 +34,11 @@ _lock = threading.Lock()
 _cache: dict[str, Any] = {}
 
 
-def load_seed(path: Path = SEED, sidecar: Path = SIDECAR) -> tuple[dict[str, Any], str]:
+def load_seed(path: Path = SEED, sidecar: Path = SIDECAR, *, source_policy=None) -> tuple[dict[str, Any], str]:
+    return read_analysis(source_policy, _read_seed, path, sidecar)
+
+
+def _read_seed(path: Path, sidecar: Path) -> tuple[dict[str, Any], str]:
     raw = path.read_bytes()
     digest = hashlib.sha256(raw).hexdigest()
     expected = sidecar.read_text(encoding="utf-8").split()[0] if sidecar.exists() else None
@@ -52,17 +57,24 @@ def _meta(doc: dict[str, Any], sha: str) -> dict[str, Any]:
             "w14Frozen": doc["w14Frozen"], "crossCheck": doc["crossCheck"], "disclaimer": doc["disclaimer"]}
 
 
+def _request_seed(request: Request):
+    try:
+        return load_seed(source_policy=getattr(request.app.state, "source_read_policy", None))
+    except SourceDisabled:
+        raise problem(503, "analysis_seed_disabled", "当前应用配置未启用分析演示来源；未读取种子材料。")
+
+
 @router.get("/analysis/cases", **EXT)
-def list_analysis_cases() -> dict[str, Any]:
-    doc, sha = load_seed()
+def list_analysis_cases(request: Request) -> dict[str, Any]:
+    doc, sha = _request_seed(request)
     return {"cases": [{"caseId": c["caseId"], "key": c["key"], "title": c["title"], "isFictionalDemo": c["isFictionalDemo"],
                        "sourceLabel": c["sourceLabel"], "hasWhatIf": c["whatif"] is not None} for c in doc["cases"]],
             **_meta(doc, sha)}
 
 
 @router.get("/cases/{case_id}/analysis", **EXT)
-def get_analysis(case_id: str) -> dict[str, Any]:
-    doc, sha = load_seed()
+def get_analysis(case_id: str, request: Request) -> dict[str, Any]:
+    doc, sha = _request_seed(request)
     for c in doc["cases"]:
         if c["caseId"] == case_id or c["key"] == case_id:
             response = {**c, "meta": _meta(doc, sha)}

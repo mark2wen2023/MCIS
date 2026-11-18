@@ -25,6 +25,7 @@ from .cases.router import router as cases_router
 from .tracks_import.router import router as tracks_import_router
 from .colreg.router import router as colreg_router
 from .config import Settings
+from .common.source_policy import SourceReadPolicy
 from .db import Database
 from .environment.router import router as environment_router
 from .evidence.router import router as evidence_router
@@ -45,6 +46,7 @@ from .interview_compare.router import router as interview_compare_router  # W5 �
 
 def create_app(settings: Settings | None = None) -> FastAPI:
     settings = settings or Settings()
+    source_policy = SourceReadPolicy(settings.allow_analysis_seed_reads, settings.allow_public_report_reads)
     settings.data_dir.mkdir(parents=True, exist_ok=True)
     settings.blob_dir.mkdir(parents=True, exist_ok=True)
     db = Database(settings.resolved_db_url)
@@ -60,6 +62,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     app = FastAPI(title="MCIS 调查业务服务", version=__version__,
                   description="海事事故调查仿真系统 · 模块③（契约见 contracts/openapi.yaml）。仅监听 127.0.0.1。")
+    app.state.source_read_policy = source_policy
     app.state.settings = settings
     app.state.db = db
     app.state.sim_states = {}

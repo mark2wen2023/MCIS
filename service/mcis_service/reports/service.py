@@ -100,7 +100,7 @@ def create_report(s, ctx, case: dict, template_id: str, lang: str, *, parent: di
     report_id = 'RPT-' + uuid4().hex[:20]
     family_id = parent['familyId'] if parent else report_id
     versions = [r['version'] for r in list_docs(s, ReportRow, case['caseId']) if r['familyId'] == family_id]
-    sections = build_sections(s, case, template)
+    sections = build_sections(s, case, template, source_policy=getattr(ctx.request.app.state, "source_read_policy", None))
     if colreg_only:
         section = next(x for x in sections if x['sectionId'] == 'analysis')
         section['titleZh'], section['titleEn'] = '避碰规则分析', 'Collision avoidance rules analysis'

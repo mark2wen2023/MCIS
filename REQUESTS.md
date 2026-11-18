@@ -968,3 +968,5 @@ claims. No product route/permission/migration/publisher changes.
 - Blocking correction: 8ec4421 deleted original mapping through unanchored edit. Restore exact aa02d61 wrapper prefix; correct preservation claim; no actual wrapper/startup execution.
 
 - Authorized lazy item lookup: unknown/fictional IDs avoid real mapping materialization, complete map overrides and entry deletion retain priority; no startup permission.
+
+- Authorized candidate source-read contract: two instance flags default False; analysis disabled=503 analysis_seed_disabled before read; report disabled-source missing text distinct from read failure. Legacy direct load_seed needs explicit policy; whatif custom callback shape retained but skipped when disabled. Existing reports unchanged. See tests_acceptance/source-read-policy/REVIEW.md; no startup permission.

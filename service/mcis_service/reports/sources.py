@@ -16,6 +16,7 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from ..analysis.router import load_seed
+from ..common.source_policy import SourceDisabled, read_analysis, read_public_report
 from ..cases import service as cases
 from ..colreg import evidence_refs
 from ..colreg.models import ColregAnalysisRow
@@ -40,10 +41,19 @@ def _unavailable(_s: Session, _case: dict[str, Any]) -> dict[str, Any]:
     return {'missing': True, 'items': []}
 
 
-def _whatif(_s: Session, case: dict[str, Any]) -> dict[str, Any]:
+def _policy_missing(kind):
+    label = '分析演示来源' if kind == 'analysis' else '仓库公开报告摘录'
+    return {'missing': True, 'items': [],
+            'missingZh': f'当前应用策略未启用{label}，未读取该来源；不表示材料不存在或读取故障。',
+            'missingEn': f'{kind} repository source disabled by application policy; not read, not a read failure.'}
+
+
+def _whatif(_s: Session, case: dict[str, Any], *, source_policy=None) -> dict[str, Any]:
     """只用种子的字段生成句子；来源许可先于访问 whatif 正文。"""
     try:
-        seed, digest = load_seed()
+        seed, digest = load_seed(source_policy=source_policy)
+    except SourceDisabled:
+        return _policy_missing('analysis')
     except Exception:
         # 包括 analysis_seed_tampered；上游种子故障不阻断其它章节生成。
         return {'missing': True, 'items': [],
@@ -186,7 +196,7 @@ def _clone(sentence: dict[str, Any], identifier: str) -> dict[str, Any]:
     return out
 
 
-def build_sections(s: Session, case: dict[str, Any], template: dict[str, Any]) -> list[dict[str, Any]]:
+def build_sections(s: Session, case: dict[str, Any], template: dict[str, Any], *, source_policy=None) -> list[dict[str, Any]]:
     """从当前已存档来源创建全 Draft 章节，绝不调用 COLREG evaluate / runs.ensure。
 
     案件与船舶字段属于元数据，不伪装为有证据支持的结论；其 citations 可为空，
@@ -355,7 +365,16 @@ def build_sections(s: Session, case: dict[str, Any], template: dict[str, Any]) -
     for kind, label_zh, label_en, number in (
             ('whatif', '推演对比表', 'what-if comparison table', 'W14'),
             ('systemic', '系统分析', 'systemic analysis', 'W15')):
-        source = SOURCE_ADAPTERS.get(kind, _unavailable)(s, deepcopy(case))
+        adapter = SOURCE_ADAPTERS.get(kind, _unavailable)
+        if kind == 'whatif':
+            try:
+                # Old two-positional-argument custom adapters remain callable when enabled.
+                call = (lambda: adapter(s, deepcopy(case), source_policy=source_policy)) if adapter is _whatif else (lambda: adapter(s, deepcopy(case)))
+                source = read_analysis(source_policy, call)
+            except SourceDisabled:
+                source = _policy_missing('analysis')
+        else:
+            source = adapter(s, deepcopy(case))
         supplied = source.get('items') or []
         if source.get('missing', True) or not supplied:
             grouped['analysis'].append(_missing(
@@ -428,8 +447,16 @@ def build_sections(s: Session, case: dict[str, Any], template: dict[str, Any]) -
         if not grouped[name]:
             grouped[name].append(_missing(name + '-missing', zh, en))
 
-    from . import public_text
-    public_excerpts = public_text.excerpts(case, template)
+    def read_excerpts():
+        from . import public_text
+        return public_text, public_text.excerpts(case, template)
+
+    try:
+        public_text, public_excerpts = read_public_report(source_policy, read_excerpts)
+    except SourceDisabled:
+        public_excerpts = {}
+        disabled = _policy_missing('public_report')
+        grouped['appendix'].append(_missing('appendix-public-source-disabled', disabled['missingZh'], disabled['missingEn']))
     sections = []
     for spec in template['sections']:
         identifier = spec['sectionId']
