@@ -450,3 +450,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | MEDIA_DEMO_NO_ROLE_HEADER | 待独验 | 仅移除合成准备脚本的LeadInvestigator头，沿用原默认Investigator及权限；1个新普通接口合成节点通过。非可信身份/浏览器验收，模型与归档关闭；冻结 logs/MEDIA_DEMO_NO_ROLE_HEADER-impl-hashes-frozen.txt，仅本地。 |
 
 | Audio saved-draft marker | 待独验 | 2026-11-18：成功保存后逐段清除误报标记，保留其他段及提交期间新输入；普通合成红1→绿3，非浏览器/真实服务验收，不改变权限或归档。 |
+
+| Image saved-draft marker | 待独验 | 2026-11-18：仅图片页逐行清除成功保存后的误报，其他行及保存期间输入保留；合成红1→绿3，非浏览器/真实服务验收，权限及归档保护不变。 |

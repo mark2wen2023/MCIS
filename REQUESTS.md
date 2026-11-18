@@ -733,3 +733,6 @@ Remove unnecessary LeadInvestigator header from isolated synthetic preparation. 
 
 ## Audio saved-draft marker correction (2026-11-18)
 On media demo f001a6d, change audio review page only: confirmed successful save clears that segment's dirty marker only if current fields still match the submitted body. Preserve other drafts and edits during pending requests; no permission/API change. New ordinary synthetic DOM/HTTP tests: one baseline failure, final3 pass; not browser or real-backend acceptance. Details tests_acceptance/audio-saved-draft-state/DEVELOPER-VERIFICATION.md.
+
+## Image saved-draft marker correction (2026-11-18)
+On media demo3507b9f, ordinary synthetic test reproduced dirty remaining true after a matching successful image-line save. Track dirty lines; clear only the successfully checked line, preserve other drafts. Existing pending-edit response mismatch remains unknown/no retry. Baseline1fail, final3pass; no browser/model/original bytes or paused tests. See tests_acceptance/image-saved-draft-state/DEVELOPER-VERIFICATION.md.

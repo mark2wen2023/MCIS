@@ -1,0 +1,2 @@
+752966db32edba6a0215dd16f217136f2db0c8a553ac4a21d0d48c77eed5908d  service/mcis_service/image_review/review.html
+05b86e20418064063e8502a42c3beced83bb22cdc9e4bec05286bb46ae6d6b63  tests_acceptance/image-saved-draft-state/page.test.cjs
