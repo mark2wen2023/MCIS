@@ -793,3 +793,5 @@ Synthetic red1 reproduced new input lost on late load render. Track edits and se
 - audio-playback-waiting：授权补充播放器等待/失败反馈，保持 busy、不排队、不超时解锁和不自动重试；原串行测试只更新失败提示预期，旧冻结清单保留历史，新清单 logs/audio-playback-waiting-impl-hashes-frozen.txt。
 
 - image-task-waiting：已授权在图片任务查询发起时替换旧JSON为等待反馈，不改查询次数、代次或最新响应优先，不新增轮询/重试/任务执行；新冻结 logs/image-task-waiting-impl-hashes-frozen.txt，旧清单仅历史版本。
+
+- image-task-waiting-edit：授权补齐新查询先完成的时序证据及等待中草稿input反馈；确认两项提示滞留后最小标记修复，不取消请求/不自动重试。旧冻结为历史，新清单 logs/image-task-waiting-edit-impl-hashes-frozen.txt。

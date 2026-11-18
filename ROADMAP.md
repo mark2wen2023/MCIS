@@ -503,3 +503,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 - 待测：audio-playback-waiting，基于59559cc；8新增及10相邻纯Node开发合成节点通过，共18不累计历史；真实播放/浏览器未验，后端启动/归档仍暂停。见 tests_acceptance/audio-playback-waiting/DEVELOPER.md。
 
 - 待测：image-task-waiting，基于fe92743；11项新增纯Node合成开发测试通过，正常/unknown/失败/迟到/切上下文；浏览器、HTTP、任务执行未验，后端启动/归档仍暂停。见 tests_acceptance/image-task-waiting/DEVELOPER.md。
+
+- 待测：image-task-waiting-edit，基于fa9e118；单文件15项纯Node开发合成通过（新增4项，不累计历史），dirty保留；浏览器/HTTP未验，启动/归档暂停不变。

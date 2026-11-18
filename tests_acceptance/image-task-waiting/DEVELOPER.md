@@ -25,3 +25,17 @@ Developer only; no independent acceptance. No browser/HTTP/task execution verifi
 whole-suite run for this one standalone HTML text update. Existing editVersion guard can suppress
 responses if draft input changes; this slice does not redesign that lifecycle or promise a timeout.
 Backend startup and archive tests remain paused due to seed import isolation. No merge/deployment.
+
+## Follow-up: final-response ordering and draft edits
+Base fa9e118230a8f40dbd3a702926004d1122601878. Four new synthetic cases:
+newer finishes first then older success/failure; actual rendered textarea oninput while waiting,
+then query success/failure. Fixture gained only synthetic element creation/input events; same
+forbidden fetch and in-memory json seam, no image decode or application imports.
+Before fix: 13 passed, 2 failed at the draft-edit waiting notice; response-order cases passed.
+After fix: 15 passed, 0 failed/skipped using the same single-file command above. Not cumulative.
+A pending-query marker updates only feedback, is scoped to the latest query generation, resets
+on context change/settlement, and turns waiting into an explicit non-applied-result notice when
+input changes. Dirty/current DOM text remain, result is ignored by existing editVersion guard.
+No request cancellation, dispatch, retry, polling, task-state or permissions changes. This supersedes
+the earlier documented editVersion feedback limitation for these tested textarea paths; not a full
+lifecycle or browser guarantee. Other input types sharing the handler not separately exercised.
