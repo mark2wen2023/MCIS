@@ -397,3 +397,37 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTREVIEWMAIN | 最小整合独审通过 | 2026-11-14：main25b9df6前缀及其他跟踪文件保留，12源文件逐字；独立无.git副本164项通过，新/原冻结各4/4。见 DEFECTS/EXPERTREVIEWMAIN.md；仅离线pending人审，真实0/HOLD。 |
 | EXPERTTRACE | 待独审 | 2026-11-14：PR87head99b44f0上新增10跨视图追溯/反认证回归，组合174项通过；冻结 logs/EXPERTTRACE-impl-hashes-frozen.txt。不改运行代码；真模型0/HOLD，非浏览器或事实验收。 |
 | EXPERTTRACE | 测试增量独审通过 | 2026-11-14：独立无.git副本10过；临时断开taskId触发5红、伪认证flag触发1红，恢复10过；冻结2/2，运行文件无差异。见 DEFECTS/EXPERTTRACE.md。真实模型0/HOLD。 |
+
+| CASE-LOAD-STATUS | 2026-11-18 | 待测：案件资料载入状态不再误称服务ONLINE/OFFLINE；5合成SSR场景/27断言、30导航断言及构建为开发自测；浏览器/视觉未验 | logs/case-load-status-impl-hashes-frozen.txt；tests_acceptance/case-load-status/DEVELOPER.md |
+
+| CASE-LOAD-STATUS transition | 2026-11-18 | 待测：案件读取结果绑定caseId；6合成生命周期断言、27相邻SSR断言与构建开发通过，浏览器未验 | tests_acceptance/case-load-status/TRANSITION-DEVELOPER.md；logs/case-load-transition-impl-hashes-frozen.txt |
+
+| TOAST-LIFETIME | 2026-11-18 | 待测：同文提示各自到期，五项合成时钟场景及构建开发自测通过；浏览器/视觉未验 | tests_acceptance/toast-lifetime/DEVELOPER.md；logs/toast-lifetime-impl-hashes-frozen.txt |
+
+| TOAST-ACCESSIBILITY | 2026-11-18 | 待测：保存反馈状态/警报语义；合成结构检查、5定时器场景及构建开发通过；读屏/浏览器/视觉未验 | tests_acceptance/toast-accessibility/DEVELOPER.md；logs/toast-accessibility-impl-hashes-frozen.txt |
+
+| INTERVIEW-REPORT-LINK | 2026-11-18 | 待测：兼容报告笔录id链接，保留record优先与案件上下文；6合成选择场景/30导航断言及构建开发通过；浏览器未验，不含句级定位 | tests_acceptance/interview-report-link/DEVELOPER.md；logs/interview-report-link-impl-hashes-frozen.txt |
+
+| COLREG-REPORT-LINK | 2026-11-18 | 待测：报告check/run链接接通，指定版本不静默回退；9合成页面场景/12断言、30导航断言及构建开发通过，浏览器/历史完整性未验 | tests_acceptance/colreg-report-link/DEVELOPER.md；logs/colreg-report-link-impl-hashes-frozen.txt |
+
+| COLREG version transition | 2026-11-18 | 待测：手动切版重建读取会话，active别名按当前处理；5合成生命周期断言/12相邻断言与构建开发通过；浏览器未验 | tests_acceptance/colreg-report-link/TRANSITION-DEVELOPER.md；logs/colreg-version-transition-impl-hashes-frozen.txt |
+
+
+## COLREG case work retained across version navigation — pending independent review
+
+Follow-up to 0b53fce: preserve case-scoped draft, notice and comparison while resetting only version-scoped reads. No permissions or service changes. Developer synthetic tests and build passed; browser unverified. Evidence: tests_acceptance/colreg-report-link/RETAINED-WORK-DEVELOPER.md; freeze: logs/colreg-retained-work-impl-hashes-frozen.txt. Prior freezes remain historical.
+
+
+## COLREG stale work response suppression — pending independent review
+Following f492182, case-retained work rejects late session and out-of-order UI responses; no backend cancellation/retry guarantee. Draft current-ledger provenance is explicitly distinguished from viewed run. Developer synthetic regressions and build passed; browser unverified. See tests_acceptance/colreg-report-link/ASYNC-WORK-DEVELOPER.md and logs/colreg-async-work-impl-hashes-frozen.txt.
+
+
+## First pending COLREG draft guidance — pending independent review
+Make conditional unknown-result guidance visible even before any draft/notice/compare exists, including loading/unavailable states. No job state or backend changes. Developer five new synthetic assertions, adjacent tests/build passed. See tests_acceptance/colreg-report-link/FIRST-DRAFT-DEVELOPER.md and logs/colreg-first-draft-impl-hashes-frozen.txt; browser unverified.
+
+| ANALYSIS-MISSING-SCENARIO | 2026-11-18 | 待测：缺失方案不静默退回基线；8合成断言与构建开发通过，浏览器/历史核验未验 | tests_acceptance/analysis-missing-scenario/DEVELOPER.md；logs/analysis-missing-scenario-impl-hashes-frozen.txt |
+
+
+## UI first-group integration — pending acceptance
+
+Combined case status, toast, interview link, COLREG and missing-analysis candidates without functional edits; all document append histories retained. Developer selected 12 synthetic scripts and build passed; browser, visual, real-data and independent combined acceptance remain unverified. See tests_acceptance/ui-navigation-group-one/DEVELOPER.md. Do not merge or deploy.

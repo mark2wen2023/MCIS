@@ -647,3 +647,64 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## CASE-LOAD-STATUS (2026-11-18)
+Authorized bounded UI feedback correction on main94d5e38: Layout's case-fetch
+result is not service health. Replace ONLINE/OFFLINE with explicit case-data
+states; retain navigation, requests and permissions. Shared Layout change,
+synthetic SSR validation and build only; browser/visual acceptance pending.
+
+## CASE-LOAD-STATUS transition follow-up (2026-11-18)
+Independent review prompted an actual Layout-function synthetic lifecycle check.
+Before effects run, switching from failed case A to B retained false status.
+Bind load result to case ID; preserve existing cancellation and requests.
+
+## TOAST-LIFETIME (2026-11-18)
+Bounded UI feedback fix: expire the specific notification instance, not any later
+notification with the same text. No request/permission changes. Synthetic hook
+and clock regression only; browser/visual acceptance pending.
+
+## TOAST-ACCESSIBILITY (2026-11-18)
+Bounded save-feedback accessibility: existing evidence/recommendation operations
+use Toast with no live-region semantics. Add persistent empty status/alert
+regions, retaining messages, timeout and focus. No API or permission changes.
+
+## INTERVIEW-REPORT-LINK (2026-11-18)
+Report citations already encode interview record as id (reports/sources.py),
+while InterviewPage only consumed record. Accept id only when record is absent;
+preserve explicit record priority, case context and missing-record behavior.
+No API/permission changes, statement positioning or historical version claims.
+
+## COLREG-REPORT-LINK (2026-11-18)
+Existing report links carry check/run; current page ignored both. Bind query to
+session and initial selection; explicit run lookup may not fall back to current
+analysis. Missing/mismatched target is shown, not replaced. No API/permission or
+historical integrity claims; browser acceptance pending.
+
+## COLREG-REPORT-LINK loading follow-up (2026-11-18)
+Actual useLoad synthetic lifecycle reproduces stale A misreported as mismatched B
+on manual version selection. Route version selection through keyed query session;
+normalize active endpoint alias to current semantics. No loader/global/API changes.
+
+
+## COLREG case work retained across version navigation — pending independent review
+
+Follow-up to 0b53fce: preserve case-scoped draft, notice and comparison while resetting only version-scoped reads. No permissions or service changes. Developer synthetic tests and build passed; browser unverified. Evidence: tests_acceptance/colreg-report-link/RETAINED-WORK-DEVELOPER.md; freeze: logs/colreg-retained-work-impl-hashes-frozen.txt. Prior freezes remain historical.
+
+
+## COLREG stale work response suppression — pending independent review
+Following f492182, case-retained work rejects late session and out-of-order UI responses; no backend cancellation/retry guarantee. Draft current-ledger provenance is explicitly distinguished from viewed run. Developer synthetic regressions and build passed; browser unverified. See tests_acceptance/colreg-report-link/ASYNC-WORK-DEVELOPER.md and logs/colreg-async-work-impl-hashes-frozen.txt.
+
+
+## First pending COLREG draft guidance — pending independent review
+Make conditional unknown-result guidance visible even before any draft/notice/compare exists, including loading/unavailable states. No job state or backend changes. Developer five new synthetic assertions, adjacent tests/build passed. See tests_acceptance/colreg-report-link/FIRST-DRAFT-DEVELOPER.md and logs/colreg-first-draft-impl-hashes-frozen.txt; browser unverified.
+
+## ANALYSIS-MISSING-SCENARIO (2026-11-18)
+Existing report analysis links specify scenario; AnalysisView silently displayed
+baseline for absent scenario. Show missing target with explicit baseline action;
+valid/default views unchanged. No source/version verification or permission change.
+
+
+## UI first-group integration — pending acceptance
+
+Combined case status, toast, interview link, COLREG and missing-analysis candidates without functional edits; all document append histories retained. Developer selected 12 synthetic scripts and build passed; browser, visual, real-data and independent combined acceptance remain unverified. See tests_acceptance/ui-navigation-group-one/DEVELOPER.md. Do not merge or deploy.
