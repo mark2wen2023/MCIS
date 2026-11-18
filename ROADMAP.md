@@ -401,3 +401,7 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 ## GISIS stale validation feedback — pending independent review
 Editing fields invalidates displayed prior validation object while retaining input; prompts explicit revalidation. Developer 4 synthetic flows/40 assertions and build passed; browser unverified. See tests_acceptance/gisis-stale-validation/DEVELOPER.md and logs/gisis-stale-validation-impl-hashes-frozen.txt. No API, permission or consultation changes.
+
+
+## GISIS parent input revision binding — pending independent review
+Capture frontend input revision/request when validating; editing clears old result/global notice and stale success cannot certify new input. Four parent synthetic callback flows and four panel flows/44 assertions, build passed; not full browser/HTTP lifecycle. See tests_acceptance/gisis-stale-validation/PARENT-DEVELOPER.md and logs/gisis-parent-validation-impl-hashes-frozen.txt. No backend/permission or consultation changes.

@@ -23,6 +23,7 @@ export interface ReportViewProps {
   onCreate: (language?: ReportLanguage) => void; onRegenerate: () => void; onReview: (action: ReviewAction, target: ReviewTarget) => void
   onExport: (format: 'pdf' | 'docx', lang: ReportLanguage) => void; onGlossary: () => void
   onGisisExport: (format: 'json' | 'csv') => void; onGisisValidate: (values: Record<string, unknown>, exportFile: boolean) => void
+  onGisisEdit?: () => void
   onRefresh?: () => void
 }
 
@@ -100,7 +101,7 @@ export function ReportView(props: ReportViewProps) {
           </div>
           {draft && !pending && <div className="rpt-draft-note">DRAFT 草稿 · 尚有章节未经人工确认，导出保留草稿标注。重新生成保留当前版本和复核记录。</div>}
         </Panel>
-        <GisisPanel key={caseId} data={props.gisis} busy={busy} pending={pending || blocked} validation={props.validation} onExport={props.onGisisExport} onValidate={props.onGisisValidate} />
+        <GisisPanel key={caseId} data={props.gisis} busy={busy} pending={pending || blocked} validation={props.validation} onExport={props.onGisisExport} onValidate={props.onGisisValidate} onEdit={props.onGisisEdit} />
       </div>
       <Panel title="报告审计" meta={<span>操作人 · 时间 · 原值/新值 · 理由全文</span>}>
         {props.audit.length ? <div className="rpt-audit-list">{props.audit.map((a) => <details key={a.auditEvent.seq} className="rpt-audit"><summary><span className="mono">#{a.auditEvent.seq} · {a.auditEvent.utc}</span> <b>{a.auditEvent.operator}</b> · {a.auditEvent.action} · {a.sectionId || '报告'}{a.sentenceId ? ` / ${a.sentenceId}` : ''}</summary><p>{a.summary}</p>{a.reason && <div className="rpt-reason"><b>理由全文：</b>{a.reason}</div>}<div className="rpt-audit-values"><div><b>原值</b><pre>{JSON.stringify(a.beforeValue, null, 2)}</pre></div><div><b>新值</b><pre>{JSON.stringify(a.afterValue, null, 2)}</pre></div></div></details>)}</div> : <div className="rpt-empty">{pending ? '真实案例待确认，无报告操作' : '暂无报告审计记录'}</div>}
@@ -158,10 +159,11 @@ function parseFieldValue(field: GisisField, text: string): unknown {
   return text
 }
 
-function GisisPanel({ data, busy, pending, validation, onExport, onValidate }: { data: GisisDocument | null; busy: boolean; pending: boolean; validation?: GisisValidation | null; onExport: (format: 'json' | 'csv') => void; onValidate: (values: Record<string, unknown>, exportFile: boolean) => void }) {
+function GisisPanel({ data, busy, pending, validation, onExport, onValidate, onEdit }: { data: GisisDocument | null; busy: boolean; pending: boolean; validation?: GisisValidation | null; onExport: (format: 'json' | 'csv') => void; onValidate: (values: Record<string, unknown>, exportFile: boolean) => void; onEdit?: () => void }) {
   const [edits, setEdits] = useState<Record<string, string>>({})
   const [staleValidation, setStaleValidation] = useState<GisisValidation | null | undefined>(undefined)
   const changeField = (id: string, value: string) => {
+    onEdit?.()
     setStaleValidation(validation)
     setEdits((old) => ({ ...old, [id]: value }))
   }

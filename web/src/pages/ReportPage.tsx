@@ -45,6 +45,7 @@ function ReportSession({identity, isActive, refresh}: {identity:string; isActive
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
+  const gisisInputs = useRef({ revision: 0, request: 0 })
   const [validation, setValidation] = useState<GisisValidation | null>(null)
   const [blockedReason, setBlockedReason] = useState<'report_case_not_imported' | undefined>()
 
@@ -141,11 +142,25 @@ function ReportSession({identity, isActive, refresh}: {identity:string; isActive
       onExport={(format, exportLang) => { if (report) void perform(async () => { const file = await reportApi.export(caseId, report.reportId, format, exportLang); setNotice(`已导出 ${file.filename}${file.sha256 ? ` · SHA-256 ${file.sha256}` : ''}`); refresh() }).catch(() => {}) }}
       onGlossary={() => { void perform(async () => { await reportApi.glossary() }, '已下载 IMO 标准航海用语术语表（中文为项目译文）。').catch(() => {}) }}
       onGisisExport={(format) => { void perform(async () => { await reportApi.gisisExport(caseId, format); refresh() }, `已导出 GISIS ${format.toUpperCase()} 本地草稿字段。`).catch(() => {}) }}
-      onGisisValidate={(values, exportFile) => { void perform(async () => {
-        if (exportFile) { await reportApi.gisisValidateExport(caseId, values); setValidation(null); setNotice('GISIS 字段校验通过并已导出。') }
-        else setValidation(await reportApi.gisisValidate(caseId, values))
-        if (report) { try { setAudit(await reportApi.audit(caseId, report.reportId)) } catch (e) { if (current()) { setAudit([]); setAuditError(`审计读取失败：${(e as Error).message}`) } } }
-      }).catch(() => {}) }} onRefresh={refresh} />
+      onGisisEdit={() => { gisisInputs.current.revision++; setValidation(null); setNotice(null) }}
+      onGisisValidate={(values, exportFile) => {
+        if (!current() || denied || saving) return
+        const revision = gisisInputs.current.revision
+        const request = ++gisisInputs.current.request
+        void perform(async () => {
+          setValidation(null)
+          const changed = () => revision !== gisisInputs.current.revision
+          const unknown = () => { setValidation(null); setNotice('输入已变化，此次结果不作为当前字段的校验结论。先前请求可能已处理或下载，请核对，勿自动重试。') }
+          let result: GisisValidation | undefined
+          if (exportFile) await reportApi.gisisValidateExport(caseId, values)
+          else result = await reportApi.gisisValidate(caseId, values)
+          if (!current() || request !== gisisInputs.current.request) return
+          if (changed()) { unknown(); return }
+          if (exportFile) setNotice('GISIS 字段校验通过并已导出。')
+          else setValidation(result!)
+          if (report) { try { setAudit(await reportApi.audit(caseId, report.reportId)) } catch (e) { if (current()) { setAudit([]); setAuditError(`审计读取失败：${(e as Error).message}`) } } }
+        }).catch(() => {})
+      }} onRefresh={refresh} />
     {report&&!denied&&<ReportOutputPanel report={report} who={identity} onDenied={()=>handleError(new ReportApiError(403,'FORBIDDEN','',null))}/>}
     {review && <ReviewDialog key={`${report?.reportId}:${review.target.sectionId}:${review.target.sentenceId || ''}:${review.action}`} action={review.action} target={review.target} busy={saving} error={error} onCancel={() => setReview(null)} onSubmit={submitReview} />}
   </>
