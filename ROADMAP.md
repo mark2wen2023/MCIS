@@ -481,3 +481,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | seed lazy mapping compatibility | 待测 | helper-only synthetic assertions pass; startup/archive hold unchanged | logs/seed-lazy-compat-impl-hashes-frozen.txt |
 
 | seed lazy wrapper correction | 待测 | 8ec4421 unusable; prefix restored/static checked, synthetic helper passed; startup hold remains | logs/seed-lazy-wrapper-correction-frozen.txt |
+
+| seed lazy item lookup | 待测 | fabricated helper tests/static wrapper checks pass; actual startup and report/analysis isolation unverified | logs/seed-lazy-item-lookup-frozen.txt |

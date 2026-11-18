@@ -51,5 +51,8 @@ def __dir__():
 
 
 def seed_band_evidence(case_id: str) -> dict[str, list[str]]:
-    source = _exports.get("BAND_EVIDENCE").get(case_id, {})
+    source = _exports.get_item("BAND_EVIDENCE", case_id, {
+        LILY_MARY_CASE: lambda: LILY_MARY_BAND_EVIDENCE,
+        HAILI5_CASE: lambda: _exports.get("HAILI5_BAND_EVIDENCE"),
+    })
     return {k: list(v) for k, v in source.items()}
