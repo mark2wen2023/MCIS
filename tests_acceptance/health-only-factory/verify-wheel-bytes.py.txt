@@ -1,0 +1,48 @@
+import hashlib, json, os, pathlib, platform, sys, tempfile, urllib.parse, urllib.request
+manifest = pathlib.Path(sys.argv[1]).read_bytes()
+if hashlib.sha256(manifest).hexdigest() != '99384c53c8881226dcae1d256fcd66385eb43cbc0d66d0eff140ac3764597f5c':
+    raise SystemExit('Manifest mismatch')
+m = json.loads(manifest)
+if platform.python_implementation() != 'CPython' or sys.version_info[:2] != (3,12) or platform.system() != 'Linux' or platform.machine() != 'x86_64':
+    raise SystemExit('Target mismatch')
+libc = os.confstr('CS_GNU_LIBC_VERSION')
+if tuple(map(int,libc.split()[1].split('.'))) < (2,17):
+    raise SystemExit('glibc mismatch')
+rows = m['wheels']
+names = [r['filename'] for r in rows]
+if len(rows) != 11 or len(set(names)) != 11:
+    raise SystemExit('Manifest set mismatch')
+for r in rows:
+    u = urllib.parse.urlsplit(r['url'])
+    if u.scheme != 'https' or u.netloc != 'files.pythonhosted.org' or u.query or u.fragment or u.path.split('/')[-1] != r['filename']:
+        raise SystemExit('URL mismatch')
+    tag = r['filename'].removesuffix('.whl').rsplit('-',3)[1:]
+    if tag not in [['py3','none','any'], ['cp312','cp312','manylinux2014_x86_64.manylinux_2_17_x86_64']]:
+        raise SystemExit('Unsupported tag')
+class NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self,*args,**kwargs):
+        raise RuntimeError('Redirect refused; stop')
+opener = urllib.request.build_opener(NoRedirect)
+root = pathlib.Path(tempfile.mkdtemp(prefix='mcis-health-wheel-bytes-'))
+print('Temporary directory:',root,flush=True)
+results=[]
+for r in rows:
+    target=root/r['filename']
+    with opener.open(r['url'],timeout=30) as response, target.open('xb') as out:
+        if response.status != 200 or response.url != r['url']:
+            raise RuntimeError('Unexpected response; stop')
+        while True:
+            chunk=response.read(65536)
+            if not chunk: break
+            out.write(chunk)
+    actual=hashlib.sha256(target.read_bytes()).hexdigest()
+    size=target.stat().st_size
+    if actual != r['sha256'] or size != r['size']:
+        raise RuntimeError('Bytes mismatch: '+r['filename'])
+    results.append({'filename':r['filename'],'sha256':actual,'size':size,'filename_tag_compatible':True})
+    print('PASS',r['filename'],flush=True)
+if sorted(p.name for p in root.iterdir()) != sorted(names):
+    raise RuntimeError('Downloaded set mismatch')
+report={'base_commit':'3cf0732ad33fb3bbac3a947c8128d4d2b613093e','manifest_sha256':hashlib.sha256(manifest).hexdigest(),'python':platform.python_version(),'platform':'CPython/Linux/x86_64','libc':libc,'official_host':'files.pythonhosted.org','redirects_allowed':False,'exact_set_count':11,'results':results,'installed':False,'extracted':False,'application_imported':False,'startup_allowed':False}
+pathlib.Path('/tmp/health-wheel-byte-results.json').write_text(json.dumps(report,indent=2)+'\n')
+print('ALL 11 VERIFIED; no install/extract/import')
