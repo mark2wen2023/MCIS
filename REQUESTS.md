@@ -972,3 +972,6 @@ claims. No product route/permission/migration/publisher changes.
 - Authorized candidate source-read contract: two instance flags default False; analysis disabled=503 analysis_seed_disabled before read; report disabled-source missing text distinct from read failure. Legacy direct load_seed needs explicit policy; whatif custom callback shape retained but skipped when disabled. Existing reports unchanged. See tests_acceptance/source-read-policy/REVIEW.md; no startup permission.
 
 - Source policy Settings correction: preserve original seven positional fields, append flags; synthetic class-only construction verified. seed_demo default remains True; new flags are not environment-parsed.
+
+### COLREG non-demo annotation source gate (2026-11-19)
+Candidate based on 6d5069b: snapshot existing seed_demo at construction, pass via COLREG session info, lazy-load repository annotations only for explicit demo sessions. No role/default/archive changes. Direct sessions without the flag no longer auto-annotate Seed current; existing versions retained, missing enrichment noted. See tests_acceptance/colreg-seed-read-policy/REVIEW.md; synthetic/AST only, startup remains paused.

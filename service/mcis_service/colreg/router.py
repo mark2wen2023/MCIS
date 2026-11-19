@@ -184,6 +184,10 @@ def _runs_session(ctx: Ctx):
     """版本读写串行化：首次收编与新建版本在同一把锁内提交，避免页面并发请求重复建 R-0001。"""
     with runs.LOCK:
         with ctx.db.session() as s:
+            # Trusted instance snapshot only; no request/header/body opt-in.
+            s.info["mcis_colreg_seed_annotations_enabled"] = (
+                getattr(ctx.request.app.state, "colreg_seed_annotations_enabled", False) is True
+            )
             yield s
 
 

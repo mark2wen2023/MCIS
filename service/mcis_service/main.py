@@ -46,6 +46,7 @@ from .interview_compare.router import router as interview_compare_router  # W5 �
 
 def create_app(settings: Settings | None = None) -> FastAPI:
     settings = settings or Settings()
+    colreg_seed_annotations_enabled = settings.seed_demo is True
     source_policy = SourceReadPolicy(settings.allow_analysis_seed_reads, settings.allow_public_report_reads)
     settings.data_dir.mkdir(parents=True, exist_ok=True)
     settings.blob_dir.mkdir(parents=True, exist_ok=True)
@@ -62,6 +63,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     app = FastAPI(title="MCIS 调查业务服务", version=__version__,
                   description="海事事故调查仿真系统 · 模块③（契约见 contracts/openapi.yaml）。仅监听 127.0.0.1。")
+    app.state.colreg_seed_annotations_enabled = colreg_seed_annotations_enabled
     app.state.source_read_policy = source_policy
     app.state.settings = settings
     app.state.db = db

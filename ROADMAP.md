@@ -487,3 +487,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | instance source-read policy | 待测 | synthetic helper and AST wiring checks pass; actual app/HTTP/report output untested, startup/archive hold | logs/source-read-policy-frozen.txt |
 
 | source policy Settings order | 待测 | synthetic constructor and AST checks pass; no app imports, seed default remains True | logs/source-policy-settings-order-frozen.txt |
+
+| 2026-11-19 | COLREG non-demo annotation read gate | 待独验 | 基础 6d5069b；4组自造回调/AST检查通过，非HTTP/数据库/真实种子验收；启动继续暂停；logs/colreg-seed-read-policy-frozen.txt |

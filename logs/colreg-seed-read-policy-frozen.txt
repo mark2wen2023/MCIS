@@ -1,0 +1,4 @@
+8648cfab97e4dc7da89f56e167b1254fce84113204de8aa7e706559a162de10c  service/mcis_service/main.py
+e773b1a19376e19d323937b4c2d44cd692140519916fbc52fd8de7ec1028bbab  service/mcis_service/colreg/router.py
+378cc7d3b23bf137cc96c314665f0d8efe5bc2ccbfbe7434810ac6e93ffe6245  service/mcis_service/colreg/runs.py
+1e75069e3c84f7f02a308da499f244febd6f5521f4b2d9c8109c902925854874  tests_acceptance/colreg-seed-read-policy/check.py

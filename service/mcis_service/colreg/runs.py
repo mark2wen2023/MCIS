@@ -23,7 +23,6 @@ from ..common.context import problem
 from ..common.timeutil import iso, now_utc
 from ..db import get_doc, put_doc
 from .models import ColregAnalysisRow
-from .seed_annotations import seed_band_evidence
 
 INDEX_KEY = "runs"
 CURRENT_KEY = "current"
@@ -78,6 +77,12 @@ def _create(s: Session, case_id: str, idx: dict[str, Any], analysis: dict[str, A
     return run
 
 
+def _seed_band_evidence(case_id: str) -> dict[str, list[str]]:
+    """Only called after the instance-owned session flag permits demo annotations."""
+    from .seed_annotations import seed_band_evidence
+    return seed_band_evidence(case_id)
+
+
 def ensure(s: Session, case_id: str, operator: str = "系统（版本收编）") -> dict[str, Any]:
     """返回版本索引；必要时收编现有 current。幂等。"""
     idx = get_doc(s, ColregAnalysisRow, case_id, INDEX_KEY)
@@ -88,9 +93,15 @@ def ensure(s: Session, case_id: str, operator: str = "系统（版本收编）")
             put_doc(s, ColregAnalysisRow, case_id, INDEX_KEY, idx)
             return idx
         kind = _kind_of(cur)
+        band_evidence = None
+        note = "首次访问时由已有 current 收编"
+        if kind == "Seed":
+            if s.info.get("mcis_colreg_seed_annotations_enabled") is True:
+                band_evidence = _seed_band_evidence(case_id)
+            else:
+                note += "；实例未启用演示案例注解读取，未补入仓库时间带证据关联；不表示原有分析已核验"
         _create(s, case_id, idx, copy.deepcopy(cur), kind=kind, created_by=operator,
-                band_evidence=seed_band_evidence(case_id) if kind == "Seed" else None,
-                note="首次访问时由已有 current 收编")
+                band_evidence=band_evidence, note=note)
         return idx
     if cur is not None and idx.get("currentSha") != _sha(cur):
         # current 被外部改写（如 .mcase 导入）：另存为新版本，不丢弃旧版本
