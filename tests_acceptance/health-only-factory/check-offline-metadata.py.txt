@@ -1,0 +1,55 @@
+import base64,csv,hashlib,importlib.metadata,json,os,pathlib,subprocess,sys
+root=pathlib.Path(sys.argv[1]).resolve(); venv=root/'venv'
+m=json.loads(pathlib.Path(sys.argv[2]).read_text())
+site=venv/'lib/python3.12/site-packages'
+if any(site.rglob('*.pth')) or any(site.rglob('*.egg-link')) or any(site.rglob('sitecustomize.py')) or any(site.rglob('usercustomize.py')):
+    raise SystemExit('unexpected startup/editable hook')
+cfg=(venv/'pyvenv.cfg').read_text()
+if 'include-system-site-packages = false' not in cfg:
+    raise SystemExit('system site enabled')
+probe="import sys,site,json; print(json.dumps({'paths':sys.path,'prefix':sys.prefix,'base_prefix':sys.base_prefix,'user_site_enabled':site.ENABLE_USER_SITE,'isolated':sys.flags.isolated,'no_user_site':sys.flags.no_user_site,'loaded_forbidden':[n for n in sys.modules if n.split('.')[0] in ('fastapi','starlette','pydantic','mcis_service')]}))"
+p=subprocess.run([str(venv/'bin/python'),'-I','-c',probe],check=True,cwd=root,env={'PATH':'/usr/bin:/bin','LANG':'C.UTF-8'},capture_output=True,text=True)
+obs=json.loads(p.stdout)
+if obs['prefix']!=str(venv) or obs['prefix']==obs['base_prefix'] or obs['user_site_enabled'] or obs['loaded_forbidden'] or obs['isolated']!=1:
+    raise SystemExit('isolation mismatch')
+for s in obs['paths']:
+    if ('site-packages' in s or 'dist-packages' in s) and pathlib.Path(s).resolve()!=site:
+        raise SystemExit('inherited package path')
+    if 'mcis' in s and pathlib.Path(s).resolve()!=site:
+        raise SystemExit('unexpected checkout path')
+normalize=lambda s:s.lower().replace('_','-')
+dists=list(importlib.metadata.distributions(path=[str(site)]))
+expected={normalize(r['name']):r['version'] for r in m['wheels']}
+actual={normalize(d.metadata['Name']):d.version for d in dists}
+if len(dists)!=11 or actual!=expected:
+    raise SystemExit('distribution mismatch')
+inputs=json.loads((root/'inputs.json').read_text())
+# Installer's vendored metadata parser only; never import target packages.
+sys.path.insert(0,inputs['installer_site'])
+from pip._vendor.packaging.requirements import Requirement
+from pip._vendor.packaging.markers import default_environment
+marker_env=default_environment();marker_env['extra']=''
+requirements=[]; hashed=0;unhashed=[];inventory=[]
+for d in dists:
+    for raw in d.requires or []:
+        r=Requirement(raw)
+        if r.marker is not None and not r.marker.evaluate(marker_env): continue
+        if r.url or r.extras or normalize(r.name) not in actual or actual[normalize(r.name)] not in r.specifier:
+            raise SystemExit('dependency closure mismatch: '+raw)
+        requirements.append({'distribution':d.metadata['Name'],'requirement':raw})
+    for f in d.files or []:
+        path=pathlib.Path(d.locate_file(f)).resolve()
+        if not path.is_relative_to(venv) or not path.is_file(): raise SystemExit('installed file outside environment or missing')
+        data=path.read_bytes()
+        if f.hash:
+            if f.hash.mode!='sha256' or base64.urlsafe_b64encode(hashlib.sha256(data).digest()).rstrip(b'=').decode()!=f.hash.value:
+                raise SystemExit('RECORD mismatch')
+            hashed+=1
+        else: unhashed.append(str(path.relative_to(venv)))
+        if f.size is not None and len(data)!=f.size: raise SystemExit('RECORD size mismatch')
+for path in sorted(site.rglob('*')):
+    if path.is_symlink(): raise SystemExit('site symlink')
+    if path.is_file(): inventory.append({'path':str(path.relative_to(venv)),'size':path.stat().st_size,'sha256':hashlib.sha256(path.read_bytes()).hexdigest()})
+report={'base_commit':'fd69678a37b39e38d93fedf89d57e1a4bbc5f210','installed_distributions':actual,'active_requirements_verified':requirements,'hashed_record_files_verified':hashed,'unhashed_record_files':unhashed,'site_file_inventory':inventory,'site_isolation':{'include_system_site_packages':False,'user_site_enabled':False,'isolated_probe':True,'only_venv_package_path':True,'stdlib_shared_with_base_interpreter':True,'framework_or_application_imported':False},'installer':{'name':'pip','version':'26.2.2','source':'existing execution-environment tooling, not installed into target','record_sha256':inputs['installer_record_sha256']},'http_executed':False,'startup_allowed':False}
+(root/'verification.json').write_text(json.dumps(report,indent=2)+'\n')
+print(json.dumps({'distributions':len(actual),'active_requirements':len(requirements),'record_hashes_verified':hashed,'site_files':len(inventory),'site_isolation':'PASS','framework_import':'NOT PERFORMED'}))

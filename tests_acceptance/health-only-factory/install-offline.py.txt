@@ -1,0 +1,38 @@
+import hashlib,json,os,pathlib,platform,subprocess,sys,sysconfig,tempfile,zipfile
+manifest_path=pathlib.Path(sys.argv[1]).resolve()
+wheel_dir=pathlib.Path(sys.argv[2]).resolve()
+b=manifest_path.read_bytes()
+if hashlib.sha256(b).hexdigest()!='99384c53c8881226dcae1d256fcd66385eb43cbc0d66d0eff140ac3764597f5c':
+    raise SystemExit('manifest mismatch')
+m=json.loads(b); rows=m['wheels']
+if platform.python_implementation()!='CPython' or sys.version_info[:2]!=(3,12) or platform.system()!='Linux' or platform.machine()!='x86_64' or tuple(map(int,os.confstr('CS_GNU_LIBC_VERSION').split()[1].split('.')))<(2,17):
+    raise SystemExit('platform mismatch')
+if len(rows)!=11 or sorted(p.name for p in wheel_dir.iterdir())!=sorted(r['filename'] for r in rows):
+    raise SystemExit('wheel set mismatch')
+for r in rows:
+    p=wheel_dir/r['filename']
+    if p.is_symlink() or not p.is_file() or p.stat().st_size!=r['size'] or hashlib.sha256(p.read_bytes()).hexdigest()!=r['sha256']:
+        raise SystemExit('wheel mismatch')
+    if p.name.removesuffix('.whl').rsplit('-',3)[1:] not in [['py3','none','any'],['cp312','cp312','manylinux2014_x86_64.manylinux_2_17_x86_64']]:
+        raise SystemExit('tag mismatch')
+    with zipfile.ZipFile(p) as z:
+        for n in z.namelist():
+            parts=pathlib.PurePosixPath(n).parts
+            if n.startswith('/') or '..' in parts or n.endswith('.pth') or pathlib.PurePosixPath(n).name in ('sitecustomize.py','usercustomize.py'):
+                raise SystemExit('unexpected wheel startup/path member')
+root=pathlib.Path(tempfile.mkdtemp(prefix='mcis-health-offline-install-'))
+venv=root/'venv'
+print('New isolated root:',root,flush=True)
+env={'PATH':'/usr/bin:/bin','PIP_CONFIG_FILE':os.devnull,'LANG':'C.UTF-8'}
+subprocess.run([sys.executable,'-I','-S','-m','venv','--without-pip',str(venv)],check=True,env=env,cwd=root)
+requirements=root/'wheel-requirements.txt'
+requirements.write_text(''.join((wheel_dir/r['filename']).as_uri()+' --hash=sha256:'+r['sha256']+'\n' for r in rows))
+# Existing installer only; no pip/setuptools bootstrap into the target environment.
+installer_site=sysconfig.get_path('purelib')
+runner="import sys,runpy;sys.path.insert(0,sys.argv.pop(1));runpy.run_module('pip',run_name='__main__')"
+cmd=[sys.executable,'-I','-S','-c',runner,installer_site,'--isolated','--python',str(venv/'bin/python'),'install','--no-index','--no-deps','--require-hashes','--no-compile','--disable-pip-version-check','--no-cache-dir','-r',str(requirements),'--report',str(root/'pip-report.json')]
+result=subprocess.run(cmd,check=True,env=env,cwd=root,text=True,capture_output=True)
+(root/'pip-output.txt').write_text(result.stdout+result.stderr)
+print(result.stdout,flush=True)
+(root/'inputs.json').write_text(json.dumps({'manifest':str(manifest_path),'installer_site':installer_site,'installer_record_sha256':hashlib.sha256((pathlib.Path(installer_site)/'pip-26.2.2.dist-info/RECORD').read_bytes()).hexdigest()}))
+pathlib.Path('/tmp/health-offline-root.txt').write_text(str(root))
