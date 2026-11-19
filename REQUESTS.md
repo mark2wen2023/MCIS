@@ -827,3 +827,6 @@ Authorized extraction on 1366168: unchanged app metadata/state/CORS/error/health
 
 ## Narrow historical evidence lookup (2026-11-19)
 Authorized on f891c89: move unchanged archived_evidence/historical_only to history_lookup, re-export old service names; retarget only two Evidence Intake imports. Full AST comparisons and handmade query/guard checks, no actual ORM/permission/archive execution. See tests_acceptance/archive-history-lookup/REVIEW.md; startup remains paused.
+
+## Basic case registration boundary (2026-11-19)
+Authorized on a8c6f30: extract unchanged basic case endpoint declarations into private registration helper; old router retains metadata, aliases and later overview/vessel/track registrations. No main/include-router change. AST and handwritten registration/import checks only; transitive models/contracts remain. See tests_acceptance/cases-basic-registration/REVIEW.md.

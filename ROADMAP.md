@@ -527,3 +527,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-19 | Private app shell boundary | 待独验：完整展开AST、6组旧新假依赖顺序及state/CORS/错误/健康回调检查通过；无真实FastAPI/HTTP/启动隔离验收，最小入口未接线 | logs/app-shell-boundary-frozen.txt |
 
 | 2026-11-19 | Narrow historical evidence lookup | 待独验：完整AST、5种假查询及8组手写守门序列开发检查通过；仅缩短直接请求依赖，非真实权限/ORM/隔离或启动验收 | logs/archive-history-lookup-frozen.txt |
+
+| 2026-11-19 | Basic case registration boundary | 待独验：完整AST、默认/基础注册及定义/注册异常假依赖检查通过；未执行真实FastAPI operation IDs/HTTP/ORM，无隔离启动保证 | logs/cases-basic-registration-frozen.txt |
