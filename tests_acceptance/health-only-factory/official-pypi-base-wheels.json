@@ -1,0 +1,421 @@
+{
+  "checked_date_utc": "2026-11-19",
+  "scope": "FastAPI base requirements; no extras; metadata verification only",
+  "target": {
+    "implementation": "CPython",
+    "version": "3.12.14",
+    "architecture": "x86_64",
+    "os": "Linux",
+    "libc_requirement": "glibc >=2.17",
+    "observed_libc": "glibc 2.41"
+  },
+  "official_metadata_complete_for_base": true,
+  "wheel_bytes_downloaded": false,
+  "installed_or_imported": false,
+  "startup_allowed": false,
+  "wheels": [
+    {
+      "name": "fastapi",
+      "version": "0.162.7",
+      "metadata_url": "https://pypi.org/pypi/fastapi/0.162.7/json",
+      "filename": "fastapi-0.162.7-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/a0/49/2d76050f652082f1435f34a8ac9af6207b9aed8b81cde42e0bb121fa7c5a/fastapi-0.162.7-py3-none-any.whl",
+      "sha256": "fa3be857122ec8d91d4d234e86ac19acf4ef23f5c6c3dfcce78ec0c27c0c5ab4",
+      "size": 152411,
+      "requires_python": ">=3.11",
+      "yanked": false,
+      "active_requires_dist": [
+        "starlette>=0.46.0",
+        "anyio>=4.1.0",
+        "pydantic>=2.9.0",
+        "typing-extensions>=4.8.0",
+        "typing-inspection>=0.4.2",
+        "annotated-doc>=0.0.2",
+        "opentelemetry-api>=1.44.0"
+      ],
+      "excluded_requires_dist": [
+        {
+          "requirement": "opentelemetry-sdk>=1.44.0; extra == \"opentelemetry\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "opentelemetry-exporter-otlp-proto-http>=1.44.0; extra == \"opentelemetry\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "opentelemetry-sdk>=1.44.0; extra == \"standard\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "opentelemetry-exporter-otlp-proto-http>=1.44.0; extra == \"standard\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "fastapi-cli[standard]>=0.0.32; extra == \"standard\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "fastar>=0.9.0; extra == \"standard\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "httpx<1.0.0,>=0.23.0; extra == \"standard\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "httpx2>=2.0.0; extra == \"standard\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "jinja2>=3.1.5; extra == \"standard\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "python-multipart>=0.0.18; extra == \"standard\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "email-validator>=2.0.0; extra == \"standard\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "uvicorn[standard]>=0.12.0; extra == \"standard\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "pydantic-settings>=2.0.0; extra == \"standard\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "pydantic-extra-types>=2.0.0; extra == \"standard\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "opentelemetry-sdk>=1.44.0; extra == \"standard-no-fastapi-cloud-cli\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "opentelemetry-exporter-otlp-proto-http>=1.44.0; extra == \"standard-no-fastapi-cloud-cli\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "fastapi-cli[standard-no-fastapi-cloud-cli]>=0.0.32; extra == \"standard-no-fastapi-cloud-cli\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "httpx<1.0.0,>=0.23.0; extra == \"standard-no-fastapi-cloud-cli\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "httpx2>=2.0.0; extra == \"standard-no-fastapi-cloud-cli\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "jinja2>=3.1.5; extra == \"standard-no-fastapi-cloud-cli\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "python-multipart>=0.0.18; extra == \"standard-no-fastapi-cloud-cli\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "email-validator>=2.0.0; extra == \"standard-no-fastapi-cloud-cli\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "uvicorn[standard]>=0.12.0; extra == \"standard-no-fastapi-cloud-cli\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "pydantic-settings>=2.0.0; extra == \"standard-no-fastapi-cloud-cli\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "pydantic-extra-types>=2.0.0; extra == \"standard-no-fastapi-cloud-cli\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "opentelemetry-sdk>=1.44.0; extra == \"all\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "opentelemetry-exporter-otlp-proto-http>=1.44.0; extra == \"all\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "fastapi-cli[standard]>=0.0.32; extra == \"all\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "httpx<1.0.0,>=0.23.0; extra == \"all\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "httpx2>=2.0.0; extra == \"all\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "jinja2>=3.1.5; extra == \"all\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "python-multipart>=0.0.18; extra == \"all\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "itsdangerous>=1.1.0; extra == \"all\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "pyyaml>=5.3.1; extra == \"all\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "email-validator>=2.0.0; extra == \"all\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "uvicorn[standard]>=0.12.0; extra == \"all\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "pydantic-settings>=2.0.0; extra == \"all\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "pydantic-extra-types>=2.0.0; extra == \"all\"",
+          "reason": "no extras selected"
+        }
+      ]
+    },
+    {
+      "name": "starlette",
+      "version": "1.10.0",
+      "metadata_url": "https://pypi.org/pypi/starlette/1.10.0/json",
+      "filename": "starlette-1.10.0-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/88/2e/947cfe02def9371c07cd5bf5b6b61c829e9aecb9904db02a66cfafbc1eec/starlette-1.10.0-py3-none-any.whl",
+      "sha256": "478c0ab3b4ced6e82719849c118fa406f0278a3499c1a898cd15cd31bdc38ce4",
+      "size": 80571,
+      "requires_python": ">=3.11",
+      "yanked": false,
+      "active_requires_dist": [
+        "anyio<5,>=4.0.0",
+        "typing-extensions>=4.10.0; python_version < \"3.13\""
+      ],
+      "excluded_requires_dist": [
+        {
+          "requirement": "httpx2>=2.0.0; extra == \"full\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "httpx<0.29.0,>=0.27.0; extra == \"full\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "itsdangerous; extra == \"full\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "jinja2; extra == \"full\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "opentelemetry-api; extra == \"full\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "python-multipart>=0.0.18; extra == \"full\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "pyyaml; extra == \"full\"",
+          "reason": "no extras selected"
+        }
+      ]
+    },
+    {
+      "name": "pydantic",
+      "version": "2.14.3",
+      "metadata_url": "https://pypi.org/pypi/pydantic/2.14.3/json",
+      "filename": "pydantic-2.14.3-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/72/b8/b864503789ef5c58597d2a7b4adbee62c26440ab1e682581fc6838df8947/pydantic-2.14.3-py3-none-any.whl",
+      "sha256": "3f7b347782ab7e4cf4c798496ae3a82787d9f21ec12676a9c564355eeef8daa8",
+      "size": 494071,
+      "requires_python": ">=3.10",
+      "yanked": false,
+      "active_requires_dist": [
+        "annotated-types>=0.6.0",
+        "pydantic-core==2.50.4",
+        "typing-extensions>=4.16.0",
+        "typing-inspection>=0.4.4"
+      ],
+      "excluded_requires_dist": [
+        {
+          "requirement": "email-validator>=2.0.0; extra == \"email\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "tzdata; platform_system == \"Windows\" and extra == \"timezone\"",
+          "reason": "no extras selected"
+        }
+      ]
+    },
+    {
+      "name": "pydantic_core",
+      "version": "2.50.4",
+      "metadata_url": "https://pypi.org/pypi/pydantic_core/2.50.4/json",
+      "filename": "pydantic_core-2.50.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "url": "https://files.pythonhosted.org/packages/91/23/e0c6e3cd09a0ac809953fea698c816b9f03bf0b35b6820c9553e4f5d85a8/pydantic_core-2.50.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "sha256": "c81d98e27d9d9261909dcccab1ba5d6ea1c98b0bb9470e368604614fd1d36ddd",
+      "size": 2261727,
+      "requires_python": ">=3.10",
+      "yanked": false,
+      "active_requires_dist": [
+        "typing-extensions>=4.16.0"
+      ],
+      "excluded_requires_dist": []
+    },
+    {
+      "name": "anyio",
+      "version": "4.16.0",
+      "metadata_url": "https://pypi.org/pypi/anyio/4.16.0/json",
+      "filename": "anyio-4.16.0-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/a9/16/7757fb84c819accc7d7e9af5291b261e4abb8627ee040f99e7d35ef2457a/anyio-4.16.0-py3-none-any.whl",
+      "sha256": "c66ae634e0b8228396b801741beb3294326d4b6102f7bba4041c0dfb58c29026",
+      "size": 134521,
+      "requires_python": ">=3.10",
+      "yanked": false,
+      "active_requires_dist": [
+        "idna>=2.8",
+        "typing_extensions>=4.16.0; python_version < \"3.15\""
+      ],
+      "excluded_requires_dist": [
+        {
+          "requirement": "exceptiongroup>=1.0.2; python_version < \"3.11\"",
+          "reason": "false for Python 3.12"
+        },
+        {
+          "requirement": "trio>=0.32.0; extra == \"trio\"",
+          "reason": "no extras selected"
+        }
+      ]
+    },
+    {
+      "name": "typing-extensions",
+      "version": "4.16.0",
+      "metadata_url": "https://pypi.org/pypi/typing_extensions/4.16.0/json",
+      "filename": "typing_extensions-4.16.0-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl",
+      "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+      "size": 45571,
+      "requires_python": ">=3.9",
+      "yanked": false,
+      "active_requires_dist": [],
+      "excluded_requires_dist": []
+    },
+    {
+      "name": "typing-inspection",
+      "version": "0.4.5",
+      "metadata_url": "https://pypi.org/pypi/typing-inspection/0.4.5/json",
+      "filename": "typing_inspection-0.4.5-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/de/0c/ea2544850a7c135e15033a5c7a8e7211136184b7ae63e2239d557c2b3019/typing_inspection-0.4.5-py3-none-any.whl",
+      "sha256": "bc210535442b39e1bf2805e0c7a17dfd6a4ace760c84c7f7d16245d23a6b1c39",
+      "size": 14874,
+      "requires_python": ">=3.10",
+      "yanked": false,
+      "active_requires_dist": [
+        "typing-extensions>=4.15.0"
+      ],
+      "excluded_requires_dist": []
+    },
+    {
+      "name": "annotated-types",
+      "version": "0.8.0",
+      "metadata_url": "https://pypi.org/pypi/annotated-types/0.8.0/json",
+      "filename": "annotated_types-0.8.0-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/99/91/8acff4f5e50511b911bbccb72b8628a49c68ce14148cd9f6431094859a90/annotated_types-0.8.0-py3-none-any.whl",
+      "sha256": "f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0",
+      "size": 13427,
+      "requires_python": ">=3.10",
+      "yanked": false,
+      "active_requires_dist": [],
+      "excluded_requires_dist": []
+    },
+    {
+      "name": "annotated-doc",
+      "version": "0.0.6",
+      "metadata_url": "https://pypi.org/pypi/annotated-doc/0.0.6/json",
+      "filename": "annotated_doc-0.0.6-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/cd/f5/3dd85d583e55be76cd02b1fc9bbec771b12d63124b01661d9535ccf8721f/annotated_doc-0.0.6-py3-none-any.whl",
+      "sha256": "361ca0950cc7082f53fa69e9328409f40a62c61e57e0a47e1825a08078a58a53",
+      "size": 5293,
+      "requires_python": ">=3.10",
+      "yanked": false,
+      "active_requires_dist": [],
+      "excluded_requires_dist": []
+    },
+    {
+      "name": "idna",
+      "version": "3.20",
+      "metadata_url": "https://pypi.org/pypi/idna/3.20/json",
+      "filename": "idna-3.20-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/58/a2/bb081bab032533a855d44de1d56f8e8426114ff1ba5d1f07a438a0a654f8/idna-3.20-py3-none-any.whl",
+      "sha256": "ab7ae7122974553370f0bdb919e1a960b2cd1bc1ef0276416d896db81c14582c",
+      "size": 69583,
+      "requires_python": ">=3.9",
+      "yanked": false,
+      "active_requires_dist": [],
+      "excluded_requires_dist": [
+        {
+          "requirement": "ruff>=0.16.0; extra == \"all\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "mypy>=1.11.2; extra == \"all\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "ty>=0.0.37; extra == \"all\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "pytest>=8.3.2; extra == \"all\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "hypothesis>=6.141.1; extra == \"all\"",
+          "reason": "no extras selected"
+        },
+        {
+          "requirement": "coverage>=7.10.0; extra == \"all\"",
+          "reason": "no extras selected"
+        }
+      ]
+    },
+    {
+      "name": "opentelemetry-api",
+      "version": "1.45.2",
+      "metadata_url": "https://pypi.org/pypi/opentelemetry-api/1.45.2/json",
+      "filename": "opentelemetry_api-1.45.2-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/a9/2d/610db864d7513158cebb8f36cc88e67e73bd6c7aa1905ef18d89e1281c81/opentelemetry_api-1.45.2-py3-none-any.whl",
+      "sha256": "2cbd737377e710ee740d261c94e93fa0f08e6d037c18f17513cc0a2d94479a34",
+      "size": 60335,
+      "requires_python": ">=3.10",
+      "yanked": false,
+      "active_requires_dist": [
+        "typing-extensions>=4.5.0"
+      ],
+      "excluded_requires_dist": []
+    }
+  ],
+  "future_http_test_dependencies": {
+    "locked": false,
+    "reason": "not in this base manifest; test harness choice requires separate review",
+    "candidates": [
+      "HTTP client/TestClient backend (httpx or httpx2: choose from reviewed framework test path)",
+      "HTTP client transitive dependencies",
+      "test runner if chosen",
+      "ASGI server (e.g. uvicorn) only if actual listening server is later approved"
+    ]
+  }
+}
