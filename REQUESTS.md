@@ -854,3 +854,6 @@ Authorized on 3667fa4: image/audio ?case-only prefill without request or address
 
 ## Audio explicit saved-run picker (2026-11-19)
 Authorized on dc33626: strict same-case list validation and explicit open controls, preserving existing dirty confirmation/detail checks; no automatic listing, detail or URL update. Image unchanged. See tests_acceptance/audio-run-picker/REVIEW.md.
+
+## Image explicit saved-run picker (2026-11-19)
+Authorized on f276dbf: same-case validated list entries open via existing reset/detail checks, retaining drafts on cancellation/failure. No auto list/detail/address update, API or identity change. See tests_acceptance/image-run-picker/REVIEW.md.

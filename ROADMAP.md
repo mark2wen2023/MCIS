@@ -545,3 +545,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-19 | Explicit case-only media target | 待独验：两页完整/限定4组合成检查及既有能力/重开/地址回归通过；初始零请求，旧头反例确认；无真实HTTP/权限/浏览器，启动暂停 | logs/media-case-only-frozen.txt |
 
 | 2026-11-19 | Audio saved-run picker | 待独验：12个新合成场景分别完整/限定通过；既有能力/重开/地址及4个归属回归通过，旧头反例确认；图片未改，无真实HTTP/浏览器/权限验收 | logs/audio-run-picker-frozen.txt |
+
+| 2026-11-19 | Image saved-run picker | 待独验：12个新合成场景分别完整/限定通过；能力/重开/地址及5个图片归属回归通过，旧头反例确认；无真实浏览器/HTTP/权限验收 | logs/image-run-picker-frozen.txt |
