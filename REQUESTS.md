@@ -821,3 +821,6 @@ Authorized behavior-preserving extraction on df05eb6: private storage initializa
 
 ## DB append-only trigger private boundary (2026-11-19)
 Authorized extraction on 4a1a800: private trigger installer called unconditionally after original full registry/create_all. No reduced schema or skip path. Full AST/SQL equivalence and three handmade-engine comparisons passed; dependency findings and limitations in tests_acceptance/db-trigger-boundary/REVIEW.md. No actual DB or paused tests.
+
+## Private application shell boundary (2026-11-19)
+Authorized extraction on 1366168: unchanged app metadata/state/CORS/error/health block into private helper, called after original directory/DB/optional seed initialization and before unchanged routers. No new factory or launcher path. Expanded AST and six handwritten fake sequences passed; real startup remains untested/paused. See tests_acceptance/app-shell-boundary/REVIEW.md.

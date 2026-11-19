@@ -523,3 +523,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-19 | Private media register boundaries | 待独验：图音各正常/重复/初始化早失败共6组假依赖序列及展开AST、逐字SQL开发检查通过；无真实DDL/应用/权限验收 | logs/media-register-boundaries-frozen.txt |
 
 | 2026-11-19 | DB append-only trigger private boundary | 待独验：全AST/逐字SQL及正常/建表早失败/触发器假回调失败序列开发检查通过；全registry与保护不变，无真实DB验收 | logs/db-trigger-boundary-frozen.txt |
+
+| 2026-11-19 | Private app shell boundary | 待独验：完整展开AST、6组旧新假依赖顺序及state/CORS/错误/健康回调检查通过；无真实FastAPI/HTTP/启动隔离验收，最小入口未接线 | logs/app-shell-boundary-frozen.txt |
