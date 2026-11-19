@@ -515,3 +515,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-18 | media-unknown-accumulation | 待独立验收 | 8新+2既有Node合成节点通过；仅累计提醒文案，非逐次操作清单/浏览器/后端验收；冻结 logs/media-unknown-accumulation-impl-hashes-frozen.txt |
 
 | Audio playback whitespace range | 待独验 | 11 new + 8 adjacent selected Node synthetic cases passed; no real playback/browser/backend | logs/audio-blank-range-frozen.txt |
+
+| Audio shared times() whitespace | 待独验 | 15 pure parser + 19 selected offline playback cases passed in this run; no Save/HTTP/browser | logs/audio-shared-times-frozen.txt |

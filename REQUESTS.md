@@ -809,3 +809,6 @@ Authorized clarification of both frozen page banners only; no Set/request/receip
 
 ## Audio playback whitespace range correction
 Authorized media-only UI candidate: whitespace-only time input must not implicitly seek to zero; local precondition explanation. Save/backend/source-transfer contracts unchanged. See tests_acceptance/audio-blank-range/DEVELOPER.md.
+
+## Audio shared time parser follow-up
+Move existing whitespace-only guard into times() so playback and pre-save parsing agree; no Save executed, no backend/receipt contract change. Base 00a0ce7; pure parser and selected offline playback verified.
