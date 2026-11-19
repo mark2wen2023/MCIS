@@ -552,3 +552,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 图片保存冲突反馈待独验：完整/限定各20合成场景及相邻检查通过；见 tests_acceptance/image-save-conflict/REVIEW.md；冻结 logs/image-save-conflict-frozen.txt。
+
+
+图音请求摘要指引待独验：四种合成页面模式及相邻回归通过；tests_acceptance/media-receipt-guidance/REVIEW.md；冻结 logs/media-receipt-guidance-frozen.txt。

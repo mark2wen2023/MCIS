@@ -863,3 +863,6 @@ Authorized on 331a0ed: production JSON status/code parsing distinguishes current
 
 
 图片保存反馈窄修正：当前412/OCR_REVISION明确未保存，其余保守未知；成功校验不变，仅离线合成。
+
+
+图音导入指引：仅标签/说明关联明确使用同案已核对登记回执的请求摘要，非原件SHA或预览；不改任何JS/校验。
