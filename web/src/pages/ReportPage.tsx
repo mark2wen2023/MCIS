@@ -62,6 +62,7 @@ function ReportSession({identity, isActive, refresh, initialSelection}: {identit
   const [review, setReview] = useState<{ action: ReviewAction; target: ReviewTarget } | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const actionInFlight = useRef(false)
   const [error, setError] = useState<string | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
   const [gisisNotice, setGisisNotice] = useState<string | null>(null)
@@ -114,7 +115,8 @@ function ReportSession({identity, isActive, refresh, initialSelection}: {identit
   }, [caseId, requestedReport, requestedTemplate, requestedLanguage])
 
   async function perform(work: () => Promise<void>, message?: string) {
-    if (!current() || denied || saving) return
+    if (!current() || denied || saving || actionInFlight.current) return
+    actionInFlight.current = true
     setSaving(true); setError(null); setNotice(null); setGisisNotice(null); setGisisError(null)
     try { await work(); if (current() && message) setNotice(message) }
     catch (e) {
@@ -126,7 +128,7 @@ function ReportSession({identity, isActive, refresh, initialSelection}: {identit
         }
       }
       throw e
-    } finally { if (current()) setSaving(false) }
+    } finally { actionInFlight.current = false; if (current()) setSaving(false) }
   }
 
   function navigateReport(next: Report) {
@@ -166,7 +168,7 @@ function ReportSession({identity, isActive, refresh, initialSelection}: {identit
       onGisisExport={(format) => { void perform(async () => { await reportApi.gisisExport(caseId, format); refreshCurrent() }, `已导出 GISIS ${format.toUpperCase()} 本地草稿字段。`).catch(() => {}) }}
       onGisisEdit={() => { gisisInputs.current.revision++; setValidation(null); setGisisNotice(null); setGisisError(null) }}
       onGisisValidate={(values, exportFile) => {
-        if (!current() || denied || saving) return
+        if (!current() || denied || saving || actionInFlight.current) return
         const revision = gisisInputs.current.revision
         const request = ++gisisInputs.current.request
         void perform(async () => {

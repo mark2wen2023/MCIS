@@ -905,3 +905,6 @@ Test-only correction: render ready/source60 Detail and verify current adoption e
 
 ## UI effect harness correction
 Authorized limited repair of three frozen synthetic harnesses: dependency-aware commit/cleanup and unfinished-loop failure detection. Original business assertions retained; product unchanged. See tests_acceptance/ui-effect-harness/README.md.
+
+### Report action synchronous single-flight (2026-11-19)
+On UI integration 3edb1a55: synthetic actual-parent callback double invocation before rerender dispatched twice. Add event-phase session-local guard in perform and before GISIS request counter. No backend/media/permission changes; no retry/idempotency claim. New 3 scenarios, adjacent 12 scenarios and TS/Vite passed; browser and independent review pending.
