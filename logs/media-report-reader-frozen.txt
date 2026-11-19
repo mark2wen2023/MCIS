@@ -1,0 +1,2 @@
+c1b5edf66b9ea96c912d8bdf55457f74f6230fa68fbeb5277638c530589cdaa0  service/mcis_service/reports/media_reference_reader.py
+0b64b25d8e4ca5b292c74b058c6d5f7948a3f9374d5e71f91cf9c085d286a926  tests_acceptance/media-report-reference/check_reader.py

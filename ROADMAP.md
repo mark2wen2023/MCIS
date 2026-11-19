@@ -515,3 +515,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-18 | media-unknown-accumulation | 待独立验收 | 8新+2既有Node合成节点通过；仅累计提醒文案，非逐次操作清单/浏览器/后端验收；冻结 logs/media-unknown-accumulation-impl-hashes-frozen.txt |
 
 | 2026-11-19 | 图音已保存修订精确引用投影 | 待独验 | 基础76d6c22；纯内存三组检查通过，未接reports/sources或HTTP/导出/恢复；logs/media-report-reference-frozen.txt |
+
+| 2026-11-19 | 图音报告精确读取边界及人工内容摘要 | 待独验 | 3fd3112增量；两组纯内存查询形状检查，非实际ORM/权限/HTTP；logs/media-report-reader-frozen.txt；未接线 |

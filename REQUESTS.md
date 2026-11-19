@@ -809,3 +809,6 @@ Authorized clarification of both frozen page banners only; no Set/request/receip
 
 ### Saved media exact report reference projection (2026-11-19)
 Internal contract proposal in contracts/media-report-reference-projection.md; new standalone reports/media_reference.py consumes trusted saved-row snapshots and derived register declarations only. No application call site, public citation/schema/route or persistence changes. Exact revision, no latest fallback; permission/storage adapter and export/reopen remain future gates. Synthetic-only checks, startup/archive still paused.
+
+### Exact media read boundary increment (2026-11-19)
+On 3fd3112: internal scoped reader over existing media models with exact case/run/revision queries and no_autoflush; trusted per-ID derived-evidence callback required. Separate canonical human-content and complete-reference digests; altered text at same revision cannot match a prior supplied reference digest. No writes, public API or reports/sources integration. Two synthetic query groups only; no ORM/application execution. Contract and limitations appended to media-report-reference-projection.md.
