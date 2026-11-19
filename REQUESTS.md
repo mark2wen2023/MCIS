@@ -920,3 +920,6 @@ Restrict invalid-report selection redirect to existing case-context routes; pres
 
 ## UI workbench Web-only integration (2026-11-19)
 Authorized on a8ff69e: add only three #100 saved metadata gap files from fixed242b814; #99/#101 six input files already identical, retain all workspace guards. Twelve bounded offline scripts and TS/Vite passed using existing dependencies. No backend/contracts/browser. See tests_acceptance/ui-workbench-integrated/REVIEW.md.
+
+## Workbench media workflow boundary guidance (2026-11-19)
+Authorized on55ae567: current Web head lacks separate media review service/pages; add truthful evidence-stage gap and existing original-registration guidance, no fabricated links/API. Old missing-text SSR failure/new pass, navigation/report context regression and TS/Vite passed. See tests_acceptance/ui-workbench-integrated/MEDIA-GUIDANCE.md.

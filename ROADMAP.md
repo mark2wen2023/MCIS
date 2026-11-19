@@ -557,3 +557,5 @@ Combined exact 139f188 and b4df823; only document append conflicts, both preserv
 | P0 report sidebar scope correction | 待独验 | global links preserved, invalid case links select first, late metadata ignored; scoped offline regression + TS/Vite passed | logs/report-sidebar-scope-frozen.txt |
 
 | 2026-11-19 | Integrated case workbench Web increment | 待独验：#100三文件、既有#99/#101去重；12限定离线脚本与TS/Vite通过，浏览器/HTTP/图音闭环未验 | logs/ui-workbench-integrated-frozen.txt |
+
+| 2026-11-19 | Workbench media boundary guidance | 待独验：旧版缺提示反例/新SSR、导航与报告守门及TS/Vite通过；无图音保存重开接线、无浏览器/HTTP验收 | logs/ui-workbench-media-guidance-frozen.txt |

@@ -40,3 +40,23 @@ assert.ok(render('/recs').includes('不自动入库'))
 assert.equal(render('/interview'),html)
 assert.ok(!render('/report','').includes('SYN-B'))
 console.log('PASS case flow: route mapping, explicit context/encoding, back/next, global/no-case clearing and actual component SSR')
+
+// Current branch has file registration, not the separate media review candidate.
+for (const path of ['/evidence','/ships','/env','/track']) {
+ const output=render(path)
+ assert.ok(output.includes('图音核对尚未接入本工作台'))
+ assert.ok(output.includes('登记文件副本不等于导入识别结果或保存核对修订'))
+ assert.ok(output.includes('选择对应证据，再使用“查看登记原件”'))
+ assert.ok(output.includes('不是重开图音核对运行'))
+ assert.ok(!output.includes('/audio-review-lab')&&!output.includes('/image-review-lab'))
+}
+for(const query of ['', '?case=', '?case=A&case=A', '?case=A&case=B']) {
+ const output=render('/evidence',query)
+ assert.ok(!output.includes('图音核对尚未接入本工作台'))
+ assert.ok(output.includes('href="/lobby"'))
+}
+assert.ok(!render('/report').includes('图音核对尚未接入本工作台'))
+assert.ok(!render('/lobby').includes('图音核对尚未接入本工作台'))
+assert.ok(render('/evidence','?case=SYN-B').includes('SYN-B'))
+assert.ok(!render('/evidence','?case=SYN-B').includes(encodeURIComponent(id)))
+console.log('PASS media workflow gap guidance: four evidence routes, explicit/invalid contexts, no fabricated media links')
