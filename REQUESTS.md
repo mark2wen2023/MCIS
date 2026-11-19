@@ -917,3 +917,6 @@ Authorized report-only correction on candidate/case-workspace-flow: share explic
 
 ## P0 report sidebar scope correction
 Restrict invalid-report selection redirect to existing case-context routes; preserve knowledge/global paths. Independent-review follow-up only; controlled hooks use actual route table and delayed synthetic metadata. No permissions/API change.
+
+## UI workbench Web-only integration (2026-11-19)
+Authorized on a8ff69e: add only three #100 saved metadata gap files from fixed242b814; #99/#101 six input files already identical, retain all workspace guards. Twelve bounded offline scripts and TS/Vite passed using existing dependencies. No backend/contracts/browser. See tests_acceptance/ui-workbench-integrated/REVIEW.md.

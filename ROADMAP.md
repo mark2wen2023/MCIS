@@ -555,3 +555,5 @@ Combined exact 139f188 and b4df823; only document append conflicts, both preserv
 | P0 report explicit case boundary | 待独验 | missing/blank/duplicate report case requires lobby selection; offline actual-component controlled hooks + adjacent report regression + SSR + TS/Vite passed; no browser/backend | logs/report-explicit-case-frozen.txt |
 
 | P0 report sidebar scope correction | 待独验 | global links preserved, invalid case links select first, late metadata ignored; scoped offline regression + TS/Vite passed | logs/report-sidebar-scope-frozen.txt |
+
+| 2026-11-19 | Integrated case workbench Web increment | 待独验：#100三文件、既有#99/#101去重；12限定离线脚本与TS/Vite通过，浏览器/HTTP/图音闭环未验 | logs/ui-workbench-integrated-frozen.txt |

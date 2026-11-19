@@ -1,3 +1,4 @@
+import { GapSummary } from '../caseMetadata/GapSummary'
 import {useCallback,useEffect,useRef,useState,useSyncExternalStore} from 'react'
 import {Link,useSearchParams} from 'react-router-dom'
 import {api,ApiError,CASE_ID,casePath,getRole} from '../api'
@@ -22,6 +23,7 @@ function Session({id,token}:{id:string;token:string}){
  {error?<div role="alert"><p>{error}</p><button onClick={()=>{setError('');setRetry(n=>n+1)}}>重试读取</button></div>:!base||!form?<p role="status">正在读取案件档案…</p>:<>
  <header className="w84-case"><span>{base.case.isFictionalDemo?'虚构演示':'非虚构案件'}</span><h2>{display(base.case.title)}</h2><p>{id}</p></header>
  <CaseReadonly snapshot={base}/>
+ <GapSummary snapshot={base}/>
  {base.lastChange&&<aside className="w84-last"><h2>最近文字修改 · 来源声明未核实</h2><p>{base.lastChange.utc} · {base.lastChange.operator}</p><p>来源：{base.lastChange.sourceLabel}</p><p>理由：{base.lastChange.changeReason}</p></aside>}
  {!edit?<><dl className="w84-values">{fields.map(([k,label])=><div key={k}><dt>{label}</dt><dd>{display(base.case[k])}</dd></div>)}</dl><div className="w84-actions">{canEdit(getRole())?<button onClick={()=>{setEdit(true);setMessage('')}}>编辑文字档案</button>:<p>当前身份仅可查看，不能编辑。</p>}<button onClick={()=>{setBase(null);setForm(null);setError('');setRetry(n=>n+1)}}>重新读取</button></div></>:<form noValidate onSubmit={e=>{e.preventDefault();void save()}}><h2>编辑五项文字信息</h2><p>可选项清空将移除已保存的该字段。来源不同请分次保存。离开页面会放弃草稿，已发出的修改不能通过离开撤销。</p><fieldset disabled={busy||blocked!==null}>
  {fields.map(([k,label,max])=><label key={k}>{label}{k==='title'?'（必填）':'（可清空）'}{k==='summaryNotes'?<textarea rows={6} maxLength={max} value={form[k]} onChange={e=>setForm(f=>f&&({...f,[k]:e.target.value}))}/>:<input maxLength={max} value={form[k]} onChange={e=>setForm(f=>f&&({...f,[k]:e.target.value}))}/>}</label>)}
