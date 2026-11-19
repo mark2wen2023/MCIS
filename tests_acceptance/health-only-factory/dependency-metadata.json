@@ -1,0 +1,232 @@
+{
+  "observation": "read-only dist-info metadata; no target-package imports",
+  "platform": {
+    "observer_python": "3.12.14",
+    "implementation": "cpython",
+    "sys_platform": "linux",
+    "machine": "x86_64",
+    "soabi": "cpython-312-x86_64-linux-gnu",
+    "venv_declared_version": "3.12.14",
+    "observer_matches_venv_executable": true
+  },
+  "base_extras_selected": [],
+  "distributions": [
+    {
+      "name": "fastapi",
+      "version": "0.162.7",
+      "requires_python": ">=3.11",
+      "requires_dist": [
+        "starlette>=0.46.0",
+        "anyio>=4.1.0",
+        "pydantic>=2.9.0",
+        "typing-extensions>=4.8.0",
+        "typing-inspection>=0.4.2",
+        "annotated-doc>=0.0.2",
+        "opentelemetry-api>=1.44.0",
+        "opentelemetry-sdk>=1.44.0; extra == \"opentelemetry\"",
+        "opentelemetry-exporter-otlp-proto-http>=1.44.0; extra == \"opentelemetry\"",
+        "opentelemetry-sdk>=1.44.0; extra == \"standard\"",
+        "opentelemetry-exporter-otlp-proto-http>=1.44.0; extra == \"standard\"",
+        "fastapi-cli[standard]>=0.0.32; extra == \"standard\"",
+        "fastar>=0.9.0; extra == \"standard\"",
+        "httpx<1.0.0,>=0.23.0; extra == \"standard\"",
+        "httpx2>=2.0.0; extra == \"standard\"",
+        "jinja2>=3.1.5; extra == \"standard\"",
+        "python-multipart>=0.0.18; extra == \"standard\"",
+        "email-validator>=2.0.0; extra == \"standard\"",
+        "uvicorn[standard]>=0.12.0; extra == \"standard\"",
+        "pydantic-settings>=2.0.0; extra == \"standard\"",
+        "pydantic-extra-types>=2.0.0; extra == \"standard\"",
+        "opentelemetry-sdk>=1.44.0; extra == \"standard-no-fastapi-cloud-cli\"",
+        "opentelemetry-exporter-otlp-proto-http>=1.44.0; extra == \"standard-no-fastapi-cloud-cli\"",
+        "fastapi-cli[standard-no-fastapi-cloud-cli]>=0.0.32; extra == \"standard-no-fastapi-cloud-cli\"",
+        "httpx<1.0.0,>=0.23.0; extra == \"standard-no-fastapi-cloud-cli\"",
+        "httpx2>=2.0.0; extra == \"standard-no-fastapi-cloud-cli\"",
+        "jinja2>=3.1.5; extra == \"standard-no-fastapi-cloud-cli\"",
+        "python-multipart>=0.0.18; extra == \"standard-no-fastapi-cloud-cli\"",
+        "email-validator>=2.0.0; extra == \"standard-no-fastapi-cloud-cli\"",
+        "uvicorn[standard]>=0.12.0; extra == \"standard-no-fastapi-cloud-cli\"",
+        "pydantic-settings>=2.0.0; extra == \"standard-no-fastapi-cloud-cli\"",
+        "pydantic-extra-types>=2.0.0; extra == \"standard-no-fastapi-cloud-cli\"",
+        "opentelemetry-sdk>=1.44.0; extra == \"all\"",
+        "opentelemetry-exporter-otlp-proto-http>=1.44.0; extra == \"all\"",
+        "fastapi-cli[standard]>=0.0.32; extra == \"all\"",
+        "httpx<1.0.0,>=0.23.0; extra == \"all\"",
+        "httpx2>=2.0.0; extra == \"all\"",
+        "jinja2>=3.1.5; extra == \"all\"",
+        "python-multipart>=0.0.18; extra == \"all\"",
+        "itsdangerous>=1.1.0; extra == \"all\"",
+        "pyyaml>=5.3.1; extra == \"all\"",
+        "email-validator>=2.0.0; extra == \"all\"",
+        "uvicorn[standard]>=0.12.0; extra == \"all\"",
+        "pydantic-settings>=2.0.0; extra == \"all\"",
+        "pydantic-extra-types>=2.0.0; extra == \"all\""
+      ],
+      "metadata_sha256": "8f4b6749b602ced136ff35f67116b8e0998a281fd1bafb8cbb626e31897dfae7",
+      "wheel_metadata_sha256": "22e224df06da127147d5cc7be623364750a6962448ddd14b5d36d16a482f8054",
+      "record_present": true,
+      "direct_url_present": false,
+      "payload_verified": false,
+      "artifact_provenance_verified": false
+    },
+    {
+      "name": "starlette",
+      "version": "1.10.0",
+      "requires_python": ">=3.11",
+      "requires_dist": [
+        "anyio<5,>=4.0.0",
+        "typing-extensions>=4.10.0; python_version < '3.13'",
+        "httpx2>=2.0.0; extra == 'full'",
+        "httpx<0.29.0,>=0.27.0; extra == 'full'",
+        "itsdangerous; extra == 'full'",
+        "jinja2; extra == 'full'",
+        "opentelemetry-api; extra == 'full'",
+        "python-multipart>=0.0.18; extra == 'full'",
+        "pyyaml; extra == 'full'"
+      ],
+      "metadata_sha256": "82f72dde2c5c3c55d45d9461adce5e30973481f7f3e10b59e497bbc5b8abf598",
+      "wheel_metadata_sha256": "5b77e4a649bbfb07fdbc123967eeecd1e5a478cfaca6eefc23c35e6fdf037848",
+      "record_present": true,
+      "direct_url_present": false,
+      "payload_verified": false,
+      "artifact_provenance_verified": false
+    },
+    {
+      "name": "pydantic",
+      "version": "2.14.3",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "annotated-types>=0.6.0",
+        "pydantic-core==2.50.4",
+        "typing-extensions>=4.16.0",
+        "typing-inspection>=0.4.4",
+        "email-validator>=2.0.0; extra == 'email'",
+        "tzdata; (platform_system == 'Windows') and extra == 'timezone'"
+      ],
+      "metadata_sha256": "c3eb8984172bedc8e056655e1419351f4497374a91b7b709dbc4a1340f50e1e9",
+      "wheel_metadata_sha256": "da266b2640c891e0e1d24f528a428ca85b913feb9aea66f822bd40b04478044c",
+      "record_present": true,
+      "direct_url_present": false,
+      "payload_verified": false,
+      "artifact_provenance_verified": false
+    },
+    {
+      "name": "pydantic_core",
+      "version": "2.50.4",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "typing-extensions>=4.16.0"
+      ],
+      "metadata_sha256": "bb1956097beb504f190f8ea20c859b5dfea567679a247ce252d7813dd73f361d",
+      "wheel_metadata_sha256": "8b356abe878ffd8419e6888ec6cbff2c8b0b77786ae02db72d64b7e3912bf59c",
+      "record_present": true,
+      "direct_url_present": false,
+      "payload_verified": false,
+      "artifact_provenance_verified": false
+    },
+    {
+      "name": "anyio",
+      "version": "4.16.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "exceptiongroup>=1.0.2; python_version < \"3.11\"",
+        "idna>=2.8",
+        "typing_extensions>=4.16.0; python_version < \"3.15\"",
+        "trio>=0.32.0; extra == \"trio\""
+      ],
+      "metadata_sha256": "b184ac9cd097e2bb7f90d42799346cc91c276095d000d95d7f7ddd407d0c887e",
+      "wheel_metadata_sha256": "98e75747d0b7c0c568bfb71263c3d8f970b3a374a6996087bc642be5cb09a1aa",
+      "record_present": true,
+      "direct_url_present": false,
+      "payload_verified": false,
+      "artifact_provenance_verified": false
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.16.0",
+      "requires_python": ">=3.9",
+      "requires_dist": [],
+      "metadata_sha256": "b05084ca1d50879865178d9fff9fabeab61bdfb1f361bfbde95421ffc8f9be46",
+      "wheel_metadata_sha256": "1b68144734c4b66791f27add5d425f3620775585718a03d0f9b110ba3a4d88db",
+      "record_present": true,
+      "direct_url_present": false,
+      "payload_verified": false,
+      "artifact_provenance_verified": false
+    },
+    {
+      "name": "typing-inspection",
+      "version": "0.4.5",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "typing-extensions>=4.15.0"
+      ],
+      "metadata_sha256": "7306933907768b0098784e56dfd678242f52383ff3e35c10a4c150539393d6ec",
+      "wheel_metadata_sha256": "5b77e4a649bbfb07fdbc123967eeecd1e5a478cfaca6eefc23c35e6fdf037848",
+      "record_present": true,
+      "direct_url_present": false,
+      "payload_verified": false,
+      "artifact_provenance_verified": false
+    },
+    {
+      "name": "annotated-types",
+      "version": "0.8.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [],
+      "metadata_sha256": "614985b278f601b8ef863f82783b991cc3ada4b89f592eb71c7c48c5f2ef2298",
+      "wheel_metadata_sha256": "942926c567d0b1273d09f20295879abd37507845f6b683eab9f87d808df91100",
+      "record_present": true,
+      "direct_url_present": false,
+      "payload_verified": false,
+      "artifact_provenance_verified": false
+    },
+    {
+      "name": "annotated-doc",
+      "version": "0.0.6",
+      "requires_python": ">=3.10",
+      "requires_dist": [],
+      "metadata_sha256": "bc2ae0bab6e707bb7dd723e78e1f5db6bec1b81e7e7f0c5d8aa77e8cf51079d4",
+      "wheel_metadata_sha256": "22e224df06da127147d5cc7be623364750a6962448ddd14b5d36d16a482f8054",
+      "record_present": true,
+      "direct_url_present": false,
+      "payload_verified": false,
+      "artifact_provenance_verified": false
+    },
+    {
+      "name": "idna",
+      "version": "3.20",
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "ruff >= 0.16.0 ; extra == \"all\"",
+        "mypy >= 1.11.2 ; extra == \"all\"",
+        "ty >= 0.0.37 ; extra == \"all\"",
+        "pytest >= 8.3.2 ; extra == \"all\"",
+        "hypothesis >= 6.141.1 ; extra == \"all\"",
+        "coverage >= 7.10.0 ; extra == \"all\""
+      ],
+      "metadata_sha256": "dbd8c14c1e4ca1e0c9824a6dbc7cbbf78884f38eb52d91148cd3025f671e4b85",
+      "wheel_metadata_sha256": "96a37c8d7b7f425a05386731f644adbd66ebca17c45e8236176cfe614466df9d",
+      "record_present": true,
+      "direct_url_present": false,
+      "payload_verified": false,
+      "artifact_provenance_verified": false
+    },
+    {
+      "name": "opentelemetry-api",
+      "version": "1.45.2",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "typing-extensions>=4.5.0"
+      ],
+      "metadata_sha256": "aa93f63be0d6d1f662966e67b22a77c0d9966752e3a32ad87c1347f595cea7cb",
+      "wheel_metadata_sha256": "da266b2640c891e0e1d24f528a428ca85b913feb9aea66f822bd40b04478044c",
+      "record_present": true,
+      "direct_url_present": false,
+      "payload_verified": false,
+      "artifact_provenance_verified": false
+    }
+  ],
+  "site_pth_names": [],
+  "site_egg_link_names": [],
+  "complete_runtime_lock": false,
+  "startup_allowed": false
+}

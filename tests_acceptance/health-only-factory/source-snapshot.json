@@ -1,0 +1,26 @@
+{
+  "source_commit": "0308d07f262ce7436757ade6d16a30fc25c4dd02",
+  "files": [
+    {
+      "source": "service/mcis_service/__init__.py",
+      "snapshot_path": "mcis_service/__init__.py",
+      "bytes": 93,
+      "sha256": "0af1ae7229694ada406cc87b5cbaaf195441620cb48e8dda54df83a3f6295480"
+    },
+    {
+      "source": "service/mcis_service/health.py",
+      "snapshot_path": "mcis_service/health.py",
+      "bytes": 209,
+      "sha256": "630a0739136ba952adb6b7d1fdd9a3629f5d384c2643428184eb8454675e9d36"
+    },
+    {
+      "source": "service/mcis_service/health_app.py",
+      "snapshot_path": "mcis_service/health_app.py",
+      "bytes": 384,
+      "sha256": "077227d8ef720396f7b008dbfcb7489f0b8bc15b74833a3fb9b6944e28ed84f1"
+    }
+  ],
+  "exact_file_count": 3,
+  "copy_performed": false,
+  "startup_allowed": false
+}

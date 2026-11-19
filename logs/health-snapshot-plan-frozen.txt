@@ -1,0 +1,3 @@
+96623df0a794b1c351034f25f300f9bb519353ba07953894a02da51c4baedea3  tests_acceptance/health-only-factory/README.md
+351437ac46816084696c28e1fffdbf47fe1aa891bc205189abf4e6d5f33e1eb2  tests_acceptance/health-only-factory/source-snapshot.json
+450e782661e3808ceac8246ee4e4bc579037fa3c703374b7b979038c6dfd19a9  tests_acceptance/health-only-factory/dependency-metadata.json
