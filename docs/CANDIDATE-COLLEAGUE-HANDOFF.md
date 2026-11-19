@@ -6,7 +6,7 @@
 
 | 分支 | 固定头 | 含义 |
 |---|---|---|
-| integration/ui-review-series | `749eaff1af3f0cf1ddc12c0f84ff6ca2c916b451` | 可拉取做代码评审；在已独验 3edb1a55 上新增报告动作同步防重复，新增修复仅开发验证。 |
+| integration/ui-review-series | `749eaff1af3f0cf1ddc12c0f84ff6ca2c916b451` | 可拉取做代码评审；在已独验 3edb1a55 上新增报告动作同步防重复，新增修复已获限定独验，边界见下文。 |
 | candidate/media-demo-launcher | `76d6c22c474172a28f7b2da9ae45021e8d573b82` | 隔离图音复核、来源声明、草稿和异步反馈；正式媒体归档恢复未开放。 |
 | candidate/media-report-exact-reference | `3a19c75221dc770042708972bf7a1a36d681e121` | 基于图音头的内部精确修订投影/读取器及逐项证据派生；未接报告生成、展示、导出或重开，只供内部代码评审。 |
 | candidate/ui-offline-report-preview | `0bdbf26fde52b2908e7b8881ddc5ebe978c9f146` | 文档头；预览构建固定 `87dfd2584294893319751e29ec240ca7d7e54c81`，不是完整应用。 |
@@ -16,14 +16,14 @@ UI 与图音两头互不包含，彼此均非祖先，共同基线为 `94d5e38c9
 
 ## 已有证据，按版本解释
 
-- **当前 UI 749eaff**：[固定增量记录](https://github.com/mark2wen2023/MCIS/blob/749eaff1af3f0cf1ddc12c0f84ff6ca2c916b451/tests_acceptance/report-action-single-flight/REVIEW.md)。旧头合成反例为导出回调重渲染前派发两次；修复后开发方运行新 3 场景、相邻 12 场景及 TS/Vite 通过，尚未收到该增量独验结论。仅当前页面防重复，不是后端幂等或未知结果安全重试。
+- **当前 UI 749eaff**：[固定增量记录](https://github.com/mark2wen2023/MCIS/blob/749eaff1af3f0cf1ddc12c0f84ff6ca2c916b451/tests_acceptance/report-action-single-flight/REVIEW.md)。父线程已完成该固定头限定独验：旧头反例明确为实际派发 2 对预期 1；新 3 场景、相邻 12 场景、两份 TypeScript 配置及 Vite 通过。GISIS 防重计数仅静态检查，未做浏览器、HTTP 或后端幂等验收。仅当前页面防重复，不是未知结果安全重试；本轮未重跑测试。
 - **UI 已独验基线 3edb1a55**：父线程确认 24 个综合脚本、提交阶段专项 3 组及 TypeScript/Vite 已独验通过。三个修正的旧生命周期脚本在原头和候选均有完成标记，保留业务断言。见[固定记录](https://github.com/mark2wen2023/MCIS/tree/3edb1a55bc60fdaa13980e84597da2f357663231/tests_acceptance/ui-effect-harness)与[提交阶段专项](https://github.com/mark2wen2023/MCIS/tree/3edb1a55bc60fdaa13980e84597da2f357663231/tests_acceptance/ui-commit-phase)。记录中的“待独验”为当时状态，此处补充后来确认；本轮没有重跑。真实 React 并发、浏览器、视觉及当前组合后端未验，不将不同计数相加为全量覆盖。
 - **历史 UI 661d73f / 49fc5b0**：`661d73ff62a981af5ed64751c606b8e5129d42c0` 为旧代码组合，`49fc5b06ebedd2229b028c12f810180c8aef4649` 为其文档后续头，不再是当前综合分支头。[历史记录](https://github.com/mark2wen2023/MCIS/blob/49fc5b06ebedd2229b028c12f810180c8aef4649/tests_acceptance/ui-review-series/DEVELOPER.md)保留，不能替代当前固定版本证据。
 - **离线报告 87dfd25 / 0bdbf26**：`87dfd2584294893319751e29ec240ca7d7e54c81` 的三页已独立重建及静态检查通过；`0bdbf26fde52b2908e7b8881ddc5ebe978c9f146` 仅补交接与 ZIP 校验。手造中文草稿、双语修改、英文缺失复用实际 ReportView；章节原文折叠区与合成 GISIS 快照已有输出检查。无页面脚本、业务请求或可操作业务控件；浏览器/视觉未验，不证明点击、保存、身份、HTTP 或生成报告。见[固定预览与制品说明](https://github.com/mark2wen2023/MCIS/blob/0bdbf26fde52b2908e7b8881ddc5ebe978c9f146/web/preview/report/README.md)，不构成后端启动许可。
 - **图音**：已明确独验的六项固定版本为 25fc8e7（播放迟到）、9bc2f3d（串行不排队）、d1f2593（input/dirty/模拟离页）、baabeed（来源声明）、4ec789e（音频已载入/目标归属）、53e59ca（图片来源/草稿/下载归属）。均为纯 Node 合成 DOM/Promise 的限定范围，固定链接见[指南证据表](https://github.com/mark2wen2023/MCIS/blob/76d6c22c474172a28f7b2da9ae45021e8d573b82/docs/MEDIA-DEMO.md)。后续等待、保存反馈及 unknown 提醒变化不能据这六项推定独验。76d6c22 的累计提醒[记录](https://github.com/mark2wen2023/MCIS/blob/76d6c22c474172a28f7b2da9ae45021e8d573b82/tests_acceptance/media-unknown-guidance/ACCUMULATION.md)保留的是开发方执行记录；父线程随后确认 76d6c22 的 8 个新增及 2 个既有生命周期场景已获限定独验。不同固定版本的结果不能累计，此结论不是全量、真实浏览器或后端验收。
 - **来源比较 2e95936**：父线程最新确认新增 7 组聚合与原 13 组纯函数分别独验通过；不累计为系统覆盖。要求同一案件、笔录及声明快照，保留逐 pair 结果；缺失/null、乱序、多角色、显式调用者 ABA 等为合成输入。没有网络、文件、数据库等服务访问或关联写入；Node 测试本身仍需加载测试/模块源码。声明一致不证明原件真实性、当前字节、人工批准、可信身份或服务端完整历史。见[固定说明](https://github.com/mark2wen2023/MCIS/blob/2e9593657cf1ab1dafbf7ee815d9ef0a06f9bd8d/research/source-declarations/README.md)。其中“待独验”属于提交时记录，此处补充后来确认，不冒充本轮重跑。
 
-- **内部引用 3a19c75**：[固定记录](https://github.com/mark2wen2023/MCIS/blob/3a19c75221dc770042708972bf7a1a36d681e121/tests_acceptance/media-report-reference/REVIEW.md)。开发侧纯函数、AST 和自造查询桩分别检查精确修订、内容摘要、逐项证据派生；不累计场景数。没有真实 ORM、授权、事务或报告闭环验收，本文件不宣称独验。摘要区分人工正文与来源声明，不构成原件核验或存储防篡改。
+- **内部引用 3a19c75**：[固定记录](https://github.com/mark2wen2023/MCIS/blob/3a19c75221dc770042708972bf7a1a36d681e121/tests_acceptance/media-report-reference/REVIEW.md)。父线程确认各固定提交分别完成限定独验：3fd3112 的 3 组纯内存、c04dc2c 的 2 组查询桩、3a19c75 的 3 组 AST/桩，分别检查精确修订、内容摘要和逐项证据派生。不合计为全量覆盖；没有真实 ORM、授权、一致事务或报告闭环验收。本轮未重跑，固定记录中的待独验为当时状态。摘要区分人工正文与来源声明，不构成原件核验或存储防篡改。
 
 不同提交、测试轮次与历史测试数不得相加为“全量通过”。旧 558/560、历史 HTTP/LibreOffice 或模型实验均不构成本候选的新验收或重跑许可。
 
