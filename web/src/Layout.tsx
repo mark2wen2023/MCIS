@@ -4,6 +4,7 @@ import { api, CASE_ID, getOperator, getRole, setIdentity } from './api'
 import { onCaseMetadataChanged } from './caseMetadata/events'
 import { ROUTES } from './routes'
 import { CaseLoadStatus } from './components/CaseLoadStatus'
+import { CaseWorkspaceFlow } from './caseFlow/CaseWorkspaceFlow'
 import type { CaseDef, Role } from './types'
 import { SERVICE_ADDR } from './config'
 import { caseForLocation, navigationForCase } from './caseContext'
@@ -94,7 +95,7 @@ export function Layout() {
           </select>
         </div>
       </header>
-      <main className="main"><Outlet key={`${caseId}:${role}`} /></main>
+      <main className="main"><CaseWorkspaceFlow pathname={loc.pathname} search={loc.search} /><Outlet key={`${caseId}:${role}`} /></main>
     </div>
   )
 }

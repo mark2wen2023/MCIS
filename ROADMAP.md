@@ -549,3 +549,5 @@ Combined exact 139f188 and b4df823; only document append conflicts, both preserv
 | UI effect harness correction | 待独验 | 08fc47b product unchanged; 24 selected Node scripts + TS/Vite passed; three corrected scripts also pass original 49fc5b0 source. logs/ui-effect-harness-hashes-frozen.txt; integration unchanged; no browser/backend acceptance. |
 
 | 2026-11-19 | 报告动作重渲染前重复派发保护 | 待独验 | 3edb1a55增量；新3场景、相邻12场景、TS/Vite开发通过；无浏览器/HTTP；logs/report-action-single-flight-frozen.txt |
+
+| 2026-11-19 | P0 案件流程导航 | 待独验 | 749eaff基础；当前URL案号/阶段/可选下一步，沉淀仅后续；合成SSR/映射及TS/Vite开发通过；logs/case-workspace-flow-frozen.txt；浏览器未验 |

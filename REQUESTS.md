@@ -908,3 +908,6 @@ Authorized limited repair of three frozen synthetic harnesses: dependency-aware 
 
 ### Report action synchronous single-flight (2026-11-19)
 On UI integration 3edb1a55: synthetic actual-parent callback double invocation before rerender dispatched twice. Add event-phase session-local guard in perform and before GISIS request counter. No backend/media/permission changes; no retry/idempotency claim. New 3 scenarios, adjacent 12 scenarios and TS/Vite passed; browser and independent review pending.
+
+### P0 case workspace flow navigation (2026-11-19)
+Authorized UI-only candidate on 749eaff: Layout adds explicit-URL case flow navigation using existing routes. No demo fallback, metadata reuse, progress claims, new API or knowledge ingestion; stages/back/next are advisory. New component/model/style plus synthetic SSR/mapping checks; TS/Vite passed. No browser/visual/backend acceptance. Shared Layout change recorded here; freeze explicitly includes Layout.

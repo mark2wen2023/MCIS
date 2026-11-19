@@ -1,0 +1,10 @@
+.case-workspace-flow { margin: 0 0 16px; padding: 12px 14px; border: 1px solid #52657a; border-radius: 8px; background: var(--panel, #182330); color: var(--text, #e2e8f0); min-width: 0; }
+.case-flow-heading { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; font-size: 13px; }
+.case-flow-id { overflow-wrap: anywhere; }
+.case-flow-steps { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 10px 0; padding: 0; }
+.case-workspace-flow a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.case-flow-steps a, .case-flow-steps li > span { display: inline-block; padding: 7px 12px; border: 1px solid #718399; border-radius: 5px; }
+.case-flow-steps a[aria-current="step"] { border-width: 2px; font-weight: 700; background: #294660; }
+.case-workspace-flow a:focus-visible { outline: 3px solid #ffd477; outline-offset: 3px; }
+.case-workspace-flow p { margin: 6px 0 0; font-size: 13px; line-height: 1.6; overflow-wrap: anywhere; }
+@media (max-width: 640px) { .case-workspace-flow { padding: 10px; } .case-flow-heading { display: grid; gap: 6px; } }
