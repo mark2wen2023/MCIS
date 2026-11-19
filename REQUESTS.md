@@ -818,3 +818,6 @@ On c04dc2c: reuse get_doc/EvidenceRow + filtered custody_events + derive inside 
 
 ## Internal exact audio range candidate
 Opt-in pure internal read on media reference base, mandatory old digest and exact segment, trusted caller snapshot/authorization prerequisites. Original projection/digest unchanged; no report route or media retrieval. See contracts/audio-reference-range.md.
+
+## Generation-only report snapshot parser (2026-11-19)
+Authorized narrow internal candidate on audio-reference-range: reuse complete generation RA and existing report schema/anchors, no history replay or persistent media binding. See contracts/report-generation-snapshot.md. No route/schema/storage change or application execution.

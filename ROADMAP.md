@@ -521,3 +521,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-19 | 报告媒体逐项证据派生接线 | 待独验 | c04dc2c增量；3组AST/查询桩通过，未验真实ORM/授权/事务；logs/media-single-evidence-frozen.txt；报告调用点仍未接 |
 
 | Internal exact audio range | 待独验 | 3 normal handcrafted pure reads; trusted sample basis required; no ORM/auth/transaction/runtime acceptance | logs/audio-reference-range-frozen.txt |
+
+| 2026-11-19 | Internal generation-only report snapshot | 待独验：两代纯合成正常输入、当前行/返回副本隔离开发检查通过；无 ORM/权限/真实生成/持久媒体绑定 | logs/report-generation-snapshot-frozen.txt |
