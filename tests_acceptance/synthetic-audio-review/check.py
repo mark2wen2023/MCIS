@@ -5,7 +5,7 @@ import copy
 import hashlib
 from pathlib import Path
 import subprocess
-from make_fixture import fixture
+from make_fixture import fixture, timed_fixture
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE_COMMIT = '3a19c75221dc770042708972bf7a1a36d681e121'
@@ -111,6 +111,59 @@ for row in data['rows'][1:]:
             'No identity or fact verification')
 require(data == before, 'Input fixture mutated')
 print('PASS one normal synthetic scenario: first/second exact reference and old-reference re-read')
+# A separate normal input: same text, two declared within-file ranges.
+data = timed_fixture()
+before = copy.deepcopy(data)
+for row in data['rows'][1:]:
+    d = row['doc']
+    audio = data['rows'][0]['doc']['audio']
+    require(type(d['startMs']) is int and type(d['endMs']) is int
+            and 0 <= d['startMs'] < d['endMs'] <= data['rows'][0]['doc']['machineDraft']['source']['durationMs']
+            and d['endMs'] * audio['sampleRateHz'] <= audio['frames'] * 1000,
+            'Handmade range must fit synthetic sample basis')
+    require(d['timeStatus'] == 'operator_declared' and d['factVerified'] is False,
+            'Declared times are not verified incident times')
+available = data['rows'][:2]
+early = read(reader=SavedShapeReader(), **data['request'])
+available = data['rows']
+calls.clear()
+late = read(reader=SavedShapeReader(), **dict(data['request'], revision=2))
+require(calls == [('revision', 0), ('revision', 2),
+                  ('evidence', data['request']['evidence_id'])], 'Late exact read order')
+require(early['projection']['revision'] == 1 and late['projection']['revision'] == 2,
+        'Explicit early/late revision')
+require(early['projection']['humanText'] == late['projection']['humanText']
+        == data['rows'][1]['doc']['text'] == data['rows'][2]['doc']['text'], 'Identical text')
+require(early['referenceSha256'] != late['referenceSha256'], 'Distinct revision references')
+calls.clear()
+again = read(reader=SavedShapeReader(), expected_reference_sha256=early['referenceSha256'],
+             **data['request'])
+require(again == early, 'Old range reference digest remains stable')
+require(calls == [('revision', 0), ('revision', 1),
+                  ('evidence', data['request']['evidence_id'])], 'Early exact re-read order')
+# Controlled normal input sensitivity, NOT a stored-row mutation or failure probe.
+# Hold every field, including revision, utc and expectedRevision, identical.
+control = copy.deepcopy(data)
+control['rows'][1]['doc'].update(startMs=4000, endMs=5500)
+changed_keys = {k for k in before['rows'][1]['doc']
+                if before['rows'][1]['doc'][k] != control['rows'][1]['doc'][k]}
+require(changed_keys == {'startMs', 'endMs'}, 'Only time bounds may vary')
+require(control['rows'][0] == data['rows'][0] and control['rows'][2] == data['rows'][2]
+        and control['evidenceItem'] == data['evidenceItem'], 'Other inputs identical')
+available = control['rows']
+sensitive = read(reader=SavedShapeReader(), **data['request'])
+require(sensitive['projection']['revision'] == early['projection']['revision'] == 1
+        and sensitive['projection']['humanText'] == early['projection']['humanText'],
+        'Control fixes revision and text')
+require(sensitive['projection']['humanRevisionSha256'] != early['projection']['humanRevisionSha256']
+        and sensitive['referenceSha256'] != early['referenceSha256'],
+        'Fixed-revision bounds must affect both digests')
+for result in (early, late, again, sensitive):
+    require(result['projection']['target'] == {'segmentId': 'SEG-SYN-1'}
+            and 'startMs' not in result['projection'] and 'endMs' not in result['projection'],
+            'Current projection does not return playback bounds')
+require(data == before, 'Original timed fixture must remain unchanged')
+print('PASS timed synthetic scenario: exact early/late, old digest re-read, fixed-revision bounds sensitivity')
 print('NOT RUN: authorization, missing-evidence, HTTP, ORM, save, report export/reopen, browser, ASR')
 print('Source:', SOURCE_COMMIT, '| no media candidate code merged into this UI-derived branch')
 

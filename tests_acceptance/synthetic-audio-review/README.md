@@ -61,3 +61,19 @@
 可把本目录 check.py 和 make_fixture.py 一起复制到无 Git 的临时目录，用绝对路径 --source-dir 指向上述两文件目录运行。本轮开发侧已在 TemporaryDirectory 中分别验证：默认入口（临时 cwd，脚本仍从原仓定位对象）；便携入口（复制两个用例脚本，无 .git/checkout）。两条均通过。临时目录自动清理，无二进制/源码副本入库。
 
 新增直接断言 r2.revision=2、r2.humanText 等于第二次完整正文且不等于 r1；保留第一次内容、摘要、旧引用重读及精确 0→1→指定证据读取顺序。没有新增缺证/权限/故障测试，没有运行服务或后端。
+
+## 同文字、不同文件内时间的正常样例
+
+原有两次未知时间、不同文字的场景保持不变。新增 timed_fixture；可单独查看自造素材：
+
+    python -B tests_acceptance/synthetic-audio-review/make_fixture.py --timed
+
+check.py 的默认与 --source-dir 入口现在均执行两个正常场景。新增样例：同案、同证据、同运行、同片段，两次正文完全相同；revision 1 声明 1000–2500ms，revision 2 声明 4000–5500ms。手造时基 96000 帧 / 8000Hz = 12 秒。timeStatus=operator_declared、hearingStatus=transcription_checked 仅代表此合成行的操作者声明，不代表真的听过录音；factVerified=false、说话人未知。无实际音频字节。
+
+字段依据：固定 reader 的 AUDIO 字段包含 startMs/endMs/timeStatus；audio_review/app.py 的 revise 保存构造使用 operator_declared。此处只运行纯读取器，不运行 app 或 Save。片段范围按手造帧数/采样率检查，不把“约三秒”等外部间隔推成原音位置。
+
+直接断言早晚修订号、完全相同正文、精确查询顺序、不同引用摘要，以及追加 revision 2 后 revision 1 仍匹配原摘要。另有固定 revision=1 的纯内存控制输入，只替换 startMs/endMs，其他字段包括 utc/reason/expectedRevision 完全相同；新算人工修订摘要及引用摘要均不同。这才是时间字段输入敏感性的证据，而非只由修订号差异推断。没有调用摘要不匹配错误路径，没有修改存储、源文件或执行权限/故障测试。
+
+重要限制：现有 projection.target 只返回 segmentId，projection 不返回 startMs/endMs。摘要包含时间不等于取回旧时间、更不等于定位或回听。下一验收项仍需真实调用点先满足既有授权交集和一致读取视图，再仅按旧修订取回旧片段范围；缺失/未知不自动定位，文件内相对毫秒与事故时刻必须分开。该项本轮未实现或运行。
+
+本轮开发：原场景和新场景在默认本地 Git 对象路径通过；复制到无 Git 的临时目录、显式两份已核哈希源码路径也通过。未独验；不累计历史次数，不称真实报告导出重开、ORM、HTTP、媒体回听或端到端验收。

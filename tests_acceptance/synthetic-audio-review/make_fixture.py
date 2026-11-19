@@ -51,5 +51,21 @@ def fixture():
     }
 
 
+def timed_fixture():
+    # Independent hand-authored input, not a modification of stored data.
+    data = fixture()
+    data['scenario'] = '同片段文字相同，两次人工声明的文件内毫秒范围不同；没有真实录音或听取。'
+    data['rows'][0]['doc']['audio'] = {'frames': 96000, 'sampleRateHz': 8000}
+    for row, start, end in zip(data['rows'][1:], (1000, 4000), (2500, 5500)):
+        row['doc'].update(text='合成提示后记录。', startMs=start, endMs=end,
+                          timeStatus='operator_declared', hearingStatus='transcription_checked',
+                          reason='合成操作者声明文件内范围；非事实核验、非事故时刻。')
+    return data
+
+
 if __name__ == '__main__':
-    print(json.dumps(fixture(), ensure_ascii=False, indent=2))
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--timed', action='store_true', help='Same text with two declared file ranges')
+    args = parser.parse_args()
+    print(json.dumps(timed_fixture() if args.timed else fixture(), ensure_ascii=False, indent=2))
