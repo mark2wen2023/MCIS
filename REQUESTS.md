@@ -824,3 +824,6 @@ Authorized narrow internal candidate on audio-reference-range: reuse complete ge
 
 ## Synthetic report/audio composition acceptance (2026-11-19)
 Authorized test-only composition on 30ac3e8: explicit handmade RA-to-audio association fixture, reuse generation_sentence and read_exact_audio_range. No persistent binding or product changes. See tests_acceptance/report-audio-snapshot-combination/README.md.
+
+## Offline report/audio directory preflight (2026-11-19)
+Existing media preparation/manifest check imports application and/or opens SQLite, so remains paused. Add standard-library-only explicit empty-directory/sample-path plan check, no startup permission or product changes. See tests_acceptance/report-audio-preflight/README.md; only ordinary synthetic input validation ran.
