@@ -553,3 +553,5 @@ Combined exact 139f188 and b4df823; only document append conflicts, both preserv
 | 2026-11-19 | P0 案件流程导航 | 待独验 | 749eaff基础；当前URL案号/阶段/可选下一步，沉淀仅后续；合成SSR/映射及TS/Vite开发通过；logs/case-workspace-flow-frozen.txt；浏览器未验 |
 
 | P0 report explicit case boundary | 待独验 | missing/blank/duplicate report case requires lobby selection; offline actual-component controlled hooks + adjacent report regression + SSR + TS/Vite passed; no browser/backend | logs/report-explicit-case-frozen.txt |
+
+| P0 report sidebar scope correction | 待独验 | global links preserved, invalid case links select first, late metadata ignored; scoped offline regression + TS/Vite passed | logs/report-sidebar-scope-frozen.txt |

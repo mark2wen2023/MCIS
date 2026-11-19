@@ -7,7 +7,7 @@ import { CaseLoadStatus } from './components/CaseLoadStatus'
 import { CaseWorkspaceFlow } from './caseFlow/CaseWorkspaceFlow'
 import type { CaseDef, Role } from './types'
 import { SERVICE_ADDR } from './config'
-import { caseForLocation, explicitCaseId, navigationForCase } from './caseContext'
+import { caseForLocation, explicitCaseId, navigationForCase, supportsCaseContext } from './caseContext'
 
 const ROLES: { role: Role; label: string; op: string }[] = [
   { role: 'LeadInvestigator', label: '首席调查官', op: '首席调查官' },
@@ -105,7 +105,7 @@ export function Layout() {
 
 function NavItem(r: (typeof ROUTES)[number] & { caseId: string }) {
   return (
-    <NavLink to={!r.caseId ? '/lobby' : r.path === 'report' ? '/report?case=' + encodeURIComponent(r.caseId) : navigationForCase(r.path, r.caseId, CASE_ID)} className={({ isActive }) => `nav-item ${r.group === 'p6' ? 'p6' : ''} ${isActive ? 'active' : ''}`}>
+    <NavLink to={!r.caseId && supportsCaseContext(r.path) ? '/lobby' : r.path === 'report' ? '/report?case=' + encodeURIComponent(r.caseId) : navigationForCase(r.path, r.caseId, CASE_ID)} className={({ isActive }) => `nav-item ${r.group === 'p6' ? 'p6' : ''} ${isActive ? 'active' : ''}`}>
       <span className="nav-step-num">{r.num}</span>
       <span className="nav-item-text">
         <span className="nav-item-name">{r.name}</span>

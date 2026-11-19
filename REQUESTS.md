@@ -914,3 +914,6 @@ Authorized UI-only candidate on 749eaff: Layout adds explicit-URL case flow navi
 
 ## P0 report explicit case boundary
 Authorized report-only correction on candidate/case-workspace-flow: share explicit URL parsing with flow navigation, block invalid report context before metadata/session reads, preserve valid query semantics. No backend/permissions change. See tests_acceptance/case-workspace-flow/REPORT-EXPLICIT-CASE.md.
+
+## P0 report sidebar scope correction
+Restrict invalid-report selection redirect to existing case-context routes; preserve knowledge/global paths. Independent-review follow-up only; controlled hooks use actual route table and delayed synthetic metadata. No permissions/API change.
