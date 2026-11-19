@@ -555,3 +555,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 图音请求摘要指引待独验：四种合成页面模式及相邻回归通过；tests_acceptance/media-receipt-guidance/REVIEW.md；冻结 logs/media-receipt-guidance-frozen.txt。
+
+
+图片提交快照待独验：完整/限定各22新合成场景与相邻回归通过；tests_acceptance/image-save-snapshot/REVIEW.md；冻结 logs/image-save-snapshot-frozen.txt。

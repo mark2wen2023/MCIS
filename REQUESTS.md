@@ -866,3 +866,6 @@ Authorized on 331a0ed: production JSON status/code parsing distinguishes current
 
 
 图音导入指引：仅标签/说明关联明确使用同案已核对登记回执的请求摘要，非原件SHA或预览；不改任何JS/校验。
+
+
+图片提交快照窄修复：成功校验绑定发送时字段/记录基线，逐行编辑世代保留等待中新草稿；更新旧“live字段不符即未知”回归，保留失败关闭及412语义。

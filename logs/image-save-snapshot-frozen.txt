@@ -1,0 +1,4 @@
+9bffa1b32fb7fdca8d00834d7fa551461b6191bf92d7ce630c1f9d962fbb879b  service/mcis_service/image_review/review.html
+905d1b621344d2c781c67f507addb9a2f9ee22fcbdd0c35597bf14b2d9c5915a  tests_acceptance/image-save-snapshot/page.test.cjs
+f86ce79a10728dff2b5148f9971b5be2a057fd19a561606ee91e47864bdd14f5  tests_acceptance/image-save-snapshot/check.py
+1c6103e97650be1389cf27ef9859340cecd8f4b557cece63346b646122dd6d87  tests_acceptance/image-reopen-address/page.test.cjs
