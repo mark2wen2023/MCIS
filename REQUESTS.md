@@ -851,3 +851,6 @@ Authorized on af80e1e: pure server page shaping derives task capability only fro
 
 ## Explicit case-only media target (2026-11-19)
 Authorized on 3667fa4: image/audio ?case-only prefill without request or address write; explicit accepted import uses existing case/run synchronization. run=, duplicates and extra parameters remain invalid. Update the prior case-only URL test expectation; no API/permission/capability change. See tests_acceptance/media-case-only/REVIEW.md.
+
+## Audio explicit saved-run picker (2026-11-19)
+Authorized on dc33626: strict same-case list validation and explicit open controls, preserving existing dirty confirmation/detail checks; no automatic listing, detail or URL update. Image unchanged. See tests_acceptance/audio-run-picker/REVIEW.md.
