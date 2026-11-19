@@ -558,3 +558,8 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 图片提交快照待独验：完整/限定各22新合成场景与相邻回归通过；tests_acceptance/image-save-snapshot/REVIEW.md；冻结 logs/image-save-snapshot-frozen.txt。
+
+
+取证UI离线交付入口待独验：统一命令实跑退出0，入口4项自造防误用检查通过；详见 tools/evidence_ui_offline/README.md。两分支未整合，工作台真实切案与全链路仍未验。
+
+冻结：logs/evidence-ui-offline-frozen.txt。

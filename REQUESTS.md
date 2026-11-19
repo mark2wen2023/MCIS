@@ -869,3 +869,6 @@ Authorized on 331a0ed: production JSON status/code parsing distinguishes current
 
 
 图片提交快照窄修复：成功校验绑定发送时字段/记录基线，逐行编辑世代保留等待中新草稿；更新旧“live字段不符即未知”回归，保留失败关闭及412语义。
+
+
+双检出取证UI离线入口：tools/evidence_ui_offline/run.py 固定工作台16eab999与媒体60988d5的明列源码摘要，复用代表性合成回归，无网络/安装/启动，不改产品。

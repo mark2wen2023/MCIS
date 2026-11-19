@@ -1,0 +1,45 @@
+{
+  "workbench": {
+    "baseline": "16eab9998ca9efe81b32ae9f82cf36511f0a3f01",
+    "files": {
+      "web/tests/run-case-workspace-flow.cjs": "1431e9a550e14445075bfa2ba3b630d0ecd8cca7c179f62f9ad9ad6fe7bb80cd",
+      "web/tests/case-workspace-flow.test.tsx": "b7b1cfc300e7744535ecaa673d0722a30ff9ce6d8a7e601436ed0e5bde9e376a",
+      "web/tests/report-explicit-case.test.cjs": "b7015a72660c8b3f6e5b50e566af9c19af46c629cacb09c71bc8b4676e6d9e63",
+      "web/src/caseFlow/CaseWorkspaceFlow.tsx": "3a9bef6cd7af25fdce8ccecaad18cb3b63cbc56a668054f6d444c7937b86e349",
+      "web/src/caseFlow/model.ts": "1afcfa86bfc509a174b931f4a3222a7d4d8ec0f18f7011bf8efd84a7b9f70cb0",
+      "web/src/styles/case-workspace-flow.css": "1524ace60c861c4bae913fbe32ac86e8913cbc1e265dbcf451456dd6ee497f47",
+      "web/src/caseContext.ts": "7c7cb43d9b4ba74262e2f736e717f92119952648d13ebe8233a76c24edcdd2c5",
+      "web/src/routes.ts": "afb04274225b84cf055b82c8526e53ddf3dbadc52b84a2739f808a30cbb6c6f8",
+      "web/src/Layout.tsx": "08d252c6614dce0d4cc1c607705399abd851a38cb174fd398a730e257bdcd6fc",
+      "web/src/pages/ReportPage.tsx": "de34ac2c16360bcb0f6537b74622af6626cafe7bfefd095802d45b87fb70c7c9",
+      "web/tsconfig.json": "770b4140bbb581e2dfd9ea9946ffc9c75a1d86ba7d2db5f77c83e37cbdf9d808",
+      "web/tsconfig.app.json": "8e5d12ba330e7d86409edec74b95451e0db22ee09b9426c94b5bf817571eddb0"
+    }
+  },
+  "media": {
+    "baseline": "60988d5bc3cde6077d4122c38128ef3e1598ad41",
+    "files": {
+      "service/mcis_service/_review_page.py": "aad698ebeec7ebbae561672858346154edfd11d77fd08f1e95ef850cfb67914c",
+      "tests_acceptance/media-receipt-guidance/page.cjs": "e5144fb752ee964cfa36e91654807929b72ce6cf3f1bb97424f2c508abacfde3",
+      "service/mcis_service/image_review/review.html": "9bffa1b32fb7fdca8d00834d7fa551461b6191bf92d7ce630c1f9d962fbb879b",
+      "tests_acceptance/image-loaded-context/page.test.cjs": "7296352a286d7aa5e104bf0f2354af58bc75e5f825bdc071a7728baa2aef7534",
+      "tests_acceptance/image-url-reopen/page.test.cjs": "7fa74fd0eb6bf3b8ea9c2fe285294fac1d32d87abfe52c4bf5bda33731a6b7c0",
+      "tests_acceptance/image-reopen-address/page.test.cjs": "1c6103e97650be1389cf27ef9859340cecd8f4b557cece63346b646122dd6d87",
+      "tests_acceptance/image-save-conflict/page.test.cjs": "620d0442dc0c975d2af9d831ce5031bb031101685564c867eb27c53d962a5e79",
+      "tests_acceptance/image-save-snapshot/page.test.cjs": "905d1b621344d2c781c67f507addb9a2f9ee22fcbdd0c35597bf14b2d9c5915a",
+      "service/mcis_service/audio_review/review.html": "7e4f0c8f75ecf2340a8cd3f2c006056b1b734817fe0509609c1d3ce89cff8c7f",
+      "tests_acceptance/audio-loaded-context/page.test.cjs": "332b3231247ccc1358a42f6ba2696d8026df2368a0dd7ded8466bb2a3b343def",
+      "tests_acceptance/audio-url-reopen/page.test.cjs": "bc41e138364b6bbfd213a26e8935eb2d1a39898e2b3409ae775f421d1e266755",
+      "tests_acceptance/audio-reopen-address/page.test.cjs": "44cbc3bd6a57890b2b7aa7c0be283264c551618a549013b82496b114e8bb8447",
+      "tests_acceptance/audio-save-conflict/page.test.cjs": "9525e96ae6e7ad69ddbec1149f10a52f08277943e0ff4ce480df34c4138b0529"
+    }
+  },
+  "dependencyVersions": {
+    "esbuild": "0.28.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-router-dom": "7.18.5",
+    "react-router": "7.18.5",
+    "scheduler": "0.28.0"
+  }
+}
