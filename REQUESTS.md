@@ -917,3 +917,6 @@ Authorized report-only correction on candidate/case-workspace-flow: share explic
 
 ## P0 report sidebar scope correction
 Restrict invalid-report selection redirect to existing case-context routes; preserve knowledge/global paths. Independent-review follow-up only; controlled hooks use actual route table and delayed synthetic metadata. No permissions/API change.
+
+## P0 synthetic audio review colleague scenario
+UI-flow-derived independent candidate: hand-authored two-revision saved-row shapes and pinned existing pure reference check. No media product merge or service/permissions change. See tests_acceptance/synthetic-audio-review/README.md.

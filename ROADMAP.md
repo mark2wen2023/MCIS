@@ -555,3 +555,5 @@ Combined exact 139f188 and b4df823; only document append conflicts, both preserv
 | P0 report explicit case boundary | 待独验 | missing/blank/duplicate report case requires lobby selection; offline actual-component controlled hooks + adjacent report regression + SSR + TS/Vite passed; no browser/backend | logs/report-explicit-case-frozen.txt |
 
 | P0 report sidebar scope correction | 待独验 | global links preserved, invalid case links select first, late metadata ignored; scoped offline regression + TS/Vite passed | logs/report-sidebar-scope-frozen.txt |
+
+| P0 synthetic audio review scenario | 待独验 | single offline normal reference re-read passed; text-only, no recording/save/export/authorization execution | tests_acceptance/synthetic-audio-review/README.md |
