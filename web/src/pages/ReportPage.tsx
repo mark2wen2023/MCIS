@@ -1,5 +1,6 @@
+import { explicitCaseId } from '../caseContext'
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { ReportApiError, createReportApi } from '../reports/api'
 import { ReportView, ReviewDialog } from '../reports/ReportView'
 import { getRole, getOperator, onIdentityChange } from '../api'
@@ -16,7 +17,8 @@ export function ReportPage() {
   const [params] = useSearchParams()
   const identity = useSyncExternalStore(onIdentityChange, () => JSON.stringify([getRole(), getOperator()]))
   const [revision, setRevision] = useState(0)
-  const contextKey = JSON.stringify([params.get('case'),params.get('report'),params.get('reportId'),params.get('template'),params.get('lang'),identity])
+  const explicitCase = explicitCaseId(params.toString())
+  const contextKey = JSON.stringify([params.getAll('case'),params.get('report'),params.get('reportId'),params.get('template'),params.get('lang'),identity])
   const selection = useRef<{ contextKey: string; value?: ReportSelection }>({ contextKey })
   const initialSelection = selection.current.contextKey === contextKey ? selection.current.value : undefined
   const key = JSON.stringify([contextKey, revision])
@@ -26,12 +28,13 @@ export function ReportPage() {
     if (selection.current.contextKey !== contextKey) selection.current = { contextKey }
     return () => { if (active.current === key) active.current = null }
   }, [key, contextKey])
-  return <ReportSession key={key} identity={identity} isActive={() => active.current === key && identity === JSON.stringify([getRole(),getOperator()])} initialSelection={initialSelection} refresh={(value) => {
+  if (!explicitCase) return <section aria-label="报告选案提示"><h1>请先选择案件</h1><p>报告需要唯一、非空且无首尾空白的显式案号；不会自动读取默认案件。</p><Link to="/lobby">前往案件大厅选择案件</Link></section>
+  return <ReportSession caseId={explicitCase} key={key} identity={identity} isActive={() => active.current === key && identity === JSON.stringify([getRole(),getOperator()])} initialSelection={initialSelection} refresh={(value) => {
     if (active.current !== key || identity !== JSON.stringify([getRole(),getOperator()])) return
     selection.current = { contextKey, value }; setRevision(v => v + 1)
   }} />
 }
-function ReportSession({identity, isActive, refresh, initialSelection}: {identity:string; isActive:()=>boolean; refresh:(selection?:ReportSelection)=>void; initialSelection?:ReportSelection}) {
+function ReportSession({caseId, identity, isActive, refresh, initialSelection}: {caseId:string; identity:string; isActive:()=>boolean; refresh:(selection?:ReportSelection)=>void; initialSelection?:ReportSelection}) {
   const mounted = useRef(true)
   useLayoutEffect(() => { mounted.current = true; return () => { mounted.current = false } }, [])
   const current = () => mounted.current && isActive()
@@ -42,7 +45,6 @@ function ReportSession({identity, isActive, refresh, initialSelection}: {identit
   const [auditError, setAuditError] = useState<string|null>(null)
 
   const [params, setParams] = useSearchParams()
-  const caseId = params.get('case') || DEMO_CASE_ID
   const requestedReport = params.get('report') || params.get('reportId')
   const requestedTemplate = (['imo-cic', 'maib', 'cn-msa'].includes(params.get('template') || '') ? params.get('template') : 'imo-cic') as ReportTemplateId
   const requestedLanguage = (['zh', 'en', 'bilingual'].includes(params.get('lang') || '') ? params.get('lang') : 'bilingual') as ReportLanguage

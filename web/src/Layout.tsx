@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { NavLink, Outlet, useLocation, useSearchParams } from 'react-router-dom'
+import { Link, NavLink, Outlet, useLocation, useSearchParams } from 'react-router-dom'
 import { api, CASE_ID, getOperator, getRole, setIdentity } from './api'
 import { onCaseMetadataChanged } from './caseMetadata/events'
 import { ROUTES } from './routes'
@@ -7,7 +7,7 @@ import { CaseLoadStatus } from './components/CaseLoadStatus'
 import { CaseWorkspaceFlow } from './caseFlow/CaseWorkspaceFlow'
 import type { CaseDef, Role } from './types'
 import { SERVICE_ADDR } from './config'
-import { caseForLocation, navigationForCase } from './caseContext'
+import { caseForLocation, explicitCaseId, navigationForCase } from './caseContext'
 
 const ROLES: { role: Role; label: string; op: string }[] = [
   { role: 'LeadInvestigator', label: '首席调查官', op: '首席调查官' },
@@ -26,12 +26,15 @@ export function Layout() {
   const [params] = useSearchParams()
   const onLobby = loc.pathname.endsWith('/lobby')
   const onAnalysis = loc.pathname.endsWith('/analysis') // W12：分析页也按 ?case= 显示当前案件
-  const caseId = caseForLocation(loc.pathname, params.toString(), CASE_ID)
+  const onReport = loc.pathname.replace(/\/$/, '').endsWith('/report')
+  const explicitCase = explicitCaseId(params.toString())
+  const needsCase = onReport && !explicitCase
+  const caseId = onReport ? explicitCase || '' : caseForLocation(loc.pathname, params.toString(), CASE_ID)
   const caseLoaded = caseLoadResult?.caseId === caseId ? caseLoadResult.loaded : null
   const setCaseLoaded = (loaded: boolean | null) => setCaseLoadResult({ caseId, loaded })
-  useEffect(() => onCaseMetadataChanged(caseId, () => { if (!onLobby) setCaseRevision(n => n + 1) }), [caseId, onLobby])
+  useEffect(() => { if (!needsCase) return onCaseMetadataChanged(caseId, () => { if (!onLobby) setCaseRevision(n => n + 1) }) }, [caseId, onLobby, needsCase])
   useEffect(() => {
-    if (onLobby) { setCaseDef(null); setCaseLoaded(null); return }
+    if (onLobby || needsCase) { setCaseDef(null); setCaseLoaded(null); return }
     let cancelled = false
     setCaseDef(null); setCaseLoaded(null)
     api.get<CaseDef>(`/cases/${encodeURIComponent(caseId)}`).then((c) => {
@@ -48,15 +51,15 @@ export function Layout() {
         }).catch(() => { if (!cancelled) setCaseLoaded(false) })
     })
     return () => { cancelled = true }
-  }, [caseId, onAnalysis, onLobby, caseRevision])
+  }, [caseId, onAnalysis, onLobby, caseRevision, needsCase])
   const changeRole = (r: Role) => {
     setIdentity(r, ROLES.find((x) => x.role === r)?.op)
     setRole(r)
   }
-  const currentCase = caseDef?.caseId === caseId ? caseDef : null
+  const currentCase = !needsCase && caseDef?.caseId === caseId ? caseDef : null
   const fictional = currentCase?.isFictionalDemo === true
   const unknown = !currentCase
-  const unknownLabel = onLobby ? '请选择案件' : caseLoaded === false ? '案件信息不可用' : '案件信息载入中'
+  const unknownLabel = onLobby || needsCase ? '请选择案件' : caseLoaded === false ? '案件信息不可用' : '案件信息载入中'
   return (
     <div className="app">
       <aside className="sidebar">
@@ -68,7 +71,7 @@ export function Layout() {
           </div>
         </div>
         <div className={`demo-banner ${fictional || unknown ? '' : 'real'}`}>
-          {unknown ? <>{unknownLabel}<br />{onLobby ? '案件大厅' : caseId}</> : fictional
+          {unknown ? <>{unknownLabel}<br />{onLobby || needsCase ? '案件大厅' : caseId}</> : fictional
             ? <>⚠ 示例数据（虚构）<br />{currentCase?.title}，虚构演示，不作为真实事故资料</>
             : <>⚠ 非虚构案件<br />{currentCase?.title || '案件资料'}，仅作技术分析，不作责任认定</>}
         </div>
@@ -80,13 +83,13 @@ export function Layout() {
         </nav>
         <div className="sidebar-foot">
           <span>service {SERVICE_ADDR}</span>
-          <CaseLoadStatus onLobby={onLobby} loaded={caseLoaded === true && !currentCase ? null : caseLoaded} />
+          <CaseLoadStatus onLobby={onLobby || needsCase} loaded={caseLoaded === true && !currentCase ? null : caseLoaded} />
         </div>
       </aside>
       <header className="topbar">
         <div className="topbar-left">
           <span className={`watermark ${fictional || unknown ? '' : 'real'}`}>{unknown ? unknownLabel : fictional ? '⚠ 示例数据（虚构）' : '⚠ 非虚构案件'}</span>
-          <span className="case-chip">{onLobby ? '案件大厅' : '当前案件'}<b>{onLobby ? '尚未选择' : caseId}</b>{currentCase ? currentCase.title.replace('【虚构演示】', '') : '—'}</span>
+          <span className="case-chip">{onLobby || needsCase ? '案件大厅' : '当前案件'}<b>{onLobby || needsCase ? '尚未选择' : caseId}</b>{currentCase ? currentCase.title.replace('【虚构演示】', '') : '—'}</span>
         </div>
         <div className="topbar-right">
           <span className="ident">操作人：{getOperator()}</span>
@@ -95,14 +98,14 @@ export function Layout() {
           </select>
         </div>
       </header>
-      <main className="main"><CaseWorkspaceFlow pathname={loc.pathname} search={loc.search} /><Outlet key={`${caseId}:${role}`} /></main>
+      <main className="main"><CaseWorkspaceFlow pathname={loc.pathname} search={loc.search} />{needsCase ? <section aria-label="报告选案提示"><h1>请先选择案件</h1><p>报告需要唯一、非空且无首尾空白的显式案号。旧书签不再自动读取演示案件或重复参数的首值。</p><Link to="/lobby">前往案件大厅选择案件</Link></section> : <Outlet key={`${caseId}:${role}`} />}</main>
     </div>
   )
 }
 
 function NavItem(r: (typeof ROUTES)[number] & { caseId: string }) {
   return (
-    <NavLink to={navigationForCase(r.path, r.caseId, CASE_ID)} className={({ isActive }) => `nav-item ${r.group === 'p6' ? 'p6' : ''} ${isActive ? 'active' : ''}`}>
+    <NavLink to={!r.caseId ? '/lobby' : r.path === 'report' ? '/report?case=' + encodeURIComponent(r.caseId) : navigationForCase(r.path, r.caseId, CASE_ID)} className={({ isActive }) => `nav-item ${r.group === 'p6' ? 'p6' : ''} ${isActive ? 'active' : ''}`}>
       <span className="nav-step-num">{r.num}</span>
       <span className="nav-item-text">
         <span className="nav-item-name">{r.name}</span>

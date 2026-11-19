@@ -911,3 +911,6 @@ On UI integration 3edb1a55: synthetic actual-parent callback double invocation b
 
 ### P0 case workspace flow navigation (2026-11-19)
 Authorized UI-only candidate on 749eaff: Layout adds explicit-URL case flow navigation using existing routes. No demo fallback, metadata reuse, progress claims, new API or knowledge ingestion; stages/back/next are advisory. New component/model/style plus synthetic SSR/mapping checks; TS/Vite passed. No browser/visual/backend acceptance. Shared Layout change recorded here; freeze explicitly includes Layout.
+
+## P0 report explicit case boundary
+Authorized report-only correction on candidate/case-workspace-flow: share explicit URL parsing with flow navigation, block invalid report context before metadata/session reads, preserve valid query semantics. No backend/permissions change. See tests_acceptance/case-workspace-flow/REPORT-EXPLICIT-CASE.md.

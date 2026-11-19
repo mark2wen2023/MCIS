@@ -551,3 +551,5 @@ Combined exact 139f188 and b4df823; only document append conflicts, both preserv
 | 2026-11-19 | 报告动作重渲染前重复派发保护 | 待独验 | 3edb1a55增量；新3场景、相邻12场景、TS/Vite开发通过；无浏览器/HTTP；logs/report-action-single-flight-frozen.txt |
 
 | 2026-11-19 | P0 案件流程导航 | 待独验 | 749eaff基础；当前URL案号/阶段/可选下一步，沉淀仅后续；合成SSR/映射及TS/Vite开发通过；logs/case-workspace-flow-frozen.txt；浏览器未验 |
+
+| P0 report explicit case boundary | 待独验 | missing/blank/duplicate report case requires lobby selection; offline actual-component controlled hooks + adjacent report regression + SSR + TS/Vite passed; no browser/backend | logs/report-explicit-case-frozen.txt |

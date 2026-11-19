@@ -14,3 +14,9 @@ export function navigationForCase(path: string, caseId: string, fallback: string
   return supportsCaseContext(route) && caseId !== fallback ? route + '?case=' + encodeURIComponent(caseId) : route
 }
 
+
+/** Explicit URL declaration only; duplicates (including equal values) are ambiguous. */
+export function explicitCaseId(search: string): string | null {
+  const values = new URLSearchParams(search).getAll('case')
+  return values.length === 1 && values[0].trim() !== '' && values[0] === values[0].trim() ? values[0] : null
+}

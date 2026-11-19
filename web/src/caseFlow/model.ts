@@ -1,4 +1,4 @@
-import { supportsCaseContext } from '../caseContext'
+import { explicitCaseId, supportsCaseContext } from '../caseContext'
 import { ROUTES } from '../routes'
 
 export const FLOW_STAGES = [
@@ -15,8 +15,7 @@ export const FLOW_STAGES = [
 export function caseFlow(pathname: string, search: string) {
   const page = pathname.replace(/\/$/, '').split('/').pop() || ''
   const stage = FLOW_STAGES.findIndex(s => (s.pages as readonly string[]).includes(page))
-  const values = new URLSearchParams(search).getAll('case')
-  const caseId = values.length === 1 && values[0].trim() !== '' && values[0] === values[0].trim() ? values[0] : null
+  const caseId = explicitCaseId(search)
   if (stage < 0 || !supportsCaseContext(pathname) || !caseId) return null
   const href = (route: string | null) => route && supportsCaseContext(route) && ROUTES.some(r => r.path === route)
     ? `/${route}?case=${encodeURIComponent(caseId)}` : null
