@@ -527,3 +527,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-19 | Report/audio synthetic composition | 待独验：两组合成正常场景开发通过；旧句旧范围、新句新范围及未知 null；仅夹具关联，无产品绑定/权限/一致事务验收 | logs/report-audio-snapshot-combination-frozen.txt |
 
 | 2026-11-19 | Offline report/audio directory plan | 待独验：空临时目录及普通路径/样例拒绝开发检查、CLI 正常/退出2通过；不证明隔离、不批准启动、不建库或素材 | logs/report-audio-preflight-frozen.txt |
+
+| 2026-11-19 | Report/audio generated WAV offline composition | 待独验：原占位场景及实际合成 WAV 旧/新/未知范围开发检查通过；源与 WAV 双哈希、8000Hz/96000帧；非语音/非SenseVoice/非播放器验收，无真实登记绑定 | logs/report-audio-generated-wav-frozen.txt |

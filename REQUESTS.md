@@ -827,3 +827,6 @@ Authorized test-only composition on 30ac3e8: explicit handmade RA-to-audio assoc
 
 ## Offline report/audio directory preflight (2026-11-19)
 Existing media preparation/manifest check imports application and/or opens SQLite, so remains paused. Add standard-library-only explicit empty-directory/sample-path plan check, no startup permission or product changes. See tests_acceptance/report-audio-preflight/README.md; only ordinary synthetic input validation ran.
+
+## Actual synthetic WAV composition test (2026-11-19)
+Authorized test-only follow-up to 7a2d0e4: fixed local c10b2cd generator source and expected WAV SHA-256, auto-cleaned synthetic output, optional actual-byte digest/sample basis in existing normal composition fixture. Original placeholder scenarios retained; registration/AI/human claims remain fixtures. No product interfaces or logic changed.

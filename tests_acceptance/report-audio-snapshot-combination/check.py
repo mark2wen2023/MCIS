@@ -39,13 +39,22 @@ def validate(name, doc):
     validator.validate(doc)
 
 
-def scenario(unknown):
+def scenario(unknown, wav=None):
     data = fixtures['fixture']('audio')
     initial, first = [r['doc'] for r in data['saved_rows']]
     initial['audio'] = dict(format='PCM_WAV', channels=1, sampleWidthBytes=2,
                             sampleRateHz=8000, frames=96000)
     initial['machineDraft']['version'] = 3
     initial['machineDraft']['source'].update(durationMs=12000, frameCount=96000, sampleRateHz=8000)
+    if wav is not None:
+        # Actual synthetic WAV bytes only. Registration and custody remain fixtures.
+        initial['audio'] = deepcopy(wav['audio'])
+        initial['machineDraft']['source'].update(
+            currentSha256=wav['sha256'], registeredSha256=wav['sha256'],
+            durationMs=wav['durationMs'], frameCount=wav['audio']['frames'],
+            sampleRateHz=wav['audio']['sampleRateHz'])
+        first['audioSha256'] = wav['sha256']
+        data['evidence_items'][0].update(sha256=wav['sha256'], currentSha256=wav['sha256'])
     first.update(reason='synthetic', operator='synthetic', role='Investigator',
                  utc='2026-01-01T00:00:00Z', speaker={'status':'unknown','id':None},
                  startMs=None if unknown else 1000, endMs=None if unknown else 2500,
@@ -100,6 +109,10 @@ def scenario(unknown):
         assert not sentence['sourceVerified'] and not sentence['persistentBinding']
         assert not result['mediaRetrieved'] and not result['factVerified']
         assert result['timeBasis'] == dict(kind='file-relative-milliseconds', frames=96000, sampleRateHz=8000)
+        if wav is not None:
+            assert result['sourceSha256'] == wav['sha256']
+            assert initial['machineDraft']['artifactSha256'] == 'd'*64
+            assert initial['machineDraft']['source']['stateDigest'] == 'c'*64
         return sentence, result
 
     old = connected(old_inputs, old_link)
@@ -124,7 +137,10 @@ def scenario(unknown):
     assert before == (available, data, old_inputs, new_inputs, old_link, new_link)
     print('PASS synthetic composition:', 'independent unknown old time' if unknown else 'two declared ranges')
 
+    return old, new, reread
 
-scenario(False)
-scenario(True)
-print('COMPLETE: fixture associations only; no persistent binding, authority, original audio or real snapshot transaction verified')
+
+if __name__ == '__main__':
+    scenario(False)
+    scenario(True)
+    print('COMPLETE: fixture associations only; no persistent binding, authority, original audio or real snapshot transaction verified')
