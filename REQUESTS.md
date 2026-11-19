@@ -809,3 +809,6 @@ Authorized clarification of both frozen page banners only; no Set/request/receip
 
 ## Media demo factory lazy imports (2026-11-19)
 Authorized narrow source change on fixed media 76d6c22: defer main/image/audio imports until explicit factory invocation; keep order and ordinary call body. Independent candidate, no source-policy merge or startup approval. AST/closed fake-dependency verification only; tests_acceptance/media-demo-lazy-factory/REVIEW.md records compatibility and remaining risks.
+
+## Media main direct seed import guard (2026-11-19)
+Authorized equivalent relocation from fixed 6d5069b into media candidate d966236: only three main seed imports move into existing seed_demo branch; no branch merge, default/config/routes/launcher changes. Full AST and extracted fake-branch checks only. See tests_acceptance/media-demo-seed-imports/REVIEW.md; startup remains paused.

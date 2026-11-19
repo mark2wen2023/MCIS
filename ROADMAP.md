@@ -515,3 +515,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-18 | media-unknown-accumulation | 待独立验收 | 8新+2既有Node合成节点通过；仅累计提醒文案，非逐次操作清单/浏览器/后端验收；冻结 logs/media-unknown-accumulation-impl-hashes-frozen.txt |
 
 | 2026-11-19 | Media demo factory delayed dependency load | 待独验：旧实现定义期3次假导入、候选0次；显式调用顺序/参数/返回及AST开发检查通过；非真实导入或隔离验收，启动仍暂停 | logs/media-demo-lazy-factory-frozen.txt |
+
+| 2026-11-19 | Media main three seed import edges | 待独验：全AST仅三导入移位；关闭旧3/新0、开启顺序参数相同的假依赖检查通过；非传递闭包/启动/隔离验收 | logs/media-demo-seed-imports-frozen.txt |
