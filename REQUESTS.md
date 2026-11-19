@@ -839,3 +839,6 @@ Authorized on 0735c99: independent image page reuses existing case/run detail re
 
 ## Private review-only registration (2026-11-19)
 Authorized on c57d12b: add unconnected private image/audio registration retaining storage/review routes/pages and guards, explicitly omitting task-router registration; complete registration remains equivalent. Conditional task-backed verification unchanged. No factory/default/identity/UI activation. See tests_acceptance/media-review-only-registration/REVIEW.md.
+
+## Audio accepted-record reopen address (2026-11-19)
+Authorized on 1231cae: synchronize case/run via replaceState only after accepted current audio import/read/save with no dirty or unknown state. History failure is separate from save result; no API, identity, original or task change. Image remains unchanged. See tests_acceptance/audio-reopen-address/REVIEW.md.
