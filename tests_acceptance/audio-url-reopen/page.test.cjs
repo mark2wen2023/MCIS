@@ -1,0 +1,22 @@
+// Synthetic DOM only. Real fetch is forbidden; json is replaced with memory promises.
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const path=process.env.AUDIO_PAGE_SOURCE||'service/mcis_service/audio_review/review.html';
+let script=fs.readFileSync(path,'utf8').split('<script>')[1].split('</script>')[0];
+const boot="reopenFromUrl(typeof location==='undefined'?'':location.search);";
+script=script.replace(boot,'json=memoryRequest;'+boot);
+const run='AR-'+'a'.repeat(32), other='AR-'+'b'.repeat(32);
+function record(c='SYN-1',r=run){return {caseId:c,runId:r,revision:0,humanRevisions:[],initial:{audio:{},machineDraft:{source:{caseId:c,evidenceId:'SYN-E'},transcript:{segments:[],unlocatedSegments:[]}}}}}
+function setup(search=''){
+ const requests=[],elements={};
+ class Element{constructor(){this.value='';this.textContent='';this.children=[];this.events={}}addEventListener(k,f){(this.events[k]??=[]).push(f)}fire(k){for(const f of this.events[k]||[])f()}pause(){}load(){}removeAttribute(){}setAttribute(){}append(...x){this.children.push(...x)}replaceChildren(){this.children=[]}}
+ const ctx=vm.createContext({document:{getElementById:id=>elements[id]??(elements[id]=new Element()),createElement:()=>new Element()},window:{addEventListener(){}},location:{search},URLSearchParams,URL:{revokeObjectURL(){}},confirm:()=>true,fetch(){throw Error('real fetch forbidden')},memoryRequest:path=>new Promise((resolve,reject)=>requests.push({path,resolve,reject}))});
+ elements.status=new Element();elements.metadata=new Element();vm.runInContext(script,ctx);vm.runInContext('json=memoryRequest',ctx);
+ return {elements,requests,read:s=>vm.runInContext(s,ctx)};
+}
+const settle=()=>new Promise(r=>setImmediate(r));
+test('encoded explicit case/run loads same current record only',async()=>{const s=setup('?case=SYN%2D1&run='+run);assert.equal(s.requests.length,1);assert.equal(s.requests[0].path,'/api/v1/cases/SYN-1/audio-reviews/'+run);s.requests[0].resolve(record());await settle();assert.equal(s.read('state.runId'),run);assert.match(s.elements['loaded-context'].textContent,/SYN-1/);assert.match(s.elements['reopen-context'].textContent,/不是报告固定历史版本/)});
+test('invalid URL contexts never read or select a default',async()=>{for(const q of ['?case=SYN-1','?run='+run,'?case=&run='+run,'?case=%20&run='+run,'?case=SYN-1&case=SYN-1&run='+run,'?case=SYN-1&case=SYN-2&run='+run,'?case=SYN-1&run='+run+'&run='+run,'?case=SYN-1&run=','?case=SYN%2F1&run='+run,'?case=SYN-1&run='+run+'&revision=1']){const s=setup(q);assert.equal(s.requests.length,0);assert.equal(s.elements.case.value,'');assert.equal(s.elements.run.value,'');assert.match(s.elements['reopen-context'].textContent,/链接无效/);await s.elements.load.onclick();assert.equal(s.requests.length,0)}});
+test('mismatched case or run cannot render record',async()=>{for(const d of [record('SYN-2'),record('SYN-1',other)]){const s=setup('?case=SYN-1&run='+run);s.requests[0].resolve(d);await settle();assert.equal(s.read('state'),null);assert.equal(s.elements.metadata?.textContent||'','');assert.match(s.elements.status.textContent,/响应不能确认|运行不符/)}});
+for(const outcome of ['success','failure'])test('late '+outcome+' after selection change does not render or replace feedback',async()=>{const s=setup('?case=SYN-1&run='+run);s.elements.case.value='SYN-2';s.elements.case.fire('input');s.elements.run.value=other;s.elements.run.fire('input');s.elements.status.textContent='new context';if(outcome==='success')s.requests[0].resolve(record());else s.requests[0].reject(Error('old failure'));await settle();assert.equal(s.read('state'),null);assert.equal(s.elements.status.textContent,'new context');assert.equal(s.read('busy'),false);const p=s.elements.load.onclick();s.requests[1].resolve(record('SYN-2',other));await p;assert.equal(s.read('context'),'SYN-2')});
+test('no parameters preserves explicit manual read without startup request',async()=>{const s=setup();assert.equal(s.requests.length,0);s.elements.case.value='SYN-1';s.elements.run.value=run;const p=s.elements.load.onclick();s.requests[0].resolve(record());await p;assert.equal(s.read('state.runId'),run)});
+test('ordinary read failure never claims loaded record',async()=>{const s=setup('?case=SYN-1&run='+run);s.requests[0].reject(Error('synthetic failure'));await settle();assert.equal(s.read('state'),null);assert.match(s.elements.status.textContent,/synthetic failure/)});

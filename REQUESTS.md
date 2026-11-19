@@ -830,3 +830,6 @@ Authorized on f891c89: move unchanged archived_evidence/historical_only to histo
 
 ## Basic case registration boundary (2026-11-19)
 Authorized on a8c6f30: extract unchanged basic case endpoint declarations into private registration helper; old router retains metadata, aliases and later overview/vessel/track registrations. No main/include-router change. AST and handwritten registration/import checks only; transitive models/contracts remain. See tests_acceptance/cases-basic-registration/REVIEW.md.
+
+## Audio explicit current-record reopening (2026-11-19)
+Authorized on ec3e292: standalone audio page accepts explicit case/run URL, reuses guarded detail read, no automatic write/download/playback; stale detail responses do not replace new-context feedback. No API, permission or workspace integration change. See tests_acceptance/audio-url-reopen/REVIEW.md; real startup remains paused.
