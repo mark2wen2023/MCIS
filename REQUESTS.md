@@ -806,3 +806,6 @@ Authorized frontend-only amendment to frozen audio/image pages: retain page-memo
 
 ## Media unknown accumulation wording (2026-11-18)
 Authorized clarification of both frozen page banners only; no Set/request/receipt behavior change. New pure Node accumulation coverage in tests_acceptance/media-unknown-guidance/ACCUMULATION.md.
+
+## Media demo factory lazy imports (2026-11-19)
+Authorized narrow source change on fixed media 76d6c22: defer main/image/audio imports until explicit factory invocation; keep order and ordinary call body. Independent candidate, no source-policy merge or startup approval. AST/closed fake-dependency verification only; tests_acceptance/media-demo-lazy-factory/REVIEW.md records compatibility and remaining risks.
