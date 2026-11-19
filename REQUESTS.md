@@ -815,3 +815,6 @@ On 3fd3112: internal scoped reader over existing media models with exact case/ru
 
 ### Per-evidence report source binding (2026-11-19)
 On c04dc2c: reuse get_doc/EvidenceRow + filtered custody_events + derive inside no_autoflush; return only case/evidence/current digest, separate missing from sanitized read failures. ScopedMediaReader defaults to it; no new route or permission. Existing report access does not establish media authorization intersection; remain unwired. Three AST/synthetic query groups, no actual ORM/backend execution.
+
+## Internal exact audio range candidate
+Opt-in pure internal read on media reference base, mandatory old digest and exact segment, trusted caller snapshot/authorization prerequisites. Original projection/digest unchanged; no report route or media retrieval. See contracts/audio-reference-range.md.

@@ -519,3 +519,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-19 | 图音报告精确读取边界及人工内容摘要 | 待独验 | 3fd3112增量；两组纯内存查询形状检查，非实际ORM/权限/HTTP；logs/media-report-reader-frozen.txt；未接线 |
 
 | 2026-11-19 | 报告媒体逐项证据派生接线 | 待独验 | c04dc2c增量；3组AST/查询桩通过，未验真实ORM/授权/事务；logs/media-single-evidence-frozen.txt；报告调用点仍未接 |
+
+| Internal exact audio range | 待独验 | 3 normal handcrafted pure reads; trusted sample basis required; no ORM/auth/transaction/runtime acceptance | logs/audio-reference-range-frozen.txt |
