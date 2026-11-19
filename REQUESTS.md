@@ -833,3 +833,6 @@ Authorized on a8c6f30: extract unchanged basic case endpoint declarations into p
 
 ## Audio explicit current-record reopening (2026-11-19)
 Authorized on ec3e292: standalone audio page accepts explicit case/run URL, reuses guarded detail read, no automatic write/download/playback; stale detail responses do not replace new-context feedback. No API, permission or workspace integration change. See tests_acceptance/audio-url-reopen/REVIEW.md; real startup remains paused.
+
+## Image explicit current-record reopening (2026-11-19)
+Authorized on 0735c99: independent image page reuses existing case/run detail read for explicit URL reopening; invalid links do not read, stale success/error cannot update changed target, draft replacement checks preserved. No API/permission/original/save changes. See tests_acceptance/image-url-reopen/REVIEW.md; startup remains paused.

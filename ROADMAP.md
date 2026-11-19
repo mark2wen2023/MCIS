@@ -531,3 +531,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-19 | Basic case registration boundary | 待独验：完整AST、默认/基础注册及定义/注册异常假依赖检查通过；未执行真实FastAPI operation IDs/HTTP/ORM，无隔离启动保证 | logs/cases-basic-registration-frozen.txt |
 
 | 2026-11-19 | Audio URL current-record reopen | 待独验：7个新合成Node场景、4个相邻归属/草稿场景、TS/Vite开发检查通过；非固定历史报告，无真实浏览器/HTTP/权限/播放验收，启动仍暂停 | logs/audio-url-reopen-frozen.txt |
+
+| 2026-11-19 | Image URL current-record reopen | 待独验：9个新合成Node场景、5个相邻归属/草稿场景通过；旧头重开反例确认，非报告历史版本，浏览器/HTTP/权限/原件未验，启动仍暂停 | logs/image-url-reopen-frozen.txt |
