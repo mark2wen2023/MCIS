@@ -812,3 +812,6 @@ Authorized narrow source change on fixed media 76d6c22: defer main/image/audio i
 
 ## Media main direct seed import guard (2026-11-19)
 Authorized equivalent relocation from fixed 6d5069b into media candidate d966236: only three main seed imports move into existing seed_demo branch; no branch merge, default/config/routes/launcher changes. Full AST and extracted fake-branch checks only. See tests_acceptance/media-demo-seed-imports/REVIEW.md; startup remains paused.
+
+## Media demo shared constants (2026-11-19)
+Authorized narrow follow-up to 585a9c0: move unchanged CID/PUBLIC literals to dependency-free constants module; retain prepare imported names and shared dictionary identity, remove launch→prepare constant dependency. Only AST/handmade importer check, no actual scripts/startup. See tests_acceptance/media-demo-shared-constants/REVIEW.md.

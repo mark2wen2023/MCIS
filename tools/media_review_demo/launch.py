@@ -9,7 +9,7 @@ import re
 import sqlite3
 from mcis_service.config import Settings, SERVICE_ROOT, PROJECT_ROOT
 from mcis_service.media_review_demo import create_media_review_demo
-from tools.media_review_demo.prepare import CID, PUBLIC
+from tools.media_review_demo.constants import CID, PUBLIC
 
 HOST='127.0.0.1'
 PORT=8766

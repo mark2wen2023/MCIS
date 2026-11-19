@@ -517,3 +517,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-19 | Media demo factory delayed dependency load | 待独验：旧实现定义期3次假导入、候选0次；显式调用顺序/参数/返回及AST开发检查通过；非真实导入或隔离验收，启动仍暂停 | logs/media-demo-lazy-factory-frozen.txt |
 
 | 2026-11-19 | Media main three seed import edges | 待独验：全AST仅三导入移位；关闭旧3/新0、开启顺序参数相同的假依赖检查通过；非传递闭包/启动/隔离验收 | logs/media-demo-seed-imports-frozen.txt |
+
+| 2026-11-19 | Media demo dependency-free constants | 待独验：原值/完整AST等价及同源名字与对象假导入检查通过；移除launcher→prepare边；非全依赖/隔离/启动验收 | logs/media-demo-shared-constants-frozen.txt |

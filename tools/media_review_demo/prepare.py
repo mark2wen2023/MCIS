@@ -22,12 +22,8 @@ from tools.audio_transcript_contract.machine_contract import PROFILE, output_dig
 from tools.audio_transcript_contract.contract import digest
 from tools.audio_transcript_contract.sensevoice_candidate import convert as convert_asr
 
-PUBLIC={
-    'audio': 'a1bd32dc78493c123f9625a66deee562aed2895f53fbc39f2cca3be7e6f4f20f',
-    'license': 'f382b62dcc61fc566b9215b1e3b604b539bfd96ed52ae1eeff5090f6dc176057',
-    'result': '1642c59d687568c5cbf9e6dc59b0c2fc20405d48d0253206f5935f79c23d63c2'}
+from tools.media_review_demo.constants import CID, PUBLIC
 PUBLIC_URL='https://github.com/modelscope/FunASR/blob/c1e3018bf0b16ac10d40fe7cf902cafd624ee4dd/runtime/funasr_api/asr_example.wav'
-CID='MEDIA-DEMO-SYNTHETIC'
 
 
 def sha(raw):return hashlib.sha256(raw).hexdigest()
