@@ -1,0 +1,1362 @@
+{
+  "format": "MCIS-SHARED-TRAJECTORY-1",
+  "caseId": "SYN-XREPO-OTHER",
+  "coordinateSystem": "WGS84-geographic",
+  "units": {
+    "position": "decimal-degrees",
+    "angles": "degrees-true-north-clockwise",
+    "speed": "knots",
+    "dimensions": "metres",
+    "time": "UTC-seconds"
+  },
+  "sources": [
+    {
+      "sourceId": "synthetic-record",
+      "type": "simulation",
+      "recordLocator": "handmade:synthetic-record",
+      "description": "Pure invented South Pacific positions/times; no real incident or system export"
+    },
+    {
+      "sourceId": "synthetic-no-hdg",
+      "type": "simulation",
+      "recordLocator": "handmade:synthetic-no-hdg",
+      "description": "Synthetic source record has no HDG; does not authorize COG fallback"
+    },
+    {
+      "sourceId": "synthetic-clock",
+      "type": "simulation",
+      "recordLocator": "handmade:synthetic-clock",
+      "description": "Invented clock: A UTC reference; B source clock 12 seconds slow; alignment adds 12 seconds"
+    },
+    {
+      "sourceId": "synthetic-identity",
+      "type": "simulation",
+      "recordLocator": "handmade:synthetic-identity",
+      "description": "Invented IMO/MMSI digit-shape fixtures; invalid IMO check digit, non ordinary ship MID; not registration"
+    }
+  ],
+  "vessel": {
+    "vesselId": "SYN-VESSEL-B",
+    "identityStatus": "operator_asserted",
+    "identifiers": [
+      {
+        "scheme": "IMO",
+        "value": "0000002",
+        "sourceIds": [
+          "synthetic-identity"
+        ]
+      },
+      {
+        "scheme": "MMSI",
+        "value": "000000002",
+        "sourceIds": [
+          "synthetic-identity"
+        ]
+      }
+    ],
+    "identityBasis": "Operator asserts synthetic identity only; invalid check digits/MID intentionally; no real vessel",
+    "lengthM": {
+      "value": 100,
+      "kind": "schematic",
+      "sourceIds": [
+        "synthetic-record"
+      ],
+      "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+    },
+    "beamM": {
+      "value": 16,
+      "kind": "schematic",
+      "sourceIds": [
+        "synthetic-record"
+      ],
+      "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+    }
+  },
+  "display": {
+    "scaleMultiplier": 1,
+    "purpose": "true_scale",
+    "note": "Synthetic dimensions only; missing heading forbids a claimed exact hull footprint"
+  },
+  "sampling": {
+    "expectedIntervalSeconds": null,
+    "gapThresholdSeconds": 15,
+    "basis": "Synthetic nonuniform samples; 15s local threshold, not a standard",
+    "missingIntervals": []
+  },
+  "points": [
+    {
+      "pointId": "B-t0",
+      "time": {
+        "sourceRecordTime": "2026-02-01T11:59:48.000Z",
+        "sourceUtc": "2026-02-01T11:59:48.000Z",
+        "alignedUtc": "2026-02-01T12:00:00.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.96083778
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t10",
+      "time": {
+        "sourceRecordTime": "2026-02-01T11:59:58.000Z",
+        "sourceUtc": "2026-02-01T11:59:58.000Z",
+        "alignedUtc": "2026-02-01T12:00:10.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.96156301
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t20",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:00:08.000Z",
+        "sourceUtc": "2026-02-01T12:00:08.000Z",
+        "alignedUtc": "2026-02-01T12:00:20.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.96228823
+        },
+        "kind": "interpolated",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Synthetic linear position interpolation between same-vessel recorded points at 10s and 30s; no gap crossed"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t30",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:00:18.000Z",
+        "sourceUtc": "2026-02-01T12:00:18.000Z",
+        "alignedUtc": "2026-02-01T12:00:30.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.96301346
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t40",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:00:28.000Z",
+        "sourceUtc": "2026-02-01T12:00:28.000Z",
+        "alignedUtc": "2026-02-01T12:00:40.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.96373869
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t50",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:00:38.000Z",
+        "sourceUtc": "2026-02-01T12:00:38.000Z",
+        "alignedUtc": "2026-02-01T12:00:50.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.96446391
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t60",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:00:48.000Z",
+        "sourceUtc": "2026-02-01T12:00:48.000Z",
+        "alignedUtc": "2026-02-01T12:01:00.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.96518914
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t65",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:00:53.000Z",
+        "sourceUtc": "2026-02-01T12:00:53.000Z",
+        "alignedUtc": "2026-02-01T12:01:05.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.96555175
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t70",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:00:58.000Z",
+        "sourceUtc": "2026-02-01T12:00:58.000Z",
+        "alignedUtc": "2026-02-01T12:01:10.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.96591437
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t80",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:01:08.000Z",
+        "sourceUtc": "2026-02-01T12:01:08.000Z",
+        "alignedUtc": "2026-02-01T12:01:20.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.96663959
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t90",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:01:18.000Z",
+        "sourceUtc": "2026-02-01T12:01:18.000Z",
+        "alignedUtc": "2026-02-01T12:01:30.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.96736482
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t95",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:01:23.000Z",
+        "sourceUtc": "2026-02-01T12:01:23.000Z",
+        "alignedUtc": "2026-02-01T12:01:35.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.96772743
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t100",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:01:28.000Z",
+        "sourceUtc": "2026-02-01T12:01:28.000Z",
+        "alignedUtc": "2026-02-01T12:01:40.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.96809004
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t110",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:01:38.000Z",
+        "sourceUtc": "2026-02-01T12:01:38.000Z",
+        "alignedUtc": "2026-02-01T12:01:50.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.96881527
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t120",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:01:48.000Z",
+        "sourceUtc": "2026-02-01T12:01:48.000Z",
+        "alignedUtc": "2026-02-01T12:02:00.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.9695405
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t125",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:01:53.000Z",
+        "sourceUtc": "2026-02-01T12:01:53.000Z",
+        "alignedUtc": "2026-02-01T12:02:05.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.96990311
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t130",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:01:58.000Z",
+        "sourceUtc": "2026-02-01T12:01:58.000Z",
+        "alignedUtc": "2026-02-01T12:02:10.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.97026572
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t140",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:02:08.000Z",
+        "sourceUtc": "2026-02-01T12:02:08.000Z",
+        "alignedUtc": "2026-02-01T12:02:20.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.97099095
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t150",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:02:18.000Z",
+        "sourceUtc": "2026-02-01T12:02:18.000Z",
+        "alignedUtc": "2026-02-01T12:02:30.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.97171618
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t160",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:02:28.000Z",
+        "sourceUtc": "2026-02-01T12:02:28.000Z",
+        "alignedUtc": "2026-02-01T12:02:40.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.9724414
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t170",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:02:38.000Z",
+        "sourceUtc": "2026-02-01T12:02:38.000Z",
+        "alignedUtc": "2026-02-01T12:02:50.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.97316663
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t180",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:02:48.000Z",
+        "sourceUtc": "2026-02-01T12:02:48.000Z",
+        "alignedUtc": "2026-02-01T12:03:00.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.97389185
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t190",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:02:58.000Z",
+        "sourceUtc": "2026-02-01T12:02:58.000Z",
+        "alignedUtc": "2026-02-01T12:03:10.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.97461708
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t200",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:03:08.000Z",
+        "sourceUtc": "2026-02-01T12:03:08.000Z",
+        "alignedUtc": "2026-02-01T12:03:20.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.97534231
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t210",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:03:18.000Z",
+        "sourceUtc": "2026-02-01T12:03:18.000Z",
+        "alignedUtc": "2026-02-01T12:03:30.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.97606753
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    },
+    {
+      "pointId": "B-t220",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:03:28.000Z",
+        "sourceUtc": "2026-02-01T12:03:28.000Z",
+        "alignedUtc": "2026-02-01T12:03:40.000Z",
+        "status": "corrected",
+        "correctionSeconds": 12,
+        "basis": "Synthetic clock reference: A zero; B clock slow by exactly 12 seconds, add +12s",
+        "sourceIds": [
+          "synthetic-clock"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": -40.0,
+          "lonDeg": -129.97679276
+        },
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "headingDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "courseDeg": {
+        "value": 270,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      },
+      "speedKn": {
+        "value": 12,
+        "kind": "recorded",
+        "sourceIds": [
+          "synthetic-record"
+        ],
+        "basis": "Handmade synthetic record; recorded is fixture quality, not actual observation"
+      }
+    }
+  ]
+}
