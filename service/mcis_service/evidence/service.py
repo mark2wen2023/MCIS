@@ -137,6 +137,42 @@ def load_item(s: Session, case_id: str, evidence_id: str) -> dict[str, Any]:
     return doc
 
 
+class EvidenceSourceReadError(ValueError):
+    """Sanitized internal source-read failure; never contains record contents."""
+    def __init__(self, code):
+        self.code = code
+        super().__init__(code)
+
+
+def report_source_snapshot(s: Session, case_id: str, evidence_id: str) -> dict[str, str] | None:
+    """Single registered source in an already authorized consistent read scope.
+
+    No permission grant, transaction management, file access or audit write.
+    None means missing registration only; failures never masquerade as missing.
+    """
+    if any(not isinstance(v, str) or not v or v != v.strip() for v in (case_id, evidence_id)):
+        raise EvidenceSourceReadError("evidence_scope_invalid")
+    try:
+        with s.no_autoflush:
+            item = get_doc(s, EvidenceRow, case_id, evidence_id)
+            if item is None:
+                return None
+            if item.get("caseId") != case_id or item.get("evidenceId") != evidence_id:
+                raise EvidenceSourceReadError("evidence_scope_mismatch")
+            events = custody_events(s, case_id, evidence_id)
+            if any(e.case_id != case_id or e.evidence_id != evidence_id for e in events):
+                raise EvidenceSourceReadError("evidence_scope_mismatch")
+            derived = derive(item, events)
+            current = derived.get("currentSha256")
+            if not isinstance(current, str) or not re.fullmatch(r"[0-9a-f]{64}", current):
+                raise EvidenceSourceReadError("source_digest_unknown")
+            return {"caseId": case_id, "evidenceId": evidence_id, "currentSha256": current}
+    except EvidenceSourceReadError:
+        raise
+    except Exception:
+        raise EvidenceSourceReadError("evidence_read_failed") from None
+
+
 def list_items(s: Session, case_id: str) -> list[dict[str, Any]]:
     events = custody_events(s, case_id)
     by_id: dict[str, list] = {}

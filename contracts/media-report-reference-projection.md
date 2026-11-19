@@ -146,3 +146,40 @@ such a reference, proves user approval, verifies an original file, resolves ABA
 history, or makes export/reopen available. Source changes still block according
 to the prior projection rules. Existing public routes and stored formats remain
 unchanged; no reports/sources.py integration and no current HTTP identity changes.
+
+## Default single-evidence binding increment
+
+`evidence.service.report_source_snapshot(session, case_id, evidence_id)` now
+implements the default source reader. It directly reuses get_doc with EvidenceRow,
+then custody_events(session, case_id, evidence_id), then derive. Non-empty exact
+IDs are mandatory because custody_events treats a missing/empty evidence_id as
+an all-case request. Each returned registration/event identity is checked before
+using it. Existing event seq ordering and derive semantics are preserved; no
+independent custody reconstruction or alternate storage has been introduced.
+
+The whole operation is under session.no_autoflush. It uses the caller's existing
+consistent transaction, never starts/commits/rolls back, and never calls load_file,
+verify, append_custody, audit, list_items or list_docs. Return is restricted to
+caseId/evidenceId/currentSha256; no title, path, original document, event lines or
+full derived dictionary escapes. None means only get_doc returned no registration;
+no event query occurs then. EvidenceSourceReadError codes distinguish
+`evidence_scope_invalid`, `evidence_scope_mismatch`, `source_digest_unknown`, and
+`evidence_read_failed`. Unexpected read/derive exceptions are replaced with a
+constant error and suppressed exception context, not reported as missing.
+
+ScopedMediaReader now uses this actual function when evidence_reader is omitted;
+the service import is lazy and errors map to ProjectionUnavailable by safe code.
+The retained custom callback option is also called under no_autoflush. A custom
+callback is trusted server code; this contract does not sandbox or sanitize all
+arbitrary callback behavior. No application import was executed in this work.
+
+This closes the missing per-evidence implementation, but not the authorization
+or transactional integration gate. `reports/router.py:check_access` checks report
+content/role/report_draft. Media routes reuse `evidence_intake/router.py:authorize`,
+which additionally checks full evidence_meta/testimony and restricted-source
+visibility. Those are not proven equivalent. No existing report call site was
+found already providing that intersection plus media/task/source-byte validation
+and a consistent read. Do not install this reader into reports/sources.py merely
+because report access passes. A caller must establish all existing media/source
+checks without broadening permissions; current startup/test restrictions remain.
+No endpoint, role, persistence format, report display or file access was added.

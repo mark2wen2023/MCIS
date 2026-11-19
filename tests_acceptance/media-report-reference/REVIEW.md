@@ -57,3 +57,28 @@ adapter reuses their model/session query form with an exact revision predicate
 instead. Evidence read callback remains an unwired trusted per-ID interface. No
 new storage, endpoints, configuration, report display or persistence is introduced.
 Startup/archive and all prior paused tests remain paused; independent review pending.
+
+## Single-evidence reader increment (base c04dc2c)
+
+Only `python3 -I -S -B tests_acceptance/media-report-reference/check_evidence_reader.py`
+was run after static review. Three groups passed. Exact get_row/get_doc,
+custody_events/derive and the new helper were extracted as AST from fixed non-seed
+files and executed with handmade query/Session/row doubles. No ORM/package/main
+imports. The actual ScopedMediaReader.read_evidence function was extracted with
+its lazy service import substituted by those functions; this explicitly does
+not test actual module loading.
+
+Checks cover registration first, exact case/key and case/evidence predicates,
+seq ordering before actual derive (two synthetic Change events), minimal output,
+unchanged input, no_autoflush active during every simulated query, missing item
+without custody query, ordinary synthetic read error distinguished/sanitized,
+wrong-case item/event before derivation, empty ID before query, default reader
+composition and safe error mapping. Fake session has no write API. This is query
+shape and pure algorithm evidence, not actual SQL filtering, permissions, DB
+read-only enforcement, transaction consistency or exception transport acceptance.
+No real failure injection, denied operation, permission/refusal endpoint, file
+read, media/seed/real data access, backend, HTTP, model or paused suite ran.
+
+No existing safe report call point was proven: report_access and media authorize
+have different prerequisites (see contract). The default implementation is usable
+by a future correctly authorized caller, not currently connected to reports.

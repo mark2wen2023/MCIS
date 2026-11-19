@@ -1,4 +1,4 @@
-"""Internal exact reads over existing media tables; no ORM/application imports.
+"""Internal exact reads; no eager ORM/application imports.
 
 The caller must authorize the case and own a consistent read transaction. Neither
 this adapter nor a caller-provided reader authenticates an HTTP request.
@@ -19,11 +19,12 @@ class ScopedMediaReader:
 
     Inject existing audio Revision/image Record classes and SQLAlchemy select
     from an already authorized call site; never import app.py to obtain them here.
-    evidence_reader(case_id, evidence_id) must return a derived current item in
-    the same read scope, not list all case evidence or check/open original bytes.
+    Default evidence reads reuse evidence.service.report_source_snapshot lazily.
+    An optional trusted evidence_reader(case_id, evidence_id) must return a
+    derived current item in the same read scope, without all-case/file reads.
     No transaction, flush, write, source download, latest lookup or fallback here.
     """
-    def __init__(self, *, case_id, session, select, audio_model, image_model, evidence_reader):
+    def __init__(self, *, case_id, session, select, audio_model, image_model, evidence_reader=None):
         if not isinstance(case_id, str) or not case_id:
             _fail('invalid_identity')
         self.case_id = case_id
@@ -43,7 +44,15 @@ class ScopedMediaReader:
                  'doc': deepcopy(r.doc)} for r in rows]
 
     def read_evidence(self, evidence_id):
-        return deepcopy(self._evidence_reader(self.case_id, evidence_id))
+        if self._evidence_reader is None:
+            # Import only when an authorized real call site uses the default reader.
+            from ..evidence.service import report_source_snapshot, EvidenceSourceReadError
+            try:
+                return report_source_snapshot(self._session, self.case_id, evidence_id)
+            except EvidenceSourceReadError as exc:
+                raise ProjectionUnavailable(exc.code) from None
+        with self._session.no_autoflush:
+            return deepcopy(self._evidence_reader(self.case_id, evidence_id))
 
 
 def _canonical(value):

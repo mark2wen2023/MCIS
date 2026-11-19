@@ -812,3 +812,6 @@ Internal contract proposal in contracts/media-report-reference-projection.md; ne
 
 ### Exact media read boundary increment (2026-11-19)
 On 3fd3112: internal scoped reader over existing media models with exact case/run/revision queries and no_autoflush; trusted per-ID derived-evidence callback required. Separate canonical human-content and complete-reference digests; altered text at same revision cannot match a prior supplied reference digest. No writes, public API or reports/sources integration. Two synthetic query groups only; no ORM/application execution. Contract and limitations appended to media-report-reference-projection.md.
+
+### Per-evidence report source binding (2026-11-19)
+On c04dc2c: reuse get_doc/EvidenceRow + filtered custody_events + derive inside no_autoflush; return only case/evidence/current digest, separate missing from sanitized read failures. ScopedMediaReader defaults to it; no new route or permission. Existing report access does not establish media authorization intersection; remain unwired. Three AST/synthetic query groups, no actual ORM/backend execution.
