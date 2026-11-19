@@ -143,7 +143,8 @@ def _initialize_image_review_storage(app):
 
 def _mount_image_review_routes(app, tasks_router):
     app.include_router(router)
-    app.include_router(tasks_router)
+    if tasks_router is not None:
+        app.include_router(tasks_router)
     @app.get('/image-review-lab/preview.js')
     def preview_script():
         return Response(Path(__file__).with_name('preview.js').read_text(), media_type='text/javascript', headers={'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff'})
@@ -160,6 +161,21 @@ def register_image_review(app, *, ocr_runtime=None):
     app.state.image_ocr_runtime = ocr_runtime
     _initialize_image_review_storage(app)
     _mount_image_review_routes(app, tasks_router)
+    app.state.image_review_registered = True
+    return app
+
+
+def _register_image_review_only(app):
+    """Private review surface; no task routes. Task-backed reads still verify bindings.
+
+    Not an app factory or an isolation guarantee; caller supplies existing guarded
+    dependencies. Same registration flag prevents mixing with full registration.
+    """
+    if getattr(app.state, 'image_review_registered', False):
+        raise ValueError('image review already registered')
+    app.state.image_ocr_runtime = None
+    _initialize_image_review_storage(app)
+    _mount_image_review_routes(app, None)
     app.state.image_review_registered = True
     return app
 

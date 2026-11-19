@@ -836,3 +836,6 @@ Authorized on ec3e292: standalone audio page accepts explicit case/run URL, reus
 
 ## Image explicit current-record reopening (2026-11-19)
 Authorized on 0735c99: independent image page reuses existing case/run detail read for explicit URL reopening; invalid links do not read, stale success/error cannot update changed target, draft replacement checks preserved. No API/permission/original/save changes. See tests_acceptance/image-url-reopen/REVIEW.md; startup remains paused.
+
+## Private review-only registration (2026-11-19)
+Authorized on c57d12b: add unconnected private image/audio registration retaining storage/review routes/pages and guards, explicitly omitting task-router registration; complete registration remains equivalent. Conditional task-backed verification unchanged. No factory/default/identity/UI activation. See tests_acceptance/media-review-only-registration/REVIEW.md.

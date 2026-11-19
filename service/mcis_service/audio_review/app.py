@@ -170,7 +170,9 @@ def _initialize_audio_review_storage(app):
 
 
 def _mount_audio_review_routes(app, tasks):
-    app.include_router(router);app.include_router(tasks.router)
+    app.include_router(router)
+    if tasks is not None:
+        app.include_router(tasks.router)
     @app.get('/audio-review-lab',response_class=HTMLResponse)
     def page():return HTMLResponse(Path(__file__).with_name('review.html').read_text(),headers={'Cache-Control':'no-store'})
 
@@ -183,6 +185,21 @@ def register_audio_review(app, *, sensevoice_runtime=None):
     app.state.audio_asr_runtime=sensevoice_runtime
     _initialize_audio_review_storage(app)
     _mount_audio_review_routes(app, tasks)
+    app.state.audio_review_registered = True
+    return app
+
+
+def _register_audio_review_only(app):
+    """Private review surface; no task routes. Task-backed reads still verify bindings.
+
+    Not an app factory or an isolation guarantee; caller supplies existing guarded
+    dependencies. Same registration flag prevents mixing with full registration.
+    """
+    if getattr(app.state, 'audio_review_registered', False):
+        raise ValueError('audio review already registered')
+    app.state.audio_asr_runtime = None
+    _initialize_audio_review_storage(app)
+    _mount_audio_review_routes(app, None)
     app.state.audio_review_registered = True
     return app
 
