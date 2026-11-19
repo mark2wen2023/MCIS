@@ -88,7 +88,7 @@ def exclusive_write(path: Path,raw,created):
 
 
 def load_receipt(ctx,s,case_id,digest):
-    from ..working_records_archive.service import archived_evidence,historical_only
+    from ..working_records_archive.history_lookup import archived_evidence,historical_only
     if archived_evidence(s,case_id,digest=digest) is not None:
         from ..reports.access import require_content
         require_content(s,case_id,ctx.role)
@@ -198,7 +198,7 @@ def receipt_input(case_id:str,digest:str,ctx:Ctx=CtxDep):
 def receipt_evidence(case_id:str,evidence_id:str,ctx:Ctx=CtxDep):
     with ctx.db.session() as s:
         authorize(ctx,s,case_id)
-        from ..working_records_archive.service import archived_evidence,historical_only
+        from ..working_records_archive.history_lookup import archived_evidence,historical_only
         if archived_evidence(s,case_id,evidence_id=evidence_id) is not None:
             from ..reports.access import require_content
             require_content(s,case_id,ctx.role)

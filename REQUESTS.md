@@ -824,3 +824,6 @@ Authorized extraction on 4a1a800: private trigger installer called unconditional
 
 ## Private application shell boundary (2026-11-19)
 Authorized extraction on 1366168: unchanged app metadata/state/CORS/error/health block into private helper, called after original directory/DB/optional seed initialization and before unchanged routers. No new factory or launcher path. Expanded AST and six handwritten fake sequences passed; real startup remains untested/paused. See tests_acceptance/app-shell-boundary/REVIEW.md.
+
+## Narrow historical evidence lookup (2026-11-19)
+Authorized on f891c89: move unchanged archived_evidence/historical_only to history_lookup, re-export old service names; retarget only two Evidence Intake imports. Full AST comparisons and handmade query/guard checks, no actual ORM/permission/archive execution. See tests_acceptance/archive-history-lookup/REVIEW.md; startup remains paused.

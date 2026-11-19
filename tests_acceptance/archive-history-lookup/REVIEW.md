@@ -1,0 +1,11 @@
+# Narrow historical evidence lookup — development-only verification
+
+Base `f891c89ad4eb8453682f393c5c3a0210ee856245`.
+
+Move unchanged `archived_evidence` / `historical_only` into working_records_archive/history_lookup.py. service.py re-exports the same names. Only evidence_intake/router.py's load_receipt and receipt_evidence local imports change. Known evidence/router, manual_interviews/router, package_intake/router and working_records_archive/router callers remain on the compatible service symbols. No archive workflows, tables, triggers, roles or error bodies change. This preserves calling interfaces, not private monkeypatches of service module globals.
+
+`python -B tests_acceptance/archive-history-lookup/check.py`
+
+Development check passed: function AST identical; full service AST restored by expanding re-export; full intake AST restored by reversing two import edits. Narrow module import list is exactly sqlalchemy.select, common.context.problem and models.ArchiveImportHistoryRow. Five handmade query combinations (including empty strings) preserve case/type/optional ID/digest predicates and select/where/scalars/first order. Eight old/new handmade guard-prefix sequences cover both callers with miss, hit, permission marker and query marker. Hit checks permission before unchanged 409; denied marker propagates before historical details; miss continues; query marker propagates. These are hand-written callbacks, NOT real authorization, ORM, archive or fault-injection tests. Prefix extraction ends at a synthetic continuation, never executes original file reads or downstream business operations. No app or third-party module is imported by this check.
+
+The narrow module still imports the existing archive models (including their DDL event registration) and common context; those retain DB/FastAPI dependencies. It removes the direct request-time dependency on the full archive service, not the entire transitive closure. Historical permission checks still use reports.access on a hit. Full service callers retain full imports. main/model registry, runtime isolation and actual startup remain unverified/paused. No independent factory, API, migration or restored active credential is introduced.
