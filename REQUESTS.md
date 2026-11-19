@@ -806,3 +806,6 @@ Authorized frontend-only amendment to frozen audio/image pages: retain page-memo
 
 ## Media unknown accumulation wording (2026-11-18)
 Authorized clarification of both frozen page banners only; no Set/request/receipt behavior change. New pure Node accumulation coverage in tests_acceptance/media-unknown-guidance/ACCUMULATION.md.
+
+### Saved media exact report reference projection (2026-11-19)
+Internal contract proposal in contracts/media-report-reference-projection.md; new standalone reports/media_reference.py consumes trusted saved-row snapshots and derived register declarations only. No application call site, public citation/schema/route or persistence changes. Exact revision, no latest fallback; permission/storage adapter and export/reopen remain future gates. Synthetic-only checks, startup/archive still paused.
