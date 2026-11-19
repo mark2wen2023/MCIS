@@ -806,3 +806,6 @@ Authorized frontend-only amendment to frozen audio/image pages: retain page-memo
 
 ## Media unknown accumulation wording (2026-11-18)
 Authorized clarification of both frozen page banners only; no Set/request/receipt behavior change. New pure Node accumulation coverage in tests_acceptance/media-unknown-guidance/ACCUMULATION.md.
+
+## Audio playback whitespace range correction
+Authorized media-only UI candidate: whitespace-only time input must not implicitly seek to zero; local precondition explanation. Save/backend/source-transfer contracts unchanged. See tests_acceptance/audio-blank-range/DEVELOPER.md.
