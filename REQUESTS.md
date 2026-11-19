@@ -848,3 +848,6 @@ Authorized on 3d5b09d: synchronize only case/run after accepted current image im
 
 ## Review-only served page capability (2026-11-19)
 Authorized on af80e1e: pure server page shaping derives task capability only from registration closure. Limited pages hide/inert task controls, omit callbacks and task artifact download actions; full mode retains them. Existing guards and task-backed binding checks unchanged. No factory/workspace activation. See tests_acceptance/media-review-capability/REVIEW.md.
+
+## Explicit case-only media target (2026-11-19)
+Authorized on 3667fa4: image/audio ?case-only prefill without request or address write; explicit accepted import uses existing case/run synchronization. run=, duplicates and extra parameters remain invalid. Update the prior case-only URL test expectation; no API/permission/capability change. See tests_acceptance/media-case-only/REVIEW.md.

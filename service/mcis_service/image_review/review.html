@@ -2,7 +2,7 @@
 <style>body{font:16px sans-serif;max-width:1400px;margin:2em auto;padding:1em}label{display:block;margin:.8em 0}input,textarea{width:95%;padding:.5em}button{margin:.4em;padding:.5em}pre{white-space:pre-wrap}article{border-top:1px solid #aaa;padding:1em 0}.notice{background:#fff1cf;padding:1em}.review-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.5em}.image-pane{position:sticky;top:1em;align-self:start;min-width:0}.image-pane canvas{display:block;width:100%;height:auto;border:1px solid #888;background:#eee}.page-scroll{max-height:55vh;overflow:auto}#crop{margin-bottom:1em}article.selected{border:2px solid #d02600;padding:.8em}button:focus-visible{outline:3px solid #005fcc}@media(max-width:760px){.review-grid{display:block}.image-pane{position:static}.page-scroll{max-height:45vh}}</style>
 <h1>图片文字核对 · 隔离候选</h1>
 <p class="notice">可导入已有OCR输出；配置本地执行器后可显式发起公开第6页识别。文字核对不是事实确认。页码及页图关系由导入者声明，未自动验证。原文件不覆盖；核对记录只追加。本候选含此记录的案件暂不支持整案归档。请求沿用现有本地身份机制，不代表生产身份认证。</p>
-<label>案件ID<input id="case"></label><label>已保存运行ID（恢复查看）<input id="run"></label><button id="load">读取</button><button id="list">列出已保存运行（核查未知结果）</button><pre id="runs"></pre><p id="reopen-context" role="status">可用 ?case=案件ID&amp;run=核对运行ID 重开当前核对记录；不是报告固定历史版本，不自动载入或下载原件。无参数时仍可手工填写。</p>
+<label>案件ID<input id="case"></label><label>已保存运行ID（恢复查看）<input id="run"></label><button id="load">读取</button><button id="list">列出已保存运行（核查未知结果）</button><pre id="runs"></pre><p id="reopen-context" role="status">可用 ?case=案件ID&amp;run=核对运行ID 重开当前核对记录；不是报告固定历史版本，不自动载入或下载原件。仅 ?case=案件ID 时只预填案号，不发起请求；无参数时仍可手工填写。</p>
 <details><summary>导入已登记结果</summary><p>先通过既有证据登记功能分别登记PDF、页图PNG、原始OCR输出JSON及已有逐行OCR候选JSON。登记时间须如实填写，不能猜测。</p><label>PDF登记回执摘要<input id="pdf"></label><label>页图登记回执摘要<input id="image"></label><label>原始OCR输出登记回执摘要<input id="raw"></label><label>候选JSON登记回执摘要<input id="candidate"></label><label><input type="checkbox" id="ack" style="width:auto">确认本实验记录使本案整包归档保持拒绝</label><button id="create">导入</button></details>
 <!-- review-capability-notice --><details data-task-controls><summary>显式启动本地OCR（目前仅公开报告第6页）</summary><p>使用上方PDF和页图回执。一次任务最多120秒；刷新或断开不表示取消。运行或未知任务不自动重试，不支持整案归档。</p><label>任务ID（保留此号以核查结果）<input id="task"></label><button id="new-task">生成新任务号</button><label><input type="checkbox" id="task-ack" style="width:auto">确认仅本地处理公开样本、保存任务及结果、接受归档限制</label><button id="start-task">开始本地OCR</button><button id="check-task">只读查询任务</button><button id="list-tasks">列出本案任务（刷新恢复）</button><pre id="task-status" role="status"></pre></details>
 <p id="reopen-address" role="status"></p><p id="status" role="status"></p><p id="save-unknown" role="status"></p><p id="loaded-context" role="status"></p><div id="source"></div><div class="review-grid"><section class="image-pane" aria-label="登记页图核对"><h2>登记页图与局部核对</h2><p>只预览PNG。红框来自OCR坐标，不证明文字正确或PDF页码关系。下方局部图保留原始像素内容；不自动纠正、补字或识别。</p><button id="show-image">授权载入页图（记录访问）</button><button id="clear-image">清除预览</button><p id="preview-status" role="status"></p><canvas id="crop" aria-label="选中行邻近原图"></canvas><div class="page-scroll"><canvas id="page-image" aria-label="整页原图及所选OCR框"></canvas></div></section><div id="lines"></div></div>
@@ -64,13 +64,18 @@ function syncReopenAddress(){
  }catch(e){notice.textContent='当前读取或保存的确认结果不变，但刷新地址未更新；请记下案件和运行ID后手工重开，不因此重复保存。';}
 }
 // Explicit URL reopening reuses the guarded detail read; no original download or write.
-function validReopenIds(c,r){return typeof c==='string'&&typeof r==='string'&&c===c.trim()&&r===r.trim()&&/^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$/.test(c)&&/^OCR-[a-f0-9]{32}$/.test(r);}
+function validUrlCase(c){return typeof c==='string'&&c===c.trim()&&/^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$/.test(c);}
+function validReopenIds(c,r){return validUrlCase(c)&&typeof r==='string'&&r===r.trim()&&/^OCR-[a-f0-9]{32}$/.test(r);}
 function reopenFromUrl(search){
  if(!search)return;
  const params=new URLSearchParams(search),cases=params.getAll('case'),runs=params.getAll('run');
  el('case').value='';el('run').value='';
+ if(cases.length===1&&validUrlCase(cases[0])&&runs.length===0&&[...params.keys()].every(k=>k==='case')){
+  el('case').value=cases[0];
+  el('reopen-context').textContent='已选当前案（URL声明，尚未验证访问权限），尚无运行目标；未查询是否已有记录，未发起请求。可显式导入已登记的已有识别结果，或填写运行ID后读取。';return;
+ }
  if(cases.length!==1||runs.length!==1||!validReopenIds(cases[0],runs[0])||[...params.keys()].some(k=>!['case','run'].includes(k))){
-  el('reopen-context').textContent='链接无效：须提供唯一、非空、合法的 case 和 run；未读取任何记录。请手工明确填写案件和运行后读取，不使用默认案件。';return;
+  el('reopen-context').textContent='链接无效：须提供唯一合法 case（不带 run），或唯一合法 case 和 run；未读取任何记录。请手工明确填写案件和运行后读取，不使用默认案件。';return;
  }
  el('case').value=cases[0];el('run').value=runs[0];
  el('reopen-context').textContent='已从链接填写目标并发起当前核对记录读取（不是报告固定历史版本）；仅成功核对响应后显示，后续以输入框和已载入归属提示为准。未自动载入或下载原件。';

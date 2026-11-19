@@ -1,7 +1,7 @@
 <!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>音频逐段核对候选</title>
 <style>body{font:16px sans-serif;max-width:1100px;margin:2em auto;padding:1em}label{display:block;margin:.7em 0}input,textarea{padding:.5em;max-width:95%}textarea{width:95%}pre{white-space:pre-wrap;overflow-wrap:anywhere}button{padding:.6em;margin:.3em}article{border-top:1px solid #aaa;padding:1em 0}.notice{background:#fff1d6;padding:1em}audio{width:100%}</style>
 <h1>原音与逐段核对 · 隔离候选</h1><p class="notice">本地SenseVoice任务须显式发起且由服务端配置；仅授权登记的1–30秒16kHz单声道16位PCM WAV可执行。也可导入离线结果；页面不证明人已听或原件真实性。机器时间戳若有也是估计，情绪标签不是事实。机器草稿仅为待核对输入，合成数据不是识别结果。听不清保持空文字，时间未知不补零；说话人未知。人工核对不等于事实认证或批准笔录。仅支持短PCM WAV；本候选案件暂不支持整包归档。</p>
-<label>案件ID<input id="case"></label><label>核对运行ID<input id="run"></label><button id="list">列出已保存运行</button><button id="load">读取运行</button><pre id="runs"></pre><p id="reopen-context" role="status">可用 ?case=案件ID&amp;run=核对运行ID 重开当前核对记录；不是报告固定历史版本，不自动载入或播放原音。无参数时仍可手工填写。</p>
+<label>案件ID<input id="case"></label><label>核对运行ID<input id="run"></label><button id="list">列出已保存运行</button><button id="load">读取运行</button><pre id="runs"></pre><p id="reopen-context" role="status">可用 ?case=案件ID&amp;run=核对运行ID 重开当前核对记录；不是报告固定历史版本，不自动载入或播放原音。仅 ?case=案件ID 时只预填案号，不发起请求；无参数时仍可手工填写。</p>
 <details><summary>关联已登记原音与v2机器草稿</summary><label>原音登记回执<input id="audio-digest"></label><button id="source">读取来源绑定（不证明人已听）</button><pre id="source-context"></pre><label>机器草稿JSON登记回执<input id="draft-digest"></label><label><input type="checkbox" id="ack">确认归档限制并保留原音、机器原稿</label><button id="attach">建立核对运行</button></details>
 <!-- review-capability-notice --><details data-task-controls><summary>显式本地SenseVoice任务（受限短WAV）</summary><p>先填写上方原音登记回执。仅使用本地模型，不上传音频。开始即占用任务号；超时或未知时查询状态，不盲重试。成功仅指任务完成，不等于识别正确；静音也可能误识别出文字，必须回听人工核对。仍禁止整包归档。</p><label>任务号<input id="task-id"></label><button id="new-task">生成任务号</button><label><input id="task-confirm" type="checkbox">确认本地执行与归档限制</label><button id="start-task">启动本地识别</button><button id="task-status">查询任务</button><button id="task-list">列出本案任务</button><button id="open-task">打开成功任务的待核对草稿</button><pre id="task-output" role="status"></pre></details>
 <p id="reopen-address" role="status"></p><p id="status" role="status"></p><p id="save-unknown" role="status"></p><h2>回听原音</h2><p>显式载入会记录下载访问，不证明实际听取。片段按相对原音毫秒定位，浏览器停止时机不保证采样级精度。时间未知只能回听整段原音，不猜定位。</p><button id="listen">授权载入原音</button><button id="clear">清除原音</button><audio id="player" controls preload="metadata"></audio><p id="play-status" role="status"></p><p id="loaded-context" role="status"></p><section aria-label="运行来源声明"><h2>运行记录中的来源声明</h2><p>以下仅展示本次已读取运行记录中的声明；本展示未自动核验原件或当前登记版本，也未与笔录匹配，不证明人已听或内容真实。</p><pre id="record-source" style="overflow-wrap:anywhere"></pre></section><pre id="metadata"></pre><div id="segments"></div>
@@ -77,13 +77,18 @@ function syncReopenAddress(){
  }catch(e){notice.textContent='当前读取或保存的确认结果不变，但刷新地址未更新；请记下案件和运行ID后手工重开，不因此重复保存。';}
 }
 // Explicit URL reopening uses the same guarded detail read; no receipt/download/write.
-function validReopenIds(c,r){return typeof c==='string'&&typeof r==='string'&&/^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$/.test(c)&&/^AR-[a-f0-9]{32}$/.test(r);}
+function validUrlCase(c){return typeof c==='string'&&c===c.trim()&&/^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$/.test(c);}
+function validReopenIds(c,r){return validUrlCase(c)&&typeof r==='string'&&r===r.trim()&&/^AR-[a-f0-9]{32}$/.test(r);}
 function reopenFromUrl(search){
  if(!search)return;
  const params=new URLSearchParams(search),cases=params.getAll('case'),runs=params.getAll('run');
  el('case').value='';el('run').value='';
+ if(cases.length===1&&validUrlCase(cases[0])&&runs.length===0&&[...params.keys()].every(k=>k==='case')){
+  el('case').value=cases[0];
+  el('reopen-context').textContent='已选当前案（URL声明，尚未验证访问权限），尚无运行目标；未查询是否已有记录，未发起请求。可显式导入已登记的已有识别结果，或填写运行ID后读取。';return;
+ }
  if(cases.length!==1||runs.length!==1||!validReopenIds(cases[0],runs[0])||[...params.keys()].some(k=>!['case','run'].includes(k))){
-  el('reopen-context').textContent='链接无效：须提供唯一、非空、合法的 case 和 run；未读取任何记录。请手工明确填写案件和运行后读取，不使用默认案件。';return;
+  el('reopen-context').textContent='链接无效：须提供唯一合法 case（不带 run），或唯一合法 case 和 run；未读取任何记录。请手工明确填写案件和运行后读取，不使用默认案件。';return;
  }
  el('case').value=cases[0];el('run').value=runs[0];
  el('reopen-context').textContent='已从链接填写目标并发起当前核对记录读取（不是报告固定历史版本）；仅成功核对响应后显示，后续以输入框和已载入归属提示为准。未自动载入或播放原音。';
