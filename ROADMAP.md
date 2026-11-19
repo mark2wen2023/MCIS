@@ -549,3 +549,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-19 | Image saved-run picker | 待独验：12个新合成场景分别完整/限定通过；能力/重开/地址及5个图片归属回归通过，旧头反例确认；无真实浏览器/HTTP/权限验收 | logs/image-run-picker-frozen.txt |
 
 | 2026-11-19 | Audio exact revision conflict | 待独验：17个生产json合成fetch场景分别完整/限定通过，4个保存上下文及能力/重开/地址回归通过；图片未改，无真实HTTP/权限/数据库验收 | logs/audio-save-conflict-frozen.txt |
+
+
+图片保存冲突反馈待独验：完整/限定各20合成场景及相邻检查通过；见 tests_acceptance/image-save-conflict/REVIEW.md；冻结 logs/image-save-conflict-frozen.txt。

@@ -860,3 +860,6 @@ Authorized on f276dbf: same-case validated list entries open via existing reset/
 
 ## Audio exact revision conflict feedback (2026-11-19)
 Authorized on 331a0ed: production JSON status/code parsing distinguishes current 412/AUDIO_REVISION_STALE as not saved, preserving draft and prior unknown. All other/late results remain conservative; late save feedback no longer replaces another target status. Image unchanged. See tests_acceptance/audio-save-conflict/REVIEW.md.
+
+
+图片保存反馈窄修正：当前412/OCR_REVISION明确未保存，其余保守未知；成功校验不变，仅离线合成。
