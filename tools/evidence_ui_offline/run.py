@@ -79,11 +79,14 @@ def main():
                 pages[medium+'-'+mode]=shaped
                 page=Path(tmp)/(medium+'-'+mode+'.html');page.write_text(shaped)
                 child={**env,medium.upper()+'_PAGE_SOURCE':str(page)}
-                suites=['url-reopen','reopen-address','save-conflict']
+                suites=['url-reopen','reopen-address','save-conflict','run-picker']
                 if medium=='image':suites.append('save-snapshot')
+                else:suites.extend(['save-edit-generation','playback-failed-boundary'])
                 for suite in suites:
                     run([node,'--test','--test-reporter=tap',f'tests_acceptance/{medium}-{suite}/page.test.cjs'],media,child,'# fail 0')
         run([node,'tests_acceptance/media-receipt-guidance/page.cjs'],media,env,'audio-limited:',json.dumps(pages))
+        case_pages={m:{mode:pages[m+'-'+mode] for mode in ['full','limited']} for m in ['image','audio']}
+        run([node,'tests_acceptance/media-case-only/page.cjs'],media,env,'audio limited: case-only zero-request, invalid forms, accepted import/reopen, late/unconfirmed and manual PASS',json.dumps(case_pages))
     print('PASS OFFLINE REPRESENTATIVE CHECKS ONLY — 两条候选未整合；非浏览器/HTTP/身份/工作台切案验收',flush=True)
 
 if __name__=='__main__':

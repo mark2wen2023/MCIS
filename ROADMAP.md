@@ -569,3 +569,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 音频失败停止点待独验：完整/限定各8新合成场景及18相邻播放节点通过；tests_acceptance/audio-playback-failed-boundary/REVIEW.md；冻结 logs/audio-playback-failed-boundary-frozen.txt。
+
+
+新版双检出入口待独验：统一入口退出0，守门4项退出0；tools/evidence_ui_offline/README.md。旧6aa761c交付保留；本轮冻结 logs/evidence-ui-offline-morning-frozen.txt。

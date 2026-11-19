@@ -878,3 +878,6 @@ Authorized on 331a0ed: production JSON status/code parsing distinguishes current
 
 
 音频失败片段边界窄修复：只在原上下文与本次stopAt仍一致时清理失败停止点，保留成功到点停及旧提示边界。
+
+
+取证UI离线入口显式升级媒体固定基线至dc502326，工作台16eab999不变；新增已保存运行选择/case-only及两套音频回归的固定摘要与命令，不改产品或关闭哈希。

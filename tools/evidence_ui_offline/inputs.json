@@ -17,7 +17,7 @@
     }
   },
   "media": {
-    "baseline": "60988d5bc3cde6077d4122c38128ef3e1598ad41",
+    "baseline": "dc5023261a4ef8c344e2e6bd0c32587fa1e60219",
     "files": {
       "service/mcis_service/_review_page.py": "aad698ebeec7ebbae561672858346154edfd11d77fd08f1e95ef850cfb67914c",
       "tests_acceptance/media-receipt-guidance/page.cjs": "e5144fb752ee964cfa36e91654807929b72ce6cf3f1bb97424f2c508abacfde3",
@@ -27,11 +27,16 @@
       "tests_acceptance/image-reopen-address/page.test.cjs": "1c6103e97650be1389cf27ef9859340cecd8f4b557cece63346b646122dd6d87",
       "tests_acceptance/image-save-conflict/page.test.cjs": "620d0442dc0c975d2af9d831ce5031bb031101685564c867eb27c53d962a5e79",
       "tests_acceptance/image-save-snapshot/page.test.cjs": "905d1b621344d2c781c67f507addb9a2f9ee22fcbdd0c35597bf14b2d9c5915a",
-      "service/mcis_service/audio_review/review.html": "7e4f0c8f75ecf2340a8cd3f2c006056b1b734817fe0509609c1d3ce89cff8c7f",
+      "service/mcis_service/audio_review/review.html": "0266ca6ba7d1139108c7473558589c66d65a0b8fd2d2ab4eba51e90a0f769b57",
       "tests_acceptance/audio-loaded-context/page.test.cjs": "332b3231247ccc1358a42f6ba2696d8026df2368a0dd7ded8466bb2a3b343def",
       "tests_acceptance/audio-url-reopen/page.test.cjs": "bc41e138364b6bbfd213a26e8935eb2d1a39898e2b3409ae775f421d1e266755",
       "tests_acceptance/audio-reopen-address/page.test.cjs": "44cbc3bd6a57890b2b7aa7c0be283264c551618a549013b82496b114e8bb8447",
-      "tests_acceptance/audio-save-conflict/page.test.cjs": "9525e96ae6e7ad69ddbec1149f10a52f08277943e0ff4ce480df34c4138b0529"
+      "tests_acceptance/audio-save-conflict/page.test.cjs": "9525e96ae6e7ad69ddbec1149f10a52f08277943e0ff4ce480df34c4138b0529",
+      "tests_acceptance/audio-save-edit-generation/page.test.cjs": "2be27ba5379a6f1ef1406012547a2995dccf1ded4df0d56e158f395fad8a1088",
+      "tests_acceptance/audio-playback-failed-boundary/page.test.cjs": "7877add609b64be6efe82112b6e249c4f586c5a6f929897c11cfb2794af02604",
+      "tests_acceptance/image-run-picker/page.test.cjs": "ab2f95957314a101e6dacf29fdd0948358147b804714a79ce5dda592af68e53c",
+      "tests_acceptance/audio-run-picker/page.test.cjs": "465d594690c1e99d2028d202e17b76a25acd4375da86b89a5b4cc59a237bfd8c",
+      "tests_acceptance/media-case-only/page.cjs": "1f44745ef99d64f88c12f5afd1dea26c3cfb4234b2abb8b702e1afb292b2dac2"
     }
   },
   "dependencyVersions": {
