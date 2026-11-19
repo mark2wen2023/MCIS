@@ -2,6 +2,7 @@
 import io
 import json
 from pathlib import Path
+from .._review_page import _review_page
 from uuid import uuid4
 import wave
 from fastapi import APIRouter, Request
@@ -174,7 +175,7 @@ def _mount_audio_review_routes(app, tasks):
     if tasks is not None:
         app.include_router(tasks.router)
     @app.get('/audio-review-lab',response_class=HTMLResponse)
-    def page():return HTMLResponse(Path(__file__).with_name('review.html').read_text(),headers={'Cache-Control':'no-store'})
+    def page():return HTMLResponse(_review_page(Path(__file__).with_name('review.html').read_text(), task_routes=tasks is not None),headers={'Cache-Control':'no-store'})
 
 
 def register_audio_review(app, *, sensevoice_runtime=None):

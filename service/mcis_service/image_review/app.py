@@ -2,6 +2,7 @@
 No default app mounting. Local tasks require explicit host configuration; no automatic retries.
 """
 from pathlib import Path
+from .._review_page import _review_page
 from uuid import uuid4
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse, Response
@@ -150,7 +151,7 @@ def _mount_image_review_routes(app, tasks_router):
         return Response(Path(__file__).with_name('preview.js').read_text(), media_type='text/javascript', headers={'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff'})
     @app.get('/image-review-lab', response_class=HTMLResponse)
     def page():
-        return HTMLResponse(Path(__file__).with_name('review.html').read_text(), headers={'Cache-Control': 'no-store'})
+        return HTMLResponse(_review_page(Path(__file__).with_name('review.html').read_text(), task_routes=tasks_router is not None), headers={'Cache-Control': 'no-store'})
 
 
 def register_image_review(app, *, ocr_runtime=None):

@@ -845,3 +845,6 @@ Authorized on 1231cae: synchronize case/run via replaceState only after accepted
 
 ## Image accepted-record reopen address (2026-11-19)
 Authorized on 3d5b09d: synchronize only case/run after accepted current image import/read/review, with no dirty or unknown state. Preserve image current-input response comparison; History errors do not change save results. No API/identity/original changes. See tests_acceptance/image-reopen-address/REVIEW.md.
+
+## Review-only served page capability (2026-11-19)
+Authorized on af80e1e: pure server page shaping derives task capability only from registration closure. Limited pages hide/inert task controls, omit callbacks and task artifact download actions; full mode retains them. Existing guards and task-backed binding checks unchanged. No factory/workspace activation. See tests_acceptance/media-review-capability/REVIEW.md.
