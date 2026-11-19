@@ -872,3 +872,6 @@ Authorized on 331a0ed: production JSON status/code parsing distinguishes current
 
 
 双检出取证UI离线入口：tools/evidence_ui_offline/run.py 固定工作台16eab999与媒体60988d5的明列源码摘要，复用代表性合成回归，无网络/安装/启动，不改产品。
+
+
+音频保存本段编辑世代修复：原提交确认后，不因用户改回同值清除之后的草稿；只改本段代次与dirty清除条件。冻结双检出入口不改。

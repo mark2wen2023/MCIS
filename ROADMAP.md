@@ -563,3 +563,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 取证UI离线交付入口待独验：统一命令实跑退出0，入口4项自造防误用检查通过；详见 tools/evidence_ui_offline/README.md。两分支未整合，工作台真实切案与全链路仍未验。
 
 冻结：logs/evidence-ui-offline-frozen.txt。
+
+
+音频保存编辑世代待独验：完整/限定各8新场景及相邻检查通过；tests_acceptance/audio-save-edit-generation/REVIEW.md；冻结 logs/audio-save-edit-generation-frozen.txt。
