@@ -1,0 +1,2 @@
+7d7dacde4989e2482711c8e4c87a44fff6d7338e0fd9b4948d37d5dd1265ba8a  tests_acceptance/report-audio-snapshot-combination/check.py
+b3547939a8011cf25a504428b69995c056e0a055d7a5c272e1a930cc45d3071e  tests_acceptance/report-audio-snapshot-combination/README.md

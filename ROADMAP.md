@@ -523,3 +523,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Internal exact audio range | 待独验 | 3 normal handcrafted pure reads; trusted sample basis required; no ORM/auth/transaction/runtime acceptance | logs/audio-reference-range-frozen.txt |
 
 | 2026-11-19 | Internal generation-only report snapshot | 待独验：两代纯合成正常输入、当前行/返回副本隔离开发检查通过；无 ORM/权限/真实生成/持久媒体绑定 | logs/report-generation-snapshot-frozen.txt |
+
+| 2026-11-19 | Report/audio synthetic composition | 待独验：两组合成正常场景开发通过；旧句旧范围、新句新范围及未知 null；仅夹具关联，无产品绑定/权限/一致事务验收 | logs/report-audio-snapshot-combination-frozen.txt |

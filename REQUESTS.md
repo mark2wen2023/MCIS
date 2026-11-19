@@ -821,3 +821,6 @@ Opt-in pure internal read on media reference base, mandatory old digest and exac
 
 ## Generation-only report snapshot parser (2026-11-19)
 Authorized narrow internal candidate on audio-reference-range: reuse complete generation RA and existing report schema/anchors, no history replay or persistent media binding. See contracts/report-generation-snapshot.md. No route/schema/storage change or application execution.
+
+## Synthetic report/audio composition acceptance (2026-11-19)
+Authorized test-only composition on 30ac3e8: explicit handmade RA-to-audio association fixture, reuse generation_sentence and read_exact_audio_range. No persistent binding or product changes. See tests_acceptance/report-audio-snapshot-combination/README.md.
