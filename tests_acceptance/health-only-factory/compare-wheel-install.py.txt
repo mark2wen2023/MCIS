@@ -1,0 +1,55 @@
+import hashlib,json,pathlib,stat,sys,zipfile
+manifest=pathlib.Path(sys.argv[1]); wheels=pathlib.Path(sys.argv[2]); venv=pathlib.Path(sys.argv[3]); site=venv/'lib/python3.12/site-packages'
+raw=manifest.read_bytes()
+if hashlib.sha256(raw).hexdigest()!='99384c53c8881226dcae1d256fcd66385eb43cbc0d66d0eff140ac3764597f5c':raise SystemExit('manifest mismatch')
+m=json.loads(raw); mapped=set(); results=[]; generated=[]
+def ordinary(p):
+ if p.is_symlink() or not p.is_file():raise SystemExit('not ordinary file')
+ for parent in p.parents:
+  if parent.is_symlink():raise SystemExit('symlink parent')
+ return p.read_bytes()
+for r in m['wheels']:
+ data=ordinary(wheels/r['filename'])
+ if len(data)!=r['size'] or hashlib.sha256(data).hexdigest()!=r['sha256']:raise SystemExit('wheel mismatch')
+ with zipfile.ZipFile(wheels/r['filename']) as z:
+  seen=set(); info_dirs=set()
+  for member in z.infolist():
+   name=member.filename; path=pathlib.PurePosixPath(name)
+   if name in seen or name.startswith('/') or '..' in path.parts or '\\' in name or stat.S_ISLNK(member.external_attr>>16):raise SystemExit('unsafe or duplicate member')
+   seen.add(name)
+   if member.is_dir():continue
+   if '.data' in name.split('/')[0]:raise SystemExit('unreviewed data relocation')
+   if name in mapped:raise SystemExit('cross-wheel collision')
+   mapped.add(name)
+   if path.parts[0].endswith('.dist-info'):info_dirs.add(path.parts[0])
+   original=z.read(member); installed=ordinary(site/name)
+   if path.name=='RECORD' and path.parts[0].endswith('.dist-info'):
+    generated.append({'path':name,'classification':'installer-regenerated RECORD; not wheel-byte-equivalent','installed_sha256':hashlib.sha256(installed).hexdigest(),'wheel_sha256':hashlib.sha256(original).hexdigest()})
+   else:
+    if original!=installed:raise SystemExit('wheel byte mismatch: '+name)
+    results.append({'wheel':r['filename'],'installed_path':name,'size':len(installed),'sha256':hashlib.sha256(installed).hexdigest()})
+  if len(info_dirs)!=1:raise SystemExit('dist-info ambiguity')
+  d=next(iter(info_dirs))
+  for leaf in ('INSTALLER','REQUESTED','direct_url.json'):
+   name=d+'/'+leaf
+   if name in mapped:raise SystemExit('generated name collision')
+   content=ordinary(site/name); mapped.add(name)
+   if leaf=='INSTALLER' and content!=b'pip\n':raise SystemExit('installer metadata mismatch')
+   if leaf=='REQUESTED' and content!=b'':raise SystemExit('requested metadata mismatch')
+   if leaf=='direct_url.json':
+    obj=json.loads(content)
+    if obj.get('url')!=(wheels/r['filename']).resolve().as_uri() or obj.get('archive_info',{}).get('hashes')!={'sha256':r['sha256']}:raise SystemExit('direct url mismatch')
+   generated.append({'path':name,'classification':'installer-generated metadata; structure/value checked, not wheel member','installed_sha256':hashlib.sha256(content).hexdigest()})
+actual=set()
+for p in site.rglob('*'):
+ if p.is_symlink():raise SystemExit('site symlink')
+ if p.is_file():actual.add(p.relative_to(site).as_posix())
+if actual!=mapped:raise SystemExit('site set mismatch')
+outside=[]
+for p in sorted(venv.rglob('*')):
+ if p.is_relative_to(site):continue
+ if p.is_symlink() or p.is_file():outside.append({'path':str(p.relative_to(venv)),'classification':'not verified against wheel: virtualenv infrastructure or generated console script','symlink':p.is_symlink()})
+report={'base_commit':'bb981b0bc9faa6bfe14ddfe41092eefbc2db5326','wheel_byte_equal_count':len(results),'generated_metadata_count':len(generated),'exact_site_file_count':len(actual),'byte_equal_files':results,'generated_metadata':generated,'outside_site_unverified':outside,'application_executed':False,'sandbox_proven':False,'startup_allowed':False}
+pathlib.Path(sys.argv[4]).write_text(json.dumps(report,indent=2)+'\n')
+print(json.dumps({k:v for k,v in report.items() if k not in ('byte_equal_files','generated_metadata','outside_site_unverified')}))
+print('Outside-site unverified entries:',len(outside))
