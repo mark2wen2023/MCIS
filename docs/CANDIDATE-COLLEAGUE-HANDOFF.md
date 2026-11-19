@@ -1,12 +1,14 @@
 # 同事交接：代码评审候选、内部引用与静态预览
 
-2026-11-19；仅供代码审查，不是生产版本、部署许可或启动许可。本次仅修改交接文档，并在新建的普通源码检验目录复跑下文三条获准离线检查；未运行应用、后端或浏览器。远端头在整理时核对如下；分支可移动，复核必须固定完整 SHA，不把后续头当作同一被测版本。普通 clone 不证明仓库资料净化；不得打开或加入真实案件、种子正文、媒体或凭据。
+2026-11-19；仅供代码审查，不是生产版本、部署许可或启动许可。本次仅补充两条前端候选的远端与源码核对，不重复功能测试。前次 b5ed49a 文档交付已在新建普通源码检验目录复跑下文三条获准离线检查；两次均未运行应用、后端或浏览器。远端头在整理时核对如下；分支可移动，复核必须固定完整 SHA，不把后续头当作同一被测版本。普通 clone 不证明仓库资料净化；不得打开或加入真实案件、种子正文、媒体或凭据。
 
 ## 固定版本及关系
 
 | 分支 | 固定头 | 含义 |
 |---|---|---|
 | integration/ui-review-series | `749eaff1af3f0cf1ddc12c0f84ff6ca2c916b451` | 可拉取做代码评审；在已独验 3edb1a55 上新增报告动作同步防重复，新增修复已获限定独验，边界见下文。 |
+| candidate/case-workspace-flow | `a8ff69efce06fa869d8893823b8f211d6a96d97b` | 基于 749eaff 的七阶段导航与报告显式选案守门；无有效报告案号时全局侧栏入口仍保留原路径。不是下列三 PR 组合。 |
+| integration/pr99-pr100-pr101-browser-pending | `78516e800bd00a94fddf4ecd796f46699dde3618` | 独验记录头；固定功能头 `242b814bc44ba1c27d1226f9ee673abbb4a25a47`，#99/#100/#101 只读提示组合，仍待浏览器验收。 |
 | candidate/media-demo-launcher | `76d6c22c474172a28f7b2da9ae45021e8d573b82` | 隔离图音复核、来源声明、草稿和异步反馈；正式媒体归档恢复未开放。 |
 | candidate/media-report-exact-reference | `3a19c75221dc770042708972bf7a1a36d681e121` | 基于图音头的内部精确修订投影/读取器及逐项证据派生；未接报告生成、展示、导出或重开，只供内部代码评审。 |
 | candidate/audio-reference-range | `da8cda69bfb421177c702587c45426a2cc5ce5e1` | 内部精确旧录音范围、生成 RA 句子解析及合成组合验收；包含空目录预检 `7a2d0e4ab8d96b1b4a72da2e03563908989897d0`，未接真实报告链。 |
@@ -19,9 +21,19 @@ UI 与图音两头互不包含，彼此均非祖先，共同基线为 `94d5e38c9
 
 音频新增三条候选**不是一个已集成版本**：da8cda6 继承内部引用 3a19c75，但没有合入 191fd1e 的页面修复或 c10b2cd 的素材分支；其 WAV 测试只读取固定生成器 Git 对象，不代表产品整合。各候选也不自动纳入综合 UI。不要把独立测试结果拼成已可运行的录音→报告闭环。
 
-## 本轮离线交接复验与浅克隆入口
+## 两条前端候选不能混用验收结论
 
-- da8cda6：本轮在新建 Git 目录通过下列双分支 depth=1 fetch、完整 SHA 比对和白名单源码展开，复跑占位组合、实际生成 WAV 组合及目录预检。均是**开发方交接复验**，不是本轮新增独立验收，不累计历史计数。30ac3e8 的生成快照解析此前已获限定独验；不能将其结论扩为真实报告绑定。
+- **工作台 a8ff69e**：`web/src/caseFlow/model.ts` 定义接报、取证、询问、分析、报告、建议、沉淀七阶段；仅按当前显式案号与路由导航，完成状态未评估，沉淀仍为后续入口。`Layout.tsx` 的报告路径在缺失、空白或重复案号时不挂载报告 Outlet、不开始新案件元数据读取；ReportPage 也保持显式选案守门，不回退默认案号。侧栏只对按案入口引导选案，知识库等真正全局入口仍按原路径、不携案号。有效明确案号仍保留既有报告与历史链接语义；不是案号存在或访问权证明。
+- 该精确头实际包含 #99 的 `web/src/interview/SourceDisclosure.tsx`（InterviewView 调用）和 #101 的 `web/src/environment/OriginGuidance.tsx`（EnvironmentPage 调用），但树中**没有** `web/src/caseMetadata/GapSummary.tsx`。不能因已有 #99/#101 组件，就声称工作台包含或验证了 #100。本轮只核对固定源码，不重跑这些功能。
+- 工作台的既有限定证据是实际组件 SSR/路由纯逻辑，以及受控无网 hooks harness 的无效案号 no-read/no-Outlet、有效→无效→另一案、全局侧栏路径和旧元数据迟到抑制；相邻回归与 TypeScript/Vite 结果见[导航记录](https://github.com/mark2wen2023/MCIS/blob/a8ff69efce06fa869d8893823b8f211d6a96d97b/tests_acceptance/case-workspace-flow/REVIEW.md)和[报告选案及侧栏修正记录](https://github.com/mark2wen2023/MCIS/blob/a8ff69efce06fa869d8893823b8f211d6a96d97b/tests_acceptance/case-workspace-flow/REPORT-EXPLICIT-CASE.md)。它们不证明真实 React reconciliation/并发、浏览器点击、视觉、HTTP 或权限；本轮没有重新执行。
+- **三 PR 组合 78516e8**：功能仍是 242b814；246c116 仅补开发记录，78516e8 仅补[限定独立复核记录](https://github.com/mark2wen2023/MCIS/blob/78516e800bd00a94fddf4ecd796f46699dde3618/tests_acceptance/pr99-pr100-pr101-combined/INDEPENDENT-VERIFICATION.md)。六项合成 SSR/纯逻辑及 TS/Vite 的独验只属于该固定功能版本，不能转移给工作台或累计成全量验收。
+- **#100 的清单只在本次这条三 PR 组合中验**：`GapSummary` 展示已保存的名称、海域、首席调查员、调查机构、概要五项文字填写情况，不统计未保存草稿、不判断事实或全案完整，不是工作台的功能覆盖，也不是工作台试用的前置门槛。严格解析器对异常快照的整页错误和 helper 的逐字段结果分层，见组合独验记录；不能将直接 helper 调用当正常页面路径。
+
+原 `integration/ui-review-series` 的 749eaff 继续作为独立固定候选保留，不以工作台或三 PR 组合替换。两条新增表项不是同一个版本，未将其产品修改合并到本交接分支；也不改变图音/内部引用/静态预览之间的独立关系。无新增试用或启动许可，DO NOT MERGE / 不部署。
+
+## 前次离线交接复验与浅克隆入口
+
+- da8cda6：前次 b5ed49a 文档交付在新建 Git 目录通过下列双分支 depth=1 fetch、完整 SHA 比对和白名单源码展开，复跑占位组合、实际生成 WAV 组合及目录预检。均是**开发方交接复验**，不是本轮新增独立验收，不累计历史计数。30ac3e8 的生成快照解析此前已获限定独验；不能将其结论扩为真实报告绑定。
 - 7a2d0e4：仅检查显式空目录与固定样例/成员路径，输出未来数据库和素材位置。startupAllowed/isolationVerified 始终 false，不建库、不证明沙箱、不批准启动；本轮复跑普通输入校验，不运行权限或拒写探测。
 - c10b2cd：本轮仅使用固定对象中的生成器；源码 SHA-256 为 `d5a9285e64898077888f92615082e33278fd405ddabadad4e339a82fcec0cd23`。生成 WAV 摘要为 `48e65e6aa7493adecacf16a5a2bd09e0966303658ec2bf6c980cc239fb4c266f`，头部为 8000Hz、单声道、16-bit、96000帧。生成输出自动清理，不提交二进制。实际字节只替代夹具中原音摘要/时基；机器产物、登记、人工修订及句级关联仍是手造声明。
 - 191fd1e：固定[开发记录](https://github.com/mark2wen2023/MCIS/blob/191fd1ea3c36ac9c3d3458a41fe24c004357956a/tests_acceptance/audio-blank-range/DEVELOPER.md)记载 15 个纯解析、11 个合成 DOM、8 个等待场景的同轮结果。本轮不重跑该分支，不把它称为实际 Save、HTTP 或回听验收。
