@@ -818,3 +818,6 @@ Authorized narrow follow-up to 585a9c0: move unchanged CID/PUBLIC literals to de
 
 ## Private media registration boundaries (2026-11-19)
 Authorized behavior-preserving extraction on df05eb6: private storage initialization and route mounting helpers in the two media app modules. No new public/skip option or independent factory. Six old/new handmade sequence checks and expanded AST/verbatim SQL comparison passed; no actual app/ORM/pages. See tests_acceptance/media-register-boundaries/REVIEW.md.
+
+## DB append-only trigger private boundary (2026-11-19)
+Authorized extraction on 4a1a800: private trigger installer called unconditionally after original full registry/create_all. No reduced schema or skip path. Full AST/SQL equivalence and three handmade-engine comparisons passed; dependency findings and limitations in tests_acceptance/db-trigger-boundary/REVIEW.md. No actual DB or paused tests.

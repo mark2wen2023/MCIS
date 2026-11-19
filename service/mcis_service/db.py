@@ -54,6 +54,9 @@ class Database:
         # 导入所有模块以注册表
         from . import models_registry  # noqa: F401
         Base.metadata.create_all(self.engine)
+        self._install_append_only_triggers()
+
+    def _install_append_only_triggers(self) -> None:
         with self.engine.begin() as conn:
             for t in APPEND_ONLY_TABLES:
                 conn.execute(text(
