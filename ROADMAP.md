@@ -566,3 +566,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 音频保存编辑世代待独验：完整/限定各8新场景及相邻检查通过；tests_acceptance/audio-save-edit-generation/REVIEW.md；冻结 logs/audio-save-edit-generation-frozen.txt。
+
+
+音频失败停止点待独验：完整/限定各8新合成场景及18相邻播放节点通过；tests_acceptance/audio-playback-failed-boundary/REVIEW.md；冻结 logs/audio-playback-failed-boundary-frozen.txt。

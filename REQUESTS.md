@@ -875,3 +875,6 @@ Authorized on 331a0ed: production JSON status/code parsing distinguishes current
 
 
 音频保存本段编辑世代修复：原提交确认后，不因用户改回同值清除之后的草稿；只改本段代次与dirty清除条件。冻结双检出入口不改。
+
+
+音频失败片段边界窄修复：只在原上下文与本次stopAt仍一致时清理失败停止点，保留成功到点停及旧提示边界。
