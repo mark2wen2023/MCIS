@@ -12,8 +12,8 @@ function setup(){
 function change(row,text){row.children[1].value=text;row.children[1].oninput();row.children[5].value='synthetic correction';row.children[5].oninput();}
 for(const field of ['case','run'])test('late save after '+field+' selection change leaves old state and draft',async()=>{
  const s=setup(),row=s.boxes[0];change(row,'submitted draft');const saving=row.children[7].onclick();
- s.elements[field].value='OTHER';s.elements[field].events.input();s.release();await saving;
- assert.equal(vm.runInContext('state.revision',s.ctx),0);assert.equal(s.warning(),true);assert.equal(row.children[1].value,'submitted draft');assert.equal(s.requests(),1);assert.match(s.elements.status.textContent,/结果需核查/);
+ s.elements[field].value='OTHER';s.elements[field].events.input();s.elements.status.textContent='current target feedback';s.release();await saving;
+ assert.equal(vm.runInContext('state.revision',s.ctx),0);assert.equal(s.warning(),true);assert.equal(row.children[1].value,'submitted draft');assert.equal(s.requests(),1);assert.equal(s.elements.status.textContent,'current target feedback');assert.match(s.elements['save-unknown'].textContent,/SYNTHETIC/);
 });
 test('selection away and back still ignores late save',async()=>{
  const s=setup(),row=s.boxes[0];change(row,'submitted draft');const saving=row.children[7].onclick();

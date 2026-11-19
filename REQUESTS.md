@@ -857,3 +857,6 @@ Authorized on dc33626: strict same-case list validation and explicit open contro
 
 ## Image explicit saved-run picker (2026-11-19)
 Authorized on f276dbf: same-case validated list entries open via existing reset/detail checks, retaining drafts on cancellation/failure. No auto list/detail/address update, API or identity change. See tests_acceptance/image-run-picker/REVIEW.md.
+
+## Audio exact revision conflict feedback (2026-11-19)
+Authorized on 331a0ed: production JSON status/code parsing distinguishes current 412/AUDIO_REVISION_STALE as not saved, preserving draft and prior unknown. All other/late results remain conservative; late save feedback no longer replaces another target status. Image unchanged. See tests_acceptance/audio-save-conflict/REVIEW.md.
