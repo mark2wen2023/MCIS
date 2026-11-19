@@ -842,3 +842,6 @@ Authorized on c57d12b: add unconnected private image/audio registration retainin
 
 ## Audio accepted-record reopen address (2026-11-19)
 Authorized on 1231cae: synchronize case/run via replaceState only after accepted current audio import/read/save with no dirty or unknown state. History failure is separate from save result; no API, identity, original or task change. Image remains unchanged. See tests_acceptance/audio-reopen-address/REVIEW.md.
+
+## Image accepted-record reopen address (2026-11-19)
+Authorized on 3d5b09d: synchronize only case/run after accepted current image import/read/review, with no dirty or unknown state. Preserve image current-input response comparison; History errors do not change save results. No API/identity/original changes. See tests_acceptance/image-reopen-address/REVIEW.md.

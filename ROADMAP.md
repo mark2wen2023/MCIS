@@ -537,3 +537,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-19 | Private media review-only registration | 待独验：完整模块AST/存储源码、旧新完整注册和限定注册的手写依赖顺序/异常/重复检查通过；无真实框架/DB/权限/启动验收，工厂未接线 | logs/media-review-only-registration-frozen.txt |
 
 | 2026-11-19 | Audio accepted-record address | 待独验：19个新合成DOM/History/Promise场景及相邻7/4场景通过，旧头反例确认；非浏览器/HTTP端到端，图片未改，启动暂停 | logs/audio-reopen-address-frozen.txt |
+
+| 2026-11-19 | Image accepted-record address | 待独验：21个新合成DOM/History/Promise场景及相邻9/5场景通过，旧头反例确认；非浏览器/HTTP端到端，启动暂停 | logs/image-reopen-address-frozen.txt |
