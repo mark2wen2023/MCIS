@@ -815,3 +815,6 @@ Authorized equivalent relocation from fixed 6d5069b into media candidate d966236
 
 ## Media demo shared constants (2026-11-19)
 Authorized narrow follow-up to 585a9c0: move unchanged CID/PUBLIC literals to dependency-free constants module; retain prepare imported names and shared dictionary identity, remove launch→prepare constant dependency. Only AST/handmade importer check, no actual scripts/startup. See tests_acceptance/media-demo-shared-constants/REVIEW.md.
+
+## Private media registration boundaries (2026-11-19)
+Authorized behavior-preserving extraction on df05eb6: private storage initialization and route mounting helpers in the two media app modules. No new public/skip option or independent factory. Six old/new handmade sequence checks and expanded AST/verbatim SQL comparison passed; no actual app/ORM/pages. See tests_acceptance/media-register-boundaries/REVIEW.md.

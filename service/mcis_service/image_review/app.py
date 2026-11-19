@@ -134,16 +134,14 @@ async def review(case_id: str, run_id: str, request: Request, ctx: Ctx = CtxDep)
         return result(records(s, case_id, run_id))
 
 
-def register_image_review(app, *, ocr_runtime=None):
-    """Register the isolated module once on an existing application."""
-    if getattr(app.state, 'image_review_registered', False):
-        raise ValueError('image review already registered')
-    from .tasks import router as tasks_router
-    app.state.image_ocr_runtime = ocr_runtime
+def _initialize_image_review_storage(app):
     Storage.metadata.create_all(app.state.db.engine)
     with app.state.db.engine.begin() as c:
         for op in ('UPDATE', 'DELETE'):
             c.execute(sql(f"CREATE TRIGGER IF NOT EXISTS image_ocr_no_{op.lower()} BEFORE {op} ON image_ocr_review_records BEGIN SELECT RAISE(ABORT, 'OCR history is append-only'); END;"))
+
+
+def _mount_image_review_routes(app, tasks_router):
     app.include_router(router)
     app.include_router(tasks_router)
     @app.get('/image-review-lab/preview.js')
@@ -152,6 +150,16 @@ def register_image_review(app, *, ocr_runtime=None):
     @app.get('/image-review-lab', response_class=HTMLResponse)
     def page():
         return HTMLResponse(Path(__file__).with_name('review.html').read_text(), headers={'Cache-Control': 'no-store'})
+
+
+def register_image_review(app, *, ocr_runtime=None):
+    """Register the isolated module once on an existing application."""
+    if getattr(app.state, 'image_review_registered', False):
+        raise ValueError('image review already registered')
+    from .tasks import router as tasks_router
+    app.state.image_ocr_runtime = ocr_runtime
+    _initialize_image_review_storage(app)
+    _mount_image_review_routes(app, tasks_router)
     app.state.image_review_registered = True
     return app
 

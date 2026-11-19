@@ -519,3 +519,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-19 | Media main three seed import edges | 待独验：全AST仅三导入移位；关闭旧3/新0、开启顺序参数相同的假依赖检查通过；非传递闭包/启动/隔离验收 | logs/media-demo-seed-imports-frozen.txt |
 
 | 2026-11-19 | Media demo dependency-free constants | 待独验：原值/完整AST等价及同源名字与对象假导入检查通过；移除launcher→prepare边；非全依赖/隔离/启动验收 | logs/media-demo-shared-constants-frozen.txt |
+
+| 2026-11-19 | Private media register boundaries | 待独验：图音各正常/重复/初始化早失败共6组假依赖序列及展开AST、逐字SQL开发检查通过；无真实DDL/应用/权限验收 | logs/media-register-boundaries-frozen.txt |

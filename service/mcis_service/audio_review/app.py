@@ -162,19 +162,27 @@ async def revise(case_id:str,run_id:str,request:Request,ctx:Ctx=CtxDep):
         out=result(rows(s,case_id,run_id))
     return out
 
+def _initialize_audio_review_storage(app):
+    Storage.metadata.create_all(app.state.db.engine)
+    with app.state.db.engine.begin() as c:
+        for op in ('UPDATE','DELETE'):
+            c.execute(sql(f"CREATE TRIGGER IF NOT EXISTS audio_review_no_{op.lower()} BEFORE {op} ON audio_review_revisions BEGIN SELECT RAISE(ABORT,'append-only audio review'); END;"))
+
+
+def _mount_audio_review_routes(app, tasks):
+    app.include_router(router);app.include_router(tasks.router)
+    @app.get('/audio-review-lab',response_class=HTMLResponse)
+    def page():return HTMLResponse(Path(__file__).with_name('review.html').read_text(),headers={'Cache-Control':'no-store'})
+
+
 def register_audio_review(app, *, sensevoice_runtime=None):
     """Register the isolated module once on an existing application."""
     if getattr(app.state, 'audio_review_registered', False):
         raise ValueError('audio review already registered')
     from . import tasks
     app.state.audio_asr_runtime=sensevoice_runtime
-    Storage.metadata.create_all(app.state.db.engine)
-    with app.state.db.engine.begin() as c:
-        for op in ('UPDATE','DELETE'):
-            c.execute(sql(f"CREATE TRIGGER IF NOT EXISTS audio_review_no_{op.lower()} BEFORE {op} ON audio_review_revisions BEGIN SELECT RAISE(ABORT,'append-only audio review'); END;"))
-    app.include_router(router);app.include_router(tasks.router)
-    @app.get('/audio-review-lab',response_class=HTMLResponse)
-    def page():return HTMLResponse(Path(__file__).with_name('review.html').read_text(),headers={'Cache-Control':'no-store'})
+    _initialize_audio_review_storage(app)
+    _mount_audio_review_routes(app, tasks)
     app.state.audio_review_registered = True
     return app
 
