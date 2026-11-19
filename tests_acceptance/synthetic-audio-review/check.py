@@ -1,4 +1,5 @@
-"""Normal-path only. Reads two fixed pure Git blobs, never imports MCIS packages."""
+"""Normal-path only. Reads two fixed pure sources (Git blobs or explicit offline directory), never imports MCIS packages."""
+import argparse
 import ast
 import copy
 import hashlib
@@ -19,13 +20,34 @@ def require(ok, message):
         raise RuntimeError(message)
 
 
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--source-dir', type=Path,
+                    help='Explicit directory containing the two exact pinned .py files; never downloaded')
+args = parser.parse_args()
+
+
+def source_bytes(name):
+    if args.source_dir is not None:
+        path = args.source_dir / name
+        require(path.is_file(), 'Pinned source file missing; stop, no fallback or fetch.')
+        raw = path.read_bytes()
+    else:
+        result = subprocess.run(['git', '-C', str(ROOT), 'show',
+                                 SOURCE_COMMIT + ':service/mcis_service/reports/' + name],
+                                capture_output=True, check=False)
+        require(result.returncode == 0, 'Pinned pure source object unavailable; stop, no automatic fetch.')
+        raw = result.stdout
+    require(hashlib.sha256(raw).hexdigest() == PINS[name], 'Pinned source hash mismatch: ' + name)
+    return raw
+
+
+# Verify BOTH byte sequences before compiling/executing either. Execute only the
+# checked in-memory bytes, not a subsequently re-opened file.
+verified = {name: source_bytes(name) for name in PINS}
+
+
 def source(name):
-    result = subprocess.run(['git', '-C', str(ROOT), 'show',
-                             SOURCE_COMMIT + ':service/mcis_service/reports/' + name],
-                            capture_output=True, check=False)
-    require(result.returncode == 0, 'Pinned pure source object unavailable; stop, no automatic fetch.')
-    require(hashlib.sha256(result.stdout).hexdigest() == PINS[name], 'Pinned source hash mismatch')
-    return ast.parse(result.stdout, filename=name)
+    return ast.parse(verified[name], filename=name)
 
 
 # Match the existing acceptance approach: resolve only the pure relative import.
@@ -68,6 +90,10 @@ require(old['projection']['humanText'] == available[1]['doc']['text'], 'First te
 stored_reference = copy.deepcopy(old)
 available = data['rows']
 second = read(reader=SavedShapeReader(), **dict(data['request'], revision=2))
+require(second['projection']['revision'] == 2, 'Second reference must pin revision 2')
+require(second['projection']['humanText'] == data['rows'][2]['doc']['text'], 'Second text lost')
+require(second['projection']['humanText'] != old['projection']['humanText'],
+        'Second text must differ from first text')
 require(second['referenceSha256'] != old['referenceSha256'], 'Revision references must differ')
 require(second['projection']['humanRevisionSha256'] != old['projection']['humanRevisionSha256'],
         'Human content must be separately bound')
@@ -87,3 +113,5 @@ require(data == before, 'Input fixture mutated')
 print('PASS one normal synthetic scenario: first/second exact reference and old-reference re-read')
 print('NOT RUN: authorization, missing-evidence, HTTP, ORM, save, report export/reopen, browser, ASR')
 print('Source:', SOURCE_COMMIT, '| no media candidate code merged into this UI-derived branch')
+
+print('Input mode:', 'explicit offline directory' if args.source_dir is not None else 'fixed local Git objects')
