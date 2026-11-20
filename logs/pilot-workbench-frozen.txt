@@ -1,0 +1,3 @@
+be9d23489733e342928ef096aa05b1619668ac481e72898b7500e703ba2ab22b  service/mcis_service/local_review_pilot/workbench.html
+42834e88e0c8fc830ae1f618236f4f2e5435072c45595efdfa25e2a317dfe629  tests_acceptance/pilot-workbench/check.cjs
+94f7afc49ecbe09f5c81d078579cee8de55681684b5806472b780bd8569d8063  tests_acceptance/pilot-workbench/REVIEW.md

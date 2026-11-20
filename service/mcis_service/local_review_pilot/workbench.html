@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>粤海探析 · 合成试用工作台</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#183042;background:#f4f7fa;line-height:1.6}body{margin:0}main{max-width:1040px;margin:auto;padding:24px}header,section,nav{background:white;border:1px solid #d6e0e7;border-radius:10px;padding:20px;margin-bottom:16px}h1{font-size:1.6rem;margin:0}h2{font-size:1.15rem;margin-top:0}.subtle{color:#465d6c}ol{display:flex;flex-wrap:wrap;gap:12px;padding-left:24px}li{padding-right:12px}[aria-current=step]{font-weight:bold;color:#005d76}button{font:inherit;padding:8px 14px;background:#075e78;color:white;border:0;border-radius:5px;cursor:pointer}button:disabled{background:#697c88;cursor:wait}button:focus-visible,a:focus-visible{outline:3px solid #af6000;outline-offset:3px}#cases{display:flex;flex-wrap:wrap;gap:8px}#cases button{background:#edf4f7;color:#173d50;border:1px solid #aac3cf;max-width:100%;overflow-wrap:anywhere;text-align:left}#cases button[aria-pressed=true]{border:2px solid #075e78}#context,#case-title{overflow-wrap:anywhere}a{color:#075e78}.boundary{border-left:4px solid #ac6500;padding-left:12px}@media(max-width:560px){main{padding:12px}header,section,nav{padding:14px}}
+</style>
+<main>
+<header><p class="subtle">粤海探析 / 合成试用专用</p><h1>选案 → 取证</h1><p>仅用于获授权的合成案件。此页面尚未挂载；不用于真实材料或生产办案。</p></header>
+<nav aria-label="案件流程"><ol><li><a href="#case-picker">接报 / 选案</a></li><li id="stage">取证（待选案）</li><li>询问（未接入）</li><li>分析（未接入）</li><li>报告（未接入）</li><li>建议（未接入）</li><li>沉淀（后续）</li></ol><p>流程位置不代表完成；完成状态未评估，可返回选案。</p></nav>
+<section id="case-picker" aria-labelledby="picker-title"><h2 id="picker-title">服务器授权案件</h2><p>仅列出当前服务器会话允许读取的案件；不会读取全案列表。刷新清除当前选择。</p><button id="refresh" type="button">读取 / 刷新授权案件</button><p id="list-status" role="status" aria-live="polite">尚未读取，请主动读取授权案件。</p><div id="cases" aria-label="选择案件"></div></section>
+<section id="evidence" aria-labelledby="evidence-title"><h2 id="evidence-title">取证首页</h2><p id="context">未选择案件</p><h3 id="case-title"></h3><p id="detail-status" role="status" aria-live="polite">先从服务器授权清单明确选择案件。</p><p id="next">下一步：读取授权案件并选案。</p><div class="boundary"><strong>图音接入位置 · 尚未开放操作</strong><p>原件登记回执、已有图音识别结果导入、人工核对保存、按运行刷新重开是不同步骤。本页只读取案件，不读取证据、媒体、时间线、航迹或报告，也不能保存核对。</p><p>后续需完成受限工厂、同源会话和隔离验收后，再接本案图音操作。当前不提供导入、保存、下载或全量工作台跳转。</p></div></section>
+</main>
+<script>
+'use strict';
+(() => {
+ const el = id => document.getElementById(id);
+ const validId = value => typeof value === 'string' && /^SYN-[A-Za-z0-9_.-]{1,123}$/.test(value);
+ let epoch = 0, cases = [], target = null;
+ function clearCase() {
+  target = null; el('context').textContent = '未选择案件'; el('case-title').textContent = '';
+  el('stage').textContent = '取证（待选案）'; el('stage').removeAttribute('aria-current');
+  el('detail-status').textContent = '先从服务器授权清单明确选择案件。';
+  el('next').textContent = '下一步：读取授权案件并选案。';
+ }
+ function clearAll(message) {
+  ++epoch; cases = []; clearCase(); el('cases').replaceChildren();
+  el('refresh').disabled = false; el('list-status').textContent = message;
+ }
+ function failure(error) {
+  if (error.status === 401 || error.status === 403) {
+   clearAll('会话或案件授权未确认 / 已失效。请通过受信试用入口重新确认，再主动读取；本页不提供登录或凭据。'); return true;
+  }
+  return false;
+ }
+ async function get(path) {
+  const response = await fetch(path, {method:'GET', credentials:'same-origin', cache:'no-store', redirect:'error', headers:{Accept:'application/json'}});
+  if (!response.ok) { const error = new Error('读取失败'); error.status = response.status; throw error; }
+  return response.json();
+ }
+ function renderChoices() {
+  el('cases').replaceChildren();
+  for (const item of cases) {
+   const button = document.createElement('button'); button.type = 'button';
+   button.textContent = `${item.caseId} · ${item.title || '未命名案件'}`;
+   button.setAttribute('aria-pressed', String(target === item.caseId));
+   button.onclick = () => select(item.caseId); el('cases').appendChild(button);
+  }
+ }
+ async function select(id) {
+  if (!validId(id) || !cases.some(item => item.caseId === id)) return;
+  const version = ++epoch; clearCase(); target = id; renderChoices();
+  el('context').textContent = `当前目标案号：${id}（详情尚未确认）`;
+  el('detail-status').textContent = '正在读取所选案件；未展示上一个案件详情。';
+  el('next').textContent = '等待当前案件详情确认。';
+  try {
+   const doc = await get(`/api/v1/cases/${encodeURIComponent(id)}`);
+   if (version !== epoch || target !== id) return;
+   if (!doc || Array.isArray(doc) || doc.caseId !== id || typeof doc.title !== 'string') throw new Error('案件身份或格式不符');
+   el('context').textContent = `当前案号：${id}`; el('case-title').textContent = doc.title || '未命名案件';
+   el('stage').textContent = '取证'; el('stage').setAttribute('aria-current','step');
+   el('detail-status').textContent = '已读取当前案件。证据数量、登记与核对状态未读取，不能视为零条或已完成。';
+   el('next').textContent = '下一步：本案图音登记与核对尚待接入；可返回案件清单重新选择。';
+  } catch (error) {
+   if (version !== epoch || target !== id) return;
+   if (failure(error)) return;
+   el('detail-status').textContent = '未能确认当前案件详情（读取失败或响应不符）。未保留旧案件内容；可明确再选本案读取。';
+   el('next').textContent = '请核对所选案号；本次没有保存或自动重试。';
+  }
+ }
+ el('refresh').onclick = async () => {
+  clearAll('正在读取授权案件…'); const version = epoch;
+  el('refresh').disabled = true;
+  try {
+   const list = await get('/api/v1/pilot/cases');
+   if (version !== epoch) return;
+   if (!Array.isArray(list) || list.some(item => !item || !validId(item.caseId) || typeof item.title !== 'string') || new Set(list.map(item => item.caseId)).size !== list.length) throw new Error('清单格式无效');
+   cases = list.map(({caseId,title}) => ({caseId,title})); renderChoices();
+   el('list-status').textContent = cases.length ? `已读取 ${cases.length} 个获授权案件，请明确选择。` : '当前会话没有可读取的授权案件；未查询全案列表。';
+  } catch (error) {
+   if (version !== epoch) return;
+   if (!failure(error)) el('list-status').textContent = '案件清单读取失败或格式无效。没有可确认清单，请手动重试。';
+  } finally { if (version === epoch) el('refresh').disabled = false; }
+ };
+ // No cached workspace survives leaving the page or a hidden-page session change.
+ window.addEventListener('pagehide', () => clearAll('页面已离开；返回后请重新读取授权案件。'));
+ document.addEventListener('visibilitychange', () => {
+  if (document.hidden) clearAll('页面已隐藏；返回后请重新确认服务器会话并读取授权案件。');
+ });
+})();
+</script>
+</html>

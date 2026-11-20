@@ -584,3 +584,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 试用基础存储待独验：9组AST/手写metadata/engine检查通过，未运行DB/ORM。冻结 logs/pilot-core-storage-frozen.txt；见 tests_acceptance/pilot-core-storage/REVIEW.md；工厂仍未启用。
+
+
+试用工作台待独验：9组生产内联JS/合成DOM-Promise通过；logs/pilot-workbench-frozen.txt。页面未挂载，浏览器/同源会话/实际图音闭环未验。
