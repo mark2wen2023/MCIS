@@ -48,14 +48,27 @@ class PilotSessions:
     def revoke(self, digest):
         self._entries.pop(digest, None)
 
-    async def verify(self, credential, case_id, operation):
-        # No session creation or extension on reads, and no fallback identity.
+    def _active_session(self, credential):
         if not isinstance(credential, str) or not re.fullmatch(r'[A-Za-z0-9_-]{43,128}', credential):
             return None
         session = self._entries.get(sha256(credential.encode('ascii')).hexdigest())
         now = self._clock()
         if (session is None or type(now) not in (int, float) or not math.isfinite(now)
-                or now >= session.expires_at or (case_id, operation) not in session.grants):
+                or now >= session.expires_at):
+            return None
+        return session
+
+    def authorized_cases(self, credential):
+        """Validated server permit IDs only; None is denial, empty tuple is valid."""
+        session = self._active_session(credential)
+        if session is None:
+            return None
+        return tuple(sorted(case_id for case_id, operation in session.grants if operation == 'case.read'))
+
+    async def verify(self, credential, case_id, operation):
+        # No session creation or extension on reads, and no fallback identity.
+        session = self._active_session(credential)
+        if session is None or (case_id, operation) not in session.grants:
             return None
         return CaseGrant(session.subject, session.role, case_id, operation)
 

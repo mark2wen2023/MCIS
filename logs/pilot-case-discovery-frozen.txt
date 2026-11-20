@@ -1,0 +1,3 @@
+9108cf78f790eb80698cfbc90dc3798c9d750365e1d26c5ed0c7565bac85e35e  service/mcis_service/common/local_review_pilot.py
+7699b42835c8eec4077a591627dcae83f9fcb5a7f4d099f2fc11b5f8ef91da95  service/mcis_service/common/pilot_case_discovery.py
+846b06b2764b5479b396b37b540fd7e2614d2032e9df3fcaa488cab9f2e8702f  tests_acceptance/pilot-case-discovery/check.py

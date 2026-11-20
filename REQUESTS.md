@@ -887,3 +887,6 @@ Authorized on 331a0ed: production JSON status/code parsing distinguishes current
 
 
 独立local-review-pilot候选：显式服务器临时会话表+同源Cookie读取器，逐案/操作/过期/撤销检查，经verified-case-context接线。默认关闭，无会话发行/真实工厂，不改旧默认。
+
+
+local-review-pilot真实授权案发现切片：显式注册GET /api/v1/pilot/cases，从有效会话case.read集合逐案调用现有load_case，不读全案列表；默认拒绝、不启用工厂。

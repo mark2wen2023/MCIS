@@ -578,3 +578,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 试用身份源接线待独验：新增7组与原边界6组AST/手写替身通过；tests_acceptance/local-review-pilot/REVIEW.md；冻结 logs/local-review-pilot-frozen.txt。受限工厂/同源引导与真实首次导入仍未验。
+
+
+授权案发现API待独验：5组新AST/手写替身与7/6组相邻通过，见 tests_acceptance/pilot-case-discovery/REVIEW.md；冻结 logs/pilot-case-discovery-frozen.txt。真实受限存储装配及同源首次导入仍阻断。
