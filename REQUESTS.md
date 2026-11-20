@@ -923,3 +923,6 @@ local-review-pilot真实授权案发现切片：显式注册GET /api/v1/pilot/ca
 
 
 试用编号保留依赖修复：变更已冻结pilot_core_storage/host_adapter及相邻合成检查，显式包含原track_history.models.LocalReceipt并验证原只追加触发器；不改next_id/reserved或任何路由，不走全量registry。产品提交与后继固定输入更新分开。
+
+
+试用构建输入独立刷新：固定产品1db4e3f498d8b641ef2569ec579b067f71b7a9be，保留57路径，重算两份修复源码blob/SHA与290条import记录。仅解除已修复track_local_receipts缺表项，旧记录移入resolved；外部base仍unverified/null，不改镜像批准表。

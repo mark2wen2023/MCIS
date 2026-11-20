@@ -614,3 +614,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 试用航迹编号保留表待独验：旧fce90d3单项反例退出1，明确未建track_local_receipts；新存储11项、宿主6项AST/手写引擎检查通过。logs/pilot-track-receipt-storage-frozen.txt；真实ORM/DDL/登记未执行，仍无批准镜像或运行许可。
+
+
+试用构建输入刷新待独验：产品固定1db4e3f；7组打包检查通过，57文件源码审查退出0并逐个重算摘要；默认build因未审外部base退出2，误用旧ref退出2，无目标残留。logs/pilot-image-build-track-refresh-frozen.txt；没有构建/运行容器或应用。

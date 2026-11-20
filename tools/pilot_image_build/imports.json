@@ -66,6 +66,7 @@
 {"file":"service/mcis_service/common/pilot_core_storage.py","line":17,"scope":"_initialize_pilot_core_storage","import":"from ..audit.models import AuditEventRow","selected_local":["service/mcis_service/audit/models.py"],"omitted_local":[]},
 {"file":"service/mcis_service/common/pilot_core_storage.py","line":18,"scope":"_initialize_pilot_core_storage","import":"from ..redaction.models import AccessPolicyRow","selected_local":["service/mcis_service/redaction/models.py"],"omitted_local":[]},
 {"file":"service/mcis_service/common/pilot_core_storage.py","line":19,"scope":"_initialize_pilot_core_storage","import":"from ..working_records_archive.models import ArchiveImportHistoryRow","selected_local":["service/mcis_service/working_records_archive/models.py"],"omitted_local":[]},
+{"file":"service/mcis_service/common/pilot_core_storage.py","line":20,"scope":"_initialize_pilot_core_storage","import":"from ..track_history.models import LocalReceipt","selected_local":["service/mcis_service/track_history/models.py"],"omitted_local":[]},
 {"file":"service/mcis_service/common/timeutil.py","line":2,"scope":"","import":"from __future__ import annotations","selected_local":[],"omitted_local":[]},
 {"file":"service/mcis_service/common/timeutil.py","line":4,"scope":"","import":"from datetime import datetime, timedelta, timezone","selected_local":[],"omitted_local":[]},
 {"file":"service/mcis_service/common/verified_case_context.py","line":7,"scope":"","import":"from dataclasses import dataclass","selected_local":[],"omitted_local":[]},

@@ -1,6 +1,6 @@
 # 图片试用镜像输入组装：源码审查可执行，构建/运行仍阻断
 
-固定产品输入：`5647d960a9fe7ed3976e9b19219f88ba29939680`。
+固定产品输入：`1db4e3f498d8b641ef2569ec579b067f71b7a9be`。
 本工具不安装、联网、构建、加载镜像、启动应用或读取工作区业务材料。
 不改变 `container_runner.APPROVED_IMAGES`（仍空），也不授予运行许可。
 
@@ -8,7 +8,7 @@
 
 `inputs.json` 固定 57 个显式路径、Git blob、大小和 SHA-256：限定应用 Python、
 三份页面/脚本、合成准备工具，以及 case/evidence-item/common 三份 schema。
-`imports.json` 记录 289 个实际 AST import 节点（含函数作用域和行号）。
+`imports.json` 记录 290 个实际 AST import 节点（含函数作用域和行号）。
 包级 __init__ 已纳入；tools/local_review_pilot 无 __init__ 的位置保持原 namespace 语义。
 manifest 的 SHA-256 固定在 `package.py` 中，不能通过临时修改清单跳过守门。
 所有源文件从固定提交的 Git blob 读取，不从工作树复制、不展开整个仓库。
@@ -17,14 +17,14 @@ manifest 的 SHA-256 固定在 `package.py` 中，不能通过临时修改清单
 ```sh
 python -I tools/pilot_image_build/package.py \
   --repo /path/to/MCIS \
-  --ref 5647d960a9fe7ed3976e9b19219f88ba29939680 \
+  --ref 1db4e3f498d8b641ef2569ec579b067f71b7a9be \
   --target /trusted/exclusive-parent/new-review-directory \
   --source-review-only
 ```
 目标必须全新、父目录受调用者控制且无并发修改；不把目录检查当沙箱或恶意同UID隔离。
 结果为 `source/`、`STATUS.json`、`NOT_BUILDABLE.txt`，**不生成 Dockerfile**，不要执行其中应用。
 普通模式去掉 `--source-review-only`；当前明确退出2，目标不存在：
-`MISSING_TRACK_RECEIPT_TABLE`。不得把源码审查退出0说成可构建或试用通过。
+`Runtime base not frozen/reviewed`。不得把源码审查退出0说成可构建或试用通过。
 
 独立工具复验（仅标准库/手造目录和假Git响应）：
 ```sh
@@ -35,20 +35,21 @@ python -I tests_acceptance/pilot-image-build/check.py
 另实跑固定Git对象的源码审查模式：57个输出逐一重算SHA-256一致，确认无Dockerfile，临时目录清理。
 生产模式明确拒绝；未执行其他功能/权限/ORM/浏览器检查。
 
-## 新确认的业务调用阻断（不能靠打包掩盖）
+## 已修复的具体源码阻断（不等于真实登记验收）
 
-| 固定源码位置 | 必要行为 |
-|---|---|
-| `evidence_intake/router.py:166` `commit_input` | 首次登记调用 `evidence.next_id` |
-| `evidence/service.py:154–155` `next_id` | 导入并调用 `track_history.service.reserved` |
-| `track_history/service.py:20–25` `reserved` | 查询历史索引及真实 `LocalReceipt`，防止重用已保留证据编号 |
-| `track_history/models.py:4` `LocalReceipt` | 表 `track_local_receipts`，具有原有只追加触发器 |
-| `common/pilot_core_storage.py:8` / `host_adapter.py:37` | 六个基础表＋一个图片表，没有该表；宿主还严格要求七表集合 |
+固定产品提交 `1db4e3f498d8b641ef2569ec579b067f71b7a9be` 保留
+`commit_input → evidence.next_id → track_history.service.reserved → track_local_receipts`
+原编号冲突核查。专用初始化现在使用真实 LocalReceipt 模型与原两条只追加触发器，
+验证包含它的七张基础表；加图片表后宿主要求八张表逐一为空。
+没有新增航迹/归档路由，没有调用全量 registry，也不读取旧库。
 
-因此本候选的真实登记首次分配编号会碰到未初始化表。这里是源码推论，不是运行过的异常。
-不能删 reserved、补空返回或假表。本轮不改产品，后续最小产品项须审查并同时补齐真实模型、
-触发器、依赖检查及宿主准确表集合，再冻结新的产品ref/清单；不能仅清掉 blocked 字段。
-这纠正了上一轮“只差镜像”的判断：现在同时有明确产品依赖阻断和外部镜像缺项。
+旧 `fce90d30cb94deb1069dca90c78693316e03c5c7` 的打包器/清单和旧阻断仍可按该固定提交复核，
+没有修改旧提交或放宽哈希。此次后继提交重新冻结同一57路径，仅两份运行源码blob改变；
+新增一条明确 LocalReceipt import，记录共290条，遗漏导入范围不变。
+`inputs.json.resolved` 保留这条缺口及修复提交，只有这条 `blocked` 被解除。
+
+旧基线单项反例退出1；新初始化11项、宿主6项AST/手写引擎检查通过，包含缺表、缺触发器及
+宿主旧记录拒绝；没有真实ORM/DDL/登记验收。外部镜像仍unverified且摘要未知，默认build退出2。
 
 ## 有限导入闭包及遗漏边界
 
@@ -92,7 +93,7 @@ referencing、uvicorn、playwright，及它们实际版本所需的全部传递�
 
 `package.py::recipe(base)` 是实际可执行Dockerfile生成器：固定 FROM 镜像ID，
 只 COPY 已校验 source 树及已校验 entry.py，设置非root、固定环境、私有解释器；没有RUN/安装。
-当产品阻断和外部锁都解决，普通模式才输出 Dockerfile 与仅允许这些输入的 .dockerignore。
+当新发现的产品阻断（如有）及外部锁都解决，普通模式才输出 Dockerfile 与仅允许这些输入的 .dockerignore。
 不会把基础归档复制进构建上下文。不自动执行build/load；未来须用无外网且已装入同一固定base的
 受审构建器，不能把 `--network=none`（仅RUN网络）误当禁止解析/拉取FROM的保证。
 成品镜像仍需独立核对再加入运行器批准表；打包/构建均不自动批准运行。

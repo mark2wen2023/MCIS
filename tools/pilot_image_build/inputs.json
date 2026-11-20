@@ -1,6 +1,6 @@
 {
   "format": "mcis-pilot-build-inputs/1",
-  "commit": "5647d960a9fe7ed3976e9b19219f88ba29939680",
+  "commit": "1db4e3f498d8b641ef2569ec579b067f71b7a9be",
   "files": [
     {
       "path": "contracts/schemas/case.schema.json",
@@ -112,9 +112,9 @@
     },
     {
       "path": "service/mcis_service/common/pilot_core_storage.py",
-      "blob": "f999d6de5677ba9bc8cadcebc4b48ad6a4917e62",
-      "sha256": "fa8af4e7ab87ddcd7d71fa40430a4ea62652187bbba5fe0640782928e4eb1a12",
-      "size": 3731
+      "blob": "84290296ef716a656ee475896fd255a76e394057",
+      "sha256": "15258876fd0a4878c1a737939499fb67e546d1cea37f4077be0bcf4c41b32fe1",
+      "size": 3965
     },
     {
       "path": "service/mcis_service/common/timeutil.py",
@@ -328,9 +328,9 @@
     },
     {
       "path": "tools/pilot_image_acceptance/host_adapter.py",
-      "blob": "9cc5e3f441278713beb1ce4209959db321010477",
-      "sha256": "98f3c6cdba115d56dab5390a44d3ac8fe47a367eb24a2e576d914d7093f03a0e",
-      "size": 3332
+      "blob": "b2a0a642232cd3d9ff062086f38f7a0b045aab5f",
+      "sha256": "aba59a3b364efb975904a4582d37714726fa922c6b15903673938a6955b68af4",
+      "size": 3355
     },
     {
       "path": "tools/pilot_image_acceptance/prepare.py",
@@ -353,15 +353,7 @@
     "uvicorn",
     "playwright"
   ],
-  "blocked": [
-    {
-      "code": "MISSING_TRACK_RECEIPT_TABLE",
-      "path": "service/mcis_service/evidence/service.py",
-      "line": 154,
-      "chain": "evidence_intake.router.commit_input:166 -> evidence.service.next_id:154 -> track_history.service.reserved:24 -> track_local_receipts",
-      "reason": "pilot_core_storage CORE_TABLES and host_adapter expected seven tables exclude track_local_receipts; real registration cannot be claimed ready. Do not stub, omit reserved lookup or create a fake table."
-    }
-  ],
+  "blocked": [],
   "external": {
     "status": "unverified",
     "base_image_id": null,
@@ -376,5 +368,16 @@
       "size": null
     }
   },
-  "scope": "source review only until product blocker and external image are independently resolved; no runtime approval"
+  "scope": "fixed imported-image source review; known track-receipt initialization gap fixed, external runtime unverified; no runtime approval",
+  "resolved": [
+    {
+      "code": "MISSING_TRACK_RECEIPT_TABLE",
+      "path": "service/mcis_service/evidence/service.py",
+      "line": 154,
+      "chain": "evidence_intake.router.commit_input:166 -> evidence.service.next_id:154 -> track_history.service.reserved:24 -> track_local_receipts",
+      "reason": "pilot_core_storage CORE_TABLES and host_adapter expected seven tables exclude track_local_receipts; real registration cannot be claimed ready. Do not stub, omit reserved lookup or create a fake table.",
+      "fixed_commit": "1db4e3f498d8b641ef2569ec579b067f71b7a9be",
+      "verification": "11 storage AST/fake-engine checks; 6 authority checks including absent track table and existing track row; not real ORM"
+    }
+  ]
 }
