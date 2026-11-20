@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const assert = require('node:assert/strict');
 const path = require('node:path');
-const html = fs.readFileSync(path.join(__dirname,'../../service/mcis_service/local_review_pilot/workbench.html'),'utf8');
+const html = fs.readFileSync(process.env.PILOT_WORKBENCH_SOURCE || path.join(__dirname,'../../service/mcis_service/local_review_pilot/workbench.html'),'utf8');
 const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)];
 assert.equal(scripts.length,1);
 assert(!/\bsrc=|<iframe|<form|localStorage|X-MCIS|Authorization|DEMO_CASE_ID/.test(html));
@@ -14,7 +14,7 @@ class Element {
  setAttribute(k,v) { this.attrs[k]=v; }
  removeAttribute(k) { delete this.attrs[k]; }
 }
-function setup(images=false) {
+function setup(images=false,search='') {
  const nodes = Object.fromEntries([...html.matchAll(/id="([^"]+)"/g)].map(m=>[m[1],new Element()]));
  const requests=[], events={};
  const document={hidden:false,getElementById:id=>{assert(nodes[id],id);return nodes[id];},createElement:tag=>{assert(['button','a'].includes(tag));return new Element();},addEventListener:(n,f)=>events[n]=f};
@@ -25,7 +25,7 @@ function setup(images=false) {
   let resolve,reject; const promise=new Promise((a,b)=>{resolve=a;reject=b;});
   requests.push({url,resolve:(body,status=200)=>resolve({ok:status===200,status,json:async()=>body}),reject}); return promise;
  }
- vm.runInNewContext(images?scripts[0][1].replace('const imagePageAvailable=false;','const imagePageAvailable=true;'):scripts[0][1],{document,window,fetch,console});
+ vm.runInNewContext(images?scripts[0][1].replace('const imagePageAvailable=false;','const imagePageAvailable=true;'):scripts[0][1],{document,window,fetch,console,URLSearchParams,location:{search}});
  return {nodes,requests,events,document};
 }
 const A={caseId:'SYN-A',title:'合成 A'},B={caseId:'SYN-B',title:'合成 B'};
@@ -95,5 +95,21 @@ async function test(name,f){await f();console.log('PASS '+name);}
   const old=s.nodes.cases.children[0].onclick(),fresh=s.nodes.cases.children[1].onclick();s.requests[4].resolve(B);await fresh;s.requests[3].resolve(A);await old;assert.equal(s.nodes['image-entry'].children[0].href,'/pilot/image-review?case=SYN-B');
   const off=setup();await loaded(off);const d=off.nodes.cases.children[0].onclick();off.requests[1].resolve(A);await d;assert.equal(off.nodes['image-entry'].children.length,0);
  });
- console.log('COMPLETE 10 groups; synthetic DOM/Promise only');
+ await test('return hint is inert until list; matching is not selection',async()=>{
+  const s=setup(true,'?case=SYN-A');assert(s.nodes['return-hint'],'old workbench lacks return hint');assert.equal(s.requests.length,0);assert.match(s.nodes['return-hint'].textContent,/未授权/);
+  await loaded(s);assert.equal(s.requests.length,1);assert.equal(s.nodes.context.textContent,'未选择案件');assert.match(s.nodes['return-hint'].textContent,/SYN-A.*仍须点击/);
+  const p=s.nodes.cases.children[0].onclick();s.requests[1].resolve(A);await p;assert.equal(s.nodes.context.textContent,'当前案号：SYN-A');assert(!s.nodes['return-hint'].textContent.includes('SYN-A'));
+ });
+ await test('invalid, forged, revoked or failed hints never select/read detail',async()=>{
+  for(const search of ['?case=','?case=SYN-A&case=SYN-A','?case=SYN-A&case=SYN-B','?case=SYN-A&role=LeadInvestigator','?case=%20SYN-A','?case=NOT-SYN-A']){
+   const s=setup(true,search);assert.equal(s.requests.length,0);await loaded(s);assert.equal(s.requests.length,1);assert(!s.nodes['return-hint'].textContent.includes('SYN-A'));assert.equal(s.nodes.context.textContent,'未选择案件');
+  }
+  const s=setup(true,'?case=SYN-A');await loaded(s,[B]);assert(!s.nodes['return-hint'].textContent.includes('SYN-A'));await loaded(s,[A]);assert(!s.nodes['return-hint'].textContent.includes('SYN-A'));
+  for(const status of [401,403,500]){const x=setup(true,'?case=SYN-A');let p=x.nodes.refresh.onclick();x.requests[0].resolve({},status);await p;await loaded(x,[A]);assert(!x.nodes['return-hint'].textContent.includes('SYN-A'));assert.equal(x.requests.length,2);}
+ });
+ await test('new list and B detail win; late A list cannot restore hint',async()=>{
+  const s=setup(true,'?case=SYN-A');const a=s.nodes.refresh.onclick(),b=s.nodes.refresh.onclick();s.requests[1].resolve([B]);await b;s.requests[0].resolve([A]);await a;
+  assert(!s.nodes['return-hint'].textContent.includes('SYN-A'));const p=s.nodes.cases.children[0].onclick();s.requests[2].resolve(B);await p;assert.equal(s.nodes.context.textContent,'当前案号：SYN-B');
+ });
+ console.log('COMPLETE 13 groups; synthetic DOM/Promise only');
 })().catch(error=>{console.error(error);process.exitCode=1;});

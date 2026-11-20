@@ -11,6 +11,20 @@ def workbench_page(html, *, images):
 def image_page(html):
     html = _review_page(html, task_routes=False)
     markers = {
+        '<p id="loaded-context"': '<button id="pilot-return" type="button" hidden>返回取证工作台（提示回选本案）</button><p id="loaded-context"',
+        'function renderLoadedContext(){': 'function renderLoadedContext(){updatePilotReturn();',
+        'reopenFromUrl(typeof location===': """function pilotReturnCase(){
+ return state&&context===el('case').value&&state.caseId===context&&state.runId===el('run').value&&/^SYN-[A-Za-z0-9_.-]{1,123}$/.test(context)?context:null;
+}
+function updatePilotReturn(){el('pilot-return').hidden=!pilotReturnCase();}
+el('pilot-return').onclick=()=>{
+ const c=pilotReturnCase();
+ if(!c||busy||!reset())return;
+ // Keep dirty/beforeunload protection intact; never write or claim cancellation.
+ try{location.assign('/pilot?case='+encodeURIComponent(c));}
+ catch(e){el('status').textContent='未能返回工作台；当前草稿仍在，请先复制保留。';}
+};
+reopenFromUrl(typeof location===""",
         'const originalRoutesAvailable=true;': 'const originalRoutesAvailable=false;',
         'const pilotSession=false;': 'const pilotSession=true;',
         '<section class="image-pane"': '<section hidden inert class="image-pane"',

@@ -126,3 +126,21 @@ python3 -I "$review_tool_dir/check.py" --archive "$archive" \
 退出 0 只表示 `result=metadata_checked`：输出固定 schema `mcis.oci-metadata-review/1`、tar SHA/大小、目标平台、选定 manifest/config digest、layer/member 数量；`runtimeApproved / inventoryVerified / rootfsDiffIdsVerified / dependencyAbiVerified / provenanceVerified / builderVerified` 均为 false。退出 2 输出固定失败码，不输出输入路径/任意元数据/异常栈：`ARCHIVE_HASH/SIZE` 是传递字节不符，`BLOB_HASH` 是成员内容不符，`DESCRIPTOR_MISMATCH` 是引用长度/摘要不符，`PLATFORM_MISMATCH/CONFIG_PLATFORM/AMBIGUOUS_PLATFORM` 是平台不明，`MEMBER_* / TAR_* / UNSUPPORTED_* / *_LIMIT / INPUT_* / JSON_*` 分别指出路径格式、支持面、预算或输入问题。失败不能通过改媒体类型/删成员/自算新期望摘要而伪装原输入通过。
 
 本轮仅新生成的微型全合成归档测试：`python3 -I tests_acceptance/oci-metadata-review/check.py`，9 组退出 0。CLI 正常/拒绝亦在临时文件上实测，不使用实际基础镜像。gzip blob 只核对压缩字节，**不验证 gzip 流或解压后 tar 内容，也不验证 diff ID**（仅检查 rootfs 声明的格式/数量）；不验证 ABI、依赖/Chromium/TLS 实际存在、镜像来源、inventory 与 rootfs 一致性、builder 可见性或运行权限。通过后仍须按上节独立审阅实际 rootfs 与依赖、来源及平台，冻结外部输入、批准最终镜像；当前允许表为空和默认构建拒绝保持不变。
+
+
+## 后续 UI 增量：同源返回与显式回选（尚未进入旧构建冻结）
+
+本次候选仅修改 pilot 的页面塑形与工作台，不改普通图片页、API 或 React 工作台。当前图片案/运行通过现有响应核验且仍与输入目标一致时，增加「返回取证工作台（提示回选本案）」；仅导航到同源 `/pilot?case=<案号>`。新目标未载入、迟到响应或保存忙时不能用此动作跳转。原不带案号返回链接保留。新增按钮复用 `reset()` 放弃草稿确认；取消时不跳转、不清草稿，确认后也不清 dirty，原 beforeunload 保护仍在（真实浏览器可能再次询问，尚未实测）。导航失败保留输入，不自动重试。
+
+回选参数不是身份或授权。工作台只接受唯一合法 SYN 案号，不接受空值、重复或额外参数，不显示任意 URL 内容，不缓存 localStorage；进站零请求。用户主动读取当前服务器授权案列表后，匹配者仅出现回选提示，仍须明确点击原案件按钮才读取详情。缺案、清单错误/授权失效、选择其他案或页面离开后，不恢复旧提示；旧列表/详情响应沿既有 epoch 失效。回选不会自动打开图片、读取原件或保存。
+
+复跑本增量须另在交付回信固定提交检出相关源码/测试，不能使用上面的旧 6169caf 源码 worktree 冒称覆盖新 UI：
+
+```bash
+node tests_acceptance/pilot-workbench/check.cjs
+python3 -I tests_acceptance/pilot-pages/check.py
+python3 -I tests_acceptance/pilot-factory/check.py
+python3 -I tests_acceptance/pilot-image-build/check.py
+```
+
+本轮以上均退出 0：工作台 13 组；实际服务器塑形的图片脚本含返回/草稿保护，且限定/普通页各 22 个相邻重开场景；工厂 5 组 AST/替身；旧构建工具 7 组。旧 e9db012 页面搭配新增断言均退出 1（分别缺回选提示、缺带上下文返回），不是运行异常或真实后端反例。冻结清单为 `logs/pilot-return-hint-impl-hashes-frozen.txt`；旧图片/运行器/58 文件构建冻结及镜像允许表原样保留，旧打包工具仍打包 3a615bf 的旧 UI。本增量需要后续另立受控构建冻结才能进入镜像，不能宣称已经包含在旧包。没有执行浏览器、HTTP、ORM 或真实鉴权；不承诺 React 联通、按证据选 OCR、报告或原件验收。
