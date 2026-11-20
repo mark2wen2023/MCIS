@@ -23,6 +23,7 @@ IMAGE_ROUTES = frozenset({
 })
 
 AUDIO_ROUTES = frozenset({
+    ('GET', '/pilot/audio-review'),
     ('GET', '/api/v1/cases/{case_id}/evidence-intakes/{digest}'),
     ('POST', '/api/v1/cases/{case_id}/audio-reviews'),
     ('GET', '/api/v1/cases/{case_id}/audio-reviews'),
@@ -68,12 +69,12 @@ def create_local_review_pilot(*, enabled=False, db=None, sessions=None, origin=N
     from ..common.context import Ctx, problem
     from ..common.pilot_case_discovery import _register_pilot_case_discovery
     from ..common.pilot_core_storage import _initialize_pilot_core_storage
-    from .pages import workbench_page, _mount_pilot_image_pages
+    from .pages import workbench_page, _mount_pilot_image_pages, _mount_pilot_audio_page
 
     # Public static shell carries no identity or case data. All data requests
     # below independently verify the server session; no legacy header fallback.
     html = Path(__file__).with_name('workbench.html').read_text(encoding='utf-8')
-    html = workbench_page(html, images=image_imports)
+    html = workbench_page(html, images=image_imports, audio=audio_imports)
     app = FastAPI(title='MCIS synthetic case pilot', docs_url=None,
                   redoc_url=None, openapi_url=None, redirect_slashes=False)
     app.state.db = db
@@ -124,6 +125,7 @@ def create_local_review_pilot(*, enabled=False, db=None, sessions=None, origin=N
     if audio_imports:
         from ..audio_review.app import _mount_audio_imports_only, _initialize_audio_review_storage
         _mount_audio_imports_only(app)
+        _mount_pilot_audio_page(app)
 
     expected = ROUTES | IMAGE_ROUTES if image_imports else ROUTES
     if audio_imports:

@@ -14,7 +14,7 @@ class Element {
  setAttribute(k,v) { this.attrs[k]=v; }
  removeAttribute(k) { delete this.attrs[k]; }
 }
-function setup(images=false,search='') {
+function setup(images=false,search='',audio=false) {
  const nodes = Object.fromEntries([...html.matchAll(/id="([^"]+)"/g)].map(m=>[m[1],new Element()]));
  const requests=[], events={};
  const document={hidden:false,getElementById:id=>{assert(nodes[id],id);return nodes[id];},createElement:tag=>{assert(['button','a'].includes(tag));return new Element();},addEventListener:(n,f)=>events[n]=f};
@@ -25,7 +25,7 @@ function setup(images=false,search='') {
   let resolve,reject; const promise=new Promise((a,b)=>{resolve=a;reject=b;});
   requests.push({url,resolve:(body,status=200)=>resolve({ok:status===200,status,json:async()=>body}),reject}); return promise;
  }
- vm.runInNewContext(images?scripts[0][1].replace('const imagePageAvailable=false;','const imagePageAvailable=true;'):scripts[0][1],{document,window,fetch,console,URLSearchParams,location:{search}});
+ vm.runInNewContext((images?scripts[0][1].replace('const imagePageAvailable=false;','const imagePageAvailable=true;'):scripts[0][1]).replace('const audioPageAvailable=false;',audio?'const audioPageAvailable=true;':'const audioPageAvailable=false;'),{document,window,fetch,console,URLSearchParams,location:{search}});
  return {nodes,requests,events,document};
 }
 const A={caseId:'SYN-A',title:'合成 A'},B={caseId:'SYN-B',title:'合成 B'};
@@ -33,6 +33,14 @@ const flush=async()=>{for(let i=0;i<8;i++)await Promise.resolve();};
 async function loaded(s,list=[A,B]) { const p=s.nodes.refresh.onclick();s.requests.at(-1).resolve(list);await p; }
 async function test(name,f){await f();console.log('PASS '+name);}
 (async()=>{
+ await test('audio capability links only confirmed case; cleared before next detail',async()=>{
+  for(const enabled of [false,true]){const s=setup(false,'',enabled);assert.equal(s.nodes['audio-entry'].children.length,0);await loaded(s);
+   const p=s.nodes.cases.children[0].onclick();assert.equal(s.nodes['audio-entry'].children.length,0);s.requests.at(-1).resolve(A);await p;
+   assert.equal(s.nodes['audio-entry'].children.length,enabled?1:0);
+   if(enabled){assert.equal(s.nodes['audio-entry'].children[0].href,'/pilot/audio-review?case=SYN-A');assert.equal(s.nodes['audio-nav'].children[0].href,'/pilot/audio-review?case=SYN-A');assert(!s.nodes['audio-stage'].attrs['aria-disabled']);}
+   const q=s.nodes.cases.children[1].onclick();assert.equal(s.nodes['audio-entry'].children.length,0);s.requests.at(-1).resolve({},403);await q;assert.equal(s.nodes['audio-entry'].children.length,0);
+  }
+ });
  await test('initial no request; explicit discovery and detail; no role or writes',async()=>{
   const s=setup();assert.equal(s.requests.length,0);await loaded(s);
   assert.equal(s.requests.length,1);assert.equal(s.nodes.cases.children.length,2);
@@ -111,5 +119,5 @@ async function test(name,f){await f();console.log('PASS '+name);}
   const s=setup(true,'?case=SYN-A');const a=s.nodes.refresh.onclick(),b=s.nodes.refresh.onclick();s.requests[1].resolve([B]);await b;s.requests[0].resolve([A]);await a;
   assert(!s.nodes['return-hint'].textContent.includes('SYN-A'));const p=s.nodes.cases.children[0].onclick();s.requests[2].resolve(B);await p;assert.equal(s.nodes.context.textContent,'当前案号：SYN-B');
  });
- console.log('COMPLETE 13 groups; synthetic DOM/Promise only');
+ console.log('COMPLETE 14 groups; synthetic DOM/Promise only');
 })().catch(error=>{console.error(error);process.exitCode=1;});

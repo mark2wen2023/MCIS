@@ -1,0 +1,100 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><title>粤海探析 · 询问文字稿核对</title><style>/* pilot-workbench-skin */
+textarea{width:100%;min-height:100px}pre{white-space:pre-wrap;overflow-wrap:anywhere}.segment{padding:16px;border-bottom:1px solid #2a3a4d}.segment label{display:block;margin:8px 0}.segment input{width:100%}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid #4dd0e1;outline-offset:3px}</style><body>
+<header class="hdr"><div class="brand"><span class="brand-icon">航</span>粤海探析</div><span class="hdr-sep"></span><div class="crumb">调查工作台 / 询问</div><span class="tag">合成试用 · 文字核对</span></header>
+<div class="layout"><aside class="side"><div class="side-label">CASE QUEUE</div><h2>案件队列</h2><button id="cases-load">读取授权案件</button><p id="cases-status" role="status">尚未读取；URL 仅为未授权提示。</p><div id="cases"></div><button id="back">返回取证工作台</button><p>切案前确认保留或放弃草稿。不会自动选择默认案件。</p></aside>
+<main class="main"><nav class="stage-bar" aria-label="案件流程"><ol><li>1 接报</li><li>2 取证</li><li class="active" aria-current="step">3 询问</li><li aria-disabled="true">4 分析</li><li aria-disabled="true">5 报告</li><li aria-disabled="true">6 建议</li><li aria-disabled="true">7 沉淀</li></ol></nav><div class="content-main">
+<div class="page-heading"><div><div class="eyebrow">INTERVIEW / TRANSCRIPT</div><h1>录音文字稿核对</h1><p>已有机器文字 → 逐段人工修订。不是批准笔录，也不构成事实确认。</p></div><span class="tag">不提供回听</span></div>
+<section class="card"><div class="card-head"><h2>本案已保存核对记录</h2><button id="runs-load" disabled>列出记录</button></div><p id="runs-status" role="status">先明确选案。</p><div id="runs"></div></section>
+<section class="card"><div class="card-head"><h2>内容核对</h2><button id="edit" disabled>进入编辑（权限由保存请求核查）</button></div><p id="status" role="status" aria-live="polite">尚未载入记录。</p><div id="segments"></div></section>
+<details class="card"><summary>明确导入已有结果（两份同案登记回执）</summary><div class="card-body"><p>从已确认登记回执复制「请求摘要」，不要复制「原件 SHA-256」或未确认的预览摘要。需 WAV 原音与 v2/v3 机器稿 JSON；本页不生成、上传或读取原音。</p><label>WAV 请求摘要<input id="audio-receipt" autocomplete="off"></label><label>机器稿 JSON 请求摘要<input id="draft-receipt" autocomplete="off"></label><label><input id="archive-ack" type="checkbox">我确认此核对候选不支持归档，不是批准笔录</label><button id="import" disabled>导入已有结果</button></div></details>
+</div></main><aside class="inspector"><h2>来源 / 版本 / 待办</h2><section class="inspect-block"><h3>当前案卷</h3><p id="context">未确认案件</p></section><section class="inspect-block"><h3>当前已读取来源声明</h3><pre id="source">未读取</pre><p>声明不是原件真实性认证；服务端每次详情与保存仍检查原登记绑定。不替换原件，不静默采用新来源。</p></section><section class="inspect-block"><h3>运行版本</h3><p id="version">未读取</p><p id="address" role="status">重开的是当前记录，不是固定报告历史。</p></section><section class="inspect-block"><h3>待人工核对</h3><p id="unknown" role="status">本页面尚无未知提交提醒。</p><p>未知提交先复制草稿并人工核查。重新读取会替换输入，不能证明旧请求结果；再次保存可能追加修订。不自动重试。</p></section><p class="notice">仅人工合成试用；不提供播放器、原件下载、模型任务、4A 或报告关联。尚未完成真实运行验收。</p></aside></div>
+<script>
+'use strict';
+(() => {
+ const el=id=>document.getElementById(id), caseOK=x=>typeof x==='string'&&/^SYN-[A-Za-z0-9_.-]{1,123}$/.test(x), runOK=x=>typeof x==='string'&&/^AR-[a-f0-9]{32}$/.test(x), hash=x=>typeof x==='string'&&/^[a-f0-9]{64}$/.test(x);
+ const object=x=>!!x&&typeof x==='object'&&!Array.isArray(x), equal=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+ let epoch=0,listEpoch=0,cases=[],caseId=null,state=null,editing=false,writing=false,blocked=false,rows=new Map(),unknown=false;
+ const dirty=()=>[...rows.values()].some(r=>r.dirty);
+ const allowLeave=()=>!writing&&(!(dirty()||unknown)||confirm('请先复制草稿。离开或重新读取会替换输入；未知请求仍可能已提交。确认继续？'));
+ function hint(){
+  const p=new URLSearchParams(location.search),c=p.getAll('case'),r=p.getAll('run');
+  if(!location.search)return null;
+  if(c.length!==1||!caseOK(c[0])||r.length>1||(r.length===1&&!runOK(r[0]))||[...p.keys()].some(k=>!['case','run'].includes(k)))return false;
+  return {caseId:c[0],runId:r[0]||null};
+ }
+ let requested=hint();
+ el('cases-status').textContent=requested===false?'地址参数无效；未发请求，请返回选案。':requested?'收到回选提示；主动读取授权案并点击选案后才生效。':'尚未读取；请主动读取授权案件。';
+ function clearRecord(){state=null;rows=new Map();editing=false;blocked=false;el('segments').replaceChildren();el('source').textContent='未读取';el('version').textContent='未读取';el('edit').disabled=true;}
+ function clearCase(){++epoch;++listEpoch;caseId=null;clearRecord();el('context').textContent='未确认案件';el('runs').replaceChildren();el('runs-status').textContent='先明确选案。';el('status').textContent='尚未载入记录。';el('runs-load').disabled=true;el('import').disabled=true;el('audio-receipt').value='';el('draft-receipt').value='';el('archive-ack').checked=false;}
+ function fail(e){
+  if(e.status===401||e.status===403){editing=false;blocked=true;cases=[];el('cases').replaceChildren();el('import').disabled=true;el('runs-load').disabled=true;el('edit').disabled=true;for(const r of rows.values())r.lock();return '会话或操作授权未确认；只读保留当前草稿，请复制后由受信入口核查。';}
+  return '读取失败或来源 / 响应不符；未替换原件或自动重试。';
+ }
+ async function api(path,body){
+  const response=await fetch(path,{method:body===undefined?'GET':'POST',credentials:'same-origin',redirect:'error',cache:'no-store',headers:body===undefined?{Accept:'application/json'}:{Accept:'application/json','Content-Type':'application/json'},...(body===undefined?{}:{body:JSON.stringify(body)})});
+  let d;try{d=await response.json();}catch(e){throw Error('响应不明');}
+  if(!response.ok){const e=Error('请求未确认');e.status=response.status;e.code=object(d)?d.code:null;throw e;}return d;
+ }
+ const base=c=>'/api/v1/cases/'+encodeURIComponent(c)+'/audio-reviews';
+ function checked(d,c,r){
+  const m=d?.initial?.machineDraft,t=m?.transcript,s=m?.source,a=d?.initial?.audio;
+  if(!object(d)||d.caseId!==c||!runOK(d.runId)||(r&&d.runId!==r)||!Number.isInteger(d.revision)||d.revision<0||d.revision>1000||d.asrExecutedByService!==false||d.factVerified!==false||d.archiveSupported!==false||'artifactTaskId' in (d.initial||{})||!object(t)||!Array.isArray(t.segments)||!Array.isArray(t.unlocatedSegments)||!object(s)||s.caseId!==c||typeof s.evidenceId!=='string'||!s.evidenceId||!hash(s.currentSha256)||!hash(s.registeredSha256)||!hash(m.artifactSha256)||!object(a)||!Number.isInteger(a.frames)||a.frames<=0||!Number.isInteger(a.sampleRateHz)||a.sampleRateHz<=0||!Array.isArray(d.humanRevisions)||d.humanRevisions.length!==d.revision)throw Error('响应不符');
+  const all=[...t.segments,...t.unlocatedSegments],ids=new Set();
+  const times=(x,y)=>(x===null&&y===null)||(Number.isInteger(x)&&Number.isInteger(y)&&0<=x&&x<y&&y*a.sampleRateHz<=a.frames*1000);
+  for(const x of all){if(!object(x)||typeof x.id!=='string'||!x.id||ids.has(x.id)||typeof x.text!=='string'||!times(x.startMs??null,x.endMs??null))throw Error('片段不符');ids.add(x.id);}
+  for(const [i,x] of d.humanRevisions.entries())if(!object(x)||x.revision!==i+1||!ids.has(x.segmentId)||typeof x.text!=='string'||typeof x.reason!=='string'||!['pending','transcription_checked','unintelligible'].includes(x.hearingStatus)||!times(x.startMs,x.endMs)||x.audioSha256!==s.currentSha256||x.machineArtifactSha256!==m.artifactSha256||x.factVerified!==false||x.speaker?.status!=='unknown'||x.speaker?.id!==null)throw Error('修订不符');
+  return d;
+ }
+ function address(){if(!state||dirty()||unknown)return;try{history.replaceState(null,'','/pilot/audio-review?case='+encodeURIComponent(caseId)+'&run='+encodeURIComponent(state.runId));el('address').textContent='地址已更新，可刷新后重新选案打开当前记录；不是固定报告历史。';}catch(e){el('address').textContent='已接纳记录，但刷新地址未更新；请手工保留案号与运行号。';}}
+ function metadata(){el('source').textContent='证据：'+state.initial.machineDraft.source.evidenceId+'\n原件摘要声明：'+state.initial.machineDraft.source.currentSha256+'\n机器稿产物摘要：'+state.initial.machineDraft.artifactSha256;el('version').textContent=state.runId+' / 修订 '+state.revision;}
+ function render(){
+  el('segments').replaceChildren();rows=new Map();editing=false;blocked=false;el('edit').disabled=false;metadata();
+  const originals=[...state.initial.machineDraft.transcript.segments,...state.initial.machineDraft.transcript.unlocatedSegments];
+  if(!originals.length){const empty=document.createElement('p');empty.textContent='此记录没有文字片段。';el('segments').append(empty);}
+  for(const original of originals){
+   const last=state.humanRevisions.filter(x=>x.segmentId===original.id).at(-1),value=last||original;
+   const box=document.createElement('article');box.className='segment';
+   const title=document.createElement('h3'),machine=document.createElement('p'),time=document.createElement('p'),text=document.createElement('textarea'),status=document.createElement('select'),reason=document.createElement('input'),save=document.createElement('button'),feedback=document.createElement('p');
+   title.textContent='片段 '+original.id;machine.textContent='机器原文（未核验）：'+original.text;time.textContent='文件内时间：'+(value.startMs==null?'未知':value.startMs+'–'+value.endMs+' ms')+'；说话人：未知（不推断）。本页不修改时间、不回听。';
+   text.value=value.text;text.setAttribute('aria-label','核对文字 '+original.id);reason.setAttribute('aria-label','修订理由 '+original.id);reason.placeholder='修订理由（必填）';
+   for(const [v,label] of [['pending','待核对'],['transcription_checked','人工文字核对（非事实确认）'],['unintelligible','无法辨明（文字须空）']]){const o=document.createElement('option');o.value=v;o.textContent=label;status.append(o);}status.value=last?last.hearingStatus:'pending';save.textContent='保存本段新修订';feedback.setAttribute('role','status');
+   const row={dirty:false,edit:0,lock:()=>{text.readOnly=!editing||blocked;reason.readOnly=!editing||blocked;status.disabled=!editing||blocked;save.disabled=!editing||blocked||writing;}};rows.set(original.id,row);row.lock();
+   for(const n of [text,status,reason])n.oninput=()=>{if(!editing||blocked)return;row.edit++;row.dirty=true;feedback.textContent='当前输入仍为草稿。';};
+   const renderedEpoch=epoch,renderedRun=state.runId;
+   save.onclick=async()=>{
+    if(!editing||blocked||writing||epoch!==renderedEpoch||state?.runId!==renderedRun||!reason.value.trim()||reason.value.length>2000||text.value.length>16000||(status.value==='unintelligible'&&text.value!==''))return;
+    const c=caseId,before=state,edit=row.edit,body={expectedRevision:before.revision,segmentId:original.id,text:text.value,hearingStatus:status.value,startMs:value.startMs??null,endMs:value.endMs??null,reason:reason.value};
+    writing=true;for(const x of rows.values())x.lock();feedback.textContent='本次保存等待确认；仍可继续编辑，后续输入保留。';
+    try{
+     const d=checked(await api(base(c)+'/'+renderedRun+'/revisions',body),c,renderedRun),r=d.humanRevisions.at(-1);
+     if(epoch!==renderedEpoch||caseId!==c||state!==before)throw Error('上下文变化');
+     if(d.revision!==before.revision+1||!equal(d.initial,before.initial)||!equal(d.humanRevisions.slice(0,-1),before.humanRevisions)||Object.keys(body).some(k=>r[k]!==body[k]))throw Error('保存响应不明');
+     state=d;if(row.edit===edit)row.dirty=false;metadata();feedback.textContent=row.dirty?'已确认提交时内容；之后输入仍未保存。':'已确认本段修订 '+d.revision+'；不是事实或原件核验。';address();
+    }catch(e){
+     const current=epoch===renderedEpoch&&caseId===c&&state===before;
+     if(current&&e.status===412&&e.code==='AUDIO_REVISION_STALE'){blocked=true;feedback.textContent='版本已变化，本次未保存，保留草稿。请复制后人工重读核对。';}
+     else{unknown=true;el('unknown').textContent='本页面有结果未知的提交，可能涉及先前案 / 运行；不是逐次操作清单。先复制草稿并人工核查，不自动重试。';if(current){blocked=true;feedback.textContent='本次结果未确认；草稿保留。'+fail(e);}}
+    }finally{writing=false;for(const x of rows.values())x.lock();}
+   };
+   box.append(title,machine,time,text,status,reason,save,feedback);el('segments').append(box);
+  }
+ }
+ async function open(run){if(!caseId||blocked||!runOK(run)||!allowLeave())return;const c=caseId,v=++epoch;clearRecord();el('status').textContent='正在读取目标记录；未展示旧内容。';try{const d=checked(await api(base(c)+'/'+run),c,run);if(epoch!==v||caseId!==c)return;state=d;render();el('status').textContent='已读取当前记录；默认只读，编辑与保存仍由服务器逐次核查权限。';address();}catch(e){if(epoch===v&&caseId===c)el('status').textContent=fail(e);}}
+ el('runs-load').onclick=async()=>{if(!caseId||blocked||writing)return;const c=caseId,v=epoch,l=++listEpoch;el('runs').replaceChildren();el('runs-status').textContent='正在读取列表；列表不核验来源。';try{const d=await api(base(c));if(v!==epoch||l!==listEpoch||caseId!==c)return;if(!Array.isArray(d)||d.some(x=>!object(x)||x.caseId!==c||!runOK(x.runId))||new Set(d.map(x=>x.runId)).size!==d.length)throw Error('列表不符');for(const x of d){const b=document.createElement('button');b.textContent='打开 '+x.runId;b.onclick=()=>{if(v===epoch&&c===caseId)return open(x.runId);};el('runs').append(b);}el('runs-status').textContent=d.length?'请选择；详情仍须重新核验。':'本案没有已保存运行；可明确导入已登记结果。';}catch(e){if(v===epoch&&l===listEpoch)el('runs-status').textContent=fail(e);}};
+ async function select(id){
+  if(!cases.some(x=>x.caseId===id)||!allowLeave())return;
+  const h=requested;requested=null;clearCase();const v=epoch;el('context').textContent='目标案 '+id+' 尚未确认';
+  try{const d=await api('/api/v1/cases/'+encodeURIComponent(id));if(v!==epoch)return;if(!object(d)||d.caseId!==id||typeof d.title!=='string')throw Error('案件不符');caseId=id;el('context').textContent=id+' · '+d.title;el('runs-load').disabled=false;el('import').disabled=false;el('runs-status').textContent='本案尚未列出；请主动读取。';if(h&&h.caseId===id&&h.runId)await open(h.runId);}catch(e){if(v===epoch)el('status').textContent=fail(e);}
+ }
+ el('cases-load').onclick=async()=>{if(requested===false||!allowLeave())return;clearCase();cases=[];el('cases').replaceChildren();const v=epoch;el('cases-status').textContent='正在读取授权案件。';try{const d=await api('/api/v1/pilot/cases');if(v!==epoch)return;if(!Array.isArray(d)||d.some(x=>!object(x)||!caseOK(x.caseId)||typeof x.title!=='string')||new Set(d.map(x=>x.caseId)).size!==d.length)throw Error('案件清单不符');cases=d;if(requested&&!cases.some(x=>x.caseId===requested.caseId))requested=null;for(const x of cases){const b=document.createElement('button');b.textContent=x.caseId+' · '+x.title;b.onclick=()=>select(x.caseId);el('cases').append(b);}el('cases-status').textContent=cases.length?'请明确点击选案；未自动选择。':'当前没有授权案件。';}catch(e){if(v===epoch){requested=null;el('cases-status').textContent=fail(e);}}};
+ el('edit').onclick=()=>{if(!state||writing||blocked)return;editing=true;for(const r of rows.values())r.lock();el('status').textContent='正在编辑本地草稿；尚未保存，不代表已获保存权限。';};
+ el('import').onclick=async()=>{
+  if(!caseId||blocked||writing||!hash(el('audio-receipt').value)||!hash(el('draft-receipt').value)||!el('archive-ack').checked||!allowLeave())return;
+  const c=caseId,v=++epoch,body={audioReceipt:el('audio-receipt').value,draftReceipt:el('draft-receipt').value,acknowledgeArchiveBlocked:true};writing=true;editing=false;for(const x of rows.values())x.lock();el('status').textContent='导入等待确认，不自动重试。';
+  try{const d=checked(await api(base(c),body),c);if(v!==epoch||caseId!==c||d.revision!==0||d.initial.audioReceipt!==body.audioReceipt||d.initial.draftReceipt!==body.draftReceipt||d.initial.acknowledgeArchiveBlocked!==true)throw Error('导入响应不符');state=d;render();el('status').textContent='已确认导入当前运行；尚未人工核对。';address();}catch(e){unknown=true;el('unknown').textContent='导入结果未确认，可能已创建运行；先人工核查，不自动重试。';if(v===epoch){blocked=true;el('status').textContent=fail(e);}}finally{writing=false;for(const x of rows.values())x.lock();}
+ };
+ el('back').onclick=()=>{if(!allowLeave())return;location.assign('/pilot'+(caseId?'?case='+encodeURIComponent(caseId):''));};
+ window.addEventListener('beforeunload',e=>{if(dirty()||writing||unknown){e.preventDefault();e.returnValue='';}});
+ window.addEventListener('pagehide',()=>{clearCase();cases=[];el('cases').replaceChildren();});
+})();
+</script></body></html>

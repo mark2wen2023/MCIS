@@ -943,3 +943,6 @@ local-review-pilot真实授权案发现切片：显式注册GET /api/v1/pilot/ca
 - 独立智海式取证壳待独验：candidate/zhihai-evidence-workbench 基于15dd614，参考经摘要核对的用户11/19 index.html，仅重排pilot工作台/图片页静态壳；业务内联脚本逐字不变。tests_acceptance/zhihai-workbench/README.md；logs/zhihai-workbench-impl-hashes-frozen.txt。静态/合成通过，未作像素或浏览器验收，旧构建冻结/允许表不变。
 
 - 深蓝候选音频 API 切片待独验：factory 显式 audio_imports 默认关闭，复用既有导入/列表/详情/修订与真实 Revision 表，任务来源明确拒绝；不挂 source/播放/任务/页面。tests_acceptance/pilot-audio-imports/README.md；logs/pilot-audio-imports-impl-hashes-frozen.txt。仅AST/合成替身，旧冻结不更新，音频UI与运行验收仍待后续。
+
+## 2026-11-20 · 同源试用询问文字面板
+Mark 授权在 candidate/zhihai-evidence-workbench 接同案询问。基线 145b163：新增 default-off audio_imports 对应的深蓝三栏文字面板、服务器能力标记与同案入口；复用现有音频 API，不改旧音频页/处理器、身份或数据合同。以独立面板避免旧任务/播放器事件耦合，无播放/原件/source-context/模型。新代码未纳入旧镜像冻结；限定测试见 tests_acceptance/pilot-audio-workbench/README.md，运行与视觉未验。

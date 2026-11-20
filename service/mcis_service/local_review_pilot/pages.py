@@ -3,7 +3,11 @@ from .._review_page import _review_page
 from .workbench_skin import CSS, image_shell
 
 
-def workbench_page(html, *, images):
+def workbench_page(html, *, images, audio=False):
+    if type(audio) is not bool or html.count('const audioPageAvailable=false;') != 1:
+        raise ValueError('pilot audio capability marker mismatch')
+    if audio:
+        html = html.replace('const audioPageAvailable=false;', 'const audioPageAvailable=true;')
     if type(images) is not bool or html.count('const imagePageAvailable=false;') != 1:
         raise ValueError('pilot workbench capability marker mismatch')
     if html.count('/* pilot-workbench-skin */') != 1:
@@ -60,3 +64,20 @@ def _mount_pilot_image_pages(app):
     @app.get('/image-review-lab/preview.js')
     def preview_script():
         return Response(script, media_type='text/javascript', headers=headers)
+
+
+def _mount_pilot_audio_page(app):
+    # Separate text-only panel: no legacy task/player handlers or hidden capabilities.
+    from pathlib import Path
+    from fastapi.responses import HTMLResponse
+    html = Path(__file__).with_name('audio_workbench.html').read_text(encoding='utf-8')
+    if html.count('/* pilot-workbench-skin */') != 1:
+        raise ValueError('pilot audio skin marker mismatch')
+    html = html.replace('/* pilot-workbench-skin */', CSS)
+
+    @app.get('/pilot/audio-review', response_class=HTMLResponse)
+    def audio_page():
+        return HTMLResponse(html, headers={'Cache-Control': 'no-store',
+                            'Referrer-Policy': 'no-referrer',
+                            'X-Content-Type-Options': 'nosniff',
+                            'X-Frame-Options': 'DENY'})

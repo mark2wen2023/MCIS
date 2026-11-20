@@ -45,7 +45,7 @@ def setup(extra=False, init_fail=False):
             return self
         def read_text(self,**kw):events.append('html');return '<p>synthetic shell</p>'
     def load_case(session,case_id):events.append(('read',case_id));return {'caseId':case_id,'title':'synthetic title'}
-    scope.update(workbench_page=lambda html,**kw:html,SimpleNamespace=NS,FastAPI=App,Depends=lambda f:f,Response=object,Request=object,HTMLResponse=lambda html,headers:NS(html=html,headers=headers),Path=FakePath,__file__='synthetic/factory.py',load_case=load_case,_initialize_pilot_core_storage=init)
+    scope.update(_mount_pilot_audio_page=lambda app:app.get('/pilot/audio-review')(lambda:None),workbench_page=lambda html,**kw:html,SimpleNamespace=NS,FastAPI=App,Depends=lambda f:f,Response=object,Request=object,HTMLResponse=lambda html,headers:NS(html=html,headers=headers),Path=FakePath,__file__='synthetic/factory.py',load_case=load_case,_initialize_pilot_core_storage=init)
     for file in ['common/pilot_case_discovery.py','local_review_pilot/factory.py']:
         tree=ast.parse((ROOT/'service/mcis_service'/file).read_text())
         if file.endswith('factory.py'):

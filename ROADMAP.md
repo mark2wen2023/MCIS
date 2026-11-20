@@ -634,3 +634,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 - 独立智海式取证壳待独验：candidate/zhihai-evidence-workbench 基于15dd614，参考经摘要核对的用户11/19 index.html，仅重排pilot工作台/图片页静态壳；业务内联脚本逐字不变。tests_acceptance/zhihai-workbench/README.md；logs/zhihai-workbench-impl-hashes-frozen.txt。静态/合成通过，未作像素或浏览器验收，旧构建冻结/允许表不变。
 
 - 深蓝候选音频 API 切片待独验：factory 显式 audio_imports 默认关闭，复用既有导入/列表/详情/修订与真实 Revision 表，任务来源明确拒绝；不挂 source/播放/任务/页面。tests_acceptance/pilot-audio-imports/README.md；logs/pilot-audio-imports-impl-hashes-frozen.txt。仅AST/合成替身，旧冻结不更新，音频UI与运行验收仍待后续。
+
+| 2026-11-20 | pilot-audio-workbench | 待独验 | 默认关闭的同源询问文字核对面板；同案列表/导入/逐段修订/重开，14 组合成 DOM；挂载 AST、工作台及图片相邻通过。未执行服务/浏览器/ORM，不等于授权/原件/运行验收。冻结 logs/pilot-audio-workbench-impl-hashes-frozen.txt |

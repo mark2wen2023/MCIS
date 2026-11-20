@@ -15,7 +15,14 @@ def inline(html):return re.findall(r'<script>([\s\S]*?)</script>',html)
 class Checks(unittest.TestCase):
     def test_workbench_behavior_unchanged(self):
         path='service/mcis_service/local_review_pilot/workbench.html'
-        self.assertEqual(inline((ROOT/path).read_text()),inline(old(path)))
+        current=inline((ROOT/path).read_text())[0]
+        # Only the explicit server-gated audio entry was added; all existing
+        # selection, session, image entry and stale-response logic stays byte-identical.
+        current=current.replace(' const audioPageAvailable=false;\n','')
+        current=current.replace("  el('audio-entry').replaceChildren();\n",'')
+        current=current.replace("  el('audio-nav').replaceChildren();el('audio-nav').textContent='询问';el('audio-stage').setAttribute('aria-disabled','true');\n",'')
+        current=re.sub(r"   if \(audioPageAvailable\) \{[\s\S]*?\n   \}\n",'',current)
+        self.assertEqual([current],inline(old(path)))
     def test_shaped_image_behavior_and_ids_unchanged(self):
         import ast
         scope={}
