@@ -590,3 +590,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 最小试用工厂待独验：5组AST/替身、相邻存储9组与UI9组通过；logs/pilot-factory-frozen.txt。真实FastAPI/DB/TLS/HTTP未运行，媒体依赖及受限闭环未完成。
+
+
+试用图片API待独验：7组新AST/替身、工厂5组/存储9组/UI9组通过；logs/pilot-image-imports-frozen.txt。原件与合法回执准备、真实服务/ORM/身份验收仍未完成，不构成可运行闭环。

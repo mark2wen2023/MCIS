@@ -1,18 +1,28 @@
 """Explicit synthetic-only case workbench factory. Never used by default startup.
 
-No media routes yet: their task-binding/storage closure is not approved.
+Optional image imports use registered receipts only; task sources are refused.
 The caller must provision a NEW exclusively owned temporary SQLite Database,
 trusted ephemeral sessions and HTTPS loopback transport before calling this.
 No login/token issuance, seed, business records or server startup is provided.
 """
 from pathlib import Path
 from urllib.parse import urlsplit
+from types import SimpleNamespace
 
 ROUTES = frozenset({('GET', '/pilot'), ('GET', '/api/v1/pilot/cases'),
                     ('GET', '/api/v1/cases/{case_id}')})
 
+IMAGE_ROUTES = frozenset({
+    ('GET', '/api/v1/cases/{case_id}/evidence-intakes/{digest}'),
+    ('POST', '/api/v1/cases/{case_id}/image-reviews'),
+    ('GET', '/api/v1/cases/{case_id}/image-reviews'),
+    ('GET', '/api/v1/cases/{case_id}/image-reviews/{run_id}'),
+    ('POST', '/api/v1/cases/{case_id}/image-reviews/{run_id}/reviews'),
+})
 
-def create_local_review_pilot(*, enabled=False, db=None, sessions=None, origin=None):
+
+def create_local_review_pilot(*, enabled=False, db=None, sessions=None, origin=None,
+                              image_imports=False, image_blob_dir=None):
     if enabled is not True:
         raise ValueError('synthetic pilot is disabled')
     from ..common.local_review_pilot import PilotSessions, _cookie_reader, _install_local_review_pilot
@@ -22,7 +32,12 @@ def create_local_review_pilot(*, enabled=False, db=None, sessions=None, origin=N
     if urlsplit(origin).hostname != '127.0.0.1':
         raise ValueError('pilot requires HTTPS on 127.0.0.1')
 
-    from fastapi import FastAPI, Depends, Response
+    if type(image_imports) is not bool:
+        raise ValueError('explicit image capability required')
+    if image_imports and (not isinstance(image_blob_dir, Path) or not image_blob_dir.is_absolute()):
+        raise ValueError('explicit absolute synthetic blob root required')
+
+    from fastapi import FastAPI, Depends, Response, APIRouter
     from fastapi.responses import HTMLResponse
     from ..common.context import Ctx, problem
     from ..common.pilot_case_discovery import _register_pilot_case_discovery
@@ -56,8 +71,23 @@ def create_local_review_pilot(*, enabled=False, db=None, sessions=None, origin=N
                             'X-Content-Type-Options': 'nosniff',
                             'X-Frame-Options': 'DENY'})
 
+    if image_imports:
+        from ..image_review.app import _mount_image_imports_only, _initialize_image_review_storage
+        from ..evidence_intake.router import receipt_input
+        from ..reports.access import NoStoreRoute
+        # Only the existing receipt reader, not the intake router or download.
+        app.state.settings = SimpleNamespace(blob_dir=image_blob_dir)
+        receipt_router = APIRouter(route_class=NoStoreRoute)
+        receipt_router.add_api_route('/api/v1/cases/{case_id}/evidence-intakes/{digest}',
+                                     receipt_input, methods=['GET'])
+        app.include_router(receipt_router)
+        _mount_image_imports_only(app)
+
+    expected = ROUTES | IMAGE_ROUTES if image_imports else ROUTES
     actual = [(method, route.path) for route in app.routes for method in route.methods]
-    if len(actual) != len(ROUTES) or frozenset(actual) != ROUTES:
+    if len(actual) != len(expected) or frozenset(actual) != expected:
         raise RuntimeError('pilot route surface changed; initialization refused')
     _initialize_pilot_core_storage(db)
+    if image_imports:
+        _initialize_image_review_storage(app, imported_only=True)
     return app

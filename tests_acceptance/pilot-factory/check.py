@@ -27,6 +27,8 @@ def setup(extra=False, init_fail=False):
         def __init__(self,**kw):
             events.append('app');self.options=kw;self.routes=[];self.state=NS();self.dependency_overrides={}
             if extra:self.routes.append(NS(methods={'GET'},path='/unexpected'))
+        def include_router(self, router):
+            self.routes.extend(router.routes)
         def get(self,path,**kw):
             def register(fn):
                 events.append(path);self.routes.append(NS(methods={'GET'},path=path,endpoint=fn,options=kw));return fn
@@ -37,17 +39,18 @@ def setup(extra=False, init_fail=False):
         if init_fail:raise RuntimeError('synthetic initialize failure')
     class FakePath:
         def __init__(self,value):pass
+        def is_absolute(self):return True
         def with_name(self,name):
             if name!='workbench.html':raise AssertionError('unexpected source')
             return self
         def read_text(self,**kw):events.append('html');return '<p>synthetic shell</p>'
     def load_case(session,case_id):events.append(('read',case_id));return {'caseId':case_id,'title':'synthetic title'}
-    scope.update(FastAPI=App,Depends=lambda f:f,Response=object,Request=object,HTMLResponse=lambda html,headers:NS(html=html,headers=headers),Path=FakePath,__file__='synthetic/factory.py',load_case=load_case,_initialize_pilot_core_storage=init)
+    scope.update(SimpleNamespace=NS,FastAPI=App,Depends=lambda f:f,Response=object,Request=object,HTMLResponse=lambda html,headers:NS(html=html,headers=headers),Path=FakePath,__file__='synthetic/factory.py',load_case=load_case,_initialize_pilot_core_storage=init)
     for file in ['common/pilot_case_discovery.py','local_review_pilot/factory.py']:
         tree=ast.parse((ROOT/'service/mcis_service'/file).read_text())
         if file.endswith('factory.py'):
             imports={n.module for n in ast.walk(tree) if isinstance(n,ast.ImportFrom)}
-            if imports != {'pathlib','urllib.parse','common.local_review_pilot','fastapi','fastapi.responses','common.context','common.pilot_case_discovery','common.pilot_core_storage','cases.service'}:raise AssertionError(imports)
+            if imports != {'pathlib','urllib.parse','common.local_review_pilot','fastapi','fastapi.responses','common.context','common.pilot_case_discovery','common.pilot_core_storage','cases.service','types','image_review.app','evidence_intake.router','reports.access'}:raise AssertionError(imports)
         exec(compile(ast.fix_missing_locations(Strip().visit(tree)),'<production AST fake dependencies>','exec'),scope)
     def construct(**changes):
         kw=dict(enabled=True,db=db,sessions=sessions,origin='https://127.0.0.1:8766');kw.update(changes)

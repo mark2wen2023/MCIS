@@ -44,6 +44,14 @@ def receipts(ctx, s, case_id, bindings):
     return result
 
 
+def _require_imported_source(ctx, initial):
+    # Server registration capability only; never selected by request/URL/body.
+    if getattr(ctx.request.app.state, 'image_imports_only', False):
+        if (not isinstance(initial, dict) or 'artifactTaskId' in initial
+                or initial.get('mode') != 'imported-existing-output'):
+            raise problem(409, 'OCR_IMPORTED_SOURCE_ONLY', '此试用入口仅支持登记回执导入的结果，不支持任务来源记录')
+
+
 def records(s, case_id, run_id):
     rows = s.scalars(select(Record).where(Record.case_id == case_id, Record.run_id == run_id).order_by(Record.revision)).all()
     if not rows: raise problem(404, 'OCR_RUN_NOT_FOUND', '未找到本案识别结果')
@@ -92,6 +100,8 @@ def list_runs(case_id: str, ctx: Ctx = CtxDep):
     with ctx.db.session() as s:
         authorize(ctx, s, case_id)
         rows = s.scalars(select(Record).where(Record.case_id == case_id, Record.revision == 0).order_by(Record.id)).all()
+        for row in rows:
+            _require_imported_source(ctx, row.doc)
         return [{'runId': row.run_id, 'caseId': case_id, 'utc': row.doc['utc'],
                  'sourceCheck': 'not-performed-by-list'} for row in rows]
 
@@ -101,6 +111,7 @@ def read(case_id: str, run_id: str, ctx: Ctx = CtxDep):
     with WRITE_LOCK, ctx.db.session() as s:
         begin(s); authorize(ctx, s, case_id)
         rows = records(s, case_id, run_id)
+        _require_imported_source(ctx, rows[0].doc)
         receipts(ctx, s, case_id, rows[0].doc['bindings'])
         if 'artifactTaskId' in rows[0].doc:
             from .tasks import verify_task_binding
@@ -121,6 +132,7 @@ async def review(case_id: str, run_id: str, request: Request, ctx: Ctx = CtxDep)
     with WRITE_LOCK, ctx.db.session() as s:
         begin(s); authorize(ctx, s, case_id, write=True)
         rows = records(s, case_id, run_id)
+        _require_imported_source(ctx, rows[0].doc)
         receipts(ctx, s, case_id, rows[0].doc['bindings'])
         if 'artifactTaskId' in rows[0].doc:
             from .tasks import verify_task_binding
@@ -135,8 +147,12 @@ async def review(case_id: str, run_id: str, request: Request, ctx: Ctx = CtxDep)
         return result(records(s, case_id, run_id))
 
 
-def _initialize_image_review_storage(app):
-    Storage.metadata.create_all(app.state.db.engine)
+def _initialize_image_review_storage(app, *, imported_only=False):
+    if imported_only:
+        # Tasks may have been imported elsewhere in this process; never create their tables.
+        Storage.metadata.create_all(app.state.db.engine, tables=[Record.__table__])
+    else:
+        Storage.metadata.create_all(app.state.db.engine)
     with app.state.db.engine.begin() as c:
         for op in ('UPDATE', 'DELETE'):
             c.execute(sql(f"CREATE TRIGGER IF NOT EXISTS image_ocr_no_{op.lower()} BEFORE {op} ON image_ocr_review_records BEGIN SELECT RAISE(ABORT, 'OCR history is append-only'); END;"))
@@ -184,3 +200,18 @@ def _register_image_review_only(app):
 def create_image_review_app(settings, ocr_runtime=None):
     from ..main import create_app
     return register_image_review(create_app(settings), ocr_runtime=ocr_runtime)
+
+
+def _mount_image_imports_only(app):
+    """Private pilot API surface. Caller initializes real storage before serving.
+
+    No static media page/download/task routes. Existing CtxDep must be overridden
+    by the dedicated factory's verified case context. Task records fail explicitly
+    in list/read/review before receipt bytes or dynamic task modules are read.
+    """
+    if getattr(app.state, 'image_review_registered', False):
+        raise ValueError('image review already registered')
+    app.state.image_imports_only = True
+    app.state.image_ocr_runtime = None
+    app.include_router(router)
+    app.state.image_review_registered = True
