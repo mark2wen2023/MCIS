@@ -623,3 +623,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 阶段回执构建输入待独验：7组工具检查通过，58固定文件源码审查退出0且全部摘要一致；默认build仍因未知外部base退出2，无目标残留。logs/pilot-stage-build-inputs-frozen.txt；没有构建/启动任何运行资源。
+
+
+- 本机交接（文档待独立复核）：新增 `docs/LOCAL-PILOT-HANDOFF.md`，固定代码 6169caf / 产品冻结 3a615bf；六组离线检查及 58 文件源码提取通过，默认构建拒绝如期。仅说明与索引，不改冻结源码、哈希或允许表；实际镜像/平台/服务验收仍未执行。
