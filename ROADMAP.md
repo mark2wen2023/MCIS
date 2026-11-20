@@ -632,3 +632,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 - Pilot 同源返回/回选待独验：仅 pages.py/workbench.html 和合成检查；确认上下文后返回，URL 提示须重新匹配授权列表并显式选案。logs/pilot-return-hint-impl-hashes-frozen.txt；旧 6169caf/3a615bf 构建冻结不更新，新 UI 尚未进入镜像；未运行服务或浏览器。
 
 - 独立智海式取证壳待独验：candidate/zhihai-evidence-workbench 基于15dd614，参考经摘要核对的用户11/19 index.html，仅重排pilot工作台/图片页静态壳；业务内联脚本逐字不变。tests_acceptance/zhihai-workbench/README.md；logs/zhihai-workbench-impl-hashes-frozen.txt。静态/合成通过，未作像素或浏览器验收，旧构建冻结/允许表不变。
+
+- 深蓝候选音频 API 切片待独验：factory 显式 audio_imports 默认关闭，复用既有导入/列表/详情/修订与真实 Revision 表，任务来源明确拒绝；不挂 source/播放/任务/页面。tests_acceptance/pilot-audio-imports/README.md；logs/pilot-audio-imports-impl-hashes-frozen.txt。仅AST/合成替身，旧冻结不更新，音频UI与运行验收仍待后续。

@@ -50,7 +50,7 @@ def setup(extra=False, init_fail=False):
         tree=ast.parse((ROOT/'service/mcis_service'/file).read_text())
         if file.endswith('factory.py'):
             imports={n.module for n in ast.walk(tree) if isinstance(n,ast.ImportFrom)}
-            if imports != {'pathlib','urllib.parse','common.local_review_pilot','fastapi','fastapi.responses','common.context','common.pilot_case_discovery','common.pilot_core_storage','cases.service','types','image_review.app','evidence_intake.router','reports.access','pages'}:raise AssertionError(imports)
+            if imports != {'pathlib','urllib.parse','common.local_review_pilot','fastapi','fastapi.responses','common.context','common.pilot_case_discovery','common.pilot_core_storage','cases.service','types','image_review.app','evidence_intake.router','reports.access','pages','audio_review.app'}:raise AssertionError(imports)
         exec(compile(ast.fix_missing_locations(Strip().visit(tree)),'<production AST fake dependencies>','exec'),scope)
     def construct(**changes):
         kw=dict(enabled=True,db=db,sessions=sessions,origin='https://127.0.0.1:8766');kw.update(changes)

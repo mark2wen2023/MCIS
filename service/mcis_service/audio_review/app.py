@@ -71,7 +71,13 @@ def rows(s,case_id,run_id):
     if not result:raise problem(404,'AUDIO_REVIEW_NOT_FOUND','本案未找到核对记录')
     return result
 
+def _require_imported_source(ctx, initial):
+    if getattr(ctx.request.app.state, 'audio_imports_only', False) and 'artifactTaskId' in initial:
+        raise problem(409, 'AUDIO_TASK_SOURCE_DISABLED', '本试用仅支持已登记的既有机器稿，不开放任务来源记录')
+
+
 def check(ctx,s,case_id,initial):
+    _require_imported_source(ctx, initial)
     current,fmt=source(ctx,s,case_id,initial['audioReceipt'])
     if not matched_source(initial['machineDraft'],current,fmt):raise problem(409,'AUDIO_SOURCE_STALE','原音版本不符，保留原稿，不静默重绑定')
     if 'artifactTaskId' in initial:
@@ -128,7 +134,10 @@ async def attach(case_id:str,request:Request,ctx:Ctx=CtxDep):
 def listing(case_id:str,ctx:Ctx=CtxDep):
     with ctx.db.session() as s:
         authorize(ctx,s,case_id)
-        return [{'caseId':case_id,'runId':r.run_id,'utc':r.doc['utc'],'sourceCheck':'not-performed-by-list'} for r in s.scalars(select(Revision).where(Revision.case_id==case_id,Revision.revision==0))]
+        captured = list(s.scalars(select(Revision).where(Revision.case_id==case_id,Revision.revision==0)))
+        for r in captured:
+            _require_imported_source(ctx, r.doc)
+        return [{'caseId':case_id,'runId':r.run_id,'utc':r.doc['utc'],'sourceCheck':'not-performed-by-list'} for r in captured]
 
 @router.get('/{run_id}')
 def get(case_id:str,run_id:str,ctx:Ctx=CtxDep):
@@ -163,8 +172,11 @@ async def revise(case_id:str,run_id:str,request:Request,ctx:Ctx=CtxDep):
         out=result(rows(s,case_id,run_id))
     return out
 
-def _initialize_audio_review_storage(app):
-    Storage.metadata.create_all(app.state.db.engine)
+def _initialize_audio_review_storage(app, *, imported_only=False):
+    if imported_only:
+        Storage.metadata.create_all(app.state.db.engine, tables=[Revision.__table__])
+    else:
+        Storage.metadata.create_all(app.state.db.engine)
     with app.state.db.engine.begin() as c:
         for op in ('UPDATE','DELETE'):
             c.execute(sql(f"CREATE TRIGGER IF NOT EXISTS audio_review_no_{op.lower()} BEFORE {op} ON audio_review_revisions BEGIN SELECT RAISE(ABORT,'append-only audio review'); END;"))
@@ -208,3 +220,30 @@ def _register_audio_review_only(app):
 def create_audio_review_app(settings, *, sensevoice_runtime=None):
     from ..main import create_app
     return register_audio_review(create_app(settings), sensevoice_runtime=sensevoice_runtime)
+
+
+def _mount_audio_imports_only(app):
+    """Pilot-only APIs; factory supplies verified sessions and real storage.
+
+    Reuse original routes and metadata; omit source-context, task and HTML routes.
+    All imported reads/revisions keep original receipt/binding/audit checks.
+    """
+    if getattr(app.state, 'audio_review_registered', False):
+        raise ValueError('audio review already registered')
+    expected = {
+        ('POST', '/api/v1/cases/{case_id}/audio-reviews'): attach,
+        ('GET', '/api/v1/cases/{case_id}/audio-reviews'): listing,
+        ('GET', '/api/v1/cases/{case_id}/audio-reviews/{run_id}'): get,
+        ('POST', '/api/v1/cases/{case_id}/audio-reviews/{run_id}/revisions'): revise,
+    }
+    selected = [route for route in router.routes if any((method, route.path) in expected for method in route.methods)]
+    actual = [(method, route.path) for route in selected for method in route.methods]
+    if len(actual) != len(expected) or set(actual) != set(expected) or any(
+            route.endpoint is not expected[(method, route.path)] for route in selected for method in route.methods):
+        raise RuntimeError('audio imported route surface changed')
+    limited = APIRouter()
+    limited.routes.extend(selected)
+    app.state.audio_imports_only = True
+    app.state.audio_asr_runtime = None
+    app.include_router(limited)
+    app.state.audio_review_registered = True
