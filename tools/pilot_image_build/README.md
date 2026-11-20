@@ -1,14 +1,14 @@
 # 图片试用镜像输入组装：源码审查可执行，构建/运行仍阻断
 
-固定产品输入：`1db4e3f498d8b641ef2569ec579b067f71b7a9be`。
+固定产品输入：`3a615bf6d449c90eb0a64d25c20c5cdc83fdd06c`。
 本工具不安装、联网、构建、加载镜像、启动应用或读取工作区业务材料。
 不改变 `container_runner.APPROVED_IMAGES`（仍空），也不授予运行许可。
 
 ## 实际交付与命令
 
-`inputs.json` 固定 57 个显式路径、Git blob、大小和 SHA-256：限定应用 Python、
+`inputs.json` 固定 58 个显式路径、Git blob、大小和 SHA-256：限定应用 Python、
 三份页面/脚本、合成准备工具，以及 case/evidence-item/common 三份 schema。
-`imports.json` 记录 290 个实际 AST import 节点（含函数作用域和行号）。
+`imports.json` 记录 294 个实际 AST import 节点（含函数作用域和行号）。
 包级 __init__ 已纳入；tools/local_review_pilot 无 __init__ 的位置保持原 namespace 语义。
 manifest 的 SHA-256 固定在 `package.py` 中，不能通过临时修改清单跳过守门。
 所有源文件从固定提交的 Git blob 读取，不从工作树复制、不展开整个仓库。
@@ -17,7 +17,7 @@ manifest 的 SHA-256 固定在 `package.py` 中，不能通过临时修改清单
 ```sh
 python -I tools/pilot_image_build/package.py \
   --repo /path/to/MCIS \
-  --ref 1db4e3f498d8b641ef2569ec579b067f71b7a9be \
+  --ref 3a615bf6d449c90eb0a64d25c20c5cdc83fdd06c \
   --target /trusted/exclusive-parent/new-review-directory \
   --source-review-only
 ```
@@ -98,10 +98,17 @@ referencing、uvicorn、playwright，及它们实际版本所需的全部传递�
 受审构建器，不能把 `--network=none`（仅RUN网络）误当禁止解析/拉取FROM的保证。
 成品镜像仍需独立核对再加入运行器批准表；打包/构建均不自动批准运行。
 
+## 阶段回执冻结更新
+
+本次在原57文件基础上仅增加纯协议 `receipt.py`，固定阶段标记/宿主/entry的新字节与import记录；
+旧提交中的清单保持不变。记录的track表修复仍归属于1db4e3f，不冒充新修复。
+新协议不接收原browser dict、日志或截图，2048字节单条严格回执与外层退出/清理判定已接线。
+产品基线/build材料摘要/镜像ID各有不同含义，见 tools/pilot_image_acceptance/README.md。
+本次实际58文件源码审查及逐文件摘要复核通过；默认build仍因未知外部base退出2。
+
 ## 后续真实验收记录边界
 
-首次运行批准后仅记录固定枚举阶段（preflight / ready / cases / receipts / zero-runs /
-import / revision / reopen / switch / cleanup）、passed/failed/unknown、退出码及清理结果。
-禁止导出日志正文、原始响应或未知截图；当前runtime还未实现此分阶段结果协议，需在实跑前补齐。
+固定阶段：preflight、https_ready、cases_zero_runs、four_receipts、first_import、save_reopen、
+authorized_switch、cleanup。只记录有限状态、退出码和清理确认，不输出案件号/地址/正文/凭据。
 既有driver只检查A/B获授权案正常切换，不包含不对称权限、真实冲突、迟到响应或原图渲染。
 本轮没有构建或运行镜像，未运行HTTP、ORM、服务、浏览器、模型或4A；没有读取业务材料。

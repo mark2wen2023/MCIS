@@ -1,6 +1,6 @@
 {
   "format": "mcis-pilot-build-inputs/1",
-  "commit": "1db4e3f498d8b641ef2569ec579b067f71b7a9be",
+  "commit": "3a615bf6d449c90eb0a64d25c20c5cdc83fdd06c",
   "files": [
     {
       "path": "contracts/schemas/case.schema.json",
@@ -310,15 +310,15 @@
     },
     {
       "path": "tools/pilot_image_acceptance/browser_steps.py",
-      "blob": "d995a15afdb5f4b15296075e4d2c2038bfbadb6d",
-      "sha256": "a9c7ea365d9542eb191b7f7b3eb9d9ddebf17226e3930dab33bbf49e55315d69",
-      "size": 4178
+      "blob": "139373499a986cda46442cc2d302e762e2c00047",
+      "sha256": "cf52ee53076bf53936dfd25c773b7330da618a0f806fee2ff5f8cb44bad8cde7",
+      "size": 4284
     },
     {
       "path": "tools/pilot_image_acceptance/container_entry.py",
-      "blob": "30b64dc62245fded739b425b6d3d642e09f8e676",
-      "sha256": "c858ee2d3056eefe0c1a5539589ba585d467623e9a7c320bf3a5a3480160720f",
-      "size": 584
+      "blob": "1aaaae034fc736db7f01039eff6f236435d77128",
+      "sha256": "fb0d890d82cfcd0960790070ea9ccb8948ff01c292877ea725a79ab675bef3c2",
+      "size": 1100
     },
     {
       "path": "tools/pilot_image_acceptance/fixtures.py",
@@ -334,15 +334,21 @@
     },
     {
       "path": "tools/pilot_image_acceptance/prepare.py",
-      "blob": "49b985fcb30df68c1095fc667b4cadcf017560ae",
-      "sha256": "3e464249d1d66d3bffabc8a254abebe2879e555f613078de72dc6394eea61e2f",
-      "size": 6562
+      "blob": "46275f5a8592d1e7b8cb912e4cd4f310a14f1f6f",
+      "sha256": "39d310f79a2ddf71098a89f98ee7f8e1948a182347eb43f49c4fa609add5e3bd",
+      "size": 6634
     },
     {
       "path": "tools/pilot_image_acceptance/runtime_host.py",
-      "blob": "b21f50de648902468edb2a66bbb0d675b1b6827f",
-      "sha256": "16b164e7092516c2dd071f1a28ab2e360e52ac7fd34db714053e40b0920692e7",
-      "size": 9243
+      "blob": "2e0c42cc03c261c907d5653dfafd2be9ca094616",
+      "sha256": "11a2ef266e041dc2ca1fc76e8c25ad882b32a16d768a8f3a31f4fcb242d2b9d8",
+      "size": 9802
+    },
+    {
+      "path": "tools/pilot_image_acceptance/receipt.py",
+      "blob": "35a80b8e89ec3907f83cb4588ab02994c30f9493",
+      "sha256": "2b012b0d33720257f2cb9f480746761cfd3b5db5f1f3fa9101a2d0fbd2d43e23",
+      "size": 3359
     }
   ],
   "python_external_roots": [

@@ -929,3 +929,6 @@ local-review-pilot真实授权案发现切片：显式注册GET /api/v1/pilot/ca
 
 
 合成试用阶段回执：修改冻结prepare/browser/runtime/entry/controller，仅增加固定阶段标记与限长单记录通道和严格外层通过判定；迁移控制器假执行器回归，不增加业务路由或测试权限范围。无原始日志/浏览器字典输出，镜像允许表仍空。
+
+
+阶段回执后继冻结：固定3a615bf6d449c90eb0a64d25c20c5cdc83fdd06c，白名单从57增至58（仅新增receipt.py），更新阶段接线源码与294条imports证据；不更改历史冻结或外部允许表，不放宽输入校验。

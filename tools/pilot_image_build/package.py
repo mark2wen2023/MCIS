@@ -10,10 +10,10 @@ import stat
 import subprocess
 import sys
 
-REF='1db4e3f498d8b641ef2569ec579b067f71b7a9be'
+REF='3a615bf6d449c90eb0a64d25c20c5cdc83fdd06c'
 # Filled from this revision's reviewed manifests, not user-supplied locks.
-INPUTS_SHA='4a6a26c6626934be46c9ad928d74647538e47af479ffdd8a62872377bbe62143'
-IMPORTS_SHA='deef6c6c0cc9215dcb2723616c54f207953ec0003b4d2b667fabfd440f0b1ee6'
+INPUTS_SHA='e910b3f6d95deb5faf00986760fc4ea8180c71db881f57bdc55559b2d457aad6'
+IMPORTS_SHA='7d37d042f677acee7dbf63b5d3fc51911c149caa9877665b586c29e0d0e3e33b'
 class Blocked(RuntimeError):pass
 
 def require(ok,message):

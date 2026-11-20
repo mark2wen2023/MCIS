@@ -246,9 +246,10 @@
 {"file":"tools/pilot_image_acceptance/browser_steps.py","line":5,"scope":"","import":"from urllib.parse import urlsplit, parse_qs","selected_local":[],"omitted_local":[]},
 {"file":"tools/pilot_image_acceptance/browser_steps.py","line":6,"scope":"","import":"from .fixtures import CASE_IDS","selected_local":["tools/pilot_image_acceptance/fixtures.py"],"omitted_local":[]},
 {"file":"tools/pilot_image_acceptance/browser_steps.py","line":7,"scope":"","import":"from .prepare import checked","selected_local":["tools/pilot_image_acceptance/prepare.py"],"omitted_local":[]},
-{"file":"tools/pilot_image_acceptance/container_entry.py","line":5,"scope":"","import":"import sys","selected_local":[],"omitted_local":[]},
-{"file":"tools/pilot_image_acceptance/container_entry.py","line":6,"scope":"","import":"from pathlib import Path","selected_local":[],"omitted_local":[]},
-{"file":"tools/pilot_image_acceptance/container_entry.py","line":12,"scope":"","import":"from tools.pilot_image_acceptance.runtime_host import main","selected_local":["tools/pilot_image_acceptance/runtime_host.py"],"omitted_local":[]},
+{"file":"tools/pilot_image_acceptance/container_entry.py","line":5,"scope":"","import":"import os","selected_local":[],"omitted_local":[]},
+{"file":"tools/pilot_image_acceptance/container_entry.py","line":6,"scope":"","import":"import sys","selected_local":[],"omitted_local":[]},
+{"file":"tools/pilot_image_acceptance/container_entry.py","line":7,"scope":"","import":"from pathlib import Path","selected_local":[],"omitted_local":[]},
+{"file":"tools/pilot_image_acceptance/container_entry.py","line":18,"scope":"","import":"from tools.pilot_image_acceptance.runtime_host import main","selected_local":["tools/pilot_image_acceptance/runtime_host.py"],"omitted_local":[]},
 {"file":"tools/pilot_image_acceptance/fixtures.py","line":2,"scope":"","import":"import base64","selected_local":[],"omitted_local":[]},
 {"file":"tools/pilot_image_acceptance/fixtures.py","line":3,"scope":"","import":"import hashlib","selected_local":[],"omitted_local":[]},
 {"file":"tools/pilot_image_acceptance/fixtures.py","line":4,"scope":"","import":"import json","selected_local":[],"omitted_local":[]},
@@ -287,6 +288,9 @@
 {"file":"tools/pilot_image_acceptance/runtime_host.py","line":18,"scope":"","import":"from .prepare import checked, prepare_registered_case_a","selected_local":["tools/pilot_image_acceptance/prepare.py"],"omitted_local":[]},
 {"file":"tools/pilot_image_acceptance/runtime_host.py","line":19,"scope":"","import":"from .browser_steps import review_in_same_origin_page","selected_local":["tools/pilot_image_acceptance/browser_steps.py"],"omitted_local":[]},
 {"file":"tools/pilot_image_acceptance/runtime_host.py","line":61,"scope":"serving","import":"import uvicorn","selected_local":[],"omitted_local":[]},
-{"file":"tools/pilot_image_acceptance/runtime_host.py","line":94,"scope":"RuntimeHost.approved_scope","import":"from mcis_service.common.local_review_pilot import PilotSessions, PilotSession, COOKIE_NAME","selected_local":["service/mcis_service/common/local_review_pilot.py"],"omitted_local":[]},
-{"file":"tools/pilot_image_acceptance/runtime_host.py","line":95,"scope":"RuntimeHost.approved_scope","import":"from playwright.async_api import async_playwright","selected_local":[],"omitted_local":[]}
+{"file":"tools/pilot_image_acceptance/runtime_host.py","line":174,"scope":"main","import":"from .receipt import Receipt","selected_local":["tools/pilot_image_acceptance/receipt.py"],"omitted_local":[]},
+{"file":"tools/pilot_image_acceptance/runtime_host.py","line":100,"scope":"RuntimeHost.approved_scope","import":"from mcis_service.common.local_review_pilot import PilotSessions, PilotSession, COOKIE_NAME","selected_local":["service/mcis_service/common/local_review_pilot.py"],"omitted_local":[]},
+{"file":"tools/pilot_image_acceptance/runtime_host.py","line":101,"scope":"RuntimeHost.approved_scope","import":"from playwright.async_api import async_playwright","selected_local":[],"omitted_local":[]},
+{"file":"tools/pilot_image_acceptance/receipt.py","line":2,"scope":"","import":"import json","selected_local":[],"omitted_local":[]},
+{"file":"tools/pilot_image_acceptance/receipt.py","line":3,"scope":"","import":"import re","selected_local":[],"omitted_local":[]}
 ]

@@ -620,3 +620,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 合成试用阶段回执待独验：新6组协议/假子进程、相邻宿主4组/素材5组分别通过；logs/pilot-stage-receipt-frozen.txt。未执行任何容器/服务/HTTP/ORM/浏览器，真实阶段与清理尚待批准隔离验收。
+
+
+阶段回执构建输入待独验：7组工具检查通过，58固定文件源码审查退出0且全部摘要一致；默认build仍因未知外部base退出2，无目标残留。logs/pilot-stage-build-inputs-frozen.txt；没有构建/启动任何运行资源。
