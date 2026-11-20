@@ -599,3 +599,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 试用登记装配待独验：4组新AST/手写替身、工厂5组、图片7组通过；logs/pilot-registration-frozen.txt。案A四回执且零运行仅列后续强制检查，真实准备/HTTP/ORM未执行。
+
+
+合成图片夹具待独验：5组标准库纯字节/解析器AST/编排静态检查通过；logs/pilot-image-fixture-frozen.txt。建案/准备/HTTP/浏览器未执行，可信隔离宿主及建案授权仍阻断。
