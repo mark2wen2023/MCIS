@@ -626,3 +626,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 - 本机交接（文档待独立复核）：新增 `docs/LOCAL-PILOT-HANDOFF.md`，固定代码 6169caf / 产品冻结 3a615bf；六组离线检查及 58 文件源码提取通过，默认构建拒绝如期。仅说明与索引，不改冻结源码、哈希或允许表；实际镜像/平台/服务验收仍未执行。
+
+- OCI 元数据窄预检（待独验）：新增独立标准库工具及 9 组合成归档检查；仅 USTAR/单平台 OCI，校验 tar 与引用 blob，不解压/批准/运行。冻结见 logs/oci-metadata-review-impl-hashes-frozen.txt；旧打包器、产品冻结与允许表不变。

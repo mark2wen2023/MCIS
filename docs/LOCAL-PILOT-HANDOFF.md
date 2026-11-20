@@ -94,3 +94,35 @@ python3 -I tools/pilot_image_build/package.py --repo "$review" --ref "$product" 
 唯一结果是有界单条 `mcis.synthetic-image-acceptance/1` 回执，阶段为 `preflight / https_ready / cases_zero_runs / four_receipts / first_import / save_reopen / authorized_switch / cleanup`。记录固定 `productBaseline`、`build`、`image` 和有限状态/退出码，不输出原日志、browser dict、路径、案号或 Cookie。`build` 是固定六源码的仪表化摘要，不是整个基础镜像的摘要。缺结果、非法/多条/超长记录、超时、未知退出或任一清理未确认，都不能通过；成功必须有效内程全阶段通过、正常容器退出并确认外层清理。
 
 当前用例只计划正常授权切案，不覆盖不对称权限、真实并发冲突/迟到响应、原图渲染；音频、完整七步工作台、报告冻结持久绑定/权限交集/同一读取视图、保存到报告导出重开均不在本轮已装配验收内。图音源页/纯逻辑的历史绿色结果不能补足这些运行证据。下一步是准备并审阅上述外部输入与本机平台，不能再用一份空模板替代它们。
+
+
+## 新增：本机 OCI 元数据预检（不批准镜像）
+
+`tools/oci_metadata_review/check.py` 是独立标准库工具，不接入打包器或运行器。交付代码基线仍是上述 6169caf / 3a615bf；下面工具是后续独立增量，不在旧源码快照中。可从交付回信的**完整提交**取出这一个普通源码文件，不改现有工作树：
+
+```bash
+# repo 沿用上文；tool_ref 必须填本次交付回信的完整 40 位提交，不能填分支名。
+tool_ref=填入本次交付完整提交
+case "$tool_ref" in *[!0-9a-f]*|'') exit 2;; esac
+test "${#tool_ref}" -eq 40 || exit 2
+git -C "$repo" cat-file -e "$tool_ref^{commit}" || exit 2
+# 新建的自有临时目录，只写工具源码；不向其中解包镜像。
+review_tool_dir=$(mktemp -d) || exit 2
+git -C "$repo" show "$tool_ref:tools/oci_metadata_review/check.py" > "$review_tool_dir/check.py" || exit 2
+# 三项必须由获得授权的文件所有者/可信传递记录提供，不是示例凭据或现成镜像。
+archive=/absolute/path/to/authorized-offline-archive.tar
+expected_sha256=填入可信传递记录的64位tar摘要
+expected_bytes=填入确切十进制字节数
+python3 -I "$review_tool_dir/check.py" --archive "$archive" \
+ --sha256 "$expected_sha256" --size "$expected_bytes" --platform linux/amd64
+```
+
+工具不联网，不调用 Git/Docker，不读取环境配置，不解包、不写文件、不执行镜像内容。调用者须保证授权输入在自己控制、无并发写入的可信目录中；工具以 `O_NOFOLLOW` 打开一个普通且单链接的文件描述符，前后核对 inode/大小/修改时间，不以这些检查冒充文件系统沙箱或恶意同 UID 写者隔离。父目录/解释器的可信性仍是前提。
+
+支持面刻意很窄：**未压缩 USTAR、OCI Image Layout 1.0.0、单 manifest、单目标平台**。仅 `oci-layout`、`index.json` 和实际引用的 `blobs/sha256/<64小写hex>` 普通文件；不能附目录项。index 只能一个 OCI manifest 描述符且必须显式声明 platform；manifest/config 描述符采用 OCI v1 media type；layer 仅接受 `application/vnd.oci.image.layer.v1.tar+gzip` 描述符。允许 linux/amd64（默认）或显式 linux/arm64/v8，index 与 config 必须同时匹配。arm64 的结构通过不表示 ARM 运行已验。
+
+拒绝 Docker-save、压缩外层 tar、PAX/GNU 扩展、嵌套/多平台 index、annotations/URL 等未支持的描述符扩展、额外/重复/穿越路径、目录/软硬链接/设备成员、错误头校验和/字节摘要/长度、未知平台和超限。上限：归档 8 GiB、成员 4096、每份 JSON 元数据 1 MiB；流式检查 blob，不将 layer 全部载入内存。config 中命令、环境、历史等任意内容不会回显或执行。
+
+退出 0 只表示 `result=metadata_checked`：输出固定 schema `mcis.oci-metadata-review/1`、tar SHA/大小、目标平台、选定 manifest/config digest、layer/member 数量；`runtimeApproved / inventoryVerified / rootfsDiffIdsVerified / dependencyAbiVerified / provenanceVerified / builderVerified` 均为 false。退出 2 输出固定失败码，不输出输入路径/任意元数据/异常栈：`ARCHIVE_HASH/SIZE` 是传递字节不符，`BLOB_HASH` 是成员内容不符，`DESCRIPTOR_MISMATCH` 是引用长度/摘要不符，`PLATFORM_MISMATCH/CONFIG_PLATFORM/AMBIGUOUS_PLATFORM` 是平台不明，`MEMBER_* / TAR_* / UNSUPPORTED_* / *_LIMIT / INPUT_* / JSON_*` 分别指出路径格式、支持面、预算或输入问题。失败不能通过改媒体类型/删成员/自算新期望摘要而伪装原输入通过。
+
+本轮仅新生成的微型全合成归档测试：`python3 -I tests_acceptance/oci-metadata-review/check.py`，9 组退出 0。CLI 正常/拒绝亦在临时文件上实测，不使用实际基础镜像。gzip blob 只核对压缩字节，**不验证 gzip 流或解压后 tar 内容，也不验证 diff ID**（仅检查 rootfs 声明的格式/数量）；不验证 ABI、依赖/Chromium/TLS 实际存在、镜像来源、inventory 与 rootfs 一致性、builder 可见性或运行权限。通过后仍须按上节独立审阅实际 rootfs 与依赖、来源及平台，冻结外部输入、批准最终镜像；当前允许表为空和默认构建拒绝保持不变。
