@@ -605,3 +605,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 合成图片建案适配待独验：6项标准库AST/手写资源替身通过，logs/pilot-creation-authority-frozen.txt；真实宿主隔离、会话/TLS/监听生命周期与ORM/HTTP/浏览器均未实现或未验，禁止实跑。
+
+
+图片试用宿主待独验：新5组合成生命周期/预检/源码检查，相邻建案6组、素材5组分别通过；logs/pilot-runtime-host-frozen.txt。真实镜像/依赖闭包、TLS/沙箱、ORM/HTTP/浏览器未验，未启动任何资源，不构成试用闭环。

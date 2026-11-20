@@ -1,7 +1,8 @@
 # 合成图片试用素材与编排源码——当前禁止实跑
 
-基线 `5ab815fd4e4386bbd716d7f092a5ccb903368827`。没有启动器、环境隔离实现、会话
-发放器或已批准浏览器驱动；**不是一条现在可运行的端到端命令**。本轮只运行纯字节/AST检查。
+初始素材基线 `5ab815fd4e4386bbd716d7f092a5ccb903368827`。下文保留前轮边界；
+本轮增加未执行的启动/会话/收尾源码，见末节。仍无受审离线镜像与运行许可，
+**不是一条现在可运行的端到端命令**。仅运行纯合成/AST检查。
 没有改产品工厂、路由、默认配置或权限。
 
 ## 已写的实际代码
@@ -102,3 +103,72 @@ python -I tests_acceptance/pilot-creation-authority/check.py
 ```
 6 项标准库检查：固定两案/身份、正文与有效期、异常不重试、上下文限制、手写资源顺序与清理、
 真实宿主适配源码 AST 顺序。没有导入应用、FastAPI、ORM，没有创建库、临时资源或真实请求。
+
+
+## 连接后的宿主入口源码（基线 cfc39aed，仍未执行）
+
+新增三文件，不改变产品 factory、路由或权限：
+- `container_runner.py`：离线 `docker image inspect → create → inspect → start → wait → rm`。
+  只接受源码内 `APPROVED_IMAGES` 的内容地址镜像，`--pull=never`，不安装或联网拉取；
+  当前清单为空，任何调用在创建前拒绝。CLI 的 SHA、标签或环境布尔值不能自行批准镜像。
+  检查镜像用户/环境/入口/卷，再检查创建后网络 none、只读根、无宿主卷/设备/端口、
+  去能力、no-new-privileges、私有 tmpfs。仅移除自身创建 ID；创建结果未知时按唯一名称及
+  所有权标签核对清理，不重试创建。若 daemon 结果或清理无法确认，非零退出并只报非秘密
+  资源名供人工核对，不能声称所有资源已清理。外部等待 240 秒，失败/超时正常尝试强制回收。
+- `container_entry.py`：审定镜像将其安装为 `/opt/pilot/entry.py`，由固定私有解释器 `-I`
+  调用，仅增加两个固定源码路径。禁止在宿主运行或用普通 checkout 冒充镜像。
+- `runtime_host.py`：实际实现 `approved_scope/create_case/request/review_in_same_origin_page`，
+  连接现有准备函数与页面函数，不复制其业务逻辑。业务导入前核对容器用户、环境变量**名称**、
+  仅 lo 网卡、只读根、空 tmpfs、无 Docker socket、固定源码位置。这些检查是容器配置的
+  补充，不独立证明镜像没有秘密/种子，也不能代替外部镜像审计。
+
+运行时会从显式 subject/role 生成仅固定两案的三分钟服务器会话以及原两案创建授权；
+随机 token 只保留内存，服务器保存摘要，通过新浏览器上下文的可信 bootstrap 安装
+Secure/HttpOnly/SameSite=Strict Cookie，不进 JS、URL、输出、数据库或登录 profile。
+无默认调查员、不连 4A、不提供登录端点。会话授予八项具体案操作，不包含建案、下载、任务或报告；
+建案仍只能经内部适配调用原 handler。准备请求使用真实页面同源 fetch，自然产生浏览器来源头，
+不伪造角色/Origin/Sec-Fetch-Site，不自动重试。
+
+在自己 tmpfs 子目录生成短期 TLS 证书/私钥和新的私有 NSS 信任库，仅供该次浏览器 HOME；
+不改宿主/系统信任库，不复用 profile，不关闭证书检查，Chromium 明确开启 sandbox。
+Uvicorn 只监听 HTTPS 127.0.0.1:8766，启动期限15秒；经真实 HTTPS `/pilot` 返回200后
+才准备两案、登记四份材料并确认零运行，进入首次导入/修订/刷新/授权切案页面检查。
+总流程150秒；正常/异常/取消都撤销会话、关闭新浏览器/服务、dispose DB 和删除自己临时目录。
+内层无法及时响应时由外层容器240秒期限回收。所有行为均是**待实跑源码**，未宣称已停止过实际服务。
+未增加权限拒绝探针；现有 driver 的切案为两个获授权案的正常切换。
+
+### 唯一环境放行门槛：审定并固定完整离线执行镜像（当前缺失）
+
+不是“有 Docker 就能运行”。需要在明确批准后由可信环境准备、审查一个无业务材料/种子/模型/
+凭据的镜像，将准确 image ID 写入受审的 `APPROVED_IMAGES` 增量。镜像必须含：
+1. 精确冻结的本候选源码/必要 schemas 白名单和入口（不能 COPY 整个仓库），Python 3.11+
+   与全部真实传递依赖；不可 editable、.pth、sitecustomize 或用户 site。源白名单及依赖闭包
+   仍需逐文件确定，当前没有 Dockerfile 或可声称通过的 image ID。
+2. `/opt/pilot/bin/python`、`/opt/pilot/source`、`/opt/pilot/source/service`，
+   `/opt/pilot/chromium/chrome`、Playwright/其匹配浏览器、uvicorn、openssl、certutil；
+   版本与摘要必须冻结，不在运行时安装。
+3. 镜像固定非 root `65532:65532`；Env 恰为 PATH=/opt/pilot/bin:/usr/bin:/bin 和 LANG=C.UTF-8，
+   无 Entrypoint/Volume/ExposedPorts。根只读可运行，现有受支持 Chromium 沙箱和临时 NSS
+   信任可用；平台不支持就停止，不能增特权、改安全配置、关 sandbox 或 ignore HTTPS。
+4. 运行平台本身及镜像内容受信；Docker daemon 只由外部控制器调用，不能挂进容器。
+   外层命令并不读取内网或扫描宿主业务目录，镜像内容审计是独立必要前提。
+
+镜像审定及真实运行**另行批准之后**才使用下面形式；当前一定拒绝，勿执行试探：
+```sh
+python -I tools/pilot_image_acceptance/container_runner.py \
+  --image sha256:<审定离线镜像的完整64位摘要> \
+  --subject SYN-PILOT-reviewer --role LeadInvestigator
+```
+命令失败返回2，成功仅输出合成范围和镜像 ID；不输出 token、请求正文或 traceback。
+这轮没有验证真实 ORM、TLS/NSS、Chromium sandbox、HTTP/会话、登记、图片显示或保存；
+“完整源码连起来”不等于合成试用闭环通过，更不等于真实案件或生产验收。
+
+### 本轮实际执行的检查
+```sh
+python -I tests_acceptance/pilot-runtime-host/check.py
+python -I tests_acceptance/pilot-creation-authority/check.py
+python -I tests_acceptance/pilot-image-fixture/check.py
+```
+新检查5组：控制器6种假命令结果、宿主5种假资源生命周期、假Uvicorn的3种启动/退出、预检9种内存观测、源码边界。
+相邻建案6组、原素材5组分别通过；不累计成端到端覆盖。新测试删除源码 imports 后注入
+手写依赖，不实例化真实 FastAPI/ORM/浏览器，不执行 Docker、openssl、certutil 或网络请求。
