@@ -45,12 +45,12 @@ def setup(extra=False, init_fail=False):
             return self
         def read_text(self,**kw):events.append('html');return '<p>synthetic shell</p>'
     def load_case(session,case_id):events.append(('read',case_id));return {'caseId':case_id,'title':'synthetic title'}
-    scope.update(SimpleNamespace=NS,FastAPI=App,Depends=lambda f:f,Response=object,Request=object,HTMLResponse=lambda html,headers:NS(html=html,headers=headers),Path=FakePath,__file__='synthetic/factory.py',load_case=load_case,_initialize_pilot_core_storage=init)
+    scope.update(workbench_page=lambda html,**kw:html,SimpleNamespace=NS,FastAPI=App,Depends=lambda f:f,Response=object,Request=object,HTMLResponse=lambda html,headers:NS(html=html,headers=headers),Path=FakePath,__file__='synthetic/factory.py',load_case=load_case,_initialize_pilot_core_storage=init)
     for file in ['common/pilot_case_discovery.py','local_review_pilot/factory.py']:
         tree=ast.parse((ROOT/'service/mcis_service'/file).read_text())
         if file.endswith('factory.py'):
             imports={n.module for n in ast.walk(tree) if isinstance(n,ast.ImportFrom)}
-            if imports != {'pathlib','urllib.parse','common.local_review_pilot','fastapi','fastapi.responses','common.context','common.pilot_case_discovery','common.pilot_core_storage','cases.service','types','image_review.app','evidence_intake.router','reports.access'}:raise AssertionError(imports)
+            if imports != {'pathlib','urllib.parse','common.local_review_pilot','fastapi','fastapi.responses','common.context','common.pilot_case_discovery','common.pilot_core_storage','cases.service','types','image_review.app','evidence_intake.router','reports.access','pages'}:raise AssertionError(imports)
         exec(compile(ast.fix_missing_locations(Strip().visit(tree)),'<production AST fake dependencies>','exec'),scope)
     def construct(**changes):
         kw=dict(enabled=True,db=db,sessions=sessions,origin='https://127.0.0.1:8766');kw.update(changes)

@@ -141,10 +141,13 @@ class Checks(unittest.TestCase):
         mount=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='_mount_image_imports_only')
         ns={'router':router};exec(compile(ast.Module(body=[mount],type_ignores=[]),'<real mount fake router>','exec'),ns)
         def init(app,**kw):calls.append(kw);self.assertTrue(app.state.image_imports_only)
-        sc.update(APIRouter=Router,NoStoreRoute=object,receipt_input=object(),_mount_image_imports_only=ns[mount.name],_initialize_image_review_storage=init)
+        def pages(app):
+            app.get('/pilot/image-review')(lambda:None)
+            app.get('/image-review-lab/preview.js')(lambda:None)
+        sc.update(_mount_pilot_image_pages=pages,APIRouter=Router,NoStoreRoute=object,receipt_input=object(),_mount_image_imports_only=ns[mount.name],_initialize_image_review_storage=init)
         app=s.construct(image_imports=True,image_blob_dir=sc['Path']('/synthetic'))
         actual={(m,r.path) for r in app.routes for m in r.methods}
-        self.assertEqual(actual,sc['ROUTES']|sc['IMAGE_ROUTES']);self.assertEqual(len(actual),8)
+        self.assertEqual(actual,sc['ROUTES']|sc['IMAGE_ROUTES']);self.assertEqual(len(actual),10)
         self.assertEqual(calls,[{'imported_only':True}]);self.assertIsNone(app.state.image_ocr_runtime)
         self.assertFalse(any('download' in p or 'tasks' in p for m,p in actual))
         with self.assertRaises(ValueError):ns[mount.name](app)

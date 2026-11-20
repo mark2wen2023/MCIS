@@ -13,6 +13,8 @@ ROUTES = frozenset({('GET', '/pilot'), ('GET', '/api/v1/pilot/cases'),
                     ('GET', '/api/v1/cases/{case_id}')})
 
 IMAGE_ROUTES = frozenset({
+    ('GET', '/pilot/image-review'),
+    ('GET', '/image-review-lab/preview.js'),
     ('GET', '/api/v1/cases/{case_id}/evidence-intakes/{digest}'),
     ('POST', '/api/v1/cases/{case_id}/image-reviews'),
     ('GET', '/api/v1/cases/{case_id}/image-reviews'),
@@ -42,10 +44,12 @@ def create_local_review_pilot(*, enabled=False, db=None, sessions=None, origin=N
     from ..common.context import Ctx, problem
     from ..common.pilot_case_discovery import _register_pilot_case_discovery
     from ..common.pilot_core_storage import _initialize_pilot_core_storage
+    from .pages import workbench_page, _mount_pilot_image_pages
 
     # Public static shell carries no identity or case data. All data requests
     # below independently verify the server session; no legacy header fallback.
     html = Path(__file__).with_name('workbench.html').read_text(encoding='utf-8')
+    html = workbench_page(html, images=image_imports)
     app = FastAPI(title='MCIS synthetic case pilot', docs_url=None,
                   redoc_url=None, openapi_url=None, redirect_slashes=False)
     app.state.db = db
@@ -82,6 +86,7 @@ def create_local_review_pilot(*, enabled=False, db=None, sessions=None, origin=N
                                      receipt_input, methods=['GET'])
         app.include_router(receipt_router)
         _mount_image_imports_only(app)
+        _mount_pilot_image_pages(app)
 
     expected = ROUTES | IMAGE_ROUTES if image_imports else ROUTES
     actual = [(method, route.path) for route in app.routes for method in route.methods]

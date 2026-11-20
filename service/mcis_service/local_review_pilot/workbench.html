@@ -10,15 +10,17 @@
 <header><p class="subtle">粤海探析 / 合成试用专用</p><h1>选案 → 取证</h1><p>仅用于获授权的合成案件。仅供独立试用入口；尚未完成运行验收，不用于真实材料或生产办案。</p></header>
 <nav aria-label="案件流程"><ol><li><a href="#case-picker">接报 / 选案</a></li><li id="stage">取证（待选案）</li><li>询问（未接入）</li><li>分析（未接入）</li><li>报告（未接入）</li><li>建议（未接入）</li><li>沉淀（后续）</li></ol><p>流程位置不代表完成；完成状态未评估，可返回选案。</p></nav>
 <section id="case-picker" aria-labelledby="picker-title"><h2 id="picker-title">服务器授权案件</h2><p>仅列出当前服务器会话允许读取的案件；不会读取全案列表。刷新清除当前选择。</p><button id="refresh" type="button">读取 / 刷新授权案件</button><p id="list-status" role="status" aria-live="polite">尚未读取，请主动读取授权案件。</p><div id="cases" aria-label="选择案件"></div></section>
-<section id="evidence" aria-labelledby="evidence-title"><h2 id="evidence-title">取证首页</h2><p id="context">未选择案件</p><h3 id="case-title"></h3><p id="detail-status" role="status" aria-live="polite">先从服务器授权清单明确选择案件。</p><p id="next">下一步：读取授权案件并选案。</p><div class="boundary"><strong>图音接入位置 · 尚未开放操作</strong><p>原件登记回执、已有图音识别结果导入、人工核对保存、按运行刷新重开是不同步骤。本页只读取案件，不读取证据、媒体、时间线、航迹或报告，也不能保存核对。</p><p>后续需完成受限工厂、同源会话和隔离验收后，再接本案图音操作。当前不提供导入、保存、下载或全量工作台跳转。</p></div></section>
+<section id="evidence" aria-labelledby="evidence-title"><h2 id="evidence-title">取证首页</h2><p id="context">未选择案件</p><h3 id="case-title"></h3><p id="detail-status" role="status" aria-live="polite">先从服务器授权清单明确选择案件。</p><p id="next">下一步：读取授权案件并选案。</p><div id="image-entry"></div><div class="boundary"><strong>图音接入范围</strong><p>原件登记回执、已有图音识别结果导入、人工核对保存、按运行刷新重开是不同步骤。本页只读取案件，不读取证据、媒体、时间线、航迹或报告，也不能保存核对。</p><p>图片操作仅限显式装配的受限入口；同源会话和隔离运行仍待验收。仅在下方出现已装配的图片入口时，可前往该页；本工作台不执行导入、保存或下载。音频尚未接入。</p></div></section>
 </main>
 <script>
 'use strict';
 (() => {
+ const imagePageAvailable=false;
  const el = id => document.getElementById(id);
  const validId = value => typeof value === 'string' && /^SYN-[A-Za-z0-9_.-]{1,123}$/.test(value);
  let epoch = 0, cases = [], target = null;
  function clearCase() {
+  el('image-entry').replaceChildren();
   target = null; el('context').textContent = '未选择案件'; el('case-title').textContent = '';
   el('stage').textContent = '取证（待选案）'; el('stage').removeAttribute('aria-current');
   el('detail-status').textContent = '先从服务器授权清单明确选择案件。';
@@ -59,9 +61,15 @@
    if (version !== epoch || target !== id) return;
    if (!doc || Array.isArray(doc) || doc.caseId !== id || typeof doc.title !== 'string') throw new Error('案件身份或格式不符');
    el('context').textContent = `当前案号：${id}`; el('case-title').textContent = doc.title || '未命名案件';
+   if (imagePageAvailable) {
+    const link = document.createElement('a');
+    link.href = '/pilot/image-review?case=' + encodeURIComponent(id);
+    link.textContent = '进入本案图片文字核对（须已有合法登记回执；访问仍由服务器核查）';
+    el('image-entry').appendChild(link);
+   }
    el('stage').textContent = '取证'; el('stage').setAttribute('aria-current','step');
    el('detail-status').textContent = '已读取当前案件。证据数量、登记与核对状态未读取，不能视为零条或已完成。';
-   el('next').textContent = '下一步：本案图音登记与核对尚待接入；可返回案件清单重新选择。';
+   el('next').textContent = imagePageAvailable ? '下一步：可进入本案图片文字核对；不载入原图、不提供登记或下载，尚未完成运行验收。' : '下一步：本案图音登记与核对尚待接入；可返回案件清单重新选择。';
   } catch (error) {
    if (version !== epoch || target !== id) return;
    if (failure(error)) return;

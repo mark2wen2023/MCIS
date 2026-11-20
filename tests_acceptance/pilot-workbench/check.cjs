@@ -14,10 +14,10 @@ class Element {
  setAttribute(k,v) { this.attrs[k]=v; }
  removeAttribute(k) { delete this.attrs[k]; }
 }
-function setup() {
+function setup(images=false) {
  const nodes = Object.fromEntries([...html.matchAll(/id="([^"]+)"/g)].map(m=>[m[1],new Element()]));
  const requests=[], events={};
- const document={hidden:false,getElementById:id=>{assert(nodes[id],id);return nodes[id];},createElement:tag=>{assert.equal(tag,'button');return new Element();},addEventListener:(n,f)=>events[n]=f};
+ const document={hidden:false,getElementById:id=>{assert(nodes[id],id);return nodes[id];},createElement:tag=>{assert(['button','a'].includes(tag));return new Element();},addEventListener:(n,f)=>events[n]=f};
  const window={addEventListener:(n,f)=>events[n]=f};
  function fetch(url,options) {
   assert(/^\/api\/v1\/(pilot\/cases|cases\/SYN-[\w.-]+)$/.test(url));
@@ -25,7 +25,7 @@ function setup() {
   let resolve,reject; const promise=new Promise((a,b)=>{resolve=a;reject=b;});
   requests.push({url,resolve:(body,status=200)=>resolve({ok:status===200,status,json:async()=>body}),reject}); return promise;
  }
- vm.runInNewContext(scripts[0][1],{document,window,fetch,console});
+ vm.runInNewContext(images?scripts[0][1].replace('const imagePageAvailable=false;','const imagePageAvailable=true;'):scripts[0][1],{document,window,fetch,console});
  return {nodes,requests,events,document};
 }
 const A={caseId:'SYN-A',title:'合成 A'},B={caseId:'SYN-B',title:'合成 B'};
@@ -85,8 +85,15 @@ async function test(name,f){await f();console.log('PASS '+name);}
  });
  await test('titles rendered as text; seven stages are not completion; no fake media links',async()=>{
   const s=setup();await loaded(s,[{caseId:'SYN-A',title:'<img src=x>'}]);assert.match(s.nodes.cases.children[0].textContent,/<img src=x>/);
-  assert(html.includes('完成状态未评估'));assert(html.includes('图音接入位置 · 尚未开放操作'));
+  assert(html.includes('完成状态未评估'));assert(html.includes('图音接入范围'));
   assert.deepEqual([...html.matchAll(/href="([^"]+)"/g)].map(m=>m[1]),['#case-picker']);
  });
- console.log('COMPLETE 9 groups; synthetic DOM/Promise only');
+ await test('image capability: confirmed case only, clear before switch and ignore late response',async()=>{
+  const s=setup(true);assert.equal(s.nodes['image-entry'].children.length,0);await loaded(s);
+  let p=s.nodes.cases.children[0].onclick();s.requests[1].resolve(A);await p;assert.equal(s.nodes['image-entry'].children[0].href,'/pilot/image-review?case=SYN-A');
+  p=s.nodes.cases.children[1].onclick();assert.equal(s.nodes['image-entry'].children.length,0);s.requests[2].reject(new Error('fail'));await p;assert.equal(s.nodes['image-entry'].children.length,0);
+  const old=s.nodes.cases.children[0].onclick(),fresh=s.nodes.cases.children[1].onclick();s.requests[4].resolve(B);await fresh;s.requests[3].resolve(A);await old;assert.equal(s.nodes['image-entry'].children[0].href,'/pilot/image-review?case=SYN-B');
+  const off=setup();await loaded(off);const d=off.nodes.cases.children[0].onclick();off.requests[1].resolve(A);await d;assert.equal(off.nodes['image-entry'].children.length,0);
+ });
+ console.log('COMPLETE 10 groups; synthetic DOM/Promise only');
 })().catch(error=>{console.error(error);process.exitCode=1;});

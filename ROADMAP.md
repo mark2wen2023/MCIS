@@ -593,3 +593,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 试用图片API待独验：7组新AST/替身、工厂5组/存储9组/UI9组通过；logs/pilot-image-imports-frozen.txt。原件与合法回执准备、真实服务/ORM/身份验收仍未完成，不构成可运行闭环。
+
+
+试用图片页面待独验：生产脚本内存fetch及普通/受限页22项对照通过，工作台10/工厂5/API7组通过；logs/pilot-pages-frozen.txt。无真实浏览器/HTTP/合法回执全链验收。
