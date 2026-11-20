@@ -76,21 +76,27 @@ async def serving(app,key,cert):
         except (TimeoutError,asyncio.CancelledError):
             server.force_exit=True;task.cancel()
             await asyncio.gather(task,return_exceptions=True)
+            raise RuntimeError('Server shutdown not confirmed') from None
         # Outer controller's deadline force-removes owned container if the
         # runtime/event loop cannot stop; no background process may survive it.
 
 
 class RuntimeHost:
-    def __init__(self,subject,role):
+    def __init__(self,subject,role,progress=None):
         checked(isinstance(subject,str) and subject.startswith('SYN-PILOT-') and subject.strip()==subject,
                 'Explicit synthetic server subject required')
         checked(role in ('Investigator','LeadInvestigator'),'Explicit creation role required')
+        self.progress=progress
         self.subject=subject;self.role=role;self.page=None;self.creator=None;self._used=False
+
+    def mark(self,stage):
+        if self.progress is not None:self.progress.mark(stage)
 
     @asynccontextmanager
     async def approved_scope(self):
         checked(not self._used,'Host scope already consumed');self._used=True
         preflight()  # BEFORE importing any business/ORM/FastAPI or issuing session.
+        self.mark('preflight')
         from mcis_service.common.local_review_pilot import PilotSessions,PilotSession,COOKIE_NAME
         from playwright.async_api import async_playwright
         token=secrets.token_urlsafe(32);digest=hashlib.sha256(token.encode('ascii')).hexdigest()
@@ -101,7 +107,8 @@ class RuntimeHost:
             frozenset((d['caseId'],'case.create',sha(encoded(d))) for d in cases()))
         authority=CreationAuthority(config)
         try:
-            async with AsyncExitStack() as stack:
+            stack=AsyncExitStack()
+            try:
                 root=Path(stack.enter_context(tempfile.TemporaryDirectory(prefix='acceptance-',dir='/run/pilot')))
                 class Workspace:
                     @contextmanager
@@ -126,8 +133,12 @@ class RuntimeHost:
                 self.page.set_default_timeout(10000)
                 response=await self.page.goto(ORIGIN+'/pilot')
                 checked(response is not None and response.status==200,'HTTPS shell readiness failed')
-                try:yield
-                finally:sessions.revoke(digest)  # revoke BEFORE browser/server/DB cleanup
+                self.mark('https_ready')
+                yield
+            finally:
+                sessions.revoke(digest)
+                await stack.aclose()
+                if self.progress is not None:self.progress.cleaned()
         finally:
             sessions.revoke(digest);token=None;self.page=None;self.creator=None
 
@@ -151,18 +162,22 @@ class RuntimeHost:
         return result
 
     async def review_in_same_origin_page(self,prepared):
-        return await review_in_same_origin_page(self.page,prepared)
+        return await review_in_same_origin_page(self.page,prepared,mark=self.mark)
 
 
-async def run(subject,role):
+async def run(subject,role,progress=None):
     async with asyncio.timeout(150):
-        return await prepare_registered_case_a(host=RuntimeHost(subject,role))
+        return await prepare_registered_case_a(host=RuntimeHost(subject,role,progress))
 
 
 def main():
+    from .receipt import Receipt
     parser=argparse.ArgumentParser();parser.add_argument('--subject',required=True)
     parser.add_argument('--role',required=True,choices=('Investigator','LeadInvestigator'))
-    args=parser.parse_args()
-    try:asyncio.run(run(args.subject,args.role))
-    except BaseException:return 2  # no tracebacks, request bodies or secrets
-    return 0
+    parser.add_argument('--image',required=True)
+    args=parser.parse_args();progress=Receipt(args.image)
+    try:
+        asyncio.run(run(args.subject,args.role,progress))
+        raw=progress.finish(True)
+    except BaseException:raw=progress.finish(False)
+    return progress.value['exitCode'],raw

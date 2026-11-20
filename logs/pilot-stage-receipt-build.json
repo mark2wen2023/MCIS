@@ -1,0 +1,12 @@
+{
+  "normalization": "receipt.py BUILD line becomes BUILD='' before hashing; canonical sorted compact JSON of filename->sha256",
+  "files": {
+    "browser_steps.py": "cf52ee53076bf53936dfd25c773b7330da618a0f806fee2ff5f8cb44bad8cde7",
+    "container_entry.py": "fb0d890d82cfcd0960790070ea9ccb8948ff01c292877ea725a79ab675bef3c2",
+    "container_runner.py": "4d7c7b761c5d1ae43cb583ac48ff54f23f37aec9678ab6fdf5339d417d88192f",
+    "prepare.py": "39d310f79a2ddf71098a89f98ee7f8e1948a182347eb43f49c4fa609add5e3bd",
+    "receipt.py": "8063a04f694f04a3882b0e5c57d4871adf3e6532977d69016ff6945e6dc4e829",
+    "runtime_host.py": "11a2ef266e041dc2ca1fc76e8c25ad882b32a16d768a8f3a31f4fcb242d2b9d8"
+  },
+  "build": "sha256:b8750f27a2ff71d11c39ea091f0187917ea141d587a4c342de07d0932e220aca"
+}

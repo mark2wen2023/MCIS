@@ -25,41 +25,6 @@ def extracted(path,env):
     return env
 
 class RuntimeChecks(unittest.TestCase):
-    def test_container_positive_failure_timeout_and_gate(self):
-        image='sha256:'+'a'*64;cid='b'*64
-        for mode in ('ok','unapproved','bad-network','nonzero','timeout','create-timeout'):
-            calls=[]
-            def execute(argv,**kwargs):
-                self.assertEqual(argv[0],'docker');calls.append(argv[1:])
-                args=argv[1:]
-                if args[:2]==['image','inspect']:
-                    data=[{'Id':image,'Config':{'User':'65532:65532','Env':['PATH=/opt/pilot/bin:/usr/bin:/bin','LANG=C.UTF-8']}}]
-                elif args[0]=='create':
-                    if mode=='create-timeout':raise subprocess.TimeoutExpired(argv,20)
-                    return NS(stdout=cid+'\n')
-                elif args[0]=='inspect':
-                    data=[{'Image':image,'State':{'Running':False},'HostConfig':{
-                       'NetworkMode':'bridge' if mode=='bad-network' else 'none','ReadonlyRootfs':True,
-                       'Privileged':False,'IpcMode':'private','CapDrop':['ALL'],'SecurityOpt':['no-new-privileges'],
-                       'LogConfig':{'Type':'none'},'Tmpfs':{'/run/pilot':'rw,nosuid,nodev,size=512m,mode=0700,uid=65532,gid=65532','/tmp':'rw,nosuid,nodev,size=128m,mode=1777'}},
-                       'Config':{'Labels':{'mcis.pilot.owner':'c'*32},'User':'65532:65532','Cmd':[*env['COMMAND'],'--subject','SYN-PILOT-reviewer','--role','LeadInvestigator']}}]
-                elif args[0]=='wait':
-                    if mode=='timeout':raise subprocess.TimeoutExpired(argv,240)
-                    return NS(stdout='1' if mode=='nonzero' else '0')
-                else:return NS(stdout='')
-                return NS(stdout=json.dumps(data))
-            env=extracted('tools/pilot_image_acceptance/container_runner.py',dict(subprocess=subprocess,json=json,re=re,secrets=NS(token_hex=lambda n:'c'*32),sys=NS(stderr=None)))
-            if mode!='unapproved':env['APPROVED_IMAGES']=frozenset({image})
-            try:result=env['run_container'](image,'SYN-PILOT-reviewer','LeadInvestigator',execute=execute)
-            except (RuntimeError,subprocess.TimeoutExpired):self.assertNotEqual(mode,'ok')
-            else:self.assertEqual(result['status'],'passed');self.assertEqual(mode,'ok')
-            if mode=='unapproved':self.assertEqual(calls,[]);continue
-            self.assertEqual(calls[-1],['rm','--force','mcis-pilot-'+'c'*32 if mode=='create-timeout' else cid])
-            create=next(c for c in calls if c[0]=='create')
-            self.assertIn('--network=none',create);self.assertIn('--pull=never',create)
-            self.assertFalse(any(x in create for x in ('-v','--volume','--privileged','--publish')))
-            if mode=='bad-network':self.assertFalse(any(c[0]=='start' for c in calls))
-
     def test_runtime_lifetime_real_control_flow_fake_resources(self):
         async def scenario(mode):
             events=[];opaque='fabricated-not-a-credential';captured=[]
@@ -116,7 +81,8 @@ class RuntimeChecks(unittest.TestCase):
                      cases=lambda:[{'caseId':'SYN-PILOT-A'},{'caseId':'SYN-PILOT-B'}],encoded=lambda x:b'fabricated',sha=lambda x:'a'*64)
             extracted('tools/pilot_image_acceptance/runtime_host.py',env)
             env.update(preflight=preflight,tls_files=lambda root:('key','cert',PurePosixPath('/fabricated/home')),serving=serve)
-            host=env['RuntimeHost']('SYN-PILOT-reviewer','LeadInvestigator')
+            progress=NS(mark=lambda stage:events.append('stage:'+stage),cleaned=lambda:events.append('inner-cleanup-confirmed'))
+            host=env['RuntimeHost']('SYN-PILOT-reviewer','LeadInvestigator',progress)
             try:
                 async with host.approved_scope():
                     events.append('workflow')
@@ -128,6 +94,8 @@ class RuntimeChecks(unittest.TestCase):
             selftest.assertLess(events.index('preflight'),events.index('session-issued'))
             for a,b in zip(('context-close','browser-close','pw-close','server-stop','owned-close','temp-close'),('browser-close','pw-close','server-stop','owned-close','temp-close','revoke')):
                 selftest.assertLess(events.index(a),len(events)-1 if b=='revoke' else events.index(b))
+            selftest.assertIn('stage:preflight',events);selftest.assertIn('inner-cleanup-confirmed',events)
+            if mode!='health-fail':selftest.assertIn('stage:https_ready',events)
             selftest.assertIn('revoke',events);selftest.assertIsNone(host.page);selftest.assertIsNone(host.creator)
             selftest.assertTrue(captured[0]['secure'] and captured[0]['httpOnly']);selftest.assertEqual(captured[0]['sameSite'],'Strict')
             with selftest.assertRaises(Stop):
@@ -153,7 +121,10 @@ class RuntimeChecks(unittest.TestCase):
             def config(app,**kw):
                 self.assertEqual((kw['host'],kw['port']),('127.0.0.1',8766))
                 self.assertFalse(kw['access_log']);return kw
-            env=dict(asynccontextmanager=asynccontextmanager,asyncio=asyncio,uvicorn=NS(Server=Server,Config=config))
+            async def shutdown_timeout(awaitable,timeout):raise TimeoutError('synthetic shutdown deadline')
+            api=NS(**{name:getattr(asyncio,name) for name in ('create_task','timeout','sleep','shield','gather','CancelledError','wait_for')})
+            if mode=='shutdown-timeout':api.wait_for=shutdown_timeout
+            env=dict(asynccontextmanager=asynccontextmanager,asyncio=api,uvicorn=NS(Server=Server,Config=config))
             exec(compile(ast.fix_missing_locations(ast.Module(body=[fn],type_ignores=[])),'<fake server only>','exec'),env)
             try:
                 async with env['serving'](object(),'fake-key','fake-cert'):
@@ -163,7 +134,7 @@ class RuntimeChecks(unittest.TestCase):
             else:self.assertEqual(mode,'ok')
             if mode=='early-exit':self.assertNotIn('yielded',events)
             else:self.assertEqual(events[-1],'stopped')
-        for mode in ('ok','early-exit','body-error'):asyncio.run(scenario(mode))
+        for mode in ('ok','early-exit','body-error','shutdown-timeout'):asyncio.run(scenario(mode))
 
     def test_preflight_uses_observed_facts_not_boolean(self):
         source=ast.parse((ROOT/'tools/pilot_image_acceptance/runtime_host.py').read_text())
@@ -192,7 +163,7 @@ class RuntimeChecks(unittest.TestCase):
         self.assertNotIn('no-sandbox',runtime);self.assertNotIn('ignore_https_errors=True',runtime)
         self.assertNotIn('X-MCIS',runtime);self.assertNotIn('models_registry',runtime)
         self.assertIn('prepare_registered_case_a(host=RuntimeHost',runtime)
-        self.assertIn('await review_in_same_origin_page(self.page,prepared)',runtime)
+        self.assertIn('await review_in_same_origin_page(self.page,prepared,mark=self.mark)',runtime)
         self.assertIn('APPROVED_IMAGES = frozenset()',controller)
         for name in ('runtime_host.py','container_runner.py','container_entry.py'):ast.parse((root/name).read_text())
 

@@ -172,3 +172,39 @@ python -I tests_acceptance/pilot-image-fixture/check.py
 新检查5组：控制器6种假命令结果、宿主5种假资源生命周期、假Uvicorn的3种启动/退出、预检9种内存观测、源码边界。
 相邻建案6组、原素材5组分别通过；不累计成端到端覆盖。新测试删除源码 imports 后注入
 手写依赖，不实例化真实 FastAPI/ORM/浏览器，不执行 Docker、openssl、certutil 或网络请求。
+
+## 阶段回执增量（替代前述仅成功/失败输出，仍未运行）
+
+内程与外层使用 `receipt.py` 的固定 `mcis.synthetic-image-acceptance/1` schema。
+只输出 productBaseline（0a7232c，仪表增量前产品基线）、build（六份仪表源码的可复算SHA-256）、
+已批准镜像ID、固定阶段状态、退出码和清理状态。build计算见 logs/pilot-stage-receipt-build.json，
+其中receipt.py自身BUILD行归一化为空以避免自引用；不是外部运行镜像或依赖摘要。
+
+阶段仅有：preflight、https_ready、cases_zero_runs、four_receipts、first_import、save_reopen、
+authorized_switch、cleanup。内程仅 passed/failed/pending；拿不到有效内程回执时外层可标 unknown。
+这些标记分别位于真实检查之后，不从原browser dict复制caseId、runId、文字或地址。
+cleanup只有内层AsyncExitStack成功结束才确认；外层容器回收另列containerCleanup。
+内层失败且清理完成仍失败，不能由清理成功掩盖业务失败。
+
+容器保持log-driver=none。固定entry在任何业务导入之前将库/子进程stdout与stderr定向空设备，
+只保留一个不可继承的原stdout描述符，写出一条ASCII JSON及换行。外层用docker start --attach
+实时读取：最多2048字节（发现第2049字节即拒绝），240秒超时，stderr丢弃，不调用docker logs，
+不保存原始输出文件，不增加挂载或端口。解析拒绝未知/重复字段、非规范JSON、多条、超长、
+阶段次序错误、标识不符和假成功；不把解析错误正文或原始traceback打印出来。
+
+外层只有同时得到合法内程成功回执、容器已退出且退出码0（与attach退出一致）、内外清理确认，
+才输出result=passed/exitCode=0；其他固定回执为not_passed/2。创建结果不明仍先核对自有标签
+尝试清理，不再打印临时容器名称。无法确认清理时明确unknown，不宣称资源已经消失。
+CLI错误也不回显参数；回执没有案件号、文件路径、Cookie、token、原日志或截图。
+
+实际离线命令：
+```sh
+python -I tests_acceptance/pilot-stage-receipt/check.py
+python -I tests_acceptance/pilot-runtime-host/check.py
+python -I tests_acceptance/pilot-image-fixture/check.py
+```
+分别6组协议/假子进程检查、4组宿主替身/AST检查、5组原素材检查通过。原控制器测试迁移至
+新回执脚本，保留未批准镜像、网络配置不符、创建超时等守门；新增无结果/非法/超长/多条、
+流式限长、未知退出/不一致、清理失败及阶段失败检查。没有执行真实子进程或应用。
+覆盖仍只计划A/B正常授权切案，不包括权限拒绝、真实冲突/迟到响应或原图渲染。
+镜像表仍为空，未获得运行许可，分阶段真实结果尚不存在。

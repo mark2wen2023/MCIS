@@ -68,6 +68,7 @@ async def prepare_registered_case_a(*, host):
             checked(status==200 and doc==case,'Same-case readback not confirmed')
             status,runs=await host.request('GET','/api/v1/cases/'+quote(case['caseId'],safe='')+'/image-reviews',None)
             checked(status==200 and runs==[],'Both cases must start with confirmed zero image runs')
+        host.mark('cases_zero_runs')
         bindings={}
         for kind,body in bodies.items():
             status,preview=await host.request('POST',base+'/evidence-intakes:preview',body)
@@ -97,6 +98,7 @@ async def prepare_registered_case_a(*, host):
         for cid in CASE_IDS:
             status,runs=await host.request('GET','/api/v1/cases/'+quote(cid,safe='')+'/image-reviews',None)
             checked(status==200 and runs==[],'Preparation must not create an image run')
+        host.mark('four_receipts')
         result={'caseId':CASE_IDS[0],'bindings':bindings,'imageRuns':0,'sourceVerified':False}
         # Host retains its resource scope while an approved UI driver/operator
         # imports these bindings, edits/saves/reloads, and exercises case controls.

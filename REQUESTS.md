@@ -926,3 +926,6 @@ local-review-pilot真实授权案发现切片：显式注册GET /api/v1/pilot/ca
 
 
 试用构建输入独立刷新：固定产品1db4e3f498d8b641ef2569ec579b067f71b7a9be，保留57路径，重算两份修复源码blob/SHA与290条import记录。仅解除已修复track_local_receipts缺表项，旧记录移入resolved；外部base仍unverified/null，不改镜像批准表。
+
+
+合成试用阶段回执：修改冻结prepare/browser/runtime/entry/controller，仅增加固定阶段标记与限长单记录通道和严格外层通过判定；迁移控制器假执行器回归，不增加业务路由或测试权限范围。无原始日志/浏览器字典输出，镜像允许表仍空。

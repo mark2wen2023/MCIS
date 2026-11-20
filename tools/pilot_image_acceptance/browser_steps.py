@@ -7,7 +7,7 @@ from .fixtures import CASE_IDS
 from .prepare import checked
 
 
-async def review_in_same_origin_page(page, prepared):
+async def review_in_same_origin_page(page, prepared, *, mark=lambda stage:None):
     """Future browser adapter continuation, kept within the host cleanup scope.
 
     Use only after explicit browser/HTTP/ORM approval. A timeout stops; no action
@@ -41,6 +41,7 @@ async def review_in_same_origin_page(page, prepared):
     query=parse_qs(urlsplit(page.url).query)
     checked(query.get('case')==[CASE_IDS[0]] and len(query.get('run',[]))==1
             and re.fullmatch('OCR-[a-f0-9]{32}',query['run'][0]) is not None,'Accepted run address not confirmed')
+    mark('first_import')
     run=query['run'][0]
     line=page.locator('#lines article').first
     revised='SYNTHETIC LINE — manually revised for acceptance'
@@ -52,6 +53,7 @@ async def review_in_same_origin_page(page, prepared):
     await page.locator('#lines article').first.wait_for(state='visible',timeout=10000)
     checked(parse_qs(urlsplit(page.url).query).get('run')==[run],'Reload changed run')
     checked(await page.locator('#lines article').first.locator('textarea').input_value()==revised,'Saved text not reread')
+    mark('save_reopen')
     # Switch on workbench: B must be B, never A's metadata/link. No media data is
     # copied into the workspace; this is not a delayed-response browser test.
     await page.goto(origin+'/pilot')
@@ -60,5 +62,6 @@ async def review_in_same_origin_page(page, prepared):
         await page.get_by_role('button',name=re.compile('^'+re.escape(cid)+' ·')).click()
         await page.wait_for_function("expected => document.querySelector('#context')?.textContent === '当前案号：'+expected",arg=cid,timeout=10000)
         checked(await page.locator('#image-entry a').get_attribute('href')=='/pilot/image-review?case='+cid,'Workspace case/link mismatch')
+    mark('authorized_switch')
     return {'caseId':CASE_IDS[0],'runId':run,'revision':1,'sourceVerified':False,
             'checked':'first import, one revision, reload, authorized workspace case switch'}
