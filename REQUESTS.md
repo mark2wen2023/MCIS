@@ -920,3 +920,6 @@ local-review-pilot真实授权案发现切片：显式注册GET /api/v1/pilot/ca
 
 
 图片试用镜像输入：固定5647d96的57文件Git对象白名单与标准库打包器/配方，保留源码审查与可构建两级守门。新发现首次登记next_id依赖track_local_receipts未初始化，明确默认阻断；不改产品、不用打包绕过该查询。外部镜像摘要未知留空，不构建或批准运行。
+
+
+试用编号保留依赖修复：变更已冻结pilot_core_storage/host_adapter及相邻合成检查，显式包含原track_history.models.LocalReceipt并验证原只追加触发器；不改next_id/reserved或任何路由，不走全量registry。产品提交与后继固定输入更新分开。

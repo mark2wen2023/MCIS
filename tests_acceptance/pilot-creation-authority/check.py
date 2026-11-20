@@ -75,7 +75,7 @@ class Checks(unittest.TestCase):
 
     def test_owned_scope_with_only_handwritten_resources(self):
         from contextlib import contextmanager
-        for mode in ('normal','nonempty','factory-error','continuation-error','missing-host'):
+        for mode in ('normal','nonempty','factory-error','continuation-error','missing-host','missing-track','old-track'):
             s=setup();events=[]
             authority=s.scope['CreationAuthority'](s.config,clock=lambda:10)
             class FakePath:
@@ -100,14 +100,15 @@ class Checks(unittest.TestCase):
                 def __exit__(self,*args):events.append('disconnect')
                 def execute(self,sql):
                     events.append(sql)
-                    return NS(scalar_one=lambda:1 if mode=='nonempty' else 0)
+                    return NS(scalar_one=lambda:1 if mode=='nonempty' or (mode=='old-track' and sql=='SELECT COUNT(*) FROM track_local_receipts') else 0)
             engine=NS(connect=lambda:Connection(),dispose=lambda:events.append('dispose'))
             def database(url):events.append('database');return NS(engine=engine)
             def factory(**kwargs):
                 events.append('factory')
                 if mode=='factory-error':raise RuntimeError('fabricated failure')
                 return NS(state=NS(db=kwargs['db']))
-            tables={'cases','evidence_items','custody_events','audit_events','access_policies','archive_import_history','image_ocr_review_records'}
+            tables={'cases','evidence_items','custody_events','audit_events','access_policies','archive_import_history','track_local_receipts','image_ocr_review_records'}
+            if mode=='missing-track':tables.remove('track_local_receipts')
             class Adapter:
                 def __init__(self,*args):events.append('adapter')
                 def close(self):events.append('close')
@@ -130,7 +131,7 @@ class Checks(unittest.TestCase):
             self.assertLess(events.index('host-enter'),events.index('database'))
             if mode in ('normal','continuation-error'):
                 self.assertEqual(events.count('close'),1)
-                self.assertEqual(sum(isinstance(x,str) and x.startswith('SELECT COUNT(*)') for x in events),7)
+                self.assertEqual(sum(isinstance(x,str) and x.startswith('SELECT COUNT(*)') for x in events),8)
             else:self.assertNotIn('yielded',events)
             with self.assertRaises(Stopped):authority.claim()
 

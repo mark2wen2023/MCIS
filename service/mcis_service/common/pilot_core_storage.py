@@ -6,7 +6,7 @@ Importing this module does not import ORM; calling it deliberately does.
 Failure may leave DDL behind: discard that temporary DB, do not retry/reuse it.
 """
 CORE_TABLES = ('cases', 'evidence_items', 'custody_events', 'audit_events',
-               'access_policies', 'archive_import_history')
+               'access_policies', 'archive_import_history', 'track_local_receipts')
 
 
 def _initialize_pilot_core_storage(db):
@@ -17,9 +17,10 @@ def _initialize_pilot_core_storage(db):
     from ..audit.models import AuditEventRow
     from ..redaction.models import AccessPolicyRow
     from ..working_records_archive.models import ArchiveImportHistoryRow
+    from ..track_history.models import LocalReceipt
 
     models = (CaseRow, EvidenceRow, CustodyEventRow, AuditEventRow,
-              AccessPolicyRow, ArchiveImportHistoryRow)
+              AccessPolicyRow, ArchiveImportHistoryRow, LocalReceipt)
     tables = tuple(model.__table__ for model in models)
     # Use the real model objects (including their DDL listeners), never names
     # resolved to arbitrary replacement tables or the full global registry.
@@ -41,15 +42,16 @@ def _initialize_pilot_core_storage(db):
     Database._install_append_only_triggers(db)
     if set(inspect(db.engine).get_table_names()) != set(CORE_TABLES):
         raise RuntimeError('pilot core initialized table set incomplete/unexpected')
-    # ArchiveImportHistoryRow retains its original after_create listeners.
+    # ArchiveImportHistoryRow and LocalReceipt retain original after_create listeners.
     # Verify protection, not just table existence, before returning success.
     expected = {}
-    for name in ('audit_events', 'custody_events', 'archive_import_history'):
+    for name in ('audit_events', 'custody_events', 'archive_import_history', 'track_local_receipts'):
+        message = 'local track markers are append-only' if name == 'track_local_receipts' else f'{name} is append-only'
         for operation in ('UPDATE', 'DELETE'):
             trigger = f'{name}_no_{operation.lower()}'
             expected[trigger] = (name,
                 f'CREATE TRIGGER {trigger} BEFORE {operation} ON {name} '
-                f"BEGIN SELECT RAISE(ABORT, '{name} is append-only'); END")
+                f"BEGIN SELECT RAISE(ABORT, '{message}'); END")
     with db.engine.connect() as connection:
         actual = {name: (table, sql) for name, table, sql in connection.execute(text(
             "SELECT name, tbl_name, sql FROM sqlite_master WHERE type='trigger'"))}

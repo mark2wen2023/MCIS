@@ -35,7 +35,7 @@ def owned_creation_scope(*, authority, approved_host=None, sessions=None, origin
                 app=create_local_review_pilot(enabled=True,db=db,sessions=sessions,origin=origin,
                         image_imports=True,image_blob_dir=blobs,evidence_registration=True)
                 expected={'cases','evidence_items','custody_events','audit_events','access_policies',
-                          'archive_import_history','image_ocr_review_records'}
+                          'archive_import_history','track_local_receipts','image_ocr_review_records'}
                 checked(set(inspect(db.engine).get_table_names())==expected,'Unexpected preparation schema')
                 # Only fixed identifiers, no arbitrary SQL/client-provided table.
                 with db.engine.connect() as connection:

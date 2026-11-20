@@ -611,3 +611,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 图片镜像输入待独验：7组打包器纯合成检查通过；固定57文件源码审查输出重算SHA一致，默认构建退出2且不创建目标。logs/pilot-image-build-frozen.txt。缺track_local_receipts真实初始化及受审离线base，不能构建/运行，未执行应用/容器。
+
+
+试用航迹编号保留表待独验：旧fce90d3单项反例退出1，明确未建track_local_receipts；新存储11项、宿主6项AST/手写引擎检查通过。logs/pilot-track-receipt-storage-frozen.txt；真实ORM/DDL/登记未执行，仍无批准镜像或运行许可。

@@ -1,12 +1,16 @@
 """Standard-library AST + hand-written metadata/engine, no ORM/app imports."""
 import ast
+import argparse
 from pathlib import Path
 import subprocess
 from types import SimpleNamespace as NS
 import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
-BASE = '983d1b582027038a24d7f692bf4c8e9441ee021f'
+BASE = 'fce90d30cb94deb1069dca90c78693316e03c5c7'
+parser=argparse.ArgumentParser(add_help=False)
+parser.add_argument('--initializer-ref')
+options,remaining=parser.parse_known_args()
 def source(path):
     return subprocess.check_output(['git', 'show', BASE + ':' + path], cwd=ROOT, text=True)
 def run_nodes(nodes, scope):
@@ -14,17 +18,20 @@ def run_nodes(nodes, scope):
 
 class Checks(unittest.TestCase):
     def setup_model(self):
-        tree = ast.parse((ROOT/'service/mcis_service/common/pilot_core_storage.py').read_text())
+        path='service/mcis_service/common/pilot_core_storage.py'
+        text=(subprocess.check_output(['git','show',options.initializer_ref+':'+path],cwd=ROOT,text=True)
+              if options.initializer_ref else (ROOT/path).read_text())
+        tree = ast.parse(text)
         self.assertFalse(any(isinstance(n, (ast.Import, ast.ImportFrom)) for n in tree.body))
         imports = [n for n in ast.walk(tree) if isinstance(n, ast.ImportFrom)]
-        self.assertEqual({n.module for n in imports}, {'sqlalchemy','db','cases.models','evidence.models','audit.models','redaction.models','working_records_archive.models'})
+        self.assertLessEqual({n.module for n in imports}, {'sqlalchemy','db','cases.models','evidence.models','audit.models','redaction.models','working_records_archive.models','track_history.models'})
         # Remove imports ONLY for fake execution, retain production control flow.
         for n in tree.body:
             if isinstance(n, ast.FunctionDef):
                 n.body = [s for s in n.body if not isinstance(s, ast.ImportFrom)]
         scope = {}
         run_nodes(tree.body, scope)
-        names = scope['CORE_TABLES']
+        names = ('cases','evidence_items','custody_events','audit_events','access_policies','archive_import_history','track_local_receipts')
         tables = {name:NS(name=name, foreign_keys=()) for name in names}
         self.events = []; self.created = []; self.triggers = {}; self.drop_table = False; self.drop_trigger = False
         owner = self
@@ -63,6 +70,9 @@ class Checks(unittest.TestCase):
               'ArchiveArtifactRow':model('archive_historical_artifacts'), 'DDL':DDL,
               'event':NS(listen=lambda table,event,ddl:listeners.setdefault(table.name,[]).append(ddl.sql))}
         run_nodes([n for n in archive.body if isinstance(n,ast.For)],regs)
+        track=ast.parse(source('service/mcis_service/track_history/models.py'))
+        regs['LocalReceipt']=model('track_local_receipts')
+        run_nodes([n for n in track.body if isinstance(n,ast.For)],regs)
         def create_all(target, *, tables):
             self.assertIs(target,engine); self.events.append('create-explicit')
             self.created.extend(t.name for t in tables if not (self.drop_table and t.name=='cases'))
@@ -74,7 +84,7 @@ class Checks(unittest.TestCase):
             def get(): self.events.append('inspect'); return list(self.created)
             return NS(get_table_names=get)
         scope.update(Base=NS(metadata=metadata),Database=dbclass,APPEND_ONLY_TABLES=('audit_events','custody_events'),inspect=inspect,text=lambda x:x)
-        for key,name in zip(('CaseRow','EvidenceRow','CustodyEventRow','AuditEventRow','AccessPolicyRow','ArchiveImportHistoryRow'),names):
+        for key,name in zip(('CaseRow','EvidenceRow','CustodyEventRow','AuditEventRow','AccessPolicyRow','ArchiveImportHistoryRow','LocalReceipt'),names):
             scope[key]=NS(__table__=tables[name])
         self.scope=scope; self.db=NS(engine=engine); self.tables=tables
         return scope['_initialize_pilot_core_storage']
@@ -83,8 +93,26 @@ class Checks(unittest.TestCase):
         f=self.setup_model(); self.tables['unrelated']=NS(name='unrelated')
         self.assertEqual(f(self.db),self.scope['CORE_TABLES'])
         self.assertEqual(tuple(self.created),self.scope['CORE_TABLES'])
-        self.assertEqual(self.events,['inspect','create-explicit']+['trigger']*6+['inspect','verify-triggers'])
-        self.assertEqual(len(self.triggers),6)
+        self.assertEqual(self.events,['inspect','create-explicit']+['trigger']*8+['inspect','verify-triggers'])
+        self.assertEqual(len(self.triggers),8)
+
+    def test_required_track_receipt_and_original_listeners(self):
+        f=self.setup_model();f(self.db)
+        self.assertIn('track_local_receipts',self.created)
+        for op in ('UPDATE','DELETE'):
+            name='track_local_receipts_no_'+op.lower()
+            self.assertEqual(self.triggers[name],('track_local_receipts',
+                f"CREATE TRIGGER IF NOT EXISTS {name} BEFORE {op} ON track_local_receipts BEGIN SELECT RAISE(ABORT, 'local track markers are append-only'); END;"))
+
+    def test_missing_track_model_or_trigger_refused(self):
+        f=self.setup_model();del self.tables['track_local_receipts']
+        with self.assertRaisesRegex(RuntimeError,'metadata'):f(self.db)
+        self.assertEqual(self.events,[])
+        f=self.setup_model();original=self.scope['Database']._install_append_only_triggers
+        def remove(db):
+            original(db);self.triggers.pop('track_local_receipts_no_delete',None)
+        self.scope['Database']._install_append_only_triggers=remove
+        with self.assertRaisesRegex(RuntimeError,'protection'):f(self.db)
 
     def test_missing_model_before_engine(self):
         f=self.setup_model(); del self.tables['archive_import_history']
@@ -114,7 +142,7 @@ class Checks(unittest.TestCase):
         f=self.setup_model()
         paths={'cases.models':('CaseRow',), 'evidence.models':('EvidenceRow','CustodyEventRow'),
                'audit.models':('AuditEventRow',),'redaction.models':('AccessPolicyRow',),
-               'working_records_archive.models':('ArchiveImportHistoryRow',)}
+               'working_records_archive.models':('ArchiveImportHistoryRow',),'track_history.models':('LocalReceipt',)}
         names=[]
         for module, classes in paths.items():
             tree=ast.parse(source('service/mcis_service/'+module.replace('.', '/')+'.py'))
@@ -140,4 +168,4 @@ class Checks(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'synthetic DDL'): f(self.db)
         self.assertEqual(self.events,['inspect'])
 
-if __name__=='__main__': unittest.main()
+if __name__=='__main__': unittest.main(argv=[__file__,*remaining])
