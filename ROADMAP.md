@@ -581,3 +581,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 授权案发现API待独验：5组新AST/手写替身与7/6组相邻通过，见 tests_acceptance/pilot-case-discovery/REVIEW.md；冻结 logs/pilot-case-discovery-frozen.txt。真实受限存储装配及同源首次导入仍阻断。
+
+
+试用基础存储待独验：9组AST/手写metadata/engine检查通过，未运行DB/ORM。冻结 logs/pilot-core-storage-frozen.txt；见 tests_acceptance/pilot-core-storage/REVIEW.md；工厂仍未启用。

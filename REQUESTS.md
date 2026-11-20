@@ -890,3 +890,6 @@ Authorized on 331a0ed: production JSON status/code parsing distinguishes current
 
 
 local-review-pilot真实授权案发现切片：显式注册GET /api/v1/pilot/cases，从有效会话case.read集合逐案调用现有load_case，不读全案列表；默认拒绝、不启用工厂。
+
+
+合成试用基础存储：新增未接线的六表显式初始化，保留原模型/只追加保护；不改默认初始化，不宣称媒体任务绑定依赖闭合。

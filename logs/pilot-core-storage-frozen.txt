@@ -1,0 +1,3 @@
+fa8af4e7ab87ddcd7d71fa40430a4ea62652187bbba5fe0640782928e4eb1a12  service/mcis_service/common/pilot_core_storage.py
+ae0b6a23e6b505b359e9bb81b1308e9686c149aeca7e827e1c4f3a15ea572dc8  tests_acceptance/pilot-core-storage/check.py
+c1db3bc6fac9f8d60edb23d5aaa28377509f379396babb2be0a8ce7682cae6b0  tests_acceptance/pilot-core-storage/REVIEW.md
