@@ -939,3 +939,5 @@ local-review-pilot真实授权案发现切片：显式注册GET /api/v1/pilot/ca
 - OCI 元数据窄预检（待独验）：新增独立标准库工具及 9 组合成归档检查；仅 USTAR/单平台 OCI，校验 tar 与引用 blob，不解压/批准/运行。冻结见 logs/oci-metadata-review-impl-hashes-frozen.txt；旧打包器、产品冻结与允许表不变。
 
 - Pilot 同源返回/回选待独验：仅 pages.py/workbench.html 和合成检查；确认上下文后返回，URL 提示须重新匹配授权列表并显式选案。logs/pilot-return-hint-impl-hashes-frozen.txt；旧 6169caf/3a615bf 构建冻结不更新，新 UI 尚未进入镜像；未运行服务或浏览器。
+
+- 独立智海式取证壳待独验：candidate/zhihai-evidence-workbench 基于15dd614，参考经摘要核对的用户11/19 index.html，仅重排pilot工作台/图片页静态壳；业务内联脚本逐字不变。tests_acceptance/zhihai-workbench/README.md；logs/zhihai-workbench-impl-hashes-frozen.txt。静态/合成通过，未作像素或浏览器验收，旧构建冻结/允许表不变。

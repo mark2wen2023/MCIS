@@ -1,5 +1,6 @@
 """Pure source page shapers + fake registration; never import application packages."""
 import ast
+import runpy
 from pathlib import Path
 import subprocess
 import shutil
@@ -13,14 +14,15 @@ def definitions(source,scope,names=None):
     tree=ast.parse(source)
     nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and (names is None or n.name in names)]
     exec(compile(ast.Module(body=nodes,type_ignores=[]),'<reviewed pure AST>','exec'),scope)
-scope={}
+skin=runpy.run_path(str(ROOT/'service/mcis_service/local_review_pilot/workbench_skin.py'))
+scope={'CSS':skin['CSS'],'image_shell':skin['image_shell']}
 definitions(git_source('service/mcis_service/_review_page.py'),scope)
 source=(ROOT/'service/mcis_service/local_review_pilot/pages.py').read_text()
 definitions(source,scope,['workbench_page','image_page'])
 raw=(ROOT/'service/mcis_service/image_review/review.html').read_text()
 html=scope['image_page'](raw)
 workbench=(ROOT/'service/mcis_service/local_review_pilot/workbench.html').read_text()
-assert scope['workbench_page'](workbench,images=False)==workbench
+assert scope['workbench_page'](workbench,images=False)==workbench.replace('/* pilot-workbench-skin */',skin['CSS'])
 assert 'const imagePageAvailable=true;' in scope['workbench_page'](workbench,images=True)
 for marker in ['const originalRoutesAvailable=true;','const pilotSession=false;','<section class="image-pane"']:
     try:scope['image_page'](raw.replace(marker,''))

@@ -1,17 +1,15 @@
-<!doctype html>
-<html lang="zh-CN">
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="referrer" content="no-referrer">
-<title>粤海探析 · 合成试用工作台</title>
-<style>
-:root{font-family:system-ui,sans-serif;color:#183042;background:#f4f7fa;line-height:1.6}body{margin:0}main{max-width:1040px;margin:auto;padding:24px}header,section,nav{background:white;border:1px solid #d6e0e7;border-radius:10px;padding:20px;margin-bottom:16px}h1{font-size:1.6rem;margin:0}h2{font-size:1.15rem;margin-top:0}.subtle{color:#465d6c}ol{display:flex;flex-wrap:wrap;gap:12px;padding-left:24px}li{padding-right:12px}[aria-current=step]{font-weight:bold;color:#005d76}button{font:inherit;padding:8px 14px;background:#075e78;color:white;border:0;border-radius:5px;cursor:pointer}button:disabled{background:#697c88;cursor:wait}button:focus-visible,a:focus-visible{outline:3px solid #af6000;outline-offset:3px}#cases{display:flex;flex-wrap:wrap;gap:8px}#cases button{background:#edf4f7;color:#173d50;border:1px solid #aac3cf;max-width:100%;overflow-wrap:anywhere;text-align:left}#cases button[aria-pressed=true]{border:2px solid #075e78}#context,#case-title{overflow-wrap:anywhere}a{color:#075e78}.boundary{border-left:4px solid #ac6500;padding-left:12px}@media(max-width:560px){main{padding:12px}header,section,nav{padding:14px}}
-</style>
-<main>
-<header><p class="subtle">粤海探析 / 合成试用专用</p><h1>选案 → 取证</h1><p>仅用于获授权的合成案件。仅供独立试用入口；尚未完成运行验收，不用于真实材料或生产办案。</p></header>
-<nav aria-label="案件流程"><ol><li><a href="#case-picker">接报 / 选案</a></li><li id="stage">取证（待选案）</li><li>询问（未接入）</li><li>分析（未接入）</li><li>报告（未接入）</li><li>建议（未接入）</li><li>沉淀（后续）</li></ol><p>流程位置不代表完成；完成状态未评估，可返回选案。</p></nav>
-<section id="case-picker" aria-labelledby="picker-title"><h2 id="picker-title">服务器授权案件</h2><p>仅列出当前服务器会话允许读取的案件；不会读取全案列表。刷新清除当前选择。</p><button id="refresh" type="button">读取 / 刷新授权案件</button><p id="list-status" role="status" aria-live="polite">尚未读取，请主动读取授权案件。</p><p id="return-hint" role="status">没有已确认的回选提示。</p><div id="cases" aria-label="选择案件"></div></section>
-<section id="evidence" aria-labelledby="evidence-title"><h2 id="evidence-title">取证首页</h2><p id="context">未选择案件</p><h3 id="case-title"></h3><p id="detail-status" role="status" aria-live="polite">先从服务器授权清单明确选择案件。</p><p id="next">下一步：读取授权案件并选案。</p><div id="image-entry"></div><div class="boundary"><strong>图音接入范围</strong><p>原件登记回执、已有图音识别结果导入、人工核对保存、按运行刷新重开是不同步骤。本页只读取案件，不读取证据、媒体、时间线、航迹或报告，也不能保存核对。</p><p>图片操作仅限显式装配的受限入口；同源会话和隔离运行仍待验收。仅在下方出现已装配的图片入口时，可前往该页；本工作台不执行导入、保存或下载。音频尚未接入。</p></div></section>
-</main>
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><title>粤海探析 · 取证工作台</title><style>/* pilot-workbench-skin */</style><body>
+<header class="hdr"><div class="brand"><span class="brand-icon" aria-hidden="true">航</span>粤海探析</div><span class="hdr-sep"></span><div class="crumb">调查工作台 / 取证</div><span class="tag">合成试用 · 未运行验收</span></header>
+<div class="layout">
+<aside class="side" id="case-picker" aria-labelledby="picker-title"><div class="side-label">CASE QUEUE</div><h2 id="picker-title">案件队列</h2><button id="refresh" type="button" class="primary">读取 / 刷新授权案件</button><p id="list-status" role="status" aria-live="polite">尚未读取，请主动读取授权案件。</p><div id="cases" aria-label="选择案件"></div><p id="return-hint" role="status">没有已确认的回选提示。</p><p class="muted">只列服务器授权案件。刷新会清除当前选择，不使用默认案号。</p></aside>
+<main class="main"><nav class="stage-bar" aria-label="案件流程"><ol><li><span class="stage-num">1</span><a href="#case-picker">接报 / 选案</a></li><li class="active"><span class="stage-num">2</span><span id="stage">取证（待选案）</span></li><li aria-disabled="true"><span class="stage-num">3</span>询问</li><li aria-disabled="true"><span class="stage-num">4</span>分析</li><li aria-disabled="true"><span class="stage-num">5</span>报告</li><li aria-disabled="true"><span class="stage-num">6</span>建议</li><li aria-disabled="true"><span class="stage-num">7</span>沉淀</li></ol></nav>
+<div class="content-main" id="evidence"><div class="page-heading"><div><div class="eyebrow">INVESTIGATION / EVIDENCE</div><h1>取证工作台</h1><p>先选案，再进入已有登记结果的内容核对。</p></div><span class="tag">完成状态未评估</span></div>
+<section class="card"><div class="card-head"><h2>证据与核对工作区</h2><span class="tag">未读取证据台账</span></div><div class="evidence-row"><span class="file-icon" aria-hidden="true">OCR</span><div><h3>图片文字核对</h3><p>同案已保存运行 / 导入已有识别结果 / 人工修订</p></div><span class="tag">需逐案授权</span></div><div id="image-entry"></div><div class="evidence-row"><span class="file-icon" aria-hidden="true">WAV</span><div><h3>音频内容核对</h3><p>本试用工厂尚未装配，不提供跳转</p></div><span class="tag">未接入</span></div></section>
+<section class="card"><div class="card-head"><h2>内容核对</h2><span class="tag">按当前运行</span></div><div class="empty"><div class="empty-mark" aria-hidden="true">[ — ]</div><h3>从授权案件进入核对记录</h3><p>左侧主动读取并选择案件。案件详情确认后，可使用上方实际装配的图片入口；此处不预填证据或完成数量。</p></div></section>
+<section class="card"><div class="card-head"><h2>图音接入范围</h2></div><div class="card-body muted"><p>原件登记、已有结果导入和人工修订是不同步骤。导入需四份合法同案登记回执；摘要在图片页的明确导入入口填写。</p><p>本页只读取案件，不读取证据、媒体、时间线、航迹或报告，也不能保存核对。七阶段仅导航位置，未接入阶段不可操作，可回头补证。</p></div></section>
+</div></main>
+<aside class="inspector" aria-label="来源、版本与待办"><h2>当前案件 / 核对上下文</h2><section class="inspect-block"><h3>服务器确认的案件</h3><p id="context">未选择案件</p><h3 id="case-title"></h3><p id="detail-status" role="status" aria-live="polite">先从服务器授权清单明确选择案件。</p></section><section class="inspect-block"><h3>下一步</h3><p id="next">下一步：读取授权案件并选案。</p></section><section class="inspect-block"><h3>来源与版本</h3><p>本页仅确认案件详情。证据来源、运行修订与保存反馈需在核对页逐项读取。</p><p class="muted">没有读取不等于零条，也不代表完成。</p></section><section class="inspect-block"><h3>待办 · 非完成进度</h3><ol class="steps"><li>核对选中案件</li><li>进入已有结果核对</li><li>确认保存反馈并重开</li></ol></section><p class="notice">仅用于获授权的合成案件。不提供 AI 探员、真实模型、原件预览或报告生成；尚未完成运行验收。</p></aside>
+</div>
 <script>
 'use strict';
 (() => {
@@ -109,4 +107,4 @@
  });
 })();
 </script>
-</html>
+</body></html>

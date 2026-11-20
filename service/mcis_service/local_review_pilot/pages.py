@@ -1,10 +1,14 @@
 """Server-controlled pilot page shaping, never a URL capability or authentication."""
 from .._review_page import _review_page
+from .workbench_skin import CSS, image_shell
 
 
 def workbench_page(html, *, images):
     if type(images) is not bool or html.count('const imagePageAvailable=false;') != 1:
         raise ValueError('pilot workbench capability marker mismatch')
+    if html.count('/* pilot-workbench-skin */') != 1:
+        raise ValueError('pilot skin marker mismatch')
+    html = html.replace('/* pilot-workbench-skin */', CSS)
     return html.replace('const imagePageAvailable=false;', 'const imagePageAvailable=true;') if images else html
 
 
@@ -37,7 +41,7 @@ reopenFromUrl(typeof location===""",
         if html.count(marker) != 1:
             raise ValueError('pilot image capability marker mismatch')
         html = html.replace(marker, replacement)
-    return html
+    return image_shell(html)
 
 
 def _mount_pilot_image_pages(app):
