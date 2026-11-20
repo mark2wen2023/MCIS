@@ -22,9 +22,14 @@ IMAGE_ROUTES = frozenset({
     ('POST', '/api/v1/cases/{case_id}/image-reviews/{run_id}/reviews'),
 })
 
+REGISTRATION_ROUTES = frozenset({
+    ('POST', '/api/v1/cases/{case_id}/evidence-intakes:preview'),
+    ('POST', '/api/v1/cases/{case_id}/evidence-intakes:commit'),
+})
+
 
 def create_local_review_pilot(*, enabled=False, db=None, sessions=None, origin=None,
-                              image_imports=False, image_blob_dir=None):
+                              image_imports=False, image_blob_dir=None, evidence_registration=False):
     if enabled is not True:
         raise ValueError('synthetic pilot is disabled')
     from ..common.local_review_pilot import PilotSessions, _cookie_reader, _install_local_review_pilot
@@ -36,6 +41,8 @@ def create_local_review_pilot(*, enabled=False, db=None, sessions=None, origin=N
 
     if type(image_imports) is not bool:
         raise ValueError('explicit image capability required')
+    if type(evidence_registration) is not bool or (evidence_registration and not image_imports):
+        raise ValueError('registration requires explicit image pilot capability')
     if image_imports and (not isinstance(image_blob_dir, Path) or not image_blob_dir.is_absolute()):
         raise ValueError('explicit absolute synthetic blob root required')
 
@@ -84,11 +91,21 @@ def create_local_review_pilot(*, enabled=False, db=None, sessions=None, origin=N
         receipt_router = APIRouter(route_class=NoStoreRoute)
         receipt_router.add_api_route('/api/v1/cases/{case_id}/evidence-intakes/{digest}',
                                      receipt_input, methods=['GET'])
+        if evidence_registration:
+            from ..evidence_intake.router import preview_input, commit_input
+            # Preserve original bounded body, identity-bound digest, history,
+            # exclusive file write, custody/audit and cleanup behavior in full.
+            receipt_router.add_api_route('/api/v1/cases/{case_id}/evidence-intakes:preview',
+                                         preview_input, methods=['POST'])
+            receipt_router.add_api_route('/api/v1/cases/{case_id}/evidence-intakes:commit',
+                                         commit_input, methods=['POST'])
         app.include_router(receipt_router)
         _mount_image_imports_only(app)
         _mount_pilot_image_pages(app)
 
     expected = ROUTES | IMAGE_ROUTES if image_imports else ROUTES
+    if evidence_registration:
+        expected = expected | REGISTRATION_ROUTES
     actual = [(method, route.path) for route in app.routes for method in route.methods]
     if len(actual) != len(expected) or frozenset(actual) != expected:
         raise RuntimeError('pilot route surface changed; initialization refused')

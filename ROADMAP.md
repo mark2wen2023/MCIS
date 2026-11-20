@@ -596,3 +596,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 试用图片页面待独验：生产脚本内存fetch及普通/受限页22项对照通过，工作台10/工厂5/API7组通过；logs/pilot-pages-frozen.txt。无真实浏览器/HTTP/合法回执全链验收。
+
+
+试用登记装配待独验：4组新AST/手写替身、工厂5组、图片7组通过；logs/pilot-registration-frozen.txt。案A四回执且零运行仅列后续强制检查，真实准备/HTTP/ORM未执行。
