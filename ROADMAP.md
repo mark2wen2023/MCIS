@@ -587,3 +587,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 试用工作台待独验：9组生产内联JS/合成DOM-Promise通过；logs/pilot-workbench-frozen.txt。页面未挂载，浏览器/同源会话/实际图音闭环未验。
+
+
+最小试用工厂待独验：5组AST/替身、相邻存储9组与UI9组通过；logs/pilot-factory-frozen.txt。真实FastAPI/DB/TLS/HTTP未运行，媒体依赖及受限闭环未完成。
