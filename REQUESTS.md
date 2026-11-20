@@ -884,3 +884,6 @@ Authorized on 331a0ed: production JSON status/code parsing distinguishes current
 
 
 独立候选 verified-case-context：新增未接线的实例级CtxDep替换，显式服务器验证器确认主体/案/操作，默认拒绝；原默认入口/业务保护不变。无生产身份源，非运行权限验收。
+
+
+独立local-review-pilot候选：显式服务器临时会话表+同源Cookie读取器，逐案/操作/过期/撤销检查，经verified-case-context接线。默认关闭，无会话发行/真实工厂，不改旧默认。

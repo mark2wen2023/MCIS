@@ -575,3 +575,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 可信案件上下文接入点待独验：6组AST/标准库手写替身通过；tests_acceptance/verified-case-context/REVIEW.md；冻结 logs/verified-case-context-frozen.txt。未装配/启动，不开放工作台入口。
+
+
+试用身份源接线待独验：新增7组与原边界6组AST/手写替身通过；tests_acceptance/local-review-pilot/REVIEW.md；冻结 logs/local-review-pilot-frozen.txt。受限工厂/同源引导与真实首次导入仍未验。

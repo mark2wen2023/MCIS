@@ -1,0 +1,3 @@
+7a1fbf2c94706c9aa16190395622ee5b39aa300a389ce904d431732e7cad4c7a  service/mcis_service/common/local_review_pilot.py
+9d306df51264bff12971a25863a3acc039013361fc0c95942470162225c838f6  service/mcis_service/common/verified_case_context.py
+013331a698806f87520c2db56e34c40c5f842973a4ead5e482691cf54667013b  tests_acceptance/local-review-pilot/check.py
