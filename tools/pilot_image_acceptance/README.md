@@ -12,7 +12,7 @@
 - `prepare.py::bind_existing_case_creator`：显式受信建案授权提供器缺失则在导入前拒绝；
   有提供器时用现有 `_register_basic_cases` 收集原 create_case 函数，私有router永不挂载。
   原schema、角色、重复检查、put_doc与audit不改。这里没有自行构造Ctx或新建数据库行。
-  **提供器尚未实现**，必须确实确认精确案号的创建权限；case.read、任意Ctx或普通会话
+  本次新增内部提供器见下节；仍须由可信宿主确认配置来源。case.read、任意Ctx或普通会话
   不能视为创建许可。现有试用权限映射没有case.create，不能拿该映射冒充已提供这个能力。
 - `prepare_registered_case_a(host=...)`：在宿主批准的资源作用域中创建两案、真实单案重读、
   核对两案零运行；对A的四材料依序真实preview/commit、比对SHA/元数据/案号/证据ID、
@@ -62,3 +62,43 @@ python -I tests_acceptance/pilot-image-fixture/check.py
 首次AST断言误把说明中的“sessions”当数据库调用，已改为检查AST属性调用后复跑通过。
 未导入FastAPI/SQLAlchemy/应用，未执行建案、准备、ORM、HTTP、浏览器、权限或模型测试。
 检查读取的Git对象仅是明确的契约schema和纯解析源码；没有读取真实案例/seed或凭据。
+
+
+## 本轮内部建案适配（待批准源码，未运行）
+
+基线 `afd1e49b7d8a0f7933c452445d54ab7b3f6293c1`。
+`authority.py` 的 `CreationConfig` 必须来自宿主核验的服务器配置：显式主体、创建角色、
+最长十分钟的进程单调时钟截止点，以及两份 `cases()` 精确正文摘要绑定的
+`(caseId, case.create, bodySHA256)` 授权集合。它验证配置形状与范围，不认证配置签发者。
+不接受浏览器参数、角色头或普通 case.read 权限作为创建授权，无默认身份、密码或凭据。
+一份 authority 仅领取一次、仅绑定一个适配器；每案仅发送一次。处理器异常关闭整个创建作用域，
+不能据此推断未提交或自动重试。此约束仅在该进程对象内成立，重启/重新构造配置不具持久防重保证。
+
+`host_adapter.py::owned_creation_scope` 提供实际可供未来宿主调用的上下文管理器源码：
+先要求外部 `approved_host.isolated_workspace()`，再领取授权；宿主检查成功后，在其专属目录
+新建自有临时子目录/新 SQLite 路径，用现有专用 factory 初始化真实表及保护；核对确切七表
+且全部零行后才给出 `(creation_adapter, app, root)`。适配器构造服务器 `Ctx/Request`，
+调用原 `bind_existing_case_creator`，不调用 get_ctx 或注入浏览器头，不挂公开 POST /cases。
+成功/异常退出都关闭适配器、dispose 引擎、清理自己新建的临时子目录。真实数据库、SQLAlchemy
+和清理行为本轮均未运行；本轮验证的是 AST 与手写资源替身。
+
+**没有提供隔离执行器，仍禁止运行。** `isolated_workspace()` 不是布尔声明：受审宿主须实际
+检查并强制源码/依赖/schema 白名单、无旧库/业务/seed/用户秘密/模型挂载、网络限制、目录独占，
+不能证实就不得 yield。该接口是信任边界，不会检测恶意 Python 调用者伪造宿主对象；venv 或空目录
+不能代替这些条件。当前没有可引用的此类平台实施证据，因此缺省宿主在应用/ORM导入前阻断。
+
+未来宿主还须完成以下具体接线（本轮未实现、不得自行执行）：
+1. 在同一明确批准作用域提供经核验的 CreationConfig 和真实短期 PilotSessions；
+   建案权限仅适配器拥有，不扩展浏览器授权。不要打印、落盘或把秘密放入 URL/HTML。
+2. 将 `host.create_case` 绑定 `creation_adapter.create_case`，把同源请求传输绑定此同一个 app，
+   保持 `prepare_registered_case_a` 的两案零运行、四份真实登记与回读断言，不直接插库。
+3. 仅 HTTPS 127.0.0.1 私有监听；认证 bootstrap、TLS、浏览器和监听生命周期必须在
+   owned scope 退出前停止并撤销会话，外层宿主再收回隔离资源。适配器本身不创建监听或会话。
+4. 用户批准后才运行真实 ORM/HTTP/浏览器链；未知提交直接停止，不把替身结果称合法登记。
+
+本轮可复验且唯一执行的检查命令：
+```sh
+python -I tests_acceptance/pilot-creation-authority/check.py
+```
+6 项标准库检查：固定两案/身份、正文与有效期、异常不重试、上下文限制、手写资源顺序与清理、
+真实宿主适配源码 AST 顺序。没有导入应用、FastAPI、ORM，没有创建库、临时资源或真实请求。

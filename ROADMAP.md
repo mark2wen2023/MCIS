@@ -602,3 +602,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 合成图片夹具待独验：5组标准库纯字节/解析器AST/编排静态检查通过；logs/pilot-image-fixture-frozen.txt。建案/准备/HTTP/浏览器未执行，可信隔离宿主及建案授权仍阻断。
+
+
+合成图片建案适配待独验：6项标准库AST/手写资源替身通过，logs/pilot-creation-authority-frozen.txt；真实宿主隔离、会话/TLS/监听生命周期与ORM/HTTP/浏览器均未实现或未验，禁止实跑。

@@ -22,8 +22,9 @@ def bind_existing_case_creator(*, context_for_creation=None):
     """Future trusted host only; missing authorization adapter fails before imports.
 
     context_for_creation must independently authorize creation for the exact
-    synthetic ID and return a server Ctx. This candidate does NOT implement that
-    authority; case.read/session possession alone must never satisfy it.
+    synthetic ID and return a server Ctx. authority.py supplies the internal
+    fixed-case provider; its configuration must come from a trusted host.
+    case.read/session possession alone must never satisfy creation authority.
     The private router is a handler collector, never mounted or served.
     """
     checked(callable(context_for_creation), 'Explicit server case-creation authorization adapter required')
