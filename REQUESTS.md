@@ -881,3 +881,6 @@ Authorized on 331a0ed: production JSON status/code parsing distinguishes current
 
 
 取证UI离线入口显式升级媒体固定基线至dc502326，工作台16eab999不变；新增已保存运行选择/case-only及两套音频回归的固定摘要与命令，不改产品或关闭哈希。
+
+
+独立候选 verified-case-context：新增未接线的实例级CtxDep替换，显式服务器验证器确认主体/案/操作，默认拒绝；原默认入口/业务保护不变。无生产身份源，非运行权限验收。
