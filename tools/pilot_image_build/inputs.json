@@ -1,0 +1,380 @@
+{
+  "format": "mcis-pilot-build-inputs/1",
+  "commit": "5647d960a9fe7ed3976e9b19219f88ba29939680",
+  "files": [
+    {
+      "path": "contracts/schemas/case.schema.json",
+      "blob": "0348dceb84be818180d23730cc45b696f613d9c3",
+      "sha256": "5160e13fee6093f790f6cbff8cac2153179e990e790fe3d8e2cdcee852661bd9",
+      "size": 1955
+    },
+    {
+      "path": "contracts/schemas/common.schema.json",
+      "blob": "d91719995e23673c1db87e560458b276f69b1ff8",
+      "sha256": "f07b49f3e8e396e79b5236e60c9d6cfb6786902f92c6a5748ea938aa42cf8806",
+      "size": 2712
+    },
+    {
+      "path": "contracts/schemas/evidence-item.schema.json",
+      "blob": "d72be421874d47ccf157986cef31e4d27061ab1a",
+      "sha256": "f108ad5a9be67f81862177d2185f18f54c41d57d63df8d318fe3f50281711e08",
+      "size": 2988
+    },
+    {
+      "path": "service/mcis_service/__init__.py",
+      "blob": "d0057db3b4a34ea8643fe57cbbd0cc94fb430242",
+      "sha256": "0af1ae7229694ada406cc87b5cbaaf195441620cb48e8dda54df83a3f6295480",
+      "size": 93
+    },
+    {
+      "path": "service/mcis_service/_review_page.py",
+      "blob": "fb1daa046308d9abd7327a090d33b52d0efd594c",
+      "sha256": "aad698ebeec7ebbae561672858346154edfd11d77fd08f1e95ef850cfb67914c",
+      "size": 932
+    },
+    {
+      "path": "service/mcis_service/audit/__init__.py",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "service/mcis_service/audit/models.py",
+      "blob": "8ab5d0dc9694281300affcb7d2d5ca04f5df5248",
+      "sha256": "11f5c91f5ec0d189b4c94fad71cd3f7de7c5fe4673d13c4a807963b43729ad9b",
+      "size": 1127
+    },
+    {
+      "path": "service/mcis_service/audit/service.py",
+      "blob": "ef06ebec3b6b1f07fe748a6dc30eed2aa0453eeb",
+      "sha256": "69b51ee029fdfdb3042b598a609b5138d7f7bee27c89823e881c541071e673da",
+      "size": 7155
+    },
+    {
+      "path": "service/mcis_service/cases/__init__.py",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "service/mcis_service/cases/basic_registration.py",
+      "blob": "e299551d63a80743c48a504afeaa12ee7924853b",
+      "sha256": "6522a7cfa6c1f8b717b23fe386f8824fcd77c1d16cc5a7b2b103707470a42b73",
+      "size": 2048
+    },
+    {
+      "path": "service/mcis_service/cases/models.py",
+      "blob": "a2d0b8e27102f9849d43ce8047f75a19417cd3fc",
+      "sha256": "f941613d0df2f00b3fa11931756cac0b9a4f69aff10b2b66b4614a7bb03f2aef",
+      "size": 662
+    },
+    {
+      "path": "service/mcis_service/cases/service.py",
+      "blob": "efa7db4415fd953eeec877258673896b9411221e",
+      "sha256": "e17e1c5709ec510cf5e443961039092d0315ad64f0342c67c38de684c706ebdf",
+      "size": 2723
+    },
+    {
+      "path": "service/mcis_service/common/__init__.py",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "service/mcis_service/common/context.py",
+      "blob": "831a037954682115ba49c2742601117900676d78",
+      "sha256": "a860b79756a213c6bc70ce375c3b29c76920f79ccd3f8dba5c5eae5b22438dde",
+      "size": 1332
+    },
+    {
+      "path": "service/mcis_service/common/contracts.py",
+      "blob": "12a19142da0824ed06d69ab90955b7d437b41634",
+      "sha256": "6c7829bb5ff0a7e1af31214b97c93b1e7d7e0e7559ffe47d312e4145c71017ac",
+      "size": 1491
+    },
+    {
+      "path": "service/mcis_service/common/csjson.py",
+      "blob": "08420730190b5711308f6b64ef142682e9009443",
+      "sha256": "a6c43b1df8bb08b06cf87936e1ff3aed54907975b28a7ed7a17a9e61e5a89900",
+      "size": 1585
+    },
+    {
+      "path": "service/mcis_service/common/local_review_pilot.py",
+      "blob": "8acf0556679f95c7f06631a04797b840784282c2",
+      "sha256": "9108cf78f790eb80698cfbc90dc3798c9d750365e1d26c5ed0c7565bac85e35e",
+      "size": 5719
+    },
+    {
+      "path": "service/mcis_service/common/pilot_case_discovery.py",
+      "blob": "94b7dd2cd601dec3c7aa1b2eaef39d7ab777ab93",
+      "sha256": "7699b42835c8eec4077a591627dcae83f9fcb5a7f4d099f2fc11b5f8ef91da95",
+      "size": 2574
+    },
+    {
+      "path": "service/mcis_service/common/pilot_core_storage.py",
+      "blob": "f999d6de5677ba9bc8cadcebc4b48ad6a4917e62",
+      "sha256": "fa8af4e7ab87ddcd7d71fa40430a4ea62652187bbba5fe0640782928e4eb1a12",
+      "size": 3731
+    },
+    {
+      "path": "service/mcis_service/common/timeutil.py",
+      "blob": "73f85d80a0a514ea0b4b7adb597e03964862def2",
+      "sha256": "acebeceb1fde1bb336bb0d5f19349eb00e39b051b4dac3e0b7593ff9929ca4e5",
+      "size": 1221
+    },
+    {
+      "path": "service/mcis_service/common/verified_case_context.py",
+      "blob": "76d86c2f522743ce10918b44a02bffcbb0f73407",
+      "sha256": "9d306df51264bff12971a25863a3acc039013361fc0c95942470162225c838f6",
+      "size": 5102
+    },
+    {
+      "path": "service/mcis_service/config.py",
+      "blob": "aba470fc79aeb32824d9b3119be3de5cbdd4df42",
+      "sha256": "0e5e5262bcffe7f63fbca833e5cd267045d9db790d7600f0848c5451f21aa2ea",
+      "size": 1174
+    },
+    {
+      "path": "service/mcis_service/db.py",
+      "blob": "6d6ea88c8023c2dc3f7c6caad54bf311d6188a44",
+      "sha256": "82dbe9bb89c8676e319bde6cb5d6be2efe08aa19104331fcc068ff6a9538548d",
+      "size": 4285
+    },
+    {
+      "path": "service/mcis_service/evidence/__init__.py",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "service/mcis_service/evidence/models.py",
+      "blob": "b932477c86927935d78c28f78b669b55e8ab78b4",
+      "sha256": "989c22f76b9375eeb34da9de0877290b3797978721ab91921b5abf42dd8c3113",
+      "size": 1358
+    },
+    {
+      "path": "service/mcis_service/evidence/service.py",
+      "blob": "3eda8ab08896b8ad10117d367ba8ef5eedc542c1",
+      "sha256": "5e16fac97124c9e6180e104281b14a944d8dc721f85ab4a1f6957302672bb406",
+      "size": 9740
+    },
+    {
+      "path": "service/mcis_service/evidence_intake/__init__.py",
+      "blob": "41f9ac7779be36426ecad83da28643c77c6d427f",
+      "sha256": "ee52d083e7092c5f824d0f09afb0fca33e447fc092968ceb96c6a7ad217bf454",
+      "size": 86
+    },
+    {
+      "path": "service/mcis_service/evidence_intake/parser.py",
+      "blob": "803e4f9fd67592d5977d365c1d8e1ccf52ce9565",
+      "sha256": "8330cd9ce803309ded4ccf846a4cc3611c9672ddad31bf2ea0b91a71144f07ea",
+      "size": 4658
+    },
+    {
+      "path": "service/mcis_service/evidence_intake/router.py",
+      "blob": "c6b05b565cf4a2a32b84d579934fa0fc26e20116",
+      "sha256": "49f82c2e36f597df9375f91e14fb37d283186a4d5114f69b16ec94f347cf75e9",
+      "size": 13887
+    },
+    {
+      "path": "service/mcis_service/image_review/__init__.py",
+      "blob": "9d4adef383ffc00c15d17e3d4fa23c1b5c9003a9",
+      "sha256": "ea618bb0eb33d0f1fef6f3eafa3a1d57fbf44eb12452fe4d8174ad1cabec3374",
+      "size": 87
+    },
+    {
+      "path": "service/mcis_service/image_review/app.py",
+      "blob": "c3aa370e9b67f983d675c668ff12202df347bf1c",
+      "sha256": "ca3359bae7354f50dd03aa398b21c2da4a997fbff80ae1608b1883b102a73ce5",
+      "size": 11502
+    },
+    {
+      "path": "service/mcis_service/image_review/contract.py",
+      "blob": "a589db9040301baf33d12f8709fbbb519d435435",
+      "sha256": "969902fce786c6cfe19f06498f79ff3d5259e87df35f21f1c21c23747b218c7c",
+      "size": 3987
+    },
+    {
+      "path": "service/mcis_service/image_review/preview.js",
+      "blob": "19768292f9248d0ff1d719e843017ad478636b23",
+      "sha256": "05220348abecf2321a520358d8b3317a0dc3378007edb429ea417ba0b19e0ec7",
+      "size": 3578
+    },
+    {
+      "path": "service/mcis_service/image_review/review.html",
+      "blob": "8fd1481f2bb3df0b58f060a1efab868836f16993",
+      "sha256": "5697a612f8084bb9c0263e1470df76de1d9702f98b63cc035dba272fa98304ac",
+      "size": 26550
+    },
+    {
+      "path": "service/mcis_service/local_review_pilot/factory.py",
+      "blob": "41589a73fd6cf366ad2c64265589f9b774dbf98a",
+      "sha256": "f911123c9a5f4400a7f704b76ec65badb15409a4a3e011bc7d179f360eebd404",
+      "size": 6290
+    },
+    {
+      "path": "service/mcis_service/local_review_pilot/pages.py",
+      "blob": "d4b919129ea0a45f2c23ed9930b74bd90f3f1bb5",
+      "sha256": "8ccd5bb248f23a3210b1778ef5aa4bc31c54f28a5281605c3fc9240096e715a2",
+      "size": 2618
+    },
+    {
+      "path": "service/mcis_service/local_review_pilot/workbench.html",
+      "blob": "75caba385dc6f823184352274eb2b6ef0512922b",
+      "sha256": "162645473bc8b7404b5ebe73e08be6732e0a071591acb25994eb7282e115ed47",
+      "size": 8548
+    },
+    {
+      "path": "service/mcis_service/redaction/__init__.py",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "service/mcis_service/redaction/gateway.py",
+      "blob": "cff7c35ffef09efb28f0de01e058e35af3401239",
+      "sha256": "159d6695450f6f088400fdaffce3dee93317ce1a6a18d45809d357febabef916",
+      "size": 4238
+    },
+    {
+      "path": "service/mcis_service/redaction/models.py",
+      "blob": "04d46285ff2ea428318a95c5ee566b28ec677213",
+      "sha256": "4a3a44517c628dd6ad2536f7013bee3fee11095a890b6be62a4f2bcaf7311449",
+      "size": 174
+    },
+    {
+      "path": "service/mcis_service/redaction/policy.py",
+      "blob": "21b63c33282a8db6d1705df102a6306391e076a7",
+      "sha256": "27ead2a5efdcbf1092305cf03e2c527600ac9e771b7f88b426d3b0983bd89623",
+      "size": 2476
+    },
+    {
+      "path": "service/mcis_service/reports/__init__.py",
+      "blob": "73a9cd49bec11f3d6e1bec6723eaf588355a47df",
+      "sha256": "8ba52ec498ce30f3263c03c45f29c306d47ea2517d541d8c3e208cbf7f4d5020",
+      "size": 98
+    },
+    {
+      "path": "service/mcis_service/reports/access.py",
+      "blob": "873de9e57af0908afc925293317bbb87c1cde8b0",
+      "sha256": "33e74b8946bccce150597048921fb4742ff9ee77d1ee5d51df345fdf99ad5385",
+      "size": 6506
+    },
+    {
+      "path": "service/mcis_service/track_history/__init__.py",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "service/mcis_service/track_history/models.py",
+      "blob": "7bd5da12506dc20a29a8682f12e8a87f2b5d21ea",
+      "sha256": "77e988b23a5e5522e244a6e2c5b0a87a324dae742ccc3a9b69f7fc90f6ab8c9a",
+      "size": 702
+    },
+    {
+      "path": "service/mcis_service/track_history/service.py",
+      "blob": "54f8f0d64792226ed6933db7f7f34c74bbe6c8fd",
+      "sha256": "7e33fc744fd4ff7c4b17738d9f34079a7a6f94197c1d8723605e5fc4adee2655",
+      "size": 4847
+    },
+    {
+      "path": "service/mcis_service/working_records_archive/__init__.py",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "service/mcis_service/working_records_archive/history_lookup.py",
+      "blob": "e2209fac2c8ab209567b8b4923dc484bf92e66e5",
+      "sha256": "3bf8f976e2e678e2e97b8d48fc8d4bf0123e50d86ddee7584fb1c6b4782649ae",
+      "size": 725
+    },
+    {
+      "path": "service/mcis_service/working_records_archive/models.py",
+      "blob": "3f88c4a1678271ad68af40648ee15ea6cd9f0fa0",
+      "sha256": "a8db4c50a30fad42f019e41bab7423b196ec18d25dd4bbdcb3f0bdd69dd5f8c9",
+      "size": 1430
+    },
+    {
+      "path": "service/mcis_service/working_records_archive/validation.py",
+      "blob": "15cff036dc8bd2d00ca12ef1d2309c238fe51614",
+      "sha256": "cb00625e180dc1018870e9ee080f1b72dd5aeb3e8ca4809b58f98c37a1bc2064",
+      "size": 27856
+    },
+    {
+      "path": "tools/pilot_image_acceptance/authority.py",
+      "blob": "7049c380d5e7f216abab254eb312a77504d779a3",
+      "sha256": "d65765a3ff6667037c7cd8c2b0a15045b148be96b4d3f1cb674092b1b7997af8",
+      "size": 4255
+    },
+    {
+      "path": "tools/pilot_image_acceptance/browser_steps.py",
+      "blob": "d995a15afdb5f4b15296075e4d2c2038bfbadb6d",
+      "sha256": "a9c7ea365d9542eb191b7f7b3eb9d9ddebf17226e3930dab33bbf49e55315d69",
+      "size": 4178
+    },
+    {
+      "path": "tools/pilot_image_acceptance/container_entry.py",
+      "blob": "30b64dc62245fded739b425b6d3d642e09f8e676",
+      "sha256": "c858ee2d3056eefe0c1a5539589ba585d467623e9a7c320bf3a5a3480160720f",
+      "size": 584
+    },
+    {
+      "path": "tools/pilot_image_acceptance/fixtures.py",
+      "blob": "4f38a9375163aae0a70ec731f88aa9e16ad2bb0c",
+      "sha256": "684b081da60c6a998d5385c2780a253cfeed52a1a08f7657cf33a6f4fca345dd",
+      "size": 4061
+    },
+    {
+      "path": "tools/pilot_image_acceptance/host_adapter.py",
+      "blob": "9cc5e3f441278713beb1ce4209959db321010477",
+      "sha256": "98f3c6cdba115d56dab5390a44d3ac8fe47a367eb24a2e576d914d7093f03a0e",
+      "size": 3332
+    },
+    {
+      "path": "tools/pilot_image_acceptance/prepare.py",
+      "blob": "49b985fcb30df68c1095fc667b4cadcf017560ae",
+      "sha256": "3e464249d1d66d3bffabc8a254abebe2879e555f613078de72dc6394eea61e2f",
+      "size": 6562
+    },
+    {
+      "path": "tools/pilot_image_acceptance/runtime_host.py",
+      "blob": "b21f50de648902468edb2a66bbb0d675b1b6827f",
+      "sha256": "16b164e7092516c2dd071f1a28ab2e360e52ac7fd34db714053e40b0920692e7",
+      "size": 9243
+    }
+  ],
+  "python_external_roots": [
+    "fastapi",
+    "sqlalchemy",
+    "jsonschema",
+    "referencing",
+    "uvicorn",
+    "playwright"
+  ],
+  "blocked": [
+    {
+      "code": "MISSING_TRACK_RECEIPT_TABLE",
+      "path": "service/mcis_service/evidence/service.py",
+      "line": 154,
+      "chain": "evidence_intake.router.commit_input:166 -> evidence.service.next_id:154 -> track_history.service.reserved:24 -> track_local_receipts",
+      "reason": "pilot_core_storage CORE_TABLES and host_adapter expected seven tables exclude track_local_receipts; real registration cannot be claimed ready. Do not stub, omit reserved lookup or create a fake table."
+    }
+  ],
+  "external": {
+    "status": "unverified",
+    "base_image_id": null,
+    "archive": {
+      "name": "pilot-runtime-base.oci.tar",
+      "sha256": null,
+      "size": null
+    },
+    "inventory": {
+      "name": "pilot-runtime-base.inventory.json",
+      "sha256": null,
+      "size": null
+    }
+  },
+  "scope": "source review only until product blocker and external image are independently resolved; no runtime approval"
+}

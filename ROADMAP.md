@@ -608,3 +608,6 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 
 
 图片试用宿主待独验：新5组合成生命周期/预检/源码检查，相邻建案6组、素材5组分别通过；logs/pilot-runtime-host-frozen.txt。真实镜像/依赖闭包、TLS/沙箱、ORM/HTTP/浏览器未验，未启动任何资源，不构成试用闭环。
+
+
+图片镜像输入待独验：7组打包器纯合成检查通过；固定57文件源码审查输出重算SHA一致，默认构建退出2且不创建目标。logs/pilot-image-build-frozen.txt。缺track_local_receipts真实初始化及受审离线base，不能构建/运行，未执行应用/容器。
