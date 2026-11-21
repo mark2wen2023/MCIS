@@ -2,6 +2,7 @@
 // Alternate binding of the existing shell, NEVER loaded by the frozen demo.
 // No transport, credential storage, cached authority or automatic query.
 (() => {
+ const DISPLAY_ONLY = false; // Set only by explicit offline shell construction.
  const el=id=>document.getElementById(id), text=(id,v)=>{el(id).textContent=v;};
  const node=(parent,tag,v)=>{const n=document.createElement(tag);n.textContent=v;parent.appendChild(n);return n;};
  const svg=(parent,tag,attrs)=>{const n=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,String(v));parent.appendChild(n);return n;};
@@ -16,9 +17,9 @@
   assert(keys(r,['caseId','alignedUtc','vessels','authenticityVerified','collisionDetermined'])&&r.caseId===s.caseId&&r.alignedUtc===t&&r.authenticityVerified===false&&r.collisionDetermined===false);
   assert(Array.isArray(r.vessels)&&r.vessels.length===2);const seen=new Set();
   r.vessels.forEach((v,i)=>{
-   assert(keys(v,['vesselId','position','headingDeg','courseDeg','time','courseUsedAsHeading','collisionAngle','original','locator','status',...(v.status==='declared_gap'?['gap']:[])]));
+   assert(keys(v,['vesselId','position','headingDeg','courseDeg','time','courseUsedAsHeading','collisionAngle',...(DISPLAY_ONLY?[]:['original']),'locator','status',...(v.status==='declared_gap'?['gap']:[])]));
    assert(typeof v.vesselId==='string'&&v.vesselId.length>0&&v.vesselId.length<=128&&!seen.has(v.vesselId));seen.add(v.vesselId);
-   assert(goodPin(v.original,s.caseId)&&pinKeys.every(k=>v.original[k]===s.pins[i][k])&&v.courseUsedAsHeading===false&&v.collisionAngle===null);
+   assert((DISPLAY_ONLY?v.vesselId===s.vesselIds[i]:goodPin(v.original,s.caseId)&&pinKeys.every(k=>v.original[k]===s.pins[i][k]))&&v.courseUsedAsHeading===false&&v.collisionAngle===null);
    if(v.status==='input_point'){
     assert(keys(v.locator,['jsonPointer'])&&/^\/points\/(0|[1-9]\d*)$/.test(v.locator.jsonPointer));
     assert(keys(v.time,['sourceUtc','alignedUtc','correctionSeconds','status'])&&utc(v.time.sourceUtc)&&v.time.alignedUtc===t&&['referenced','corrected'].includes(v.time.status));
@@ -74,7 +75,7 @@
   if(!s||!reader||!s.times.includes(time)){clear('尚未选择有效案件与查询时点。');return;}
   const attempt={epoch:context,time};flight=attempt;el('time').value=time;controls();
   try{
-   const result=await reader(Object.freeze({caseId:s.caseId,pins:clone(s.pins),alignedUtc:time}));
+   const result=await reader(Object.freeze({caseId:s.caseId,...(DISPLAY_ONLY?{}:{pins:clone(s.pins)}),alignedUtc:time}));
    if(ticket!==serial||context!==epoch)return;
    render(validate(result,s,time),ticket);everReady=true;
   }catch(error){
@@ -85,8 +86,12 @@
  function selectCase(value){
   ++epoch;++serial;selection=null;everReady=false;clear('未选择案件。');el('time').replaceChildren();text('registered-case','未选案件');
   try{
+   if(DISPLAY_ONLY){
+    assert(keys(value,['caseId','vesselIds','times'])&&id(value.caseId)&&Array.isArray(value.vesselIds)&&value.vesselIds.length===2&&value.vesselIds.every(id)&&value.vesselIds[0]!==value.vesselIds[1]);
+   }else{
    assert(keys(value,['caseId','pins','times'])&&id(value.caseId)&&Array.isArray(value.pins)&&value.pins.length===2&&value.pins.every(p=>goodPin(p,value.caseId)));
    assert(value.pins[0].requestDigest!==value.pins[1].requestDigest&&value.pins[0].evidenceId!==value.pins[1].evidenceId);
+   }
    assert(Array.isArray(value.times)&&value.times.length>0&&value.times.length<=1000&&value.times.every(utc)&&value.times.every((t,i)=>i===0||Date.parse(t)>Date.parse(value.times[i-1])));
    selection=clone(value);text('registered-case',selection.caseId);
    for(const time of selection.times){const o=node(el('time'),'option',time);o.value=time;}el('time').value=selection.times[0];clear('已选择案件；请显式查询。尚未载入登记证据。');

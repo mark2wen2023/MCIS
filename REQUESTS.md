@@ -697,3 +697,5 @@ Raw pair two-time acceptance：仅新增原样合成JSON真实登记/精确查�
 Registered pair seat handoff：测试宿主在真实登记/原件查询/Access核对后同步交付最小帧副本，仅合成回调，无原件读取接口或新授权。见tests_acceptance/registered-trajectory-pair/SEAT-HANDOFF.md。
 
 Registered seat workbench：在 e0cbccc 上复用现有 registered.js/build 壳，追加真实宿主→B consumer→合成DOM联验。收窄侧栏仅显示服务 JSON 定位，内部 pin 校验不变；明确校时依据未交付/人审未签、展示对齐不判事件先后。仅新候选，不改旧冻结/公共合同，见 SEAT-UI.md。
+
+Registered seat display boundary：c643e81 的内部 pin UI 协议不适合作浏览器输入；新增显式离线构建展示协议与宿主白名单投影，保留旧模式/冻结，校验仍在固定B及真实宿主回调。无公共HTTP/权限/保存。见 DISPLAY-BOUNDARY.md。

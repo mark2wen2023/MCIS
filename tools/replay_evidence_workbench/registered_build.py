@@ -7,8 +7,13 @@ from pathlib import Path
 HERE=Path(__file__).resolve().parent
 
 
-def build(output):
+def build(output, *, display_only=False):
     html=(HERE/'workbench.html').read_text()
+    script=(HERE/'registered.js').read_text()
+    if display_only:
+        marker='const DISPLAY_ONLY = false;'
+        if script.count(marker)!=1:raise ValueError('Display boundary changed')
+        script=script.replace(marker,'const DISPLAY_ONLY = true;')
     changes={
         '案件 / 合成双船会遇':'案件 / 登记原件查询',
         '<span class="badge">合成案件</span>':'<span class="badge">内部查询</span>',
@@ -29,7 +34,7 @@ def build(output):
         '<dt>对齐 UTC</dt>':'<dt>展示对齐 UTC</dt>',
         'PAYLOAD':'{}',
         '/* STYLE */':(HERE/'style.css').read_text(),
-        '/* SCRIPT */':(HERE/'registered.js').read_text(),
+        '/* SCRIPT */':script,
     }
     for before,after in changes.items():
         if html.count(before)!=1:raise ValueError('Existing shell changed; review required')

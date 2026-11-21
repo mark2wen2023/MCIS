@@ -433,3 +433,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Registered pair seat handoff | 待独验 | 5项离线临时SQLite检查退出0（3既有+2新增），仅可信测试宿主回调，无模型/真实身份；logs/registered-pair-seat-handoff-impl-hashes-frozen.txt |
 
 | Registered seat workbench | 待独验 | seat_ui 5项、business_ui 4项分别退出0（重叠不累计）；真实合成临时SQLite + 实际B回调 + 模拟DOM/传输，浏览器/HTTP未验；logs/registered-seat-workbench-impl-hashes-frozen.txt |
+
+| Registered seat display boundary | 待独验 | display_ui 5、seat_ui 5、business_ui 4分别退出0，重叠不累计；传入JS无内部pin及值，DOM竞态/错误收口；非浏览器/HTTP/认证；logs/registered-seat-display-impl-hashes-frozen.txt |
