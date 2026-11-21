@@ -435,3 +435,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Registered seat workbench | 待独验 | seat_ui 5项、business_ui 4项分别退出0（重叠不累计）；真实合成临时SQLite + 实际B回调 + 模拟DOM/传输，浏览器/HTTP未验；logs/registered-seat-workbench-impl-hashes-frozen.txt |
 
 | Registered seat display boundary | 待独验 | display_ui 5、seat_ui 5、business_ui 4分别退出0，重叠不累计；传入JS无内部pin及值，DOM竞态/错误收口；非浏览器/HTTP/认证；logs/registered-seat-display-impl-hashes-frozen.txt |
+
+| Display-only browser acceptance | 待实机/独验 | 两次生成与摘要一致、宿主5项和DOM通过；旧四帧重建/DOM兼容；浏览器脚本仅语法检查，未启动；logs/display-browser-impl-hashes-frozen.txt |

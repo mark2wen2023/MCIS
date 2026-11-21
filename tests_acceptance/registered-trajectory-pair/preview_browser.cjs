@@ -2,14 +2,17 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict');
 const {pathToFileURL}=require('node:url');
-const SHA='9d4e3b8a990597e83769ea37292a500f10f4f3f693815d3a9c0e85a9d4b2b856';
+const LEGACY_SHA='9d4e3b8a990597e83769ea37292a500f10f4f3f693815d3a9c0e85a9d4b2b856';
+const DISPLAY_SHA='917cfd7eee4ffac24b129a76a43e251d22b965e2fcd3ccfa07494530e402bead';
 async function main(){
- const [input,output,executable,...extra]=process.argv.slice(2);if(!input||!output||extra.length)throw Error('node preview_browser.cjs HTML NEW_RESULT_DIR [CHROMIUM_ABSOLUTE_PATH]');
+ const args=process.argv.slice(2),displayOnly=args[0]==='--display-only';if(displayOnly)args.shift();
+ const SHA=displayOnly?DISPLAY_SHA:LEGACY_SHA;
+ const [input,output,executable,...extra]=args;if(!input||!output||extra.length)throw Error('node preview_browser.cjs HTML NEW_RESULT_DIR [CHROMIUM_ABSOLUTE_PATH]');
  if(executable&&!path.isAbsolute(executable))throw Error('Absolute executable required');
  if(!fs.lstatSync(input).isFile())throw Error('Regular HTML required');const bytes=fs.readFileSync(input);
  assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),SHA);fs.mkdirSync(output);
  const dest=path.resolve(output,'preview.html');fs.writeFileSync(dest,bytes,{flag:'wx'});const url=pathToFileURL(dest).href;
- let browser,error;const result={htmlSha256:SHA,status:'failed',browser:null,checks:[],closed:false};
+ let browser,error;const result={protocol:displayOnly?'display-only':'legacy-internal-pins',htmlSha256:SHA,status:'failed',browser:null,checks:[],closed:false};
  try{
   const {chromium}=require('playwright');
   browser=await chromium.launch({headless:true,chromiumSandbox:true,timeout:30000,...(executable?{executablePath:executable}:{})});result.browser=browser.version();
@@ -43,6 +46,9 @@ async function main(){
      assert.equal(await p.locator('#quality').innerText(),'未选择');
      assert.equal(await p.locator('#source-a').isDisabled(),true);assert.equal(await p.locator('#source-b').isDisabled(),true);
     };
+    if(displayOnly){
+     await require('./display_browser_checks.cjs')({p,width,output,tabTo,slide,count,submit,cleared});
+    }else{
     await slide(0);await p.locator('#preview-slider').scrollIntoViewIfNeeded();
     const box=await p.locator('#preview-slider').boundingBox();assert(box&&box.width>20);
     await p.mouse.move(box.x+8,box.y+box.height/2);await p.mouse.down();
@@ -72,6 +78,7 @@ async function main(){
     assert.equal(await count(),4);await p.locator('#preview-late').click();
     await p.waitForFunction(()=>document.getElementById('preview-event').textContent.includes('被忽略'));
     await cleared();assert.equal(await count(),5);assert.equal(await p.locator('#registered-case').innerText(),'未选案件');
+    }
     if(width===390){await p.locator('#nav-toggle').click();assert.equal(await p.locator('#nav-toggle').getAttribute('aria-expanded'),'true');}
     assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));assert.deepEqual(errors,[]);assert.deepEqual(requests,[url]);
     result.checks.push({width,height:900,hasTouch:false,isMobile:false,input:'mouse drag; Tab/Home/Arrow/Enter',lateScenario:'synthetic A to no case; not A/B or revocation',status:'passed',requests:requests.length});
