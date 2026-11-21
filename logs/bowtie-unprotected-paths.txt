@@ -1,0 +1,5 @@
+daa2bdbfca897d9db5bbf5d90ab05589c72ab9f3e7897e501242e83ac524dc94  web/src/bowtiePreview/BowtieForm.tsx
+70655aef24b1609db99838b4b11febb2467da0be4145a10951350d7bbc0bf9ce  web/src/bowtiePreview/pathWitnesses.ts
+cb955c889cd4dcdd20be37c06209f225abc391468a9a640fd8b08971d1a645dc  web/src/bowtiePreview/UnprotectedPaths.tsx
+d90759265a5ccd54305ab7fc5ce3bf01b2769a6de1f955ab45dc85405052a19c  web/tests/bowtie-unprotected-paths.test.tsx
+b18c066e7b392721ea22b4598366be6c30e5e6d3d59b77a72819eb0accef041d  web/tests/run-bowtie-unprotected-paths.sh
