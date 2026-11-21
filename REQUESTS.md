@@ -680,3 +680,7 @@ Opt-in alternate binding of existing replay workbench shell; default offline dem
 
 ## REGISTERED-TRAJECTORY-REOPEN（2026-11-21）
 独立测试候选：复用固定真实登记/精确查询工装，验证同案新增另一原件后重建Database仍按旧pin回读。仅合成临时库/文件；报告音频绑定类型不适用轨迹，不绕过权限或存储合同，无生产改动。
+
+
+## PILOT-TRAJECTORY-PREPARE（2026-11-21）
+明确用户批准的单案本机待审引用。独立默认关闭内部操作，复用完整报告政策、固定RA及原件Access；不增加公共路由/默认grant，不保存报告或绑定。详见 tests_acceptance/registered-trajectory-pair/PILOT-PREPARE.md。
