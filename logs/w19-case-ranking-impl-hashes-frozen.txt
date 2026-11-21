@@ -1,0 +1,3 @@
+61f51fe3f10b0afedabbe9b98473640920264bbaf41f0fb7f0ba11c4fd0591ed  research/w19_case_ranking/rank.py
+0a80006a807e96186fe2df0c38deb5c8a3f493e454c7a4731393cf77dae43f1c  research/w19_case_ranking/fixtures.py
+919001038a7eaf4ab36c73df26732bdbc42c83e6e9826ab8f2d9cf10f2084de9  research/w19_case_ranking/check.py

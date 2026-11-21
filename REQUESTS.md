@@ -647,3 +647,6 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## W19 case-tag ranking research
+独立纯标签Jaccard研究：仅已发布Case、显式合成研究词表，非生产机制字段/授权/检索接线；固定人工标签报告漏项及误收，不修改正式合同。见research/w19_case_ranking/README.md。
