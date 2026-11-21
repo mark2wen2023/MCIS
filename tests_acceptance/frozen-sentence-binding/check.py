@@ -78,19 +78,18 @@ class Tests(unittest.TestCase):
         self.assertEqual(decide(key=s.key,proposed=raw,existing=store.get(s.key)),'insert_required')
         self.assertEqual(decide(key=s.key,proposed=raw,existing=store.insert_if_absent(s.key,raw)),'identical')
         self.assertEqual(decide(key=s.key,proposed=prepare(scope=s,key=s.key),existing=store.get(s.key)),'identical')
-        self.assertEqual(json.loads(raw)['audio']['startMs'],1000)
-        self.assertFalse(json.loads(raw)['generation']['persistentBinding'])
+        self.assertEqual(set(json.loads(raw)),{'contract','key','pin','sentenceSha256'})
+        self.assertEqual(json.loads(raw)['pin']['referenceSha256'],s.pin['referenceSha256'])
     def test_every_immutable_payload_change_conflicts(self):
         s=Scope(); raw=prepare(scope=s,key=s.key); doc=json.loads(raw)
         for field in s.pin:
             altered=deepcopy(doc); old=altered['pin'][field]
-            altered['pin'][field]=old+1 if type(old) is int else old+'changed'
+            altered['pin'][field]=('f'*64 if field=='referenceSha256' else old+1 if type(old) is int else old+'changed')
             changed=b['_bytes'](altered); store=MemoryStore();store.insert_if_absent(s.key,raw)
             with self.assertRaises(b['BindingConflict']): decide(key=s.key,proposed=changed,existing=store.insert_if_absent(s.key,changed))
             self.assertEqual(store.get(s.key),raw)
-        for part in ('generation','audio'):
-            altered=deepcopy(doc); altered[part]['changed']='synthetic'
-            with self.assertRaises(b['BindingConflict']): decide(key=s.key,proposed=b['_bytes'](altered),existing=raw)
+        altered=deepcopy(doc);altered['sentenceSha256']='f'*64
+        with self.assertRaises(b['BindingConflict']): decide(key=s.key,proposed=b['_bytes'](altered),existing=raw)
     def test_no_context_and_denial_before_reads(self):
         s=Scope()
         for scope in (None,{},True):
@@ -125,7 +124,9 @@ class Tests(unittest.TestCase):
         with self.assertRaises(ValueError): prepare(scope=s,key=s.key)
     def test_absent_not_corrupt_unknown_not_zero(self):
         s=Scope(True); raw=prepare(scope=s,key=s.key)
-        self.assertIsNone(json.loads(raw)['audio']['startMs']);self.assertIsNone(json.loads(raw)['audio']['endMs'])
+        result=a['read_exact_audio_range'](reader=s.reader(),case_id=s.key[0],evidence_id='EV-A',run_id='RUN-SYN',revision=1,segment_id='SEG-SYN',expected_reference_sha256=s.pin['referenceSha256'])
+        self.assertIsNone(result['startMs']);self.assertIsNone(result['endMs'])
+        self.assertNotIn('audio',json.loads(raw))
         s.pin=None;self.assertIsNone(prepare(scope=s,key=s.key))
         self.assertEqual(decide(key=s.key,proposed=None,existing=None),'no_historical_reference')
         for stored in (b'{}',b'invalid',b'null',b'',False):
@@ -143,8 +144,52 @@ class Tests(unittest.TestCase):
         digest=r['read_exact_media_reference'](reader=s.reader(),media='audio',case_id='CASE-SYN',evidence_id='EV-A',evidence_role='audio',run_id='RUN-SYN',revision=2)['referenceSha256']
         s.pin.update(generationSnapshotId=s.key[1],reportId=new['reportId'],auditSeq=2,version=2,revision=2,referenceSha256=digest)
         fresh=prepare(scope=s,key=s.key);store=MemoryStore();store.insert_if_absent(oldkey,old);store.insert_if_absent(s.key,fresh)
-        self.assertEqual(len(store.rows),2);self.assertEqual(json.loads(fresh)['audio']['startMs'],4000)
+        self.assertEqual(len(store.rows),2);self.assertEqual(json.loads(fresh)['pin']['revision'],2)
         s.key=oldkey;s.generation=oldgen;s.pin=oldpin
         self.assertEqual(prepare(scope=s,key=oldkey),old);self.assertEqual(store.get(oldkey),old)
+
+    def test_no_prose_and_changed_frozen_sentence_conflicts(self):
+        s=Scope();phrase='SYNTHETIC_PRIVATE_SENTENCE_7Q9'
+        sentence=s.generation['snapshot']['afterValue']['sections'][0]['sentences'][0]
+        sentence['textZh']=phrase
+        sentence['generatedText']['textZh']=phrase+'_generated'
+        raw=prepare(scope=s,key=s.key)
+        self.assertNotIn(phrase.encode(),raw)
+        self.assertEqual(b['_sentence_digest'](sentence),b['_sentence_digest'](dict(reversed(list(sentence.items())))))
+        for field in (b'textZh',b'citations',b'generatedText',b'operator',b'startMs',b'endMs'):
+            self.assertNotIn(field,raw)
+        sentence['textZh']=phrase+'_changed'
+        changed=prepare(scope=s,key=s.key)
+        self.assertNotEqual(json.loads(raw)['sentenceSha256'],json.loads(changed)['sentenceSha256'])
+        self.assertEqual(json.loads(raw)['pin'],json.loads(changed)['pin'])
+        with self.assertRaises(b['BindingConflict']): decide(key=s.key,proposed=changed,existing=raw)
+
+    def test_bounded_corrupt_bytes_both_operands(self):
+        s=Scope();raw=prepare(scope=s,key=s.key)
+        bad=[json.dumps(raw.decode()).encode(),b'['*10000+b'0'+b']'*10000,
+             b'['*9+b'0'+b']'*9,b' '* (b['MAX_RECORD_BYTES']+1),
+             b'{"x":NaN}',b'{"x":1,"x":2}',b'\xff',b'{}',b'null',
+             raw.replace(b'"pin":',b'"pin":null,"discard":')]
+        for corrupt in bad:
+            for kwargs in (dict(proposed=raw,existing=corrupt),dict(proposed=corrupt,existing=raw)):
+                with self.assertRaises(b['BindingCorrupt']): decide(key=s.key,**kwargs)
+        # JSON escaping/brackets in a permitted identifier are not nesting.
+        doc=json.loads(raw);doc['pin']['evidenceId']='EV-[]{}"\\'
+        escaped=b['_bytes'](doc)
+        self.assertEqual(decide(key=s.key,proposed=escaped,existing=escaped),'identical')
+        # Old content-bearing v1 envelopes explicitly fail, no silent migration.
+        old=b['_bytes'](dict(contract='frozen-sentence-audio-binding/1',key=list(s.key),pin=s.pin,generation={},audio={}))
+        with self.assertRaises(b['BindingCorrupt']): decide(key=s.key,proposed=raw,existing=old)
+
+    def test_sentence_hash_limits_and_range_revalidation(self):
+        for value in ('x'*(b['MAX_SENTENCE_BYTES']+1), [[[[None]]]]):
+            if type(value) is list:
+                for _ in range(34):value=[value]
+            with self.assertRaises(b['BindingUnavailable']): b['_sentence_digest'](value)
+        for unknown in (False,True):
+            s=Scope(unknown);raw=prepare(scope=s,key=s.key)
+            self.assertEqual(decide(key=s.key,proposed=prepare(scope=s,key=s.key),existing=raw),'identical')
+            s.data['saved_rows'][0]['doc']['audio']['frames']=1
+            with self.assertRaises(ValueError): prepare(scope=s,key=s.key)
 
 if __name__=='__main__': unittest.main()

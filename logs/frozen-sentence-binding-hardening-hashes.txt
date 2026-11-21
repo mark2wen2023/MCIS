@@ -1,0 +1,3 @@
+b660ef047451178b42dba779176d9b25a2beb97fe45834635696b5895c1ce300  service/mcis_service/reports/sentence_binding.py
+104d44c7e154c8166dd2187d716e3de44a96767a4b759b685d4913a45cb2fca2  tests_acceptance/frozen-sentence-binding/check.py
+ebca97dfebf16e9fd861cec4386121d47b56308e7967e48fcf226e3322516db0  tests_acceptance/frozen-sentence-binding/README.md

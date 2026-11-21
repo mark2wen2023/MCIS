@@ -7,6 +7,7 @@ implementation yet; never construct one from browser JSON or caller booleans.
 """
 from abc import ABC, abstractmethod
 from copy import deepcopy
+from hashlib import sha256
 import json
 import re
 
@@ -83,6 +84,91 @@ PIN_FIELDS = frozenset(('caseId', 'generationSnapshotId', 'sectionId', 'sentence
     'revision', 'segmentId', 'referenceSha256'))
 
 
+# Internal, pre-persistence envelope v2. No old reference digest recipe changes.
+MAX_RECORD_BYTES = 16384
+MAX_RECORD_DEPTH = 8
+MAX_SENTENCE_BYTES = 1048576
+MAX_SENTENCE_NODES = 20000
+MAX_SENTENCE_DEPTH = 32
+
+
+def _sentence_digest(sentence):
+    # Iterative bounds before recursive JSON encoding; cycles also exhaust this
+    # finite node budget. This hashes content without retaining it in the record.
+    stack = [(sentence, 0)]
+    nodes = 0
+    chars = 0
+    try:
+        while stack:
+            value, depth = stack.pop()
+            nodes += 1
+            if nodes > MAX_SENTENCE_NODES or depth > MAX_SENTENCE_DEPTH:
+                raise ValueError()
+            if type(value) is dict:
+                stack.extend((v, depth + 1) for pair in value.items() for v in pair)
+            elif type(value) is list:
+                stack.extend((v, depth + 1) for v in value)
+            elif type(value) is str:
+                chars += len(value)
+                if chars > MAX_SENTENCE_BYTES:
+                    raise ValueError()
+            elif value is not None and type(value) not in (bool, int, float):
+                raise ValueError()
+        encoded = _bytes(sentence)
+        if len(encoded) > MAX_SENTENCE_BYTES:
+            raise ValueError()
+        return sha256(encoded).hexdigest()
+    except (ValueError, TypeError, RecursionError, UnicodeError):
+        raise BindingUnavailable('frozen_sentence_digest_unavailable') from None
+
+
+def _check_record(raw, key):
+    try:
+        if type(raw) is not bytes or not 1 <= len(raw) <= MAX_RECORD_BYTES:
+            raise ValueError()
+        # Bound nesting before json.loads, ignoring brackets inside strings.
+        depth = 0
+        quoted = escaped = False
+        for c in raw:
+            if quoted:
+                if escaped:
+                    escaped = False
+                elif c == 92:
+                    escaped = True
+                elif c == 34:
+                    quoted = False
+            elif c == 34:
+                quoted = True
+            elif c in (91, 123):
+                depth += 1
+                if depth > MAX_RECORD_DEPTH:
+                    raise ValueError()
+            elif c in (93, 125):
+                depth -= 1
+                if depth < 0:
+                    raise ValueError()
+        if quoted or depth:
+            raise ValueError()
+        doc = json.loads(raw)
+        if (type(doc) is not dict or set(doc) != {'contract', 'key', 'pin', 'sentenceSha256'}
+                or doc['contract'] != 'frozen-sentence-audio-binding/2'
+                or doc['key'] != list(key) or _bytes(doc) != raw
+                or type(doc['pin']) is not dict or set(doc['pin']) != PIN_FIELDS
+                or type(doc['sentenceSha256']) is not str
+                or re.fullmatch(r'[0-9a-f]{64}', doc['sentenceSha256']) is None):
+            raise ValueError()
+        for name, value in doc['pin'].items():
+            if name in ('auditSeq', 'version', 'revision'):
+                if type(value) is not int or value < 1:
+                    raise ValueError()
+            elif type(value) is not str or not value or value != value.strip():
+                raise ValueError()
+        if re.fullmatch(r'[0-9a-f]{64}', doc['pin']['referenceSha256']) is None:
+            raise ValueError()
+    except (ValueError, TypeError, UnicodeError, RecursionError):
+        raise BindingCorrupt('binding_record_corrupt') from None
+
+
 def prepare_audio_binding(*, scope, key):
     """Resolve from trusted server reads only; return immutable proposal bytes.
 
@@ -118,11 +204,13 @@ def prepare_audio_binding(*, scope, key):
     reader = scope.media_reader(key, dict(pin))
     if reader is None:
         raise BindingUnavailable('trusted_media_reader_required')
-    audio = read_exact_audio_range(reader=reader, case_id=key[0], evidence_id=pin['evidenceId'],
+    read_exact_audio_range(reader=reader, case_id=key[0], evidence_id=pin['evidenceId'],
         run_id=pin['runId'], revision=pin['revision'], segment_id=pin['segmentId'],
         expected_reference_sha256=pin['referenceSha256'])
-    return _bytes(dict(contract='frozen-sentence-audio-binding/1', key=list(key),
-                       generation=frozen, pin=pin, audio=audio))
+    raw = _bytes(dict(contract='frozen-sentence-audio-binding/2', key=list(key),
+                      pin=pin, sentenceSha256=_sentence_digest(frozen['sentence'])))
+    _check_record(raw, key)
+    return raw
 
 
 def decide_binding(*, key, proposed, existing):
@@ -134,24 +222,10 @@ def decide_binding(*, key, proposed, existing):
     are corrupt. Equality is never proof that storage or access is trustworthy.
     """
     _key(key)
-    def check(raw):
-        try:
-            if type(raw) is not bytes:
-                raise ValueError()
-            doc = json.loads(raw)
-            if (type(doc) is not dict or set(doc) != {'contract','key','generation','pin','audio'}
-                    or doc['contract'] != 'frozen-sentence-audio-binding/1'
-                    or doc['key'] != list(key) or _bytes(doc) != raw
-                    or type(doc['generation']) is not dict or type(doc['audio']) is not dict
-                    or type(doc['pin']) is not dict or set(doc['pin']) != PIN_FIELDS):
-                raise ValueError()
-            return doc
-        except (ValueError, TypeError, UnicodeError):
-            raise BindingCorrupt('binding_record_corrupt') from None
     if proposed is not None:
-        check(proposed)
+        _check_record(proposed, key)
     if existing is not None:
-        check(existing)
+        _check_record(existing, key)
     if proposed is None:
         if existing is not None:
             raise BindingConflict('historical_pin_unavailable')

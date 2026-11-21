@@ -531,3 +531,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-19 | Report/audio generated WAV offline composition | 待独验：原占位场景及实际合成 WAV 旧/新/未知范围开发检查通过；源与 WAV 双哈希、8000Hz/96000帧；非语音/非SenseVoice/非播放器验收，无真实登记绑定 | logs/report-audio-generated-wav-frozen.txt |
 
 | 2026-11-21 | 冻结句单一音频绑定内部候选 | 待独立复验；7组手写内存/纯函数用例与既有纯离线回归通过，真实授权/同事务/持久化/导出重开未验且未接线；冻结 logs/frozen-sentence-binding-impl-hashes.txt |
+
+| 2026-11-21 | 冻结句音频绑定加固 | 待独验；内部记录去正文与引用副本、嵌套/大小拒绝；10组纯合成通过，未接库/权限/导出；logs/frozen-sentence-binding-hardening-hashes.txt |

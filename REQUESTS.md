@@ -834,3 +834,7 @@ Authorized test-only follow-up to 7a2d0e4: fixed local c10b2cd generator source 
 ## 2026-11-21 — 内部冻结句音频绑定决策（独立候选）
 
 基于 da8cda69 的已有完整生成 RA 与精确音频旧引用读取，新增未接线 `reports/sentence_binding.py`；仅可信服务端读取上下文与不可覆盖存储接口合同，首版音频。无对外合同/路由/权限/旧摘要修改，无真实存储实现。详见 `tests_acceptance/frozen-sentence-binding/README.md`。授权交集、稳定读取事务和持久关联来源仍为接入前置；不把合成 Scope 当身份或普通 JSON 当可信快照。
+
+## 2026-11-21 — 冻结句绑定加固（同候选，未接入）
+
+独验发现旧内部 envelope 含正文/citations，深层 bytes 可泄出 RecursionError。此次仅收窄内部 v2 为 key/pin/句摘要，增加确定大小/嵌套边界；不改旧精确引用摘要或任何对外合同、报告、权限、持久化。保留 a5a920a 原冻结，新冻结单列 hardening-hashes。范围仍通过原读取器重验，不存内容/范围副本；详见定向 README。
