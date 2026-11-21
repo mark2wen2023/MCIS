@@ -673,3 +673,7 @@ Internal fresh authorized/committed pair -> exact point projection. No new route
 
 ## Registered query workbench adapter (2026-11-21)
 Opt-in alternate binding of existing replay workbench shell; default offline demo and frozen HTML unchanged. Explicit injected query only, no transport/identity/route/CSP widening. Selection is local until explicit submit; current failures/switch/invalidation clear coordinates and provenance. Synthetic business output -> production JS with hand DOM; no browser/HTTP acceptance. See registered-trajectory-pair README.
+
+## Registered trajectory finite preview
+
+基线2eb5d477，新增验收目录内真实合成临时登记/查询结果的单HTML预览及独立浏览器入口；旧workbench、适配器、夹具、摘要不变。模拟传输不接业务。详见 tests_acceptance/registered-trajectory-pair/PREVIEW.md，浏览器仍受正常沙箱环境阻断。
