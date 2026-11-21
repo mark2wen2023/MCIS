@@ -217,6 +217,21 @@ def receipt_evidence(case_id:str,evidence_id:str,ctx:Ctx=CtxDep):
         return found[0]
 
 
+def _read_original_for_access(ctx,s,case_id,digest,purpose):
+    """Internal: caller owns verified context, transaction and purpose validation.
+
+    Not an authentication boundary. Keep authorization, receipt integrity,
+    container protection and Access custody together for every original read.
+    """
+    authorize(ctx,s,case_id);found=load_receipt(ctx,s,case_id,digest)
+    if not found:raise problem(404,'INTAKE_NOT_FOUND','未找到登记原件')
+    receipt,raw=found
+    from ..report_output.attachment_access import protect_container
+    protect_container(s,case_id,ctx.role,raw)
+    evidence.append_custody(s,case_id=case_id,evidence_id=receipt['evidenceId'],kind='Access',
+               operator=ctx.operator,role=ctx.role,sha256=receipt['sourceSha256'],detail=purpose)
+    return receipt,raw
+
 @router.post('/evidence-intakes/{digest}:download')
 async def download(case_id:str,digest:str,request:Request,ctx:Ctx=CtxDep):
     with ctx.db.session() as s:authorize(ctx,s,case_id)
@@ -230,13 +245,7 @@ async def download(case_id:str,digest:str,request:Request,ctx:Ctx=CtxDep):
         with ctx.db.session() as s:
             from ..reports.access import begin
             begin(s)
-            authorize(ctx,s,case_id);found=load_receipt(ctx,s,case_id,digest)
-            if not found:raise problem(404,'INTAKE_NOT_FOUND','未找到登记原件')
-            receipt,raw=found
-            from ..report_output.attachment_access import protect_container
-            protect_container(s,case_id,ctx.role,raw)
-            evidence.append_custody(s,case_id=case_id,evidence_id=receipt['evidenceId'],kind='Access',
-                       operator=ctx.operator,role=ctx.role,sha256=receipt['sourceSha256'],detail=purpose)
+            receipt,raw=_read_original_for_access(ctx,s,case_id,digest,purpose)
         return Response(raw,media_type='application/octet-stream',headers={
              'Content-Disposition':'attachment; filename="source.bin"','X-Sha256':sha(raw),
              'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'})

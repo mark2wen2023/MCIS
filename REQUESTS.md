@@ -657,3 +657,7 @@ Mark 授权首条三维回放可追溯小闭环。源码复核现有 TrackView/U
 
 ## 2026-11-21 · replay-evidence-workbench-ui
 Mark 授权把已看像素的「复盘与取证」设计稿实现为单屏离线候选。新增独立工作台生成器/HTML/CSS/JS，复用固定证据时钟查询，不改变原 preview.py、浏览器验收或其 hash、V1/双船夹具。交互与静态检查通过，真实浏览器/像素仍未验；用户预览已保存 Library，见 tools/replay_evidence_workbench/README.md。
+
+
+## Registered trajectory pair — internal candidate (2026-11-21)
+Base f9f4e599cdb670d864a5e7e986067216e7105636. Extract the existing evidence intake download authorized/audited read unchanged; reuse it in an unregistered internal two-original V1 assembler. No route, grant, contract, old freeze or default enablement change. Caller must supply verified server context and fixed server-selected pins; own rollback and establish read isolation. See tests_acceptance/registered-trajectory-pair/README.md. Pending independent review.

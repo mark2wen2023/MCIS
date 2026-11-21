@@ -403,3 +403,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-21 | replay-evidence-clock | 待独验 | 固定双船 V1 + 独立合成设备，共享时点回指原始 JSON；8 项单测、参考校验和面板 DOM 通过；无实际浏览器/3D接线。冻结 logs/replay-evidence-clock-impl-hashes-frozen.txt |
 
 | 2026-11-21 | replay-evidence-workbench-ui | 待独验 | 按已查看设计稿做深蓝单屏，原查询同帧证据/地图/三轨时间轴；新2项及原8项/DOM通过；真实浏览器未验。冻结 logs/replay-evidence-workbench-ui-impl-hashes-frozen.txt |
+
+| 2026-11-21 | Internal registered V1 pair | 待测：共用下载授权/审计读取；双份固定摘要整体验证；无路由/默认启用 | tests_acceptance/registered-trajectory-pair/README.md；logs/registered-trajectory-pair-impl-hashes-frozen.txt |
