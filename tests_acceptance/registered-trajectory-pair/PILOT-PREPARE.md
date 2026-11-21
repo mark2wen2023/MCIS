@@ -29,3 +29,13 @@ SQLite BEGIN IMMEDIATE 与同一个 Database.session 覆盖策略、RA及审计�
 覆盖：同案正例；缺凭据/grant、到期/撤销、错案、普通 Investigator/Public 与伪造角色头、报告/证据策略拒绝、错误 pin；读取后到期和提交异常不返回且回滚；成功恰有1条 Access、操作者为服务器主体且两条链有效；报告0行、RA仅夹具1行且未改、无绑定表；无正文泄漏。
 
 尚未验：实际账号/登录、HTTP、UI、本机部署、跨进程撤权、真实报告生成/保存/导出/恢复。没有启动服务、浏览器、容器、模型或读取真实资料。下一步需独立审查此限用途授权及审计失败口径，再另行批准运行；本候选不构成启动许可。
+
+## 3bc6c77 后的一致性收口
+
+可信存储 key 取回的 RA 必须 `snapshotId == key[1]`，在原件读取前拒绝不一致。prepare 不再用 audit.to_doc 的关系列直接决定生成事件：读取已验证链中同一原始 line，严格比较 seq/action/category/entity_type/entity_id 与关系行，然后将链字段传给 generation_sentence，snapshot_ref 亦只取链内字段。不修改公共审计服务或链配方。
+
+保留缺口：现有链不含 caseId；案范围仍依靠服务器固定 CASE 与同事务的关系查询约束，不是链内密码学案件绑定。RA afterValue 全文未进入该链，不能称完整快照受密码学保护；链头也不是外部可信锚。此修正没有增加授权/保存/导出或运行入口。
+
+同一命令重跑 5 项通过、退出 0（原业务3项＋本票2项，非累计覆盖）。新增的临时库夹具通过普通 INSERT 建立 key/document 不一致记录，测试以原件函数必须不被调用证明前置拒绝；没有修改已有审计行或绕过触发器。纯内存关系投影用例逐项测试 seq/action/category/entity_type/entity_id 不一致及未在已验证集合中的记录；不是数据库攻击、HTTP角色伪造或部署测试。原正例、Investigator拒绝、会话到期/撤销、提交前拒绝回滚、无正文和无报告/绑定写入断言仍通过。RA 现在共2条测试准备记录，执行 prepare 不修改它们。
+
+旧冻结文件保留，只在旧提交适用；本修正使用 `logs/pilot-trajectory-prepare-consistency-impl-hashes-frozen.txt`。

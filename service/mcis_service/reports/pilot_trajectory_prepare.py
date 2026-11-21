@@ -14,6 +14,32 @@ OPERATION = 'report.reference.prepare'
 class PrepareUnavailable(ValueError):
     pass
 
+def _generation_event(row, verified_lines):
+    """Bind relational projection to its verified line; case scope remains relational."""
+    if row.line not in verified_lines:
+        raise PrepareUnavailable('generation_audit_unavailable')
+    try:
+        def pairs(items):
+            result = {}
+            for key, value in items:
+                if key in result:
+                    raise ValueError('duplicate field')
+                result[key] = value
+            return result
+        record = json.loads(row.line, object_pairs_hook=pairs)
+        if (type(record) is not dict or type(record.get('seq')) is not int
+                or record['seq'] != row.seq
+                or any(record.get(field) != getattr(row, field)
+                       for field in ('action', 'category', 'entity_type', 'entity_id'))):
+            raise ValueError('projection mismatch')
+        return {'caseId': row.case_id, 'seq': record['seq'],
+                'action': record['action'], 'category': record['category'],
+                'entityType': record['entity_type'], 'entityId': record['entity_id'],
+                'snapshotRef': record.get('snapshot_ref')}
+    except (ValueError, TypeError, KeyError, RecursionError):
+        raise PrepareUnavailable('generation_audit_inconsistent') from None
+
+
 class PilotTrajectoryPrepare:
     def __init__(self, *, enabled=False, sessions=None, db=None, settings=None, subject=None, key=None, pin=None):
         self.enabled=enabled is True
@@ -62,11 +88,13 @@ class PilotTrajectoryPrepare:
                 if case.get('isFictionalDemo') is not True:raise PrepareUnavailable('synthetic_case_required')
                 snapshot=get_doc(session,ReportAuditRow,CASE,key[1])
                 if not snapshot:raise PrepareUnavailable('generation_unavailable')
-                if not audit.verify_chain(audit.all_lines(session,CASE))['valid']:raise PrepareUnavailable('audit_invalid')
+                if snapshot.get('snapshotId') != key[1]:raise PrepareUnavailable('generation_identity_mismatch')
+                verified_lines=audit.all_lines(session,CASE)
+                if not audit.verify_chain(verified_lines)['valid']:raise PrepareUnavailable('audit_invalid')
                 row=session.scalars(select(AuditEventRow).where(AuditEventRow.case_id==CASE,AuditEventRow.seq==snapshot.get('auditSeq'))).one_or_none()
                 if row is None:raise PrepareUnavailable('generation_audit_unavailable')
                 frozen=generation_sentence(case_id=CASE,report_id=snapshot.get('reportId'),snapshot=snapshot,
-                    audit_event=audit.to_doc(row),section_id=key[2],sentence_id=key[3],validate_contract=validate)
+                    audit_event=_generation_event(row,verified_lines),section_id=key[2],sentence_id=key[3],validate_contract=validate)
                 receipt,raw=_read_original_for_access(ctx,session,CASE,pin['requestDigest'],'Synthetic pilot pending trajectory reference')
                 if any(receipt.get(k)!=v for k,v in pin.items()) or type(raw) is not bytes or len(raw)>4*1024*1024 or hashlib.sha256(raw).hexdigest()!=pin['sourceSha256']:
                     raise PrepareUnavailable('original_pin_mismatch')

@@ -17,6 +17,20 @@ BASE=base['PATHS']+('service/mcis_service/trajectory_exchange/registered_query.p
 NEW=tuple('service/mcis_service/'+p for p in ['common/local_review_pilot.py','common/verified_case_context.py','reports/generation_snapshot.py','reports/pilot_trajectory_prepare.py'])
 
 class Pilot:
+    def test_generation_event_projection_consistency(self):
+        from types import SimpleNamespace
+        from mcis_service.reports.pilot_trajectory_prepare import _generation_event,PrepareUnavailable
+        from mcis_service.audit.service import build_line,verify_chain
+        from mcis_service.common.csjson import ZERO_HASH
+        line=build_line(utc='2026-01-01T00:00:00Z',operator='Synthetic',action='report.generate',category='Report',command='fixture',before='',after='',seq=1,role='LeadInvestigator',entity_type='report',entity_id='synthetic-report',prev=ZERO_HASH,snapshot_ref='report-snapshot:synthetic')
+        self.assertTrue(verify_chain([line])['valid'])
+        fields=dict(case_id=self.cid,seq=1,action='report.generate',category='Report',entity_type='report',entity_id='synthetic-report',line=line)
+        self.assertEqual(_generation_event(SimpleNamespace(**fields),[line])['snapshotRef'],'report-snapshot:synthetic')
+        for field,value in [('seq',2),('action','report.review'),('category','Other'),('entity_type','other'),('entity_id','other')]:
+            with self.subTest(field=field),self.assertRaises(PrepareUnavailable):
+                _generation_event(SimpleNamespace(**{**fields,field:value}),[line])
+        with self.assertRaises(PrepareUnavailable):_generation_event(SimpleNamespace(**fields),[])
+
     def test_scoped_prepare_and_denials(self):
         from mcis_service.common.local_review_pilot import PilotSessions,PilotSession
         from mcis_service.reports.pilot_trajectory_prepare import PilotTrajectoryPrepare,PrepareUnavailable,OPERATION
@@ -54,6 +68,16 @@ class Pilot:
         self.assertNotIn('PRIVATE',json.dumps(result));self.assertNotIn('正文',json.dumps(result,ensure_ascii=False));self.assertNotIn('position',result)
         self.assertEqual(self.counts(),(before[0],before[1]+1,before[2]+1))
         baseline=self.counts()
+        # Ordinary fresh fixture row with a mismatched document identity; no UPDATE
+        # or trigger bypass. Reject before the original access function is reached.
+        from unittest.mock import patch
+        wrong_key='RA-'+'2'*32
+        with self.db.session() as session:
+            put_doc(session,ReportAuditRow,self.cid,wrong_key,deepcopy(snap))
+        with patch('mcis_service.evidence_intake.router._read_original_for_access',side_effect=AssertionError('must not read original')):
+            with self.assertRaisesRegex(PrepareUnavailable,'generation_identity_mismatch'):
+                prepare(key=(self.cid,wrong_key,'synthetic-section','synthetic-sentence'))
+        self.assertEqual(self.counts(),baseline)
         with self.assertRaises(PrepareUnavailable):prepare(_credential='')
         with self.assertRaises(PrepareUnavailable):prepare(pin={**self.pins[0],'sourceSha256':'f'*64})
         self.assertEqual(self.counts(),baseline)  # existing rollback policy after unsuccessful assembly
@@ -98,8 +122,8 @@ class Pilot:
         self.assertEqual(self.counts(),baseline)
         with self.db.session() as s:
             self.assertEqual(s.query(ReportRow).count(),0)
-            self.assertEqual(s.query(ReportAuditRow).count(),1)
-            self.assertEqual(s.scalars(select(ReportAuditRow)).one().doc,snap)
+            self.assertEqual(s.query(ReportAuditRow).count(),2)
+            self.assertEqual(s.scalars(select(ReportAuditRow).where(ReportAuditRow.key==sid)).one().doc,snap)
             self.assertIsNone(s.execute(text("SELECT name FROM sqlite_master WHERE name='frozen_sentence_bindings_v1'")).first())
             self.assertTrue(audit.verify_chain(audit.all_lines(s,self.cid))['valid'])
             custody=s.scalars(select(CustodyEventRow).where(CustodyEventRow.case_id==self.cid).order_by(CustodyEventRow.seq)).all()

@@ -684,3 +684,5 @@ Opt-in alternate binding of existing replay workbench shell; default offline dem
 
 ## PILOT-TRAJECTORY-PREPARE（2026-11-21）
 明确用户批准的单案本机待审引用。独立默认关闭内部操作，复用完整报告政策、固定RA及原件Access；不增加公共路由/默认grant，不保存报告或绑定。详见 tests_acceptance/registered-trajectory-pair/PILOT-PREPARE.md。
+
+PILOT-TRAJECTORY-PREPARE 收口：固定 RA key/document ID 相等，生成事件链/关系投影一致；仅该内部路径，旧冻结保留，新 consistency 冻结；不改审计配方或授权。

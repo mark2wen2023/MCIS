@@ -1,0 +1,2 @@
+6d4bce82b0888d4aa7975a5e5e974ddac4e917d5504ebc4a3a1eff4cb59c29ef  service/mcis_service/reports/pilot_trajectory_prepare.py
+ec7702d7c8e930cd26fe3ea21ce5eafbf75e808639f5a9a25d9137aaff6f85bb  tests_acceptance/registered-trajectory-pair/pilot_prepare.py
