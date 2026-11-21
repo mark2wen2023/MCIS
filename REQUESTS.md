@@ -695,3 +695,5 @@ Single-case handoff local guard：9项实际本地先决文件必须普通且匹
 ECFC associated position research：独立离线展示适配，显式合成关联、保留推定与手工时间；复用真实登记/精确查询和固定ECFC解析，不改业务合同/授权/路由。research/ecfc_associated_position/README.md。
 
 W11 edge display selection：仅tests_acceptance内新增节点/边出处独立展示与版本失效工装；复用2a1af98节点输出，边来源为明确合成测试映射，无登记/授权声明。V1及产品不变，见 tests_acceptance/ecfc-display-selection/README.md。
+
+W11 candidate React display：基于d1db803，仅tests_acceptance新增真实React只读视图+候选会话适配的SSR/手动事件/受控Promise验证；生产Graph无边来源加载接缝，不接线，不修改Python Selection或任何合同。

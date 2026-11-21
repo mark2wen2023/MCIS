@@ -1,0 +1,4 @@
+65ad839d638d6761747d5ed61e042cd41324e7e04a2dc5f308ef0a2d860ab933  tests_acceptance/ecfc-display-react/Adapter.tsx
+d10121aba99a07f4a12fc3e444836844b995bbab0aad2c59d65eac0ab9ab56a0  tests_acceptance/ecfc-display-react/check.tsx
+97fa1c240570e076576b204f0188d84f095d59d43b0909d9e79815bbb22f07fd  tests_acceptance/ecfc-display-react/run.cjs
+6ff280b8df4860328362804387dff08e1301364eb5ea87e17622a6b8e9661c3c  tests_acceptance/ecfc-display-react/README.md
