@@ -370,3 +370,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-12 | Report output A | 受限独立验收通过 | 最终独立49 passed/11.56s，20SHA前后匹配；真实双格式单render/原文不变/审计关联、实际第二连接改报告或策略后409/403、故障全表回滚与commit后交付失败各有证明。真浏览器2正常下载+2真实commit后故障替换+1真实commit后身份迟响应丢弃，最终5审计；8独立客户端坏结构/错绑拒绝。实际2MiB报告及16MiB输出边界与其余缩小limit测试区别详见独立REPORT；未穷尽多worker/真实切案/全部变体。无服务端原件保存、无.mcase文件恢复、无签署认证；B仅计划，不部署不触W11。 |
 
 | 2026-11-12 | W11 ECFC new manual draft slice | DRAFT — DO NOT MERGE / 真实浏览器未验 | 从 main3aba2bf 重新实现而非恢复丢失工件；论文表4/原C#核心、人工推定节点/边、结构与方法提示分离、同案来源/完整原文权限、CAS/幂等/原子文档审计回执。保存前UI与服务端双重明确确认整案.mcase阻断；未实现归档恢复。新CLI49、自测最终相关服务243、独立API30及真实TCP10通过，UI82/tsc/build/API-double通过；真实浏览器启动即受环境socket权限限制，正常审批执行后仍失败，实际UI断言0。20实施SHA冻结；不得以HTTP/API-double替代真实浏览器验收，不合并不部署。详见tests_acceptance/ECFCNEW/REPORT.md。 |
+
+| 2026-11-21 | W11 节点缺项导航 | 待独验；新增纯TS/SSR/手写回调、既有82条模型渲染、TS/Vite通过；无浏览器/API/保存实测；logs/ecfc-node-evidence-review.txt |
