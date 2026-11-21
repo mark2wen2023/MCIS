@@ -1,0 +1,874 @@
+{
+  "fixture_version": "w19-independent-roles-v1",
+  "baseline_commit": "c1b988306a06e1d75f5b42c79fa1b50bd06ed596",
+  "scope": "offline synthetic research only; no real cases or product replacement approval",
+  "label_provenance": "Labels manually specified from each scenario rubric and synthetic source assertions, before any ranker execution. No ranker has been run to generate or tune these labels. All labels are provisional independent test author judgments awaiting root review, not expert-adjudicated ground truth.",
+  "reviewed_vocabulary": [
+    "主机熄火",
+    "交接遗漏",
+    "净空未复核",
+    "动力丧失",
+    "失去推进",
+    "指令无响应",
+    "推进异常",
+    "操作遗漏",
+    "桥区",
+    "液压失压",
+    "疲劳",
+    "瞭望中断",
+    "能见度受限",
+    "舵机故障",
+    "走锚"
+  ],
+  "label_definitions": {
+    "relevant": "eligible Published Case with explicit supporting traits meeting query rubric",
+    "not_relevant": "eligible Published Case explicitly fails one or more required traits",
+    "insufficient_evidence": "eligible Published Case with ambiguous/missing evidence; must not be claimed supported relevant or silently treated as confirmed negative",
+    "excluded": "status/kind outside evaluation candidate universe; retrieval is eligibility failure, not semantic false positive"
+  },
+  "scenarios": [
+    {
+      "scenario_id": "Q1",
+      "query_text": "找低能见度下持续瞭望中断的参考模式",
+      "query_tags": [
+        "能见度受限",
+        "瞭望中断"
+      ],
+      "relevance_rubric": "相关必须同时有低能见度及持续观察中断的明确合成描述；天气相同或提到相同词不够。",
+      "cards": [
+        {
+          "cardId": "KC-00000000000000000000000000000065",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 持续观察中断",
+            "summary": "合成角色：低能见度期间，值守者停止观察周围目标。",
+            "body": "合成角色：低能见度期间，值守者停止观察周围目标。",
+            "tags": [
+              "能见度受限",
+              "瞭望中断"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q1/持续观察中断",
+              "excerpt": "合成角色：低能见度期间，值守者停止观察周围目标。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000066",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 交接造成观察空档",
+            "summary": "合成角色：低能见度期间交接未安排接替者，持续观察出现空档。",
+            "body": "合成角色：低能见度期间交接未安排接替者，持续观察出现空档。",
+            "tags": [
+              "交接遗漏"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q1/交接造成观察空档",
+              "excerpt": "合成角色：低能见度期间交接未安排接替者，持续观察出现空档。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000067",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 天气相同但观察持续",
+            "summary": "合成角色：低能见度期间持续观察正常，偏航由操纵装置失效引起。",
+            "body": "合成角色：低能见度期间持续观察正常，偏航由操纵装置失效引起。",
+            "tags": [
+              "能见度受限"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q1/天气相同但观察持续",
+              "excerpt": "合成角色：低能见度期间持续观察正常，偏航由操纵装置失效引起。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000068",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 否定词堆叠",
+            "summary": "合成角色：调查议题包含能见度受限、瞭望中断；核对后两者均被排除，实际为机械故障。",
+            "body": "合成角色：调查议题包含能见度受限、瞭望中断；核对后两者均被排除，实际为机械故障。",
+            "tags": [
+              "能见度受限",
+              "瞭望中断"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q1/否定词堆叠",
+              "excerpt": "合成角色：调查议题包含能见度受限、瞭望中断；核对后两者均被排除，实际为机械故障。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000069",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 仅有议题没有记录",
+            "summary": "合成角色：议题为低能见度及观察中断，相关值守记录尚未取得。",
+            "body": "合成角色：议题为低能见度及观察中断，相关值守记录尚未取得。",
+            "tags": [
+              "能见度受限",
+              "瞭望中断"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q1/仅有议题没有记录",
+              "excerpt": "合成角色：议题为低能见度及观察中断，相关值守记录尚未取得。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        }
+      ],
+      "gold_labels": [
+        {
+          "cardId": "KC-00000000000000000000000000000065",
+          "role": "持续观察中断",
+          "label": "relevant",
+          "reason": "两个必要特征均有描述。",
+          "evidence_locator": "Q1/持续观察中断"
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000066",
+          "role": "交接造成观察空档",
+          "label": "relevant",
+          "reason": "语义满足，标签故意遗漏以测试召回。",
+          "evidence_locator": "Q1/交接造成观察空档"
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000067",
+          "role": "天气相同但观察持续",
+          "label": "not_relevant",
+          "reason": "天气相同，但明确没有观察中断。",
+          "evidence_locator": "Q1/天气相同但观察持续"
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000068",
+          "role": "否定词堆叠",
+          "label": "not_relevant",
+          "reason": "否定事实不能被关键词或误标签覆盖。",
+          "evidence_locator": "Q1/否定词堆叠"
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000069",
+          "role": "仅有议题没有记录",
+          "label": "insufficient_evidence",
+          "reason": "不能把议题标签当作已支持的机制。",
+          "evidence_locator": "Q1/仅有议题没有记录"
+        }
+      ]
+    },
+    {
+      "scenario_id": "Q2",
+      "query_text": "找操舵指令未转成舵角响应的机械故障模式",
+      "query_tags": [
+        "舵机故障",
+        "指令无响应"
+      ],
+      "relevance_rubric": "相关必须有指令发出但舵角未响应且机械故障得到合成来源支持；操作错误和主动保持舵角不相关。",
+      "cards": [
+        {
+          "cardId": "KC-000000000000000000000000000000c9",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 执行机构失效",
+            "summary": "合成角色：操舵指令正常发出，执行机构故障导致舵角不响应。",
+            "body": "合成角色：操舵指令正常发出，执行机构故障导致舵角不响应。",
+            "tags": [
+              "舵机故障",
+              "指令无响应"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q2/执行机构失效",
+              "excerpt": "合成角色：操舵指令正常发出，执行机构故障导致舵角不响应。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-000000000000000000000000000000ca",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 液压执行失效",
+            "summary": "合成角色：液压失压使操舵执行机构无法执行已收到的指令。",
+            "body": "合成角色：液压失压使操舵执行机构无法执行已收到的指令。",
+            "tags": [
+              "液压失压"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q2/液压执行失效",
+              "excerpt": "合成角色：液压失压使操舵执行机构无法执行已收到的指令。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-000000000000000000000000000000cb",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 指令输入错误",
+            "summary": "合成角色：舵角准确执行输入指令；操作者输入方向错误，未发现机械故障。",
+            "body": "合成角色：舵角准确执行输入指令；操作者输入方向错误，未发现机械故障。",
+            "tags": [
+              "指令无响应"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q2/指令输入错误",
+              "excerpt": "合成角色：舵角准确执行输入指令；操作者输入方向错误，未发现机械故障。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-000000000000000000000000000000cc",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 过往故障已修复",
+            "summary": "合成角色：过去出现指令无响应，当前维修后测试正常，本次未发出转舵指令。",
+            "body": "合成角色：过去出现指令无响应，当前维修后测试正常，本次未发出转舵指令。",
+            "tags": [
+              "舵机故障",
+              "指令无响应"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q2/过往故障已修复",
+              "excerpt": "合成角色：过去出现指令无响应，当前维修后测试正常，本次未发出转舵指令。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        }
+      ],
+      "gold_labels": [
+        {
+          "cardId": "KC-000000000000000000000000000000c9",
+          "role": "执行机构失效",
+          "label": "relevant",
+          "reason": "指令、结果和故障关系都有支持。",
+          "evidence_locator": "Q2/执行机构失效"
+        },
+        {
+          "cardId": "KC-000000000000000000000000000000ca",
+          "role": "液压执行失效",
+          "label": "relevant",
+          "reason": "不同表述的同类机械执行失效。",
+          "evidence_locator": "Q2/液压执行失效"
+        },
+        {
+          "cardId": "KC-000000000000000000000000000000cb",
+          "role": "指令输入错误",
+          "label": "not_relevant",
+          "reason": "结果源自错误输入，不是指令无法执行。",
+          "evidence_locator": "Q2/指令输入错误"
+        },
+        {
+          "cardId": "KC-000000000000000000000000000000cc",
+          "role": "过往故障已修复",
+          "label": "not_relevant",
+          "reason": "时间范围不同，过去缺陷不支持当前模式。",
+          "evidence_locator": "Q2/过往故障已修复"
+        }
+      ]
+    },
+    {
+      "scenario_id": "Q3",
+      "query_text": "找交接遗漏关键净空限制而未复核的模式",
+      "query_tags": [
+        "交接遗漏",
+        "净空未复核"
+      ],
+      "relevance_rubric": "相关需要交接遗漏限制信息并缺少接替者复核；仅同处桥区或碰撞结果不够。",
+      "cards": [
+        {
+          "cardId": "KC-0000000000000000000000000000012d",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 限制未交接且未复核",
+            "summary": "合成角色：交接者遗漏净空限制，接替者未重新核验限制。",
+            "body": "合成角色：交接者遗漏净空限制，接替者未重新核验限制。",
+            "tags": [
+              "交接遗漏",
+              "净空未复核"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q3/限制未交接且未复核",
+              "excerpt": "合成角色：交接者遗漏净空限制，接替者未重新核验限制。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-0000000000000000000000000000012e",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 完整交接后主动违规",
+            "summary": "合成角色：净空限制已完整交接并复核，后续角色明知限制仍选择继续。",
+            "body": "合成角色：净空限制已完整交接并复核，后续角色明知限制仍选择继续。",
+            "tags": [
+              "净空未复核"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q3/完整交接后主动违规",
+              "excerpt": "合成角色：净空限制已完整交接并复核，后续角色明知限制仍选择继续。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-0000000000000000000000000000012f",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 桥区设备故障",
+            "summary": "合成角色：处于桥区，交接和净空核验完整，机械失效造成偏移。",
+            "body": "合成角色：处于桥区，交接和净空核验完整，机械失效造成偏移。",
+            "tags": [
+              "桥区"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q3/桥区设备故障",
+              "excerpt": "合成角色：处于桥区，交接和净空核验完整，机械失效造成偏移。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000130",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 交接记录缺失",
+            "summary": "合成角色：交接记录未找到，无法判断是否传达或复核净空限制。",
+            "body": "合成角色：交接记录未找到，无法判断是否传达或复核净空限制。",
+            "tags": [
+              "交接遗漏",
+              "净空未复核"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q3/交接记录缺失",
+              "excerpt": "合成角色：交接记录未找到，无法判断是否传达或复核净空限制。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        }
+      ],
+      "gold_labels": [
+        {
+          "cardId": "KC-0000000000000000000000000000012d",
+          "role": "限制未交接且未复核",
+          "label": "relevant",
+          "reason": "两个必要环节均明确。",
+          "evidence_locator": "Q3/限制未交接且未复核"
+        },
+        {
+          "cardId": "KC-0000000000000000000000000000012e",
+          "role": "完整交接后主动违规",
+          "label": "not_relevant",
+          "reason": "缺陷是后续决策，不是信息遗漏或未复核。",
+          "evidence_locator": "Q3/完整交接后主动违规"
+        },
+        {
+          "cardId": "KC-0000000000000000000000000000012f",
+          "role": "桥区设备故障",
+          "label": "not_relevant",
+          "reason": "地点相同不等于机制相同。",
+          "evidence_locator": "Q3/桥区设备故障"
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000130",
+          "role": "交接记录缺失",
+          "label": "insufficient_evidence",
+          "reason": "记录缺失不证明交接遗漏。",
+          "evidence_locator": "Q3/交接记录缺失"
+        }
+      ]
+    },
+    {
+      "scenario_id": "Q4",
+      "query_text": "找失去推进能力导致无法维持操纵的模式",
+      "query_tags": [
+        "失去推进"
+      ],
+      "relevance_rubric": "只比较推进能力丧失这一机制；同义表述相关，主动停机或未确认失效不应算相关。",
+      "cards": [
+        {
+          "cardId": "KC-00000000000000000000000000000191",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 推进丧失字面模式",
+            "summary": "合成角色：推进装置意外失效，无法产生所需推进力。",
+            "body": "合成角色：推进装置意外失效，无法产生所需推进力。",
+            "tags": [
+              "失去推进"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q4/推进丧失字面模式",
+              "excerpt": "合成角色：推进装置意外失效，无法产生所需推进力。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000192",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 同义失去动力",
+            "summary": "合成角色：主动力中断，推进器不能输出推力。",
+            "body": "合成角色：主动力中断，推进器不能输出推力。",
+            "tags": [
+              "动力丧失"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q4/同义失去动力",
+              "excerpt": "合成角色：主动力中断，推进器不能输出推力。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000193",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 同义主机熄火",
+            "summary": "合成角色：主机非计划熄火并停止输出推进功率。",
+            "body": "合成角色：主机非计划熄火并停止输出推进功率。",
+            "tags": [
+              "主机熄火"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q4/同义主机熄火",
+              "excerpt": "合成角色：主机非计划熄火并停止输出推进功率。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000194",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 主动停机控制",
+            "summary": "合成角色：操作者主动停机等待，设备可随时恢复，未发生能力失效。",
+            "body": "合成角色：操作者主动停机等待，设备可随时恢复，未发生能力失效。",
+            "tags": [
+              "失去推进"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q4/主动停机控制",
+              "excerpt": "合成角色：操作者主动停机等待，设备可随时恢复，未发生能力失效。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000195",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 疑似推进问题",
+            "summary": "合成角色：报告提出推进故障疑问，尚无转速或设备检查记录支持。",
+            "body": "合成角色：报告提出推进故障疑问，尚无转速或设备检查记录支持。",
+            "tags": [
+              "失去推进"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q4/疑似推进问题",
+              "excerpt": "合成角色：报告提出推进故障疑问，尚无转速或设备检查记录支持。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        }
+      ],
+      "gold_labels": [
+        {
+          "cardId": "KC-00000000000000000000000000000191",
+          "role": "推进丧失字面模式",
+          "label": "relevant",
+          "reason": "明确推进丧失。",
+          "evidence_locator": "Q4/推进丧失字面模式"
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000192",
+          "role": "同义失去动力",
+          "label": "relevant",
+          "reason": "同义机制，不应要求同一个标签。",
+          "evidence_locator": "Q4/同义失去动力"
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000193",
+          "role": "同义主机熄火",
+          "label": "relevant",
+          "reason": "不同标签仍明确同一机制。",
+          "evidence_locator": "Q4/同义主机熄火"
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000194",
+          "role": "主动停机控制",
+          "label": "not_relevant",
+          "reason": "主动控制动作不是设备能力丧失。",
+          "evidence_locator": "Q4/主动停机控制"
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000195",
+          "role": "疑似推进问题",
+          "label": "insufficient_evidence",
+          "reason": "仅假设，不能确认为相似机制。",
+          "evidence_locator": "Q4/疑似推进问题"
+        }
+      ]
+    },
+    {
+      "scenario_id": "Q5",
+      "query_text": "找锚泊状态下走锚的支持记录",
+      "query_tags": [
+        "走锚"
+      ],
+      "relevance_rubric": "当前语料没有足够记录支持走锚；期望相关集合为空，但应区分明确反例和证据不足。",
+      "cards": [
+        {
+          "cardId": "KC-000000000000000000000000000001f5",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 标题标签完全吻合但待查",
+            "summary": "合成角色：标题为走锚，锚位和锚链记录均缺失，原因待查。",
+            "body": "合成角色：标题为走锚，锚位和锚链记录均缺失，原因待查。",
+            "tags": [
+              "走锚"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q5/标题标签完全吻合但待查",
+              "excerpt": "合成角色：标题为走锚，锚位和锚链记录均缺失，原因待查。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-000000000000000000000000000001f6",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 另一方猜测",
+            "summary": "合成角色：旁观角色猜测走锚，未说明可核对的位置或锚泊证据。",
+            "body": "合成角色：旁观角色猜测走锚，未说明可核对的位置或锚泊证据。",
+            "tags": [
+              "走锚"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q5/另一方猜测",
+              "excerpt": "合成角色：旁观角色猜测走锚，未说明可核对的位置或锚泊证据。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-000000000000000000000000000001f7",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 主动起锚",
+            "summary": "合成角色：位置变化发生在主动起锚离开后，锚泊时位置稳定。",
+            "body": "合成角色：位置变化发生在主动起锚离开后，锚泊时位置稳定。",
+            "tags": [
+              "走锚"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q5/主动起锚",
+              "excerpt": "合成角色：位置变化发生在主动起锚离开后，锚泊时位置稳定。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-000000000000000000000000000001f8",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 无锚泊状态",
+            "summary": "合成角色：一直处于航行状态，未实施锚泊。",
+            "body": "合成角色：一直处于航行状态，未实施锚泊。",
+            "tags": [
+              "推进异常"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q5/无锚泊状态",
+              "excerpt": "合成角色：一直处于航行状态，未实施锚泊。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        }
+      ],
+      "gold_labels": [
+        {
+          "cardId": "KC-000000000000000000000000000001f5",
+          "role": "标题标签完全吻合但待查",
+          "label": "insufficient_evidence",
+          "reason": "标题不能替代支持记录。",
+          "evidence_locator": "Q5/标题标签完全吻合但待查"
+        },
+        {
+          "cardId": "KC-000000000000000000000000000001f6",
+          "role": "另一方猜测",
+          "label": "insufficient_evidence",
+          "reason": "未核实陈述。",
+          "evidence_locator": "Q5/另一方猜测"
+        },
+        {
+          "cardId": "KC-000000000000000000000000000001f7",
+          "role": "主动起锚",
+          "label": "not_relevant",
+          "reason": "明确属于计划离泊，不是走锚。",
+          "evidence_locator": "Q5/主动起锚"
+        },
+        {
+          "cardId": "KC-000000000000000000000000000001f8",
+          "role": "无锚泊状态",
+          "label": "not_relevant",
+          "reason": "缺少锚泊前提。",
+          "evidence_locator": "Q5/无锚泊状态"
+        }
+      ]
+    },
+    {
+      "scenario_id": "Q6",
+      "query_text": "找疲劳导致操作遗漏的已发布案例模式",
+      "query_tags": [
+        "疲劳",
+        "操作遗漏"
+      ],
+      "relevance_rubric": "仅已发布 Case 进入语义相关母集；资格排除与语义不相关必须分开。",
+      "cards": [
+        {
+          "cardId": "KC-00000000000000000000000000000259",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 合格相关",
+            "summary": "合成角色：疲劳状态造成操作步骤遗漏。",
+            "body": "合成角色：疲劳状态造成操作步骤遗漏。",
+            "tags": [
+              "疲劳",
+              "操作遗漏"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q6/合格相关",
+              "excerpt": "合成角色：疲劳状态造成操作步骤遗漏。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-0000000000000000000000000000025a",
+          "status": "Candidate",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 待审核相关",
+            "summary": "合成角色：疲劳状态造成操作步骤遗漏。",
+            "body": "合成角色：疲劳状态造成操作步骤遗漏。",
+            "tags": [
+              "疲劳",
+              "操作遗漏"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q6/待审核相关",
+              "excerpt": "合成角色：疲劳状态造成操作步骤遗漏。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-0000000000000000000000000000025b",
+          "status": "Withdrawn",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 已撤回相关",
+            "summary": "合成角色：疲劳状态造成操作步骤遗漏。",
+            "body": "合成角色：疲劳状态造成操作步骤遗漏。",
+            "tags": [
+              "疲劳",
+              "操作遗漏"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q6/已撤回相关",
+              "excerpt": "合成角色：疲劳状态造成操作步骤遗漏。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-0000000000000000000000000000025c",
+          "status": "Published",
+          "content": {
+            "kind": "Method",
+            "title": "合成角色 方法而非案例",
+            "summary": "合成方法角色：说明如何检查疲劳和遗漏。",
+            "body": "合成方法角色：说明如何检查疲劳和遗漏。",
+            "tags": [
+              "疲劳",
+              "操作遗漏"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q6/方法而非案例",
+              "excerpt": "合成方法角色：说明如何检查疲劳和遗漏。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        },
+        {
+          "cardId": "KC-0000000000000000000000000000025d",
+          "status": "Published",
+          "content": {
+            "kind": "Case",
+            "title": "合成角色 训练阶段主动省略",
+            "summary": "合成角色：清醒训练者按教案主动跳过演示步骤，未发生疲劳性遗漏。",
+            "body": "合成角色：清醒训练者按教案主动跳过演示步骤，未发生疲劳性遗漏。",
+            "tags": [
+              "操作遗漏"
+            ],
+            "applicability": "完全合成的角色与特征测试，不描述真实事故，不作事故机制或责任认定。",
+            "source": {
+              "type": "Synthetic",
+              "title": "独立人工标签语料",
+              "locator": "Q6/训练阶段主动省略",
+              "excerpt": "合成角色：清醒训练者按教案主动跳过演示步骤，未发生疲劳性遗漏。",
+              "rightsNote": "本任务手造，仅测试。"
+            }
+          }
+        }
+      ],
+      "gold_labels": [
+        {
+          "cardId": "KC-00000000000000000000000000000259",
+          "role": "合格相关",
+          "label": "relevant",
+          "reason": "资格和两个特征均满足。",
+          "evidence_locator": "Q6/合格相关"
+        },
+        {
+          "cardId": "KC-0000000000000000000000000000025a",
+          "role": "待审核相关",
+          "label": "excluded",
+          "reason": "Candidate 不进入评价母集。",
+          "evidence_locator": "Q6/待审核相关"
+        },
+        {
+          "cardId": "KC-0000000000000000000000000000025b",
+          "role": "已撤回相关",
+          "label": "excluded",
+          "reason": "Withdrawn 不进入评价母集。",
+          "evidence_locator": "Q6/已撤回相关"
+        },
+        {
+          "cardId": "KC-0000000000000000000000000000025c",
+          "role": "方法而非案例",
+          "label": "excluded",
+          "reason": "Method 不是 Case。",
+          "evidence_locator": "Q6/方法而非案例"
+        },
+        {
+          "cardId": "KC-0000000000000000000000000000025d",
+          "role": "训练阶段主动省略",
+          "label": "not_relevant",
+          "reason": "同一表面结果来自不同含义。",
+          "evidence_locator": "Q6/训练阶段主动省略"
+        }
+      ]
+    }
+  ]
+}
