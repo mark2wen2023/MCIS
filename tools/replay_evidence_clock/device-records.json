@@ -1,0 +1,32 @@
+{
+  "scope": "handmade-synthetic-device-records-not-business-export",
+  "caseId": "SYN-XREPO-001",
+  "records": [
+    {
+      "recordId": "SYN-DEVICE-01",
+      "vesselId": "SYN-VESSEL-A",
+      "rawText": "合成设备标记：检查点，不是事故或碰撞记录。",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:01:33.000Z",
+        "sourceUtc": "2026-02-01T12:01:33.000Z",
+        "correctionSeconds": 7,
+        "alignedUtc": "2026-02-01T12:01:40.000Z",
+        "status": "corrected",
+        "basis": "人工设定的合成设备慢7秒；加7秒。不是实物校时证据。"
+      }
+    },
+    {
+      "recordId": "SYN-DEVICE-02",
+      "vesselId": "SYN-VESSEL-B",
+      "rawText": "合成设备标记：日期与时区无法核实，不参加同步。",
+      "time": {
+        "sourceRecordTime": "设备屏显 12:01:40，日期和时区未知",
+        "sourceUtc": null,
+        "correctionSeconds": null,
+        "alignedUtc": null,
+        "status": "unresolved",
+        "basis": "没有可核实的合成时基；禁止按屏显猜成UTC。"
+      }
+    }
+  ]
+}

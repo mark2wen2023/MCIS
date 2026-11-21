@@ -1,0 +1,5 @@
+{
+  "tests_acceptance/shared-trajectory-cross-repo-expanded/vessel-a.json": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c",
+  "tests_acceptance/shared-trajectory-cross-repo-expanded/vessel-b.json": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca",
+  "tools/replay_evidence_clock/device-records.json": "1d51aef82c4386c0448ea9dca53469ab281b778502674061d89187b30e997390"
+}
