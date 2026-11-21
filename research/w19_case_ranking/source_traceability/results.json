@@ -1,0 +1,60 @@
+{
+  "scope": "pure synthetic traceability; no recall improvement or semantic truth claim",
+  "rank_source_blob": "df014103e47dcb1bb4a1115c6d05e1d4d30385c5",
+  "ranked": [
+    {
+      "cardId": "KC-00000000000000000000000000000001",
+      "score": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "sharedTags": [
+        "推进异常"
+      ],
+      "queryOnlyTags": [],
+      "cardOnlyTags": [],
+      "traceability": "SOURCE_NOT_FOUND",
+      "support": "NOT_ASSESSED",
+      "causation": "NOT_ASSESSED",
+      "review": "PENDING"
+    },
+    {
+      "cardId": "KC-00000000000000000000000000000002",
+      "score": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "sharedTags": [
+        "推进异常"
+      ],
+      "queryOnlyTags": [],
+      "cardOnlyTags": [],
+      "traceability": "LOCATED",
+      "support": "NOT_ASSESSED",
+      "causation": "NOT_ASSESSED",
+      "review": "PENDING"
+    },
+    {
+      "cardId": "KC-00000000000000000000000000000003",
+      "score": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "sharedTags": [
+        "推进异常"
+      ],
+      "queryOnlyTags": [],
+      "cardOnlyTags": [],
+      "traceability": "LOCATED",
+      "support": "NOT_ASSESSED",
+      "causation": "NOT_ASSESSED",
+      "review": "PENDING"
+    }
+  ],
+  "checks": {
+    "frozen_sample_cases": 3,
+    "mutations_rejected": 6,
+    "recall_and_order_preserved": true
+  },
+  "interpretation": "Two quotations resolve. Other-vessel/unconfirmed and observation-without-cause both remain pending."
+}

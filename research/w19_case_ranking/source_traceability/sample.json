@@ -1,0 +1,86 @@
+{
+  "scope": "new synthetic sample, not old 27 cards; no semantic truth labels",
+  "query_tags": [
+    "推进异常"
+  ],
+  "reviewed_vocabulary": [
+    "推进异常"
+  ],
+  "cards": [
+    {
+      "cardId": "KC-00000000000000000000000000000001",
+      "status": "Published",
+      "content": {
+        "kind": "Case",
+        "title": "独立出处合成卡1",
+        "body": "合成船乙的推进异常尚未证实；此陈述与合成船甲无关。",
+        "summary": "合成船乙的推进异常尚未证实；此陈述与合成船甲无关。",
+        "tags": [
+          "推进异常"
+        ],
+        "source": {
+          "type": "Synthetic",
+          "title": "独立合成记录",
+          "locator": "absent-records.txt#L2",
+          "excerpt": "合成船乙的推进异常尚未证实；此陈述与合成船甲无关。"
+        }
+      },
+      "sourceBinding": {
+        "file": "absent-records.txt",
+        "sha256": "9d38ac1226ddf7c6905185e3648851d9a3c87ba332885bf57fae19948aeb450f",
+        "line": 2,
+        "recordId": "SYN-R01"
+      }
+    },
+    {
+      "cardId": "KC-00000000000000000000000000000002",
+      "status": "Published",
+      "content": {
+        "kind": "Case",
+        "title": "独立出处合成卡2",
+        "body": "合成船乙的推进异常尚未证实；此陈述与合成船甲无关。",
+        "summary": "合成船乙的推进异常尚未证实；此陈述与合成船甲无关。",
+        "tags": [
+          "推进异常"
+        ],
+        "source": {
+          "type": "Synthetic",
+          "title": "独立合成记录",
+          "locator": "source-records.txt#L2",
+          "excerpt": "合成船乙的推进异常尚未证实；此陈述与合成船甲无关。"
+        }
+      },
+      "sourceBinding": {
+        "file": "source-records.txt",
+        "sha256": "9d38ac1226ddf7c6905185e3648851d9a3c87ba332885bf57fae19948aeb450f",
+        "line": 2,
+        "recordId": "SYN-R01"
+      }
+    },
+    {
+      "cardId": "KC-00000000000000000000000000000003",
+      "status": "Published",
+      "content": {
+        "kind": "Case",
+        "title": "独立出处合成卡3",
+        "body": "合成船甲的观察记录显示推进器转速为零；该观察不证明设备故障，也不证明停转原因。",
+        "summary": "合成船甲的观察记录显示推进器转速为零；该观察不证明设备故障，也不证明停转原因。",
+        "tags": [
+          "推进异常"
+        ],
+        "source": {
+          "type": "Synthetic",
+          "title": "独立合成记录",
+          "locator": "source-records.txt#L3",
+          "excerpt": "合成船甲的观察记录显示推进器转速为零；该观察不证明设备故障，也不证明停转原因。"
+        }
+      },
+      "sourceBinding": {
+        "file": "source-records.txt",
+        "sha256": "9d38ac1226ddf7c6905185e3648851d9a3c87ba332885bf57fae19948aeb450f",
+        "line": 3,
+        "recordId": "SYN-R02"
+      }
+    }
+  ]
+}

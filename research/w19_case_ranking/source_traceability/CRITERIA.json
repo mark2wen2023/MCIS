@@ -1,0 +1,17 @@
+{
+  "frozen_before_execution": true,
+  "expected_traceability": {
+    "KC-00000000000000000000000000000001": "SOURCE_NOT_FOUND",
+    "KC-00000000000000000000000000000002": "LOCATED",
+    "KC-00000000000000000000000000000003": "LOCATED"
+  },
+  "rules": [
+    "Use original rank_cases unchanged; retain all recall and order.",
+    "Resolve declared local file, raw SHA256, one-based line, record ID, and exact excerpt/body against independently written source file.",
+    "Missing file, SHA mismatch, line missing, ID mismatch or excerpt/body mismatch must fail traceability.",
+    "LOCATED never sets relevance/support/causation true. Semantic review remains pending for every card.",
+    "Card1 is a deliberate wrong-file reference to text from source-records.txt; not a separately invented quotation.",
+    "Card2 text expressly concerns unconfirmed other-vessel allegation; card3 records observation only. These are human-readable boundaries, not machine semantic labels.",
+    "No labels from old corpus or answers used in rank or resolver."
+  ]
+}
