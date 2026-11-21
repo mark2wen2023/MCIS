@@ -1,0 +1,730 @@
+{
+  "source_commit": "c1b988306a06e1d75f5b42c79fa1b50bd06ed596",
+  "source_blob": "df014103e47dcb1bb4a1115c6d05e1d4d30385c5",
+  "source_sha256": "61f51fe3f10b0afedabbe9b98473640920264bbaf41f0fb7f0ba11c4fd0591ed",
+  "fixture_sha256": "98e01b4077e8827ad0678a58b4a32d71a8acda0aafca13a60a36bc8183d5a3ad",
+  "label_sha256": "c5caeb0c763230512e4ff0460abe70c3a092974f3a2a7ddf3f7a0025121e6484",
+  "scope": "Six independent per-query pools, 27 synthetic cards; not global 27-card retrieval. query_text is not an input to rank_cases.",
+  "labels": "Frozen author labels; root reviewed content legality, not expert-adjudicated relevance truth.",
+  "python": "3.12.14",
+  "queries": [
+    {
+      "query": "Q1",
+      "query_text": "找低能见度下持续瞭望中断的参考模式",
+      "query_tags": [
+        "能见度受限",
+        "瞭望中断"
+      ],
+      "pool_size": 5,
+      "ranked": [
+        {
+          "cardId": "KC-00000000000000000000000000000065",
+          "score": {
+            "numerator": 1,
+            "denominator": 1
+          },
+          "sharedTags": [
+            "瞭望中断",
+            "能见度受限"
+          ],
+          "queryOnlyTags": [],
+          "cardOnlyTags": [],
+          "role": "持续观察中断",
+          "label": "relevant",
+          "reason": "两个必要特征均有描述。"
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000068",
+          "score": {
+            "numerator": 1,
+            "denominator": 1
+          },
+          "sharedTags": [
+            "瞭望中断",
+            "能见度受限"
+          ],
+          "queryOnlyTags": [],
+          "cardOnlyTags": [],
+          "role": "否定词堆叠",
+          "label": "not_relevant",
+          "reason": "否定事实不能被关键词或误标签覆盖。"
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000069",
+          "score": {
+            "numerator": 1,
+            "denominator": 1
+          },
+          "sharedTags": [
+            "瞭望中断",
+            "能见度受限"
+          ],
+          "queryOnlyTags": [],
+          "cardOnlyTags": [],
+          "role": "仅有议题没有记录",
+          "label": "insufficient_evidence",
+          "reason": "不能把议题标签当作已支持的机制。"
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000067",
+          "score": {
+            "numerator": 1,
+            "denominator": 2
+          },
+          "sharedTags": [
+            "能见度受限"
+          ],
+          "queryOnlyTags": [
+            "瞭望中断"
+          ],
+          "cardOnlyTags": [],
+          "role": "天气相同但观察持续",
+          "label": "not_relevant",
+          "reason": "天气相同，但明确没有观察中断。"
+        }
+      ],
+      "hits": [
+        {
+          "cardId": "KC-00000000000000000000000000000065",
+          "role": "持续观察中断",
+          "label": "relevant",
+          "reason": "两个必要特征均有描述。",
+          "evidence_locator": "Q1/持续观察中断"
+        }
+      ],
+      "misses": [
+        {
+          "cardId": "KC-00000000000000000000000000000066",
+          "role": "交接造成观察空档",
+          "label": "relevant",
+          "reason": "语义满足，标签故意遗漏以测试召回。",
+          "evidence_locator": "Q1/交接造成观察空档"
+        }
+      ],
+      "false_positive": [
+        {
+          "cardId": "KC-00000000000000000000000000000067",
+          "role": "天气相同但观察持续",
+          "label": "not_relevant",
+          "reason": "天气相同，但明确没有观察中断。",
+          "evidence_locator": "Q1/天气相同但观察持续"
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000068",
+          "role": "否定词堆叠",
+          "label": "not_relevant",
+          "reason": "否定事实不能被关键词或误标签覆盖。",
+          "evidence_locator": "Q1/否定词堆叠"
+        }
+      ],
+      "insufficient_returned": [
+        {
+          "cardId": "KC-00000000000000000000000000000069",
+          "role": "仅有议题没有记录",
+          "label": "insufficient_evidence",
+          "reason": "不能把议题标签当作已支持的机制。",
+          "evidence_locator": "Q1/仅有议题没有记录"
+        }
+      ],
+      "insufficient_not_returned": [],
+      "excluded_filtered": [],
+      "eligibility_failures": [],
+      "confirmed_negative_not_returned": [],
+      "precision_at_5": {
+        "numerator": 1,
+        "denominator": 5,
+        "value": 0.2
+      },
+      "returned_correctness": {
+        "numerator": 1,
+        "denominator": 4,
+        "value": 0.25
+      },
+      "recall": {
+        "numerator": 1,
+        "denominator": 2,
+        "value": 0.5
+      }
+    },
+    {
+      "query": "Q2",
+      "query_text": "找操舵指令未转成舵角响应的机械故障模式",
+      "query_tags": [
+        "舵机故障",
+        "指令无响应"
+      ],
+      "pool_size": 4,
+      "ranked": [
+        {
+          "cardId": "KC-000000000000000000000000000000c9",
+          "score": {
+            "numerator": 1,
+            "denominator": 1
+          },
+          "sharedTags": [
+            "指令无响应",
+            "舵机故障"
+          ],
+          "queryOnlyTags": [],
+          "cardOnlyTags": [],
+          "role": "执行机构失效",
+          "label": "relevant",
+          "reason": "指令、结果和故障关系都有支持。"
+        },
+        {
+          "cardId": "KC-000000000000000000000000000000cc",
+          "score": {
+            "numerator": 1,
+            "denominator": 1
+          },
+          "sharedTags": [
+            "指令无响应",
+            "舵机故障"
+          ],
+          "queryOnlyTags": [],
+          "cardOnlyTags": [],
+          "role": "过往故障已修复",
+          "label": "not_relevant",
+          "reason": "时间范围不同，过去缺陷不支持当前模式。"
+        },
+        {
+          "cardId": "KC-000000000000000000000000000000cb",
+          "score": {
+            "numerator": 1,
+            "denominator": 2
+          },
+          "sharedTags": [
+            "指令无响应"
+          ],
+          "queryOnlyTags": [
+            "舵机故障"
+          ],
+          "cardOnlyTags": [],
+          "role": "指令输入错误",
+          "label": "not_relevant",
+          "reason": "结果源自错误输入，不是指令无法执行。"
+        }
+      ],
+      "hits": [
+        {
+          "cardId": "KC-000000000000000000000000000000c9",
+          "role": "执行机构失效",
+          "label": "relevant",
+          "reason": "指令、结果和故障关系都有支持。",
+          "evidence_locator": "Q2/执行机构失效"
+        }
+      ],
+      "misses": [
+        {
+          "cardId": "KC-000000000000000000000000000000ca",
+          "role": "液压执行失效",
+          "label": "relevant",
+          "reason": "不同表述的同类机械执行失效。",
+          "evidence_locator": "Q2/液压执行失效"
+        }
+      ],
+      "false_positive": [
+        {
+          "cardId": "KC-000000000000000000000000000000cb",
+          "role": "指令输入错误",
+          "label": "not_relevant",
+          "reason": "结果源自错误输入，不是指令无法执行。",
+          "evidence_locator": "Q2/指令输入错误"
+        },
+        {
+          "cardId": "KC-000000000000000000000000000000cc",
+          "role": "过往故障已修复",
+          "label": "not_relevant",
+          "reason": "时间范围不同，过去缺陷不支持当前模式。",
+          "evidence_locator": "Q2/过往故障已修复"
+        }
+      ],
+      "insufficient_returned": [],
+      "insufficient_not_returned": [],
+      "excluded_filtered": [],
+      "eligibility_failures": [],
+      "confirmed_negative_not_returned": [],
+      "precision_at_5": {
+        "numerator": 1,
+        "denominator": 5,
+        "value": 0.2
+      },
+      "returned_correctness": {
+        "numerator": 1,
+        "denominator": 3,
+        "value": 0.3333333333333333
+      },
+      "recall": {
+        "numerator": 1,
+        "denominator": 2,
+        "value": 0.5
+      }
+    },
+    {
+      "query": "Q3",
+      "query_text": "找交接遗漏关键净空限制而未复核的模式",
+      "query_tags": [
+        "交接遗漏",
+        "净空未复核"
+      ],
+      "pool_size": 4,
+      "ranked": [
+        {
+          "cardId": "KC-0000000000000000000000000000012d",
+          "score": {
+            "numerator": 1,
+            "denominator": 1
+          },
+          "sharedTags": [
+            "交接遗漏",
+            "净空未复核"
+          ],
+          "queryOnlyTags": [],
+          "cardOnlyTags": [],
+          "role": "限制未交接且未复核",
+          "label": "relevant",
+          "reason": "两个必要环节均明确。"
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000130",
+          "score": {
+            "numerator": 1,
+            "denominator": 1
+          },
+          "sharedTags": [
+            "交接遗漏",
+            "净空未复核"
+          ],
+          "queryOnlyTags": [],
+          "cardOnlyTags": [],
+          "role": "交接记录缺失",
+          "label": "insufficient_evidence",
+          "reason": "记录缺失不证明交接遗漏。"
+        },
+        {
+          "cardId": "KC-0000000000000000000000000000012e",
+          "score": {
+            "numerator": 1,
+            "denominator": 2
+          },
+          "sharedTags": [
+            "净空未复核"
+          ],
+          "queryOnlyTags": [
+            "交接遗漏"
+          ],
+          "cardOnlyTags": [],
+          "role": "完整交接后主动违规",
+          "label": "not_relevant",
+          "reason": "缺陷是后续决策，不是信息遗漏或未复核。"
+        }
+      ],
+      "hits": [
+        {
+          "cardId": "KC-0000000000000000000000000000012d",
+          "role": "限制未交接且未复核",
+          "label": "relevant",
+          "reason": "两个必要环节均明确。",
+          "evidence_locator": "Q3/限制未交接且未复核"
+        }
+      ],
+      "misses": [],
+      "false_positive": [
+        {
+          "cardId": "KC-0000000000000000000000000000012e",
+          "role": "完整交接后主动违规",
+          "label": "not_relevant",
+          "reason": "缺陷是后续决策，不是信息遗漏或未复核。",
+          "evidence_locator": "Q3/完整交接后主动违规"
+        }
+      ],
+      "insufficient_returned": [
+        {
+          "cardId": "KC-00000000000000000000000000000130",
+          "role": "交接记录缺失",
+          "label": "insufficient_evidence",
+          "reason": "记录缺失不证明交接遗漏。",
+          "evidence_locator": "Q3/交接记录缺失"
+        }
+      ],
+      "insufficient_not_returned": [],
+      "excluded_filtered": [],
+      "eligibility_failures": [],
+      "confirmed_negative_not_returned": [
+        {
+          "cardId": "KC-0000000000000000000000000000012f",
+          "role": "桥区设备故障",
+          "label": "not_relevant",
+          "reason": "地点相同不等于机制相同。",
+          "evidence_locator": "Q3/桥区设备故障"
+        }
+      ],
+      "precision_at_5": {
+        "numerator": 1,
+        "denominator": 5,
+        "value": 0.2
+      },
+      "returned_correctness": {
+        "numerator": 1,
+        "denominator": 3,
+        "value": 0.3333333333333333
+      },
+      "recall": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      }
+    },
+    {
+      "query": "Q4",
+      "query_text": "找失去推进能力导致无法维持操纵的模式",
+      "query_tags": [
+        "失去推进"
+      ],
+      "pool_size": 5,
+      "ranked": [
+        {
+          "cardId": "KC-00000000000000000000000000000191",
+          "score": {
+            "numerator": 1,
+            "denominator": 1
+          },
+          "sharedTags": [
+            "失去推进"
+          ],
+          "queryOnlyTags": [],
+          "cardOnlyTags": [],
+          "role": "推进丧失字面模式",
+          "label": "relevant",
+          "reason": "明确推进丧失。"
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000194",
+          "score": {
+            "numerator": 1,
+            "denominator": 1
+          },
+          "sharedTags": [
+            "失去推进"
+          ],
+          "queryOnlyTags": [],
+          "cardOnlyTags": [],
+          "role": "主动停机控制",
+          "label": "not_relevant",
+          "reason": "主动控制动作不是设备能力丧失。"
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000195",
+          "score": {
+            "numerator": 1,
+            "denominator": 1
+          },
+          "sharedTags": [
+            "失去推进"
+          ],
+          "queryOnlyTags": [],
+          "cardOnlyTags": [],
+          "role": "疑似推进问题",
+          "label": "insufficient_evidence",
+          "reason": "仅假设，不能确认为相似机制。"
+        }
+      ],
+      "hits": [
+        {
+          "cardId": "KC-00000000000000000000000000000191",
+          "role": "推进丧失字面模式",
+          "label": "relevant",
+          "reason": "明确推进丧失。",
+          "evidence_locator": "Q4/推进丧失字面模式"
+        }
+      ],
+      "misses": [
+        {
+          "cardId": "KC-00000000000000000000000000000192",
+          "role": "同义失去动力",
+          "label": "relevant",
+          "reason": "同义机制，不应要求同一个标签。",
+          "evidence_locator": "Q4/同义失去动力"
+        },
+        {
+          "cardId": "KC-00000000000000000000000000000193",
+          "role": "同义主机熄火",
+          "label": "relevant",
+          "reason": "不同标签仍明确同一机制。",
+          "evidence_locator": "Q4/同义主机熄火"
+        }
+      ],
+      "false_positive": [
+        {
+          "cardId": "KC-00000000000000000000000000000194",
+          "role": "主动停机控制",
+          "label": "not_relevant",
+          "reason": "主动控制动作不是设备能力丧失。",
+          "evidence_locator": "Q4/主动停机控制"
+        }
+      ],
+      "insufficient_returned": [
+        {
+          "cardId": "KC-00000000000000000000000000000195",
+          "role": "疑似推进问题",
+          "label": "insufficient_evidence",
+          "reason": "仅假设，不能确认为相似机制。",
+          "evidence_locator": "Q4/疑似推进问题"
+        }
+      ],
+      "insufficient_not_returned": [],
+      "excluded_filtered": [],
+      "eligibility_failures": [],
+      "confirmed_negative_not_returned": [],
+      "precision_at_5": {
+        "numerator": 1,
+        "denominator": 5,
+        "value": 0.2
+      },
+      "returned_correctness": {
+        "numerator": 1,
+        "denominator": 3,
+        "value": 0.3333333333333333
+      },
+      "recall": {
+        "numerator": 1,
+        "denominator": 3,
+        "value": 0.3333333333333333
+      }
+    },
+    {
+      "query": "Q5",
+      "query_text": "找锚泊状态下走锚的支持记录",
+      "query_tags": [
+        "走锚"
+      ],
+      "pool_size": 4,
+      "ranked": [
+        {
+          "cardId": "KC-000000000000000000000000000001f5",
+          "score": {
+            "numerator": 1,
+            "denominator": 1
+          },
+          "sharedTags": [
+            "走锚"
+          ],
+          "queryOnlyTags": [],
+          "cardOnlyTags": [],
+          "role": "标题标签完全吻合但待查",
+          "label": "insufficient_evidence",
+          "reason": "标题不能替代支持记录。"
+        },
+        {
+          "cardId": "KC-000000000000000000000000000001f6",
+          "score": {
+            "numerator": 1,
+            "denominator": 1
+          },
+          "sharedTags": [
+            "走锚"
+          ],
+          "queryOnlyTags": [],
+          "cardOnlyTags": [],
+          "role": "另一方猜测",
+          "label": "insufficient_evidence",
+          "reason": "未核实陈述。"
+        },
+        {
+          "cardId": "KC-000000000000000000000000000001f7",
+          "score": {
+            "numerator": 1,
+            "denominator": 1
+          },
+          "sharedTags": [
+            "走锚"
+          ],
+          "queryOnlyTags": [],
+          "cardOnlyTags": [],
+          "role": "主动起锚",
+          "label": "not_relevant",
+          "reason": "明确属于计划离泊，不是走锚。"
+        }
+      ],
+      "hits": [],
+      "misses": [],
+      "false_positive": [
+        {
+          "cardId": "KC-000000000000000000000000000001f7",
+          "role": "主动起锚",
+          "label": "not_relevant",
+          "reason": "明确属于计划离泊，不是走锚。",
+          "evidence_locator": "Q5/主动起锚"
+        }
+      ],
+      "insufficient_returned": [
+        {
+          "cardId": "KC-000000000000000000000000000001f5",
+          "role": "标题标签完全吻合但待查",
+          "label": "insufficient_evidence",
+          "reason": "标题不能替代支持记录。",
+          "evidence_locator": "Q5/标题标签完全吻合但待查"
+        },
+        {
+          "cardId": "KC-000000000000000000000000000001f6",
+          "role": "另一方猜测",
+          "label": "insufficient_evidence",
+          "reason": "未核实陈述。",
+          "evidence_locator": "Q5/另一方猜测"
+        }
+      ],
+      "insufficient_not_returned": [],
+      "excluded_filtered": [],
+      "eligibility_failures": [],
+      "confirmed_negative_not_returned": [
+        {
+          "cardId": "KC-000000000000000000000000000001f8",
+          "role": "无锚泊状态",
+          "label": "not_relevant",
+          "reason": "缺少锚泊前提。",
+          "evidence_locator": "Q5/无锚泊状态"
+        }
+      ],
+      "precision_at_5": {
+        "numerator": 0,
+        "denominator": 5,
+        "value": 0.0
+      },
+      "returned_correctness": {
+        "numerator": 0,
+        "denominator": 3,
+        "value": 0.0
+      },
+      "recall": null
+    },
+    {
+      "query": "Q6",
+      "query_text": "找疲劳导致操作遗漏的已发布案例模式",
+      "query_tags": [
+        "疲劳",
+        "操作遗漏"
+      ],
+      "pool_size": 5,
+      "ranked": [
+        {
+          "cardId": "KC-00000000000000000000000000000259",
+          "score": {
+            "numerator": 1,
+            "denominator": 1
+          },
+          "sharedTags": [
+            "操作遗漏",
+            "疲劳"
+          ],
+          "queryOnlyTags": [],
+          "cardOnlyTags": [],
+          "role": "合格相关",
+          "label": "relevant",
+          "reason": "资格和两个特征均满足。"
+        },
+        {
+          "cardId": "KC-0000000000000000000000000000025d",
+          "score": {
+            "numerator": 1,
+            "denominator": 2
+          },
+          "sharedTags": [
+            "操作遗漏"
+          ],
+          "queryOnlyTags": [
+            "疲劳"
+          ],
+          "cardOnlyTags": [],
+          "role": "训练阶段主动省略",
+          "label": "not_relevant",
+          "reason": "同一表面结果来自不同含义。"
+        }
+      ],
+      "hits": [
+        {
+          "cardId": "KC-00000000000000000000000000000259",
+          "role": "合格相关",
+          "label": "relevant",
+          "reason": "资格和两个特征均满足。",
+          "evidence_locator": "Q6/合格相关"
+        }
+      ],
+      "misses": [],
+      "false_positive": [
+        {
+          "cardId": "KC-0000000000000000000000000000025d",
+          "role": "训练阶段主动省略",
+          "label": "not_relevant",
+          "reason": "同一表面结果来自不同含义。",
+          "evidence_locator": "Q6/训练阶段主动省略"
+        }
+      ],
+      "insufficient_returned": [],
+      "insufficient_not_returned": [],
+      "excluded_filtered": [
+        {
+          "cardId": "KC-0000000000000000000000000000025a",
+          "role": "待审核相关",
+          "label": "excluded",
+          "reason": "Candidate 不进入评价母集。",
+          "evidence_locator": "Q6/待审核相关"
+        },
+        {
+          "cardId": "KC-0000000000000000000000000000025b",
+          "role": "已撤回相关",
+          "label": "excluded",
+          "reason": "Withdrawn 不进入评价母集。",
+          "evidence_locator": "Q6/已撤回相关"
+        },
+        {
+          "cardId": "KC-0000000000000000000000000000025c",
+          "role": "方法而非案例",
+          "label": "excluded",
+          "reason": "Method 不是 Case。",
+          "evidence_locator": "Q6/方法而非案例"
+        }
+      ],
+      "eligibility_failures": [],
+      "confirmed_negative_not_returned": [],
+      "precision_at_5": {
+        "numerator": 1,
+        "denominator": 5,
+        "value": 0.2
+      },
+      "returned_correctness": {
+        "numerator": 1,
+        "denominator": 2,
+        "value": 0.5
+      },
+      "recall": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      }
+    }
+  ],
+  "aggregate": {
+    "hits": 5,
+    "misses": 4,
+    "returned": 18,
+    "false_positive": 8,
+    "insufficient_returned": 5,
+    "excluded_filtered": 3,
+    "eligibility_failures": 0,
+    "precision_at_5": {
+      "numerator": 5,
+      "denominator": 30,
+      "value": 0.16666666666666666
+    },
+    "returned_correctness": {
+      "numerator": 5,
+      "denominator": 18,
+      "value": 0.2777777777777778
+    },
+    "micro_recall": {
+      "numerator": 5,
+      "denominator": 9,
+      "value": 0.5555555555555556
+    }
+  }
+}
