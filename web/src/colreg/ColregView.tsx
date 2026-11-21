@@ -167,8 +167,9 @@ export function ColregView(props: ColregViewProps) {
 
       {/* W6.2：1200–1679px（如 1440×900）下由 w6.css 把判定表区（.colreg-grid）排到本区之前，进首屏 */}
       <div className="colreg-bands-wrap" data-testid="colreg-bands-wrap">
-        <Panel title={`会遇局面时间带 · 让路/直航责任 · DCPA 演变（${simToClock(caseDef.caseEpochUtc, t0)} – ${simToClock(caseDef.caseEpochUtc, t1)}）`}
+        <Panel title={bands.length ? `会遇局面时间带 · 让路/直航责任 · DCPA 演变（${simToClock(caseDef.caseEpochUtc, t0)} – ${simToClock(caseDef.caseEpochUtc, t1)}）` : '会遇局面时间带 · 尚无时间带'}
           meta={<span>{bands.length} 段 · 存疑带 ? 标记</span>} style={{ marginBottom: 12 }}>
+          {bands.length === 0 && <p role="status" data-testid="bands-empty">当前结果未提供会遇时间带，无法据此确定分析区间；不表示无碰撞危险。已有核查项仍供人工逐条核对。</p>}
           <div className="colreg-legend">
             {Object.entries(SITUATION_COLOR).map(([k, color]) => (
               <span key={k}><i style={{ background: color }} />{situationLabel(k)}</span>

@@ -647,3 +647,6 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## COLREG-EMPTY-CONTEXT（2026-11-21）
+独立前端候选：空会遇时间带不再将布局默认 0–1 秒呈现为实际分析区间。只改显示与纯合成 SSR；不改 W1/W6 规则、合同、权限及人工复核逻辑。非空结果保持原样。
