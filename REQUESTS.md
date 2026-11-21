@@ -664,3 +664,6 @@ Base f9f4e599cdb670d864a5e7e986067216e7105636. Extract the existing evidence int
 
 ## Registered pair transaction boundary (2026-11-21)
 Internal owned session wrapper follows existing download lock/begin and Database commit/rollback; no catches inside transaction. Finite replay issue classification replaces blanket TIME_UNRESOLVED. No route/role/contract changes. Real temporary SQLite probe tests do not exercise business custody/authentication. Prior freeze retained; new transaction freeze separate.
+
+## Registered pair business-table acceptance (2026-11-21)
+Test-only: fixed ca8bb78 ordinary-source allowlist, fresh temporary SQLite/files, direct production intake and pair calls. Three synthetic groups; explicit Ctx fixture is not authentication. No runtime, role, route, schema or frozen-source change.

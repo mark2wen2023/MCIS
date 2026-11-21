@@ -38,3 +38,25 @@ python tests_acceptance/shared-trajectory-cross-repo-expanded/check.py
 本轮：10 组合成读取/分类与 AST 等价检查；6 组**真实 SQLite 事务原语**检查。后者从固定源码 AST 提取原 `Database` 类和 `begin`，使用已有 SQLAlchemy 2.1.8，在自动清理的新临时目录建唯一 `synthetic_access_probe` 表；未导入 app、业务模型/registry，未调用 create_all。生产授权/原件读取/容器仍为手写替身，Access 以探针 INSERT 表示，**不是实际保管链/审计表测试**。覆盖成功后可见两条、第二份读取失败回滚第一条、第二份校验失败回滚两条、提交前异常不交付且回滚、提交后异常不交付但两条可能持久化、无效 purpose 不启动读取。未执行真实权限、业务 ORM/原件/审计链、并发撤权或浏览器。
 
 接 UI 仍缺已验证的服务器调用装配、可信 pin 来源及真实授权/原件/持久审计验收。本次只补事务所有权的内部接缝，不开放入口，也未改变已冻结图片/镜像或旧 bdb0c60 哈希记录。新冻结见 `logs/registered-trajectory-pair-transaction-hashes-frozen.txt`。
+
+
+## 真实业务表与合成原件限定复验（2026-11-21）
+
+```sh
+/workspace/mcis/service/.venv/bin/python -I tests_acceptance/registered-trajectory-pair/business.py
+```
+
+此入口固定生产源码为 `ca8bb781545228a3333167b6188fcde1c53c2509`；只读取脚本 PATHS 明列的普通 Git blob，先与当前 HEAD 对应源码逐字节比较，不一致则停。将原样源码、四份 Schema 与两份既有合成 V1 文件复制到全新自动清理目录；用 `-I` 和该目录导入真正生产模块，不 AST 替换或 monkeypatch。无 main/models_registry/seed 文件可导入；配置类只定义、不实例化；未启动应用或 HTTP。
+
+用原 `Database` + 显式七张真实模型表建立独立新 SQLite：cases/evidence_items/custody_events/audit_events/access_policies/archive_import_history/track_local_receipts；不调用全量 create_all。原模型 after_create 保护保留，audit/custody 四条追加保护 SQL 与 Database 原定义相同，核对实际触发器存在。其他 ORM 模型可能因原归档模块导入而注册到 metadata，但未建表、未执行业务。临时根和引擎在成功/失败后清理。
+
+**真实执行**：生产 preview_input/commit_input 的 body 解析、完整业务授权与 Schema 检查、编号分配、保管链/审计、独占原件文件写入；生产 `_load_registered_pair`、load_receipt、原件字节重读/摘要和登记绑定核验、容器检测、V1 校验、事务提交/回滚。读取并验证真实 audit 和 custody 两条哈希链。
+
+**手造部分**：请求只由 Body.stream/headers 替身传递（无 HTTP）；Ctx 的测试主体/既有 Investigator 角色显式注入，**不是已认证用户或会话验收**。案件与初始策略是经 case Schema 校验后的 fixture 用 put_doc 建立，未验建案 API。两船原文完全合成；证据、回执、Register/Access 与审计均由生产登记/读取函数生成，没有手工插这些行。
+
+3 组退出 0：
+1. 同案两船：真实登记后 (证据,保管,审计)=(2,2,2)，读取后=(2,4,4)，案/证据摘要匹配、Access 逐证据正确，审计/保管链 valid，各回执 accessCount=1。
+2. 持久策略 evidence_meta=Deny：真实业务 require 返回 403，无双份结果，行数不变。仅业务策略检查，不是认证/4A/并发撤权测试。
+3. 第二份为合法登记且单船契约有效、但文内 caseId 不同：读取失败；两份 Access 与对应审计全部回滚，登记记录/原件不撤销、原链仍有效。
+
+首次运行因夹具缺 accidentType 在 case Schema 处失败，未开始登记；补齐纯合成字段后通过。既有生产源码及旧冻结没有修改。此轮不包含真实容器内容、档案恢复、真实业务数据、HTTP/浏览器、文件并发变更、撤权竞态或 UI。仍不能直接宣称可接 UI：尚需可信会话/固定 pin 选择来源与受控调用装配的验收。

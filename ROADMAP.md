@@ -407,3 +407,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-21 | Internal registered V1 pair | 待测：共用下载授权/审计读取；双份固定摘要整体验证；无路由/默认启用 | tests_acceptance/registered-trajectory-pair/README.md；logs/registered-trajectory-pair-impl-hashes-frozen.txt |
 
 | 2026-11-21 | Registered pair owned transaction | 待独验：内部事务退出后才交付；10组合成与6组临时SQLite原语检查通过，非真实业务审计/权限 | logs/registered-trajectory-pair-transaction-hashes-frozen.txt |
+
+| 2026-11-21 | Registered pair business tables | 待独验：3组真实SQLite/登记/原件/保管审计限定合成检查通过；主体为fixture，未验认证或UI | tests_acceptance/registered-trajectory-pair/business.py |
