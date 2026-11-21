@@ -663,3 +663,6 @@ main94d5e38独立增量：VesselList中显式呈现缺失/已登记/异常尺寸
 ## UI 03/05/08 review combination
 
 在独立candidate/ui-03-05-08-review基于main94d5e38组合9ff7a04、59580d2、03a8e78精确前端及测试文件，三来源不变，非共享文件逐字核对，原冻结保留。无其他业务接线。组合复跑及限制见 tests_acceptance/ui-03-05-08-review/README.md。
+
+## UI-03-04-05-08-REVIEW（2026-11-21）
+以b965f140为父，逐字摘取813f946环境4产品/6测试文件，产品路径无重叠；不合并源分支、不改权限或主题。四页离线定向组合复验，详见tests_acceptance/ui-03-04-05-08-review/README.md。

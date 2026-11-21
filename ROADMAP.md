@@ -405,3 +405,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | analysis-snapshot-scope | 待测 | W12/页面08旧分析停用与快照重读；纯合成hook/SSR、TS/Vite通过；真实浏览器和登记轨迹版本联动未验。冻结 logs/analysis-snapshot-scope-impl-hashes-frozen.txt |
 
 | ui-03-05-08-review | 待测 | 独立精确文件组合；7项前端定向/相邻检查、原冻结校验、TS/Vite通过；真实浏览器/跨页业务未验。来源冻结保持，说明 tests_acceptance/ui-03-05-08-review/README.md |
+
+| UI-03-04-05-08-REVIEW | 待测 | 2026-11-21 | 四页组合12离线入口及TS/Vite通过，非浏览器/业务闭环；logs/ui-03-04-05-08-impl-hashes-frozen.txt |
