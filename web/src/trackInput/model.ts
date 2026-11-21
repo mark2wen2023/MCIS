@@ -1,3 +1,4 @@
+import { validUtc } from '../tracks/model'
 export const MAX_FILE_BYTES=1024*1024
 export const TEMPLATE='utc,latDeg,lonDeg,sogKn,sogStatus,cogDeg,cogStatus,hdgDeg,hdgStatus\r\n'
 export interface ImportBody {profile:'mcis-utc-v1';vesselId:string;fileName:string;source:string;timeBasis:string;contentBase64:string}
@@ -15,6 +16,22 @@ export function parsePreview(v:unknown,caseId:string,body:ImportBody):Preview {
   if(!Array.isArray(v.issues)||v.issues.length>200||!v.issues.every(i=>obj(i)&&integer(i.row)&&string(i.field)&&string(i.code)&&string(i.message))||v.issues.length>v.issuesTotal||!Array.isArray(v.warnings)||!v.warnings.every(string))throw Error('预览诊断无效，未允许保存。')
   if(!Array.isArray(v.samplePoints)||v.samplePoints.length>100||!v.samplePoints.every(p=>obj(p)&&p.vesselId===body.vesselId&&string(p.utc)&&['timeSec','latDeg','lonDeg','sogKn','cogDeg'].every(k=>finite(p[k]))&&(p.hdgDeg==null||finite(p.hdgDeg))))throw Error('预览点格式无效，未允许保存。')
   if(v.timeRange!==null&&(!obj(v.timeRange)||!string(v.timeRange.firstUtc)||!string(v.timeRange.lastUtc)||!finite(v.timeRange.fromSec)||!finite(v.timeRange.toSec)))throw Error('时间范围无效，未允许保存。')
+  // Validate the existing preview contract, not the raw CSV or its authenticity.
+  // A rejected CSV can still contain diagnostic sample points: only an accepted
+  // whole-file preview requires strict sample ordering and matching endpoints.
+  if(!validUtc(v.caseEpochUtc))throw Error('预览 UTC 纪元无效，未允许保存。')
+  const epoch=Date.parse(v.caseEpochUtc)
+  const aligned=(utc:unknown,seconds:unknown)=>validUtc(utc)&&finite(seconds)&&Math.abs((Date.parse(utc)-epoch)/1000-seconds)<=1e-6
+  if(!v.samplePoints.every(p=>aligned(p.utc,p.timeSec)))throw Error('预览 UTC 与相对秒不一致，未允许保存。')
+  if(v.timeRange!==null&&(!aligned(v.timeRange.firstUtc,v.timeRange.fromSec)||!aligned(v.timeRange.lastUtc,v.timeRange.toSec)))throw Error('预览时间范围与纪元不一致，未允许保存。')
+  if(v.canCommit){
+    const points=v.samplePoints,range=v.timeRange as Preview['timeRange']
+    if(points.length!==Math.min(v.rowCount,100)||!range||range.fromSec>range.toSec
+       ||points.some((p,i)=>i>0&&Date.parse(p.utc)<=Date.parse(points[i-1].utc))
+       ||!points.length||Date.parse(points[0].utc)!==Date.parse(range.firstUtc)
+       ||points.some(p=>p.timeSec<range.fromSec-1e-6||p.timeSec>range.toSec+1e-6)
+       ||(v.rowCount<=100&&Date.parse(points[points.length-1].utc)!==Date.parse(range.lastUtc)))throw Error('可保存预览的时间顺序或样例范围矛盾，未允许保存。')
+  }
   if(v.canCommit&&(v.rowCount===0||v.issuesTotal>0||v.existingTrackCount>0))throw Error('预览状态矛盾，未允许保存。')
   return v as unknown as Preview
 }

@@ -647,3 +647,7 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## W10 preview time consistency
+
+独立于main94d5e38，增强已有trackInput.parsePreview响应核验：UTC/纪元/相对秒和可保存样例顺序、范围；不改CSV合同或后端、不新增修订写入。保留不可保存诊断与未知HDG；见 tests_acceptance/track-preview-time-consistency/README.md。旧冻结文件仅在新候选增量修改，不更新原冻结。
