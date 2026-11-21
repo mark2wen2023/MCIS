@@ -413,3 +413,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-21 | Registered exact UTC internal seam | 待独验：生产内部入口逐次读取提交后查询；原离线选择语义对照3组通过；业务表组合待下一固定源码测试提交 | logs/registered-trajectory-query-hashes-frozen.txt |
 
 | 2026-11-21 | Registered exact UTC business composition | 待独验：固定db90fdf，纯查询3组、真实业务组合5组（含原3组）通过；未接UI/认证 | tests_acceptance/registered-trajectory-pair/business_query.py |
+
+| 2026-11-21 | Registered query workbench adapter | 待独验：同壳默认关闭、显式选点查询、竞态与来源校验；shell2组、业务模型→手写DOM组合4组（含既有3组）；旧2+8回归通过，未实机/HTTP | tests_acceptance/registered-trajectory-pair/business_ui.py |

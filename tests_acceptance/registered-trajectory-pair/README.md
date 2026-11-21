@@ -79,3 +79,36 @@ python tests_acceptance/registered-trajectory-pair/query.py
 新增实证：T+20 两船存量插值，B 原 08Z+12→20Z；T+80 A缺轨/B有点；T+124.25 A缺轨/B无精确行；T+100 A recorded、HDG null/COG存在；逐次 Access 审计增加；每船 pin 精确匹配真实登记且 pointer 指向原行。错摘要、错案和持久策略拒绝不产生新模型、不提交新增 Access。测试中调用方旧变量不被替换，**不是实际 UI 状态/竞态测试**；已经返回的数据不能因此撤销，仍未解决跨进程撤权、文件并发改动或长期缓存使用。
 
 业务链沿用上一节真实/替身边界：真实登记、文件、策略、DB/审计与查询；Ctx 身份和请求传输是合成夹具。未启动应用/HTTP/浏览器/容器/媒体，未接 4A、报告或独立只读工作台。接 UI 仍需可信调用装配、服务器 pin 选择与请求生命周期控制，不可把内部函数当身份验证器。
+
+## 同一复盘工作台的默认关闭适配入口（2026-11-21）
+
+新增 `tools/replay_evidence_workbench/registered_build.py` 复用原 workbench.html/style.css 壳，改用 `registered.js` 绑定同一 map/time/timeline/证据侧栏 DOM。原 build.py/workbench.js、模板、CSS 和原 HTML 固定摘要完全不变。此入口不是第二套模拟回放器，也不替换默认演示。
+
+```sh
+python tools/replay_evidence_workbench/registered_build.py --output /tmp/registered-shell-new.html
+```
+
+目标必须不存在；输出默认空白待接状态，无案件数据、默认身份、查询或 HTTP。CSP 仍 `connect-src 'none'`。仅供未来可信同源装配选择的源码切片，**当前没有可用业务服务/浏览器入口**。不为接线放开 CSP 或提供角色/凭据。
+
+注入接口（没有示例身份、固定案或网络实现）：
+- `MCISRegisteredWorkbench.attach(query)`：query 接收 `{caseId,pins,alignedUtc}`，返回内部最小模型的 Promise。宿主须自己提供已验证会话、固定 pin 选择、服务端权限/事务及 purpose；不能把浏览器参数当授权。错误可用有限 `code=ACCESS_DENIED|SESSION_EXPIRED` 表示拒绝，其他异常统一失败，不输出 message/原日志。
+- `selectCase({caseId,pins,times})`：配置来源须经宿主确认；这里只核格式和响应一致性。切案立即清除坐标/来源/旧详情，配置无效不保留旧案，也不发请求。times 只允许有限、有序、唯一 UTC 时间列表，**不是观测/连续轨迹证明**。
+- 选择时点、oninput/onchange、前后移动仅本地暂选并清掉旧坐标，时间轴显示未查询标记；只有“查询当前时点”显式提交才调用 query。同一时点等待中防重复；没有 tick、自动重试或自动首读。
+- `invalidate()`：宿主身份/会话/案权限上下文变化时必须调用，清旧模型并移除适配器。页面不能自行发现服务器撤权，不能拿已返回的模型作长期许可。
+
+模型按实际内部查询形状逐字段校验：同案、相同顺序的完整 pins、精确时点、状态、坐标/方向范围、时间算术、JSON Pointer；额外原文/来源字段拒绝。显示固定 evidenceId/requestDigest/sourceSha256 与 Pointer，来源 UTC/校正/对齐时刻；server 未提供的原始设备时钟说明、sourceIds、basis、原文一律不补。设备与原文动作禁用，没有回退合成帧。地图仅示意当前点并明确自适应范围、不绘连续线；时间轴只标本次两份结果。插值、计算、人工假设和示意 kind 分别标注，不把它们叫观测；缺 HDG 不用 COG。
+
+首次响应校验失败显示“首次载入未通过”；曾接受结果后的当前失败显示“此前显示已清除”。两种情况均无旧坐标或来源，**曾接受结果不等于已认证会话**。每次查询前先清除，generation/序号忽略旧成功与旧失败，旧详情回调也失效。忽略响应只阻止显示，**不取消已提交 Access、也不宣称回滚**。没有 URL/storage/log 数据写入。
+
+复验：
+```sh
+node --check tools/replay_evidence_workbench/registered.js
+python tests_acceptance/registered-trajectory-pair/shell.py
+/workspace/mcis/service/.venv/bin/python -I tests_acceptance/registered-trajectory-pair/business_ui.py
+python tests_acceptance/replay-evidence-workbench/check.py
+python tests_acceptance/replay-evidence-clock/check.py
+```
+
+本轮均退出0：shell 2组；business_ui 4组（包含原业务3组，不重复累计）；旧工作台2组含原Node手写DOM、旧查询8组。business_ui 使用固定 db90fdf 真实生产登记/读取/查询，生成4个时点到临时文件后交生产registered.js＋原壳的手写DOM；真实查询4次审计从2到10。JS阶段为内存Promise适配，不是真实传输：20轮 input/change、前后移动0次调用；一次明确按钮1次调用；等待同点重复不派发；A→B、乱序/旧错误、权限拒绝、身份失效、错pin/时间/额外原文和旧详情不回填。此计数分层对账**不是一次真实浏览器点击打通HTTP的证明**。
+
+未运行浏览器/视觉/键盘焦点实机验收、HTTP、App/容器/媒体/4A；未改可信身份装配或服务端路由。独立离线工作台仍保持默认原样；该适配只有注入接口，没有已批准的业务HTTP接缝，因此不对外启用。

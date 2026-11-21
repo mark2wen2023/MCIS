@@ -670,3 +670,6 @@ Test-only: fixed ca8bb78 ordinary-source allowlist, fresh temporary SQLite/files
 
 ## Registered exact UTC query (2026-11-21)
 Internal fresh authorized/committed pair -> exact point projection. No new route/grant, no batch input API or authority cache; original Git preview and its hashes remain unchanged. Reuse V1 UTC parser, preserve exact gap-first selector semantics by differential synthetic tests. Protected pin+JSON Pointer replaces Git/raw-row output. No default caller/UI and no revocation claim.
+
+## Registered query workbench adapter (2026-11-21)
+Opt-in alternate binding of existing replay workbench shell; default offline demo and frozen HTML unchanged. Explicit injected query only, no transport/identity/route/CSP widening. Selection is local until explicit submit; current failures/switch/invalidation clear coordinates and provenance. Synthetic business output -> production JS with hand DOM; no browser/HTTP acceptance. See registered-trajectory-pair README.
