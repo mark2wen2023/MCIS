@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import stat
 import time
 
 ROOT=Path(__file__).resolve().parents[2]
@@ -15,6 +16,19 @@ STAGES=('business_query.py','pilot_prepare.py','t100_seat_crosscheck.py','raw_fi
 
 def require_bytes(raw,expected):
     if hashlib.sha256(raw).hexdigest()!=expected:raise ValueError('fixed_input_mismatch')
+
+REQUIRED_LOCAL = tuple('tests_acceptance/registered-trajectory-pair/'+name for name in (*STAGES,'business.py')) + tuple('service/mcis_service/'+name for name in ('common/local_review_pilot.py','common/verified_case_context.py','reports/generation_snapshot.py','reports/pilot_trajectory_prepare.py'))
+
+def require_local_inputs(root, config):
+    hashes={e['path']:e['sha256'] for e in config['files'] if e['ref']==config['baseline']}
+    hashes.update(config['localFiles'])
+    for name in REQUIRED_LOCAL:
+        path=root/name
+        try:
+            if not stat.S_ISREG(path.lstat().st_mode):raise ValueError('required_local_not_regular')
+        except FileNotFoundError:
+            raise ValueError('required_local_missing') from None
+        require_bytes(path.read_bytes(),hashes[name])
 
 def require_versions(actual,expected):
     if actual!=expected:raise ValueError('dependency_versions_not_reviewed')
@@ -30,8 +44,7 @@ def preflight():
     # Import only existing libraries, never MCIS. Failure is not a passed precheck.
     subprocess.run([sys.executable,'-I','-c','import sqlalchemy,fastapi,jsonschema'],check=True,capture_output=True,timeout=30)
     for ref in config['requiredRefs']+[config['baseline']]:git('cat-file','-e',ref+'^{commit}')
-    for path,digest in config['localFiles'].items():
-        require_bytes((ROOT/path).read_bytes(),digest)
+    require_local_inputs(ROOT,config)
     summaries=[]
     for entry in config['files']:
         ref,path,digest=entry['ref'],entry['path'],entry['sha256']
