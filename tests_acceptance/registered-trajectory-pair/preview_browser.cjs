@@ -14,25 +14,67 @@ async function main(){
   const {chromium}=require('playwright');
   browser=await chromium.launch({headless:true,chromiumSandbox:true,timeout:30000,...(executable?{executablePath:executable}:{})});result.browser=browser.version();
   for(const width of [1440,390]){
-   const c=await browser.newContext({viewport:{width,height:900},offline:true,serviceWorkers:'block'});
+   const c=await browser.newContext({viewport:{width,height:900},hasTouch:false,isMobile:false,offline:true,serviceWorkers:'block'});
    try{
     const requests=[],errors=[];c.on('request',r=>requests.push(r.url()));const p=await c.newPage();p.setDefaultTimeout(8000);p.on('pageerror',e=>errors.push(e.message));
     await p.goto(url);assert.match(await p.title(),/登记轨迹/);assert.equal(await p.locator('[data-current]').count(),0);
-    const slide=async i=>p.locator('#preview-slider').evaluate((e,v)=>{e.value=String(v);e.dispatchEvent(new Event('input',{bubbles:true}));},i);
-    for(let i=0;i<12;i++)await slide(i%4);assert.equal(await p.locator('#preview-count').innerText(),'模拟查询次数：0');
-    await slide(0);await p.locator('#registered-load').click();await p.waitForFunction(()=>document.querySelectorAll('[data-current]').length===2);
-    assert.equal(await p.locator('#preview-count').innerText(),'模拟查询次数：1');
-    const b=p.locator('#point-options button').nth(1);await b.focus();assert(await b.evaluate(e=>e===document.activeElement));await p.keyboard.press('Enter');
-    assert.equal(await p.locator('#correction').innerText(),'12 s');assert.equal(await p.locator('#source-time').innerText(),'2026-02-01T12:00:08.000Z');assert.match(await p.locator('#quality').innerText(),/已存插值/);
-    const before=await p.locator('#ref').innerText();await p.locator('[data-current]').nth(1).click();assert.equal(await p.locator('#ref').innerText(),before);
+    // Real input devices only: evaluate below reads focus, never sets value/events.
+    const tabTo=async selector=>{
+     for(let i=0;i<100;i++){
+      if(await p.locator(selector).evaluate(e=>e===document.activeElement))return;
+      await p.keyboard.press('Tab');
+     }
+     throw Error('Keyboard focus not reachable: '+selector);
+    };
+    const slide=async i=>{
+     await tabTo('#preview-slider');await p.keyboard.press('Home');
+     for(let n=0;n<i;n++)await p.keyboard.press('ArrowRight');
+     assert.equal(await p.locator('#preview-slider').inputValue(),String(i));
+    };
+    const count=async()=>Number((await p.locator('#preview-count').innerText()).split('：')[1]);
+    const submit=async()=>{
+     const n=await count();await tabTo('#registered-load');await p.keyboard.press('Enter');
+     assert.equal(await count(),n+1);
+    };
+    const cleared=async()=>{
+     assert.equal(await p.locator('[data-current]').count(),0);
+     for(const id of ['record-id','raw-time','source-time','correction','aligned-time','pointer','ref','clock'])assert.equal(await p.locator('#'+id).innerText(),'—',id);
+     assert.equal(await p.locator('#file').innerText(),'未选择证据');
+     assert.equal(await p.locator('#quality').innerText(),'未选择');
+     assert.equal(await p.locator('#source-a').isDisabled(),true);assert.equal(await p.locator('#source-b').isDisabled(),true);
+    };
+    await slide(0);await p.locator('#preview-slider').scrollIntoViewIfNeeded();
+    const box=await p.locator('#preview-slider').boundingBox();assert(box&&box.width>20);
+    await p.mouse.move(box.x+8,box.y+box.height/2);await p.mouse.down();
+    await p.mouse.move(box.x+box.width-8,box.y+box.height/2,{steps:20});await p.mouse.up();
+    assert.equal(await p.locator('#preview-slider').inputValue(),'3');assert.equal(await count(),0);await cleared();
+    await slide(0);await p.keyboard.press('ArrowRight');await p.keyboard.press('ArrowLeft');
+    assert.equal(await p.locator('#preview-slider').inputValue(),'0');assert.equal(await count(),0);
+    await submit();await p.waitForFunction(()=>document.querySelectorAll('[data-current]').length===2);
+    await tabTo('#source-b');await p.keyboard.press('Enter');
+    assert.equal(await p.locator('#correction').innerText(),'12 s');assert.equal(await p.locator('#source-time').innerText(),'2026-02-01T12:00:08.000Z');
+    assert.equal(await p.locator('#aligned-time').innerText(),'2026-02-01T12:00:20.000Z');assert.equal(await p.locator('#pointer').innerText(),'/points/2');
+    assert.match(await p.locator('#quality').innerText(),/已存插值/);
+    const before=await p.locator('#ref').innerText();assert.match(before,/登记摘要 .*原文字节 SHA-256/);
+    await p.locator('[data-current]').nth(1).click();assert.equal(await p.locator('#ref').innerText(),before);assert.equal(await p.locator('#pointer').innerText(),'/points/2');assert.equal(await count(),1);
     await p.screenshot({path:path.join(output,`${width}-t20.png`),fullPage:true});
-    await slide(1);assert.equal(await p.locator('#pointer').innerText(),'—');assert.equal(await p.locator('[data-current]').count(),0);await p.locator('#registered-load').click();await p.waitForFunction(()=>document.querySelectorAll('[data-current]').length===1);assert.match(await p.locator('#state-note').innerText(),/声明缺轨/);
-    await slide(3);await p.locator('#registered-load').click();await p.waitForFunction(()=>document.getElementById('state-note').textContent.includes('无精确行'));assert.equal(await p.locator('[data-current]').count(),0);await p.screenshot({path:path.join(output,`${width}-gap.png`),fullPage:true});
-    await slide(2);await p.locator('#registered-load').click();await p.waitForFunction(()=>document.querySelectorAll('[data-current]').length===2);await p.locator('#point-options button').first().click();assert.match(await p.locator('#warning').innerText(),/艏向未知/);
-    await p.locator('#preview-late').click();await p.waitForFunction(()=>document.getElementById('preview-event').textContent.includes('被忽略'));assert.equal(await p.locator('[data-current]').count(),0);assert.equal(await p.locator('#registered-case').innerText(),'未选案件');assert.equal(await p.locator('#ref').innerText(),'—');
+    await slide(1);await cleared();assert.equal(await count(),1);await submit();
+    await p.waitForFunction(()=>document.querySelectorAll('[data-current]').length===1);
+    await p.locator('#source-a').click();assert.equal(await p.locator('#pointer').innerText(),'/sampling/missingIntervals/0');assert.equal(await p.locator('#quality').innerText(),'声明缺轨');assert.equal(await p.locator('#source-time').innerText(),'—');
+    await p.locator('#source-b').click();assert.equal(await p.locator('#pointer').innerText(),'/points/9');assert.equal(await p.locator('#aligned-time').innerText(),'2026-02-01T12:01:20.000Z');
+    await slide(3);await cleared();assert.equal(await count(),2);await submit();
+    await p.waitForFunction(()=>document.getElementById('state-note').textContent.includes('无精确行'));assert.equal(await p.locator('[data-current]').count(),0);
+    assert.equal(await p.locator('#source-b').isDisabled(),true);assert.equal(await p.locator('#point-options button').nth(1).isDisabled(),true);
+    await p.locator('#source-a').click();assert.equal(await p.locator('#pointer').innerText(),'/sampling/missingIntervals/1');assert.equal(await p.locator('#quality').innerText(),'声明缺轨');assert.equal(await p.locator('#aligned-time').innerText(),'2026-02-01T12:02:04.250Z');
+    await p.screenshot({path:path.join(output,`${width}-gap.png`),fullPage:true});
+    await slide(2);await cleared();await submit();await p.waitForFunction(()=>document.querySelectorAll('[data-current]').length===2);
+    await p.locator('#point-options button').first().click();assert.equal(await p.locator('#pointer').innerText(),'/points/7');assert.match(await p.locator('#warning').innerText(),/艏向未知/);
+    assert.equal(await count(),4);await p.locator('#preview-late').click();
+    await p.waitForFunction(()=>document.getElementById('preview-event').textContent.includes('被忽略'));
+    await cleared();assert.equal(await count(),5);assert.equal(await p.locator('#registered-case').innerText(),'未选案件');
     if(width===390){await p.locator('#nav-toggle').click();assert.equal(await p.locator('#nav-toggle').getAttribute('aria-expanded'),'true');}
     assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));assert.deepEqual(errors,[]);assert.deepEqual(requests,[url]);
-    result.checks.push({width,status:'passed',requests:requests.length});
+    result.checks.push({width,height:900,hasTouch:false,isMobile:false,input:'mouse drag; Tab/Home/Arrow/Enter',lateScenario:'synthetic A to no case; not A/B or revocation',status:'passed',requests:requests.length});
    }finally{await c.close();}
   }
  }catch(e){error=e;result.failure=String(e.message);}

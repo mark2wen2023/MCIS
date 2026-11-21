@@ -40,3 +40,19 @@ node tests_acceptance/registered-trajectory-pair/preview_browser.cjs /tmp/regist
 - 新浏览器脚本语法检查；未运行浏览器脚本本体。
 
 无HTTP接线、真实登录/撤权竞态、三维、原件全文、报告或实际应用验收。旧响应抑制只影响显示，不能撤销已提交业务审计。
+
+## 浏览器输入覆盖补强（2026-11-21，待实机）
+
+本次只修改浏览器脚本与本说明，不改生成器、HTML、夹具或上述 SHA。原脚本用 `evaluate` 设置 range.value 并派发 input，不能证明鼠标/键盘输入。现在用 `mouse.down/move/up` 拖动原生 range；Tab 找到真实焦点，Home/ArrowRight/ArrowLeft 暂选，Tab 到查询按钮并 Enter 提交。evaluate 只读焦点/布局，不修改控件或派发事件。
+
+1440×900 和 390×900 **均为鼠标/键盘、hasTouch=false、isMobile=false**；390 是窄视口，不是触屏验收。新断言覆盖：
+
+- 实际拖动后暂选到第4帧，查询仍0次；方向键往返仍0次；第一次明确Enter提交恰为1次，各次后续提交各加1。
+- T+20：B 的 source UTC `12:00:08.000Z`、+12s、aligned UTC `12:00:20.000Z`、`/points/2` 和既有插值；来源键盘入口与地图标记一致。
+- T+80：A 定位 `/sampling/missingIntervals/0`，B 定位 `/points/9`，仅B有点。
+- T+124.25：A 定位 `/sampling/missingIntervals/1`，B无精确行、定位按钮禁用，零地图点。
+- T+100：A `/points/7` 且未知艏向；每次暂选清掉旧详情。迟到响应实际释放并被忽略后，记录/时间/校正/定位/摘要/文件等旧字段仍清空。
+
+迟到用例仅是同一合成 A → 无案，**不是 A → B 切案、撤权或业务审计回滚**。模拟查询次数不是实际 Access 次数。
+
+本轮实跑退出0：`node --check .../preview_browser.cjs`、`node .../preview_dom.cjs /tmp/registered-preview.html`、`python tests_acceptance/replay-evidence-clock/check.py`（8项）、`python tests_acceptance/replay-evidence-workbench/check.py`（2项及旧模拟DOM）、`git diff --check`。HTML哈希再次相符。已知 sandbox helper 仍 nobody/4755，未重试启动。**以上不执行新增真实操作断言；鼠标拖动、Tab顺序、窄屏及网络观察仍待正常沙箱浏览器运行本页所列命令。** 不累计为浏览器或端到端通过。
