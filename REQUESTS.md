@@ -667,3 +667,6 @@ Internal owned session wrapper follows existing download lock/begin and Database
 
 ## Registered pair business-table acceptance (2026-11-21)
 Test-only: fixed ca8bb78 ordinary-source allowlist, fresh temporary SQLite/files, direct production intake and pair calls. Three synthetic groups; explicit Ctx fixture is not authentication. No runtime, role, route, schema or frozen-source change.
+
+## Registered exact UTC query (2026-11-21)
+Internal fresh authorized/committed pair -> exact point projection. No new route/grant, no batch input API or authority cache; original Git preview and its hashes remain unchanged. Reuse V1 UTC parser, preserve exact gap-first selector semantics by differential synthetic tests. Protected pin+JSON Pointer replaces Git/raw-row output. No default caller/UI and no revocation claim.

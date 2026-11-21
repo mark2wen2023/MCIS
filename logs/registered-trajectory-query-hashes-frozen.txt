@@ -1,0 +1,1 @@
+39887965aac4f1918794006c84a7dac21f7bd3b65ee55f2b6916f56b5623ffaa  service/mcis_service/trajectory_exchange/registered_query.py
