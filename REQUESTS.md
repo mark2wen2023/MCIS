@@ -647,3 +647,7 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## W9 dimension status display
+
+main94d5e38独立增量：VesselList中显式呈现缺失/已登记/异常尺寸及未核验来源，不更改表单/模型/服务合同、不加示意缩放。旧冻结保留；详见 tests_acceptance/vessel-dimension-status/README.md。
