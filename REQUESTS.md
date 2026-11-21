@@ -838,3 +838,7 @@ Authorized test-only follow-up to 7a2d0e4: fixed local c10b2cd generator source 
 ## 2026-11-21 — 冻结句绑定加固（同候选，未接入）
 
 独验发现旧内部 envelope 含正文/citations，深层 bytes 可泄出 RecursionError。此次仅收窄内部 v2 为 key/pin/句摘要，增加确定大小/嵌套边界；不改旧精确引用摘要或任何对外合同、报告、权限、持久化。保留 a5a920a 原冻结，新冻结单列 hardening-hashes。范围仍通过原读取器重验，不存内容/范围副本；详见定向 README。
+
+## Frozen binding SQLite storage — independent opt-in proposal
+
+在 0514755778127efa33c0b47b0fcb00e617cb753d 之上新增内部 BindingStore SQLite 实现及纯合成临时业务表测试。默认关闭，不接路由/权限/registry，不改旧信封与摘要；同案父快照外键与只追加保护。生产授权交集/统一读取视图、迁移/归档恢复和报告导出仍为阻断。详见 tests_acceptance/frozen-binding-storage/README.md；不用于默认服务库。
