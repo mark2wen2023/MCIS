@@ -429,3 +429,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Single-case local prerequisites | 待独验 | 4项普通guard、原四阶段退出0/8.058s；logs/single-case-offline-local-guard-impl-hashes-frozen.txt |
 
 | ECFC associated original position | 待独验 | 6项离线检查退出0（3既有+3新增），非事件定位/浏览器/生产授权；logs/ecfc-associated-position-impl-hashes-frozen.txt |
+
+| W11 edge display selection experiment | 待独验 | 新入口6项（3基线+3新）与原节点6项分别退出0、不累计；边仅合成映射，图换版/删边/迟到清空，无UI/授权接线；logs/ecfc-edge-display-selection-impl-hashes-frozen.txt |

@@ -1,0 +1,3 @@
+c0a0d9f2c77eb353e7d997bc4523d753f5603965bd2ade884280da4a0951f963  tests_acceptance/ecfc-display-selection/selection.py
+e320bf86b4a33d3f92896073f9dd86d01b776ed53d72d71433914385b26f83c8  tests_acceptance/ecfc-display-selection/check.py
+c9de95ab442a9045edd683d0ee8b4e40095b571e40471a1f33c589538e7c88f9  tests_acceptance/ecfc-display-selection/README.md

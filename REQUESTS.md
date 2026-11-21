@@ -693,3 +693,5 @@ PILOT-TRAJECTORY-PREPARE 收口：固定 RA key/document ID 相等，生成事�
 Single-case handoff local guard：9项实际本地先决文件必须普通且匹配原SHA，Git物化源码不要求展开；仅工具/普通临时目录测试。
 
 ECFC associated position research：独立离线展示适配，显式合成关联、保留推定与手工时间；复用真实登记/精确查询和固定ECFC解析，不改业务合同/授权/路由。research/ecfc_associated_position/README.md。
+
+W11 edge display selection：仅tests_acceptance内新增节点/边出处独立展示与版本失效工装；复用2a1af98节点输出，边来源为明确合成测试映射，无登记/授权声明。V1及产品不变，见 tests_acceptance/ecfc-display-selection/README.md。
