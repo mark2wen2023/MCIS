@@ -28,12 +28,12 @@ PATHS=tuple('service/mcis_service/'+p+'.py' for p in MODULES)+tuple(
     'tests_acceptance/shared-trajectory-cross-repo-expanded/'+n for n in ('vessel-a.json','vessel-b.json'))
 
 
-def materialize(destination):
-    for path in PATHS:
-        entry=subprocess.check_output(['git','ls-tree',REF,'--',path],cwd=ROOT,text=True).split()
+def materialize(destination, *, ref=REF, paths=PATHS):
+    for path in paths:
+        entry=subprocess.check_output(['git','ls-tree',ref,'--',path],cwd=ROOT,text=True).split()
         if len(entry)!=4 or entry[0]!='100644' or entry[1]!='blob' or entry[3]!=path:
             raise RuntimeError('Expected fixed ordinary source file')
-        raw=subprocess.check_output(['git','show',REF+':'+path],cwd=ROOT)
+        raw=subprocess.check_output(['git','show',ref+':'+path],cwd=ROOT)
         current=subprocess.check_output(['git','show','HEAD:'+path],cwd=ROOT)
         if raw!=current: raise RuntimeError('Source changed; review and explicitly refreeze test')
         target=destination/path
@@ -49,7 +49,7 @@ class Body:
     async def stream(self): yield self.raw
 
 
-def run(source):
+def run(source, *, extra_cases=(), allowed_paths=PATHS):
     sys.path.insert(0,str(source/'service'))
     from fastapi import HTTPException
     from sqlalchemy import select, text
@@ -157,11 +157,15 @@ def run(source):
                 self.assertTrue(verify_chain([r.line for r in custody])['valid'])
 
     suite=unittest.defaultTestLoader.loadTestsFromTestCase(Business)
+    for mixin in extra_cases:
+        combined=type(mixin.__name__,(mixin,Business),{})
+        for name in sorted(n for n in vars(mixin) if n.startswith('test_')):
+            suite.addTest(combined(name))
     result=unittest.TextTestRunner(verbosity=2).run(suite)
     for name,module in tuple(sys.modules.items()):
         if name=='mcis_service' or name.startswith('mcis_service.'):
             path=Path(module.__file__).resolve()
-            if not path.is_relative_to(source/'service/mcis_service') or str(path.relative_to(source)) not in PATHS:
+            if not path.is_relative_to(source/'service/mcis_service') or str(path.relative_to(source)) not in allowed_paths:
                 raise RuntimeError('Unexpected production module origin')
     if 'mcis_service.main' in sys.modules or 'mcis_service.models_registry' in sys.modules:
         raise RuntimeError('Forbidden application import')

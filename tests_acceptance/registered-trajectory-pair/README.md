@@ -60,3 +60,22 @@ python tests_acceptance/shared-trajectory-cross-repo-expanded/check.py
 3. 第二份为合法登记且单船契约有效、但文内 caseId 不同：读取失败；两份 Access 与对应审计全部回滚，登记记录/原件不撤销、原链仍有效。
 
 首次运行因夹具缺 accidentType 在 case Schema 处失败，未开始登记；补齐纯合成字段后通过。既有生产源码及旧冻结没有修改。此轮不包含真实容器内容、档案恢复、真实业务数据、HTTP/浏览器、文件并发变更、撤权竞态或 UI。仍不能直接宣称可接 UI：尚需可信会话/固定 pin 选择来源与受控调用装配的验收。
+
+## 精确 UTC 内部查询（2026-11-21）
+
+产品固定头 `db90fdf73de7bd26ba75819f0102fc03d0789faf`；新增 `trajectory_exchange.registered_query._query_registered_pair(ctx, case_id, pins, purpose, aligned_utc)`。没有 HTTP/包级导出/UI 调用。输入由可信服务器调用方提供，不接受客户端批次。每次查询都重新走 `_load_registered_pair`，授权读取与 owned session 提交/关闭之后才产生查询结果；不缓存批次为权限。先验证严格 UTC Z、秒或毫秒格式，不能传本地时刻或自动取邻点。
+
+原工具 `point_at` 与 Git 溯源和 rawRecord 原文输出耦合，因此未引入服务器路径。新窄适配复用 V1 `_stamp`，用固定原实现作差分对照：声明缺口内部先返回 declared_gap；端点可命中；其余仅匹配精确已存 alignedUtc，不插值、不拼补。固定工作台/query.py/HTML hashes 均未修改。没有新增同步窗口的交集/并集规则，也不接独立设备样例。
+
+最小模型含 caseId/alignedUtc、两船 status、position/headingDeg/courseDeg 的 value/kind、时间 status/sourceUtc/correctionSeconds/alignedUtc，以及每船 original 固定 caseId/evidenceId/requestDigest/sourceSha256 与 JSON Pointer。点定位 `/points/n`，缺口定位 `/sampling/missingIntervals/n`，无精确行 locator=null。原始字段中的来源 ID、说明、basis、整行记录和 Git 路径不复制到结果；需要进一步查看须另走授权读取。输出的坐标、标识、时间、摘要仍属内部受保护信息，**不是公开响应**。recorded 与 interpolated 保留原 kind；后者为契约已有值，非本次计算或观测认证。缺 HDG 不使用 COG，collisionAngle=null。
+
+```sh
+python tests_acceptance/registered-trajectory-pair/query.py
+/workspace/mcis/service/.venv/bin/python -I tests_acceptance/registered-trajectory-pair/business_query.py
+```
+
+实跑：纯合成 3 组差分/输入/精简输出检查；真实模块业务组合命令 5 组（其中复用既有 3 组，新增 2 组），不要重复累计。组合测试从固定产品 Git 对象物化白名单，复用 business.py 同一个登记/原件/业务表工装；原 business.py 默认仍冻结 ca8bb78，新增参数仅供这个显式固定测试入口使用，不关闭逐字节校验。
+
+新增实证：T+20 两船存量插值，B 原 08Z+12→20Z；T+80 A缺轨/B有点；T+124.25 A缺轨/B无精确行；T+100 A recorded、HDG null/COG存在；逐次 Access 审计增加；每船 pin 精确匹配真实登记且 pointer 指向原行。错摘要、错案和持久策略拒绝不产生新模型、不提交新增 Access。测试中调用方旧变量不被替换，**不是实际 UI 状态/竞态测试**；已经返回的数据不能因此撤销，仍未解决跨进程撤权、文件并发改动或长期缓存使用。
+
+业务链沿用上一节真实/替身边界：真实登记、文件、策略、DB/审计与查询；Ctx 身份和请求传输是合成夹具。未启动应用/HTTP/浏览器/容器/媒体，未接 4A、报告或独立只读工作台。接 UI 仍需可信调用装配、服务器 pin 选择与请求生命周期控制，不可把内部函数当身份验证器。
