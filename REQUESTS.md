@@ -647,3 +647,6 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## W7 unknown deadline hint
+仅closeHint未知期限/本机时钟显示无法判断，不改旧截止边界、30天默认或权限；tests_acceptance/w7-unknown-deadline/README.md。

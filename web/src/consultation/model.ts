@@ -38,7 +38,8 @@ export function closeHint(round: Round, now: number) {
   if (round.isClosed) return '本轮已关闭'
   if (round.allReplied) return '各方均已回复或放弃，可以请求关闭。'
   const deadline = Date.parse(round.deadlineUtc)
-  return Number.isFinite(deadline) && now >= deadline
+  if (!Number.isFinite(deadline) || !Number.isFinite(now)) return '截止时间或本机时间无法核对，无法判断是否到期；服务可能拒绝关闭。'
+  return now >= deadline
     ? '按本机时间已到期限；最终以服务时间判断。'
     : '尚有未回复方，且本机时间未到期限；服务可能拒绝关闭。'
 }
