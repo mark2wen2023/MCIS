@@ -1,0 +1,332 @@
+{
+  "baseline": "3eabe40551b871e509442e707e514f4ad0e26d85",
+  "requiredRefs": [
+    "db90fdf73de7bd26ba75819f0102fc03d0789faf",
+    "22c3c0fd06c5f6c85a4c41a3eabd6714965d6689"
+  ],
+  "dependencies": {
+    "SQLAlchemy": "2.1.8",
+    "fastapi": "0.162.7",
+    "jsonschema": "4.26.0"
+  },
+  "files": [
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/__init__.py",
+      "sha256": "0af1ae7229694ada406cc87b5cbaaf195441620cb48e8dda54df83a3f6295480"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/config.py",
+      "sha256": "0e5e5262bcffe7f63fbca833e5cd267045d9db790d7600f0848c5451f21aa2ea"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/db.py",
+      "sha256": "67287ff0a8ac6c3f814319681737e3f8427b5c89ad038236d22e2422828aee93"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/common/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/common/contracts.py",
+      "sha256": "6c7829bb5ff0a7e1af31214b97c93b1e7d7e0e7559ffe47d312e4145c71017ac"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/common/context.py",
+      "sha256": "a860b79756a213c6bc70ce375c3b29c76920f79ccd3f8dba5c5eae5b22438dde"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/common/timeutil.py",
+      "sha256": "acebeceb1fde1bb336bb0d5f19349eb00e39b051b4dac3e0b7593ff9929ca4e5"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/common/csjson.py",
+      "sha256": "a6c43b1df8bb08b06cf87936e1ff3aed54907975b28a7ed7a17a9e61e5a89900"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/cases/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/cases/models.py",
+      "sha256": "f941613d0df2f00b3fa11931756cac0b9a4f69aff10b2b66b4614a7bb03f2aef"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/cases/service.py",
+      "sha256": "e17e1c5709ec510cf5e443961039092d0315ad64f0342c67c38de684c706ebdf"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/audit/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/audit/models.py",
+      "sha256": "11f5c91f5ec0d189b4c94fad71cd3f7de7c5fe4673d13c4a807963b43729ad9b"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/audit/service.py",
+      "sha256": "69b51ee029fdfdb3042b598a609b5138d7f7bee27c89823e881c541071e673da"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/evidence/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/evidence/models.py",
+      "sha256": "989c22f76b9375eeb34da9de0877290b3797978721ab91921b5abf42dd8c3113"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/evidence/service.py",
+      "sha256": "5e16fac97124c9e6180e104281b14a944d8dc721f85ab4a1f6957302672bb406"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/evidence_intake/__init__.py",
+      "sha256": "ee52d083e7092c5f824d0f09afb0fca33e447fc092968ceb96c6a7ad217bf454"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/evidence_intake/parser.py",
+      "sha256": "8330cd9ce803309ded4ccf846a4cc3611c9672ddad31bf2ea0b91a71144f07ea"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/evidence_intake/router.py",
+      "sha256": "895772528e5ed901128016942dce46d670ec446aaaf04063f3a8c4802b5bbacf"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/redaction/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/redaction/models.py",
+      "sha256": "4a3a44517c628dd6ad2536f7013bee3fee11095a890b6be62a4f2bcaf7311449"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/redaction/policy.py",
+      "sha256": "27ead2a5efdcbf1092305cf03e2c527600ac9e771b7f88b426d3b0983bd89623"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/redaction/gateway.py",
+      "sha256": "159d6695450f6f088400fdaffce3dee93317ce1a6a18d45809d357febabef916"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/reports/__init__.py",
+      "sha256": "8ba52ec498ce30f3263c03c45f29c306d47ea2517d541d8c3e208cbf7f4d5020"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/reports/models.py",
+      "sha256": "67ca9030dd43eb260107db2460d751e5f84dce4a329a9bd9ba5ea90793ee2b88"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/reports/access.py",
+      "sha256": "33e74b8946bccce150597048921fb4742ff9ee77d1ee5d51df345fdf99ad5385"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/interviews/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/interviews/models.py",
+      "sha256": "4c8946c4d1c16217ecafdf0d2125672aafb8db661ad253c7d03a21dc7a4e387c"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/interviews/access.py",
+      "sha256": "8b4d84e8f62a48da3f6a56ca27043190ddbb92546d217c5025f4e8d9ff43e402"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/manual_interviews/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/manual_interviews/models.py",
+      "sha256": "d40ec4f8dccbe773e27de4be8314b1e3abfd3c1445b1f3025df5884fba3e05bb"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/working_records_archive/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/working_records_archive/models.py",
+      "sha256": "a8db4c50a30fad42f019e41bab7423b196ec18d25dd4bbdcb3f0bdd69dd5f8c9"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/working_records_archive/validation.py",
+      "sha256": "cb00625e180dc1018870e9ee080f1b72dd5aeb3e8ca4809b58f98c37a1bc2064"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/working_records_archive/service.py",
+      "sha256": "0c2319c81401f12614610e8b3938e0344315b1419d98f119501ab11d7aa8b0f7"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/track_history/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/track_history/models.py",
+      "sha256": "77e988b23a5e5522e244a6e2c5b0a87a324dae742ccc3a9b69f7fc90f6ab8c9a"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/track_history/service.py",
+      "sha256": "7e33fc744fd4ff7c4b17738d9f34079a7a6f94197c1d8723605e5fc4adee2655"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/report_output/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/report_output/attachment_access.py",
+      "sha256": "02c2028ee2909ffb4ce7e2765e6ef45a48af0db267e47537aba669e140df07ab"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/trajectory_exchange/__init__.py",
+      "sha256": "c8d70f74f7bf7d1c60d22e4c6e6c055b2e76f701ae52a78ddd960ca32aeb1fa4"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/trajectory_exchange/validation.py",
+      "sha256": "49e285f9547646c4401aa96350e19532296b53cfc514cf06171616c37c4cf76f"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/trajectory_exchange/registered_pair.py",
+      "sha256": "a922d3c24b7a9ebc72e29de859da4b754c6f47df4dd7535c3f2a8f8987d3be72"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "contracts/schemas/case.schema.json",
+      "sha256": "5160e13fee6093f790f6cbff8cac2153179e990e790fe3d8e2cdcee852661bd9"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "contracts/schemas/common.schema.json",
+      "sha256": "f07b49f3e8e396e79b5236e60c9d6cfb6786902f92c6a5748ea938aa42cf8806"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "contracts/schemas/evidence-item.schema.json",
+      "sha256": "f108ad5a9be67f81862177d2185f18f54c41d57d63df8d318fe3f50281711e08"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "contracts/schemas/shared-trajectory-v1.schema.json",
+      "sha256": "2c6d1a426647eac4ac2afd4bf25f714fefbb13d813ddd00572de6bac9aa074a4"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "tests_acceptance/shared-trajectory-cross-repo-expanded/vessel-a.json",
+      "sha256": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "tests_acceptance/shared-trajectory-cross-repo-expanded/vessel-b.json",
+      "sha256": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/trajectory_exchange/registered_query.py",
+      "sha256": "39887965aac4f1918794006c84a7dac21f7bd3b65ee55f2b6916f56b5623ffaa"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "contracts/schemas/report.schema.json",
+      "sha256": "a8669aa7f5dee5078f5defe953f24ae35dfcf8a8a1b95280ae154016d0675d36"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/common/local_review_pilot.py",
+      "sha256": "ae6328fcdf6e89263ebae7b54abed6caf90e334ab0d1a0935027ad66df02b542"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/common/verified_case_context.py",
+      "sha256": "9d306df51264bff12971a25863a3acc039013361fc0c95942470162225c838f6"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/reports/generation_snapshot.py",
+      "sha256": "758652c25acea4758104509f64195cc074be3784f9ecf6f7fe017bde124669c6"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "service/mcis_service/reports/pilot_trajectory_prepare.py",
+      "sha256": "6d4bce82b0888d4aa7975a5e5e974ddac4e917d5504ebc4a3a1eff4cb59c29ef"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "tests_acceptance/registered-trajectory-pair/business.py",
+      "sha256": "9d0432820abf0a0ee02d827a5a7a960b216597b536ebe75d52c280f647242ac9"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "tests_acceptance/registered-trajectory-pair/business_query.py",
+      "sha256": "79b2003a26c85f5a64033fce3a3f7daedc9d078095d481f5cfa9f9c0baef4797"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "tests_acceptance/registered-trajectory-pair/pilot_prepare.py",
+      "sha256": "ec7702d7c8e930cd26fe3ea21ce5eafbf75e808639f5a9a25d9137aaff6f85bb"
+    },
+    {
+      "ref": "3eabe40551b871e509442e707e514f4ad0e26d85",
+      "path": "tests_acceptance/registered-trajectory-pair/t100_seat_crosscheck.py",
+      "sha256": "885b11eae8bcba1f48b0e1fa00d745cf0d470fc0d5e1d4ab6d23a37a443d3d47"
+    },
+    {
+      "ref": "420284ab5fd44c94b737f8c1cf51bc0ef09aea29",
+      "path": "research/expert_group/packet.py",
+      "sha256": "cf03aa785baf19312226ea64213cacc1afa5fa9fbbbcd36fa6f13b63493ef96d"
+    },
+    {
+      "ref": "2048c60fd6650c6f2c99a76a16be463a3895655d",
+      "path": "tests_acceptance/shared-trajectory-cross-repo-expanded/vessel-a.json",
+      "sha256": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c"
+    },
+    {
+      "ref": "2048c60fd6650c6f2c99a76a16be463a3895655d",
+      "path": "tests_acceptance/shared-trajectory-cross-repo-expanded/vessel-b.json",
+      "sha256": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca"
+    }
+  ],
+  "localFiles": {
+    "tests_acceptance/registered-trajectory-pair/raw_fixture_prepare.py": "d78fcfad8fd1b67dffa98690c9328f7a3ad9f47b808950404d008a2113439f5d"
+  }
+}

@@ -423,3 +423,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | PILOT-TRAJECTORY-PREPARE | 待独验 | 4项临时SQLite/会话/原件合成检查通过，非实际登录或启用；logs/pilot-trajectory-prepare-impl-hashes-frozen.txt |
 
 | PILOT-TRAJECTORY-PREPARE consistency | 待独验 | 5项合成/临时SQLite通过；caseId与RA全文非链覆盖；logs/pilot-trajectory-prepare-consistency-impl-hashes-frozen.txt |
+
+| Single-case offline handoff | 待独验 | 四阶段退出0，总9.700s，重叠不累计；原字节与compact SHA明确区分；logs/single-case-offline-impl-hashes-frozen.txt |
