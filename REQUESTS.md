@@ -677,3 +677,6 @@ Opt-in alternate binding of existing replay workbench shell; default offline dem
 ## Registered trajectory finite preview
 
 基线2eb5d477，新增验收目录内真实合成临时登记/查询结果的单HTML预览及独立浏览器入口；旧workbench、适配器、夹具、摘要不变。模拟传输不接业务。详见 tests_acceptance/registered-trajectory-pair/PREVIEW.md，浏览器仍受正常沙箱环境阻断。
+
+## REGISTERED-TRAJECTORY-REOPEN（2026-11-21）
+独立测试候选：复用固定真实登记/精确查询工装，验证同案新增另一原件后重建Database仍按旧pin回读。仅合成临时库/文件；报告音频绑定类型不适用轨迹，不绕过权限或存储合同，无生产改动。

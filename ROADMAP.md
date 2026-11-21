@@ -417,3 +417,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-21 | Registered query workbench adapter | 待独验：同壳默认关闭、显式选点查询、竞态与来源校验；shell2组、业务模型→手写DOM组合4组（含既有3组）；旧2+8回归通过，未实机/HTTP | tests_acceptance/registered-trajectory-pair/business_ui.py |
 
 | registered-trajectory-preview | 待测 | 有限合成帧单HTML与新版专用浏览器入口；临时SQLite/假DOM及原回归通过，真实桌面/390px未验。冻结 logs/registered-trajectory-preview-impl-hashes-frozen.txt |
+
+| REGISTERED-TRAJECTORY-REOPEN | 待测 | 2026-11-21 | 真实合成登记/点位/新Database重读；报告接缝未通；logs/registered-trajectory-reopen-impl-hashes-frozen.txt |
