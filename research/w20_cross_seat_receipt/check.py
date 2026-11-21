@@ -60,8 +60,27 @@ def main():
         except (ValueError,packet.GroupError):negatives+=1
         else:raise AssertionError(kind)
     assert negatives==5
+    # Positive: quote from one explicitly cited located excerpt, including a later citation.
+    single=opinions(['STA-1'])
+    for op in single:op['review']['quote']=registry['STA-1']['excerpt']
+    assert fixture.receive(draft,expected,single,registry,packet._validate)['locatedOriginalCount']==1
+    multiple=opinions(['OBS-1','STB-1'])
+    for op in multiple:op['review']['quote']=registry['STB-1']['excerpt']
+    assert fixture.receive(draft,expected,multiple,registry,packet._validate)['locatedOriginalCount']==2
+    quote_rejections=0
+    uncited=opinions(['OBS-1']);uncited[0]['review']['quote']=registry['STA-1']['excerpt']
+    joined=opinions(['OBS-1','STA-1'])
+    boundary=registry['OBS-1']['excerpt'][-24:]+'\n'+registry['STA-1']['excerpt'][:24]
+    assert boundary in '\n'.join(x['excerpt'] for x in registry.values())
+    assert all(boundary not in x['excerpt'] for x in registry.values())
+    joined[0]['review']['quote']=boundary
+    for kind,ops in [('uncited_excerpt',uncited),('cross_excerpt_join',joined)]:
+        try:fixture.receive(draft,expected,ops,registry,packet._validate)
+        except (ValueError,packet.GroupError):quote_rejections+=1
+        else:raise AssertionError('quote correspondence accepted: '+kind)
+    assert quote_rejections==2
     print(json.dumps({'scope':'receiver fixture, NOT actual chair meeting','draft':draft,'draftDigest':expected,
       'actual_functions':['packet._validate','source_traceability.locate'],'observation_only':first,
       'alias_unique_count':alias['locatedOriginalCount'],'conflict':conflict,
-      'unanimous_labels_still_pending':True,'negative_cases':negatives},ensure_ascii=False,indent=2))
+      'unanimous_labels_still_pending':True,'negative_cases':negatives,'quote_positive_cases':2,'quote_rejections':quote_rejections},ensure_ascii=False,indent=2))
 if __name__=='__main__':main()

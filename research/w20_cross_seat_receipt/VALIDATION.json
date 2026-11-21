@@ -13,5 +13,13 @@
     "status": "opposed_source_assertions_pending"
   },
   "unanimityNotProof": true,
-  "rejected": 5
+  "rejected": 5,
+  "parent": "ba48b3e44453eb69d2115304507c5c115afedbe2",
+  "quote_positive_cases": 2,
+  "quote_rejections": 2,
+  "old_fixture_regression": {
+    "exit": 1,
+    "reason": "quote correspondence accepted: uncited_excerpt"
+  },
+  "original_cases_retained": true
 }

@@ -33,3 +33,13 @@ The phase change adds evidence, not a new draft revision. All outcomes keep caus
 
 ## Formal work still missing
 A trusted existing host would need to bind the actual draft revision and located provenance to submitted opinions, then expose this separation to the real chair/human-review path. This fixture defines no production interface, grant or cross-repository contract and verifies no human sign-off. No blind-review data, real case, service, browser, model, report save, deployment or main/3D modification.
+
+## Cited-excerpt correspondence follow-up
+Parent ba48b3e44453eb69d2115304507c5c115afedbe2. Only this research directory changes.
+Previously the fixture passed all registry excerpts concatenated together to the validator. It now resolves every opinion citation, requires its non-empty quote to occur inside ONE of those cited excerpts, and supplies only that excerpt to the unchanged packet._validate. No cross-excerpt concatenation is used. The registry is still populated exclusively by the existing successful locator wrapper; this is not a general untrusted-source intake interface.
+
+Original cases remain. Added positives: quote from the sole explicitly cited inspection source; quote from a later source in a multi-source citation list. Added negatives: quote exists in an uncited registry source; quote spans the end/start of two individually cited excerpts. The latter is explicitly checked to match the old concatenated text but no individual excerpt.
+
+New tests against the parent fixture failed (exit1, uncited_excerpt accepted). Updated fixture full command exits0: original 5 negatives retained, 2 new valid quotes accepted and 2 mismatches rejected. Existing 4-opinion/1-original, alias, 3-original conflict and no-vote-to-fact assertions still pass.
+
+This proves limited text-to-cited-source correspondence only. It does not establish professional correctness, source authenticity, causal truth, real chair integration or authorization. No fixed packet entry, source originals, draft, contract or production code changed.
