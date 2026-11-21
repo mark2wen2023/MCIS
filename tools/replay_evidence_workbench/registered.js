@@ -50,7 +50,8 @@
   if(token!==serial||!current||!selection)return;
   text('evidence-title',v.vesselId);text('record-id',v.locator?.jsonPointer??'无精确记录');text('quality',v.status==='declared_gap'?'声明缺轨':quality[v.position.kind]);
   text('raw-time','本模型未返回');text('source-time',v.time?.sourceUtc??'—');text('aligned-time',current.alignedUtc);text('correction',v.time?String(v.time.correctionSeconds)+' s':'—');
-  text('file',v.original.evidenceId);text('pointer',v.locator?.jsonPointer??'没有对应点行');text('ref','登记摘要 '+v.original.requestDigest+' · 原文字节 SHA-256 '+v.original.sourceSha256);
+  text('basis',v.time?'校时数值为来源声明，待人工复核；校时依据未交付、人审未签。等时仅为展示对齐，事件先后或同时仍未确定。':'声明缺轨范围不是位置观测；本模型没有可复核的该时点记录。');
+  text('file','服务定位 · 不显示内部标识');text('pointer',v.locator?.jsonPointer??'没有对应点行');text('ref','仅展示服务提供的 JSON 路径；内部固定定位已作一致性校验，不代表授权');
   text('warning',v.status==='input_point'&&v.headingDeg.value===null?'艏向未知，不以 COG 替代。':'固定原件定位，不回退 latest；已有返回值不代表持续授权。');
  }
  function render(model,token){

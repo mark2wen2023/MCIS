@@ -25,6 +25,8 @@ def build(output):
         '完整原始记录':'原文不在此模型中',
         '<section class="other">':'<section class="other" hidden>',
         '离线交互候选 / 仅合成数据 · 非实际三维验收':'内部查询适配候选 / 无默认身份、查询或业务接线',
+        '<dt>来源 UTC</dt>':'<dt>原件记载 UTC</dt>',
+        '<dt>对齐 UTC</dt>':'<dt>展示对齐 UTC</dt>',
         'PAYLOAD':'{}',
         '/* STYLE */':(HERE/'style.css').read_text(),
         '/* SCRIPT */':(HERE/'registered.js').read_text(),

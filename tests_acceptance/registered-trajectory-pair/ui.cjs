@@ -22,7 +22,7 @@ const t20=times[0],t80=times[1],t100=times[2],t124=times[3];
  for(let i=0;i<20;i++){nodes.time.value=i%2?t20:t80;nodes.time.oninput();nodes.time.onchange();}
  assert.equal(calls.length,0);assert.equal(markers().length,0);assert(nodes.timeline.children.some(n=>n.attrs['data-preview']==='unqueried'));
  nodes.time.value=t20;nodes.time.onchange();await nodes['registered-load'].onclick();assert.equal(markers().length,2);assert.equal(calls.length,1);
- nodes['point-options'].children[1].onclick();assert.match(nodes.quality.textContent,/已存插值/);assert.equal(nodes.correction.textContent,'12 s');assert.equal(nodes['source-time'].textContent,'2026-02-01T12:00:08.000Z');assert.match(nodes.ref.textContent,new RegExp(config.pins[1].sourceSha256));assert.equal(nodes.pointer.textContent,'/points/2');assert(nodes['raw-open'].disabled);
+ nodes['point-options'].children[1].onclick();assert.match(nodes.quality.textContent,/已存插值/);assert.equal(nodes.correction.textContent,'12 s');assert.equal(nodes['source-time'].textContent,'2026-02-01T12:00:08.000Z');assert.match(nodes.ref.textContent,/仅展示服务提供的 JSON 路径/);assert(!nodes.ref.textContent.includes(config.pins[1].sourceSha256));assert.equal(nodes.pointer.textContent,'/points/2');assert(nodes['raw-open'].disabled);
  const oldClick=nodes['point-options'].children[1].onclick;
  await api.load(t80);assert.equal(markers().length,1);assert.match(nodes['state-note'].textContent,/声明缺轨/);assert.equal(nodes.pointer.textContent,'—');oldClick();assert.equal(nodes.pointer.textContent,'—');
  nodes['point-options'].children[0].onclick();assert.equal(nodes.pointer.textContent,'/sampling/missingIntervals/0');
