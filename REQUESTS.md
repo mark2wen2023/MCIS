@@ -693,3 +693,5 @@ PILOT-TRAJECTORY-PREPARE 收口：固定 RA key/document ID 相等，生成事�
 Single-case handoff local guard：9项实际本地先决文件必须普通且匹配原SHA，Git物化源码不要求展开；仅工具/普通临时目录测试。
 
 Raw pair two-time acceptance：仅新增原样合成JSON真实登记/精确查询T100及T124.250组合检查，T20存量插值对照；不改产品、授权或报告，见tests_acceptance/registered-trajectory-pair/RAW-TWO-TIMES.md。
+
+Registered pair seat handoff：测试宿主在真实登记/原件查询/Access核对后同步交付最小帧副本，仅合成回调，无原件读取接口或新授权。见tests_acceptance/registered-trajectory-pair/SEAT-HANDOFF.md。

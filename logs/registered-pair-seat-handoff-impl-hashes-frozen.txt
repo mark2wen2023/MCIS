@@ -1,0 +1,2 @@
+14f2d81fcbfee730d8ae76fa1de273acc20848978a33c0f1e157883fb5247463  tests_acceptance/registered-trajectory-pair/seat_handoff.py
+1a75c5023a0ab2e7491591b3cc4b479d0e988d2c9b1ceed4873142d8803a89bb  tests_acceptance/registered-trajectory-pair/SEAT-HANDOFF.md
