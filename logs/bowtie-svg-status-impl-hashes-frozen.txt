@@ -1,0 +1,4 @@
+300969a967ea3dc7fab899b2e03344a8c4ed92ba49a102968895746721083576  web/src/bowtiePreview/Diagram.tsx
+1c4aaac8e1ea5e1446c4865cd55c50b3090c26ff4749ecfc5f896c45e7e251bb  web/tests/bowtie-svg-status.test.tsx
+b25ae3a9debad33879e32ddb47f7ea800db241b569e10b02b4d50783f8041323  web/tests/run-bowtie-svg-status.sh
+4dd4797cc8c28d2573de8107b3b608f3e69d73ad333ef1391e130b369a65b20b  web/tests/bowtie-svg-status.md

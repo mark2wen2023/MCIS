@@ -399,3 +399,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTTRACE | 测试增量独审通过 | 2026-11-14：独立无.git副本10过；临时断开taskId触发5红、伪认证flag触发1红，恢复10过；冻结2/2，运行文件无差异。见 DEFECTS/EXPERTTRACE.md。真实模型0/HOLD。 |
 
 | 2026-11-21 | W15.3 未画屏障路径列表 | 待独验；定向纯TS/SSR、TS构建与Vite通过；未运行API/核心CLI/真实浏览器；logs/bowtie-unprotected-paths.txt |
+
+| W15 SVG status labels | 待独验 | 合成SSR新旧对照、既有两项回归、TS/Vite通过；未验浏览器/AcciMap/导出；logs/bowtie-svg-status-impl-hashes-frozen.txt |
