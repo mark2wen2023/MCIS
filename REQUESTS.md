@@ -647,3 +647,7 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## W12 analysis snapshot scope
+
+从main 94d5e38独立修 AnalysisPage 的旧案/旧请求显示；新增页面专用读取hook和纯合成回归，不改共享useLoad、算法或API。列表/详情seedSha一致仅本次快照标识，不冒充登记轨迹版本。旧W12案例seed测试未运行；详见 tests_acceptance/analysis-snapshot-scope/README.md。
