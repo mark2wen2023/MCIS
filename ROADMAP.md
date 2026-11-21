@@ -397,3 +397,11 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTREVIEWMAIN | 最小整合独审通过 | 2026-11-14：main25b9df6前缀及其他跟踪文件保留，12源文件逐字；独立无.git副本164项通过，新/原冻结各4/4。见 DEFECTS/EXPERTREVIEWMAIN.md；仅离线pending人审，真实0/HOLD。 |
 | EXPERTTRACE | 待独审 | 2026-11-14：PR87head99b44f0上新增10跨视图追溯/反认证回归，组合174项通过；冻结 logs/EXPERTTRACE-impl-hashes-frozen.txt。不改运行代码；真模型0/HOLD，非浏览器或事实验收。 |
 | EXPERTTRACE | 测试增量独审通过 | 2026-11-14：独立无.git副本10过；临时断开taskId触发5红、伪认证flag触发1红，恢复10过；冻结2/2，运行文件无差异。见 DEFECTS/EXPERTTRACE.md。真实模型0/HOLD。 |
+
+| vessel-dimension-status | 待测 | 页面03只读尺寸核对；真实组件SSR旧新对照、原W9.1 84项、TS/Vite通过；浏览器/Unity/尺寸真实性未验。冻结 logs/vessel-dimension-status-impl-hashes-frozen.txt |
+
+| track-preview-time-consistency | 待测 | 页面05真实CSV预览解析接缝；新增20项合成、原W10.2/W10.1及TS/Vite通过；无浏览器/HTTP/写入/修订版本链验收。冻结 logs/track-preview-time-consistency-impl-hashes-frozen.txt |
+
+| analysis-snapshot-scope | 待测 | W12/页面08旧分析停用与快照重读；纯合成hook/SSR、TS/Vite通过；真实浏览器和登记轨迹版本联动未验。冻结 logs/analysis-snapshot-scope-impl-hashes-frozen.txt |
+
+| ui-03-05-08-review | 待测 | 独立精确文件组合；7项前端定向/相邻检查、原冻结校验、TS/Vite通过；真实浏览器/跨页业务未验。来源冻结保持，说明 tests_acceptance/ui-03-05-08-review/README.md |

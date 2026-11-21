@@ -5,12 +5,13 @@ import { caseIdentity } from '../cases/identity'
 import { CreateVesselPanel } from '../vessels/CreateVesselPanel'
 import { canCreateVessel, fields, kinds, parseVessels, type VesselRecord } from '../vessels/model'
 import '../styles/w9.css'
+import { Dimensions, dimensionFields } from '../vessels/Dimensions'
 
 type CaseInfo={caseId:string;title:string;isFictionalDemo:boolean}
 type State={status:'loading'}|{status:'error';message:string}|{status:'ready';case:CaseInfo;vessels:VesselRecord[]}
 export function VesselList({vessels}:{vessels:VesselRecord[]}) {
   if(!vessels.length)return <p role="status">本案尚无船舶参数。调查组可从“新增船舶”开始录入。</p>
-  return <div className="w9-list">{vessels.map(v=><article className="w9-vessel" key={v.vesselId}><h2>{v.name}</h2><p>船舶编号：{v.vesselId}</p><dl>{fields.filter(([key])=>v[key]!==undefined).map(([key,label])=><div key={key}><dt>{label}</dt><dd>{String(v[key])}<small>{v.parameterSources?.[key]?`【${kinds[v.parameterSources[key]!.kind]}】${v.parameterSources[key]!.sourceLabel}`:'未登记来源（既有记录或虚构参数）'}</small></dd></div>)}</dl></article>)}</div>
+  return <div className="w9-list">{vessels.map(v=><article className="w9-vessel" key={v.vesselId}><h2>{v.name}</h2><p>船舶编号：{v.vesselId}</p><dl>{fields.filter(([key])=>v[key]!==undefined&&!dimensionFields.some(([dimension])=>dimension===key)).map(([key,label])=><div key={key}><dt>{label}</dt><dd>{String(v[key])}<small>{v.parameterSources?.[key]?`【${kinds[v.parameterSources[key]!.kind]}】${v.parameterSources[key]!.sourceLabel}`:'未登记来源（既有记录或虚构参数）'}</small></dd></div>)}</dl><Dimensions vessel={v}/></article>)}</div>
 }
 export function ShipsPage() {
   const who=useSyncExternalStore(onIdentityChange,caseIdentity,caseIdentity)

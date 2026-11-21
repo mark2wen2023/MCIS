@@ -647,3 +647,19 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## W9 dimension status display
+
+main94d5e38独立增量：VesselList中显式呈现缺失/已登记/异常尺寸及未核验来源，不更改表单/模型/服务合同、不加示意缩放。旧冻结保留；详见 tests_acceptance/vessel-dimension-status/README.md。
+
+## W10 preview time consistency
+
+独立于main94d5e38，增强已有trackInput.parsePreview响应核验：UTC/纪元/相对秒和可保存样例顺序、范围；不改CSV合同或后端、不新增修订写入。保留不可保存诊断与未知HDG；见 tests_acceptance/track-preview-time-consistency/README.md。旧冻结文件仅在新候选增量修改，不更新原冻结。
+
+## W12 analysis snapshot scope
+
+从main 94d5e38独立修 AnalysisPage 的旧案/旧请求显示；新增页面专用读取hook和纯合成回归，不改共享useLoad、算法或API。列表/详情seedSha一致仅本次快照标识，不冒充登记轨迹版本。旧W12案例seed测试未运行；详见 tests_acceptance/analysis-snapshot-scope/README.md。
+
+## UI 03/05/08 review combination
+
+在独立candidate/ui-03-05-08-review基于main94d5e38组合9ff7a04、59580d2、03a8e78精确前端及测试文件，三来源不变，非共享文件逐字核对，原冻结保留。无其他业务接线。组合复跑及限制见 tests_acceptance/ui-03-05-08-review/README.md。

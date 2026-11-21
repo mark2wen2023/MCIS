@@ -1,0 +1,4 @@
+d9f34ddba2dfa7ea87aa112066f6e402483e7b977dace18f9a9e54488dde949a  web/src/pages/ShipsPage.tsx
+6a7eada063f055d16fb2472475c3626f3e37f5c94677e53eae42cb4b55bba667  web/src/vessels/Dimensions.tsx
+ee7a15b2c9b9f44018121869cef9d1f372529d7b53729d706a7097dd83aaca43  web/tests/vessel-dimensions.cjs
+bf9c8ac32a97a96627ab883ba5eee02bcd873f624e0c8e3b45c0d3ca7b4fbfb1  tests_acceptance/vessel-dimension-status/README.md
