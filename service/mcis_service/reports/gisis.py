@@ -70,7 +70,8 @@ def _valid_type(value, expected):
     if expected == "integer":
         return isinstance(value, int) and not isinstance(value, bool)
     if expected == "number":
-        return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
+        # Integers are finite without a lossy/overflowing float conversion.
+        return (isinstance(value, int) and not isinstance(value, bool)) or (isinstance(value, float) and math.isfinite(value))
     if expected == "string":
         return isinstance(value, str)
     return True

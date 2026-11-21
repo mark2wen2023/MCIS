@@ -647,3 +647,6 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## W16 GISIS numeric validation
+独立候选：仅number整数有限性检查避免float溢出，保持原范围/缺值规则；不改模板专业映射、权限或导出，详见 tests_acceptance/w16-gisis-numeric/README.md。
