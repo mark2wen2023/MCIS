@@ -830,3 +830,7 @@ Existing media preparation/manifest check imports application and/or opens SQLit
 
 ## Actual synthetic WAV composition test (2026-11-19)
 Authorized test-only follow-up to 7a2d0e4: fixed local c10b2cd generator source and expected WAV SHA-256, auto-cleaned synthetic output, optional actual-byte digest/sample basis in existing normal composition fixture. Original placeholder scenarios retained; registration/AI/human claims remain fixtures. No product interfaces or logic changed.
+
+## 2026-11-21 — 内部冻结句音频绑定决策（独立候选）
+
+基于 da8cda69 的已有完整生成 RA 与精确音频旧引用读取，新增未接线 `reports/sentence_binding.py`；仅可信服务端读取上下文与不可覆盖存储接口合同，首版音频。无对外合同/路由/权限/旧摘要修改，无真实存储实现。详见 `tests_acceptance/frozen-sentence-binding/README.md`。授权交集、稳定读取事务和持久关联来源仍为接入前置；不把合成 Scope 当身份或普通 JSON 当可信快照。
