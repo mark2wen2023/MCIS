@@ -691,3 +691,5 @@ PILOT-TRAJECTORY-PREPARE 收口：固定 RA key/document ID 相等，生成事�
 仅工具与限定测试：固定输入/依赖预检、既有四阶段串行复跑；新增原Git字节正常登记prepare对照，不改原compact实验/授权。tools/single_case_offline/README.md。
 
 Single-case handoff local guard：9项实际本地先决文件必须普通且匹配原SHA，Git物化源码不要求展开；仅工具/普通临时目录测试。
+
+ECFC associated position research：独立离线展示适配，显式合成关联、保留推定与手工时间；复用真实登记/精确查询和固定ECFC解析，不改业务合同/授权/路由。research/ecfc_associated_position/README.md。

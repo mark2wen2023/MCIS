@@ -427,3 +427,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Single-case offline handoff | 待独验 | 四阶段退出0，总9.700s，重叠不累计；原字节与compact SHA明确区分；logs/single-case-offline-impl-hashes-frozen.txt |
 
 | Single-case local prerequisites | 待独验 | 4项普通guard、原四阶段退出0/8.058s；logs/single-case-offline-local-guard-impl-hashes-frozen.txt |
+
+| ECFC associated original position | 待独验 | 6项离线检查退出0（3既有+3新增），非事件定位/浏览器/生产授权；logs/ecfc-associated-position-impl-hashes-frozen.txt |
