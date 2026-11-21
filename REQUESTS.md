@@ -661,3 +661,6 @@ Mark 授权把已看像素的「复盘与取证」设计稿实现为单屏离线
 
 ## Registered trajectory pair — internal candidate (2026-11-21)
 Base f9f4e599cdb670d864a5e7e986067216e7105636. Extract the existing evidence intake download authorized/audited read unchanged; reuse it in an unregistered internal two-original V1 assembler. No route, grant, contract, old freeze or default enablement change. Caller must supply verified server context and fixed server-selected pins; own rollback and establish read isolation. See tests_acceptance/registered-trajectory-pair/README.md. Pending independent review.
+
+## Registered pair transaction boundary (2026-11-21)
+Internal owned session wrapper follows existing download lock/begin and Database commit/rollback; no catches inside transaction. Finite replay issue classification replaces blanket TIME_UNRESOLVED. No route/role/contract changes. Real temporary SQLite probe tests do not exercise business custody/authentication. Prior freeze retained; new transaction freeze separate.

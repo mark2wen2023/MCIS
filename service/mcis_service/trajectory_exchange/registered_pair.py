@@ -1,8 +1,9 @@
 """Unregistered internal V1 pair assembly; not a grant, route or replay switch.
 
-Caller must supply a server-verified context and immutable server-selected pins,
-validate access purpose/operator, and own a transaction which rolls back on ANY
-failure. No partial result is returned. Same session use does not establish
+Caller must supply a server-verified context and immutable server-selected pins.
+Use _load_registered_pair for the owned transaction boundary. The lower-level
+_read_registered_pair remains for callers owning a rollback-on-failure scope.
+No partial result is returned. Same session use does not establish
 SQLite snapshot isolation or solve revocation races. Never accept browser pins
 as proof of identity/access. No old-version fallback or current-track lookup.
 """
@@ -77,8 +78,47 @@ def _read_registered_pair(ctx, session, case_id, pins, purpose):
         if doc['caseId'] != case_id:
             _fail('DOCUMENT_CASE_MISMATCH')
         if not validation['canReplaySynchronously']:
-            _fail('TIME_UNRESOLVED')
+            _reject_replay(validation)
         completed.append({'pin': pin, 'document': doc, 'validation': validation})
     if completed[0]['document']['vessel']['vesselId'] == completed[1]['document']['vessel']['vesselId']:
         _fail('DUPLICATE_VESSEL')
     return tuple(completed)
+
+
+def _reject_replay(validation):
+    # Preserve the validator's finite diagnoses; gaps/unknown heading are not
+    # reasons to reject exact-point replay. Never echo point/source identifiers.
+    allowed = {'TIME_UNRESOLVED', 'TIME_CONFLICT', 'TIME_NOT_INCREASING',
+               'POSITION_MISSING', 'IDENTITY_UNRESOLVED'}
+    issues = validation.get('issues')
+    if not isinstance(issues, list) or not issues:
+        _fail('REPLAY_VALIDATION_UNKNOWN')
+    codes = set()
+    for issue in issues:
+        if not isinstance(issue, dict) or issue.get('code') not in allowed:
+            _fail('REPLAY_VALIDATION_UNKNOWN')
+        codes.add(issue['code'])
+    _fail('REPLAY_BLOCKED:' + ','.join(sorted(codes)))
+
+
+def _load_registered_pair(ctx, case_id, pins, purpose):
+    """Internal service boundary; no routes, identity source or default caller.
+
+    Trusted caller supplies case/operator and immutable server-selected pins.
+    Owns a fresh Database.session, following the existing download lock/begin
+    convention. Never catches a failure within that scope. A successful return
+    occurs only after commit and close; outer callers may map errors afterwards.
+    Commit exceptions propagate: they are not proof that nothing was committed
+    and must never trigger automatic retry. No cross-process revocation claim.
+    """
+    from ..db import WRITE_LOCK
+    from ..reports.access import begin
+    from ..evidence_intake.parser import text
+    # Same input checks as download; no browser headers or identity fallback.
+    purpose = text(purpose, 1000)
+    text(ctx.operator, 200, multiline=False)
+    with WRITE_LOCK:
+        with ctx.db.session() as session:
+            begin(session)
+            result = _read_registered_pair(ctx, session, case_id, pins, purpose)
+    return result

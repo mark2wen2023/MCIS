@@ -59,7 +59,7 @@ class Checks(unittest.TestCase):
         ns.update(runpy.run_path(str(ROOT / 'service/mcis_service/trajectory_exchange/validation.py')))
         ns.update(hashlib=hashlib, json=json, re=__import__('re'))
         compile_functions((ROOT / PAIR).read_text(),
-                          {'RegisteredPairError', '_fail', '_object', '_read_registered_pair'}, ns)
+                          {'RegisteredPairError', '_fail', '_object', '_read_registered_pair', '_reject_replay'}, ns)
 
     def put(self, i, doc):
         raw = json.dumps(doc, separators=(',', ':')).encode()
@@ -125,6 +125,28 @@ class Checks(unittest.TestCase):
         doc=copy.deepcopy(self.docs[1]); doc['caseId']='SYN-OTHER'
         self.pins[1]=self.put(1,doc)
         with self.assertRaisesRegex(ValueError,'DOCUMENT_CASE_MISMATCH'): self.read()
+
+    def test_finite_replay_diagnostics(self):
+        for code, change in [
+            ('POSITION_MISSING', lambda d: d['points'][0].update(position={**d['points'][0]['position'], 'kind':'missing', 'value':None})),
+            ('IDENTITY_UNRESOLVED', lambda d: d['vessel'].update(identityStatus='unresolved')),
+            ('TIME_UNRESOLVED', lambda d: d['points'][0]['time'].update(status='unresolved', alignedUtc=None, correctionSeconds=None)),
+            ('TIME_CONFLICT', lambda d: d['points'][0]['time'].update(status='conflict', alignedUtc=None, correctionSeconds=None)),
+        ]:
+            with self.subTest(code=code):
+                doc=copy.deepcopy(self.docs[1]); change(doc)
+                self.pins[1]=self.put(1,doc)
+                with self.assertRaisesRegex(ValueError,'REPLAY_BLOCKED:'+code): self.read()
+        doc=copy.deepcopy(self.docs[1])
+        doc['points'][1]['time']=copy.deepcopy(doc['points'][0]['time'])
+        self.pins[1]=self.put(1,doc)
+        with self.assertRaisesRegex(ValueError,'REPLAY_BLOCKED:TIME_NOT_INCREASING'): self.read()
+        doc=copy.deepcopy(self.docs[1]); doc['vessel']['identityStatus']='unresolved'
+        doc['points'][0]['position'].update(kind='missing',value=None)
+        self.pins[1]=self.put(1,doc)
+        with self.assertRaisesRegex(ValueError,'REPLAY_BLOCKED:IDENTITY_UNRESOLVED,POSITION_MISSING'): self.read()
+        with self.assertRaisesRegex(ValueError,'REPLAY_VALIDATION_UNKNOWN'):
+            self.ns['_reject_replay']({'issues':[{'code':'future'}]})
 
     def test_old_pins_no_latest_fallback(self):
         expected=self.read()

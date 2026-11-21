@@ -405,3 +405,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-21 | replay-evidence-workbench-ui | 待独验 | 按已查看设计稿做深蓝单屏，原查询同帧证据/地图/三轨时间轴；新2项及原8项/DOM通过；真实浏览器未验。冻结 logs/replay-evidence-workbench-ui-impl-hashes-frozen.txt |
 
 | 2026-11-21 | Internal registered V1 pair | 待测：共用下载授权/审计读取；双份固定摘要整体验证；无路由/默认启用 | tests_acceptance/registered-trajectory-pair/README.md；logs/registered-trajectory-pair-impl-hashes-frozen.txt |
+
+| 2026-11-21 | Registered pair owned transaction | 待独验：内部事务退出后才交付；10组合成与6组临时SQLite原语检查通过，非真实业务审计/权限 | logs/registered-trajectory-pair-transaction-hashes-frozen.txt |
