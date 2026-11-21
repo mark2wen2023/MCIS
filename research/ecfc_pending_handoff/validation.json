@@ -1,0 +1,31 @@
+{
+  "environment": "Python 3.12.14",
+  "location": "fresh temporary directory, no internal work directory access needed",
+  "runs": [
+    {
+      "command": "python -I -B package/check.py --dependencies public-dependencies",
+      "exit": 0,
+      "stderr": "test_invalid_records_fail (seat_checks.Checks.test_invalid_records_fail) ... ok\ntest_no_service_import (seat_checks.Checks.test_no_service_import) ... ok\ntest_two_times_pending_and_nonmutation (seat_checks.Checks.test_two_times_pending_and_nonmutation) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.007s\n\nOK\n",
+      "summary": {
+        "scope": "actual pinned pure receiver + locator; synthetic adapter, no real registration or ECFC database",
+        "published_seat_tests": 3,
+        "new_scenarios": 2,
+        "rejected_inputs": 4
+      }
+    },
+    {
+      "command": "python -I -B package/test_dependencies.py --dependencies public-dependencies",
+      "exit": 0,
+      "stderr": "",
+      "summary": {
+        "dependency_checks_pass": true,
+        "changed_or_wrong_hash_rejected": 11
+      }
+    },
+    {
+      "command": "python -I -B package/check.py --repo no-repository",
+      "exit": 1,
+      "expected": "FIXED_OBJECT_MISSING:receiver"
+    }
+  ]
+}

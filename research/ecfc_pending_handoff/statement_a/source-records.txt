@@ -1,0 +1,1 @@
+STA-1	2026-02-01T12:01:40.000Z	{"assertedStance": "supports", "caseId": "SYN-XREPO-001", "target": "LINK-1", "text": "合成检查记录甲声称：同一时段SYN-VESSEL-A设备供电中断导致推力指示下降；时钟一致性与测量方法尚待复核。", "vesselId": "SYN-VESSEL-A"}

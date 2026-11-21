@@ -1,0 +1,63 @@
+{
+  "caseId": "SYN-XREPO-001",
+  "eventId": "EV-1",
+  "linkId": "LINK-1",
+  "eventClaim": "SYN-VESSEL-A 推力指示下降的记录",
+  "linkClaim": "设备供电中断导致推力指示下降",
+  "sources": [
+    {
+      "directory": "observation",
+      "card": {
+        "content": {
+          "body": "{\"assertedStance\": \"observation\", \"caseId\": \"SYN-XREPO-001\", \"target\": \"EV-1\", \"text\": \"合成观察记录：2026-02-01T12:01:40.000Z，SYN-VESSEL-A推力指示下降；未检查供电或执行机构，原因未定。\", \"vesselId\": \"SYN-VESSEL-A\"}",
+          "source": {
+            "locator": "source-records.txt#L1",
+            "excerpt": "{\"assertedStance\": \"observation\", \"caseId\": \"SYN-XREPO-001\", \"target\": \"EV-1\", \"text\": \"合成观察记录：2026-02-01T12:01:40.000Z，SYN-VESSEL-A推力指示下降；未检查供电或执行机构，原因未定。\", \"vesselId\": \"SYN-VESSEL-A\"}"
+          }
+        },
+        "sourceBinding": {
+          "file": "source-records.txt",
+          "line": 1,
+          "recordId": "OBS-1",
+          "sha256": "befbd28c6e9a5a281dfbe445b7f7e63f985d7aefc87e2a3159fb1efaedaca5da"
+        }
+      }
+    },
+    {
+      "directory": "statement_a",
+      "card": {
+        "content": {
+          "body": "{\"assertedStance\": \"supports\", \"caseId\": \"SYN-XREPO-001\", \"target\": \"LINK-1\", \"text\": \"合成检查记录甲声称：同一时段SYN-VESSEL-A设备供电中断导致推力指示下降；时钟一致性与测量方法尚待复核。\", \"vesselId\": \"SYN-VESSEL-A\"}",
+          "source": {
+            "locator": "source-records.txt#L1",
+            "excerpt": "{\"assertedStance\": \"supports\", \"caseId\": \"SYN-XREPO-001\", \"target\": \"LINK-1\", \"text\": \"合成检查记录甲声称：同一时段SYN-VESSEL-A设备供电中断导致推力指示下降；时钟一致性与测量方法尚待复核。\", \"vesselId\": \"SYN-VESSEL-A\"}"
+          }
+        },
+        "sourceBinding": {
+          "file": "source-records.txt",
+          "line": 1,
+          "recordId": "STA-1",
+          "sha256": "83402e19f44f2437584a62c9fd69e0636ae5c3a90790a6a8436fff1907abbcbe"
+        }
+      }
+    },
+    {
+      "directory": "statement_b",
+      "card": {
+        "content": {
+          "body": "{\"assertedStance\": \"refutes\", \"caseId\": \"SYN-XREPO-001\", \"target\": \"LINK-1\", \"text\": \"合成检查记录乙反驳甲的供电中断解释：同一时段SYN-VESSEL-A供电稳定，执行机构卡滞；与甲记录的差异未裁定。\", \"vesselId\": \"SYN-VESSEL-A\"}",
+          "source": {
+            "locator": "source-records.txt#L1",
+            "excerpt": "{\"assertedStance\": \"refutes\", \"caseId\": \"SYN-XREPO-001\", \"target\": \"LINK-1\", \"text\": \"合成检查记录乙反驳甲的供电中断解释：同一时段SYN-VESSEL-A供电稳定，执行机构卡滞；与甲记录的差异未裁定。\", \"vesselId\": \"SYN-VESSEL-A\"}"
+          }
+        },
+        "sourceBinding": {
+          "file": "source-records.txt",
+          "line": 1,
+          "recordId": "STB-1",
+          "sha256": "54b73eafb76dec9f110f56c1a113ee9e8a06999a38403e85861802037341ae06"
+        }
+      }
+    }
+  ]
+}

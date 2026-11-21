@@ -1,0 +1,1 @@
+STB-1	2026-02-01T12:01:40.000Z	{"assertedStance": "refutes", "caseId": "SYN-XREPO-001", "target": "LINK-1", "text": "合成检查记录乙反驳甲的供电中断解释：同一时段SYN-VESSEL-A供电稳定，执行机构卡滞；与甲记录的差异未裁定。", "vesselId": "SYN-VESSEL-A"}

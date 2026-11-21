@@ -1,0 +1,58 @@
+[
+  {
+    "key": "receiver",
+    "ref": "e0cbccc83b13598c7ff118798ec7c56e472d413b",
+    "path": "tests_acceptance/registered-trajectory-pair/seat_receiver/receiver.py",
+    "blob": "33bb210edcf03728f591d52b9175f1d2987e00a9"
+  },
+  {
+    "key": "seat_check",
+    "ref": "e0cbccc83b13598c7ff118798ec7c56e472d413b",
+    "path": "tests_acceptance/registered-trajectory-pair/seat_receiver/check.py",
+    "blob": "9c8576cb9938300927ab9d6f0e4bdbcba11a0ae1"
+  },
+  {
+    "key": "objects",
+    "ref": "e0cbccc83b13598c7ff118798ec7c56e472d413b",
+    "path": "tests_acceptance/registered-trajectory-pair/seat_receiver/fixed_objects.py",
+    "blob": "a99d0da6558758901857122121dd4773311a97ca"
+  },
+  {
+    "key": "locator",
+    "ref": "d1c1d378f8ec21e3cf8a01fe446df81770395a9e",
+    "path": "research/w19_case_ranking/source_traceability/check.py",
+    "blob": "44fc5d82279db5fa3a3c748161f3122708e85668"
+  },
+  {
+    "key": "project",
+    "ref": "0dc1226364524977a4155e480d96436443cd8967",
+    "path": "service/mcis_service/trajectory_exchange/registered_query.py",
+    "blob": "a7a5a12294308395413af75de1837de284a94a1c"
+  },
+  {
+    "key": "validation",
+    "ref": "0dc1226364524977a4155e480d96436443cd8967",
+    "path": "service/mcis_service/trajectory_exchange/validation.py",
+    "blob": "cd1be59c2c74327ca5468eab06d1461c71ad0afe"
+  },
+  {
+    "key": "host",
+    "ref": "420284ab5fd44c94b737f8c1cf51bc0ef09aea29",
+    "path": "research/expert_group/packet.py",
+    "blob": "ff2018dad2d58e9fe158f503ecd71a004c20e226"
+  },
+  {
+    "key": "a",
+    "ref": "2048c60fd6650c6f2c99a76a16be463a3895655d",
+    "path": "tests_acceptance/shared-trajectory-cross-repo-expanded/vessel-a.json",
+    "blob": "d8e132c566f07004d76227af52745d5b5ad943c4",
+    "sha256": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c"
+  },
+  {
+    "key": "b",
+    "ref": "2048c60fd6650c6f2c99a76a16be463a3895655d",
+    "path": "tests_acceptance/shared-trajectory-cross-repo-expanded/vessel-b.json",
+    "blob": "7b332f3af0acbe9d5260fca88b889de95c5279c0",
+    "sha256": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca"
+  }
+]

@@ -1,0 +1,1 @@
+OBS-1	2026-02-01T12:01:40.000Z	{"assertedStance": "observation", "caseId": "SYN-XREPO-001", "target": "EV-1", "text": "合成观察记录：2026-02-01T12:01:40.000Z，SYN-VESSEL-A推力指示下降；未检查供电或执行机构，原因未定。", "vesselId": "SYN-VESSEL-A"}
