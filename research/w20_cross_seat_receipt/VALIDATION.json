@@ -1,0 +1,17 @@
+{
+  "exit": 0,
+  "mode": "explicit fixed-source paths; no live chair",
+  "draftDigest": "213b8bd46acf49a489bfc46523449d83a75751f5c714b925b10810d3e2765959",
+  "observations": {
+    "opinionCount": 4,
+    "originals": 1
+  },
+  "aliasOriginals": 1,
+  "withChecks": {
+    "opinionCount": 4,
+    "originals": 3,
+    "status": "opposed_source_assertions_pending"
+  },
+  "unanimityNotProof": true,
+  "rejected": 5
+}
