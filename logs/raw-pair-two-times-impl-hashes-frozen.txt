@@ -1,0 +1,2 @@
+ff860d546818551dafa969febd7916ba3e889269e9e411b36f913a61ffb6c990  tests_acceptance/registered-trajectory-pair/raw_two_times.py
+7eba0111c5b9bd41ef741c4a272aeed06d368a5d5359683fe3e8f345b8420500  tests_acceptance/registered-trajectory-pair/RAW-TWO-TIMES.md

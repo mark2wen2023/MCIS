@@ -427,3 +427,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Single-case offline handoff | 待独验 | 四阶段退出0，总9.700s，重叠不累计；原字节与compact SHA明确区分；logs/single-case-offline-impl-hashes-frozen.txt |
 
 | Single-case local prerequisites | 待独验 | 4项普通guard、原四阶段退出0/8.058s；logs/single-case-offline-local-guard-impl-hashes-frozen.txt |
+
+| Raw pair two-time acceptance | 待独验 | 4项临时SQLite合成检查退出0（3既有+1新增），无UI/身份/报告保存；logs/raw-pair-two-times-impl-hashes-frozen.txt |
