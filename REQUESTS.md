@@ -842,3 +842,7 @@ Authorized test-only follow-up to 7a2d0e4: fixed local c10b2cd generator source 
 ## Frozen binding SQLite storage — independent opt-in proposal
 
 在 0514755778127efa33c0b47b0fcb00e617cb753d 之上新增内部 BindingStore SQLite 实现及纯合成临时业务表测试。默认关闭，不接路由/权限/registry，不改旧信封与摘要；同案父快照外键与只追加保护。生产授权交集/统一读取视图、迁移/归档恢复和报告导出仍为阻断。详见 tests_acceptance/frozen-binding-storage/README.md；不用于默认服务库。
+
+## Frozen binding archive refusal follow-up
+
+固定73a1fa7，不改运行代码。新增 archive_check.py 直接调用真实工作记录build和临时SQLite，验证已有权限拒绝、未支持绑定表拒绝、回滚及无产物；不调用含HFACS导入的外围export_case，不放开归档。可信报告主体/服务器pin来源仍缺，接线最小决定见 tests_acceptance/frozen-binding-storage/ARCHIVE-REFUSAL.md。

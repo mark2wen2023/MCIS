@@ -1,0 +1,2 @@
+5ea49f75f3b4ad9e5b1e2bfd4fffe10ea115a2b1cb49f6deeaab967f27a82853  tests_acceptance/frozen-binding-storage/archive_check.py
+3478f6fb34b426bb8837dab3d4c3aa3e85841cb6d673211b929674c0e109fc9b  tests_acceptance/frozen-binding-storage/ARCHIVE-REFUSAL.md

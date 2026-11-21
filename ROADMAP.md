@@ -535,3 +535,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-21 | 冻结句音频绑定加固 | 待独验；内部记录去正文与引用副本、嵌套/大小拒绝；10组纯合成通过，未接库/权限/导出；logs/frozen-sentence-binding-hardening-hashes.txt |
 
 | frozen-binding-storage | 待测 | 独立默认关闭 SQLite 存储；8项临时库检查、原10项纯绑定回归；真实授权/报告接线/归档恢复未验。冻结 logs/frozen-binding-storage-impl-hashes-frozen.txt |
+
+| frozen-binding-archive-refusal | 待测 | 固定73a1fa7真实build拒绝路径5项临时SQLite；无完整导出/恢复或认证验收。冻结 logs/frozen-binding-archive-refusal-impl-hashes-frozen.txt |
