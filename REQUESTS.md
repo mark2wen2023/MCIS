@@ -654,3 +654,6 @@ Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD
 
 ## 2026-11-21 · replay-evidence-clock
 Mark 授权首条三维回放可追溯小闭环。源码复核现有 TrackView/Unity adapter 未提供 V1 与证据侧栏闭环，故从固定 2048c60 合成夹具实现独立只读共享时点查询与二维离线面板；不接 main/pilot/mcis-3d，不改共享契约/夹具。设备 +7 秒和未核实时间均手造；无连续插值、无方向补值或碰撞裁定。工具/测试范围见 tools/replay_evidence_clock/README.md。
+
+## 2026-11-21 · replay-evidence-workbench-ui
+Mark 授权把已看像素的「复盘与取证」设计稿实现为单屏离线候选。新增独立工作台生成器/HTML/CSS/JS，复用固定证据时钟查询，不改变原 preview.py、浏览器验收或其 hash、V1/双船夹具。交互与静态检查通过，真实浏览器/像素仍未验；用户预览已保存 Library，见 tools/replay_evidence_workbench/README.md。
