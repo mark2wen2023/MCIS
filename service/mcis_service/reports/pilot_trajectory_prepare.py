@@ -88,7 +88,10 @@ class PilotTrajectoryPrepare:
                 if case.get('isFictionalDemo') is not True:raise PrepareUnavailable('synthetic_case_required')
                 snapshot=get_doc(session,ReportAuditRow,CASE,key[1])
                 if not snapshot:raise PrepareUnavailable('generation_unavailable')
-                if snapshot.get('snapshotId') != key[1]:raise PrepareUnavailable('generation_identity_mismatch')
+                if 'snapshotId' not in snapshot:
+                    snapshot = {**snapshot, 'snapshotId': key[1]}
+                elif snapshot['snapshotId'] != key[1]:
+                    raise PrepareUnavailable('generation_identity_mismatch')
                 verified_lines=audit.all_lines(session,CASE)
                 if not audit.verify_chain(verified_lines)['valid']:raise PrepareUnavailable('audit_invalid')
                 row=session.scalars(select(AuditEventRow).where(AuditEventRow.case_id==CASE,AuditEventRow.seq==snapshot.get('auditSeq'))).one_or_none()
