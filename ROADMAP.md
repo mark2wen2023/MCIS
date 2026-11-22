@@ -431,3 +431,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Raw pair two-time acceptance | 待独验 | 4项临时SQLite合成检查退出0（3既有+1新增），无UI/身份/报告保存；logs/raw-pair-two-times-impl-hashes-frozen.txt |
 
 | 2026-11-22 | 同案跨仓MCIS半边四时点对账 | 待独验；原3基线+1新真实临时SQLite场景退出0，4查询8Access、混案+0；固定字节回执可重复；3D/HTTP/真实账号未验；logs/cross-repo-clock-receipt-impl-hashes-frozen.txt |
+
+| 2026-11-22 | 合成跨端时钟测试产物对账 | 待独验 | 固定 8d68f6fa 回执；8 项标准库合成/CLI 检查通过；浏览器/三维未验；冻结 logs/clock-artifact-comparator-impl-hashes-frozen.txt |
