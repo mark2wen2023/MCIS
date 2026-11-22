@@ -1,0 +1,200 @@
+{
+  "kind": "synthetic-offline-comparison-only",
+  "caseId": "SYN-XREPO-001",
+  "fixtureCommit": "2048c60fd6650c6f2c99a76a16be463a3895655d",
+  "productCommit": "db90fdf73de7bd26ba75819f0102fc03d0789faf",
+  "harnessCommit": "c7f933d9d5a3fea6c4f3d706fe1f091475c3eb24",
+  "files": {
+    "vessel-a.json": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c",
+    "vessel-b.json": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca",
+    "vessel-mismatch.json": "f785399311f5dd045eec6cc8a6a2105d95b376e9aa894342fd4da4f5985dc2f4"
+  },
+  "frames": [
+    {
+      "utc": "2026-02-01T12:01:40.000Z",
+      "vessels": [
+        {
+          "vesselId": "SYN-VESSEL-A",
+          "status": "input_point",
+          "jsonPointer": "/points/7",
+          "fileSha256": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c",
+          "time": {
+            "sourceUtc": "2026-02-01T12:01:40.000Z",
+            "alignedUtc": "2026-02-01T12:01:40.000Z",
+            "correctionSeconds": 0,
+            "status": "referenced"
+          },
+          "positionKind": "recorded",
+          "headingKind": "missing",
+          "headingMissing": true
+        },
+        {
+          "vesselId": "SYN-VESSEL-B",
+          "status": "input_point",
+          "jsonPointer": "/points/12",
+          "fileSha256": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca",
+          "time": {
+            "sourceUtc": "2026-02-01T12:01:28.000Z",
+            "alignedUtc": "2026-02-01T12:01:40.000Z",
+            "correctionSeconds": 12,
+            "status": "corrected"
+          },
+          "positionKind": "recorded",
+          "headingKind": "recorded",
+          "headingMissing": false
+        }
+      ],
+      "accessAdded": 2,
+      "accessTotal": 2
+    },
+    {
+      "utc": "2026-02-01T12:02:01.000Z",
+      "vessels": [
+        {
+          "vesselId": "SYN-VESSEL-A",
+          "status": "input_point",
+          "jsonPointer": "/points/10",
+          "fileSha256": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c",
+          "time": {
+            "sourceUtc": "2026-02-01T12:02:01.000Z",
+            "alignedUtc": "2026-02-01T12:02:01.000Z",
+            "correctionSeconds": 0,
+            "status": "referenced"
+          },
+          "positionKind": "recorded",
+          "headingKind": "missing",
+          "headingMissing": true
+        },
+        {
+          "vesselId": "SYN-VESSEL-B",
+          "status": "no_observation_at_time",
+          "jsonPointer": null,
+          "fileSha256": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca",
+          "time": null,
+          "positionKind": null,
+          "headingKind": null,
+          "headingMissing": null
+        }
+      ],
+      "accessAdded": 2,
+      "accessTotal": 4
+    },
+    {
+      "utc": "2026-02-01T12:02:04.250Z",
+      "vessels": [
+        {
+          "vesselId": "SYN-VESSEL-A",
+          "status": "declared_gap",
+          "jsonPointer": "/sampling/missingIntervals/1",
+          "fileSha256": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c",
+          "time": null,
+          "positionKind": null,
+          "headingKind": null,
+          "headingMissing": null
+        },
+        {
+          "vesselId": "SYN-VESSEL-B",
+          "status": "no_observation_at_time",
+          "jsonPointer": null,
+          "fileSha256": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca",
+          "time": null,
+          "positionKind": null,
+          "headingKind": null,
+          "headingMissing": null
+        }
+      ],
+      "accessAdded": 2,
+      "accessTotal": 6
+    },
+    {
+      "utc": "2026-02-01T12:02:07.500Z",
+      "vessels": [
+        {
+          "vesselId": "SYN-VESSEL-A",
+          "status": "input_point",
+          "jsonPointer": "/points/11",
+          "fileSha256": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c",
+          "time": {
+            "sourceUtc": "2026-02-01T12:02:07.500Z",
+            "alignedUtc": "2026-02-01T12:02:07.500Z",
+            "correctionSeconds": 0,
+            "status": "referenced"
+          },
+          "positionKind": "recorded",
+          "headingKind": "missing",
+          "headingMissing": true
+        },
+        {
+          "vesselId": "SYN-VESSEL-B",
+          "status": "no_observation_at_time",
+          "jsonPointer": null,
+          "fileSha256": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca",
+          "time": null,
+          "positionKind": null,
+          "headingKind": null,
+          "headingMissing": null
+        }
+      ],
+      "accessAdded": 2,
+      "accessTotal": 8
+    }
+  ],
+  "mixedCase": {
+    "result": "rejected",
+    "accessAdded": 0
+  },
+  "accessTotal": 8,
+  "limitations": [
+    "No HTTP, real login, browser, model or 3D execution",
+    "Clock corrections are synthetic declarations, not signed review or event ordering",
+    "Recorded is fixture quality, not real observation",
+    "Not a runtime interface, permission or V1 contract extension"
+  ],
+  "productFileSha256": {
+    "service/mcis_service/__init__.py": "0af1ae7229694ada406cc87b5cbaaf195441620cb48e8dda54df83a3f6295480",
+    "service/mcis_service/config.py": "0e5e5262bcffe7f63fbca833e5cd267045d9db790d7600f0848c5451f21aa2ea",
+    "service/mcis_service/db.py": "67287ff0a8ac6c3f814319681737e3f8427b5c89ad038236d22e2422828aee93",
+    "service/mcis_service/common/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "service/mcis_service/common/contracts.py": "6c7829bb5ff0a7e1af31214b97c93b1e7d7e0e7559ffe47d312e4145c71017ac",
+    "service/mcis_service/common/context.py": "a860b79756a213c6bc70ce375c3b29c76920f79ccd3f8dba5c5eae5b22438dde",
+    "service/mcis_service/common/timeutil.py": "acebeceb1fde1bb336bb0d5f19349eb00e39b051b4dac3e0b7593ff9929ca4e5",
+    "service/mcis_service/common/csjson.py": "a6c43b1df8bb08b06cf87936e1ff3aed54907975b28a7ed7a17a9e61e5a89900",
+    "service/mcis_service/cases/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "service/mcis_service/cases/models.py": "f941613d0df2f00b3fa11931756cac0b9a4f69aff10b2b66b4614a7bb03f2aef",
+    "service/mcis_service/cases/service.py": "e17e1c5709ec510cf5e443961039092d0315ad64f0342c67c38de684c706ebdf",
+    "service/mcis_service/audit/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "service/mcis_service/audit/models.py": "11f5c91f5ec0d189b4c94fad71cd3f7de7c5fe4673d13c4a807963b43729ad9b",
+    "service/mcis_service/audit/service.py": "69b51ee029fdfdb3042b598a609b5138d7f7bee27c89823e881c541071e673da",
+    "service/mcis_service/evidence/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "service/mcis_service/evidence/models.py": "989c22f76b9375eeb34da9de0877290b3797978721ab91921b5abf42dd8c3113",
+    "service/mcis_service/evidence/service.py": "5e16fac97124c9e6180e104281b14a944d8dc721f85ab4a1f6957302672bb406",
+    "service/mcis_service/evidence_intake/__init__.py": "ee52d083e7092c5f824d0f09afb0fca33e447fc092968ceb96c6a7ad217bf454",
+    "service/mcis_service/evidence_intake/parser.py": "8330cd9ce803309ded4ccf846a4cc3611c9672ddad31bf2ea0b91a71144f07ea",
+    "service/mcis_service/evidence_intake/router.py": "895772528e5ed901128016942dce46d670ec446aaaf04063f3a8c4802b5bbacf",
+    "service/mcis_service/redaction/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "service/mcis_service/redaction/models.py": "4a3a44517c628dd6ad2536f7013bee3fee11095a890b6be62a4f2bcaf7311449",
+    "service/mcis_service/redaction/policy.py": "27ead2a5efdcbf1092305cf03e2c527600ac9e771b7f88b426d3b0983bd89623",
+    "service/mcis_service/redaction/gateway.py": "159d6695450f6f088400fdaffce3dee93317ce1a6a18d45809d357febabef916",
+    "service/mcis_service/reports/__init__.py": "8ba52ec498ce30f3263c03c45f29c306d47ea2517d541d8c3e208cbf7f4d5020",
+    "service/mcis_service/reports/models.py": "67ca9030dd43eb260107db2460d751e5f84dce4a329a9bd9ba5ea90793ee2b88",
+    "service/mcis_service/reports/access.py": "33e74b8946bccce150597048921fb4742ff9ee77d1ee5d51df345fdf99ad5385",
+    "service/mcis_service/interviews/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "service/mcis_service/interviews/models.py": "4c8946c4d1c16217ecafdf0d2125672aafb8db661ad253c7d03a21dc7a4e387c",
+    "service/mcis_service/interviews/access.py": "8b4d84e8f62a48da3f6a56ca27043190ddbb92546d217c5025f4e8d9ff43e402",
+    "service/mcis_service/manual_interviews/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "service/mcis_service/manual_interviews/models.py": "d40ec4f8dccbe773e27de4be8314b1e3abfd3c1445b1f3025df5884fba3e05bb",
+    "service/mcis_service/working_records_archive/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "service/mcis_service/working_records_archive/models.py": "a8db4c50a30fad42f019e41bab7423b196ec18d25dd4bbdcb3f0bdd69dd5f8c9",
+    "service/mcis_service/working_records_archive/validation.py": "cb00625e180dc1018870e9ee080f1b72dd5aeb3e8ca4809b58f98c37a1bc2064",
+    "service/mcis_service/working_records_archive/service.py": "0c2319c81401f12614610e8b3938e0344315b1419d98f119501ab11d7aa8b0f7",
+    "service/mcis_service/track_history/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "service/mcis_service/track_history/models.py": "77e988b23a5e5522e244a6e2c5b0a87a324dae742ccc3a9b69f7fc90f6ab8c9a",
+    "service/mcis_service/track_history/service.py": "7e33fc744fd4ff7c4b17738d9f34079a7a6f94197c1d8723605e5fc4adee2655",
+    "service/mcis_service/report_output/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "service/mcis_service/report_output/attachment_access.py": "02c2028ee2909ffb4ce7e2765e6ef45a48af0db267e47537aba669e140df07ab",
+    "service/mcis_service/trajectory_exchange/__init__.py": "c8d70f74f7bf7d1c60d22e4c6e6c055b2e76f701ae52a78ddd960ca32aeb1fa4",
+    "service/mcis_service/trajectory_exchange/validation.py": "49e285f9547646c4401aa96350e19532296b53cfc514cf06171616c37c4cf76f",
+    "service/mcis_service/trajectory_exchange/registered_pair.py": "a922d3c24b7a9ebc72e29de859da4b754c6f47df4dd7535c3f2a8f8987d3be72",
+    "service/mcis_service/trajectory_exchange/registered_query.py": "39887965aac4f1918794006c84a7dac21f7bd3b65ee55f2b6916f56b5623ffaa"
+  }
+}

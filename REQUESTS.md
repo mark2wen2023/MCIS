@@ -693,3 +693,6 @@ PILOT-TRAJECTORY-PREPARE 收口：固定 RA key/document ID 相等，生成事�
 Single-case handoff local guard：9项实际本地先决文件必须普通且匹配原SHA，Git物化源码不要求展开；仅工具/普通临时目录测试。
 
 Raw pair two-time acceptance：仅新增原样合成JSON真实登记/精确查询T100及T124.250组合检查，T20存量插值对照；不改产品、授权或报告，见tests_acceptance/registered-trajectory-pair/RAW-TWO-TIMES.md。
+
+## MCIS跨仓四时点对账（2026-11-22）
+独立候选基于c7f933d，仅验收代码及纯合成最小回执；复用固定真实登记/Access/精确查询，新增121与127.5端点对账，原样混案拒绝。不是V1合同或生产接口，不动3D和报告权限。

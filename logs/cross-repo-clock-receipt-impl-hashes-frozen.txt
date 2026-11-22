@@ -1,0 +1,3 @@
+ab9ed446fcb9ce923421916425e293e19fefe541a9651e3fd18efe3d1313c600  tests_acceptance/cross-repo-clock-receipt/README.md
+dd1547151e6052c2e78cb39c961315e01e8fca7297fbd6e5f9983fe3a0a92a9d  tests_acceptance/cross-repo-clock-receipt/check.py
+7860ef04924f49954ceba3be596a0258682de2f96c1060f1c8123fa34aa5c51a  tests_acceptance/cross-repo-clock-receipt/receipt.json

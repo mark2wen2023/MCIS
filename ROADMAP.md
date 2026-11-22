@@ -429,3 +429,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | Single-case local prerequisites | 待独验 | 4项普通guard、原四阶段退出0/8.058s；logs/single-case-offline-local-guard-impl-hashes-frozen.txt |
 
 | Raw pair two-time acceptance | 待独验 | 4项临时SQLite合成检查退出0（3既有+1新增），无UI/身份/报告保存；logs/raw-pair-two-times-impl-hashes-frozen.txt |
+
+| 2026-11-22 | 同案跨仓MCIS半边四时点对账 | 待独验；原3基线+1新真实临时SQLite场景退出0，4查询8Access、混案+0；固定字节回执可重复；3D/HTTP/真实账号未验；logs/cross-repo-clock-receipt-impl-hashes-frozen.txt |
