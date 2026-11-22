@@ -74,6 +74,28 @@ def main():
     changed=dict(binding,sourceSetDigest='0'*64);gate.bind_draft_simulated(changed)
     reject('stale_draft_binding',lambda:gate.submit_simulated(ticket['attemptId'],ticket['contextDigest'],reviews(ticket)))
     assert ledger.settle.call_count==0;gate.stop()
+    # Actual A -> B -> A: equal final fields do not revive the issued ticket.
+    gate,ledger=owner();gate.bind_draft_simulated(binding);ticket=gate.issue()
+    frozen=copy.deepcopy(ticket)
+    gate.bind_draft_simulated(revised);gate.bind_draft_simulated(copy.deepcopy(binding))
+    reject('stale_draft_binding',lambda:gate.submit_simulated(ticket['attemptId'],ticket['contextDigest'],reviews(ticket)))
+    assert gate._active==frozen and gate.receipt()['opinions']==[]
+    assert ledger.settle.call_count==0 and ledger.reserve.call_count==1
+    assert ticket['context']['draftBindingGeneration']==1 and gate._draft_generation==3
+    reject('not_ready',gate.issue)
+    stopped=gate.stop();assert stopped['phase']=='stopped_by_operator'
+    assert stopped['opinions']==[] and gate._active is None and ledger.stop.call_count==1
+    # Positive idempotence: equal fields before/after issue retain the issued generation.
+    gate,ledger=owner();gate.bind_draft_simulated(binding)
+    gate.bind_draft_simulated(copy.deepcopy(binding));ticket=gate.issue()
+    frozen=copy.deepcopy(ticket);gate.bind_draft_simulated(copy.deepcopy(binding))
+    assert gate._active==frozen and gate._draft_generation==1
+    state=gate.submit_simulated(ticket['attemptId'],ticket['contextDigest'],reviews(ticket))
+    assert ledger.settle.call_count==1 and len(state['opinions'])==1
+    assert state['opinions'][0]['attemptId']==ticket['attemptId']
+    assert state['opinions'][0]['draftBinding']==binding
+    assert state['opinions'][0]['draftBindingGeneration']==1
+    gate.stop()
     # Current-version opinions preserve both opposite synthetic statements separately.
     gate,ledger=owner();binding=copy.deepcopy(revised)
     original=copy.deepcopy(binding);gate.bind_draft_simulated(binding)
@@ -103,10 +125,11 @@ def main():
     assert not state['modelExecuted'] and not state['opinionsPersisted']
     gate.stop()
     # Optional binding leaves legacy context/opinion shape unchanged.
-    gate,ledger=owner();ticket=gate.issue();assert 'draftBinding' not in ticket['context']
+    gate,ledger=owner();ticket=gate.issue();assert 'draftBinding' not in ticket['context'] and 'draftBindingGeneration' not in ticket['context']
     state=gate.submit_simulated(ticket['attemptId'],ticket['contextDigest'],reviews(ticket))
-    assert 'draftBinding' not in state['opinions'][0];gate.stop()
+    assert 'draftBinding' not in state['opinions'][0] and 'draftBindingGeneration' not in state['opinions'][0];gate.stop()
     print(json.dumps({'scope':'actual FourChair methods with mocked storage and synthetic packet loader',
+      'aba_rejected_without_settlement_or_migration':True,'identical_rebind_accepted':True,
       'stale_draft_rejected_before_settle':True,'changed_source_set_rejected':True,
       'current_attributed_opinions':4,'located_byte_positions':3,
       'opposed_excerpts_preserved':True,'wrong_ticket_and_cross_source_quote_rejected':True,

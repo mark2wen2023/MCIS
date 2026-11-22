@@ -439,3 +439,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-16 | FOUR_SEAT_MESSAGES | 待测 | 第一轮四席模拟消息显式票据/请求绑定、主持封存，5新普通合成节点开发通过；未接Pi/真实执行，HOLD；logs/FOUR_SEAT_MESSAGES-impl-hashes-frozen.txt |
 
 | 2026-11-22 | W20_CHAIR_REVISION | 待独审 | FourChair 可选内存稿件绑定；纯合成旧稿/来源集变更拒收、v2 四席归属与相反摘录保留，自测退出0；账本及packet加载为测试替身，真实来源接线/签认/模型未验；logs/W20_CHAIR_REVISION-impl-hashes-frozen.txt |
+
+| 2026-11-22 | W20_CHAIR_GENERATION | 待独审 | 8fb8a7c后继：内存绑定代次阻止A→B→A旧票据复活；新增幂等正例/回退反例，旧版红测退出1、修复全套退出0；默认无绑定形状与停机保留，真实账本/签认/模型未验；logs/W20_CHAIR_GENERATION-impl-hashes-frozen.txt |

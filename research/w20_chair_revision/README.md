@@ -21,8 +21,8 @@ are unchanged. No default ECFC source intake has been implemented.
 This is the permitted narrow stale-revision fallback. A stale ticket remains active
 and unaccepted; there is no retry/reassignment/resume/new revision meeting flow.
 Explicit stop is needed. Once any opinion exists, rebinding is rejected, preventing
-mixed-version summary aggregation. Host version naming/reuse is not an implemented
-revision registry. Changing all metadata back is not independently detected.
+mixed-version summary aggregation. Host version naming/reuse is not a persistent revision registry. The process-local
+binding generation now detects metadata changing away and back (A -> B -> A).
 
 ## Reproduce
 Use an existing Python with standard library only, from this candidate checkout:
@@ -62,3 +62,21 @@ current_attributed_opinions=4, located_byte_positions=3,
 opposed_excerpts_preserved=true, default_binding_absent=true.
 No existing database fault/concurrency/model/browser tests were run.
 Pending independent review. No W19 blind inputs/answers were read.
+
+## Binding generation follow-up
+Parent 8fb8a7c0fbc586bbf6b5435fd9914106c7857886, same candidate branch.
+A changed validated binding increments a process-local integer under the existing
+lock; identical fields are idempotent. Bound ticket context freezes the generation
+inside contextDigest; submission checks it before validation/settlement. Accepted
+bound opinions retain the generation. Default unbound ticket/opinion shape and
+stop handling are unchanged. No persistence, reset API or revision registry added.
+
+Two added cases: a real bind A -> issue -> bind B -> bind A rejects the original
+issued ticket with zero settlements, zero opinions, one reservation, and unchanged
+active ticket; explicit stop clears it normally. Repeating identical A bindings
+before/after issue keeps generation 1 and allows exactly one attributed acceptance.
+New negative against parent exited 1 at stale_draft_binding (old ticket accepted).
+Updated full synthetic check exited 0. Original cases retained. Frozen follow-up:
+logs/W20_CHAIR_GENERATION-impl-hashes-frozen.txt. Previous freeze remains historical.
+This is process-local simulation coverage only, not authentic identities or a real
+ledger/meeting/provider/human approval test.

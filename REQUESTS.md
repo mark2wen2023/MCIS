@@ -777,3 +777,9 @@ trusted synthetic host draft metadata and stale submission rejection in memory.
 No default packet, review schema, authorization or production interface changes.
 No cross-version resume. Source registry and real ledger integration remain gaps.
 See research/w20_chair_revision/README.md; independent review pending.
+
+## W20_CHAIR_GENERATION (2026-11-22)
+Narrow follow-up to 8fb8a7c: monotonically increasing process-local binding
+generation prevents A->B->A from reviving an outstanding ticket. Identical
+bindings remain idempotent. Default unbound shape/stop behavior unchanged.
+No persistent revision registry, real ledger or new evidence system.
