@@ -570,3 +570,6 @@ W11 pre-publication disposition: Independent synthetic mutation tests found abse
 ## 2026-11-21 — W11 逐节点待补前端导航
 
 在固定 015df41 上独立候选增加 NodeReview；Panel 只增加摘要、实例唯一控件 ID 和摘要来源失效标记。不改原模型/合同/保存/API。旧 W11 冻结保留，本增量单列；null/0、节点来源交集与失效、SSR/回调检查见 web/tests/ecfc-node-review.md。只说明当前填写/选择，不能解释为事实或真实性。
+
+## W11 真实图只读选边候选（2026-11-22）
+在 dc261c6 固定前端上修改 Graph/Panel 的展示接线；旧冻结保留。默认无边读取器，无后端、合同、权限或持久化变化。仅合成测试注入候选读取器，不构成可信产品关联。
