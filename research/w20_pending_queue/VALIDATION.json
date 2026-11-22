@@ -1,0 +1,25 @@
+{
+  "scope": "real original DB/session/AgentDraftRow/audit in disposable SQLite",
+  "exit_code": 0,
+  "fresh_connection_pending_and_audit": true,
+  "duplicate_no_second_row": true,
+  "negative_cases": [
+    "wrong_case",
+    "old_version",
+    "old_generation",
+    "wrong_locator",
+    "wrong_quote",
+    "wrong_role",
+    "current_host_different_version",
+    "current_host_unverified_positions_and_edited_context"
+  ],
+  "audit_flush_failure_full_rollback": true,
+  "reference_resolution_count": 3,
+  "source_text_not_persisted": true,
+  "business_tables_absent": true,
+  "chair_storage_and_packet_loader": "MOCKED",
+  "queue_storage_and_audit": "REAL",
+  "human_review": "NOT_RUN",
+  "production_identity": "NOT_RUN",
+  "models": "NOT_RUN"
+}

@@ -791,3 +791,11 @@ submit arguments/default packet path unchanged. Reuse _validate, retain exact
 source association and count byte locations only. No production protocol, source
 access/identity, persistent meeting or human-signature interface. See research/
 w20_chair_revision/README.md for test-loader/storage mocks and remaining gaps.
+
+## W20_PENDING_QUEUE (2026-11-22)
+New isolated research adapter owns a disposable SQLite DB with only original
+AgentDraftRow/AuditEventRow. Rebuild pinned synthetic source context, bind exact
+live FourChair receipt, project typed metadata/reference digests (no raw payload
+or source text), use original session/audit atomically. Not a public AgentDraft
+DTO or production queue registration; no HTTP/review/permission/contract change.
+See research/w20_pending_queue/README.md for real DB vs mocked chair storage.

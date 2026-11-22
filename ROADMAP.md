@@ -443,3 +443,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-22 | W20_CHAIR_GENERATION | 待独审 | 8fb8a7c后继：内存绑定代次阻止A→B→A旧票据复活；新增幂等正例/回退反例，旧版红测退出1、修复全套退出0；默认无绑定形状与停机保留，真实账本/签认/模型未验；logs/W20_CHAIR_GENERATION-impl-hashes-frozen.txt |
 
 | 2026-11-22 | W20_CHAIR_SOURCES | 待独审 | 90d0581后继：FourChair可信合成宿主内部逐项选定单段；票据冻结、借用/拼接拒收、回执保留具体出处，四意见同处计1；原代次/默认回归通过，完整脚本退出0。仅定位引用处数，真实原件接线/账本/身份/签认未验；logs/W20_CHAIR_SOURCES-impl-hashes-frozen.txt |
+
+| 2026-11-22 | W20_PENDING_QUEUE | 待独审 | c94de84后新增内部合成待审适配；真实临时SQLite/原AgentDraftRow/原审计事务重开读回、重复去重、错案旧稿错位置拒收、审计flush后失败双回滚，脚本退出0；原文不落盘，无正式读取/签认/ECFC写入；主席账本/packet加载仍替身；logs/W20_PENDING_QUEUE-impl-hashes-frozen.txt |
