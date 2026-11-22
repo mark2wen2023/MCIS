@@ -699,3 +699,6 @@ Raw pair two-time acceptance：仅新增原样合成JSON真实登记/精确查�
 
 ## 2026-11-22 合成跨端时钟测试产物对账
 仅新增 tests_acceptance/clock-artifact-comparator，固定读取 8d68f6fa 的合成回执；未来采集通过显式语义映射比较，不规定 AI Studio 格式，不改 V1/生产入口。模拟输入明确标注；匹配不证明浏览器运行或产物真实性。8 项标准库测试通过，浏览器未运行。
+
+## 2026-11-22 时钟对账 CPA 误拒修正
+按独审裁定收窄 3fa858a：原件 no_observation_at_time 不等于回放位置不可靠，仅固定回执 declared_gap 禁止即时 CPA。先以端点 true 复现旧版两处错误，再最小修正测试工具；10 项退出0，仍不核验浏览器/CPA算法。旧冻结保留，新冻结单列。

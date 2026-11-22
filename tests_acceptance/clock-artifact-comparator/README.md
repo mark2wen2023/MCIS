@@ -12,7 +12,7 @@
 python -I -B tests_acceptance/clock-artifact-comparator/check.py
 ```
 
-8 项纯合成测试，退出 0。包括实际 CLI 子进程成功 0、改动产物字节后拒绝 1。`check.py:fixture()` 是明确模拟的另一种 JSON 形状，假 build 为 40 个 `a`，不是实际三维提交，也不是对方格式建议。正常映射依据固定 MCIS 回执构造；负例逐项独立改动。测试不会运行浏览器/HTTP/模型或读取业务库。
+10 项纯合成测试，退出 0。包括实际 CLI 子进程成功 0、改动产物字节后拒绝 1。`check.py:fixture()` 是明确模拟的另一种 JSON 形状，假 build 为 40 个 `a`，不是实际三维提交，也不是对方格式建议。正常映射依据固定 MCIS 回执构造；负例逐项独立改动。测试不会运行浏览器/HTTP/模型或读取业务库。
 
 ## 收到真实采集文件以后
 
@@ -32,6 +32,10 @@ mapping 字段（完整模拟用法可读 `check.py:fixture()`）：
 - `frame`：utc/kind/instantCpaAvailable/vessels；`vessel`：vesselId/status/jsonPointer/fileSha256/positionKind/headingKind/headingMissing，以及 time_sourceUtc/time_alignedUtc/time_correctionSeconds/time_status。
 - 每个字段是 `{"path":["实际键",0,"实际键"]}`，相对当前根/帧/船对象；可选 `values` 字符串枚举翻译（如实际“悬停”只能映射 hover，不能映射 playback_frame）。映射本身须人工核对；工具报告其原字节 SHA。无表达式、默认值或缺失补值。
 
-四帧必须按 T+100、121、124.250、127.500 顺序，UTC 精确匹配固定回执；状态/定位/品质/原始 UTC/修正/对齐逐项匹配。127.500 必须是 `2026-02-01T12:02:07.500Z`，`12:02:08` HUD 不可替代。B 后三帧无精确点，不可借邻点 pointer；A 缺口保留缺口 pointer，不是原点；任一船无点时不得声明即时 CPA 可用。T+100 的 CPA 数值正确性不在此工具覆盖内。未知艏向不能由 COG 填补。
+四帧必须按 T+100、121、124.250、127.500 顺序，UTC 精确匹配固定回执；状态/定位/品质/原始 UTC/修正/对齐逐项匹配。127.500 必须是 `2026-02-01T12:02:07.500Z`，`12:02:08` HUD 不可替代。B 后三帧无精确点，不可借邻点 pointer；A 缺口保留缺口 pointer，不是原点；仅当固定 MCIS 回执明确 `declared_gap` 时禁止即时 CPA 可用（本组为 T+124.250）；`no_observation_at_time` 仅表示原件无精确行，不能据此否定另行派生的回放位置。T+121/T+127.500 允许可用或不可用，但 B 原点 pointer 仍须为空，派生位置不充当原始观测。所有帧必须有布尔可用状态，缺失或数字 0/1 不接受；缺口必须显式 false。工具不复算或验证任何 CPA 数值，也不证明回放插值可靠。未知艏向不能由 COG 填补。
 
-成功输出 `semantic_comparison_matches`、有限来源声明、固定 MCIS/输入/候选提交及文件/产物/映射摘要，**始终** `browserExecutionVerified:false` 与 `artifactAuthenticityVerified:false`。失败退出非零，不输出输入正文。8 项通过不是浏览器、播放、三维或真实账号通过；完整候选提交真实性、实际播放操作、采集链路真实性仍需独立证据。校时依据未交付、人审未签；展示对齐不确定同一事故事件先后/同时。
+成功输出 `semantic_comparison_matches`、有限来源声明、固定 MCIS/输入/候选提交及文件/产物/映射摘要，**始终** `browserExecutionVerified:false` 与 `artifactAuthenticityVerified:false`。失败退出非零，不输出输入正文。10 项通过不是浏览器、播放、三维或真实账号通过；完整候选提交真实性、实际播放操作、采集链路真实性仍需独立证据。校时依据未交付、人审未签；展示对齐不确定同一事故事件先后/同时。
+
+## 误拒修正的实测记录
+
+在未改动的 3fa858a 比较逻辑上先加入端点反例：T+121 与 T+127.500 的 CPA=true 各被误拒，10 项测试退出 1（2 个错误）。收窄为 declared_gap 后同一套 10 项退出 0；原有精确 UTC、空原点 pointer、来源/品质/摘要、CLI 和未验真声明检查保留。新增模拟值仅验证对账规则，不是浏览器采集或 CPA 算法证明。原冻结记录不改，新冻结见 logs/clock-artifact-comparator-gap-fix-impl-hashes-frozen.txt。

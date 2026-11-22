@@ -66,7 +66,8 @@ def compare(raw,mapping):
         if field(frame,frame_map['kind'])!='playback_frame':fail('not_playback_frame')
         cpa=field(frame,frame_map['instantCpaAvailable'])
         if type(cpa) is not bool:fail('cpa_state')
-        if any(v['status']!='input_point' for v in truth['vessels']) and cpa:fail('cpa_without_pair')
+        # Exact-original absence does not rule out separately derived replay positions.
+        if any(v['status']=='declared_gap' for v in truth['vessels']) and cpa:fail('cpa_in_declared_gap')
         vessels=field(frame,frame_map['vessels'])
         if not isinstance(vessels,list) or len(vessels)!=2:fail('vessel_count')
         indexed={}

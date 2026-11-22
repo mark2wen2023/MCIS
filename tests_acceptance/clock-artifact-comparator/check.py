@@ -49,7 +49,24 @@ class Checks(unittest.TestCase):
             a=deepcopy(self.a);a['samples'][i]['ships'][1]['jsonPointer']='/points/12'
             with self.assertRaisesRegex(m.Mismatch,'vessel_jsonPointer'):run(a,self.mapping)
         self.a['samples'][2]['cpa']=True
-        with self.assertRaisesRegex(m.Mismatch,'cpa_without_pair'):run(self.a,self.mapping)
+        with self.assertRaisesRegex(m.Mismatch,'cpa_in_declared_gap'):run(self.a,self.mapping)
+    def test_endpoint_replay_cpa_does_not_claim_exact_original(self):
+        # Original lookup absence is not a verdict on reliable replay interpolation.
+        for index in (1,3):
+            for available in (False,True):
+                a=deepcopy(self.a);a['samples'][index]['cpa']=available
+                self.assertIsNone(a['samples'][index]['ships'][1]['jsonPointer'])
+                with self.subTest(index=index,available=available):
+                    result=run(a,self.mapping)
+                    self.assertEqual(result['result'],'semantic_comparison_matches')
+                    self.assertFalse(result['browserExecutionVerified'])
+    def test_gap_cpa_requires_explicit_boolean_false(self):
+        run(self.a,self.mapping)  # Explicit false remains valid.
+        for value in (True,0,1,None):
+            a=deepcopy(self.a);a['samples'][2]['cpa']=value
+            with self.subTest(value=value),self.assertRaises(m.Mismatch):run(a,self.mapping)
+        a=deepcopy(self.a);del a['samples'][2]['cpa']
+        with self.assertRaisesRegex(m.Mismatch,'missing_field'):run(a,self.mapping)
     def test_fixed_build_input_and_raw_hash(self):
         for key in ('build','input'):
             a=deepcopy(self.a);a[key]='b'*40
