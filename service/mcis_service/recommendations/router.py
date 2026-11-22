@@ -372,7 +372,9 @@ def open_round(case_id: str, body: RoundIn, ctx: Ctx = CtxDep) -> dict[str, Any]
                      command=f"发出征求意见 {case_id} 第 {n} 轮",
                      after=f"草案={body.draftVersion}" + (f"（{body.draftSha256}）" if body.draftSha256 else "")
                            + f"；各方={','.join(p.name for p in body.parties)}；期限={rnd['deadlineUtc']}"
-                           + ("（商定）" if body.isAgreedDeadline else "（默认 30 天）"),
+                           + (f"（商定 {body.days} 天）" if body.isAgreedDeadline
+                              else f"（明确设置 {body.days} 天；未标记商定）" if "days" in body.model_fields_set
+                              else f"（默认 {body.days} 天）"),
                      entity_type="consultationRound", entity_id=str(n))
         return _round_view(rnd)
 
