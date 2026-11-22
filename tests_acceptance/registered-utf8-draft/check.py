@@ -70,6 +70,12 @@ def run(source, allowed, fixture):
 
     class Checks(unittest.TestCase):
         def test_registered_bytes_to_unsaved_draft(self):
+            self.exercise()
+
+        def test_projection_rejection_preserves_committed_access(self):
+            self.exercise(reject_projection=True)
+
+        def exercise(self, *, reject_projection=False):
             with tempfile.TemporaryDirectory(dir=source) as folder:
                 root = Path(folder); blobs = root / 'blobs'; blobs.mkdir()
                 db = Database('sqlite:///' + str(root / 'fresh.sqlite'))
@@ -145,15 +151,40 @@ def run(source, allowed, fixture):
                 self.assertEqual(binding, rubric['binding'])
                 local_source = {host['sourceId']: {k: registered[k] for k in
                     ('caseId', 'evidenceId', 'requestDigest', 'sourceSha256')}}
-                draft = fixture.p.project_utf8(raw, proposal, host=binding, rubric=rubric)
-                self.assertEqual(len(draft['nodes']), 3)
-                self.assertFalse(draft['saved']); self.assertFalse(draft['authorityVerified'])
-                self.assertFalse(draft['scenarioReady']); self.assertEqual(draft['edges'], [])
-                for node in draft['nodes']:
-                    src = node['source']
-                    self.assertEqual(local_source[src['sourceId']]['sourceSha256'], src['rawSha256'])
-                    self.assertEqual(raw[src['byteStart']:src['byteEndExclusive']].decode(), node['text'])
-                    self.assertNotIn('page', src)
+                if reject_projection:
+                    def persisted_state():
+                        # Read all seven tables, not only counts; no additional original read.
+                        with db.session() as s:
+                            return deepcopy(tuple(
+                                tuple(s.execute(select(m.__table__).order_by(*m.__table__.primary_key.columns)).all())
+                                for m in models))
+
+                    committed = persisted_state()
+                    for fault in ('same_source_wrong_sha', 'late_wrong_quote'):
+                        bad_binding, bad_proposal = deepcopy(binding), deepcopy(proposal)
+                        if fault == 'same_source_wrong_sha':
+                            bad_binding['rawSha256'] = '0' * 64
+                            expected = '^host binding changed$'
+                        else:
+                            # Earlier valid items must not escape as a partial draft.
+                            bad_proposal['items'][-1]['quote'] = 'X' * bad_proposal['items'][-1]['length']
+                            expected = '^quote_location$'
+                        delivered = None
+                        with self.subTest(fault=fault), self.assertRaisesRegex(ValueError, expected):
+                            delivered = fixture.p.project_utf8(raw, bad_proposal, host=bad_binding, rubric=rubric)
+                        self.assertIsNone(delivered)
+                        self.assertEqual(counts(), (1, 2, 2))
+                        self.assertEqual(persisted_state(), committed)
+                else:
+                    draft = fixture.p.project_utf8(raw, proposal, host=binding, rubric=rubric)
+                    self.assertEqual(len(draft['nodes']), 3)
+                    self.assertFalse(draft['saved']); self.assertFalse(draft['authorityVerified'])
+                    self.assertFalse(draft['scenarioReady']); self.assertEqual(draft['edges'], [])
+                    for node in draft['nodes']:
+                        src = node['source']
+                        self.assertEqual(local_source[src['sourceId']]['sourceSha256'], src['rawSha256'])
+                        self.assertEqual(raw[src['byteStart']:src['byteEndExclusive']].decode(), node['text'])
+                        self.assertNotIn('page', src)
                 self.assertEqual(counts(), (1, 2, 2))
                 with db.session() as s:
                     accesses = s.scalars(select(CustodyEventRow).where(CustodyEventRow.kind == 'Access')).all()
@@ -168,7 +199,9 @@ def run(source, allowed, fixture):
                     self.assertEqual(tables, {m.__tablename__ for m in models})
                 print(json.dumps({'syntheticOnly': True, 'registration': 1, 'access': 1,
                     'wrongCaseStatus': 404, 'deniedStatus': 403, 'rejectionAccessDelta': 0,
-                    'auditChainValid': True, 'rawSha256': fixture.PIN, 'draftNodes': 3,
+                    'auditChainValid': True, 'rawSha256': fixture.PIN,
+                    'draftNodes': 0 if reject_projection else 3,
+                    'postReadProjectionRejects': 2 if reject_projection else 0,
                     'saved': False, 'productionSourceBinding': False}, sort_keys=True))
 
     result = unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromTestCase(Checks))
