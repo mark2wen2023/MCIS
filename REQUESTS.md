@@ -653,3 +653,6 @@ Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD
 授权独立候选在 BowtieForm 已校验结果中增加有界、稳定的具体路径列表；新增 pathWitnesses/UnprotectedPaths，原 hash/来源/身份/清除守卫保留并为列表绑定 canonical 输入与完整身份。仅显示当前草图未画，不代表现实控制缺失。不改契约/核心/API/权限；详见 web/tests/bowtie-unprotected-paths.md。原 W153 冻结不重写，本增量单列冻结。
 
 W15 SVG 状态标签：独立候选仅补 Diagram 内待核验/Unknown 与整图来源边界说明，既有合同/来源/权限不变。旧冻结保留；新冻结 logs/bowtie-svg-status-impl-hashes-frozen.txt。
+
+## W15 同源文字替代（2026-11-22）
+在固定9e241db的独立候选补真实Diagram原生可展开文字结构；同一输入无推导，旧SVG/合同/来源/权限不变，旧冻结保留。新增SSR及原SVG/TS检查，无浏览器/读屏声称。

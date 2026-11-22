@@ -1,0 +1,3 @@
+fc29cd1563a71fec30a4f5cf1392e48c85cfb7a104a17bdb5c50d81012f057c1  web/src/bowtiePreview/Diagram.tsx
+1c826cd7db444e5acf6b5ea6487de4e92ec7bb7d1d39e66b44ce4c314cd971df  web/tests/bowtie-text-alternative.test.tsx
+b4788b859d758fc5ed3527fc108873783caddf049022f488effa31ebec5707f0  web/tests/bowtie-text-alternative.md

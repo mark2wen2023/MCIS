@@ -401,3 +401,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-21 | W15.3 未画屏障路径列表 | 待独验；定向纯TS/SSR、TS构建与Vite通过；未运行API/核心CLI/真实浏览器；logs/bowtie-unprotected-paths.txt |
 
 | W15 SVG status labels | 待独验 | 合成SSR新旧对照、既有两项回归、TS/Vite通过；未验浏览器/AcciMap/导出；logs/bowtie-svg-status-impl-hashes-frozen.txt |
+
+| 2026-11-22 | W15 Bow-tie 同源文字替代 | 待独验；真实Diagram同源details，原SVG/新SSR/TS退出0；不推导因果、不含ECFC映射，浏览器/读屏/AcciMap未验；logs/bowtie-text-alternative-impl-hashes-frozen.txt |
