@@ -46,6 +46,7 @@ class FourChair:
         self._active = None
         self._draft_binding = None
         self._draft_generation = 0
+        self._review_sources = None
 
     def bind_draft_simulated(self, binding):
         """Trusted in-process test host metadata only; no source/identity verification.
@@ -69,6 +70,50 @@ class FourChair:
             if snapshot != self._draft_binding:
                 self._draft_generation += 1
                 self._draft_binding = snapshot
+                self._review_sources = None
+
+    def _select_review_sources_simulated(self, registry, selection):
+        """Internal trusted synthetic host seam, BEFORE issue; not a locator/API.
+
+        Host must first verify each original with the fixed locator and same case.
+        One explicitly selected excerpt per review item. No caller source payload
+        is accepted by submit_simulated; ticket context freezes this selection.
+        """
+        with self._lock:
+            self._time()
+            if self._phase != 'ready' or self._draft_binding is None:
+                raise ChairError('source_selection_phase')
+            registry, selection = copy.deepcopy(registry), copy.deepcopy(selection)
+            if not isinstance(registry, dict) or not registry:
+                raise ChairError('source_registry_shape')
+            identities = {}
+            for alias, src in registry.items():
+                if (not isinstance(alias, str) or not alias or not isinstance(src, dict) or
+                        set(src) != {'sha256', 'line', 'locator', 'excerpt'}):
+                    raise ChairError('source_registry_shape')
+                sha, line = src['sha256'], src['line']
+                if (not isinstance(sha, str) or len(sha) != 64 or
+                        any(c not in '0123456789abcdef' for c in sha) or
+                        type(line) is not int or line < 1 or
+                        not isinstance(src['locator'], str) or
+                        not src['locator'].endswith('#L' + str(line)) or
+                        not isinstance(src['excerpt'], str) or not src['excerpt'].strip()):
+                    raise ChairError('source_registry_shape')
+                key = (sha, line)
+                if key in identities and identities[key] != src['excerpt']:
+                    raise ChairError('source_identity_conflict')
+                identities[key] = src['excerpt']
+            if _digest(registry) != self._draft_binding['sourceSetDigest']:
+                raise ChairError('source_set_binding')
+            items = {item['itemId'] for item in self._packet['items']}
+            if not isinstance(selection, dict) or set(selection) != items:
+                raise ChairError('source_selection_shape')
+            selected = {}
+            for item_id, alias in selection.items():
+                if not isinstance(alias, str) or alias not in registry:
+                    raise ChairError('source_selection_unknown')
+                selected[item_id] = {'sourceId': alias, **registry[alias]}
+            self._review_sources = selected
 
     def _time(self):
         if self._phase not in ('ready', 'active'):
@@ -106,6 +151,8 @@ class FourChair:
             if self._draft_binding is not None:
                 context['draftBinding'] = copy.deepcopy(self._draft_binding)
                 context['draftBindingGeneration'] = self._draft_generation
+            if self._review_sources is not None:
+                context['locatedReviewSources'] = copy.deepcopy(self._review_sources)
             ticket = {'attemptId': str(uuid.uuid4()), 'context': copy.deepcopy(context),
                       'contextDigest': _digest(context)}
             try:
@@ -133,13 +180,20 @@ class FourChair:
                      ticket['context'].get('draftBindingGeneration') != self._draft_generation)):
                 raise ChairError('stale_draft_binding')
             reviews = copy.deepcopy(reviews)
-            _validate({'reviews': reviews}, self._packet)
+            selected = ticket['context'].get('locatedReviewSources')
+            validation_packet = self._packet if selected is None else {'items': [
+                {'itemId': item_id, 'sourceText': src['excerpt']}
+                for item_id, src in selected.items()]}
+            # Existing validator checks each quote against ONE selected excerpt.
+            _validate({'reviews': reviews}, validation_packet)
             opinion = {'role': ticket['context']['role'], 'round': ticket['context']['round'],
                        'attemptId': attempt_id, 'contextDigest': context_digest,
                        'reviews': reviews, 'simulated': True}
             if self._draft_binding is not None:
                 opinion['draftBinding'] = copy.deepcopy(ticket['context']['draftBinding'])
                 opinion['draftBindingGeneration'] = ticket['context']['draftBindingGeneration']
+            if selected is not None:
+                opinion['locatedReviewSources'] = copy.deepcopy(selected)
             try:
                 self._ledger.settle(self._id, attempt_id, outcome='received_unverified')
             except Exception:
@@ -179,7 +233,14 @@ class FourChair:
                     summary.append({'round': round_number, 'itemId': item['itemId'], 'labels': labels,
                                     'disputedLabels': len(set(labels.values())) > 1,
                                     'missingRoles': [r for r in ROLES if r not in labels], 'factVerified': False})
-            return copy.deepcopy({'schema': 'mcis.four-chair-simulation.v1', 'meetingId': self._id,
+            citation_summary = {}
+            if self._review_sources is not None or any('locatedReviewSources' in o for o in self._opinions):
+                places = {(src['sha256'], src['line']) for o in self._opinions
+                          for src in o.get('locatedReviewSources', {}).values()}
+                citation_summary = {'locatedCitationPlaceCount': len(places),
+                                    'sourceCountIsWeight': False,
+                                    'sourceIndependence': 'NOT_ASSESSED'}
+            return copy.deepcopy({**citation_summary, 'schema': 'mcis.four-chair-simulation.v1', 'meetingId': self._id,
                                   'chair': '海青君（软件主持协议）', 'phase': self._phase,
                                   'opinions': self._opinions, 'summary': summary,
                                   'packetSha256': PACKET_SHA256, 'simulationOnly': True,

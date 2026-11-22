@@ -1,82 +1,84 @@
-# FourChair draft attribution — narrow memory candidate
+# FourChair selected-source attribution — synthetic internal seam
 
-Base: 26451febf955f4b6d7654e9a4b32ca70c2ec4c13.
-Reference: 431d9d5ff06d051b9017ae350a5dabaf2ad61e8b cited-excerpt correspondence.
-Self-tested only; real ledger, real identity, human confirmation and model execution NOT RUN.
+Parent 90d05818aabb09913ca59138d210755236195ef3; same independent candidate branch.
+Uses existing FourChair issue/submit_simulated/receipt, not another chair.
+Reference: 431d9d5ff06d051b9017ae350a5dabaf2ad61e8b single cited-excerpt principle.
+Synthetic originals: fixed 6996fa05 ECFC package. No W19 blind materials.
 
-## Scope and limits
-Changes the existing research/expert_budget/four_chair.py, not a replacement chair.
-Optional bind_draft_simulated is a trusted in-process synthetic host operation.
-It copies caseId, version, draftDigest and sourceSetDigest into the issued context,
-therefore its existing contextDigest binds the actual active ticket and role.
-Submission checks the host's current binding before validating reviews or settling.
-Accepted opinions retain the issued draftBinding. No network/product API is added.
+## What changed
+A trusted in-process synthetic host may call the INTERNAL
+_select_review_sources_simulated(registry, selection) before issue, after binding
+the draft. The registry must match that version's sourceSetDigest. Selection maps
+each existing review item to exactly one source ID; unknown IDs are rejected.
+Host selection is explicit in the issued context and covered by contextDigest.
+submit_simulated keeps its existing signature and review shape. It accepts no
+source registry/citation payload from the submitting seat. The existing _validate
+checks each item against ONE host-selected excerpt. Neither other registered
+excerpts, excerpts selected for other items, nor concatenations are searched.
 
-The host must compute the digests from the draft and successfully located sources;
-the new method only checks metadata shape, not provenance, authority or truth.
-The source-set digest is not per-opinion citation validation.
-The default pinned packet loader, packet pin, review schema and production identity
-are unchanged. No default ECFC source intake has been implemented.
+Accepted opinions retain role, attempt ID, draft version/digest/generation and
+locatedReviewSources (source ID, raw-byte SHA-256, one-based line, locator, excerpt).
+The existing review carries its exact quote separately. Opposite statements and
+opinions remain separate; even unanimous labels keep factVerified=false.
 
-This is the permitted narrow stale-revision fallback. A stale ticket remains active
-and unaccepted; there is no retry/reassignment/resume/new revision meeting flow.
-Explicit stop is needed. Once any opinion exists, rebinding is rejected, preventing
-mixed-version summary aggregation. Host version naming/reuse is not a persistent revision registry. The process-local
-binding generation now detects metadata changing away and back (A -> B -> A).
+locatedCitationPlaceCount means ONLY 可定位引用处数, deduplicated by original raw
+SHA-256 + exact line across accepted source-bound opinions. Aliases and seats
+are not counting keys. It does NOT count independent witnesses or establish
+evidence weight; sourceCountIsWeight=false, sourceIndependence=NOT_ASSESSED.
+Unbound/default receipt and ticket shapes do not gain these fields.
+The count excludes outstanding/rejected opinions and is not a causal conclusion.
 
-## Reproduce
-Use an existing Python with standard library only, from this candidate checkout:
+## Trust boundary and gaps
+This is a private research-host seam, not a product API, source-access grant,
+identity check, original-file integration or persistent consultation interface.
+The host must first run the existing locator against the fixed bytes and verify
+the same case before constructing the registry. FourChair checks the registry
+digest and correspondence; it does NOT itself authenticate a source or run I/O.
+A sourceSetDigest supplied by an arbitrary caller is not a credential.
+
+The test does actual locate() on the frozen files, then passes the resulting
+registry through this seam. No load_packet/default pin change is made. Tests mock
+the constructor's storage and packet loader to use pure synthetic items only.
+Thus no real initialized ledger meeting/default evidence integration is claimed.
+An actual product host and professional/human adjudication remain unimplemented.
+
+Selection can change only in ready state. An issued ticket freezes a deep copy.
+Changing draft binding clears the future selection and makes the existing ticket
+stale through the previous generation checks. No cross-draft migration/restart
+is added. Once opinions exist, draft rebinding remains prohibited.
+
+## Reproduce (existing Python, no install/network)
+From this candidate checkout:
 ```sh
 python -I -B research/w20_chair_revision/check.py \
   --ecfc-package /path/to/verified-6996fa05/research/ecfc_pending_handoff \
   --locator /path/to/verified-431d9d5/research/w19_case_ranking/source_traceability/check.py
+sha256sum -c logs/W20_CHAIR_SOURCES-impl-hashes-frozen.txt
 ```
-Both arguments may point to fixed Git exports. No fetch/install is performed.
-The published ECFC frozen manifest, every listed byte and locator/packet blobs are
-checked before use. Dependencies and synthetic originals are not copied into this
-commit. The script itself prints its result and does not save opinions/reports.
+Explicit dependency paths can be verified fixed Git exports. The ECFC manifest
+SHA, each manifest-listed byte, locator blob and packet.py blob are checked.
+No dependency/original copies are committed. The script prints checks, never
+saves consultation opinions or reports. Existing previous freezes are historical.
 
-## Actual test boundary
-Calls actual FourChair constructor, issue, submit_simulated, receipt and stop.
-Only Ledger, constructor file open/close, and the packet-loading pair are mocked.
-The test-only packet uses the same fixed 6996fa05 synthetic source excerpts after
-actual locate succeeds. It never opens the default public accident packet.
-This is not a real initialized ledger meeting or production evidence integration.
+## Executed coverage
+2026-11-22 full check exited 0; no assertion skips.
+- Original revision/generation/default-path tests retained, including A->B->A.
+- Wrong source-set digest and unknown source selection rejected before issue.
+- Four same-label seat opinions referencing OBS-1/its alias retain four opinions
+  but only one citation place; no fact verification.
+- Unselected registry quote rejected with no settlement or opinion change.
+- With two explicitly selected excerpts, borrowing the other item's text and
+  joining the boundary between both excerpts are also rejected.
+- Correct single/multi-item quotes accepted through actual _validate.
+- Opposed synthetic inspection statements retained separately with exact sources;
+  conflicting labels stay disputed, three byte positions are not causal proof.
+- Active selection replacement rejected; returned ticket/receipt copies cannot
+  change the host-frozen source association.
+- Draft change rejects a source-selected old ticket before settlement.
+- Default no-selection ticket/opinion/receipt adds no source fields.
 
-Two negative revision cases: v1 ticket after host binds v2; same draft version with
-changed source-set digest. Both fail before ledger settlement, retain the original
-ticket and accept no opinion. Four subsequent v2 role opinions preserve actual
-attempt IDs and both opposed inspection excerpts. Wrong ticket and a quote from
-another item's excerpt are rejected by existing binding/_validate checks.
-Each item's sourceText is one exact located excerpt, never concatenated excerpts,
-matching the limited principle checked in 431d9d5; receive() is not rerun or wired.
-All summaries keep factVerified=false. Optional binding absent preserves existing
-context/opinion shape. Neither counting byte positions nor disagreement proves
-independent evidence, source authenticity, professional accuracy or causal truth.
-
-## Developer result
-2026-11-22: check.py exited 0, no skipped assertions.
-Local command used the verified ECFC export and locator export; output included
-stale_draft_rejected_before_settle=true, changed_source_set_rejected=true,
-current_attributed_opinions=4, located_byte_positions=3,
-opposed_excerpts_preserved=true, default_binding_absent=true.
-No existing database fault/concurrency/model/browser tests were run.
-Pending independent review. No W19 blind inputs/answers were read.
-
-## Binding generation follow-up
-Parent 8fb8a7c0fbc586bbf6b5435fd9914106c7857886, same candidate branch.
-A changed validated binding increments a process-local integer under the existing
-lock; identical fields are idempotent. Bound ticket context freezes the generation
-inside contextDigest; submission checks it before validation/settlement. Accepted
-bound opinions retain the generation. Default unbound ticket/opinion shape and
-stop handling are unchanged. No persistence, reset API or revision registry added.
-
-Two added cases: a real bind A -> issue -> bind B -> bind A rejects the original
-issued ticket with zero settlements, zero opinions, one reservation, and unchanged
-active ticket; explicit stop clears it normally. Repeating identical A bindings
-before/after issue keeps generation 1 and allows exactly one attributed acceptance.
-New negative against parent exited 1 at stale_draft_binding (old ticket accepted).
-Updated full synthetic check exited 0. Original cases retained. Frozen follow-up:
-logs/W20_CHAIR_GENERATION-impl-hashes-frozen.txt. Previous freeze remains historical.
-This is process-local simulation coverage only, not authentic identities or a real
-ledger/meeting/provider/human approval test.
+Actual classes/functions: FourChair methods, packet._validate, source locator.
+Mocked: Ledger, constructor file open/close, packet-loading pair only.
+NOT RUN: real DB/identity, external runner/model, service/browser, professional
+correctness, human sign-off, independent source authenticity or causation.
+Pending independent review. No merge/deployment.

@@ -783,3 +783,11 @@ Narrow follow-up to 8fb8a7c: monotonically increasing process-local binding
 generation prevents A->B->A from reviving an outstanding ticket. Identical
 bindings remain idempotent. Default unbound shape/stop behavior unchanged.
 No persistent revision registry, real ledger or new evidence system.
+
+## W20_CHAIR_SOURCES (2026-11-22)
+Reopen FourChair only for optional private trusted synthetic-host selection of
+one located excerpt per review item, frozen into actual issued context. Existing
+submit arguments/default packet path unchanged. Reuse _validate, retain exact
+source association and count byte locations only. No production protocol, source
+access/identity, persistent meeting or human-signature interface. See research/
+w20_chair_revision/README.md for test-loader/storage mocks and remaining gaps.
