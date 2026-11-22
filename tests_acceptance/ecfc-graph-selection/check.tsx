@@ -3,10 +3,12 @@ import {renderToStaticMarkup} from 'react-dom/server'
 import {Graph} from '../../web/src/ecfcDrafts/Graph'
 import {EdgeSelection,edgeSelection,savedEdgeView} from '../../web/src/ecfcDrafts/EdgeSelection'
 import {CORE,PROFILE,type Draft,type Document,type Validation} from '../../web/src/ecfcDrafts/model'
+import {restoreEdgeFocus} from '../../web/src/ecfcDrafts/focus'
+import {readFileSync} from 'node:fs'
 import {begin,reset} from './hooks'
 import {setResponse} from './api'
 // run.cjs appends this test-only export to the real Panel module in memory.
-import {Editor} from '../../web/src/ecfcDrafts/Panel'
+import {Editor,EcfcPanel} from '../../web/src/ecfcDrafts/Panel'
 import {caseIdentity} from '../../web/src/cases/identity'
 let count=0
 const pass=(name:string)=>{count++;console.log('PASS '+name)}
@@ -67,6 +69,30 @@ async function main(){
  const html=renderToStaticMarkup(<EdgeSelection draft={draft} validation={validation} document={doc} reader={props.candidateEdgeReader}/>)
  assert.match(html,/不提供回放跳转/);assert.ok(!html.includes('href='));assert.match(html,/待核验/)
  pass('source UTC never grants seek; no link or persistence controls')
+ let focusCalls=0
+ const region={},outside={},docDom:any={activeElement:null}
+ const control={closest:()=>region},rootDom:any={isConnected:true,ownerDocument:docDom,contains:(e:any)=>e===control||e===region}
+ const target:any={isConnected:true,ownerDocument:docDom,focus:(options:any)=>{assert.deepEqual(options,{preventScroll:true});focusCalls++;docDom.activeElement=target}}
+ docDom.activeElement=control;restoreEdgeFocus(rootDom,target);assert.equal(focusCalls,1)
+ docDom.activeElement=outside;restoreEdgeFocus(rootDom,target);assert.equal(focusCalls,1)
+ docDom.activeElement=control;target.isConnected=false;restoreEdgeFocus(rootDom,target);assert.equal(focusCalls,1);target.isConnected=true
+ rootDom.isConnected=false;restoreEdgeFocus(rootDom,target);assert.equal(focusCalls,1);rootDom.isConnected=true
+ docDom.activeElement={closest:()=>null};rootDom.contains=()=>true;restoreEdgeFocus(rootDom,target);assert.equal(focusCalls,1)
+ rootDom.contains=(e:any)=>e===control||e===region
+ docDom.activeElement=control;assert.doesNotThrow(()=>restoreEdgeFocus(rootDom,{...target,focus(){throw Error('synthetic unavailable focus')}}))
+ pass('focus predicate: only connected edge-owned focus, never other input/body/detached target')
+ reset();begin();const panel=EcfcPanel({caseId:'SYN',who:caseIdentity(),focusTarget:{current:target}})
+ panel.props.ref.current=rootDom;docDom.activeElement=control
+ all(panel,e=>e.type==='button'&&String(e.props.children).startsWith('重新打开'))[0].props.onClick()
+ assert.equal(focusCalls,2);begin();const cleared=EcfcPanel({caseId:'SYN',who:caseIdentity(),focusTarget:{current:target}})
+ assert.equal(all(cleared,e=>e.type===Editor).length,0)
+ pass('actual Panel reopen callback hands focus off before clearing; no old Editor restored')
+ const pageSource=readFileSync('src/pages/EcfcPage.tsx','utf8'),panelSource=readFileSync('src/ecfcDrafts/Panel.tsx','utf8')
+ assert.match(pageSource,/<h1 ref=\{heading\} tabIndex=\{-1\}>/)
+ assert.match(pageSource,/<EcfcPanel key=\{JSON.stringify\(\[caseId,who\]\)\} focusTarget=\{heading\}/)
+ assert.match(panelSource,/onIdentityChange\(\(\)=>\{restore\(\);stop\(\)\}\)/)
+ assert.match(panelSource,/onPackageNavigation\(\(\)=>\{navigating.current=true;stop\(\)\}\)/)
+ pass('static identity/navigation wiring: persistent title; navigation suppresses handoff')
  console.log(`${count} scenarios passed; real Graph SSR + actual Editor callbacks with handwritten hooks; no browser/effects/HTTP`)
 }
 main().catch(e=>{console.error(e);process.exitCode=1})

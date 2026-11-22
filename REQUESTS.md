@@ -573,3 +573,6 @@ W11 pre-publication disposition: Independent synthetic mutation tests found abse
 
 ## W11 真实图只读选边候选（2026-11-22）
 在 dc261c6 固定前端上修改 Graph/Panel 的展示接线；旧冻结保留。默认无边读取器，无后端、合同、权限或持久化变化。仅合成测试注入候选读取器，不构成可信产品关联。
+
+## W11 选边焦点归位（2026-11-22）
+在5549ee8同候选追加；修改真实Panel/EdgeSelection与EcfcPage标题位置，目标在keyed Panel外保持。仅应用内重开/身份失效，主动导航不抢焦。默认关联与权限不变，旧冻结不覆盖。真实浏览器时序待独验。

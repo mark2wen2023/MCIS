@@ -37,12 +37,12 @@ export function EdgeSelection({draft,validation,document,reader}:{draft:Draft;va
  const session=useMemo(()=>edgeSelection(document,reader),[document,reader])
  useEffect(()=>{session.activate();return()=>session.close()},[session])
  const state=useSyncExternalStore(session.subscribe,session.snapshot,session.snapshot)
- return <><Graph draft={draft} validation={validation} selectedEdge={state.edge?.id} onSelectEdge={session.select}/>
+ return <div data-ecfc-edge-focus=""><Graph draft={draft} validation={validation} selectedEdge={state.edge?.id} onSelectEdge={session.select}/>
  <aside aria-label="连线出处核对"><h3>连线出处 · 待核验</h3><p>关联不证明因果；原始记录时刻不是已核实事件时刻，不提供回放跳转。</p>
  {!document?<p>须重新打开已保存、来源已核对且未修改的草稿；重新预览不能恢复旧出处。</p>:!reader?<p>可信边关联尚未接通；未读取原件。</p>:<p>仅候选读取器；仍须服务端独立核验关联与读取权限。</p>}
  {state.edge&&<p>所选连线 {state.edge.id}：{state.edge.from} → {state.edge.to}</p>}
  {document&&reader&&<button type="button" disabled={!state.edge||state.status==='pending'} onClick={()=>void session.read()}>查看该连线关联出处</button>}
  {state.status==='pending'&&<p role="status">正在核对该版本关联…</p>}{state.status==='unavailable'&&<p role="alert">出处不可用；未显示旧内容。</p>}
  {state.frame&&<dl><dt>原始记录定位</dt><dd>{state.frame.locator}</dd><dt>原始记录 UTC（非事件时刻）</dt><dd>{state.frame.sourceUtc??'未知'}</dd><dt>关联片段（待核验）</dt><dd>{state.frame.excerpt}</dd></dl>}
- </aside></>
+ </aside></div>
 }

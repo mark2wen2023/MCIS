@@ -374,3 +374,5 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | 2026-11-21 | W11 节点缺项导航 | 待独验；新增纯TS/SSR/手写回调、既有82条模型渲染、TS/Vite通过；无浏览器/API/保存实测；logs/ecfc-node-evidence-review.txt |
 
 | 2026-11-22 | W11 实际 Graph/Panel 只读选边 | 待独验；默认无可信边读取器、无后端/权限变化；10场景实际组件源码/手写hooks与SSR，旧82项及节点导航、TS/Vite通过；真实浏览器/关联未验；logs/ecfc-graph-edge-selection-impl-hashes-frozen.txt |
+
+| 2026-11-22 | W11 选边焦点归位 | 待独验；13场景（含原10）、旧82及节点导航、TS/Vite通过；焦点替身/静态接线不等于React DOM或键盘实机；logs/ecfc-graph-focus-impl-hashes-frozen.txt |
