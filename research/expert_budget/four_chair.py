@@ -44,6 +44,27 @@ class FourChair:
         self._phase = 'ready'
         self._opinions = []
         self._active = None
+        self._draft_binding = None
+
+    def bind_draft_simulated(self, binding):
+        """Trusted in-process test host metadata only; no source/identity verification.
+
+        Once any opinion is accepted, a revision requires a separate simulation.
+        An outstanding old ticket is retained, but cannot settle after revision.
+        """
+        with self._lock:
+            self._time()
+            if self._phase not in ('ready', 'active') or self._opinions:
+                raise ChairError('draft_binding_phase')
+            fields = {'caseId', 'version', 'draftDigest', 'sourceSetDigest'}
+            if not isinstance(binding, dict) or set(binding) != fields:
+                raise ChairError('draft_binding_shape')
+            if any(not isinstance(v, str) or not v or len(v) > 256 for v in binding.values()):
+                raise ChairError('draft_binding_shape')
+            for key in ('draftDigest', 'sourceSetDigest'):
+                if len(binding[key]) != 64 or any(c not in '0123456789abcdef' for c in binding[key]):
+                    raise ChairError('draft_binding_shape')
+            self._draft_binding = copy.deepcopy(binding)
 
     def _time(self):
         if self._phase not in ('ready', 'active'):
@@ -78,6 +99,8 @@ class FourChair:
             context = {'packet': self._packet, 'role': role, 'roleName': ROLE_NAMES[role],
                        'scope': ROLE_SCOPE[role], 'round': round_number, 'previousRound': self._opinions[:4] if round_number == 2 else [],
                        'simulationOnly': True, 'chair': '海青君（软件主持协议）'}
+            if self._draft_binding is not None:
+                context['draftBinding'] = copy.deepcopy(self._draft_binding)
             ticket = {'attemptId': str(uuid.uuid4()), 'context': copy.deepcopy(context),
                       'contextDigest': _digest(context)}
             try:
@@ -100,11 +123,15 @@ class FourChair:
             ticket = self._active
             if attempt_id != ticket['attemptId'] or context_digest != ticket['contextDigest']:
                 raise ChairError('ticket_binding')
+            if ticket['context'].get('draftBinding') != self._draft_binding:
+                raise ChairError('stale_draft_binding')
             reviews = copy.deepcopy(reviews)
             _validate({'reviews': reviews}, self._packet)
             opinion = {'role': ticket['context']['role'], 'round': ticket['context']['round'],
                        'attemptId': attempt_id, 'contextDigest': context_digest,
                        'reviews': reviews, 'simulated': True}
+            if self._draft_binding is not None:
+                opinion['draftBinding'] = copy.deepcopy(ticket['context']['draftBinding'])
             try:
                 self._ledger.settle(self._id, attempt_id, outcome='received_unverified')
             except Exception:

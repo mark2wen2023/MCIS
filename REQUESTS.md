@@ -770,3 +770,10 @@ dispatch, migration or runner. Read-only inspection adds explicit coverage label
 Isolated first-round synthetic adapter over revision5 only. Explicit ticket/request
 binding; separate host issue/seal operations, no completion inferred from messages.
 Reuse revision4 framing, envelope and commit guard. No runner/provider or resume.
+
+## W20_CHAIR_REVISION (2026-11-22)
+Reopen research/expert_budget/four_chair.py on fixed 26451fe only for optional
+trusted synthetic host draft metadata and stale submission rejection in memory.
+No default packet, review schema, authorization or production interface changes.
+No cross-version resume. Source registry and real ledger integration remain gaps.
+See research/w20_chair_revision/README.md; independent review pending.
