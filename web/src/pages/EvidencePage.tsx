@@ -8,6 +8,7 @@ import { AlignPreviewPanel } from '../align/AlignPreviewPanel'
 import { SERVICE_ADDR } from '../config'
 import { EChart } from '../components/EChart'
 import { Metric, Panel } from '../components/Panel'
+import { EvidenceMetrics } from '../evidenceIntake/EvidenceMetrics'
 import { useToast } from '../components/Toast'
 import { shortHash } from '../format'
 import { simToClock, toLocal, timeZoneLabel, distanceTooltip } from '../cases/evidenceTime'
@@ -78,10 +79,6 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
 
   const offsetMinutes = caseRes.data?.displayTimeZoneOffsetMinutes ?? 0
   const counts = {
-    total: items.length,
-    verified: items.filter((e) => e.status === 'Verified').length,
-    review: items.filter((e) => e.needsReview).length,
-    restricted: items.filter((e) => e.confidentiality === 'Restricted').length,
     mismatch: items.filter((e) => e.status === 'Mismatch').length,
     openConflicts: (conflicts.data ?? []).filter((c) => c.status === 'Open' || c.status === 'PendingInterview').length,
   }
@@ -114,10 +111,7 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
       {(ev.error || tl.error) && <div className="p6-card" style={{ borderColor: 'var(--red)', marginBottom: 12 }}>后端错误：{ev.error ?? tl.error}</div>}
 
       <div className="grid w4-metrics" style={{ marginBottom: 12 }}>
-        <Metric label="证据条目" value={counts.total} unit="条" />
-        <Metric label="哈希校验一致" value={counts.verified} unit={`/ ${counts.total}`} tone="green" />
-        <Metric label="需复核" value={counts.review} unit="条" tone="amber" />
-        <Metric label="受限（保密）" value={counts.restricted} unit="条" tone="pur" />
+        <EvidenceMetrics data={ev.data} error={ev.error} />
         <Metric label="保管链" value={chain.data ? (chain.data.valid ? '完整' : '断裂') : '…'} unit={chain.data ? `${chain.data.count} 行` : ''} tone={chain.data && !chain.data.valid ? 'red' : 'green'} />
         <Metric label="未决时间冲突" value={counts.openConflicts} unit={`/ ${(conflicts.data ?? []).length}`} tone={counts.openConflicts ? 'red' : 'green'} />
       </div>
