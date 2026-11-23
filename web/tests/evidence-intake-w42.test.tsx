@@ -1,4 +1,5 @@
 import { renderToStaticMarkup } from 'react-dom/server'
+import { EvidenceSelectionButton } from '../src/evidenceIntake/EvidenceSelectionButton'
 import { PROFILE,MAX_FILE_BYTES,intakeBody,parsePreview,parseReceipt,utcSeconds,fileNameValid,encodeBytes,sameMetadata,type Metadata } from '../src/evidenceIntake/model'
 let n=0;const check=(v:unknown,label:string)=>{if(!v)throw Error(label);n++};const reject=(fn:()=>unknown)=>{let yes=false;try{fn()}catch{yes=true}check(yes,'invalid value must reject')}
 Object.defineProperty(globalThis,'localStorage',{value:{getItem:()=>null,setItem:()=>{}}})
@@ -22,6 +23,21 @@ check(parseReceipt({...receipt,evidence:{...receipt.evidence,note:'later note ed
 for(const d of [{caseId:'other'},{evidenceId:'bad'},{requestDigest:'c'.repeat(64)},{sourceSha256:'c'.repeat(64)},{fileName:'../bad'},{byteLength:1},{metadata:{...metadata,title:'changed'}},{registeredUtc:'bad'},{registeredBy:''},{registeredRole:'Public'},{registeredRole:['Investigator']},{replayed:'false'},{evidence:{...receipt.evidence,caseId:'wrong'}},{evidence:{...receipt.evidence,sha256:'bad'}},{evidence:{...receipt.evidence,status:'Authentic'}},{evidence:{...receipt.evidence,status:['Unverified']}},{evidence:{...receipt.evidence,accessCount:-1}}])reject(()=>parseReceipt({...receipt,...d},'C',preview))
 reject(()=>parseReceipt(receipt,'C',undefined,'EV-002'));check(sameMetadata(metadata,{...metadata}),'metadata comparison key based')
 async function main(){
+ // Real production selection button SSR/callback, not browser keyboard/effects.
+ const selectedIds:string[]=[];let selectionStopped=0
+ const select=(id:string)=>selectedIds.push(id)
+ const title='合成记录 <甲> & "乙"'
+ const first=renderToStaticMarkup(<EvidenceSelectionButton evidenceId="EV-001" title={title} selected={true} onSelect={select}/>)
+ const second=renderToStaticMarkup(<EvidenceSelectionButton evidenceId="EV-002" title={title} selected={false} onSelect={select}/>)
+ check(first.includes('aria-pressed="true"')&&second.includes('aria-pressed="false"'),'current selection available without row color')
+ check(first.includes('aria-label="查看证据 EV-001：')&&second.includes('aria-label="查看证据 EV-002：'),'same-title evidence distinguished by id')
+ check(!first.includes('<甲>')&&first.includes('&lt;甲&gt;'),'literal title escaped')
+ check(first.includes('type="button"')&&first.includes('w42-evidence-select'),'native button and existing style retained')
+ const button=EvidenceSelectionButton({evidenceId:'EV-002',title,selected:false,onSelect:select})
+ button.props.onClick({stopPropagation:()=>{selectionStopped++}})
+ check(selectionStopped===1&&selectedIds.length===1&&selectedIds[0]==='EV-002','one click delegates existing selection once; no row bubbling')
+ const after=renderToStaticMarkup(<EvidenceSelectionButton evidenceId="EV-002" title={title} selected={true} onSelect={select}/>)
+ check(after.includes('aria-pressed="true"'),'updated selected prop is reflected')
  const {EvidenceIntakePanel,Declaration}=await import('../src/evidenceIntake/EvidenceIntakePanel');const {setIdentity}=await import('../src/api')
  let html=renderToStaticMarkup(<EvidenceIntakePanel caseId="C" who={'Investigator\n调查员 A'} selectedEvidenceId="EV-001"/>);check(html.includes('登记已有文件副本'),'closed entry real scope');check(!html.includes('已核对登记回执'),'no fake initial success')
  html=renderToStaticMarkup(<Declaration metadata={metadata}/>);check(!html.includes('<img'),'source escaped');check(html.includes('&lt;img'),'escaped literal retained');check(html.includes('提取 UTC'),'extraction label')

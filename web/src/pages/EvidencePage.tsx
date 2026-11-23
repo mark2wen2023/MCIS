@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import type { EChartsOption } from 'echarts'
 import { api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
 import { EvidenceIntakePanel } from '../evidenceIntake/EvidenceIntakePanel'
+import { EvidenceSelectionButton } from '../evidenceIntake/EvidenceSelectionButton'
 import { announceEvidenceSelection } from '../evidenceIntake/navigation'
 import { AlignPreviewPanel } from '../align/AlignPreviewPanel'
 import { SERVICE_ADDR } from '../config'
@@ -132,7 +133,7 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
               {items.map((e) => (
                 <tr key={e.evidenceId} className={sel?.evidenceId === e.evidenceId ? 'sel' : ''} onClick={() => selectEvidence(e.evidenceId)}>
                   <td className="mono" style={{ color: 'var(--cyan)' }}>{e.evidenceId}</td>
-                  <td><button type="button" className="w42-evidence-select" onClick={event=>{event.stopPropagation();selectEvidence(e.evidenceId)}}>{e.title}</button></td>
+                  <td><EvidenceSelectionButton evidenceId={e.evidenceId} title={e.title} selected={sel?.evidenceId === e.evidenceId} onSelect={selectEvidence}/></td>
                   <td className="p6-dim">{e.source} / {e.extractedBy}</td>
                   <td className="mono">{toLocal(e.extractedUtc, true, offsetMinutes)}</td>
                   <td className="mono p6-dim" title={e.currentSha256}>{shortHash(e.currentSha256)}</td>
