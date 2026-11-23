@@ -1,5 +1,6 @@
 // W12 分析页（原型第 08 页）：DCPA/TCPA 与距离曲线、关键时刻、W14 对比表 / 临界标注 / 天线敏感性、数据来源。
 import { useMemo } from 'react'
+import { AnalysisChoice } from './AnalysisChoice'
 import { EChart } from '../components/EChart'
 import { Panel } from '../components/Panel'
 import { BASELINE, curveOption, fmtM, fmtMoment, fmtNm, pickSeries, sensitivitySpan, shortSha, trackOption, vesselName, verdictTone } from './derive'
@@ -39,9 +40,9 @@ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, se
         <div className="page-actions">
           <span className="p6-seg" data-testid="case-switcher">
             {cases.map((c) => (
-              <span key={c.caseId} className={c.caseId === data.caseId ? 'on' : ''} onClick={() => onSwitchCase(c.caseId)} role="button" tabIndex={0}>
+              <AnalysisChoice key={c.caseId} value={c.caseId} selected={c.caseId === data.caseId} onSelect={onSwitchCase}>
                 {CASE_LABEL[c.key] ?? c.title}
-              </span>
+              </AnalysisChoice>
             ))}
           </span>
         </div>
@@ -56,13 +57,13 @@ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, se
         <Panel title="两船距离 D(t)、DCPA(t)、TCPA(t) 时序曲线"
           meta={<span>步长 {sel === BASELINE ? data.baseline.stepSec : w?.stepSec} s · 截至 {picked.series[picked.series.length - 1]?.clock ?? '—'}</span>}>
           <div className="p6-seg an-series-pick" data-testid="series-pick">
-            <span className={sel === BASELINE ? 'on' : ''} onClick={() => onSelect(BASELINE)} role="tab" tabIndex={0}>
+            <AnalysisChoice value={BASELINE} selected={sel === BASELINE} onSelect={onSelect}>
               {data.key === 'yangze22' ? '原始（S0 重建）' : '案件航迹'}
-            </span>
+            </AnalysisChoice>
             {w?.rows.map((r) => (
-              <span key={r.id} className={sel === r.id ? 'on' : ''} onClick={() => onSelect(r.id)} role="tab" tabIndex={0}>
+              <AnalysisChoice key={r.id} value={r.id} selected={sel === r.id} onSelect={onSelect}>
                 {r.id}{r.isCritical ? ' ⚠' : ''}
-              </span>
+              </AnalysisChoice>
             ))}
           </div>
           {charts ? <EChart option={curve} height={300} /> : <div className="an-chart-placeholder" data-points={picked.series.length} />}
