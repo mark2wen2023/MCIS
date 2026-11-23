@@ -40,8 +40,9 @@ ui=[]
 for expected in f['items']:
  row=next(r for r in projection['rows'] if r['itemId']==expected['id'] and r['role']==expected['seat'])
  assert row['draftBinding']==binding and row['source']['sha256']==registry[expected['sourceId']]['sha256']
- ui.append({'id':row['itemId'],'seat':row['role'],'claim':row['rationale'],'sourceId':row['source']['sourceId'],'start':row['source']['line'],'end':row['source']['line'],'quote':row['quote']})
+ ui.append({'id':row['itemId'],'seat':row['role'],'claim':row['rationale'],'sourceId':row['source']['sourceId'],'sourceSha256':row['source']['sha256'],'start':row['source']['line'],'end':row['source']['line'],'quote':row['quote']})
 control={k:f[k] for k in ('caseId','revision','question','items')}
-control['sources']=[{**s,'caseId':f['caseId'],'revision':f['revision']} for s in f['sources']]
+control['items']=[{**i,'sourceSha256':registry[i['sourceId']]['sha256']} for i in f['items']]
+control['sources']=[{**s,'caseId':f['caseId'],'revision':f['revision'],'sha256':registry[s['id']]['sha256']} for s in f['sources']]
 input_={'kind':'developer_synthetic_dispute','caseId':projection['caseId'],'revision':binding['version'],'question':f['question'],'items':ui}
 print(json.dumps({'projection':projection,'input':input_,'control':control,'mocks':['constructor packet loader','ledger and constructor file open/close'],'modelExecuted':False},ensure_ascii=False))

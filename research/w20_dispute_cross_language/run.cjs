@@ -2,7 +2,7 @@ const fs=require('fs'),path=require('path'),crypto=require('crypto'),cp=require(
 const [projectionRoot,presenterRoot,dependencies]=process.argv.slice(2).map(x=>path.resolve(x));
 const presenter=path.join(presenterRoot,'web/src/agentOverview/SyntheticDispute.tsx');
 const b=fs.readFileSync(presenter),sha=crypto.createHash('sha1').update(Buffer.from('blob '+b.length+String.fromCharCode(0))).update(b).digest('hex');
-if(sha!=='29c1da2d03e6ccae63b1c8ddda4fa53a69bc8529')throw Error('presenter pin mismatch');
+if(sha!=='a24b857d0f3dc749bbbb3fa6a9a2fd0a31bd5f36')throw Error('presenter pin mismatch');
 const payload=cp.execFileSync('python3',['-I','-B',path.join(__dirname,'host.py'),projectionRoot],{encoding:'utf8',timeout:15000,maxBuffer:1024*1024});
 process.env.CROSS_LANGUAGE_PAYLOAD=payload;
 global.fetch=()=>{throw Error('network forbidden')};

@@ -1,14 +1,18 @@
+import {createHash} from 'node:crypto';
 import assert from 'node:assert/strict';
 import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {AgentOverviewSyntheticReview as View} from '../../web/src/pages/AgentOverviewPage';
 const caseId='CASE-2026-DEMO-LILY-MARY',revision='synthetic-review-v1';
 const items=[
- {id:'A',seat:'席位甲（合成）',claim:'声称发出了右满舵指令',sourceId:'S-A',start:2,end:2,quote:'我声称当时发出了右满舵指令。'},
- {id:'B',seat:'席位乙（合成）',claim:'声称当时没有发出该指令',sourceId:'S-B',start:2,end:2,quote:'我声称当时没有发出右满舵指令。'}];
+ {id:'A',seat:'席位甲（合成）',claim:'声称发出了右满舵指令',sourceId:'S-A',sourceSha256:'',start:2,end:2,quote:'我声称当时发出了右满舵指令。'},
+ {id:'B',seat:'席位乙（合成）',claim:'声称当时没有发出该指令',sourceId:'S-B',sourceSha256:'',start:2,end:2,quote:'我声称当时没有发出右满舵指令。'}];
+const fullSha=(lines:string[])=>createHash('sha256').update(Buffer.from(lines.join('\n')+'\n','utf8')).digest('hex');
+items.forEach((i:any,n)=>i.sourceSha256=fullSha([n===0?'合成笔记甲':'合成笔记乙',i.quote]));
 const control={caseId,revision,question:'是否发出该指令（合成争议）',items:structuredClone(items),sources:[
- {id:'S-A',caseId,revision,lines:['合成笔记甲',items[0].quote]},
- {id:'S-B',caseId,revision,lines:['合成笔记乙',items[1].quote]}]};
+ {id:'S-A',sha256:'',caseId,revision,lines:['合成笔记甲',items[0].quote]},
+ {id:'S-B',sha256:'',caseId,revision,lines:['合成笔记乙',items[1].quote]}]};
+control.sources.forEach((s:any)=>s.sha256=fullSha(s.lines));
 function freeze(x:any){Object.freeze(x);Object.values(x).forEach(v=>{if(v&&typeof v==='object')freeze(v)});return x}freeze(control);
 const input={kind:'developer_synthetic_dispute' as const,caseId,revision,question:control.question,items};
 let passed=0;function check(name:string,fn:()=>void){fn();passed++;console.log('PASS '+name)}

@@ -1,3 +1,4 @@
+import {createHash} from 'node:crypto';
 import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import assert from 'node:assert/strict';
@@ -25,4 +26,36 @@ const rejected=renderToStaticMarkup(<SyntheticDispute input={bad} control={p.con
 assert(rejected.includes('绑定不符'));for(const i of p.control.items)assert(!rejected.includes(i.quote));
 assert.equal(JSON.stringify(p),before);
 console.log('PASS source mismatch rejects whole display without mutation');
-console.log('TOTAL 3 integration checks; 4 simulated seats; 8 projected rows; 2 predeclared cards; no model');
+
+function currentControl(current:any){
+ const c=structuredClone(current);
+ for(const s of c.sources){
+  // Same canonical bytes as Python: UTF-8(join(lines, LF) + final LF), no normalization.
+  s.sha256=createHash('sha256').update(Buffer.from(s.lines.join('\n')+'\n','utf8')).digest('hex');
+ }
+ return c;
+}
+const rebuilt=currentControl(p.control);
+for(const source of rebuilt.sources)assert.equal(source.sha256,p.control.sources.find((s:any)=>s.id===source.id).sha256);
+for(const item of p.input.items){
+ const row=p.projection.rows.find((r:any)=>r.itemId===item.id&&r.role===item.seat);
+ assert.equal(item.sourceSha256,row.source.sha256);
+ assert(html.includes(item.sourceSha256));
+}
+assert.equal(renderToStaticMarkup(<SyntheticDispute input={p.input} control={rebuilt}/>),html);
+console.log('PASS full Python UTF-8 digest survives receipt and matches independent Node calculation');
+const current=structuredClone(p.control);
+current.sources[0].lines[0]+='（相邻行已修订）';
+const changed=currentControl(current);
+assert.notEqual(changed.sources[0].sha256,p.input.items[0].sourceSha256);
+assert.equal(changed.caseId,p.input.caseId);assert.equal(changed.revision,p.input.revision);
+assert.equal(changed.sources[0].id,p.input.items[0].sourceId);
+assert.equal(changed.sources[0].lines[1],p.input.items[0].quote);
+const stale=renderToStaticMarkup(<SyntheticDispute input={p.input} control={changed}/>);
+assert(stale.includes('绑定不符'));
+for(const i of p.control.items)assert(!stale.includes(i.quote));
+assert(!/<(button|input|form|a|select|textarea)\b/.test(stale));
+assert.equal(JSON.stringify(p),before);
+console.log('PASS same quote and locator but changed neighboring source line rejects old version');
+
+console.log('TOTAL 5 integration checks; full-source version retained; no product binding');

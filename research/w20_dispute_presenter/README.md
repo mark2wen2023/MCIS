@@ -9,3 +9,5 @@ The runner verifies six imported application blobs against the fixed parent. It 
 27 checks passed, including opposing rows retaining separate quotes/sources, unresolved/pending status, no controls, no default rows, case/revision/quote/ID/line mismatch, complete side retention, mutation, property-order equivalence and no toJSON/accessor invocation.
 No model, real case, queue, approval, archival, production data, browser interaction or real four-expert deliberation is covered.
 Workflow inspection before handoff: parent contains no workflows; main 94d5e38c926fda232bb987b60fa9145e4bcf01a7 has only route-classification, triggered by pull_request or push to main. Candidate push is separate; no PR, merge or workflow dispatch.
+
+Version follow-up: Source.sha256 and Item.sourceSha256 are required. The component compares a held full-source version with the fixture-host current digest; it does not compute source hashes or authenticate client control. Full-byte canonicalization and stale neighboring-line integration are tested in research/w20_dispute_cross_language. Still unmounted and test-only.
