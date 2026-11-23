@@ -1,0 +1,69 @@
+{
+  "fixedComparator": "31c2a896d1717a7876a416f7d8ca295fa41378b8",
+  "testsRun": 13,
+  "passed": true,
+  "example": {
+    "relation": "overlap-not-identity",
+    "sources": [
+      {
+        "reason": null,
+        "source": {
+          "case": "synthetic-clock",
+          "id": "panel",
+          "revision": "0597523c13059bd4196d921f1725df5a2de541746cb269d7d7dd2dd034bb2ef0",
+          "locator": "/rows/alarm"
+        },
+        "calibration": "panel-alarm@review-v1",
+        "basis": {
+          "case": "synthetic-clock",
+          "id": "anchor",
+          "revision": "89038734a9528937a09a4a06984db3de303f5057e6c99de94d44c8ec70a17241",
+          "locator": "/rows/panel"
+        },
+        "originalSeconds": [
+          "70",
+          "70"
+        ],
+        "displayInterval": [
+          "-27",
+          "-27"
+        ],
+        "aligned": true
+      },
+      {
+        "reason": null,
+        "source": {
+          "case": "synthetic-clock",
+          "id": "vdr",
+          "revision": "ada2bf86928340f1485cb01d03c8e566d54ead60097cd5a69b92fc776612dbf5",
+          "locator": "/rows/alarm"
+        },
+        "calibration": "vdr-alarm@review-v1",
+        "basis": {
+          "case": "synthetic-clock",
+          "id": "anchor",
+          "revision": "89038734a9528937a09a4a06984db3de303f5057e6c99de94d44c8ec70a17241",
+          "locator": "/rows/vdr"
+        },
+        "originalSeconds": [
+          "-27",
+          "-27"
+        ],
+        "displayInterval": [
+          "-27",
+          "-27"
+        ],
+        "aligned": true
+      }
+    ],
+    "status": "pending_human_review",
+    "authorityVerified": false,
+    "modelCalled": false,
+    "saved": false,
+    "scope": "synthetic_test_host_only",
+    "identityDetermined": false,
+    "causationDetermined": false
+  },
+  "actualHumanApprovals": 0,
+  "realAuthorizationTested": false
+}

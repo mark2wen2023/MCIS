@@ -1,0 +1,20 @@
+test_distinct_basis_unresolved (__main__.Checks.test_distinct_basis_unresolved) ... ok
+test_double_panel_value_disagrees_with_review_basis (__main__.Checks.test_double_panel_value_disagrees_with_review_basis) ... ok
+test_missing_or_misbound_review (__main__.Checks.test_missing_or_misbound_review) ... ok
+test_no_loss_time (__main__.Checks.test_no_loss_time) ... ok
+test_normal_and_unchanged (__main__.Checks.test_normal_and_unchanged) ... ok
+test_partial_scope (__main__.Checks.test_partial_scope) ... ok
+test_repeated_panel_offset_on_aligned_vdr_rejected (__main__.Checks.test_repeated_panel_offset_on_aligned_vdr_rejected) ... ok
+test_repin_does_not_rebind_old_review (__main__.Checks.test_repin_does_not_rebind_old_review) ... ok
+test_review_not_model_authority (__main__.Checks.test_review_not_model_authority) ... ok
+test_source_version_bytes_locator (__main__.Checks.test_source_version_bytes_locator) ... ok
+test_temporal_only (__main__.Checks.test_temporal_only) ... ok
+test_unreviewed_disputed_no_review (__main__.Checks.test_unreviewed_disputed_no_review) ... ok
+test_wrong_case (__main__.Checks.test_wrong_case) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.004s
+
+OK
+
+exit_code=0
