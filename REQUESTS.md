@@ -647,3 +647,7 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## W17 冲突独立请求显示状态（2026-11-23，独立候选）
+
+EvidencePage 冲突读取待定/失败不得当成功空集；仅调整指标、清单和图提示，共用三态，不改 hook、权限、API、CPA 或历史冻结。定向合成 SSR 与限制见 web/tests/CONFLICT-READ-STATE.md。

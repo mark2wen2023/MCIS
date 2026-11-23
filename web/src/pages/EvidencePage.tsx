@@ -8,6 +8,7 @@ import { AlignPreviewPanel } from '../align/AlignPreviewPanel'
 import { SERVICE_ADDR } from '../config'
 import { EChart } from '../components/EChart'
 import { Metric, Panel } from '../components/Panel'
+import { ConflictMetric, ConflictReadNotice, conflictReadState, timedConflicts, type ConflictReadState } from '../evidenceIntake/ConflictReadState'
 import { EvidenceMetrics } from '../evidenceIntake/EvidenceMetrics'
 import { useToast } from '../components/Toast'
 import { shortHash } from '../format'
@@ -78,10 +79,7 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
     }, '已重新校验全部证据哈希（每条写入保管链 Verify 事件）')
 
   const offsetMinutes = caseRes.data?.displayTimeZoneOffsetMinutes ?? 0
-  const counts = {
-    mismatch: items.filter((e) => e.status === 'Mismatch').length,
-    openConflicts: (conflicts.data ?? []).filter((c) => c.status === 'Open' || c.status === 'PendingInterview').length,
-  }
+  const conflictState = conflictReadState(conflicts.data, conflicts.error)
 
   return (
     <div className="w4-page">
@@ -113,7 +111,7 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
       <div className="grid w4-metrics" style={{ marginBottom: 12 }}>
         <EvidenceMetrics data={ev.data} error={ev.error} />
         <Metric label="保管链" value={chain.data ? (chain.data.valid ? '完整' : '断裂') : '…'} unit={chain.data ? `${chain.data.count} 行` : ''} tone={chain.data && !chain.data.valid ? 'red' : 'green'} />
-        <Metric label="未决时间冲突" value={counts.openConflicts} unit={`/ ${(conflicts.data ?? []).length}`} tone={counts.openConflicts ? 'red' : 'green'} />
+        <ConflictMetric state={conflictState} />
       </div>
 
       <div className="grid w4-columns" style={{ marginBottom: 12 }}>
@@ -147,15 +145,16 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
 
       <div className="grid w4-columns">
         <Panel title="事件时间线 · 冲突标注 · 两船距离" meta={<span>{caseRes.data ? timeZoneLabel(offsetMinutes) : '时区加载中'} · 源：/timeline + mcis-core cpa</span>} bodyStyle={{ padding: '4px 6px' }}>
+          <ConflictReadNotice state={conflictState} />
           {cpa.data?.status === 'missing-tracks' && <div className="empty">轨迹数据不足：尚无两艘船的非空轨迹，CPA / 两船距离未运行。</div>}
           {cpa.error && <div className="empty">轨迹或 CPA 加载失败：{cpa.error}</div>}
           {!cpa.data && !cpa.error && <div className="empty">正在检查轨迹数据…</div>}
           {tl.data && tl.data.events.length === 0 && <div className="empty">尚无事件时间线数据。</div>}
           {caseRes.data && tl.data && (tl.data.events.length > 0 || (cpa.data?.results.length ?? 0) > 0) ? (
-            <TimelineChart fictional={caseId === CASE_ID && caseRes.data.isFictionalDemo} offsetMinutes={offsetMinutes} epoch={caseRes.data.caseEpochUtc} events={tl.data.events} conflicts={conflicts.data ?? []} cpa={cpa.data?.results ?? []} />
+            <TimelineChart fictional={caseId === CASE_ID && caseRes.data.isFictionalDemo} offsetMinutes={offsetMinutes} epoch={caseRes.data.caseEpochUtc} events={tl.data.events} conflicts={conflictState.kind === 'success' ? conflictState.data : []} cpa={cpa.data?.results ?? []} />
           ) : (!caseRes.data || !tl.data) ? <div className="empty">加载中…</div> : null}
         </Panel>
-        <ConflictPanel offsetMinutes={offsetMinutes} caseId={caseId} conflicts={conflicts.data ?? []} epoch={caseRes.data?.caseEpochUtc} onChanged={conflicts.reload} />
+        <ConflictPanel offsetMinutes={offsetMinutes} caseId={caseId} state={conflictState} epoch={caseRes.data?.caseEpochUtc} onChanged={conflicts.reload} />
       </div>
     </div>
   )
@@ -210,10 +209,12 @@ function CustodyPanel({ caseId, item, events, onChanged, offsetMinutes }: { offs
   )
 }
 
-function ConflictPanel({ caseId, conflicts, epoch, onChanged, offsetMinutes }: { offsetMinutes: number; caseId: string; conflicts: Conflict[]; epoch?: string; onChanged: () => void }) {
+export function ConflictPanel({ caseId, state, epoch, onChanged, offsetMinutes }: { offsetMinutes: number; caseId: string; state: ConflictReadState; epoch?: string; onChanged: () => void }) {
   const { run } = useToast()
   const [editing, setEditing] = useState<string | null>(null)
   const [note, setNote] = useState('')
+  if (state.kind !== 'success') return <Panel title="多源时间对齐 · 冲突清单"><ConflictReadNotice state={state} /></Panel>
+  const conflicts = state.data
   const patch = (c: Conflict, body: Partial<Conflict>, ok: string) =>
     run(async () => { const r = await api.patch(casePath(`/conflicts/${c.conflictId}`, caseId), body); onChanged(); return r }, ok)
   return (
@@ -283,7 +284,7 @@ function TimelineChart({ fictional, epoch, events, conflicts, cpa, offsetMinutes
         labelLayout: { hideOverlap: true },
         data: events.filter((e) => e.kind === k).map((e) => ({ value: [e.timeSec, lane(e)], name: (e.presumptive ? '≈' : '') + e.title, raw: e })),
       }))
-    const conflictLines = conflicts.filter((c) => c.timeSec != null).map((c) => ({
+    const conflictLines = timedConflicts(conflicts).map((c) => ({
       xAxis: c.timeSec as number,
       lineStyle: { color: c.status === 'Open' || c.status === 'PendingInterview' ? '#ff3b5c' : '#526987', type: 'dashed' as const },
       label: { formatter: c.conflictId, color: '#ff8fa3', fontSize: 9.5 },
