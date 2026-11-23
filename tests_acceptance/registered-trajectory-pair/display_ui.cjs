@@ -28,6 +28,25 @@ const blank=()=>{assert.equal(markers().length,0);for(const id of ['pointer','re
  assert.equal(nodes['source-time'].textContent,'—');assert.equal(nodes.correction.textContent,'—');assert(nodes['raw-open'].disabled);
  // Display mode refuses the internal protocol rather than silently ignoring it.
  api.attach(async q=>{const r=frame(q.alignedUtc);r.vessels[0].original={};return r;});api.selectCase(config);await api.load(t100);blank();assert.match(nodes['state-note'].textContent,/首次载入未通过/);
+ // Date/source failures use already validated synthetic frames; no registration/read.
+ const invalidFrames=[
+  ['missing time',r=>{r.vessels[1].time=null;}],
+  ['wrong case',r=>{r.caseId='SYN-OTHER';}],
+  ['calendar overflow',r=>{r.vessels[1].time.sourceUtc='2026-02-30T12:01:28.000Z';}],
+  ['offset arithmetic',r=>{r.vessels[1].time.correctionSeconds=13;}],
+  ['wrong aligned UTC',r=>{r.vessels[1].time.alignedUtc=t124;}]
+ ];
+ for(const [label,mutate] of invalidFrames){
+  let damaged=false;
+  api.attach(async q=>{const r=frame(q.alignedUtc);if(damaged)mutate(r);return r;});
+  api.selectCase(config);await api.load(t100);nodes['source-b'].onclick();
+  assert.equal(nodes['source-time'].textContent,'2026-02-01T12:01:28.000Z',label);
+  const obsoleteDetail=nodes['source-b'].onclick;
+  damaged=true;await api.load(t100);blank();obsoleteDetail();blank();
+  assert.equal(nodes['aligned-time'].textContent,'—',label);
+  assert.equal(nodes['state-note'].textContent,'此前显示已清除；本次未取得有效结果；未显示登记证据。',label);
+ }
+ console.log('PASS five current-frame date/source rejection cases clear previous time/pointer and obsolete detail callback');
  // Controlled same-case slow transport; late completion must not revive old point/details.
  let pending=[];api.attach(q=>new Promise(resolve=>pending.push({q,resolve})));api.selectCase(config);
  const early=api.load(t100);blank();const later=api.load(t124);blank();pending[1].resolve(frame(t124));await later;pending[0].resolve(frame(t100));await early;
@@ -52,5 +71,5 @@ const blank=()=>{assert.equal(markers().length,0);for(const id of ['pointer','re
   api.attach(async()=>{throw {code,message:'synthetic-private-error'};});api.selectCase(config);await api.load(t100);blank();
   for(const n of Object.values(nodes)){assert(!n.textContent.includes('synthetic-private-error'));assert(!n.textContent.includes('ARBITRARY_PRIVATE_CODE'));}
  }
- console.log('PASS actual handoff -> existing sidebar: T100 display-only input/clock pending; T124.250 gap/no point; stage zero calls; explicit one call; stale details/late results cleared. Synthetic DOM/transport only.');
+ console.log('PASS host-derived frames -> existing sidebar: T100 display-only input/clock pending; T124.250 gap/no point; stage zero calls; explicit one call; stale details/late results cleared. Synthetic DOM/transport only.');
 })().catch(e=>{console.error(e);process.exitCode=1;});
