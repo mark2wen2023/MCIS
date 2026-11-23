@@ -46,7 +46,7 @@ def projection(frame):
             require(heading == {'value': None, 'kind':'missing'})
         else:
             require(heading['kind'] == 'recorded' and type(heading['value']) in (int,float)
-                    and math.isfinite(heading['value']) and 0 <= heading['value'] <= 360)
+                    and math.isfinite(heading['value']) and 0 <= heading['value'] < 360 and heading['value'] == 270)
         out.append({'vesselId':identity,'evidenceId':pin['evidenceId'],
                     'requestDigest':pin['requestDigest'],'sourceSha256':pin['sourceSha256'],
                     'jsonPointer':pointer,'observation':{'field':'headingDeg',**heading}})

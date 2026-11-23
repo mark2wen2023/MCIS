@@ -27,7 +27,7 @@ are included in the handoff.
 
 Output contains only fixed synthetic case/UTC, source fixture commit, actual
 registration IDs/request digests/raw hashes, vessel IDs, JSON pointers and one
-heading observation per vessel. A: missing/null; B: recorded/270 in this exact
+heading observation per vessel. A: missing/null; B: recorded/270 (strictly below 360, exact fixed-value assertion) in this exact
 synthetic input. Recorded here describes fixture quality, not independent truth.
 COG is not a heading substitute. Alignment is not human-approved event ordering.
 EV-001/EV-002 are this fresh fixture's receipts, not global product constants.

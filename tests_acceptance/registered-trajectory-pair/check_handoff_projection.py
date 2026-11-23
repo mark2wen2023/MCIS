@@ -30,4 +30,13 @@ class Check(unittest.TestCase):
         for value in [None,float('nan'),True]:
             f=frame();f['vessels'][1]['headingDeg']['value']=value
             with self.assertRaises(ValueError):h.projection(f)
+    def test_b_360_rejected(self):
+        f=frame();f['vessels'][1]['headingDeg']['value']=360
+        with self.assertRaises(ValueError):h.projection(f)
+    def test_b_nan_rejected(self):
+        f=frame();f['vessels'][1]['headingDeg']['value']=float('nan')
+        with self.assertRaises(ValueError):h.projection(f)
+    def test_b_wrong_fixed_value_rejected(self):
+        f=frame();f['vessels'][1]['headingDeg']['value']=269
+        with self.assertRaises(ValueError):h.projection(f)
 if __name__=='__main__':unittest.main(verbosity=2)
