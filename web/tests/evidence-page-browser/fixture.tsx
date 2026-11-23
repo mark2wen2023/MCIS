@@ -1,4 +1,5 @@
 import React from 'react'
+import {allowedRequest} from './request-policy.mjs'
 import {getInstanceByDom} from 'echarts'
 const conflictMode = new URLSearchParams(location.search).has('conflicts')
 import {createRoot} from 'react-dom/client'
@@ -14,7 +15,7 @@ let serial=0
 const unexpected:string[]=[]
 window.fetch=(input,init)=>new Promise<Response>(resolve=>{
  const url=String(input)
- if((init?.method??'GET')!=='GET'||!/^\/api\/v1\/cases\/SYN-[AB](?:\/|$)/.test(url)) {
+ if(!allowedRequest(url,init?.method??'GET')) {
   unexpected.push('unexpected request'); resolve(new Response('{}',{status:403})); return
  }
  if(conflictMode && url.endsWith('/conflicts')) {pending.push({id:++serial,url,operator:String((init?.headers as Record<string,string>)?.['X-MCIS-Operator']),finish:resolve});return}

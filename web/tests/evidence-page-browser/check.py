@@ -89,6 +89,8 @@ try:
     assert metric.locator('.val').inner_text()=='待载入'
     assert '无冲突' not in panel.inner_text()
     page.wait_for_function("()=>gate.chart()?.series.some(s=>s.data.some(d=>d.name==='≈AVAILABLE-EVENT'))")
+    assert page.get_by_text('时间冲突待载入，冲突标注尚不可用。',exact=True).count()==2
+    assert page.evaluate('gate.chart().series[0].markLine.data')==[]
     page.evaluate('(v)=>gate.settleConflict(...v)',[conflict_id,outcome])
     expected='不可用' if outcome=='deny' else '0/ 0' if outcome=='empty' else '1/ 2'
     page.wait_for_function('(v)=>Array.from(document.querySelectorAll(".w4-metrics .p6-metric")).find(x=>x.querySelector(".lbl")?.textContent==="未决时间冲突")?.querySelector(".val")?.textContent===v',arg=expected)

@@ -90,3 +90,22 @@ browser passes. Known blocked Chromium was not retried. No screenshots/receipt
 from a real browser were produced here. Use a qualified normal sandbox host with
 existing dependencies for the one check.py command above. Require exit 0 AND
 receipt passed=true AND externalRequests=0; inspect the per-width conflict checks.
+
+## Explicit fixture endpoint boundary
+
+`request-policy.mjs` is shared by the fixture and 37 offline positive/negative
+checks. Only GET on the exact case root, evidence list, custody chain verify,
+timeline, conflicts, tracks, access-policy and EV-001 custody for SYN-A/B is
+allowed. All other URLs (including unknown same-case URLs, query variants,
+other evidence IDs and writes) record `unexpected` and return 403. Allowed
+ancillary failures remain intentional; no request falls through to the network.
+
+```sh
+node web/tests/evidence-page-browser/request-policy.test.mjs
+```
+
+Before resolving each conflict request, the real-browser script now requires
+exactly two pending notices (table and chart) and zero chart markLines, after
+confirming the existing event is rendered. Those browser assertions remain
+UNRUN here; offline policy tests, predicate tests, Python syntax and fixture
+build are the executed checks, not browser acceptance.
