@@ -1,0 +1,1 @@
+{"mode":"React SSR only; no browser","positiveChecks":"Chinese labels, A/B distinction, noninteractive references, stable render","rejectionCases":12,"passed":true,"sourcePreviewSha256":"ab3543be14e7e2271790a1a0cb03d61a3a779adb0f3682ef56f32050317f3dc9"}
