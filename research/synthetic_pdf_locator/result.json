@@ -1,0 +1,66 @@
+{
+  "tests": 7,
+  "passed": true,
+  "pdfSha256": "2df2fa8d595de9c293e1dc3d19b090d24a8ad82c00d7ad8d368358341f157ae1",
+  "reportlab": "4.4.9",
+  "pymupdf": "1.26.6",
+  "pdfGenerated": true,
+  "rendered": true,
+  "textLayerExtracted": true,
+  "ocrRun": false,
+  "modelRun": false,
+  "observations": [
+    {
+      "page": 1,
+      "word": "08:30",
+      "textDirection": [
+        1.0,
+        0.0
+      ],
+      "textLayerTopLeftBox": [
+        40.0,
+        157.8800048828125,
+        80.91200256347656,
+        179.91200256347656
+      ],
+      "pdfBottomLeftBox": [
+        40.0,
+        620.0880126953125,
+        80.91200256347656,
+        642.1199951171875
+      ],
+      "pixelBox": [
+        80.0,
+        315.760009765625,
+        161.82400512695312,
+        359.8240051269531
+      ]
+    },
+    {
+      "page": 2,
+      "word": "08:30",
+      "textDirection": [
+        0.0,
+        -1.0
+      ],
+      "textLayerTopLeftBox": [
+        137.8800048828125,
+        567.0880126953125,
+        159.91200256347656,
+        608.0
+      ],
+      "pdfBottomLeftBox": [
+        137.8800048828125,
+        192.0,
+        159.91200256347656,
+        232.9119873046875
+      ],
+      "pixelBox": [
+        275.760009765625,
+        1134.176025390625,
+        319.8240051269531,
+        1216.0
+      ]
+    }
+  ]
+}
