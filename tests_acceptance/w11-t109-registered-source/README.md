@@ -33,3 +33,13 @@ T+100仅游标；A-t100 /points/7缺HDG，A无T109精确点。T109只是独立�
 ```
 
 脚本和communication.txt与已独审ZIP原字节一致。独立验收侧已核字节/源码，缺固定Git对象未实跑；作者实跑1项集成用例退出0。不是独立执行器复跑、真实账号或跨仓/UI验收。发布不包含ZIP、RESULT日志或临时库。
+
+## 未发布后继：选择门控接真实合成登记读取
+
+父b61aa93128ceb0cbe80ce9204579d35c7d31497d。额外固定依赖d1db803b06ed89a02629a3bd2817ec6ef3a72fb9的tests_acceptance/ecfc-display-selection/selection.py，复用edge_key和Selection，不复制正式schema或新增接口。
+
+排重结论：旧d1db803仅边片段本地映射/失效，未读边原件；d9187fef1f979866ac4d8ce2064d1ac92f34bb36的真实EdgeSelection/Panel仅有候选读取器，默认未接可信关联。本次不接产品，是合成宿主选择门控与本次登记回执的首次组合检查。最小envelope仅作选择上下文，不声称经过正式parseEnvelope/.NET验证或保存；图摘要由工装计算，不是产品权威摘要。
+
+映射由测试宿主从实际receipt构造，键为case/revision/digest/edgeId/from/to，EV-001仅为空测试库的回执预期，不用于解析链接或授权。未解析、未明确打开、错案、换revision/digest、删边、反向端点或来源变化均返回None；读wrapper入口计数严格为0。已解析且明确打开只增加1次wrapper调用并提交1 Access。错pin仍调用真实helper，随后宿主比较失败回滚，不能声称未物理读取。整套另含错案/拒绝角色/两次错pin，wrapper总调用5次，而不是总共1次。
+
+可见结果只保留合成通联标签、原文UTC和字节定位/待审状态，不带pin，seekAvailable/eventVerified为false。T100仅游标；T109仍未经人审核时。换图版清除显示，旧ticket不能回填，不新增读取。没有生产图绑定、真实UI/浏览器或跨仓验证。纯合成临时库，仅本地修改待独审，不推送。

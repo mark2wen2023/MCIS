@@ -19,6 +19,7 @@ ROOT = None
 FIXTURE = Path(__file__).resolve().with_name('communication.txt')
 RAW_SHA = '418be9609b46a00062c41fb49073911986098e9a61e010f4311aa86946ecd3ea'
 TRACKS = '2048c60fd6650c6f2c99a76a16be463a3895655d'
+SELECTION = 'd1db803b06ed89a02629a3bd2817ec6ef3a72fb9'
 PRODUCT = 'db90fdf73de7bd26ba75819f0102fc03d0789faf'
 HARNESS = 'c7f933d9d5a3fea6c4f3d706fe1f091475c3eb24'
 DRAFT = '194ee6be7a4b31c0e23b5615b5d60cd9b0667ed0'
@@ -49,7 +50,7 @@ def module(name, path):
     return result
 
 
-def run(source, allowed, locator, raw_input):
+def run(source, allowed, locator, raw_input, selection):
     sys.path.insert(0, str(source / 'service'))
     from fastapi import HTTPException
     from sqlalchemy import select, text
@@ -115,7 +116,10 @@ def run(source, allowed, locator, raw_input):
                     with db.session() as s:
                         return tuple(s.query(m).count() for m in (EvidenceRow, CustodyEventRow, AuditEventRow))
 
+                reader_calls = 0
                 def read(context, target, expected_pin):
+                    nonlocal reader_calls
+                    reader_calls += 1  # At the real read wrapper entry, before permission checks.
                     # Purpose validated by same production primitive used in download; no route invocation.
                     purpose = intake.text('Synthetic local UTF8 draft review', 1000)
                     intake.text(context.operator, 200, multiline=False)
@@ -135,6 +139,44 @@ def run(source, allowed, locator, raw_input):
                     'sourceSha256':RAW_SHA})
                 self.assertEqual(counts(), (1, 1, 1))
                 before = counts()
+                # Minimal synthetic selection context, NOT a saved/validated product graph.
+                graph = {'nodes':[{'id':'event-a','text':'Synthetic pending event','timeSeconds':None},
+                                  {'id':'event-b','text':'Synthetic pending response','timeSeconds':None}],
+                         'edges':[{'id':'edge-communication','from':'event-a','to':'event-b'}]}
+                envelope = {'caseId':cid, 'sourceStatus':'unchanged', 'document':{
+                    'revision':1, 'digest':hashlib.sha256(json.dumps(graph,sort_keys=True).encode()).hexdigest(),
+                    'draft':graph}}
+                edge_id = 'edge-communication'
+                association = {'graphKey':selection.edge_key(envelope,edge_id),
+                               'pin':deepcopy(pin), 'origin':'synthetic_test_host'}
+                view = selection.Selection()
+                def open_selected(env, mapping, *, explicit_open):
+                    ticket = view.select(env, edge_id)
+                    key = selection.edge_key(env, edge_id)
+                    if (not explicit_open or key is None or mapping is None
+                            or mapping.get('origin') != 'synthetic_test_host'
+                            or mapping.get('graphKey') != key):
+                        return None
+                    found = read(ctx, env['caseId'], mapping['pin'])
+                    return ticket, found
+                self.assertIsNone(open_selected(envelope,None,explicit_open=True))
+                self.assertIsNone(open_selected(envelope,association,explicit_open=False))
+                changed = deepcopy(envelope); changed['document']['revision'] = 2
+                self.assertIsNone(open_selected(changed,association,explicit_open=True))
+                wrong_case = deepcopy(envelope); wrong_case['caseId'] = 'SYN-OTHER'
+                self.assertIsNone(open_selected(wrong_case,association,explicit_open=True))
+                removed = deepcopy(envelope); removed['document']['draft']['edges'] = []
+                self.assertIsNone(open_selected(removed,association,explicit_open=True))
+                reversed_edge = deepcopy(envelope)
+                reversed_edge['document']['draft']['edges'][0].update({'from':'event-b','to':'event-a'})
+                self.assertIsNone(open_selected(reversed_edge,association,explicit_open=True))
+                changed_digest = deepcopy(envelope); changed_digest['document']['digest'] = '0' * 64
+                self.assertIsNone(open_selected(changed_digest,association,explicit_open=True))
+                changed_source = deepcopy(envelope); changed_source['sourceStatus'] = 'changed'
+                self.assertIsNone(open_selected(changed_source,association,explicit_open=True))
+                self.assertEqual(reader_calls, 0)
+                self.assertEqual(counts(), before)
+
                 with self.assertRaises(HTTPException) as wrong:
                     read(ctx, 'SYN-OTHER', pin)
                 self.assertEqual(wrong.exception.status_code, 404)
@@ -145,9 +187,11 @@ def run(source, allowed, locator, raw_input):
                 self.assertEqual(counts(), before)
                 for field, value in (('evidenceId', 'SYN-WRONG-EVIDENCE'), ('sourceSha256', '0' * 64)):
                     with self.subTest(field=field), self.assertRaisesRegex(ValueError, '^FIXED_PIN_MISMATCH$'):
-                        read(ctx, cid, {**pin, field: value})
+                        open_selected(envelope,{**association,'pin':{**pin, field:value}},explicit_open=True)
                     self.assertEqual(counts(), before)  # helper Access is rolled back with mismatch.
-                registered, raw = read(ctx, cid, pin)
+                calls_before_open = reader_calls
+                ticket, (registered, raw) = open_selected(envelope,association,explicit_open=True)
+                self.assertEqual(reader_calls, calls_before_open + 1)
                 self.assertEqual(raw, raw_input)
                 self.assertEqual(registered['sourceSha256'], hashlib.sha256(raw).hexdigest())
                 self.assertEqual(registered['evidenceId'], receipt['evidenceId'])
@@ -159,6 +203,16 @@ def run(source, allowed, locator, raw_input):
                 self.assertEqual(raw[location['byteStart']:location['byteEndExclusive']].decode(), quote)
                 self.assertFalse(location['authorityVerified'])
                 self.assertNotIn('page', location)
+                visible = {'label':'原始通联记录（合成宿主关联，非事件证明）',
+                           'sourceUtc':quote, 'byteStart':location['byteStart'],
+                           'byteEndExclusive':location['byteEndExclusive'],
+                           'status':'待审', 'seekAvailable':False, 'eventVerified':False}
+                self.assertTrue(view.finish(ticket,visible))
+                self.assertEqual(view.visible,visible)
+                view.select(changed,edge_id)
+                self.assertIsNone(view.visible)
+                self.assertFalse(view.finish(ticket,visible))
+                self.assertEqual(reader_calls,calls_before_open+1)
                 for wrong_time in ('2026-02-01T12:01:40.000Z', '2026-02-01T12:01:50.000Z'):
                     with self.subTest(wrong_time=wrong_time), self.assertRaisesRegex(ValueError, '^quote_location$'):
                         locator.locate(raw, {**citation, 'quote':wrong_time}, expected_sha256=registered['sourceSha256'])
@@ -179,6 +233,7 @@ def run(source, allowed, locator, raw_input):
                     'location':location, 'timeReview':'not_provided', 'eventOrderEstablished':False,
                     'auditChainValid':True, 'committedAccess':1, 'wrongCaseStatus':404,
                     'deniedStatus':403, 'pinMismatchesRolledBack':2, 'saved':False,
+                    'unresolvedReaderCalls':0, 'explicitOpenReaderCalls':1, 'totalReaderCalls':reader_calls,
                     'ecfcBindingVerified':False}, ensure_ascii=False, sort_keys=True))
 
     result = unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromTestCase(Checks))
@@ -214,5 +269,7 @@ if __name__ == '__main__':
                 assert document['points'][7]['time']['alignedUtc'] == '2026-02-01T12:01:40.000Z'
                 assert document['points'][7]['headingDeg']['value'] is None
                 assert not any(p['time']['alignedUtc'] == '2026-02-01T12:01:49.000Z' for p in document['points'])
-        ok = run(source, allowed, locator, raw_input)
+        selection = module('pinned_selection', copy_fixed(SELECTION,
+            'tests_acceptance/ecfc-display-selection/selection.py', source))
+        ok = run(source, allowed, locator, raw_input, selection)
     raise SystemExit(0 if ok else 1)
