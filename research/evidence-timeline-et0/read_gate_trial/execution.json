@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/workspace/scratch/d5cd4f6afdb1/mcis-work/service/.venv/bin/python",
+    "-I",
+    "-B",
+    "/workspace/shared/et0_access_gate_b_20261123/candidate/research/evidence-timeline-et0/read_gate_trial/check.py",
+    "--dependencies",
+    "/workspace/shared/et0_access_gate_b_20261123/dependencies"
+  ],
+  "exitCode": 0
+}

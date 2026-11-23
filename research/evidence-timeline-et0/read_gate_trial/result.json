@@ -1,0 +1,28 @@
+{
+  "testsRun": 2,
+  "passed": true,
+  "result": {
+    "read": {
+      "sourceCommit": "db90fdf73de7bd26ba75819f0102fc03d0789faf",
+      "sourceSha256": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca",
+      "accessAdded": 1,
+      "custodyAdded": 1,
+      "auditAdded": 1,
+      "reopened": true,
+      "otherTablesUnchanged": true,
+      "originalFilesUnchanged": true,
+      "actualCalibrationApprovals": 0
+    },
+    "et0": {
+      "commit": "8a2478f66b6a41c753e3b71c6e1d95d4bf76a82c",
+      "relation": "undetermined",
+      "reviewSelections": 0,
+      "authorityVerified": false
+    },
+    "integration": "NOT_CONNECTED: registered V1 and separate ET0 fixture; no raw-time conversion",
+    "http": false,
+    "realIdentity": false,
+    "model": false,
+    "published": false
+  }
+}
