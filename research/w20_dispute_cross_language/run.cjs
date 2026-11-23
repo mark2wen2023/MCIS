@@ -1,0 +1,10 @@
+const fs=require('fs'),path=require('path'),crypto=require('crypto'),cp=require('child_process'),Module=require('module');
+const [projectionRoot,presenterRoot,dependencies]=process.argv.slice(2).map(x=>path.resolve(x));
+const presenter=path.join(presenterRoot,'web/src/agentOverview/SyntheticDispute.tsx');
+const b=fs.readFileSync(presenter),sha=crypto.createHash('sha1').update(Buffer.from('blob '+b.length+String.fromCharCode(0))).update(b).digest('hex');
+if(sha!=='29c1da2d03e6ccae63b1c8ddda4fa53a69bc8529')throw Error('presenter pin mismatch');
+const payload=cp.execFileSync('python3',['-I','-B',path.join(__dirname,'host.py'),projectionRoot],{encoding:'utf8',timeout:15000,maxBuffer:1024*1024});
+process.env.CROSS_LANGUAGE_PAYLOAD=payload;
+global.fetch=()=>{throw Error('network forbidden')};
+const esbuild=require(path.join(dependencies,'esbuild'));
+(async()=>{const built=await esbuild.build({entryPoints:[path.join(__dirname,'test.tsx')],bundle:true,write:false,platform:'node',format:'cjs',jsx:'automatic',packages:'external',nodePaths:[dependencies],plugins:[{name:'pinned-presenter',setup(build){build.onResolve({filter:/^@presenter$/},()=>({path:presenter}))}}]});const m=new Module(path.join(__dirname,'memory.cjs'));m.paths=[dependencies];m._compile(built.outputFiles[0].text,path.join(__dirname,'memory.cjs'))})().catch(e=>{console.error(e.message);process.exitCode=1}).finally(()=>{delete process.env.CROSS_LANGUAGE_PAYLOAD});

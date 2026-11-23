@@ -1,0 +1,41 @@
+{
+  "caseId": "CASE-2026-DEMO-LILY-MARY",
+  "revision": "synthetic-dispute-cross-v1",
+  "question": "是否发出右满舵指令（合成争议）",
+  "sources": [
+    {
+      "id": "S-A",
+      "lines": [
+        "合成记录甲",
+        "我声称当时发出了右满舵指令。"
+      ]
+    },
+    {
+      "id": "S-B",
+      "lines": [
+        "合成记录乙",
+        "我声称当时没有发出右满舵指令。"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "A",
+      "seat": "regulations",
+      "claim": "声称发出了右满舵指令",
+      "sourceId": "S-A",
+      "start": 2,
+      "end": 2,
+      "quote": "我声称当时发出了右满舵指令。"
+    },
+    {
+      "id": "B",
+      "seat": "investigation",
+      "claim": "声称当时没有发出该指令",
+      "sourceId": "S-B",
+      "start": 2,
+      "end": 2,
+      "quote": "我声称当时没有发出右满舵指令。"
+    }
+  ]
+}
