@@ -1,0 +1,62 @@
+{
+  "scope": "developer-visible synthetic controls only",
+  "verifierBlob": "44fc5d82279db5fa3a3c748161f3122708e85668",
+  "hostSelection": {
+    "version": "v2",
+    "sha256": "79ea76ffc3f0cf1c6cf34e40c5dd28c81d2a3ef9bc4fc2e85f8a24cfadf4859f",
+    "recordId": "SYN-01"
+  },
+  "receipts": [
+    {
+      "cardId": "SYN-CURRENT",
+      "traceability": "LOCATED",
+      "binding": {
+        "file": "source-records.txt",
+        "version": "v2",
+        "sha256": "79ea76ffc3f0cf1c6cf34e40c5dd28c81d2a3ef9bc4fc2e85f8a24cfadf4859f",
+        "line": 1,
+        "recordId": "SYN-01"
+      },
+      "support": "NOT_ASSESSED",
+      "causation": "NOT_ASSESSED",
+      "review": "PENDING",
+      "authenticatedReview": false
+    },
+    {
+      "cardId": "SYN-STALE",
+      "traceability": "SOURCE_VERSION_MISMATCH",
+      "binding": {
+        "file": "source-records.txt",
+        "version": "v1",
+        "sha256": "77f5137a21c65d28d6087a36d64fd61cc2f16a933bb5592f63aa5b60fe22ea77",
+        "line": 1,
+        "recordId": "SYN-01"
+      },
+      "support": "NOT_ASSESSED",
+      "causation": "NOT_ASSESSED",
+      "review": "PENDING",
+      "authenticatedReview": false
+    },
+    {
+      "cardId": "SYN-UNBOUND",
+      "traceability": "BINDING_MISSING",
+      "binding": null,
+      "support": "NOT_ASSESSED",
+      "causation": "NOT_ASSESSED",
+      "review": "PENDING",
+      "authenticatedReview": false
+    }
+  ],
+  "checks": [
+    "current_exact_utf8_located",
+    "same_title_stale_version_rejected",
+    "missing_binding_pending",
+    "legacy_current_bytes_reject_stale_digest",
+    "locatable_stale_snapshot_not_current",
+    "relabelled_version_cannot_replace_digest",
+    "record_not_selected_rejected",
+    "stale_time_text_under_current_binding_rejected",
+    "all_receipts_unassessed_unauthenticated_pending"
+  ],
+  "passed": 9
+}

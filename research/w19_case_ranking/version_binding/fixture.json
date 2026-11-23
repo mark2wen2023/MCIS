@@ -1,0 +1,57 @@
+{
+  "scope": "developer-visible synthetic; not old27 evidence",
+  "hostSelection": {
+    "version": "v2",
+    "sha256": "79ea76ffc3f0cf1c6cf34e40c5dd28c81d2a3ef9bc4fc2e85f8a24cfadf4859f",
+    "recordId": "SYN-01"
+  },
+  "cards": [
+    {
+      "cardId": "SYN-CURRENT",
+      "content": {
+        "title": "虚构设备记录",
+        "body": "虚构：2030-06-04 00:01 显示告警；原因未核。",
+        "source": {
+          "locator": "source-records.txt#L1",
+          "excerpt": "虚构：2030-06-04 00:01 显示告警；原因未核。"
+        }
+      },
+      "sourceBinding": {
+        "file": "source-records.txt",
+        "version": "v2",
+        "sha256": "79ea76ffc3f0cf1c6cf34e40c5dd28c81d2a3ef9bc4fc2e85f8a24cfadf4859f",
+        "line": 1,
+        "recordId": "SYN-01"
+      }
+    },
+    {
+      "cardId": "SYN-STALE",
+      "content": {
+        "title": "虚构设备记录",
+        "body": "虚构：2030-06-03 23:58 显示告警；原因未核。",
+        "source": {
+          "locator": "source-records.txt#L1",
+          "excerpt": "虚构：2030-06-03 23:58 显示告警；原因未核。"
+        }
+      },
+      "sourceBinding": {
+        "file": "source-records.txt",
+        "version": "v1",
+        "sha256": "77f5137a21c65d28d6087a36d64fd61cc2f16a933bb5592f63aa5b60fe22ea77",
+        "line": 1,
+        "recordId": "SYN-01"
+      }
+    },
+    {
+      "cardId": "SYN-UNBOUND",
+      "content": {
+        "title": "虚构设备记录",
+        "body": "虚构：2030-06-04 00:01 显示告警；原因未核。",
+        "source": {
+          "locator": "source-records.txt#L1",
+          "excerpt": "虚构：2030-06-04 00:01 显示告警；原因未核。"
+        }
+      }
+    }
+  ]
+}
