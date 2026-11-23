@@ -1,0 +1,12 @@
+test_complete_retained_qualifier (__main__.Checks.test_complete_retained_qualifier) ... ok
+test_manifest_change_rejected (__main__.Checks.test_manifest_change_rejected) ... ok
+test_no_input_mutation (__main__.Checks.test_no_input_mutation) ... ok
+test_pending_is_not_confirmed_omission (__main__.Checks.test_pending_is_not_confirmed_omission) ... ok
+test_retention_one_does_not_permit_resolution (__main__.Checks.test_retention_one_does_not_permit_resolution) ... ok
+test_retention_one_with_confirmed_omission (__main__.Checks.test_retention_one_with_confirmed_omission) ... ok
+test_stale_review_and_output_policy_rejected (__main__.Checks.test_stale_review_and_output_policy_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.001s
+
+OK

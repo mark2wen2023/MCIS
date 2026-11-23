@@ -1,0 +1,22 @@
+{
+  "schema": "developer-conflict-control/v1",
+  "caseId": "synthetic-indicator",
+  "sourceText": "Synthetic observer A reports the indicator was on.\nSynthetic observer B reports the indicator was off.\nThe disagreement remains unresolved pending review.\n",
+  "sourceSha256": "6688cecfe38b7c866fe3268444a58975c4bfa720f6f7b80c826d1e6bf36ded04",
+  "required": [
+    "a",
+    "b",
+    "unresolved"
+  ],
+  "conflicts": {
+    "indicator": [
+      "a",
+      "b"
+    ]
+  },
+  "policy": {
+    "requiredQualifier": "unresolved",
+    "allowedResolution": "unresolved"
+  },
+  "origin": "developer_visible_not_independent_review"
+}
