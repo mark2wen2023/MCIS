@@ -45,7 +45,7 @@ export function PackagePanel({ who }: { who: string }) {
   useEffect(() => onPackageNavigation(() => setOpen(false)), [])
   return <section className="w83-package" aria-label="案件包工具">
     <div className="w83-heading"><div><span className="w83-eyebrow">.MCASE · 证据完整性</span><h2>案件包预检</h2></div><button type="button" aria-expanded={open} onClick={()=>setOpen(v=>!v)}>{open ? '关闭预检' : '选择案件包预检'}</button></div>
-    <p>上传到本机调查服务核对清单。预检不等于导入。受限基础资料首次导入请使用独立的导入面板；完整案件包还原未开放。当前支持范围的案件包导出位于下方对应案件卡片；不是完整案件备份。匹配版本的受限归档仅在工作记录与依赖全部校验通过时支持同案号新案恢复（无W10时1.2.0工作记录扩展；含W10时须1.3.0）；未知或不支持内容整包拒绝，不会成功遗漏。HFACS当前版本最多支持256个完整修订及对应回执，超限整体拒绝，不截断历史。</p>
+    <p>上传到本机调查服务核对清单。预检不等于导入。受限基础资料首次导入请使用独立的导入面板；完整案件包还原未开放。当前支持范围的案件包导出位于下方对应案件卡片；不是完整案件备份，也不是全系统备份。匹配版本的受限归档仅在工作记录与依赖全部校验通过时支持同案号新案恢复（无W10时1.2.0工作记录扩展；含W10时须1.3.0）；未知或不支持内容整包拒绝，不会成功遗漏。HFACS当前版本最多支持256个完整修订及对应回执，超限整体拒绝，不截断历史。</p>
     {open && <PackageCheckForm key={who} who={who}/>}
   </section>
 }
