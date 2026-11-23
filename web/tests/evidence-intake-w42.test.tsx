@@ -1,3 +1,4 @@
+import { EvidenceDigests } from '../src/evidenceIntake/EvidenceDigests'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { PROFILE,MAX_FILE_BYTES,intakeBody,parsePreview,parseReceipt,utcSeconds,fileNameValid,encodeBytes,sameMetadata,type Metadata } from '../src/evidenceIntake/model'
 let n=0;const check=(v:unknown,label:string)=>{if(!v)throw Error(label);n++};const reject=(fn:()=>unknown)=>{let yes=false;try{fn()}catch{yes=true}check(yes,'invalid value must reject')}
@@ -22,6 +23,17 @@ check(parseReceipt({...receipt,evidence:{...receipt.evidence,note:'later note ed
 for(const d of [{caseId:'other'},{evidenceId:'bad'},{requestDigest:'c'.repeat(64)},{sourceSha256:'c'.repeat(64)},{fileName:'../bad'},{byteLength:1},{metadata:{...metadata,title:'changed'}},{registeredUtc:'bad'},{registeredBy:''},{registeredRole:'Public'},{registeredRole:['Investigator']},{replayed:'false'},{evidence:{...receipt.evidence,caseId:'wrong'}},{evidence:{...receipt.evidence,sha256:'bad'}},{evidence:{...receipt.evidence,status:'Authentic'}},{evidence:{...receipt.evidence,status:['Unverified']}},{evidence:{...receipt.evidence,accessCount:-1}}])reject(()=>parseReceipt({...receipt,...d},'C',preview))
 reject(()=>parseReceipt(receipt,'C',undefined,'EV-002'));check(sameMetadata(metadata,{...metadata}),'metadata comparison key based')
 async function main(){
+ const original='a'.repeat(64), current='b'.repeat(64)
+ const digestView=(sha256:string,currentSha256:string)=>renderToStaticMarkup(<dl><EvidenceDigests item={{sha256,currentSha256}}/></dl>)
+ const changed=digestView(original,current)
+ check(changed.includes('登记原始 SHA-256</dt>')&&changed.includes('保管链当前 SHA-256</dt>'),'registration and custody hashes separately labelled')
+ check(changed.indexOf(original)<changed.indexOf('保管链当前 SHA-256')&&changed.indexOf(current)>changed.indexOf('保管链当前 SHA-256'),'original and current values mapped without substitution')
+ const next=digestView(original,'c'.repeat(64))
+ check(next.includes(original)&&next.includes('c'.repeat(64))&&!next.includes(current),'new props preserve original and replace current display')
+ check(digestView(original,original).split(original).length===3,'equal hashes retain both labels and values')
+ check(digestView(original,'').includes('未提供')&&!digestView(original,'').includes('>'+original+'</dd><dt>摘要口径'),'missing current hash not replaced with original')
+ check(changed.includes('不是解析修订号')&&changed.includes('不证明内容真实性')&&changed.includes('不展示解析结果版本'),'does not invent parsed version or authenticity')
+
  const {EvidenceIntakePanel,Declaration}=await import('../src/evidenceIntake/EvidenceIntakePanel');const {setIdentity}=await import('../src/api')
  let html=renderToStaticMarkup(<EvidenceIntakePanel caseId="C" who={'Investigator\n调查员 A'} selectedEvidenceId="EV-001"/>);check(html.includes('登记已有文件副本'),'closed entry real scope');check(!html.includes('已核对登记回执'),'no fake initial success')
  html=renderToStaticMarkup(<Declaration metadata={metadata}/>);check(!html.includes('<img'),'source escaped');check(html.includes('&lt;img'),'escaped literal retained');check(html.includes('提取 UTC'),'extraction label')

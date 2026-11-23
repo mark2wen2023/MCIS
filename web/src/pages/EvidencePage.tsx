@@ -2,6 +2,7 @@ import { useMemo, useState, useSyncExternalStore } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import type { EChartsOption } from 'echarts'
 import { api, casePath, CASE_ID, getRole, getOperator, onIdentityChange } from '../api'
+import { EvidenceDigests } from '../evidenceIntake/EvidenceDigests'
 import { EvidenceIntakePanel } from '../evidenceIntake/EvidenceIntakePanel'
 import { announceEvidenceSelection } from '../evidenceIntake/navigation'
 import { AlignPreviewPanel } from '../align/AlignPreviewPanel'
@@ -126,7 +127,7 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
         <Panel title="证据清单（Evidence Register）" meta={<><span>caseId · EV-NNN</span><span>点击行查看保管链</span></>} bodyStyle={{ padding: 0, maxHeight: 300 }}>
           <table className="p6-table">
             <thead>
-              <tr><th>编号</th><th>证据</th><th>来源 / 提取人</th><th>提取时间</th><th>SHA-256</th><th>访问</th><th>标记</th><th>状态</th></tr>
+              <tr><th>编号</th><th>证据</th><th>来源 / 提取人</th><th>提取时间</th><th>保管链当前 SHA-256</th><th>访问</th><th>标记</th><th>状态</th></tr>
             </thead>
             <tbody>
               {items.map((e) => (
@@ -177,7 +178,7 @@ function CustodyPanel({ caseId, item, events, onChanged, offsetMinutes }: { offs
     <Panel title={`保管链 · ${id}`} meta={<span>audit/custody.jsonl · 只追加</span>} bodyStyle={{ maxHeight: 300 }}>
       <dl className="kv" style={{ marginTop: 0 }}>
         <dt>证据</dt><dd>{item.title}</dd>
-        <dt>登记 SHA</dt><dd className="mono" style={{ whiteSpace: 'normal' }}>{item.sha256}</dd>
+        <EvidenceDigests item={item} />
         <dt>路径</dt><dd className="mono">{item.relativePath}</dd>
         <dt>保密 / 状态</dt>
         <dd>
