@@ -48,6 +48,7 @@ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, se
       </div>
 
       <div className="p6-note an-source" data-testid="source-banner">
+        <div data-testid="analysis-result-scope">既有离线分析结果（种子数据），非当前登记航迹重新计算；尚未绑定当前登记原件版本。同案登记航迹变更不代表这些结果已更新。种子自检不代表当前版本核验。</div>
         <b>{data.title}</b> · <span className="mono">{data.caseId}</span> · {data.sourceLabel}
         {serviceAddr ? <> · 服务 <span className="mono">{serviceAddr}</span></> : null}
       </div>
