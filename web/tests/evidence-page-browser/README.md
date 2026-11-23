@@ -48,3 +48,22 @@ states only. Do not commit output, compiled Python or generated dist.
 Local authoring checks: Vite build exit0 (large chunk warning), Python compile
 exit0, inherited evidence-metrics SSR 10 assertions exit0. Browser not attempted
 on the known sandbox-blocked host; no mounted lifecycle assertions yet passed.
+
+## Request/metric wait correction
+
+Every navigation/identity action captures the monotonic request baseline BEFORE
+clicking. The wait uses one uniquely matching new request (`id > baseline`, exact
+case evidence URL and encoded simulated operator). Old pending entries and
+ambiguous matches cannot satisfy it. Initial full navigation uses baseline zero.
+Metric waits require exactly four selected metric values, never empty-array truth.
+Old rejected responses carry LATE-* markers; current rejection carries
+CURRENT-DENIAL, which must remain visible after the old request completes.
+
+```sh
+node web/tests/evidence-page-browser/predicates.test.cjs
+```
+
+13 ordinary offline checks execute the same JS predicates loaded by check.py,
+including old pending, wrong case/operator, ambiguous requests and 0/3/5 metrics.
+These checks passed; they do not run Playwright, React lifecycle or Chromium.
+The corrected fixture also builds and check.py compiles; browser remains unrun.
