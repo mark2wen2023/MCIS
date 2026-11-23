@@ -1,0 +1,54 @@
+{
+  "tests": 9,
+  "passed": true,
+  "pdfRun": false,
+  "ocrRun": false,
+  "modelRun": false,
+  "results": {
+    "missing": {
+      "sourceSha256": "5e81572e5cd74c9a73c0cb96b216f6d54a32d3f03c7e333a24b04174f2e8a0c6",
+      "page": 2,
+      "recordId": "panel-alarm",
+      "quote": "08:30",
+      "precision": "page",
+      "originalBox": null,
+      "reason": "unverified_transform",
+      "scope": "fixed_synthetic_coordinates_not_pdf_ocr",
+      "authorityVerified": false
+    },
+    "upright": {
+      "sourceSha256": "5e81572e5cd74c9a73c0cb96b216f6d54a32d3f03c7e333a24b04174f2e8a0c6",
+      "page": 1,
+      "recordId": "rehearsal",
+      "quote": "08:30",
+      "precision": "exact_fixture_box",
+      "originalBox": [
+        40,
+        60,
+        100,
+        80
+      ],
+      "reason": "verified_test_transform",
+      "scope": "fixed_synthetic_coordinates_not_pdf_ocr",
+      "authorityVerified": false,
+      "coordinateUnit": "synthetic_page_units_top_left"
+    },
+    "rotated": {
+      "sourceSha256": "5e81572e5cd74c9a73c0cb96b216f6d54a32d3f03c7e333a24b04174f2e8a0c6",
+      "page": 2,
+      "recordId": "panel-alarm",
+      "quote": "08:30",
+      "precision": "exact_fixture_box",
+      "originalBox": [
+        100,
+        200,
+        300,
+        240
+      ],
+      "reason": "verified_test_transform",
+      "scope": "fixed_synthetic_coordinates_not_pdf_ocr",
+      "authorityVerified": false,
+      "coordinateUnit": "synthetic_page_units_top_left"
+    }
+  }
+}
