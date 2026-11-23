@@ -1,0 +1,20 @@
+{
+  "schema": "synthetic-ocr-receipt/v1",
+  "page": 2,
+  "imageSha256": "60cdfab7def30e761f2f0f446e798b1d8fbdb6eff6e96fed4b7aaac2a83359fb",
+  "rawSha256": "38e6803e935775dcbd57fc6131308903ce04e1ec1474c6bbc8ddda65a7cd01e7",
+  "status": "self_made_control",
+  "transform": {
+    "crop": [
+      132,
+      588,
+      199,
+      694
+    ],
+    "rotation": 90,
+    "size": [
+      106,
+      67
+    ]
+  }
+}

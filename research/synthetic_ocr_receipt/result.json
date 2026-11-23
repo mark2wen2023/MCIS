@@ -1,0 +1,121 @@
+{
+  "tests": 8,
+  "passed": true,
+  "ocrRun": false,
+  "scores": null,
+  "controls": {
+    "missing": {
+      "schema": "synthetic-ocr-receipt/v1",
+      "source": {
+        "pdfSha256": "2df2fa8d595de9c293e1dc3d19b090d24a8ad82c00d7ad8d368358341f157ae1",
+        "imageSha256": "60cdfab7def30e761f2f0f446e798b1d8fbdb6eff6e96fed4b7aaac2a83359fb",
+        "page": 2
+      },
+      "status": "missing",
+      "rawSha256": null,
+      "rawPageIndex": null,
+      "rawPageIndexStatus": "missing",
+      "lines": [],
+      "ocrRun": false,
+      "scores": null,
+      "confirmed": false,
+      "productionImportSupported": false,
+      "origin": "self_made_control"
+    },
+    "not_run": {
+      "schema": "synthetic-ocr-receipt/v1",
+      "source": {
+        "pdfSha256": "2df2fa8d595de9c293e1dc3d19b090d24a8ad82c00d7ad8d368358341f157ae1",
+        "imageSha256": "60cdfab7def30e761f2f0f446e798b1d8fbdb6eff6e96fed4b7aaac2a83359fb",
+        "page": 2
+      },
+      "status": "not_run",
+      "rawSha256": null,
+      "rawPageIndex": null,
+      "rawPageIndexStatus": "missing",
+      "lines": [],
+      "ocrRun": false,
+      "scores": null,
+      "confirmed": false,
+      "productionImportSupported": false,
+      "origin": "self_made_control"
+    },
+    "crop_control": {
+      "schema": "synthetic-ocr-receipt/v1",
+      "source": {
+        "pdfSha256": "2df2fa8d595de9c293e1dc3d19b090d24a8ad82c00d7ad8d368358341f157ae1",
+        "imageSha256": "60cdfab7def30e761f2f0f446e798b1d8fbdb6eff6e96fed4b7aaac2a83359fb",
+        "page": 2
+      },
+      "status": "self_made_control",
+      "rawSha256": "38e6803e935775dcbd57fc6131308903ce04e1ec1474c6bbc8ddda65a7cd01e7",
+      "rawPageIndex": null,
+      "rawPageIndexStatus": "missing",
+      "lines": [
+        {
+          "line_index": 0,
+          "text": "08:30",
+          "raw_polygon": [
+            [
+              71,
+              26
+            ],
+            [
+              71,
+              48
+            ],
+            [
+              9,
+              48
+            ],
+            [
+              9,
+              26
+            ]
+          ],
+          "raw_bbox": [
+            9,
+            26,
+            71,
+            48
+          ],
+          "model_score": null,
+          "model_score_status": "missing",
+          "originalRasterPolygon": [
+            [
+              158,
+              623
+            ],
+            [
+              180,
+              623
+            ],
+            [
+              180,
+              685
+            ],
+            [
+              158,
+              685
+            ]
+          ],
+          "cellMatches": [
+            "display-time"
+          ],
+          "literalTextMatches": [
+            "display-time"
+          ],
+          "originalPdfPrecision": "page",
+          "originalPdfPolygon": null,
+          "needs_review": true
+        }
+      ],
+      "ocrRun": false,
+      "scores": null,
+      "confirmed": false,
+      "productionImportSupported": false,
+      "origin": "self_made_control",
+      "inverseVerified": true
+    }
+  }
+}
