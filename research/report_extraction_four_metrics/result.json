@@ -1,0 +1,220 @@
+{
+  "tests": 15,
+  "passed": true,
+  "controls": {
+    "valid_empty": {
+      "status": "complete",
+      "metrics": {
+        "citationCoverage": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null
+        },
+        "locatorAccuracy": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null
+        },
+        "semanticSupport": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null
+        },
+        "mandatoryRecall": {
+          "numerator": 0,
+          "denominator": 3,
+          "value": 0.0
+        },
+        "conflictRetention": {
+          "numerator": 0,
+          "denominator": 1,
+          "value": 0.0
+        }
+      },
+      "labels": {
+        "S": 0,
+        "C": 0,
+        "U": 0,
+        "D": 0
+      },
+      "pendingMandatory": [],
+      "missingMandatory": [
+        "m1",
+        "m2",
+        "m3"
+      ],
+      "controlFailures": [
+        "conflict_not_preserved"
+      ],
+      "modelRun": false,
+      "semanticJudgmentAutomated": false,
+      "reviewOrigin": "developer_visible_synthetic_control_not_independent_review"
+    },
+    "exact_but_unsupported": {
+      "status": "complete",
+      "metrics": {
+        "citationCoverage": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0
+        },
+        "locatorAccuracy": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0
+        },
+        "semanticSupport": {
+          "numerator": 2,
+          "denominator": 3,
+          "value": 0.6666666666666666
+        },
+        "mandatoryRecall": {
+          "numerator": 2,
+          "denominator": 3,
+          "value": 0.6666666666666666
+        },
+        "conflictRetention": {
+          "numerator": 1,
+          "denominator": 1,
+          "value": 1.0
+        }
+      },
+      "labels": {
+        "S": 2,
+        "C": 0,
+        "U": 1,
+        "D": 0
+      },
+      "pendingMandatory": [],
+      "missingMandatory": [
+        "m3"
+      ],
+      "controlFailures": [
+        "semantic_not_supported"
+      ],
+      "modelRun": false,
+      "semanticJudgmentAutomated": false,
+      "reviewOrigin": "developer_visible_synthetic_control_not_independent_review"
+    },
+    "full": {
+      "status": "complete",
+      "metrics": {
+        "citationCoverage": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0
+        },
+        "locatorAccuracy": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0
+        },
+        "semanticSupport": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0
+        },
+        "mandatoryRecall": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0
+        },
+        "conflictRetention": {
+          "numerator": 1,
+          "denominator": 1,
+          "value": 1.0
+        }
+      },
+      "labels": {
+        "S": 3,
+        "C": 0,
+        "U": 0,
+        "D": 0
+      },
+      "pendingMandatory": [],
+      "missingMandatory": [],
+      "controlFailures": [],
+      "modelRun": false,
+      "semanticJudgmentAutomated": false,
+      "reviewOrigin": "developer_visible_synthetic_control_not_independent_review"
+    },
+    "one_side": {
+      "status": "complete",
+      "metrics": {
+        "citationCoverage": {
+          "numerator": 2,
+          "denominator": 2,
+          "value": 1.0
+        },
+        "locatorAccuracy": {
+          "numerator": 2,
+          "denominator": 2,
+          "value": 1.0
+        },
+        "semanticSupport": {
+          "numerator": 2,
+          "denominator": 2,
+          "value": 1.0
+        },
+        "mandatoryRecall": {
+          "numerator": 2,
+          "denominator": 3,
+          "value": 0.6666666666666666
+        },
+        "conflictRetention": {
+          "numerator": 0,
+          "denominator": 1,
+          "value": 0.0
+        }
+      },
+      "labels": {
+        "S": 2,
+        "C": 0,
+        "U": 0,
+        "D": 0
+      },
+      "pendingMandatory": [],
+      "missingMandatory": [
+        "m2"
+      ],
+      "controlFailures": [
+        "conflict_not_preserved"
+      ],
+      "modelRun": false,
+      "semanticJudgmentAutomated": false,
+      "reviewOrigin": "developer_visible_synthetic_control_not_independent_review"
+    },
+    "pending": {
+      "status": "pending",
+      "metrics": {
+        "citationCoverage": {
+          "numerator": 2,
+          "denominator": 2,
+          "value": 1.0
+        },
+        "locatorAccuracy": {
+          "numerator": 2,
+          "denominator": 2,
+          "value": 1.0
+        },
+        "semanticSupport": null,
+        "mandatoryRecall": null,
+        "conflictRetention": null
+      },
+      "labels": {
+        "S": 2,
+        "C": 0,
+        "U": 0,
+        "D": 0
+      },
+      "pendingMandatory": [
+        "m2"
+      ],
+      "missingMandatory": null,
+      "controlFailures": [],
+      "modelRun": false,
+      "semanticJudgmentAutomated": false,
+      "reviewOrigin": "developer_visible_synthetic_control_not_independent_review"
+    }
+  }
+}

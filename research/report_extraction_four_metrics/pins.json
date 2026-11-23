@@ -1,0 +1,22 @@
+[
+  {
+    "path": "research/semantic_support/evaluate.py",
+    "ref": "194ee6be7a4b31c0e23b5615b5d60cd9b0667ed0",
+    "blob": "5f69174e642b8fd127c78c3df121889f4a23cebc"
+  },
+  {
+    "path": "tests_acceptance/synthetic-utf8-locator/check.py",
+    "ref": "194ee6be7a4b31c0e23b5615b5d60cd9b0667ed0",
+    "blob": "510acb5484f22d7a52fe77b32aa6d6126c53b1f6"
+  },
+  {
+    "path": "tests_acceptance/synthetic-report-draft/check_utf8_joined.py",
+    "ref": "194ee6be7a4b31c0e23b5615b5d60cd9b0667ed0",
+    "blob": "88beef211d02edd739a290f7cd1de5d99902ba35"
+  },
+  {
+    "path": "tests_acceptance/synthetic-report-draft/project.py",
+    "ref": "194ee6be7a4b31c0e23b5615b5d60cd9b0667ed0",
+    "blob": "50761d1fe0c27086a7866a3e470795abb854546d"
+  }
+]
