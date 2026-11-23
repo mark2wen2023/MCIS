@@ -1,0 +1,14 @@
+[
+  {
+    "name": "seat_note.py",
+    "blob": "4d678d13361e5c29442252321f299aec842742fc",
+    "ref": "6d4b00032abdba1f3b1cce46ecd3dff488f1aa81",
+    "path": "research/haiqing_single_seat/seat_note.py"
+  },
+  {
+    "name": "packet.py",
+    "blob": "ff2018dad2d58e9fe158f503ecd71a004c20e226",
+    "ref": "420284ab5fd44c94b737f8c1cf51bc0ef09aea29",
+    "path": "research/expert_group/packet.py"
+  }
+]

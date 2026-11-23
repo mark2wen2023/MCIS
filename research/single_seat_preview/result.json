@@ -1,0 +1,43 @@
+{
+  "tests": 5,
+  "passed": true,
+  "preview": {
+    "type": "synthetic_single_seat_readonly_preview/v1",
+    "caseId": "SYN-XREPO-001",
+    "alignedUtc": "2026-02-01T12:02:04.250Z",
+    "humanAction": {
+      "status": "pending",
+      "confirmed": false,
+      "saved": false
+    },
+    "finding": "Evidence is insufficient to determine whether either vessel turned.",
+    "rows": [
+      {
+        "itemId": "item_001",
+        "vesselId": "SYN-VESSEL-A",
+        "evidenceState": "declared_gap",
+        "sufficiency": "insufficient",
+        "statement": "Vessel A has a declared evidence gap at the selected UTC.",
+        "limitation": "This exact UTC evidence does not establish the maneuver.",
+        "reference": {
+          "evidenceId": "SYN-E-A",
+          "jsonPointer": "/sampling/missingIntervals/1",
+          "meaning": "host_bound_synthetic_gap_locator_not_observation_or_authority"
+        }
+      },
+      {
+        "itemId": "item_002",
+        "vesselId": "SYN-VESSEL-B",
+        "evidenceState": "no_observation_at_time",
+        "sufficiency": "insufficient",
+        "statement": "Vessel B has no exact observation at the selected UTC.",
+        "limitation": "This exact UTC evidence does not establish the maneuver.",
+        "reference": null
+      }
+    ],
+    "factActivated": false,
+    "actions": [],
+    "scope": "T124.250_only_no_queue_no_authentication"
+  },
+  "text": "synthetic_single_seat_readonly_preview/v1\nSYN-XREPO-001 / 2026-02-01T12:02:04.250Z\nHuman review: pending; not confirmed; not saved.\nEvidence is insufficient to determine whether either vessel turned.\nSYN-VESSEL-A: declared_gap / insufficient\nVessel A has a declared evidence gap at the selected UTC.\nReference: SYN-E-A /sampling/missingIntervals/1 (gap only)\nThis exact UTC evidence does not establish the maneuver.\nSYN-VESSEL-B: no_observation_at_time / insufficient\nVessel B has no exact observation at the selected UTC.\nReference: none (no exact observation)\nThis exact UTC evidence does not establish the maneuver.\n"
+}

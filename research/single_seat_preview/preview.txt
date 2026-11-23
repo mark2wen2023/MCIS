@@ -1,0 +1,12 @@
+synthetic_single_seat_readonly_preview/v1
+SYN-XREPO-001 / 2026-02-01T12:02:04.250Z
+Human review: pending; not confirmed; not saved.
+Evidence is insufficient to determine whether either vessel turned.
+SYN-VESSEL-A: declared_gap / insufficient
+Vessel A has a declared evidence gap at the selected UTC.
+Reference: SYN-E-A /sampling/missingIntervals/1 (gap only)
+This exact UTC evidence does not establish the maneuver.
+SYN-VESSEL-B: no_observation_at_time / insufficient
+Vessel B has no exact observation at the selected UTC.
+Reference: none (no exact observation)
+This exact UTC evidence does not establish the maneuver.

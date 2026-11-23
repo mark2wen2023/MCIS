@@ -1,0 +1,9 @@
+{
+  "cleanCopyTests": 5,
+  "exitCode": 0,
+  "stdoutIdentical": true,
+  "changedSourceExit": 1,
+  "missingSourceExit": 1,
+  "mode": "pinned_source_export",
+  "sourceModuleCopiesPublished": false
+}
