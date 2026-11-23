@@ -1,0 +1,39 @@
+{
+  "status": "blocked",
+  "staticInputsMatch": false,
+  "readyForInference": false,
+  "packages": {
+    "paddlepaddle": {
+      "expected": "3.2.0",
+      "observed": null,
+      "match": false
+    },
+    "paddleocr": {
+      "expected": "3.3.2",
+      "observed": null,
+      "match": false
+    },
+    "paddlex": {
+      "expected": "3.3.13",
+      "observed": null,
+      "match": false
+    }
+  },
+  "models": {
+    "PP-OCRv5_mobile_det": "missing",
+    "PP-OCRv5_mobile_rec": "missing"
+  },
+  "renders": {
+    "poppler-1.png": "match",
+    "poppler-2.png": "match"
+  },
+  "modelImported": false,
+  "inferenceRun": false,
+  "networkUsed": false,
+  "remaining": [
+    "transitive dependency and native ABI compatibility",
+    "CPU operator initialization and execution",
+    "approved synthetic producer entry: public-page6 runner remains incompatible",
+    "verified crop/rotation processing provenance"
+  ]
+}

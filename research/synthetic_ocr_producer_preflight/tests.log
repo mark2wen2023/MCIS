@@ -1,0 +1,12 @@
+test_changed_archive_extracted_and_image (__main__.Checks.test_changed_archive_extracted_and_image) ... ok
+test_missing_files (__main__.Checks.test_missing_files) ... ok
+test_missing_member (__main__.Checks.test_missing_member) ... ok
+test_missing_packages (__main__.Checks.test_missing_packages) ... ok
+test_no_model_import (__main__.Checks.test_no_model_import) ... ok
+test_positive_never_runtime_ready (__main__.Checks.test_positive_never_runtime_ready) ... ok
+test_version_mismatch (__main__.Checks.test_version_mismatch) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.008s
+
+OK
