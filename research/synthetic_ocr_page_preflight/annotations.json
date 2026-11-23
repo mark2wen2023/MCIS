@@ -1,0 +1,15 @@
+{
+  "origin": "assistant_visual_developer_annotation_not_independent_review",
+  "method": "Viewed both original PNGs at 675x900. Manually chose inset rectangles from visible page-2 grid lines; no PDF text-layer boxes used.",
+  "coordinates": "original PNG pixels, top-left origin, x right/y down; rectangles [left,top,right,bottom]",
+  "pdfSha256": "2df2fa8d595de9c293e1dc3d19b090d24a8ad82c00d7ad8d368358341f157ae1",
+  "pages": [
+    {"page": 1, "file": "poppler-1.png", "sha256": "004e445bdeb0536d14eed7ca765d477eb9fb6bf12db18daa3cd82a27744701c8", "size": [675,900]},
+    {"page": 2, "file": "poppler-2.png", "sha256": "60cdfab7def30e761f2f0f446e798b1d8fbdb6eff6e96fed4b7aaac2a83359fb", "size": [675,900]}
+  ],
+  "cells": [
+    {"id":"display-time", "page":2, "rect":[132,588,199,694], "visibleText":"08:30"},
+    {"id":"interpretation", "page":2, "rect":[132,431,199,582], "visibleText":"Alarm, unverified"}
+  ],
+  "page1Note": "No table on page 1. Its 08:30 is rehearsal text, not a target table cell."
+}

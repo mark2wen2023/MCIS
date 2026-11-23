@@ -1,0 +1,58 @@
+{
+  "tests": 9,
+  "passed": true,
+  "ocrRun": false,
+  "modelRun": false,
+  "scores": null,
+  "controls": {
+    "same_text_page1": {
+      "physicalPageVerified": true,
+      "page": 1,
+      "renderSha256": "004e445bdeb0536d14eed7ca765d477eb9fb6bf12db18daa3cd82a27744701c8",
+      "literalTextMatches": [
+        "display-time"
+      ],
+      "containedCells": [],
+      "polygonOrigin": "handcrafted_control_not_ocr",
+      "originalPdfPrecision": "page",
+      "originalPdfPolygon": null,
+      "inverseTransformStatus": "not_supplied_or_verified",
+      "ocrStatus": "not_run",
+      "ocrScore": null
+    },
+    "display-time": {
+      "physicalPageVerified": true,
+      "page": 2,
+      "renderSha256": "60cdfab7def30e761f2f0f446e798b1d8fbdb6eff6e96fed4b7aaac2a83359fb",
+      "literalTextMatches": [
+        "display-time"
+      ],
+      "containedCells": [
+        "display-time"
+      ],
+      "polygonOrigin": "handcrafted_control_not_ocr",
+      "originalPdfPrecision": "page",
+      "originalPdfPolygon": null,
+      "inverseTransformStatus": "not_supplied_or_verified",
+      "ocrStatus": "not_run",
+      "ocrScore": null
+    },
+    "interpretation": {
+      "physicalPageVerified": true,
+      "page": 2,
+      "renderSha256": "60cdfab7def30e761f2f0f446e798b1d8fbdb6eff6e96fed4b7aaac2a83359fb",
+      "literalTextMatches": [
+        "interpretation"
+      ],
+      "containedCells": [
+        "interpretation"
+      ],
+      "polygonOrigin": "handcrafted_control_not_ocr",
+      "originalPdfPrecision": "page",
+      "originalPdfPolygon": null,
+      "inverseTransformStatus": "not_supplied_or_verified",
+      "ocrStatus": "not_run",
+      "ocrScore": null
+    }
+  }
+}
