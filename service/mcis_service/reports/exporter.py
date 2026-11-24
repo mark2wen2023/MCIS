@@ -69,8 +69,16 @@ def _status(value):
     return f"{value} / {_STATUS_ZH.get(value, value)}"
 
 
-def _reference_label(citation):
+def _reference_key(citation):
+    return citation["kind"], citation["id"], citation["href"], citation.get("sourceRef", "")
+
+
+def _reference_label(citation, locator_labels=None):
     label = f"[{citation['id']}]"
+    if locator_labels:
+        marker = locator_labels.get(_reference_key(citation))
+        if marker is not None:
+            label += f"[R{marker:02d}]"
     registration = citation.get("registration")
     if registration == "unregistered" or citation.get("unregistered"):
         label += "（未登记 / unregistered）"
@@ -81,11 +89,11 @@ def _reference_label(citation):
     return label
 
 
-def _sentence_text(sentence, lang):
+def _sentence_text(sentence, lang, locator_labels=None):
     text = sentence.get("textZh" if lang == "zh" else "textEn", "")
     if sentence.get("status") == "Dismissed":
         text = ("已驳回内容：" if lang == "zh" else "Dismissed content: ") + text
-    citations = " ".join(_reference_label(c) for c in sentence.get("citations", []))
+    citations = " ".join(_reference_label(c, locator_labels) for c in sentence.get("citations", []))
     text += " " + citations if citations else ""
     if sentence.get("source") == "Investigator" and citations:
         text += "\n" + (_INHERITED_ZH if lang == "zh" else _INHERITED_EN)
@@ -103,11 +111,24 @@ def _references(report):
     for section in report.get("sections", []):
         for sentence in section.get("sentences", []):
             for citation in sentence.get("citations", []):
-                found.setdefault((citation["kind"], citation["id"], citation["href"], citation.get("sourceRef", "")), citation)
+                found.setdefault(_reference_key(citation), citation)
     return list(found.values())
 
 
+def _locator_labels(references):
+    # Only disambiguate IDs with multiple targets. Markers are local to this export,
+    # assigned in first-use order, and do not change the stored evidence identifier.
+    counts = {}
+    for citation in references:
+        evidence_id = citation["id"]
+        counts[evidence_id] = counts.get(evidence_id, 0) + 1
+    ambiguous = (c for c in references if counts[c["id"]] > 1)
+    return {_reference_key(c): number for number, c in enumerate(ambiguous, 1)}
+
+
 def render_pdf(report: dict, lang: str, *, include_glossary=True) -> bytes:
+    refs = _references(report)
+    locator_labels = _locator_labels(refs)
     font = _font()
     buffer = io.BytesIO()
     body = ParagraphStyle("rpt-body", fontName=font, fontSize=9, leading=14, wordWrap="CJK", spaceAfter=5)
@@ -157,7 +178,7 @@ def render_pdf(report: dict, lang: str, *, include_glossary=True) -> bytes:
             flow.append(p("含缺数据项 / Contains missing data", small))
         if lang == "bilingual":
             rows = [[p("中文", small), p("English", small)]]
-            rows.extend([[p(_sentence_text(s, "zh")), p(_sentence_text(s, "en"))] for s in _sentences(section)])
+            rows.extend([[p(_sentence_text(s, "zh", locator_labels)), p(_sentence_text(s, "en", locator_labels))] for s in _sentences(section)])
             table = Table(rows, colWidths=[available / 2, available / 2], repeatRows=1, splitByRow=1, splitInRow=1)
             table.setStyle(TableStyle([
                 ("VALIGN", (0, 0), (-1, -1), "TOP"), ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#eef4f8")),
@@ -167,13 +188,12 @@ def render_pdf(report: dict, lang: str, *, include_glossary=True) -> bytes:
             ]))
             flow.append(table)
         else:
-            flow.extend(p(_sentence_text(sentence, lang)) for sentence in _sentences(section))
+            flow.extend(p(_sentence_text(sentence, lang, locator_labels)) for sentence in _sentences(section))
     flow.append(p("引用表 / References", heading))
-    refs = _references(report)
     if not refs:
         flow.append(p("缺数据：未提供引用 / Missing data: no references provided"))
     for citation in refs:
-        flow.append(p(f"{_reference_label(citation)} {citation['kind']} — {citation['href']} | {citation.get('sourceRef', '')}", small))
+        flow.append(p(f"{_reference_label(citation, locator_labels)} {citation['kind']} — {citation['href']} | {citation.get('sourceRef', '')}", small))
     if include_glossary:
         flow.append(p("术语表 / SMCP glossary（中文为项目译文）", heading))
         flow.extend(p(f"{term['termZh']} / {term['termEn']}", small) for term in GLOSSARY)
@@ -194,8 +214,8 @@ def _docx_font(style):
     fonts.set(qn("w:eastAsia"), "Noto Sans SC")
 
 
-def _docx_sentence(cell, sentence, lang):
-    cell.text = _sentence_text(sentence, lang)
+def _docx_sentence(cell, sentence, lang, locator_labels):
+    cell.text = _sentence_text(sentence, lang, locator_labels)
     if lang != "zh":
         return
     # A Chinese run needs an explicit East Asian font and language in narrow table columns.
@@ -215,6 +235,8 @@ def _repeat_docx_header(row):
 
 
 def render_docx(report: dict, lang: str, *, include_glossary=True) -> bytes:
+    refs = _references(report)
+    locator_labels = _locator_labels(refs)
     document = Document()
     for name in ("Normal", "Title", "Heading 1", "Heading 2"):
         _docx_font(document.styles[name])
@@ -252,17 +274,16 @@ def render_docx(report: dict, lang: str, *, include_glossary=True) -> bytes:
             _repeat_docx_header(table.rows[0])
             for sentence in _sentences(section_data):
                 cells = table.add_row().cells
-                _docx_sentence(cells[0], sentence, "zh")
-                _docx_sentence(cells[1], sentence, "en")
+                _docx_sentence(cells[0], sentence, "zh", locator_labels)
+                _docx_sentence(cells[1], sentence, "en", locator_labels)
         else:
             for sentence in _sentences(section_data):
-                document.add_paragraph(_sentence_text(sentence, lang))
+                document.add_paragraph(_sentence_text(sentence, lang, locator_labels))
     document.add_heading("引用表 / References", level=1)
-    refs = _references(report)
     if not refs:
         document.add_paragraph("缺数据：未提供引用 / Missing data: no references provided")
     for citation in refs:
-        document.add_paragraph(f"{_reference_label(citation)} {citation['kind']} — {citation['href']} | {citation.get('sourceRef', '')}")
+        document.add_paragraph(f"{_reference_label(citation, locator_labels)} {citation['kind']} — {citation['href']} | {citation.get('sourceRef', '')}")
     if include_glossary:
         document.add_heading("术语表 / SMCP glossary（中文为项目译文）", level=1)
         table = document.add_table(rows=1, cols=2)
