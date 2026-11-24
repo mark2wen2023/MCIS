@@ -6,7 +6,7 @@ ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT))
 from research.expert_budget import four_chair as chair
 from research.expert_group import packet
-from research.w20_four_review.project import project, ProjectionError
+from research.w20_four_review.project import project, ProjectionError, REVIEW_QUESTIONS
 
 def main():
     p=argparse.ArgumentParser()
@@ -73,7 +73,19 @@ def main():
     assert view['hostEvidenceAvailability']=='BLOCKED_NO_INTERFACE'
     assert view['rows'][0]['declaredLabel']=='supported' and view['rows'][3]['declaredLabel']=='conflicted'
     assert view['rows'][0]['source']==receipt['opinions'][0]['locatedReviewSources'][view['rows'][0]['itemId']]
-    checks=['actual_four_chair_same_case','opposed_seats_and_uncertainty_retained',
+    # Same existing output: conflicting AND insufficient rows remain separately bound.
+    for row in view['rows']:
+        assert row['reviewQuestions']==list(REVIEW_QUESTIONS[row['declaredLabel']])
+        assert row['reviewQuestionsOrigin']=='fixed_guidance_not_seat_or_human_answer'
+        original=next(op for op in receipt['opinions'] if op['role']==row['role'])
+        declared=next(x for x in original['reviews'] if x['itemId']==row['itemId'])
+        assert all(row[k]==declared[k] for k in ('quote','rationale','uncertainty'))
+        assert row['source']==original['locatedReviewSources'][row['itemId']]
+    assert any(x['declaredLabel']=='conflicted' for x in view['rows'])
+    assert any(x['declaredLabel']=='insufficient' for x in view['rows'])
+    view['rows'][0]['reviewQuestions'].append('display-only edit')
+    assert 'display-only edit' not in project(receipt,host)['rows'][0]['reviewQuestions']
+    checks=['questions_bound_to_declared_label','conflict_and_insufficient_coexist','original_opinion_and_source_unchanged','question_copy_isolation','actual_four_chair_same_case','opposed_seats_and_uncertainty_retained',
       'exact_sources_and_binding_retained','pending_without_fabricated_stop','no_input_or_ledger_mutation']
     mutations=[
       ('packet_identity',lambda r,h:r.update(packetSha256='0'*64)),

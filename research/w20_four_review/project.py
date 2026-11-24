@@ -3,6 +3,15 @@ from copy import deepcopy
 from research.expert_group.packet import _digest, _validate, GroupError, PACKET_SHA256
 from research.expert_budget.four_chair import ROLES
 
+# Fixed prompts only: no semantic classification, vote or evidence request.
+REVIEW_QUESTIONS = {
+    'supported': ('这处引文直接支持的是哪一项观察或陈述，是否不足以支持因果解释？',),
+    'conflicted': ('冲突双方各自说了什么，各对应哪一处已列出处？',
+                   '差异是否涉及时间、对象或适用范围，哪些仍待核对？'),
+    'insufficient': ('现有引文缺少哪一项判断依据，为什么仍不能作出结论？',
+                     '还需人工核对什么材料；在核对前应保留哪些未知？'),
+}
+
 class ProjectionError(ValueError):
     pass
 
@@ -70,7 +79,9 @@ def _project(r, host):
               'declaredLabel':review['label'],'rationale':review['rationale'],
               'uncertainty':review['uncertainty'],'quote':review['quote'],
               'source':deepcopy(selected[item]),'status':'pending_human_review',
-              'semanticSupportVerified':False,'factActivated':False})
+              'semanticSupportVerified':False,'factActivated':False,
+              'reviewQuestions':list(REVIEW_QUESTIONS[review['label']]),
+              'reviewQuestionsOrigin':'fixed_guidance_not_seat_or_human_answer'})
     expected=[]
     for round_ in (1,2):
         for item in host['tickets'][0]['context']['packet']['items']:

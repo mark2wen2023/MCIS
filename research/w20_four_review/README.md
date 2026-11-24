@@ -1,3 +1,25 @@
+# Follow-up: row-bound manual review questions
+Base 28594e2e37484824ddce4aff9711df45845edb60. No new card, input schema,
+FourChair protocol, model, ledger, queue, permission or product route.
+Existing project(receipt, host) now appends reviewQuestions and an explicit
+fixed_guidance_not_seat_or_human_answer origin marker to each accepted row.
+Questions are selected from the existing declared label, not inferred semantics.
+Conflicted rows ask for both statements and their sources plus scope/time differences;
+insufficient rows ask which basis is missing and which unknowns must remain;
+supported rows still ask whether an observation is being overextended to causation.
+Questions do not request tools, authorize new source reads, record answers or resolve votes.
+Original quotes, rationale, uncertainty, source and draft bindings are retained unchanged.
+Same item shared across seats still does NOT mean independent supporting evidence.
+
+Actual Linux: existing check.py command below exit 0, 26 checks (22 existing + 4 new).
+12 same-case rows retain conflicting and insufficient opinions simultaneously.
+New checks cover per-row prompt attribution, coexistence, original/source preservation
+and isolated output copies. Existing 15 rejection cases remain.
+Existing FourChair executes in simulation; packet loader, ledger and OS file handles
+remain explicit test doubles. Source locator and fixed byte validation actually run.
+No human answer, professional judgment, live meeting, model or real ledger is claimed.
+
+## Existing projection and replay boundaries
 # Four-seat pending review projection — research only
 
 Parent: c94de84c9a4fa2b694672753605a3dc37d240479.
