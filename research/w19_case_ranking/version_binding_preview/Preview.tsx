@@ -2,6 +2,11 @@ import {KnowledgeSourceBody} from '../../../web/src/knowledge/KnowledgeSourceBod
 import fixed from '../version_binding/results.json'
 import fixture from '../version_binding/fixture.json'
 
+const reviewTasks=[
+ '核对定位摘录是否支持卡内陈述；原因未核，不能据此确认原因。',
+ '先核对 v1 与当前 v2 的时间及版本差异；旧摘录不得充当当前出处。',
+ '先补齐原件版本、摘要和记录身份；标题或摘录相同不能代替来源绑定。'
+]
 const labels=['当前合成字节定位一致（不代表支持）','旧版本拒绝：不可作为当前出处','缺少绑定：无法核对出处']
 
 /** Only the pinned developer control is supported, not an arbitrary receipt parser. */
@@ -13,6 +18,7 @@ export function VersionBindingPreview({receipt}:{receipt:unknown}){
  return <section aria-label="W19 合成来源核对"><h2>合成来源核对 · 开发只读预览</h2><p>未运行检索或模型。不代表推荐、事实或责任认定；没有认证、审批或保存入口。</p>
  {fixed.receipts.map((r,i)=>{const c=fixture.cards[i].content;return <article key={r.cardId} aria-label={r.cardId}>
  <h3>{labels[i]}</h3><p>支持未评估 · 因果未评估 · 待人工复核 · 未认证 · 未保存</p>
+ <section aria-label={r.cardId+' 人工核查待办'}><h4>待人工核查</h4><p>{reviewTasks[i]}</p><p>候选内容仅供查找线索；定位通过不代表语义支持，也不是相似度评分。</p><p>核查尚未完成；本页不登记完成、不签认、不发布。</p></section>
  <p>定位状态：<code>{r.traceability}</code></p>
  <p>宿主合成选择：{fixed.hostSelection.version} · {fixed.hostSelection.recordId} · <code>{fixed.hostSelection.sha256}</code></p>
  {r.binding?<p>来件声明（不是认证）：{r.binding.version} · {r.binding.recordId} · <code>{r.binding.sha256}</code></p>:<p>来件没有版本绑定；下方仅为卡内声明。</p>}

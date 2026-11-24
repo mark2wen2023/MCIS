@@ -50,3 +50,15 @@ check('replacement valid -> invalid -> valid has no retained source',()=>{
  assert(!invalid.includes('2030-06-04'));assert.equal(render(VersionBindingPreview,{receipt:fixed}),html)
 })
 console.log('W19 shared presentation: '+n+' checks passed; SSR only')
+
+for(const [id,task] of [
+ ['SYN-CURRENT','核对定位摘录是否支持卡内陈述'],
+ ['SYN-STALE','先核对 v1 与当前 v2 的时间及版本差异'],
+ ['SYN-UNBOUND','先补齐原件版本、摘要和记录身份'],
+])check('card-specific pending manual task '+id,()=>{
+ const card=html.split('<article aria-label="'+id+'">')[1]?.split('</article>')[0]
+ assert(card&&card.includes(task))
+ assert(card.includes('核查尚未完成')&&card.includes('不是相似度评分'))
+ assert(card.includes('待人工复核'));noActions(card)
+})
+console.log('W19 manual review tasks: total '+n+' SSR checks passed')

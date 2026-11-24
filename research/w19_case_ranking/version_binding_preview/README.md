@@ -61,3 +61,10 @@ Stale claims remain labelled refused; missing binding remains missing.
 All rows remain pending, unassessed and unauthenticated, with no review/save action.
 No real-system authentication, source access, human judgment, visual/browser QA,
 professional scoring or recall improvement is claimed. W20 and frozen 27 cards unchanged.
+
+## Follow-up: per-card manual review tasks
+Three existing frozen cards now carry separate pending human tasks: semantic support,
+stale-version reconciliation, or missing identity binding. This is read-only guidance,
+not completed human review, a write workflow, ranking or a production mount.
+The existing shared KnowledgeSourceBody remains the same. No source data or parser changed.
+Three added SSR checks examine each actual card, task, pending label and absence of actions.
