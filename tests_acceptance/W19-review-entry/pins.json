@@ -1,0 +1,14 @@
+{
+  "research/w19_case_ranking/version_binding/fixture.json": "d8c69d9532e2691c748398572e010c23993c663e",
+  "web/src/api.ts": "83793af8f668eaa39078335045aef5b9f5fa1b72",
+  "web/src/knowledge/KnowledgeSourceBody.tsx": "6aad019d0801200813c3e13c881a291914b24072",
+  "web/src/knowledge/SuggestionPreview.tsx": "7b187087da50ce6559873f216e4b05972980b38f",
+  "web/src/knowledge/api.ts": "97a01bf3217d707b7a2d2b17043937fd2bc927e6",
+  "web/src/knowledge/model.ts": "9555ed32d0ecf35a59b0604fff13ec108d75e558",
+  "web/src/knowledge/suggestionModel.ts": "725976dfb60aa7c7775dd9c4bb78088536a39d8f",
+  "web/src/knowledgeArchive/Panel.tsx": "f077c86a50b8e90cd14c1edcb0c972006e1afc1b",
+  "web/src/knowledgeArchive/api.ts": "969f080ad80ef8022a60aac716e4992375eec40d",
+  "web/src/knowledgeArchive/model.ts": "df50e302ad6f4362ac8e06c350bde10d13377bc1",
+  "web/src/pages/KnowledgePage.tsx": "98efab8c9626c011a881075b5e616d62847a79b3",
+  "web/src/knowledge/SearchReason.tsx": "ac68904ca50d413ec0d7cdf8f0c6b2bcba104374"
+}
