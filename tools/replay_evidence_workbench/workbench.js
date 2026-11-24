@@ -5,8 +5,9 @@
  let index=data.frames.findIndex(f=>f.relativeSeconds===100);
  function node(parent,tag,text){const n=document.createElement(tag);n.textContent=text;parent.appendChild(n);return n;}
  function svg(parent,tag,attrs,text){const n=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,String(v));if(text!==undefined)n.textContent=text;parent.appendChild(n);return n;}
- const x=p=>36+(p.lonDeg-data.bounds.lonDeg[0])/(data.bounds.lonDeg[1]-data.bounds.lonDeg[0])*738;
- const y=p=>320-(p.latDeg-data.bounds.latDeg[0])/(data.bounds.latDeg[1]-data.bounds.latDeg[0])*250;
+ const fraction=(value,[min,max])=>max===min?.5:(value-min)/(max-min);
+ const x=p=>36+fraction(p.lonDeg,data.bounds.lonDeg)*738;
+ const y=p=>320-fraction(p.latDeg,data.bounds.latDeg)*250;
  const tx=t=>120+t/220*665;
  function clearDetail(){
   for(const id of ['record-id','raw-time','source-time','correction','aligned-time','pointer','ref'])el(id).textContent='—';
