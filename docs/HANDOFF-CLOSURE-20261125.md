@@ -18,6 +18,19 @@
 | W20 | [`58fc144`](https://github.com/mark2wen2023/MCIS/commit/58fc144ca99e91b42037bcab75ea94772bbad888) · `candidate/w20-typed-t100-seat-20261124`；[`39d8f53`](https://github.com/mark2wen2023/MCIS/commit/39d8f530e6011a54a130c58f687b3695b9112b8e) · `candidate/w20-four-review-questions-20261124`；[`e419ffe`](https://github.com/mark2wen2023/MCIS/commit/e419ffe66c8418261e2a6af163debaaee2721128) · `candidate/synthetic-report-draft-local` | 单席与四席待审源绑定合成测试，非正式宿主/真实推理，不自动出调查结论。 |
 | W21 | [`1724774`](https://github.com/mark2wen2023/MCIS/commit/17247747272fb53623b144e199260f59d6befcbd) · `candidate/four-frames-prepare-joined`；[`8d68f6f`](https://github.com/mark2wen2023/MCIS/commit/8d68f6fa076b7acad90fab10e95ab88c6945a018) · `candidate/mcis-cross-repo-clock-receipt` | GitHub 可拉取；需要有两条完整历史的 MCIS 工作副本复验。三份固定合成样例已对字节，无须重交。真三维与 SQLite 四时点尚未联验。 |
 
+## 已上仓的可复验入口
+
+| 工作包 | 固定候选 | 测试范围 |
+| --- | --- | --- |
+| W4 | [`3ae5166`](https://github.com/mark2wen2023/MCIS/commit/3ae5166b7522f63bf39827a02341c856e394a0c9) | 真实 HTTP/SQLite/Poppler；浏览器模式仍未实跑 |
+| W7/W11 | [`0927416`](https://github.com/mark2wen2023/MCIS/commit/09274169fef7321ecf6a3d983c864187ce26bf7a) | 固定 25 个源码与 10 项合成 SQLite 版本关联 |
+| W9 | [`aca3e1e`](https://github.com/mark2wen2023/MCIS/commit/aca3e1e120b955ef25baefc58ef57f83758651d8) | 固定 73 个源码，ASGI/SQLite→React DOM 21 项 |
+| W17 | [`a80226d`](https://github.com/mark2wen2023/MCIS/commit/a80226d7e32d79ce8ab7a035a16e5089bfbac377) | 固定 100 个源码，20 项显式选证和 30 项登记回执 |
+| W19 | [`87ac70e`](https://github.com/mark2wen2023/MCIS/commit/87ac70ec9ea87370a847446440aafe842746f027) | SQLite/API 49 项，React DOM 35 项（两条独立测试） |
+| W21 | [`0d33cc7`](https://github.com/mark2wen2023/MCIS/commit/0d33cc71a7e03228cad46f4966fdb593c3217bc9) | 历史 4 帧 48 个共有字段，篡改拒绝；非新浏览器或数据库联验 |
+
+以上只发布测试源、固定输入清单和说明；不发布原证据、运行数据库、截图、环境缓存或外部打包。每个验证候选独立拉取，不把它们直接并入主线。
+
 ## 闭环顺序
 
 1. W4、W3、W9、W15、W17、W19 在各自固定版本运行真实浏览器，分别保留桌面/移动、选证/撤权、切案清旧、控制台及下载回执。W9 已跑过的旧二维入口不再重复冒充新版全验。
