@@ -58,14 +58,27 @@ def main():
     require(harness.read_bytes() == git_file(BASE,HARNESS))
     require(hashlib.sha256(harness.read_bytes()).hexdigest() == 'a71813661dfdf538ce040f8e1ee83dc0499df15ddf165683eb01f6616c9535d6')
     query_bytes = git_file(PRODUCT,QUERY)
-    observed = []; joined = []; errors = []
+    observed = []; joined = []; registrations = []; errors = []
     def observe(frame, event, returned):
-        if event != 'return':
-            return
         try:
+            if event == 'call' and frame.f_code.co_name == 'test_four_frames_then_prepare_same_registration':
+                require(Path(frame.f_code.co_filename) == harness and not observed and not registrations)
+                host = frame.f_locals['self']
+                require(host.cid == CASE and len(host.pins) == len(host.docs) == 2)
+                expected = []
+                for i, pin in enumerate(host.pins):
+                    vessel_id = ('SYN-VESSEL-A', 'SYN-VESSEL-B')[i]
+                    require(host.docs[i]['vessel']['vesselId'] == vessel_id and pin['caseId'] == CASE)
+                    require(set(pin) == {'caseId','evidenceId','requestDigest','sourceSha256'})
+                    require(all(type(value) is str for value in pin.values()))
+                    expected.append({'vesselId':vessel_id, **{k:pin[k] for k in ('evidenceId','requestDigest','sourceSha256')}})
+                registrations.append(expected)  # independent of the later query/observation DTO
+            if event != 'return':
+                return
             if frame.f_code.co_name == '_query_registered_pair' and type(returned) is dict and returned.get('alignedUtc') == UTC:
                 filename = Path(frame.f_code.co_filename)
                 require(filename.as_posix().endswith('/'+QUERY) and filename.read_bytes() == query_bytes)
+                require(len(registrations) == 1)
                 observed.append(projection(returned))
             if frame.f_code.co_name == 'test_four_frames_then_prepare_same_registration':
                 require(Path(frame.f_code.co_filename) == harness)
@@ -87,12 +100,12 @@ def main():
             code = exc.code
         finally:
             sys.setprofile(None)
-    require(type(code) is int and code == 0 and not errors and len(observed) == len(joined) == 1)
+    require(type(code) is int and code == 0 and not errors and len(observed) == len(joined) == len(registrations) == 1)
     require(joined[0] == {'result':'PASS','caseId':CASE,'prepareAccessAdded':1,'finalAccess':9,
         'custodyRows':11,'auditRows':12,'reportRows':0,'snapshotFixtureRows':1,'bindingTableExists':False,
         'denialsNoExtraWrites':True,'sameRegisteredPins':True,'http':False,'realLogin':False,'generatorExecuted':False})
     print(json.dumps({'kind':'synthetic-test-only-ephemeral-handoff','fixtureCommit':BASE,
-        'caseId':CASE,'alignedUtc':UTC,'vessels':observed[0],
+        'caseId':CASE,'alignedUtc':UTC,'vessels':observed[0],'expectedRegistrations':registrations[0],
         'custodyDelta':{'queryAccess':8,'prepareAccess':1,'observerAccess':0},
         'receipt':joined[0]},ensure_ascii=False,sort_keys=True))
 
