@@ -49,3 +49,9 @@ credential, or infer a maneuver from one point. No model, live account, browser,
 Observed on this task: original fixture exit0 via wrapper; 8+1 Access preserved;
 A missing heading and B exact recorded 270 exported. Independent projection
 negative checks are pure standard-library and do not run the fixture again.
+
+## 同次登记 pin 的独立观察（后继候选）
+在原测试方法 call 事件中先复制已登记 self.pins，且必须早于任何
+T100 query 返回；仅附加 expectedRegistrations 最小身份映射。consumer 用它
+核对观察结果，不从观察结果反建预期。固定 runner 是信任边界，不是任意
+JSON 真伪证明或生产授权。本轮同库重跑仍 8+1 Access，无额外原件读取。

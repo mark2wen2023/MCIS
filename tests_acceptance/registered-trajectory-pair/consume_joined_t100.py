@@ -1,9 +1,9 @@
 """Offline test-only stdout consumer; never a product authority or an Access writer."""
 import argparse, copy, hashlib, json, math, os, re, subprocess, sys
 from pathlib import Path
-PRODUCER='735aa9709d61b08af80611a1f915780aab260019'
+PRODUCER='3b613a5bda111cdfd3d5a4177710a2a4c304dc08'
 PATH='tests_acceptance/registered-trajectory-pair/joined_t100_handoff.py'
-BLOB='7cdcd3abe5fd763f29074b96fcf7863e43eb563b'
+BLOB='53f5e13d23020c0ed1a5f306c56ea3fa378547d9'
 BASE='17247747272fb53623b144e199260f59d6befcbd'
 CASE='SYN-XREPO-001'
 UTC='2026-02-01T12:01:40.000Z'
@@ -20,7 +20,7 @@ def strict(raw):
         return out
     return json.loads(raw,object_pairs_hook=pairs,parse_constant=lambda _:need(False,'NONFINITE'))
 def consume(x):
-    keys(x,'kind fixtureCommit caseId alignedUtc vessels custodyDelta receipt')
+    keys(x,'kind fixtureCommit caseId alignedUtc vessels expectedRegistrations custodyDelta receipt')
     need(x['kind']=='synthetic-test-only-ephemeral-handoff' and x['fixtureCommit']==BASE,'VERSION')
     need(x['caseId']==CASE and x['alignedUtc']==UTC,'CASE_TIME')
     need(type(x['vessels']) is list and len(x['vessels'])==2,'VESSELS')
@@ -28,11 +28,16 @@ def consume(x):
     for actual,wanted in ((x['receipt'],expected),(x['custodyDelta'],{'queryAccess':8,'prepareAccess':1,'observerAccess':0})):
         need(type(actual) is dict and set(actual)==set(wanted),'RECEIPT')
         need(all(type(actual[k]) is type(v) and actual[k]==v for k,v in wanted.items()),'RECEIPT')
+    need(type(x['expectedRegistrations']) is list and len(x['expectedRegistrations'])==2,'REGISTRATIONS')
     result=[]
     for i,(v,sha,pointer) in enumerate(zip(x['vessels'],SHAS,('/points/7','/points/12'))):
         keys(v,'vesselId evidenceId requestDigest sourceSha256 jsonPointer observation')
         need(v['vesselId']==('SYN-VESSEL-A','SYN-VESSEL-B')[i],'VESSEL_ID')
         need(v['sourceSha256']==sha and v['jsonPointer']==pointer,'SOURCE_BINDING')
+        expected_pin=x['expectedRegistrations'][i]
+        keys(expected_pin,'vesselId evidenceId requestDigest sourceSha256')
+        need(all(type(expected_pin[k]) is str and v[k]==expected_pin[k]
+                 for k in ('vesselId','evidenceId','requestDigest','sourceSha256')),'REGISTRATION_BINDING')
         need(type(v['evidenceId']) is str and 0<len(v['evidenceId'])<=200,'EVIDENCE_ID')
         need(type(v['requestDigest']) is str and re.fullmatch('[0-9a-f]{64}',v['requestDigest']) is not None,'REQUEST_DIGEST')
         o=v['observation'];keys(o,'field kind value');need(o['field']=='headingDeg','FIELD')
@@ -59,7 +64,12 @@ def run(repo, python):
     need(proc.returncode==0,'PRODUCER_FAILED')
     x=strict(proc.stdout); before=copy.deepcopy(x); out=consume(x)
     need(x==before,'MUTATION')
+    def swap_registration_identity(x):
+        a,b=x['vessels']
+        for key in ('evidenceId','requestDigest'):
+            a[key],b[key]=b[key],a[key]
     edits=[
+        swap_registration_identity,
         lambda x:x.update(caseId='wrong'),
         lambda x:x.update(fixtureCommit='0'*40),
         lambda x:x.update(alignedUtc='2026-02-01T12:01:41.000Z'),
