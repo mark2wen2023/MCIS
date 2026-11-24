@@ -20,6 +20,8 @@ from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, Tabl
 from ..config import PROJECT_ROOT
 from .templates import DISCLAIMER_EN, DISCLAIMER_ZH, GLOSSARY, TEMPLATES
 
+_INHERITED_ZH = "引用沿用原生成内容，仅用于追溯；不自动证明修改文字，也不表示修改文字仍是原文。请人工核对支持关系。"
+_INHERITED_EN = "References are inherited from the generated text for traceability only; they do not automatically support the edited wording or identify it as an original quotation. Review the support manually."
 _FONT = "MCIS-NotoSansSC-W16"
 _STATUS_ZH = {"Draft": "草稿", "Confirmed": "已确认", "Modified": "已修改", "Dismissed": "已驳回"}
 
@@ -84,7 +86,10 @@ def _sentence_text(sentence, lang):
     if sentence.get("status") == "Dismissed":
         text = ("已驳回内容：" if lang == "zh" else "Dismissed content: ") + text
     citations = " ".join(_reference_label(c) for c in sentence.get("citations", []))
-    return text + (" " + citations if citations else "")
+    text += " " + citations if citations else ""
+    if sentence.get("source") == "Investigator" and citations:
+        text += "\n" + (_INHERITED_ZH if lang == "zh" else _INHERITED_EN)
+    return text
 
 
 def _sentences(section):

@@ -179,6 +179,8 @@ def review_section(s, ctx, report: dict, section_id: str, body: dict) -> dict:
     if action == 'modify':
         target.update(changes)
         target['source'] = 'Investigator'
+        if sentence_id is not None:
+            target['sourceStatus'] = 'Investigator'
         if sentence_id is None:
             # 整节修改为调查员表述；生成原文保留在 generatedText 与完整审计快照。
             citations = []
