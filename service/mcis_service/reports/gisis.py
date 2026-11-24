@@ -57,7 +57,7 @@ def build_gisis(case: dict, vessels: list) -> dict:
         if definition["id"] == "severity":
             value = _SEVERITY.get(value) if isinstance(value, str) else None
         fields.append(_materialize(definition, value))
-    from .service import data_status, is_fictional
+    from .data_policy import data_status, is_fictional
     fictional = is_fictional(case)
     return {"caseId": case["caseId"], "isFictionalDemo": fictional,
             "realDataStatus": data_status(case), "fields": fields,

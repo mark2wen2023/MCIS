@@ -10,15 +10,14 @@ from sqlalchemy import select
 from ..audit import service as audit
 from ..audit.models import AuditEventRow
 from ..cases import service as cases
-from ..colreg.haili5_seed import CASE_ID as HAILI5_CASE_ID
 from ..common import contracts
 from ..common.context import problem
 from ..common.timeutil import iso, now_utc
 from ..db import get_doc, list_docs, put_doc
 from .models import ReportAuditRow, ReportRow
 
-YANGZE22_CASE_ID = 'CJK-2024-1230-YangZe22-VegaDream'  # 规范 caseId；公开使用已授权，是否入库以实际CaseRow为准。
-REAL_CASE_IDS = {HAILI5_CASE_ID, YANGZE22_CASE_ID}
+from .data_policy import HAILI5_CASE_ID, YANGZE22_CASE_ID, REAL_CASE_IDS, is_fictional, data_status
+
 DISCLAIMER_ZH = '不作责任认定'
 DISCLAIMER_EN = 'This report does not apportion blame or liability'
 
@@ -28,14 +27,6 @@ def case_info(s, case_id: str) -> dict:
     if case_id == YANGZE22_CASE_ID and get_doc(s, CaseRow, case_id, case_id) is None:
         return {'caseId': case_id, 'title': 'YANGZE 22', 'isFictionalDemo': False, '_reportCaseNotImported': True}
     return cases.load_case(s, case_id)
-
-
-def is_fictional(case: dict) -> bool:
-    return case.get('isFictionalDemo') is True and case['caseId'] not in REAL_CASE_IDS
-
-
-def data_status(case: dict) -> str:
-    return 'fictional' if is_fictional(case) else ('authorized-public' if case['caseId'] in REAL_CASE_IDS else 'pending-confirmation')
 
 
 def require_available(case: dict) -> None:
