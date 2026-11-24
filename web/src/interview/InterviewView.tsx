@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Panel } from '../components/Panel'
 import { SERVICE_ADDR } from '../config'
 import {
   KIND_CLASS, KIND_LABEL, ROSTER_CLASS, STALE_LABEL, STATE_LABEL, rowActions, segmentClass, shipClock, shipDate, verdictOf,
 } from './labels'
+import { canLocateRegisteredTurn, locateComparedTurn, locateRegisteredTurn } from './turnLocator'
 import type { IcChartPoint, IcPage, IcRoster, IcRow, IcSegment, Outcome, RecheckInput, StmtKind } from './types'
 
 export interface InterviewViewProps {
@@ -22,12 +23,18 @@ export interface InterviewViewProps {
   pageError?: string | null
 }
 
+type LocationRequest = { page: IcPage; utc: string }
+
 const LEGEND: StmtKind[] = ['Time', 'Position', 'Operation']
 
 export function InterviewView(props: InterviewViewProps) {
   const { roster, page, selectedRecordId, onSelectRecord, selectedRowId, onSelectRow, busy, serviceAddr = SERVICE_ADDR, pageError } = props
   const fictional = roster.fictional
   const row = page?.rows.find((r) => r.statementId === selectedRowId) ?? page?.rows[0] ?? null
+  const [locationRequest, setLocationRequest] = useState<LocationRequest | null>(null)
+  const requestLocation = (utc: string | null) => setLocationRequest(utc !== null && page ? { page, utc } : null)
+  const comparedLocation = page && !pageError && row && (selectedRowId === null || row.statementId === selectedRowId)
+    ? locateComparedTurn(page, roster.caseId, selectedRecordId, row.statementId) : null
   return (
     <div className="ic-page" data-testid="interview-page">
       <div className="page-head">
@@ -70,7 +77,9 @@ export function InterviewView(props: InterviewViewProps) {
           meta={fictional ? <span className="p6-tag">虚构演示</span> : undefined}>
           {pageError && <div className="ic-error" role="alert">{pageError}</div>}
           {!page && !pageError && <div className="empty">请选择左侧笔录</div>}
-          {page && <Transcript page={page} selected={row?.statementId ?? null} onSelect={onSelectRow} />}
+          {page && <Transcript page={page} caseId={roster.caseId} recordId={selectedRecordId} selected={row?.statementId ?? null}
+            onSelect={onSelectRow} lookup={!pageError && locationRequest?.page === page ? locationRequest : null}
+            requestLocation={requestLocation} />}
         </Panel>
 
         <Panel title="陈述 ⇄ 数据 交叉比对" meta={page ? <span data-testid="ic-header">{page.summary.headerText}</span> : undefined}>
@@ -91,6 +100,11 @@ export function InterviewView(props: InterviewViewProps) {
                   ))}
                 </div>
               )}
+              {comparedLocation && <p className="p6-note">
+                <button className="btn btn-sm" type="button" onClick={() => requestLocation(comparedLocation.utc)}>
+                  定位所选比对条目的原文问答
+                </button>{' '}仅定位这份笔录已登记的问答时间，不是事故或录音时点。
+              </p>}
               {row && <RowActions key={row.statementId + (row.state ?? '') + String(row.isStale)} row={row} busy={busy} {...props} />}
             </>
           )}
@@ -100,14 +114,40 @@ export function InterviewView(props: InterviewViewProps) {
   )
 }
 
-function Transcript({ page, selected, onSelect }: { page: IcPage; selected: string | null; onSelect: (id: string) => void }) {
+const LOCATION_STATUS = {
+  'invalid-time': '请输入有效的 UTC 时间，以 Z 结尾，最多三位小数。',
+  unavailable: '当前问答的来源或轮次标识不足，无法定位。',
+  'no-match': '当前笔录没有这个已登记的问答时间。未定位，不按最接近的时间猜测。',
+  ambiguous: '当前笔录有多轮使用同一时间，无法定位到唯一问答。',
+}
+
+function Transcript({ page, caseId, recordId, selected, onSelect, lookup, requestLocation }: {
+  page: IcPage; caseId: string; recordId: string; selected: string | null; onSelect: (id: string) => void
+  lookup: LocationRequest | null; requestLocation: (utc: string | null) => void
+}) {
   const rec = page.record
+  const [query, setQuery] = useState('')
+  const target = useRef<HTMLDivElement>(null)
+  const available = canLocateRegisteredTurn(page, caseId, recordId)
+  const location = available && lookup ? locateRegisteredTurn(page, caseId, recordId, lookup.utc) : null
+  const locatedRound = location?.state === 'found' ? location.round : null
+  useEffect(() => { if (locatedRound !== null) target.current?.focus() }, [lookup, locatedRound])
+
   return (
     <div className="ic-transcript" data-testid="ic-transcript">
       <div className="ic-meta mono">
         询问人 {(rec.interviewers ?? []).join('、') || '—'} · 记录人 {rec.recorder || '—'} · 地点 {rec.location || '—'} · 开始 {shipDate(rec.startUtc)}
         {rec.durationMin != null && ` · 用时 ${Math.round(rec.durationMin)} min`}{rec.evidenceId && ` · 证据 ${rec.evidenceId}`}
       </div>
+      {available ? <form className="p6-note" onSubmit={e => { e.preventDefault(); requestLocation(query) }}>
+        <label>问答 UTC 时间 <input className="input" value={query} maxLength={32}
+          placeholder="YYYY-MM-DDTHH:mm:ssZ" onChange={e => { setQuery(e.target.value); requestLocation(null) }} /></label>{' '}
+        <button type="submit" className="btn btn-sm">定位问答</button>
+        <p>仅定位当前笔录已登记的问答时间，供人工核对。来源是登记绑定，不代表原件已核验；不生成引文。</p>
+        {location && <p role="status">{location.state === 'found'
+          ? `已定位到第 ${location.round} 轮（${location.utc}）。请人工核对。`
+          : LOCATION_STATUS[location.state]}</p>}
+      </form> : <p className="p6-note">缺少可用来源绑定，无法按时间定位；不生成引文。</p>}
       <div className="ic-legend">
         {LEGEND.map((k) => <span key={k} className={`ic-hl ${KIND_CLASS[k]}`}>{KIND_LABEL[k]}</span>)}
         <span className="ic-hl ic-contra">与数据矛盾（已确认）</span>
@@ -117,7 +157,10 @@ function Transcript({ page, selected, onSelect }: { page: IcPage; selected: stri
         <div className="p6-note ic-suppressed" data-testid="ic-suppressed">当前角色看到的是脱敏文本，高亮已关闭（脱敏改变了原文下标）。</div>
       )}
       {page.turns.map((t) => (
-        <div key={t.round} className="ic-turn" data-round={t.round}>
+        <div key={t.round} className="ic-turn" data-round={t.round}
+          ref={locatedRound === t.round ? target : undefined} tabIndex={locatedRound === t.round ? -1 : undefined}
+          aria-current={locatedRound === t.round ? 'location' : undefined}>
+          {locatedRound === t.round && <p><strong>已定位 · 第 {t.round} 轮</strong></p>}
           <div className="ic-q"><span className="ic-qa">问</span>{renderSegments(t.questionSegments, selected, onSelect)}</div>
           <div className="ic-a"><span className="ic-qa">答</span>{renderSegments(t.answerSegments, selected, onSelect)}</div>
         </div>
