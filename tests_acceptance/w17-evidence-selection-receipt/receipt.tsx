@@ -1,0 +1,27 @@
+import assert from 'node:assert/strict';import {spawn} from 'node:child_process';import {createInterface} from 'node:readline';import {createHash} from 'node:crypto';
+const host=spawn(process.env.PYTHON!,['-I','-B',process.env.HOST!],{stdio:['pipe','pipe','inherit']});const ended=new Promise(r=>host.once('exit',r));const lines=createInterface({input:host.stdout})[Symbol.asyncIterator]();async function recv(){const n=await lines.next();assert(!n.done);return JSON.parse(n.value)}const setup=await recv();assert(setup.ready);let chain=Promise.resolve();function call(x:any){const r=chain.then(()=>{host.stdin.write(JSON.stringify(x)+'\n');return recv()});chain=r.then(()=>{});return r}
+const {Window}=await import(process.env.MCIS_HAPPY_DOM_PATH!);const window=new Window({url:'http://localhost/'});for(const key of ['window','document','navigator','HTMLElement','Event','CustomEvent','MouseEvent'])Object.defineProperty(globalThis,key,{value:window[key]??window,writable:true,configurable:true});Object.defineProperty(globalThis,'localStorage',{value:{getItem:(k:string)=>k==='mcis.role'?'LeadInvestigator':k==='mcis.operator'?'synthetic-reader':null},configurable:true});(globalThis as any).IS_REACT_ACT_ENVIRONMENT=true;
+const React=require('react'),{act}=React,{createRoot}=require('react-dom/client');const {MemoryRouter,useNavigate}=require('react-router-dom');const {EvidencePage}=require('./web/src/pages/EvidencePage');let go:any;function Shell(){go=useNavigate();return <EvidencePage/>}
+const receipts:any[]=[];let hold=false;let held:any[]=[];(globalThis as any).fetch=async(url:string,init:any)=>{assert.equal(init.method,'GET');const delay=hold&&url.endsWith('/intake');const r=await call({path:url,role:init.headers['X-MCIS-Role']});receipts.push(r);const b=Buffer.from(r.bodyBase64,'base64');assert.equal(createHash('sha256').update(b).digest('hex'),r.sha256);const response={ok:r.status===200,status:r.status,text:async()=>b.toString('utf8'),json:async()=>JSON.parse(b.toString('utf8'))};if(delay)return new Promise(resolve=>held.push(()=>resolve(response)));return response};
+const div=document.createElement('div');document.body.append(div);const root=createRoot(div);let n=0;function check(x:any){assert(x);n++}async function drain(){await act(async()=>{await chain;await new Promise(r=>setTimeout(r,20))})}async function nav(c:string){await act(async()=>go('/evidence?case='+c));await drain()}async function click(label:string){await act(async()=>{const b=[...div.querySelectorAll('button')].find(x=>x.textContent===label);assert(b);b.dispatchEvent(new window.MouseEvent('click',{bubbles:true}))});await drain()}
+try{
+ await act(async()=>root.render(<MemoryRouter initialEntries={['/evidence?case=SYN-A']}><Shell/></MemoryRouter>));await drain();
+ const open='＋ 登记已有文件副本 / 查看登记原件',read='读取当前证据登记回执（只读）';
+ await click('SOURCE-SYN-A');await click(open);check(!receipts.some(x=>x.path.endsWith('/intake')));await click(read);
+ check(!!div.querySelector('.w42-receipt'));check(div.querySelector('.w42-receipt')!.textContent!.includes('SYN-A.txt'));check(div.querySelector('.w42-receipt')!.textContent!.includes(setup.registered['SYN-A'].sourceSha256));
+ const a=receipts.find(x=>x.path==='/api/v1/cases/SYN-A/evidence/EV-001/intake');const body=JSON.parse(Buffer.from(a.bodyBase64,'base64').toString());check(a.status===200);check(body.requestDigest===setup.registered['SYN-A'].requestDigest);check(body.replayed===true);check(!('contentBase64' in body));
+ // Start another actual A receipt read, hold its delivery, then switch case.
+ await click('SOURCE-SYN-A');await click(open);hold=true;await click(read);check(held.length===1);
+ await nav('SYN-B');check(!div.querySelector('.w42-receipt'));check(div.textContent!.includes('请选择证据'));check(!receipts.some(x=>x.path==='/api/v1/cases/SYN-B/evidence/EV-001/intake'));
+ await act(async()=>{held.splice(0).forEach(f=>f());await new Promise(r=>setTimeout(r,20))});check(!div.querySelector('.w42-receipt'));check(!div.textContent!.includes('SYN-A.txt'));
+ hold=false;await click('SOURCE-SYN-B');await click(open);check(!div.querySelector('.w42-receipt'));await click(read);check(div.querySelector('.w42-receipt')!.textContent!.includes('SYN-B.txt'));check(!div.querySelector('.w42-receipt')!.textContent!.includes('SYN-A.txt'));
+ const b=receipts.find(x=>x.path==='/api/v1/cases/SYN-B/evidence/EV-001/intake');check(JSON.parse(Buffer.from(b.bodyBase64,'base64').toString()).requestDigest===setup.registered['SYN-B'].requestDigest);
+ for(const [path,role,status] of [
+ ['/api/v1/cases/SYN-B/evidence-intakes/'+setup.registered['SYN-A'].requestDigest,'LeadInvestigator',404],
+ ['/api/v1/cases/SYN-B/evidence/EV-999/intake','LeadInvestigator',404],
+ ['/api/v1/cases/SYN-B/evidence/EV-001/intake','Public',403]]){
+  const r=await call({path,role});receipts.push(r);check(r.status===status);check(!Buffer.from(r.bodyBase64,'base64').toString().includes('sourceSha256'));
+ }
+ await click('SOURCE-SYN-B');await click(open);check((await call({control:'denyB'})).denied);await click(read);check(!div.querySelector('.w42-receipt'));check(!!div.querySelector('[role="alert"]'));check(receipts.filter(x=>x.path.endsWith('/intake')).at(-1).status===403);
+ check(!receipts.some(x=>/download|\/content|:commit|:preview/.test(x.path)));
+}finally{await act(async()=>root.unmount());host.stdin.end();await window.happyDOM.abort();window.close()}check(await ended===0);console.log('PASS '+n+' assertions; actual intake registration/readback; no downloads');process.exit(0);
