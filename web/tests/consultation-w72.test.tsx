@@ -26,7 +26,7 @@ check(closeHint({...r,deadlineUtc:'garbage'},0).includes('可能拒绝'),'invali
 const render=(rounds:Round[],current?:Round,writable=true,busy=false)=>renderToStaticMarkup(<RoundLifecycle rounds={rounds} current={current} writable={writable} busy={busy} mutate={async()=>{}} />)
 const empty=render([])
 check(empty.includes('核对新建轮次'),'creation in empty case')
-check(empty.includes('固定默认30天'),'no custom deadline')
+check(empty.includes('默认 30 天') && !empty.includes('已商定期限（天）'),'default 30 with the agreed input hidden until explicitly selected')
 check(empty.includes('不上传文件'),'no upload claim')
 const open=render([r],r)
 check(!open.includes('核对新建轮次'),'no open while open')

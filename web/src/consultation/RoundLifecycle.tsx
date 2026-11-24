@@ -9,6 +9,8 @@ export function RoundLifecycle({ rounds, current, writable, busy, mutate }: {
 }) {
   const [version, setVersion] = useState('')
   const [hash, setHash] = useState('')
+  const [useAgreedDeadline, setUseAgreedDeadline] = useState(false)
+  const [agreedDays, setAgreedDays] = useState('')
   const [parties, setParties] = useState([{ partyId: '', name: '' }])
   const [reason, setReason] = useState('')
   const eligible = current ? eligibleParties(current) : []
@@ -28,8 +30,9 @@ export function RoundLifecycle({ rounds, current, writable, busy, mutate }: {
     {!canOpenRound(rounds) ? <p>已有未关闭轮次，不能新建。</p> : <form onSubmit={(e) => {
       e.preventDefault(); if (busy) return
       try {
-        const body = newRoundPayload({ draftVersion: version, parties, draftSha256: hash })
-        setError(''); setConfirm({ path: '/consultation/rounds', body, title: '确认新建轮次', detail: `草案 ${body.draftVersion}；相关方：${body.parties.map((p) => `${p.partyId}（${p.name}）`).join('、')}；期限为服务登记时间起30天。${body.draftSha256 ? `声明草案SHA-256：${body.draftSha256}（未上传或核验文件）。` : '未提供草案文件哈希。'}本轮无删除/撤销接口。` })
+        const body = newRoundPayload({ draftVersion: version, parties, draftSha256: hash, agreedDays: useAgreedDeadline ? agreedDays : undefined })
+        const deadline = body.isAgreedDeadline ? `申报已商定期限：服务登记时间起 ${body.days} 天（系统不核验是否已经商定）。` : '默认期限：服务登记时间起 30 天。'
+        setError(''); setConfirm({ path: '/consultation/rounds', body, title: '确认新建轮次', detail: `草案 ${body.draftVersion}；相关方：${body.parties.map((p) => `${p.partyId}（${p.name}）`).join('、')}；${deadline}${body.draftSha256 ? `声明草案SHA-256：${body.draftSha256}（未上传或核验文件）。` : '未提供草案文件哈希。'}本轮无删除/撤销接口。` })
       } catch (e) { setError(e instanceof Error ? e.message : String(e)) }
     }}>
       <label>草案版本<input className="input" disabled={busy} value={version} onChange={(e) => setVersion(e.target.value)} required /></label>
@@ -40,7 +43,12 @@ export function RoundLifecycle({ rounds, current, writable, busy, mutate }: {
       </fieldset>)}
       <button type="button" className="btn btn-sm" disabled={busy} onClick={() => setParties((old) => [...old, { partyId: '', name: '' }])}>添加相关方</button>
       <label>草案 SHA-256（选填，不上传文件）<input className="input" disabled={busy} value={hash} onChange={(e) => setHash(e.target.value)} /></label>
-      <p>固定默认30天，从服务登记时间起算。不开启自定义期限。</p>
+      <p>未选择商定期限时，使用默认 30 天，从服务登记时间起算。</p>
+      <label><input type="checkbox" disabled={busy} checked={useAgreedDeadline} onChange={(e) => setUseAgreedDeadline(e.target.checked)} />登记已商定期限</label>
+      {useAgreedDeadline && <>
+        <label>已商定期限（天）<input className="input" disabled={busy} inputMode="numeric" value={agreedDays} onChange={(e) => setAgreedDays(e.target.value)} required /></label>
+        <p>仅登记已经商定的期限（1 至 180 天），从服务登记时间起算。系统不核验是否已经商定。</p>
+      </>}
       <button className="btn btn-primary" disabled={busy}>核对新建轮次</button>
     </form>}
     {current && !current.isClosed && <>
