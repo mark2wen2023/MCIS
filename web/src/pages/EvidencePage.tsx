@@ -63,9 +63,10 @@ function EvidenceCasePage({ caseId, requestedId }: { caseId: string; requestedId
   const tl = useLoad(() => api.get<TimelineResp>(casePath('/timeline', caseId)))
   const conflicts = useLoad(() => api.get<Conflict[]>(casePath('/conflicts', caseId)))
   const cpa = useLoad(() => loadEvidenceCpa(caseId))
-  const [selId, setSelId] = useState<string>(requestedId || 'EV-001')
+  // A case with no explicit evidence link starts unselected; never reuse a common row ID.
+  const [selId, setSelId] = useState<string>(requestedId)
   const items = ev.data ?? []
-  const sel = items.find((e) => e.evidenceId === selId) ?? (requestedId ? undefined : items[0])
+  const sel = selId ? items.find((e) => e.evidenceId === selId) : undefined
   const custody = useLoad(async () => ({ evidenceId: sel?.evidenceId, events: sel ? await api.get<CustodyEvent[]>(casePath(`/evidence/${sel.evidenceId}/custody`, caseId)) : [] }), [sel?.evidenceId])
 
   const refreshEvidence = () => { ev.reload(); custody.reload(); chain.reload() }
