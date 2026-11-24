@@ -1,3 +1,14 @@
+# Follow-up: fixed receipt data admission
+Base f24ef201dc21bb5987bb89ad481b6924551ef235. Only research preview admission changes.
+Replace serialization equality with exact own data-property comparison to the frozen expected shape.
+Object key order is immaterial; arrays preserve order, holes/extra properties fail;
+accessors, custom serialization and symbol extras are refused without calling them.
+Still only developer-visible fixed controls, not arbitrary source validation or production authentication.
+No product component, permissions, source text, ranking, browser harness or W4 changes.
+Four added checks (one has two negative inputs) exercise actual Preview rendering.
+No browser rerun; no SQLite or model execution.
+
+## Prior implementation records
 # Current follow-up: existing KnowledgeCard review entry
 
 Base 568d4b0ea74efeb570cf406b52e3cdfc4b0d4f02. This revision changes the ACTUAL

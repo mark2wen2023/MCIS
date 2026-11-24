@@ -79,3 +79,28 @@ for(const canReview of [false,true])check('actual Candidate read-only entry '+ca
  assert.equal(page.includes('批准发布到公开资料库'),canReview)
 })
 console.log('W19 product entry: '+n+' SSR checks passed')
+
+check('receipt object field order is immaterial',()=>{
+ const reverse=(x:any):any=>Array.isArray(x)?x.map(reverse):x&&typeof x==='object'?Object.fromEntries(Object.entries(x).reverse().map(([k,v])=>[k,reverse(v)])):x
+ assert.equal(render(VersionBindingPreview,{receipt:reverse(fixed)}),html)
+})
+check('custom serialization is not an admitted receipt',()=>{
+ let calls=0
+ const x={toJSON(){calls++;return fixed}}
+ assert(render(VersionBindingPreview,{receipt:x}).includes('整份拒绝'))
+ assert.equal(calls,0)
+})
+check('accessor receipt is refused without invoking getter',()=>{
+ let calls=0
+ const x=structuredClone(fixed)
+ Object.defineProperty(x,'scope',{enumerable:true,get(){calls++;return fixed.scope}})
+ assert(render(VersionBindingPreview,{receipt:x}).includes('整份拒绝'))
+ assert.equal(calls,0)
+})
+check('symbol extras and sparse receipt arrays rejected',()=>{
+ const x=structuredClone(fixed);(x as any)[Symbol('extra')]=true
+ assert(render(VersionBindingPreview,{receipt:x}).includes('整份拒绝'))
+ const y=structuredClone(fixed);delete (y.receipts as any)[0]
+ assert(render(VersionBindingPreview,{receipt:y}).includes('整份拒绝'))
+})
+console.log('W19 data admission: '+n+' SSR checks passed')

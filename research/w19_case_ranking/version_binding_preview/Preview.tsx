@@ -9,11 +9,22 @@ const reviewTasks=[
 ]
 const labels=['当前合成字节定位一致（不代表支持）','旧版本拒绝：不可作为当前出处','缺少绑定：无法核对出处']
 
+function sameData(actual:unknown, expected:unknown):boolean {
+ if(expected===null||typeof expected!=='object')return typeof actual===typeof expected&&actual===expected
+ if(!actual||typeof actual!=='object'||Object.getPrototypeOf(actual)!==Object.getPrototypeOf(expected))return false
+ const keys=Reflect.ownKeys(expected)
+ if(Reflect.ownKeys(actual).length!==keys.length)return false
+ return keys.every(k=>{
+  const a=Object.getOwnPropertyDescriptor(actual,k),b=Object.getOwnPropertyDescriptor(expected,k)
+  return !!a&&!!b&&Object.hasOwn(a,'value')&&Object.hasOwn(b,'value')&&sameData(a.value,b.value)
+ })
+}
+
 /** Only the pinned developer control is supported, not an arbitrary receipt parser. */
 export function VersionBindingPreview({receipt}:{receipt:unknown}){
  if(receipt===undefined||receipt===null)return <section aria-label="W19 合成来源核对"><p role="status">未配置合成回执，未展示来源；未保存。</p></section>
  let matches=false
- try{matches=JSON.stringify(receipt)===JSON.stringify(fixed)}catch{/* malformed input stays rejected */}
+ try{matches=sameData(receipt,fixed)}catch{/* malformed input stays rejected */}
  if(!matches)return <section aria-label="W19 合成来源核对"><p role="alert">回执不是固定合成控制，整份拒绝展示；未保存。</p></section>
  return <section aria-label="W19 合成来源核对"><h2>合成来源核对 · 开发只读预览</h2><p>未运行检索或模型。不代表推荐、事实或责任认定；没有认证、审批或保存入口。</p>
  {fixed.receipts.map((r,i)=>{const c=fixture.cards[i].content;return <article key={r.cardId} aria-label={r.cardId}>
