@@ -1,0 +1,17 @@
+{
+  "contracts/schemas/knowledge-card.schema.json": "b19ba05dff0ffc15c18a8ed72521cd7a66ce2f7d",
+  "service/mcis_service/__init__.py": "d0057db3b4a34ea8643fe57cbbd0cc94fb430242",
+  "service/mcis_service/common/__init__.py": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+  "service/mcis_service/common/context.py": "831a037954682115ba49c2742601117900676d78",
+  "service/mcis_service/common/contracts.py": "12a19142da0824ed06d69ab90955b7d437b41634",
+  "service/mcis_service/common/timeutil.py": "73f85d80a0a514ea0b4b7adb597e03964862def2",
+  "service/mcis_service/config.py": "aba470fc79aeb32824d9b3119be3de5cbdd4df42",
+  "service/mcis_service/db.py": "27daf52c0c6312495d03123f7c496bc688466a74",
+  "service/mcis_service/knowledge/__init__.py": "82ca253a5516f079f3ec9a79acf4c987b0febb96",
+  "service/mcis_service/knowledge/models.py": "7a5d4949bad51e569e23720dbc81055194584903",
+  "service/mcis_service/knowledge/router.py": "6371cdc4fd3d0fe9d3626e294b61d9464bbfca17",
+  "service/mcis_service/knowledge_archive/__init__.py": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+  "service/mcis_service/knowledge_archive/models.py": "c94b332680c6cf5022ff08ebeab7bbbcb813145f",
+  "service/mcis_service/knowledge_archive/service.py": "27fedcd56fcbee45b484788a0c585d612330cb8d",
+  "service/mcis_service/knowledge_archive/validation.py": "3f3a4983a7b2926618154fe1d070e0c66f1a3259"
+}
