@@ -1,0 +1,8 @@
+83793af8f668eaa39078335045aef5b9f5fa1b72 web/src/api.ts
+7c5c92fcae4d54b7fc10f0cd158a18a07b03832c web/src/components/Panel.tsx
+492b65fcace052d6ced7860fc4576f2cc5ba240c web/src/consultation/ConsultationPanel.tsx
+2d3a6d060b1ce92e5f8717dbffa401c8d6bf5d96 web/src/consultation/RoundLifecycle.tsx
+462537d3eb3421bef6699d904d7841d497450077 web/src/consultation/model.ts
+2598f0dc31355037eeae6b3cf38067e4d39027e2 web/src/consultation/types.ts
+e8e74d2b7f25a436150f81efc7d70884af47729a web/src/styles/w7.css
+e12bc343a4d43668dea5d918d1abed4c7578cc0a web/src/types.ts
