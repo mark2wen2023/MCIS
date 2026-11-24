@@ -1,3 +1,26 @@
+# Current follow-up: existing KnowledgeCard review entry
+
+Base 568d4b0ea74efeb570cf406b52e3cdfc4b0d4f02. This revision changes the ACTUAL
+KnowledgeCard used by KnowledgePage, not the standalone synthetic preview mount.
+Only Candidate cards get the native collapsed summary “进入待审核查”.
+Inside the existing details, three read-only manual steps precede the existing
+KnowledgeSourceBody. No new requests, fetching, source URLs, fields, save or publish handlers.
+Existing Candidate visibility and canReview action policy remain unchanged.
+Published/Rejected/Withdrawn markup is unchanged. Existing approval form remains outside
+this details and opening it does not acknowledge its checkboxes.
+Details key includes card ID, content digest and status; React replacement should reset
+native open state, but this lifecycle has NOT been browser-tested.
+
+Linux validation: 34 SSR checks, existing W19.1 27 assertions, W19.2 guards, exit 0.
+Of 16 comparison combinations, Candidate comparisons remove ONLY the declared summary
+replacement and added review-step section before checking all remaining markup byte-for-byte.
+Other statuses compare unchanged. Two new actual-card checks cover canReview false/true,
+existing excerpt, pending labels and no new controls. SSR confirms no open attribute.
+No DOM library was installed; actual mouse/keyboard opening, focus, browser visibility
+and replacement lifecycle remain for coordinator testing. No real account/service/model.
+The run commands below remain applicable. No W9 or W20 files changed.
+
+## Previous shared-preview implementation record
 # W19 shared source presentation — synthetic SSR candidate
 
 Base: `1f76a060dcf30f2cc403b5ef22ccc35f9f1e7d0c`.

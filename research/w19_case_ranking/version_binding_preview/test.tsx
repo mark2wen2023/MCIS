@@ -13,12 +13,18 @@ const render=(C:any,props:any)=>renderToStaticMarkup(createElement(C,props))
 const noActions=(html:string)=>assert(!/<(?:a|button|input|form|textarea|select|script)\b|\shref=|\son\w+=/i.test(html))
 for(const status of ['Candidate','Published','Rejected','Withdrawn'] as const)
  for(const publicSource of [false,true])for(const canReview of [false,true]){
- check('product SSR preserved '+status+'/'+publicSource+'/'+canReview,()=>{
+ check('product SSR outside declared review entry preserved '+status+'/'+publicSource+'/'+canReview,()=>{
  const c:Card={cardId:'KC-'+'a'.repeat(32),status,content:structuredClone(sample),contentDigest:'b'.repeat(64),createdUtc:'2030-06-04T00:00:00Z',reviewedUtc:'2030-06-04T00:01:00Z',reviewedBy:'合成审核者',reviewNote:'仅合成属性'}
  c.content.title='<script>synthetic</script>'
  if(publicSource)c.content.source={...c.content.source,type:'Public',url:'https://example.invalid/synthetic'}
  const props={card:c,canReview,onReview:()=>{throw Error('SSR must not act')}}
- assert.equal(render(After,props),render(Before,props))
+ const after=render(After,props)
+ const preserved=after.replace('<summary>进入待审核查（正文、出处与适用限制）</summary>','<summary>正文、出处与适用限制</summary>').replace(/<section aria-label="待审卡人工核查步骤">[\s\S]*?<\/section>/,'')
+ assert.equal(preserved,render(Before,props))
+ if(status==='Candidate'){
+  assert(after.includes('进入待审核查')&&after.includes('待人工核查 · 未确认'))
+  assert(!/<details[^>]*\sopen(?:[= >])/.test(after))
+ }else assert(!after.includes('待审卡人工核查步骤'))
  })}
 const html=render(VersionBindingPreview,{receipt:fixed})
 check('three original states, no support upgrade',()=>{
@@ -62,3 +68,14 @@ for(const [id,task] of [
  assert(card.includes('待人工复核'));noActions(card)
 })
 console.log('W19 manual review tasks: total '+n+' SSR checks passed')
+
+for(const canReview of [false,true])check('actual Candidate read-only entry '+canReview,()=>{
+ const card:Card={cardId:'KC-'+'c'.repeat(32),status:'Candidate',content:structuredClone(sample),contentDigest:'d'.repeat(64),createdUtc:'2030-06-04T00:00:00Z'}
+ const page=render(After,{card,canReview,onReview:()=>{throw Error('opening must not approve')}})
+ const section=page.match(/<section aria-label="待审卡人工核查步骤">[\s\S]*?<\/section>/)?.[0]
+ assert(section);noActions(section)
+ assert(section.includes('不读取新原件')&&section.includes('不记录核查完成'))
+ assert(page.includes(card.content.source.excerpt))
+ assert.equal(page.includes('批准发布到公开资料库'),canReview)
+})
+console.log('W19 product entry: '+n+' SSR checks passed')
