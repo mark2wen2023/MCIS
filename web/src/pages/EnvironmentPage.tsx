@@ -10,13 +10,15 @@ import '../styles/w9-environment.css'
 type CaseInfo={caseId:string;title:string;isFictionalDemo:boolean}
 type State={status:'loading'}|{status:'error';message:string}|{status:'ready';case:CaseInfo;records:Observation[]}
 export function ObservationList({records}:{records:Observation[]}) {
-  if(!records.length)return <p role="status">本案尚无环境观测记录。未知环境不会自动补值。</p>
-  return <div className="w92-list">{records.map(r=><article className="w92-record" key={r.observationId}><h2>{r.observationId}</h2><p className="w92-muted">【{origins[r.valueOrigin]}】来源：{r.sourceLabel}</p><OriginGuidance origin={r.valueOrigin}/><dl>
+  return <><aside aria-label="回放环境输入状态"><p><strong>当前回放无可用、已核准环境输入</strong></p>
+    <p>下列为环境记录，不是回放参数。查到记录不代表已复核；当前读取结果未提供结构化空间适用范围、适用时段及版本核准绑定，不送入动力学计算。</p>
+    <p>各条来源、地点、观测 UTC 和来源口径独立保留；不借用其他地点记录，不从潮位推断流速，也不推断流向、深度或补默认值。登记的 0 与未知不同。</p>
+  </aside>{!records.length?<p role="status">本案尚无环境观测记录。未知环境不会自动补值。</p>:<div className="w92-list">{records.map(r=><article className="w92-record" key={r.observationId}><h2>{r.observationId}</h2><p className="w92-muted">【{origins[r.valueOrigin]}】来源：{r.sourceLabel}</p><OriginGuidance origin={r.valueOrigin}/><dl>
     <div><dt>观测时刻（UTC）</dt><dd>{r.observedAtUtc??'未知'}</dd></div><div><dt>观测地点 / 台站</dt><dd>{r.locationDescription??'未知'}</dd></div>
     <div><dt>风速</dt><dd>{quantity(r.windSpeedMps,'m/s')}</dd></div><div><dt>风的来向 · 真北顺时针</dt><dd>{quantity(r.windFromDirDeg,'°（从该方向吹来）')}</dd></div>
     <div><dt>流速</dt><dd>{quantity(r.currentSpeedKn,'kn')}</dd></div><div><dt>水流去向 · 真北顺时针</dt><dd>{quantity(r.currentToDirDeg,'°（向该方向流去）')}</dd></div>
     <div><dt>能见度</dt><dd>{quantity(r.visibilityNm,'nm')}</dd></div>
-  </dl><h3>原文与说明</h3><p className="w92-original">{r.description}</p></article>)}</div>
+  </dl><h3>原文与说明</h3><p className="w92-original">{r.description}</p></article>)}</div>}</>
 }
 export function EnvironmentPage() {
   const who=useSyncExternalStore(onIdentityChange,caseIdentity,caseIdentity)
