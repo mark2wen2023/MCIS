@@ -1,0 +1,336 @@
+name: W9 approved synthetic browser acceptance once
+'on':
+  push:
+    branches: ['candidate/w9-approved-once-20261124']
+permissions: {}
+concurrency:
+  group: mcis-w9-approved-once-20261124
+  cancel-in-progress: false
+jobs:
+  w9:
+    if: >-
+      github.repository == 'mark2wen2023/MCIS' &&
+      github.ref == 'refs/heads/candidate/w9-approved-once-20261124' &&
+      github.event.created == true && github.event.deleted == false &&
+      github.run_attempt == '1'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - name: Materialize fixed synthetic workbench.html
+        shell: bash
+        run: |
+          python3 -I -B - <<'PYTHON'
+          import base64, gzip, os
+          from pathlib import Path
+          root = Path(os.environ["RUNNER_TEMP"]) / ("mcis-w9-" + os.environ["GITHUB_RUN_ID"] + "-1")
+          root.mkdir(mode=0o700)
+          with (root / "workbench.html").open("xb") as output:
+              output.write(gzip.decompress(base64.b64decode('''
+          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
+          ''')))
+          PYTHON
+      - name: Materialize fixed synthetic check.cjs
+        shell: bash
+        run: |
+          python3 -I -B - <<'PYTHON'
+          import base64, gzip, os
+          from pathlib import Path
+          root = Path(os.environ["RUNNER_TEMP"]) / ("mcis-w9-" + os.environ["GITHUB_RUN_ID"] + "-1")
+          assert root.is_dir() and not root.is_symlink()
+          with (root / "check.cjs").open("xb") as output:
+              output.write(gzip.decompress(base64.b64decode('''
+          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
+          dvaFCj3x+TbzqFOXd4n/Bxvn54/LJgAA
+          ''')))
+          PYTHON
+      - name: Verify assets and run W9 with Chrome sandbox enabled
+        shell: bash
+        run: |
+          python3 -I -B - <<'PYTHON'
+          import base64, hashlib, json, os, re, shutil, signal, struct, subprocess, tempfile, urllib.request, zlib
+          from pathlib import Path
+
+          root = Path(os.environ["RUNNER_TEMP"]) / ("mcis-w9-" + os.environ["GITHUB_RUN_ID"] + "-1")
+          product = "f25cf283a50b128e7aed8c247c857312249fd3e9"
+          pins = {
+              "workbench.html": (218441, "6a1665d539d868d91c629a61205145660bfee873bd1b423e814eaa07aea641b3"),
+              "check.cjs": (9931, "d7d80e19b119551e1697dcb4e0575fef0a38bbf9c7934418cde11e08fc12f3ce")
+          }
+          version = "1.62.1"
+          deps = {
+              "playwright": "sha512-0M+L3LAD8/nm554LOla9Ayx0j0tmFZ0FBcoQ7F1VuVHpM/XpiC8RcDzBQB8W5+hA8L22THxELzeF+2WcUzvcLg==",
+              "playwright-core": "sha512-wPYSwEBJY9GHraISXqyqtx0na0LpO3XEX7jNDhntbex7tzUS7kLnZsOlFruFJB4Hi/rhDMjXGqHewDZ68nYZVw==",
+          }
+          assertions = [
+              "new workbench identity, meaningful initial A-t100, two markers",
+              "real Tab focus and visible focus outline; narrow navigation Enter toggles",
+              "original A-t0 record, fixed input revision and pointer",
+              "map click equals keyboard button; T20 original/interpolated/+12; expandable raw record focus",
+              "T80 one B point; T124.25 zero; old detail invalidated, no carried-forward position",
+              "device +7 and unknown device separate; unknown does not move clock or positions",
+              "HDG unknown preserved at four boundaries; no history line bridges either gap",
+              "viewport layout order and no whole-page horizontal overflow",
+              "no external page requests observed in offline context; no page/console errors",
+          ]
+          def require(condition):
+              if not condition:
+                  raise RuntimeError("gate requirement")
+
+          def run(command, env, seconds):
+              with tempfile.TemporaryFile(dir=root) as sink:
+                  p = subprocess.Popen(command, cwd=root, env=env, stdout=sink, stderr=sink,
+                                       start_new_session=True)
+                  try:
+                      require(p.wait(timeout=seconds) == 0)
+                  except subprocess.TimeoutExpired:
+                      os.killpg(p.pid, signal.SIGKILL)
+                      p.wait()
+                      raise
+
+          def png(path, width, height):
+              require(path.is_file() and not path.is_symlink() and 256 < path.stat().st_size < 8_000_000)
+              data = path.read_bytes()
+              require(data[:8] == b"\x89PNG\r\n\x1a\n")
+              i, idat, first = 8, [], True
+              while i < len(data):
+                  size, tag = struct.unpack_from(">I4s", data, i)
+                  end = i + 12 + size
+                  require(end <= len(data))
+                  piece = data[i + 8:i + 8 + size]
+                  require(zlib.crc32(tag + piece) == struct.unpack_from(">I", data, end - 4)[0])
+                  i = end
+                  if first:
+                      require(tag == b"IHDR" and size == 13)
+                      w, h, depth, mode, c, f, interlace = struct.unpack(">IIBBBBB", piece)
+                      require(w == width and height <= h <= 12000 and depth == 8 and mode in (2, 6))
+                      require(c == f == interlace == 0)
+                      first = False
+                  elif tag == b"IDAT":
+                      idat.append(piece)
+                  elif tag == b"IEND":
+                      require(not size and i == len(data))
+                      break
+              require(not first and bool(idat) and tag == b"IEND")
+              step = 3 if mode == 2 else 4
+              stride = step * w
+              dec = zlib.decompressobj()
+              pixels = dec.decompress(b"".join(idat), (stride + 1) * h + 1)
+              require(len(pixels) == (stride + 1) * h and dec.eof and not dec.unused_data)
+              prev = bytearray(stride)
+              colors = set()
+              for y in range(h):
+                  at = y * (stride + 1)
+                  filt = pixels[at]
+                  require(filt <= 4)
+                  row = bytearray(pixels[at + 1:at + 1 + stride])
+                  for x, value in enumerate(row):
+                      a, b = (row[x-step] if x >= step else 0), prev[x]
+                      c = prev[x-step] if x >= step else 0
+                      if filt == 1:
+                          value += a
+                      elif filt == 2:
+                          value += b
+                      elif filt == 3:
+                          value += (a + b) // 2
+                      elif filt == 4:
+                          p = a + b - c
+                          pa, pb, pc = abs(p - a), abs(p - b), abs(p - c)
+                          value += a if pa <= pb and pa <= pc else (b if pb <= pc else c)
+                      row[x] = value & 255
+                  for x in range(0, stride, step * 3):
+                      if step == 3 or row[x + 3] != 0:
+                          colors.add(bytes(row[x:x + 3]))
+                  if len(colors) >= 16:
+                      return {"sha256": hashlib.sha256(data).hexdigest(), "width": w, "height": h}
+                  prev = row
+              raise RuntimeError("screenshot blank")
+
+          class NoRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self, *args, **kwargs):
+                  raise RuntimeError("redirect denied")
+
+          def validate_receipt():
+              output = root / "result"
+              receipt_path = output / "result.json"
+              require(0 < receipt_path.stat().st_size < 24_000 and not receipt_path.is_symlink())
+              receipt = json.loads(receipt_path.read_text())
+              require(receipt.get("productCommit") == product and receipt.get("htmlSha256") == pins["workbench.html"][1])
+              require(receipt.get("status") == "passed" and receipt.get("stage") == "complete" and receipt.get("browserClosed") is True)
+              require(receipt.get("playwright") == version and bool(re.fullmatch(r"[0-9]+(?:\.[0-9]+){1,3}", receipt.get("browser", ""))))
+              require(hashlib.sha256((output / "fixed-workbench.html").read_bytes()).hexdigest() == pins["workbench.html"][1])
+              require(len(receipt.get("viewports", [])) == 2)
+              results = []
+              all_shots = set()
+              for row, (label, w, h) in zip(receipt["viewports"], (("desktop", 1440, 900), ("narrow", 390, 844)), strict=True):
+                  require(row.get("label") == label and row.get("viewport") == {"width": w, "height": h})
+                  require(row.get("status") == "passed" and row.get("checks") == assertions and row.get("errors") == [])
+                  require(row.get("requests") == [(output / "fixed-workbench.html").as_uri()])
+                  files = [label + "-" + n + ".png" for n in ("t80", "t124-25", "device100", "layout100")]
+                  require(row.get("screenshots") == files)
+                  shots = {n: png(output / n, w, h) for n in files}
+                  require(len({a["sha256"] for a in shots.values()}) == len(files))
+                  all_shots.update(files)
+                  results.append({"label": label, "width": w, "height": h, "checks": len(assertions),
+                                  "externalRequests": 0, "pageErrors": 0, "screenshots": shots})
+              require({p.name for p in output.glob("*.png")} == all_shots)
+              return {"chrome": receipt["browser"], "viewports": results, "closed": True}
+
+          def main():
+              stage = "host"
+              report = {"schema": "mcis-w9-ci-once-v1", "sourceGate": "f9f4e599cdb670d864a5e7e986067216e7105636",
+                        "productCommit": product, "htmlSha256": pins["workbench.html"][1], "status": "failed"}
+              try:
+                  require(os.geteuid() != 0 and 'VERSION_ID="24.04"' in Path("/etc/os-release").read_text())
+                  require(root.is_dir() and not root.is_symlink())
+                  chrome, node, npm = [shutil.which(s) for s in ("google-chrome", "node", "npm")]
+                  require(all(ep and Path(ep).is_absolute() for ep in (chrome, node, npm)))
+                  clean = root / "home"
+                  clean.mkdir(mode=0o700)
+                  env = {"PATH": os.environ["PATH"], "HOME": str(clean), "TMPDIR": str(clean), "LANG": "C.UTF-8",
+                         "CI": "true", "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1", "NPM_CONFIG_USERCONFIG": "/dev/null",
+                         "NPM_CONFIG_CACHE": str(root / "npm-cache")}
+                  ver = subprocess.check_output([node, "--version"], env=env, timeout=10, text=True).strip()
+                  require(bool(re.fullmatch(r"v[0-9]+\.[0-9]+\.[0-9]+", ver)) and int(ver.split(".")[0][1:]) >= 20)
+                  stage = "pinned_inputs"
+                  for filename, (length, digest) in pins.items():
+                      p = root / filename
+                      require(p.is_file() and not p.is_symlink() and p.stat().st_size == length and hashlib.sha256(p.read_bytes()).hexdigest() == digest)
+                  stage = "dependencies"
+                  # Download only these two immutable stock tarballs; verify trusted integrity independently
+                  # before npm sees them. Linux install is offline, local, no lifecycle script or optional package.
+                  opener = urllib.request.build_opener(NoRedirect())
+                  for package, integrity in deps.items():
+                      require(re.fullmatch(r"sha512-[A-Za-z0-9+/]{86}==", integrity) is not None)
+                      url = f"https://registry.npmjs.org/{package}/-/{package}-{version}.tgz"
+                      with opener.open(url, timeout=35) as response:
+                          raw = response.read(16_000_001)
+                      require(0 < len(raw) <= 16_000_000)
+                      require("sha512-" + base64.b64encode(hashlib.sha512(raw).digest()).decode() == integrity)
+                      (root / f"{package}.tgz").write_bytes(raw)
+                  (root / "package.json").write_text(json.dumps({"name": "w9-ci", "private": True}))
+                  run([npm, "install", "--offline", "--ignore-scripts", "--omit=optional", "--no-audit", "--no-fund",
+                       "--no-package-lock", "./playwright-core.tgz", "./playwright.tgz"], env, 80)
+                  for package in deps:
+                      require(json.loads((root / "node_modules" / package / "package.json").read_text()).get("version") == version)
+                  require({p.name for p in (root / "node_modules").iterdir() if not p.name.startswith(".")} == set(deps))
+                  stage = "browser"
+                  run([node, str(root / "check.cjs"), "--html", str(root / "workbench.html"),
+                       "--output", str(root / "result"), "--chromium", chrome], env, 220)
+                  stage = "receipt"
+                  report.update(validate_receipt())
+                  stage = "complete"
+                  report["status"] = "passed"
+              except Exception:
+                  pass
+              report["stage"] = stage
+              print(json.dumps(report, separators=(",", ":")), flush=True)
+              return 0 if report["status"] == "passed" else 1
+
+          if __name__ == "__main__":
+              raise SystemExit(main())
+          PYTHON
+      - name: Clean temporary files
+        if: always()
+        shell: bash
+        run: |
+          [[ ${GITHUB_RUN_ID:?} =~ ^[0-9]+$ ]]
+          [[ ${GITHUB_RUN_ATTEMPT:?} = 1 ]]
+          rm -rf -- "${RUNNER_TEMP:?}/mcis-w9-${GITHUB_RUN_ID}-1"
