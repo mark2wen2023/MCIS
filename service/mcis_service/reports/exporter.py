@@ -194,6 +194,20 @@ def _docx_font(style):
     fonts.set(qn("w:eastAsia"), "Noto Sans SC")
 
 
+def _docx_sentence(cell, sentence, lang):
+    cell.text = _sentence_text(sentence, lang)
+    if lang != "zh" or sentence.get("source") != "Investigator" or not sentence.get("citations"):
+        return
+    # A Chinese run needs an explicit East Asian font and language in narrow table columns.
+    for paragraph in cell.paragraphs:
+        for run in paragraph.runs:
+            rpr = run._element.get_or_add_rPr()
+            rpr.get_or_add_rFonts().set(qn("w:eastAsia"), "Noto Sans CJK SC")
+            language = OxmlElement("w:lang")
+            language.set(qn("w:eastAsia"), "zh-CN")
+            rpr.append(language)
+
+
 def _repeat_docx_header(row):
     """OOXML header row; office applications repeat it on continuation pages."""
     header = OxmlElement("w:tblHeader")
@@ -238,8 +252,8 @@ def render_docx(report: dict, lang: str, *, include_glossary=True) -> bytes:
             _repeat_docx_header(table.rows[0])
             for sentence in _sentences(section_data):
                 cells = table.add_row().cells
-                cells[0].text = _sentence_text(sentence, "zh")
-                cells[1].text = _sentence_text(sentence, "en")
+                _docx_sentence(cells[0], sentence, "zh")
+                _docx_sentence(cells[1], sentence, "en")
         else:
             for sentence in _sentences(section_data):
                 document.add_paragraph(_sentence_text(sentence, lang))
@@ -259,6 +273,11 @@ def render_docx(report: dict, lang: str, *, include_glossary=True) -> bytes:
             cells = table.add_row().cells
             cells[0].text = term["termZh"]
             cells[1].text = term["termEn"]
+        # Keep short glossary rows compact so a repeated header is not stranded on its own page.
+        for row in table.rows:
+            for cell in row.cells:
+                for paragraph in cell.paragraphs:
+                    paragraph.paragraph_format.space_after = Pt(0)
     buffer = io.BytesIO()
     document.save(buffer)
     return buffer.getvalue()
