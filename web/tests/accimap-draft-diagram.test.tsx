@@ -42,6 +42,25 @@ assert.ok(d.querySelector('svg desc')?.textContent.includes('不补节点或边'
 assert.equal(parse(renderToStaticMarkup(<AcciMapDraftDiagram caseId="other" draft={fixture}/>)).querySelector('svg'),null)
 assert.equal(parse(renderToStaticMarkup(<AcciMapDraftDiagram caseId={fixture.caseId} draft={{...fixture,isFictionalDemo:false} as unknown as SyntheticAcciMapDraft}/>)).querySelector('svg'),null)
 assert.equal(parse(renderToStaticMarkup(<AcciMapDraftDiagram caseId={fixture.caseId} draft={{...fixture,edges:[],informationFlows:[]}}/>)).querySelectorAll('svg line').length,0)
+// A displayed draft row with a blank ID cannot satisfy a missing endpoint.
+for (const invalidId of ['', '   ', '\t']) {
+ const guardDraft = {
+  ...fixture,
+  nodes: [...fixture.nodes, { id: invalidId, label: '尚未编号', level: 'CrewActs' as const }],
+  edges: [{ fromId: invalidId, toId: a }, { fromId: a, toId: invalidId }, { fromId: a, toId: b }],
+  informationFlows: [{ fromId: a, toId: invalidId }],
+ }
+ const guard = parse(renderToStaticMarkup(<AcciMapDraftDiagram caseId={fixture.caseId} draft={guardDraft}/>))
+ assert.equal(guard.querySelectorAll('svg line').length, 1, JSON.stringify(invalidId))
+ assert.ok(guard.body.textContent.includes('未绘制连线 3 条'))
+ const statuses = Array.from(guard.querySelectorAll('details ol li'), li => li.textContent)
+ assert.equal(statuses.filter(t => t.endsWith('（未绘制）') && t.includes('缺失')).length, 3)
+ assert.ok(statuses.includes(`输入关系：${a} → ${b}（图中已绘）`))
+ assert.ok(Array.from(guard.querySelectorAll('svg g title')).some(n => n.textContent.includes('尚未编号')))
+}
+// The display guard must not trim nonblank IDs into another node's identity.
+const exactDraft = {...fixture, edges: [{fromId:' ' + a, toId:b}], informationFlows: []}
+assert.equal(parse(renderToStaticMarkup(<AcciMapDraftDiagram caseId={fixture.caseId} draft={exactDraft}/>)).querySelectorAll('svg line').length, 0)
 assert.equal(JSON.stringify(fixture),baseline)
 await w.close()
 console.log('PASS AcciMap: 6 levels, explicit distinct edge types, omitted malformed edges, unknown status, unchanged fixture, cross-case/non-synthetic blocked')

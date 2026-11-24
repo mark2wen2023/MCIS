@@ -8,6 +8,7 @@ const levels = [
 type Level = typeof levels[number][0]
 type DraftNode = { id: string; label: string; level: Level }
 type Link = { fromId: string; toId: string }
+const hasId = (id: string) => id.trim().length !== 0
 export type SyntheticAcciMapDraft = {
   caseId: string
   isFictionalDemo: true
@@ -26,7 +27,8 @@ export function AcciMapDraftDiagram({ caseId, draft }: { caseId: string; draft: 
     const y = 74 + i * 104
     const nodes = draft.nodes.filter(n => n.level === level).map((node, j) => {
       const point = { x: 170 + j * 192, y: y + 15 }
-      index.set(node.id, index.has(node.id) ? null : point)
+      // A visible, not-yet-numbered row is never a valid link endpoint.
+      if (hasId(node.id)) index.set(node.id, index.has(node.id) ? null : point)
       return { node, ...point }
     })
     return { label, y, nodes }
@@ -36,9 +38,13 @@ export function AcciMapDraftDiagram({ caseId, draft }: { caseId: string; draft: 
     ...draft.edges.map(link => ({ ...link, kind: 'relation' as const })),
     ...draft.informationFlows.map(link => ({ ...link, kind: 'information' as const })),
   ]
-  const drawable = links.flatMap(link => {
+  const endpoints = (link: Link) => {
     const start = index.get(link.fromId), end = index.get(link.toId)
-    return start && end && link.fromId !== link.toId ? [{ ...link, start, end }] : []
+    return start && end && link.fromId !== link.toId ? { start, end } : null
+  }
+  const drawable = links.flatMap(link => {
+    const points = endpoints(link)
+    return points ? [{ ...link, ...points }] : []
   })
   const omitted = links.length - drawable.length
   // Assign a distinct track to each line between an unordered endpoint pair.
@@ -99,8 +105,8 @@ export function AcciMapDraftDiagram({ caseId, draft }: { caseId: string; draft: 
     <details>
       <summary>查看全部输入连线（含未绘制项）</summary>
       {links.length ? <ol>{links.map((link, i) => {
-        const drawn = index.get(link.fromId) && index.get(link.toId) && link.fromId !== link.toId
-        return <li key={i}>{link.kind === 'information' ? '输入信息流' : '输入关系'}：{link.fromId || '缺失'} → {link.toId || '缺失'}{drawn ? '（图中已绘）' : '（未绘制）'}</li>
+        const drawn = endpoints(link) !== null
+        return <li key={i}>{link.kind === 'information' ? '输入信息流' : '输入关系'}：{hasId(link.fromId) ? link.fromId : '缺失'} → {hasId(link.toId) ? link.toId : '缺失'}{drawn ? '（图中已绘）' : '（未绘制）'}</li>
       })}</ol> : <p>无输入连线。</p>}
     </details>
   </figure>
