@@ -57,3 +57,47 @@ def handoff(host_validate, args, *, frame, trusted_pins):
     return {'status': 'proposed_note_pending_human_review', 'caseId': CASE,
             'alignedUtc': UTC, 'text': CLAIM, 'items': deepcopy(reviews),
             'references': deepcopy(local), 'factActivated': False, 'saved': False}
+
+# T100 is a separate test-only typed entry. No change to the T124 text entry.
+T100_CONSUMER = 'ebe153b2753923b9b93c6d09281aad6f98a1d9d6'
+T100_PRODUCER = '3b613a5bda111cdfd3d5a4177710a2a4c304dc08'
+
+def bind_t100_test_receipt(trusted_pending, *, consumer_commit, producer_commit):
+    """Trusted fixture host ONLY, immediately after pinned consumer.run succeeds.
+    This factory is not authentication: callers must not expose it to model/UI input.
+    The closure holds a private snapshot; no receipt storage or production dispatch.
+    """
+    if consumer_commit != T100_CONSUMER or producer_commit != T100_PRODUCER:
+        raise ScopeError('t100_version')
+    if (type(trusted_pending) is not dict
+            or set(trusted_pending) != {'scope','caseId','alignedUtc','observations','reviewState','turnConclusion','causation','saved','sourceAuthenticityVerified'}
+            or trusted_pending['scope'] != 'synthetic_registered_stdout_test_only'
+            or trusted_pending['caseId'] != CASE
+            or trusted_pending['alignedUtc'] != '2026-02-01T12:01:40.000Z'
+            or trusted_pending['reviewState'] != 'pending'
+            or trusted_pending['turnConclusion'] is not None
+            or trusted_pending['causation'] is not None
+            or trusted_pending['saved'] is not False
+            or trusted_pending['sourceAuthenticityVerified'] is not False
+            or type(trusted_pending['observations']) is not list
+            or len(trusted_pending['observations']) != 2):
+        raise ScopeError('t100_pending')
+    # Full schema, exact source digests and independent registration checks belong
+    # to pinned consume(); do not duplicate that parser here.
+    snapshot = deepcopy(trusted_pending)
+    def same(a, b):
+        if type(a) is not type(b): return False
+        if type(a) is dict:
+            return a.keys() == b.keys() and all(same(a[k],b[k]) for k in a)
+        if type(a) is list:
+            return len(a)==len(b) and all(same(x,y) for x,y in zip(a,b))
+        return type(a) in (str,int,float,bool,type(None)) and a==b
+    def accept(pending):
+        if not same(pending, snapshot):
+            raise ScopeError('t100_same_run_binding')
+        return {'status':'proposed_note_pending_human_review',
+                'caseId':snapshot['caseId'],'alignedUtc':snapshot['alignedUtc'],
+                'observations':deepcopy(snapshot['observations']),
+                'text':'Single-time heading records do not establish a turn or cause.',
+                'turnConclusion':None,'causation':None,'factActivated':False,'saved':False}
+    return accept
