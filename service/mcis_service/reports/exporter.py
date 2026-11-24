@@ -40,6 +40,16 @@ def _state(report):
     return "DRAFT 草稿" if _draft(report) else "CONFIRMED 已确认"
 
 
+def _visible_state(report):
+    return _state(report) if _draft(report) else "CONFIRMED 已确认（章节 / sections）"
+
+
+def _review_notice(report):
+    return "" if _draft(report) else (
+        "章节均已确认，不代表正式签发／归档 / "
+        "All sections confirmed; not formal issuance or archiving.")
+
+
 def _fiction(report):
     if report.get("isFictionalDemo") is True:
         return "虚构示例 / Fictional"
@@ -109,9 +119,12 @@ def render_pdf(report: dict, lang: str, *, include_glossary=True) -> bytes:
         canvas.saveState()
         canvas.setFont(font, 8)
         canvas.setFillColor(colors.HexColor("#b45309") if _draft(report) else colors.HexColor("#166534"))
-        canvas.drawString(42, page_height - 27, _state(report))
+        canvas.drawString(42, page_height - 27, _visible_state(report))
         canvas.setFillColor(colors.black)
         canvas.drawRightString(page_width - 42, page_height - 27, _fiction(report))
+        if _review_notice(report):
+            canvas.setFont(font, 6.5)
+            canvas.drawString(42, page_height - 39, _review_notice(report))
         canvas.setFont(font, 6.7)
         canvas.drawCentredString(page_width / 2, 27, f"{DISCLAIMER_ZH} / {DISCLAIMER_EN}")
         canvas.drawRightString(page_width - 42, 15, str(doc.page))
@@ -125,9 +138,11 @@ def render_pdf(report: dict, lang: str, *, include_glossary=True) -> bytes:
             canvas.restoreState()
         canvas.restoreState()
 
-    flow = [p(_title(report), cover), p(_state(report), heading), p(_fiction(report), heading),
+    flow = [p(_title(report), cover), p(_visible_state(report), heading), p(_fiction(report), heading),
             p(f"{report.get('caseId', '')} · {report.get('reportId', '')} · v{report.get('version', 1)}", small),
             p(f"{DISCLAIMER_ZH} / {DISCLAIMER_EN}", heading), Spacer(1, 9)]
+    if _review_notice(report):
+        flow.insert(2, p(_review_notice(report), small))
     for number, section in enumerate(report.get("sections", []), 1):
         section_title = section.get("titleZh") if lang == "zh" else section.get("titleEn")
         if lang == "bilingual":
@@ -187,12 +202,19 @@ def render_docx(report: dict, lang: str, *, include_glossary=True) -> bytes:
     section = document.sections[0]
     section.top_margin = Inches(0.7)
     section.bottom_margin = Inches(0.7)
-    section.header.paragraphs[0].text = f"{_state(report)} | {_fiction(report)}"
+    section.header.paragraphs[0].text = f"{_visible_state(report)} | {_fiction(report)}"
+    if _review_notice(report):
+        section.header_distance = Inches(0.25)
+        section.header.paragraphs[0].add_run("\n" + _review_notice(report))
+        for run in section.header.paragraphs[0].runs:
+            run.font.size = Pt(8)
     section.footer.paragraphs[0].text = f"{DISCLAIMER_ZH} / {DISCLAIMER_EN}"
     for run in section.footer.paragraphs[0].runs:
         run.font.size = Pt(7)
     document.add_heading(_title(report), 0)
-    document.add_paragraph(_state(report))
+    document.add_paragraph(_visible_state(report))
+    if _review_notice(report):
+        document.add_paragraph(_review_notice(report))
     document.add_paragraph(_fiction(report))
     document.add_paragraph(f"{report.get('caseId', '')} | {report.get('reportId', '')} | v{report.get('version', 1)}")
     document.add_paragraph(f"{DISCLAIMER_ZH} / {DISCLAIMER_EN}")
