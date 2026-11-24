@@ -121,6 +121,9 @@ class IssueHostClient:
             fields=('kind','note','sourceIds','outcome','againstJudgment','seq','recordedUtc','status')
             body={'caseId':raw['caseId'],'issueId':raw['issueId'],'revision':raw['revision'],'status':raw['status'],
                   'events':[{k:e[k] for k in fields} for e in raw['events']]}
+            if req.action=='read':
+                for projected,original in zip(body['events'],raw['events'],strict=True):
+                    projected['sourceVersionStates']=[{'evidenceId':item['evidenceId'],'status':item['status']} for item in original['sourceVersionStates']]
             return {**self.scope,'requestId':request_id,'ok':True,'body':body}
         except Exception:
             return {**self.scope,'requestId':request_id,'ok':False,'code':'ISSUE_HOST_UNCONFIRMED','status':503}

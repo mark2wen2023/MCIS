@@ -1,6 +1,19 @@
 export type Kind='judgment'|'verification'|'discussion';
 export type Entry={kind:Kind,note:string,sourceIds:string[],outcome:'supports'|'refutes'|'inconclusive'|null,againstJudgment:number|null};
-export type Event=Entry&{seq:number,recordedUtc:string};
+export type VersionState={evidenceId:string,status:'current'|'needs_review'|'unavailable'};
+export type Event=Entry&{seq:number,recordedUtc:string,sourceVersionStates?:VersionState[]};
+/** Read-time states are not append-only journal content. */
+export function immutableEvents(events:Event[]){return events.map(({sourceVersionStates,...event})=>event)}
+function parseVersionStates(e:any):VersionState[]|undefined{
+ if(!Object.hasOwn(e,'sourceVersionStates'))return undefined;
+ const a=e.sourceVersionStates;
+ if(!Array.isArray(a)||a.length!==e.sourceIds.length)throw Error('invalid version states');
+ const seen=new Set<string>();
+ return a.map((x:any)=>{
+  if(!x||typeof x!=='object'||Array.isArray(x)||Object.keys(x).sort().join('|')!=='evidenceId|status'||!e.sourceIds.includes(x.evidenceId)||seen.has(x.evidenceId)||!['current','needs_review','unavailable'].includes(x.status))throw Error('invalid version state');
+  seen.add(x.evidenceId);return {evidenceId:x.evidenceId,status:x.status};
+ });
+}
 export type History={caseId:string,issueId:string,revision:number,status:'working_unreviewed',events:Event[]};
 export type SourcePin={evidenceId:string,sourceIncarnation:string,sourceSha256:string};
 export class SourceSelectionChanged extends Error{constructor(){super("来源版本已变化，请重新读取并选择");this.name="SourceSelectionChanged"}}
@@ -27,7 +40,8 @@ export function parse(value:unknown,caseId:string,issueId:string):History{
   if(!e||e.status!=='working_unreviewed'||e.seq!==i+1||!['judgment','verification','discussion'].includes(e.kind)||typeof e.note!=='string'||!e.note.trim()||e.note.length>8000||typeof e.recordedUtc!=='string'||!Number.isFinite(Date.parse(e.recordedUtc))||!Array.isArray(e.sourceIds)||e.sourceIds.length>20||e.sourceIds.some((s:unknown)=>typeof s!=='string'||!s||s.length>64)||new Set(e.sourceIds).size!==e.sourceIds.length)throw Error('invalid');
   if(e.kind==='judgment'){if(e.againstJudgment!==null||e.outcome!==null)throw Error('invalid');judgment=e.seq;verified=false}
   else{if(!judgment||e.againstJudgment!==judgment)throw Error('invalid');if(e.kind==='verification'){if(!['supports','refutes','inconclusive'].includes(e.outcome))throw Error('invalid');verified=true}else if(!verified||e.outcome!==null)throw Error('invalid')}
-  return {seq:e.seq,kind:e.kind,note:e.note,recordedUtc:e.recordedUtc,sourceIds:[...e.sourceIds],outcome:e.outcome,againstJudgment:e.againstJudgment} as Event;
+  const states=parseVersionStates(e);
+  return {...(states===undefined?{}:{sourceVersionStates:states}),seq:e.seq,kind:e.kind,note:e.note,recordedUtc:e.recordedUtc,sourceIds:[...e.sourceIds],outcome:e.outcome,againstJudgment:e.againstJudgment} as Event;
  });return {caseId,issueId,revision:x.revision,status:'working_unreviewed',events};
 }
 export function createRehearsalPort():JournalPort{

@@ -190,13 +190,45 @@ def append(db,settings,token,case_id,issue_id,operation_id,expected_revision,ent
         return response
 
 
-def read(db,token,case_id,issue_id):
+def source_version_states(ctx,s,case_id,event,checked):
+    """Request-local integrity results, compared against each immutable snapshot."""
+    snapshots={x['evidenceId']:x for x in event.get('sourceSnapshots',[])}
+    result=[]
+    for evidence_id in event['sourceIds']:
+        key=(case_id,evidence_id)
+        if key not in checked:
+            try:
+                checked[key]=(source_current(ctx,s,case_id,evidence_id),None)
+            except HTTPException as error:
+                # Do not cache or downgrade an authorization failure.
+                if error.status_code in (401,403):raise
+                if error.status_code==409:
+                    code=error.detail.get('code') if isinstance(error.detail,dict) else None
+                    status='unavailable' if code=='SOURCE_INCARNATION_MISSING' else 'needs_review'
+                elif error.status_code in (404,503):status='unavailable'
+                else:raise
+                checked[key]=(None,status)
+        current,status=checked[key]
+        old=snapshots.get(evidence_id)
+        if current is not None:
+            keys=('caseId','evidenceId','caseIncarnation','incarnation','sourceSha256')
+            status=('current' if all(old.get(k)==current.get(k) for k in keys) else 'needs_review') if old is not None else 'unavailable'
+        result.append({'evidenceId':evidence_id,'status':status})
+    return result
+
+
+def read(db,token,case_id,issue_id,settings=None):
     canonical_id(issue_id)
     with db.session() as s:
         before,generation=auth(s,token,case_id)
         history=rows(s,generation,issue_id)
         if not history:raise problem(404,'ISSUE_NOT_FOUND','问题不存在')
         response=project(case_id,issue_id,history)
+        if settings is not None:
+            ctx=SimpleNamespace(db=db,settings=settings,role=before.role,operator=before.subject_id)
+            checked={}  # Lifetime is this authorized read only; never a host/global cache.
+            for event in response['events']:
+                event['sourceVersionStates']=source_version_states(ctx,s,case_id,event,checked)
         if auth(s,token,case_id)!=(before,generation):raise problem(403,'ISSUE_ACCESS_DENIED','授权变化')
         return response
 

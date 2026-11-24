@@ -67,7 +67,7 @@ async def handle(app,scope,receive,send):
     if method=='GET':
         if hs.get(b'content-length',[]) not in ([],[b'0']):await fail(400,'ISSUE_READ_BODY');return True
         try:
-            if issue_id:result=await run_in_threadpool(journal.read,app.db,token,case_id,issue_id)
+            if issue_id:result=await run_in_threadpool(journal.read,app.db,token,case_id,issue_id,app.settings)
             else:result=await run_in_threadpool(journal.list_issues,app.db,token,case_id)
         except HTTPException as e:await fail(e.status_code if e.status_code in (403,404,409,413) else 503,'ISSUE_READ_REJECTED');return True
         except Exception:await fail(503,'ISSUE_UNAVAILABLE');return True
