@@ -11,7 +11,7 @@ from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[2]
 # Freeze the complete first-party import closure, including package initializers.
-PINS = {'service/mcis_service/__init__.py': '0af1ae7229694ada406cc87b5cbaaf195441620cb48e8dda54df83a3f6295480', 'service/mcis_service/config.py': '0e5e5262bcffe7f63fbca833e5cd267045d9db790d7600f0848c5451f21aa2ea', 'service/mcis_service/reports/__init__.py': '8ba52ec498ce30f3263c03c45f29c306d47ea2517d541d8c3e208cbf7f4d5020', 'service/mcis_service/reports/templates.py': '46304abd191be543146f56ba5789e7c36d18f4bb20ec81bb62e83dece2a31aa4', 'service/mcis_service/reports/exporter.py': '9124188c4c68d5473046fc2d149ae4a8cf244dcf91bbc9b40e57e666042088eb'}
+PINS = {'service/mcis_service/__init__.py': '0af1ae7229694ada406cc87b5cbaaf195441620cb48e8dda54df83a3f6295480', 'service/mcis_service/config.py': '0e5e5262bcffe7f63fbca833e5cd267045d9db790d7600f0848c5451f21aa2ea', 'service/mcis_service/reports/__init__.py': '8ba52ec498ce30f3263c03c45f29c306d47ea2517d541d8c3e208cbf7f4d5020', 'service/mcis_service/reports/templates.py': '46304abd191be543146f56ba5789e7c36d18f4bb20ec81bb62e83dece2a31aa4', 'service/mcis_service/reports/exporter.py': 'edff6bd6ae8e610a0071d11db599c98027d832e797b91c7d465b9e52d7d779bd'}
 
 class ImportBoundary(importlib.abc.MetaPathFinder):
     def find_spec(self, fullname, path=None, target=None):
