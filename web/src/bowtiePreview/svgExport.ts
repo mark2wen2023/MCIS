@@ -6,7 +6,7 @@ const notices=[
  '人工 Bow-tie 假设草图 · 所有节点待核验 · 屏障 Unknown',
  '连线仅表达输入，非已证实因果、事实、责任或屏障有效性。',
  '参考资料不绑定节点，本文件不含原件、证据明细或结构核查结果。',
- '未找到端点的连线不绘制；完整节点 ID 保留在各节点标题中。',
+ '端点缺失或有歧义的连线不绘制；完整节点 ID 保留在各节点标题中。',
 ]
 export function serializeBowtieSvg(svg:SVGSVGElement):string {
  const copy=svg.cloneNode(true) as SVGSVGElement

@@ -3,6 +3,7 @@ import {createRoot} from 'react-dom/client'
 import {flushSync} from 'react-dom'
 import {Window} from 'happy-dom'
 import {Diagram} from '../src/bowtiePreview/Diagram'
+import {bowtieDraftFocusTarget} from '../src/bowtiePreview/endpoints'
 import {serializeBowtieSvg} from '../src/bowtiePreview/svgExport'
 import type {Model} from '../src/bowtiePreview/model'
 const w=new Window()
@@ -33,8 +34,8 @@ for(const id of [prevention,mitigation]){
 }
 const desc=parsed.querySelector('svg > desc')?.textContent
 assert.ok(desc?.includes('不是逐节点已核实证据'))
-assert.ok(desc?.includes('未找到端点的连线不在图中绘制'))
-assert.ok(Array.from(parsed.querySelectorAll('svg > text')).some(t=>t.textContent?.includes('未找到端点的连线不绘制')))
+assert.ok(desc?.includes('未绘制连线 1 条'))
+assert.ok(Array.from(parsed.querySelectorAll('svg > text')).some(t=>t.textContent?.includes('端点缺失或有歧义的连线不绘制')))
 for(const phrase of ['待核验','Unknown','非已证实因果','不含原件'])assert.ok(xml.includes(phrase))
 assert.ok(!xml.includes(model.hazard))
 assert.equal(svg.outerHTML,original)
@@ -58,6 +59,28 @@ assert.equal(await blob!.text(),xml)
 assert.equal(w.document.querySelector('a'),null)
 await new Promise(resolve=>setTimeout(resolve,10))
 assert.equal(revoked,'blob:synthetic-test')
+const duplicateNodes:Model['nodes']=[{id:'DUP',label:'重复甲',kind:'Threat',barrierId:null},{id:'DUP',label:'重复乙',kind:'PreventionBarrier',barrierId:null}]
+for(const nodes of [duplicateNodes,[...duplicateNodes].reverse()]){
+ const ambiguous:Model={...model,nodes:[...nodes,...model.nodes],edges:[{fromId:'DUP',toId:'top'},{fromId:'top',toId:'DUP'},{fromId:prevention,toId:'top'},{fromId:'',toId:mitigation}]}
+ flushSync(()=>root.render(<Diagram model={ambiguous} canExport={()=>true}/>))
+ const live=host.querySelector('svg')!
+ assert.equal(live.querySelectorAll('line').length,1)
+ assert.ok(live.querySelector('desc')?.textContent.includes('未绘制连线 3 条'))
+ assert.ok(Array.from(live.querySelectorAll('svg > text')).some(t=>t.textContent?.includes('未绘制连线 3 条')))
+ assert.equal(bowtieDraftFocusTarget(ambiguous,'DUP'),null)
+ assert.equal(bowtieDraftFocusTarget(ambiguous,'top'),'w153-top')
+ assert.equal(bowtieDraftFocusTarget(ambiguous,prevention),'w153-node-2')
+ assert.equal(bowtieDraftFocusTarget(ambiguous,'missing'),'w153-edges')
+ host.querySelector('button')!.click()
+ const standalone=new w.DOMParser().parseFromString(await blob!.text(),'image/svg+xml')
+ assert.equal(standalone.querySelectorAll('line').length,1)
+ assert.ok(standalone.querySelector('desc')?.textContent.includes('未绘制连线 3 条'))
+ assert.ok(Array.from(standalone.querySelectorAll('svg > text')).some(t=>t.textContent?.includes('未绘制连线 3 条')))
+ for(const label of ['DUP · 重复甲','DUP · 重复乙'])assert.ok(Array.from(standalone.querySelectorAll('title')).some(t=>t.textContent?.includes(label)))
+}
+assert.equal(clicks,3)
+assert.equal(bowtieDraftFocusTarget({...model,nodes:[...model.nodes,{...duplicateNodes[0],id:'top'}]},'top'),null)
+await new Promise(resolve=>setTimeout(resolve,10))
 URL.createObjectURL=originalCreate;URL.revokeObjectURL=originalRevoke
 flushSync(()=>root.unmount())
 await w.close()
