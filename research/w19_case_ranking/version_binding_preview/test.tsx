@@ -79,3 +79,21 @@ for(const canReview of [false,true])check('actual Candidate read-only entry '+ca
  assert.equal(page.includes('批准发布到公开资料库'),canReview)
 })
 console.log('W19 product entry: '+n+' SSR checks passed')
+
+for(const [name,q,tag,expected] of [
+ ['literal','不确定性','','字面子串条件'],
+ ['tag','','来源核查','精确标签条件'],
+ ['both','不确定性','来源核查','同时成立才返回'],
+ ['none','','','不能视为相关性推荐'],
+ ['whitespace','   ','  ','本次没有字面或标签条件'],
+ ['escaped','<script>test</script>','','&lt;script&gt;test&lt;/script&gt;'],
+])check('actual result-card explanation '+name,()=>{
+ const card:Card={cardId:'KC-'+'e'.repeat(32),status:'Candidate',content:structuredClone(sample),contentDigest:'f'.repeat(64),createdUtc:'2030-06-04T00:00:00Z'}
+ const h=render(After,{card,canReview:false,onReview:()=>{throw Error('write')},searchContext:{status:'Candidate',kind:'Method',q,tag}})
+ assert(h.includes('为什么返回这张卡')&&h.includes(expected))
+ assert(h.includes('不证明原文支持')&&h.includes('缺少依据、反例和不确定性'))
+ const part=h.match(/<details aria-label="本次返回原因">[\s\S]*?<\/details>/)?.[0]
+ assert(part);noActions(part);assert(!part.includes('<script>'))
+ assert(!/<details[^>]*\sopen(?:[= >])/.test(part))
+})
+console.log('W19 search reasons: '+n+' SSR checks passed')

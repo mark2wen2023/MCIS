@@ -1,3 +1,30 @@
+# Follow-up: actual search result-card explanation
+Base f24ef201dc21bb5987bb89ad481b6924551ef235. KnowledgePage captures applied
+status/kind/q/tag with each successful response and passes that snapshot to KnowledgeCard.
+It does NOT use editable fields or a newer filter to explain an older result.
+No API, query, permissions, ordering, threshold, source reads, save or publication changes.
+
+New collapsed “为什么返回这张卡” uses the existing product result, explaining:
+status/type restrictions; literal substring or whole-tag condition; AND when both present;
+unfiltered listing when neither present; newest registration-row order, not similarity.
+The backend does not return matched offsets or semantic evidence checks, so the component
+does not claim a specific field hit or mark individual cards supported/unsupported.
+Missing basis, counterevidence and uncertainty remain for human review.
+Router examined at this base: service/mcis_service/knowledge/router.py,
+blob 6371cdc4fd3d0fe9d3626e294b61d9464bbfca17.
+
+The independent 25b7d91 six-query/27-card evaluation and c1b988 tag ranker remain separate
+research controls: no labels, answers, frozen text, score or denominator are used by this UI.
+This does not improve or re-evaluate their recall. No new blind answers are read.
+
+Linux existing runner: exit 0, 40 SSR checks (6 new actual-card contexts), W19.1 27 assertions,
+W19.2 existing checks. No context keeps previous rendering unchanged. First run detected
+an accidental whitespace difference; removed it, rerun passed without weakening assertions.
+No browser/real API or asynchronous replacement test performed; coordinator should verify
+query-edit without submit, new-query load, and stale response rejection in the actual page.
+Only loaded card content and applied query conditions are displayed; no provenance invented.
+
+## Earlier implementation records
 # Current follow-up: existing KnowledgeCard review entry
 
 Base 568d4b0ea74efeb570cf406b52e3cdfc4b0d4f02. This revision changes the ACTUAL
