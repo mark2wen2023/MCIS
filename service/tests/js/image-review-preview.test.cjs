@@ -49,11 +49,11 @@ test('derived clear during real hash/decode invalidates late bitmap without rest
  const pending=h.controller.loadDerived(png(),derived());await ready;h.controller.clear();resolve({...expected,close(){closed++;}});
  assert.equal(await pending,false);assert.equal(closed,1);assert.equal(h.ops.length,0);assert.equal(h.page.width,1);assert.equal(b.review.disabled,false);
 });
-test('original page connects controls and guards both original read and OCR save; no derived route',()=>{
+test('original page connects controls and guards both original read and OCR save; derived loading delegated to host',()=>{
  const fs=require('node:fs'),path=require('node:path');const html=fs.readFileSync(path.join(__dirname,'../../mcis_service/image_review/review.html'),'utf8');
  assert.match(html,/controls:\(\)=>\(\{originalRead:/);assert.match(html,/querySelectorAll\('\[data-ocr-review\]'\)/);
- assert.match(html,/async function readOriginal\(kind\)\{preview.assertOriginalAction\(\)/);
- assert.match(html,/button.dataset.ocrReview='true';button.onclick=\(\)=>action\(async\(\)=>\{preview.assertOriginalAction\(\)/);
+ assert.match(html,/async function readOriginal\(kind,token=loadedEpoch\)\{requireLoaded\(token\);preview.assertOriginalAction\(\)/);
+ assert.match(html,/button.dataset.ocrReview='true';button.onclick=\(\)=>action\(async\(\)=>\{requireLoaded\(token\);preview.assertOriginalAction\(\)/);
  assert.doesNotMatch(html,/loadDerived\(/);
 });
 test('late original read cannot replace a current derived page',async()=>{

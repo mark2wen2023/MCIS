@@ -134,11 +134,14 @@ async def review(case_id: str, run_id: str, request: Request, ctx: Ctx = CtxDep)
         return result(records(s, case_id, run_id))
 
 
-def create_image_review_app(settings, ocr_runtime=None):
+def create_image_review_app(settings, ocr_runtime=None, *, synthetic_pdf_binding=None):
     from ..main import create_app
     app = create_app(settings)
     from .tasks import router as tasks_router
     app.state.image_ocr_runtime = ocr_runtime
+    from .synthetic_pdf import router as pdf_router
+    app.state.synthetic_pdf_binding = synthetic_pdf_binding
+    app.include_router(pdf_router)
     Storage.metadata.create_all(app.state.db.engine)
     with app.state.db.engine.begin() as c:
         for op in ('UPDATE', 'DELETE'):
@@ -148,7 +151,14 @@ def create_image_review_app(settings, ocr_runtime=None):
     @app.get('/image-review-lab/preview.js')
     def preview_script():
         return Response(Path(__file__).with_name('preview.js').read_text(), media_type='text/javascript', headers={'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff'})
+    @app.get('/image-review-lab/pdf-host.js')
+    def pdf_host_script():
+        return Response(Path(__file__).with_name('pdf_host.js').read_text(), media_type='text/javascript', headers={'Cache-Control': 'no-store'})
     @app.get('/image-review-lab', response_class=HTMLResponse)
     def page():
-        return HTMLResponse(Path(__file__).with_name('review.html').read_text(), headers={'Cache-Control': 'no-store'})
+        from .synthetic_pdf import SyntheticPdfBinding
+        html = Path(__file__).with_name('review.html').read_text()
+        if type(app.state.synthetic_pdf_binding) is SyntheticPdfBinding:
+            html = html.replace('id="show-pdf" hidden', 'id="show-pdf"')
+        return HTMLResponse(html, headers={'Cache-Control': 'no-store'})
     return app
