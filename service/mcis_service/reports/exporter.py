@@ -196,7 +196,7 @@ def _docx_font(style):
 
 def _docx_sentence(cell, sentence, lang):
     cell.text = _sentence_text(sentence, lang)
-    if lang != "zh" or sentence.get("source") != "Investigator" or not sentence.get("citations"):
+    if lang != "zh":
         return
     # A Chinese run needs an explicit East Asian font and language in narrow table columns.
     for paragraph in cell.paragraphs:
