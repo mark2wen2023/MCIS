@@ -89,7 +89,7 @@ export function ReportView(props: ReportViewProps) {
             </div>)}
             {selected.source === 'Investigator' && <details className="rpt-original"><summary>调查员修改 · 原生成文本</summary><p>{selected.generatedText.textZh}</p><p lang="en">{selected.generatedText.textEn}</p></details>}
             <div className="rpt-review-actions"><b>章节复核</b>{(Object.keys(ACTION_LABEL) as ReviewAction[]).map((action) => <button className={`btn btn-sm ${action === 'confirm' ? 'btn-primary' : action === 'dismiss' ? 'btn-danger' : ''}`} key={action} disabled={busy || pending || blocked} onClick={() => onReview(action, targetOf(selected))}>{ACTION_LABEL[action]}</button>)}{selected.reviewedBy && <span className="p6-note">{selected.reviewedBy} · {selected.reviewedAt}</span>}</div>
-            <details className="rpt-source-details"><summary>章节来源与引用表（{distinctCitations.length}）</summary><p className="p6-note">数据源：{selected.dataSources.join(' / ')}</p><table className="p6-table"><thead><tr><th>引用</th><th>类型</th><th>状态</th><th>来源定位</th></tr></thead><tbody>{distinctCitations.map((c) => <tr key={`${c.kind}:${c.id}:${c.sourceRef || ''}`}><td><CitationLink citation={c} /></td><td>{c.kind}</td><td>{c.registration === 'unregistered' ? '未登记' : c.registration === 'missing' ? '缺数据' : c.needsReview ? '证据需复核' : '已登记'}</td><td style={{ overflowWrap: 'anywhere' }}>{c.sourceRef || '未提供'}</td></tr>)}</tbody></table></details>
+            <details className="rpt-source-details"><summary>章节来源与引用表（{distinctCitations.length}）</summary><p className="p6-note">数据源：{selected.dataSources.join(' / ')}</p><table className="p6-table"><thead><tr><th>引用</th><th>类型</th><th>状态</th><th>来源定位</th></tr></thead><tbody>{distinctCitations.map((c) => <tr key={`${c.kind}:${c.id}:${c.sourceRef || ''}`}><td><CitationLink citation={c} /></td><td>{c.kind}</td><td>{citationStatus(c)}</td><td style={{ overflowWrap: 'anywhere' }}>{c.sourceRef || '未提供'}</td></tr>)}</tbody></table></details>
           </> : <div className="rpt-empty">{pending ? '真实案例报告功能待确认' : '选择模板和语言，生成可逐节复核的报告草稿。W14 采用已核验的虚构案例分析种子；W15 暂以缺数据保留。'}</div>}
           <div className="rpt-export" aria-label="报告导出">
             <button className="btn btn-sm" disabled={busy || pending || blocked || !report} onClick={() => props.onExport('pdf', 'zh')}>PDF 中文</button>
@@ -107,6 +107,16 @@ export function ReportView(props: ReportViewProps) {
       </Panel>
     </div>
   )
+}
+
+// Presentation only: a business-item citation is not original-evidence registration.
+function citationStatus(citation: Citation): string {
+  if (citation.registration === 'missing') return '缺数据'
+  if (citation.unregistered || citation.registration === 'unregistered') return '未登记'
+  if (citation.registration !== 'registered') return '登记状态未知'
+  if (citation.kind === 'colreg-check') return '规则核查条目（非原件登记）；原件及复核状态另查'
+  if (citation.kind === 'evidence') return citation.needsReview ? '证据台账已登记；需复核' : '证据台账已登记（不代表原件已核验）'
+  return citation.needsReview ? '来源条目需复核（非原件登记）' : '来源条目（非原件登记）'
 }
 
 function CitationLink({ citation }: { citation: Citation }) {
