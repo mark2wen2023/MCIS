@@ -38,3 +38,46 @@
 3. W20 先验证同案带来源的正式读入口再开多席。保留事实、分歧、不足与人工决定；合成或替身测试不能代表真实模型、4A 或生产身份。
 4. W13、W21 分开验 Web 与 Unity。四时点固定 T+100／121／124.250／127.500：浏览器回执应带两仓提交、三份样例哈希、实际命令退出码及首导航起的网络范围，再查同案关联、访问审计、草稿写入和重开。正式集成还需 Unity、串流回退及 Windows 交付。
 5. 正式发布、签发或部署均未执行。本交接只纳入可验证候选和合成测试，不含环境配置、附件原件、账号、运行数据库或证据包。
+
+## W21：固定 Git 历史复验
+
+在已获准访问本仓的主机上，使用一个新的、非浅克隆、非部分克隆的 MCIS Git 仓和已安装依赖的服务 Python。先确认 `origin` 指向本仓；仅拉这两个分支，不改原工作树。两个脱离分支的工作树共享对象库，但不同提交分别运行。当前核对到共同祖先 `d3fd954`。本命令只记录复验入口，尚未在当前 Linux 实跑 Git 拉取或 SQLite 联验。
+
+```sh
+#!/usr/bin/env bash
+# Run only in a fresh MCIS repo on an already authorized host.
+set -euo pipefail
+: "${PYTHON:?Set PYTHON to the absolute path of the existing MCIS virtual environment interpreter}"
+[[ "$PYTHON" = /* && -x "$PYTHON" && "$(git rev-parse --is-shallow-repository)" = false ]]
+[[ "$(git config --bool remote.origin.promisor || true)" != true ]]
+fetch_root="$(git rev-parse --show-toplevel)"
+root="$(mktemp -d)"
+joined=17247747272fb53623b144e199260f59d6befcbd
+receipt=8d68f6fa076b7acad90fab10e95ab88c6945a018
+
+git fetch --no-tags origin \
+  refs/heads/candidate/four-frames-prepare-joined:refs/remotes/origin/candidate/four-frames-prepare-joined \
+  refs/heads/candidate/mcis-cross-repo-clock-receipt:refs/remotes/origin/candidate/mcis-cross-repo-clock-receipt
+[[ "$(git rev-parse refs/remotes/origin/candidate/four-frames-prepare-joined)" = "$joined" ]]
+[[ "$(git rev-parse refs/remotes/origin/candidate/mcis-cross-repo-clock-receipt)" = "$receipt" ]]
+[[ "$(git merge-base "$joined" "$receipt")" = d3fd9542249f214a5aa3776d7c0b8c7609ad81a7 ]]
+export GIT_NO_LAZY_FETCH=1
+git worktree add --detach "$root/receipt" "$receipt"
+git worktree add --detach "$root/joined" "$joined"
+(
+  cd "$root/receipt"
+  "$PYTHON" -I -B tests_acceptance/cross-repo-clock-receipt/check.py --receipt "$root/receipt.actual.json"
+  cmp "$root/receipt.actual.json" tests_acceptance/cross-repo-clock-receipt/receipt.json
+)
+(
+  cd "$root/joined"
+  "$PYTHON" -I -B tests_acceptance/registered-trajectory-pair/four_frames_prepare_joined.py
+)
+# Remove only these detached worktrees after retaining the appropriate synthetic receipts:
+# git -C "$fetch_root" worktree remove "$root/receipt"
+# git -C "$fetch_root" worktree remove "$root/joined"
+```
+
+第一个回执的生成/文件比对，和第二个命令的四时点与准备操作，是两种不同的 MCIS 侧证据。两者如通过仍不能代替当前 `mcis-3d` 真浏览器及其原始回执。
+
+W4 的 `3ae5166` 浏览器与临时服务必须在同一主机。现有脚本覆盖完成后的画布和旧操作回调、恢复注册 PNG 及两次读取审计；不含窄屏截图，也不等价于真实请求挂起时的 A→B→A 测试。
