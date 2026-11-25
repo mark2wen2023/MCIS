@@ -1,5 +1,6 @@
 """Research asset integrity binding; trusted manifest storage is required."""
 import hashlib
+import math
 import json
 import hmac
 import re
@@ -44,6 +45,11 @@ def bind_asset(glb, evidence, *, algorithm_version):
     extras=doc['asset'].get('extras')
     if not isinstance(extras,dict) or extras.get('research_only') is not True or extras.get('lofting_authorized') is not False:
         raise ValueError('GLB authorization metadata inconsistent with research evidence')
+    for metadata in (extras,evidence):
+        if 'mcis_origin_m' in metadata:
+            origin=metadata['mcis_origin_m']
+            if not isinstance(origin,list) or len(origin)!=3 or any(type(v) not in (int,float) or not math.isfinite(v) for v in origin):
+                raise ValueError('invalid GLB or sidecar local origin')
     if ('mcis_origin_m' in extras)!=('mcis_origin_m' in evidence) or extras.get('mcis_origin_m')!=evidence.get('mcis_origin_m'):
         raise ValueError('GLB local origin inconsistent with evidence')
     return dict(version='0.1',algorithm_version=algorithm_version,
