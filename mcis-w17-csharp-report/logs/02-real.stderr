@@ -1,0 +1,5 @@
+Verified d40e3b5fd2e208af84c84d6faf61095d0a0a89fb: 190 service/contract + 9 C# blob pins
+SDK 8.0.428; installed runtimes:
+Microsoft.AspNetCore.App 8.0.34 [/home/box/.dotnet/shared/Microsoft.AspNetCore.App]
+Microsoft.NETCore.App 8.0.34 [/home/box/.dotnet/shared/Microsoft.NETCore.App]
+

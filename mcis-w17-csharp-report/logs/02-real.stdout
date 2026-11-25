@@ -1,0 +1,10 @@
+  Determining projects to restore...
+  Restored /tmp/w17-csharp-offline-uf8m6h_8/tools/mcis-compat/McisCompat.csproj (in 65 ms).
+  McisCompat -> /tmp/w17-csharp-offline-uf8m6h_8/build/mcis-compat.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.80
+{"archive": "1.4.0", "custodySha256": "431bc69024b01f65179ad11cae2b1f12c22cd3b0b7d123216ee6f34c5a146239", "events": 4, "items": 2, "statuses": ["NeedsReview", "Verified"], "restrictedCount": 1, "nonCanonicalRejected": "custody_chain_broken"}

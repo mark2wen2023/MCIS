@@ -1,0 +1,31 @@
+2026-11-26 02:48:59 CST
+acceptance=aca9dfd254581a5711c4b38a4f897233f292dedb
+product=d40e3b5fd2e208af84c84d6faf61095d0a0a89fb
+python=/workspace/mcis-w17-871db66/service/.venv/bin/python
+Python 3.13.5
+dotnet=/home/box/.dotnet/dotnet (not globally on PATH)
+8.0.428
+8.0.428 [/home/box/.dotnet/sdk]
+Microsoft.AspNetCore.App 8.0.34 [/home/box/.dotnet/shared/Microsoft.AspNetCore.App]
+Microsoft.NETCore.App 8.0.34 [/home/box/.dotnet/shared/Microsoft.NETCore.App]
+--- McisCompat.csproj ---
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- 仅测试用：用 Unity 侧原样 C#（只读引用）校验服务写出的 audit/custody.jsonl 能被 CustodyLedger.Load 接受且逐字节等同 ToJsonLine。 -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>mcis-compat</AssemblyName>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <NoWarn>$(NoWarn);CS8632</NoWarn>
+    <McisScripts>$(MSBuildThisFileDirectory)../../unity/Assets/_Project/Scripts</McisScripts>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(McisScripts)/Core/Primitives/**/*.cs" />
+    <Compile Include="$(McisScripts)/Domain/Evidence/**/*.cs" />
+    <Compile Include="src/**/*.cs" />
+  </ItemGroup>
+</Project>
+--- unshare ---
+unshare -n: failed
