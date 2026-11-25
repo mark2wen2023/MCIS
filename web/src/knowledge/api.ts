@@ -19,6 +19,14 @@ export async function request(path:string,who:string,body?:unknown,signal?:Abort
  return d
 }
 export async function search(query:URLSearchParams,status:Status,who:string,signal:AbortSignal){return parsePage(await request('/cards?'+query.toString(),who,undefined,signal),status)}
+const CARD_ID=/^KC-[a-f0-9]{32}$/
+export const isExactCardId=(id:string)=>CARD_ID.test(id)
+export async function readExact(id:string,who:string,signal:AbortSignal){
+ if(!isExactCardId(id))throw Error('知识卡编号格式不合法')
+ const card=parseCard(await request('/cards/'+encodeURIComponent(id),who,undefined,signal))
+ if(card.cardId!==id)throw Error('读取的知识卡编号不一致')
+ return card
+}
 export async function create(content:Content,who:string){const c=parseCard(await request('/cards',who,content));if(c.status!=='Candidate')throw Error('创建状态不一致');return c}
 export async function review(id:string,decision:Status,digest:string,note:string,approved:boolean,who:string){const c=parseCard(await request('/cards/'+encodeURIComponent(id)+'/review',who,{decision,expectedDigest:digest,note,sourceVerified:approved,rightsVerified:approved,releaseApproved:approved}));if(c.cardId!==id||c.status!==decision||c.contentDigest!==digest)throw Error('审核响应不一致');return c}
 export const uncertain=(e:unknown)=>!(e instanceof ApiError&&e.status<500)

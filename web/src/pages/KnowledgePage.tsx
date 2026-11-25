@@ -1,7 +1,7 @@
 import {SearchReason,type SearchContext} from '../knowledge/SearchReason'
 import {KnowledgeSourceBody} from '../knowledge/KnowledgeSourceBody'
 import {useCallback,useEffect,useRef,useState,useSyncExternalStore} from 'react'
-import {getRole} from '../api'
+import {ApiError,getRole} from '../api'
 import * as api from '../knowledge/api'
 import {KINDS,STATUSES,permissions,utc,sample,type Card,type Content,type Status,type Kind,type Page} from '../knowledge/model'
 import '../styles/w19.css'
@@ -29,7 +29,7 @@ function KnowledgeWorkspace(){
  }
  return <main className="w19" aria-labelledby="knowledge-heading"><header><span>W19 · 人工维护的知识资料库</span><h1 id="knowledge-heading">案例、疑难与方法知识卡</h1><p>全局资料库，与当前案件无关。这里只收明确公开或合成内容，不读取真实案件、内网材料，也不调用模型或训练。</p></header>
  <p className="w19-warning">来源链接、摘录及使用权仍需人工核实。内容哈希只标识版本，不证明真实性或已获授权。检索为字面与标签匹配，不是语义相似度或调查结论。</p>
- <KnowledgeArchivePanel/><form className="w19-search" onSubmit={e=>{e.preventDefault();setFilter({...filter,kind,q,tag,offset:0})}}><label>字面关键词<input value={q} maxLength={160} onChange={e=>setQ(e.target.value)}/></label><label>类型<select value={kind} onChange={e=>setKind(e.target.value)}><option value="">全部类型</option>{Object.entries(KINDS).map(([k,v])=><option key={k} value={k}>{v}</option>)}</select></label><label>精确标签<input maxLength={40} value={tag} onChange={e=>setTag(e.target.value)}/></label><button type="submit" disabled={loading}>检索</button></form>
+ <KnowledgeArchivePanel/>{access.internal&&lock==='idle'&&<ExactCardReader who={who} valid={valid}/>}<form className="w19-search" onSubmit={e=>{e.preventDefault();setFilter({...filter,kind,q,tag,offset:0})}}><label>字面关键词<input value={q} maxLength={160} onChange={e=>setQ(e.target.value)}/></label><label>类型<select value={kind} onChange={e=>setKind(e.target.value)}><option value="">全部类型</option>{Object.entries(KINDS).map(([k,v])=><option key={k} value={k}>{v}</option>)}</select></label><label>精确标签<input maxLength={40} value={tag} onChange={e=>setTag(e.target.value)}/></label><button type="submit" disabled={loading}>检索</button></form>
  {access.internal&&<label className="w19-status">资料状态<select value={filter.status} disabled={lock==='pending'} onChange={e=>setFilter({...filter,status:e.target.value as Status,offset:0})}>{Object.entries(STATUSES).map(([k,v])=><option key={k} value={k}>{v}</option>)}</select></label>}
  <div className="w19-actions"><button disabled={loading||lock==='pending'} onClick={()=>setTick(n=>n+1)}>重新读取</button><span>{access.internal?'内部候选不向外部角色展示；只有首席可批准发布。':'只读已发布公开/合成知识卡；未审批或撤回内容不可访问。'}</span></div>
  {lock==='pending'&&<p role="status">写入进行中。离开页面不会撤销服务处理，请勿重复操作。</p>}{notice&&<p role="status">{notice}</p>}{error&&<p role="alert" className="w19-warning">{error}</p>}{actionError&&<p role="alert" className="w19-warning">{actionError}</p>}
@@ -38,6 +38,35 @@ function KnowledgeWorkspace(){
  {access.internal&&<CreateCard disabled={lock!=='idle'} onCreate={c=>void run(()=>api.create(c,who),true)}/>}
  {loading?<p role="status">读取知识卡…</p>:result&&<><h2>{STATUSES[filter.status]} <small>{result.total} 条</small></h2>{result.items.length===0?<p className="w19-empty">没有符合条件的知识卡。库为空时不伪造样本或模型推荐。</p>:result.items.map(c=><KnowledgeCard key={c.cardId+c.status+tick} card={c} searchContext={result.appliedSearch} canReview={access.review&&lock==='idle'} onReview={(decision,note,approved)=>void run(()=>api.review(c.cardId,decision,c.contentDigest,note,approved,who))}/>)}<div className="w19-actions"><button disabled={!filter.offset} onClick={()=>setFilter({...filter,offset:Math.max(0,filter.offset-20)})}>上一页</button><span>第 {Math.floor(filter.offset/20)+1} 页</span><button disabled={filter.offset+result.items.length>=result.total||filter.offset>=10000} onClick={()=>setFilter({...filter,offset:filter.offset+20})}>下一页</button></div></>}
  <p>本片不提供向量相似度、RAG、自动案例采集、事故分级或通知义务判定。现有角色头仅适用于本机演示，不是生产认证。</p></main>
+}
+function ExactCardReader({who,valid}:{who:string;valid:()=>boolean}){
+ const [id,setId]=useState(''),[card,setCard]=useState<Card>(),[message,setMessage]=useState(''),[busy,setBusy]=useState(false)
+ const active=useRef<AbortController|undefined>(undefined)
+ useEffect(()=>()=>{const pending=active.current;active.current=undefined;pending?.abort()},[])
+ function reset(next:string){
+  const pending=active.current;active.current=undefined;pending?.abort()
+  setId(next);setCard(undefined);setMessage('');setBusy(false)
+ }
+ async function read(){
+  const requested=id.trim()
+  if(!valid()||active.current||!api.isExactCardId(requested))return
+  const controller=new AbortController();active.current=controller
+  setCard(undefined);setMessage('');setBusy(true)
+  const live=()=>active.current===controller&&valid()
+  try{const value=await api.readExact(requested,who,controller.signal);if(live())setCard(value)}
+  catch(e){if(live())setMessage(e instanceof ApiError&&(e.status===403||e.status===404)?'没有可访问的这条知识卡。':'读取未确认，未展示知识卡。可重新读取；没有写入。')}
+  finally{if(live()){active.current=undefined;setBusy(false)}}
+ }
+ return <section aria-label="按编号重开已保存知识卡">
+  <form onSubmit={e=>{e.preventDefault();void read()}}><label>已保存知识卡编号<input maxLength={35} value={id} onChange={e=>reset(e.target.value)}/></label>
+   <button type="submit" disabled={busy||!api.isExactCardId(id.trim())}>按编号重新读取</button></form>
+  <p>只读当前服务版本与状态，不执行核查、审批或发布。</p>
+  {busy&&<p role="status">正在按编号读取…</p>}{message&&<p role="alert">{message}</p>}
+  {card&&<><h2>按编号读回：{STATUSES[card.status]}</h2>
+   <p>{card.status==='Published'?'当前已发布可查；发布不代表事实已经认证。':card.status==='Candidate'?'内部待审，不是可公开复用的资料。':'当前未公开，不可作为已发布资料复用。'}</p>
+   <KnowledgeCard key={JSON.stringify([card.cardId,card.status,card.contentDigest])} card={card} canReview={false} onReview={()=>{}}/>
+  </>}
+ </section>
 }
 export function KnowledgeCard({card,canReview,onReview,searchContext}:{card:Card;searchContext?:SearchContext;canReview:boolean;onReview:(s:Status,n:string,a:boolean)=>void}){
  const [note,setNote]=useState(''),[checks,setChecks]=useState<boolean[]>([false,false,false]);const c=card.content,source=c.source
