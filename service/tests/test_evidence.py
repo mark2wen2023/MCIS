@@ -2,6 +2,8 @@ import base64
 import hashlib
 import io
 import json
+import os
+from pathlib import Path
 import subprocess
 import zipfile
 
@@ -10,7 +12,7 @@ import pytest
 from mcis_service.common.csjson import sha256_hex
 from mcis_service.config import PROJECT_ROOT
 
-from .conftest import C, H, HAS_DOTNET
+from .conftest import C, H
 
 COMPAT = PROJECT_ROOT / "tools" / "mcis-compat" / "mcis-compat.sh"
 
@@ -92,15 +94,102 @@ def test_tampered_blob_detected(client, app):
     assert client.get(f"{C}/evidence/EV-002", headers=H()).json()["status"] == "Mismatch"
 
 
-@pytest.mark.skipif(not HAS_DOTNET or not COMPAT.exists(), reason="需要 ~/.dotnet")
-def test_custody_jsonl_accepted_by_csharp_ledger(client, tmp_path):
-    """用 Unity 侧原样 C#（CustodyLedger.Load）校验导出的 custody.jsonl：链完整 + 每行与 ToJsonLine 逐字节一致。"""
-    client.patch(f"{C}/evidence/EV-002", json={"needsReview": True, "reason": "含引号\"与换行\n的理由"}, headers=H())
-    z = zipfile.ZipFile(io.BytesIO(client.get(f"{C}/export", headers=H("LeadInvestigator")).content))
-    p = tmp_path / "custody.jsonl"
-    p.write_bytes(z.read("audit/custody.jsonl"))
-    out = subprocess.run([str(COMPAT), "custody", str(p)], capture_output=True, text=True, timeout=300)
+
+INTEROP_CASE = "SYN-CUSTODY-INTEROP"
+INTEROP = f"/api/v1/cases/{INTEROP_CASE}"
+REVIEW_REASON = '合成理由，含引号"和反斜杠\\\n另起一行'
+REVIEW_IDS = {"EV-002", "EV-005"}
+RESTRICTED = ["EV-006"]
+DOTNET = Path(os.environ.get("DOTNET_ROOT", Path.home() / ".dotnet")) / "dotnet"
+
+
+@pytest.fixture
+def synthetic_interop_export(empty_client):
+    """Create only one supported case; do not reuse the six-module demo."""
+    lead = H("LeadInvestigator", "Synthetic Interop")
+    case = {
+        "caseId": INTEROP_CASE, "title": "Synthetic custody interop",
+        "schemaVersion": "1.0.0", "accidentType": "Collision",
+        "incidentTimeUtc": "2026-01-01T00:00:00Z", "caseEpochUtc": "2026-01-01T00:00:00Z",
+        "incidentLocation": {"latDeg": 0, "lonDeg": 0}, "displayTimeZoneOffsetMinutes": 0,
+        "isFictionalDemo": True,
+    }
+    created = empty_client.post("/api/v1/cases", json=case, headers=lead)
+    assert created.status_code == 201, created.text
+    for index in range(1, 7):
+        evidence_id = f"EV-{index:03d}"
+        content = f"Invented custody interop bytes {index}\n".encode("utf-8")
+        body = {
+            "title": f"Synthetic evidence {index}", "source": "Synthetic offline test",
+            "extractedBy": "Synthetic Interop", "extractedUtc": "2026-01-01T00:00:00Z",
+            "relativePath": f"evidence/{evidence_id}/original.txt", "category": "Document",
+            "confidentiality": "Restricted" if evidence_id in RESTRICTED else "Normal",
+            "contentBase64": base64.b64encode(content).decode("ascii"),
+        }
+        registered = empty_client.post(f"{INTEROP}/evidence", json=body, headers=lead)
+        assert registered.status_code == 201, registered.text
+        assert registered.json()["evidenceId"] == evidence_id
+        assert registered.json()["sha256"] == hashlib.sha256(content).hexdigest()
+    for evidence_id in sorted(REVIEW_IDS):
+        review = empty_client.patch(
+            f"{INTEROP}/evidence/{evidence_id}", json={"needsReview": True, "reason": REVIEW_REASON}, headers=lead,
+        )
+        assert review.status_code == 200, review.text
+        assert review.json()["status"] == "NeedsReview"
+    verified = empty_client.post(f"{INTEROP}/evidence/EV-001/verify", headers=lead)
+    assert verified.status_code == 200, verified.text
+    assert verified.json()["verifyMatched"] is True
+    response = empty_client.get(f"{INTEROP}/export", headers=lead)
+    # Do not interpret an HTTP error body as a ZIP.
+    assert response.status_code == 200, response.text
+    assert response.headers["content-type"] == "application/zip"
+    assert response.headers["cache-control"] == "no-store"
+    with zipfile.ZipFile(io.BytesIO(response.content)) as package:
+        assert json.loads(package.read("manifest.json"))["packageVersion"] == "1.0.0"
+        return package.read("audit/custody.jsonl")
+
+
+def test_custody_interop_zip_contains_exact_synthetic_ledger(synthetic_interop_export):
+    previous = "0" * 64
+    assert synthetic_interop_export.endswith(b"\n") and b"\r" not in synthetic_interop_export
+    rows = {}
+    for seq, line in enumerate(synthetic_interop_export[:-1].split(b"\n"), 1):
+        event = json.loads(line)
+        assert event["prev"] == previous and event["seq"] == seq
+        previous = hashlib.sha256(line).hexdigest()
+        rows.setdefault(event["action"], []).append((event,line))
+    assert [e["evidence_id"] for e,_ in rows["custody.register"]] == [f"EV-{i:03d}" for i in range(1, 7)]
+    assert [e["evidence_id"] for e,_ in rows["custody.register"] if e.get("confidentiality") == "Restricted"] == RESTRICTED
+    assert {e["evidence_id"] for e,_ in rows["custody.review"]} == REVIEW_IDS
+    assert len(rows["custody.review"]) == 2
+    for event,line in rows["custody.review"]:
+        assert event["detail"] == REVIEW_REASON and event["result"] == "needs_review"
+        assert b'\\"' in line and b'\\\\' in line and b'\\n' in line
+    assert [e["evidence_id"] for e,_ in rows["custody.verify"]] == ["EV-001"]
+
+
+def test_custody_interop_demo_refuses_partial_export(empty_client):
+    from mcis_service.seed.lily_mary import seed as seed_fictional_only
+
+    app = empty_client.app
+    with app.state.db.session() as session:
+        assert seed_fictional_only(session, app.state.settings.blob_dir)
+    response = empty_client.get(f"{C}/export", headers=H("LeadInvestigator"))
+    assert response.status_code == 409
+    assert response.json()["code"] == "ARCHIVE_RESTORE_UNSUPPORTED"
+    assert response.headers["cache-control"] == "no-store"
+    assert "content-disposition" not in response.headers
+
+
+@pytest.mark.skipif(not DOTNET.is_file() or not COMPAT.is_file(), reason="需要现有 .NET 8 和 mcis-compat")
+def test_custody_jsonl_accepted_by_csharp_ledger(synthetic_interop_export, tmp_path):
+    """Default C# ledger verifies the real exported UTF-8 lines, without normalization."""
+    evidence_file = tmp_path / "custody.jsonl"
+    evidence_file.write_bytes(synthetic_interop_export)
+    out = subprocess.run([str(COMPAT), "custody", str(evidence_file)], capture_output=True, text=True, timeout=300)
+    assert out.returncode == 0, (out.stdout, out.stderr)
     res = json.loads(out.stdout.strip().splitlines()[-1])
-    assert res["ok"], res
-    assert res["items"] == 6 and res["status"]["EV-002"] == "NeedsReview" and res["status"]["EV-005"] == "NeedsReview"
-    assert res["restricted"] == ["EV-006"]
+    assert res["ok"] and res["items"] == 6 and res["events"] == 9
+    assert {ident for ident, status in res["status"].items() if status == "NeedsReview"} == REVIEW_IDS
+    assert res["status"]["EV-001"] == "Verified"
+    assert res["restricted"] == RESTRICTED
