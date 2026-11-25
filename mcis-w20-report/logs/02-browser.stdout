@@ -1,0 +1,7 @@
+W20 pins: 376 exact Git blobs at e15f98267936bb2ba26a1a8c845df7410db8c8d1
+Built app JS bytes=4598250
+Built component JS bytes=686981
+Component-only true Chromium: 7 synthetic phases, no service writes
+Product W5 interview true Chrome desktop: stale source rejected; no statement written
+Product fresh 390px browser after actual restart: still pending; zero statements
+W20 actual sandboxed Chromium + exact app + loopback HTTP/SQLite PASS

@@ -1,0 +1,17 @@
+=== which ===
+dotnet: not on PATH
+=== dotnet if any ===
+=== common install locations ===
+drwxr-xr-x 12 box box 4096 Nov 25 11:40 /home/box/.dotnet
+/home/box/.dotnet/dotnet
+=== python / node (already used) ===
+Python 3.13.5
+Python 3.13.5
+v24.22.1
+=== W17/W11 csharp hints in repo (read-only) ===
+
+=== /home/box/.dotnet/dotnet (not on PATH) ===
+8.0.428
+8.0.428 [/home/box/.dotnet/sdk]
+Microsoft.AspNetCore.App 8.0.34 [/home/box/.dotnet/shared/Microsoft.AspNetCore.App]
+Microsoft.NETCore.App 8.0.34 [/home/box/.dotnet/shared/Microsoft.NETCore.App]

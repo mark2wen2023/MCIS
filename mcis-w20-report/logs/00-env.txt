@@ -1,0 +1,11 @@
+time: 2026-11-26 01:43:43 CST
+acceptance: b0d291788d9167365ab72be873c9871265b96807
+product:    e15f98267936bb2ba26a1a8c845df7410db8c8d1
+diff vs product: only tests_acceptance/w20-chromium/{README.md,component.tsx,host.py,pins.json,run.py}
+376 pins: worktree OK, e15f982 OK (73 contracts + 146 service + 156 web + 1 tests_acceptance)
+chrome: Google Chrome 156.0.8078.47 
+playwright: Python Playwright 1.65.2 (route_web_socket yes), CPython 3.13.5
+host python: /workspace/mcis-w17-871db66/service/.venv/bin/python
+build-only: exit 0; 376 pins; app JS 4598250; component JS 686981
+browser: exit 0; receipt result=passed trueBrowser=true; Chrome 156.0.8078.47; chromium_sandbox=True
+sdk: /home/box/.dotnet/dotnet exists, not on PATH; SDK 8.0.428; runtimes 8.0.34; no restore/test this round
