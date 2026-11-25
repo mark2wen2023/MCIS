@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "blocker": null,
+  "browser": "156.0.8078.47",
+  "sandbox": {
+    "noSandboxFlag": false,
+    "chromeProcCount": 3,
+    "browser": "156.0.8078.47"
+  },
+  "created": [
+    {
+      "id": "SR-2026-01",
+      "status": "Draft",
+      "body": "  第一段：整改建议，保留段落和空格。\n\n第二段：核验措施。  ",
+      "title": "合成建议 0"
+    },
+    {
+      "id": "SR-2026-02",
+      "status": "Draft",
+      "body": "",
+      "title": "合成建议 1"
+    }
+  ],
+  "writes": [
+    {
+      "method": "POST",
+      "status": 201,
+      "url": "http://127.0.0.1:18794/api/v1/cases/SYN-W7-CREATE-BODY/recommendations",
+      "id": "SR-2026-01",
+      "statusField": "Draft",
+      "body": "  第一段：整改建议，保留段落和空格。\n\n第二段：核验措施。  "
+    },
+    {
+      "method": "POST",
+      "status": 201,
+      "url": "http://127.0.0.1:18794/api/v1/cases/SYN-W7-CREATE-BODY/recommendations",
+      "id": "SR-2026-02",
+      "statusField": "Draft",
+      "body": ""
+    }
+  ],
+  "external": [],
+  "shots": [
+    "/workspace/mcis-w7-report/screenshots/01-recs-empty.png",
+    "/workspace/mcis-w7-report/screenshots/02-create-form-filled.png",
+    "/workspace/mcis-w7-report/screenshots/03-saved-draft-card.png",
+    "/workspace/mcis-w7-report/screenshots/04-read-body.png",
+    "/workspace/mcis-w7-report/screenshots/05-audit-create-only.png",
+    "/workspace/mcis-w7-report/screenshots/06-after-reload-body.png",
+    "/workspace/mcis-w7-report/screenshots/07-empty-body-form.png",
+    "/workspace/mcis-w7-report/screenshots/08-empty-body-read.png",
+    "/workspace/mcis-w7-report/screenshots/09-empty-after-reload.png",
+    "/workspace/mcis-w7-report/screenshots/10-first-rec-still-present.png"
+  ]
+}

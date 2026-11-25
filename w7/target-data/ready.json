@@ -1,0 +1,6 @@
+{
+ "origin": "http://127.0.0.1:18793",
+ "db": "/workspace/mcis-w7-report/target-data/mcis.db",
+ "seed_demo": false,
+ "caseId": "SYN-W7-CREATE-BODY"
+}

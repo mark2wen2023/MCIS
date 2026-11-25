@@ -1,0 +1,45 @@
+{
+  "ok": true,
+  "recommendations": [
+    {
+      "id": "SR-2026-01",
+      "status": "Draft",
+      "title": "合成建议 0",
+      "body": "  第一段：整改建议，保留段落和空格。\n\n第二段：核验措施。  ",
+      "history": [],
+      "addressee": "合成对象"
+    },
+    {
+      "id": "SR-2026-02",
+      "status": "Draft",
+      "title": "合成建议 1",
+      "body": "",
+      "history": [],
+      "addressee": "合成对象"
+    }
+  ],
+  "audit": [
+    {
+      "seq": 1,
+      "action": "safetyrec.create",
+      "command": "新建安全建议 SR-2026-01",
+      "category": "SafetyRec",
+      "entity_id": "SR-2026-01",
+      "operator": "首席调查官",
+      "role": "LeadInvestigator"
+    },
+    {
+      "seq": 2,
+      "action": "safetyrec.create",
+      "command": "新建安全建议 SR-2026-02",
+      "category": "SafetyRec",
+      "entity_id": "SR-2026-02",
+      "operator": "首席调查官",
+      "role": "LeadInvestigator"
+    }
+  ],
+  "write_actions": [
+    "safetyrec.create",
+    "safetyrec.create"
+  ]
+}
