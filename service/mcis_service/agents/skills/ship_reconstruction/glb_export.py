@@ -1,4 +1,5 @@
 """Export research mesh as GLB with a separate face evidence manifest."""
+from copy import deepcopy
 import json
 import math
 import struct
@@ -61,31 +62,45 @@ def export_glb(result, *, local_origin_m=None, max_vertex_error_m=None, max_area
     # Compare decoded coordinates after the complete inverse frame transformation.
     # Local quantization alone omits loss during subtraction/addition.
     world_vertex_error=vertex_error
+    source_rotated=[[x,z,-y] for x,y,z in vertices]
+    recovered_rotated=positions
     if local_origin_m is not None:
         recovered=[[x+local_origin_m[0],-z+local_origin_m[1],y+local_origin_m[2]] for x,y,z in positions]
         if any(not math.isfinite(v) for p in recovered for v in p):
             raise ValueError('nonfinite world roundtrip')
         world_vertex_error=max(math.dist(a,b) for a,b in zip(vertices,recovered))
+        recovered_rotated=[[x,z,-y] for x,y,z in recovered]
         restored=validate_mesh(recovered,faces)
         if any(restored[k] for k in ('invalid_faces','degenerate_faces','duplicate_faces','nonmanifold_edges','inconsistent_winding_edges')):
             raise ValueError('world roundtrip introduced invalid geometry')
         if len({tuple(p) for p in recovered}) < len({tuple(p) for p in vertices}):
             raise ValueError('world roundtrip merged distinct vertices')
-    area_error=0.0
-    edge_error=0.0
-    for face in faces:
-        n0=_normal(original,face)
-        n1=_normal(positions,face)
-        a0,a1=math.hypot(*n0),math.hypot(*n1)
-        if not math.isfinite(a0) or a0<=0 or not math.isfinite(a1):
-            raise ValueError('invalid face normal')
-        if math.fsum((x/a0)*(y/a1) for x,y in zip(n0,n1))<=0:
-            raise ValueError('float32 serialization reversed face normal')
-        area_error=max(area_error,abs(a1/a0-1))
-        for i,j in zip(face,(*face[1:],face[0])):
-            d0=math.dist(original[i],original[j])
-            d1=math.dist(positions[i],positions[j])
-            edge_error=max(edge_error,abs(d1/d0-1))
+    def shape_errors(reference, decoded):
+        area_error=0.0
+        edge_error=0.0
+        for face in faces:
+            n0=_normal(reference,face)
+            n1=_normal(decoded,face)
+            a0,a1=math.hypot(*n0),math.hypot(*n1)
+            if not math.isfinite(a0) or a0<=0 or not math.isfinite(a1) or a1<=0:
+                raise ValueError('invalid face normal')
+            if math.fsum((x/a0)*(y/a1) for x,y in zip(n0,n1))<=0:
+                raise ValueError('float32 serialization reversed face normal')
+            area_error=max(area_error,abs(a1/a0-1))
+            for i,j in zip(face,(*face[1:],face[0])):
+                d0=math.dist(reference[i],reference[j])
+                d1=math.dist(decoded[i],decoded[j])
+                if not math.isfinite(d0) or d0<=0 or not math.isfinite(d1):
+                    raise ValueError('invalid edge length')
+                edge_error=max(edge_error,abs(d1/d0-1))
+        return area_error,edge_error
+    # Check local quantization, storage relative to original shape (including
+    # translation loss), and complete world recovery independently.
+    local_area,local_edge=shape_errors(original,positions)
+    storage_area,storage_edge=shape_errors(source_rotated,positions)
+    world_area,world_edge=shape_errors(source_rotated,recovered_rotated)
+    area_error=max(local_area,storage_area,world_area)
+    edge_error=max(local_edge,storage_edge,world_edge)
     for value,limit in ((max(vertex_error,world_vertex_error),max_vertex_error_m),(area_error,max_area_relative_error),(edge_error,max_edge_relative_error)):
         if limit is not None and value>limit:
             raise ValueError('float32 precision budget exceeded')
@@ -102,7 +117,7 @@ def export_glb(result, *, local_origin_m=None, max_vertex_error_m=None, max_area
     j=json.dumps(doc,separators=(',',':'),allow_nan=False).encode()
     j+=b' '*((-len(j))%4)
     glb=struct.pack('<4sII',b'glTF',2,12+8+len(j)+8+len(binary))+struct.pack('<I4s',len(j),b'JSON')+j+struct.pack('<I4s',len(binary),b'BIN\x00')+binary
-    sidecar={'faces':evidence,'axis_mapping':'(x,y,z)->(x,z,-y)','research_only':True,'lofting_authorized':False}
+    sidecar={'faces':deepcopy(evidence),'axis_mapping':'(x,y,z)->(x,z,-y)','research_only':True,'lofting_authorized':False}
     if local_origin_m is not None:
         sidecar['mcis_origin_m']=local_origin_m
     if local_origin_m is not None or any(v is not None for v in (max_vertex_error_m,max_area_relative_error,max_edge_relative_error)):
