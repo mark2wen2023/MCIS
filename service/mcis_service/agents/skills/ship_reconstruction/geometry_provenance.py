@@ -1,4 +1,10 @@
 """Research-only face provenance for sparse loft meshes."""
+def valid_reference(ref):
+    return isinstance(ref,dict) and all(
+        isinstance(ref.get(k),str) and ref[k].strip()
+        for k in ('document_id','locator')
+    )
+
 def bind_face_evidence(mesh, samples, cell_reviews):
     records=[]
     if len(mesh['triangles'])!=len(mesh['face_cells']):
@@ -6,7 +12,7 @@ def bind_face_evidence(mesh, samples, cell_reviews):
     for face_id,(face,cell) in enumerate(zip(mesh['triangles'],mesh['face_cells'])):
         i,j=cell
         review=cell_reviews.get((i,j))
-        if not isinstance(review,dict) or review.get('review')!='accepted' or not review.get('document_id') or not review.get('locator'):
+        if not valid_reference(review) or review.get('review')!='accepted':
             raise ValueError('cell support evidence required')
         sources=[]
         bases=[]
@@ -18,7 +24,7 @@ def bind_face_evidence(mesh, samples, cell_reviews):
             if not isinstance(refs,list) or not refs:
                 raise ValueError('missing corner evidence')
             for ref in refs:
-                if not isinstance(ref,dict) or not ref.get('document_id') or not ref.get('locator'):
+                if not valid_reference(ref):
                     raise ValueError('invalid evidence reference')
                 if ref not in sources:
                     sources.append(dict(ref))
