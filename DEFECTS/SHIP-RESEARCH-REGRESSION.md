@@ -1,0 +1,12 @@
+# 船舶研发分支的独立回归
+
+|冻结提交|船舶专项|完整服务 pytest|
+|---|---|---|
+|f2f791b6a6d97c4010fb7fe0cb20008df5e620dd|58 通过|1960 项，共 790 通过、383 失败、776 错误、11 跳过|
+|6cabb64e89c818dae1992b38577ee29ca5282465|58 通过|1960 项，共 790 通过、383 失败、776 错误、11 跳过|
+
+**集成验收未通过。** 两份船舶契约 ship-reconstruction.schema.json、ship-offset-table.schema.json 均缺少共享注册表依赖的 $id。构造 registry() 时抛出 KeyError，影响其他模块的案件操作。仅在隔离契约副本补齐这两项标识，已复现的代表用例随后通过。其他错误按逐例记录分别归因。
+
+最新冻结版本的 20 项独立合成语义/坐标探针通过。两次均实际运行三种虚构剖面的基准，得到一致的 JSON 和 CSV。每种船型、每种方法评估 20 个留出高度。结果和复验入口见 tests_acceptance/SHIP-RESEARCH。研发分支实现由其维护者处理，本验收分支保留分立历史。
+
+测试环境为 macOS arm64，Python 3.13.2、pytest 8.4.2、ezdxf 1.4.5、SciPy 1.16.1。船舶专项命令为 `python -m pytest -q tests/test_ship_*.py`，全服务命令为 `python -m pytest -q --junitxml=service-results.xml`，均在目标提交的 service 目录执行。每份原始服务报告中 201 个断言失败和 664 个准备错误直接出现相同的 $id 异常。发布物仅含合成结果与脱敏统计。

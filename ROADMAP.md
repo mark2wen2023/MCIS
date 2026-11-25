@@ -401,3 +401,4 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | SHIP-DWG | 限定技术复验通过，整图失败 | fb00b09 冻结3/3，四原件断网复跑。型线图块丢失 DWG-01 开放，见 DEFECTS/SHIP-DWG.md；放样未授权。 |
 | CAD-INTEGRITY | 待独审 | 新增通用块引用完整性 Skill，12 项合成回归与 26 项既有测试通过；真实修复仅作局部研究。冻结 logs/CAD-INTEGRITY-impl-hashes-frozen.txt。 |
 | CAD-INTEGRITY | 限定独审通过 | d69e76b 冻结3/3、38 项测试通过。真实原生缺块与隔离试件分别返回4和0。DWG-01和CAD-02仍开放，正式放样关闭。 |
+| 船舶重建并行 QA | 限定验收，正式放样关闭 | 两个冻结研发提交完成独立回归，服务契约集成失败；原生转换两项根因经样本验证，增加合成顶点重复验收，详见 DEFECTS/SHIP-RESEARCH-REGRESSION.md 及 DEFECTS/CAD-INTEGRITY.md。 |
