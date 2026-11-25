@@ -399,3 +399,4 @@ W5.2b pre-publication D1: independent forced export/manual overlap reproduced ap
 | EXPERTTRACE | 测试增量独审通过 | 2026-11-14：独立无.git副本10过；临时断开taskId触发5红、伪认证flag触发1红，恢复10过；冻结2/2，运行文件无差异。见 DEFECTS/EXPERTTRACE.md。真实模型0/HOLD。 |
 | SHIP-DWG | 待独审，整图阻断 | 7388 四原件原生转换与既有适配器实测；模型空间通过，型线图块丢失，见 tests_acceptance/SHIP-DWG/REPORT.md；冻结 logs/SHIP-DWG-impl-hashes-frozen.txt。 |
 | SHIP-DWG | 限定技术复验通过，整图失败 | fb00b09 冻结3/3，四原件断网复跑。型线图块丢失 DWG-01 开放，见 DEFECTS/SHIP-DWG.md；放样未授权。 |
+| CAD-INTEGRITY | 待独审 | 新增通用块引用完整性 Skill，12 项合成回归与 26 项既有测试通过；真实修复仅作局部研究。冻结 logs/CAD-INTEGRITY-impl-hashes-frozen.txt。 |

@@ -647,3 +647,6 @@ Add cross-view traceability regression on PR87head99b44f0, no runtime changes.
 Tests join original source/tickets/snapshot/citation/human tasks and preserve past
 unresolved labels; self-consistent identity claims cannot become approval.
 Scope tests_acceptance/EXPERTTRACE/SCOPE.md, synthetic opinions only, real0/HOLD.
+
+## CAD-INTEGRITY
+附加独立的本地 CAD 转换复核 Skill。读取 DWG 与派生 DXF，返回引用、成员及支持的几何检查结果。正式船体放样门禁关闭；隔离算法研究可使用标记为研究用途的副本或合成材料。
