@@ -1,0 +1,3 @@
+Verified 100 input Git blobs at 29cbfe255967fc6814abafd919ed9a7485ef8710
+PASS 20 assertions; actual list/custody bytes; no source download
+PASS 30 assertions; actual intake registration/readback; no downloads

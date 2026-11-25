@@ -1,0 +1,68 @@
+.....F.................................................................. [ 52%]
+.................................................................F       [100%]
+=================================== FAILURES ===================================
+_________________ test_custody_jsonl_accepted_by_csharp_ledger _________________
+
+client = <starlette.testclient.TestClient object at 0x7f524a3fbe30>
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-4/test_custody_jsonl_accepted_by0')
+
+    @pytest.mark.skipif(not HAS_DOTNET or not COMPAT.exists(), reason="需要 ~/.dotnet")
+    def test_custody_jsonl_accepted_by_csharp_ledger(client, tmp_path):
+        """用 Unity 侧原样 C#（CustodyLedger.Load）校验导出的 custody.jsonl：链完整 + 每行与 ToJsonLine 逐字节一致。"""
+        client.patch(f"{C}/evidence/EV-002", json={"needsReview": True, "reason": "含引号\"与换行\n的理由"}, headers=H())
+>       z = zipfile.ZipFile(io.BytesIO(client.get(f"{C}/export", headers=H("LeadInvestigator")).content))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_evidence.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.13/zipfile/__init__.py:1401: in __init__
+    self._RealGetContents()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <zipfile.ZipFile [closed]>
+
+    def _RealGetContents(self):
+        """Read in the table of contents for the ZIP file."""
+        fp = self.fp
+        try:
+            endrec = _EndRecData(fp)
+        except OSError:
+            raise BadZipFile("File is not a zip file")
+        if not endrec:
+>           raise BadZipFile("File is not a zip file")
+E           zipfile.BadZipFile: File is not a zip file
+
+/usr/lib/python3.13/zipfile/__init__.py:1468: BadZipFile
+____________________ test_policy_and_audit_are_one_snapshot ____________________
+
+client = <starlette.testclient.TestClient object at 0x7f5248a76250>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f52490da570>
+
+    def test_policy_and_audit_are_one_snapshot(client,monkeypatch):
+        from mcis_service.access_workbench import router as r
+        save(client)
+        original=r.get_doc;once=False
+        def raced(session,model,cid,key):
+            nonlocal once
+            result=original(session,model,cid,key)
+            if not once:
+                once=True
+                # Commit from another database connection between policy and history reads.
+                with client.app.state.db.session() as other:
+                    policy=default_policy();policy['version']='2.0.0'
+                    put_doc(other,AccessPolicyRow,'CASE-A','policy',policy)
+                    event(other,command='version-2')
+            return result
+        monkeypatch.setattr(r,'get_doc',raced)
+>       out=client.get(url());assert out.status_code==200,out.text
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"code":"INTERNAL_ERROR","message":"请求处理失败"}
+E       assert 500 == 200
+E        +  where 500 = <Response [500 Internal Server Error]>.status_code
+
+../tests_acceptance/W171/test_workbench.py:86: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_evidence.py::test_custody_jsonl_accepted_by_csharp_ledger
+FAILED ::test_policy_and_audit_are_one_snapshot - AssertionError: {"code":"IN...
+2 failed, 136 passed in 31.02s
+exit=1

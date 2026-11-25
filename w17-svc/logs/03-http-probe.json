@@ -1,0 +1,259 @@
+{
+ "dbAfterSeed": {
+  "custody": [
+   [
+    "SYN-A",
+    "EV-001",
+    "Register"
+   ],
+   [
+    "SYN-B",
+    "EV-001",
+    "Register"
+   ]
+  ],
+  "audit": 2,
+  "evidence": [
+   [
+    "SYN-A",
+    "EV-001"
+   ],
+   [
+    "SYN-B",
+    "EV-001"
+   ]
+  ]
+ },
+ "checks": [
+  {
+   "name": "SYN-A list 200, exactly one EV-001 titled SOURCE-SYN-A",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "SYN-A list does not leak other case",
+   "passed": true
+  },
+  {
+   "name": "SYN-A custody 200, only own Register",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "SYN-A intake receipt matches registered digest/sha/fileName, no contentBase64, replayed",
+   "passed": true,
+   "status": 200,
+   "cacheControl": "no-store"
+  },
+  {
+   "name": "SYN-B list 200, exactly one EV-001 titled SOURCE-SYN-B",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "SYN-B list does not leak other case",
+   "passed": true
+  },
+  {
+   "name": "SYN-B custody 200, only own Register",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "SYN-B intake receipt matches registered digest/sha/fileName, no contentBase64, replayed",
+   "passed": true,
+   "status": 200,
+   "cacheControl": "no-store"
+  },
+  {
+   "name": "SYN-A digest under SYN-B -> 404, no sourceSha256",
+   "passed": true,
+   "status": 404
+  },
+  {
+   "name": "EV-999 -> 404",
+   "passed": true,
+   "status": 404
+  },
+  {
+   "name": "Public /evidence -> 403, no metadata",
+   "passed": true,
+   "status": 403
+  },
+  {
+   "name": "Public /evidence/EV-001 -> 403, no metadata",
+   "passed": true,
+   "status": 403
+  },
+  {
+   "name": "Public /evidence/EV-001/intake -> 403, no metadata",
+   "passed": true,
+   "status": 403
+  },
+  {
+   "name": "Public /evidence/EV-001/custody -> 403, no metadata",
+   "passed": true,
+   "status": 403
+  },
+  {
+   "name": "ExternalExpert /evidence: Restricted EV-001 not exposed (FR-05)",
+   "passed": true,
+   "status": 200,
+   "leaked": [],
+   "bodyHead": "[]"
+  },
+  {
+   "name": "ExternalExpert /evidence/EV-001: Restricted EV-001 not exposed (FR-05)",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "bodyHead": "{\"code\":\"FORBIDDEN\",\"message\":\"受限证据\"}"
+  },
+  {
+   "name": "ExternalExpert /evidence/EV-001/intake: Restricted EV-001 not exposed (FR-05)",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "bodyHead": "{\"code\":\"FORBIDDEN\",\"message\":\"本登记原件仅调查组可访问\"}"
+  },
+  {
+   "name": "ExternalExpert /evidence/EV-001/custody: Restricted EV-001 not exposed (FR-05)",
+   "passed": false,
+   "status": 200,
+   "leaked": [
+    "SOURCE-SYN-B",
+    "SYN-B.txt",
+    "Restricted"
+   ],
+   "bodyHead": "[{\"seq\":1,\"utc\":\"2026-11-25T03:40:01Z\",\"operator\":\"synthetic-reader\",\"kind\":\"Register\",\"evidenceId\":\"EV-001\",\"sha256\":\"edc6ac78f9fcffee8d33dc57041c76c2d28981597"
+  },
+  {
+   "name": "InterestedState /evidence: Restricted EV-001 not exposed (FR-05)",
+   "passed": true,
+   "status": 200,
+   "leaked": [],
+   "bodyHead": "[]"
+  },
+  {
+   "name": "InterestedState /evidence/EV-001: Restricted EV-001 not exposed (FR-05)",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "bodyHead": "{\"code\":\"FORBIDDEN\",\"message\":\"受限证据\"}"
+  },
+  {
+   "name": "InterestedState /evidence/EV-001/intake: Restricted EV-001 not exposed (FR-05)",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "bodyHead": "{\"code\":\"FORBIDDEN\",\"message\":\"本登记原件仅调查组可访问\"}"
+  },
+  {
+   "name": "InterestedState /evidence/EV-001/custody: Restricted EV-001 not exposed (FR-05)",
+   "passed": false,
+   "status": 200,
+   "leaked": [
+    "SOURCE-SYN-B",
+    "SYN-B.txt",
+    "Restricted"
+   ],
+   "bodyHead": "[{\"seq\":1,\"utc\":\"2026-11-25T03:40:01Z\",\"operator\":\"synthetic-reader\",\"kind\":\"Register\",\"evidenceId\":\"EV-001\",\"sha256\":\"edc6ac78f9fcffee8d33dc57041c76c2d28981597"
+  },
+  {
+   "name": "AgentService /evidence: Restricted EV-001 not exposed (FR-05)",
+   "passed": true,
+   "status": 200,
+   "leaked": [],
+   "bodyHead": "[]"
+  },
+  {
+   "name": "AgentService /evidence/EV-001: Restricted EV-001 not exposed (FR-05)",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "bodyHead": "{\"code\":\"FORBIDDEN\",\"message\":\"受限证据\"}"
+  },
+  {
+   "name": "AgentService /evidence/EV-001/intake: Restricted EV-001 not exposed (FR-05)",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "bodyHead": "{\"code\":\"FORBIDDEN\",\"message\":\"本登记原件仅调查组可访问\"}"
+  },
+  {
+   "name": "AgentService /evidence/EV-001/custody: Restricted EV-001 not exposed (FR-05)",
+   "passed": false,
+   "status": 200,
+   "leaked": [
+    "SOURCE-SYN-B",
+    "SYN-B.txt",
+    "Restricted"
+   ],
+   "bodyHead": "[{\"seq\":1,\"utc\":\"2026-11-25T03:40:01Z\",\"operator\":\"synthetic-reader\",\"kind\":\"Register\",\"evidenceId\":\"EV-001\",\"sha256\":\"edc6ac78f9fcffee8d33dc57041c76c2d28981597"
+  },
+  {
+   "name": "Investigator intake read",
+   "passed": true,
+   "status": 200,
+   "note": "recorded only"
+  },
+  {
+   "name": "after denyB policy: LeadInvestigator intake -> 403, no receipt",
+   "passed": true,
+   "status": 403
+  },
+  {
+   "name": "SYN-A unaffected by SYN-B deny",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "SQLite: exactly 2 custody rows, both Register (one per case), no Access/Verify after all reads",
+   "passed": true,
+   "custody": [
+    [
+     "SYN-A",
+     "EV-001",
+     "Register"
+    ],
+    [
+     "SYN-B",
+     "EV-001",
+     "Register"
+    ]
+   ]
+  },
+  {
+   "name": "SQLite: GET reads add no audit rows",
+   "passed": true,
+   "auditSeed": 2,
+   "auditEnd": 2
+  }
+ ],
+ "dbEnd": {
+  "custody": [
+   [
+    "SYN-A",
+    "EV-001",
+    "Register"
+   ],
+   [
+    "SYN-B",
+    "EV-001",
+    "Register"
+   ]
+  ],
+  "audit": 2,
+  "evidence": [
+   [
+    "SYN-A",
+    "EV-001"
+   ],
+   [
+    "SYN-B",
+    "EV-001"
+   ]
+  ]
+ },
+ "passed": false
+}
