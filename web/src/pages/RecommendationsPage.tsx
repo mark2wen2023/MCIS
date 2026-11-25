@@ -288,10 +288,10 @@ function ConsultationTable({ rounds }: { rounds: ConsultationRound[] }) {
 
 function CreateForm({ caseId, onDone }: { caseId: string; onDone: (id?: string) => void }) {
   const { run } = useToast()
-  const [f, setF] = useState({ title: '', addressee: '', causeNodeIds: 'COLREG-R19', dueUtc: '2027-06-30', isInterim: false })
+  const [f, setF] = useState({ title: '', addressee: '', body: '', causeNodeIds: 'COLREG-R19', dueUtc: '2027-06-30', isInterim: false })
   const submit = () => run(async () => {
     const r = await api.post<Recommendation>(casePath('/recommendations', caseId), {
-      title: f.title, addressee: f.addressee, body: '', isInterim: f.isInterim,
+      title: f.title, addressee: f.addressee, body: f.body, isInterim: f.isInterim,
       causeNodeIds: f.causeNodeIds.split(/[,，\s]+/).filter(Boolean), dueUtc: `${f.dueUtc}T15:59:59Z`,
     })
     onDone(r.id)
@@ -305,6 +305,12 @@ function CreateForm({ caseId, onDone }: { caseId: string; onDone: (id?: string) 
         <input className="input" style={{ width: 160 }} placeholder="原因节点（逗号分隔）" value={f.causeNodeIds} onChange={(e) => setF({ ...f, causeNodeIds: e.target.value })} />
         <input className="input" type="date" value={f.dueUtc} onChange={(e) => setF({ ...f, dueUtc: e.target.value })} />
         <label className="p6-dim"><input type="checkbox" checked={f.isInterim} onChange={(e) => setF({ ...f, isInterim: e.target.checked })} /> 临时措施</label>
+      </div>
+      <label style={{ display: 'grid', gap: 4, marginTop: 8 }}>
+        建议正文（可选）
+        <textarea className="input" rows={4} value={f.body} onChange={(e) => setF({ ...f, body: e.target.value })} />
+      </label>
+      <div className="row-actions" style={{ marginTop: 8 }}>
         <button className="btn btn-sm btn-primary" disabled={!f.title.trim() || !f.addressee.trim()} onClick={submit}>保存</button>
         <button className="btn btn-sm" onClick={() => onDone()}>取消</button>
       </div>
