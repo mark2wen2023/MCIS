@@ -1,0 +1,17 @@
+# Beijing time 2026-11-26 06:43–06:45 (Asia/Shanghai, UTC+8)
+# Followed tests_acceptance/w15-source-chromium/DIAGNOSIS.md exactly.
+# Original 9ca1c12 run.py SHA-256: 3ab818b4ac28480226aae596f9ac7f6b852cfd8c2c1a2e023af40170a560c7aa (byte-exact).
+# python is the existing Playwright 1.65.2 interpreter used for the official W15 browser gate.
+# No SIGUSR1; stop only via timeout --signal=TERM --kill-after=10s 150s.
+# chromium_sandbox left as in the original runner; no --no-sandbox.
+
+cd /workspace/mcis-w15-diag-3d711f4
+timeout --signal=TERM --kill-after=10s 150s \
+  /workspace/w17-pyplaywright-venv/bin/python -B tests_acceptance/w15-source-chromium/diagnose.py \
+  --source "$PWD" --node-modules /workspace/mcis-w17-871db66/web/node_modules \
+  --host-python /workspace/mcis-w17-871db66/service/.venv/bin/python \
+  --browser /opt/google/chrome/google-chrome \
+  --evidence /workspace/mcis-w15-diag-report/browser-diagnosis \
+  > /workspace/mcis-w15-diag-report/logs/w15.stdout \
+  2> /workspace/mcis-w15-diag-report/logs/w15.stderr
+# exit status: 124  (GNU timeout: command exceeded 150s, sent SIGTERM)

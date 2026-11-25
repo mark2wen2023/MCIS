@@ -1,0 +1,29 @@
+last TRACE lines (run.py, original 9ca1c12 bytes):
+W15 TRACE +19.122s show:141 line
+W15 TRACE +19.122s show:142 line
+W15 TRACE +19.122s show:143 line
+W15 TRACE +19.135s show:144 line
+W15 TRACE +19.158s show:145 line
+W15 TRACE +19.161s show:146 line
+W15 TRACE +19.167s show:147 line
+W15 TRACE +19.169s show:148 line
+W15 TRACE +19.169s show:148 return
+W15 TRACE +19.169s app_ui:150 line
+W15 TRACE +19.169s app_ui:154 line
+W15 TRACE +19.209s app_ui:155 line
+W15 TRACE +19.230s app_ui:156 line
+W15 TRACE +19.250s app_ui:157 line
+W15 TRACE +19.267s app_ui:158 line
+W15 TRACE +19.268s app_ui:159 line
+W15 TRACE +19.326s app_ui:158 line
+W15 TRACE +19.452s app_ui:160 line
+W15 TRACE +19.452s app_ui:161 line
+W15 TRACE +19.453s app_ui:162 line
+
+Interpretation (line numbers of pinned run.py):
+  show() completed: page.goto (line 139) finished in ~0.935s; heading visible (line 140); show returned at +19.169s.
+  Then app_ui checked the synthetic source, filled fields, clicked 运行结构核查, and received the preview response (expect_response exited, line 158 then 160).
+  Line 161 (assert status==503 and cache-control) was reached at +19.452s.
+  Last TRACE: app_ui:162 line at +19.453s — assert result.json()["code"]=="BOWTIE_CORE_UNAVAILABLE"
+  No further TRACE until faulthandler dump at 45s and outer timeout TERM at 150s (exit 124).
+  The hang is therefore after the 503 response was obtained, inside result.json(), not at page.goto.

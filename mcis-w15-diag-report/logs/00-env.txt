@@ -1,0 +1,9 @@
+2026-11-26 06:43:17 CST
+diagnosis=3d711f463e6a0224b6730cc96eecc2889e82db24
+original_runner=9ca1c12d04db524e385f2509a4e2cae5cb44605c
+python=/workspace/w17-pyplaywright-venv/bin/python
+playwright 1.65.2
+host-python=/workspace/mcis-w17-871db66/service/.venv/bin/python
+chrome=Google Chrome 156.0.8078.47 
+outer_watchdog=timeout --signal=TERM --kill-after=10s 150s
+faulthandler=45s via diagnose.py (no SIGUSR1)
