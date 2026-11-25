@@ -36,8 +36,17 @@ def parse_drawing(path):
                           'layer': entity.dxf.layer, 'type': kind}
                 if kind == 'TEXT':
                     record['text'] = entity.dxf.text
+                    alignment, anchor, second = entity.get_placement()
+                    record['anchor_wcs'] = list(entity.ocs().to_wcs(anchor))
+                    record['alignment'] = alignment.name
+                    record['rotation_deg'] = entity.dxf.rotation
+                    if second is not None:
+                        record['second_anchor_wcs'] = list(entity.ocs().to_wcs(second))
                 elif kind == 'MTEXT':
                     record['text'] = entity.plain_text()
+                    record['anchor_wcs'] = list(entity.dxf.insert)
+                    record['attachment_point'] = entity.dxf.attachment_point
+                    record['text_direction_wcs'] = list(entity.get_text_direction())
                 elif kind == 'DIMENSION':
                     record['text'] = entity.dxf.text
                     record['measurement_raw'] = entity.get_measurement()
