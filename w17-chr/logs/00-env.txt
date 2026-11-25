@@ -1,0 +1,20 @@
+2026-11-25 11:43:36 CST
+HEAD=29cbfe255967fc6814abafd919ed9a7485ef8710
+porcelain_lines=0
+29cbfe255967fc6814abafd919ed9a7485ef8710 2026-11-24 09:27:03 +0800 fix(w17): require explicit evidence selection after case switch
+Python 3.13.5
+fastapi==0.165.0
+httpx==0.28.1
+pytest==9.2.0
+SQLAlchemy==2.1.9
+uvicorn==0.54.0
+v24.22.1
+vite 8.3.8
+react 19.3.1
+react-dom 19.3.1
+react-router-dom 7.18.5
+esbuild 0.28.2
+happy-dom 21.0.4 (/workspace/w17-tools，仓库外安装)
+playwright-node 1.63.0-alpha-2026-08-31 /usr/local/lib/pnpm/5/.pnpm/playwright@1.63.0-alpha-2026-08-31/node_modules/playwright
+playwright-python Version: 1.65.2
+Google Chrome 156.0.8078.47 
