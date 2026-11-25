@@ -1,0 +1,8 @@
+# Chapter 09 — Accurate vertices do not guarantee accurate surfaces
+
+Synthetic experiment, independent of any real vessel. The analytic half-breadth is
+y(x)=1+0.725*(1-((x-2)/2)^2) m on x in [0,4] m. Linear interpolation through its exact endpoints has zero endpoint error but 0.725 m midpoint error. With fresh exact samples at 2,4,8,16,32 equally spaced intervals the measured maximum midpoint errors in metres are 0.18125,0.0453125,0.011328125,0.00283203125,0.0007080078125. The factor of four follows from the quadratic curvature; subdivision of an existing triangle without new geometric evidence does not improve this error.
+
+QA corrections: e5a10c4 (deep copy nested evidence), 7def8b3 (finite nonboolean review bounds), 4d1b20f (whole-frame edge, area and normal checks), 5fb9c2f (eight synthetic regressions). The isolated local test set including existing orchestration/runtime/audit tests passed 49/49 in 0.12 s. Three corrected source blobs matched remote. Independent QA and full service tests pending. Synthetic triangle [[0,0,0],[1,1,0],[0,0,1]] translated by origin [2^54,0,0] has local quantization vertex error zero but 1 m whole-frame vertex error and 29.2893% relative edge/area error; zero edge or area budgets now reject it.
+
+Remotion: reveal exact endpoints, draw the chord, overlay the analytic curve, display midpoint error; contrast subdividing the chord with acquiring new exact samples and reconstructing. Show the reduction in measured errors and keep the distinction between numerical representation, geometry approximation and evidence uncertainty. No real vessel geometry or private data. Research-only; no formal certification.
