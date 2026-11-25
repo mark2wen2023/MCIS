@@ -1,0 +1,373 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/bowtie-preview.schema.json",
+  "title": "W15.3 假设领结图结构预览",
+  "$defs": {
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "kind",
+        "barrierId"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500,
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+        },
+        "kind": {
+          "enum": [
+            "Threat",
+            "PreventionBarrier",
+            "MitigationBarrier",
+            "Consequence",
+            "EscalationFactor"
+          ]
+        },
+        "barrierId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "EscalationFactor"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "barrierId": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]{1,64}$"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "barrierId": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hazard",
+        "topEvent",
+        "nodes",
+        "edges"
+      ],
+      "properties": {
+        "hazard": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500,
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+        },
+        "topEvent": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "label"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,64}$"
+            },
+            "label": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 500,
+              "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+            }
+          }
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/node"
+          },
+          "maxItems": 64
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "fromId",
+              "toId"
+            ],
+            "properties": {
+              "fromId": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]{1,64}$"
+              },
+              "toId": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]{1,64}$"
+              }
+            }
+          },
+          "maxItems": 128
+        }
+      }
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model",
+        "sourceEvidenceIds"
+      ],
+      "properties": {
+        "model": {
+          "$ref": "#/$defs/model"
+        },
+        "sourceEvidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^EV-[0-9]{3,}$"
+          },
+          "maxItems": 8,
+          "uniqueItems": true
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidenceId",
+        "title",
+        "sha256"
+      ],
+      "properties": {
+        "evidenceId": {
+          "type": "string",
+          "pattern": "^EV-[0-9]{3,}$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "sources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "caseId",
+        "sources",
+        "sourceBinding",
+        "identityMode"
+      ],
+      "properties": {
+        "profile": {
+          "const": "MCIS-BOWTIE-PREVIEW-1"
+        },
+        "caseId": {
+          "type": "string"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source"
+          }
+        },
+        "sourceBinding": {
+          "const": "registered-metadata-only"
+        },
+        "identityMode": {
+          "const": "local-role-header"
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "coreVersion",
+        "mode",
+        "constructionErrors",
+        "validationIssues",
+        "structureValid",
+        "notCheckedRefCount",
+        "nodeCount",
+        "edgeCount"
+      ],
+      "properties": {
+        "coreVersion": {
+          "const": "mcis-bowtie/1"
+        },
+        "mode": {
+          "const": "hypothesis-structure-only"
+        },
+        "constructionErrors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "code",
+              "elementId",
+              "message"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "pattern": "^sys_[a-z0-9_]+$"
+              },
+              "elementId": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          },
+          "maxItems": 1
+        },
+        "validationIssues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "code",
+              "elementId",
+              "message",
+              "severity"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "pattern": "^sys_[a-z0-9_]+$"
+              },
+              "elementId": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "severity": {
+                "enum": [
+                  "Error",
+                  "Warning",
+                  "Info"
+                ]
+              }
+            }
+          },
+          "maxItems": 512
+        },
+        "structureValid": {
+          "type": "boolean"
+        },
+        "notCheckedRefCount": {
+          "const": 0
+        },
+        "nodeCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65
+        },
+        "edgeCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 128
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "caseId",
+        "inputSha256",
+        "sources",
+        "sourceRole",
+        "sourceBinding",
+        "persisted",
+        "assessment",
+        "result",
+        "limitations"
+      ],
+      "properties": {
+        "profile": {
+          "const": "MCIS-BOWTIE-PREVIEW-1"
+        },
+        "caseId": {
+          "type": "string"
+        },
+        "inputSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source"
+          },
+          "maxItems": 8
+        },
+        "sourceRole": {
+          "enum": [
+            "Investigator",
+            "LeadInvestigator"
+          ]
+        },
+        "sourceBinding": {
+          "const": "registered-metadata-only"
+        },
+        "persisted": {
+          "const": false
+        },
+        "assessment": {
+          "const": "hypothesis-structure-only"
+        },
+        "result": {
+          "$ref": "#/$defs/result"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        }
+      }
+    }
+  }
+}

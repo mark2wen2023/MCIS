@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- W14 独立验收工程：只读 glob 引用被测源码，不修改 unity/ 下任何文件。 -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <RootNamespace>W12Export</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="*.cs" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Core/Primitives/**/*.cs" Link="Sut/Core/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Domain/Common/**/*.cs" Link="Sut/Common/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Domain/Models/**/*.cs" Link="Sut/Models/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Domain/Geo/**/*.cs" Link="Sut/Geo/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Domain/Cpa/**/*.cs" Link="Sut/Cpa/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Domain/Tracks/**/*.cs" Link="Sut/Tracks/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Simulation/Clock/**/*.cs" Link="Sut/Clock/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Simulation/Cpa/**/*.cs" Link="Sut/SimCpa/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Simulation/Damage/**/*.cs" Link="Sut/Damage/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Simulation/WhatIf/**/*.cs" Link="Sut/WhatIf/%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>

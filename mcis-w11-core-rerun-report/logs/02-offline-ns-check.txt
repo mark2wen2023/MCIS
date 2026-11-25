@@ -1,0 +1,16 @@
+=== offline ns check 2026-11-26 07:19:46 CST ===
+outside interfaces:
+    lo
+enp0s3
+docker0
+--- inside unshare -r -n ---
+HOME=/home/box
+DOTNET_CLI_HOME=unset
+interfaces:
+    lo
+--- reachability ---
+nuget.org dns=no 
+api.nuget.org dns=no 
+8.8.8.8 dns=yes 
+1.1.1.1 dns=yes 
+lo               DOWN           

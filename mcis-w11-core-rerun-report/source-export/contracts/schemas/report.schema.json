@@ -1,0 +1,650 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/report.schema.json",
+  "title": "W16 国际格式调查报告（不作责任认定）",
+  "description": "句子级双语草稿、人工复核、版本保留与 GISIS 本地准备字段。",
+  "$ref": "#/$defs/report",
+  "$defs": {
+    "report": {
+      "type": "object",
+      "required": [
+        "reportId",
+        "familyId",
+        "parentReportId",
+        "caseId",
+        "templateId",
+        "lang",
+        "version",
+        "status",
+        "isFictionalDemo",
+        "realDataStatus",
+        "createdBy",
+        "createdUtc",
+        "sections",
+        "disclaimerZh",
+        "disclaimerEn",
+        "reportHref"
+      ],
+      "properties": {
+        "reportId": {
+          "type": "string"
+        },
+        "familyId": {
+          "type": "string"
+        },
+        "parentReportId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "caseId": {
+          "type": "string"
+        },
+        "templateId": {
+          "enum": [
+            "imo-cic",
+            "maib",
+            "cn-msa"
+          ]
+        },
+        "lang": {
+          "enum": [
+            "zh",
+            "en",
+            "bilingual"
+          ]
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "enum": [
+            "Draft",
+            "Confirmed",
+            "Modified",
+            "Dismissed"
+          ]
+        },
+        "isFictionalDemo": {
+          "type": "boolean"
+        },
+        "realDataStatus": {
+          "enum": [
+            "fictional",
+            "authorized-public",
+            "pending-confirmation"
+          ]
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "createdUtc": {
+          "type": "string"
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/section"
+          }
+        },
+        "disclaimerZh": {
+          "type": "string"
+        },
+        "disclaimerEn": {
+          "type": "string"
+        },
+        "reportHref": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "section": {
+      "type": "object",
+      "required": [
+        "sectionId",
+        "titleZh",
+        "titleEn",
+        "dataSources",
+        "status",
+        "source",
+        "textZh",
+        "textEn",
+        "generatedText",
+        "reviewedBy",
+        "reviewedAt",
+        "reviews",
+        "missing",
+        "sentences"
+      ],
+      "properties": {
+        "sectionId": {
+          "type": "string"
+        },
+        "titleZh": {
+          "type": "string"
+        },
+        "titleEn": {
+          "type": "string"
+        },
+        "dataSources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "enum": [
+            "Draft",
+            "Confirmed",
+            "Modified",
+            "Dismissed"
+          ]
+        },
+        "source": {
+          "enum": [
+            "Generated",
+            "Investigator"
+          ]
+        },
+        "textZh": {
+          "type": "string"
+        },
+        "textEn": {
+          "type": "string"
+        },
+        "generatedText": {
+          "type": "object",
+          "required": [
+            "textZh",
+            "textEn"
+          ],
+          "properties": {
+            "textZh": {
+              "type": "string"
+            },
+            "textEn": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "reviewedBy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reviewedAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reviewRecord"
+          }
+        },
+        "missing": {
+          "type": "boolean"
+        },
+        "sentences": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sentence"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "sentence": {
+      "type": "object",
+      "required": [
+        "sentenceId",
+        "status",
+        "source",
+        "textZh",
+        "textEn",
+        "generatedText",
+        "reviewedBy",
+        "reviewedAt",
+        "reviews",
+        "missing",
+        "citations"
+      ],
+      "properties": {
+        "sentenceId": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "Draft",
+            "Confirmed",
+            "Modified",
+            "Dismissed"
+          ]
+        },
+        "source": {
+          "enum": [
+            "Generated",
+            "Investigator"
+          ]
+        },
+        "textZh": {
+          "type": "string"
+        },
+        "textEn": {
+          "type": "string"
+        },
+        "generatedText": {
+          "type": "object",
+          "required": [
+            "textZh",
+            "textEn"
+          ],
+          "properties": {
+            "textZh": {
+              "type": "string"
+            },
+            "textEn": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "reviewedBy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reviewedAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reviewRecord"
+          }
+        },
+        "missing": {
+          "type": "boolean"
+        },
+        "citations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/citation"
+          }
+        },
+        "sourceStatus": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "citation": {
+      "type": "object",
+      "required": [
+        "kind",
+        "id",
+        "href",
+        "registration",
+        "unregistered"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "evidence",
+            "colreg-check",
+            "recommendation",
+            "interview-crosscheck",
+            "whatif",
+            "systemic"
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "href": {
+          "type": "string",
+          "pattern": "^#/"
+        },
+        "registration": {
+          "enum": [
+            "registered",
+            "unregistered",
+            "missing"
+          ]
+        },
+        "unregistered": {
+          "type": "boolean"
+        },
+        "sourceRef": {
+          "type": "string"
+        },
+        "needsReview": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "review": {
+      "type": "object",
+      "required": [
+        "action"
+      ],
+      "properties": {
+        "action": {
+          "enum": [
+            "confirm",
+            "dismiss",
+            "modify"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        },
+        "textZh": {
+          "type": "string"
+        },
+        "textEn": {
+          "type": "string"
+        },
+        "sentenceId": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "action": {
+                "enum": [
+                  "confirm",
+                  "dismiss"
+                ]
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "textZh"
+                  ]
+                },
+                {
+                  "required": [
+                    "textEn"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "reviewRecord": {
+      "type": "object",
+      "required": [
+        "action",
+        "operator",
+        "utc",
+        "reason",
+        "beforeValue",
+        "afterValue",
+        "auditSeq"
+      ],
+      "properties": {
+        "action": {
+          "enum": [
+            "confirm",
+            "dismiss",
+            "modify"
+          ]
+        },
+        "operator": {
+          "type": "string"
+        },
+        "utc": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "beforeValue": {
+          "type": "object"
+        },
+        "afterValue": {
+          "type": "object"
+        },
+        "auditSeq": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false
+    },
+    "gisisField": {
+      "type": "object",
+      "required": [
+        "id",
+        "labelZh",
+        "labelEn",
+        "required",
+        "sourceRefs",
+        "rules",
+        "value",
+        "missing",
+        "missingLabel",
+        "vesselId"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "labelZh": {
+          "type": "string"
+        },
+        "labelEn": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "sourceRefs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rules": {
+          "type": "object"
+        },
+        "gisisRef": {
+          "type": "string",
+          "description": "MSC-MEPC.3/Circ.4/Rev.1 通函条目；本地字段无对应时为 —。"
+        },
+        "mappingStatus": {
+          "enum": ["exact", "partial", "none", "pending"]
+        },
+        "mappingNote": {
+          "type": "string",
+          "description": "对应差异、待核事项与取值来源限制。"
+        },
+        "value": {},
+        "missing": {
+          "type": "boolean"
+        },
+        "missingLabel": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vesselId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "gisis": {
+      "type": "object",
+      "required": [
+        "caseId",
+        "isFictionalDemo",
+        "realDataStatus",
+        "fields",
+        "notice"
+      ],
+      "properties": {
+        "caseId": {
+          "type": "string"
+        },
+        "isFictionalDemo": {
+          "type": "boolean"
+        },
+        "realDataStatus": {
+          "enum": [
+            "fictional",
+            "authorized-public",
+            "pending-confirmation"
+          ]
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/gisisField"
+          }
+        },
+        "notice": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "problem": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "detail": {}
+      },
+      "additionalProperties": false
+    },
+    "pending": {
+      "type": "object",
+      "required": [
+        "caseId",
+        "isFictionalDemo",
+        "realDataStatus",
+        "message",
+        "reports"
+      ],
+      "properties": {
+        "caseId": {
+          "type": "string"
+        },
+        "isFictionalDemo": {
+          "const": false
+        },
+        "realDataStatus": {
+          "const": "pending-confirmation"
+        },
+        "message": {
+          "const": "真实数据使用待 Mark 本人确认"
+        },
+        "reports": {
+          "type": "array",
+          "maxItems": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "snapshot": {
+      "type": "object",
+      "required": ["snapshotId", "reportId", "sectionId", "sentenceId", "reason", "beforeValue", "afterValue", "summary", "auditSeq"],
+      "properties": {
+        "snapshotId": {"type": "string", "pattern": "^RA-[0-9a-f]{32}$"},
+        "reportId": {"type": ["string", "null"]},
+        "sectionId": {"type": ["string", "null"]},
+        "sentenceId": {"type": ["string", "null"]},
+        "reason": {"type": "string"},
+        "beforeValue": {},
+        "afterValue": {},
+        "summary": {"type": "string"},
+        "auditSeq": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    },
+    "auditRecord": {
+      "type": "object",
+      "required": [
+        "auditEvent",
+        "snapshotRef",
+        "reportId",
+        "sectionId",
+        "sentenceId",
+        "reason",
+        "beforeValue",
+        "afterValue",
+        "summary"
+      ],
+      "properties": {
+        "auditEvent": {
+          "$ref": "audit-event.schema.json"
+        },
+        "snapshotRef": {
+          "type": "string",
+          "pattern": "^report-snapshot:RA-[0-9a-f]{32}$"
+        },
+        "reportId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sectionId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sentenceId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        },
+        "beforeValue": {},
+        "afterValue": {},
+        "summary": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/sim-state.schema.json",
+  "title": "SimState / SimCommand（Unity ↔ 服务 回放同步）",
+  "description": "Unity 以 ≤10 Hz 推送当前 SimTime（PUT /sim/state，瞬态，不入审计）；网页请求跳转（POST /sim/seek，入审计），Unity 轮询 GET /sim/commands?afterSeq= 取命令执行。",
+  "$defs": {
+    "state": {
+      "type": "object",
+      "required": ["caseId", "simTimeSec", "playing", "rate"],
+      "properties": {
+        "caseId": { "$ref": "common.schema.json#/$defs/caseId" },
+        "simTimeSec": { "$ref": "common.schema.json#/$defs/simTimeSec" },
+        "utc": { "$ref": "common.schema.json#/$defs/utc", "description": "（服务填充）caseEpochUtc + simTimeSec" },
+        "playing": { "type": "boolean" },
+        "rate": { "type": "number", "description": "回放倍速，如 1/4/16" },
+        "source": { "type": "string", "description": "unity / web" },
+        "updatedUtc": { "$ref": "common.schema.json#/$defs/utc" }
+      },
+      "additionalProperties": false
+    },
+    "command": {
+      "type": "object",
+      "required": ["seq", "caseId", "type", "createdUtc"],
+      "properties": {
+        "seq": { "type": "integer", "minimum": 1 },
+        "caseId": { "$ref": "common.schema.json#/$defs/caseId" },
+        "type": { "type": "string", "enum": ["seek", "play", "pause", "setRate", "focusVessel"] },
+        "simTimeSec": { "type": ["number", "null"] },
+        "rate": { "type": ["number", "null"] },
+        "vesselId": { "type": ["string", "null"] },
+        "reason": { "type": "string", "description": "如 证据中心：冲突 C-01" },
+        "createdUtc": { "$ref": "common.schema.json#/$defs/utc" },
+        "issuedBy": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

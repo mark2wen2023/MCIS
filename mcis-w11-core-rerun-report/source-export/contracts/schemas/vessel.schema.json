@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/vessel.schema.json",
+  "title": "Vessel（船舶静态参数）",
+  "description": "VesselParticulars 的子集（C# Mcis.Domain.Models.VesselParticulars）。",
+  "type": "object",
+  "required": [
+    "vesselId",
+    "caseId",
+    "name"
+  ],
+  "properties": {
+    "vesselId": {
+      "$ref": "common.schema.json#/$defs/vesselId"
+    },
+    "caseId": {
+      "$ref": "common.schema.json#/$defs/caseId"
+    },
+    "name": {
+      "type": "string"
+    },
+    "nameCn": {
+      "type": "string"
+    },
+    "mmsi": {
+      "type": "string",
+      "pattern": "^[0-9]{9}$"
+    },
+    "imoNumber": {
+      "type": "string"
+    },
+    "callSign": {
+      "type": "string"
+    },
+    "flagState": {
+      "type": "string"
+    },
+    "vesselTypeCode": {
+      "type": "string",
+      "description": "BulkCarrier / ContainerShip …"
+    },
+    "loaM": {
+      "type": "number"
+    },
+    "beamM": {
+      "type": "number"
+    },
+    "draftForeM": {
+      "type": "number"
+    },
+    "draftAftM": {
+      "type": "number"
+    },
+    "displacementTons": {
+      "type": "number"
+    },
+    "loadingCondition": {
+      "type": "string"
+    },
+    "colorHex": {
+      "type": "string",
+      "pattern": "^#[0-9a-fA-F]{6}$",
+      "description": "界面代表色"
+    },
+    "parameterSources": {
+      "type": "object",
+      "description": "W9 additive provenance. Each key names a populated parameter; absent on legacy records. User declarations, not independent verification.",
+      "propertyNames": {
+        "enum": [
+          "name",
+          "nameCn",
+          "mmsi",
+          "imoNumber",
+          "callSign",
+          "flagState",
+          "vesselTypeCode",
+          "loaM",
+          "beamM",
+          "draftForeM",
+          "draftAftM",
+          "displacementTons",
+          "loadingCondition"
+        ]
+      },
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "sourceLabel",
+          "kind"
+        ],
+        "properties": {
+          "sourceLabel": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "enum": [
+              "Direct",
+              "Derived",
+              "Estimated"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

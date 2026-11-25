@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/evidence-item.schema.json",
+  "title": "EvidenceItem（证据条目）",
+  "description": "与 C# Mcis.Domain.Evidence.EvidenceItem 对齐（登记时不可变快照：evidenceId/caseId/title/source/extractedBy/extractedUtc/sha256/relativePath/confidentiality）。status（= EvidenceStatus，NeedsReview 优先于校验结果）、needsReview、currentSha256、accessCount、lastAccess* 由保管链事件推导，只读；需复核标记通过保管链 Review 事件（custody.review）设置/解除。category、note 为服务扩展。",
+  "type": "object",
+  "required": [
+    "evidenceId",
+    "caseId",
+    "title",
+    "source",
+    "extractedBy",
+    "extractedUtc",
+    "sha256",
+    "confidentiality"
+  ],
+  "properties": {
+    "evidenceId": {
+      "$ref": "common.schema.json#/$defs/evidenceRef"
+    },
+    "caseId": {
+      "$ref": "common.schema.json#/$defs/caseId"
+    },
+    "title": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string",
+      "description": "来源，如 Mary 轮 VDR 舱"
+    },
+    "extractedBy": {
+      "type": "string"
+    },
+    "extractedUtc": {
+      "$ref": "common.schema.json#/$defs/utc"
+    },
+    "sha256": {
+      "$ref": "common.schema.json#/$defs/sha256",
+      "description": "登记哈希"
+    },
+    "relativePath": {
+      "type": "string",
+      "description": "包内相对路径，如 raw/vdr/mary.zip；可空"
+    },
+    "confidentiality": {
+      "type": "string",
+      "enum": [
+        "Normal",
+        "Restricted"
+      ],
+      "description": "保密标记（EvidenceConfidentiality；Restricted = MSC.255(84) 第 23 章保密资料）"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "VDR",
+        "AIS",
+        "ECDIS",
+        "EngineLog",
+        "Testimony",
+        "Photo",
+        "Document",
+        "Other"
+      ]
+    },
+    "note": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Unverified",
+        "Verified",
+        "Mismatch",
+        "NeedsReview"
+      ],
+      "description": "（只读，推导）EvidenceStatus；Change 之后未重新校验为 Unverified"
+    },
+    "needsReview": {
+      "type": "boolean",
+      "description": "（只读，推导）需复核标记：最近一次 Review 事件 result=needs_review"
+    },
+    "currentSha256": {
+      "$ref": "common.schema.json#/$defs/sha256",
+      "description": "（推导）经 Change 事件后的当前哈希"
+    },
+    "accessCount": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "（推导）Access 事件计数"
+    },
+    "lastAccessUtc": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/utc"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "lastAccessBy": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

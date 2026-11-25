@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/recommendation.schema.json",
+  "title": "SafetyRecommendation（安全建议）",
+  "description": "字段与 C# Mcis.Domain.Recommendations.SafetyRecommendation 对齐（Id→id、CauseNodeIds→causeNodeIds、DueUtc→dueUtc、IsInterim→isInterim、History→history、Responses→responses）。状态机与 SafetyRecommendationBoard.Allowed 一致：Draft→Issued→Responded→{Implemented|NotAdopted|Closed}，Implemented/NotAdopted→Closed；进入 Responded 只能通过登记回复（RecordResponse）；NotAdopted 必须写明理由。progressPct 0–100（= C# ProgressPct；仅 Responded 可改，进入 Implemented 自动 100）；verificationNote = 最近一次进入 Implemented/Closed 的说明；column/responseSummary/isOverdue 只读推导。看板四栏：草拟=Draft、已发布=Issued、落实中=Responded、已关闭=Implemented/NotAdopted/Closed。",
+  "type": "object",
+  "required": [
+    "id",
+    "caseId",
+    "title",
+    "addressee",
+    "causeNodeIds",
+    "dueUtc",
+    "status",
+    "createdUtc"
+  ],
+  "$defs": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Issued",
+        "Responded",
+        "Implemented",
+        "NotAdopted",
+        "Closed"
+      ]
+    },
+    "transition": {
+      "type": "object",
+      "description": "RecommendationTransition",
+      "required": [
+        "from",
+        "to",
+        "operator",
+        "utc"
+      ],
+      "properties": {
+        "from": {
+          "$ref": "#/$defs/status"
+        },
+        "to": {
+          "$ref": "#/$defs/status"
+        },
+        "operator": {
+          "type": "string"
+        },
+        "utc": {
+          "$ref": "common.schema.json#/$defs/utc"
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "response": {
+      "type": "object",
+      "description": "RecommendationResponse",
+      "required": [
+        "party",
+        "text",
+        "utc"
+      ],
+      "properties": {
+        "party": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "utc": {
+          "$ref": "common.schema.json#/$defs/utc"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^SR-[0-9]{4}-[0-9]{2,}$"
+    },
+    "caseId": {
+      "$ref": "common.schema.json#/$defs/caseId"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "body": {
+      "type": "string"
+    },
+    "addressee": {
+      "type": "string",
+      "minLength": 1
+    },
+    "causeNodeIds": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      },
+      "description": "原因节点 id（ECFC/HFACS/COLREG），至少一个"
+    },
+    "dueUtc": {
+      "$ref": "common.schema.json#/$defs/utc"
+    },
+    "isInterim": {
+      "type": "boolean",
+      "description": "MSC.255 §25.5 临时安全措施"
+    },
+    "createdUtc": {
+      "$ref": "common.schema.json#/$defs/utc"
+    },
+    "updatedUtc": {
+      "$ref": "common.schema.json#/$defs/utc"
+    },
+    "status": {
+      "$ref": "#/$defs/status"
+    },
+    "progressPct": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "落实进度（C# ProgressPct）"
+    },
+    "verificationNote": {
+      "type": "string",
+      "description": "核实说明（C# VerificationNote）"
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/transition"
+      }
+    },
+    "responses": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/response"
+      }
+    },
+    "isOverdue": {
+      "type": "boolean",
+      "description": "（只读，推导）Issued/Responded 且超过 dueUtc"
+    },
+    "column": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Issued",
+        "InProgress",
+        "Closed"
+      ],
+      "description": "（只读）KanbanColumn：草拟/已发布/落实中/已关闭"
+    },
+    "responseSummary": {
+      "type": "string",
+      "description": "（只读）最近一条回复正文"
+    }
+  },
+  "additionalProperties": false
+}

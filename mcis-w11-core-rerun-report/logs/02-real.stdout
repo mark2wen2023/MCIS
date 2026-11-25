@@ -1,0 +1,7 @@
+W11 verified 186 W11 originals + 4 pilot helpers + 9 exact core blobs/modes (d9187fe); no fetch
+SDK version exit=0
+NuGet local directories check exit=0
+Core smoke exit=0
+Verified original SDK/core smoke and source-artifact manifest
+W11 actual ECFC core synthetic preview/save/SQLite reopen PASS; not browser, association, archive, or production
+Real W11 core business flow exit=0

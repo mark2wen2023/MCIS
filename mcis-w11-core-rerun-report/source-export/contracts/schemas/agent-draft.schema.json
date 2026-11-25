@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/agent-draft.schema.json",
+  "title": "AgentDraft（智能体草稿）+ 人工确认",
+  "description": "ARCHITECTURE §15.5：智能体输出一律为草稿，带出处；调查员确认（Confirmed/Modified）后才由服务写入目标实体。输入必须经过脱敏网关（role=AgentService）。落盘 agents/drafts.json + audit/agent.jsonl。",
+  "type": "object",
+  "required": ["draftId", "caseId", "agent", "kind", "payload", "citations", "status"],
+  "properties": {
+    "draftId": { "type": "string", "pattern": "^AD-[0-9]{3,}$" },
+    "caseId": { "$ref": "common.schema.json#/$defs/caseId" },
+    "agent": { "type": "string", "enum": ["ships", "timeline", "environment", "people_ops", "causes_ecfc", "aggregate"], "description": "六个智能体" },
+    "kind": { "type": "string", "enum": ["statement_extraction", "timeline_anchor", "colreg_narrative", "hfacs_suggestion", "report_section", "similar_cases", "other"] },
+    "targetEntityType": { "type": "string", "description": "确认后写入的实体类型，如 statement / timelineEvent" },
+    "targetEntityId": { "type": ["string", "null"] },
+    "payload": { "type": "object", "description": "草稿内容，结构随 kind 而定" },
+    "citations": { "type": "array", "minItems": 1, "items": { "$ref": "common.schema.json#/$defs/citation" } },
+    "model": { "type": "string", "description": "模型标识（骨架阶段为 none）" },
+    "promptDigest": { "type": "string", "description": "提示词摘要哈希，不存原文" },
+    "status": { "type": "string", "enum": ["PendingReview", "Confirmed", "Rejected", "Modified"] },
+    "createdUtc": { "$ref": "common.schema.json#/$defs/utc" },
+    "reviewedBy": { "type": ["string", "null"] },
+    "reviewedUtc": { "anyOf": [{ "$ref": "common.schema.json#/$defs/utc" }, { "type": "null" }] },
+    "reviewNote": { "type": "string" }
+  },
+  "additionalProperties": false
+}

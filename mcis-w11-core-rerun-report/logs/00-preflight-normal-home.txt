@@ -1,0 +1,10 @@
+=== normal-home preflight 2026-11-26 07:19:21 CST ===
+HOME=/home/box
+dotnet=/home/box/.dotnet/dotnet
+sentinel: present
+sdk-version: 8.0.428
+--- nuget locals all --list (normal home) ---
+http-cache: /home/box/.local/share/NuGet/http-cache
+global-packages: /home/box/.nuget/packages/
+temp: /tmp/NuGetScratchbox
+plugins-cache: /home/box/.local/share/NuGet/plugin-cache

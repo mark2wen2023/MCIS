@@ -1,0 +1,13 @@
+2026-11-26 07:19:22 CST
+acceptance=875ccc50b049fb24b82f6b0663f3f9476db1880e
+pilot=/workspace/mcis-w11-b40a6ca b40a6cacf91ba0d8b297377d31162e404e468e8d
+core_base=d9187fef1f979866ac4d8ce2064d1ac92f34bb36
+python=/workspace/mcis-w17-871db66/service/.venv/bin/python
+Python 3.13.5
+dotnet=/home/box/.dotnet/dotnet (not globally on PATH)
+8.0.428
+Microsoft.AspNetCore.App 8.0.34 [/home/box/.dotnet/shared/Microsoft.AspNetCore.App]
+Microsoft.NETCore.App 8.0.34 [/home/box/.dotnet/shared/Microsoft.NETCore.App]
+normal-home nuget locals exit=0
+first-use sentinel=present
+old-fresh-HOME-blocker=77794be receipt 7172162623 (NuGet-Migrations IOException, official exit 1)

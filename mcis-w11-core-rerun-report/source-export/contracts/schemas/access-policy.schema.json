@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/access-policy.schema.json",
+  "title": "AccessPolicy（权限矩阵 + 字段级脱敏规则）",
+  "description": "ARCHITECTURE §15 ⑭，落盘 access-policy.json。脱敏网关在服务出口按 X-MCIS-Role 应用；Deny 返回 403。",
+  "type": "object",
+  "required": ["matrix", "fieldRules"],
+  "properties": {
+    "version": { "type": "string" },
+    "categories": { "type": "array", "items": { "type": "string" } },
+    "matrix": {
+      "type": "object",
+      "description": "role → category → ReadWrite / ReadOnly / Redacted / Deny",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": { "type": "string", "enum": ["ReadWrite", "ReadOnly", "Redacted", "Deny"] }
+      }
+    },
+    "fieldRules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["ruleId", "field", "method", "appliesTo"],
+        "properties": {
+          "ruleId": { "type": "string" },
+          "field": { "type": "string", "description": "字段路径或语义类别，如 interviewee.name / pii.phone / turns.sensitiveFragments" },
+          "method": { "type": "string", "enum": ["RoleCode", "Mask", "Token", "Remove", "Generalize"] },
+          "appliesTo": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/role" } },
+          "description": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

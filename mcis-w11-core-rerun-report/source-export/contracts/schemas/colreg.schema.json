@@ -1,0 +1,229 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/colreg.schema.json",
+  "title": "COLREG 分析：时间带 + 核查项",
+  "description": "W1（Domain/Colreg）规则引擎的输出交换格式，落盘 analysis/colreg.json。确定性规则判定，仅作安全调查技术分析，不作责任认定。",
+  "type": "object",
+  "required": [
+    "caseId",
+    "bands",
+    "checks"
+  ],
+  "$defs": {
+    "band": {
+      "type": "object",
+      "required": [
+        "bandId",
+        "startTimeSec",
+        "endTimeSec",
+        "situation"
+      ],
+      "properties": {
+        "bandId": {
+          "type": "string"
+        },
+        "startTimeSec": {
+          "type": "number"
+        },
+        "endTimeSec": {
+          "type": "number"
+        },
+        "situation": {
+          "type": "string",
+          "enum": [
+            "NoRisk",
+            "HeadOn",
+            "Crossing",
+            "Overtaking",
+            "RestrictedVisibility",
+            "NarrowChannel",
+            "ImmediateDanger",
+            "PostCollision",
+            "Undetermined"
+          ]
+        },
+        "inSight": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "是否互见（决定 R19 还是 R11–18 适用）"
+        },
+        "giveWayVesselId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "standOnVesselId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "applicableRules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "如 [\"R14\",\"R19\"]"
+        },
+        "basis": {
+          "type": "string",
+          "description": "判定依据（相对方位、航向差、能见度等）"
+        },
+        "dangerStage": {
+          "type": "string",
+          "enum": [
+            "None",
+            "CloseQuarters",
+            "ImmediateDanger"
+          ],
+          "default": "None",
+          "description": "紧迫局面/紧迫危险阶段；situation 保留会遇类型"
+        },
+        "doubt": {
+          "type": "boolean",
+          "default": false,
+          "description": "会遇类型存疑（R14(c) 等）"
+        },
+        "doubtReason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vesselStatus": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "enum": [
+              "PowerDriven",
+              "NotUnderCommand",
+              "RestrictedManoeuvrability",
+              "ConstrainedByDraught",
+              "Fishing",
+              "Sailing",
+              "Unknown"
+            ]
+          },
+          "description": "vesselId -> 该时段船舶状态（R18）"
+        }
+      },
+      "additionalProperties": false
+    },
+    "check": {
+      "type": "object",
+      "required": [
+        "checkId",
+        "rule",
+        "vesselId",
+        "verdict"
+      ],
+      "properties": {
+        "checkId": {
+          "type": "string"
+        },
+        "rule": {
+          "type": "string",
+          "description": "如 R14 / R17-2b / R34-35"
+        },
+        "title": {
+          "type": "string"
+        },
+        "vesselId": {
+          "type": "string"
+        },
+        "verdict": {
+          "type": "string",
+          "enum": [
+            "Complies",
+            "Partial",
+            "NotComplied",
+            "NotApplicable",
+            "NeedsReview",
+            "NotAssessable",
+            "Undetermined"
+          ],
+          "description": "NeedsReview=需研判（规则允许裁量，如 R6/R19b）；NotAssessable=缺证据无法评估；Undetermined 仅兼容旧数据"
+        },
+        "atTimeSec": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "requiredAction": {
+          "type": "string"
+        },
+        "actualAction": {
+          "type": "string"
+        },
+        "deviation": {
+          "type": "string",
+          "enum": [
+            "None",
+            "Deviation",
+            "Insufficient",
+            "NoAction",
+            "Violation",
+            "Late",
+            ""
+          ]
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "RuleEngine",
+            "Investigator",
+            "Seed"
+          ]
+        },
+        "reviewStatus": {
+          "type": "string",
+          "enum": [
+            "Draft",
+            "Confirmed",
+            "Rejected",
+            "Modified"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "caseId": {
+      "$ref": "common.schema.json#/$defs/caseId"
+    },
+    "engineVersion": {
+      "type": "string"
+    },
+    "runId": {
+      "type": "string",
+      "description": "evaluate 成功响应须带本次新建并激活的版本 id（如 R-0002）。GET /colreg 当前分析文档可不带此字段。"
+    },
+    "disclaimer": {
+      "type": "string"
+    },
+    "bands": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/band"
+      }
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/check"
+      }
+    }
+  },
+  "additionalProperties": false
+}

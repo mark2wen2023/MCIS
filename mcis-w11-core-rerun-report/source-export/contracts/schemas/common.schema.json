@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/common.schema.json",
+  "title": "MCIS 公共类型",
+  "description": "各契约共享的基础类型。命名与 C# 计算核心对齐：camelCase；时间一律 UTC ISO-8601（Z 结尾）；SimTime 为相对 caseEpochUtc 的秒数（double）。",
+  "$defs": {
+    "utc": { "type": "string", "format": "date-time", "description": "UTC ISO-8601，如 2026-05-18T06:24:00Z。对应 C# DateTimeOffset（SimpleJson.FormatIso）。" },
+    "simTimeSec": { "type": "number", "description": "相对案件纪元 caseEpochUtc 的秒数，对应 C# Mcis.Core.SimTime.Seconds。" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "小写十六进制 SHA-256（与 Sha256Util / Sha256Hex.Normalize 一致）。" },
+    "caseId": { "type": "string", "minLength": 3, "pattern": "^[A-Za-z0-9._-]+$" },
+    "vesselId": { "type": "string", "minLength": 1, "description": "如 vessel_lily，对应 VesselParticulars.VesselId。" },
+    "geoCoord": {
+      "type": "object",
+      "description": "对应 Mcis.Domain.Common.GeoCoord(lonDeg, latDeg, heightM)。",
+      "required": ["lonDeg", "latDeg"],
+      "properties": {
+        "lonDeg": { "type": "number", "minimum": -180, "maximum": 180 },
+        "latDeg": { "type": "number", "minimum": -90, "maximum": 90 },
+        "heightM": { "type": "number", "default": 0 }
+      },
+      "additionalProperties": false
+    },
+    "role": {
+      "type": "string",
+      "enum": ["LeadInvestigator", "Investigator", "ExternalExpert", "InterestedState", "AgentService", "Public"],
+      "description": "访问角色（MSC.255(84) 第 23 章权限矩阵的行）。HTTP 头 X-MCIS-Role。"
+    },
+    "evidenceRef": { "type": "string", "pattern": "^EV-[0-9]{3,}$", "description": "证据编号，如 EV-001。" },
+    "citation": {
+      "type": "object",
+      "description": "原文出处。智能体草稿与陈述必须带出处。",
+      "required": ["quote"],
+      "properties": {
+        "evidenceId": { "$ref": "#/$defs/evidenceRef" },
+        "recordId": { "type": "string", "description": "笔录编号，如 IR-03" },
+        "round": { "type": "integer", "minimum": 1, "description": "笔录第几问" },
+        "page": { "type": "integer", "minimum": 1 },
+        "quote": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "problem": {
+      "type": "object",
+      "description": "错误响应体（RFC 7807 风格）。",
+      "required": ["code", "message"],
+      "properties": {
+        "code": { "type": "string" },
+        "message": { "type": "string" },
+        "detail": {}
+      }
+    }
+  }
+}

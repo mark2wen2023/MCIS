@@ -1,0 +1,8 @@
+verify-only=0
+normal-home-nuget-locals=0
+official-initialized-home=0
+SDK version=0
+NuGet local directories check=0
+Core smoke=0
+Real W11 core business flow=0
+old-fresh-HOME official-real=1 (77794be, stopped at nuget locals, receipt 7172162623)
