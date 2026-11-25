@@ -1,5 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/ship-offset-table.schema.json",
   "title": "Hull half-breadth offset observations draft",
   "type": "object",
   "additionalProperties": false,
