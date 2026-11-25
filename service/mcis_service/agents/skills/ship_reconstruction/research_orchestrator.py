@@ -1,6 +1,7 @@
 """Orchestrate a reviewed research drawing into a bounded GLB asset."""
 from copy import deepcopy
 import hashlib
+import math
 from .drawing_pipeline import extract_from_drawing
 from .offset_bridge import prepare_offset_samples
 from .reconstruction_pipeline import reconstruct_sparse
@@ -40,7 +41,10 @@ def run_research(parsed, *, region, mapping, frame_id, offset_reviews,
             raise ValueError('invalid cell review')
         if review.get('review')=='accepted':
             bounds=[stations[i],heights[j],stations[i+1],heights[j+1]]
-            if review.get('frame_id')!=frame_id or review.get('drawing_sha256')!=digest or review.get('mapping_sha256')!=mapping_digest or review.get('bounds_m')!=bounds:
+            supplied_bounds=review.get('bounds_m')
+            if not isinstance(supplied_bounds,list) or len(supplied_bounds)!=4 or any(type(v) not in (int,float) or not math.isfinite(v) for v in supplied_bounds):
+                raise ValueError('invalid cell review bounds')
+            if review.get('frame_id')!=frame_id or review.get('drawing_sha256')!=digest or review.get('mapping_sha256')!=mapping_digest or supplied_bounds!=bounds:
                 raise ValueError('cell review scope mismatch')
     result=reconstruct_sparse(stations,heights,prepared['samples'],cell_reviews)
     if not result['mesh']['triangles']:
