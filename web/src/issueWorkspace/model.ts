@@ -16,6 +16,7 @@ function parseVersionStates(e:any):VersionState[]|undefined{
 }
 export type History={caseId:string,issueId:string,revision:number,status:'working_unreviewed',events:Event[]};
 export type SourcePin={evidenceId:string,sourceIncarnation:string,sourceSha256:string};
+export class JournalWriteConflict extends Error{constructor(){super('试验服务明确拒绝本次追加');this.name='JournalWriteConflict'}}
 export class SourceSelectionChanged extends Error{constructor(){super("来源版本已变化，请重新读取并选择");this.name="SourceSelectionChanged"}}
 export type Command={sourcePins?:SourcePin[],caseId:string,issueId:string,operationId:string,expectedRevision:number,entry:Entry};
 /** No URL/credential transport. Implementer must use current server authority, not browser role headers. */

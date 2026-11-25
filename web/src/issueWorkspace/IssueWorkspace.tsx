@@ -1,5 +1,5 @@
 import {useLayoutEffect,useMemo,useRef,useState} from 'react';
-import {immutableEvents,SourceSelectionChanged,parseSources,parseIssueList,type IssueSummary,type SourceCandidate,canDiscuss,createRehearsalPort,latest,parse,type Command,type History,type JournalPort,type Kind} from './model';
+import {immutableEvents,JournalWriteConflict,SourceSelectionChanged,parseSources,parseIssueList,type IssueSummary,type SourceCandidate,canDiscuss,createRehearsalPort,latest,parse,type Command,type History,type JournalPort,type Kind} from './model';
 /** Unmounted trial component. Default disconnected; no credentials, old API or storage. */
 export function IssueWorkspace({caseId='CASE-ISSUE-FICTIONAL',port,rehearsal=false,contextKey='',issueId}:{caseId?:string,port?:JournalPort,rehearsal?:boolean,contextKey?:string,issueId?:string}){
  const demo=useMemo(()=>rehearsal&&!port&&caseId==='CASE-ISSUE-FICTIONAL'?createRehearsalPort():undefined,[caseId,port,rehearsal,contextKey]);
@@ -11,17 +11,18 @@ export function IssueWorkspace({caseId='CASE-ISSUE-FICTIONAL',port,rehearsal=fal
  const [draftTarget,setDraftTarget]=useState<number|null>(null);
  const [targetChanged,setTargetChanged]=useState<{old:number|null,current:number}>();
  const [draftRecovery,setDraftRecovery]=useState(false);
+ const [reselectBeforeSave,setReselectBeforeSave]=useState(false);
  const [readBlocked,setReadBlocked]=useState(false);const issueRef=useRef<string|undefined>(undefined);
  const [busy,setBusy]=useState(false);const [unknown,setUnknown]=useState(false);const [status,setStatus]=useState('未连接安全试验接口');
  const knownCards=useRef(new Map<string,History>());
  const baseline=useRef<History|undefined>(undefined);
  const epoch=useRef(0),locked=useRef(false),pending=useRef<Command|undefined>(undefined);
- useLayoutEffect(()=>{epoch.current++;knownCards.current.clear();setCards([]);setListStatus('尚未读取问题卡目录');setSources([]);setSelected([]);setSourceStatus('尚未读取来源');locked.current=false;pending.current=undefined;issueRef.current=issueId;baseline.current=undefined;setDraftTarget(null);setTargetChanged(undefined);setDraftRecovery(false);setReadBlocked(!!issueId);setHistory(undefined);setNote('');setKind('judgment');setUnknown(false);setBusy(false);setStatus(demo?'虚构内存试用：刷新即丢失，未写入数据库':connection?'试验接口已提供，非生产登录':'未连接安全试验接口');return ()=>{epoch.current++;pending.current=undefined;baseline.current=undefined}},[caseId,connection,demo,contextKey,issueId]);
+ useLayoutEffect(()=>{epoch.current++;knownCards.current.clear();setCards([]);setListStatus('尚未读取问题卡目录');setSources([]);setSelected([]);setSourceStatus('尚未读取来源');locked.current=false;pending.current=undefined;issueRef.current=issueId;baseline.current=undefined;setDraftTarget(null);setTargetChanged(undefined);setDraftRecovery(false);setReselectBeforeSave(false);setReadBlocked(!!issueId);setHistory(undefined);setNote('');setKind('judgment');setUnknown(false);setBusy(false);setStatus(demo?'虚构内存试用：刷新即丢失，未写入数据库':connection?'试验接口已提供，非生产登录':'未连接安全试验接口');return ()=>{epoch.current++;pending.current=undefined;baseline.current=undefined}},[caseId,connection,demo,contextKey,issueId]);
  async function save(retry=false){
   if(locked.current||!connection||!validCase)return;
   let command=pending.current;
   if(!retry){
-   if(targetChanged||unknown||readBlocked||!note.trim()||note.length>8000||kind!=='judgment'&&!history||kind==='discussion'&&!canDiscuss(history))return;
+   if(targetChanged||unknown||readBlocked||reselectBeforeSave&&!selected.length||!note.trim()||note.length>8000||kind!=='judgment'&&!history||kind==='discussion'&&!canDiscuss(history))return;
    if(kind!=='judgment'&&(draftTarget===null||draftTarget!==latest(history))){setTargetChanged({old:draftTarget,current:latest(history)});setReadBlocked(true);setDraftRecovery(true);return}
    command={caseId,issueId:history?.issueId??crypto.randomUUID(),operationId:crypto.randomUUID(),expectedRevision:history?.revision??0,
     ...(selected.length?{sourcePins:selected.map(id=>{const source=sources.find(s=>s.evidenceId===id)!;return {evidenceId:id,sourceIncarnation:source.sourceIncarnation,sourceSha256:source.sourceSha256}})}:{}),
@@ -33,8 +34,14 @@ export function IssueWorkspace({caseId='CASE-ISSUE-FICTIONAL',port,rehearsal=fal
    if(next.revision<command.expectedRevision+1||history&&JSON.stringify(immutableEvents(next.events.slice(0,history.revision)))!==JSON.stringify(immutableEvents(history.events)))throw Error('invalid history');
    const recorded=next.events[command.expectedRevision];
    if(JSON.stringify({kind:recorded.kind,note:recorded.note,sourceIds:recorded.sourceIds,outcome:recorded.outcome,againstJudgment:recorded.againstJudgment})!==JSON.stringify(command.entry))throw Error('mismatched receipt');
-   baseline.current=next;knownCards.current.set(next.issueId,next);setHistory(next);pending.current=undefined;setUnknown(false);setSelected([]);setNote('');setDraftTarget(null);setTargetChanged(undefined);setKind('judgment');setStatus(demo?'仅保存在本页内存；未写入数据库':'试验服务已返回工作记录，未审核');
-  }catch(error){if(mine===epoch.current&&error instanceof SourceSelectionChanged){pending.current=undefined;setCards([]);setListStatus('操作未确认，请重新读取目录');setSources([]);setSelected([]);setUnknown(false);setSourceStatus('来源版本已变化：请重新读取并选择');setStatus('本次来源版本不匹配，未写入；保留意见，请重新选择来源后提交')}else if(mine===epoch.current){setCards([]);setListStatus('操作未确认，请重新读取目录');setSources([]);setSelected([]);setSourceStatus('操作未确认，已隐藏来源；原操作保留待重试');setUnknown(true);setStatus('结果未确认：保留原操作重试，勿改写后重复提交。')}}
+   baseline.current=next;knownCards.current.set(next.issueId,next);setHistory(next);pending.current=undefined;setUnknown(false);setSelected([]);setReselectBeforeSave(false);setNote('');setDraftTarget(null);setTargetChanged(undefined);setKind('judgment');setStatus(demo?'仅保存在本页内存；未写入数据库':'试验服务已返回工作记录，未审核');
+  }catch(error){if(mine===epoch.current&&error instanceof SourceSelectionChanged){pending.current=undefined;setCards([]);setListStatus('操作未确认，请重新读取目录');setSources([]);setSelected([]);setUnknown(false);setSourceStatus('来源版本已变化：请重新读取并选择');setStatus('本次来源版本不匹配，未写入；保留意见，请重新选择来源后提交')}else if(mine===epoch.current&&error instanceof JournalWriteConflict){
+   pending.current=undefined;setCards([]);setListStatus('本次追加被拒绝，请先授权重读历史');
+   setHistory(undefined);setSources([]);setSelected([]);setUnknown(false);
+   setReselectBeforeSave(command.entry.sourceIds.length>0);
+   setSourceStatus('已清空提交时的来源选择');setReadBlocked(true);setDraftRecovery(true);
+   setStatus('本次追加冲突，试验服务明确拒绝。保留未提交文字，请先重读历史。');
+  }else if(mine===epoch.current){setCards([]);setListStatus('操作未确认，请重新读取目录');setSources([]);setSelected([]);setSourceStatus('操作未确认，已隐藏来源；原操作保留待重试');setUnknown(true);setStatus('结果未确认：保留原操作重试，勿改写后重复提交。')}}
   finally{if(mine===epoch.current){locked.current=false;setBusy(false)}}
  }
  async function refresh(recoverDraft=false){
@@ -59,7 +66,7 @@ export function IssueWorkspace({caseId='CASE-ISSUE-FICTIONAL',port,rehearsal=fal
  function chooseCard(id?:string){
   if(locked.current||unknown||note.length||!connection||!validCase||id&&!cards.some(c=>c.issueId===id))return;
   epoch.current++;pending.current=undefined;issueRef.current=id;baseline.current=id?knownCards.current.get(id):undefined;
-  setDraftTarget(null);setTargetChanged(undefined);setDraftRecovery(false);setHistory(undefined);setReadBlocked(!!id);setSources([]);setSelected([]);setSourceStatus('尚未读取来源');setKind('judgment');setOutcome('inconclusive');setStatus(id?'已选择问题卡，请重新读取历史后追加':'新卡尚未创建，填写初判并提交才保存');
+  setDraftTarget(null);setTargetChanged(undefined);setDraftRecovery(false);setReselectBeforeSave(false);setHistory(undefined);setReadBlocked(!!id);setSources([]);setSelected([]);setSourceStatus('尚未读取来源');setKind('judgment');setOutcome('inconclusive');setStatus(id?'已选择问题卡，请重新读取历史后追加':'新卡尚未创建，填写初判并提交才保存');
  }
  const disabled=!connection||!validCase||busy||unknown||readBlocked;
  return <section aria-label="问题研判工作区试验"><h2>问题研判记录 · 未审核</h2>
@@ -80,11 +87,12 @@ export function IssueWorkspace({caseId='CASE-ISSUE-FICTIONAL',port,rehearsal=fal
  {sources.map(source=><label key={source.evidenceId}><input type="checkbox" aria-label={'引用 '+source.evidenceId} checked={selected.includes(source.evidenceId)} disabled={disabled||selected.length>=20&&!selected.includes(source.evidenceId)} onChange={e=>setSelected(old=>e.target.checked?(old.includes(source.evidenceId)||old.length>=20?old:[...old,source.evidenceId]):old.filter(id=>id!==source.evidenceId))}/>{source.evidenceId} · {source.mediaKind} · {source.byteLength} 字节 · SHA256 {source.sourceSha256}</label>)}
  <p>仅清单引用，不上传附件、不表示已阅读原件；清单缺项不表示案件没有其他证据。保存必须匹配所选来源代次与 SHA256；变化则拒绝写入，请重新读取并选择。</p></fieldset>
  {targetChanged&&<p role="alert">原草稿针对判断 #{targetChanged.old??'未知'}；当前判断 #{targetChanged.current}。不自动重绑，不可提交；仅可放弃后重读。</p>}
- {draftRecovery&&<aside aria-label="未提交草稿恢复"><p>来源读取未确认；未提交文字仍保留，但暂不可编辑或提交。原来源选择已清空。</p>
+ {draftRecovery&&<aside aria-label="未提交草稿恢复"><p>未提交文字仍保留，但暂不可编辑或提交。原来源选择已清空，请先授权重读历史。</p>
  <button type="button" disabled={busy||!!targetChanged||!connection||!validCase} onClick={()=>void refresh(true)}>重读历史以恢复草稿</button>
- <button type="button" disabled={busy} onClick={()=>{setNote('');setKind('judgment');setDraftTarget(null);setTargetChanged(undefined);setDraftRecovery(false);setReadBlocked(true);setStatus('已放弃未提交文字；仍须授权重读历史')}}>放弃未提交文字</button></aside>}
+ <button type="button" disabled={busy} onClick={()=>{setNote('');setKind('judgment');setDraftTarget(null);setTargetChanged(undefined);setDraftRecovery(false);setReselectBeforeSave(false);setReadBlocked(true);setStatus('已放弃未提交文字；仍须授权重读历史')}}>放弃未提交文字</button></aside>}
  <label>意见与理由 <textarea aria-label="意见与理由" maxLength={8000} disabled={disabled} value={note} onChange={e=>{if(!note&&e.target.value&&kind!=='judgment')setDraftTarget(latest(history));setNote(e.target.value)}}/></label>
- <button type="button" disabled={disabled||!note.trim()} onClick={()=>void save()}>追加记录，不覆盖历史</button>
+ {reselectBeforeSave&&!selected.length&&<p>本草稿原先引用了来源，请重新读取并选择当前来源后提交。</p>}
+ <button type="button" disabled={disabled||reselectBeforeSave&&!selected.length||!note.trim()} onClick={()=>void save()}>追加记录，不覆盖历史</button>
  {unknown&&<button type="button" disabled={busy||!connection} onClick={()=>void save(true)}>按原操作重试</button>}
  <button type="button" disabled={!connection||!validCase||!issueRef.current||busy||unknown||note.length>0} onClick={()=>void refresh()}>重新读取历史</button>
  <ol>{history?.events.map(e=><li key={e.seq}><strong>#{e.seq} · {{judgment:'判断',verification:'核实记录',discussion:'讨论记录'}[e.kind]}</strong><p>{e.note}</p><small>{e.recordedUtc}{e.againstJudgment?` · 针对判断 #${e.againstJudgment}`:''}{e.outcome?` · ${{supports:'支持',refutes:'反驳',inconclusive:'未能确定'}[e.outcome]}`:''}</small>{!!e.sourceIds.length&&<p>历史来源引用：{e.sourceIds.join('、')}；不是当前原件有效性证明。</p>}{e.sourceIds.map(id=><p key={id} data-source-version={id}>{id} · {({current:'当前（本次读取核对）',needs_review:'待复核',unavailable:'不可用'} as const)[e.sourceVersionStates?.find(x=>x.evidenceId===id)?.status as 'current'|'needs_review'|'unavailable']??'未核对（响应未提供状态）'}；不代表事实已确认。</p>)}</li>)}</ol>
