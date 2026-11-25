@@ -1,0 +1,19 @@
+pdfinfo version 25.03.0
+pdftoppm version 25.03.0
+Custom Metadata: no
+Metadata Stream: no
+Tagged:          no
+UserProperties:  no
+Suspects:        no
+Form:            none
+JavaScript:      no
+Pages:           2
+Encrypted:       no
+Page size:       72 x 72 pts
+Page rot:        0
+File size:       674 bytes
+Optimized:       no
+PDF version:     1.4
+page1 (256, 256) (255, 0, 0)
+page2 (256, 256) (0, 0, 255)
+92cf698d3070092139444f94b7dacb7286f774b6186503917e534b253734e774

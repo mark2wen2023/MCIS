@@ -1,0 +1,322 @@
+{
+ "vp1440-1-red-page1-canvas.png": {
+  "size": [
+   690,
+   691
+  ],
+  "center": [
+   255,
+   0,
+   0
+  ],
+  "q": [
+   255,
+   0,
+   0
+  ]
+ },
+ "vp1440-2-blue-reread-canvas.png": {
+  "size": [
+   690,
+   691
+  ],
+  "center": [
+   0,
+   0,
+   255
+  ],
+  "q": [
+   0,
+   0,
+   255
+  ]
+ },
+ "vp1440-3a-after-stale-arrival-on-B-canvas.png": {
+  "size": [
+   690,
+   691
+  ],
+  "center": [
+   238,
+   238,
+   238
+  ],
+  "q": [
+   238,
+   238,
+   238
+  ]
+ },
+ "vp1440-3b-runB-blue-canvas.png": {
+  "size": [
+   690,
+   691
+  ],
+  "center": [
+   0,
+   0,
+   255
+  ],
+  "q": [
+   0,
+   0,
+   255
+  ]
+ },
+ "vp1440-3c-back-to-A-red-canvas.png": {
+  "size": [
+   690,
+   691
+  ],
+  "center": [
+   255,
+   0,
+   0
+  ],
+  "q": [
+   255,
+   0,
+   0
+  ]
+ },
+ "vp1440-4-case-ABA-after-stale-canvas.png": {
+  "size": [
+   690,
+   691
+  ],
+  "center": [
+   238,
+   238,
+   238
+  ],
+  "q": [
+   238,
+   238,
+   238
+  ]
+ },
+ "vp1440-4b-case-ABA-blue-canvas.png": {
+  "size": [
+   690,
+   691
+  ],
+  "center": [
+   0,
+   0,
+   255
+  ],
+  "q": [
+   0,
+   0,
+   255
+  ]
+ },
+ "vp1440-5a-after-stale-png-canvas.png": {
+  "size": [
+   690,
+   691
+  ],
+  "center": [
+   238,
+   238,
+   238
+  ],
+  "q": [
+   238,
+   238,
+   238
+  ]
+ },
+ "vp1440-5b-red-after-stale-png-canvas.png": {
+  "size": [
+   690,
+   691
+  ],
+  "center": [
+   255,
+   0,
+   0
+  ],
+  "q": [
+   255,
+   0,
+   0
+  ]
+ },
+ "vp1440-6-clear-after-stale-canvas.png": {
+  "size": [
+   690,
+   691
+  ],
+  "center": [
+   238,
+   238,
+   238
+  ],
+  "q": [
+   238,
+   238,
+   238
+  ]
+ },
+ "vp390-1-red-page1-canvas.png": {
+  "size": [
+   360,
+   361
+  ],
+  "center": [
+   255,
+   0,
+   0
+  ],
+  "q": [
+   255,
+   0,
+   0
+  ]
+ },
+ "vp390-2-blue-reread-canvas.png": {
+  "size": [
+   360,
+   361
+  ],
+  "center": [
+   0,
+   0,
+   255
+  ],
+  "q": [
+   0,
+   0,
+   255
+  ]
+ },
+ "vp390-3a-after-stale-arrival-on-B-canvas.png": {
+  "size": [
+   360,
+   361
+  ],
+  "center": [
+   238,
+   238,
+   238
+  ],
+  "q": [
+   238,
+   238,
+   238
+  ]
+ },
+ "vp390-3b-runB-blue-canvas.png": {
+  "size": [
+   360,
+   361
+  ],
+  "center": [
+   0,
+   0,
+   255
+  ],
+  "q": [
+   0,
+   0,
+   255
+  ]
+ },
+ "vp390-3c-back-to-A-red-canvas.png": {
+  "size": [
+   360,
+   361
+  ],
+  "center": [
+   255,
+   0,
+   0
+  ],
+  "q": [
+   255,
+   0,
+   0
+  ]
+ },
+ "vp390-4-case-ABA-after-stale-canvas.png": {
+  "size": [
+   360,
+   361
+  ],
+  "center": [
+   238,
+   238,
+   238
+  ],
+  "q": [
+   238,
+   238,
+   238
+  ]
+ },
+ "vp390-4b-case-ABA-blue-canvas.png": {
+  "size": [
+   360,
+   361
+  ],
+  "center": [
+   0,
+   0,
+   255
+  ],
+  "q": [
+   0,
+   0,
+   255
+  ]
+ },
+ "vp390-5a-after-stale-png-canvas.png": {
+  "size": [
+   360,
+   361
+  ],
+  "center": [
+   238,
+   238,
+   238
+  ],
+  "q": [
+   238,
+   238,
+   238
+  ]
+ },
+ "vp390-5b-red-after-stale-png-canvas.png": {
+  "size": [
+   360,
+   361
+  ],
+  "center": [
+   255,
+   0,
+   0
+  ],
+  "q": [
+   255,
+   0,
+   0
+  ]
+ },
+ "vp390-6-clear-after-stale-canvas.png": {
+  "size": [
+   360,
+   361
+  ],
+  "center": [
+   238,
+   238,
+   238
+  ],
+  "q": [
+   238,
+   238,
+   238
+  ]
+ }
+}

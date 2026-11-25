@@ -1,0 +1,326 @@
+{
+ "driverExit": 0,
+ "driver": {
+  "passed": true,
+  "viewport": "1440x900",
+  "steps": [
+   {
+    "step": "launch",
+    "version": "156.0.8078.47",
+    "noSandboxFlagSeen": false,
+    "rendererProcs": 0,
+    "chromeProcs": 10
+   },
+   {
+    "step": "sandbox_probe",
+    "chromeProcs": 14,
+    "renderers": 3,
+    "noSandboxFlagSeen": false,
+    "rendererSeccomp": "2",
+    "rendererNoNewPrivs": "1",
+    "zygote": true
+   },
+   {
+    "step": "red_page1",
+    "pass": true,
+    "canvas": {
+     "w": 256,
+     "h": 256,
+     "status": "PDF派生页 · 物理页 1 · 原PDF SHA256 92cf698d3070092139444f94b7dacb7286f774b6186503917e534b253734e774 · 派生PNG SHA256 ab62fefd53fbb936d6521586b8133d321eaf4a4f844f483cf2c61cf92bbef958；不是登记原图、OCR结果或事实核验。",
+     "lineHidden": true,
+     "center": [
+      255,
+      0,
+      0,
+      255
+     ],
+     "corner": [
+      255,
+      0,
+      0,
+      255
+     ]
+    },
+    "accessDelta": {
+     "pdf": 1,
+     "image": 0
+    }
+   },
+   {
+    "step": "blue_reread",
+    "pass": true,
+    "canvas": {
+     "w": 256,
+     "h": 256,
+     "status": "页图已载入，字节摘要与登记匹配。选择OCR行高亮；PDF页码关系仍为人工声明。",
+     "lineHidden": false,
+     "center": [
+      0,
+      0,
+      255,
+      255
+     ],
+     "corner": [
+      0,
+      0,
+      255,
+      255
+     ]
+    },
+    "accessDelta": {
+     "pdf": 0,
+     "image": 1
+    }
+   },
+   {
+    "step": "ABA_run_delayed_old_pdf",
+    "pass": true,
+    "staleStatus": 200,
+    "afterStale": {
+     "w": 1,
+     "h": 1,
+     "status": "页图未显示。点击授权载入；此操作记录一次访问。",
+     "lineHidden": true
+    },
+    "runB": {
+     "w": 256,
+     "h": 256,
+     "status": "页图已载入，字节摘要与登记匹配。选择OCR行高亮；PDF页码关系仍为人工声明。",
+     "lineHidden": false,
+     "center": [
+      0,
+      0,
+      255,
+      255
+     ],
+     "corner": [
+      0,
+      0,
+      255,
+      255
+     ]
+    },
+    "backToA": {
+     "w": 256,
+     "h": 256,
+     "status": "PDF派生页 · 物理页 1 · 原PDF SHA256 92cf698d3070092139444f94b7dacb7286f774b6186503917e534b253734e774 · 派生PNG SHA256 ab62fefd53fbb936d6521586b8133d321eaf4a4f844f483cf2c61cf92bbef958；不是登记原图、OCR结果或事实核验。",
+     "lineHidden": true,
+     "center": [
+      255,
+      0,
+      0,
+      255
+     ],
+     "corner": [
+      255,
+      0,
+      0,
+      255
+     ]
+    },
+    "accessDelta": {
+     "pdf": 2,
+     "image": 1
+    },
+    "note": "server audits the delayed (discarded) read too: expect pdf+2,image+1"
+   },
+   {
+    "step": "case_switch_delayed_old_pdf",
+    "pass": true,
+    "staleStatus": 200,
+    "afterStale": {
+     "w": 1,
+     "h": 1,
+     "status": "页图未显示。点击授权载入；此操作记录一次访问。",
+     "lineHidden": true
+    },
+    "final": {
+     "w": 256,
+     "h": 256,
+     "status": "页图已载入，字节摘要与登记匹配。选择OCR行高亮；PDF页码关系仍为人工声明。",
+     "lineHidden": false,
+     "center": [
+      0,
+      0,
+      255,
+      255
+     ],
+     "corner": [
+      0,
+      0,
+      255,
+      255
+     ]
+    },
+    "accessDelta": {
+     "pdf": 1,
+     "image": 1
+    }
+   },
+   {
+    "step": "run_switch_delayed_old_png",
+    "pass": true,
+    "staleStatus": 200,
+    "afterStale": {
+     "w": 1,
+     "h": 1,
+     "status": "页图未显示。点击授权载入；此操作记录一次访问。",
+     "lineHidden": true
+    },
+    "final": {
+     "w": 256,
+     "h": 256,
+     "status": "PDF派生页 · 物理页 1 · 原PDF SHA256 92cf698d3070092139444f94b7dacb7286f774b6186503917e534b253734e774 · 派生PNG SHA256 ab62fefd53fbb936d6521586b8133d321eaf4a4f844f483cf2c61cf92bbef958；不是登记原图、OCR结果或事实核验。",
+     "lineHidden": true,
+     "center": [
+      255,
+      0,
+      0,
+      255
+     ],
+     "corner": [
+      255,
+      0,
+      0,
+      255
+     ]
+    },
+    "accessDelta": {
+     "pdf": 1,
+     "image": 1
+    }
+   },
+   {
+    "step": "clear_during_delayed_pdf",
+    "pass": true,
+    "staleStatus": 200,
+    "afterStale": {
+     "w": 1,
+     "h": 1,
+     "status": "页图未显示。点击授权载入；此操作记录一次访问。",
+     "lineHidden": false
+    }
+   }
+  ],
+  "forbidden": [],
+  "ocrWrites": 0,
+  "consoleErrors": [
+   "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "posts": [
+   "/api/v1/cases/SYN-XREPO-001/image-reviews/OCR-225ad572e68c4c09b0cd3b12a0852fb5/synthetic-pdf-page",
+   "/api/v1/cases/SYN-XREPO-001/evidence-intakes/7755f46eb4330457fc063761ff7ad6aeae0e59ea3d7900ab5edd1cda9c39860d:download",
+   "/api/v1/cases/SYN-XREPO-001/image-reviews/OCR-225ad572e68c4c09b0cd3b12a0852fb5/synthetic-pdf-page",
+   "/api/v1/cases/SYN-XREPO-001/evidence-intakes/7755f46eb4330457fc063761ff7ad6aeae0e59ea3d7900ab5edd1cda9c39860d:download",
+   "/api/v1/cases/SYN-XREPO-001/image-reviews/OCR-225ad572e68c4c09b0cd3b12a0852fb5/synthetic-pdf-page",
+   "/api/v1/cases/SYN-XREPO-001/image-reviews/OCR-225ad572e68c4c09b0cd3b12a0852fb5/synthetic-pdf-page",
+   "/api/v1/cases/SYN-XREPO-001/evidence-intakes/7755f46eb4330457fc063761ff7ad6aeae0e59ea3d7900ab5edd1cda9c39860d:download",
+   "/api/v1/cases/SYN-XREPO-001/evidence-intakes/7755f46eb4330457fc063761ff7ad6aeae0e59ea3d7900ab5edd1cda9c39860d:download",
+   "/api/v1/cases/SYN-XREPO-001/image-reviews/OCR-225ad572e68c4c09b0cd3b12a0852fb5/synthetic-pdf-page",
+   "/api/v1/cases/SYN-XREPO-001/image-reviews/OCR-225ad572e68c4c09b0cd3b12a0852fb5/synthetic-pdf-page"
+  ]
+ },
+ "sqliteAccessTotal": 10,
+ "sqliteAccessPdf": 6,
+ "sqliteAccessImage": 4,
+ "custodyRows": [
+  [
+   1,
+   "EV-001",
+   "Register",
+   "2026-11-25T03:26:08Z",
+   "MCIS-EVIDENCE-INTAKE/1 {\"binding\":{\"byteLength\":674,\"caseId\":\"SYN-XREPO-001\",\"fileName\":\"pdf.bin\",\"metadata\":{\"category\":\"Document\",\"confidentiality\":\"Restricted\",\"extractedBy\":\"Synthetic author\",\"extractedUtc\":\"2026-02-01T00:00:00Z\",\"note\":\"synthetic only\",\"source\":\"fixed fixture\",\"title\":\"Synthetic pdf\"},\"operator\":\"Synthetic acceptance\",\"profile\":\"mcis-evidence-intake-v1\",\"role\":\"Investigator\",\"sourceSha256\":\"92cf698d3070092139444f94b7dacb7286f774b6186503917e534b253734e774\",\"version\":\"1\"},\"requestDigest\":\"5845fe7d89b80525968e8c8e8f11a371b9e9d408186b28a299972639a4b0cc7b\"}"
+  ],
+  [
+   2,
+   "EV-002",
+   "Register",
+   "2026-11-25T03:26:08Z",
+   "MCIS-EVIDENCE-INTAKE/1 {\"binding\":{\"byteLength\":585,\"caseId\":\"SYN-XREPO-001\",\"fileName\":\"image.bin\",\"metadata\":{\"category\":\"Document\",\"confidentiality\":\"Restricted\",\"extractedBy\":\"Synthetic author\",\"extractedUtc\":\"2026-02-01T00:00:00Z\",\"note\":\"synthetic only\",\"source\":\"fixed fixture\",\"title\":\"Synthetic image\"},\"operator\":\"Synthetic acceptance\",\"profile\":\"mcis-evidence-intake-v1\",\"role\":\"Investigator\",\"sourceSha256\":\"5118847bc1bac0fc1cc4939c54206a4fe3b802e12e87a5878cb57449fc98051b\",\"version\":\"1\"},\"requestDigest\":\"7755f46eb4330457fc063761ff7ad6aeae0e59ea3d7900ab5edd1cda9c39860d\"}"
+  ],
+  [
+   3,
+   "EV-003",
+   "Register",
+   "2026-11-25T03:26:08Z",
+   "MCIS-EVIDENCE-INTAKE/1 {\"binding\":{\"byteLength\":52,\"caseId\":\"SYN-XREPO-001\",\"fileName\":\"raw.bin\",\"metadata\":{\"category\":\"Document\",\"confidentiality\":\"Restricted\",\"extractedBy\":\"Synthetic author\",\"extractedUtc\":\"2026-02-01T00:00:00Z\",\"note\":\"synthetic only\",\"source\":\"fixed fixture\",\"title\":\"Synthetic raw\"},\"operator\":\"Synthetic acceptance\",\"profile\":\"mcis-evidence-intake-v1\",\"role\":\"Investigator\",\"sourceSha256\":\"58841d73629094f73b3c21d033efae3927a6e3e09abfdded675697783bb94cb1\",\"version\":\"1\"},\"requestDigest\":\"7089db870384ac43151fbea69ae25b8f82f5885c96ab8d95c2ab1e49aebe6b59\"}"
+  ],
+  [
+   4,
+   "EV-004",
+   "Register",
+   "2026-11-25T03:26:08Z",
+   "MCIS-EVIDENCE-INTAKE/1 {\"binding\":{\"byteLength\":1142,\"caseId\":\"SYN-XREPO-001\",\"fileName\":\"candidate.bin\",\"metadata\":{\"category\":\"Document\",\"confidentiality\":\"Restricted\",\"extractedBy\":\"Synthetic author\",\"extractedUtc\":\"2026-02-01T00:00:00Z\",\"note\":\"synthetic only\",\"source\":\"fixed fixture\",\"title\":\"Synthetic candidate\"},\"operator\":\"Synthetic acceptance\",\"profile\":\"mcis-evidence-intake-v1\",\"role\":\"Investigator\",\"sourceSha256\":\"12da91d38e1e6b2dc4d4d7de3f1435f4c3b8edebee0e925906e0f5d7638a2d7a\",\"version\":\"1\"},\"requestDigest\":\"62047bed6078fd1b7afd3bf017b46b49848463383c6ebdf01e4ad7193d899ad5\"}"
+  ],
+  [
+   5,
+   "EV-001",
+   "Access",
+   "2026-11-25T03:26:09Z",
+   "Synthetic PDF read-only physical page 1"
+  ],
+  [
+   6,
+   "EV-002",
+   "Access",
+   "2026-11-25T03:26:09Z",
+   "图片文字人工核对：OCR-225ad572e68c4c09b0cd3b12a0852fb5"
+  ],
+  [
+   7,
+   "EV-001",
+   "Access",
+   "2026-11-25T03:26:09Z",
+   "Synthetic PDF read-only physical page 1"
+  ],
+  [
+   8,
+   "EV-002",
+   "Access",
+   "2026-11-25T03:26:13Z",
+   "图片文字人工核对：OCR-557ae721009b45e6b9f77933e8dac384"
+  ],
+  [
+   9,
+   "EV-001",
+   "Access",
+   "2026-11-25T03:26:14Z",
+   "Synthetic PDF read-only physical page 1"
+  ],
+  [
+   10,
+   "EV-001",
+   "Access",
+   "2026-11-25T03:26:15Z",
+   "Synthetic PDF read-only physical page 1"
+  ],
+  [
+   11,
+   "EV-002",
+   "Access",
+   "2026-11-25T03:26:19Z",
+   "图片文字人工核对：OCR-225ad572e68c4c09b0cd3b12a0852fb5"
+  ],
+  [
+   12,
+   "EV-002",
+   "Access",
+   "2026-11-25T03:26:20Z",
+   "图片文字人工核对：OCR-225ad572e68c4c09b0cd3b12a0852fb5"
+  ],
+  [
+   13,
+   "EV-001",
+   "Access",
+   "2026-11-25T03:26:25Z",
+   "Synthetic PDF read-only physical page 1"
+  ],
+  [
+   14,
+   "EV-001",
+   "Access",
+   "2026-11-25T03:26:26Z",
+   "Synthetic PDF read-only physical page 1"
+  ]
+ ]
+}
