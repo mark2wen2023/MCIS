@@ -1,0 +1,28 @@
+{
+  "product": "26dd466fcbdeb8422fcb54a5985d93df2103f4cc",
+  "synthetic": true,
+  "mode": "chrome",
+  "result": "passed",
+  "trueBrowser": true,
+  "browserVersion": "Google Chrome 156.0.8078.47",
+  "observationRows": 1,
+  "observationWriteAuditRows": 1,
+  "auditChainValid": true,
+  "chromiumSandbox": true,
+  "browserFixturePostCount": 1,
+  "confirmedReadSha256": "a177b1ec8d0ec2e1c6843346f549dbaec1383501a64875ff4df7796e7215e2d4",
+  "committedPost": {
+    "upstreamStatus": 201,
+    "responseSha256": "1399814021c03c87ac350900ad334b11615893316ee3d3319e4905dd4c187413"
+  },
+  "viewport": [
+    [
+      1440,
+      900
+    ],
+    [
+      390,
+      844
+    ]
+  ]
+}
