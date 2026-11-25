@@ -1,0 +1,834 @@
+{
+  "result": {
+    "ok": true,
+    "blocker": null,
+    "browser": "156.0.8078.47",
+    "sandbox": {
+      "noSandboxFlag": false,
+      "chromeProcCount": 3,
+      "browser": "156.0.8078.47"
+    },
+    "preview": {
+      "profile": "MCIS-BASIC-INTAKE-1",
+      "caseId": "CASE-INTAKE",
+      "title": "测试",
+      "sourceSha256": "18c3d29a91d641691f01a9a6dc7f9db8effe733afe469f0637f668416da14a98",
+      "byteLength": 8598,
+      "packageVersion": "1.4.0",
+      "hfacsExtension": null,
+      "workingRecordsExtension": {
+        "version": "MCIS-WORKING-RECORDS-1",
+        "interviewCount": 0,
+        "reportCount": 1,
+        "reportSnapshotCount": 1,
+        "manualReceiptCount": 0,
+        "receiptMode": "archive-only",
+        "identityMode": "unverified-self-reported"
+      },
+      "counts": {
+        "vessels": 0,
+        "tracks": 0,
+        "environment": 0,
+        "evidence": 0,
+        "custodyEvents": 0,
+        "auditEvents": 4
+      },
+      "warnings": [
+        "仅基础资料及明确支持的HFACS完整扩展；其他业务模块不在范围。",
+        "历史回执仅归档，不恢复活跃重放；原请求摘要无法由现存文档重算。",
+        "本地角色头不是生产身份认证；旧读器不保证保留扩展。"
+      ]
+    },
+    "receipt": {
+      "profile": "MCIS-BASIC-INTAKE-1",
+      "caseId": "CASE-INTAKE",
+      "title": "测试",
+      "sourceSha256": "18c3d29a91d641691f01a9a6dc7f9db8effe733afe469f0637f668416da14a98",
+      "byteLength": 8598,
+      "packageVersion": "1.4.0",
+      "hfacsExtension": null,
+      "workingRecordsExtension": {
+        "version": "MCIS-WORKING-RECORDS-1",
+        "interviewCount": 0,
+        "reportCount": 1,
+        "reportSnapshotCount": 1,
+        "manualReceiptCount": 0,
+        "receiptMode": "archive-only",
+        "identityMode": "unverified-self-reported"
+      },
+      "counts": {
+        "vessels": 0,
+        "tracks": 0,
+        "environment": 0,
+        "evidence": 0,
+        "custodyEvents": 0,
+        "auditEvents": 4
+      },
+      "warnings": [
+        "仅基础资料及明确支持的HFACS完整扩展；其他业务模块不在范围。",
+        "历史回执仅归档，不恢复活跃重放；原请求摘要无法由现存文档重算。",
+        "本地角色头不是生产身份认证；旧读器不保证保留扩展。"
+      ],
+      "importedUtc": "2026-11-25T11:57:08Z",
+      "replayed": false
+    },
+    "timeline": {
+      "caseId": "CASE-INTAKE",
+      "caseEpochUtc": "2026-01-01T00:00:00Z",
+      "displayTimeZoneOffsetMinutes": 480,
+      "durationSec": null,
+      "events": [
+        {
+          "caseId": "CASE-INTAKE",
+          "confirmed": false,
+          "endTimeSec": 1.5,
+          "eventId": "TE-01",
+          "kind": "Event",
+          "sourceLabel": "Synthetic unverified source",
+          "timeSec": 1,
+          "title": "Synthetic 1",
+          "utc": "2026-01-01T00:00:01Z"
+        },
+        {
+          "caseId": "CASE-INTAKE",
+          "confirmed": false,
+          "endTimeSec": 2.5,
+          "eventId": "TE-02",
+          "kind": "Event",
+          "sourceLabel": "Synthetic unverified source",
+          "timeSec": 2,
+          "title": "Synthetic 2",
+          "utc": "2026-01-01T00:00:02Z"
+        }
+      ]
+    },
+    "commitCount": 1,
+    "shots": [
+      "/workspace/mcis-w17-archive-report/screenshots/01-lobby-lead.png",
+      "/workspace/mcis-w17-archive-report/screenshots/02-file-selected.png",
+      "/workspace/mcis-w17-archive-report/screenshots/03-preview.png",
+      "/workspace/mcis-w17-archive-report/screenshots/04-confirmed.png",
+      "/workspace/mcis-w17-archive-report/screenshots/05-receipt.png",
+      "/workspace/mcis-w17-archive-report/screenshots/06-timeline.png",
+      "/workspace/mcis-w17-archive-report/screenshots/07-timeline-hover.png"
+    ],
+    "previewUi": {
+      "sha": "18c3d29a91d641691f01a9a6dc7f9db8effe733afe469f0637f668416da14a98",
+      "version": "1.4.0",
+      "caseId": "CASE-INTAKE"
+    },
+    "receiptUi": {
+      "sha": "18c3d29a91d641691f01a9a6dc7f9db8effe733afe469f0637f668416da14a98",
+      "text": "已核验服务端导入回执\n\n测试 · CASE-INTAKE\n\n2026-11-25T11:57:08Z\n\n18c3d29a91d641691f01a9a6dc7f9db8effe733afe469f0637f668416da14a98\n\n案件包版本：1.4.0\n\n此包不含HFACS草稿、修订或请求回执扩展。\n\n1.4.0 受限工作记录归档\n笔录数\n0\n已存报告版本数\n1\n报告操作快照数\n1\n人工笔录历史回执数\n0\n\n1.4.0 在工作记录归档基础上保留时间线事件原文、登记时间和来源引用；最多256条，不截断。\n\n不支持时间线与航迹导入历史混合，也不支持非空冲突、安全建议、征求意见、避碰分析或智能体草稿；其他未知状态整包拒绝。\n\n事件中的确认、推定和来源标记仅保留历史声明，不代表本次审核或来源真实性认证。\n\n仅同案号新案恢复，不覆盖。历史回执只读归档，不激活或重放；当前请求只能由本次服务回执核验。\n\n原有签署、确认和审核仅为历史工作流字段，不是本次签署或审核，更不是事实或身份认证。未知模块、缺失依赖、非默认策略及超预算均整包拒绝，不截断历史。\n\n多代来源包原字节保留：历史单件上限16 MiB；外包与历史检查累计展开64 MiB、2048成员，外包32 MiB、最多32历史件与8层声明关系。旧来源包可能因此不能再次归档；不会丢弃祖先来凑上限。不是跨案知识库或整个系统备份。\n\n进入导入案件"
+    }
+  },
+  "httpLog": [
+    {
+      "utc": "2026-11-25T11:57:07.574Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases",
+      "headers": {},
+      "body": []
+    },
+    {
+      "utc": "2026-11-25T11:57:07.576Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases",
+      "headers": {},
+      "body": []
+    },
+    {
+      "utc": "2026-11-25T11:57:07.632Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases",
+      "headers": {},
+      "body": []
+    },
+    {
+      "utc": "2026-11-25T11:57:07.645Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases",
+      "headers": {},
+      "body": []
+    },
+    {
+      "utc": "2026-11-25T11:57:08.155Z",
+      "status": 200,
+      "method": "POST",
+      "url": "http://127.0.0.1:18792/api/v1/packages/intakes:preview",
+      "headers": {},
+      "body": {
+        "profile": "MCIS-BASIC-INTAKE-1",
+        "caseId": "CASE-INTAKE",
+        "title": "测试",
+        "sourceSha256": "18c3d29a91d641691f01a9a6dc7f9db8effe733afe469f0637f668416da14a98",
+        "byteLength": 8598,
+        "packageVersion": "1.4.0",
+        "hfacsExtension": null,
+        "workingRecordsExtension": {
+          "version": "MCIS-WORKING-RECORDS-1",
+          "interviewCount": 0,
+          "reportCount": 1,
+          "reportSnapshotCount": 1,
+          "manualReceiptCount": 0,
+          "receiptMode": "archive-only",
+          "identityMode": "unverified-self-reported"
+        },
+        "counts": {
+          "vessels": 0,
+          "tracks": 0,
+          "environment": 0,
+          "evidence": 0,
+          "custodyEvents": 0,
+          "auditEvents": 4
+        },
+        "warnings": [
+          "仅基础资料及明确支持的HFACS完整扩展；其他业务模块不在范围。",
+          "历史回执仅归档，不恢复活跃重放；原请求摘要无法由现存文档重算。",
+          "本地角色头不是生产身份认证；旧读器不保证保留扩展。"
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T11:57:08.494Z",
+      "status": 200,
+      "method": "POST",
+      "url": "http://127.0.0.1:18792/api/v1/packages/intakes:commit",
+      "headers": {},
+      "body": {
+        "profile": "MCIS-BASIC-INTAKE-1",
+        "caseId": "CASE-INTAKE",
+        "title": "测试",
+        "sourceSha256": "18c3d29a91d641691f01a9a6dc7f9db8effe733afe469f0637f668416da14a98",
+        "byteLength": 8598,
+        "packageVersion": "1.4.0",
+        "hfacsExtension": null,
+        "workingRecordsExtension": {
+          "version": "MCIS-WORKING-RECORDS-1",
+          "interviewCount": 0,
+          "reportCount": 1,
+          "reportSnapshotCount": 1,
+          "manualReceiptCount": 0,
+          "receiptMode": "archive-only",
+          "identityMode": "unverified-self-reported"
+        },
+        "counts": {
+          "vessels": 0,
+          "tracks": 0,
+          "environment": 0,
+          "evidence": 0,
+          "custodyEvents": 0,
+          "auditEvents": 4
+        },
+        "warnings": [
+          "仅基础资料及明确支持的HFACS完整扩展；其他业务模块不在范围。",
+          "历史回执仅归档，不恢复活跃重放；原请求摘要无法由现存文档重算。",
+          "本地角色头不是生产身份认证；旧读器不保证保留扩展。"
+        ],
+        "importedUtc": "2026-11-25T11:57:08Z",
+        "replayed": false
+      }
+    },
+    {
+      "utc": "2026-11-25T11:57:08.511Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases",
+      "headers": {},
+      "body": [
+        {
+          "caseId": "CASE-INTAKE",
+          "title": "测试",
+          "accidentType": "Collision",
+          "accidentGrade": "",
+          "incidentTimeUtc": "2026-01-01T00:00:00Z",
+          "displayTimeZoneOffsetMinutes": 480,
+          "isFictionalDemo": true,
+          "placeName": null
+        }
+      ]
+    },
+    {
+      "utc": "2026-11-25T11:57:08.826Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases/CASE-INTAKE/timeline",
+      "headers": {},
+      "body": {
+        "caseId": "CASE-INTAKE",
+        "caseEpochUtc": "2026-01-01T00:00:00Z",
+        "displayTimeZoneOffsetMinutes": 480,
+        "durationSec": null,
+        "events": [
+          {
+            "caseId": "CASE-INTAKE",
+            "confirmed": false,
+            "endTimeSec": 1.5,
+            "eventId": "TE-01",
+            "kind": "Event",
+            "sourceLabel": "Synthetic unverified source",
+            "timeSec": 1,
+            "title": "Synthetic 1",
+            "utc": "2026-01-01T00:00:01Z"
+          },
+          {
+            "caseId": "CASE-INTAKE",
+            "confirmed": false,
+            "endTimeSec": 2.5,
+            "eventId": "TE-02",
+            "kind": "Event",
+            "sourceLabel": "Synthetic unverified source",
+            "timeSec": 2,
+            "title": "Synthetic 2",
+            "utc": "2026-01-01T00:00:02Z"
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T11:57:08.826Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases/CASE-INTAKE/custody:verify-chain",
+      "headers": {},
+      "body": {
+        "valid": true,
+        "count": 0,
+        "brokenAt": null,
+        "reason": "",
+        "headHash": "0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "utc": "2026-11-25T11:57:08.827Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases/CASE-INTAKE",
+      "headers": {},
+      "body": {
+        "caseId": "CASE-INTAKE",
+        "schemaVersion": "1.0.0",
+        "title": "测试",
+        "accidentCode": "",
+        "accidentType": "Collision",
+        "accidentGrade": "",
+        "incidentTimeUtc": "2026-01-01T00:00:00Z",
+        "caseEpochUtc": "2026-01-01T00:00:00Z",
+        "displayTimeZoneOffsetMinutes": 480,
+        "incidentLocation": {
+          "lonDeg": 120,
+          "latDeg": 30,
+          "heightM": 0
+        },
+        "seaLevelOffsetM": 0,
+        "leadInvestigator": "",
+        "agencyName": "",
+        "isFictionalDemo": true,
+        "summaryNotes": ""
+      }
+    },
+    {
+      "utc": "2026-11-25T11:57:08.828Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases/CASE-INTAKE/access-policy",
+      "headers": {},
+      "body": {
+        "version": "1.0.0",
+        "categories": [
+          "ais_sim",
+          "vdr_audio",
+          "testimony",
+          "personal",
+          "medical",
+          "report_draft",
+          "evidence_meta",
+          "timeline",
+          "colreg",
+          "recommendations",
+          "audit",
+          "agent_drafts"
+        ],
+        "matrix": {
+          "LeadInvestigator": {
+            "ais_sim": "ReadWrite",
+            "vdr_audio": "ReadWrite",
+            "testimony": "ReadWrite",
+            "personal": "ReadWrite",
+            "medical": "ReadOnly",
+            "report_draft": "ReadWrite",
+            "evidence_meta": "ReadWrite",
+            "timeline": "ReadWrite",
+            "colreg": "ReadWrite",
+            "recommendations": "ReadWrite",
+            "audit": "ReadOnly",
+            "agent_drafts": "ReadWrite"
+          },
+          "Investigator": {
+            "ais_sim": "ReadWrite",
+            "vdr_audio": "ReadOnly",
+            "testimony": "ReadWrite",
+            "personal": "ReadOnly",
+            "medical": "Deny",
+            "report_draft": "ReadWrite",
+            "evidence_meta": "ReadWrite",
+            "timeline": "ReadWrite",
+            "colreg": "ReadWrite",
+            "recommendations": "ReadWrite",
+            "audit": "ReadOnly",
+            "agent_drafts": "ReadWrite"
+          },
+          "ExternalExpert": {
+            "ais_sim": "ReadOnly",
+            "vdr_audio": "Redacted",
+            "testimony": "Redacted",
+            "personal": "Deny",
+            "medical": "Deny",
+            "report_draft": "Deny",
+            "evidence_meta": "ReadOnly",
+            "timeline": "ReadOnly",
+            "colreg": "ReadOnly",
+            "recommendations": "ReadOnly",
+            "audit": "Deny",
+            "agent_drafts": "Deny"
+          },
+          "InterestedState": {
+            "ais_sim": "ReadOnly",
+            "vdr_audio": "Deny",
+            "testimony": "Redacted",
+            "personal": "Deny",
+            "medical": "Deny",
+            "report_draft": "ReadOnly",
+            "evidence_meta": "ReadOnly",
+            "timeline": "ReadOnly",
+            "colreg": "ReadOnly",
+            "recommendations": "ReadOnly",
+            "audit": "Deny",
+            "agent_drafts": "Deny"
+          },
+          "AgentService": {
+            "ais_sim": "ReadOnly",
+            "vdr_audio": "Redacted",
+            "testimony": "Redacted",
+            "personal": "Deny",
+            "medical": "Deny",
+            "report_draft": "ReadOnly",
+            "evidence_meta": "ReadOnly",
+            "timeline": "ReadOnly",
+            "colreg": "ReadOnly",
+            "recommendations": "ReadOnly",
+            "audit": "Deny",
+            "agent_drafts": "ReadWrite"
+          },
+          "Public": {
+            "ais_sim": "ReadOnly",
+            "vdr_audio": "Deny",
+            "testimony": "Deny",
+            "personal": "Deny",
+            "medical": "Deny",
+            "report_draft": "Deny",
+            "evidence_meta": "Deny",
+            "timeline": "Deny",
+            "colreg": "Deny",
+            "recommendations": "ReadOnly",
+            "audit": "Deny",
+            "agent_drafts": "Deny"
+          }
+        },
+        "fieldRules": [
+          {
+            "ruleId": "FR-01",
+            "field": "interviewee.name",
+            "method": "RoleCode",
+            "appliesTo": [
+              "ExternalExpert",
+              "InterestedState",
+              "Public"
+            ],
+            "description": "人员姓名替换为角色代号（张某 → 二副(OOW)）"
+          },
+          {
+            "ruleId": "FR-02",
+            "field": "pii.idNumber+phone",
+            "method": "Mask",
+            "appliesTo": [
+              "Investigator",
+              "ExternalExpert",
+              "InterestedState",
+              "AgentService",
+              "Public"
+            ],
+            "description": "证件号 / 电话全部遮盖（除首席外）"
+          },
+          {
+            "ruleId": "FR-03",
+            "field": "turns.sensitiveFragments",
+            "method": "Mask",
+            "appliesTo": [
+              "ExternalExpert",
+              "InterestedState",
+              "AgentService",
+              "Public"
+            ],
+            "description": "与调查无关的个人隐私片段遮盖为 [已遮盖]"
+          },
+          {
+            "ruleId": "FR-04",
+            "field": "interviewee.name",
+            "method": "Token",
+            "appliesTo": [
+              "AgentService"
+            ],
+            "description": "发给 LLM 的文本：姓名先替换为 <ROLE_xx> 再发送"
+          },
+          {
+            "ruleId": "FR-05",
+            "field": "evidence.restricted",
+            "method": "Remove",
+            "appliesTo": [
+              "ExternalExpert",
+              "InterestedState",
+              "AgentService",
+              "Public"
+            ],
+            "description": "Restricted 证据（MSC.255(84) 第 23 章保密资料）仅调查组可见，不对外部角色列出"
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T11:57:08.828Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases/CASE-INTAKE/conflicts",
+      "headers": {},
+      "body": []
+    },
+    {
+      "utc": "2026-11-25T11:57:08.828Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases/CASE-INTAKE/tracks",
+      "headers": {},
+      "body": {
+        "caseId": "CASE-INTAKE",
+        "tracks": []
+      }
+    },
+    {
+      "utc": "2026-11-25T11:57:08.828Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases/CASE-INTAKE/timeline",
+      "headers": {},
+      "body": {
+        "caseId": "CASE-INTAKE",
+        "caseEpochUtc": "2026-01-01T00:00:00Z",
+        "displayTimeZoneOffsetMinutes": 480,
+        "durationSec": null,
+        "events": [
+          {
+            "caseId": "CASE-INTAKE",
+            "confirmed": false,
+            "endTimeSec": 1.5,
+            "eventId": "TE-01",
+            "kind": "Event",
+            "sourceLabel": "Synthetic unverified source",
+            "timeSec": 1,
+            "title": "Synthetic 1",
+            "utc": "2026-01-01T00:00:01Z"
+          },
+          {
+            "caseId": "CASE-INTAKE",
+            "confirmed": false,
+            "endTimeSec": 2.5,
+            "eventId": "TE-02",
+            "kind": "Event",
+            "sourceLabel": "Synthetic unverified source",
+            "timeSec": 2,
+            "title": "Synthetic 2",
+            "utc": "2026-01-01T00:00:02Z"
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T11:57:08.828Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases/CASE-INTAKE/evidence",
+      "headers": {},
+      "body": []
+    },
+    {
+      "utc": "2026-11-25T11:57:08.828Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases/CASE-INTAKE/custody:verify-chain",
+      "headers": {},
+      "body": {
+        "valid": true,
+        "count": 0,
+        "brokenAt": null,
+        "reason": "",
+        "headHash": "0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "utc": "2026-11-25T11:57:08.828Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases/CASE-INTAKE/access-policy",
+      "headers": {},
+      "body": {
+        "version": "1.0.0",
+        "categories": [
+          "ais_sim",
+          "vdr_audio",
+          "testimony",
+          "personal",
+          "medical",
+          "report_draft",
+          "evidence_meta",
+          "timeline",
+          "colreg",
+          "recommendations",
+          "audit",
+          "agent_drafts"
+        ],
+        "matrix": {
+          "LeadInvestigator": {
+            "ais_sim": "ReadWrite",
+            "vdr_audio": "ReadWrite",
+            "testimony": "ReadWrite",
+            "personal": "ReadWrite",
+            "medical": "ReadOnly",
+            "report_draft": "ReadWrite",
+            "evidence_meta": "ReadWrite",
+            "timeline": "ReadWrite",
+            "colreg": "ReadWrite",
+            "recommendations": "ReadWrite",
+            "audit": "ReadOnly",
+            "agent_drafts": "ReadWrite"
+          },
+          "Investigator": {
+            "ais_sim": "ReadWrite",
+            "vdr_audio": "ReadOnly",
+            "testimony": "ReadWrite",
+            "personal": "ReadOnly",
+            "medical": "Deny",
+            "report_draft": "ReadWrite",
+            "evidence_meta": "ReadWrite",
+            "timeline": "ReadWrite",
+            "colreg": "ReadWrite",
+            "recommendations": "ReadWrite",
+            "audit": "ReadOnly",
+            "agent_drafts": "ReadWrite"
+          },
+          "ExternalExpert": {
+            "ais_sim": "ReadOnly",
+            "vdr_audio": "Redacted",
+            "testimony": "Redacted",
+            "personal": "Deny",
+            "medical": "Deny",
+            "report_draft": "Deny",
+            "evidence_meta": "ReadOnly",
+            "timeline": "ReadOnly",
+            "colreg": "ReadOnly",
+            "recommendations": "ReadOnly",
+            "audit": "Deny",
+            "agent_drafts": "Deny"
+          },
+          "InterestedState": {
+            "ais_sim": "ReadOnly",
+            "vdr_audio": "Deny",
+            "testimony": "Redacted",
+            "personal": "Deny",
+            "medical": "Deny",
+            "report_draft": "ReadOnly",
+            "evidence_meta": "ReadOnly",
+            "timeline": "ReadOnly",
+            "colreg": "ReadOnly",
+            "recommendations": "ReadOnly",
+            "audit": "Deny",
+            "agent_drafts": "Deny"
+          },
+          "AgentService": {
+            "ais_sim": "ReadOnly",
+            "vdr_audio": "Redacted",
+            "testimony": "Redacted",
+            "personal": "Deny",
+            "medical": "Deny",
+            "report_draft": "ReadOnly",
+            "evidence_meta": "ReadOnly",
+            "timeline": "ReadOnly",
+            "colreg": "ReadOnly",
+            "recommendations": "ReadOnly",
+            "audit": "Deny",
+            "agent_drafts": "ReadWrite"
+          },
+          "Public": {
+            "ais_sim": "ReadOnly",
+            "vdr_audio": "Deny",
+            "testimony": "Deny",
+            "personal": "Deny",
+            "medical": "Deny",
+            "report_draft": "Deny",
+            "evidence_meta": "Deny",
+            "timeline": "Deny",
+            "colreg": "Deny",
+            "recommendations": "ReadOnly",
+            "audit": "Deny",
+            "agent_drafts": "Deny"
+          }
+        },
+        "fieldRules": [
+          {
+            "ruleId": "FR-01",
+            "field": "interviewee.name",
+            "method": "RoleCode",
+            "appliesTo": [
+              "ExternalExpert",
+              "InterestedState",
+              "Public"
+            ],
+            "description": "人员姓名替换为角色代号（张某 → 二副(OOW)）"
+          },
+          {
+            "ruleId": "FR-02",
+            "field": "pii.idNumber+phone",
+            "method": "Mask",
+            "appliesTo": [
+              "Investigator",
+              "ExternalExpert",
+              "InterestedState",
+              "AgentService",
+              "Public"
+            ],
+            "description": "证件号 / 电话全部遮盖（除首席外）"
+          },
+          {
+            "ruleId": "FR-03",
+            "field": "turns.sensitiveFragments",
+            "method": "Mask",
+            "appliesTo": [
+              "ExternalExpert",
+              "InterestedState",
+              "AgentService",
+              "Public"
+            ],
+            "description": "与调查无关的个人隐私片段遮盖为 [已遮盖]"
+          },
+          {
+            "ruleId": "FR-04",
+            "field": "interviewee.name",
+            "method": "Token",
+            "appliesTo": [
+              "AgentService"
+            ],
+            "description": "发给 LLM 的文本：姓名先替换为 <ROLE_xx> 再发送"
+          },
+          {
+            "ruleId": "FR-05",
+            "field": "evidence.restricted",
+            "method": "Remove",
+            "appliesTo": [
+              "ExternalExpert",
+              "InterestedState",
+              "AgentService",
+              "Public"
+            ],
+            "description": "Restricted 证据（MSC.255(84) 第 23 章保密资料）仅调查组可见，不对外部角色列出"
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-11-25T11:57:08.830Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases/CASE-INTAKE",
+      "headers": {},
+      "body": {
+        "caseId": "CASE-INTAKE",
+        "schemaVersion": "1.0.0",
+        "title": "测试",
+        "accidentCode": "",
+        "accidentType": "Collision",
+        "accidentGrade": "",
+        "incidentTimeUtc": "2026-01-01T00:00:00Z",
+        "caseEpochUtc": "2026-01-01T00:00:00Z",
+        "displayTimeZoneOffsetMinutes": 480,
+        "incidentLocation": {
+          "lonDeg": 120,
+          "latDeg": 30,
+          "heightM": 0
+        },
+        "seaLevelOffsetM": 0,
+        "leadInvestigator": "",
+        "agencyName": "",
+        "isFictionalDemo": true,
+        "summaryNotes": ""
+      }
+    },
+    {
+      "utc": "2026-11-25T11:57:08.830Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases/CASE-INTAKE/tracks",
+      "headers": {},
+      "body": {
+        "caseId": "CASE-INTAKE",
+        "tracks": []
+      }
+    },
+    {
+      "utc": "2026-11-25T11:57:08.830Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases/CASE-INTAKE/conflicts",
+      "headers": {},
+      "body": []
+    },
+    {
+      "utc": "2026-11-25T11:57:08.830Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases/CASE-INTAKE",
+      "headers": {},
+      "body": {
+        "caseId": "CASE-INTAKE",
+        "schemaVersion": "1.0.0",
+        "title": "测试",
+        "accidentCode": "",
+        "accidentType": "Collision",
+        "accidentGrade": "",
+        "incidentTimeUtc": "2026-01-01T00:00:00Z",
+        "caseEpochUtc": "2026-01-01T00:00:00Z",
+        "displayTimeZoneOffsetMinutes": 480,
+        "incidentLocation": {
+          "lonDeg": 120,
+          "latDeg": 30,
+          "heightM": 0
+        },
+        "seaLevelOffsetM": 0,
+        "leadInvestigator": "",
+        "agencyName": "",
+        "isFictionalDemo": true,
+        "summaryNotes": ""
+      }
+    },
+    {
+      "utc": "2026-11-25T11:57:08.830Z",
+      "status": 200,
+      "method": "GET",
+      "url": "http://127.0.0.1:18792/api/v1/cases/CASE-INTAKE/evidence",
+      "headers": {},
+      "body": []
+    }
+  ]
+}

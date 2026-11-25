@@ -1,0 +1,89 @@
+INFO:     Started server process [90023]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+READY /workspace/mcis-w17-archive-report/target-data/ready.json
+INFO:     127.0.0.1:38256 - "GET /api/v1/cases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60504 - "GET /api/v1/cases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35962 - "GET /api/v1/cases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35968 - "GET /api/v1/cases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35982 - "GET /api/v1/cases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35998 - "GET /api/v1/cases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36008 - "GET /api/v1/cases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36024 - "POST /api/v1/packages/intakes%3Apreview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36040 - "POST /api/v1/packages/intakes%3Acommit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36048 - "GET /api/v1/cases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36070 - "GET /api/v1/cases/CASE-INTAKE/timeline HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36066 - "GET /api/v1/cases/CASE-INTAKE/custody%3Averify-chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36056 - "GET /api/v1/cases/CASE-INTAKE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36054 - "GET /api/v1/cases/CASE-INTAKE/access-policy HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36072 - "GET /api/v1/cases/CASE-INTAKE/conflicts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36082 - "GET /api/v1/cases/CASE-INTAKE/tracks HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36096 - "GET /api/v1/cases/CASE-INTAKE/timeline HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36060 - "GET /api/v1/cases/CASE-INTAKE/evidence HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36100 - "GET /api/v1/cases/CASE-INTAKE/custody%3Averify-chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36124 - "GET /api/v1/cases/CASE-INTAKE/access-policy HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36108 - "GET /api/v1/cases/CASE-INTAKE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36140 - "GET /api/v1/cases/CASE-INTAKE/tracks HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36132 - "GET /api/v1/cases/CASE-INTAKE/conflicts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36160 - "GET /api/v1/cases/CASE-INTAKE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36156 - "GET /api/v1/cases/CASE-INTAKE/evidence HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53286 - "GET /api/v1/cases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53300 - "GET /api/v1/cases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53306 - "GET /api/v1/cases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53320 - "GET /api/v1/cases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /api/v1/packages/intakes/18c3d29a91d641691f01a9a6dc7f9db8effe733afe469f0637f668416da14a98 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53346 - "GET /api/v1/cases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53368 - "GET /api/v1/cases/CASE-INTAKE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53354 - "GET /api/v1/cases/CASE-INTAKE/access-policy HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53386 - "GET /api/v1/cases/CASE-INTAKE/custody%3Averify-chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53376 - "GET /api/v1/cases/CASE-INTAKE/evidence HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53402 - "GET /api/v1/cases/CASE-INTAKE/timeline HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53416 - "GET /api/v1/cases/CASE-INTAKE/conflicts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53432 - "GET /api/v1/cases/CASE-INTAKE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53426 - "GET /api/v1/cases/CASE-INTAKE/tracks HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53458 - "GET /api/v1/cases/CASE-INTAKE/custody%3Averify-chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53444 - "GET /api/v1/cases/CASE-INTAKE/access-policy HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53482 - "GET /api/v1/cases/CASE-INTAKE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53480 - "GET /api/v1/cases/CASE-INTAKE/conflicts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53476 - "GET /api/v1/cases/CASE-INTAKE/timeline HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53466 - "GET /api/v1/cases/CASE-INTAKE/evidence HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53486 - "GET /api/v1/cases/CASE-INTAKE/tracks HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44370 - "GET /api/v1/cases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44384 - "GET /api/v1/cases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44400 - "GET /api/v1/cases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44404 - "GET /api/v1/cases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44406 - "POST /api/v1/packages/intakes%3Apreview HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:47414 - "GET /api/v1/cases/CASE-INTAKE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47424 - "GET /api/v1/cases/CASE-INTAKE/custody%3Averify-chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47406 - "GET /api/v1/cases/CASE-INTAKE/access-policy HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47416 - "GET /api/v1/cases/CASE-INTAKE/evidence HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47428 - "GET /api/v1/cases/CASE-INTAKE/timeline HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47444 - "GET /api/v1/cases/CASE-INTAKE/conflicts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47454 - "GET /api/v1/cases/CASE-INTAKE/tracks HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47474 - "GET /api/v1/cases/CASE-INTAKE/custody%3Averify-chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47488 - "GET /api/v1/cases/CASE-INTAKE/access-policy HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47462 - "GET /api/v1/cases/CASE-INTAKE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47520 - "GET /api/v1/cases/CASE-INTAKE/conflicts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47498 - "GET /api/v1/cases/CASE-INTAKE/evidence HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47534 - "GET /api/v1/cases/CASE-INTAKE/tracks HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47504 - "GET /api/v1/cases/CASE-INTAKE/timeline HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47536 - "GET /api/v1/cases/CASE-INTAKE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47552 - "GET /api/v1/cases/CASE-INTAKE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47572 - "GET /api/v1/cases/CASE-INTAKE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47602 - "GET /api/v1/cases/CASE-INTAKE/conflicts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47558 - "GET /api/v1/cases/CASE-INTAKE/access-policy HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47584 - "GET /api/v1/cases/CASE-INTAKE/custody%3Averify-chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47598 - "GET /api/v1/cases/CASE-INTAKE/timeline HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47566 - "GET /api/v1/cases/CASE-INTAKE/evidence HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47608 - "GET /api/v1/cases/CASE-INTAKE/tracks HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47618 - "GET /api/v1/cases/CASE-INTAKE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47634 - "GET /api/v1/cases/CASE-INTAKE/conflicts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47640 - "GET /api/v1/cases/CASE-INTAKE/access-policy HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47642 - "GET /api/v1/cases/CASE-INTAKE/custody%3Averify-chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47652 - "GET /api/v1/cases/CASE-INTAKE/timeline HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47666 - "GET /api/v1/cases/CASE-INTAKE/evidence HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47678 - "GET /api/v1/cases/CASE-INTAKE/tracks HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [90023]

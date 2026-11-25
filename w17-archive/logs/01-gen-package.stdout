@@ -1,0 +1,39 @@
+{
+  "caseId": "CASE-INTAKE",
+  "packageVersion": "1.4.0",
+  "sourceSha256": "18c3d29a91d641691f01a9a6dc7f9db8effe733afe469f0637f668416da14a98",
+  "byteLength": 8598,
+  "manifestKeys": [
+    "caseId",
+    "createdAtUtc",
+    "files",
+    "generatorVersion",
+    "lastModifiedAtUtc",
+    "packageFormat",
+    "packageVersion"
+  ],
+  "manifest": {
+    "packageFormat": "MCIS-MCASE",
+    "packageVersion": "1.4.0",
+    "caseId": "CASE-INTAKE",
+    "createdAtUtc": "2026-11-25T11:55:35Z",
+    "lastModifiedAtUtc": "2026-11-25T11:55:35Z",
+    "generatorVersion": "MCIS-Service-0.1.0"
+  },
+  "events": [
+    {
+      "eventId": "TE-01",
+      "title": "Synthetic 1",
+      "timeSec": 1,
+      "kind": "Event"
+    },
+    {
+      "eventId": "TE-02",
+      "title": "Synthetic 2",
+      "timeSec": 2,
+      "kind": "Event"
+    }
+  ],
+  "reportId": "RPT-16a491e97c344e368ad8",
+  "packagePath": "/workspace/mcis-w17-archive-report/fixtures/synthetic-1.4.mcase"
+}

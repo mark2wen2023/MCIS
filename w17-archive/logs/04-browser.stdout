@@ -1,0 +1,34 @@
+{
+  "ok": true,
+  "blocker": null,
+  "browser": "156.0.8078.47",
+  "sandbox": {
+    "noSandboxFlag": false,
+    "chromeProcCount": 3,
+    "browser": "156.0.8078.47"
+  },
+  "commitCount": 1,
+  "preview": {
+    "caseId": "CASE-INTAKE",
+    "packageVersion": "1.4.0",
+    "sourceSha256": "18c3d29a91d641691f01a9a6dc7f9db8effe733afe469f0637f668416da14a98"
+  },
+  "receipt": {
+    "caseId": "CASE-INTAKE",
+    "packageVersion": "1.4.0",
+    "sourceSha256": "18c3d29a91d641691f01a9a6dc7f9db8effe733afe469f0637f668416da14a98"
+  },
+  "timelineTitles": [
+    "Synthetic 1",
+    "Synthetic 2"
+  ],
+  "shots": [
+    "/workspace/mcis-w17-archive-report/screenshots/01-lobby-lead.png",
+    "/workspace/mcis-w17-archive-report/screenshots/02-file-selected.png",
+    "/workspace/mcis-w17-archive-report/screenshots/03-preview.png",
+    "/workspace/mcis-w17-archive-report/screenshots/04-confirmed.png",
+    "/workspace/mcis-w17-archive-report/screenshots/05-receipt.png",
+    "/workspace/mcis-w17-archive-report/screenshots/06-timeline.png",
+    "/workspace/mcis-w17-archive-report/screenshots/07-timeline-hover.png"
+  ]
+}

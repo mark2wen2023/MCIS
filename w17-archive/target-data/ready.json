@@ -1,0 +1,5 @@
+{
+ "origin": "http://127.0.0.1:18791",
+ "db": "/workspace/mcis-w17-archive-report/target-data/mcis.db",
+ "seed_demo": false
+}

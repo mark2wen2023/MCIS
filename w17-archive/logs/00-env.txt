@@ -1,0 +1,8 @@
+time: 2026-11-25 19:55:33 CST
+candidate: d40e3b5fd2e208af84c84d6faf61095d0a0a89fb
+porcelain: 0
+chrome: Google Chrome 156.0.8078.47 
+node: v24.22.1
+fastapi 0.165.0
+uvicorn 0.54.0
+playwright-node: 1.63.0-alpha
