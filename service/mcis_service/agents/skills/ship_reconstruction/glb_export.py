@@ -58,6 +58,19 @@ def export_glb(result, *, local_origin_m=None, max_vertex_error_m=None, max_area
     if len({tuple(p) for p in positions}) < len({tuple(p) for p in original}):
         raise ValueError('float32 serialization merged distinct vertices')
     vertex_error=max(math.dist(a,b) for a,b in zip(original,positions))
+    # Compare decoded coordinates after the complete inverse frame transformation.
+    # Local quantization alone omits loss during subtraction/addition.
+    world_vertex_error=vertex_error
+    if local_origin_m is not None:
+        recovered=[[x+local_origin_m[0],-z+local_origin_m[1],y+local_origin_m[2]] for x,y,z in positions]
+        if any(not math.isfinite(v) for p in recovered for v in p):
+            raise ValueError('nonfinite world roundtrip')
+        world_vertex_error=max(math.dist(a,b) for a,b in zip(vertices,recovered))
+        restored=validate_mesh(recovered,faces)
+        if any(restored[k] for k in ('invalid_faces','degenerate_faces','duplicate_faces','nonmanifold_edges','inconsistent_winding_edges')):
+            raise ValueError('world roundtrip introduced invalid geometry')
+        if len({tuple(p) for p in recovered}) < len({tuple(p) for p in vertices}):
+            raise ValueError('world roundtrip merged distinct vertices')
     area_error=0.0
     edge_error=0.0
     for face in faces:
@@ -73,7 +86,7 @@ def export_glb(result, *, local_origin_m=None, max_vertex_error_m=None, max_area
             d0=math.dist(original[i],original[j])
             d1=math.dist(positions[i],positions[j])
             edge_error=max(edge_error,abs(d1/d0-1))
-    for value,limit in ((vertex_error,max_vertex_error_m),(area_error,max_area_relative_error),(edge_error,max_edge_relative_error)):
+    for value,limit in ((max(vertex_error,world_vertex_error),max_vertex_error_m),(area_error,max_area_relative_error),(edge_error,max_edge_relative_error)):
         if limit is not None and value>limit:
             raise ValueError('float32 precision budget exceeded')
     indices=struct.pack('<'+'I'*(3*len(faces)),*(i for f in faces for i in f))
@@ -93,5 +106,5 @@ def export_glb(result, *, local_origin_m=None, max_vertex_error_m=None, max_area
     if local_origin_m is not None:
         sidecar['mcis_origin_m']=local_origin_m
     if local_origin_m is not None or any(v is not None for v in (max_vertex_error_m,max_area_relative_error,max_edge_relative_error)):
-        sidecar['precision']={'max_vertex_error_m':vertex_error,'max_area_relative_error':area_error,'max_edge_relative_error':edge_error}
+        sidecar['precision']={'max_vertex_error_m':max(vertex_error,world_vertex_error),'max_local_vertex_error_m':vertex_error,'max_world_vertex_error_m':world_vertex_error,'max_area_relative_error':area_error,'max_edge_relative_error':edge_error}
     return glb,sidecar
