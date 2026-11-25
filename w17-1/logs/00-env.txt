@@ -1,0 +1,9 @@
+2026-11-25 13:21:41 CST
+HEAD_base=871db66badc6566d82239ee701958c0ef8feb558
+candidate=340ba7cf3eed5d02174ed83630e87f3bad96f957
+Python 3.13.5
+fastapi==0.165.0
+httpx==0.28.1
+pytest==9.2.0
+SQLAlchemy==2.1.9
+uvicorn==0.54.0

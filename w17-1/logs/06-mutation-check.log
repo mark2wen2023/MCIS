@@ -1,0 +1,3 @@
+E   AssertionError: assert ('1.0.0', ['version-2']) in [('1.0.0', []), ('2.0.0', ['version-2'])]
+/tmp/mut_test.py:114: AssertionError: assert ('1.0.0', ['version-2']) in [('1.0.0', []), ('2.0.0', ['version-2'])]
+1 failed, 13 deselected, 1 warning in 0.81s
