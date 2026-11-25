@@ -19,8 +19,16 @@ def export_glb(result):
         raise ValueError('invalid mesh')
     # MCIS x-forward,y-transverse,z-up to glTF y-up via proper rotation.
     positions=[[x,z,-y] for x,y,z in vertices]
-    raw=struct.pack('<'+'f'*(3*len(positions)),*(v for p in positions for v in p))
+    try:
+        raw=struct.pack('<'+'f'*(3*len(positions)),*(v for p in positions for v in p))
+    except (OverflowError, struct.error) as exc:
+        raise ValueError('coordinates not representable as float32') from exc
     positions=[list(p) for p in struct.iter_unpack('<fff',raw)]
+    quantized=validate_mesh(positions,faces)
+    if any(quantized[k] for k in ('invalid_faces','degenerate_faces','duplicate_faces','nonmanifold_edges','inconsistent_winding_edges')):
+        raise ValueError('float32 serialization introduced invalid geometry')
+    if len({tuple(p) for p in positions}) < len({(x,z,-y) for x,y,z in vertices}):
+        raise ValueError('float32 serialization merged distinct vertices')
     indices=struct.pack('<'+'I'*(3*len(faces)),*(i for f in faces for i in f))
     binary=raw+indices
     doc={'asset':{'version':'2.0','extras':{'research_only':True,'lofting_authorized':False}},
