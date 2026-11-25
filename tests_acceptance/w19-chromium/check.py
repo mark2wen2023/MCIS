@@ -19,6 +19,13 @@ TITLE = "W19 真浏览器专用合成卡"
 EXCERPT = "合成摘录：应当保留观察来源与限制。"
 LOCATOR = "合成段落第 8 段"
 LEAD = "LeadInvestigator"
+
+# After the sample button fills textareas, Playwright's accessible name for
+# <label>标题<textarea>…</textarea></label> includes the current value, so
+# get_by_label("标题", exact=True) matches nothing against the real product UI.
+def create_field(page, name):
+    # First text node of the label only; combined accessible/inner text also includes the textarea value.
+    return page.locator("details.w19-create").locator(f'xpath=.//label[normalize-space(text())="{name}"]/textarea')
 class NoRedirect(HTTPRedirectHandler):
     def redirect_request(self, *_args, **_kwargs):
         return None
@@ -112,6 +119,10 @@ def browser_run(args, web, restart):
             context.route_web_socket("**/*", websocket)
             page = context.new_page()
             page.set_default_timeout(12000)
+            def snap(name):
+                if args.out:
+                    args.out.mkdir(parents=True, exist_ok=True)
+                    page.screenshot(path=str(args.out/name), full_page=True)
             writes=[]
             page.on("request",lambda r: writes.append(urlsplit(r.url).path) if r.method=="POST" else None)
             page.goto(web+"/#/knowledge")
@@ -119,13 +130,15 @@ def browser_run(args, web, restart):
             role.select_option(LEAD)
             page.get_by_text("人工创建候选（不会自动公开）",exact=True).click()
             page.get_by_role("button",name="在表单中填入合成示例（不保存）").click()
-            page.get_by_label("标题",exact=True).fill(TITLE)
-            page.get_by_label("原文摘录",exact=True).fill(EXCERPT)
-            page.get_by_label("页码/章节/段落定位",exact=True).fill(LOCATOR)
+            create_field(page,"标题").fill(TITLE)
+            create_field(page,"原文摘录").fill(EXCERPT)
+            create_field(page,"页码/章节/段落定位").fill(LOCATOR)
             assert writes == []
+            snap("01-create-form-filled.png")
             page.get_by_role("button",name="保存为内部待审候选").click()
             candidate=page.locator(".w19-card").filter(has=page.get_by_role("heading",name=TITLE,exact=True))
             expect(candidate).to_be_visible()
+            snap("02-saved-candidate.png")
             status,queue=endpoint(web,BASE+"/cards?status=Candidate")
             assert status==200 and queue["total"]==1
             entry=queue["items"][0]
@@ -146,10 +159,12 @@ def browser_run(args, web, restart):
                 return reader
 
             read_back("待人工审批")
+            snap("03-readback-candidate.png")
             role.select_option("Public")
             expect(page.get_by_text("只读已发布公开/合成知识卡",exact=False)).to_be_visible()
             expect(page.get_by_role("region",name="按编号重开已保存知识卡")).to_have_count(0)
             expect(page.get_by_role("heading",name=TITLE,exact=True)).to_have_count(0)
+            snap("04-public-denied-before-publish.png")
             role.select_option(LEAD)
             page.get_by_label("资料状态").select_option("Candidate")
             candidate.get_by_label("审核理由").fill("合成核验：明确批准该虚构资料。")
@@ -160,14 +175,17 @@ def browser_run(args, web, restart):
             for i in range(3):
                 checks.nth(i).check()
                 if i<2: expect(approve).to_be_disabled()
+            snap("05-three-checks-ready.png")
             with page.expect_response(lambda r: urlsplit(r.url).path==detail+"/review" and r.request.method=="POST") as resp:
                 approve.click()
             assert resp.value.status==200 and resp.value.json()["status"]=="Published"
             assert writes==[BASE+"/cards",detail+"/review"]
+            snap("06-published.png")
             restart()
             page.reload()
             role.select_option(LEAD)
             read_back("已人工批准发布")
+            snap("07-reopen-after-restart.png")
             status,found=endpoint(web,detail)
             assert status==200 and found["contentDigest"]==digest
             assert found["content"]["source"]["excerpt"]==EXCERPT and found["content"]["source"]["locator"]==LOCATOR
@@ -178,14 +196,17 @@ def browser_run(args, web, restart):
             with page.expect_response(lambda r: urlsplit(r.url).path==detail+"/review" and r.request.method=="POST") as resp:
                 listing.get_by_role("button",name="撤回并移出公开检索").click()
             assert resp.value.status==200 and resp.value.json()["status"]=="Withdrawn"
+            snap("08-withdrawn.png")
             page.reload()
             role.select_option(LEAD)
             read_back("已撤回")
+            snap("09-reopen-withdrawn.png")
             role.select_option("Public")
             expect(page.get_by_role("region",name="按编号重开已保存知识卡")).to_have_count(0)
             expect(page.get_by_role("heading",name=TITLE,exact=True)).to_have_count(0)
             assert endpoint(web,detail,"Public")[0]==404
             assert endpoint(web,BASE+"/cards","Public")[1]["total"]==0
+            snap("10-public-denied-after-withdraw.png")
             assert writes==[BASE+"/cards",detail+"/review",detail+"/review"]
             assert [a["action"] for a in endpoint(web,BASE+"/audit")[1]]==["knowledge.create","knowledge.published","knowledge.withdrawn"]
             assert endpoint(web,BASE+"/audit:verify")== (200,{"valid":True,"count":3})
@@ -202,6 +223,7 @@ def main():
     p.add_argument("--service-python",required=True)
     p.add_argument("--browser")
     p.add_argument("--http-only",action="store_true")
+    p.add_argument("--out",type=Path,help="optional directory for full-page PNG screenshots")
     args=p.parse_args()
     if not args.http_only:
         if not args.browser: p.error("--browser must name existing sandboxed Chromium")

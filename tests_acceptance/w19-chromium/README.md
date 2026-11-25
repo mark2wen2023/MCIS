@@ -10,8 +10,15 @@ working OS sandbox.
 /absolute/existing/python-with-playwright tests_acceptance/w19-chromium/check.py \
   --web /absolute/fixed/web --service /absolute/fixed/service \
   --service-python /absolute/existing/service/.venv/bin/python \
-  --browser /absolute/existing/chromium
+  --browser /absolute/existing/chromium \
+  --out /absolute/screenshot-dir
 ```
+`--out` is optional and writes full-page PNGs of the real Knowledge flow.
+The create-form fields are filled through `details.w19-create label` text,
+not `get_by_label(..., exact=True)`, because after “填入合成示例” Playwright
+includes the textarea value in the accessible name of `<label>标题<textarea>`.
+That is an acceptance-harness selector fix only; product blobs stay pinned.
+
 
 Playwright must already support BrowserContext.route_web_socket (1.48+). No
 dependency install and no fallback to --no-sandbox; absence or failure is not a
