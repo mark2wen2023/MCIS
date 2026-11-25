@@ -116,28 +116,44 @@ export function AgentReviewPanel({ caseId, recordId, recordReady, turns, onAppli
 }
 
 export function DraftReview({ draft, turns, canReview, onDecide }: {draft: Draft; turns: IcTurn[]; canReview: boolean; onDecide: (decision: Decision, note: string) => void}) {
+  // Acknowledgments are specific to the currently visible question AND answer.
+  // Remount on a changed context, even if its quoted substring survived.
+  const sources = draft.payload.statements.map(item => {
+    const rows = turns.filter(turn => turn.round === item.round)
+    const turn = rows.length === 1 ? rows[0] : undefined
+    const source = turn && (item.field === 'Answer' ? turn.answer : turn.question)
+    const offset = source && item.quote ? source.indexOf(item.quote) : -1
+    return { turn, readable: !!source && offset >= 0 && source.indexOf(item.quote, offset + 1) < 0 }
+  })
+  const binding = JSON.stringify([draft.caseId, draft.draftId, draft.status, draft.payload, turns.map(turn => [turn.round, turn.question, turn.answer, turn.utc, turn.highlightSuppressed ?? null])])
+  return <DraftReviewBound key={binding} draft={draft} sources={sources} canReview={canReview} onDecide={onDecide} />
+}
+
+function DraftReviewBound({ draft, sources, canReview, onDecide }: {
+  draft: Draft; sources: {turn: IcTurn | undefined; readable: boolean}[]; canReview: boolean; onDecide: (decision: Decision, note: string) => void
+}) {
   const [checked, setChecked] = useState<number[]>([])
   const [note, setNote] = useState('')
   const noteId = useId()
   const pending = draft.status === 'PendingReview'
+  const canConfirm = canReview && pending && sources.length > 0 && sources.every(({ readable }, index) => readable && checked.includes(index))
   return <article className="w20-draft" aria-label={'草稿 ' + draft.draftId}>
     <div className="w20-draft-heading"><h4>{draft.draftId}</h4><strong>{STATUS[draft.status]}</strong></div>
     <dl><div><dt>配置模型</dt><dd>{draft.model}</dd></div><div><dt>生成时间</dt><dd>{utc(draft.createdUtc)}</dd></div>
       {!pending && <div><dt>审核</dt><dd>{draft.reviewedBy || '未记录'} · {utc(draft.reviewedUtc)}<br/>{draft.reviewNote || '无备注'}</dd></div>}</dl>
     <details><summary>来源与审计摘要</summary><p>原文版本 SHA-256：<code>{draft.payload.sourceDigest}</code></p><p>提示词摘要：<code>{draft.promptDigest || '未记录'}</code></p><p>笔录：{draft.targetEntityId}。摘要用于追溯，不是内容真实性认证。</p></details>
     <ol className="w20-items">{draft.payload.statements.map((item, i) => {
-      const turn = turns.find(t => t.round === item.round)
-      const quoteVisible = !!turn && (item.field === 'Answer' ? turn.answer : turn.question).includes(item.quote)
+      const { turn, readable: quoteVisible } = sources[i]
       return <li key={i}><div className="w20-candidate"><div><span className="w20-label">模型候选解读</span><h5>{item.summary}</h5><p>{item.kind} · {item.subject}</p><pre aria-label="候选结构化值">{JSON.stringify(item.claim, null, 2)}</pre></div>
         <div><span className="w20-label">原文引用</span><p>{draft.targetEntityId} · 第 {item.round} 问 · {item.field === 'Answer' ? '回答' : '问题'}</p><blockquote>{item.quote}</blockquote>
           <details><summary>查看当前可见问答上下文</summary>{turn ? <><p>问：{turn.question}</p><p>答：{turn.answer}</p></> : <p>当前可见笔录中未找到此问，请重新读取原文；不要确认无法核对的候选。</p>}</details></div></div>
-        {pending && !quoteVisible && <p className="w20-warning">当前可见原文无法核对这条引用，请重新读取；不能确认。</p>}
+        {pending && !quoteVisible && <p className="w20-warning">当前可见原文缺失此引用或有多处匹配，请重新读取；不能确认。</p>}
         {pending && <label className="w20-check"><input type="checkbox" disabled={!canReview || !quoteVisible} checked={checked.includes(i)} onChange={e => setChecked(a => e.target.checked ? [...a, i] : a.filter(n => n !== i))}/>已核对本条引用与候选含义，原文足以支持该解读</label>}
       </li>
     })}</ol>
     {pending && <div className="w20-review"><label htmlFor={noteId}>审核备注（驳回必填）</label><textarea id={noteId} maxLength={2000} value={note} disabled={!canReview} onChange={e => setNote(e.target.value)} rows={2}/>
       <p>确认将把以上 {draft.payload.statements.length} 条候选追加为人工确认陈述。需修改解读时请先驳回；本片不提供草稿编辑器。人工修改也必须重新检查原文支持关系。</p>
       <div className="w20-actions"><button type="button" className="w20-reject" disabled={!canReview || !note.trim()} onClick={() => onDecide('Rejected', note.trim())}>驳回此草稿，不写回</button>
-        <button type="button" disabled={!canReview || checked.length !== draft.payload.statements.length} onClick={() => onDecide('Confirmed', note.trim())}>确认以上陈述并写回</button></div></div>}
+        <button type="button" disabled={!canConfirm} onClick={() => { if (canConfirm) onDecide('Confirmed', note.trim()) }}>确认以上陈述并写回</button></div></div>}
   </article>
 }
