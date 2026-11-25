@@ -1,0 +1,9 @@
+第一次按 README 示例用系统 python3 跑官方 run.py（2026-11-26 05:18，北京时间，unshare -r -n，原用户 HOME）：
+- --verify-only 已为 0。
+- 官方全过程退出码 1。
+- 已完成：352 针、找到 SDK 8.0.428、原 W153 CLI 11 passed in 7.40s、artifact manifest 已核验。
+- 首个停点：run.py 在 CLI 通过后用「运行器自身的解释器」load(test_cli.py) 以取出 model 夹具，系统 python3 没有 pytest：
+  ModuleNotFoundError: No module named 'pytest'
+  文件 tests_acceptance/W153/test_cli.py 第 4 行。
+- 未安装依赖，未改工装。现成服务 venv 中已有 pytest 9.2.0（CLI 子进程正是用该解释器跑过的）。
+- 无 receipt.json（官方约定失败阶段不写成功回执）。HTTP 5/4 与未知端点、SQLite 重启尚未执行。

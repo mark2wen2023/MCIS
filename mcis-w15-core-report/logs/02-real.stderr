@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/workspace/mcis-w15-core-8d10844/tests_acceptance/w15-bowtie-real-core/run.py", line 236, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/workspace/mcis-w15-core-8d10844/tests_acceptance/w15-bowtie-real-core/run.py", line 223, in main
+    fixture = load("fixed_w153_cli", root / TEST)
+  File "/workspace/mcis-w15-core-8d10844/tests_acceptance/w15-bowtie-real-core/run.py", line 57, in load
+    spec.loader.exec_module(module)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/tmp/mcis-w15-real-core-wt2cfvdw/fixed/tests_acceptance/W153/test_cli.py", line 4, in <module>
+ModuleNotFoundError: No module named 'pytest'

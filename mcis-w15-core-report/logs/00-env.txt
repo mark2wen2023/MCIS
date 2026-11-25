@@ -1,0 +1,10 @@
+2026-11-26 05:17:59 CST
+acceptance=8d108442f94901bee862ba5f53dd6343350b2718
+product=2c72d022f3d3275af637b0cdc6e545735e3200a9
+dotnet=/home/box/.dotnet/dotnet
+sdk=8.0.428
+host-python=/workspace/mcis-w17-871db66/service/.venv/bin/python
+Python 3.13.5
+pytest 9.2.0
+normal-home nuget locals exit=0
+first-use sentinel=present

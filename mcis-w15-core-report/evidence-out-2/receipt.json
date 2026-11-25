@@ -1,0 +1,11 @@
+{
+  "product": "2c72d022f3d3275af637b0cdc6e545735e3200a9",
+  "fixedSourceCount": 352,
+  "sdk": "8.0.428",
+  "syntheticOnly": true,
+  "browserVerified": false,
+  "originalCliPassed": true,
+  "httpPositivePassed": true,
+  "httpUnknownEndpointPassed": true,
+  "sqliteUnchangedAfterReopen": true
+}

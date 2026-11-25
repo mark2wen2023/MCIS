@@ -1,0 +1,33 @@
+{
+  "profile": "MCIS-BOWTIE-PREVIEW-1",
+  "caseId": "SYN-W15-A",
+  "inputSha256": "83c40c01aa3f47436a93ac5b9e4923afbdf256463320bd4c0f6b15497ebacee3",
+  "sources": [
+    {
+      "evidenceId": "EV-001",
+      "title": "Synthetic source alpha",
+      "sha256": "9456f7bb0efc6196d650c05ef88ee3becf58f97608bb0208b89a56ca4d9c05c8"
+    }
+  ],
+  "sourceRole": "LeadInvestigator",
+  "sourceBinding": "registered-metadata-only",
+  "persisted": false,
+  "assessment": "hypothesis-structure-only",
+  "result": {
+    "coreVersion": "mcis-bowtie/1",
+    "mode": "hypothesis-structure-only",
+    "constructionErrors": [],
+    "validationIssues": [],
+    "structureValid": true,
+    "notCheckedRefCount": 0,
+    "nodeCount": 5,
+    "edgeCount": 4
+  },
+  "limitations": [
+    "仅核对手工假设图的项目结构规则，不确认事实、因果、风险等级或法律结论。",
+    "所有节点均待核实、屏障状态未知；结构有效不代表屏障充分或有效。",
+    "来源仅为整个草稿绑定登记元数据；未复核原件字节，也不证明任何节点或连线。",
+    "无来源草稿允许试画，但不构成有证据支持的调查结论；本预览不保存。",
+    "本切片不支持AcciMap、STAMP、ECFC导入、评估、审批或导出。"
+  ]
+}

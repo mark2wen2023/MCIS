@@ -1,0 +1,4 @@
+W15 pinned 352 exact product files; 12 declared original build inputs, original CLI test and 3 unchanged negative helpers
+Found preinstalled .NET 8.0.428; starting original W153 CLI checks
+Original W153 CLI and produced artifact manifest verified
+W15 actual service + original C# + SQLite restart: both paths pass without mutation
