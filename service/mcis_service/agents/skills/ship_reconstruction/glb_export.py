@@ -2,6 +2,7 @@
 import json
 import struct
 from .mesh_validation import validate_mesh
+from .geometry_provenance import valid_reference
 
 def export_glb(result):
     mesh=result['mesh']
@@ -14,6 +15,10 @@ def export_glb(result):
         raise ValueError('nonempty mesh and complete face manifest required')
     if any(e.get('face_id')!=i for i,e in enumerate(evidence)):
         raise ValueError('face evidence order mismatch')
+    for entry in evidence:
+        refs=entry.get('sources')
+        if not isinstance(refs,list) or not refs or not all(valid_reference(ref) for ref in refs):
+            raise ValueError('face requires nonempty valid evidence sources')
     q=validate_mesh(vertices,faces)
     if any(q[k] for k in ('invalid_faces','degenerate_faces','duplicate_faces','nonmanifold_edges','inconsistent_winding_edges')):
         raise ValueError('invalid mesh')
