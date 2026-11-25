@@ -1,0 +1,190 @@
+{
+ "roleMatrix": {
+  "LeadInvestigator/CASE-A": {
+   "status": 200,
+   "cacheControl": "no-store",
+   "policySource": "saved",
+   "version": "1.0.0",
+   "readOnly": true,
+   "identityMode": "local-role-header",
+   "code": null
+  },
+  "LeadInvestigator/CASE-B": {
+   "status": 200,
+   "cacheControl": "no-store",
+   "policySource": "default",
+   "version": "1.0.0",
+   "readOnly": true,
+   "identityMode": "local-role-header",
+   "code": null
+  },
+  "LeadInvestigator/NO-SUCH-CASE": {
+   "status": 404,
+   "cacheControl": "no-store",
+   "policySource": null,
+   "version": null,
+   "readOnly": null,
+   "identityMode": null,
+   "code": "CASE_NOT_FOUND"
+  },
+  "Investigator/CASE-A": {
+   "status": 200,
+   "cacheControl": "no-store",
+   "policySource": "saved",
+   "version": "1.0.0",
+   "readOnly": true,
+   "identityMode": "local-role-header",
+   "code": null
+  },
+  "Investigator/CASE-B": {
+   "status": 200,
+   "cacheControl": "no-store",
+   "policySource": "default",
+   "version": "1.0.0",
+   "readOnly": true,
+   "identityMode": "local-role-header",
+   "code": null
+  },
+  "Investigator/NO-SUCH-CASE": {
+   "status": 404,
+   "cacheControl": "no-store",
+   "policySource": null,
+   "version": null,
+   "readOnly": null,
+   "identityMode": null,
+   "code": "CASE_NOT_FOUND"
+  },
+  "Public/CASE-A": {
+   "status": 403,
+   "cacheControl": "no-store",
+   "policySource": null,
+   "version": null,
+   "readOnly": null,
+   "identityMode": null,
+   "code": "FORBIDDEN"
+  },
+  "Public/CASE-B": {
+   "status": 403,
+   "cacheControl": "no-store",
+   "policySource": null,
+   "version": null,
+   "readOnly": null,
+   "identityMode": null,
+   "code": "FORBIDDEN"
+  },
+  "Public/NO-SUCH-CASE": {
+   "status": 403,
+   "cacheControl": "no-store",
+   "policySource": null,
+   "version": null,
+   "readOnly": null,
+   "identityMode": null,
+   "code": "FORBIDDEN"
+  },
+  "ExternalExpert/CASE-A": {
+   "status": 403,
+   "cacheControl": "no-store",
+   "policySource": null,
+   "version": null,
+   "readOnly": null,
+   "identityMode": null,
+   "code": "FORBIDDEN"
+  },
+  "ExternalExpert/CASE-B": {
+   "status": 403,
+   "cacheControl": "no-store",
+   "policySource": null,
+   "version": null,
+   "readOnly": null,
+   "identityMode": null,
+   "code": "FORBIDDEN"
+  },
+  "ExternalExpert/NO-SUCH-CASE": {
+   "status": 403,
+   "cacheControl": "no-store",
+   "policySource": null,
+   "version": null,
+   "readOnly": null,
+   "identityMode": null,
+   "code": "FORBIDDEN"
+  },
+  "InterestedState/CASE-A": {
+   "status": 403,
+   "cacheControl": "no-store",
+   "policySource": null,
+   "version": null,
+   "readOnly": null,
+   "identityMode": null,
+   "code": "FORBIDDEN"
+  },
+  "InterestedState/CASE-B": {
+   "status": 403,
+   "cacheControl": "no-store",
+   "policySource": null,
+   "version": null,
+   "readOnly": null,
+   "identityMode": null,
+   "code": "FORBIDDEN"
+  },
+  "InterestedState/NO-SUCH-CASE": {
+   "status": 403,
+   "cacheControl": "no-store",
+   "policySource": null,
+   "version": null,
+   "readOnly": null,
+   "identityMode": null,
+   "code": "FORBIDDEN"
+  },
+  "AgentService/CASE-A": {
+   "status": 403,
+   "cacheControl": "no-store",
+   "policySource": null,
+   "version": null,
+   "readOnly": null,
+   "identityMode": null,
+   "code": "FORBIDDEN"
+  },
+  "AgentService/CASE-B": {
+   "status": 403,
+   "cacheControl": "no-store",
+   "policySource": null,
+   "version": null,
+   "readOnly": null,
+   "identityMode": null,
+   "code": "FORBIDDEN"
+  },
+  "AgentService/NO-SUCH-CASE": {
+   "status": 403,
+   "cacheControl": "no-store",
+   "policySource": null,
+   "version": null,
+   "readOnly": null,
+   "identityMode": null,
+   "code": "FORBIDDEN"
+  }
+ },
+ "auditRowsBeforeAfterGETs": [
+  {
+   "audit_events": 0
+  },
+  {
+   "audit_events": 0
+  }
+ ],
+ "concurrent": {
+  "getStatus": 200,
+  "version": "1.0.0",
+  "events": [],
+  "writer": {
+   "ok": true,
+   "waitedSec": 1.04
+  }
+ },
+ "afterWriter": {
+  "status": 200,
+  "version": "2.0.0",
+  "events": [
+   "version-2"
+  ]
+ }
+}

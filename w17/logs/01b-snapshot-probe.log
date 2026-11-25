@@ -1,0 +1,4 @@
+/workspace/mcis-w4-3ae5166/service/.venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+CONCURRENT WRITER FAILED: OperationalError (sqlite3.OperationalError) database is locked
+500

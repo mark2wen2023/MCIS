@@ -1,0 +1,40 @@
+.............F                                                           [100%]
+=================================== FAILURES ===================================
+____________________ test_policy_and_audit_are_one_snapshot ____________________
+
+client = <starlette.testclient.TestClient object at 0x7f617757abe0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f617ce0a520>
+
+    def test_policy_and_audit_are_one_snapshot(client,monkeypatch):
+        from mcis_service.access_workbench import router as r
+        save(client)
+        original=r.get_doc;once=False
+        def raced(session,model,cid,key):
+            nonlocal once
+            result=original(session,model,cid,key)
+            if not once:
+                once=True
+                # Commit from another database connection between policy and history reads.
+                with client.app.state.db.session() as other:
+                    policy=default_policy();policy['version']='2.0.0'
+                    put_doc(other,AccessPolicyRow,'CASE-A','policy',policy)
+                    event(other,command='version-2')
+            return result
+        monkeypatch.setattr(r,'get_doc',raced)
+>       out=client.get(url());assert out.status_code==200,out.text
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"code":"INTERNAL_ERROR","message":"请求处理失败"}
+E       assert 500 == 200
+E        +  where 500 = <Response [500 Internal Server Error]>.status_code
+
+../tests_acceptance/W171/test_workbench.py:86: AssertionError
+=============================== warnings summary ===============================
+.venv/lib/python3.13/site-packages/fastapi/testclient.py:1
+  /workspace/mcis-w4-3ae5166/service/.venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED ../tests_acceptance/W171/test_workbench.py::test_policy_and_audit_are_one_snapshot
+1 failed, 13 passed, 1 warning in 7.53s
+exit=1

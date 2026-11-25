@@ -1,0 +1,13 @@
+2026-11-25 11:32:52 CST
+HEAD=3ae5166b7522f63bf39827a02341c856e394a0c9
+porcelain=0
+Python 3.13.5
+Version: 1.65.2
+v24.22.1
+vite 8.3.8 react 19.3.1
+Google Chrome 156.0.8078.47 
+fastapi==0.165.0
+httpx==0.28.1
+pytest==9.2.0
+SQLAlchemy==2.1.9
+uvicorn==0.54.0

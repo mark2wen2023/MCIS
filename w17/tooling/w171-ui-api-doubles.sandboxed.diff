@@ -1,0 +1,12 @@
+5c5
+< ROOT=Path(__file__).resolve().parents[2];server=subprocess.Popen(['node','node_modules/vite/bin/vite.js','--host','127.0.0.1','--port','15717','--strictPort'],cwd=ROOT/'web',stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)
+---
+> ROOT=Path('/workspace/mcis-w4-3ae5166');server=subprocess.Popen(['node','node_modules/vite/bin/vite.js','--host','127.0.0.1','--port','15717','--strictPort'],cwd=ROOT/'web',stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)
+12c12
+<   browser=pw.chromium.launch(executable_path=os.environ.get('MCIS_BROWSER_BIN','/usr/bin/chromium'),headless=True,args=['--no-sandbox']);page=browser.new_page(viewport={'width':1440,'height':1000});requests=[];pending=[]
+---
+>   browser=pw.chromium.launch(executable_path=os.environ.get('MCIS_BROWSER_BIN','/usr/bin/chromium'),headless=True,chromium_sandbox=True);page=browser.new_page(viewport={'width':1440,'height':1000});requests=[];pending=[]
+40c40
+<   out=ROOT/'logs/w171-ui-self';out.mkdir(parents=True,exist_ok=True);page.screenshot(path=str(out/'access-default.png'),full_page=True)
+---
+>   out=Path('/workspace/mcis-w17-report/screenshots/simulated-dom');out.mkdir(parents=True,exist_ok=True);page.screenshot(path=str(out/'access-default.png'),full_page=True)

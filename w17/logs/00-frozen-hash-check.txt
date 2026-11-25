@@ -1,0 +1,10 @@
+service/mcis_service/access_workbench/__init__.py: OK
+service/mcis_service/access_workbench/router.py: FAILED
+web/src/accessWorkbench/AccessContent.tsx: FAILED
+web/src/accessWorkbench/api.ts: OK
+web/src/accessWorkbench/model.ts: OK
+web/src/pages/AccessPage.tsx: OK
+web/src/styles/w17-access.css: OK
+web/src/caseContext.ts: FAILED
+contracts/access-workbench-v1.md: OK
+sha256sum: WARNING: 3 computed checksums did NOT match
