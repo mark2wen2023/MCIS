@@ -24,7 +24,7 @@ from ..interviews import access as interview_access
 from ..redaction.gateway import get_policy, redact_interview, require, strip_meta
 from ..timeline.models import TimelineEventRow
 from .models import AgentDraftRow
-from . import extraction, model_client
+from . import extraction, model_client, skill_runtime
 
 router = APIRouter(prefix="/api/v1", tags=["agents"], route_class=interview_access.NoStoreRoute)
 
@@ -53,6 +53,12 @@ def registry(ctx: Ctx = CtxDep) -> list[dict[str, Any]]:
         cfg, status = None, "invalid_configuration"
     return [{**a, "status": status if a["agent"] == "people_ops" else "not_connected",
              "model": cfg.model if cfg and a["agent"] == "people_ops" else "none"} for a in REGISTRY]
+
+
+@router.get("/agents/ships/skills")
+def ship_skills(ctx: Ctx = CtxDep) -> list[dict[str, Any]]:
+    """Discover research skill metadata only; never execute or read case data."""
+    return skill_runtime.list_skills("ships")
 
 
 @router.get("/cases/{case_id}/agents/drafts")
