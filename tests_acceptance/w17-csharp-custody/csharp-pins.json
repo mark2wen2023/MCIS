@@ -1,0 +1,11 @@
+{
+  "tools/mcis-compat/McisCompat.csproj": "b05fd3b833e9f0bcd8f976c575cf8bd152ac1c88",
+  "tools/mcis-compat/src/Program.cs": "147f10d7dea4373b6d26019a4e9077f1b1c2f79b",
+  "unity/Assets/_Project/Scripts/Core/Primitives/Result.cs": "cf87d8e758f609cb44f0be02cd0bd0dfb0621dcf",
+  "unity/Assets/_Project/Scripts/Core/Primitives/SimTime.cs": "85dfc79a1c73715def53abb0010ab2af07249ea5",
+  "unity/Assets/_Project/Scripts/Domain/Evidence/EvidenceItem.cs": "118e1b6bb49a3ba38a707fb97f2245b6e0a03b7e",
+  "unity/Assets/_Project/Scripts/Domain/Evidence/CustodyEvent.cs": "844482450cb90a37fbe929f8526e4051b9657b55",
+  "unity/Assets/_Project/Scripts/Domain/Evidence/CustodyLedger.cs": "cf76f87d17c9b77bea7432f885bd12a23b999c47",
+  "unity/Assets/_Project/Scripts/Domain/Evidence/InvestigationAudit.cs": "0951c6eb748bbd4a8aee7ec18a84dfbd6ee0c250",
+  "unity/Assets/_Project/Scripts/Domain/Evidence/Sha256Hex.cs": "7fba8da54ddf53bf48e3f5038713a1660cc3f1bd"
+}
