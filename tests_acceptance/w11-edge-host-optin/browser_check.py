@@ -51,9 +51,12 @@ def run():
                     else: raise RuntimeError("localhost service did not become ready")
                     context=engine.new_context(service_workers="block")
                     off=[]
+                    excerpt_posts=[]
                     def http(route):
                         u=urlsplit(route.request.url)
                         if (u.scheme,u.netloc)==("http",urlsplit(origin).netloc):
+                            if u.path==urlpath and route.request.method=="POST":
+                                excerpt_posts.append(u.path)
                             route.continue_()
                         else:
                             off.append(route.request.url);route.abort()
@@ -68,9 +71,11 @@ def run():
                     read=page.get_by_role("button",name="查看该连线关联出处",exact=True)
                     edge.click()
                     assert rpc("logs")["custody"]==["Register"]
+                    assert excerpt_posts==[], (mode,"selection must not request excerpt",excerpt_posts)
                     with page.expect_response(lambda r:urlsplit(r.url).path==urlpath and r.request.method=="POST") as response:
                         read.click()
                     assert response.value.status==200 and response.value.headers["cache-control"]=="no-store"
+                    assert excerpt_posts==[urlpath], (mode,"explicit read must be the first request",excerpt_posts)
                     expect(page.get_by_text("原始记录 UTC（非事件时刻）",exact=True)).to_be_visible()
                     expect(page.get_by_text("2026-02-01T12:01:49.000Z",exact=True).first).to_be_visible()
                     page.screenshot(path=str(out/(mode+"-read.png")),full_page=True)
@@ -78,6 +83,7 @@ def run():
                     if mode=="revised":
                         page.reload()
                         edge.click()
+                    assert excerpt_posts==[urlpath], (mode,"change or selection must not request excerpt",excerpt_posts)
                     with page.expect_response(lambda r:urlsplit(r.url).path==urlpath and r.request.method=="POST") as response:
                         read.click()
                     assert response.value.status==404
@@ -86,6 +92,8 @@ def run():
                     page.screenshot(path=str(out/(mode+"-denied.png")),full_page=True)
                     assert rpc("logs")=={"custody":["Register","Access"],"valid":True,"commands":[]}
                     assert not off,off
+                    assert excerpt_posts==[urlpath,urlpath], (mode,"exactly two explicit excerpt requests",excerpt_posts)
+                    print(f"{mode}: excerpt POST checkpoints 0/1/2; no automatic read",flush=True)
                     context.close()
                 finally:
                     server.terminate()
