@@ -1,0 +1,34 @@
+PASS fixed baseline and exact CSS-only change
+{
+  "browser": "156.0.8078.47",
+  "viewports": [
+    {
+      "mode": "baseline",
+      "width": 390,
+      "contained": false,
+      "lineCount": 1,
+      "pageScrollWidth": 650
+    },
+    {
+      "mode": "candidate",
+      "width": 390,
+      "contained": true,
+      "lineCount": 2,
+      "pageScrollWidth": 390
+    },
+    {
+      "mode": "baseline",
+      "width": 1440,
+      "contained": true,
+      "lineCount": 1,
+      "pageScrollWidth": 1440
+    },
+    {
+      "mode": "candidate",
+      "width": 1440,
+      "contained": true,
+      "lineCount": 1,
+      "pageScrollWidth": 1440
+    }
+  ]
+}

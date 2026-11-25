@@ -1,0 +1,8 @@
+2026-11-25 19:15:22 CST
+candidate=b2bc8585747e2e754d5fdecdb60afe6b2e88b523
+baseline=3ae5166b7522f63bf39827a02341c856e394a0c9
+porcelain_c=0
+porcelain_b=0
+v24.22.1
+playwright-node 1.63.0-alpha /usr/local/lib/pnpm/5/.pnpm/playwright@1.63.0-alpha-2026-08-31/node_modules/playwright
+Google Chrome 156.0.8078.47 
