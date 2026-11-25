@@ -1,0 +1,4 @@
+verify-only=0
+official-real=1
+smoke=1 (stopped at: dotnet nuget locals all --list)
+business=not-run

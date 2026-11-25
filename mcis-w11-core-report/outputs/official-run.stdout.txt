@@ -1,0 +1,3 @@
+W11 verified 186 W11 originals + 4 pilot helpers + 9 exact core blobs/modes (d9187fe); no fetch
+SDK version exit=0
+NuGet local directories check exit=1
