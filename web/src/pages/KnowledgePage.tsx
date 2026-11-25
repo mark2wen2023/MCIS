@@ -77,14 +77,19 @@ export function KnowledgeCard({card,canReview,onReview,searchContext}:{card:Card
 function CreateCard({disabled,onCreate}:{disabled:boolean;onCreate:(c:Content)=>void}){
  const empty:Content={kind:'Case',title:'',summary:'',body:'',tags:[],applicability:'',source:{type:'Synthetic',title:'',locator:'',excerpt:'',rightsNote:''}}
  const [form,setForm]=useState<Content>(empty),[tags,setTags]=useState('')
+ const [template,setTemplate]=useState<'manual'|'applied'|'stale'>('manual')
+ const markDrift=()=>setTemplate(state=>state==='applied'?'stale':state)
+ const discardTemplate=()=>{setForm(current=>({...current,title:'',summary:'',body:'',applicability:'',tags:[]}));setTags('');setTemplate('manual')}
  const set=(k:'title'|'summary'|'body'|'applicability',v:string)=>setForm({...form,[k]:v})
- const source=(k:'title'|'locator'|'excerpt'|'rightsNote'|'url',v:string)=>setForm({...form,source:{...form.source,[k]:v}})
- return <details className="w19-create"><summary>人工创建候选（不会自动公开）</summary><form onSubmit={e=>{e.preventDefault();onCreate({...form,tags:tags.split(',').map(t=>t.trim()).filter(Boolean)})}}><fieldset disabled={disabled}><legend>仅录入公开或合成材料，禁止真实内网或私人资料</legend><button type="button" onClick={()=>{setForm(structuredClone(sample));setTags(sample.tags.join(','))}}>在表单中填入合成示例（不保存）</button><label>卡片类型<select value={form.kind} onChange={e=>setForm({...form,kind:e.target.value as Kind})}>{Object.entries(KINDS).map(([k,v])=><option key={k} value={k}>{v}</option>)}</select></label>
+ const source=(k:'title'|'locator'|'excerpt'|'rightsNote'|'url',v:string)=>{if(form.source[k]!==v)markDrift();setForm({...form,source:{...form.source,[k]:v}})}
+ return <details className="w19-create"><summary>人工创建候选（不会自动公开）</summary><form onSubmit={e=>{e.preventDefault();if(disabled||template==='stale')return;onCreate({...form,tags:tags.split(',').map(t=>t.trim()).filter(Boolean)})}}><fieldset disabled={disabled}><legend>仅录入公开或合成材料，禁止真实内网或私人资料</legend><button type="button" onClick={()=>{setForm(structuredClone(sample));setTags(sample.tags.join(','));setTemplate('manual')}}>在表单中填入合成示例（不保存）</button><label>卡片类型<select value={form.kind} onChange={e=>{if(form.kind!==e.target.value)markDrift();setForm({...form,kind:e.target.value as Kind})}}>{Object.entries(KINDS).map(([k,v])=><option key={k} value={k}>{v}</option>)}</select></label>
  {(['title','summary','body','applicability'] as const).map((k,i)=><label key={k}>{['标题','摘要','正文','适用范围与限制'][i]}<textarea required maxLength={[160,600,6000,1000][i]} value={form[k]} onChange={e=>set(k,e.target.value)}/></label>)}
- <label>标签（英文逗号分隔，最多8个）<input required value={tags} maxLength={327} onChange={e=>setTags(e.target.value)}/></label><label>来源类型<select value={form.source.type} onChange={e=>{const s={...form.source,type:e.target.value as 'Public'|'Synthetic'};delete s.url;setForm({...form,source:s})}}><option value="Synthetic">合成样本</option><option value="Public">公开资料（仍需明确审批）</option></select></label>
+ <label>标签（英文逗号分隔，最多8个）<input required value={tags} maxLength={327} onChange={e=>setTags(e.target.value)}/></label><label>来源类型<select value={form.source.type} onChange={e=>{const s={...form.source,type:e.target.value as 'Public'|'Synthetic'};delete s.url;if(form.source.type!==s.type)markDrift();setForm({...form,source:s})}}><option value="Synthetic">合成样本</option><option value="Public">公开资料（仍需明确审批）</option></select></label>
  {(['title','locator','excerpt','rightsNote'] as const).map((k,i)=><label key={k}>{['来源标题','页码/章节/段落定位','原文摘录','使用权与公开依据说明'][i]}<textarea required maxLength={[240,240,2000,1000][i]} value={form.source[k]} onChange={e=>source(k,e.target.value)}/></label>)}
  {form.source.type==='Public'&&<label>HTTPS来源链接<input required type="url" maxLength={1000} value={form.source.url||''} onChange={e=>source('url',e.target.value)}/></label>}
- <SuggestionPreview key={JSON.stringify([form.kind,form.source])} input={{kind:form.kind,source:form.source}} onApply={c=>{setForm(c);setTags(c.tags.join(','))}}/><button type="submit">保存为内部待审候选</button></fieldset></form></details>
+ <SuggestionPreview key={JSON.stringify([form.kind,form.source])} input={{kind:form.kind,source:form.source}} onApply={c=>{setForm(c);setTags(c.tags.join(','));setTemplate('applied')}}/>
+ {template==='stale'&&<div role="alert" className="w19-warning"><p>来源或卡片类型已变更，原模板填入内容不能直接保存。请按当前来源重新生成并填入，或清空已填入内容后手工编写。</p><button type="button" onClick={discardTemplate}>清空候选内容，保留当前来源</button></div>}
+ <button type="submit" disabled={template==='stale'}>保存为内部待审候选</button></fieldset></form></details>
 }
 
 function AuditReader({who,valid}:{who:string;valid:()=>boolean}){
