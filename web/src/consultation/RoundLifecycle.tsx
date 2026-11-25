@@ -32,7 +32,9 @@ export function RoundLifecycle({ rounds, current, writable, busy, mutate }: {
       try {
         const body = newRoundPayload({ draftVersion: version, parties, draftSha256: hash, agreedDays: useAgreedDeadline ? agreedDays : undefined })
         const deadline = body.isAgreedDeadline ? `申报已商定期限：服务登记时间起 ${body.days} 天（系统不核验是否已经商定）。` : '默认期限：服务登记时间起 30 天。'
-        setError(''); setConfirm({ path: '/consultation/rounds', body, title: '确认新建轮次', detail: `草案 ${body.draftVersion}；相关方：${body.parties.map((p) => `${p.partyId}（${p.name}）`).join('、')}；${deadline}${body.draftSha256 ? `声明草案SHA-256：${body.draftSha256}（未上传或核验文件）。` : '未提供草案文件哈希。'}本轮无删除/撤销接口。` })
+        // Omit days for the default branch so the server records its own default, not an operator-declared value.
+        const wire = body.isAgreedDeadline ? body : { draftVersion: body.draftVersion, parties: body.parties, draftSha256: body.draftSha256, isAgreedDeadline: false }
+        setError(''); setConfirm({ path: '/consultation/rounds', body: wire, title: '确认新建轮次', detail: `草案 ${body.draftVersion}；相关方：${body.parties.map((p) => `${p.partyId}（${p.name}）`).join('、')}；${deadline}${body.draftSha256 ? `声明草案SHA-256：${body.draftSha256}（未上传或核验文件）。` : '未提供草案文件哈希。'}本轮无删除/撤销接口。` })
       } catch (e) { setError(e instanceof Error ? e.message : String(e)) }
     }}>
       <label>草案版本<input className="input" disabled={busy} value={version} onChange={(e) => setVersion(e.target.value)} required /></label>

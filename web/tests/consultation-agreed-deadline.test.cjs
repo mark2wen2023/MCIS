@@ -76,7 +76,7 @@ const round = {
   const declared = (days, isAgreedDeadline) => [
     ['/consultation/rounds', {
       draftVersion: 'synth-v1', parties: [{partyId: 'F1', name: '虚构方'}], draftSha256: '',
-      days, isAgreedDeadline,
+      ...(isAgreedDeadline ? { days } : {}), isAgreedDeadline,
     }, false],
   ];
 
