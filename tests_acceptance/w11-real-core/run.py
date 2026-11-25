@@ -51,6 +51,32 @@ def stage(root, item, data, mode):
     target.write_bytes(data)
     target.chmod(mode)
 
+def core_environment(tmp, sdk, initialized_home):
+    feed = tmp / "empty-feed"
+    feed.mkdir()
+    env = {k:v for k,v in os.environ.items() if k in ("PATH","LANG","LC_ALL","LD_LIBRARY_PATH")}
+    env.update(MCIS_DOTNET=str(sdk), TMPDIR=str(tmp),
+               DOTNET_CLI_TELEMETRY_OPTOUT="1", DOTNET_NOLOGO="1",
+               RestoreSources=str(feed), NuGetAudit="false")
+    if initialized_home:
+        interfaces = {line.split(":", 1)[0].strip()
+                      for line in Path("/proc/net/dev").read_text().splitlines()[2:] if ":" in line}
+        if interfaces != {"lo"}:
+            raise RuntimeError("Initialized-home mode requires Linux with only loopback")
+        current = Path(os.environ.get("HOME", ""))
+        if not current.is_absolute() or not current.is_dir():
+            raise RuntimeError("Initialized-home mode requires the existing normal user HOME")
+        env.update(HOME=str(current), DOTNET_ROOT=str(sdk.parent),
+                   NUGET_PACKAGES=str(tmp / "packages"),
+                   NUGET_HTTP_CACHE_PATH=str(tmp / "http-cache"),
+                   NUGET_PLUGINS_CACHE_PATH=str(tmp / "plugins-cache"),
+                   RestoreFallbackFolders="")
+    else:
+        cli_home = tmp / "cli-home"
+        cli_home.mkdir()
+        env.update(HOME=str(cli_home), DOTNET_CLI_HOME=str(cli_home))
+    return env
+
 def main():
     if not __debug__:
         raise SystemExit("Assertions must be enabled")
@@ -60,6 +86,8 @@ def main():
                    help="Local export of exact original blobs. Repeat for disjoint exports.")
     p.add_argument("--dotnet", type=Path, help="Absolute executable of preinstalled SDK 8.0.428")
     p.add_argument("--verify-only", action="store_true")
+    p.add_argument("--initialized-home", action="store_true",
+                   help="Explicitly reuse the normal already-initialized user HOME, only in loopback isolation")
     a = p.parse_args()
     if not a.verify_only and (not a.dotnet or not a.dotnet.is_absolute()):
         p.error("--dotnet requires an absolute existing executable; no automatic installation")
@@ -118,14 +146,7 @@ def main():
         if not a.dotnet.is_file() or not os.access(a.dotnet, os.X_OK):
             print("BLOCKED: preinstalled SDK executable not found; smoke, preview, save and reopen did not run", file=sys.stderr)
             return 2
-        feed = tmp / "empty-feed"
-        feed.mkdir()
-        env = {k:v for k,v in os.environ.items() if k in ("PATH","LANG","LC_ALL","LD_LIBRARY_PATH")}
-        cli_home = tmp / "cli-home"
-        cli_home.mkdir()
-        env.update(MCIS_DOTNET=str(a.dotnet), HOME=str(cli_home), TMPDIR=str(tmp),
-                   DOTNET_CLI_HOME=str(cli_home), DOTNET_CLI_TELEMETRY_OPTOUT="1", DOTNET_NOLOGO="1",
-                   RestoreSources=str(feed), NuGetAudit="false")
+        env = core_environment(tmp, a.dotnet, a.initialized_home)
         def invoke(label, command, **options):
             result = subprocess.run(command,cwd=root,env=env,check=False,timeout=120,**options)
             print(f"{label} exit={result.returncode}", flush=True)
