@@ -1,0 +1,8 @@
+2026-11-26 04:49:40 CST
+acceptance=9ca1c12d04db524e385f2509a4e2cae5cb44605c
+product=2c72d022f3d3275af637b0cdc6e545735e3200a9
+python=/workspace/w17-pyplaywright-venv/bin/python
+playwright 1.65.2
+host-python=/workspace/mcis-w17-871db66/service/.venv/bin/python
+Python 3.13.5
+chrome=Google Chrome 156.0.8078.47 
