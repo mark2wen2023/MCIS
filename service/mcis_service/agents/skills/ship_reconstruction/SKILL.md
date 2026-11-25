@@ -19,3 +19,6 @@ Status: draft; not registered with runtime. Contract: contracts/schemas/ship-rec
 
 ## Acceptance
 Use synthetic fixtures in public CI; keep real drawings and outputs on authorized local storage. Real DWG conversion, extraction and independent comparison are mandatory before claiming real-case acceptance. Follow AGENTS.md freeze and independent acceptance process. No service routes or runtime integration in this draft.
+
+## Internal research baseline (when external design confirmation is unavailable)
+Preserve original source cells, including blank values, separately from alternatives and explicitly selected research hypotheses. Use research_baseline.record_offset_decision for half-breadth decisions. Document the frame identifier, sources, derivation method, estimation assumptions and selection rationale. Do not average conflicts automatically or treat multiple copies of the same source as independent corroboration. Research scenarios may be reconstructed in isolation with documented assumptions, but must never be passed off as approved design data or formal production lofting. An unresolved value remains null. A selection does not authenticate its evidence or authorize formal use; independently verify geometry, frame, document revision and applicable tolerances before any formal release.
