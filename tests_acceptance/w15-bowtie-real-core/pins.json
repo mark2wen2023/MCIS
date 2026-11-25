@@ -1,0 +1,71 @@
+{
+  "product": "2c72d022f3d3275af637b0cdc6e545735e3200a9",
+  "negative": "9ca1c12d04db524e385f2509a4e2cae5cb44605c",
+  "core": {
+    "tools/mcis-bowtie/McisBowtie.csproj": [
+      "fc2bf519f9f0981c9a27be12ff89b767344f366b",
+      "100644"
+    ],
+    "tools/mcis-bowtie/src/Program.cs": [
+      "6b03fa4160aa0b6c36c82ac33de8a6e3bcfdd86b",
+      "100644"
+    ],
+    "unity/Assets/_Project/Scripts/Core/Primitives/Result.cs": [
+      "cf87d8e758f609cb44f0be02cd0bd0dfb0621dcf",
+      "100644"
+    ],
+    "unity/Assets/_Project/Scripts/Domain/Systemic/BowTie.cs": [
+      "f7504146b891b2545c911fdc218abf5eaa39c45b",
+      "100644"
+    ],
+    "unity/Assets/_Project/Scripts/Domain/Systemic/SystemicCommon.cs": [
+      "8766105cd68f057b29b403f02024fa34ad4425d1",
+      "100644"
+    ],
+    "unity/Assets/_Project/Scripts/Domain/HumanFactors/Hfacs.cs": [
+      "5c89cdd90ac1d333be039f00a300b1ffc4b2f21c",
+      "100644"
+    ],
+    "unity/Assets/_Project/Scripts/Domain/Evidence/CustodyLedger.cs": [
+      "cf76f87d17c9b77bea7432f885bd12a23b999c47",
+      "100644"
+    ],
+    "unity/Assets/_Project/Scripts/Domain/Evidence/CustodyEvent.cs": [
+      "844482450cb90a37fbe929f8526e4051b9657b55",
+      "100644"
+    ],
+    "unity/Assets/_Project/Scripts/Domain/Evidence/EvidenceItem.cs": [
+      "118e1b6bb49a3ba38a707fb97f2245b6e0a03b7e",
+      "100644"
+    ],
+    "unity/Assets/_Project/Scripts/Domain/Evidence/InvestigationAudit.cs": [
+      "0951c6eb748bbd4a8aee7ec18a84dfbd6ee0c250",
+      "100644"
+    ],
+    "unity/Assets/_Project/Scripts/Domain/Evidence/Sha256Hex.cs": [
+      "7fba8da54ddf53bf48e3f5038713a1660cc3f1bd",
+      "100644"
+    ],
+    "unity/Assets/_Project/Scripts/Domain/Recommendations/SafetyRecommendation.cs": [
+      "439f230f7c81fe9d826d011a12bdf844d1232fb8",
+      "100644"
+    ],
+    "tools/mcis-bowtie/build.py": [
+      "f470d82ef4756cded2c7ab19338b3ff833d6e45d",
+      "100644"
+    ],
+    "tools/mcis-bowtie/mcis-bowtie.sh": [
+      "1ca308508be4dae65305183d901dcbd1d0b7c3f3",
+      "100755"
+    ],
+    "tests_acceptance/W153/test_cli.py": [
+      "cb49ecbee964306275ea62fe9f08791811936583",
+      "100644"
+    ]
+  },
+  "negative_helpers": {
+    "tests_acceptance/w15-source-chromium/pins.json": "bc76dcf3dab55e8cfc0a50c26af4b23693ef1547",
+    "tests_acceptance/w15-source-chromium/run.py": "82ae4186e0ca418d724fb26078b127b2ea2168fa",
+    "tests_acceptance/w15-source-chromium/host.py": "c47acdf452ebb70339d16c33e587f4c0e638972d"
+  }
+}
