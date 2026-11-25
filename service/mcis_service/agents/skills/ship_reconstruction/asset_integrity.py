@@ -33,13 +33,19 @@ def validate_glb_framing(glb):
         pos+=size
     if pos!=len(glb):
         raise ValueError('unexpected trailing GLB data')
+    return doc
 
 def bind_asset(glb, evidence, *, algorithm_version):
-    validate_glb_framing(glb)
+    doc=validate_glb_framing(glb)
     if not isinstance(algorithm_version,str) or not algorithm_version.strip():
         raise ValueError('algorithm version required')
-    if evidence.get('research_only') is not True or evidence.get('lofting_authorized') is not False:
+    if not isinstance(evidence,dict) or evidence.get('research_only') is not True or evidence.get('lofting_authorized') is not False:
         raise ValueError('research evidence required')
+    extras=doc['asset'].get('extras')
+    if not isinstance(extras,dict) or extras.get('research_only') is not True or extras.get('lofting_authorized') is not False:
+        raise ValueError('GLB authorization metadata inconsistent with research evidence')
+    if ('mcis_origin_m' in extras)!=('mcis_origin_m' in evidence) or extras.get('mcis_origin_m')!=evidence.get('mcis_origin_m'):
+        raise ValueError('GLB local origin inconsistent with evidence')
     return dict(version='0.1',algorithm_version=algorithm_version,
                 glb_sha256=hashlib.sha256(glb).hexdigest(),
                 evidence_sha256=hashlib.sha256(canonical(evidence)).hexdigest(),
