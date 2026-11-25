@@ -1,0 +1,15 @@
+2026-11-25 12:46:49 CST
+HEAD=871db66badc6566d82239ee701958c0ef8feb558
+porcelain_after=0
+871db66badc6566d82239ee701958c0ef8feb558 2026-11-25 12:35:44 +0800 Align evidence read policy across evidence views
+Python 3.13.5
+fastapi==0.165.0
+httpx==0.28.1
+pytest==9.2.0
+SQLAlchemy==2.1.9
+uvicorn==0.54.0
+v24.22.1
+happy-dom 21.0.4 (仓库外)
+playwright-node 1.63.0-alpha /usr/local/lib/pnpm/5/.pnpm/playwright@1.63.0-alpha-2026-08-31/node_modules/playwright
+Version: 1.65.2
+Google Chrome 156.0.8078.47 

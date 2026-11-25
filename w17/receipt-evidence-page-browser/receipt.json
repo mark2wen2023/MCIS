@@ -1,0 +1,90 @@
+{
+  "schema": "mcis-evidence-page-browser-1",
+  "passed": true,
+  "fixtureSha256": {
+    "assets/EvidencePage-C4SVnMN-.js": "fa8661fef58ccebfd6ac6761c12f34cce1f3adab3f4f21000181ac978fa81a55",
+    "assets/EvidencePage-DtSF88TE.css": "c775ec45e0bfd2fbee26714ad048f1b0924e59e91c543ed7ffd4510f3ba0717f",
+    "assets/api-BtU4QS4m.js": "8045fe607d10521c412eeda0d3828727b59f24741700a209f8b2a8ff3472af15",
+    "assets/api-BwcfPmSO.js": "02a4ce4f7a9e4b3880f0a638a8993156343138f16866d74279496b221839c367",
+    "assets/chunk-6KYCQHYJ-BstfaElP.js": "31b44714a11a7a178dea9cba29a98cdac44692b615e7d647e9bee76f343fbeef",
+    "assets/index-BDyz1vo6.js": "752c062057ea66651a016ce75fb33cfd6d06ab7e05b6799914498914f91d9032",
+    "assets/index-CdV485IK.css": "dc577a7319ea16129884f4b09b94f2454ada24084f0a34d9803bdc907f8f682d",
+    "index.html": "5e20ca9f78875095ad54413cff72e2a0cede63236aaf260bbd6fdb458dbdc281"
+  },
+  "checks": [
+    {
+      "width": 1440,
+      "touch": false,
+      "late": "data",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "touch": false,
+      "late": "deny",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "touch": false,
+      "conflicts": "deny",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "touch": false,
+      "conflicts": "empty",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "touch": false,
+      "conflicts": "empty",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "touch": false,
+      "conflicts": "data",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "touch": false,
+      "late": "data",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "touch": false,
+      "late": "deny",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "touch": false,
+      "conflicts": "deny",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "touch": false,
+      "conflicts": "empty",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "touch": false,
+      "conflicts": "empty",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "touch": false,
+      "conflicts": "data",
+      "passed": true
+    }
+  ],
+  "externalRequests": 0,
+  "browserVersion": "156.0.8078.47"
+}

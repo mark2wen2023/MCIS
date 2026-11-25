@@ -1,0 +1,2 @@
+PASS real browser/API: read-only config, no legacy fallback, refresh clears data, delayed old-case and old-identity responses cannot restore data, role denial, no page errors.
+w171_exit=0

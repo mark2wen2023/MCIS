@@ -1,0 +1,28 @@
+node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: pinned source mismatch: service/mcis_service/evidence/router.py
++ actual - expected
+
++ '48e5dd4149076443062fdbe720d38ef58977b943'
+- '83dcd05ef1508b5d8f9d09ab46a9588da7f4b15f'
+
+    at stage (/workspace/mcis-w17-871db66/tests_acceptance/w17-evidence-selection-receipt/run.cjs:31:12)
+    at Object.<anonymous> (/workspace/mcis-w17-871db66/tests_acceptance/w17-evidence-selection-receipt/run.cjs:41:13)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '48e5dd4149076443062fdbe720d38ef58977b943',
+  expected: '83dcd05ef1508b5d8f9d09ab46a9588da7f4b15f',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.22.1

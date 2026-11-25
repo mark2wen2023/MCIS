@@ -1,0 +1,472 @@
+{
+ "sha": "871db66badc6566d82239ee701958c0ef8feb558",
+ "dbBeforeReads": null,
+ "checks": [
+  {
+   "name": "LeadInvestigator SYN-A list 200 own EV-001 only",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "LeadInvestigator SYN-A item 200, no other case",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "LeadInvestigator SYN-A custody 200 Register only",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "LeadInvestigator SYN-A intake matches digest/sha, no contentBase64",
+   "passed": true,
+   "status": 200,
+   "cache": "no-store"
+  },
+  {
+   "name": "LeadInvestigator SYN-B list 200 own EV-001 only",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "LeadInvestigator SYN-B item 200, no other case",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "LeadInvestigator SYN-B custody 200 Register only",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "LeadInvestigator SYN-B intake matches digest/sha, no contentBase64",
+   "passed": true,
+   "status": 200,
+   "cache": "no-store"
+  },
+  {
+   "name": "Investigator SYN-A list 200 own EV-001 only",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "Investigator SYN-A item 200, no other case",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "Investigator SYN-A custody 200 Register only",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "Investigator SYN-A intake matches digest/sha, no contentBase64",
+   "passed": true,
+   "status": 200,
+   "cache": "no-store"
+  },
+  {
+   "name": "Investigator SYN-B list 200 own EV-001 only",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "Investigator SYN-B item 200, no other case",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "Investigator SYN-B custody 200 Register only",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "Investigator SYN-B intake matches digest/sha, no contentBase64",
+   "passed": true,
+   "status": 200,
+   "cache": "no-store"
+  },
+  {
+   "name": "SYN-A digest under SYN-B -> 404, no sourceSha256",
+   "passed": true,
+   "status": 404
+  },
+  {
+   "name": "EV-999 custody not found (or 403), no SOURCE",
+   "passed": true,
+   "status": 404
+  },
+  {
+   "name": "SYN-A list does not mention SYN-B",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "Public SYN-A/evidence denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "Public SYN-A/evidence/EV-001 denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "Public SYN-A/evidence/EV-001/custody denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "Public SYN-A/evidence/EV-001/intake denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "Public SYN-B/evidence denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "Public SYN-B/evidence/EV-001 denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "Public SYN-B/evidence/EV-001/custody denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "Public SYN-B/evidence/EV-001/intake denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "ExternalExpert SYN-A/evidence denied, no Restricted metadata",
+   "passed": true,
+   "status": 200,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "ExternalExpert SYN-A/evidence/EV-001 denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "ExternalExpert SYN-A/evidence/EV-001/custody denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "ExternalExpert SYN-A/evidence/EV-001/intake denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "ExternalExpert SYN-B/evidence denied, no Restricted metadata",
+   "passed": true,
+   "status": 200,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "ExternalExpert SYN-B/evidence/EV-001 denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "ExternalExpert SYN-B/evidence/EV-001/custody denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "ExternalExpert SYN-B/evidence/EV-001/intake denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "InterestedState SYN-A/evidence denied, no Restricted metadata",
+   "passed": true,
+   "status": 200,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "InterestedState SYN-A/evidence/EV-001 denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "InterestedState SYN-A/evidence/EV-001/custody denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "InterestedState SYN-A/evidence/EV-001/intake denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "InterestedState SYN-B/evidence denied, no Restricted metadata",
+   "passed": true,
+   "status": 200,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "InterestedState SYN-B/evidence/EV-001 denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "InterestedState SYN-B/evidence/EV-001/custody denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "InterestedState SYN-B/evidence/EV-001/intake denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "AgentService SYN-A/evidence denied, no Restricted metadata",
+   "passed": true,
+   "status": 200,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "AgentService SYN-A/evidence/EV-001 denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "AgentService SYN-A/evidence/EV-001/custody denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "AgentService SYN-A/evidence/EV-001/intake denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "AgentService SYN-B/evidence denied, no Restricted metadata",
+   "passed": true,
+   "status": 200,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "AgentService SYN-B/evidence/EV-001 denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "AgentService SYN-B/evidence/EV-001/custody denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "AgentService SYN-B/evidence/EV-001/intake denied, no Restricted metadata",
+   "passed": true,
+   "status": 403,
+   "leaked": [],
+   "cache": "no-store"
+  },
+  {
+   "name": "after denyB LeadInvestigator SYN-B/evidence denied",
+   "passed": true,
+   "status": 403,
+   "leaked": []
+  },
+  {
+   "name": "after denyB LeadInvestigator SYN-B/evidence/EV-001 denied",
+   "passed": true,
+   "status": 403,
+   "leaked": []
+  },
+  {
+   "name": "after denyB LeadInvestigator SYN-B/evidence/EV-001/custody denied",
+   "passed": true,
+   "status": 403,
+   "leaked": []
+  },
+  {
+   "name": "after denyB LeadInvestigator SYN-B/evidence/EV-001/intake denied",
+   "passed": true,
+   "status": 403,
+   "leaked": []
+  },
+  {
+   "name": "after denyB SYN-A still readable",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "after denyB SYN-A custody still readable",
+   "passed": true,
+   "status": 200
+  },
+  {
+   "name": "SQLite: custody still exactly 2 Register rows (no Access/Verify)",
+   "passed": true,
+   "before": {
+    "audit": 2,
+    "custody": [
+     [
+      "SYN-A",
+      "EV-001",
+      "Register"
+     ],
+     [
+      "SYN-B",
+      "EV-001",
+      "Register"
+     ]
+    ],
+    "custodyN": 2
+   },
+   "after": {
+    "audit": 2,
+    "custody": [
+     [
+      "SYN-A",
+      "EV-001",
+      "Register"
+     ],
+     [
+      "SYN-B",
+      "EV-001",
+      "Register"
+     ]
+    ],
+    "custodyN": 2
+   }
+  },
+  {
+   "name": "SQLite: neither reads nor denials added audit rows",
+   "passed": true,
+   "auditSeed": 2,
+   "auditAfterInv": 2,
+   "auditAfterRestricted": 2,
+   "auditEnd": 2
+  }
+ ],
+ "dbAfterSeed": {
+  "audit": 2,
+  "custody": [
+   [
+    "SYN-A",
+    "EV-001",
+    "Register"
+   ],
+   [
+    "SYN-B",
+    "EV-001",
+    "Register"
+   ]
+  ],
+  "custodyN": 2
+ },
+ "dbAfterInvReads": {
+  "audit": 2,
+  "custody": [
+   [
+    "SYN-A",
+    "EV-001",
+    "Register"
+   ],
+   [
+    "SYN-B",
+    "EV-001",
+    "Register"
+   ]
+  ],
+  "custodyN": 2
+ },
+ "dbAfterRestricted": {
+  "audit": 2,
+  "custody": [
+   [
+    "SYN-A",
+    "EV-001",
+    "Register"
+   ],
+   [
+    "SYN-B",
+    "EV-001",
+    "Register"
+   ]
+  ],
+  "custodyN": 2
+ },
+ "dbAfterRevokeAndAll": {
+  "audit": 2,
+  "custody": [
+   [
+    "SYN-A",
+    "EV-001",
+    "Register"
+   ],
+   [
+    "SYN-B",
+    "EV-001",
+    "Register"
+   ]
+  ],
+  "custodyN": 2
+ },
+ "passed": true
+}

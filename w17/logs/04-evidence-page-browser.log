@@ -1,0 +1,2 @@
+PASS EvidencePage synthetic Chromium lifecycle; no real authorization/backend
+gate_exit=0
