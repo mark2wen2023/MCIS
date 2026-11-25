@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Hull half-breadth offset observations draft",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "frame",
+    "rows"
+  ],
+  "properties": {
+    "version": {
+      "const": "0.1"
+    },
+    "frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin_description",
+        "x_positive",
+        "z_positive",
+        "review"
+      ],
+      "properties": {
+        "origin_description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "x_positive": {
+          "const": "forward"
+        },
+        "z_positive": {
+          "const": "up"
+        },
+        "review": {
+          "enum": [
+            "pending",
+            "accepted",
+            "rejected"
+          ]
+        }
+      }
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "station_x_m",
+          "height_z_m",
+          "half_breadth_m",
+          "source"
+        ],
+        "properties": {
+          "station_x_m": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "height_z_m": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "half_breadth_m": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "source": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "document_id",
+              "locator"
+            ],
+            "properties": {
+              "document_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "locator": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
