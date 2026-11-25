@@ -133,6 +133,15 @@ def app_ui(browser, origin, evidence, reopened):
       localStorage.setItem('mcis.operator','Synthetic W15');""")
     try:
         page=context.new_page()
+        # Observe the actual preview only; do not read the body here.
+        def net(event, request, status="-"):
+            if request.method == "POST" and request.url.endswith("/systemic/bowtie:preview"):
+                print(f"W15 BROWSER t={time.monotonic():.6f} preview {event} status={status}",
+                      file=sys.stderr, flush=True)
+        page.on("request", lambda req: net("request", req))
+        page.on("response", lambda res: net("response", res.request, res.status))
+        page.on("requestfinished", lambda req: net("requestfinished", req))
+        page.on("requestfailed", lambda req: net("requestfailed", req))
         page.on("pageerror",lambda _:page_errors.append("pageerror"))
         page.on("request",lambda q:previews.append(q.method) if q.url.endswith("bowtie:preview") else None)
         def show(case):

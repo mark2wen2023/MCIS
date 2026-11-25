@@ -7,7 +7,7 @@ import sys
 import time
 
 
-ORIGINAL_SHA256 = "3ab818b4ac28480226aae596f9ac7f6b852cfd8c2c1a2e023af40170a560c7aa"
+ORIGINAL_SHA256 = "3d379e2595992eb0b55a7e32ad1c9848424d555ac082c7d0e89b7c948fc3b721"
 WATCHED = frozenset(("main", "host", "setup", "dump", "app_ui", "show"))
 
 
@@ -15,7 +15,7 @@ def observe(runner, watchdog_seconds=45):
     if not __debug__:
         raise RuntimeError("W15 refuses to run with assertions disabled")
     if hashlib.sha256(runner.read_bytes()).hexdigest() != ORIGINAL_SHA256:
-        raise RuntimeError("W15 diagnostic requires the byte-exact 9ca1c12 runner")
+        raise RuntimeError("W15 diagnostic requires the byte-exact response-observation runner")
     if sys.gettrace() is not None:
         raise RuntimeError("W15 diagnostic requires an unused trace hook")
     fixed_name = str(runner)

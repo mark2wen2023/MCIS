@@ -1,26 +1,18 @@
-# W15 blocked browser run: observe without changing the gate
+# W15 response-completion diagnostic (not original acceptance)
 
-Use this only for a bounded diagnostic rerun of the synthetic W15 negative
-acceptance. It runs the SHA-256-checked `9ca1c12` runner itself, with the exact
-same arguments and product pins. It changes no page readiness wait, sandbox
-option, network route, assertion, artifact, or exit code. In particular it
-does not use the earlier `domcontentloaded` probe as acceptance.
+The prior exact-runner trace passed default page load and the 503/no-store
+header check, then stopped while reading the response JSON. This diagnostic
+stamps browser request/response/finished/failed events for the same synthetic
+preview POST, and the test host's ASGI send sequence after forwarding the
+unchanged messages, including final byte count and SHA-256. It logs no body,
+raw headers or URL. It retains default load, the normal Chromium sandbox,
+loopback routes, fixed product sources and all assertions, including the
+potentially blocking JSON read. It does not consume or replace the response.
+Server final send alone does not prove browser receipt.
 
-Replace only the runner path in the original Chrome command. Set an outer
-watchdog, retain stderr, and use a never-used evidence directory:
-
-```sh
-timeout --signal=TERM --kill-after=10s 150s \
-  python3 -B tests_acceptance/w15-source-chromium/diagnose.py \
-  --source "$PWD" --node-modules /existing/web/node_modules \
-  --host-python /existing/service/venv/bin/python --browser /existing/google-chrome \
-  --evidence /new/w15-browser-diagnosis > /new/w15.stdout 2> /new/w15.stderr
-```
-
-The trace prints only pinned function names, line numbers, event names, and
-elapsed time, with one Python stack dump at 45 seconds. No signal to the
-Python process is needed to get that stack. Report the last trace lines and
-stack, exact exit status, and whether the original command produced its
-receipt and three originals. A timeout or only a mounted heading is not a
-pass. The probe does not create a separate success result. Do not run on real
-data, kill unrelated processes, or retry by reducing acceptance coverage.
+Follow the prior bounded command: use this checkout's diagnose.py as runner
+with the arguments in README, a new evidence directory and an outer 150s
+timeout. Retain stdout, stderr, host-first.log, and the actual exit. Correlate
+the sole browser preview POST with the sole ASGI sequence; do not send a
+second preview during the same run. Treat every result here as diagnostic;
+it does not overwrite the original blocked receipt.
