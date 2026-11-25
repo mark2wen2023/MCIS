@@ -18,7 +18,7 @@ def bind_asset(glb, evidence, *, algorithm_version):
                 evidence_sha256=hashlib.sha256(canonical(evidence)).hexdigest(),
                 research_only=True,lofting_authorized=False)
 
-def verify_asset(glb,evidence,manifest):
-    expected=bind_asset(glb,evidence,algorithm_version=manifest['algorithm_version'])
+def verify_asset(glb,evidence,manifest,*,expected_algorithm_version):
+    expected=bind_asset(glb,evidence,algorithm_version=expected_algorithm_version)
     mismatches=[k for k,v in expected.items() if type(manifest.get(k)) is not type(v) or (not hmac.compare_digest(manifest[k],v) if k.endswith('_sha256') else manifest[k]!=v)]
     return dict(matches=not mismatches,mismatches=mismatches,authenticity_checked=False,lofting_authorized=False)
