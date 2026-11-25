@@ -1,10 +1,11 @@
 """Orchestrate a reviewed research drawing into a bounded GLB asset."""
 from copy import deepcopy
+import hashlib
 from .drawing_pipeline import extract_from_drawing
 from .offset_bridge import prepare_offset_samples
 from .reconstruction_pipeline import reconstruct_sparse
 from .glb_export import export_glb
-from .asset_integrity import bind_asset, verify_asset
+from .asset_integrity import bind_asset, verify_asset, canonical
 from .geometry_provenance import valid_reference
 
 def run_research(parsed, *, region, mapping, frame_id, offset_reviews,
@@ -21,11 +22,26 @@ def run_research(parsed, *, region, mapping, frame_id, offset_reviews,
         raise ValueError('all three research precision budgets required')
     if any('cad_y' not in s for s in mapping['row_specs']):
         raise ValueError('explicit reviewed CAD row anchors required')
+    mapping_digest=hashlib.sha256(canonical({'region':region,'mapping':mapping})).hexdigest()
+    if research_review.get('mapping_sha256')!=mapping_digest:
+        raise ValueError('research review does not match table mapping')
     extraction=extract_from_drawing(parsed,region=region,mapping=mapping)
     stations=sorted(mapping['stations_m'])
     heights=sorted(s['height_m'] for s in mapping['row_specs'])
     prepared=prepare_offset_samples(extraction,stations_m=stations,heights_m=heights,
         reviews=offset_reviews,frame_id=frame_id)
+    if not isinstance(cell_reviews,dict):
+        raise ValueError('cell review map required')
+    for key,review in cell_reviews.items():
+        if not isinstance(key,tuple) or len(key)!=2 or any(type(k) is not int for k in key):
+            raise ValueError('invalid cell review index')
+        i,j=key
+        if not (0<=i<len(stations)-1 and 0<=j<len(heights)-1) or not isinstance(review,dict):
+            raise ValueError('invalid cell review')
+        if review.get('review')=='accepted':
+            bounds=[stations[i],heights[j],stations[i+1],heights[j+1]]
+            if review.get('frame_id')!=frame_id or review.get('drawing_sha256')!=digest or review.get('mapping_sha256')!=mapping_digest or review.get('bounds_m')!=bounds:
+                raise ValueError('cell review scope mismatch')
     result=reconstruct_sparse(stations,heights,prepared['samples'],cell_reviews)
     if not result['mesh']['triangles']:
         raise ValueError('no supported geometry to export')
@@ -33,6 +49,7 @@ def run_research(parsed, *, region, mapping, frame_id, offset_reviews,
     side['research_review']=deepcopy(research_review)
     side['frame_id']=frame_id
     side['drawing_sha256']=digest
+    side['mapping_sha256']=mapping_digest
     side['offset_audit']=prepared
     side['precision_budget']=deepcopy(precision)
     manifest=bind_asset(glb,side,algorithm_version=algorithm_version)
