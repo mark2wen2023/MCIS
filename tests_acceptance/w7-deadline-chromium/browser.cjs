@@ -2,7 +2,8 @@
 const assert=require('node:assert/strict');
 const {pathToFileURL}=require('node:url');
 const {createInterface}=require('node:readline');
-const [web,chromiumPath,installedPlaywright,caseId]=process.argv.slice(2);
+const {join}=require('node:path');
+const [web,chromiumPath,installedPlaywright,caseId,outDir]=process.argv.slice(2);
 const api='/api/v1/cases/'+caseId, rounds=api+'/consultation/rounds';
 const input=createInterface({input:process.stdin})[Symbol.asyncIterator]();
 async function main(){
@@ -24,12 +25,31 @@ async function main(){
     else{offOrigin.push(u.href);void route.close();}
   });
   const page=await context.newPage();page.setDefaultTimeout(15000);
+  async function snap(name){
+    if(!outDir)return;
+    await page.screenshot({path:join(outDir,name+'.png'),fullPage:true});
+  }
   page.on('request',r=>{if(['POST','PUT','PATCH','DELETE'].includes(r.method()))writes.push([r.method(),new URL(r.url()).pathname,r.postDataJSON()]);});
   const role=page.locator('select.role-select');
   async function enter(){
-    await page.goto(web+'/#/recs?case='+caseId);
-    await role.selectOption('LeadInvestigator');
-    await page.getByText('新建征求意见轮次',{exact:true}).waitFor();
+    const url=web+'/#/recs?case='+caseId;
+    // Same-hash goto after the FastAPI/SQLite restart does not reload; the panel can stay on a hung pre-restart fetch.
+    if(page.url().includes('#/recs?case='+caseId)) await page.reload({waitUntil:'domcontentloaded'});
+    else await page.goto(url,{waitUntil:'domcontentloaded'});
+    await role.waitFor();
+    // Re-selecting the already-active role fires identity listeners and invalidates the
+    // in-flight policy/rounds load without remounting, leaving the panel stuck on “正在读取”.
+    if(await role.inputValue()!=='LeadInvestigator') await role.selectOption('LeadInvestigator');
+    try {
+      await page.getByText('新建征求意见轮次',{exact:true}).waitFor();
+    } catch (err) {
+      if(outDir){
+        const fs=require('node:fs');
+        await snap('diag-enter-failed');
+        fs.writeFileSync(join(outDir,'diag-enter-failed.txt'), await page.locator('body').innerText());
+      }
+      throw err;
+    }
   }
   async function commit(button, path, type, status){
     const response=page.waitForResponse(r=>new URL(r.url()).pathname===path&&r.request().method()===type);
@@ -58,6 +78,7 @@ async function main(){
     await review.getByText(declared?'申报已商定期限：服务登记时间起 45 天':'默认期限：服务登记时间起 30 天',{exact:false}).waitFor();
     if(declared)await review.getByText('系统不核验是否已经商定',{exact:false}).waitFor();
     await review.getByText('不会向相关方发送消息',{exact:false}).waitFor();
+    await snap(declared?'03-declared-45-preview':'01-default-30-preview');
     assert.equal(writes.length,start,'preview must not write');
     const opened=await commit(review.getByRole('button',{name:'确认登记',exact:true}),rounds,'POST',201);
     assert.deepEqual([opened.caseId,opened.roundNo,opened.draftVersion,opened.isAgreedDeadline],[caseId,n,version,declared]);
@@ -72,6 +93,10 @@ async function main(){
     const closed=await commit(review.getByRole('button',{name:'确认登记',exact:true}),rounds+'/'+n+':close','POST',200);
     assert.equal(closed.isClosed,true);
     assert.equal(writes.length,start+3);
+    const closedNote=page.getByText('本轮已关闭，不能新增回复；待处理意见仍可作采纳决定。',{exact:true});
+    await closedNote.waitFor();
+    await closedNote.scrollIntoViewIfNeeded();
+    await snap(declared?'04-declared-45-closed':'02-default-30-closed');
   }
   console.log('W7_RESTART_SQLITE');
   const answer=await input.next();assert.equal(answer.value,'READY');
@@ -81,7 +106,11 @@ async function main(){
   for(const n of [1,2]){
     await select.selectOption(String(n));
     assert.match(await select.locator('option:checked').innerText(),new RegExp('SYN-DEADLINE-'+n+'.*已关闭'));
-    await page.getByText('本轮已关闭，不能新增回复；待处理意见仍可作采纳决定。',{exact:true}).waitFor();
+    const closedNote=page.getByText('本轮已关闭，不能新增回复；待处理意见仍可作采纳决定。',{exact:true});
+    await closedNote.waitFor();
+    await select.scrollIntoViewIfNeeded();
+    await closedNote.scrollIntoViewIfNeeded();
+    await snap(n===1?'05-reopen-round1-default30':'06-reopen-round2-declared45');
   }
   const persisted=await service(rounds);
   assert.deepEqual(persisted.map(x=>[x.roundNo,x.isClosed,x.isAgreedDeadline]),[[1,true,false],[2,true,true]]);

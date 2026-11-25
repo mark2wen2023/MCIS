@@ -100,6 +100,7 @@ def main():
     p.add_argument("--browser")
     p.add_argument("--playwright",type=Path,help="absolute entry file in existing Node Playwright installation")
     p.add_argument("--http-only",action="store_true")
+    p.add_argument("--out",type=Path,help="optional directory for official flow screenshots")
     args=p.parse_args()
     if not args.http_only:
         if not args.browser or not args.playwright: p.error("--browser and --playwright must identify existing sandboxed browser and driver")
@@ -122,7 +123,16 @@ def main():
             if src.is_dir(): shutil.copytree(src,webcopy/entry)
             elif src.is_file(): shutil.copyfile(src,webcopy/entry)
         (webcopy/"node_modules").symlink_to(args.web.absolute()/"node_modules",target_is_directory=True)
-        (webcopy/"gate.config.mts").write_text('import config from "./vite.config.ts"; export default {...config,cacheDir:"./isolated-vite-cache",server:{...config.server,hmr:false}};\n')
+        contracts=args.web.absolute().parent/"contracts"
+        assert contracts.is_dir(), "product tree must include contracts/ so Vite can resolve report.schema.json"
+        (root/"contracts").symlink_to(contracts, target_is_directory=True)
+        (webcopy/"gate.config.mts").write_text(
+            'import http from "node:http";\n'
+            'import config from "./vite.config.ts";\n'
+            'const agent=new http.Agent({keepAlive:false});\n'
+            'const proxy={"/api":{target:process.env.MCIS_API,changeOrigin:false,agent,timeout:10000,proxyTimeout:10000}};\n'
+            'export default {...config,cacheDir:"./isolated-vite-cache",server:{...config.server,hmr:false,proxy}};\n'
+        )
         ap=vp=bp=None
         try:
             def restart():
@@ -140,8 +150,11 @@ def main():
             if args.http_only:
                 http_only(web,restart)
             else:
-                bp=subprocess.Popen(["node",str(Path(__file__).with_name("browser.cjs").resolve()),web,args.browser,
-                                     str(args.playwright.resolve()),CASE],env=SAFE_ENV,cwd=root,
+                cmd=["node",str(Path(__file__).with_name("browser.cjs").resolve()),web,args.browser,
+                     str(args.playwright.resolve()),CASE]
+                if args.out:
+                    out=args.out.resolve(); out.mkdir(parents=True, exist_ok=True); cmd.append(str(out))
+                bp=subprocess.Popen(cmd,env=SAFE_ENV,cwd=root,
                                      stdin=subprocess.PIPE,stdout=subprocess.PIPE,text=True)
                 try:
                     restarts=0

@@ -38,3 +38,13 @@ SQLite process reopen (six audit events). Node browser file syntax checked,
 but the real Chromium path is **blocked here**: the system launcher exists
 and its payload `/usr/lib/chromium/chromium` does not. That result is not a
 browser pass; an already working sandboxed Chrome executor is required.
+
+The official runner stages Vite into a temporary web copy. The pinned product
+imports `contracts/schemas/report.schema.json` from outside `web/`; the harness
+therefore also places a read-only symlink to that existing product `contracts/`
+directory beside the staged copy (product files are not modified). Optional
+`--out /path` writes official flow screenshots from the same sandboxed browser
+run. `--http-only` remains a distinct preflight and is not a browser pass.
+ After the required FastAPI/SQLite restart, the driver reloads the already-open Recommendations page so the panel does not stay on a hung pre-restart fetch (same-hash goto is not a reload).
+ The staged Vite proxy disables HTTP keep-alive so FastAPI restart on the same loopback port does not leave the proxy holding a dead backend socket.
+ After reload, the driver does not re-select LeadInvestigator when that role is already active, because a same-role identity event cancels the in-flight consultation load without remounting the panel.
