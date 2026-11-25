@@ -1,0 +1,5 @@
+sqlite3 default busy timeout (python connect timeout) = 5.0s; sqlite lib 3.46.1
+A original-schedule: handler thread=AnyIO worker thread holds_write_tx=True | nested writer on SAME thread -> OperationalError: (sqlite3.OperationalError) database is locked after 5.01s | GET -> 200 (total 5.07s)
+B separate-thread writer still blocked while reader holds tx: True
+B GET 200 version 1.0.0 events [] | writer {'ok': True, 'waited': 0.54}
+B next GET version 2.0.0 ['version-2']
