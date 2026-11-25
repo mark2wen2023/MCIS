@@ -1,0 +1,11 @@
+TypeError: page.request is not a function
+    at enter (/workspace/mcis-w7-deadline-1f329c3/tests_acceptance/w7-deadline-chromium/browser.cjs:46:27)
+    at async main (/workspace/mcis-w7-deadline-1f329c3/tests_acceptance/w7-deadline-chromium/browser.cjs:102:3)
+Traceback (most recent call last):
+  File "/workspace/mcis-w7-deadline-1f329c3/tests_acceptance/w7-deadline-chromium/run.py", line 170, in <module>
+    if __name__=="__main__": main()
+                             ~~~~^^
+  File "/workspace/mcis-w7-deadline-1f329c3/tests_acceptance/w7-deadline-chromium/run.py", line 162, in main
+    assert bp.wait(timeout=30)==0 and restarts==1
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

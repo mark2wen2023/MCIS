@@ -1,0 +1,19 @@
+locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+  - waiting for getByText('新建征求意见轮次', { exact: true }) to be visible
+
+    at enter (/workspace/mcis-w7-deadline-1f329c3/tests_acceptance/w7-deadline-chromium/browser.cjs:41:53)
+    at async main (/workspace/mcis-w7-deadline-1f329c3/tests_acceptance/w7-deadline-chromium/browser.cjs:98:3) {
+  log: [
+    "  - waiting for getByText('新建征求意见轮次', { exact: true }) to be visible"
+  ],
+  name: 'TimeoutError'
+}
+Traceback (most recent call last):
+  File "/workspace/mcis-w7-deadline-1f329c3/tests_acceptance/w7-deadline-chromium/run.py", line 176, in <module>
+    if __name__=="__main__": main()
+                             ~~~~^^
+  File "/workspace/mcis-w7-deadline-1f329c3/tests_acceptance/w7-deadline-chromium/run.py", line 168, in main
+    assert bp.wait(timeout=30)==0 and restarts==1
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

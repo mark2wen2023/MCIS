@@ -1,0 +1,17 @@
+locator.selectOption: Timeout 15000ms exceeded.
+Call log:
+  - waiting for locator('select.role-select')
+
+    at enter (/workspace/mcis-w7-deadline-1f329c3/tests_acceptance/w7-deadline-chromium/browser.cjs:31:16)
+    at async main (/workspace/mcis-w7-deadline-1f329c3/tests_acceptance/w7-deadline-chromium/browser.cjs:46:3) {
+  log: [ "  - waiting for locator('select.role-select')" ],
+  name: 'TimeoutError'
+}
+Traceback (most recent call last):
+  File "/workspace/mcis-w7-deadline-1f329c3/tests_acceptance/w7-deadline-chromium/run.py", line 163, in <module>
+    if __name__=="__main__": main()
+                             ~~~~^^
+  File "/workspace/mcis-w7-deadline-1f329c3/tests_acceptance/w7-deadline-chromium/run.py", line 155, in main
+    assert bp.wait(timeout=30)==0 and restarts==1
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

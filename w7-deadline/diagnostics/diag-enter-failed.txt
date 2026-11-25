@@ -1,0 +1,162 @@
+M
+MCISWEB
+海事事故调查工作台
+⚠ 示例数据（虚构）
+Synthetic W7 two-deadline trial，虚构演示，不作为真实事故资料
+调查与仿真工作流（01–08）
+AI
+智能体协作状态
+配置登记 / 人工草稿队列
+LIVE
+01
+案件大厅
+案件列表 / 进入调查
+LIVE
+02
+信息录入
+基本档案 / 文字编辑
+LIVE
+03
+船舶参数
+静态参数录入 / 来源 / 查看
+LIVE
+04
+气象水文
+风 / 流 / 能见度观测记录
+LIVE
+05
+航迹设定
+已存点 / UTC CSV 首次输入
+LIVE
+06
+三维仿真
+Unity 推演 / SimTime 同步
+07
+ECFC 因果链
+事件与致因因素图
+08
+分析与报告导出
+曲线 / 证据 / PDF
+LIVE
+国际对标调查模块（09–17）
+09
+证据中心 · VDR
+证据清单 / 保管链 / 时间冲突
+LIVE
+10
+询问笔录比对
+陈述抽取 / 矛盾确认
+LIVE
+11
+避碰规则对照
+会遇局面 / 应采取 vs 实际
+LIVE
+12
+What-if 反事实
+单船舵响应假设 / 非风险判定
+LIVE
+13
+人为因素
+工休技术预览 / 人工分类草稿
+LIVE
+14
+系统性分析
+Bow-tie假设 / 结构核查
+LIVE
+15
+安全建议与报告
+看板 / 征求意见 / 审计
+LIVE
+15
+国际格式报告
+IMO/MAIB/中国海事 · 双语 · GISIS
+LIVE
+16
+知识库
+知识卡 / 人工发布 / 结构化检索
+LIVE
+17
+权限与脱敏
+策略矩阵 / 字段规则 / 只读核验
+LIVE
+service 127.0.0.1:41401
+● ONLINE
+⚠ 示例数据（虚构）
+当前案件SYN-W7-CHROMIUM-DEADLINESynthetic W7 two-deadline trial
+操作人：首席调查官
+首席调查官（LeadInvestigator）
+调查员（Investigator）
+外部专家（ExternalExpert）
+利益相关国（InterestedState）
+公众（Public）
+安全建议跟踪 · 报告草案征求意见
+示例数据（虚构）
+LIVE · 127.0.0.1:41401
+状态机与 C# SafetyRecommendationBoard 一致：草拟 → 已发布 → 已回复（只能经登记回复）→ 已落实 / 未采纳（须理由）/ 已关闭。 拖动卡片或在详情中操作；每次变更写入不可改的审计链（audit/audit.jsonl）。
+📄 国际格式报告 →
+＋ 新建安全建议
+安全建议
+0条
+已发布 · 待回复
+0条
+落实中 · 平均进度
+0% · 0 条
+逾期（已发布/落实中）
+0条
+已关闭
+0条
+安全建议看板（0 条）
+拖动卡片改变状态 · 已关闭 = 已落实 / 未采纳 / 已关闭
+草拟
+0
+已发布
+0
+落实中
+0
+已关闭
+0
+建议详情
+选择一张卡片
+报告草案征求意见
+重新读取
+
+正在读取轮次与权限…
+
+审计记录（安全建议 / 征求意见）
+append-only · SHA-256 链
+时间 · #	操作 / 变更
+11-25 21:32
+#7
+	
+关闭征求意见 SYN-W7-CHROMIUM-DEADLINE 第 2 轮 首席调查官 · consultation.close
+open → closed；回复 1/1；放弃 0
+
+11-25 21:32
+#6
+	
+登记回复 SYN-W7-CHROMIUM-DEADLINE 第 2 轮 SYN-A 首席调查官 · consultation.reply
+Pending → Replied；意见 0 条
+
+11-25 21:32
+#5
+	
+发出征求意见 SYN-W7-CHROMIUM-DEADLINE 第 2 轮 首席调查官 · consultation.open
+草案=SYN-DEADLINE-2；各方=虚构相关方；期限=2027-01-09T13:32:20Z（标记商定 45 天）
+
+11-25 21:32
+#4
+	
+关闭征求意见 SYN-W7-CHROMIUM-DEADLINE 第 1 轮 首席调查官 · consultation.close
+open → closed；回复 1/1；放弃 0
+
+11-25 21:32
+#3
+	
+登记回复 SYN-W7-CHROMIUM-DEADLINE 第 1 轮 SYN-A 首席调查官 · consultation.reply
+Pending → Replied；意见 0 条
+
+11-25 21:32
+#2
+	
+发出征求意见 SYN-W7-CHROMIUM-DEADLINE 第 1 轮 首席调查官 · consultation.open
+草案=SYN-DEADLINE-1；各方=虚构相关方；期限=2026-12-25T13:32:20Z（默认 30 天）

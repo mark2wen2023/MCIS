@@ -1,0 +1,26 @@
+api.log:
+INFO:     Started server process [124843]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:56953 (Press CTRL+C to quit)
+INFO:     127.0.0.1:53998 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54014 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/access-policy HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54030 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54070 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54052 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/audit?category=SafetyRec&order=desc&limit=14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54074 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/access-policy HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54084 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54054 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/audit?category=Consultation&order=desc&limit=6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54116 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54090 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/recommendations%3Aboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54114 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/audit?category=Consultation&order=desc&limit=6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54036 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/recommendations%3Aboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54128 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/consultation/rounds HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54098 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/audit?category=SafetyRec&order=desc&limit=14 HTTP/1.1" 200 OK
+
+web.log:
+
+  VITE v8.3.8  ready in 157 ms
+
+  ➜  Local:   http://127.0.0.1:45345/
+

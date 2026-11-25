@@ -1,0 +1,16 @@
+locator.scrollIntoViewIfNeeded: Timeout 15000ms exceeded.
+Call log:
+  - waiting for getByText(/第 1 轮：SYN-DEADLINE-1/)
+
+    at main (/workspace/mcis-w7-deadline-1f329c3/tests_acceptance/w7-deadline-chromium/browser.cjs:106:48) {
+  log: [ '  - waiting for getByText(/第 1 轮：SYN-DEADLINE-1/)' ],
+  name: 'TimeoutError'
+}
+Traceback (most recent call last):
+  File "/workspace/mcis-w7-deadline-1f329c3/tests_acceptance/w7-deadline-chromium/run.py", line 176, in <module>
+    if __name__=="__main__": main()
+                             ~~~~^^
+  File "/workspace/mcis-w7-deadline-1f329c3/tests_acceptance/w7-deadline-chromium/run.py", line 168, in main
+    assert bp.wait(timeout=30)==0 and restarts==1
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -1,0 +1,29 @@
+api.log:
+INFO:     Started server process [120874]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:49839 (Press CTRL+C to quit)
+INFO:     127.0.0.1:53076 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53078 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/access-policy HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53088 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53096 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/recommendations%3Aboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53128 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53140 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/access-policy HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53152 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53108 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/audit?category=SafetyRec&order=desc&limit=14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53178 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53166 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/recommendations%3Aboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53192 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53168 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/audit?category=SafetyRec&order=desc&limit=14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53176 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/audit?category=Consultation&order=desc&limit=6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53208 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/recommendations%3Aboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53220 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/audit?category=Consultation&order=desc&limit=6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53218 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/audit?category=SafetyRec&order=desc&limit=14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53116 - "GET /api/v1/cases/SYN-W7-CHROMIUM-DEADLINE/audit?category=Consultation&order=desc&limit=6 HTTP/1.1" 200 OK
+
+web.log:
+
+  VITE v8.3.8  ready in 167 ms
+
+  ➜  Local:   http://127.0.0.1:52303/
+

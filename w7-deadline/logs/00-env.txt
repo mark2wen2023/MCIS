@@ -1,0 +1,15 @@
+time: 2026-11-25 21:27–21:35 (Asia/Shanghai, UTC+8)
+acceptance (dispatched): 1f329c36423456cc11446e0987daf4381e3cfee4
+product pin:             b2ecb50b32b721c9f171b74ecd576691c0048b94
+harness candidate:       0092734837f652a813be41eb65148a3ce57982a7
+diff vs product: only tests_acceptance/w7-deadline-chromium/{README.md,browser.cjs,run.py}
+pins OK: RoundLifecycle.tsx 274e3cea..., RecommendationsPage.tsx acc6a5f9..., recommendations/router.py aa39f644...
+chrome: Google Chrome 156.0.8078.47 (/opt/google/chrome/google-chrome)
+playwright: Node Playwright 1.63.0-alpha-2026-08-31 (existing; routeWebSocket supported)
+service python: fastapi 0.165.0 uvicorn 0.54.0
+vite: 8.3.8
+chromium_sandbox: true; no --no-sandbox
+listen: 127.0.0.1 only; synthetic case SYN-W7-CHROMIUM-DEADLINE
+http-only: not used as a browser pass
+unmodified 1f329c3: exit 1 (logs/01-check.*)
+harness-fixed official: exit 0 (logs/09-check-official.*)
