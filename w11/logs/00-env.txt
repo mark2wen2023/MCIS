@@ -1,0 +1,10 @@
+time: 2026-11-25 23:59:50 CST
+acceptance: b40a6cacf91ba0d8b297377d31162e404e468e8d
+vs 41eb599: only tests_acceptance/w11-edge-host-optin/browser_check.py (+8)
+verify-only: exit 0; 186 service/original + 3 UI; no fetch
+chrome: Google Chrome 156.0.8078.47 
+playwright: Python Playwright 1.65.2 (route_web_socket yes)
+host python: /workspace/mcis-w17-871db66/service/.venv/bin/python
+node_modules: /workspace/mcis-w17-871db66/web/node_modules
+browser official: exit 0 (logs/02-browser.*; browser-out/exit-code.txt=0)
+checkpoints: revised and revoke each excerpt POST 0/1/2; custody Register+Access; commands=[]; T+109=2026-02-01T12:01:49.000Z
