@@ -47,6 +47,21 @@ def parse_drawing(path):
                     record['anchor_wcs'] = list(entity.dxf.insert)
                     record['attachment_point'] = entity.dxf.attachment_point
                     record['text_direction_wcs'] = list(entity.get_text_direction())
+                elif kind == 'LINE':
+                    record['segments_wcs'] = [{'start': list(entity.dxf.start), 'end': list(entity.dxf.end), 'index': 0}]
+                elif kind == 'LWPOLYLINE':
+                    vertices = list(entity.vertices_in_wcs())
+                    bulges = [p[0] for p in entity.get_points('b')]
+                    count = len(vertices) if entity.closed else max(0, len(vertices)-1)
+                    record['segments_wcs'] = []
+                    record['curved_segment_indices'] = []
+                    for i in range(count):
+                        if bulges[i] != 0:
+                            record['curved_segment_indices'].append(i)
+                        else:
+                            record['segments_wcs'].append({'start': list(vertices[i]), 'end': list(vertices[(i+1)%len(vertices)]), 'index': i})
+                    if record['curved_segment_indices']:
+                        result['issues'].append('polyline_arcs_not_extracted:' + str(record['handle']))
                 elif kind == 'DIMENSION':
                     record['text'] = entity.dxf.text
                     record['measurement_raw'] = entity.get_measurement()
