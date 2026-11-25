@@ -1,5 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcis.local/contracts/v1/ship-reconstruction.schema.json",
   "title": "Ship reconstruction intake (draft v0.1)",
   "type": "object",
   "additionalProperties": false,
