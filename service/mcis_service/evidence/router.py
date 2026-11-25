@@ -116,7 +116,9 @@ def patch_evidence(case_id: str, evidence_id: str, body: EvidencePatch, ctx: Ctx
 def get_custody(case_id: str, evidence_id: str, ctx: Ctx = CtxDep) -> list[dict[str, Any]]:
     with ctx.db.session() as s:
         require(ctx, s, case_id, "evidence_meta")
-        service.load_item(s, case_id, evidence_id)
+        item = service.load_item(s, case_id, evidence_id)
+        if not filter_evidence([item], ctx.role, get_policy(s, case_id)):
+            raise problem(403, "FORBIDDEN", "受限证据")
         return [service.custody_doc(r) for r in service.custody_events(s, case_id, evidence_id)]
 
 
