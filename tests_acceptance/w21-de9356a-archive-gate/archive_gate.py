@@ -20,6 +20,12 @@ PINS = {
 SCREENSHOT_COUNT = 12
 DECLARED_3D_COMMIT = 'de9356a4616c0ef593ffff0ca81fd959ff24c1b3'
 MCIS_FIXTURE = '2048c60fd6650c6f2c99a76a16be463a3895655d'
+# Fixed receipt 8d68f6fa076b7acad90fab10e95ab88c6945a018 and byte-matched MCIS inputs.
+EXPECTED_INPUT_HASHES = {
+    'vesselA': 'a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c',
+    'vesselB': '07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca',
+    'vesselMismatch': 'f785399311f5dd045eec6cc8a6a2105d95b376e9aa894342fd4da4f5985dc2f4',
+}
 EXPECTED = (
     ('100.000', '2026-02-01T12:01:40.000Z', 'gap-v0-g0-end.png'),
     ('121.000', '2026-02-01T12:02:01.000Z', 'gap-v0-g1-start.png'),
@@ -127,6 +133,24 @@ def checksum_listing(members, manifest_path):
         listed.add(name)
     return listed
 
+def report_input_hashes(report):
+    hashes = report.get('inputHashes')
+    require(type(hashes) is dict and hashes.keys() == EXPECTED_INPUT_HASHES.keys(),
+            'report_input_hash_keys')
+    for key, expected in EXPECTED_INPUT_HASHES.items():
+        entry = hashes[key]
+        require(type(entry) is dict and entry.keys() == {'path', 'sha256'},
+                'report_input_hash_entry:' + key)
+        path = entry['path']
+        require(type(path) is str and bool(path.strip()) and '\x00' not in path,
+                'report_input_hash_path:' + key)
+        digest = entry['sha256']
+        require(type(digest) is str and re.fullmatch(r'[a-f0-9]{64}', digest) is not None,
+                'report_input_hash_format:' + key)
+        require(digest == expected, 'report_input_hash_mismatch:' + key)
+    return len(EXPECTED_INPUT_HASHES)
+
+
 def clocks(raw_receipt, raw_report):
     lines = raw_receipt.splitlines()
     require(len(lines) == len(EXPECTED) and all(lines), 'four_jsonl_rows')
@@ -134,6 +158,7 @@ def clocks(raw_receipt, raw_report):
     report = parse(raw_report)
     require(type(report) is dict and report.get('mcisCommit') == MCIS_FIXTURE, 'report_mcis_fixture_commit')
     require(report.get('mode') == 'CROSS_REPO_PLAN_A', 'report_cross_repo_mode')
+    input_hashes_checked = report_input_hashes(report)
     require(canonical_match(report.get('fourPointClockReceipt'), frames), 'report_jsonl_mismatch')
     for frame, (seconds, utc, screenshot) in zip(frames, EXPECTED):
         require(type(frame) is dict, 'frame_type')
@@ -151,6 +176,7 @@ def clocks(raw_receipt, raw_report):
         require(all(type(vessels[v]) is dict and vessels[v].get('vesselId') == v for v in VESSELS), 'vessel_identity')
     return {'seconds': [s for s, _, _ in EXPECTED], 'frames': len(frames),
             'receiptFormat': 'ai_studio_keyed_vessels',
+            'reportInputHashesMatched': input_hashes_checked,
             'strictMcisReceiptAccepted': False, 'rewroteSource': False}
 
 def validate_archive(path, expected_outer_sha, pins=PINS, screenshot_count=SCREENSHOT_COUNT):
