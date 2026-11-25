@@ -1,0 +1,7 @@
+{"stage":"bundle","base":"bd02094a7cbb95d9ebb24a33e51bab2e695cccd7","pins":192,"bytes":1281976}
+{"stage":"launch"}
+{"stage":"launch-complete"}
+{"stage":"card-a-conflict"}
+{"stage":"card-b-no-rebind"}
+{"stage":"store-reopen"}
+{"stage":"complete"}

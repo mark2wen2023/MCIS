@@ -1,0 +1,105 @@
+{
+  "base": "bd02094a7cbb95d9ebb24a33e51bab2e695cccd7",
+  "version": "Google Chrome 156.0.8078.47",
+  "chromiumSandbox": true,
+  "stages": [
+    "launch",
+    "launch-complete",
+    "card-a-conflict",
+    "card-b-no-rebind",
+    "store-reopen",
+    "complete"
+  ],
+  "pass": true,
+  "runtimeVersion": "156.0.8078.47",
+  "receipts": [
+    {
+      "action": "read",
+      "caseId": "CASE-TRIAL-FICTIONAL",
+      "issueId": "098be464-d9fe-4a7d-a7ca-d57ac3fe059c",
+      "ok": true
+    },
+    {
+      "action": "sources",
+      "caseId": "CASE-TRIAL-FICTIONAL",
+      "ok": true
+    },
+    {
+      "action": "save",
+      "caseId": "CASE-TRIAL-FICTIONAL",
+      "issueId": "098be464-d9fe-4a7d-a7ca-d57ac3fe059c",
+      "expectedRevision": 1,
+      "against": 1,
+      "sourceIds": [
+        "EV-001"
+      ],
+      "code": "ISSUE_HOST_REJECTED",
+      "status": 409,
+      "ok": false
+    },
+    {
+      "action": "read",
+      "caseId": "CASE-TRIAL-FICTIONAL",
+      "issueId": "098be464-d9fe-4a7d-a7ca-d57ac3fe059c",
+      "ok": true
+    },
+    {
+      "action": "sources",
+      "caseId": "CASE-TRIAL-FICTIONAL",
+      "ok": true
+    },
+    {
+      "action": "save",
+      "caseId": "CASE-TRIAL-FICTIONAL",
+      "issueId": "098be464-d9fe-4a7d-a7ca-d57ac3fe059c",
+      "expectedRevision": 2,
+      "against": 1,
+      "sourceIds": [
+        "EV-001"
+      ],
+      "ok": true
+    },
+    {
+      "action": "read",
+      "caseId": "CASE-TRIAL-FICTIONAL",
+      "issueId": "f9e16ca5-20b2-4524-a691-0b2d95de0fde",
+      "ok": true
+    },
+    {
+      "action": "save",
+      "caseId": "CASE-TRIAL-FICTIONAL",
+      "issueId": "f9e16ca5-20b2-4524-a691-0b2d95de0fde",
+      "expectedRevision": 1,
+      "against": 1,
+      "sourceIds": [],
+      "code": "ISSUE_HOST_REJECTED",
+      "status": 409,
+      "ok": false
+    },
+    {
+      "action": "read",
+      "caseId": "CASE-TRIAL-FICTIONAL",
+      "issueId": "f9e16ca5-20b2-4524-a691-0b2d95de0fde",
+      "ok": true
+    },
+    {
+      "action": "read",
+      "caseId": "CASE-TRIAL-FICTIONAL",
+      "issueId": "f9e16ca5-20b2-4524-a691-0b2d95de0fde",
+      "ok": true
+    },
+    {
+      "action": "read",
+      "caseId": "CASE-TRIAL-FICTIONAL",
+      "issueId": "098be464-d9fe-4a7d-a7ca-d57ac3fe059c",
+      "ok": true
+    },
+    {
+      "action": "read",
+      "caseId": "CASE-TRIAL-FICTIONAL",
+      "issueId": "f9e16ca5-20b2-4524-a691-0b2d95de0fde",
+      "ok": true
+    }
+  ],
+  "cleanupErrors": []
+}

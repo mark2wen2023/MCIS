@@ -1,0 +1,10 @@
+time: 2026-11-26 01:29:03 CST
+acceptance: 6a231db3ad4821e450af869def15f39ba95803ea
+product:    bd02094a7cbb95d9ebb24a33e51bab2e695cccd7
+diff vs product: only tests_acceptance/w3-conflict-chromium/{README.md,page.tsx,pins.json,run.cjs}
+192 pins: worktree OK, bd02094 OK, no symlinks
+chrome: Google Chrome 156.0.8078.47 
+playwright: Node Playwright 1.63.0-alpha-2026-08-31
+host python: /workspace/mcis-w17-871db66/service/.venv/bin/python
+build-only: exit 0; bundle 1281976 bytes, 192 pins, base bd02094
+browser: exit 0; pass true; chromiumSandbox true; stages complete; cleanupErrors []
