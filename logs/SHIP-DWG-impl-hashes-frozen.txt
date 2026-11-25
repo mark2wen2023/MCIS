@@ -1,0 +1,3 @@
+c5ff017ab3db982a60bb1b5225cd9de7be04f6a4aa05fc9a59f01bc29f11f65a  tests_acceptance/SHIP-DWG/check.py
+7bdd87b17df04f0ecdb8ea19b29b25f819db259f059ce57f97564e19d7612b57  tests_acceptance/SHIP-DWG/compare.py
+846f95503737bcba10380e5b6404fd242d570b9d942873bcdb9b8982a8a48b23  tests_acceptance/SHIP-DWG/README.md
