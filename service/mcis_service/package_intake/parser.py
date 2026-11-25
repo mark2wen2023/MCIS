@@ -146,7 +146,7 @@ def parse_package(data: bytes, *, validated_hfacs=None) -> ParsedPackage:
     def load(path):
         return strict_json(files[path])
     manifest = load("manifest.json")
-    if not isinstance(manifest, dict) or manifest.get("packageFormat") != PACKAGE_FORMAT or manifest.get("packageVersion") not in (PACKAGE_VERSION, "1.1.0", "1.2.0", "1.3.0"):
+    if not isinstance(manifest, dict) or manifest.get("packageFormat") != PACKAGE_FORMAT or manifest.get("packageVersion") not in (PACKAGE_VERSION, "1.1.0", "1.2.0", "1.3.0", "1.4.0"):
         fail("不支持的包格式或版本")
     if set(manifest) != {"packageFormat", "packageVersion", "caseId", "createdAtUtc", "lastModifiedAtUtc", "generatorVersion", "files"}:
         fail("未知或不完整清单字段")
@@ -157,9 +157,13 @@ def parse_package(data: bytes, *, validated_hfacs=None) -> ParsedPackage:
     has_hfacs = hfacs_path in files
     from ..working_records_archive.validation import PATH as working_path
     has_working = working_path in files
-    if (manifest['packageVersion'] in ('1.2.0','1.3.0')) != has_working:
+    from ..working_records_archive import timeline as timeline_archive
+    has_timeline = timeline_archive.PATH in files
+    if (manifest['packageVersion']=='1.4.0') != has_timeline:
+        fail('外层版本与时间线扩展不匹配')
+    if (manifest['packageVersion'] in ('1.2.0','1.3.0','1.4.0')) != has_working:
         fail('外层版本与工作记录扩展不匹配')
-    if manifest['packageVersion'] not in ('1.2.0','1.3.0') and ((manifest["packageVersion"] == "1.1.0") != has_hfacs):
+    if manifest['packageVersion'] not in ('1.2.0','1.3.0','1.4.0') and ((manifest["packageVersion"] == "1.1.0") != has_hfacs):
         fail("外层版本与HFACS扩展不匹配")
     from ..track_history.validation import markers
     if markers(files)and manifest['packageVersion']!='1.3.0':
@@ -228,6 +232,7 @@ def parse_package(data: bytes, *, validated_hfacs=None) -> ParsedPackage:
             hfacs_archive = validate_hfacs(files[hfacs_path], cid, set(ei))
     allowed = required | {"environment/observations.json", "audit/agent.jsonl"}
     if has_hfacs: allowed.add(hfacs_path)
+    if has_timeline: allowed.add(timeline_archive.PATH)
     if has_working:
         allowed.add(working_path)
         wdata = strict_json(files[working_path])
@@ -239,6 +244,9 @@ def parse_package(data: bytes, *, validated_hfacs=None) -> ParsedPackage:
                       "analysis/colreg.json": {}, "recommendations.json": [], "consultation/rounds.json": [], "agents/drafts.json": []}
     for path, empty in empty_sections.items():
         if path in files:
+            if path=='analysis/timeline.json' and has_timeline:
+                allowed.add(path)
+                continue # checked against authoritative rows after full working validation
             if load(path) != empty:
                 fail(f"暂不支持非空业务内容：{path}")
             allowed.add(path)
@@ -350,6 +358,7 @@ def parse_package(data: bytes, *, validated_hfacs=None) -> ParsedPackage:
             outer_members = len(outer_zip.infolist())
         working_archive = validate_working(files[working_path], cid, files, ei, audit_lines, custody_lines, outer_member_count=outer_members)
         if (manifest['packageVersion']=='1.3.0')!=(working_archive.data['version']==2):fail('外层版本与航迹历史扩展不匹配')
+        if has_timeline: timeline_archive.validate(files,cid)
     summary = {"caseId": cid, "title": case["title"], "files": len(files), "vessels": len(vessels),
                "trackPoints": sum(map(len, tracks.values())), "observations": len(observations), "evidence": len(evidence),
                "auditEvents": len(audit_lines), "custodyEvents": len(custody_lines)}

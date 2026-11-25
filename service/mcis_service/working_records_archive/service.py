@@ -38,11 +38,11 @@ def read_blob(root,case_id,rel,limit=MAX_BYTES):
     return raw
 
 
-def reject_unsupported_tables(s,case_id):
+def reject_unsupported_tables(s,case_id,*,timeline=False):
     # Inspect actual database tables, not the incomplete models_registry alone.
     inspector=inspect(s.connection())
     for name in inspector.get_table_names():
-        if name in ALLOWED_TABLES or name in GLOBALS:continue
+        if name in ALLOWED_TABLES or name in GLOBALS or (timeline and name=='timeline_events'):continue
         cols={c['name']for c in inspector.get_columns(name)}
         quoted='"'+name.replace('"','""')+'"'
         where=' WHERE case_id=:cid'if 'case_id'in cols else''
@@ -77,7 +77,7 @@ def build(s,root,ctx,case_id):
     from ..package_intake.router import IntakeReceipt
     from ..package_intake.parser import strict_json
     from ..evidence_intake.parser import PREFIX
-    full_access(s,ctx,case_id);reject_unsupported_tables(s,case_id)
+    full_access(s,ctx,case_id);reject_unsupported_tables(s,case_id,timeline=True)
     c=s.scalars(select(CaseRow).where(CaseRow.case_id==case_id)).first()
     if c is None:raise problem(404,'CASE_NOT_FOUND','案件不存在')
     if 'incidentTimeUtc'not in c.doc or 'caseEpochUtc'not in c.doc:fail('案件时间基础字段缺失，不能构造可恢复包')
@@ -138,6 +138,15 @@ def build(s,root,ctx,case_id):
     from ..track_history.service import collect_export
     track_entries=collect_export(s,case_id,files)
     if track_entries:data['version']=2
+    from ..timeline.models import TimelineEventRow
+    from . import timeline
+    timeline_rows = [{'key':r.key,'createdUtc':r.created_utc,'updatedUtc':r.updated_utc,'doc':r.doc}
+                     for r in s.scalars(select(TimelineEventRow).where(TimelineEventRow.case_id==case_id).order_by(TimelineEventRow.key))]
+    if timeline_rows:
+        if track_entries:fail('时间线与航迹历史组合尚不支持')
+        files[timeline.PATH]=canonical({'format':timeline.FORMAT,'version':1,'caseId':case_id,'events':timeline_rows})
+        files['analysis/timeline.json']=canonical({'events':[r['doc'] for r in timeline_rows]})
+        timeline.validate(files,case_id)
     for entry in track_entries:histories[('track-intake',entry['key'])]=entry
     data['importHistory']=[histories[k]for k in sorted(histories)]
     data['historicalArtifacts']=[artifacts[k]for k in sorted(artifacts)]
@@ -157,6 +166,11 @@ def build(s,root,ctx,case_id):
 def restore(s,root,validated,files):
     from ..evidence.service import blob_path
     data=validated.data;cid=data['caseId']
+    from . import timeline
+    from ..timeline.models import TimelineEventRow
+    if timeline.PATH in files:
+        for r in timeline.validate(files,cid):
+            s.add(TimelineEventRow(case_id=cid,key=r['key'],doc=r['doc'],created_utc=r['createdUtc'],updated_utc=r['updatedUtc']))
     for model,key in ((InterviewRow,'interviews'),(ReportRow,'reports'),(ReportAuditRow,'reportSnapshots')):
         for r in data[key]:
             row=model(case_id=cid,key=r['key'],doc=r['doc'],created_utc=r['createdUtc'],updated_utc=r['updatedUtc']);s.add(row)
