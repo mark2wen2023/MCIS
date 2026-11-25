@@ -1,0 +1,13 @@
+time: 2026-11-25 20:51:46 CST
+tooling: 9c878b1ad055deea52ba8c0fb46ef7c3e05017fa
+product: d0c4d8c2a6f2aaeee5e49b2085d4f744a491d642
+diff vs product:
+ tests_acceptance/w19-chromium/README.md |  37 +++++
+ tests_acceptance/w19-chromium/check.py  | 244 ++++++++++++++++++++++++++++++++
+ 2 files changed, 281 insertions(+)
+porcelain: 0
+chrome: Google Chrome 156.0.8078.47 
+node: v24.22.1
+python-playwright 1.65.2
+fastapi 0.165.0
+uvicorn 0.54.0
