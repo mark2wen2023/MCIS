@@ -14,7 +14,7 @@
 
 已完成：整理并推送上述候选交付；在限定样例上复验真实 HTTP/SQLite、报表引用到 PDF/DOCX 等分项。未完成：把 W21 新三维回执与正式 MCIS 流程对上，及把仍未合并的候选做成整体可交付版本。不要把历史预检当成新回执，也不要夹带其他本地改动。
 
-第一步：收到 AI Studio 原件后，先验压缩包和内件 SHA-256、三个输入哈希、实际 SHA、时间点及状态，再走 [固定 Git 历史复验](./HANDOFF-CLOSURE-20261125.md#w21固定-git-历史复验) 两条 MCIS 历史（`17247747272fb53623b144e199260f59d6befcbd` 和 `8d68f6fa076b7acad90fab10e95ab88c6945a018`），在隔离工作树做四时点匹配、同案关系、8 次 Access、1 次草稿准备，以及重开核对。拿不到完整历史或浏览器字段就交差异表，不补造数据。Dot 负责审 Grokbot 的验收原件和两仓的验收记录；W21 等包时不占其他两条线，按甘特安排无依赖的 MCIS 事项。真实模型不在这轮授权范围。
+第一步：收到 AI Studio 原件后，先验压缩包和内件 SHA-256、三个输入哈希、实际 SHA、时间点及状态，再走 [固定 Git 历史复验](./HANDOFF-CLOSURE-20261125.md#w21固定-git-历史复验) 两条 MCIS 历史（`17247747272fb53623b144e199260f59d6befcbd` 和 `8d68f6fa076b7acad90fab10e95ab88c6945a018`），在隔离工作树分别验收：四时点对账；合成同案 joined 测试（8 次读 Access + 1 次草稿准备审计，`saved=false`、零 Report、无已保存绑定，不含重开）。重开另验 [固定 `afc72a1`](https://github.com/mark2wen2023/MCIS/blob/afc72a1180ae345556a85fb63a4020a476893d14/tests_acceptance/registered-trajectory-pair/REOPEN.md)，复用同一轮拉取的历史，单独重开同一个合成 SQLite 并读回 T+100 登记原件；这是 3 登记 / 8 次 Access 的独立组件测试，不是 joined 库重开或报告持久化。拿不到完整历史或浏览器字段就交差异表，不补造数据。Dot 负责审 Grokbot 的验收原件和两仓的验收记录；W21 等包时不占其他两条线，按甘特安排无依赖的 MCIS 事项。真实模型不在这轮授权范围。
 
 ### Grokbot：Linux 真浏览器验收，优先 W4
 
@@ -26,6 +26,16 @@ service/.venv/bin/python -I -B tests_acceptance/w4-synthetic-pdf-live/run.py \
 ```
 
 必须看实际浏览器：红页显示完成、切案/切轮不会被旧回调覆盖、受控重读蓝页、两次受控读取各一条 Access；交浏览器版本、固定 SHA、命令、退出码、日志和截图。若没有验证窄屏、真实延迟下的 A→B→A 或人工视觉，单列未验。失败时给第一条错误和复现步骤，不关沙箱、不改机器权限、不跑远程 CI。只读复验无需改代码；若必须改复验工具，只改此验收目录，推自己的候选分支。完成后再由 Dot 分配下一个无冲突关口，优先考虑 W17 真浏览器。
+
+W4 交件后，下一项 W17：从固定产品 `29cbfe255967fc6814abafd919ed9a7485ef8710`，用 Vite 构建，再跑 **Python Playwright**（不是 W4 的 Node Playwright）：
+
+```sh
+./web/node_modules/.bin/vite build --config web/tests/evidence-page-browser/vite.config.ts
+python web/tests/evidence-page-browser/check.py \
+  --chromium /usr/bin/chromium --dist "$PWD/.evidence-page-browser-dist" --output /tmp/w17-browser-new
+```
+
+使用实际浏览器路径和新输出目录。退出码 0、回执 `passed=true`、`externalRequests=0` 才算这个子关口通过。1440/390 浏览器验的是证据页选择、切案、迟到响应和冲突，HTTP 是受控样例；另一个 [`a80226d`](https://github.com/mark2wen2023/MCIS/commit/a80226d7e32d79ce8ab7a035a16e5089bfbac377) 验的是真 FastAPI/SQLite 与模拟 DOM 的登记回执。两份分别记，不等于登记在真实浏览器连后端通过。
 
 ### AI Studio：三维回放与 W21 原始制品
 
