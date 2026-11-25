@@ -51,3 +51,11 @@ def test_conflicting_authorization():
     changed=struct.pack('<4sII',b'glTF',2,12+len(body))+body
     with pytest.raises(ValueError,match='authorization'):
         bind_asset(changed,evidence,algorithm_version='synthetic')
+
+def test_distinct_vertices_normal_flip():
+    r=payload()
+    base=2**23
+    r['mesh']=dict(vertices_m=[[base,base,0],[base+1.49,base+.49,0],[base+2.49,base+.51,0]],triangles=[[0,1,2]])
+    r['provenance']['faces']=r['provenance']['faces'][:1]
+    with pytest.raises(ValueError,match='reversed face normal'):
+        export_glb(r)
