@@ -1,4 +1,6 @@
 """Research-only face provenance for sparse loft meshes."""
+from copy import deepcopy
+
 def valid_reference(ref):
     return isinstance(ref,dict) and all(
         isinstance(ref.get(k),str) and ref[k].strip()
@@ -27,7 +29,7 @@ def bind_face_evidence(mesh, samples, cell_reviews):
                 if not valid_reference(ref):
                     raise ValueError('invalid evidence reference')
                 if ref not in sources:
-                    sources.append(dict(ref))
+                    sources.append(deepcopy(ref))
             bases.append(s['basis'])
-        records.append(dict(face_id=face_id,cell=[i,j],corner_bases=bases,sources=sources,cell_review=dict(review),basis='computed_surface',review='pending'))
+        records.append(dict(face_id=face_id,cell=[i,j],corner_bases=bases,sources=sources,cell_review=deepcopy(review),basis='computed_surface',review='pending'))
     return dict(faces=records,research_only=True,lofting_authorized=False)
