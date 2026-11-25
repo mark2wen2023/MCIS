@@ -1,0 +1,27 @@
+"""Research-only face provenance for sparse loft meshes."""
+def bind_face_evidence(mesh, samples, cell_reviews):
+    records=[]
+    if len(mesh['triangles'])!=len(mesh['face_cells']):
+        raise ValueError('face mapping mismatch')
+    for face_id,(face,cell) in enumerate(zip(mesh['triangles'],mesh['face_cells'])):
+        i,j=cell
+        review=cell_reviews.get((i,j))
+        if not isinstance(review,dict) or review.get('review')!='accepted' or not review.get('document_id') or not review.get('locator'):
+            raise ValueError('cell support evidence required')
+        sources=[]
+        bases=[]
+        for a,b in ((i,j),(i,j+1),(i+1,j),(i+1,j+1)):
+            s=samples[a][b]
+            if s.get('basis') not in ('direct_sample','interpolated') or s.get('half_breadth_m') is None:
+                raise ValueError('unsupported corner')
+            refs=s.get('sources')
+            if not isinstance(refs,list) or not refs:
+                raise ValueError('missing corner evidence')
+            for ref in refs:
+                if not isinstance(ref,dict) or not ref.get('document_id') or not ref.get('locator'):
+                    raise ValueError('invalid evidence reference')
+                if ref not in sources:
+                    sources.append(dict(ref))
+            bases.append(s['basis'])
+        records.append(dict(face_id=face_id,cell=[i,j],corner_bases=bases,sources=sources,cell_review=dict(review),basis='computed_surface',review='pending'))
+    return dict(faces=records,research_only=True,lofting_authorized=False)
