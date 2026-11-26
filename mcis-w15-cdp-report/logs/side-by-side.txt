@@ -1,0 +1,33 @@
+W15 CDP Network vs Playwright vs host (diagnostic only, candidate cc98de9)
+acceptance=cc98de9ac4888c684651a6eb9d397b0161164022
+versus=3a2ef41e8280abb169e4bcc5a805d7fd49109af1 (CDP observation + DIAGNOSIS note + diagnose pin only; no CDP body read)
+official diagnose exit=124 (outer timeout TERM at 150s; not an assertion pass)
+receipt=none screenshots=none
+one preview POST only; no second preview sent; original assertions unchanged
+
+Side-by-side (same monotonic clock):
+
+event / source                         observed     status / size / fingerprint                          t
+-------------------------------------  -----------  ---------------------------------------------------  -------------
+CDP Network.requestWillBeSent          yes          status=- encodedBytes=-                              23046.938669
+Playwright request                     yes          status=-                                             23046.939048
+HOST preview request                   yes          -                                                    23046.940750
+HOST sent_headers                      yes          status=503                                           23047.005248
+HOST sent_final                        yes          bytes=74 sha256=56d478d95ce7be6180ea5b0b14dc4b25d27eef1039fa14eba6e14a9e9a6780ff
+                                                                                                         23047.005328
+Playwright response                    yes          status=503                                           23047.008073
+CDP Network.responseReceived           yes          status=503 encodedBytes=-                            23047.008901
+CDP Network.loadingFinished            no           (missing)                                            -
+CDP Network.loadingFailed              no           (missing)                                            -
+Playwright requestfinished             no           (missing)                                            -
+Playwright requestfailed               no           (missing)                                            -
+
+Timing: host_final to Playwright response = 0.002745s; Playwright response to CDP responseReceived = 0.000828s.
+encodedBytes on responseReceived is "-" (DIAGNOSIS.md: encodedBytes is a transport counter, typically on loadingFinished, not JSON body length).
+No CDP getResponseBody was called.
+
+Last TRACE: +4.665s app_ui:195 line — assert result.json()["code"]=="BOWTIE_CORE_UNAVAILABLE"
+expect_response and the 503/no-store header assert had already completed (lines 193-194).
+Then faulthandler at 45s (selectors.select / greenlet_main) and outer TERM at 150s.
+
+This does not overwrite prior receipts and is not overall acceptance. Diagnosis is not a pass.
