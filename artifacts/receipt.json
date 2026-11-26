@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "pin": "94d5e38c926fda232bb987b60fa9145e4bcf01a7",
+  "coreDllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+  "groups": [
+    {
+      "name": "group1-manual-calibrate",
+      "exitCode": 0,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "name": "group2-no-manual-no-auto",
+      "exitCode": 0,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "name": "group3-bad-manual-anchors",
+      "exitCode": 4,
+      "ok": false,
+      "errors": []
+    }
+  ],
+  "firstFailure": null,
+  "perPointAlignedTimes": "未验",
+  "scope": "synthetic manual-anchor core CLI only; not W4 whole package"
+}

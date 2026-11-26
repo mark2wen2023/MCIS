@@ -1,0 +1,3 @@
+# SYN-W4-MANUAL-ANCHOR-1 格式错误的人工锚点（time_a_utc 非法）。非真实案卷。
+event_key,source_a,time_a_utc,source_b,time_b_utc,note,investigator
+EVT-BAD,SYN-GNSS,not-a-utc-timestamp,SYN-VDR,2026-03-01T08:10:12.000Z,合成：故意非法时间,SYN-INVESTIGATOR

@@ -1,0 +1,50 @@
+{
+  "caseId": "SYN-W4-MANUAL-ANCHOR-1",
+  "caseEpochUtc": "2026-03-01T08:00:00Z",
+  "referenceSourceId": "SYN-GNSS",
+  "offsetMethod": "Median",
+  "calibrate": true,
+  "sources": [
+    {
+      "sourceId": "SYN-GNSS",
+      "format": "csv",
+      "path": "/workspace/mcis-w4-manual-anchor-cand/tests_acceptance/w4-manual-anchor-core/fixtures/syn-gnss.csv",
+      "emitGnssAnchors": false,
+      "csvMapping": {
+        "timeColumn": "time_utc",
+        "columns": [
+          {
+            "column": "sog_kn",
+            "kind": "SpeedOverGround"
+          },
+          {
+            "column": "cog_deg",
+            "kind": "CourseOverGround"
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "SYN-VDR",
+      "format": "csv",
+      "path": "/workspace/mcis-w4-manual-anchor-cand/tests_acceptance/w4-manual-anchor-core/fixtures/syn-vdr.csv",
+      "emitGnssAnchors": false,
+      "csvMapping": {
+        "timeColumn": "time_utc",
+        "columns": [
+          {
+            "column": "sog_kn",
+            "kind": "SpeedOverGround"
+          },
+          {
+            "column": "cog_deg",
+            "kind": "CourseOverGround"
+          }
+        ]
+      }
+    }
+  ],
+  "manualAnchors": {
+    "path": "/workspace/mcis-w4-manual-anchor-cand/tests_acceptance/w4-manual-anchor-core/fixtures/manual-anchors-valid.csv"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "time": "2026-11-26 23:55:22 CST",
+  "pin": "94d5e38c926fda232bb987b60fa9145e4bcf01a7",
+  "sourceHead": "3c408593143ae1dddc5f065ea8549566fcd40be8",
+  "alignCommandSha256": "4ce13b7fec0898f01d3157b99278561a1ea391d0f4ce3140c1bc9f79fda99b58",
+  "coreDir": "/workspace/mcis-w41-core-out",
+  "artifacts": {
+    "mcis-core.dll": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+    "mcis-core.runtimeconfig.json": "3d25821758613e4cd940d143ccb03c93704140077e69104996832510f38f6598",
+    "mcis-core.deps.json": "fda133109cf9fc926cbda09598ad344f75dc57ec02e345b6923ec5fe2dff9d12"
+  },
+  "dotnet": {
+    "path": "/home/box/.dotnet/dotnet",
+    "version": "8.0.428"
+  },
+  "python": "3.13.5 (main, Aug 10 2026, 12:06:59) [GCC 14.2.0]",
+  "scope": "synthetic manual-anchor core CLI only; not W4 whole package",
+  "offsetDefinition": "offsetSeconds = source time − reference time; calibrated = source − offset",
+  "knownSyntheticOffsetSeconds": 12.0,
+  "perPointAlignedTimes": "未验",
+  "perPointAlignedTimesNote": "CLI align JSON has no per-sample aligned timestamps; do not infer them from conflicts"
+}

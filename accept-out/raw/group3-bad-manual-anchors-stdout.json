@@ -1,0 +1,1 @@
+{"ok":false,"command":"align","coreVersion":"mcis-core/0.1.0","error":{"code":"BAD_REQUEST","message":"人工锚点导入失败：vdr_manual_anchor_bad_time 人工锚点第 3 行 time_a_utc 无效：not-a-utc-timestamp"}}

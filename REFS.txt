@@ -1,0 +1,6 @@
+pin=94d5e38c926fda232bb987b60fa9145e4bcf01a7
+candidate=candidate/w4-manual-anchor-core @3c408593143ae1dddc5f065ea8549566fcd40be8
+coreDllSha256=f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf
+exit=0
+scope=synthetic manual-anchor core CLI only; not W4 whole package
+perPointAlignedTimes=未验
