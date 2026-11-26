@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Isolated sample-clock harness: compiles pinned core sources read-only. No product/CLI changes. No PackageReference. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <RootNamespace>Mcis.Acceptance.W4.SampleClock</RootNamespace>
+    <AssemblyName>W4SampleClock</AssemblyName>
+    <Deterministic>true</Deterministic>
+    <UseAppHost>false</UseAppHost>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Core/Primitives/**/*.cs" Link="Impl/Core/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Domain/Common/**/*.cs" Link="Impl/Common/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Domain/Models/**/*.cs" Link="Impl/Models/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Domain/Timeline/**/*.cs" Link="Impl/Timeline/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Data/Vdr/**/*.cs" Link="Impl/Vdr/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="../../unity/Assets/_Project/Scripts/Domain/Evidence/**/*.cs" Link="Impl/Evidence/%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>

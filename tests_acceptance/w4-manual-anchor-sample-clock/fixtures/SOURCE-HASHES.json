@@ -1,0 +1,30 @@
+{
+  "sourceCandidate": "candidate/w4-manual-anchor-core",
+  "sourceSha": "3c408593143ae1dddc5f065ea8549566fcd40be8",
+  "expectedSourceSha": "3c408593143ae1dddc5f065ea8549566fcd40be8",
+  "productPin": "94d5e38c926fda232bb987b60fa9145e4bcf01a7",
+  "files": {
+    "syn-gnss.csv": {
+      "sourcePath": "tests_acceptance/w4-manual-anchor-core/fixtures/syn-gnss.csv",
+      "sourceSha256": "714b34cd0d01df8dbd2ddde9c423cd0861e74073c8e50e333b3feb12a27cfe02",
+      "copiedSha256": "714b34cd0d01df8dbd2ddde9c423cd0861e74073c8e50e333b3feb12a27cfe02",
+      "bytes": 277,
+      "match": true
+    },
+    "syn-vdr.csv": {
+      "sourcePath": "tests_acceptance/w4-manual-anchor-core/fixtures/syn-vdr.csv",
+      "sourceSha256": "42d54483b2c28094b4a14908d21b5055dbdfae3d48a6b676ff8dc9814e287a2e",
+      "copiedSha256": "42d54483b2c28094b4a14908d21b5055dbdfae3d48a6b676ff8dc9814e287a2e",
+      "bytes": 308,
+      "match": true
+    },
+    "manual-anchors-valid.csv": {
+      "sourcePath": "tests_acceptance/w4-manual-anchor-core/fixtures/manual-anchors-valid.csv",
+      "sourceSha256": "91b4277de01e01d797818bd8ca3128789dbfc4a11e495d27af909cd65d174f48",
+      "copiedSha256": "91b4277de01e01d797818bd8ca3128789dbfc4a11e495d27af909cd65d174f48",
+      "bytes": 557,
+      "match": true
+    }
+  },
+  "allCopiedBytesMatch": true
+}
