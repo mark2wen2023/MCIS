@@ -291,8 +291,19 @@ def main() -> int:
 
     source = args.source.resolve()
     head = subprocess.check_output(["git", "-C", str(source), "rev-parse", "HEAD"], text=True).strip()
-    if head != PIN:
-        die(f"source HEAD {head} is not pin {PIN}")
+    ancestor = subprocess.run(
+        ["git", "-C", str(source), "merge-base", "--is-ancestor", PIN, "HEAD"],
+        check=False,
+    )
+    if ancestor.returncode != 0:
+        die(f"source HEAD {head} does not contain pin {PIN}")
+    changed = subprocess.check_output(
+        ["git", "-C", str(source), "diff", "--name-only", PIN, "HEAD"],
+        text=True,
+    ).splitlines()
+    unexpected = [n for n in changed if not n.startswith("tests_acceptance/w4-manual-anchor-core/")]
+    if unexpected:
+        die("source differs from pin outside the acceptance directory: " + ", ".join(unexpected))
     align = source / "tools/mcis-core/src/AlignCommand.cs"
     require_sha(align, ALIGN_CS_SHA256, "AlignCommand.cs")
 
