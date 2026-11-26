@@ -1,0 +1,11 @@
+{
+  "box-control.json": "492b8c0beb15ecf744618982527c91a5b7d9f5ace45617dbd00acccb9a5ac324",
+  "inputs/A/lines.dxf": "29f9d2697329441a300e65dc8eb2ec85db4946afd57fef2269cf179da788ea83",
+  "inputs/B/lines.dxf": "291ceb16b60b10f11b4b46d7d9f6c664e2b0e11cb32dbc3b8051ddf26e31693e",
+  "make_inputs.py": "52650bcc3194afde05456b27a4b4fe4b7b7e5fc8ca2ed1555b1d6c87c9b2a5c2",
+  "score.py": "9d4eac0c843f7a2479d9c9234e14b72fb6085dbacf5867505248d01369a80cfa",
+  "truth/A.json": "4a18e97ff75dc6f6717497b013c18e270eae4c09a11f2d278970d25fe1c94648",
+  "truth/B.json": "a67aecfc6e68f74ca6091faf6fd5f7835b56b33c678052319c5977eb8437ad67",
+  "witness/A.json": "3a18a0114a7fe162115580b42e3af494f07ebb0180cd5f140508f8f62d07997b",
+  "witness/B.json": "ca01076609191d595398fc1a1974cc15d8d12d18701d3e05edafda7087b058d1"
+}

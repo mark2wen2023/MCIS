@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 """从工程 DWG/DXF 离线生成研究级几何及逐项证据。"""
 import argparse
-import hashlib
 import json
-import math
-import os
 from pathlib import Path
 import tempfile
 import time
@@ -17,7 +14,8 @@ from jsonschema import Draft202012Validator
 from cad_input import AXES,classify,convert,extract
 from core.drawing_parser import fingerprint,parse_drawing
 from geometry import build_shell,exchange,read_exchange,hydro,quality,read_curves
-from parts import extract_parts
+from parts import extract_parts,discover_parts,extrude_registered
+from design_shell import from_design
 
 
 def save(path,data):
@@ -55,11 +53,21 @@ def write_asset(out,role,filename,mesh,report):
     error=float(np.max(np.linalg.norm(mesh.vertices-readback.vertices,axis=1)))
     if not np.array_equal(mesh.faces,readback.faces) or error>report["vertex_budget_m"]:
         raise ValueError("GLB 读回的顶点顺序、连接或精度超过预算")
+    a,b=mesh.triangles,readback.triangles
+    edges0,edges1=(np.roll(t,-1,axis=1)-t for t in (a,b))
+    l0,l1=(np.linalg.norm(e,axis=2) for e in (edges0,edges1))
+    cross0,cross1=(np.cross(e[:,0],e[:,1]) for e in (edges0,edges1))
+    areas0,areas1=(np.linalg.norm(c,axis=1)*0.5 for c in (cross0,cross1))
+    edge_error=np.abs(l1-l0);area_error=np.abs(areas0-areas1)
+    if (np.any(np.einsum("ij,ij->i",cross0,cross1)<=0) or
+            np.any(edge_error>1e-7+1e-3*l0) or np.any(area_error>1e-10+1e-3*areas0)):
+        raise ValueError("GLB 往返存在法向翻转、退化或边长与面积超出研究预算")
     qa=quality(readback)
     if role in ("displacement","proxy") and not qa["closed_verified"]:
         raise ValueError("导出后的实体未通过闭合与自交复核")
     report["assets"][role]={"path":filename,"sha256":fingerprint(path),"faces":len(mesh.faces),
-                             "roundtrip_vertex_error_m":error,"quality":qa}
+                             "roundtrip_vertex_error_m":error,"max_edge_error_m":float(edge_error.max()),
+                             "max_area_error_m2":float(area_error.max()),"quality":qa}
     return readback
 
 
@@ -93,17 +101,50 @@ def run(directory,files,out,profile,oda,report):
     mesh,faces,construction=build_shell(rows,curves,symmetric,closure,profile.get("subdivisions",4 if curves else 1))
     report.update(construction=construction,domain="已观测型值域",boundary_basis=profile.get("boundary_source") or
                   "研究假设：在型值表端站、最高与最低层作平面封盖，仅计算该型值域")
-    contact=write_asset(out,"contact","contact.glb",mesh,report)
+    if profile.get("design_shell"):
+        write_asset(out,"offset_surface","offset-surface.glb",mesh,report)
+        save(out/"offset-face-evidence.json",dict(source_sha256=item["sha256"],faces=faces))
+        report["assets"]["offset_surface"]["evidence"]="offset-face-evidence.json"
+        try:
+            mesh,faces,refinement=from_design(directory,entries,profile["design_shell"],curves)
+        except ValueError as exc:
+            report["issues"].append({"design_shell_rejected":str(exc)})
+        else:
+            report.update(design_refinement=refinement,domain="原始设计排水实体及原图水线",
+                          boundary_basis=profile["design_shell"]["source"])
+    try:
+        contact=write_asset(out,"contact","contact.glb",mesh,report)
+    except ValueError as exc:
+        if "design_refinement" not in report:raise
+        report["issues"].append({"split_mesh_exchange_rejected":str(exc)})
+        mesh,faces,refinement=from_design(directory,entries,profile["design_shell"],curves,keep_topology=True)
+        report["design_refinement"]=refinement
+        contact=write_asset(out,"contact","contact.glb",mesh,report)
     qa=quality(contact);report["mesh"]=qa
     save(out/"face-evidence.json",dict(source_sha256=item["sha256"],dxf_sha256=item["dxf_sha256"],
             asset_sha256=report["assets"]["contact"]["sha256"],frame=frame,faces=faces))
     report["assets"]["contact"]["evidence"]="face-evidence.json"
-    parts,part_issues=extract_parts(entries,profile.get("components",[]))
+    holdouts=[c for c in curves if c["use"]=="holdout"]
+    if holdouts:
+        import igl
+        measured=[]
+        for curve in holdouts:
+            points=np.array(curve["points_m"])
+            sq,_,_=igl.point_mesh_squared_distance(points,np.array(contact.vertices),np.array(contact.faces,dtype=np.int64))
+            distances=np.sqrt(np.maximum(0,sq))
+            measured.append(dict(handle=curve["handle"],kind=curve["kind"],samples=len(points),
+                    mae_m=float(distances.mean()),p95_m=float(np.percentile(distances,95)),
+                    max_m=float(distances.max()),rmse_m=float(np.sqrt(np.mean(sq)))))
+        save(out/"heldout.json",dict(method="整条留出曲线折线采样到已读回接触网格的单向最近距离",
+                source_sha256=item["sha256"],asset_sha256=report["assets"]["contact"]["sha256"],curves=measured))
+    parts,part_issues=extract_parts(entries,profile.get("components",discover_parts(entries)))
+    parts.extend(extrude_registered(entries,profile.get("extrusions",[])))
     report["issues"].extend(part_issues)
     scene=trimesh.Scene();scene.add_geometry(exchange(mesh),node_name="hull")
     for index,(spec,part,handles,pqa) in enumerate(parts):
         key=f"{spec['role']}-{index}"
         verified=pqa["closed_verified"] if spec["role"] in ("tank","compartment") else None
+        write_asset(out,key,key+".glb",part,report)
         report["components"].append({"id":key,"source":spec,"handles":handles,"quality":pqa,
                                     "enclosed_compartment_verified":verified})
         scene.add_geometry(exchange(part),node_name=key)
@@ -116,9 +157,9 @@ def run(directory,files,out,profile,oda,report):
                                          {s["role"] for s,_,_,_ in parts})
     if qa["closed_verified"]:
         solid=write_asset(out,"displacement","displacement.glb",mesh,report)
-        proxy=mesh.convex_hull
+        proxy=solid.convex_hull
         write_asset(out,"proxy","proxy.glb",proxy,report)
-        report["assets"]["proxy"]["method"]="单凸包，适用于粗筛"
+        report["assets"]["proxy"]["method"]="排水 GLB 读回顶点的单凸包，适用于粗筛"
         report["assets"]["proxy"]["relative_volume_excess"]=float(proxy.volume/mesh.volume-1)
         drafts=profile.get("drafts_m",sorted({r["z_m"] for r in rows}))
         save(out/"hydrostatics.json",hydro(solid,drafts))
@@ -161,6 +202,7 @@ def main():
         except Exception as exc:
             report["issues"].append({"stage_error":type(exc).__name__,"message":str(exc)[:2000]})
             report["status"]="needs_evidence"
+            report["intermediate_assets_only"]=True
         report["seconds"]=time.monotonic()-start
         save(path/"report.json",report)
         if dest.exists():raise FileExistsError(dest)

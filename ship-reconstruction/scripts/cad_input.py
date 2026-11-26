@@ -75,12 +75,15 @@ def declarations(entities):
     frame = (bool(re.search(r"x\s*[-+:=]?\s*(?:forward|向艏|向首)", combined)) and
              bool(re.search(r"y\s*[-+:=]?\s*(?:port|向左舷)", combined)) and
              bool(re.search(r"z\s*[-+:=]?\s*(?:up|向上)", combined)))
+    origin = find(r"\borigin\s*[:=]|原点[：:=]")
+    conflict = find(r"x\s*[-+:=]?\s*(?:aft|向艉)|y\s*[-+:=]?\s*(?:starboard|向右舷)|z\s*[-+:=]?\s*(?:down|向下)")
+    frame=bool(frame and origin and not conflict)
     # Avoid treating a negated declaration as permission to mirror.
     sym = find(r"\bsymmetric(?:al)?\b|左右对称|关于中线对称|左右舷对称")
     negative = find(r"\b(?:not|non[- ]?)\s*symmetric|不对称|非对称")
     return {"unit":next(iter(units)) if len(units)==1 else None, "frame":frame,
             "symmetric":bool(sym and not negative), "notes":[h for h,t in notes if
-                re.search(unit_pattern,t) or any(w in t for w in ("forward","向艏","向首","对称","symmetr"))]}
+                re.search(unit_pattern,t) or any(w in t for w in ("origin","原点","forward","向艏","向首","port","向左舷","向上","对称","symmetr"))]}
 
 
 def discover(parsed):

@@ -1,0 +1,54 @@
+{
+  "source_sha256": "291ceb16b60b10f11b4b46d7d9f6c664e2b0e11cb32dbc3b8051ddf26e31693e",
+  "symmetric": true,
+  "frame": {
+    "axes": "x-forward,y-port,z-up",
+    "source": "lines.dxf#37"
+  },
+  "table": {
+    "row_labels": [
+      "ST 19.2 m",
+      "ST 17.9 m",
+      "ST 15.8 m",
+      "ST 13.2 m",
+      "ST 10 m",
+      "ST 7.2 m",
+      "ST 4.2 m",
+      "ST 1.8 m",
+      "ST 0 m"
+    ],
+    "column_labels": [
+      "WL 0 m",
+      "WL 0.33 m",
+      "WL 0.67 m",
+      "WL 1.1 m",
+      "WL 1.54 m",
+      "WL 1.95 m"
+    ],
+    "station_axis": "row",
+    "stations_m_by_label": {
+      "ST 0 m": 0,
+      "ST 1.8 m": 1.8,
+      "ST 4.2 m": 4.2,
+      "ST 7.2 m": 7.2,
+      "ST 10 m": 10.0,
+      "ST 13.2 m": 13.2,
+      "ST 15.8 m": 15.8,
+      "ST 17.9 m": 17.9,
+      "ST 19.2 m": 19.2
+    },
+    "heights_m_by_label": {
+      "WL 0 m": 0,
+      "WL 0.33 m": 0.33,
+      "WL 0.67 m": 0.67,
+      "WL 1.1 m": 1.1,
+      "WL 1.54 m": 1.54,
+      "WL 1.95 m": 1.95
+    },
+    "unit": "m",
+    "source": "lines.dxf#36; lines.dxf#38",
+    "layout": "Model",
+    "plane_z": 0.0,
+    "tolerance": 0.8
+  }
+}

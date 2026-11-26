@@ -12,7 +12,7 @@ def transform(matrix, points):
     if a.shape!=(4,4) or any(type(v) not in (int,float) or not math.isfinite(v) for v in a.flat):
         raise ValueError("需要四行四列有限数值变换矩阵")
     a=a.astype(float)
-    if not np.array_equal(a[-1],[0,0,0,1]):
+    if np.linalg.matrix_rank(a[:3,:3])!=3 or not np.array_equal(a[-1],[0,0,0,1]):
         raise ValueError("仅支持仿射坐标变换")
     return np.asarray(points,dtype=float) @ a[:3,:3].T + a[:3,3]
 
@@ -129,17 +129,21 @@ def build_shell(rows, curves, symmetric, closure, subdivisions=1):
 def quality(mesh):
     check=validate_mesh(mesh.vertices.tolist(),mesh.faces.tolist())
     topology={k:len(v) if isinstance(v,list) else v for k,v in check.items()}
-    intersections=None
+    intersections=None; manifold=None
     try:
+        import igl
         from igl.copyleft import cgal
+        manifold=bool(igl.is_vertex_manifold(np.ascontiguousarray(mesh.faces,dtype=np.int64)).all())
         hits=cgal.remesh_self_intersections(np.ascontiguousarray(mesh.vertices),np.ascontiguousarray(mesh.faces,dtype=np.int64),detect_only=True)[2]
         intersections=len(hits)
     except (ImportError,RuntimeError):
         pass
-    return dict(topology=topology,self_intersection_pairs=intersections,components=int(mesh.body_count),
+    angles=np.rad2deg(mesh.face_angles)
+    longest=mesh.edges_unique_length.max()
+    return dict(vertex_manifold=manifold,min_angle_deg=float(angles.min()),max_edge_m=float(longest),topology=topology,self_intersection_pairs=intersections,components=int(mesh.body_count),
                 signed_volume_m3=float(mesh.volume),area_m2=float(mesh.area),
                 closed_verified=bool(check["edge_closed_candidate"] and mesh.body_count==1 and
-                    mesh.is_watertight and mesh.is_winding_consistent and mesh.is_volume and intersections==0))
+                    mesh.is_watertight and mesh.is_winding_consistent and mesh.is_volume and manifold and intersections==0))
 
 
 def exchange(mesh):

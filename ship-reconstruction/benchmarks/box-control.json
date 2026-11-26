@@ -1,0 +1,70 @@
+{
+  "metrics": {
+    "L_rel": {
+      "error": 0.0,
+      "threshold": 0.0025,
+      "passed": true
+    },
+    "B_rel": {
+      "error": 0.0,
+      "threshold": 0.0075,
+      "passed": true
+    },
+    "D_rel": {
+      "error": 0.0,
+      "threshold": 0.0025,
+      "passed": true
+    },
+    "holdout_rms_over_B": {
+      "error": 0.0,
+      "threshold": 0.015,
+      "passed": true
+    },
+    "section_max_rel": {
+      "error": 0.0,
+      "threshold": 0.035,
+      "passed": true
+    },
+    "volume_max_rel": {
+      "error": 0.0,
+      "threshold": 0.035,
+      "passed": true
+    },
+    "waterplane_max_rel": {
+      "error": 0.0,
+      "threshold": 0.035,
+      "passed": true
+    },
+    "lcb_max_over_L": {
+      "error": 0.0,
+      "threshold": 0.01,
+      "passed": true
+    }
+  },
+  "held_out": [
+    {
+      "x_m": 0.891,
+      "z_m": 0.619,
+      "half_breadth_m": 1,
+      "measured_m": 1.0
+    }
+  ],
+  "sections": [
+    {
+      "x_m": 0.879,
+      "area_m2": 4,
+      "measured_m2": 4.0
+    }
+  ],
+  "hydrostatics": [
+    {
+      "draft_m": 0.713,
+      "volume_m3": 5.704,
+      "area_m2": 8,
+      "lcb_m": 2,
+      "measured_volume_m3": 5.704,
+      "measured_area_m2": 8.0,
+      "measured_lcb_m": 2.0
+    }
+  ]
+}

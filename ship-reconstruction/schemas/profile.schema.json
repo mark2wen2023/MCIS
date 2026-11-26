@@ -226,6 +226,109 @@
       "items": {
         "type": "number"
       }
+    },
+    "design_shell": {
+      "type": "object",
+      "required": [
+        "source_sha256",
+        "matrix",
+        "source",
+        "max_correction_m"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "matrix": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "max_correction_m": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "extrusions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source_sha256",
+          "matrix",
+          "role",
+          "source",
+          "outline_handle",
+          "measure_handle",
+          "positive_normal"
+        ],
+        "properties": {
+          "source_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "matrix": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          "role": {
+            "enum": [
+              "deck",
+              "bulkhead",
+              "frame",
+              "longitudinal",
+              "plate",
+              "tank",
+              "compartment"
+            ]
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outline_handle": {
+            "type": "string",
+            "minLength": 1
+          },
+          "measure_handle": {
+            "type": "string",
+            "minLength": 1
+          },
+          "positive_normal": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {
+              "type": "number"
+            }
+          }
+        }
+      }
     }
   },
   "required": [
