@@ -1,0 +1,5 @@
+product=94d5e38c926fda232bb987b60fa9145e4bcf01a7
+candidate=candidate/w41-late-response @5723594b9789d951e25fd9d107fbb858fcfa52b7
+mechanism=ed430db2aab3620be1c001194308691e7694bdd5
+viewport=390x844
+scope=synthetic late preview response at 390x844 only; not W4 whole package and not a desktop or baseline rerun

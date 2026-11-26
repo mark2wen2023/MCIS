@@ -1,0 +1,127 @@
+{
+  "revision": "94d5e38c926fda232bb987b60fa9145e4bcf01a7",
+  "browser": "Google Chrome 156.0.8078.47",
+  "sandboxRequested": true,
+  "cases": [
+    "SYN-W41-X-A",
+    "SYN-W41-X-B"
+  ],
+  "coreDllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+  "passed": true,
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "scope": "synthetic late preview response at the requested viewport only; not W4 whole package and not a desktop or baseline rerun",
+  "browserRuntime": "156.0.8078.47",
+  "sqliteBefore": "1cca655bc21e380ec61bad207f022463e574880ed68c9f44476b3878a2f0eb12",
+  "late": {
+    "screenshotBeforeRelease": {
+      "width": 390,
+      "height": 844,
+      "bytes": 91205,
+      "sha256": "99018721162708ce13337e17494784b64c8ae3f1b61660a83ba20fb1445198d5"
+    },
+    "overflowBeforeRelease": {
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "scrollHeight": 3888
+    },
+    "receiptPanelBeforeRelease": {
+      "box": {
+        "x": 25,
+        "y": 0.40625,
+        "width": 340,
+        "height": 1010.84375
+      },
+      "visibleWidth": 340,
+      "visibleHeight": 843.59375,
+      "textChars": 982
+    },
+    "released": {
+      "released": true,
+      "sha256": "e8dd952a43315b9044d8fff637d1620fbbd640e0aa7b72faf83d8cea3745263c",
+      "held": true,
+      "sent": false
+    },
+    "gateAfterWait": {
+      "held": false,
+      "sent": true,
+      "sendError": null,
+      "status": 200,
+      "sha256": "e8dd952a43315b9044d8fff637d1620fbbd640e0aa7b72faf83d8cea3745263c",
+      "bytes": 1556,
+      "computedAt": 1795693678.5187573,
+      "releasedAt": 1795693679.1110275,
+      "sentAt": 1795693679.1111538
+    },
+    "events": [
+      {
+        "at": 1795693678.9795144,
+        "mono": 35748.808628177,
+        "kind": "finished",
+        "path": "/api/v1/cases/SYN-W41-X-B/timeline/align-preview",
+        "failure": null
+      },
+      {
+        "at": 1795693679.1135206,
+        "mono": 35748.942634258,
+        "kind": "finished",
+        "path": "/api/v1/cases/SYN-W41-X-A/timeline/align-preview",
+        "failure": null
+      }
+    ],
+    "screenshotAfterA": {
+      "width": 390,
+      "height": 844,
+      "bytes": 106863,
+      "sha256": "67e06abaeb76e7e102330fc1479324642c805a827c5909ca3269f4f3d487c372"
+    },
+    "overflowAfterA": {
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "scrollHeight": 3888
+    },
+    "receiptPanelAfterA": {
+      "box": {
+        "x": 25,
+        "y": 0.40625,
+        "width": 340,
+        "height": 1010.84375
+      },
+      "visibleWidth": 340,
+      "visibleHeight": 843.59375,
+      "textChars": 982
+    },
+    "held": {
+      "held": true,
+      "sent": false,
+      "sendError": null,
+      "status": 200,
+      "sha256": "e8dd952a43315b9044d8fff637d1620fbbd640e0aa7b72faf83d8cea3745263c",
+      "bytes": 1556,
+      "computedAt": 1795693678.5187573,
+      "releasedAt": null,
+      "sentAt": null
+    },
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "pageOverflow": false,
+    "receiptPanelReadable": true,
+    "beforeReleaseTextContainsB": true,
+    "aFinishedAfterB": true,
+    "aCancelled": false,
+    "aNeverArrived": false,
+    "browserBodySha256": "e8dd952a43315b9044d8fff637d1620fbbd640e0aa7b72faf83d8cea3745263c",
+    "bStatus": 200,
+    "aStatus": 200
+  },
+  "sqliteAfterLate": "1cca655bc21e380ec61bad207f022463e574880ed68c9f44476b3878a2f0eb12",
+  "sqliteAfterReopen": "1cca655bc21e380ec61bad207f022463e574880ed68c9f44476b3878a2f0eb12"
+}

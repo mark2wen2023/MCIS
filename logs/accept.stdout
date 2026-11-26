@@ -1,0 +1,25 @@
+W41 LATE 35737.835 work tree ready
+W41 LATE 35738.093 archived pinned product
+W41 LATE 35744.959 vite build done
+W41 LATE 35746.225 chrome launched
+W41 LATE 35747.306 service first ready
+W41 LATE 35747.338 cases seeded
+W41 LATE 35747.342 sqlite before hashed
+W41 LATE 35747.342 late flow start
+W41 LATE 35747.495 open A
+W41 LATE 35748.010 opened A
+W41 LATE 35748.010 fill A
+W41 LATE 35748.143 filled A
+W41 LATE 35748.181 A request started
+W41 LATE 35748.181 waiting for A hold
+W41 LATE 35748.182 gate poll {'held': False, 'sent': False, 'sendError': None, 'status': None, 'sha256': None, 'bytes': None, 'computedAt': None, 'releasedAt': None, 'sentAt': None}
+W41 LATE 35748.433 A held sha=e8dd952a43315b9044d8fff637d1620fbbd640e0aa7b72faf83d8cea3745263c
+W41 LATE 35748.438 open B
+W41 LATE 35748.523 opened B
+W41 LATE 35748.523 fill B
+W41 LATE 35748.642 filled B
+W41 LATE 35748.808 B HTTP 200
+W41 LATE 35748.940 releasing A
+W41 LATE 35748.940 released A
+W41 LATE 35748.992 after wait finish=True fail=None gate={'held': False, 'sent': True, 'sendError': None, 'status': 200, 'sha256': 'e8dd952a43315b9044d8fff637d1620fbbd640e0aa7b72faf83d8cea3745263c', 'bytes': 1556, 'computedAt': 1795693678.5187573, 'releasedAt': 1795693679.1110275, 'sentAt': 1795693679.1111538}
+W41 LATE 35749.125 late flow done

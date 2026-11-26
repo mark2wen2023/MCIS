@@ -1,0 +1,4 @@
+2026-11-26 19:47:47 CST
+candidate=5723594b9789d951e25fd9d107fbb858fcfa52b7
+parent=ed430db2aab3620be1c001194308691e7694bdd5
+command=timeout --signal=TERM --kill-after=10s 150s late-response run.py --viewport-width 390 --viewport-height 844
