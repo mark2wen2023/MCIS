@@ -1,0 +1,45 @@
+{
+  "mcisRevision": "2048c60fd6650c6f2c99a76a16be463a3895655d",
+  "precheckRevision": "e8d86bbfce715e0725e212835eed70167f25b6c8",
+  "files": {
+    "vessel-a.json": {
+      "mcis": {
+        "sha256": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c",
+        "bytes": 35376
+      },
+      "precheck": {
+        "sha256": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c",
+        "bytes": 35376
+      },
+      "expected": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c",
+      "mcisMatchesExpected": true,
+      "precheckEqualsMcis": true
+    },
+    "vessel-b.json": {
+      "mcis": {
+        "sha256": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca",
+        "bytes": 40954
+      },
+      "precheck": {
+        "sha256": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca",
+        "bytes": 40954
+      },
+      "expected": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca",
+      "mcisMatchesExpected": true,
+      "precheckEqualsMcis": true
+    },
+    "vessel-mismatch.json": {
+      "mcis": {
+        "sha256": "f785399311f5dd045eec6cc8a6a2105d95b376e9aa894342fd4da4f5985dc2f4",
+        "bytes": 40956
+      },
+      "precheck": {
+        "sha256": "f785399311f5dd045eec6cc8a6a2105d95b376e9aa894342fd4da4f5985dc2f4",
+        "bytes": 40956
+      },
+      "expected": "f785399311f5dd045eec6cc8a6a2105d95b376e9aa894342fd4da4f5985dc2f4",
+      "mcisMatchesExpected": true,
+      "precheckEqualsMcis": true
+    }
+  }
+}

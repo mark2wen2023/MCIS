@@ -1,0 +1,5 @@
+precheck=e8d86bbfce715e0725e212835eed70167f25b6c8
+mcis=2048c60fd6650c6f2c99a76a16be463a3895655d
+mcis3d=de9356a4616c0ef593ffff0ca81fd959ff24c1b3
+officialRun=not-started
+scope=preflight only; not W21 whole package

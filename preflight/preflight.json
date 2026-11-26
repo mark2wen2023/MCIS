@@ -1,0 +1,85 @@
+{
+  "timeAsiaShanghai": "2026-11-26 21:53:43 CST",
+  "dispatch": "https://github.com/mark2wen2023/MCIS/issues/106#issuecomment-7193191678",
+  "accepted": "https://github.com/mark2wen2023/MCIS/issues/106#issuecomment-7193863761",
+  "pins": {
+    "precheck": "e8d86bbfce715e0725e212835eed70167f25b6c8",
+    "mcis": "2048c60fd6650c6f2c99a76a16be463a3895655d",
+    "mcis3d": "de9356a4616c0ef593ffff0ca81fd959ff24c1b3"
+  },
+  "items": {
+    "node": {
+      "ok": true,
+      "path": "/usr/local/bin/node",
+      "version": "v24.22.1"
+    },
+    "playwrightCli": {
+      "ok": true,
+      "path": "/workspace/w17-pyplaywright-venv/bin/playwright",
+      "version": "1.65.2"
+    },
+    "chromeSandbox": {
+      "ok": true,
+      "path": "/usr/bin/google-chrome",
+      "version": "Google Chrome 156.0.8078.47",
+      "sandboxRequested": true,
+      "noSandboxFlag": false,
+      "launchOk": true,
+      "chromeSandboxHelper": {
+        "path": "/opt/google/chrome/chrome-sandbox",
+        "mode": "0o104755",
+        "uid": 0
+      }
+    },
+    "webgl": {
+      "ok": true,
+      "webgl": true,
+      "webgl2": true,
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "vendor": "Google Inc. (Google)",
+      "sandboxFlags": null,
+      "probeScreenshot": {
+        "path": "preflight/webgl-probe.png",
+        "sha256": "002bfbab28614b1bd2ddf8baa0691b3c053628c074293c73b2bb5293e5eb50ad",
+        "bytes": 13081,
+        "size": [
+          1280,
+          720
+        ]
+      }
+    },
+    "lockedSource": {
+      "precheckLocal": true,
+      "mcis2048c60Local": true,
+      "mcis3dGitFetchWithGITHUB_MCIS_TOKEN": "403 (private repo mark2wen2023/mcis-3d; token cannot clone)",
+      "mcis3dCommitConfirmedViaCursorGithub": true,
+      "mcis3dLocalCheckoutWithDeps": false,
+      "oldPackagesNotUsed": true,
+      "note": "Did not use in-repo legacy archives such as mcis3d-215c057e-browser-acceptance.tgz. Did not touch /workspace/yuehai-*."
+    },
+    "existingDependencies": {
+      "ok": false,
+      "blocker": "本机无 mcis-3d@de9356a 的 node_modules 或 bun 依赖目录，也无对应 bun.lock 缓存（~/.bun 不存在）。不得 npm/bun install 或下载。MCIS web/node_modules 属于另一工程，未挪用。",
+      "packageManagerLock": "bun.lock (blob 0301fe25ab6cb4edd7df621dd6a96f819728892b, 121800 bytes); package.json scripts 写 npm install / npm run dev",
+      "bunPresent": "1.4.4 at /usr/local/bin/bun, unused because install is forbidden"
+    },
+    "viteDefaultListen": {
+      "ok": false,
+      "actuallyVerifiedWithSs": false,
+      "reason": "未启动默认服务：既有依赖缺失，且源码默认绑定 0.0.0.0，无法确保只绑定回环。按派遣，无法确保则停，未改 mcis-3d，未把服务绑到非回环地址做实测。",
+      "viteConfigTs": "de9356a vite.config.ts 未设置 server.host / server.port；allowedHosts 含 .run.app、.googleusercontent.com、localhost、127.0.0.1。未碰线上地址。",
+      "serverTsListen": "server.ts: const PORT = Number(process.env.PORT || 3000); app.listen(PORT, '0.0.0.0', ...). npm run dev = tsx server.ts。默认监听全部接口，不是回环。"
+    }
+  },
+  "officialRun": {
+    "started": false,
+    "exitCode": null,
+    "firstFailure": "预检阻塞：既有依赖缺失；且默认监听为 0.0.0.0，无法确保只绑定回环。",
+    "preparePy": "未验",
+    "browserLaunchConfig": "未验（官方 runner 未启动）。预检探测：Chrome 156.0.8078.47，chromium_sandbox=True，未用 --no-sandbox，launchOk。",
+    "fourTimestampsTwoVessels": "未验",
+    "mixedCaseReject": "未验",
+    "firstNavigationRequests": "未验",
+    "scope": "preflight only; not W21 whole package"
+  }
+}
