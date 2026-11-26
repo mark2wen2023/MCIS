@@ -1,0 +1,13 @@
+{
+  "sourceFixtureRevision": "2048c60fd6650c6f2c99a76a16be463a3895655d",
+  "sourceRunnerRevision": "de9356a4616c0ef593ffff0ca81fd959ff24c1b3",
+  "verifiedFixtureSha256": {
+    "vessel-a.json": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c",
+    "vessel-b.json": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca",
+    "vessel-mismatch.json": "f785399311f5dd045eec6cc8a6a2105d95b376e9aa894342fd4da4f5985dc2f4"
+  },
+  "originalRunnerSha256": "dc3f64541c3572c10997118e006491f02bd87f7e200e943ae6ab3acc66ba27a4",
+  "derivedRunnerSha256": "26a36ec86bf072d61c47e8fa4ae8eee574bdf5cefc3bc47a0aca7c36600e81c1",
+  "browserExecuted": false,
+  "scope": "exact input and runner preparation only; no browser or network result"
+}
