@@ -1,0 +1,10 @@
+2026-11-26 14:53:10 CST
+base_diag=b46401aedd55f30504757338d040376e565aed03
+acceptance_restored=034bff8b1a72aba9c296e13615d637b90d1c3d47
+candidate=508460d4b440617d71e7571f46f1235ed4d5b55d
+python=/workspace/w17-pyplaywright-venv/bin/python
+playwright 1.65.2
+host-python=/workspace/mcis-w17-871db66/service/.venv/bin/python
+chrome=Google Chrome 156.0.8078.47 
+sandbox=chromium_sandbox=True
+outer_watchdog=timeout --signal=TERM --kill-after=10s 150s

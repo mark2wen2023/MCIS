@@ -1,0 +1,38 @@
+W15 CMP effect-start session=SYN-W15-A hashCase=SYN-W15-A
+W15 SOURCE t=27765.695652 case=SYN-W15-A event=request status=- failure=-
+W15 SOURCE t=27765.781668 case=SYN-W15-A event=response status=200 failure=-
+W15 SOURCE t=27765.783008 case=SYN-W15-A event=requestfinished status=- failure=-
+W15 CMP ready session=SYN-W15-A
+W15 PAGE t=27765.822889 tag=hash:SYN-W15-A visibleCase=SYN-W15-A hashCase=SYN-W15-A loadingStatus=0 sourcesPanel=1
+W15 BROWSER t=27765.936396 preview request status=-
+W15 BROWSER t=27766.023647 preview response status=503
+W15 CMP effect-cleanup session=SYN-W15-A hashCase=SYN-W15-B
+W15 CMP effect-start session=SYN-W15-B hashCase=SYN-W15-B
+W15 SOURCE t=27766.187254 case=SYN-W15-B event=request status=- failure=-
+W15 CMP nav hashchange
+W15 CMP leave nav session=SYN-W15-B hashCase=SYN-W15-B stillHere=true active=true
+W15 CMP drop-error session=SYN-W15-B active=false
+W15 BROWSER t=27766.197763 preview requestfailed status=-
+W15 SOURCE t=27766.199773 case=SYN-W15-B event=requestfailed status=- failure=net::ERR_ABORTED
+W15 PAGE t=27766.209324 tag=hash:SYN-W15-B visibleCase=SYN-W15-B hashCase=SYN-W15-B loadingStatus=1 sourcesPanel=0
+W15 SWITCH t=27771.211001 begin visible-entry case=SYN-W15-B
+W15 CMP nav click
+W15 CMP leave nav session=SYN-W15-B hashCase=SYN-W15-B stillHere=true active=false
+W15 CMP effect-cleanup session=SYN-W15-B hashCase=CASE-2026-DEMO-LILY-MARY
+W15 CMP nav click
+W15 CMP nav click
+W15 CMP nav click
+W15 CMP nav click
+W15 CMP nav click
+W15 CMP nav click
+W15 CMP effect-start session=SYN-W15-B hashCase=SYN-W15-B
+W15 SOURCE t=27771.448193 case=SYN-W15-B event=request status=- failure=-
+W15 PAGE t=27771.458031 tag=visible-entry:SYN-W15-B visibleCase=SYN-W15-B hashCase=SYN-W15-B loadingStatus=1 sourcesPanel=0
+W15 SOURCE t=27771.518910 case=SYN-W15-B event=response status=200 failure=-
+W15 SOURCE t=27771.519815 case=SYN-W15-B event=requestfinished status=- failure=-
+W15 CMP ready session=SYN-W15-B
+W15 SWITCH t=27771.533861 visible-entry sourcesPanel=1
+W15 PAGE t=27771.542638 tag=visible-entry-wait:SYN-W15-B visibleCase=SYN-W15-B hashCase=SYN-W15-B loadingStatus=0 sourcesPanel=1
+W15 CMP nav pagehide
+W15 CMP leave nav session=SYN-W15-B hashCase=SYN-W15-B stillHere=true active=true
+W15 CMP nav pagehide
