@@ -1,0 +1,7 @@
+2026-11-26 17:21:54 CST
+product=94d5e38c926fda232bb987b60fa9145e4bcf01a7
+script=ce08e1d3a917b6956e3cd2279b9acc9a7b3852c9
+chrome=Google Chrome 156.0.8078.47 
+dotnet=8.0.428
+playwright=1.65.2
+run.py=not started (blocked on attested prebuilt core DLL)

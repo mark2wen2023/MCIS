@@ -1,0 +1,10 @@
+commit 94d5e38c926fda232bb987b60fa9145e4bcf01a7
+Merge: 9b8e055 8ff1c9c
+Author:     Mark2wen <119033937+mark2wen2023@users.noreply.github.com>
+AuthorDate: Sun Nov 15 07:03:42 2026 +0800
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Nov 15 07:03:42 2026 +0800
+
+    Merge PR #91: integrate offline expert review and traceability
+    
+    Exact full-base tree preservation verified; selected local expert139 and download authorization51 passed and independently rerun. CI Route classification passed. Offline synthetic review only, not real LLM/browser/identity approval. No deployment.

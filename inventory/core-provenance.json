@@ -1,0 +1,254 @@
+{
+  "productPin": "94d5e38c926fda232bb987b60fa9145e4bcf01a7",
+  "scriptCommit": "ce08e1d3a917b6956e3cd2279b9acc9a7b3852c9",
+  "compileInputCount": 56,
+  "compileInputsAt94d5e38": [
+    {
+      "path": "tools/mcis-core/McisCore.csproj",
+      "gitBlob": "1677e2a2449d960649d65776463e29140aa14958"
+    },
+    {
+      "path": "tools/mcis-core/src/AlignCommand.cs",
+      "gitBlob": "b8e252bed402f92c538d7f875fb0613ab6bea5ca"
+    },
+    {
+      "path": "tools/mcis-core/src/ColregCommand.cs",
+      "gitBlob": "bf5044baed9f074e3af492b7cffb4bd9f9249973"
+    },
+    {
+      "path": "tools/mcis-core/src/CpaCommand.cs",
+      "gitBlob": "6bd611acd396a4b3317a74ff82fadfc3a5d4bc79"
+    },
+    {
+      "path": "tools/mcis-core/src/Program.cs",
+      "gitBlob": "850c618a0fb384b2f6f50d5b7f2d4739d4a86177"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Core/Primitives/Result.cs",
+      "gitBlob": "cf87d8e758f609cb44f0be02cd0bd0dfb0621dcf"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Core/Primitives/SimTime.cs",
+      "gitBlob": "85dfc79a1c73715def53abb0010ab2af07249ea5"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Data/Vdr/ManualAnchorCsvImporter.cs",
+      "gitBlob": "c477e1762df0597cd966a878516b357266c61973"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Data/Vdr/NmeaParser.cs",
+      "gitBlob": "2746959553af9d410e55ccd40579d5b4ea978b7d"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Data/Vdr/VdrCsvImporter.cs",
+      "gitBlob": "fdc5f50a96eeb0ce94588a5a6ada69f527d9c1be"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Data/Vdr/VdrCsvMapping.cs",
+      "gitBlob": "afd47bb8a0eaadc4b04760f5776892d66ffe94c9"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Data/Vdr/VdrImporter.cs",
+      "gitBlob": "fa31e4303972dd297087d087c7f4cf576d38c4f2"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Data/Vdr/VdrMediaManifestImporter.cs",
+      "gitBlob": "45b412678608427cc6259afbe230a460757ad0fa"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Data/Vdr/VdrNmeaImporter.cs",
+      "gitBlob": "ecf56b7b32dfc460e5c867372e57c8aa97d04b05"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Data/Vdr/VdrOptions.cs",
+      "gitBlob": "b927819cca1a7442cba441650c0ff7c7d9f4952a"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Colreg/ColregEncounterState.cs",
+      "gitBlob": "9b04c8727c2539826f472220ac957bae3c68c4f7"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Colreg/ColregEngine.cs",
+      "gitBlob": "9e1108e86e9a36754159d260b4fcefbb4cf03bb6"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Colreg/ColregEvaluator.cs",
+      "gitBlob": "1c3bf1c171786eeeb86c3ab77d12885d6dead402"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Colreg/ColregIds.cs",
+      "gitBlob": "030bde4f52b2e5c15d0c93a0c52f8013f9d3b9c6"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Colreg/ColregModels.cs",
+      "gitBlob": "7e4c2ce4d5e42347d64e441c07edb664e909f19d"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Colreg/ColregRules.cs",
+      "gitBlob": "a1b109856954910c36561e06e6e209f33309547f"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Colreg/ColregThresholds.cs",
+      "gitBlob": "5aaf0238ff6f845f1cb36a4c8146008a02af81a5"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Colreg/ColregW11Api.cs",
+      "gitBlob": "54688a616da87d4f16e9bba2ce860b0e4e2c126a"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Common/EcfcAndDamageEnums.cs",
+      "gitBlob": "e85dc0ce85e250fc67d16f51d23ea1b3cb87912a"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Common/EnuAndEnums.cs",
+      "gitBlob": "07667c01da5263501d7ebacae80dc004a649afaf"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Common/GeoPrimitives.cs",
+      "gitBlob": "3c3e3f52141f8e082c6d9a01b2c43063b06225c6"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Cpa/CpaCalculator.cs",
+      "gitBlob": "a7ed38043776192d539af91f09cac8ad57ea96a0"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Cpa/CpaCalculatorTriangle.cs",
+      "gitBlob": "ce6c7f3f2b04fe8e0023b10714cd67f8ffc70b4e"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Cpa/CpaModels.cs",
+      "gitBlob": "ea2d66b2911fcd0214d6f0d6d2d0cad5f9a5a223"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Evidence/CustodyEvent.cs",
+      "gitBlob": "844482450cb90a37fbe929f8526e4051b9657b55"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Evidence/CustodyLedger.cs",
+      "gitBlob": "cf76f87d17c9b77bea7432f885bd12a23b999c47"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Evidence/EvidenceItem.cs",
+      "gitBlob": "118e1b6bb49a3ba38a707fb97f2245b6e0a03b7e"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Evidence/InvestigationAudit.cs",
+      "gitBlob": "0951c6eb748bbd4a8aee7ec18a84dfbd6ee0c250"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Evidence/Sha256Hex.cs",
+      "gitBlob": "7fba8da54ddf53bf48e3f5038713a1660cc3f1bd"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Geo/GeoMath.cs",
+      "gitBlob": "5c925afed843ee52090cbbd35a1b8552e27b373b"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Geo/IGeoConverter.cs",
+      "gitBlob": "fd433954d6fea7e0ebceae3c237bd028cfec1916"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Models/CaseMetadata.cs",
+      "gitBlob": "770798d426318b2ceaeb542533e21bd653772300"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Models/CollisionModels.cs",
+      "gitBlob": "2cfee14a9455723f7f6c405deefb09731009ef7c"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Models/EcfcModels.cs",
+      "gitBlob": "4b8cb72c5ffc9df9cfd50ad29cd2bf98c360d61e"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Models/EnvironmentModels.cs",
+      "gitBlob": "b364f8d6fce7b1fd228209584500ff9d27613b9d"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Models/TrackAndCpaModels.cs",
+      "gitBlob": "c9dcb194ead684796498a40e83c2c6ad3b5a3488"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Models/VesselAndAisModels.cs",
+      "gitBlob": "94937cb39329527dbc21e4e3c5b53b68ace04048"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Timeline/AngleMath.cs",
+      "gitBlob": "8c692432cddedd882aa94b8d68e9f8b3bc65b52d"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Timeline/BearingReference.cs",
+      "gitBlob": "ac78b7372af18823829985f5021286932d36d8b3"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Timeline/Calibration.cs",
+      "gitBlob": "bbf417a123956fb160ef9d66a7bec0993788a22a"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Timeline/ClockOffsets.cs",
+      "gitBlob": "bad620877d4f591244cafff0f3ad0ea611daab38"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Timeline/ConflictDetection.cs",
+      "gitBlob": "45070d979f95b6bbafa7c4a0c024230b9e9a7c1f"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Timeline/ConflictJson.cs",
+      "gitBlob": "a7c352c12a8f1e635baba05c3995d254c31b30a2"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Timeline/EventMarker.cs",
+      "gitBlob": "d99d1e2809c51f83094b1c731d52300dc114981e"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Timeline/ManualAnchors.cs",
+      "gitBlob": "5f7489179b96af77875b56b01fd419cd6bfcaf78"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Timeline/MediaItem.cs",
+      "gitBlob": "3777fdc65222914ec2b298fb18bebde5dd83b13b"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Timeline/MultiTrackTimeline.cs",
+      "gitBlob": "5a945c6004cf1a3b7a03b308a950448d87ec6651"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Timeline/TimeRange.cs",
+      "gitBlob": "da74eb4295eb31928dd5c59fc11bd88068400b1f"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Timeline/TimelineSample.cs",
+      "gitBlob": "eb1fe69e91f8aac305ac080bd91bd6f2f15c90b2"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Timeline/Track.cs",
+      "gitBlob": "a9f3a6fdc1ddd98ac6dc0bad93c9f4978bc05f1a"
+    },
+    {
+      "path": "unity/Assets/_Project/Scripts/Domain/Timeline/TrackKind.cs",
+      "gitBlob": "ee204a4709a280a533726036e28bba7a460bc858"
+    }
+  ],
+  "compareToLocalMain": {
+    "localHead": "c6113bee85d25bf97d805fb2d264fb6ab138b2e2",
+    "compileInputSetAndBlobsIdentical": true
+  },
+  "officialOutPathSearched": [
+    "/workspace/*/tools/mcis-core/out/mcis-core.dll",
+    "/tmp/**/mcis-core.dll"
+  ],
+  "officialOutDllFound": false,
+  "unattestedDllObserved": {
+    "path": "/workspace/maritime-sim-design/tools/mcis-core/bin/Release/net8.0/mcis-core.dll",
+    "size": 250368,
+    "sha256": "7afd120cb343a4459b1f012ea96c5ab8df53c04a4ba58b916dcc20f3d1d88337",
+    "mtimeAsiaShanghai": "2026-11-22 10:20:26 CST",
+    "gitignored": true,
+    "matchesDocumentedHistoricalSha": false,
+    "matchesDocumentedReproducibleSha": false,
+    "embeddedSourceRevisionId": null,
+    "note": "Present on box snapshot worktree; no SourceRevisionId in assembly strings; SHA not in prior provenance records. Not used for this run."
+  },
+  "documentedHistoricalDllSha256": "b0e507b80b41f2d3a5de0dd73adac2b070dd7310e2f9c52b65a6ab44b9b652f3",
+  "documentedReproducibleCurrentSourceDllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+  "documentedReproducibleSourceNote": "logs/core-dll-provenance-investigation.md (c6113be-era 56 identical compile inputs, PathMap, no SourceRevisionId). Not a file present on this machine this run."
+}
