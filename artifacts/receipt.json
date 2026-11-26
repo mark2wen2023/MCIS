@@ -1,0 +1,222 @@
+{
+  "revision": "2447b14076bbf39db014b8bf4a3a3b350cbf0e05",
+  "component": "web/src/accimapPreview/Diagram.tsx",
+  "componentSha256": "d6f67ba6d80b19b7a1c212a02ee6ac0bfc7903f6d067affd2acba4e6210c875f",
+  "browser": "Google Chrome 156.0.8078.47",
+  "sandboxRequested": true,
+  "passed": true,
+  "scope": "synthetic AcciMap draft diagram component only; not W15 or W4 whole package",
+  "viewports": {
+    "1440": {
+      "passed": true,
+      "before": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "pageScrollWidth": 1440,
+        "pageClientWidth": 1440,
+        "pageScrollLeft": 0,
+        "bodyScrollWidth": 1440,
+        "regionScrollWidth": 1706,
+        "regionClientWidth": 1408,
+        "regionScrollLeft": 0,
+        "widerThanContainer": true
+      },
+      "focus": {
+        "tag": "DIV",
+        "role": "region",
+        "ariaLabel": "AcciMap 草图可滚动区域",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "outlineWidth": "1px",
+        "outlineStyle": "auto",
+        "outlineColor": "rgb(16, 16, 16)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "rect": {
+          "x": 16,
+          "y": 140.875,
+          "width": 1408,
+          "height": 759
+        }
+      },
+      "screenshotFocus": {
+        "width": 1440,
+        "height": 900,
+        "bytes": 117549,
+        "sha256": "d14b04ffcc590693435beecf25cfa9c1df989b78cb78b8affbd558da31b2d67a"
+      },
+      "beforeArrow": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "pageScrollWidth": 1440,
+        "pageClientWidth": 1440,
+        "pageScrollLeft": 0,
+        "bodyScrollWidth": 1440,
+        "regionScrollWidth": 1706,
+        "regionClientWidth": 1408,
+        "regionScrollLeft": 0,
+        "widerThanContainer": true
+      },
+      "afterArrow": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "pageScrollWidth": 1440,
+        "pageClientWidth": 1440,
+        "pageScrollLeft": 0,
+        "bodyScrollWidth": 1440,
+        "regionScrollWidth": 1706,
+        "regionClientWidth": 1408,
+        "regionScrollLeft": 48,
+        "widerThanContainer": true
+      },
+      "screenshotAfterArrow": {
+        "width": 1440,
+        "height": 900,
+        "bytes": 111808,
+        "sha256": "90a2853986de23263e401d8c7b60e54cef41a420c8568cf61885bb19529e7a7f"
+      },
+      "onlyRegionScrolled": true,
+      "pageOverflow": false,
+      "listFocus": {
+        "tag": "SUMMARY",
+        "role": null,
+        "ariaLabel": null,
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "outlineWidth": "1px",
+        "outlineStyle": "auto",
+        "outlineColor": "rgb(16, 16, 16)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "rect": {
+          "x": 16,
+          "y": 875.875,
+          "width": 1408,
+          "height": 24
+        }
+      },
+      "listOpen": true,
+      "layerHeadings": [
+        "政府与法规",
+        "监管",
+        "公司",
+        "船舶管理",
+        "船员行为",
+        "设备与环境"
+      ],
+      "fullNamesVerified": true,
+      "groupedByLayer": true,
+      "screenshotList": {
+        "width": 1440,
+        "height": 900,
+        "bytes": 167553,
+        "sha256": "873e64541dd471f8cf3c251dd160138f5331217ce21dbca051df3cced75bec8c"
+      }
+    },
+    "390": {
+      "passed": true,
+      "before": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "pageScrollWidth": 390,
+        "pageClientWidth": 390,
+        "pageScrollLeft": 0,
+        "bodyScrollWidth": 390,
+        "regionScrollWidth": 1706,
+        "regionClientWidth": 358,
+        "regionScrollLeft": 0,
+        "widerThanContainer": true
+      },
+      "focus": {
+        "tag": "DIV",
+        "role": "region",
+        "ariaLabel": "AcciMap 草图可滚动区域",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "outlineWidth": "1px",
+        "outlineStyle": "auto",
+        "outlineColor": "rgb(16, 16, 16)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "rect": {
+          "x": 16,
+          "y": 84.875,
+          "width": 358,
+          "height": 759
+        }
+      },
+      "screenshotFocus": {
+        "width": 390,
+        "height": 844,
+        "bytes": 82840,
+        "sha256": "c64cd42a799415b172e6942ec703d9bdf911e82881410de9070bb41b82a33474"
+      },
+      "beforeArrow": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "pageScrollWidth": 390,
+        "pageClientWidth": 390,
+        "pageScrollLeft": 0,
+        "bodyScrollWidth": 390,
+        "regionScrollWidth": 1706,
+        "regionClientWidth": 358,
+        "regionScrollLeft": 0,
+        "widerThanContainer": true
+      },
+      "afterArrow": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "pageScrollWidth": 390,
+        "pageClientWidth": 390,
+        "pageScrollLeft": 0,
+        "bodyScrollWidth": 390,
+        "regionScrollWidth": 1706,
+        "regionClientWidth": 358,
+        "regionScrollLeft": 48,
+        "widerThanContainer": true
+      },
+      "screenshotAfterArrow": {
+        "width": 390,
+        "height": 844,
+        "bytes": 80149,
+        "sha256": "29e42513cc66302e423953b986db88249d6ad62df9191d8b703307961a3717a1"
+      },
+      "onlyRegionScrolled": true,
+      "pageOverflow": false,
+      "listFocus": {
+        "tag": "SUMMARY",
+        "role": null,
+        "ariaLabel": null,
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "outlineWidth": "1px",
+        "outlineStyle": "auto",
+        "outlineColor": "rgb(16, 16, 16)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "rect": {
+          "x": 16,
+          "y": 819.875,
+          "width": 358,
+          "height": 24
+        }
+      },
+      "listOpen": true,
+      "layerHeadings": [
+        "政府与法规",
+        "监管",
+        "公司",
+        "船舶管理",
+        "船员行为",
+        "设备与环境"
+      ],
+      "fullNamesVerified": true,
+      "groupedByLayer": true,
+      "screenshotList": {
+        "width": 390,
+        "height": 844,
+        "bytes": 95592,
+        "sha256": "f5c5bb8a837a8a3a2adea50ea2eadad819708217cf91f484baa65305afad08e6"
+      }
+    }
+  },
+  "bundleSha256": "a4c5c1fc742847b5b527198e69a8330621b0480e1d82a3999597329750656ef8",
+  "browserRuntime": "156.0.8078.47",
+  "originHost": "127.0.0.1"
+}

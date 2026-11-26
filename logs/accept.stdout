@@ -1,0 +1,14 @@
+W15 ACCIMAP 37216.102 bundle ready
+W15 ACCIMAP 37216.924 chrome launched
+W15 ACCIMAP 37216.926 1440 start
+W15 ACCIMAP 37217.086 1440 open
+W15 ACCIMAP 37217.285 1440 before {'innerWidth': 1440, 'innerHeight': 900, 'pageScrollWidth': 1440, 'pageClientWidth': 1440, 'pageScrollLeft': 0, 'bodyScrollWidth': 1440, 'regionScrollWidth': 1706, 'regionClientWidth': 1408, 'regionScrollLeft': 0, 'widerThanContainer': True}
+W15 ACCIMAP 37217.295 1440 focus {'tag': 'DIV', 'role': 'region', 'ariaLabel': 'AcciMap 草图可滚动区域', 'outline': 'rgb(16, 16, 16) auto 1px', 'outlineWidth': '1px', 'outlineStyle': 'auto', 'outlineColor': 'rgb(16, 16, 16)', 'outlineOffset': '0px', 'boxShadow': 'none', 'rect': {'x': 16, 'y': 140.875, 'width': 1408, 'height': 759}}
+W15 ACCIMAP 37217.394 1440 after ArrowRight {'innerWidth': 1440, 'innerHeight': 900, 'pageScrollWidth': 1440, 'pageClientWidth': 1440, 'pageScrollLeft': 0, 'bodyScrollWidth': 1440, 'regionScrollWidth': 1706, 'regionClientWidth': 1408, 'regionScrollLeft': 48, 'widerThanContainer': True}
+W15 ACCIMAP 37217.646 1440 done
+W15 ACCIMAP 37217.646 390 start
+W15 ACCIMAP 37217.728 390 open
+W15 ACCIMAP 37217.850 390 before {'innerWidth': 390, 'innerHeight': 844, 'pageScrollWidth': 390, 'pageClientWidth': 390, 'pageScrollLeft': 0, 'bodyScrollWidth': 390, 'regionScrollWidth': 1706, 'regionClientWidth': 358, 'regionScrollLeft': 0, 'widerThanContainer': True}
+W15 ACCIMAP 37217.857 390 focus {'tag': 'DIV', 'role': 'region', 'ariaLabel': 'AcciMap 草图可滚动区域', 'outline': 'rgb(16, 16, 16) auto 1px', 'outlineWidth': '1px', 'outlineStyle': 'auto', 'outlineColor': 'rgb(16, 16, 16)', 'outlineOffset': '0px', 'boxShadow': 'none', 'rect': {'x': 16, 'y': 84.875, 'width': 358, 'height': 759}}
+W15 ACCIMAP 37217.891 390 after ArrowRight {'innerWidth': 390, 'innerHeight': 844, 'pageScrollWidth': 390, 'pageClientWidth': 390, 'pageScrollLeft': 0, 'bodyScrollWidth': 390, 'regionScrollWidth': 1706, 'regionClientWidth': 358, 'regionScrollLeft': 48, 'widerThanContainer': True}
+W15 ACCIMAP 37218.045 390 done

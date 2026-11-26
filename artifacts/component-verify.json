@@ -1,0 +1,8 @@
+{
+  "productSha": "2447b14076bbf39db014b8bf4a3a3b350cbf0e05",
+  "component": "web/src/accimapPreview/Diagram.tsx",
+  "expectedSha256": "d6f67ba6d80b19b7a1c212a02ee6ac0bfc7903f6d067affd2acba4e6210c875f",
+  "actualSha256": "d6f67ba6d80b19b7a1c212a02ee6ac0bfc7903f6d067affd2acba4e6210c875f",
+  "bytes": 7869,
+  "match": true
+}

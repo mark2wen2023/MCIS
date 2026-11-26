@@ -1,0 +1,6 @@
+product=2447b14076bbf39db014b8bf4a3a3b350cbf0e05
+candidate=candidate/w15-accimap-arrow-rerun @367ea21e22f3f9b7ce1aee160d318469982c738e
+fixtures=147e322d402c89b727f95ff84cd51b983d224655
+componentSha256=d6f67ba6d80b19b7a1c212a02ee6ac0bfc7903f6d067affd2acba4e6210c875f
+exit=0
+scope=synthetic AcciMap draft diagram component only; not W15 or W4 whole package
