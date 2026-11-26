@@ -1,0 +1,11 @@
+[
+  "stage isolation assembly and core sources",
+  "SDK and NuGet preflight, then official offline mcis-ecfc smoke",
+  "start 127.0.0.1 loopback on a fresh empty SQLite",
+  "seed synthetic case and evidence via existing intake HTTP",
+  "save current draft via existing service and real mcis-ecfc",
+  "register the current valid binding with the existing isolated-assembly SQL",
+  "explicit read of the same currently valid binding (expect 200 and one Access)",
+  "revoke via existing host.py mechanism without changing version/digest/identity/edge/span",
+  "repeat the same explicit-read request (expect 404, no new Access, valid audit, zero replay)"
+]

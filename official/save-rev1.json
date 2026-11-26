@@ -1,0 +1,137 @@
+{
+  "caseId": "SYN-XREPO-001",
+  "document": {
+    "caseId": "SYN-XREPO-001",
+    "digest": "2d1ce99dc5ca27cbe7171c4980742975ff22977d011c6d9b943bb19d67b54c63",
+    "draft": {
+      "edges": [
+        {
+          "from": "C01",
+          "id": "E01",
+          "to": "N01"
+        }
+      ],
+      "nodes": [
+        {
+          "evidenceIds": [
+            "EV-001"
+          ],
+          "id": "C01",
+          "isPrimaryIncident": false,
+          "kind": "Condition",
+          "lane": 0,
+          "text": "Synthetic condition",
+          "timeSeconds": null
+        },
+        {
+          "evidenceIds": [],
+          "id": "N01",
+          "isPrimaryIncident": false,
+          "kind": "Event",
+          "lane": 0,
+          "text": "Synthetic unknown event",
+          "timeSeconds": null
+        }
+      ],
+      "scope": "Synthetic edge, no finding"
+    },
+    "origin": "Investigator",
+    "revision": 1,
+    "savedBy": "LocalSyntheticLead",
+    "savedRole": "LeadInvestigator",
+    "savedUtc": "2026-11-26T20:46:10Z",
+    "sources": [
+      {
+        "evidenceId": "EV-001",
+        "sha256": "418be9609b46a00062c41fb49073911986098e9a61e010f4311aa86946ecd3ea",
+        "title": "Synthetic communication"
+      }
+    ],
+    "status": "Draft",
+    "strength": "ToBeVerified",
+    "validation": {
+      "coreVersion": "mcis-ecfc-draft/1",
+      "edges": [
+        {
+          "bold": false,
+          "from": "C01",
+          "id": "E01",
+          "kind": "Influence",
+          "to": "N01"
+        }
+      ],
+      "issues": [
+        {
+          "code": "ECFC-W05",
+          "edgeId": null,
+          "isError": false,
+          "message": "条件在可行时应予以量化（表 4：As practical, should be quantified）。",
+          "nodeId": "C01"
+        },
+        {
+          "code": "ECFC-W03",
+          "edgeId": null,
+          "isError": false,
+          "message": "条件在可行/适用时应标明日期与时刻。",
+          "nodeId": "C01"
+        },
+        {
+          "code": "ECFC-W01",
+          "edgeId": null,
+          "isError": false,
+          "message": "事件应使用“一个名词 + 一个主动动词”表述（表 4：one noun and one active verb）。",
+          "nodeId": "N01"
+        },
+        {
+          "code": "ECFC-W02",
+          "edgeId": null,
+          "isError": false,
+          "message": "事件应尽量量化（表 4：Should be quantified as much as possible）。",
+          "nodeId": "N01"
+        },
+        {
+          "code": "ECFC-W03",
+          "edgeId": null,
+          "isError": false,
+          "message": "事件在时间已知时应标明日期与时刻（表 4：indicate the date and time, when they are known）。",
+          "nodeId": "N01"
+        },
+        {
+          "code": "ECFC-E06",
+          "edgeId": null,
+          "isError": true,
+          "message": "主序列应有且仅有一个核心事故节点（IsPrimaryIncident），当前数量为 0。",
+          "nodeId": null
+        }
+      ],
+      "nodes": [
+        {
+          "evidenceIds": [
+            "EV-001"
+          ],
+          "id": "C01",
+          "isPresumptive": true,
+          "isPrimaryIncident": false,
+          "kind": "Condition",
+          "lane": 0,
+          "text": "Synthetic condition",
+          "timeSeconds": null
+        },
+        {
+          "evidenceIds": [],
+          "id": "N01",
+          "isPresumptive": true,
+          "isPrimaryIncident": false,
+          "kind": "Event",
+          "lane": 0,
+          "text": "Synthetic unknown event",
+          "timeSeconds": null
+        }
+      ]
+    }
+  },
+  "identityMode": "local-role-header",
+  "persisted": true,
+  "profile": "MCIS-ECFC-DRAFT-1",
+  "sourceStatus": "unchanged"
+}

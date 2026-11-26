@@ -1,0 +1,61 @@
+{
+  "afterRevoke": {
+    "auditValid": true,
+    "code": "SOURCE_UNAVAILABLE",
+    "custody": [
+      "Register",
+      "Access"
+    ],
+    "ecfcAuditRevisions": [
+      1
+    ],
+    "simCommands": [],
+    "status": 404
+  },
+  "bind": "127.0.0.1",
+  "correction": {
+    "fullAppMain875ccc50": {
+      "includesEcfcDraftsRouter": true,
+      "line": "app.include_router(ecfc_drafts_router)",
+      "path": "service/mcis_service/main.py",
+      "sha256": "6859848c5a6255740bcb0bfd93609bec13d5ac9ac67b26c8cbfd44a363d10cfa"
+    },
+    "isolationAssemblyMain": {
+      "includesEcfcDraftsRouter": false,
+      "note": "Previous receipt 'create_app did not mount ecfc_drafts_router' referred only to this pinned assembly, not to 875ccc50 product main.py",
+      "sha256": "2c21e58417fe208462921543762eaf3a9c81e9fd40238be44de50e5a9ff28d93"
+    },
+    "productExcerptInterface": false
+  },
+  "digest": "2d1ce99dc5ca27cbe7171c4980742975ff22977d011c6d9b943bb19d67b54c63",
+  "ecfc": {
+    "contract": "mcis-ecfc-build/1",
+    "coreVersion": "mcis-ecfc-draft/1",
+    "dllSha256": "f548818bd21c45d640293601f2ae271171c086f7e0b22912472a2d7dc771e75a",
+    "sdk": "8.0.428"
+  },
+  "firstBreakpoint": null,
+  "httpNotBrowser": true,
+  "kind": "w11-revoke-control",
+  "notWholePackage": true,
+  "parentCandidate": "6fe7777fbad84d60ed0854442734bebb967794b4",
+  "passed": true,
+  "pin": "875ccc50b049fb24b82f6b0663f3f9476db1880e",
+  "revisionBranchRun": false,
+  "revoke": {
+    "mechanism": "host.py mode=revoke UPDATE, identifying fields unchanged",
+    "revoked": "0->1",
+    "rowcount": 1
+  },
+  "sequence": [
+    "stage isolation assembly and core sources",
+    "SDK and NuGet preflight, then official offline mcis-ecfc smoke",
+    "start 127.0.0.1 loopback on a fresh empty SQLite",
+    "seed synthetic case and evidence via existing intake HTTP",
+    "save current draft via existing service and real mcis-ecfc",
+    "register the current valid binding with the existing isolated-assembly SQL",
+    "explicit read of the same currently valid binding (expect 200 and one Access)",
+    "revoke via existing host.py mechanism without changing version/digest/identity/edge/span",
+    "repeat the same explicit-read request (expect 404, no new Access, valid audit, zero replay)"
+  ]
+}

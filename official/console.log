@@ -1,0 +1,20 @@
+Worktree HEAD=6fe7777fbad84d60ed0854442734bebb967794b4; parent assembly 6fe7777fbad84d60ed0854442734bebb967794b4
+STEP 1: stage isolation assembly and core sources
+Staged 186 pinned originals + 9 core blobs
+STEP 2: SDK and NuGet preflight, then official offline mcis-ecfc smoke
+SDK version exit=0
+NuGet local directories check exit=0
+Core smoke exit=0
+Verified mcis-ecfc.dll SHA-256=f548818bd21c45d640293601f2ae271171c086f7e0b22912472a2d7dc771e75a
+STEP 3: start 127.0.0.1 loopback on a fresh empty SQLite
+STEP 4: seed synthetic case and evidence via existing intake HTTP
+STEP 5: save current draft via existing service and real mcis-ecfc
+Saved revision=1 digest=2d1ce99dc5ca27cbe7171c4980742975ff22977d011c6d9b943bb19d67b54c63 coreVersion=mcis-ecfc-draft/1
+STEP 6: register the current valid binding with the existing isolated-assembly SQL
+STEP 7: explicit read of the same currently valid binding (expect 200 and one Access)
+Explicit read PASS on the live binding; custody=Register,Access
+STEP 8: revoke via existing host.py mechanism without changing version/digest/identity/edge/span
+Revoke PASS: identifying fields unchanged; revoked 0->1; draft still revision 1
+STEP 9: repeat the same explicit-read request (expect 404, no new Access, valid audit, zero replay)
+After revoke: 404 SOURCE_UNAVAILABLE; custody unchanged; audit valid; sim commands []; draft still rev 1
+OFFICIAL RESULT: revoke-only control PASS (HTTP, not browser); revision branch not run; W11 whole-package 未验

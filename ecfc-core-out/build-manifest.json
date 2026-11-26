@@ -1,0 +1,22 @@
+{
+  "artifacts": {
+    "mcis-ecfc.deps.json": "0ac928b6e5992678af630f554b6d3c727f3b29a762ed050bdc0a8c0cc53f2974",
+    "mcis-ecfc.dll": "f548818bd21c45d640293601f2ae271171c086f7e0b22912472a2d7dc771e75a",
+    "mcis-ecfc.pdb": "48576e9869ae05ff118b385e418692f7e3d3dce23545e7c6f2b0eeb2c7e7a30d",
+    "mcis-ecfc.runtimeconfig.json": "3d25821758613e4cd940d143ccb03c93704140077e69104996832510f38f6598"
+  },
+  "configuration": "Release",
+  "contract": "mcis-ecfc-build/1",
+  "inputs": {
+    "tools/mcis-ecfc/McisEcfc.csproj": "fef9af0bb9360bf13f72c7cba8b0671eeb22361f2ee4d56c8041658079820ae6",
+    "tools/mcis-ecfc/src/Program.cs": "9aacead25ea7e6471705dbe8755224691f3014238908462055ad5e09069f42ca",
+    "unity/Assets/_Project/Scripts/Core/Primitives/SimTime.cs": "b5bad3e00608549ee6a3d99616c32a26e0ae0d7d051c1c76540f7c165e09de3d",
+    "unity/Assets/_Project/Scripts/Domain/Common/EcfcAndDamageEnums.cs": "648c7fb959dd442345925e2bdee153766b8227485aac5fd9b48db8271164deb8",
+    "unity/Assets/_Project/Scripts/Domain/Common/GeoPrimitives.cs": "dc2c117170a16df866fb5b372a89cbac2d528edbd5587dfff1e9b34ce7b1e204",
+    "unity/Assets/_Project/Scripts/Domain/Ecfc/EcfcValidator.cs": "3d24251730249d8cd93760a8cb18d75d02e542eb50f511ff59c796edc9754887",
+    "unity/Assets/_Project/Scripts/Domain/Models/EcfcModels.cs": "cfcc4a65e2747f3ab87c988d06eccbd4a1a41c61b4ee22804008bc911194437c"
+  },
+  "pathMap": "/mcis-ecfc-source",
+  "recipeSha256": "b4bb823ecd09579fccabc2652382db3db0bd34cfaa17fdf5a267253738306663",
+  "sdk": "8.0.428"
+}

@@ -1,0 +1,32 @@
+{
+  "after": {
+    "case_id": "SYN-XREPO-001",
+    "edge_id": "E01",
+    "end_byte": 121,
+    "evidence_id": "EV-001",
+    "from_id": "C01",
+    "graph_digest": "2d1ce99dc5ca27cbe7171c4980742975ff22977d011c6d9b943bb19d67b54c63",
+    "intake_digest": "18d0b29bb7000017bbf4878ffc654780c9541de8868b5b3895cf3f30c36b1d33",
+    "revision": 1,
+    "revoked": 1,
+    "singleton": 1,
+    "source_sha": "418be9609b46a00062c41fb49073911986098e9a61e010f4311aa86946ecd3ea",
+    "start_byte": 97,
+    "to_id": "N01"
+  },
+  "before": {
+    "case_id": "SYN-XREPO-001",
+    "edge_id": "E01",
+    "end_byte": 121,
+    "evidence_id": "EV-001",
+    "from_id": "C01",
+    "graph_digest": "2d1ce99dc5ca27cbe7171c4980742975ff22977d011c6d9b943bb19d67b54c63",
+    "intake_digest": "18d0b29bb7000017bbf4878ffc654780c9541de8868b5b3895cf3f30c36b1d33",
+    "revision": 1,
+    "revoked": 0,
+    "singleton": 1,
+    "source_sha": "418be9609b46a00062c41fb49073911986098e9a61e010f4311aa86946ecd3ea",
+    "start_byte": 97,
+    "to_id": "N01"
+  }
+}

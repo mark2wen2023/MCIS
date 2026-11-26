@@ -1,0 +1,15 @@
+{
+  "auditValid": true,
+  "custody": [
+    "Register",
+    "Access"
+  ],
+  "draftDigest": "2d1ce99dc5ca27cbe7171c4980742975ff22977d011c6d9b943bb19d67b54c63",
+  "draftRevision": 1,
+  "ecfcAuditRevisions": [
+    1
+  ],
+  "intakeReplayed": false,
+  "seekAvailable": true,
+  "simCommands": []
+}

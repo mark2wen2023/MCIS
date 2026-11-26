@@ -1,0 +1,40 @@
+{
+  "byteLength": 290,
+  "caseId": "SYN-XREPO-001",
+  "evidence": {
+    "accessCount": 0,
+    "caseId": "SYN-XREPO-001",
+    "category": "Document",
+    "confidentiality": "Restricted",
+    "currentSha256": "418be9609b46a00062c41fb49073911986098e9a61e010f4311aa86946ecd3ea",
+    "evidenceId": "EV-001",
+    "extractedBy": "Synthetic author",
+    "extractedUtc": "2026-02-01T00:00:00Z",
+    "lastAccessBy": null,
+    "lastAccessUtc": null,
+    "needsReview": false,
+    "note": "No real record",
+    "relativePath": "raw/evidence-intakes/18d0b29bb7000017bbf4878ffc654780c9541de8868b5b3895cf3f30c36b1d33/source.bin",
+    "sha256": "418be9609b46a00062c41fb49073911986098e9a61e010f4311aa86946ecd3ea",
+    "source": "Handmade synthetic fixture",
+    "status": "Unverified",
+    "title": "Synthetic communication"
+  },
+  "evidenceId": "EV-001",
+  "fileName": "communication.txt",
+  "metadata": {
+    "category": "Document",
+    "confidentiality": "Restricted",
+    "extractedBy": "Synthetic author",
+    "extractedUtc": "2026-02-01T00:00:00Z",
+    "note": "No real record",
+    "source": "Handmade synthetic fixture",
+    "title": "Synthetic communication"
+  },
+  "registeredBy": "LocalSyntheticLead",
+  "registeredRole": "LeadInvestigator",
+  "registeredUtc": "2026-11-26T20:46:10Z",
+  "replayed": false,
+  "requestDigest": "18d0b29bb7000017bbf4878ffc654780c9541de8868b5b3895cf3f30c36b1d33",
+  "sourceSha256": "418be9609b46a00062c41fb49073911986098e9a61e010f4311aa86946ecd3ea"
+}
