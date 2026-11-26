@@ -1,0 +1,11 @@
+2026-11-26 11:52:35 CST
+base=cc98de9ac4888c684651a6eb9d397b0161164022
+candidate=d4391cda418aa284df27d8b86066d9d3b81c0566
+branch=candidate/w15-chrome-native-netlog
+python=/workspace/w17-pyplaywright-venv/bin/python
+playwright 1.65.2
+host-python=/workspace/mcis-w17-871db66/service/.venv/bin/python
+chrome=Google Chrome 156.0.8078.47 
+outer_watchdog=timeout --signal=TERM --kill-after=10s 150s
+one_post_only=yes
+netlog_capture=default sanitization; raw file in private temp only

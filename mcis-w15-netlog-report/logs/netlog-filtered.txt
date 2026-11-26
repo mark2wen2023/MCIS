@@ -1,0 +1,48 @@
+W15 Chrome native NetLog filtered summary (diagnostic only)
+candidate=d4391cda418aa284df27d8b86066d9d3b81c0566
+base=cc98de9ac4888c684651a6eb9d397b0161164022
+branch=candidate/w15-chrome-native-netlog
+official diagnose exit=124 (outer timeout TERM at 150s; not an assertion pass)
+raw NetLog: not packed, not uploaded, not committed; private temp only
+capture: Chrome default sanitization; no CDP/NetLog body read
+
+file_complete_json=yes
+event_count=2277
+association=unique
+matching_url_request_sources=1
+
+http_response_status_on_url_request_source=503
+http_response_status_from_READ_RESPONSE_HEADERS=503
+net_error_on_url_request_source=net::OK
+net_error_on_REQUEST_ALIVE_PHASE_END=未验 (field absent on that event)
+
+event flags on the unique URL_REQUEST (and its non-socket child sources):
+  REQUEST_ALIVE PHASE_BEGIN=yes
+  REQUEST_ALIVE PHASE_END=yes
+  HTTP_TRANSACTION_READ_RESPONSE_HEADERS=yes
+  HTTP_TRANSACTION_READ_BODY PHASE_BEGIN=yes
+  HTTP_TRANSACTION_READ_BODY PHASE_END=yes
+  URL_REQUEST_JOB_FILTERED_BYTES_READ=yes
+
+Selected URL_REQUEST event names (no URL, headers, or body):
+  CORS_REQUEST BEGIN/END
+  CHECK_CORS_PREFLIGHT_REQUIRED
+  REQUEST_ALIVE BEGIN/END
+  URL_REQUEST_START_JOB BEGIN/END
+  HTTP_STREAM_REQUEST BEGIN/END
+  UPLOAD_DATA_STREAM_INIT BEGIN/END
+  HTTP_TRANSACTION_SEND_REQUEST BEGIN/END
+  HTTP_TRANSACTION_SEND_REQUEST_HEADERS
+  HTTP_TRANSACTION_SEND_REQUEST_BODY
+  HTTP_TRANSACTION_READ_HEADERS BEGIN/END
+  HTTP_STREAM_PARSER_READ_HEADERS BEGIN/END
+  HTTP_TRANSACTION_READ_RESPONSE_HEADERS
+  NETWORK_DELEGATE_HEADERS_RECEIVED BEGIN/END
+  URL_REQUEST_DELEGATE_RESPONSE_STARTED BEGIN/END
+  HTTP_TRANSACTION_READ_BODY BEGIN/END
+  URL_REQUEST_JOB_FILTERED_BYTES_READ
+
+Note: a broader source-dependency walk that included reused sockets was not used
+to infer status or error, because that walk was not unique for HTTP status.
+
+This is not a product change and not an acceptance pass.

@@ -1,0 +1,50 @@
+diff --git a/tests_acceptance/w15-source-chromium/DIAGNOSIS.md b/tests_acceptance/w15-source-chromium/DIAGNOSIS.md
+index b79e3e1..f825d34 100644
+--- a/tests_acceptance/w15-source-chromium/DIAGNOSIS.md
++++ b/tests_acceptance/w15-source-chromium/DIAGNOSIS.md
+@@ -22,3 +22,13 @@ page and same single POST: requestWillBeSent, responseReceived, loadingFinished
+ or loadingFailed. It never reads the body through CDP. encodedBytes is a
+ browser transport counter, not the JSON body length. Absence of CDP events is
+ not proof of a network failure, since delivery to the listener can also stall.
++
++This revision only adds Chrome native NetLog capture to the original launch
++arguments: `--log-net-log` to a private temporary file, `--net-log-max-size-mb=10`,
++and `--net-log-duration=60`, and updates the diagnostic SHA pin. Capture uses
++Chrome's default sanitization and does not collect sensitive or raw bytes. The
++raw NetLog stays in a local private temporary directory and is not packed,
++uploaded, or committed. Published results may include only filtered status,
++event or error codes, the exit, and the candidate SHA — not URLs, request
++headers, bodies, or account material. All original assertions, the single
++preview POST, sandbox, and 150s outer timeout are unchanged.
+diff --git a/tests_acceptance/w15-source-chromium/diagnose.py b/tests_acceptance/w15-source-chromium/diagnose.py
+index 0106d0f..134e042 100644
+--- a/tests_acceptance/w15-source-chromium/diagnose.py
++++ b/tests_acceptance/w15-source-chromium/diagnose.py
+@@ -7,7 +7,7 @@ import sys
+ import time
+ 
+ 
+-ORIGINAL_SHA256 = "8d52dabc5db587479d02605472bb7a6cc1f46d55bbe7f3c5ddf585a3912352e6"
++ORIGINAL_SHA256 = "434aa9e76c99ca5902a5e8b1a868b29423fc7ea4517d3d4a7048fa15fefc8ff3"
+ WATCHED = frozenset(("main", "host", "setup", "dump", "app_ui", "show"))
+ 
+ 
+diff --git a/tests_acceptance/w15-source-chromium/run.py b/tests_acceptance/w15-source-chromium/run.py
+index f1e8b0b..687f092 100644
+--- a/tests_acceptance/w15-source-chromium/run.py
++++ b/tests_acceptance/w15-source-chromium/run.py
+@@ -257,8 +257,13 @@ def main():
+                     raise
+                 from playwright.sync_api import sync_playwright
+                 with sync_playwright() as p:
++                    netlog_dir=Path("/tmp/mcis-w15-netlog-private")
++                    netlog_dir.mkdir(mode=0o700, exist_ok=True)
++                    os.chmod(netlog_dir, 0o700)
++                    netlog=netlog_dir/"chrome-netlog.json"
+                     browser=p.chromium.launch(executable_path=str(browser_path),headless=True,chromium_sandbox=True,
+-                         env=environment(work),args=["--no-proxy-server"])
++                         env=environment(work),args=["--no-proxy-server",
++                         f"--log-net-log={netlog}","--net-log-max-size-mb=10","--net-log-duration=60"])
+                     try:
+                         with host(arg.host_python,work,fixed,assets,data,arg.evidence,"first") as origin:
+                             setup(origin)
