@@ -1,0 +1,90 @@
+{
+  "revision": "897297ec97da9f0f33db6122e9dd234a25a31498",
+  "component": "web/src/accimapPreview/Diagram.tsx",
+  "componentSha256": "5c1703dbf09665cde748046b91f3791057837e8e9afc574e530c4b0f0b7a7144",
+  "browser": "Google Chrome 156.0.8078.47",
+  "sandboxRequested": true,
+  "passed": false,
+  "scope": "synthetic AcciMap draft diagram component only; not W15 or W4 whole package",
+  "viewports": {
+    "1440": {
+      "passed": false,
+      "before": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "pageScrollWidth": 1440,
+        "pageClientWidth": 1440,
+        "pageScrollLeft": 0,
+        "bodyScrollWidth": 1440,
+        "regionScrollWidth": 1706,
+        "regionClientWidth": 1408,
+        "regionScrollLeft": 0,
+        "widerThanContainer": true
+      },
+      "focus": {
+        "tag": "DIV",
+        "role": "region",
+        "ariaLabel": "AcciMap 草图可滚动区域",
+        "outline": "rgb(16, 16, 16) auto 1px",
+        "outlineWidth": "1px",
+        "outlineStyle": "auto",
+        "outlineColor": "rgb(16, 16, 16)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "rect": {
+          "x": 16,
+          "y": 140.875,
+          "width": 1408,
+          "height": 759
+        }
+      },
+      "screenshotFocus": {
+        "width": 1440,
+        "height": 900,
+        "bytes": 117549,
+        "sha256": "d14b04ffcc590693435beecf25cfa9c1df989b78cb78b8affbd558da31b2d67a"
+      },
+      "beforeArrow": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "pageScrollWidth": 1440,
+        "pageClientWidth": 1440,
+        "pageScrollLeft": 0,
+        "bodyScrollWidth": 1440,
+        "regionScrollWidth": 1706,
+        "regionClientWidth": 1408,
+        "regionScrollLeft": 0,
+        "widerThanContainer": true
+      },
+      "afterArrow": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "pageScrollWidth": 1440,
+        "pageClientWidth": 1440,
+        "pageScrollLeft": 0,
+        "bodyScrollWidth": 1440,
+        "regionScrollWidth": 1706,
+        "regionClientWidth": 1408,
+        "regionScrollLeft": 0,
+        "widerThanContainer": true
+      },
+      "screenshotAfterArrow": {
+        "width": 1440,
+        "height": 900,
+        "bytes": 117532,
+        "sha256": "f98c9a3c3343d05b464c7ef768016395bdd7ea1d9583929c136ba8a397375f77"
+      },
+      "firstFailure": "ArrowRight did not change the diagram scrollLeft: {'innerWidth': 1440, 'innerHeight': 900, 'pageScrollWidth': 1440, 'pageClientWidth': 1440, 'pageScrollLeft': 0, 'bodyScrollWidth': 1440, 'regionScrollWidth': 1706, 'regionClientWidth': 1408, 'regionScrollLeft': 0, 'widerThanContainer': True} -> {'innerWidth': 1440, 'innerHeight': 900, 'pageScrollWidth': 1440, 'pageClientWidth': 1440, 'pageScrollLeft': 0, 'bodyScrollWidth': 1440, 'regionScrollWidth': 1706, 'regionClientWidth': 1408, 'regionScrollLeft': 0, 'widerThanContainer': True}",
+      "screenshotFirstFailure": {
+        "width": 1440,
+        "height": 900,
+        "bytes": 117069,
+        "sha256": "9198175fd330de82c15e708f4a3a01484560b1abcfe96152b0698f86c7719f99"
+      }
+    }
+  },
+  "bundleSha256": "58c0a4fa2ca171ca614494113d09e2d340cdb9a26cc86a4cb9aacf8081268b2b",
+  "browserRuntime": "156.0.8078.47",
+  "originHost": "127.0.0.1",
+  "firstFailure": "ArrowRight did not change the diagram scrollLeft: {'innerWidth': 1440, 'innerHeight': 900, 'pageScrollWidth': 1440, 'pageClientWidth': 1440, 'pageScrollLeft': 0, 'bodyScrollWidth': 1440, 'regionScrollWidth': 1706, 'regionClientWidth': 1408, 'regionScrollLeft': 0, 'widerThanContainer': True} -> {'innerWidth': 1440, 'innerHeight': 900, 'pageScrollWidth': 1440, 'pageClientWidth': 1440, 'pageScrollLeft': 0, 'bodyScrollWidth': 1440, 'regionScrollWidth': 1706, 'regionClientWidth': 1408, 'regionScrollLeft': 0, 'widerThanContainer': True}"
+}

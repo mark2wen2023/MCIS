@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/workspace/mcis-w15-accimap-cand/tests_acceptance/w15-accimap-synthetic-browser/run.py", line 331, in <module>
+    main()
+    ~~~~^^
+  File "/workspace/mcis-w15-accimap-cand/tests_acceptance/w15-accimap-synthetic-browser/run.py", line 318, in main
+    flow(browser, origin, width, height, a.out, rec["viewports"][str(width)])
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/mcis-w15-accimap-cand/tests_acceptance/w15-accimap-synthetic-browser/run.py", line 182, in flow
+    require(after_arrow["regionScrollLeft"] is not None
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            and after_arrow["regionScrollLeft"] > before_arrow["regionScrollLeft"],
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            f"ArrowRight did not change the diagram scrollLeft: {before_arrow} -> {after_arrow}")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/mcis-w15-accimap-cand/tests_acceptance/w15-accimap-synthetic-browser/run.py", line 37, in require
+    raise RuntimeError(name)
+RuntimeError: ArrowRight did not change the diagram scrollLeft: {'innerWidth': 1440, 'innerHeight': 900, 'pageScrollWidth': 1440, 'pageClientWidth': 1440, 'pageScrollLeft': 0, 'bodyScrollWidth': 1440, 'regionScrollWidth': 1706, 'regionClientWidth': 1408, 'regionScrollLeft': 0, 'widerThanContainer': True} -> {'innerWidth': 1440, 'innerHeight': 900, 'pageScrollWidth': 1440, 'pageClientWidth': 1440, 'pageScrollLeft': 0, 'bodyScrollWidth': 1440, 'regionScrollWidth': 1706, 'regionClientWidth': 1408, 'regionScrollLeft': 0, 'widerThanContainer': True}

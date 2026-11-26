@@ -1,0 +1,5 @@
+product=897297ec97da9f0f33db6122e9dd234a25a31498
+candidate=candidate/w15-accimap-sketch @147e322d402c89b727f95ff84cd51b983d224655
+componentSha256=5c1703dbf09665cde748046b91f3791057837e8e9afc574e530c4b0f0b7a7144
+exit=1
+scope=synthetic AcciMap draft diagram component only; not W15 or W4 whole package

@@ -1,0 +1,7 @@
+W15 ACCIMAP 36532.536 bundle ready
+W15 ACCIMAP 36533.148 chrome launched
+W15 ACCIMAP 36533.149 1440 start
+W15 ACCIMAP 36533.285 1440 open
+W15 ACCIMAP 36533.449 1440 before {'innerWidth': 1440, 'innerHeight': 900, 'pageScrollWidth': 1440, 'pageClientWidth': 1440, 'pageScrollLeft': 0, 'bodyScrollWidth': 1440, 'regionScrollWidth': 1706, 'regionClientWidth': 1408, 'regionScrollLeft': 0, 'widerThanContainer': True}
+W15 ACCIMAP 36533.463 1440 focus {'tag': 'DIV', 'role': 'region', 'ariaLabel': 'AcciMap 草图可滚动区域', 'outline': 'rgb(16, 16, 16) auto 1px', 'outlineWidth': '1px', 'outlineStyle': 'auto', 'outlineColor': 'rgb(16, 16, 16)', 'outlineOffset': '0px', 'boxShadow': 'none', 'rect': {'x': 16, 'y': 140.875, 'width': 1408, 'height': 759}}
+W15 ACCIMAP 36533.525 1440 after ArrowRight {'innerWidth': 1440, 'innerHeight': 900, 'pageScrollWidth': 1440, 'pageClientWidth': 1440, 'pageScrollLeft': 0, 'bodyScrollWidth': 1440, 'regionScrollWidth': 1706, 'regionClientWidth': 1408, 'regionScrollLeft': 0, 'widerThanContainer': True}

@@ -1,0 +1,4 @@
+2026-11-26 20:24:45 CST
+candidate=147e322d402c89b727f95ff84cd51b983d224655
+product=897297ec97da9f0f33db6122e9dd234a25a31498
+command=timeout --signal=TERM --kill-after=10s 150s accimap run.py desktop+390
