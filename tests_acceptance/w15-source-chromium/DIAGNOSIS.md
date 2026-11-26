@@ -28,3 +28,19 @@ receipt.json reports workflowVerified=true, bodyVerified=false, browserVerified=
 and passed=false (not full gate). A timeout or assertion failure does not pass
 this scope. The default run retains every original assertion and the old gate
 remains blocked; do not mislabel either run. No mock response or additional POST.
+
+## Case-switch source GET observation (not full acceptance)
+
+This revision only adds observation for the source-list GET after switching
+cases. It keeps the original single preview POST, original assertions, normal
+sandbox, and --workflow-only to reach the switch without reading the 503 body.
+After the first-screen work, the original hash jump to case B is unchanged.
+Source GET events are logged without URL, headers or body: synthetic case id,
+event, status and failure category. The same-case positive HTTP source-list
+GET is recorded from the real request, together with the visible current case
+id. If the original hash-switch assertion fails, a separate diagnostic then
+drives the user-visible lobby entry and module link (not a direct HTTP stand-in
+and not a retry or loosened assertion) and records whether that path differs.
+Classify the case-B source GET as never sent, sent then cancelled, returned a
+failure, or responded but the UI did not use it. If the association is not
+unique, record 未验. This is not a product change and not an acceptance pass.
