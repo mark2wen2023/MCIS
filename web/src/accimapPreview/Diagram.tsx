@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { useId, type KeyboardEvent } from 'react'
 
 // Component input only; this is not a storage or transport contract.
 const levels = [
@@ -15,6 +15,17 @@ export type SyntheticAcciMapDraft = {
   nodes: readonly DraftNode[]
   edges: readonly Link[]
   informationFlows: readonly Link[]
+}
+
+export function panAcciMapOnArrow(e: Pick<KeyboardEvent<HTMLDivElement>, 'target' | 'currentTarget' | 'key' |
+  'defaultPrevented' | 'altKey' | 'ctrlKey' | 'metaKey' | 'shiftKey' | 'preventDefault'>) {
+  if (e.target !== e.currentTarget || e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return
+  const direction = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0
+  const region = e.currentTarget
+  const max = region.scrollWidth - region.clientWidth
+  if (!direction || max <= 0) return
+  e.preventDefault()
+  region.scrollLeft = Math.max(0, Math.min(max, region.scrollLeft + direction * 48))
 }
 
 export function AcciMapDraftDiagram({ caseId, draft }: { caseId: string; draft: SyntheticAcciMapDraft }) {
@@ -63,7 +74,7 @@ export function AcciMapDraftDiagram({ caseId, draft }: { caseId: string; draft: 
   return <figure style={{ marginInline: 0, minWidth: 0, maxWidth: '100%', overflowWrap: 'anywhere' }}>
     <figcaption>AcciMap 合成草图 · 待核验 · 证据状态未知。实线为输入关系，虚线为输入信息流；都不是已证实因果。</figcaption>
     <p id={`${id}-scroll-help`}>图可横向滚动；键盘用户可聚焦图框后按左右方向键。完整节点与连线另有文字清单。</p>
-    <div role="region" tabIndex={0} aria-label="AcciMap 草图可滚动区域" aria-describedby={`${id}-scroll-help`} style={{ overflowX: 'auto', maxWidth: '100%' }}>
+    <div role="region" tabIndex={0} aria-label="AcciMap 草图可滚动区域" aria-describedby={`${id}-scroll-help`} onKeyDown={panAcciMapOnArrow} style={{ overflowX: 'auto', maxWidth: '100%' }}>
       <svg role="img" aria-labelledby={`${id}-title ${id}-desc`} viewBox={`0 0 ${width} 754`} style={{ minWidth: width }}>
         <title id={`${id}-title`}>AcciMap 六层人工草图 · 待核验</title>
         <desc id={`${id}-desc`}>只展示明确输入，不补节点或边、不验证来源与因果。无法连到唯一端点或自连的边不绘制。全部输入连线可在图下文字清单核对。</desc>

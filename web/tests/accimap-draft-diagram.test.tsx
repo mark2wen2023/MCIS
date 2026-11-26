@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { Window } from 'happy-dom'
-import { AcciMapDraftDiagram, type SyntheticAcciMapDraft } from '../src/accimapPreview/Diagram'
+import { AcciMapDraftDiagram, panAcciMapOnArrow, type SyntheticAcciMapDraft } from '../src/accimapPreview/Diagram'
 const a='SYN-ACCIMAP-LONG-001',b='SYN-ACCIMAP-LONG-002'
 const fixture:SyntheticAcciMapDraft={
   caseId:'SYN-ACCIMAP-1',isFictionalDemo:true,
@@ -82,3 +82,34 @@ reviewDoc.body.innerHTML = renderToStaticMarkup(<AcciMapDraftDiagram caseId={fix
 assert.ok(reviewDoc.querySelector('details')?.textContent.includes('无输入节点。'))
 await reviewWindow.close()
 console.log('PASS AcciMap review: labeled focusable scroller, full node text, unnumbered node, empty draft, long-text wrapping')
+
+
+const region = {scrollWidth: 260, clientWidth: 200, scrollLeft: 0} as HTMLDivElement
+let prevented = 0
+const keypress = (key: string, overrides = {}) => panAcciMapOnArrow({
+ key, currentTarget: region, target: region, defaultPrevented:false,
+ altKey:false, ctrlKey:false, metaKey:false, shiftKey:false, preventDefault:()=>{prevented++}, ...overrides,
+})
+keypress('ArrowRight')
+assert.equal(region.scrollLeft,48)
+keypress('ArrowRight')
+assert.equal(region.scrollLeft,60)
+keypress('ArrowRight')
+assert.equal(region.scrollLeft,60)
+keypress('ArrowLeft')
+assert.equal(region.scrollLeft,12)
+keypress('ArrowLeft')
+assert.equal(region.scrollLeft,0)
+assert.equal(prevented,5)
+for(const overrides of [{altKey:true},{ctrlKey:true},{metaKey:true},{shiftKey:true},{defaultPrevented:true},{target:{}}]){
+ keypress('ArrowRight',overrides)
+}
+keypress('ArrowDown')
+keypress('Tab')
+assert.equal(region.scrollLeft,0)
+assert.equal(prevented,5)
+Object.assign(region,{scrollWidth:200})
+keypress('ArrowRight')
+assert.equal(region.scrollLeft,0)
+assert.equal(prevented,5)
+console.log('PASS AcciMap keyboard: focused horizontal arrows, bounds, modifiers, descendant events, unrelated keys and no overflow')
