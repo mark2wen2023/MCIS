@@ -1,0 +1,5 @@
+NetLog numbers for the already-captured unique preview POST (no re-run, raw log not shared)
+URL_REQUEST_JOB_FILTERED_BYTES_READ count=1
+byte_count sum=74 (field=byte_count; events_with_value=1)
+  event[1] phase=PHASE_NONE field=byte_count value=74
+explicit EOF/complete/cancel/error events=未观察到

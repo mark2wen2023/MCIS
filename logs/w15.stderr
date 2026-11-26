@@ -1,0 +1,297 @@
+W15 TRACE +0.066s main:189 call
+W15 TRACE +0.066s main:190 line
+W15 TRACE +0.066s main:191 line
+W15 TRACE +0.067s main:192 line
+W15 TRACE +0.067s main:193 line
+W15 TRACE +0.067s main:194 line
+W15 TRACE +0.067s main:195 line
+W15 TRACE +0.067s main:196 line
+W15 TRACE +0.067s main:197 line
+W15 TRACE +0.067s main:198 line
+W15 TRACE +0.067s main:199 line
+W15 TRACE +0.067s main:200 line
+W15 TRACE +0.067s main:201 line
+W15 TRACE +0.067s main:200 line
+W15 TRACE +0.067s main:202 line
+W15 TRACE +0.068s main:203 line
+W15 TRACE +0.068s main:204 line
+W15 TRACE +0.068s main:206 line
+W15 TRACE +0.068s main:207 line
+W15 TRACE +0.068s main:208 line
+W15 TRACE +0.068s main:209 line
+W15 TRACE +0.068s main:210 line
+W15 TRACE +0.068s main:211 line
+W15 TRACE +0.068s main:212 line
+W15 TRACE +0.068s main:213 line
+W15 TRACE +0.571s main:214 line
+W15 TRACE +0.571s main:215 line
+W15 TRACE +0.571s main:216 line
+W15 TRACE +0.571s main:217 line
+W15 TRACE +0.571s main:231 line
+W15 TRACE +0.571s main:232 line
+W15 TRACE +0.571s main:233 line
+W15 TRACE +0.571s main:234 line
+W15 TRACE +0.571s main:233 line
+W15 TRACE +0.651s main:234 line
+W15 TRACE +0.651s main:233 line
+W15 TRACE +0.651s main:238 line
+W15 TRACE +0.836s main:239 line
+W15 TRACE +1.289s main:240 line
+W15 TRACE +1.289s main:241 line
+W15 TRACE +1.290s main:240 line
+W15 TRACE +4.174s main:242 line
+W15 TRACE +4.174s main:243 line
+W15 TRACE +4.174s host:74 call
+W15 TRACE +4.174s host:76 line
+W15 TRACE +4.175s host:77 line
+W15 TRACE +4.175s host:78 line
+W15 TRACE +4.175s host:79 line
+W15 TRACE +4.175s host:77 line
+W15 TRACE +4.176s host:80 line
+W15 TRACE +4.176s host:81 line
+W15 TRACE +5.591s host:82 line
+W15 TRACE +5.592s host:83 line
+W15 TRACE +5.592s host:84 line
+W15 TRACE +5.592s host:85 line
+W15 TRACE +5.592s host:86 line
+W15 TRACE +5.655s host:87 line
+W15 TRACE +5.655s host:91 line
+W15 TRACE +5.655s host:91 return
+W15 TRACE +5.655s main:244 line
+W15 TRACE +5.655s setup:100 call
+W15 TRACE +5.655s setup:101 line
+W15 TRACE +5.655s setup:102 line
+W15 TRACE +5.655s setup:103 line
+W15 TRACE +5.655s setup:104 line
+W15 TRACE +5.655s setup:102 line
+W15 TRACE +5.691s setup:105 line
+W15 TRACE +5.691s setup:106 line
+W15 TRACE +5.691s setup:107 line
+W15 TRACE +5.691s setup:108 line
+W15 TRACE +5.691s setup:106 line
+W15 TRACE +5.691s setup:105 line
+W15 TRACE +5.714s setup:109 line
+W15 TRACE +5.714s setup:101 line
+W15 TRACE +5.714s setup:102 line
+W15 TRACE +5.714s setup:103 line
+W15 TRACE +5.714s setup:104 line
+W15 TRACE +5.714s setup:102 line
+W15 TRACE +5.719s setup:105 line
+W15 TRACE +5.719s setup:106 line
+W15 TRACE +5.719s setup:107 line
+W15 TRACE +5.719s setup:108 line
+W15 TRACE +5.719s setup:106 line
+W15 TRACE +5.719s setup:105 line
+W15 TRACE +5.725s setup:109 line
+W15 TRACE +5.725s setup:101 line
+W15 TRACE +5.725s setup:101 return
+W15 TRACE +5.725s main:245 line
+W15 TRACE +5.725s dump:116 call
+W15 TRACE +5.725s dump:117 line
+W15 TRACE +5.726s dump:118 line
+W15 TRACE +5.730s dump:117 line
+W15 TRACE +5.730s dump:117 return
+W15 TRACE +5.730s main:246 line
+W15 TRACE +5.730s app_ui:120 call
+W15 TRACE +5.730s app_ui:121 line
+W15 TRACE +5.730s app_ui:122 line
+W15 TRACE +5.730s app_ui:123 line
+W15 TRACE +5.730s app_ui:122 line
+W15 TRACE +5.741s app_ui:124 line
+W15 TRACE +5.741s app_ui:125 line
+W15 TRACE +5.741s app_ui:131 line
+W15 TRACE +5.743s app_ui:132 line
+W15 TRACE +5.744s app_ui:133 line
+W15 TRACE +5.745s app_ui:135 line
+W15 TRACE +5.745s app_ui:136 line
+W15 TRACE +5.922s app_ui:138 line
+W15 TRACE +5.923s app_ui:142 line
+W15 TRACE +5.923s app_ui:143 line
+W15 TRACE +5.924s app_ui:144 line
+W15 TRACE +5.924s app_ui:145 line
+W15 TRACE +5.925s app_ui:146 line
+W15 TRACE +5.926s app_ui:147 line
+W15 TRACE +5.926s app_ui:148 line
+W15 TRACE +5.926s app_ui:159 line
+W15 TRACE +5.926s show:148 call
+W15 TRACE +5.926s show:149 line
+W15 TRACE +6.373s show:150 line
+W15 TRACE +6.525s show:151 line
+W15 TRACE +6.525s show:152 line
+W15 TRACE +6.525s show:153 line
+W15 TRACE +6.530s show:154 line
+W15 TRACE +6.533s show:155 line
+W15 TRACE +6.536s show:156 line
+W15 TRACE +6.539s show:157 line
+W15 TRACE +6.542s show:158 line
+W15 TRACE +6.542s show:158 return
+W15 TRACE +6.542s app_ui:160 line
+W15 TRACE +6.542s app_ui:164 line
+W15 TRACE +6.577s app_ui:165 line
+W15 TRACE +6.619s app_ui:166 line
+W15 TRACE +6.629s app_ui:167 line
+W15 TRACE +6.636s app_ui:168 line
+W15 TRACE +6.637s app_ui:169 line
+W15 BROWSER t=25304.731390 preview request status=-
+W15 TRACE +6.674s app_ui:168 line
+W15 BROWSER t=25304.791579 preview response status=503
+W15 TRACE +6.733s app_ui:170 line
+W15 TRACE +6.733s app_ui:171 line
+W15 TRACE +6.734s app_ui:172 line
+W15 TRACE +6.734s app_ui:174 line
+W15 TRACE +6.734s app_ui:175 line
+W15 TRACE +6.734s app_ui:176 line
+W15 TRACE +6.739s app_ui:177 line
+W15 TRACE +6.741s app_ui:178 line
+W15 TRACE +6.743s app_ui:179 line
+W15 TRACE +6.746s app_ui:180 line
+W15 TRACE +6.888s app_ui:181 line
+W15 TRACE +6.888s show:148 call
+W15 TRACE +6.888s show:149 line
+W15 TRACE +6.894s show:150 line
+W15 TRACE +6.907s show:151 line
+W15 TRACE +6.907s show:152 line
+W15 TRACE +6.907s show:153 line
+W15 BROWSER t=25304.967582 preview requestfailed status=-
+W15 TRACE +11.910s show:153 exception
+W15 TRACE +11.910s show:153 return
+W15 TRACE +11.910s app_ui:181 exception
+W15 TRACE +11.910s app_ui:187 line
+W15 TRACE +11.947s app_ui:187 return
+W15 TRACE +11.947s main:246 exception
+W15 TRACE +11.947s main:243 line
+W15 TRACE +11.947s host:91 call
+W15 TRACE +11.947s host:91 exception
+W15 TRACE +11.947s host:93 line
+W15 TRACE +11.947s host:94 line
+W15 TRACE +12.111s host:98 line
+W15 TRACE +12.112s host:76 line
+W15 TRACE +12.112s host:98 return
+W15 TRACE +12.112s main:251 line
+W15 TRACE +12.194s main:239 line
+W15 TRACE +12.212s main:211 line
+W15 TRACE +12.240s main:262 line
+W15 TRACE +12.240s main:263 line
+W15 TRACE +12.240s main:263 return
+Traceback (most recent call last):
+  File "/workspace/mcis-w15-workflow-034bff8/tests_acceptance/w15-source-chromium/diagnose.py", line 44, in <module>
+    observe(Path(__file__).resolve().with_name("run.py"))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/mcis-w15-workflow-034bff8/tests_acceptance/w15-source-chromium/diagnose.py", line 37, in observe
+    runpy.run_path(fixed_name, run_name="__main__")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/mcis-w15-workflow-034bff8/tests_acceptance/w15-source-chromium/run.py", line 266, in <module>
+    main()
+    ~~~~^^
+  File "/workspace/mcis-w15-workflow-034bff8/tests_acceptance/w15-source-chromium/run.py", line 246, in main
+    app_ui(browser,origin,arg.evidence,False,arg.workflow_only)
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/mcis-w15-workflow-034bff8/tests_acceptance/w15-source-chromium/run.py", line 181, in app_ui
+    show(CASE_B)
+    ~~~~^^^^^^^^
+  File "/workspace/mcis-w15-workflow-034bff8/tests_acceptance/w15-source-chromium/run.py", line 153, in show
+    expect(panel).to_contain_text(TITLES[case])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/sync_api/_generated.py", line 14994, in to_contain_text
+    self._sync(
+    ~~~~~~~~~~^
+        self._impl_obj.to_contain_text(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        )
+        ^
+    )
+    ^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+    return task.result()
+           ~~~~~~~~~~~^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/assertions.py", line 306, in to_contain_text
+    await self._expect_impl(
+    ...<9 lines>...
+    )
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/assertions.py", line 122, in _expect_impl
+    _record_soft_or_raise(
+    ~~~~~~~~~~~~~~~~~~~~~^
+        AssertionError(
+        ^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        self._is_soft,
+        ^^^^^^^^^^^^^^
+    )
+    ^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/_assertions.py", line 50, in _record_soft_or_raise
+    raise error
+AssertionError: Locator expected to contain text 'Synthetic source beta'
+Actual value: None
+Error: element(s) not found 
+Call log:
+  - Expect "to_contain_text" locator("#w153-draft-sources") with timeout 5000ms
+  - waiting for locator("#w153-draft-sources")
+
+Aria snapshot:
+- complementary:
+  - text: M MCISWEB 海事事故调查工作台 ⚠ 示例数据（虚构） SYN-W15-B，虚构演示，不作为真实事故资料
+  - navigation:
+    - text: 调查与仿真工作流（01–08）
+    - link "AI 智能体协作状态 配置登记 / 人工草稿队列 LIVE":
+      - /url: "#/agents?case=SYN-W15-B"
+    - link "01 案件大厅 案件列表 / 进入调查 LIVE":
+      - /url: "#/lobby"
+    - link "02 信息录入 基本档案 / 文字编辑 LIVE":
+      - /url: "#/case?case=SYN-W15-B"
+    - link "03 船舶参数 静态参数录入 / 来源 / 查看 LIVE":
+      - /url: "#/ships?case=SYN-W15-B"
+    - link "04 气象水文 风 / 流 / 能见度观测记录 LIVE":
+      - /url: "#/env?case=SYN-W15-B"
+    - link "05 航迹设定 已存点 / UTC CSV 首次输入 LIVE":
+      - /url: "#/track?case=SYN-W15-B"
+    - link "06 三维仿真 Unity 推演 / SimTime 同步":
+      - /url: "#/sim"
+    - link "07 ECFC 因果链 事件与致因因素图":
+      - /url: "#/ecfc"
+    - link "08 分析与报告导出 曲线 / 证据 / PDF LIVE":
+      - /url: "#/analysis?case=SYN-W15-B"
+    - text: 国际对标调查模块（09–17）
+    - link "09 证据中心 · VDR 证据清单 / 保管链 / 时间冲突 LIVE":
+      - /url: "#/evidence?case=SYN-W15-B"
+    - link "10 询问笔录比对 陈述抽取 / 矛盾确认 LIVE":
+      - /url: "#/interview?case=SYN-W15-B"
+    - link "11 避碰规则对照 会遇局面 / 应采取 vs 实际 LIVE":
+      - /url: "#/colreg?case=SYN-W15-B"
+    - link "12 What-if 反事实 单船舵响应假设 / 非风险判定 LIVE":
+      - /url: "#/whatif?case=SYN-W15-B"
+    - link "13 人为因素 工休技术预览 / 人工分类草稿 LIVE":
+      - /url: "#/hf?case=SYN-W15-B"
+    - link "14 系统性分析 Bow-tie假设 / 结构核查 LIVE":
+      - /url: "#/systemic?case=SYN-W15-B"
+    - link "15 安全建议与报告 看板 / 征求意见 / 审计 LIVE":
+      - /url: "#/recs?case=SYN-W15-B"
+    - link "15 国际格式报告 IMO/MAIB/中国海事 · 双语 · GISIS LIVE":
+      - /url: "#/report?case=SYN-W15-B"
+    - link "16 知识库 知识卡 / 人工发布 / 结构化检索 LIVE":
+      - /url: "#/knowledge"
+    - link "17 权限与脱敏 策略矩阵 / 字段规则 / 只读核验 LIVE":
+      - /url: "#/access?case=SYN-W15-B"
+  - text: service 127.0.0.1:8765 ● ONLINE
+- banner:
+  - text: ⚠ 示例数据（虚构） 当前案件SYN-W15-BSYN-W15-B 操作人：Synthetic W15
+  - combobox "X-MCIS-Role":
+    - option "首席调查官（LeadInvestigator）" [selected]
+    - option "调查员（Investigator）"
+    - option "外部专家（ExternalExpert）"
+    - option "利益相关国（InterestedState）"
+    - option "公众（Public）"
+- main:
+  - heading "系统性分析 · Bow-tie 假设草拟" [level=1]
+  - link "返回案件大厅":
+    - /url: "#/lobby"
+  - paragraph: 当前案件：SYN-W15-B · 本地自报角色，不是真实身份认证
+  - complementary:
+    - strong: 人工假设与结构校验，不确认事实、因果、风险分值或责任。
+    - paragraph: 所有节点固定待核验，屏障固定 Unknown。无屏障直接路径可能结构有效，但不代表安全。威胁链与允许连接是项目约束，不是适用法律结论。
+    - paragraph: 本片不保存、不导出，不接入 ECFC。AcciMap / STAMP、屏障有效性评估和审核尚未实现。方法参考为一般 Bow-tie 方法，不是海事法律认证。
+  - button "刷新来源（清空录入和结果）"
+  - status: 正在读取本案允许的登记来源…
