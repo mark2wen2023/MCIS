@@ -16,3 +16,9 @@ timeout. Retain stdout, stderr, host-first.log, and the actual exit. Correlate
 the sole browser preview POST with the sole ASGI sequence; do not send a
 second preview during the same run. Treat every result here as diagnostic;
 it does not overwrite the original blocked receipt.
+
+This revision also observes Chrome CDP Network lifecycle events on the same
+page and same single POST: requestWillBeSent, responseReceived, loadingFinished
+or loadingFailed. It never reads the body through CDP. encodedBytes is a
+browser transport counter, not the JSON body length. Absence of CDP events is
+not proof of a network failure, since delivery to the listener can also stall.

@@ -134,6 +134,29 @@ def app_ui(browser, origin, evidence, reopened):
       localStorage.setItem('mcis.operator','Synthetic W15');""")
     try:
         page=context.new_page()
+        # Observe Chrome's own network events without consuming the response.
+        cdp = context.new_cdp_session(page)
+        preview_ids = set()
+        def chrome_request(event):
+            request = event.get("request", {})
+            url = request.get("url", "")
+            if (request.get("method") == "POST" and
+                    urlsplit(url).netloc == urlsplit(origin).netloc and
+                    urlsplit(url).path.endswith("/systemic/bowtie:preview")):
+                preview_ids.add(event["requestId"])
+                chrome_lifecycle("requestWillBeSent", event)
+        def chrome_lifecycle(kind, event):
+            if event.get("requestId") not in preview_ids:
+                return
+            status = event.get("response", {}).get("status", "-")
+            size = event.get("encodedDataLength", "-")
+            print(f"W15 CDP t={time.monotonic():.6f} preview {kind} "
+                  f"status={status} encodedBytes={size}", file=sys.stderr, flush=True)
+        cdp.on("Network.requestWillBeSent", chrome_request)
+        cdp.on("Network.responseReceived", lambda e: chrome_lifecycle("responseReceived", e))
+        cdp.on("Network.loadingFinished", lambda e: chrome_lifecycle("loadingFinished", e))
+        cdp.on("Network.loadingFailed", lambda e: chrome_lifecycle("loadingFailed", e))
+        cdp.send("Network.enable")
         # Observe the actual preview only; do not read the body here.
         def net(event, request, status="-"):
             if request.method == "POST" and request.url.endswith("/systemic/bowtie:preview"):
