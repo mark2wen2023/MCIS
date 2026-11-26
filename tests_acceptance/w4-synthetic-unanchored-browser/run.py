@@ -145,7 +145,10 @@ def flow(browser, origin, width, output, reopened):
             csv_fields.nth(i).fill(f"time_utc,cog_deg\n{EPOCH},{val}\n2026-01-01T00:01:00Z,{val}\n")
             panel.get_by_label("UTC时间列名", exact=True).nth(i).fill("time_utc")
             panel.get_by_label("值列名", exact=True).nth(i).fill("cog_deg")
-            panel.get_by_label("数据类型", exact=True).nth(i).select_option("CourseOverGround")
+            mapping = panel.locator("fieldset").nth(i).get_by_role("combobox")
+            expect(mapping).to_have_count(1)
+            mapping.select_option(value="CourseOverGround")
+            expect(mapping).to_have_value("CourseOverGround")
         panel.get_by_role("checkbox").check()
         path = f"/api/v1/cases/{case}/timeline/align-preview"
         with page.expect_response(lambda r: r.request.method == "POST" and urlsplit(r.url).path == path,
