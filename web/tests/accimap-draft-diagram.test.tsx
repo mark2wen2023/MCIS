@@ -31,7 +31,7 @@ assert.deepEqual(ys.map(Math.sign),[1,1,-1])
 for(const [kind,start,end] of [['输入关系',a,b],['输入信息流',a,b],['输入信息流',b,a]])
  assert.ok(Array.from(d.querySelectorAll('details li')).some(li=>li.textContent===`${kind}：${start} → ${end}（图中已绘）`))
 assert.equal(d.querySelectorAll('details ol li').length,6)
-assert.ok(d.querySelector('details summary')?.textContent.includes('全部输入连线'))
+assert.ok(Array.from(d.querySelectorAll('details summary')).some(el=>el.textContent.includes('全部输入连线')))
 assert.equal(Array.from(d.querySelectorAll('details li')).filter(li=>li.textContent.endsWith('（未绘制）')).length,3)
 assert.equal(d.querySelector('svg script'),null)
 assert.ok(html.includes('&lt;script&gt;'))
@@ -64,3 +64,21 @@ assert.equal(parse(renderToStaticMarkup(<AcciMapDraftDiagram caseId={fixture.cas
 assert.equal(JSON.stringify(fixture),baseline)
 await w.close()
 console.log('PASS AcciMap: 6 levels, explicit distinct edge types, omitted malformed edges, unknown status, unchanged fixture, cross-case/non-synthetic blocked')
+
+const reviewWindow = new Window()
+const fullLabel = '这是必须完整保留且不能只显示十个汉字的合成节点说明'
+const reviewDoc = reviewWindow.document
+reviewDoc.body.innerHTML = renderToStaticMarkup(<AcciMapDraftDiagram caseId={fixture.caseId} draft={{
+ ...fixture, nodes: [{id:'  ', label:fullLabel, level:'Company'}], edges:[], informationFlows:[],
+}}/>)
+const scroller = reviewDoc.querySelector('[role=region]')
+assert.equal(scroller?.getAttribute('tabindex'),'0')
+assert.equal(scroller?.getAttribute('aria-label'),'AcciMap 草图可滚动区域')
+assert.ok(reviewDoc.getElementById(scroller!.getAttribute('aria-describedby')!)?.textContent.includes('左右方向键'))
+assert.ok(reviewDoc.querySelector('details ul li')?.textContent.includes('未编号：'+fullLabel))
+assert.ok(!Array.from(reviewDoc.querySelectorAll('svg g text')).some(el=>el.textContent.includes(fullLabel)))
+assert.ok(reviewDoc.querySelector('figure')?.style.overflowWrap === 'anywhere')
+reviewDoc.body.innerHTML = renderToStaticMarkup(<AcciMapDraftDiagram caseId={fixture.caseId} draft={{...fixture,nodes:[],edges:[],informationFlows:[]}}/>)
+assert.ok(reviewDoc.querySelector('details')?.textContent.includes('无输入节点。'))
+await reviewWindow.close()
+console.log('PASS AcciMap review: labeled focusable scroller, full node text, unnumbered node, empty draft, long-text wrapping')

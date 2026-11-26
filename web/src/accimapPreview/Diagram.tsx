@@ -60,9 +60,10 @@ export function AcciMapDraftDiagram({ caseId, draft }: { caseId: string; draft: 
   for (const group of pairs.values())
     group.forEach((link, i) => trackByLink.set(link, (i - (group.length - 1) / 2) * 10))
 
-  return <figure>
+  return <figure style={{ marginInline: 0, minWidth: 0, maxWidth: '100%', overflowWrap: 'anywhere' }}>
     <figcaption>AcciMap 合成草图 · 待核验 · 证据状态未知。实线为输入关系，虚线为输入信息流；都不是已证实因果。</figcaption>
-    <div style={{ overflowX: 'auto' }}>
+    <p id={`${id}-scroll-help`}>图可横向滚动；键盘用户可聚焦图框后按左右方向键。完整节点与连线另有文字清单。</p>
+    <div role="region" tabIndex={0} aria-label="AcciMap 草图可滚动区域" aria-describedby={`${id}-scroll-help`} style={{ overflowX: 'auto', maxWidth: '100%' }}>
       <svg role="img" aria-labelledby={`${id}-title ${id}-desc`} viewBox={`0 0 ${width} 754`} style={{ minWidth: width }}>
         <title id={`${id}-title`}>AcciMap 六层人工草图 · 待核验</title>
         <desc id={`${id}-desc`}>只展示明确输入，不补节点或边、不验证来源与因果。无法连到唯一端点或自连的边不绘制。全部输入连线可在图下文字清单核对。</desc>
@@ -102,6 +103,15 @@ export function AcciMapDraftDiagram({ caseId, draft }: { caseId: string; draft: 
         <text x="18" y="724" fill="#203c4a" fontSize="13">未绘制连线 {omitted} 条（端点缺失、歧义或自连）；完整节点 ID 见节点标题。</text>
       </svg>
     </div>
+    <details>
+      <summary>查看全部输入节点（完整名称）</summary>
+      {lanes.some(lane => lane.nodes.length) ? lanes.filter(lane => lane.nodes.length).map(lane => <section key={lane.label}>
+        <h3>{lane.label}</h3>
+        <ul>{lane.nodes.map(({ node }, i) => <li key={i}>
+          <strong>{hasId(node.id) ? node.id : '未编号'}</strong>：{node.label}（待核验；证据状态未知）
+        </li>)}</ul>
+      </section>) : <p>无输入节点。</p>}
+    </details>
     <details>
       <summary>查看全部输入连线（含未绘制项）</summary>
       {links.length ? <ol>{links.map((link, i) => {
