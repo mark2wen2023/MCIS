@@ -191,11 +191,14 @@ def check_group1(exit_code: int, parsed) -> list[str]:
     if cal.get("uncalibratedSources"):
         errors.append(f"group1 uncalibratedSources={cal.get('uncalibratedSources')}")
     stats = result.get("stats") or {}
-    if (stats.get("manualAnchorCount") or 0) < 1:
-        errors.append(f"group1 stats.manualAnchorCount={stats.get('manualAnchorCount')}")
-    if stats.get("anchorCount") and stats.get("anchorCount") != stats.get("manualAnchorCount"):
+    manual = stats.get("manualAnchorCount") or 0
+    anchors = stats.get("anchorCount") or 0
+    if manual != 3:
+        errors.append(f"group1 stats.manualAnchorCount={manual}, expected 3")
+    # Each manual anchor becomes two observations (source A and source B).
+    if anchors != 6:
         errors.append(
-            f"group1 auto anchors may have mixed in: anchorCount={stats.get('anchorCount')} manual={stats.get('manualAnchorCount')}"
+            f"group1 stats.anchorCount={anchors}, expected 6 (3 manual anchors × 2 observations, no automatic anchors)"
         )
     return errors
 
