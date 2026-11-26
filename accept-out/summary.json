@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "harnessExit": 0,
+  "firstFailure": null,
+  "cliUsed": false,
+  "scope": "synthetic sample-clock core path only; not W4 whole package"
+}

@@ -1,0 +1,4 @@
+http-cache: /home/box/.local/share/NuGet/http-cache
+global-packages: /home/box/.nuget/packages/
+temp: /tmp/NuGetScratchbox
+plugins-cache: /home/box/.local/share/NuGet/plugin-cache

@@ -1,0 +1,68 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {}
+  },
+  "libraries": {},
+  "projectFileDependencyGroups": {
+    "net8.0": []
+  },
+  "packageFolders": {
+    "/home/box/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/workspace/mcis-w4-sample-clock-cand/tests_acceptance/w4-manual-anchor-sample-clock/W4.SampleClock.csproj",
+      "projectName": "W4SampleClock",
+      "projectPath": "/workspace/mcis-w4-sample-clock-cand/tests_acceptance/w4-manual-anchor-sample-clock/W4.SampleClock.csproj",
+      "packagesPath": "/home/box/.nuget/packages/",
+      "outputPath": "/workspace/mcis-w4-sample-clock-report/accept-out/harness-obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/workspace/mcis-w4-sample-clock-report/accept-out/harness-obj/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      }
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/home/box/.dotnet/sdk/8.0.428/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

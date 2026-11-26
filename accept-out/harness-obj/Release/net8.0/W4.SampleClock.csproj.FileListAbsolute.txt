@@ -1,0 +1,14 @@
+/workspace/mcis-w4-sample-clock-report/accept-out/harness-bin/W4SampleClock.deps.json
+/workspace/mcis-w4-sample-clock-report/accept-out/harness-bin/W4SampleClock.runtimeconfig.json
+/workspace/mcis-w4-sample-clock-report/accept-out/harness-bin/W4SampleClock.dll
+/workspace/mcis-w4-sample-clock-report/accept-out/harness-bin/W4SampleClock.pdb
+/workspace/mcis-w4-sample-clock-report/accept-out/harness-obj/Release/net8.0/W4.SampleClock.GeneratedMSBuildEditorConfig.editorconfig
+/workspace/mcis-w4-sample-clock-report/accept-out/harness-obj/Release/net8.0/W4.SampleClock.AssemblyInfoInputs.cache
+/workspace/mcis-w4-sample-clock-report/accept-out/harness-obj/Release/net8.0/W4.SampleClock.AssemblyInfo.cs
+/workspace/mcis-w4-sample-clock-report/accept-out/harness-obj/Release/net8.0/W4.SampleClock.csproj.CoreCompileInputs.cache
+/workspace/mcis-w4-sample-clock-report/accept-out/harness-obj/Release/net8.0/W4.SampleClock.sourcelink.json
+/workspace/mcis-w4-sample-clock-report/accept-out/harness-obj/Release/net8.0/W4SampleClock.dll
+/workspace/mcis-w4-sample-clock-report/accept-out/harness-obj/Release/net8.0/refint/W4SampleClock.dll
+/workspace/mcis-w4-sample-clock-report/accept-out/harness-obj/Release/net8.0/W4SampleClock.pdb
+/workspace/mcis-w4-sample-clock-report/accept-out/harness-obj/Release/net8.0/W4.SampleClock.genruntimeconfig.cache
+/workspace/mcis-w4-sample-clock-report/accept-out/harness-obj/Release/net8.0/ref/W4SampleClock.dll
