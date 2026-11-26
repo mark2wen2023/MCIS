@@ -1,0 +1,8 @@
+2026-11-26 18:13:32 CST
+accept_sha=b1586b667402431763f4b984202107894ecd5884
+product=94d5e38c926fda232bb987b60fa9145e4bcf01a7
+core_dll=/workspace/mcis-w41-core-out/mcis-core.dll
+core_sha256=f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf
+rebuilt=no
+chrome=Google Chrome 156.0.8078.47 
+command=timeout --signal=TERM --kill-after=10s 150s run.py (b1586b6) --core-dll previously verified
