@@ -1,0 +1,15 @@
+{
+  "passed": false,
+  "blocked": true,
+  "exit": 3,
+  "firstBreakpoint": {
+    "file": "service/mcis_service/ecfc_drafts/router.py",
+    "version": "875ccc50b049fb24b82f6b0663f3f9476db1880e",
+    "sha256": "a3e29516ba1116c4f4876ebeab325d3d3f3364d0061919f96409a14c2979f4b6",
+    "alsoIdenticalAt": "41eb599f5a42eb2d0938ad4212936a0949a1cef5",
+    "detail": "产品 ECFC 路由只有 GET context、GET draft、POST save、GET audit、POST preview；context 声明 sourceBinding=registered-metadata-only（约第 322 行）。不存在按「图版本/边」登记或在明确读取意图下返回通联原文片段的产品接口。既有单边原文试点在 tests_acceptance/w11-edge-host-optin/host.py 临时增加 /__local_synthetic_w11/{CASE}/edge-excerpt，并在 tests_acceptance/w11-excerpt-binding-local/check.py 用 fixture_core 与直写 pilot_single_source；tests_acceptance/w11-excerpt-binding-local/pilot.py 写明为测试专用内部适配器、不是 API。tests_acceptance/ECFCNEW/http_real.py 虽走真实回环 HTTP 预览/保存，但草稿 edges=[]，不含单边原文登记或读取。按派遣不得临时开接口或改产品，故停于该首个断点。组合实跑未验。"
+  },
+  "combinedBusinessRun": "未验",
+  "sameRoundEvidenceReused": false,
+  "scope": "interface inventory and evidence comparison only; not W11 whole package"
+}

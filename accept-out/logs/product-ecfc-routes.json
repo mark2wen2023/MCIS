@@ -1,0 +1,32 @@
+{
+  "sourceBinding": "registered-metadata-only",
+  "ecfcDraftRoutes": [
+    {
+      "file": "service/mcis_service/ecfc_drafts/router.py",
+      "method": "GET",
+      "path": "/context"
+    },
+    {
+      "file": "service/mcis_service/ecfc_drafts/router.py",
+      "method": "GET",
+      "path": "/draft"
+    },
+    {
+      "file": "service/mcis_service/ecfc_drafts/router.py",
+      "method": "POST",
+      "path": "/save"
+    },
+    {
+      "file": "service/mcis_service/ecfc_drafts/router.py",
+      "method": "GET",
+      "path": "/audit"
+    },
+    {
+      "file": "service/mcis_service/ecfc_drafts/router.py",
+      "method": "POST",
+      "path": "/preview"
+    }
+  ],
+  "productFilesMentioningExcerptBinding": [],
+  "hasProductEdgeExcerptRoute": false
+}

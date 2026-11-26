@@ -1,0 +1,35 @@
+{
+  "time": "2026-11-27 02:22:03 CST",
+  "sourceHead": "e1ee4f162465cffaafcb9e75d7bf5514ddd4334a",
+  "basePin": "875ccc50b049fb24b82f6b0663f3f9476db1880e",
+  "excerptPin": "41eb599f5a42eb2d0938ad4212936a0949a1cef5",
+  "dotnet": {
+    "dotnetPath": "/home/box/.dotnet/dotnet",
+    "dotnetPresent": true,
+    "dotnetVersion": "8.0.428",
+    "nugetLocalsExit": 0,
+    "nugetLocals": [
+      "http-cache: /home/box/.local/share/NuGet/http-cache",
+      "global-packages: /home/box/.nuget/packages/",
+      "temp: /tmp/NuGetScratchbox",
+      "plugins-cache: /home/box/.local/share/NuGet/plugin-cache"
+    ]
+  },
+  "python": "3.13.5 (main, Aug 10 2026, 12:06:59) [GCC 14.2.0]",
+  "combinedBusinessRun": "未验",
+  "replayCommand": [
+    "timeout",
+    "--signal=TERM",
+    "--kill-after=10s",
+    "150s",
+    "python3",
+    "tests_acceptance/w11-combined-pilot/run.py",
+    "--source",
+    "/workspace/mcis-w11-combined-cand",
+    "--dotnet",
+    "/home/box/.dotnet/dotnet",
+    "--out",
+    "<empty-out>"
+  ],
+  "scope": "interface inventory and evidence comparison only; not W11 whole package"
+}

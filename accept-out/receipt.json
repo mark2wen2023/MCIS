@@ -1,0 +1,144 @@
+{
+  "passed": false,
+  "blocked": true,
+  "blockExit": 3,
+  "sameRoundEvidenceReused": false,
+  "combinedBusinessRun": "未验",
+  "httpResultsClaimedAsBrowser": false,
+  "cliUsed": false,
+  "webUiUsed": false,
+  "realCaseUsed": false,
+  "productChanged": false,
+  "newInterfaceOpened": false,
+  "fixtureCoreUsed": false,
+  "directTableWritesUsed": false,
+  "scope": "interface inventory and evidence comparison only; not W11 whole package",
+  "thresholds": {
+    "sameRoundExistingEvidenceCoversAllGates": {
+      "result": false,
+      "note": "875ccc5 核心复验与 b40a6ca/41eb599 单边原文是两轮分开的官方证据，不是同一轮。"
+    },
+    "dotnetGeneratedCurrentDraft": {
+      "result": "仅在 875ccc5 核心复验中单独满足；组合轮未验",
+      "note": "w11-real-core/workflow.py 经原 run_core 预览/保存/同库重开，明确不含 association。"
+    },
+    "registeredSyntheticExcerptOnThatVersionEdge": {
+      "result": "仅在 b40a6ca 单边原文轮中以试点表满足；组合轮未验",
+      "note": "登记靠对 pilot_single_source 直写 INSERT，不是产品接口。"
+    },
+    "excerptOnlyOnExplicitReadIntent": {
+      "result": "仅在 b40a6ca 浏览器轮中于试点路由上满足；组合轮未验"
+    },
+    "readKeepsSpecifiedVersionEdgeExcerpt": {
+      "result": "仅在 b40a6ca 轮中于试点适配器上满足；组合轮未验"
+    },
+    "afterReviseOrUndoOldBindingUnreadable": {
+      "result": "仅在 b40a6ca 轮中于试点适配器上满足；组合轮未验"
+    },
+    "t109OnlyAsRecordedSourceTime": {
+      "result": "仅在 b40a6ca 轮中满足（2026-02-01T12:01:49.000Z）；组合轮未验"
+    },
+    "sqliteAndExistingAuditChecked": {
+      "result": "两轮各自核对过，但不是同一库同一轮；组合轮未验"
+    },
+    "noFixtureCoreOrDirectProductionTableWrites": {
+      "result": false,
+      "note": "单边原文工装使用 fixture_core，并对试点表直写；不可当作产品动作。"
+    },
+    "productInterfacesCanCombineWithoutNewRoute": {
+      "result": false,
+      "note": "产品 ECFC 接口仅有 context/draft/save/audit/preview，sourceBinding=registered-metadata-only。"
+    }
+  },
+  "firstBreakpoint": {
+    "file": "service/mcis_service/ecfc_drafts/router.py",
+    "version": "875ccc50b049fb24b82f6b0663f3f9476db1880e",
+    "sha256": "a3e29516ba1116c4f4876ebeab325d3d3f3364d0061919f96409a14c2979f4b6",
+    "alsoIdenticalAt": "41eb599f5a42eb2d0938ad4212936a0949a1cef5",
+    "detail": "产品 ECFC 路由只有 GET context、GET draft、POST save、GET audit、POST preview；context 声明 sourceBinding=registered-metadata-only（约第 322 行）。不存在按「图版本/边」登记或在明确读取意图下返回通联原文片段的产品接口。既有单边原文试点在 tests_acceptance/w11-edge-host-optin/host.py 临时增加 /__local_synthetic_w11/{CASE}/edge-excerpt，并在 tests_acceptance/w11-excerpt-binding-local/check.py 用 fixture_core 与直写 pilot_single_source；tests_acceptance/w11-excerpt-binding-local/pilot.py 写明为测试专用内部适配器、不是 API。tests_acceptance/ECFCNEW/http_real.py 虽走真实回环 HTTP 预览/保存，但草稿 edges=[]，不含单边原文登记或读取。按派遣不得临时开接口或改产品，故停于该首个断点。组合实跑未验。"
+  },
+  "priorEvidence": {
+    "dotnetCore": {
+      "pin": "875ccc50b049fb24b82f6b0663f3f9476db1880e",
+      "branch": "evidence/w11-core-grokbot-875ccc5",
+      "sha": "5d33addffde4565903367276e7ad4e0568860327",
+      "zipSha256": "87dbabc691ab77a58a08fecbd78dd78df582a681fb98a42c10eeb21c4bb100d6",
+      "scope": "real .NET preview/save/SQLite reopen; not association, excerpt, browser, or HTTP lifecycle"
+    },
+    "excerptPilot": {
+      "pin": "b40a6cacf91ba0d8b297377d31162e404e468e8d",
+      "basedOn": "41eb599f5a42eb2d0938ad4212936a0949a1cef5",
+      "branch": "evidence/w11-grokbot-b40a6ca",
+      "zipSha256": "b2038e908ced208e2787a36d87e96afec9c393d8ab2ba5d5119999abb2365b1f",
+      "scope": "explicit excerpt read / revision / revoke / T+109 in isolated host; fixture core + harness-only route + direct pilot_single_source writes"
+    }
+  },
+  "productInterfaceInventory": {
+    "sourceBinding": "registered-metadata-only",
+    "ecfcDraftRoutes": [
+      {
+        "file": "service/mcis_service/ecfc_drafts/router.py",
+        "method": "GET",
+        "path": "/context"
+      },
+      {
+        "file": "service/mcis_service/ecfc_drafts/router.py",
+        "method": "GET",
+        "path": "/draft"
+      },
+      {
+        "file": "service/mcis_service/ecfc_drafts/router.py",
+        "method": "POST",
+        "path": "/save"
+      },
+      {
+        "file": "service/mcis_service/ecfc_drafts/router.py",
+        "method": "GET",
+        "path": "/audit"
+      },
+      {
+        "file": "service/mcis_service/ecfc_drafts/router.py",
+        "method": "POST",
+        "path": "/preview"
+      }
+    ],
+    "productFilesMentioningExcerptBinding": [],
+    "hasProductEdgeExcerptRoute": false
+  },
+  "fingerprints": {
+    "service/mcis_service/ecfc_drafts/router.py": {
+      "sha256": "a3e29516ba1116c4f4876ebeab325d3d3f3364d0061919f96409a14c2979f4b6",
+      "matchesExpected": true
+    },
+    "tests_acceptance/w11-real-core/workflow.py": {
+      "sha256": "4b01ee4e9fb70e54ad792e0d05b134b696faf797eb604968874abfef15f7a4ec",
+      "matchesExpected": true
+    },
+    "tests_acceptance/ECFCNEW/http_real.py": {
+      "sha256": "2fe1b3ad833b4af289e7d74b8818c705276c0cb6ea0e7019abcb19a89f0b45c4",
+      "matchesExpected": true
+    },
+    "tests_acceptance/w11-edge-host-optin/host.py": {
+      "sha256": "9ffcc5152f5de516ade287c8998f68322bb108015ed0d0e4eac2f83b0fbe2255",
+      "matchesExpected": true
+    },
+    "tests_acceptance/w11-excerpt-binding-local/check.py": {
+      "sha256": "79f0583a1a18edef8cec7f15b8f9c507be29117803f77dc937b68387f116de86",
+      "matchesExpected": true
+    },
+    "tests_acceptance/w11-excerpt-binding-local/pilot.py": {
+      "sha256": "6d09489264e3bbff5a36576702bf5b91b8536d6f6c991ad78731885de120fe66",
+      "matchesExpected": true
+    }
+  },
+  "unchangedFrom41eb599": {
+    "tests_acceptance/ECFCNEW/http_real.py": true,
+    "tests_acceptance/w11-edge-host-optin/host.py": true,
+    "tests_acceptance/w11-excerpt-binding-local/check.py": true,
+    "tests_acceptance/w11-excerpt-binding-local/pilot.py": true,
+    "service/mcis_service/ecfc_drafts/router.py": true
+  },
+  "basePin": "875ccc50b049fb24b82f6b0663f3f9476db1880e",
+  "excerptPin": "41eb599f5a42eb2d0938ad4212936a0949a1cef5",
+  "basePinReason": "875ccc50 already contains both the real .NET gate and the 41eb599/b40a6ca excerpt tooling, and is the reviewed genuine-.NET pin."
+}
