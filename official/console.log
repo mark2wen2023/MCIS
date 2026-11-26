@@ -1,0 +1,8 @@
+Pin HEAD=94d5e38c926fda232bb987b60fa9145e4bcf01a7; knowledge/router.py SHA-256=26686dd2fc14b9f80600b676b547d6a8d9d325b16cdd2b5ca9672383ee76e632
+Search type: literal case-folded substring (keyword), not vector/semantic
+Listening on 127.0.0.1:18767
+Created 3 synthetic cards: published=KC-2da7ac64e85846b6a84f80e77a455c94 pending=KC-8de529800133475da16d8f378ea037d4 withdrawn=KC-b5426501fab440a38de3a762e58684b1
+Usable Public search PASS: only the reviewed Published card, original source returned
+Pending and withdrawn stay out of usable Published results; Public cannot query those statuses
+Knowledge audit chain valid, count=6
+OFFICIAL RESULT: keyword search PASS (HTTP, not browser, not vector); W19 whole-package 未验

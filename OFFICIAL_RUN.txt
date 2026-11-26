@@ -1,0 +1,22 @@
+# Official W19 reviewed knowledge-card keyword search and source return
+# Time zone: Asia/Shanghai (CST, UTC+8)
+start=2026-11-27T05:43:14+08:00
+end=2026-11-27T05:43:17+08:00
+exit=0
+timeout=timeout --signal=TERM --kill-after=10s 150s
+isolation=unshare -r -n ; ip link set lo up
+python=/workspace/mcis-w17-871db66/service/.venv/bin/python
+script=/workspace/mcis-w19-retrieval-cand/tests_acceptance/w19-knowledge-card-retrieval/run.py
+report=/workspace/mcis-w19-retrieval-report
+bind=127.0.0.1:18767
+pin=94d5e38c926fda232bb987b60fa9145e4bcf01a7
+search_type=literal-substring-keyword
+vector_search=false
+command:
+/usr/bin/timeout --signal=TERM --kill-after=10s 150s /usr/bin/unshare -r -n /bin/bash -c '
+  set -euo pipefail
+  ip link set lo up
+  exec "$0" -I -B "$1" --python "$0" --report "$2"
+' /workspace/mcis-w17-871db66/service/.venv/bin/python \
+  /workspace/mcis-w19-retrieval-cand/tests_acceptance/w19-knowledge-card-retrieval/run.py \
+  /workspace/mcis-w19-retrieval-report

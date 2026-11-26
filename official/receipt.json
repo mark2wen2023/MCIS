@@ -1,0 +1,27 @@
+{
+  "bind": "127.0.0.1",
+  "firstBreakpoint": null,
+  "httpNotBrowser": true,
+  "kind": "w19-knowledge-card-retrieval",
+  "notWholePackage": true,
+  "passed": true,
+  "pin": "94d5e38c926fda232bb987b60fa9145e4bcf01a7",
+  "pinReason": "origin/main HEAD, GitHub-verifiable; existing review+search+source path; later W19 search candidates do not change knowledge/router.py versus this SHA; avoids 8183226 template Chromium work",
+  "recordCount": 3,
+  "recordCountNote": "Dot said two records; three is the minimum to hold Published, Candidate and Withdrawn in one usable-search snapshot. Knowledge cards on this SHA are not case-scoped.",
+  "routerSha256": "26686dd2fc14b9f80600b676b547d6a8d9d325b16cdd2b5ca9672383ee76e632",
+  "searchType": "literal-substring-keyword",
+  "usableSearch": {
+    "path": "GET /api/v1/knowledge/cards?q=... (default status=Published)",
+    "returnedSource": {
+      "excerpt": "SYN-W19-RETR-SRC-PUB",
+      "locator": "段落1",
+      "rightsNote": "测试作者构造，不含真实资料",
+      "title": "合成夹具-published",
+      "type": "Synthetic"
+    },
+    "role": "Public",
+    "total": 1
+  },
+  "vectorSearch": false
+}

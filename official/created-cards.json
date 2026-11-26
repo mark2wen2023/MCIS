@@ -1,0 +1,7 @@
+{
+  "count": 3,
+  "note": "Dot said two records; three is the minimum to hold Published, Candidate and Withdrawn in one usable-search snapshot. Cards on this SHA are not case-scoped.",
+  "pending": "KC-8de529800133475da16d8f378ea037d4",
+  "published": "KC-2da7ac64e85846b6a84f80e77a455c94",
+  "withdrawn": "KC-b5426501fab440a38de3a762e58684b1"
+}

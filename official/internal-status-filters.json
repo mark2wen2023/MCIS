@@ -1,0 +1,74 @@
+{
+  "candidate": {
+    "items": [
+      {
+        "cardId": "KC-8de529800133475da16d8f378ea037d4",
+        "content": {
+          "applicability": "不能当真实结论",
+          "body": "合成正文，不是真实事故。标记 SYN-W19-RETR-7f3a9c。pending",
+          "kind": "Method",
+          "source": {
+            "excerpt": "SYN-W19-RETR-SRC-CAND",
+            "locator": "段落1",
+            "rightsNote": "测试作者构造，不含真实资料",
+            "title": "合成夹具-pending",
+            "type": "Synthetic"
+          },
+          "summary": "仅用于检索出处对照的合成样本 SYN-W19-RETR-7f3a9c",
+          "tags": [
+            "synthetic-w19",
+            "syn-w19-retr-7f3a9c"
+          ],
+          "title": "合成知识卡 SYN-W19-RETR-7f3a9c pending"
+        },
+        "contentDigest": "d0898ac9f8e85d1189ea1f3af35ba17da1f3bb384e801dba7da4712fe331a911",
+        "createdBy": "LocalSyntheticInvestigator",
+        "createdUtc": "2026-11-26T21:43:16Z",
+        "status": "Candidate"
+      }
+    ],
+    "limit": 20,
+    "offset": 0,
+    "total": 1
+  },
+  "withdrawn": {
+    "items": [
+      {
+        "approvals": {
+          "releaseApproved": true,
+          "rightsVerified": true,
+          "sourceVerified": true
+        },
+        "cardId": "KC-b5426501fab440a38de3a762e58684b1",
+        "content": {
+          "applicability": "不能当真实结论",
+          "body": "合成正文，不是真实事故。标记 SYN-W19-RETR-7f3a9c。withdrawn",
+          "kind": "Method",
+          "source": {
+            "excerpt": "SYN-W19-RETR-SRC-WDN",
+            "locator": "段落1",
+            "rightsNote": "测试作者构造，不含真实资料",
+            "title": "合成夹具-withdrawn",
+            "type": "Synthetic"
+          },
+          "summary": "仅用于检索出处对照的合成样本 SYN-W19-RETR-7f3a9c",
+          "tags": [
+            "synthetic-w19",
+            "syn-w19-retr-7f3a9c"
+          ],
+          "title": "合成知识卡 SYN-W19-RETR-7f3a9c withdrawn"
+        },
+        "contentDigest": "757a85711ed0157b87058bfb0ff287db1b267d8d4ac1794529cd0c0f0c4dd5b4",
+        "createdBy": "LocalSyntheticInvestigator",
+        "createdUtc": "2026-11-26T21:43:16Z",
+        "reviewNote": "已人工核查，允许发布或撤回合成测试样本",
+        "reviewedBy": "LocalSyntheticLead",
+        "reviewedUtc": "2026-11-26T21:43:16Z",
+        "status": "Withdrawn"
+      }
+    ],
+    "limit": 20,
+    "offset": 0,
+    "total": 1
+  }
+}
