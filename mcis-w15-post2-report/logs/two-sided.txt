@@ -1,0 +1,40 @@
+W15 same-POST two-sided comparison (diagnostic only, candidate 3a2ef41)
+acceptance=3a2ef41e8280abb169e4bcc5a805d7fd49109af1
+versus=06de2510cfacdc938aeb05e7ef2bc85d6a5d68ce (import sys + diagnose SHA-256 pin only)
+official diagnose exit=124 (outer timeout TERM at 150s; not an assertion pass)
+receipt=none screenshots=none
+one preview POST only; no second preview sent
+
+== browser side (stderr W15 BROWSER) ==
+W15 BROWSER t=22547.378698 preview request status=-
+W15 BROWSER t=22547.450980 preview response status=503
+requestfinished: not observed
+requestfailed: not observed
+NameError: none (import sys fix took effect)
+page.expect_response completed (TRACE left the with-block at app_ui:168, then 170/171).
+assert result.status==503 and cache-control==no-store completed (line 171 then 172 line event).
+Last TRACE: +5.144s app_ui:172 line — assert result.json()["code"]=="BOWTIE_CORE_UNAVAILABLE"
+Then faulthandler at 45s and outer TERM at 150s; no further TRACE.
+
+== host side (host-first.log) ==
+W15 HOST t=22547.380562 preview request
+W15 HOST t=22547.447214 preview sent_headers status=503
+W15 HOST t=22547.447300 preview sent_final bytes=74 sha256=56d478d95ce7be6180ea5b0b14dc4b25d27eef1039fa14eba6e14a9e9a6780ff
+host-reopened.log: not created
+
+== timing (same monotonic clock, seconds) ==
+host_request - browser_request = 0.001864s
+host_headers - host_request    = 0.066652s
+host_final   - host_headers    = 0.000086s
+browser_response - host_final  = 0.003680s
+browser_response - browser_request = 0.072282s
+
+== comparison ==
+Both sides observed exactly one preview POST. Host completed ASGI send: HTTP 503, 74 final bytes,
+sha256=56d478d95ce7be6180ea5b0b14dc4b25d27eef1039fa14eba6e14a9e9a6780ff.
+Browser received a response event with status 503 about 3.7ms after host sent_final,
+and expect_response plus the 503/no-store header assert succeeded.
+Browser never logged requestfinished or requestfailed, and Response.json() then hung.
+Browser body bytes/fingerprint could not be read, so they cannot be checked against the host sha256.
+DIAGNOSIS.md: server final send alone does not prove browser receipt.
+This does not overwrite prior receipts and is not overall acceptance.

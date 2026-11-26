@@ -1,0 +1,7 @@
+Timeout (0:00:45)!
+Thread 0x00007f6bcf6a5780 (most recent call first):
+  File "/usr/lib/python3.13/selectors.py", line 452 in select
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 2004 in _run_once
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 683 in run_forever
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 712 in run_until_complete
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py", line 66 in greenlet_main
