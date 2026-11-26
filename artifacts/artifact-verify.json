@@ -1,0 +1,29 @@
+{
+  "dir": "/workspace/mcis-w41-core-out",
+  "exists": true,
+  "files": {
+    "mcis-core.dll": {
+      "present": true,
+      "sha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+      "match": true,
+      "size": 250368,
+      "mtime": "2026-11-26 17:49:30 CST"
+    },
+    "mcis-core.runtimeconfig.json": {
+      "present": true,
+      "sha256": "3d25821758613e4cd940d143ccb03c93704140077e69104996832510f38f6598",
+      "match": true,
+      "size": 433,
+      "mtime": "2026-11-26 17:49:30 CST"
+    },
+    "mcis-core.deps.json": {
+      "present": true,
+      "sha256": "fda133109cf9fc926cbda09598ad344f75dc57ec02e345b6923ec5fe2dff9d12",
+      "match": true,
+      "size": 397,
+      "mtime": "2026-11-26 17:49:30 CST"
+    }
+  },
+  "ok": true,
+  "unattestedObservedSha256": "7afd120cb343a4459b1f012ea96c5ab8df53c04a4ba58b916dcc20f3d1d88337"
+}

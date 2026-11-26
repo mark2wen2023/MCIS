@@ -1,0 +1,19 @@
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 766 modules transformed.
+
+(!) outDir /tmp/w41-late-pkylfbx1/dist is not inside project root and will not be emptied.
+Use --emptyOutDir to override.
+
+rendering chunks...
+computing gzip size...
+../../dist/index.html                     0.42 kB │ gzip:   0.32 kB
+../../dist/assets/index-D5reRpCB.css     76.01 kB │ gzip:  15.13 kB
+../../dist/assets/index-CSpLpTLR.js   1,856.26 kB │ gzip: 599.68 kB
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 1500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 665ms

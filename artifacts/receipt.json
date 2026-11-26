@@ -1,0 +1,69 @@
+{
+  "revision": "94d5e38c926fda232bb987b60fa9145e4bcf01a7",
+  "browser": "Google Chrome 156.0.8078.47",
+  "sandboxRequested": true,
+  "cases": [
+    "SYN-W41-X-A",
+    "SYN-W41-X-B"
+  ],
+  "coreDllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+  "passed": true,
+  "scope": "synthetic late preview response only; not W4 whole package and not a baseline rerun",
+  "browserRuntime": "156.0.8078.47",
+  "sqliteBefore": "7d1bd0ef15e59177611d5e05704bd70dc9162ee24cb91db9a56a20afaaf389b4",
+  "late": {
+    "released": {
+      "released": true,
+      "sha256": "e8dd952a43315b9044d8fff637d1620fbbd640e0aa7b72faf83d8cea3745263c",
+      "held": true,
+      "sent": false
+    },
+    "gateAfterWait": {
+      "held": false,
+      "sent": true,
+      "sendError": null,
+      "status": 200,
+      "sha256": "e8dd952a43315b9044d8fff637d1620fbbd640e0aa7b72faf83d8cea3745263c",
+      "bytes": 1556,
+      "computedAt": 1795691338.2072182,
+      "releasedAt": 1795691338.7945704,
+      "sentAt": 1795691338.79478
+    },
+    "events": [
+      {
+        "at": 1795691338.6885233,
+        "mono": 34787.713273747,
+        "kind": "finished",
+        "path": "/api/v1/cases/SYN-W41-X-B/timeline/align-preview",
+        "failure": null
+      },
+      {
+        "at": 1795691338.7981029,
+        "mono": 34787.822852706,
+        "kind": "finished",
+        "path": "/api/v1/cases/SYN-W41-X-A/timeline/align-preview",
+        "failure": null
+      }
+    ],
+    "held": {
+      "held": true,
+      "sent": false,
+      "sendError": null,
+      "status": 200,
+      "sha256": "e8dd952a43315b9044d8fff637d1620fbbd640e0aa7b72faf83d8cea3745263c",
+      "bytes": 1556,
+      "computedAt": 1795691338.2072182,
+      "releasedAt": null,
+      "sentAt": null
+    },
+    "beforeReleaseTextContainsB": true,
+    "aFinishedAfterB": true,
+    "aCancelled": false,
+    "aNeverArrived": false,
+    "browserBodySha256": "e8dd952a43315b9044d8fff637d1620fbbd640e0aa7b72faf83d8cea3745263c",
+    "bStatus": 200,
+    "aStatus": 200
+  },
+  "sqliteAfterLate": "7d1bd0ef15e59177611d5e05704bd70dc9162ee24cb91db9a56a20afaaf389b4",
+  "sqliteAfterReopen": "7d1bd0ef15e59177611d5e05704bd70dc9162ee24cb91db9a56a20afaaf389b4"
+}

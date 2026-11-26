@@ -1,0 +1,4 @@
+product=94d5e38c926fda232bb987b60fa9145e4bcf01a7
+candidate=candidate/w41-late-response @ed430db2aab3620be1c001194308691e7694bdd5
+parent=b1586b667402431763f4b984202107894ecd5884
+scope=synthetic late preview response only; not W4 whole package and not a baseline rerun
