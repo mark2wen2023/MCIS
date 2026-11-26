@@ -11,6 +11,7 @@ import select
 import shutil
 import sqlite3
 import subprocess
+import sys
 import tempfile
 import time
 from urllib.error import HTTPError
