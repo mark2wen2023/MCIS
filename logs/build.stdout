@@ -1,0 +1,23 @@
+=== isolation preflight ===
+2026-11-26 17:49:26 CST
+HOME=/home/box
+DOTNET_CLI_HOME=<unset>
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000\    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+--- resolve ---
+127.0.0.1       localhost
+nuget.org: UNRESOLVED (expected)
+api.nuget.org: UNRESOLVED (expected)
+--- routes ---
+=== SDK preflight ===
+8.0.428
+8.0.428 [/home/box/.dotnet/sdk]
+=== NuGet locals (do not skip) ===
+http-cache: /home/box/.local/share/NuGet/http-cache
+global-packages: /home/box/.nuget/packages/
+temp: /tmp/NuGetScratchroot
+plugins-cache: /home/box/.local/share/NuGet/plugin-cache
+=== official reproducible build ===
+BUILD_EXIT=0

@@ -1,0 +1,17 @@
+{
+  "buildExit": 0,
+  "acceptExit": 1,
+  "sdk": "8.0.428",
+  "recipeSha256": "4dbeb66ddb73dead6a91e227a2f88381437beb20d5f4d68719a156bfb584e96b",
+  "inputCount": 56,
+  "artifacts": {
+    "mcis-core.dll": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+    "mcis-core.runtimeconfig.json": "3d25821758613e4cd940d143ccb03c93704140077e69104996832510f38f6598",
+    "mcis-core.deps.json": "fda133109cf9fc926cbda09598ad344f75dc57ec02e345b6923ec5fe2dff9d12"
+  },
+  "historicalCrossRefFull": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+  "dllMatchesHistoricalCrossRef": true,
+  "firstAcceptFailure": "1440 fresh, preview(SYN-W41-X-A): Playwright TimeoutError 30s on locator(\".w4-preview\").get_by_label(\"数据类型\", exact=True).first .select_option(\"CourseOverGround\")",
+  "screenshots": [],
+  "sqliteLogicalSha256": null
+}

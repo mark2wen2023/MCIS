@@ -1,0 +1,13 @@
+{
+  "revision": "94d5e38c926fda232bb987b60fa9145e4bcf01a7",
+  "browser": "Google Chrome 156.0.8078.47",
+  "sandboxRequested": true,
+  "cases": [
+    "SYN-W41-X-A",
+    "SYN-W41-X-B"
+  ],
+  "coreDllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+  "passed": false,
+  "scope": "synthetic unanchored COG preview only; not W4 whole package",
+  "browserRuntime": "156.0.8078.47"
+}
