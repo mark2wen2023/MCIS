@@ -44,3 +44,9 @@ are not skipped. If these pass, receipt.json reports nativeBodyVerified=true,
 bodyVerified=true, browserVerified=true and passed=false (not the original
 gate). The default command retains result.json() and its existing 124; do not
 relabel either run as a full-package pass.
+
+On --native-body runs, the 1440 and 390 viewports also record true-size
+viewport screenshots and clientWidth/scrollWidth for document, app, topbar,
+main and diagram. Page/main must not overflow horizontally; a present
+diagram may scroll only inside its container. The original result.json()
+command is unchanged.

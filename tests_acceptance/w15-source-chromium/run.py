@@ -117,6 +117,41 @@ def dump(data):
     with sqlite3.connect(data/"acceptance.sqlite") as db:
         return hashlib.sha256("\n".join(db.iterdump()).encode()).hexdigest()
 
+
+def layout_metrics(page):
+    return page.evaluate("""() => {
+      const pick = (el, name) => {
+        if (!el) return {name, present:false};
+        const cs = getComputedStyle(el);
+        return {name, present:true, clientWidth:el.clientWidth, scrollWidth:el.scrollWidth, overflowX:cs.overflowX};
+      };
+      const parts = [pick(document.documentElement,'document'), pick(document.querySelector('.app'),'app'),
+                     pick(document.querySelector('.topbar'),'topbar'), pick(document.querySelector('.main'),'main'),
+                     pick(document.querySelector('.w153-diagram'),'diagram')];
+      const pageOverflow = parts.filter(x => x.present && x.name !== 'diagram' && x.scrollWidth > x.clientWidth + 1);
+      return {viewportInnerWidth:window.innerWidth, viewportInnerHeight:window.innerHeight, parts,
+              pageOverflow:pageOverflow.map(x => x.name)};
+    }""")
+
+def check_layout(page, evidence, tag):
+    from playwright.sync_api import expect
+    data=layout_metrics(page)
+    (evidence/f"{tag}-metrics.json").write_text(json.dumps(data,indent=2)+"\n")
+    page.screenshot(path=str(evidence/f"{tag}-viewport.png"),full_page=False)
+    assert data["pageOverflow"]==[], f"{tag} horizontal overflow in {data['pageOverflow']}"
+    diagram=next(x for x in data["parts"] if x["name"]=="diagram")
+    if diagram["present"] and diagram["scrollWidth"]>diagram["clientWidth"]+1:
+        assert diagram["overflowX"] in ("auto","scroll")
+    expect(page.locator(".case-chip")).to_be_visible()
+    expect(page.locator("nav.nav").get_by_role("link").first).to_be_visible()
+    role=page.locator(".role-select")
+    expect(role).to_be_visible()
+    role.focus()
+    expect(role).to_be_focused()
+    link=page.locator("nav.nav").get_by_role("link").first
+    link.focus()
+    expect(link).to_be_focused()
+
 def app_ui(browser, origin, evidence, reopened, workflow_only=False, native_body=False):
     from playwright.sync_api import expect
     context=browser.new_context(viewport={"width":390 if reopened else 1440,"height":844 if reopened else 900},
@@ -193,6 +228,8 @@ def app_ui(browser, origin, evidence, reopened, workflow_only=False, native_body
         if reopened:
             page.screenshot(path=str(evidence/"03-restart-390.png"),full_page=True)
             assert not previews
+            if native_body:
+                check_layout(page,evidence,"layout-390")
         else:
             panel.locator("input").check()
             page.get_by_label("危险源（背景条件，不等于事故结果）",exact=True).fill("Synthetic hazard")
@@ -225,6 +262,8 @@ def app_ui(browser, origin, evidence, reopened, workflow_only=False, native_body
             page.screenshot(path=str(evidence/"02-case-switch-1440.png"),full_page=True)
             show(CASE_A)
             assert previews==["POST"]
+            if native_body:
+                check_layout(page,evidence,"layout-1440")
         assert not blocked and not page_errors
     finally:
         context.close()
