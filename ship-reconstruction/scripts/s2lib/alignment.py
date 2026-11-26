@@ -96,6 +96,10 @@ def datum_controls(data):
         if len(held) != len(p):
             continue
         f["leave_one_out_errors_m"] = held
+        f["max_holdout_residual_m"] = max(held)
+        f["control_pairs"] = [
+            dict(instance=t["instance"], paper_wcs=t["p"], ship_m=qv.tolist()) for t, _, qv in group
+        ]
         if max(held) > 1e-5:
             f["status"] = "conflict"
             continue

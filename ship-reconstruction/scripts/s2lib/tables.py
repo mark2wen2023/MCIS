@@ -253,11 +253,27 @@ def grids(data, layout):
                     continue
                 z = next((s["a"][2] for _, _, s in array if s["instance"] == hr[0][3][0]), 0)
                 grid = defaultdict(list)
+                boundaries = defaultdict(list)
                 for txt in texts:
                     p = mat @ (np.array(txt["p"][:2]) - origin)
                     i, j = bisect_right(ys, p[1]) - 1, bisect_right(xs, p[0]) - 1
                     if abs(txt["p"][2] - z) < tol and 0 <= i < len(ys) - 1 and 0 <= j < len(xs) - 1:
-                        grid[i, j].append(txt)
+                        rr = [
+                            k
+                            for k in (i - 1, i, i + 1)
+                            if 0 <= k < len(ys) - 1 and ys[k] - tol <= p[1] <= ys[k + 1] + tol
+                        ]
+                        cc = [
+                            k
+                            for k in (j - 1, j, j + 1)
+                            if 0 <= k < len(xs) - 1 and xs[k] - tol <= p[0] <= xs[k + 1] + tol
+                        ]
+                        if len(rr) * len(cc) > 1:
+                            for ri in rr:
+                                for cj in cc:
+                                    boundaries[ri, cj].append(txt)
+                        else:
+                            grid[i, j].append(txt)
                 if sum(any(field(t["text"]) for t in v) for v in grid.values()) < 2:
                     continue
 
@@ -309,6 +325,10 @@ def grids(data, layout):
                     ] + [bounds(vr, x, ys[i], ys[i + 1]) for x in xs[j : j + 2]]
                     if not all(c["edge_instances"]):
                         c.update(status="merged_unknown", value=None)
+                    if boundaries[i, j]:
+                        c.update(
+                            status="boundary_ambiguous", value=None, boundary_texts=boundaries[i, j]
+                        )
                     c["cell_wcs"] = [
                         [*((mat.T @ [x, y]) + origin), z]
                         for x, y in [(xs[j], ys[i]), (xs[j + 1], ys[i + 1])]
@@ -325,7 +345,22 @@ def grids(data, layout):
 def extract(data, inventory, spacing):
     tables = []
     for layout in sorted({t["layout"] for t in data["texts"]}):
-        ruled = list(grids(data, layout))
+        zs = {
+            round(t["p"][2], 6) for t in data["texts"] if t["layout"] == layout and field(t["text"])
+        }
+        ruled = []
+        for z in sorted(zs):
+            planar = {
+                "texts": [
+                    t for t in data["texts"] if t["layout"] == layout and abs(t["p"][2] - z) < 1e-6
+                ],
+                "segments": [
+                    s
+                    for s in data["segments"]
+                    if s["layout"] == layout and max(abs(s["a"][2] - z), abs(s["b"][2] - z)) < 1e-6
+                ],
+            }
+            ruled.extend(grids(planar, layout))
         tables.extend(ruled)
         used = {
             h

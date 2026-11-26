@@ -296,7 +296,7 @@ def extract(data, inv, tables, frames):
     return selected
 
 
-def geometry_handoff(curve_rows, frames, table_rows):
+def locate_in_space(curve_rows, frames):
     """生成带固定轴及符号候选的纸面到三维矩阵，保持逐实体身份。"""
     for curve in curve_rows:
         curve["ship_coordinate_candidates"] = []
@@ -304,7 +304,7 @@ def geometry_handoff(curve_rows, frames, table_rows):
         if not matches or curve["confidence"] != "cross_checked_candidate":
             continue
         match = matches[0]
-        view = "YZ" if match["kind"] == "section" else "XY"
+        view = {"section": "YZ", "waterline": "XY", "buttock": "XZ"}[match["kind"]]
         coords = np.array(curve["samples"])[:, :2]
         evidence = {
             h for g in curve["candidates"] if g["basis"] == "view_family" for h in [g["view"]]
@@ -331,7 +331,7 @@ def geometry_handoff(curve_rows, frames, table_rows):
                         status="candidate",
                         paper_to_ship_m=matrix.tolist(),
                         view=view,
-                        fixed_axis="X" if view == "YZ" else "Z",
+                        fixed_axis={"YZ": "X", "XY": "Z", "XZ": "Y"}[view],
                         fixed_m=match["fixed_m"],
                         y_sign=sign,
                         fixed_axis_value_instances=match["value_instances"],
@@ -340,6 +340,9 @@ def geometry_handoff(curve_rows, frames, table_rows):
                         scope="纸面WCS乘齐次矩阵；左右舷解释待证",
                     )
                 )
+
+
+def height_units(curve_rows, table_rows):
     for table in table_rows:
         if table["unit_status"] != "unknown" or not table.get("unit_candidate"):
             continue
@@ -406,3 +409,61 @@ def geometry_handoff(curve_rows, frames, table_rows):
                     if c["value"] is None
                     else c["value"] * {"m": 1.0, "cm": 0.01, "mm": 0.001}[unit],
                 )
+
+
+def geometry_handoff(curve_rows, frames, table_rows):
+    locate_in_space(curve_rows, frames)
+    height_units(curve_rows, table_rows)
+    # A profile buttock has a fixed breadth. Compare the recovered height
+    # columns at station intersections after their independent unit evaluation.
+    for curve in curve_rows:
+        if curve["kind"] != "buttock" or curve["type"] != "SPLINE":
+            continue
+        pp = np.asarray(curve["samples"])[:, :2]
+        matches = {}
+        for f in frames:
+            if f.get("view") != "XZ" or f["layout"] != curve["layout"]:
+                continue
+            lo, hi = np.array(f["paper_bounds"])
+            pad = 0.36 * (hi - lo)
+            if np.any(pp.mean(0) < lo - pad) or np.any(pp.mean(0) > hi + pad):
+                continue
+            vals = (
+                np.column_stack((pp, np.ones(len(pp)))) @ np.array([f["axes"][k] for k in "XZ"]).T
+            )
+            errors = defaultdict(list)
+            for table in table_rows:
+                if table["layout"] != curve["layout"]:
+                    continue
+                for c in table["cells"]:
+                    m = re.fullmatch(r"(" + NUM + r")剖", c["field_label"].strip())
+                    if not m or c["value_m"] is None or c["station_m"] is None:
+                        continue
+                    unit = c.get("unit")
+                    if not unit:
+                        continue
+                    widths = hits(c["station_m"], vals)
+                    if len(widths) != 1:
+                        continue
+                    key = float(m[1]) * {"mm": 0.001, "cm": 0.01, "m": 1.0}[unit]
+                    errors[key].append((abs(widths[0] - c["value_m"]), c["instances"]))
+            for fixed, es in errors.items():
+                if len(es) < 2:
+                    continue
+                rms = float(np.sqrt(np.mean([e * e for e, _ in es])))
+                if fixed not in matches or rms < matches[fixed]["rms_m"]:
+                    matches[fixed] = dict(
+                        kind="buttock",
+                        fixed_m=fixed,
+                        rms_m=rms,
+                        n=len(es),
+                        value_instances=[h for _, ids in es for h in ids],
+                    )
+        rows = sorted(matches.values(), key=lambda r: r["rms_m"])
+        if rows:
+            curve["offset_matches"] = rows[:3]
+            if rows[0]["rms_m"] < 0.025 and (
+                len(rows) == 1 or rows[1]["rms_m"] > rows[0]["rms_m"] + 0.005
+            ):
+                curve["confidence"] = "cross_checked_candidate"
+    locate_in_space(curve_rows, frames)

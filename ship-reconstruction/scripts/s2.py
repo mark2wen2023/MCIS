@@ -219,6 +219,31 @@ def check(g):
                 not f.get("leave_one_out_errors_m") or max(f["leave_one_out_errors_m"]) > 1e-5
             ):
                 problems.append("unverified_registration")
+            if f["status"] == "verified":
+                pairs = f.get("control_pairs", [])
+                matrix = np.asarray(f.get("paper_to_ship_m"), dtype=float)
+                if len(pairs) < 4 or matrix.shape != (3, 3) or not np.isfinite(matrix).all():
+                    problems.append("invalid_control_evidence")
+                    continue
+                p = np.asarray([v["paper_wcs"][:2] for v in pairs])
+                q = np.asarray([v["ship_m"] for v in pairs])
+                if (
+                    not np.isfinite(p).all()
+                    or not np.isfinite(q).all()
+                    or np.linalg.matrix_rank(p - p.mean(0)) != 2
+                ):
+                    problems.append("invalid_control_geometry")
+                    continue
+                errors = np.linalg.norm(
+                    np.column_stack((p, np.ones(len(p)))) @ matrix.T - q, axis=1
+                )
+                if max(errors) > 1e-5:
+                    problems.append("matrix_control_mismatch")
+    if any(
+        g.get("validation", {}).get(k) is True
+        for k in ("engineering_approved", "eligible_for_automatic_full_loft")
+    ):
+        problems.append("unsupported_authorization")
     return dict(
         valid=not problems,
         issues=sorted(set(problems)),
@@ -236,11 +261,15 @@ def process(path, dest, oda):
             p for p in path.rglob("*") if p.is_file() and p.suffix.lower() in (".dwg", ".dxf")
         )
     )
-    if not sources:
-        raise ValueError("未找到 DWG/DXF")
+
     g = dict(schema_version="2.0", inventory=[], tables=[], curves=[], alignment=[], issues=[])
     with tempfile.TemporaryDirectory() as tmp:
+        if not sources:
+            g["issues"].append(dict(code="no_cad_sources"))
         for source in sources:
+            if source.suffix.lower() not in (".dwg", ".dxf"):
+                g["issues"].append(dict(file=source.name, code="unsupported_source_format"))
+                continue
             sha = fingerprint(source)
             try:
                 dx, adapter = convert(source, Path(tmp), oda)
@@ -328,6 +357,14 @@ def process(path, dest, oda):
                     warnings.append("candidate_alignment_only")
                 inv["coverage_warnings"] = warnings
                 curves.geometry_handoff(cr, frames, found)
+                for record in cr:
+                    record["parameter_source"] = "converted_dxf" if adapter else "source_dxf"
+                if any(
+                    c["value"] is not None and c["value_m"] is None
+                    for t in found
+                    for c in t["cells"]
+                ):
+                    warnings.append("printed_values_without_bound_unit")
                 if fingerprint(source) != sha:
                     raise ValueError("输入在读取过程中改变")
                 g["inventory"].append(inv)
