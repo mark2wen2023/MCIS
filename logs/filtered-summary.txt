@@ -1,0 +1,26 @@
+W15 case-switch source GET diagnosis (sanitized; no URL/headers/body)
+candidate=b46401aedd55f30504757338d040376e565aed03
+base=034bff8b1a72aba9c296e13615d637b90d1c3d47
+exit=1
+classification=已发后取消
+
+CASE_A hash (control, positive source read):
+  browser: request, response 200, requestfinished
+  host: sent_headers status=200, sent_final bytes=279
+  page: visibleCase=SYN-W15-A hashCase=SYN-W15-A loadingStatus=0 sourcesPanel=1
+
+After hash jump to CASE_B (original show() path; unique GET in this window):
+  page after switch: visibleCase=SYN-W15-B hashCase=SYN-W15-B loadingStatus=1 sourcesPanel=0
+  browser: GET request, then requestfailed failure=net::ERR_ABORTED (no HTTP status)
+  host: no CASE_B sources GET in this window
+  first failing assertion: show(CASE_B) expect(#w153-draft-sources).to_contain_text("Synthetic source beta") (5s timeout)
+
+Visible-entry comparison (after the original assertion failed; lobby "进入案件" + "14 系统性分析"; not a retry, not a pass):
+  browser: GET request, response 200, requestfinished
+  host: sent_headers status=200, sent_final bytes=278
+  page: visibleCase=SYN-W15-B hashCase=SYN-W15-B loadingStatus=0 sourcesPanel=1
+  behaviour differs from the hash jump: yes
+
+Same-case (SYN-W15-B) positive HTTP source-read: observed only on the visible-entry path (GET 200, host final 278 bytes). Not observed on the original hash jump.
+
+Preview (unchanged, one POST, not pursued): request, response 503, later requestfailed; host sent_final bytes=74.

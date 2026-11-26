@@ -1,0 +1,12 @@
+2026-11-26 13:24:27 CST
+base=034bff8b1a72aba9c296e13615d637b90d1c3d47
+candidate=b46401aedd55f30504757338d040376e565aed03
+run.py sha256=04b972e3fd6ae1a361a03318bfe79f8ff9ab711bdf5e99bbc10881f12cf5013b
+python=/workspace/w17-pyplaywright-venv/bin/python
+playwright 1.65.2
+host-python=/workspace/mcis-w17-871db66/service/.venv/bin/python
+chrome=Google Chrome 156.0.8078.47 
+outer_watchdog=timeout --signal=TERM --kill-after=10s 150s
+extra_flag=--workflow-only
+one_post_only=yes
+sandbox=chromium_sandbox=True
