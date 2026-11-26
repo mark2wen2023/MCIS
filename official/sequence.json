@@ -1,0 +1,11 @@
+[
+  "start 127.0.0.1 service+web",
+  "desktop: A already visible",
+  "desktop: switch to B and hold the real B analysis request",
+  "desktop: release the real B response, then B is shown",
+  "desktop: switch back to A; only A is shown",
+  "390px: A already visible",
+  "390px: switch to B and hold the real B analysis request",
+  "390px: release the real B response, then B is shown",
+  "390px: switch back to A; only A is shown"
+]

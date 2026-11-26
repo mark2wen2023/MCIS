@@ -1,0 +1,24 @@
+{
+  "viewport": "390px",
+  "heldRequests": [
+    {
+      "url": "http://127.0.0.1:18770/api/v1/cases/SYN-W12-SNAP-B/analysis",
+      "method": "GET",
+      "heldAt": 1795737129.2979157,
+      "continuedAt": 1795737129.4298046
+    }
+  ],
+  "bResponsesBeforeRelease": [],
+  "bRequestSeen": true,
+  "bResponseReturnedBeforeRelease": false,
+  "releasedAt": 1795737129.4283755,
+  "bResponsesAfterRelease": [
+    {
+      "t": 1795737129.4368849,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/cases/SYN-W12-SNAP-B/analysis",
+      "status": 200,
+      "isBAnalysis": true
+    }
+  ]
+}

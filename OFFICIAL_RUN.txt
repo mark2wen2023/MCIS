@@ -1,0 +1,18 @@
+# Official W12 loading-frame supplement
+# Time zone: Asia/Shanghai (CST, UTC+8)
+start=2026-11-27T07:52:05+08:00
+end=2026-11-27T07:52:10+08:00
+exit=0
+timeout=timeout --signal=TERM --kill-after=10s 150s
+python_service=/workspace/mcis-w17-871db66/service/.venv/bin/python
+python_browser=/workspace/w17-pyplaywright-venv/bin/python
+playwright=1.65.2
+chrome=Google Chrome 156.0.8078.47
+sandbox=chromium_sandbox=True ; no --no-sandbox
+bind=127.0.0.1:18770
+pin=03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5
+parent=9979c087e19e005b9251257048317b13eea421da
+hold=Playwright route paused the real GET /api/v1/cases/SYN-W12-SNAP-B/analysis, then route.continue(); no fulfill or replaced body
+viewports=desktop 1440x900 ; 390x844
+stable_state_unchanged=7205529901 / 9979c08 / 73aa88b / sheet row 48
+command: see OFFICIAL_COMMAND.sh

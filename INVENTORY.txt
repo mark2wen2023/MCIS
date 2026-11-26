@@ -1,0 +1,38 @@
+# W12 loading-frame inventory
+# pin=03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5
+# parent=9979c087e19e005b9251257048317b13eea421da
+# candidate=fb53e4e8c82b0486dadd59aafb8906e910c947af
+
+ca53bda6aa94623d2ea02a3f7d369537cebacef36afdfad8f6b5bc0174e7f9f8  run.py (unchanged at 9979c08)
+c585232799af34a4d9842e3c265d2ee2dcb28a3d03f2482ad5b99d11cce15969  host.py (unchanged at 9979c08)
+2b48d4dbf3f494bf34415ed160b9cbb8515afe0e801ff1b4bd2532b1f9dfb095  synthetic_seed.py (unchanged at 9979c08)
+2215973baeb685a867e80ede1cefb625e4668a565bd7dd6008050436a3b3425d  README.md (unchanged at 9979c08)
+d20062fbd74630c13721f6a7abdbeb3a46fab7bc121def0fb5e37744cd0b61f9  loading_frame.py
+
+155d4b640d72a9f9d8c967c811f8aae0403b4389d180d3b2c303958292f716be  CANDIDATE_SHA.txt  bytes=41
+b03811b6523a5f2569f538d24cc1077c32d3db940055b351023b7c141509e48c  ISSUE_COMMENT_INPROGRESS.md  bytes=1100
+51dbf53587cf577c1589f16778c459c04874f2f6e8844841fdb622060fd65fd5  OFFICIAL_COMMAND.sh  bytes=676
+162a9718080053904f9e0ad0fdfe0d1ee661f8abc73166da731a50b6446db343  OFFICIAL_RUN.txt  bytes=814
+5785e6dc2be5935d9de5b91e391c049490c794e77cf1e3bd5efa8dfa5ee6b05a  REPORT.md  bytes=1088
+d20062fbd74630c13721f6a7abdbeb3a46fab7bc121def0fb5e37744cd0b61f9  acceptance/loading_frame.py  bytes=19011
+db08ef18b4c14e0842624b58d88d46b25c9287af9bfa00e5d4261b0e97db5d60  official/analysis-cases.json  bytes=1582
+37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570  official/blocked-urls-390.json  bytes=3
+37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570  official/blocked-urls-desktop.json  bytes=3
+eeda2dbb92bcead4161561797ec5f45990cd5a9a97f29308bddd191d4af0a089  official/console.log  bytes=2150
+edf05f993c87eab907ef5373f06a900770085b8342dd74839f3637d3d907405c  official/hold-evidence-390.json  bytes=598
+c89640c6ebac288a87469cedfc5218814b52b532a9402b60803411b69a9f5802  official/hold-evidence-desktop.json  bytes=596
+fe68f8ab035af0b26d4eab415cc200b7c041f66adee8fd454922bea6e268f1e1  official/host.log  bytes=29
+fbcd276a929c0f2194c5ba62cb7b34576e3ddceffae41257079ad541f4f0b9f7  official/listeners.txt.json  bytes=1994
+e42babb3dcaac3eae71c53f8af1416598936f84e44b71baa7094a6499bca8101  official/network-390.json  bytes=5095
+6c2ecca94e52b81453001c5017a3272f44c33e6a7847537d29bae21397d79619  official/network-desktop.json  bytes=5094
+cd43603dac61992310ecb1f8373487674dea5a1e8623b29882eb65bf57633dc7  official/receipt.json  bytes=1446
+ab6fb967b9902d22d5a35236ac8a49b92104e95e1435916e7b1182f3295a6e9f  official/screenshots/01-390-case-a.png  bytes=299139
+afe0e5623726f7e35f7bdf64895b7b3838ec7fbe0f27de7602f422bd3bf9bdb7  official/screenshots/01-desktop-case-a.png  bytes=330756
+632596836ab2b0ef0536468aaeec6967d4b0c8b57a8856e7f2632343a33f71d0  official/screenshots/02-390-loading-b-held.png  bytes=189738
+8f64aa0ef7cc70d2f981db17df582e1cb1240c169451e7fb586c884882c37340  official/screenshots/02-desktop-loading-b-held.png  bytes=208959
+c82659d87753f1619e7c0e5380b86bf1c381f180233ceb336abe3a44cbb89272  official/screenshots/03-390-case-b.png  bytes=301191
+a552e4b779b1d5803147047e8a7253b579cc3a49698c4fde2bae0967ce681580  official/screenshots/03-desktop-case-b.png  bytes=331961
+2d75b7b38416df7146b8836ef643035114e5ed70d4532ee2293df5c230ce036d  official/screenshots/04-390-case-a-back.png  bytes=303578
+f5f928b2424f6eb25dd753f38b920b268ab7a8642da73b719a5a5b48005ee5b2  official/screenshots/04-desktop-case-a-back.png  bytes=334995
+155453aab9b9be9b5bd288a96840e1d6f7afaa75496c2a80d06fe136c070b2d3  official/sequence.json  bytes=432
+e48a439ad2885998964c362f90daf48409ad6ca86d2e5c4c79478da03b3bbd9b  official-wrapper-meta.txt  bytes=142

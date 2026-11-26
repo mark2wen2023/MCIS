@@ -1,0 +1,201 @@
+{
+  "requests": [
+    {
+      "t": 1795737128.7125723,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/",
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737128.7319102,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/assets/index-BZeq9abE.js",
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737128.732477,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/assets/index-D5reRpCB.css",
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737128.890979,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/analysis/cases",
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737128.8917022,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/cases/SYN-W12-SNAP-A/analysis",
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737128.8922336,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/cases/SYN-W12-SNAP-A",
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737128.965391,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/analysis/cases",
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737129.297142,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/analysis/cases",
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737129.2977679,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/cases/SYN-W12-SNAP-B/analysis",
+      "isBAnalysis": true
+    },
+    {
+      "t": 1795737129.2980547,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/cases/SYN-W12-SNAP-B",
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737129.3309424,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/analysis/cases",
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737129.6222036,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/analysis/cases",
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737129.622846,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/cases/SYN-W12-SNAP-A/analysis",
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737129.6232219,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/cases/SYN-W12-SNAP-A",
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737129.6354194,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/analysis/cases",
+      "isBAnalysis": false
+    }
+  ],
+  "responses": [
+    {
+      "t": 1795737128.722918,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/",
+      "status": 200,
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737128.7454815,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/assets/index-D5reRpCB.css",
+      "status": 200,
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737128.805086,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/assets/index-BZeq9abE.js",
+      "status": 200,
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737128.9585829,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/cases/SYN-W12-SNAP-A/analysis",
+      "status": 200,
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737128.958772,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/cases/SYN-W12-SNAP-A",
+      "status": 404,
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737128.9593384,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/analysis/cases",
+      "status": 200,
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737128.9812133,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/analysis/cases",
+      "status": 200,
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737129.3284094,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/analysis/cases",
+      "status": 200,
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737129.3286264,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/cases/SYN-W12-SNAP-B",
+      "status": 404,
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737129.335921,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/analysis/cases",
+      "status": 200,
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737129.4368849,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/cases/SYN-W12-SNAP-B/analysis",
+      "status": 200,
+      "isBAnalysis": true
+    },
+    {
+      "t": 1795737129.632613,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/cases/SYN-W12-SNAP-A/analysis",
+      "status": 200,
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737129.6327796,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/analysis/cases",
+      "status": 200,
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737129.6338596,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/cases/SYN-W12-SNAP-A",
+      "status": 404,
+      "isBAnalysis": false
+    },
+    {
+      "t": 1795737129.6709023,
+      "method": "GET",
+      "url": "http://127.0.0.1:18770/api/v1/analysis/cases",
+      "status": 200,
+      "isBAnalysis": false
+    }
+  ]
+}

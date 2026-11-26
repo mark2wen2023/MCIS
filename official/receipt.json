@@ -1,0 +1,44 @@
+{
+  "passed": true,
+  "kind": "w12-loading-frame",
+  "pin": "03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5",
+  "parentCandidate": "9979c087e19e005b9251257048317b13eea421da",
+  "stableStateUnchanged": {
+    "candidate": "9979c087e19e005b9251257048317b13eea421da",
+    "evidence": "73aa88bf6378893f83c4f3789ceef89f7da5971d",
+    "comment": "7205529901",
+    "sheetRow": 48
+  },
+  "browserVerified": true,
+  "httpNotBrowser": false,
+  "sandbox": "chromium_sandbox=True",
+  "noSandboxFlag": false,
+  "routeContinueDelayed": true,
+  "responseReplaced": false,
+  "viewportsRun": [
+    "desktop 1440x900",
+    "390x844"
+  ],
+  "syntheticCases": [
+    "SYN-W12-SNAP-A",
+    "SYN-W12-SNAP-B"
+  ],
+  "seedSha256": "99a77875e6ac87383fb01d7dd59187cb6dafe0bed9c1033d9ff48bef37bd5324",
+  "notWholePackage": true,
+  "untested": [
+    "同案轨迹换版 未验；稳定态跨案结果以 7205529901 / 9979c08 为准，本轮不替代。",
+    "W12 整包 未验。"
+  ],
+  "sequence": [
+    "start 127.0.0.1 service+web",
+    "desktop: A already visible",
+    "desktop: switch to B and hold the real B analysis request",
+    "desktop: release the real B response, then B is shown",
+    "desktop: switch back to A; only A is shown",
+    "390px: A already visible",
+    "390px: switch to B and hold the real B analysis request",
+    "390px: release the real B response, then B is shown",
+    "390px: switch back to A; only A is shown"
+  ],
+  "firstBreakpoint": null
+}

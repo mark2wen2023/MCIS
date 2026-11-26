@@ -1,0 +1,25 @@
+HEAD=9979c087e19e005b9251257048317b13eea421da; parent=9979c087e19e005b9251257048317b13eea421da; synthetic seed SHA-256=99a77875e6ac87383fb01d7dd59187cb6dafe0bed9c1033d9ff48bef37bd5324
+Existing run.py/host.py/synthetic_seed.py/README locked and unchanged.
+Stable-state official result 9979c08 / 73aa88b / comment 7205529901 is not rerun or replaced.
+STEP 1: start 127.0.0.1 service+web
+STEP 2: desktop: A already visible
+screenshot /workspace/mcis-w12-loading-frame-report/official/screenshots/01-desktop-case-a.png
+STEP 3: desktop: switch to B and hold the real B analysis request
+HOLD real B analysis GET http://127.0.0.1:18770/api/v1/cases/SYN-W12-SNAP-B/analysis
+loading visible: '正在读取当前案分析；旧分析已停用。 重新读取分析快照'; held=1; B response not yet returned
+screenshot /workspace/mcis-w12-loading-frame-report/official/screenshots/02-desktop-loading-b-held.png
+STEP 4: desktop: release the real B response, then B is shown
+screenshot /workspace/mcis-w12-loading-frame-report/official/screenshots/03-desktop-case-b.png
+STEP 5: desktop: switch back to A; only A is shown
+screenshot /workspace/mcis-w12-loading-frame-report/official/screenshots/04-desktop-case-a-back.png
+STEP 6: 390px: A already visible
+screenshot /workspace/mcis-w12-loading-frame-report/official/screenshots/01-390-case-a.png
+STEP 7: 390px: switch to B and hold the real B analysis request
+HOLD real B analysis GET http://127.0.0.1:18770/api/v1/cases/SYN-W12-SNAP-B/analysis
+loading visible: '正在读取当前案分析；旧分析已停用。 重新读取分析快照'; held=1; B response not yet returned
+screenshot /workspace/mcis-w12-loading-frame-report/official/screenshots/02-390-loading-b-held.png
+STEP 8: 390px: release the real B response, then B is shown
+screenshot /workspace/mcis-w12-loading-frame-report/official/screenshots/03-390-case-b.png
+STEP 9: 390px: switch back to A; only A is shown
+screenshot /workspace/mcis-w12-loading-frame-report/official/screenshots/04-390-case-a-back.png
+OFFICIAL RESULT: loading-frame PASS viewports=['desktop 1440x900', '390x844']; W12 whole-package 未验; stable-state 7205529901 unchanged
