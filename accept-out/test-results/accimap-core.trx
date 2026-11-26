@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="6c613376-2d32-4d8c-8164-37e75cf6e07f" name="@grok-bot-vm-313942037 2026-11-27 01:29:34" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-11-27T01:29:34.3295936+08:00" queuing="2026-11-27T01:29:34.3295936+08:00" start="2026-11-27T01:29:33.6776776+08:00" finish="2026-11-27T01:29:34.3357340+08:00" />
+  <TestSettings name="default" id="a6fa85b5-bf5b-4178-87c9-481585a5383c">
+    <Deployment runDeploymentRoot="_grok-bot-vm-313942037_2026-11-27_01_29_34" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="71876023-1b07-4326-99d4-95c103768aa9" testId="946f066c-cd2a-26f2-dcdd-ef7999503062" testName="Mcis.Acceptance.W15.AcciMapAcceptanceTests.Errors_UnknownDuplicateInvalidLevelAndCreate" computerName="grok-bot-vm-313942037" duration="00:00:00.0004076" startTime="2026-11-27T01:29:34.2003875+08:00" endTime="2026-11-27T01:29:34.2003876+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="71876023-1b07-4326-99d4-95c103768aa9" />
+    <UnitTestResult executionId="5148cbea-b56a-433a-839e-9c22e2fcadd6" testId="01780e01-e619-a1e0-be18-b17ada0d971f" testName="Mcis.Acceptance.W15.AcciMapAcceptanceTests.Validate_EmptyAndIsolated" computerName="grok-bot-vm-313942037" duration="00:00:00.0013429" startTime="2026-11-27T01:29:34.2000586+08:00" endTime="2026-11-27T01:29:34.2000587+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5148cbea-b56a-433a-839e-9c22e2fcadd6" />
+    <UnitTestResult executionId="120b0338-1db8-410d-a139-9d501f07621e" testId="9e818a22-6d5b-1676-9a5b-bc1558b3d2fb" testName="Mcis.Acceptance.W15.AcciMapAcceptanceTests.Cycles_Rejected_IncludingViaEnvironmentException" computerName="grok-bot-vm-313942037" duration="00:00:00.0106164" startTime="2026-11-27T01:29:34.1964416+08:00" endTime="2026-11-27T01:29:34.1964648+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="120b0338-1db8-410d-a139-9d501f07621e" />
+    <UnitTestResult executionId="685b5e3e-1eb4-4098-918c-cfc3b095f0ca" testId="5abdf6c9-7a39-cc82-0db9-7c88dae7834d" testName="Mcis.Acceptance.W15.AcciMapAcceptanceTests.SixLevels_TopDownOrder_ChineseLabels" computerName="grok-bot-vm-313942037" duration="00:00:00.0090575" startTime="2026-11-27T01:29:34.2071888+08:00" endTime="2026-11-27T01:29:34.2071889+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="685b5e3e-1eb4-4098-918c-cfc3b095f0ca" />
+    <UnitTestResult executionId="e8bf16dd-8d44-4964-b7bc-81572227cb2d" testId="687a7c3d-a14b-9b3f-668c-96733d054b70" testName="Mcis.Acceptance.W15.AcciMapAcceptanceTests.EnvironmentToCrew_DefaultOn_ConfigurableOff" computerName="grok-bot-vm-313942037" duration="00:00:00.0002255" startTime="2026-11-27T01:29:34.2003497+08:00" endTime="2026-11-27T01:29:34.2003498+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e8bf16dd-8d44-4964-b7bc-81572227cb2d" />
+    <UnitTestResult executionId="20343435-8e9b-42fa-85de-6482f4bd11eb" testId="a1fa9495-872c-50f2-6976-4a799ded5ef1" testName="Mcis.Acceptance.W15.AcciMapAcceptanceTests.Demo_AcciMap_Valid_AllSixLevelsUsed" computerName="grok-bot-vm-313942037" duration="00:00:00.0146418" startTime="2026-11-27T01:29:34.2221566+08:00" endTime="2026-11-27T01:29:34.2221567+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="20343435-8e9b-42fa-85de-6482f4bd11eb" />
+    <UnitTestResult executionId="e12b3a53-7b3f-4a62-b41a-528f5cd1d857" testId="6d922d9d-23d6-ac7a-a8f5-0e86c6049dd7" testName="Mcis.Acceptance.W15.RetestW151AcceptanceTests.A2_InformationFlow_UpwardAllowed_IgnoredInCycleCheck" computerName="grok-bot-vm-313942037" duration="00:00:00.0157001" startTime="2026-11-27T01:29:34.2004776+08:00" endTime="2026-11-27T01:29:34.2004776+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e12b3a53-7b3f-4a62-b41a-528f5cd1d857" />
+    <UnitTestResult executionId="5e2361a2-3504-47ea-aca7-56d92d403b77" testId="07ad66c1-31e5-b417-d685-47921eda0f9f" testName="Mcis.Acceptance.W15.AcciMapAcceptanceTests.Connect_DownSameSkip_Allowed_UpRejected" computerName="grok-bot-vm-313942037" duration="00:00:00.0001895" startTime="2026-11-27T01:29:34.2004320+08:00" endTime="2026-11-27T01:29:34.2004321+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5e2361a2-3504-47ea-aca7-56d92d403b77" />
+    <UnitTestResult executionId="8ad929e3-c065-4d17-b9f8-7b582c213e3e" testId="5c8de012-0c68-b736-fb70-258e2d8e3636" testName="Mcis.Acceptance.W15.AcciMapAcceptanceTests.DirectionMatrix_MatchesAcceptedAssumption" computerName="grok-bot-vm-313942037" duration="00:00:00.0002996" startTime="2026-11-27T01:29:34.2073827+08:00" endTime="2026-11-27T01:29:34.2073828+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8ad929e3-c065-4d17-b9f8-7b582c213e3e" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Mcis.Acceptance.W15.AcciMapAcceptanceTests.Errors_UnknownDuplicateInvalidLevelAndCreate" storage="/workspace/mcis-w15-accimap-core-report/accept-out/harness-bin/w15.acceptance.dll" id="946f066c-cd2a-26f2-dcdd-ef7999503062">
+      <Execution id="71876023-1b07-4326-99d4-95c103768aa9" />
+      <TestMethod codeBase="/workspace/mcis-w15-accimap-core-report/accept-out/harness-bin/W15.Acceptance.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Mcis.Acceptance.W15.AcciMapAcceptanceTests" name="Errors_UnknownDuplicateInvalidLevelAndCreate" />
+    </UnitTest>
+    <UnitTest name="Mcis.Acceptance.W15.AcciMapAcceptanceTests.SixLevels_TopDownOrder_ChineseLabels" storage="/workspace/mcis-w15-accimap-core-report/accept-out/harness-bin/w15.acceptance.dll" id="5abdf6c9-7a39-cc82-0db9-7c88dae7834d">
+      <Execution id="685b5e3e-1eb4-4098-918c-cfc3b095f0ca" />
+      <TestMethod codeBase="/workspace/mcis-w15-accimap-core-report/accept-out/harness-bin/W15.Acceptance.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Mcis.Acceptance.W15.AcciMapAcceptanceTests" name="SixLevels_TopDownOrder_ChineseLabels" />
+    </UnitTest>
+    <UnitTest name="Mcis.Acceptance.W15.RetestW151AcceptanceTests.A2_InformationFlow_UpwardAllowed_IgnoredInCycleCheck" storage="/workspace/mcis-w15-accimap-core-report/accept-out/harness-bin/w15.acceptance.dll" id="6d922d9d-23d6-ac7a-a8f5-0e86c6049dd7">
+      <Execution id="e12b3a53-7b3f-4a62-b41a-528f5cd1d857" />
+      <TestMethod codeBase="/workspace/mcis-w15-accimap-core-report/accept-out/harness-bin/W15.Acceptance.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Mcis.Acceptance.W15.RetestW151AcceptanceTests" name="A2_InformationFlow_UpwardAllowed_IgnoredInCycleCheck" />
+    </UnitTest>
+    <UnitTest name="Mcis.Acceptance.W15.AcciMapAcceptanceTests.EnvironmentToCrew_DefaultOn_ConfigurableOff" storage="/workspace/mcis-w15-accimap-core-report/accept-out/harness-bin/w15.acceptance.dll" id="687a7c3d-a14b-9b3f-668c-96733d054b70">
+      <Execution id="e8bf16dd-8d44-4964-b7bc-81572227cb2d" />
+      <TestMethod codeBase="/workspace/mcis-w15-accimap-core-report/accept-out/harness-bin/W15.Acceptance.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Mcis.Acceptance.W15.AcciMapAcceptanceTests" name="EnvironmentToCrew_DefaultOn_ConfigurableOff" />
+    </UnitTest>
+    <UnitTest name="Mcis.Acceptance.W15.AcciMapAcceptanceTests.Validate_EmptyAndIsolated" storage="/workspace/mcis-w15-accimap-core-report/accept-out/harness-bin/w15.acceptance.dll" id="01780e01-e619-a1e0-be18-b17ada0d971f">
+      <Execution id="5148cbea-b56a-433a-839e-9c22e2fcadd6" />
+      <TestMethod codeBase="/workspace/mcis-w15-accimap-core-report/accept-out/harness-bin/W15.Acceptance.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Mcis.Acceptance.W15.AcciMapAcceptanceTests" name="Validate_EmptyAndIsolated" />
+    </UnitTest>
+    <UnitTest name="Mcis.Acceptance.W15.AcciMapAcceptanceTests.DirectionMatrix_MatchesAcceptedAssumption" storage="/workspace/mcis-w15-accimap-core-report/accept-out/harness-bin/w15.acceptance.dll" id="5c8de012-0c68-b736-fb70-258e2d8e3636">
+      <Execution id="8ad929e3-c065-4d17-b9f8-7b582c213e3e" />
+      <TestMethod codeBase="/workspace/mcis-w15-accimap-core-report/accept-out/harness-bin/W15.Acceptance.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Mcis.Acceptance.W15.AcciMapAcceptanceTests" name="DirectionMatrix_MatchesAcceptedAssumption" />
+    </UnitTest>
+    <UnitTest name="Mcis.Acceptance.W15.AcciMapAcceptanceTests.Demo_AcciMap_Valid_AllSixLevelsUsed" storage="/workspace/mcis-w15-accimap-core-report/accept-out/harness-bin/w15.acceptance.dll" id="a1fa9495-872c-50f2-6976-4a799ded5ef1">
+      <Execution id="20343435-8e9b-42fa-85de-6482f4bd11eb" />
+      <TestMethod codeBase="/workspace/mcis-w15-accimap-core-report/accept-out/harness-bin/W15.Acceptance.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Mcis.Acceptance.W15.AcciMapAcceptanceTests" name="Demo_AcciMap_Valid_AllSixLevelsUsed" />
+    </UnitTest>
+    <UnitTest name="Mcis.Acceptance.W15.AcciMapAcceptanceTests.Cycles_Rejected_IncludingViaEnvironmentException" storage="/workspace/mcis-w15-accimap-core-report/accept-out/harness-bin/w15.acceptance.dll" id="9e818a22-6d5b-1676-9a5b-bc1558b3d2fb">
+      <Execution id="120b0338-1db8-410d-a139-9d501f07621e" />
+      <TestMethod codeBase="/workspace/mcis-w15-accimap-core-report/accept-out/harness-bin/W15.Acceptance.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Mcis.Acceptance.W15.AcciMapAcceptanceTests" name="Cycles_Rejected_IncludingViaEnvironmentException" />
+    </UnitTest>
+    <UnitTest name="Mcis.Acceptance.W15.AcciMapAcceptanceTests.Connect_DownSameSkip_Allowed_UpRejected" storage="/workspace/mcis-w15-accimap-core-report/accept-out/harness-bin/w15.acceptance.dll" id="07ad66c1-31e5-b417-d685-47921eda0f9f">
+      <Execution id="5e2361a2-3504-47ea-aca7-56d92d403b77" />
+      <TestMethod codeBase="/workspace/mcis-w15-accimap-core-report/accept-out/harness-bin/W15.Acceptance.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Mcis.Acceptance.W15.AcciMapAcceptanceTests" name="Connect_DownSameSkip_Allowed_UpRejected" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="946f066c-cd2a-26f2-dcdd-ef7999503062" executionId="71876023-1b07-4326-99d4-95c103768aa9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="01780e01-e619-a1e0-be18-b17ada0d971f" executionId="5148cbea-b56a-433a-839e-9c22e2fcadd6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9e818a22-6d5b-1676-9a5b-bc1558b3d2fb" executionId="120b0338-1db8-410d-a139-9d501f07621e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5abdf6c9-7a39-cc82-0db9-7c88dae7834d" executionId="685b5e3e-1eb4-4098-918c-cfc3b095f0ca" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="687a7c3d-a14b-9b3f-668c-96733d054b70" executionId="e8bf16dd-8d44-4964-b7bc-81572227cb2d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a1fa9495-872c-50f2-6976-4a799ded5ef1" executionId="20343435-8e9b-42fa-85de-6482f4bd11eb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6d922d9d-23d6-ac7a-a8f5-0e86c6049dd7" executionId="e12b3a53-7b3f-4a62-b41a-528f5cd1d857" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="07ad66c1-31e5-b417-d685-47921eda0f9f" executionId="5e2361a2-3504-47ea-aca7-56d92d403b77" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5c8de012-0c68-b736-fb70-258e2d8e3636" executionId="8ad929e3-c065-4d17-b9f8-7b582c213e3e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="9" executed="9" passed="9" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:00.05]   Discovering: W15.Acceptance
+[xUnit.net 00:00:00.12]   Discovered:  W15.Acceptance
+[xUnit.net 00:00:00.13]   Starting:    W15.Acceptance
+[xUnit.net 00:00:00.20]   Finished:    W15.Acceptance
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>
