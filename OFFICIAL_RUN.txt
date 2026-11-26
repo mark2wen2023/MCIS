@@ -1,0 +1,18 @@
+# Official W12 analysis snapshot cross-case browser control
+# Time zone: Asia/Shanghai (CST, UTC+8)
+start=2026-11-27T07:24:12+08:00
+end=2026-11-27T07:24:17+08:00
+exit=0
+timeout=timeout --signal=TERM --kill-after=10s 150s
+isolation=loopback only; unshare not used (would risk breaking Chrome sandbox; --no-sandbox forbidden)
+python_service=/workspace/mcis-w17-871db66/service/.venv/bin/python
+python_browser=/workspace/w17-pyplaywright-venv/bin/python
+playwright=1.65.2
+chrome=Google Chrome 156.0.8078.47
+node=v24.22.1
+sandbox=chromium_sandbox=True ; no --no-sandbox
+bind=127.0.0.1:18770 (service+web, same origin)
+pin=03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5
+viewports=desktop 1440x900 ; 390x844 (conditional second viewport after desktop passed quickly)
+track_version_change=未验
+command: see OFFICIAL_COMMAND.sh

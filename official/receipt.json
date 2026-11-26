@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "kind": "w12-snapshot-scope-browser",
+  "pin": "03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5",
+  "httpNotBrowser": false,
+  "browserVerified": true,
+  "sandbox": "chromium_sandbox=True",
+  "noSandboxFlag": false,
+  "viewportsRun": [
+    "desktop 1440x900",
+    "390x844"
+  ],
+  "syntheticCases": [
+    "SYN-W12-SNAP-A",
+    "SYN-W12-SNAP-B"
+  ],
+  "seedSha256": "99a77875e6ac87383fb01d7dd59187cb6dafe0bed9c1033d9ff48bef37bd5324",
+  "trackVersionChange": "未验",
+  "notWholePackage": true,
+  "untested": [
+    "同案轨迹换版 未验：页面只显示本次读取的 seedSha256，并写明未确认登记轨迹实时版本；未接登记轨迹换版信号，不伪造版本变化，不把跨案保护算成同案换版通过。",
+    "W12 整包 未验；已有 SSR/构建/合成切案不作为本轮新验收；向量检索与 3D/4A 未验。"
+  ],
+  "sequence": [
+    "start 127.0.0.1 service+web",
+    "desktop: open case A snapshot and CPA/distance curve",
+    "desktop: switch to case B; A snapshot and labels must disappear",
+    "desktop: switch back to case A; only A is shown",
+    "390px: open case A snapshot and CPA/distance curve",
+    "390px: switch to case B; A snapshot and labels must disappear",
+    "390px: switch back to case A; only A is shown"
+  ],
+  "firstBreakpoint": null
+}

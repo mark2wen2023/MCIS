@@ -1,0 +1,9 @@
+[
+  "start 127.0.0.1 service+web",
+  "desktop: open case A snapshot and CPA/distance curve",
+  "desktop: switch to case B; A snapshot and labels must disappear",
+  "desktop: switch back to case A; only A is shown",
+  "390px: open case A snapshot and CPA/distance curve",
+  "390px: switch to case B; A snapshot and labels must disappear",
+  "390px: switch back to case A; only A is shown"
+]

@@ -1,0 +1,17 @@
+HEAD=03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5; synthetic seed SHA-256=99a77875e6ac87383fb01d7dd59187cb6dafe0bed9c1033d9ff48bef37bd5324
+Product historical analysis seed is not loaded.
+Existing SSR/build/cjs at 03a8e786 cited only, not re-run as official gates.
+STEP 1: start 127.0.0.1 service+web
+STEP 2: desktop: open case A snapshot and CPA/distance curve
+screenshot /workspace/mcis-w12-snapshot-scope-report/official/screenshots/01-desktop-case-a.png
+STEP 3: desktop: switch to case B; A snapshot and labels must disappear
+screenshot /workspace/mcis-w12-snapshot-scope-report/official/screenshots/02-desktop-case-b.png
+STEP 4: desktop: switch back to case A; only A is shown
+screenshot /workspace/mcis-w12-snapshot-scope-report/official/screenshots/03-desktop-case-a-back.png
+STEP 5: 390px: open case A snapshot and CPA/distance curve
+screenshot /workspace/mcis-w12-snapshot-scope-report/official/screenshots/01-390-case-a.png
+STEP 6: 390px: switch to case B; A snapshot and labels must disappear
+screenshot /workspace/mcis-w12-snapshot-scope-report/official/screenshots/02-390-case-b.png
+STEP 7: 390px: switch back to case A; only A is shown
+screenshot /workspace/mcis-w12-snapshot-scope-report/official/screenshots/03-390-case-a-back.png
+OFFICIAL RESULT: snapshot-scope browser PASS viewports=['desktop 1440x900', '390x844']; W12 whole-package 未验; track version-change 未验

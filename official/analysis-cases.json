@@ -1,0 +1,50 @@
+{
+  "cases": [
+    {
+      "caseId": "SYN-W12-SNAP-A",
+      "key": "syn-w12-a",
+      "title": "合成夹具甲案（仅测试）",
+      "isFictionalDemo": true,
+      "sourceLabel": "合成夹具（非真实案卷）",
+      "hasWhatIf": false
+    },
+    {
+      "caseId": "SYN-W12-SNAP-B",
+      "key": "syn-w12-b",
+      "title": "合成夹具乙案（仅测试）",
+      "isFictionalDemo": true,
+      "sourceLabel": "合成夹具（非真实案卷）",
+      "hasWhatIf": false
+    }
+  ],
+  "seedSha256": "99a77875e6ac87383fb01d7dd59187cb6dafe0bed9c1033d9ff48bef37bd5324",
+  "seedVerified": true,
+  "generatedAt": "2026-02-01T04:00:00Z",
+  "generator": "tests_acceptance/w12-snapshot-scope-browser/synthetic_seed.py",
+  "coreVersion": "synthetic-core/0",
+  "coreDll": {
+    "path": "synthetic/mcis-core-not-invoked.dll",
+    "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "role": "unused-placeholder"
+  },
+  "w14Export": {
+    "path": "synthetic/w14-not-used.json",
+    "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "role": "unused-placeholder"
+  },
+  "w14Frozen": {
+    "path": "synthetic/w14-frozen-not-used.json",
+    "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "role": "unused-placeholder"
+  },
+  "crossCheck": {
+    "against": [
+      "synthetic"
+    ],
+    "valuesCompared": 0,
+    "maxAbsDiff": 0,
+    "tolerance": 0,
+    "ok": true
+  },
+  "disclaimer": "合成测试夹具。未调用模型，未使用真实案卷，未接入登记轨迹换版信号。"
+}
