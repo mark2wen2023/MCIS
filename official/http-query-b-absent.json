@@ -1,0 +1,19 @@
+{
+  "body": {
+    "items": [],
+    "limit": 20,
+    "offset": 0,
+    "total": 0
+  },
+  "headers": {
+    "connection": "close",
+    "content-length": "44",
+    "content-type": "application/json",
+    "date": "Thu, 26 Nov 2026 22:45:17 GMT",
+    "server": "uvicorn",
+    "vary": "Origin"
+  },
+  "path": "/api/v1/knowledge/cards?q=ZXQ-ABSENT-W19-9K2M",
+  "query": "ZXQ-ABSENT-W19-9K2M",
+  "status": 200
+}

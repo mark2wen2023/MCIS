@@ -1,0 +1,7 @@
+[
+  "start 127.0.0.1 service on a fresh empty SQLite",
+  "load the same 3-card synthetic fixture (setup only, not a lifecycle re-acceptance)",
+  "baseline same-token usable search (same-process original control, not a lifecycle re-run)",
+  "query A: case-swapped matching token, expect same card id and byte-identical source",
+  "query B: probe absent from every fixture string, expect empty items and total=0"
+]

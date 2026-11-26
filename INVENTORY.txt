@@ -1,0 +1,24 @@
+# W19 keyword-control inventory
+# pin=94d5e38c926fda232bb987b60fa9145e4bcf01a7
+# parent=eeb7a2a152f95274346f07884fbe6f3b77c299b1
+# candidate=a3a593fe4d9362c9210d455c1ffc0836c424d841
+
+e7959f56cffc316f2bf0bb921f1b8b4a143213e94704513f6e6fe5196efbce09  run.py (unchanged at eeb7a2a)
+4607074d1190742c923a3929e8e8320b38520c729e5f1ab84f58b65d475a19ff  keyword_control.py
+
+69d8ccd4e5a881abe72a3c487dd76621f2ef6a59a1758048021f5cb1f7b89916  CANDIDATE_SHA.txt  bytes=41
+1227a4f7f9629d2594c934bd6b766156a3f127fd63638b6391e6e5a69219e69d  ISSUE_COMMENT_INPROGRESS.md  bytes=621
+59a122ac104f4630ef6c1f038f7e0699e63e1ec423319cfb1a814488b4d071a5  OFFICIAL_COMMAND.sh  bytes=559
+0510a64905dbb3b03e6db768c9acfa8afa553c9b26e0f8c9d89c8200238cc138  OFFICIAL_RUN.txt  bytes=1047
+a0b2ff10d35d6dfcc8f6b4238f402597eaba1e09608d466e14b0629f84c4a779  REPORT.md  bytes=1300
+4607074d1190742c923a3929e8e8320b38520c729e5f1ab84f58b65d475a19ff  acceptance/keyword_control.py  bytes=11946
+76e3e5729a473c69f2563eafc11ba4b00471ece9229c3b7dbf8c17ad15143dd3  official/absent-word-precondition.json  bytes=93
+55546c0620a536eb7c7590edf630f6443a5e96363dc425698dc6f3faa6812405  official/console.log  bytes=1207
+ffaea623c39e263615fe4368e1f398d7562f7214c1f658d029da9fbccc15918a  official/fixture-cards.json  bytes=177
+f25b8774089a5b59adf60bd65c1474e5a6b4315734bedca881f0bd349ce45619  official/http-baseline-same-token.json  bytes=1419
+7ec24b95f582cdbceaa0f68e48e3be8e9c50ac496db7b27fc2825133edb48491  official/http-query-a-case-swap.json  bytes=1419
+df906f08c4449250ab00472b36aa26f70959359d804370e93c3f8b768c9db061  official/http-query-b-absent.json  bytes=402
+0fea54fedb9919c1ab14447344c488875dc11e68d187cdba958f0f307a376941  official/listeners.json  bytes=79
+f3710a373cb3d44884f61e4fa9b1931b3a1fdbe8a83d817a11871fde95a0e894  official/receipt.json  bytes=1382
+bd623db9ea509932234f278eddcb3a36aa35ceda267f9d7181ec76dfd85e837e  official/sequence.json  bytes=413
+180fcf911cbade29bc014a300ea85fc99e710366e35f6a9f9578ef13bca878da  official-wrapper-meta.txt  bytes=78

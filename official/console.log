@@ -1,0 +1,12 @@
+HEAD=eeb7a2a152f95274346f07884fbe6f3b77c299b1; run.py unchanged SHA-256=e7959f56cffc316f2bf0bb921f1b8b4a143213e94704513f6e6fe5196efbce09
+Prior W191 real-HTTP tests and eeb7a2a official run are not equivalent originals: different or same-case-only queries; no byte-level source compare for a case-changed q; no recorded absent-word precondition.
+STEP 1: start 127.0.0.1 service on a fresh empty SQLite
+STEP 2: load the same 3-card synthetic fixture (setup only, not a lifecycle re-acceptance)
+Fixture loaded; absent word 'ZXQ-ABSENT-W19-9K2M' not present in any sample string
+STEP 3: baseline same-token usable search (same-process original control, not a lifecycle re-run)
+Baseline q='SYN-W19-RETR-7f3a9c' -> KC-62ed7bc737bf472b8d0405e2636dd0a0
+STEP 4: query A: case-swapped matching token, expect same card id and byte-identical source
+Query A q='syn-w19-retr-7F3A9C' -> same id KC-62ed7bc737bf472b8d0405e2636dd0a0; source bytes match baseline and prior official source
+STEP 5: query B: probe absent from every fixture string, expect empty items and total=0
+Query B q='ZXQ-ABSENT-W19-9K2M' -> items=[] total=0
+OFFICIAL RESULT: keyword-control PASS (HTTP, not browser, not vector); W19 whole-package 未验

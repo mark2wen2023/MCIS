@@ -1,0 +1,45 @@
+{
+  "body": {
+    "items": [
+      {
+        "cardId": "KC-62ed7bc737bf472b8d0405e2636dd0a0",
+        "content": {
+          "applicability": "不能当真实结论",
+          "body": "合成正文，不是真实事故。标记 SYN-W19-RETR-7f3a9c。published",
+          "kind": "Method",
+          "source": {
+            "excerpt": "SYN-W19-RETR-SRC-PUB",
+            "locator": "段落1",
+            "rightsNote": "测试作者构造，不含真实资料",
+            "title": "合成夹具-published",
+            "type": "Synthetic"
+          },
+          "summary": "仅用于检索出处对照的合成样本 SYN-W19-RETR-7f3a9c",
+          "tags": [
+            "synthetic-w19",
+            "syn-w19-retr-7f3a9c"
+          ],
+          "title": "合成知识卡 SYN-W19-RETR-7f3a9c published"
+        },
+        "contentDigest": "83f5cefe5964e85c00d894a5a2058cef654f19350e08d2a5e055710745a20b94",
+        "createdUtc": "2026-11-26T22:45:17Z",
+        "reviewedUtc": "2026-11-26T22:45:17Z",
+        "status": "Published"
+      }
+    ],
+    "limit": 20,
+    "offset": 0,
+    "total": 1
+  },
+  "headers": {
+    "connection": "close",
+    "content-length": "770",
+    "content-type": "application/json",
+    "date": "Thu, 26 Nov 2026 22:45:17 GMT",
+    "server": "uvicorn",
+    "vary": "Origin"
+  },
+  "path": "/api/v1/knowledge/cards?q=SYN-W19-RETR-7f3a9c",
+  "query": "SYN-W19-RETR-7f3a9c",
+  "status": 200
+}

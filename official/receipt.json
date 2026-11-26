@@ -1,0 +1,35 @@
+{
+  "equivalentOriginalCited": false,
+  "equivalentOriginalNote": "W191/test_http.py is real 127.0.0.1 HTTP on 94d5e38 but uses a different fixture; case-fold queries only checked total; no byte-level source compare; no recorded absent-word precondition. eeb7a2a official run used a single same-case token.",
+  "firstBreakpoint": null,
+  "httpNotBrowser": true,
+  "kind": "w19-keyword-control",
+  "notWholePackage": true,
+  "parentCandidate": "eeb7a2a152f95274346f07884fbe6f3b77c299b1",
+  "passed": true,
+  "pin": "94d5e38c926fda232bb987b60fa9145e4bcf01a7",
+  "queries": {
+    "A": {
+      "cardId": "KC-62ed7bc737bf472b8d0405e2636dd0a0",
+      "q": "syn-w19-retr-7F3A9C",
+      "sourceBytesMatchBaseline": true,
+      "status": 200,
+      "total": 1
+    },
+    "B": {
+      "items": [],
+      "q": "ZXQ-ABSENT-W19-9K2M",
+      "status": 200,
+      "total": 0
+    }
+  },
+  "searchType": "literal-substring-keyword",
+  "sequence": [
+    "start 127.0.0.1 service on a fresh empty SQLite",
+    "load the same 3-card synthetic fixture (setup only, not a lifecycle re-acceptance)",
+    "baseline same-token usable search (same-process original control, not a lifecycle re-run)",
+    "query A: case-swapped matching token, expect same card id and byte-identical source",
+    "query B: probe absent from every fixture string, expect empty items and total=0"
+  ],
+  "vectorSearch": false
+}

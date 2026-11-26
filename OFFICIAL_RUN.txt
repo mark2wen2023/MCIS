@@ -1,0 +1,23 @@
+# Official W19 keyword case-fold and absent-query control
+# Time zone: Asia/Shanghai (CST, UTC+8)
+start=2026-11-27T06:45:15+08:00
+end=2026-11-27T06:45:18+08:00
+exit=0
+timeout=timeout --signal=TERM --kill-after=10s 150s
+isolation=unshare -r -n ; ip link set lo up
+python=/workspace/mcis-w17-871db66/service/.venv/bin/python
+script=/workspace/mcis-w19-retrieval-cand/tests_acceptance/w19-knowledge-card-retrieval/keyword_control.py
+report=/workspace/mcis-w19-keyword-control-report
+bind=127.0.0.1:18768
+pin=94d5e38c926fda232bb987b60fa9145e4bcf01a7
+parent=eeb7a2a152f95274346f07884fbe6f3b77c299b1
+query_a=syn-w19-retr-7F3A9C
+query_b=ZXQ-ABSENT-W19-9K2M
+command:
+/usr/bin/timeout --signal=TERM --kill-after=10s 150s /usr/bin/unshare -r -n /bin/bash -c '
+  set -euo pipefail
+  ip link set lo up
+  exec "$0" -I -B "$1" --python "$0" --report "$2"
+' /workspace/mcis-w17-871db66/service/.venv/bin/python \
+  /workspace/mcis-w19-retrieval-cand/tests_acceptance/w19-knowledge-card-retrieval/keyword_control.py \
+  /workspace/mcis-w19-keyword-control-report
