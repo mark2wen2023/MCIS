@@ -1,0 +1,22 @@
+# Official isolated W11 combined synthetic pilot
+# Time zone: Asia/Shanghai (CST, UTC+8)
+start=2026-11-27T03:53:57+08:00
+end=2026-11-27T03:54:03+08:00
+exit=0
+timeout=timeout --signal=TERM --kill-after=10s 150s
+isolation=unshare -r -n ; ip link set lo up
+python=/workspace/mcis-w17-871db66/service/.venv/bin/python
+dotnet=/home/box/.dotnet/dotnet
+sdk=8.0.428
+run=/workspace/mcis-w11-isolated-cand/tests_acceptance/w11-isolated-synthetic-pilot/run.py
+report=/workspace/mcis-w11-isolated-pilot-report
+bind=127.0.0.1:18765
+command:
+/usr/bin/timeout --signal=TERM --kill-after=10s 150s /usr/bin/unshare -r -n /bin/bash -c '
+  set -euo pipefail
+  ip link set lo up
+  exec "$0" -I -B "$1" --dotnet "$2" --python "$0" --report "$3"
+' /workspace/mcis-w17-871db66/service/.venv/bin/python \
+  /workspace/mcis-w11-isolated-cand/tests_acceptance/w11-isolated-synthetic-pilot/run.py \
+  /home/box/.dotnet/dotnet \
+  /workspace/mcis-w11-isolated-pilot-report

@@ -1,0 +1,11 @@
+Named artifact /workspace/mcis-w41-core-out/mcis-core.dll SHA-256=f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf contract=mcis-core-build/1 is W4.1 mcis-core; not used as ECFC validator
+Staged 186 pinned W11 originals from local export; core marker present
+SDK version exit=0
+NuGet local directories check exit=0
+Core smoke exit=0
+Verified offline mcis-ecfc smoke; dll SHA-256=f548818bd21c45d640293601f2ae271171c086f7e0b22912472a2d7dc771e75a contract=mcis-ecfc-build/1
+Official create_app HTTP proof: pilot route absent, POST /__local_synthetic_w11/SYN-XREPO-001/edge-excerpt -> 404, bind=[{'table': 'tcp', 'addr': '127.0.0.1', 'port': 18765, 'inode': '3333448'}]
+Gate 1 PASS: preview+save via existing service functions, coreVersion=mcis-ecfc-draft/1, revision=1 digest=2d1ce99dc5ca27cbe7171c4980742975ff22977d011c6d9b943bb19d67b54c63
+Gate 2 PASS: explicit HTTP read returns only specified graph version/edge/registered T+109 span
+Gate 4 PASS: T+109 2026-02-01T12:01:49.000Z recorded as sourceUtc only; incidentTimeUtc remains 2026-02-01T12:00:00Z
+Gate 3 PASS: old binding rejected after revision and after revoke; no extra Access; case audit valid; ECFC audit 1,2

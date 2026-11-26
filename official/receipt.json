@@ -1,0 +1,85 @@
+{
+  "bind": "127.0.0.1",
+  "cli": "/workspace/mcis-w11-isolated-pilot-report/tmp-official/stage-root/tools/mcis-ecfc/mcis-ecfc.sh",
+  "draftPath": "existing preview_sync/save_sync in the same 127.0.0.1 process",
+  "ecfc": {
+    "artifacts": {
+      "mcis-ecfc.deps.json": "0ac928b6e5992678af630f554b6d3c727f3b29a762ed050bdc0a8c0cc53f2974",
+      "mcis-ecfc.dll": "f548818bd21c45d640293601f2ae271171c086f7e0b22912472a2d7dc771e75a",
+      "mcis-ecfc.pdb": "48576e9869ae05ff118b385e418692f7e3d3dce23545e7c6f2b0eeb2c7e7a30d",
+      "mcis-ecfc.runtimeconfig.json": "3d25821758613e4cd940d143ccb03c93704140077e69104996832510f38f6598"
+    },
+    "contract": "mcis-ecfc-build/1",
+    "coreVersion": "mcis-ecfc-draft/1",
+    "dllSha256": "f548818bd21c45d640293601f2ae271171c086f7e0b22912472a2d7dc771e75a",
+    "sdk": "8.0.428"
+  },
+  "ecfcHttpRoutesInPinnedCreateApp": false,
+  "firstBreakpoint": null,
+  "gates": {
+    "draft_saved_via_existing_service": {
+      "coreVersion": "mcis-ecfc-draft/1",
+      "digest": "2d1ce99dc5ca27cbe7171c4980742975ff22977d011c6d9b943bb19d67b54c63",
+      "ecfcHttpRoutesInPinnedCreateApp": [],
+      "ok": true,
+      "path": "existing preview_sync/save_sync in the same loopback process",
+      "previewPersisted": false,
+      "revision": 1
+    },
+    "explicit_read_specified_binding": {
+      "context": {
+        "caseId": "SYN-XREPO-001",
+        "digest": "2d1ce99dc5ca27cbe7171c4980742975ff22977d011c6d9b943bb19d67b54c63",
+        "edgeId": "E01",
+        "from": "C01",
+        "revision": 1,
+        "to": "N01"
+      },
+      "custodyAfterSuccess": [
+        "Register",
+        "Access"
+      ],
+      "excerpt": "2026-02-01T12:01:49.000Z",
+      "locator": "/sourceBytes/97/121",
+      "ok": true,
+      "publicDenied": 404,
+      "sourceUtc": "2026-02-01T12:01:49.000Z",
+      "wrongEdgeDenied": 404
+    },
+    "old_binding_rejected_after_revision_or_revoke": {
+      "afterRevision": 404,
+      "afterRevoke": 404,
+      "auditValid": true,
+      "custodyFinal": [
+        "Register",
+        "Access"
+      ],
+      "digest2": "5ccd74414ff9b77435f0291f24913dbc11a7eede15efa7042b36cc30736d3551",
+      "ecfcAuditRevisions": [
+        1,
+        2
+      ],
+      "ok": true,
+      "revision2": 2,
+      "simCommands": [],
+      "unboundRevision2": 404
+    },
+    "t109_recorded_source_time_only": {
+      "incidentTimeUtc": "2026-02-01T12:00:00Z",
+      "note": "T+109 is the registered source span, not the incident epoch",
+      "ok": true,
+      "sourceRecordedUtc": "2026-02-01T12:01:49.000Z"
+    }
+  },
+  "httpNotBrowser": true,
+  "kind": "w11-isolated-synthetic-pilot",
+  "namedDllUnused": {
+    "contract": "mcis-core-build/1",
+    "path": "/workspace/mcis-w41-core-out/mcis-core.dll",
+    "sha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+    "used": false
+  },
+  "notWholePackage": true,
+  "passed": true,
+  "pin": "875ccc50b049fb24b82f6b0663f3f9476db1880e"
+}

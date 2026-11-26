@@ -1,0 +1,66 @@
+# W11 isolated synthetic pilot inventory
+# pin=875ccc50b049fb24b82f6b0663f3f9476db1880e
+# hashes are SHA-256
+
+## worktree files at 875ccc50 (unchanged product / reused helpers)
+a3e29516ba1116c4f4876ebeab325d3d3f3364d0061919f96409a14c2979f4b6  service/mcis_service/ecfc_drafts/router.py  git-blob=fc432a2934a6748f5f7cc6e87e9bbf28b50c8745
+6859848c5a6255740bcb0bfd93609bec13d5ac9ac67b26c8cbfd44a363d10cfa  service/mcis_service/main.py  git-blob=088005b1788d9f4227af6bb718dc10db4f4a8b0b
+79f0583a1a18edef8cec7f15b8f9c507be29117803f77dc937b68387f116de86  tests_acceptance/w11-excerpt-binding-local/check.py  git-blob=0f77b3626fefe20fd0fed7b3b6ea72f928610a56
+6d09489264e3bbff5a36576702bf5b91b8536d6f6c991ad78731885de120fe66  tests_acceptance/w11-excerpt-binding-local/pilot.py  git-blob=78c44747d6709ec5142aa413f167866c1f7d70f4
+06ce97be8ea984b9cc30ed80b29bf6b42f654c745b1c6f98fd0588edf2b1a487  tests_acceptance/w11-excerpt-binding-local/SOURCES  git-blob=a51a6566753fdbff1f2eba0028b485f21ac2ee25
+9ffcc5152f5de516ade287c8998f68322bb108015ed0d0e4eac2f83b0fbe2255  tests_acceptance/w11-edge-host-optin/host.py  git-blob=20f55ef0cebc2c78f58efd15cc880f750205d620
+79c41608ae8c88073734404c832a5b1cdba532eb8beceb0c2648fd4f93c73723  tests_acceptance/w11-real-core/CORE_SOURCES  git-blob=487a145122a1f6641ef2c7db24a01ff42e2f4503
+4b01ee4e9fb70e54ad792e0d05b134b696faf797eb604968874abfef15f7a4ec  tests_acceptance/w11-real-core/workflow.py  git-blob=400547171a4c153c64c8636109cbac5eae551fa8
+87dce582d8410a0a8dea6a7367e52829f7d886c3500886ff169b369822d8978c  tools/mcis-ecfc/mcis-ecfc.sh  git-blob=17d798dd5caf300852cc138d6c6668e829871cb2
+b4bb823ecd09579fccabc2652382db3db0bd34cfaa17fdf5a267253738306663  tools/mcis-ecfc/build.py  git-blob=8f6d5c819e4dcc5c5964477be436d3225e15f919
+
+## pinned 186-file isolation assembly (staged, not worktree service)
+2c21e58417fe208462921543762eaf3a9c81e9fd40238be44de50e5a9ff28d93  source-export/service/mcis_service/main.py  (create_app does not include ecfc_drafts_router)
+evidence_intake/router.py at this pin retains _read_original_for_access (worktree 875ccc5 does not)
+
+## new acceptance files (candidate only)
+6696cc6cd896528232ab58f8b36af3522ac2c3bcf6469502dc3b43f16a9c2ac0  tests_acceptance/w11-isolated-synthetic-pilot/README.md
+ae225270f09d14b9b95c6ca2b715a17ce71be62e269cc2123bbb11215a6a536e  tests_acceptance/w11-isolated-synthetic-pilot/run.py
+f80357edaa4711badefeddb56d211c22a8ef848955a21fb91822d6714d35795c  tests_acceptance/w11-isolated-synthetic-pilot/server.py
+
+## official artifacts
+9bc4cb15dd8490abbf2576ad5181783fd225a30ea998b91423a974b8b42bb20d  ISSUE_COMMENT_INPROGRESS.md  bytes=1287
+4e5a15a91f41853e117898e5adfcea27dee99c0ffb5f3503353598d406c5a740  OFFICIAL_COMMAND.sh  bytes=921
+7d929aa0192c72fd9d7e62cfe1ba036155d8cbd7fdafef4bf088ab8bb6b009c0  OFFICIAL_RUN.txt  bytes=945
+6696cc6cd896528232ab58f8b36af3522ac2c3bcf6469502dc3b43f16a9c2ac0  acceptance/README.md  bytes=1126
+01858f720b682eb6a569e69cf415411ae4434e13403050d7cfdb6f9355dd78a9  acceptance/__pycache__/run.cpython-313.pyc  bytes=57998
+a937399dfa74ce30e03c19d82aed950e76f9a02e694d4e5946c3d82f06726874  acceptance/__pycache__/server.cpython-313.pyc  bytes=6125
+ae225270f09d14b9b95c6ca2b715a17ce71be62e269cc2123bbb11215a6a536e  acceptance/run.py  bytes=40613
+f80357edaa4711badefeddb56d211c22a8ef848955a21fb91822d6714d35795c  acceptance/server.py  bytes=3678
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ecfc-core-out/.build.lock  bytes=0
+d8ebeb40cce74cdf0a6349075043b889248e18da1356df1b5bfb6efb01a2baeb  ecfc-core-out/build-manifest.json  bytes=1513
+0ac928b6e5992678af630f554b6d3c727f3b29a762ed050bdc0a8c0cc53f2974  ecfc-core-out/mcis-ecfc.deps.json  bytes=397
+f548818bd21c45d640293601f2ae271171c086f7e0b22912472a2d7dc771e75a  ecfc-core-out/mcis-ecfc.dll  bytes=38400
+48576e9869ae05ff118b385e418692f7e3d3dce23545e7c6f2b0eeb2c7e7a30d  ecfc-core-out/mcis-ecfc.pdb  bytes=17672
+3d25821758613e4cd940d143ccb03c93704140077e69104996832510f38f6598  ecfc-core-out/mcis-ecfc.runtimeconfig.json  bytes=433
+418be9609b46a00062c41fb49073911986098e9a61e010f4311aa86946ecd3ea  fixtures/communication.txt  bytes=290
+83cd73eceeb4310366ee8091d6d2f94929fe54c8356fc2a83235946e2f15f27f  official/console.log  bytes=1184
+41ea49cc865b7115211f51c21b4b898c3de7fab50a52b12915bb92f09dbd6684  official/ecfc-audit.json  bytes=78
+cceee352171c7edd643422f0a8552fb3d8a45db79738ad6d23e3008050a7d134  official/explicit-read.json  bytes=626
+ebd52872d9d08e3cbc30568817a8fe75496dbd0bef69a5450d9ca8d4920e3f7d  official/intake-receipt.json  bytes=1474
+acb21b6726991a907f94e04e0731b68c1d22186e62d8e3babe97b70f3d23b864  official/official-app-listeners.json  bytes=99
+0de18a35640728340b7e3bf90310ea3ca3bc2d19f9f5548ca2d1c02da18bf2f5  official/official-app-pilot-post.json  bytes=269
+ec621ab425701198adc639a1c2e679c3679a0c1e18da9d79c7b4279eb911d745  official/official-app-routes.json  bytes=1406
+6b63389f875dc6a6ee1242a643fec9a6826d67062ea5a37f07bdc32f7a542a75  official/official-app-server.log  bytes=276
+307f06c928e9bee6d244691dff8daf68326ccbbdc67b6fa7ee7a2892ec747cc2  official/pilot-listeners.json  bytes=99
+53ed323c77073408c6ab622b7418d2618d85cd05d959c5841bc376cee20f63cb  official/pilot-routes.json  bytes=7669
+60af72f47099d444c595f94abda6886b91e529971b59385a66b1bcd240f71dc7  official/pinned-create-app-ecfc-http.json  bytes=183
+590f9ea56666fd57c2809562d4d489aa1fd8581e6d724e5f4042316b2d44ab46  official/preview.json  bytes=2887
+89d6ee7bef08bc2c204657f39867cddfa0dafd1c4706dc7c978a63fe96b7a71f  official/read-after-revision.json  bytes=70
+89d6ee7bef08bc2c204657f39867cddfa0dafd1c4706dc7c978a63fe96b7a71f  official/read-after-revoke.json  bytes=70
+f3eb64cb5cc9f35d05025e3525602ec3474da110a729c8506332e2f2c41190bb  official/receipt.json  bytes=2936
+4f7e13a1a41824899b676a218a03117472f17fb2a1adeb7d84e61ff94bea50a3  official/save-rev1.json  bytes=3732
+1cc089d2834c9a364245acd5bfbf3a5556deb9f5a25d6d363807bd974098d545  official/save-rev2.json  bytes=3730
+3bb50bc4ca7102353f7edc28bac47249febc57c46d805fd9cb3ee03e0de405d7  official/sqlite-snapshot.json  bytes=1129
+f33bae43a848837f873578f5956ea069a90df9b8eb0ae83e63a77c5c39be99ac  official-wrapper-meta.txt  bytes=260
+
+## named W4.1 artifact (NOT used as ECFC validator)
+f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf  /workspace/mcis-w41-core-out/mcis-core.dll  contract=mcis-core-build/1  used=false
+
+## verified ECFC core used
+f548818bd21c45d640293601f2ae271171c086f7e0b22912472a2d7dc771e75a  ecfc-core-out/mcis-ecfc.dll  contract=mcis-ecfc-build/1  coreVersion=mcis-ecfc-draft/1

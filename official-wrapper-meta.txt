@@ -1,0 +1,6 @@
+cwd=/workspace/mcis-w11-combined-cand
+date=2026-11-27T03:53:57+08:00
+command=timeout --signal=TERM --kill-after=10s 150s unshare -r -n bash -c 'ip link set lo up; python run.py ...'
+START=2026-11-27T03:53:57+08:00
+END=2026-11-27T03:54:03+08:00
+OFFICIAL_EXIT=0

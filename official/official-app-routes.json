@@ -1,0 +1,83 @@
+{
+  "bind": {
+    "host": "127.0.0.1",
+    "port": 18765
+  },
+  "cli": "/workspace/mcis-w11-isolated-pilot-report/tmp-official/stage-root/tools/mcis-ecfc/mcis-ecfc.sh",
+  "enablePilot": false,
+  "officialPathsContainPilot": false,
+  "officialRoutes": [
+    {
+      "methods": [
+        "GET"
+      ],
+      "path": "/api/v1/health"
+    },
+    {
+      "methods": [
+        "GET",
+        "HEAD"
+      ],
+      "path": "/docs"
+    },
+    {
+      "methods": [
+        "GET",
+        "HEAD"
+      ],
+      "path": "/docs/oauth2-redirect"
+    },
+    {
+      "methods": [
+        "GET",
+        "HEAD"
+      ],
+      "path": "/openapi.json"
+    },
+    {
+      "methods": [
+        "GET",
+        "HEAD"
+      ],
+      "path": "/redoc"
+    }
+  ],
+  "pilotPath": "/__local_synthetic_w11/SYN-XREPO-001/edge-excerpt",
+  "projectRoot": "/workspace/mcis-w11-isolated-pilot-report/tmp-official/stage-root",
+  "routesAfterSetup": [
+    {
+      "methods": [
+        "GET"
+      ],
+      "path": "/api/v1/health"
+    },
+    {
+      "methods": [
+        "GET",
+        "HEAD"
+      ],
+      "path": "/docs"
+    },
+    {
+      "methods": [
+        "GET",
+        "HEAD"
+      ],
+      "path": "/docs/oauth2-redirect"
+    },
+    {
+      "methods": [
+        "GET",
+        "HEAD"
+      ],
+      "path": "/openapi.json"
+    },
+    {
+      "methods": [
+        "GET",
+        "HEAD"
+      ],
+      "path": "/redoc"
+    }
+  ]
+}
