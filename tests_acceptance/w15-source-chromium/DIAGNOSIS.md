@@ -28,3 +28,19 @@ receipt.json reports workflowVerified=true, bodyVerified=false, browserVerified=
 and passed=false (not full gate). A timeout or assertion failure does not pass
 this scope. The default run retains every original assertion and the old gate
 remains blocked; do not mislabel either run. No mock response or additional POST.
+
+## Opt-in native body read (not the original result.json() gate)
+
+Use the original Chrome runner arguments plus --native-body. The same single
+real preview POST is used. A page fetch hook, only for this synthetic case,
+clones the real loopback POST Response when it returns and reads the clone
+with an 8s deadline. The original Response and page behaviour are unchanged.
+The run still asserts 503, Cache-Control no-store, and the JSON code from that
+clone. It does not call Playwright result.json(), does not issue a second
+request, and does not fall back to a host-side body read. If the clone cannot
+be read once, the run stops and does not pass. Case isolation, both viewports,
+three original screenshots, real server/SQLite reopen and database equality
+are not skipped. If these pass, receipt.json reports nativeBodyVerified=true,
+bodyVerified=true, browserVerified=true and passed=false (not the original
+gate). The default command retains result.json() and its existing 124; do not
+relabel either run as a full-package pass.

@@ -7,7 +7,7 @@ import sys
 import time
 
 
-ORIGINAL_SHA256 = "c5f750fc1d17e1842196bfb36f4f751c58caf57b7e732e2a4f1150d9b340f5eb"
+ORIGINAL_SHA256 = "0d962047ef4659e73fe1250d047e38639e9868a6f4c28f58cdc32da603efbfe0"
 WATCHED = frozenset(("main", "host", "setup", "dump", "app_ui", "show"))
 
 

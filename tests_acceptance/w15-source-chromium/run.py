@@ -117,7 +117,7 @@ def dump(data):
     with sqlite3.connect(data/"acceptance.sqlite") as db:
         return hashlib.sha256("\n".join(db.iterdump()).encode()).hexdigest()
 
-def app_ui(browser, origin, evidence, reopened, workflow_only=False):
+def app_ui(browser, origin, evidence, reopened, workflow_only=False, native_body=False):
     from playwright.sync_api import expect
     context=browser.new_context(viewport={"width":390 if reopened else 1440,"height":844 if reopened else 900},
         service_workers="block")
@@ -132,6 +132,39 @@ def app_ui(browser, origin, evidence, reopened, workflow_only=False):
     context.route_web_socket("**/*",lambda ws:(blocked.append("WebSocket"),ws.close()))
     context.add_init_script("""localStorage.setItem('mcis.role','LeadInvestigator');
       localStorage.setItem('mcis.operator','Synthetic W15');""")
+    if native_body:
+        context.add_init_script("""(() => {
+          const expected = new URL(%s);
+          window.__w15NativePreview = {status: "pending"};
+          const orig = window.fetch;
+          window.fetch = async function(...args) {
+            const response = await orig.apply(this, args);
+            try {
+              const input = args[0];
+              const init = args[1] || {};
+              const url = new URL(input instanceof Request ? input.url : String(input), window.location.href);
+              const method = (input instanceof Request ? input.method : (init.method || "GET")).toUpperCase();
+              if (method === "POST" && url.origin === expected.origin && url.hostname === "127.0.0.1"
+                  && url.pathname.endsWith("/systemic/bowtie:preview")) {
+                const clone = response.clone();
+                Promise.race([
+                  clone.text(),
+                  new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 8000))
+                ]).then((text) => {
+                  try {
+                    window.__w15NativePreview = {status: "read", code: JSON.parse(text).code};
+                  } catch {
+                    window.__w15NativePreview = {status: "invalid"};
+                  }
+                }).catch(() => {
+                  window.__w15NativePreview = {status: "unread"};
+                });
+              }
+            } catch {
+            }
+            return response;
+          };
+        })();""" % json.dumps(origin))
     try:
         page=context.new_page()
         # Observe the actual preview only; do not read the body here.
@@ -169,7 +202,17 @@ def app_ui(browser, origin, evidence, reopened, workflow_only=False):
                 page.get_by_role("button",name="运行结构核查（不保存）",exact=True).click()
             result=matched.value
             assert result.status==503 and result.header_value("cache-control")=="no-store"
-            if not workflow_only:
+            if native_body:
+                try:
+                    page.wait_for_function(
+                        "() => window.__w15NativePreview && window.__w15NativePreview.status !== 'pending'",
+                        timeout=8000)
+                except Exception:
+                    raise AssertionError("native browser body unread")
+                native=page.evaluate("() => window.__w15NativePreview")
+                assert native and native.get("status")=="read", "native browser body unread"
+                assert native.get("code")=="BOWTIE_CORE_UNAVAILABLE"
+            elif not workflow_only:
                 assert result.json()["code"]=="BOWTIE_CORE_UNAVAILABLE"
             assert result.request.post_data_json["sourceEvidenceIds"]==["EV-001"]
             note=page.get_by_role("alert").filter(has_text="计算核心暂不可用")
@@ -199,6 +242,8 @@ def main():
     group.add_argument("--http-only",action="store_true")
     group.add_argument("--workflow-only",action="store_true",
                        help="Scoped browser UI trace only; not the original full gate")
+    group.add_argument("--native-body",action="store_true",
+                       help="Same-threshold body assertion via a page fetch clone; not the original result.json() gate")
     arg=parser.parse_args()
     if not arg.build_only:
         if not arg.host_python or not arg.evidence or (not arg.http_only and not arg.browser):
@@ -243,16 +288,20 @@ def main():
                         with host(arg.host_python,work,fixed,assets,data,arg.evidence,"first") as origin:
                             setup(origin)
                             baseline=dump(data)
-                            app_ui(browser,origin,arg.evidence,False,arg.workflow_only)
+                            app_ui(browser,origin,arg.evidence,False,arg.workflow_only,arg.native_body)
                         with host(arg.host_python,work,fixed,assets,data,arg.evidence,"reopened") as origin:
                             for case in TITLES: source(origin,case)
-                            app_ui(browser,origin,arg.evidence,True)
+                            app_ui(browser,origin,arg.evidence,True,arg.workflow_only,arg.native_body)
                     finally:
                         browser.close()
                 assert dump(data)==baseline
                 if arg.workflow_only:
                     rec.update(workflowVerified=True, bodyVerified=False, sandboxRequested=True)
                     print("W15 scoped browser UI and real SQLite restart verified; response body and full gate not verified")
+                    return
+                if arg.native_body:
+                    rec.update(nativeBodyVerified=True, bodyVerified=True, browserVerified=True, sandboxRequested=True)
+                    print("W15 native browser body read and same-threshold UI/SQLite verified; original result.json() gate not this run")
                     return
                 rec["browserVerified"]=True
                 rec["sandboxRequested"]=True
