@@ -16,3 +16,15 @@ timeout. Retain stdout, stderr, host-first.log, and the actual exit. Correlate
 the sole browser preview POST with the sole ASGI sequence; do not send a
 second preview during the same run. Treat every result here as diagnostic;
 it does not overwrite the original blocked receipt.
+
+## Opt-in user workflow observation (not full acceptance)
+
+Use the original Chrome runner arguments plus --workflow-only. The same single
+real preview POST is observed; only the Playwright response JSON read is omitted
+for this explicitly scoped run. Status/Cache-Control, requested evidence, actual
+error and no result, case isolation, two viewports, three original screenshots,
+real server/SQLite reopen and database equality are not skipped. If these pass,
+receipt.json reports workflowVerified=true, bodyVerified=false, browserVerified=false
+and passed=false (not full gate). A timeout or assertion failure does not pass
+this scope. The default run retains every original assertion and the old gate
+remains blocked; do not mislabel either run. No mock response or additional POST.
