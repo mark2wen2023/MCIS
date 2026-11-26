@@ -22,3 +22,13 @@ page and same single POST: requestWillBeSent, responseReceived, loadingFinished
 or loadingFailed. It never reads the body through CDP. encodedBytes is a
 browser transport counter, not the JSON body length. Absence of CDP events is
 not proof of a network failure, since delivery to the listener can also stall.
+
+This revision only adds Chrome native NetLog capture to the original launch
+arguments: `--log-net-log` to a private temporary file, `--net-log-max-size-mb=10`,
+and `--net-log-duration=60`, and updates the diagnostic SHA pin. Capture uses
+Chrome's default sanitization and does not collect sensitive or raw bytes. The
+raw NetLog stays in a local private temporary directory and is not packed,
+uploaded, or committed. Published results may include only filtered status,
+event or error codes, the exit, and the candidate SHA — not URLs, request
+headers, bodies, or account material. All original assertions, the single
+preview POST, sandbox, and 150s outer timeout are unchanged.

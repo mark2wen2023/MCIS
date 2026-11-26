@@ -257,8 +257,13 @@ def main():
                     raise
                 from playwright.sync_api import sync_playwright
                 with sync_playwright() as p:
+                    netlog_dir=Path("/tmp/mcis-w15-netlog-private")
+                    netlog_dir.mkdir(mode=0o700, exist_ok=True)
+                    os.chmod(netlog_dir, 0o700)
+                    netlog=netlog_dir/"chrome-netlog.json"
                     browser=p.chromium.launch(executable_path=str(browser_path),headless=True,chromium_sandbox=True,
-                         env=environment(work),args=["--no-proxy-server"])
+                         env=environment(work),args=["--no-proxy-server",
+                         f"--log-net-log={netlog}","--net-log-max-size-mb=10","--net-log-duration=60"])
                     try:
                         with host(arg.host_python,work,fixed,assets,data,arg.evidence,"first") as origin:
                             setup(origin)
