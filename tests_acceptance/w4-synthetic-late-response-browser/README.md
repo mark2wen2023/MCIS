@@ -13,8 +13,12 @@ timeout --signal=TERM --kill-after=10s 150s python run.py \
   --dotnet /existing/dotnet \
   --core-dll /existing/prebuilt/mcis-core.dll \
   --core-sha256 VERIFIED_64_HEX \
-  --out /new/isolated/results
+  --out /new/isolated/results \
+  --viewport-width 390 --viewport-height 844
 ```
+
+The gate mechanism is unchanged. Pass `--viewport-width` / `--viewport-height` to run at 390×844 (or another requested size) without rerunning the desktop late-response or the unanchored preview baseline. Timeouts stay the same. After the original late-response assertions, the runner also checks that the preview result (receipt) panel is readable and that the document does not overflow the viewport horizontally.
+
 
 The fixed product commit is 94d5e38c926fda232bb987b60fa9145e4bcf01a7. Demo seeds stay disabled; only SYN-W41-X-A/B are created. After B's 11° result is visible, the original A response is released. The A browser request must actually finish, and that finish must be after B. A cancelled or never-arrived A request is a failure. B's case id, sources and 11° result must not be replaced by A's 5°. SQLite is compared before the late sequence, after it, and after a genuine service reopen.
 

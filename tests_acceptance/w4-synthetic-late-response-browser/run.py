@@ -40,6 +40,47 @@ def step(msg):
     print(f"W41 LATE {time.monotonic():.3f} {msg}", flush=True)
 
 
+def png_size(path):
+    import struct
+    data = path.read_bytes()
+    width, height = struct.unpack(">II", data[16:24])
+    return {"width": width, "height": height, "bytes": len(data),
+            "sha256": hashlib.sha256(data).hexdigest()}
+
+
+def viewport_metrics(page):
+    return page.evaluate("""() => ({
+      innerWidth: window.innerWidth,
+      innerHeight: window.innerHeight,
+      scrollWidth: document.documentElement.scrollWidth,
+      clientWidth: document.documentElement.clientWidth,
+      scrollHeight: document.documentElement.scrollHeight
+    })""")
+
+
+def require_no_page_overflow(page, when):
+    metrics = viewport_metrics(page)
+    require(metrics["scrollWidth"] <= metrics["innerWidth"],
+            f"document overflows viewport {when}: {metrics}")
+    return metrics
+
+
+def require_result_panel_readable(page, result, when):
+    from playwright.sync_api import expect
+    result.scroll_into_view_if_needed()
+    expect(result).to_be_visible()
+    box = result.bounding_box()
+    require(box is not None and box["width"] > 0 and box["height"] > 0,
+            f"receipt panel has no visible box {when}")
+    vp = page.viewport_size
+    visible_h = min(box["y"] + box["height"], vp["height"]) - max(box["y"], 0)
+    visible_w = min(box["x"] + box["width"], vp["width"]) - max(box["x"], 0)
+    require(visible_h > 0 and visible_w > 0, f"receipt panel not in viewport {when}: {box}")
+    text = result.inner_text()
+    require(bool(text.strip()), f"receipt panel has no readable text {when}")
+    return {"box": box, "visibleWidth": visible_w, "visibleHeight": visible_h, "textChars": len(text)}
+
+
 def gate_json(payload, status=200):
     body = json.dumps(payload, ensure_ascii=False).encode()
     return status, [(b"content-type", b"application/json; charset=utf-8"),
@@ -259,9 +300,9 @@ def wait_gate_held(origin, timeout=20):
     raise RuntimeError(f"A preview was not computed and held in time: {last}")
 
 
-def late_flow(browser, origin, output, outcome):
+def late_flow(browser, origin, output, outcome, viewport):
     from playwright.sync_api import expect
-    context = browser.new_context(viewport={"width": 1440, "height": 900}, service_workers="block")
+    context = browser.new_context(viewport=viewport, service_workers="block")
     blocked, errors = [], []
     events = []
 
@@ -332,7 +373,14 @@ def late_flow(browser, origin, output, outcome):
             "caseVisible": result.inner_text(),
             "gate": api(origin, "/__w41-gate/status", 200),
         }
-        page.screenshot(path=str(output / "w41-late-B-11deg-before-release.png"))
+        before_shot = output / f"w41-late-{viewport['width']}-B-11deg-before-release.png"
+        page.screenshot(path=str(before_shot))
+        outcome["screenshotBeforeRelease"] = png_size(before_shot)
+        require(outcome["screenshotBeforeRelease"]["width"] == viewport["width"]
+                and outcome["screenshotBeforeRelease"]["height"] == viewport["height"],
+                "before-release screenshot is not the requested viewport size")
+        outcome["overflowBeforeRelease"] = require_no_page_overflow(page, "before release")
+        outcome["receiptPanelBeforeRelease"] = require_result_panel_readable(page, result, "before release")
 
         step("releasing A"); released = api(origin, "/__w41-gate/release", 200, {}, method="POST"); step("released A")
         outcome["released"] = released
@@ -378,10 +426,20 @@ def late_flow(browser, origin, output, outcome):
         expect(sources.nth(1)).to_contain_text(",81")
         expect(sources.nth(0)).not_to_contain_text(",45")
         expect(sources.nth(1)).not_to_contain_text(",50")
-        page.screenshot(path=str(output / "w41-late-B-after-A-arrived.png"))
+        after_shot = output / f"w41-late-{viewport['width']}-B-after-A-arrived.png"
+        page.screenshot(path=str(after_shot))
+        outcome["screenshotAfterA"] = png_size(after_shot)
+        require(outcome["screenshotAfterA"]["width"] == viewport["width"]
+                and outcome["screenshotAfterA"]["height"] == viewport["height"],
+                "after-A screenshot is not the requested viewport size")
+        outcome["overflowAfterA"] = require_no_page_overflow(page, "after A arrived")
+        outcome["receiptPanelAfterA"] = require_result_panel_readable(page, result, "after A arrived")
         require(not blocked and not errors, "external or failed browser event")
         outcome.update({
             "held": held,
+            "viewport": viewport,
+            "pageOverflow": False,
+            "receiptPanelReadable": True,
             "beforeReleaseTextContainsB": CASE_B in before_release["caseVisible"] and "11 deg" in before_release["caseVisible"],
             "events": events,
             "aFinishedAfterB": True,
@@ -397,6 +455,12 @@ def late_flow(browser, origin, output, outcome):
         outcome["blocked"] = blocked
         outcome["pageErrors"] = errors
         try:
+            fail_shot = output / f"w41-late-{viewport['width']}-first-failure.png"
+            page.screenshot(path=str(fail_shot))
+            outcome["screenshotFirstFailure"] = png_size(fail_shot)
+        except Exception:
+            pass
+        try:
             outcome.setdefault("gateAtFailure", api(origin, "/__w41-gate/status", 200))
         except Exception as gate_exc:
             outcome["gateAtFailureError"] = type(gate_exc).__name__
@@ -411,6 +475,8 @@ def main():
     for flag in ("source", "node-modules", "chrome", "host-python", "dotnet", "core-dll", "out"):
         parser.add_argument("--" + flag, type=Path, required=True)
     parser.add_argument("--core-sha256", required=True)
+    parser.add_argument("--viewport-width", type=int, default=1440)
+    parser.add_argument("--viewport-height", type=int, default=900)
     a = parser.parse_args()
     for key, path in vars(a).items():
         if isinstance(path, Path):
@@ -426,9 +492,11 @@ def main():
             "missing fixed source commit")
     require((a.node_modules / "vite/bin/vite.js").is_file(), "installed Vite required (no install)")
     a.out.mkdir(exist_ok=False)
+    require(a.viewport_width > 0 and a.viewport_height > 0, "viewport must be positive")
     rec = {"revision": PIN, "browser": version, "sandboxRequested": True, "cases": [CASE_A, CASE_B],
            "coreDllSha256": a.core_sha256, "passed": False,
-           "scope": "synthetic late preview response only; not W4 whole package and not a baseline rerun"}
+           "viewport": {"width": a.viewport_width, "height": a.viewport_height},
+           "scope": "synthetic late preview response at the requested viewport only; not W4 whole package and not a desktop or baseline rerun"}
     script = Path(__file__).resolve()
     try:
         with tempfile.TemporaryDirectory(prefix="w41-late-") as tmp:
@@ -469,7 +537,7 @@ def main():
                         seed(origin)
                         step("cases seeded")
                         rec["sqliteBefore"] = dump(data); step("sqlite before hashed")
-                        step("late flow start"); rec["late"] = rec.get("late") or {}; late_flow(browser, origin, a.out, rec["late"]); step("late flow done")
+                        step("late flow start"); rec["late"] = rec.get("late") or {}; late_flow(browser, origin, a.out, rec["late"], {"width": a.viewport_width, "height": a.viewport_height}); step("late flow done")
                         rec["sqliteAfterLate"] = dump(data)
                         require(rec["sqliteAfterLate"] == rec["sqliteBefore"], "SQLite changed after the late-response sequence")
                     with service(a.host_python, script, work, assets, data, env, a.out / "service-reopened.log") as origin:
