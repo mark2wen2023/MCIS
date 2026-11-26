@@ -139,53 +139,15 @@ def app_ui(browser, origin, evidence, reopened, workflow_only=False):
             if request.method == "POST" and request.url.endswith("/systemic/bowtie:preview"):
                 print(f"W15 BROWSER t={time.monotonic():.6f} preview {event} status={status}",
                       file=sys.stderr, flush=True)
-        def source_case(url):
-            path=urlsplit(url).path
-            if not path.endswith("/systemic/bowtie:sources"):
-                return None
-            parts=path.split("/")
-            if len(parts)>=6 and parts[1:4]==["api","v1","cases"]:
-                case=parts[4]
-                return case if case in (CASE_A, CASE_B) else "other"
-            return "other"
-        def source_net(event, request, status="-", failure="-"):
-            if request.method != "GET":
-                return
-            case=source_case(request.url)
-            if case is None:
-                return
-            print(f"W15 SOURCE t={time.monotonic():.6f} case={case} event={event} "
-                  f"status={status} failure={failure}", file=sys.stderr, flush=True)
-        def failed(request):
-            net("requestfailed", request)
-            source_net("requestfailed", request, failure=request.failure or "-")
-        page.on("request", lambda req: (net("request", req), source_net("request", req)))
-        page.on("response", lambda res: (net("response", res.request, res.status),
-                                         source_net("response", res.request, res.status)))
-        page.on("requestfinished", lambda req: (net("requestfinished", req),
-                                                source_net("requestfinished", req)))
-        page.on("requestfailed", failed)
+        page.on("request", lambda req: net("request", req))
+        page.on("response", lambda res: net("response", res.request, res.status))
+        page.on("requestfinished", lambda req: net("requestfinished", req))
+        page.on("requestfailed", lambda req: net("requestfailed", req))
         page.on("pageerror",lambda _:page_errors.append("pageerror"))
         page.on("request",lambda q:previews.append(q.method) if q.url.endswith("bowtie:preview") else None)
-        def page_case_view(tag):
-            visible="-"
-            loc=page.locator("p").filter(has_text="当前案件：")
-            if loc.count():
-                found=re.search(r"当前案件：(SYN-W15-[AB])", loc.first.inner_text())
-                visible=found.group(1) if found else "unparsed"
-            fragment=page.evaluate("() => location.hash") or ""
-            found=re.search(r"[?&]case=(SYN-W15-[AB])(?:&|$)", fragment)
-            hash_case=found.group(1) if found else "unparsed"
-            loading=page.get_by_role("status").filter(has_text="正在读取本案允许的登记来源…").count()
-            panel=page.locator("#w153-draft-sources").count()
-            print(f"W15 PAGE t={time.monotonic():.6f} tag={tag} visibleCase={visible} "
-                  f"hashCase={hash_case} loadingStatus={loading} sourcesPanel={panel}",
-                  file=sys.stderr, flush=True)
-            return visible
         def show(case):
             page.goto(origin+f"/#/systemic?case={case}")
             expect(page.get_by_role("heading",name="系统性分析 · Bow-tie 假设草拟")).to_be_visible()
-            page_case_view(f"hash:{case}")
             panel=page.locator("#w153-draft-sources")
             other=CASE_B if case==CASE_A else CASE_A
             expect(panel).to_contain_text(TITLES[case])
@@ -194,24 +156,6 @@ def app_ui(browser, origin, evidence, reopened, workflow_only=False):
             expect(page.get_by_label("危险源（背景条件，不等于事故结果）",exact=True)).to_have_value("")
             expect(page.locator(".w153-result")).to_have_count(0)
             return panel
-        def visible_entry(case):
-            print(f"W15 SWITCH t={time.monotonic():.6f} begin visible-entry case={case}",
-                  file=sys.stderr, flush=True)
-            page.get_by_role("link",name="返回案件大厅").click()
-            expect(page.get_by_role("heading",name="案件大厅")).to_be_visible()
-            page.get_by_role("link",name=f"进入案件：{case}").click()
-            page.get_by_role("link",name=re.compile(r"^14 系统性分析")).click()
-            expect(page.get_by_role("heading",name="系统性分析 · Bow-tie 假设草拟")).to_be_visible()
-            page_case_view(f"visible-entry:{case}")
-            appeared=False
-            try:
-                page.locator("#w153-draft-sources").wait_for(state="visible",timeout=5000)
-                appeared=True
-            except Exception:
-                appeared=False
-            print(f"W15 SWITCH t={time.monotonic():.6f} visible-entry sourcesPanel={int(appeared)}",
-                  file=sys.stderr, flush=True)
-            page_case_view(f"visible-entry-wait:{case}")
         panel=show(CASE_A)
         if reopened:
             page.screenshot(path=str(evidence/"03-restart-390.png"),full_page=True)
@@ -234,18 +178,10 @@ def app_ui(browser, origin, evidence, reopened, workflow_only=False):
             expect(page.locator(".w153-result")).to_have_count(0)
             expect(page.get_by_text("定位草稿端点",exact=False)).to_have_count(0)
             page.screenshot(path=str(evidence/"01-core-unavailable-1440.png"),full_page=True)
-            try:
-                show(CASE_B)
-                page.screenshot(path=str(evidence/"02-case-switch-1440.png"),full_page=True)
-                show(CASE_A)
-                assert previews==["POST"]
-            except Exception:
-                try:
-                    visible_entry(CASE_B)
-                except Exception as diag:
-                    print(f"W15 SWITCH t={time.monotonic():.6f} visible-entry-error type={type(diag).__name__}",
-                          file=sys.stderr, flush=True)
-                raise
+            show(CASE_B)
+            page.screenshot(path=str(evidence/"02-case-switch-1440.png"),full_page=True)
+            show(CASE_A)
+            assert previews==["POST"]
         assert not blocked and not page_errors
     finally:
         context.close()

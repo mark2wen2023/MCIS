@@ -28,48 +28,26 @@ class ObservePreview:
         self.application = application
 
     async def __call__(self, scope, receive, send):
-        path = scope.get("path", "")
-        method = scope.get("method", "")
-        kind = None
-        case = "-"
-        if scope["type"] == "http" and method == "POST" and path.endswith("/systemic/bowtie:preview"):
-            kind = "preview"
-        elif scope["type"] == "http" and method == "GET" and path.endswith("/systemic/bowtie:sources"):
-            kind = "sources"
-            parts = path.split("/")
-            if len(parts) >= 6 and parts[1:4] == ["api", "v1", "cases"]:
-                case = parts[4] if parts[4] in ("SYN-W15-A", "SYN-W15-B") else "other"
-        if kind is None:
+        if (scope["type"] != "http" or scope["method"] != "POST"
+                or not scope["path"].endswith("/systemic/bowtie:preview")):
             return await self.application(scope, receive, send)
         digest = hashlib.sha256()
         count = 0
-        if kind == "preview":
-            print(f"W15 HOST t={time.monotonic():.6f} preview request", file=sys.stderr, flush=True)
-        else:
-            print(f"W15 HOST t={time.monotonic():.6f} sources case={case} request",
-                  file=sys.stderr, flush=True)
+        print(f"W15 HOST t={time.monotonic():.6f} preview request", file=sys.stderr, flush=True)
 
         async def observe(message):
             nonlocal count
             await send(message)
             if message["type"] == "http.response.start":
-                if kind == "preview":
-                    print(f"W15 HOST t={time.monotonic():.6f} preview sent_headers status={message['status']}",
-                          file=sys.stderr, flush=True)
-                else:
-                    print(f"W15 HOST t={time.monotonic():.6f} sources case={case} "
-                          f"sent_headers status={message['status']}", file=sys.stderr, flush=True)
+                print(f"W15 HOST t={time.monotonic():.6f} preview sent_headers status={message['status']}",
+                      file=sys.stderr, flush=True)
             elif message["type"] == "http.response.body":
                 body = message.get("body", b"")
                 digest.update(body)
                 count += len(body)
                 if not message.get("more_body", False):
-                    if kind == "preview":
-                        print(f"W15 HOST t={time.monotonic():.6f} preview sent_final bytes={count} "
-                              f"sha256={digest.hexdigest()}", file=sys.stderr, flush=True)
-                    else:
-                        print(f"W15 HOST t={time.monotonic():.6f} sources case={case} "
-                              f"sent_final bytes={count}", file=sys.stderr, flush=True)
+                    print(f"W15 HOST t={time.monotonic():.6f} preview sent_final bytes={count} "
+                          f"sha256={digest.hexdigest()}", file=sys.stderr, flush=True)
         await self.application(scope, receive, observe)
 
 with socket.socket() as sock:
