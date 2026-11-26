@@ -1,0 +1,596 @@
+W15 TRACE +0.050s main:187 call
+W15 TRACE +0.050s main:188 line
+W15 TRACE +0.050s main:189 line
+W15 TRACE +0.050s main:190 line
+W15 TRACE +0.050s main:191 line
+W15 TRACE +0.050s main:192 line
+W15 TRACE +0.050s main:193 line
+W15 TRACE +0.050s main:194 line
+W15 TRACE +0.050s main:195 line
+W15 TRACE +0.050s main:196 line
+W15 TRACE +0.051s main:197 line
+W15 TRACE +0.051s main:198 line
+W15 TRACE +0.051s main:199 line
+W15 TRACE +0.051s main:200 line
+W15 TRACE +0.051s main:202 line
+W15 TRACE +0.051s main:203 line
+W15 TRACE +0.051s main:204 line
+W15 TRACE +0.051s main:205 line
+W15 TRACE +0.051s main:206 line
+W15 TRACE +0.051s main:207 line
+W15 TRACE +0.052s main:208 line
+W15 TRACE +0.052s main:209 line
+W15 TRACE +0.526s main:210 line
+W15 TRACE +0.526s main:211 line
+W15 TRACE +0.526s main:212 line
+W15 TRACE +0.526s main:213 line
+W15 TRACE +0.526s main:227 line
+W15 TRACE +0.526s main:228 line
+W15 TRACE +0.526s main:229 line
+W15 TRACE +0.526s main:230 line
+W15 TRACE +0.526s main:229 line
+W15 TRACE +0.561s main:230 line
+W15 TRACE +0.561s main:229 line
+W15 TRACE +0.561s main:234 line
+W15 TRACE +0.684s main:235 line
+W15 TRACE +1.102s main:236 line
+W15 TRACE +1.102s main:237 line
+W15 TRACE +1.102s main:236 line
+W15 TRACE +4.396s main:238 line
+W15 TRACE +4.396s main:239 line
+W15 TRACE +4.396s host:73 call
+W15 TRACE +4.396s host:75 line
+W15 TRACE +4.396s host:76 line
+W15 TRACE +4.396s host:77 line
+W15 TRACE +4.396s host:78 line
+W15 TRACE +4.396s host:76 line
+W15 TRACE +4.397s host:79 line
+W15 TRACE +4.397s host:80 line
+W15 TRACE +5.423s host:81 line
+W15 TRACE +5.424s host:82 line
+W15 TRACE +5.424s host:83 line
+W15 TRACE +5.424s host:84 line
+W15 TRACE +5.424s host:85 line
+W15 TRACE +5.491s host:86 line
+W15 TRACE +5.491s host:90 line
+W15 TRACE +5.491s host:90 return
+W15 TRACE +5.491s main:240 line
+W15 TRACE +5.491s setup:99 call
+W15 TRACE +5.491s setup:100 line
+W15 TRACE +5.491s setup:101 line
+W15 TRACE +5.491s setup:102 line
+W15 TRACE +5.491s setup:103 line
+W15 TRACE +5.491s setup:101 line
+W15 TRACE +5.519s setup:104 line
+W15 TRACE +5.519s setup:105 line
+W15 TRACE +5.519s setup:106 line
+W15 TRACE +5.519s setup:107 line
+W15 TRACE +5.519s setup:105 line
+W15 TRACE +5.519s setup:104 line
+W15 TRACE +5.541s setup:108 line
+W15 TRACE +5.541s setup:100 line
+W15 TRACE +5.541s setup:101 line
+W15 TRACE +5.541s setup:102 line
+W15 TRACE +5.541s setup:103 line
+W15 TRACE +5.541s setup:101 line
+W15 TRACE +5.545s setup:104 line
+W15 TRACE +5.545s setup:105 line
+W15 TRACE +5.545s setup:106 line
+W15 TRACE +5.545s setup:107 line
+W15 TRACE +5.545s setup:105 line
+W15 TRACE +5.545s setup:104 line
+W15 TRACE +5.551s setup:108 line
+W15 TRACE +5.551s setup:100 line
+W15 TRACE +5.551s setup:100 return
+W15 TRACE +5.551s main:241 line
+W15 TRACE +5.551s dump:115 call
+W15 TRACE +5.551s dump:116 line
+W15 TRACE +5.551s dump:117 line
+W15 TRACE +5.555s dump:116 line
+W15 TRACE +5.555s dump:116 return
+W15 TRACE +5.555s main:242 line
+W15 TRACE +5.555s app_ui:119 call
+W15 TRACE +5.555s app_ui:120 line
+W15 TRACE +5.555s app_ui:121 line
+W15 TRACE +5.555s app_ui:122 line
+W15 TRACE +5.555s app_ui:121 line
+W15 TRACE +5.567s app_ui:123 line
+W15 TRACE +5.567s app_ui:124 line
+W15 TRACE +5.567s app_ui:130 line
+W15 TRACE +5.568s app_ui:131 line
+W15 TRACE +5.570s app_ui:132 line
+W15 TRACE +5.570s app_ui:134 line
+W15 TRACE +5.570s app_ui:135 line
+W15 TRACE +5.761s app_ui:137 line
+W15 TRACE +5.761s app_ui:141 line
+W15 TRACE +5.763s app_ui:142 line
+W15 TRACE +5.763s app_ui:143 line
+W15 TRACE +5.763s app_ui:144 line
+W15 TRACE +5.764s app_ui:145 line
+W15 TRACE +5.764s app_ui:146 line
+W15 TRACE +5.764s app_ui:147 line
+W15 TRACE +5.764s app_ui:158 line
+W15 TRACE +5.764s show:147 call
+W15 TRACE +5.764s show:148 line
+W15 TRACE +6.247s show:149 line
+W15 TRACE +6.405s show:150 line
+W15 TRACE +6.405s show:151 line
+W15 TRACE +6.405s show:152 line
+W15 TRACE +6.415s show:153 line
+W15 TRACE +6.432s show:154 line
+W15 TRACE +6.435s show:155 line
+W15 TRACE +6.438s show:156 line
+W15 TRACE +6.440s show:157 line
+W15 TRACE +6.440s show:157 return
+W15 TRACE +6.440s app_ui:159 line
+W15 TRACE +6.440s app_ui:163 line
+W15 TRACE +6.481s app_ui:164 line
+W15 TRACE +6.497s app_ui:165 line
+W15 TRACE +6.516s app_ui:166 line
+W15 TRACE +6.525s app_ui:167 line
+W15 TRACE +6.526s app_ui:168 line
+Error occurred in event listener
+Traceback (most recent call last):
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/out_of_process.py", line 52, in on_message
+    connection.dispatch(message)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/connection.py", line 379, in dispatch
+    EventGreenlet(channel._call_handler).switch(method, listener, (params,))
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 92, in _call_handler
+    self._handle_listener_error(type, error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 120, in _handle_listener_error
+    raise error
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 86, in _call_handler
+    promise = handler(*args)
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/protocol_channels.py", line 1613, in <lambda>
+    lambda event: handler(
+                  ~~~~~~~^
+        {"request": event["request"], "page": event.get("page")}
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ),
+    ^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/browser_context.py", line 249, in <lambda>
+    lambda event: self._on_request(
+                  ~~~~~~~~~~~~~~~~^
+        network.Request.from_(event["request"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        Page.from_nullable(event["page"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/browser_context.py", line 353, in _on_request
+    page.emit(Events.Page.Request, request)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 81, in emit
+    self._call_handler(type, listener, args)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 92, in _call_handler
+    self._handle_listener_error(type, error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 120, in _handle_listener_error
+    raise error
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 86, in _call_handler
+    promise = handler(*args)
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/_impl_to_api_mapping.py", line 141, in wrapper_func
+    return handler(
+        *list(map(lambda a: self.from_maybe_impl(a), args))[:arg_count]
+    )
+  File "/workspace/mcis-w15-post-06de251/tests_acceptance/w15-source-chromium/run.py", line 141, in <lambda>
+    page.on("request", lambda req: net("request", req))
+                                   ~~~^^^^^^^^^^^^^^^^
+  File "/workspace/mcis-w15-post-06de251/tests_acceptance/w15-source-chromium/run.py", line 140, in net
+    file=sys.stderr, flush=True)
+         ^^^
+NameError: name 'sys' is not defined. Did you forget to import 'sys'?
+Error occurred in event listener
+Traceback (most recent call last):
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 111, in on_done
+    self._handle_listener_error(type, e)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 120, in _handle_listener_error
+    raise error
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/browser_context.py", line 406, in _on_route
+    handled = await route_handler.handle(route)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 1273, in handle
+    return await self._saved_zone.run_async(lambda: self._handle_impl(route))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+    return await func()
+           ^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 1294, in _handle_impl
+    raise e
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 1279, in _handle_impl
+    return await self._handle_internal(route)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 1330, in _handle_internal
+    result = await run_in_greenlet(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        RouteGreenlet, lambda: handler(route, route.request)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/_greenlets.py", line 82, in body
+    future.set_result(func())
+                      ~~~~^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 1331, in <lambda>
+    RouteGreenlet, lambda: handler(route, route.request)
+                           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/_impl_to_api_mapping.py", line 141, in wrapper_func
+    return handler(
+        *list(map(lambda a: self.from_maybe_impl(a), args))[:arg_count]
+    )
+  File "/workspace/mcis-w15-post-06de251/tests_acceptance/w15-source-chromium/run.py", line 126, in route
+    req.continue_()
+    ~~~~~~~~~~~~~^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/sync_api/_generated.py", line 22519, in continue_
+    self._sync(
+    ~~~~~~~~~~^
+        self._impl_obj.continue_(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        )
+        ^
+    )
+    ^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+    return task.result()
+           ~~~~~~~~~~~^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 648, in continue_
+    await self._handle_route(callback)
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 556, in _handle_route
+    raise e
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 552, in _handle_route
+    await callback()
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 646, in callback
+    await self._inner_continue(False)  # isFallback
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 661, in _inner_continue
+    return await self._race_with_target_close(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<18 lines>...
+    )
+    ^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 460, in _race_with_target_close
+    return await self.request._target_closed_scope().safe_race(promise)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/isomorphic/manual_promise.py", line 107, in safe_race
+    return await self._race([promise], True, default_value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/isomorphic/manual_promise.py", line 136, in _race
+    return await race([terminated_task, *promises])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/utils/tasks.py", line 131, in race
+    return winner.result()
+           ~~~~~~~~~~~~~^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/channel_owner.py", line 159, in _call
+    result = owner._wrap_api_call(func, ApiCallOptions(internal=is_internal))
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/channel_owner.py", line 348, in _wrap_api_call
+    awaitable = zone.run(lambda: func(api_zone))
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/utils/zones.py", line 49, in run
+    return func()
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/channel_owner.py", line 348, in <lambda>
+    awaitable = zone.run(lambda: func(api_zone))
+                                 ~~~~^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/channel_owner.py", line 142, in func
+    return owner._connection.send_message_to_server(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        owner,
+        ^^^^^^
+    ...<2 lines>...
+        {**api_zone.options(), "timeout": timeout},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/connection.py", line 223, in send_message_to_server
+    raise error
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/out_of_process.py", line 52, in on_message
+    connection.dispatch(message)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/connection.py", line 379, in dispatch
+    EventGreenlet(channel._call_handler).switch(method, listener, (params,))
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 92, in _call_handler
+    self._handle_listener_error(type, error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 120, in _handle_listener_error
+    raise error
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 86, in _call_handler
+    promise = handler(*args)
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/protocol_channels.py", line 1613, in <lambda>
+    lambda event: handler(
+                  ~~~~~~~^
+        {"request": event["request"], "page": event.get("page")}
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ),
+    ^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/browser_context.py", line 249, in <lambda>
+    lambda event: self._on_request(
+                  ~~~~~~~~~~~~~~~~^
+        network.Request.from_(event["request"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        Page.from_nullable(event["page"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/browser_context.py", line 353, in _on_request
+    page.emit(Events.Page.Request, request)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 81, in emit
+    self._call_handler(type, listener, args)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 92, in _call_handler
+    self._handle_listener_error(type, error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 120, in _handle_listener_error
+    raise error
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 86, in _call_handler
+    promise = handler(*args)
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/_impl_to_api_mapping.py", line 141, in wrapper_func
+    return handler(
+        *list(map(lambda a: self.from_maybe_impl(a), args))[:arg_count]
+    )
+  File "/workspace/mcis-w15-post-06de251/tests_acceptance/w15-source-chromium/run.py", line 141, in <lambda>
+    page.on("request", lambda req: net("request", req))
+                                   ~~~^^^^^^^^^^^^^^^^
+  File "/workspace/mcis-w15-post-06de251/tests_acceptance/w15-source-chromium/run.py", line 140, in net
+    file=sys.stderr, flush=True)
+         ^^^
+NameError: name 'sys' is not defined. Did you forget to import 'sys'?
+W15 TRACE +6.605s app_ui:167 line
+W15 TRACE +36.535s app_ui:167 exception
+W15 TRACE +36.535s app_ui:185 line
+W15 TRACE +36.535s app_ui:185 exception
+W15 TRACE +36.535s app_ui:185 return
+W15 TRACE +36.535s main:242 exception
+W15 TRACE +36.535s main:239 line
+W15 TRACE +36.535s host:90 call
+W15 TRACE +36.535s host:90 exception
+W15 TRACE +36.535s host:92 line
+W15 TRACE +36.535s host:93 line
+W15 TRACE +36.750s host:97 line
+W15 TRACE +36.750s host:75 line
+W15 TRACE +36.750s host:97 return
+W15 TRACE +36.750s main:247 line
+W15 TRACE +36.954s main:235 line
+W15 TRACE +36.971s main:207 line
+W15 TRACE +36.999s main:254 line
+W15 TRACE +36.999s main:255 line
+W15 TRACE +36.999s main:255 return
+Traceback (most recent call last):
+  File "/workspace/mcis-w15-post-06de251/tests_acceptance/w15-source-chromium/run.py", line 167, in app_ui
+    with page.expect_response(lambda r:r.url.endswith("/systemic/bowtie:preview") and r.request.method=="POST") as matched:
+         ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/_sync_base.py", line 89, in __exit__
+    self._event.value
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/_sync_base.py", line 54, in value
+    raise exception
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/channel_owner.py", line 387, in finish
+    raise e from None
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/channel_owner.py", line 352, in finish
+    result = await zone.run_async(lambda: awaitable)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+    return await func()
+           ^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/page.py", line 817, in result
+    result = await wait
+             ^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/waiter.py", line 201, in wait_for_promise
+    raise rewrite_error_message(
+        e, str(e) + format_log_recording(self._logs)
+    ) from None
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/waiter.py", line 184, in wait_for_promise
+    result = await race([promise, *self._failures])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/utils/tasks.py", line 131, in race
+    return winner.result()
+           ~~~~~~~~~~~~~^^
+playwright._impl._errors.TimeoutError: Page.expect_response: Timeout 30000ms exceeded while waiting for event "response"
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/mcis-w15-post-06de251/tests_acceptance/w15-source-chromium/diagnose.py", line 44, in <module>
+    observe(Path(__file__).resolve().with_name("run.py"))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/mcis-w15-post-06de251/tests_acceptance/w15-source-chromium/diagnose.py", line 37, in observe
+    runpy.run_path(fixed_name, run_name="__main__")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/mcis-w15-post-06de251/tests_acceptance/w15-source-chromium/run.py", line 258, in <module>
+    main()
+    ~~~~^^
+  File "/workspace/mcis-w15-post-06de251/tests_acceptance/w15-source-chromium/run.py", line 242, in main
+    app_ui(browser,origin,arg.evidence,False)
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/mcis-w15-post-06de251/tests_acceptance/w15-source-chromium/run.py", line 185, in app_ui
+    context.close()
+    ~~~~~~~~~~~~~^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/sync_api/_generated.py", line 2207, in close
+    self._sync(self._impl_obj.close(reason=reason))
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+    return task.result()
+           ~~~~~~~~~~~^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/browser_context.py", line 810, in close
+    await self.request.dispose(reason=reason)
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/fetch.py", line 237, in dispose
+    raise e
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/fetch.py", line 233, in dispose
+    await self._channel.dispose(reason=reason, timeout=NO_TIMEOUT)
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/channel_owner.py", line 159, in _call
+    result = owner._wrap_api_call(func, ApiCallOptions(internal=is_internal))
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/channel_owner.py", line 348, in _wrap_api_call
+    awaitable = zone.run(lambda: func(api_zone))
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/utils/zones.py", line 49, in run
+    return func()
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/channel_owner.py", line 348, in <lambda>
+    awaitable = zone.run(lambda: func(api_zone))
+                                 ~~~~^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/channel_owner.py", line 150, in func
+    return owner._connection.send_message_to_server(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        owner, method, validated_params, {"internal": True, "timeout": timeout}
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/connection.py", line 223, in send_message_to_server
+    raise error
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 111, in on_done
+    self._handle_listener_error(type, e)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 120, in _handle_listener_error
+    raise error
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/browser_context.py", line 406, in _on_route
+    handled = await route_handler.handle(route)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 1273, in handle
+    return await self._saved_zone.run_async(lambda: self._handle_impl(route))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/utils/zones.py", line 58, in run_async
+    return await func()
+           ^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 1294, in _handle_impl
+    raise e
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 1279, in _handle_impl
+    return await self._handle_internal(route)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 1330, in _handle_internal
+    result = await run_in_greenlet(
+             ^^^^^^^^^^^^^^^^^^^^^^
+        RouteGreenlet, lambda: handler(route, route.request)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/_greenlets.py", line 82, in body
+    future.set_result(func())
+                      ~~~~^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 1331, in <lambda>
+    RouteGreenlet, lambda: handler(route, route.request)
+                           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/_impl_to_api_mapping.py", line 141, in wrapper_func
+    return handler(
+        *list(map(lambda a: self.from_maybe_impl(a), args))[:arg_count]
+    )
+  File "/workspace/mcis-w15-post-06de251/tests_acceptance/w15-source-chromium/run.py", line 126, in route
+    req.continue_()
+    ~~~~~~~~~~~~~^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/sync_api/_generated.py", line 22519, in continue_
+    self._sync(
+    ~~~~~~~~~~^
+        self._impl_obj.continue_(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        )
+        ^
+    )
+    ^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/_sync_base.py", line 124, in _sync
+    return task.result()
+           ~~~~~~~~~~~^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 648, in continue_
+    await self._handle_route(callback)
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 556, in _handle_route
+    raise e
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 552, in _handle_route
+    await callback()
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 646, in callback
+    await self._inner_continue(False)  # isFallback
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 661, in _inner_continue
+    return await self._race_with_target_close(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<18 lines>...
+    )
+    ^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/network.py", line 460, in _race_with_target_close
+    return await self.request._target_closed_scope().safe_race(promise)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/isomorphic/manual_promise.py", line 107, in safe_race
+    return await self._race([promise], True, default_value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/isomorphic/manual_promise.py", line 136, in _race
+    return await race([terminated_task, *promises])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/utils/tasks.py", line 131, in race
+    return winner.result()
+           ~~~~~~~~~~~~~^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/channel_owner.py", line 159, in _call
+    result = owner._wrap_api_call(func, ApiCallOptions(internal=is_internal))
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/channel_owner.py", line 348, in _wrap_api_call
+    awaitable = zone.run(lambda: func(api_zone))
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/utils/zones.py", line 49, in run
+    return func()
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/channel_owner.py", line 348, in <lambda>
+    awaitable = zone.run(lambda: func(api_zone))
+                                 ~~~~^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/channel_owner.py", line 142, in func
+    return owner._connection.send_message_to_server(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        owner,
+        ^^^^^^
+    ...<2 lines>...
+        {**api_zone.options(), "timeout": timeout},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/connection.py", line 223, in send_message_to_server
+    raise error
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/out_of_process.py", line 52, in on_message
+    connection.dispatch(message)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/connection.py", line 379, in dispatch
+    EventGreenlet(channel._call_handler).switch(method, listener, (params,))
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 92, in _call_handler
+    self._handle_listener_error(type, error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 120, in _handle_listener_error
+    raise error
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 86, in _call_handler
+    promise = handler(*args)
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/protocol_channels.py", line 1613, in <lambda>
+    lambda event: handler(
+                  ~~~~~~~^
+        {"request": event["request"], "page": event.get("page")}
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ),
+    ^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/browser_context.py", line 249, in <lambda>
+    lambda event: self._on_request(
+                  ~~~~~~~~~~~~~~~~^
+        network.Request.from_(event["request"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        Page.from_nullable(event["page"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/browser_context.py", line 353, in _on_request
+    page.emit(Events.Page.Request, request)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 81, in emit
+    self._call_handler(type, listener, args)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 92, in _call_handler
+    self._handle_listener_error(type, error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 120, in _handle_listener_error
+    raise error
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/event_emitter.py", line 86, in _call_handler
+    promise = handler(*args)
+  File "/workspace/w17-pyplaywright-venv/lib/python3.13/site-packages/playwright/_impl/_impl_to_api_mapping.py", line 141, in wrapper_func
+    return handler(
+        *list(map(lambda a: self.from_maybe_impl(a), args))[:arg_count]
+    )
+  File "/workspace/mcis-w15-post-06de251/tests_acceptance/w15-source-chromium/run.py", line 141, in <lambda>
+    page.on("request", lambda req: net("request", req))
+                                   ~~~^^^^^^^^^^^^^^^^
+  File "/workspace/mcis-w15-post-06de251/tests_acceptance/w15-source-chromium/run.py", line 140, in net
+    file=sys.stderr, flush=True)
+         ^^^
+NameError: name 'sys' is not defined. Did you forget to import 'sys'?

@@ -1,0 +1,32 @@
+W15 same-POST two-sided comparison (diagnostic only)
+acceptance=06de2510cfacdc938aeb05e7ef2bc85d6a5d68ce
+official diagnose exit=1
+receipt.passed=false receipt.browserVerified=false
+screenshots=none
+
+== browser side (stderr W15 BROWSER / listener errors) ==
+W15 BROWSER printed lines: 0
+requestfinished token in stderr: False
+requestfailed token in stderr: False
+event-listener errors: 2
+NameError sys.stderr: 3
+All event-listener failures were in net() via page.on("request") for preview POST.
+No net() calls from response / requestfinished / requestfailed were observed
+(those would also NameError if they had entered net() for this POST).
+page.expect_response timed out at 30000ms (TRACE app_ui:167 exception at +36.535s).
+Click at app_ui:168 occurred at +6.526s; first request listener NameError immediately after.
+
+== host side (host-first.log) ==
+host-first.log bytes=0
+W15 HOST lines in host-first.log: 0
+W15 HOST lines in stderr: 0
+No preview request / sent_headers status=503 / sent_final bytes / sha256 recorded.
+host-reopened.log was not created (second host not started).
+
+== comparison ==
+Cannot match host bytes/fingerprint to a browser body: host produced no final send record,
+and the browser never logged requestfinished or requestfailed for the preview POST.
+A preview POST request event did fire in the browser (net() entered) but logging crashed
+because 06de251 run.py net() writes to sys.stderr without importing sys.
+Whether the POST reached ASGI is unverified (未验). No second preview was sent by the runner.
+This does not overwrite prior blocker receipts and is not overall acceptance.

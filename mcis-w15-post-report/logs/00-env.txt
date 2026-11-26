@@ -1,0 +1,9 @@
+2026-11-26 08:20:21 CST
+diagnosis=06de2510cfacdc938aeb05e7ef2bc85d6a5d68ce
+python=/workspace/w17-pyplaywright-venv/bin/python
+playwright 1.65.2
+host-python=/workspace/mcis-w17-871db66/service/.venv/bin/python
+chrome=Google Chrome 156.0.8078.47 
+outer_watchdog=timeout --signal=TERM --kill-after=10s 150s
+faulthandler=45s via diagnose.py (no hand signals)
+one_post_only=yes
