@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "frame": {
+      "type": "object",
+      "properties": {
+        "axes": {
+          "const": "x-forward,y-port,z-up"
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "axes",
+        "source"
+      ],
+      "additionalProperties": false
+    },
+    "symmetric": {
+      "type": "boolean"
+    },
+    "table": {
+      "type": "object",
+      "properties": {
+        "row_labels": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "column_labels": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "layout": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plane_z": {
+          "type": "number"
+        },
+        "tolerance": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "station_axis": {
+          "enum": [
+            "row",
+            "column"
+          ]
+        },
+        "stations_m_by_label": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          },
+          "minProperties": 2
+        },
+        "heights_m_by_label": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          },
+          "minProperties": 2
+        },
+        "unit": {
+          "enum": [
+            "m",
+            "mm"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "row_labels",
+        "column_labels",
+        "tolerance",
+        "station_axis",
+        "stations_m_by_label",
+        "heights_m_by_label",
+        "unit",
+        "source"
+      ],
+      "additionalProperties": false
+    },
+    "curves": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "handle": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "enum": [
+              "section",
+              "waterline",
+              "buttock"
+            ]
+          },
+          "use": {
+            "enum": [
+              "constraint",
+              "holdout"
+            ]
+          },
+          "matrix": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          "fold_halfbreadth": {
+            "type": "boolean"
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "handle",
+          "kind",
+          "use",
+          "matrix",
+          "fold_halfbreadth",
+          "source"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "matrix": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          "role": {
+            "enum": [
+              "deck",
+              "bulkhead",
+              "frame",
+              "longitudinal",
+              "plate",
+              "tank",
+              "compartment"
+            ]
+          },
+          "layer": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "source_sha256",
+          "matrix",
+          "role",
+          "layer",
+          "source"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "subdivisions": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "close_table_domain": {
+      "type": "boolean"
+    },
+    "boundary_source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "drafts_m": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    }
+  },
+  "required": [
+    "source_sha256",
+    "frame",
+    "symmetric",
+    "table"
+  ],
+  "additionalProperties": false
+}

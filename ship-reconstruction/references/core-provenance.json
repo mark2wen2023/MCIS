@@ -1,0 +1,38 @@
+[
+  {
+    "file": "drawing_parser.py",
+    "sha256": "47139adee2f606d744b4994d38712485714753d6e3823fac606fd696d396a56a",
+    "commit": "a83f24f3334f8fbba6f7ecbd4353921b34df510d",
+    "source": "service/mcis_service/agents/skills/ship_reconstruction/drawing_parser.py"
+  },
+  {
+    "file": "oriented_offsets.py",
+    "sha256": "a37ffec0153f15919c7d705db27b5da7fc0ab38afa71140f0d9aca92127d7886",
+    "commit": "a83f24f3334f8fbba6f7ecbd4353921b34df510d",
+    "source": "service/mcis_service/agents/skills/ship_reconstruction/oriented_offsets.py"
+  },
+  {
+    "file": "oriented_table.py",
+    "sha256": "28f4c0150129bf7540b03335b4ab91d584f9bba000efdab28dacb8ecacaaa32c",
+    "commit": "a83f24f3334f8fbba6f7ecbd4353921b34df510d",
+    "source": "service/mcis_service/agents/skills/ship_reconstruction/oriented_table.py"
+  },
+  {
+    "file": "offset_semantics.py",
+    "sha256": "4a50d90054f18364dda71fe1ec33547da1bfba04905a54a3f76c44961ab98242",
+    "commit": "a83f24f3334f8fbba6f7ecbd4353921b34df510d",
+    "source": "service/mcis_service/agents/skills/ship_reconstruction/offset_semantics.py"
+  },
+  {
+    "file": "offset_validation.py",
+    "sha256": "733431757633712a00d155de3b243f6234c6218a2303707ff43157a3145e1c30",
+    "commit": "a83f24f3334f8fbba6f7ecbd4353921b34df510d",
+    "source": "service/mcis_service/agents/skills/ship_reconstruction/offset_validation.py"
+  },
+  {
+    "file": "mesh_validation.py",
+    "sha256": "570285c3eecd6677f9eda218287279db95848ada5a727438b3788e1468f6222d",
+    "commit": "a83f24f3334f8fbba6f7ecbd4353921b34df510d",
+    "source": "service/mcis_service/agents/skills/ship_reconstruction/mesh_validation.py"
+  }
+]
