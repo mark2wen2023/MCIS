@@ -1,0 +1,20 @@
+commit 912d96a39f1a68e98008a7317a211f5e29ed3845
+Author:     mark2wen2023 <mark2wen2023@users.noreply.github.com>
+AuthorDate: Thu Nov 26 16:50:55 2026 +0800
+Commit:     mark2wen2023 <mark2wen2023@users.noreply.github.com>
+CommitDate: Thu Nov 26 16:50:55 2026 +0800
+
+    fix(w15): contain the systemic page at 390 without hiding chrome
+    
+    A 390 viewport was still 873px wide because the 224px sidebar sat beside
+    a 1fr column whose automatic minimum followed the nowrap topbar. Scope
+    the change to the W15 page: minmax(0, 1fr), wrap the topbar, stack the
+    sidebar, and keep diagram panning in its own scroller. Navigation, case
+    id and role stay visible and focusable. Not a merge to main.
+
+ tests_acceptance/w15-source-chromium/DIAGNOSIS.md |  6 ++++
+ tests_acceptance/w15-source-chromium/diagnose.py  |  2 +-
+ tests_acceptance/w15-source-chromium/pins.json    |  2 +-
+ tests_acceptance/w15-source-chromium/run.py       | 39 +++++++++++++++++++++++
+ web/src/styles/w15-bowtie.css                     | 21 ++++++++++++
+ 5 files changed, 68 insertions(+), 2 deletions(-)

@@ -1,0 +1,79 @@
+{
+  "viewportInnerWidth": 1440,
+  "viewportInnerHeight": 900,
+  "sidebar": {
+    "name": "sidebar",
+    "present": true,
+    "clientWidth": 223,
+    "scrollWidth": 223,
+    "overflowX": "visible",
+    "minWidth": "auto",
+    "whiteSpace": "normal",
+    "gridTemplateColumns": "none",
+    "width": "224px"
+  },
+  "parts": [
+    {
+      "name": "document",
+      "present": true,
+      "clientWidth": 1440,
+      "scrollWidth": 1440,
+      "overflowX": "visible",
+      "minWidth": "0px",
+      "whiteSpace": "normal",
+      "gridTemplateColumns": "none",
+      "width": "1440px"
+    },
+    {
+      "name": "app",
+      "present": true,
+      "clientWidth": 1440,
+      "scrollWidth": 1440,
+      "overflowX": "visible",
+      "minWidth": "0px",
+      "whiteSpace": "normal",
+      "gridTemplateColumns": "224px 1216px",
+      "width": "1440px"
+    },
+    {
+      "name": "topbar",
+      "present": true,
+      "clientWidth": 1216,
+      "scrollWidth": 1216,
+      "overflowX": "visible",
+      "minWidth": "0px",
+      "whiteSpace": "normal",
+      "gridTemplateColumns": "none",
+      "width": "1216px"
+    },
+    {
+      "name": "main",
+      "present": true,
+      "clientWidth": 1216,
+      "scrollWidth": 1216,
+      "overflowX": "auto",
+      "minWidth": "0px",
+      "whiteSpace": "normal",
+      "gridTemplateColumns": "none",
+      "width": "1216px"
+    },
+    {
+      "name": "diagram",
+      "present": true,
+      "clientWidth": 1132,
+      "scrollWidth": 1132,
+      "overflowX": "auto",
+      "minWidth": "0px",
+      "whiteSpace": "normal",
+      "gridTemplateColumns": "none",
+      "width": "1132px"
+    }
+  ],
+  "firstOverflow": null,
+  "firstOverflowDelta": 0,
+  "tag": "after-1440",
+  "requestedViewport": {
+    "width": 1440,
+    "height": 900
+  }
+}

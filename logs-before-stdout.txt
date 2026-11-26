@@ -1,0 +1,170 @@
+W15 pinned 339 exact Git blobs at 2c72d022f3d3275af637b0cdc6e545735e3200a9
+Built exact product entry: 4601610 JS bytes
+[
+  {
+    "metrics": {
+      "viewportInnerWidth": 390,
+      "viewportInnerHeight": 844,
+      "sidebar": {
+        "name": "sidebar",
+        "present": true,
+        "clientWidth": 223,
+        "scrollWidth": 223,
+        "overflowX": "visible",
+        "minWidth": "auto",
+        "whiteSpace": "normal",
+        "gridTemplateColumns": "none",
+        "width": "224px"
+      },
+      "parts": [
+        {
+          "name": "document",
+          "present": true,
+          "clientWidth": 390,
+          "scrollWidth": 873,
+          "overflowX": "visible",
+          "minWidth": "0px",
+          "whiteSpace": "normal",
+          "gridTemplateColumns": "none",
+          "width": "390px"
+        },
+        {
+          "name": "app",
+          "present": true,
+          "clientWidth": 390,
+          "scrollWidth": 873,
+          "overflowX": "visible",
+          "minWidth": "0px",
+          "whiteSpace": "normal",
+          "gridTemplateColumns": "224px 648.891px",
+          "width": "390px"
+        },
+        {
+          "name": "topbar",
+          "present": true,
+          "clientWidth": 649,
+          "scrollWidth": 649,
+          "overflowX": "visible",
+          "minWidth": "auto",
+          "whiteSpace": "normal",
+          "gridTemplateColumns": "none",
+          "width": "648.891px"
+        },
+        {
+          "name": "main",
+          "present": true,
+          "clientWidth": 649,
+          "scrollWidth": 649,
+          "overflowX": "auto",
+          "minWidth": "0px",
+          "whiteSpace": "normal",
+          "gridTemplateColumns": "none",
+          "width": "648.891px"
+        },
+        {
+          "name": "diagram",
+          "present": true,
+          "clientWidth": 565,
+          "scrollWidth": 1100,
+          "overflowX": "auto",
+          "minWidth": "auto",
+          "whiteSpace": "normal",
+          "gridTemplateColumns": "none",
+          "width": "564.891px"
+        }
+      ],
+      "firstOverflow": "document",
+      "firstOverflowDelta": 483,
+      "tag": "before-390",
+      "requestedViewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    "viewportShot": "/workspace/mcis-w15-layout-report/before/before-390-viewport.png",
+    "fullpageShot": "/workspace/mcis-w15-layout-report/before/before-390-fullpage.png"
+  },
+  {
+    "metrics": {
+      "viewportInnerWidth": 1440,
+      "viewportInnerHeight": 900,
+      "sidebar": {
+        "name": "sidebar",
+        "present": true,
+        "clientWidth": 223,
+        "scrollWidth": 223,
+        "overflowX": "visible",
+        "minWidth": "auto",
+        "whiteSpace": "normal",
+        "gridTemplateColumns": "none",
+        "width": "224px"
+      },
+      "parts": [
+        {
+          "name": "document",
+          "present": true,
+          "clientWidth": 1440,
+          "scrollWidth": 1440,
+          "overflowX": "visible",
+          "minWidth": "0px",
+          "whiteSpace": "normal",
+          "gridTemplateColumns": "none",
+          "width": "1440px"
+        },
+        {
+          "name": "app",
+          "present": true,
+          "clientWidth": 1440,
+          "scrollWidth": 1440,
+          "overflowX": "visible",
+          "minWidth": "0px",
+          "whiteSpace": "normal",
+          "gridTemplateColumns": "224px 1216px",
+          "width": "1440px"
+        },
+        {
+          "name": "topbar",
+          "present": true,
+          "clientWidth": 1216,
+          "scrollWidth": 1216,
+          "overflowX": "visible",
+          "minWidth": "auto",
+          "whiteSpace": "normal",
+          "gridTemplateColumns": "none",
+          "width": "1216px"
+        },
+        {
+          "name": "main",
+          "present": true,
+          "clientWidth": 1216,
+          "scrollWidth": 1216,
+          "overflowX": "auto",
+          "minWidth": "0px",
+          "whiteSpace": "normal",
+          "gridTemplateColumns": "none",
+          "width": "1216px"
+        },
+        {
+          "name": "diagram",
+          "present": true,
+          "clientWidth": 1132,
+          "scrollWidth": 1132,
+          "overflowX": "auto",
+          "minWidth": "auto",
+          "whiteSpace": "normal",
+          "gridTemplateColumns": "none",
+          "width": "1132px"
+        }
+      ],
+      "firstOverflow": null,
+      "firstOverflowDelta": 0,
+      "tag": "before-1440",
+      "requestedViewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    "viewportShot": "/workspace/mcis-w15-layout-report/before/before-1440-viewport.png",
+    "fullpageShot": "/workspace/mcis-w15-layout-report/before/before-1440-fullpage.png"
+  }
+]

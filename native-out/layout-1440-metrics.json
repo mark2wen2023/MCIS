@@ -1,0 +1,42 @@
+{
+  "viewportInnerWidth": 1440,
+  "viewportInnerHeight": 900,
+  "parts": [
+    {
+      "name": "document",
+      "present": true,
+      "clientWidth": 1440,
+      "scrollWidth": 1440,
+      "overflowX": "visible"
+    },
+    {
+      "name": "app",
+      "present": true,
+      "clientWidth": 1440,
+      "scrollWidth": 1440,
+      "overflowX": "visible"
+    },
+    {
+      "name": "topbar",
+      "present": true,
+      "clientWidth": 1216,
+      "scrollWidth": 1216,
+      "overflowX": "visible"
+    },
+    {
+      "name": "main",
+      "present": true,
+      "clientWidth": 1216,
+      "scrollWidth": 1216,
+      "overflowX": "auto"
+    },
+    {
+      "name": "diagram",
+      "present": true,
+      "clientWidth": 1132,
+      "scrollWidth": 1132,
+      "overflowX": "auto"
+    }
+  ],
+  "pageOverflow": []
+}
