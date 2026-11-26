@@ -1,0 +1,4 @@
+2026-11-26 15:22:58 CST
+candidate=ad4e56e4e1169aa0505ca5310d3f979876cb1a97
+chrome=Google Chrome 156.0.8078.47 
+command=timeout --signal=TERM --kill-after=10s 150s diagnose.py --native-body
