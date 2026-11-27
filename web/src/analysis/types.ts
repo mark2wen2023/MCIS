@@ -4,11 +4,30 @@ export type RiskLevel = 'Safe' | 'Warning' | 'Danger'
 export interface CurvePoint {
   t: number
   clock: string
-  distanceNm: number
+  distanceNm: number | null
   dcpaNm: number | null
   tcpaMin: number | null
-  riskLevel: RiskLevel
+  riskLevel: RiskLevel | null
   isDiverging?: boolean
+}
+
+/** Explicit open missing interval supplied by a test assembly. The live analysis entry must not infer this. */
+export interface DeclaredOpenGap {
+  vesselId: string
+  startSec: number
+  endSec: number
+}
+
+export interface SpeedSample {
+  t: number
+  clock: string
+  speedKn: number | null
+}
+
+export interface VesselSpeedSeries {
+  vesselId: string
+  name?: string
+  points: SpeedSample[]
 }
 
 export interface KeyMoment {
@@ -115,6 +134,9 @@ export interface AnalysisCase {
   whatif: WhatIfBlock | null
   notes: string[]
   meta: AnalysisMeta
+  /** Test-assembly only. Absent on the live /analysis entry; never inferred from sample spacing. */
+  declaredOpenGaps?: DeclaredOpenGap[]
+  speedSeries?: VesselSpeedSeries[]
 }
 
 export interface AnalysisCaseListItem { caseId: string; key: string; title: string; isFictionalDemo: boolean; sourceLabel: string; hasWhatIf: boolean }

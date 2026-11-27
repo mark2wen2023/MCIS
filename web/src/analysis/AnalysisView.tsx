@@ -2,7 +2,7 @@
 import { useMemo, type KeyboardEvent } from 'react'
 import { EChart } from '../components/EChart'
 import { Panel } from '../components/Panel'
-import { BASELINE, curveOption, fmtM, fmtMoment, fmtNm, pickSeries, sensitivitySpan, shortSha, trackOption, vesselName, verdictTone } from './derive'
+import { BASELINE, curveOption, fmtM, fmtMoment, fmtNm, pickSeries, sensitivitySpan, shortSha, speedOption, trackOption, vesselName, verdictTone } from './derive'
 import type { AnalysisCase, AnalysisCaseListItem } from './types'
 
 export interface AnalysisViewProps {
@@ -35,6 +35,7 @@ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, se
   const curve = useMemo(() => curveOption(data, picked.series, picked.moments), [data, picked.series, picked.moments])
   const trackRow = picked.row ?? w?.rows.find((r) => r.id === 'S0') ?? null
   const track = useMemo(() => (trackRow ? trackOption(data, trackRow) : null), [data, trackRow])
+  const speed = useMemo(() => (data.speedSeries?.length ? speedOption(data) : null), [data])
   const badge = data.isFictionalDemo ? <span className="st st-warn">示例数据（虚构）</span> : <span className="st st-ok">真实案例 · 公开报告</span>
   const ant = w?.antennaSensitivity ?? null
   const antIds = w ? w.rows.map((r) => r.id) : []
@@ -75,7 +76,8 @@ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, se
               </span>
             ))}
           </div>
-          {charts ? <EChart option={curve} height={300} /> : <div className="an-chart-placeholder" data-points={picked.series.length} />}
+          {charts ? <EChart option={curve} height={300} testId="curve-chart" /> : <div className="an-chart-placeholder" data-points={picked.series.length} />}
+          {charts && speed ? <div data-testid="speed-panel"><EChart option={speed} height={190} testId="speed-chart" /><div className="p6-note">船速（kn）：只按该船已声明的开区间断段，不改写对照船。</div></div> : null}
           <div className="p6-note" data-testid="series-label"><b>{picked.label}</b>{sel === BASELINE ? '' : ` · ${w?.curveNote ?? ''}`}</div>
         </Panel>
 
@@ -90,7 +92,7 @@ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, se
               ))}
             </tbody>
           </table>
-          {trackRow && charts && track && <EChart option={track} height={190} />}
+          {trackRow && charts && track && <EChart option={track} height={190} testId="track-chart" />}
           {trackRow && <div className="p6-note">航迹图：W14 情景 {trackRow.id}（东/北 m，碰撞情景截至接触）</div>}
           {!w && <div className="p6-note" data-testid="no-whatif">{data.notes[0]}</div>}
         </Panel>

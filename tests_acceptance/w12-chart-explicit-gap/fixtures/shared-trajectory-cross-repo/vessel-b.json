@@ -1,0 +1,406 @@
+{
+  "format": "MCIS-SHARED-TRAJECTORY-1",
+  "caseId": "SYNTHETIC-CROSS-REPO-A",
+  "coordinateSystem": "WGS84-geographic",
+  "units": {
+    "position": "decimal-degrees",
+    "angles": "degrees-true-north-clockwise",
+    "speed": "knots",
+    "dimensions": "metres",
+    "time": "UTC-seconds"
+  },
+  "sources": [
+    {
+      "sourceId": "synthetic-input",
+      "type": "simulation",
+      "recordLocator": "handmade fixture points only; no external source",
+      "description": "Entirely synthetic; no vessels, people, AIS capture or incident"
+    }
+  ],
+  "vessel": {
+    "vesselId": "SYNTHETIC-VESSEL-B",
+    "identityStatus": "operator_asserted",
+    "identifiers": [
+      {
+        "scheme": "local",
+        "value": "SYNTHETIC-VESSEL-B",
+        "sourceIds": [
+          "synthetic-input"
+        ]
+      }
+    ],
+    "identityBasis": "Synthetic local identity, not authentication",
+    "lengthM": {
+      "value": 30.0,
+      "kind": "schematic",
+      "sourceIds": [
+        "synthetic-input"
+      ],
+      "basis": "Hand-constructed fixture only; no observation or inference"
+    },
+    "beamM": {
+      "value": 8.0,
+      "kind": "schematic",
+      "sourceIds": [
+        "synthetic-input"
+      ],
+      "basis": "Hand-constructed fixture only; no observation or inference"
+    }
+  },
+  "display": {
+    "scaleMultiplier": 1,
+    "purpose": "true_scale",
+    "note": "Synthetic dimensions only; missing heading forbids a claimed exact hull footprint"
+  },
+  "sampling": {
+    "expectedIntervalSeconds": 5,
+    "gapThresholdSeconds": 8,
+    "basis": "Handmade nominal five-second display grid with extra boundary observations; actual samples nonuniform; threshold not a maritime standard",
+    "missingIntervals": []
+  },
+  "points": [
+    {
+      "pointId": "SYNTHETIC-VESSEL-B-p0",
+      "time": {
+        "sourceRecordTime": "2026-02-01T11:59:58.000Z",
+        "sourceUtc": "2026-02-01T11:59:58.000Z",
+        "alignedUtc": "2026-02-01T12:00:00.000Z",
+        "status": "corrected",
+        "correctionSeconds": 2,
+        "basis": "Synthetic clock B is exactly 2 seconds slow; add +2 seconds; not measured calibration",
+        "sourceIds": [
+          "synthetic-input"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": 10.124456,
+          "lonDeg": 20.234567
+        },
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "headingDeg": {
+        "value": null,
+        "kind": "missing",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "courseDeg": {
+        "value": 90.25,
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "speedKn": {
+        "value": 5.5,
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      }
+    },
+    {
+      "pointId": "SYNTHETIC-VESSEL-B-p1",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:00:02.000Z",
+        "sourceUtc": "2026-02-01T12:00:02.000Z",
+        "alignedUtc": "2026-02-01T12:00:04.000Z",
+        "status": "corrected",
+        "correctionSeconds": 2,
+        "basis": "Synthetic clock B is exactly 2 seconds slow; add +2 seconds; not measured calibration",
+        "sourceIds": [
+          "synthetic-input"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": 10.124496,
+          "lonDeg": 20.234647
+        },
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "headingDeg": {
+        "value": null,
+        "kind": "missing",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "courseDeg": {
+        "value": 90.25,
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "speedKn": {
+        "value": 5.5,
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      }
+    },
+    {
+      "pointId": "SYNTHETIC-VESSEL-B-p2",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:00:04.000Z",
+        "sourceUtc": "2026-02-01T12:00:04.000Z",
+        "alignedUtc": "2026-02-01T12:00:06.000Z",
+        "status": "corrected",
+        "correctionSeconds": 2,
+        "basis": "Synthetic clock B is exactly 2 seconds slow; add +2 seconds; not measured calibration",
+        "sourceIds": [
+          "synthetic-input"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": 10.124516,
+          "lonDeg": 20.234687
+        },
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "headingDeg": {
+        "value": null,
+        "kind": "missing",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "courseDeg": {
+        "value": 90.25,
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "speedKn": {
+        "value": 5.5,
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      }
+    },
+    {
+      "pointId": "SYNTHETIC-VESSEL-B-p3",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:00:04.500Z",
+        "sourceUtc": "2026-02-01T12:00:04.500Z",
+        "alignedUtc": "2026-02-01T12:00:06.500Z",
+        "status": "corrected",
+        "correctionSeconds": 2,
+        "basis": "Synthetic clock B is exactly 2 seconds slow; add +2 seconds; not measured calibration",
+        "sourceIds": [
+          "synthetic-input"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": 10.124521,
+          "lonDeg": 20.234697
+        },
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "headingDeg": {
+        "value": null,
+        "kind": "missing",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "courseDeg": {
+        "value": 90.25,
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "speedKn": {
+        "value": 5.5,
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      }
+    },
+    {
+      "pointId": "SYNTHETIC-VESSEL-B-p4",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:00:05.000Z",
+        "sourceUtc": "2026-02-01T12:00:05.000Z",
+        "alignedUtc": "2026-02-01T12:00:07.000Z",
+        "status": "corrected",
+        "correctionSeconds": 2,
+        "basis": "Synthetic clock B is exactly 2 seconds slow; add +2 seconds; not measured calibration",
+        "sourceIds": [
+          "synthetic-input"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": 10.124526,
+          "lonDeg": 20.234707
+        },
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "headingDeg": {
+        "value": null,
+        "kind": "missing",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "courseDeg": {
+        "value": 90.25,
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "speedKn": {
+        "value": 5.5,
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      }
+    },
+    {
+      "pointId": "SYNTHETIC-VESSEL-B-p5",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:00:08.000Z",
+        "sourceUtc": "2026-02-01T12:00:08.000Z",
+        "alignedUtc": "2026-02-01T12:00:10.000Z",
+        "status": "corrected",
+        "correctionSeconds": 2,
+        "basis": "Synthetic clock B is exactly 2 seconds slow; add +2 seconds; not measured calibration",
+        "sourceIds": [
+          "synthetic-input"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": 10.124556,
+          "lonDeg": 20.234767
+        },
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "headingDeg": {
+        "value": null,
+        "kind": "missing",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "courseDeg": {
+        "value": 90.25,
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "speedKn": {
+        "value": 5.5,
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      }
+    },
+    {
+      "pointId": "SYNTHETIC-VESSEL-B-p6",
+      "time": {
+        "sourceRecordTime": "2026-02-01T12:00:12.000Z",
+        "sourceUtc": "2026-02-01T12:00:12.000Z",
+        "alignedUtc": "2026-02-01T12:00:14.000Z",
+        "status": "corrected",
+        "correctionSeconds": 2,
+        "basis": "Synthetic clock B is exactly 2 seconds slow; add +2 seconds; not measured calibration",
+        "sourceIds": [
+          "synthetic-input"
+        ]
+      },
+      "position": {
+        "value": {
+          "latDeg": 10.124596,
+          "lonDeg": 20.234847
+        },
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "headingDeg": {
+        "value": null,
+        "kind": "missing",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "courseDeg": {
+        "value": 90.25,
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      },
+      "speedKn": {
+        "value": 5.5,
+        "kind": "schematic",
+        "sourceIds": [
+          "synthetic-input"
+        ],
+        "basis": "Hand-constructed fixture only; no observation or inference"
+      }
+    }
+  ]
+}
