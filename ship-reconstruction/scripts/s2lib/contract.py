@@ -26,6 +26,8 @@ def fields(g):
             features.append(dict(kind=curve["kind"],confidence=curve["confidence"],evidence=evidence(curve["source_sha256"],[curve["instance"]])))
     seen_signs = {}
     for c in g["curves"]:
+        if c.get("registration_decision",{}).get("status")=="cross_checked_sign":
+            continue
         if len({v["y_sign"] for v in c["ship_coordinate_candidates"]}) > 1:
             seen_signs.setdefault(c["source_sha256"],[]).append(c["instance"])
     for src,handles in seen_signs.items():

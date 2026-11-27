@@ -32,3 +32,9 @@ class Contract(unittest.TestCase):
         note=next(n for n in g["inventory"][0]["registration_notes"] if "ORIGIN:" in n["text"])
         note["text"]=note["text"].split("ORIGIN:")[0]+"ORIGIN: UNKNOWN"
         self.assertEqual(fields(g)["modeling_admission"]["state"],"local_symmetric")
+
+    def test_reject_registration_without_witness(self):
+        g=json.loads((ROOT/"examples/s21/A/geometry.json").read_bytes())
+        curve=dict(handle="E",instance="E",source_sha256=g["inventory"][0]["source_sha256"],layout="Model",type="LINE",samples=[[0,0,0],[1,0,0]],kind="unknown",confidence="unknown",geometry={"endpoints":[[0,0,0],[1,0,0]]},ship_coordinates=[],candidates=[],ship_coordinate_candidates=[],registration_decision={"status":"cross_checked_sign","y_sign":1})
+        g["curves"].append(curve)
+        self.assertIn("unsupported_signed_registration",s2.check(g)["issues"])

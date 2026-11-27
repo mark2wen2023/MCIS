@@ -12,7 +12,9 @@ def collect(texts):
             for t in texts if (m:=PATTERN.fullmatch(t["text"].strip()))]
 
 
-def decide(g):
+def decisions(g):
+    """返回可重算的证据判定，避免信任交接文件中的已存结论。"""
+    result={}
     docs={i["source_sha256"]:i for i in g["inventory"]}
     frames={d["source_sha256"]:d["frames"] for d in g["alignment"]}
     for curve in g["curves"]:
@@ -54,5 +56,15 @@ def decide(g):
             signs={r["signed_candidates"][0] for r in support if len(r["signed_candidates"])==1}
             distinct_positions={tuple(np.round(r["target"],4)) for r in support}
             unique=(len(distinct_positions)>=2 and len(signs)==1 and all(len(r["signed_candidates"])==1 for r in support))
-            curve["registration_decision"]=dict(status="cross_checked_sign" if unique else "unresolved",
+            result[(src,curve["instance"])]=dict(status="cross_checked_sign" if unique else "unresolved",
                 y_sign=next(iter(signs)) if unique else None,tolerance_m=TOLERANCE_M,witnesses=support)
+    return result
+
+
+def decide(g):
+    by_key=decisions(g)
+    for c in g["curves"]:
+        key=(c["source_sha256"],c["instance"])
+        c.pop("registration_decision",None)
+        if key in by_key:
+            c["registration_decision"]=by_key[key]

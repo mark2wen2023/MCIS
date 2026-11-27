@@ -240,6 +240,10 @@ def check(g):
                 if max(errors) > 1e-5:
                     problems.append("matrix_control_mismatch")
     if g["schema_version"] == "2.1":
+        expected_signs=landmarks.decisions(g)
+        for curve in g["curves"]:
+            if curve.get("registration_decision")!=expected_signs.get((curve["source_sha256"],curve["instance"])):
+                problems.append("unsupported_signed_registration")
         for k,v in contract.fields(g).items():
             if g.get(k) != v:
                 problems.append("derived_contract_mismatch_"+k)
