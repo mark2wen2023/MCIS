@@ -1,0 +1,17 @@
+commit f8726ef800a86ff34473fd7a99c7e5aadd0ded7e
+Author:     Mark Wen <mark@users.noreply.github.com>
+AuthorDate: Fri Nov 27 21:47:15 2026 +0800
+Commit:     Mark Wen <mark@users.noreply.github.com>
+CommitDate: Fri Nov 27 21:47:15 2026 +0800
+
+    docs(w12): stop official analysis read at existing contract
+    
+    The official analysis return contract on mainline 94d5e38 cannot
+    express a first registered synthetic pair: list keys are three demo
+    enums, list and detail require seed metadata, and curve points require
+    non-null distance and risk. Coding stopped. No product, CI, contract,
+    or write-path changes. Not a formal acceptance.
+
+ tests_acceptance/w12-formal-handoff/HANDOFF.md | 41 ++++++++++++++++++++++++++
+ tests_acceptance/w12-formal-handoff/README.md  |  2 ++
+ 2 files changed, 43 insertions(+)
