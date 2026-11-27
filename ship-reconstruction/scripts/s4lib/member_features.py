@@ -42,6 +42,20 @@ def tee_sections(row, curves):
 OPENING=re.compile(r"(?:货舱(?:口)?|舱口|hatch(?:way)?|cargo hold)\s*[:：=]?\s*(\d+(?:\.\d+)?)\s*[x×*]\s*(\d+(?:\.\d+)?)\s*(mm|cm|m|in)\b",re.I)
 
 
+def straight_sides(centers,radius,mat,anchor,lines,tol):
+    segments=[]
+    for axis in (0,1):
+        for sign in (-1,1):
+            side=[p for pair,p in centers.items() if pair[axis]==sign]
+            delta=np.eye(2)[axis]*radius*sign
+            a,b=((q+delta)@mat.T+anchor for q in side)
+            ends=[(h,l) for h,l in lines if l.distance(Point(a))<=tol and l.distance(Point(b))<=tol]
+            if len(ends)!=1:return []
+            h,l=ends[0]
+            segments.append(dict(handle=h,trimmed_wcs=[a.tolist(),b.tolist()],source_wcs=list(map(list,l.coords))))
+    return segments
+
+
 def openings(data,src):
     found=[]
     for t in data["texts"]:
@@ -83,20 +97,26 @@ def openings(data,src):
                     if len(ok)!=1:break
                     others.append(ok[0][0]);side_centers[pair]=ok[0][1]
                 if len(others)!=4:continue
-                segments=[]
-                for axis in (0,1):
-                    for sign in (-1,1):
-                        side=[p for pair,p in side_centers.items() if pair[axis]==sign]
-                        delta=np.eye(2)[axis]*r*sign
-                        a,b=((q+delta)@mat.T+anchor for q in side)
-                        # Keep untrimmed source endpoints and the subsegment used between tangencies.
-                        ends=[(h,l) for h,l in lines if l.distance(Point(a))<=tol and l.distance(Point(b))<=tol]
-                        if len(ends)!=1:break
-                        h,l=ends[0];segments.append(dict(handle=h,trimmed_wcs=[a.tolist(),b.tolist()],source_wcs=list(map(list,l.coords))))
+                segments=straight_sides(side_centers,r,mat,anchor,lines,tol)
                 if len(segments)!=4:continue
+                # 同一组圆心的其他半径需要各自四弧、四切边。不能据此赋予材质或板厚。
+                rings=[]
+                alternatives=[a for a in near if a[3]==(-1,-1) and a[2]>r+tol and np.linalg.norm(a[1]-p)<tol]
+                for _,_,radius,_ in alternatives:
+                    rim=[]
+                    for pair,center in side_centers.items():
+                        candidates=[a for a in near if a[3]==pair and abs(a[2]-radius)<tol and np.linalg.norm(a[1]-center)<tol]
+                        if len(candidates)!=1:break
+                        rim.append(candidates[0][0])
+                    if len(rim)!=4:continue
+                    sides=straight_sides(side_centers,radius,mat,anchor,lines,tol)
+                    if len(sides)!=4:continue
+                    rings.append(dict(radius_m=radius*factor,extent_m=(dims+2*(radius-r)*factor).tolist(),
+                        arc_handles=rim,straight_edges=sides,evidence=[*rim,*[item["handle"] for item in sides]],
+                        material=None,thickness_m=None))
                 hits.append(dict(kind="rounded_opening_projection",source_sha256=src,note=t["instance"],
                     nominal_size_m=dims.tolist(),radius_m=r*factor,m_per_drawing_unit=factor,
-                    basis="printed_dimensions_and_eight_original_entities",arc_handles=others,straight_edges=segments,
+                    concentric_boundaries=rings,basis="printed_dimensions_and_eight_original_entities",arc_handles=others,straight_edges=segments,
                     evidence=[t["instance"],*others,*[s["handle"] for s in segments]],centroid_wcs=(mid@mat.T+anchor).tolist(),
                     material=None,cap_authorized=False,ship_position_m=None))
         if len(hits)==1:found+=hits

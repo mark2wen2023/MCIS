@@ -115,6 +115,10 @@ def build(structures, drawings):
         n=notes.get((s,feature["note"]),refs[0])
         edge(n,f,"supported_projection","derived",refs)
         if feature["kind"]=="rounded_opening_projection":
+            for rim in feature["concentric_boundaries"]:
+                rim_refs=[entity(s,h) for h in rim["evidence"]]
+                boundary=node("concentric_boundary",[s,feature["note"],rim["evidence"]],**rim)
+                edge(f,boundary,"shares_arc_centers","derived",refs+rim_refs)
             key=("opening_dimensions_radius",*map(lambda v:round(v,8),feature["nominal_size_m"]),round(feature["radius_m"],8))
             cross[key].append((s,f,refs[0]))
     for key,records in cross.items():
