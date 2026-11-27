@@ -1,0 +1,15 @@
+{
+  "hasRoot": true,
+  "hasGet": true,
+  "canvasCount": 1,
+  "tried": [
+    {
+      "tag": "DIV",
+      "hasInst": false
+    },
+    {
+      "tag": "DIV",
+      "hasInst": true
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+# W12 first-registered wiring inventory
+# pin=34d6acf1a64fb22d651e3de00fc851952488285e
+# candidate=4f7940e28989fb48d617cc9319b7232ff4959635
+# official=2026-11-27T13:54:34+08:00..2026-11-27T13:54:39+08:00 exit=0
+
+eeaaa1cc95746d5884336f3541f0d7e4a723750fe38dfb73cbd04feeab7f1592  CANDIDATE_SHA.txt  bytes=41
+808eea36f27f700bd39a961b502f07c13db966ef918d020aeff0088e08689e58  ISSUE_COMMENT_INPROGRESS.md  bytes=913
+97de6584176dbde93def73f25f73ec600b72fa092f97a4d208c9e7a04e687de8  OFFICIAL_COMMAND.sh  bytes=733
+b13424f5db4570f8cfa7c7be502de9af5f9f6faf61518ddfdbc113a9b0dc7c4e  OFFICIAL_RUN.txt  bytes=2848
+2f5ca53c755d2935908d89cf4341eac0c3fe2fe25243dfcaa0f00fb9829d9d07  REPORT.md  bytes=1713
+8d69b1469604ec821aad72ad812e391725940707cb8a1bdbe0b9b62b2f53ef2f  acceptance/README.md  bytes=990
+b07122c514ff022a8c393d34646055a252a04b1c7be4365da6cd8a760620a673  acceptance/build_view.py  bytes=4847
+a19eea96864ef424ea9cd1a3541b1c845791d2fd2bb52a2f65b5bff9684096a8  acceptance/core_norebuild.sh  bytes=365
+0e41bd6a02569deb907bb9fb5c89df1d112eebeb31e9e66a1cfca1dfa814f6b8  acceptance/host.py  bytes=6573
+86ba861ca1df6f724628b5329c0033c48b1f76bcd908afbd3aacd9f73161d98f  acceptance/live_seed.py  bytes=2907
+3dae4d83eb9435c963b1a75d8d8174e85e176615ec8a5bcc486cf5fe6c22dfcf  acceptance/registered_read.py  bytes=9234
+577626a6811698d20bb93e0a168a4713b7563176bfb20ff408b1591dc19d40b5  acceptance/run.py  bytes=21154
+a3f063146d4977ad8f51835d25f8fdeb1634625b78b3ad1f6cc6c1986101e136  official/analysis-chart-gap.test.cjs  bytes=17147
+7195fe2262e71e5f8fef6c18cfe4c46250ddd559355ac2ed59dc75acdcc685e7  official/analysis-w12.test.cjs  bytes=4461393
+dee05b5395192cd9e6b325c6a199e09981e0b742f4875b146cbcd01ab098c495  official/assembly/analysis.css  bytes=778
+330360d12014e655b5461829008a405fafb38831cea3ad4ac73bb8063c5213e0  official/assembly/app.js  bytes=4361698
+0beee016658929fd6fb783e96f0bb82ca0880438b29b39e08fe5232e22a4abb8  official/assembly/index.html  bytes=680
+706ee93c2f5e804bf6c7d049dc201fa78d0112192bc907090864be0877160e86  official/candidate-commit-stat.txt  bytes=960
+2e7a9c8deddf8163efa26c0acde6cdb140ee64f13cc5e82591d7c38f87c03091  official/capture-complete.json  bytes=916
+80645081b585b15fc17c7ce5510957a05aaccad0cad66bed7d06b7f671ea0a59  official/capture-missing.json  bytes=863
+cacbb0ea6e6bfd8203d30c5c6be13bc631a884609ad9ebedc157009169c1c9f9  official/core-metrics.json  bytes=1417
+6d0d95261c5b87dcfdb4ef139f4006449fec1fa80c48da71f04ffc05b0361e4e  official/echart-handle-probe.json  bytes=77
+f2b1311f13aabe600c03b59c0072d83caf83742a16855860f00ef674019b081d  official/echarts-getoption-probe.json  bytes=188
+8799c6b284b835ed2d208816c41a12a55589ddf3fd0d29eba8f815cfcbbddae7  official/echarts-getoption.json  bytes=20641
+eedbc9fa1ba169553e06486ca69383c38a995e5ca5459b1bd6145605685e1240  official/fixtures/own.csv  bytes=290
+3e19e5ab75fbb20f05f5130ee17e97e2562221c3fa81de34b708dd2d5e4a75e7  official/fixtures/target.csv  bytes=240
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  official/host-log.txt  bytes=0
+bce9c16bc3b349821566f566189440860e4ef27f773a0ce9b9e49f7ef35d8e91  official/import-digests.json  bytes=294
+1eb09101aa381f9cfdbca7c5983ba8348d6b359b1997a4e50c00eed8d5ccb06f  official/live-entry-analysis.json  bytes=400
+10fc37f6654416d6ea66c1ddc68da02a808ef1c4e87d11c74a23f4eb1a29cc8c  official/live-seed/w12-live-entry-seed.json  bytes=2548
+187581a041199d9ef7d0d6cb1577be50f122e9919974cee7ba912b9d054abcd8  official/live-seed/w12-live-entry-seed.sha256  bytes=91
+619eac89ce1c36ca54ea16685f9e0f912ee86017119191b7f137a2bc98a966db  official/registered-api.json  bytes=3165
+cfcdd0b91ad51da58cb60546c79ffb74d04943462860c366b6f3f6e8a1787173  official/run.log  bytes=2803
+a537a540ecec95b2760a7ab3e91c6c792405ef915397988c894f029974ed8456  official/shots/complete-curve.png  bytes=11723
+5eaa169635d539c445d63674878712c025e6910545a004884a64744757e05ee5  official/shots/complete-fullpage.png  bytes=308869
+5d81e58a27281e5932a59f6d37da760a44e0fe2d3723eb3820d72ae65424d2ce  official/shots/complete-identities.png  bytes=61600
+3cbfb2b38ca366bace40af1f58e43e7bd6246dc4341f2ff69fa09fa185ec096a  official/shots/complete-provenance.png  bytes=33204
+698d856aee1310c730c491dde02cb98ac15781723a740ef86792056280aa9d31  official/shots/missing-fullpage.png  bytes=46675
+1f93c8bd76cb63643e062206c864d4a16d3bba4437e472e4a1db9cafe2fdf8aa  official/shots/missing-panel.png  bytes=40052
+45f3e728dfd2b0be43cdab2001e9157f9df26526b719e74a96f54c4c166bdf7e  official/summary.json  bytes=2757

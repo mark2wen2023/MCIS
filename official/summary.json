@@ -1,0 +1,75 @@
+{
+  "ok": true,
+  "regression31": true,
+  "regression96": true,
+  "browser": {
+    "ok": true,
+    "handleProbe": {
+      "defaultTestId": false,
+      "hungOption": false,
+      "hungInstance": false
+    },
+    "chartChecks": {
+      "t0": {
+        "distance": null,
+        "dcpa": null,
+        "tcpa": null,
+        "expectedDistance": null,
+        "expectedDcpa": null,
+        "expectedTcpa": null
+      },
+      "t10": {
+        "distance": 2.578139,
+        "dcpa": 1.82261,
+        "tcpa": 7.736156,
+        "expectedDistance": 2.578139,
+        "expectedDcpa": 1.82261,
+        "expectedTcpa": 7.736156
+      },
+      "t15": {
+        "distance": null,
+        "dcpa": null,
+        "tcpa": null,
+        "expectedDistance": null,
+        "expectedDcpa": null,
+        "expectedTcpa": null
+      },
+      "t20": {
+        "distance": 2.147531,
+        "dcpa": 1.881462,
+        "tcpa": 4.392701,
+        "expectedDistance": 2.147531,
+        "expectedDcpa": 1.881462,
+        "expectedTcpa": 4.392701
+      },
+      "t30": {
+        "distance": null,
+        "dcpa": null,
+        "tcpa": null,
+        "expectedDistance": null,
+        "expectedDcpa": null,
+        "expectedTcpa": null
+      },
+      "t40": {
+        "distance": null,
+        "dcpa": null,
+        "tcpa": null,
+        "expectedDistance": null,
+        "expectedDcpa": null,
+        "expectedTcpa": null
+      }
+    },
+    "caption": "图区来源区分：距离为既有 mcis-core cpa（真实核心）；DCPA 为既有 mcis-core cpa（真实核心）；TCPA 为既有 mcis-core cpa（真实核心）。仅 T+10, T+20 为真实核心；其它时点无同刻样本，未回填。核心两次调用一致=True。DLL SHA-256 f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf。时间均为北京时间（UTC+8）。",
+    "provenance": "距离：既有 mcis-core cpa（真实核心）\nDCPA：既有 mcis-core cpa（真实核心）\nTCPA：既有 mcis-core cpa（真实核心）\n仅 T+10, T+20 为真实核心；其它时点无同刻样本，未回填。核心两次调用一致=True。DLL SHA-256 f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf。",
+    "gapWiring": "缺口元数据：未接。登记原件为 mcis-utc-v1 合成 CSV，没有授权的显式缺口元数据；保持未接，不从时间步长猜测，不新造契约。",
+    "identitiesShown": [
+      "aafd3ff11885bec8b8ced593a0fbd8bf859270f6f137967b87c32e08a257c711",
+      "36d5b473f9eab98dbcbc38521bcaa327ddd95e8350e260da6534776cc8258a81"
+    ]
+  },
+  "started": "2026-11-27 13:54:34 CST",
+  "ended": "2026-11-27 13:54:39 CST",
+  "port": 18777,
+  "origin": "http://127.0.0.1:18777",
+  "coreDllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf"
+}

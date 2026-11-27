@@ -1,0 +1,15 @@
+4f7940e feat(w12): wire first-registered receipts into analysis charts
+ .../w12-first-registered-wiring/README.md          |   9 +
+ .../assembly/index.html                            |  19 +
+ .../w12-first-registered-wiring/assembly/main.tsx  |  86 +++++
+ .../w12-first-registered-wiring/build_view.py      | 120 ++++++
+ .../w12-first-registered-wiring/core_norebuild.sh  |   7 +
+ .../w12-first-registered-wiring/host.py            | 180 +++++++++
+ .../w12-first-registered-wiring/live_seed.py       |  61 +++
+ .../w12-first-registered-wiring/registered_read.py | 239 ++++++++++++
+ .../w12-first-registered-wiring/run.py             | 416 +++++++++++++++++++++
+ web/src/analysis/AnalysisView.tsx                  |  34 +-
+ web/src/analysis/derive.ts                         |  31 +-
+ web/src/analysis/types.ts                          |  26 ++
+ web/src/components/EChart.tsx                      |  15 +-
+ 13 files changed, 1225 insertions(+), 18 deletions(-)

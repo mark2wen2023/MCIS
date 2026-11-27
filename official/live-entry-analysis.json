@@ -1,0 +1,22 @@
+{
+  "caseId": "SYN-W12-LIVE-ENTRY",
+  "hasDeclaredOpenGaps": false,
+  "leakSeries": [
+    {
+      "t": 0,
+      "clock": "08:00:00",
+      "distanceNm": 9.999,
+      "dcpaNm": 9.999,
+      "tcpaMin": 9.999,
+      "riskLevel": "Safe"
+    },
+    {
+      "t": 10,
+      "clock": "08:00:10",
+      "distanceNm": 9.999,
+      "dcpaNm": 9.999,
+      "tcpaMin": 9.999,
+      "riskLevel": "Safe"
+    }
+  ]
+}

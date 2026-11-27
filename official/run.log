@@ -1,0 +1,13 @@
+official start 2026-11-27 13:54:34 CST
+locked official dll f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf
+node_modules present at /workspace/mcis-w12-frw-cand/web/node_modules
+esbuild /workspace/mcis-w12-frw-cand/web/node_modules/esbuild/bin/esbuild /workspace/mcis-w12-frw-cand/web/tests/analysis-chart-gap.test.ts --bundle --platform=node --format=cjs --outfile=/workspace/mcis-w12-first-registered-wiring-report/official/analysis-chart-gap.test.cjs --jsx=automatic --log-level=warning
+W12 chart-gap unit tests: 31 passed
+esbuild /workspace/mcis-w12-frw-cand/web/node_modules/esbuild/bin/esbuild /workspace/mcis-w12-frw-cand/web/tests/analysis-w12.test.tsx --bundle --platform=node --format=cjs --outfile=/workspace/mcis-w12-first-registered-wiring-report/official/analysis-w12.test.cjs --jsx=automatic --log-level=warning
+W12 analysis tests: 96 passed
+esbuild /workspace/mcis-w12-frw-cand/web/node_modules/esbuild/bin/esbuild /workspace/mcis-w12-frw-cand/tests_acceptance/w12-first-registered-wiring/assembly/main.tsx --bundle --outfile=/workspace/mcis-w12-first-registered-wiring-report/official/assembly/app.js --format=iife --platform=browser --jsx=automatic --alias:react=/workspace/mcis-w12-frw-cand/web/node_modules/react --alias:react-dom=/workspace/mcis-w12-frw-cand/web/node_modules/react-dom --alias:react-dom/client=/workspace/mcis-w12-frw-cand/web/node_modules/react-dom/client --alias:react/jsx-runtime=/workspace/mcis-w12-frw-cand/web/node_modules/react/jsx-runtime --alias:echarts=/workspace/mcis-w12-frw-cand/web/node_modules/echarts --log-level=warning
+assembly app.js sha256=330360d12014e655b5461829008a405fafb38831cea3ad4ac73bb8063c5213e0
+host /workspace/mcis-w17-871db66/service/.venv/bin/python -I -B /workspace/mcis-w12-frw-cand/tests_acceptance/w12-first-registered-wiring/host.py /workspace/mcis-w12-first-registered-wiring-report/official/assembly /workspace/mcis-w12-first-registered-wiring-report/official/tmp-store /workspace/mcis-w12-first-registered-wiring-report/official /workspace/mcis-w12-frw-cand/service /workspace/mcis-w12-frw-cand/tests_acceptance/w12-first-registered-wiring/core_norebuild.sh /workspace/mcis-w41-core-out 127.0.0.1 18777
+W12_FRW_READY=127.0.0.1:18777 seed=10fc37f6654416d6ea66c1ddc68da02a808ef1c4e87d11c74a23f4eb1a29cc8c dll=f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf
+browser checks ok caption='图区来源区分：距离为既有 mcis-core cpa（真实核心）；DCPA 为既有 mcis-core cpa（真实核心）；TCPA 为既有 mcis-core cpa（真实核心）。仅 T+10, T+20 为真实核心；其它时点无同刻样本，未回填。核心两次调用一致=True。DLL SHA-256 f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf。时间均为北京时间（UTC+8）。'
+host exit=-15

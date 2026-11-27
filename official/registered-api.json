@@ -1,0 +1,101 @@
+{
+  "identities": [
+    {
+      "vesselId": "SYN-OWN",
+      "previewDigest": "aafd3ff11885bec8b8ced593a0fbd8bf859270f6f137967b87c32e08a257c711",
+      "sourceSha256": "eedbc9fa1ba169553e06486ca69383c38a995e5ca5459b1bd6145605685e1240",
+      "reportSha256": "6aed4a8c6ba39554339dfdbba25c6feb3d497e4d0d97cf13817a4e5a146f0d86",
+      "pointCount": 4
+    },
+    {
+      "vesselId": "SYN-TGT",
+      "previewDigest": "36d5b473f9eab98dbcbc38521bcaa327ddd95e8350e260da6534776cc8258a81",
+      "sourceSha256": "3e19e5ab75fbb20f05f5130ee17e97e2562221c3fa81de34b708dd2d5e4a75e7",
+      "reportSha256": "0d72637de363ecdfaa79c154f75f20ba51f2029f26defaa175b93e20263c0452",
+      "pointCount": 3
+    }
+  ],
+  "provenance": {
+    "distance": "mcis-core",
+    "dcpa": "mcis-core",
+    "tcpa": "mcis-core",
+    "note": "仅 T+10, T+20 为真实核心；其它时点无同刻样本，未回填。核心两次调用一致=True。DLL SHA-256 f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf。"
+  },
+  "gapWiring": {
+    "status": "unwired",
+    "reason": "登记原件为 mcis-utc-v1 合成 CSV，没有授权的显式缺口元数据；保持未接，不从时间步长猜测，不新造契约。"
+  },
+  "series": [
+    {
+      "t": 0.0,
+      "clock": "08:00:00",
+      "distanceNm": null,
+      "dcpaNm": null,
+      "tcpaMin": null,
+      "riskLevel": null
+    },
+    {
+      "t": 10.0,
+      "clock": "08:00:10",
+      "distanceNm": 2.578139,
+      "dcpaNm": 1.82261,
+      "tcpaMin": 7.736156,
+      "riskLevel": "Safe"
+    },
+    {
+      "t": 15.0,
+      "clock": "08:00:15",
+      "distanceNm": null,
+      "dcpaNm": null,
+      "tcpaMin": null,
+      "riskLevel": null
+    },
+    {
+      "t": 20.0,
+      "clock": "08:00:20",
+      "distanceNm": 2.147531,
+      "dcpaNm": 1.881462,
+      "tcpaMin": 4.392701,
+      "riskLevel": "Safe"
+    },
+    {
+      "t": 30.0,
+      "clock": "08:00:30",
+      "distanceNm": null,
+      "dcpaNm": null,
+      "tcpaMin": null,
+      "riskLevel": null
+    },
+    {
+      "t": 40.0,
+      "clock": "08:00:40",
+      "distanceNm": null,
+      "dcpaNm": null,
+      "tcpaMin": null,
+      "riskLevel": null
+    }
+  ],
+  "missing": {
+    "caseId": "SYN-W12-FR-INCOMPLETE",
+    "ok": false,
+    "reason": "missing-receipt:SYN-TGT",
+    "identities": {
+      "SYN-OWN": {
+        "caseId": "SYN-W12-FR-INCOMPLETE",
+        "vesselId": "SYN-OWN",
+        "previewDigest": "df304117eb7f84d24eb526e52889eeb000a6521de095c67d7b32bb948501009f",
+        "sourceSha256": "eedbc9fa1ba169553e06486ca69383c38a995e5ca5459b1bd6145605685e1240",
+        "reportSha256": "209ddc487402219cbccfab687bd8dc73e224830bdfc28b27d2ee17e7ec5086b1",
+        "pointCount": 4
+      }
+    },
+    "currentAnalysis": null,
+    "metricsReturned": false,
+    "note": "缺一船已核验回执，不显示当前分析指标，未用离线种子补结果。",
+    "gapWiring": {
+      "status": "unwired",
+      "reason": "登记原件为 mcis-utc-v1 合成 CSV，没有授权的显式缺口元数据；保持未接，不从时间步长猜测，不新造契约。"
+    }
+  },
+  "liveSeedSha256": "10fc37f6654416d6ea66c1ddc68da02a808ef1c4e87d11c74a23f4eb1a29cc8c"
+}
