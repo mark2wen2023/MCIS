@@ -4,7 +4,7 @@ import json
 import re
 from collections import defaultdict
 import numpy as np
-from .member_features import tee_sections, openings
+from .member_features import tee_sections, openings, support_contacts
 from .installation import array_evidence, project_section
 
 
@@ -108,9 +108,10 @@ def build(structures, drawings):
                 h=candidates[0];ref=entity(src,h)
                 obj="local_solid-"+digest(m["id"])
                 edge(notes[src,h],obj,"possible_installation_qualifier","candidate",[ref,entity(src,m["instance"]),entity(src,m["leader"][0])])
+    features.extend(support_contacts(structures,drawings))
     for feature in features:
         s=feature["source_sha256"];refs=[entity(s,h) for h in feature["evidence"]]
-        f=node(feature["kind"],[s,feature["note"],feature["evidence"]],**feature)
+        f=node(feature["kind"],[s,feature["note"],feature["evidence"],feature.get("point_wcs")],**feature)
         n=notes.get((s,feature["note"]),refs[0])
         edge(n,f,"supported_projection","derived",refs)
         if feature["kind"]=="rounded_opening_projection":

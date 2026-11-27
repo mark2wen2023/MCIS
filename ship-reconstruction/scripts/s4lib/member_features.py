@@ -101,3 +101,62 @@ def openings(data,src):
                     material=None,cap_authorized=False,ship_position_m=None))
         if len(hits)==1:found+=hits
     return found
+
+
+def spline_witness(curve, point, tolerance):
+    """在非零结点区间上验证端点是否位于原生二维B样条。"""
+    from scipy.interpolate import BSpline
+    from scipy.optimize import minimize_scalar
+    g=curve["geometry"]
+    if curve["type"]!="SPLINE" or "source_to_wcs_row_major_ezdxf" in curve:return None
+    poles=np.asarray(g.get("control_points",[])); knots=np.asarray(g.get("knots",[]))
+    degree=g["degree"]
+    if len(poles)<degree+1 or len(knots)!=len(poles)+degree+1 or np.any(np.diff(knots)<0):return None
+    if np.any(point < poles[:,:2].min(axis=0)-tolerance) or np.any(point>poles[:,:2].max(axis=0)+tolerance):return None
+    weights=np.asarray(g.get("weights") or [1.]*len(poles))
+    if len(weights)!=len(poles) or min(weights)<=0:return None
+    spline=BSpline(knots,np.column_stack(((poles[:,:2]-point)*weights[:,None],weights)),degree,extrapolate=False)
+    def loss(param):
+        v=spline(param)
+        return float(np.dot(v[:2],v[:2])/v[2]**2)
+    hits=[]
+    for i in range(degree,len(poles)):
+        a,b=knots[i:i+2]
+        if b<=a:continue
+        block=poles[i-degree:i+1,:2]
+        if np.any(point<block.min(axis=0)-tolerance) or np.any(point>block.max(axis=0)+tolerance):continue
+        # A positive witness suffices; an unlocated intersection stays unknown.
+        res=minimize_scalar(loss,bounds=(a,b),method="bounded",options={"xatol":1e-15})
+        val,param=min((loss(a),a),(loss(b),b),(res.fun,res.x))
+        if val<=tolerance**2:hits.append((float(val**.5),float(param)))
+    return min(hits) if hits else None
+
+
+def support_contacts(structures,drawings):
+    found=[];sources={d["sha256"]:d["data"] for d in drawings}
+    for src,data in sources.items():
+        lines={c["instance"]:c for c in data["curves"]}
+        owners=defaultdict(list)
+        for r in structures["observations"]:
+            if r["source_sha256"]!=src:continue
+            for l in r["leaders"]:
+                if len(l["target_instances"])==1:
+                    owners[l["target_instances"][0]].append((r,l))
+        members=defaultdict(list)
+        for m in structures["local_models"]:
+            if m["source_sha256"]!=src or not m["frame_attachment"]:continue
+            for edge in m["frame_attachment"]["boundary_handles"]:members[edge].append(m)
+        for h,models in members.items():
+            support=lines[h]; scale=models[0]["scale"]["m_per_drawing_unit"]
+            for target,notes in owners.items():
+                c=lines.get(target)
+                if not c or c["type"]!="SPLINE" or c["layout"]!=support["layout"] or h.rpartition("/")[0]!=target.rpartition("/")[0]:continue
+                for p in np.asarray(support["samples"])[:,:2]:
+                    witness=spline_witness(c,p,1e-6/scale)
+                    if witness is None:continue
+                    for r,l in notes:
+                        found.append(dict(kind="support_endpoint_on_section_curve",source_sha256=src,note=r["instance"],
+                            evidence=[r["instance"],*l["handles"],target,h],support_edge=h,curve=target,
+                            local_models=[m["id"] for m in models],point_wcs=p.tolist(),curve_parameter=witness[1],
+                            residual_m=witness[0]*scale,tolerance_m=1e-6,physical_connection=None,ship_y_m=None))
+    return found
