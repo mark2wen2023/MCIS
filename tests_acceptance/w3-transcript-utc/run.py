@@ -1,0 +1,418 @@
+"""Official sandboxed Chrome gate for registered-transcript UTC location.
+
+Uses the real MCIS service and the official interview page. Does not change
+product code, invent fields, or treat HTTP/DOM doubles as browser evidence.
+"""
+from __future__ import annotations
+
+import json
+import os
+import signal
+import subprocess
+import sys
+import tempfile
+import time
+import traceback
+import urllib.error
+import urllib.parse
+import urllib.request
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[1]
+CASE_ID = "SYN-W3-UTC-001"
+API_PORT = int(os.environ.get("MCIS_PORT", "18790"))
+WEB_PORT = int(os.environ.get("MCIS_WEB_PORT", "18791"))
+API = f"http://127.0.0.1:{API_PORT}"
+WEB = f"http://127.0.0.1:{WEB_PORT}"
+HOST_PYTHON = os.environ.get("MCIS_HOST_PYTHON", sys.executable)
+CHROME = os.environ.get("MCIS_CHROMIUM", "/opt/google/chrome/google-chrome")
+EVIDENCE = Path(os.environ["MCIS_BROWSER_EVIDENCE_DIR"]).resolve()
+UTC = "2026-02-01T12:01:40Z"
+UTC_MS = "2026-02-01T12:01:40.125Z"
+NEAR = "2026-02-01T12:01:40.12Z"  # normalizes to .120Z, not .125Z
+HEADERS = {
+    "Content-Type": "application/json",
+    "X-MCIS-Role": "LeadInvestigator",
+    "X-MCIS-Operator": urllib.parse.quote("首席调查官", safe=""),
+}
+
+ANSWER_UNIQUE = "唯一时间的原有回答"
+ANSWER_UNKNOWN = "时间未知的回答"
+ANSWER_MS = "毫秒对应的原有回答"
+
+
+def _http(method: str, url: str, body: dict | None = None, expected: int | tuple[int, ...] = 200) -> dict | list | None:
+    data = None if body is None else json.dumps(body, ensure_ascii=False).encode()
+    req = urllib.request.Request(url, data=data, headers=HEADERS, method=method)
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            raw = resp.read()
+            status = resp.status
+            payload = json.loads(raw.decode()) if raw else None
+    except urllib.error.HTTPError as exc:
+        raw = exc.read()
+        raise RuntimeError(f"{method} {url} -> {exc.code}: {raw.decode('utf-8', 'replace')}") from exc
+    allowed = expected if isinstance(expected, tuple) else (expected,)
+    if status not in allowed:
+        raise RuntimeError(f"{method} {url} -> {status}, expected {allowed}")
+    return payload
+
+
+def wait_http(url: str, timeout: float = 30.0) -> None:
+    deadline = time.time() + timeout
+    last = None
+    while time.time() < deadline:
+        try:
+            urllib.request.urlopen(url, timeout=1).read()
+            return
+        except Exception as exc:  # noqa: BLE001 — startup probe
+            last = exc
+            time.sleep(0.1)
+    raise RuntimeError(f"startup failed for {url}: {last}")
+
+
+def wait_ready(proc: subprocess.Popen, token: str, timeout: float = 30.0) -> None:
+    deadline = time.time() + timeout
+    buf = ""
+    while time.time() < deadline:
+        if proc.poll() is not None:
+            raise RuntimeError(f"host exited {proc.returncode} before ready: {buf[-2000:]}")
+        time.sleep(0.05)
+        # ready is printed to stdout; also probe health as a backstop
+        try:
+            urllib.request.urlopen(f"{API}/api/v1/health", timeout=0.4).read()
+            return
+        except Exception:
+            continue
+    raise RuntimeError(f"host ready timed out ({token}): {buf[-2000:]}")
+
+
+def utf16_len(text: str) -> int:
+    return len(text.encode("utf-16-le")) // 2
+
+
+def seed_registered_transcript() -> dict:
+    case = {
+        "caseId": CASE_ID,
+        "schemaVersion": "1.0.0",
+        "title": "合成登记笔录定位（虚构）",
+        "accidentType": "Collision",
+        "incidentTimeUtc": "2026-02-01T12:00:00Z",
+        "caseEpochUtc": "2026-02-01T11:00:00Z",
+        "displayTimeZoneOffsetMinutes": 480,
+        "incidentLocation": {"lonDeg": 120.0, "latDeg": 30.0},
+        "isFictionalDemo": True,
+        "placeName": "虚构水域",
+    }
+    created = _http("POST", f"{API}/api/v1/cases", case, 201)
+    evidence = _http(
+        "POST",
+        f"{API}/api/v1/cases/{CASE_ID}/evidence",
+        {
+            "title": "合成登记笔录来源（虚构，仅哈希）",
+            "source": "合成登记",
+            "extractedBy": "首席调查官",
+            "extractedUtc": "2026-02-01T11:30:00Z",
+            "sha256": "a" * 64,
+            "confidentiality": "Normal",
+            "category": "Other",
+            "note": "不提供原件字节，只登记哈希",
+        },
+        201,
+    )
+    eid = evidence["evidenceId"]
+    sha = evidence.get("sha256") or evidence.get("currentSha256")
+    if not isinstance(sha, str) or len(sha) != 64:
+        raise RuntimeError(f"service did not return a bound sha256: {evidence!r}")
+    interview = _http(
+        "POST",
+        f"{API}/api/v1/cases/{CASE_ID}/interviews",
+        {
+            "interviewee": {
+                "intervieweeId": "SYN-P-01",
+                "name": "虚构受询问人甲",
+                "role": "虚构值班员",
+                "affiliation": "虚构船",
+            },
+            "startUtc": "2026-02-01T12:00:00Z",
+            "location": "虚构询问室",
+            "recorder": "虚构记录员",
+            "interviewers": ["虚构调查员"],
+            "evidenceId": eid,
+        },
+        201,
+    )
+    record_id = interview["recordId"]
+    if interview.get("sourceSha256") != sha:
+        raise RuntimeError(f"server did not bind sourceSha256: {interview.get('sourceSha256')!r}")
+    if interview.get("turns") or interview.get("statements") or interview.get("crossChecks"):
+        raise RuntimeError("create must remain an empty draft")
+    turns = [
+        {"question": "合成问题甲", "answer": ANSWER_UNKNOWN, "utc": None},
+        {"question": "合成问题乙", "answer": ANSWER_UNIQUE, "utc": UTC},
+        {"question": "合成问题丙", "answer": ANSWER_MS, "utc": UTC_MS},
+    ]
+    for body in turns:
+        _http("POST", f"{API}/api/v1/cases/{CASE_ID}/interviews/{record_id}/turns", body, 201)
+    statement = _http(
+        "POST",
+        f"{API}/api/v1/cases/{CASE_ID}/interviews/{record_id}/statements",
+        {
+            "kind": "Time",
+            "subject": "synthetic.event_time",
+            "summary": "虚构事故时刻：另一个时间",
+            "claim": {"valueType": "EventTime", "time": UTC_MS},
+            "referenceUtc": UTC_MS,
+            "span": {"round": 2, "field": "Answer", "start": 0, "length": utf16_len(ANSWER_UNIQUE)},
+            "extractedBy": "Investigator",
+        },
+        201,
+    )
+    sid = statement["statementId"]
+    if statement.get("reviewStatus") != "Confirmed":
+        raise RuntimeError(f"investigator statement was not confirmed: {statement.get('reviewStatus')!r}")
+    _http(
+        "POST",
+        f"{API}/api/v1/cases/{CASE_ID}/interview-compare/{record_id}/rows/{sid}:recheck",
+        {
+            "outcome": "Consistent",
+            "observedText": "合成观测（虚构）",
+            "sourceLabel": "合成数据源（虚构）",
+            "delta": None,
+            "deltaUnit": "",
+            "reason": "",
+        },
+        200,
+    )
+    _http(
+        "POST",
+        f"{API}/api/v1/cases/{CASE_ID}/interview-compare/{record_id}/rows/{sid}:confirm",
+        {"note": "合成确认（虚构）"},
+        200,
+    )
+    page = _http("GET", f"{API}/api/v1/cases/{CASE_ID}/interview-compare/{record_id}")
+    rec = page["record"]
+    if rec.get("evidenceId") != eid or rec.get("sourceSha256") != sha:
+        raise RuntimeError("compare page is missing the registered source binding")
+    if page.get("highlightSuppressed"):
+        raise RuntimeError("compare page reported highlight suppression")
+    rows = [r for r in page["rows"] if r["statementId"] == sid]
+    if len(rows) != 1:
+        raise RuntimeError(f"expected one comparison row, got {rows!r}")
+    row = rows[0]
+    if row["reviewStatus"] != "Confirmed" or row["state"] != "Confirmed" or row["isStale"] or row["statementMissing"]:
+        raise RuntimeError(f"comparison row is not uniquely confirmed: {row!r}")
+    return {
+        "caseId": CASE_ID,
+        "recordId": record_id,
+        "evidenceId": eid,
+        "sourceSha256": sha,
+        "statementId": sid,
+        "pageTurns": [{"round": t["round"], "utc": t.get("utc")} for t in page["turns"]],
+    }
+
+
+def ensure_node_modules() -> None:
+    target = ROOT / "web" / "node_modules"
+    if target.exists():
+        return
+    src = os.environ.get("MCIS_NODE_MODULES")
+    if not src:
+        raise RuntimeError("web/node_modules missing and MCIS_NODE_MODULES unset; will not install")
+    target.symlink_to(src, target_is_directory=True)
+
+
+def terminate(proc: subprocess.Popen | None) -> None:
+    if proc is None or proc.poll() is not None:
+        return
+    try:
+        os.killpg(proc.pid, signal.SIGTERM)
+    except ProcessLookupError:
+        return
+    try:
+        proc.wait(timeout=8)
+    except subprocess.TimeoutExpired:
+        os.killpg(proc.pid, signal.SIGKILL)
+        proc.wait(timeout=5)
+
+
+def run_browser(seed: dict, shot_dir: Path) -> dict:
+    from playwright.sync_api import sync_playwright
+
+    shot_dir.mkdir(parents=True, exist_ok=True)
+    requests: list[str] = []
+    page_errors: list[str] = []
+    with sync_playwright() as pw, tempfile.TemporaryDirectory(prefix="w3-utc-chrome-") as tmp:
+        browser = pw.chromium.launch(
+            executable_path=CHROME,
+            headless=True,
+            chromium_sandbox=True,
+            env={**os.environ, "HOME": tmp, "XDG_CONFIG_HOME": f"{tmp}/config"},
+        )
+        context = browser.new_context()
+        page = context.new_page()
+        page.set_default_timeout(20000)
+        page.on("pageerror", lambda exc: page_errors.append(str(exc)))
+        page.on("request", lambda req: requests.append(req.url))
+
+        page.goto(f"{WEB}/#/interview?case={CASE_ID}")
+        page.locator('select[title="X-MCIS-Role"]').select_option("LeadInvestigator")
+        page.get_by_text("定位问答", exact=True).wait_for()
+        body = page.locator("body")
+        text = body.inner_text()
+        assert "仅定位当前笔录已登记的问答时间" in text, "missing Q&A-time wording"
+        assert "不生成引文" in text, "missing no-citation wording"
+        assert ANSWER_UNIQUE in text and ANSWER_UNKNOWN in text and ANSWER_MS in text
+
+        # 1. unique exact UTC locates the original turn
+        page.locator('input[placeholder="YYYY-MM-DDTHH:mm:ssZ"]').fill(UTC)
+        page.get_by_role("button", name="定位问答", exact=True).click()
+        page.get_by_text("已定位到第 2 轮", exact=False).wait_for()
+        marker = page.locator('[aria-current="location"]')
+        assert marker.count() == 1
+        assert marker.get_attribute("data-round") == "2"
+        marker_text = marker.inner_text()
+        assert ANSWER_UNIQUE in marker_text
+        assert ANSWER_UNKNOWN not in marker_text and ANSWER_MS not in marker_text
+        page.screenshot(path=str(shot_dir / "01-unique-utc.png"), full_page=True)
+
+        # 2. no cotemporal match must not guess the nearest point
+        page.locator('input[placeholder="YYYY-MM-DDTHH:mm:ssZ"]').fill(NEAR)
+        page.get_by_role("button", name="定位问答", exact=True).click()
+        page.get_by_text("没有这个已登记的问答时间", exact=False).wait_for()
+        note = page.locator("body").inner_text()
+        assert "不按最接近的时间猜测" in note
+        assert page.locator('[aria-current="location"]').count() == 0
+        page.screenshot(path=str(shot_dir / "02-no-nearest-guess.png"), full_page=True)
+
+        # 3. unique confirmed comparison jumps back to that turn, not accident time
+        cmp_btn = page.get_by_role("button", name="定位所选比对条目的原文问答", exact=True)
+        cmp_btn.wait_for()
+        around = page.locator("body").inner_text()
+        assert "不是事故或录音时点" in around
+        cmp_btn.click()
+        marker = page.locator('[aria-current="location"]')
+        marker.wait_for()
+        assert marker.count() == 1
+        assert marker.get_attribute("data-round") == "2", "must not follow accident/chart time onto round 3"
+        assert ANSWER_UNIQUE in marker.inner_text()
+        assert ANSWER_MS not in marker.inner_text()
+        page.screenshot(path=str(shot_dir / "03-confirmed-compare-jump.png"), full_page=True)
+
+        # no citation links minted by the locator
+        assert page.locator("form.p6-note a, [data-testid='interview-page'] a").count() == 0
+        assert not page_errors, page_errors
+
+        forbidden = [
+            u
+            for u in requests
+            if "/content" in u
+            or "/blobs/" in u
+            or "contentBase64" in u
+            or u.endswith("/access")
+            and "/evidence/" in u
+        ]
+        # Allow metadata list / compare / interviews / provenance / drafts / cases / evidence list (no bytes).
+        original_reads = [
+            u
+            for u in requests
+            if ("/archive-history/" in u and "/content" in u)
+            or ("/evidence/" in u and u.rstrip("/").endswith("/content"))
+            or "/evidence:download" in u
+        ]
+        assert not original_reads, original_reads
+        version = browser.version
+        browser.close()
+    return {
+        "pass": True,
+        "version": f"Google Chrome {version}",
+        "chromiumSandbox": True,
+        "noSandboxArg": False,
+        "caseId": seed["caseId"],
+        "recordId": seed["recordId"],
+        "evidenceId": seed["evidenceId"],
+        "sourceSha256": seed["sourceSha256"],
+        "statementId": seed["statementId"],
+        "requests": sorted(set(requests)),
+        "pageErrors": page_errors,
+        "forbiddenOriginalReads": original_reads,
+        "screenshots": ["01-unique-utc.png", "02-no-nearest-guess.png", "03-confirmed-compare-jump.png"],
+    }
+
+
+def main() -> int:
+    EVIDENCE.mkdir(parents=True, exist_ok=True)
+    logs = EVIDENCE / "logs"
+    shots = EVIDENCE / "screenshots"
+    logs.mkdir(parents=True, exist_ok=True)
+    shots.mkdir(parents=True, exist_ok=True)
+    ensure_node_modules()
+    data_dir = Path(tempfile.mkdtemp(prefix="w3-utc-sqlite-"))
+    host_log = (logs / "01-host.log").open("w", encoding="utf-8")
+    vite_log = (logs / "02-vite.log").open("w", encoding="utf-8")
+    host = vite = None
+    exit_doc: dict = {"pass": False, "chromiumSandbox": True, "noSandboxArg": False}
+    try:
+        env = {
+            **os.environ,
+            "MCIS_DATA_DIR": str(data_dir),
+            "MCIS_SEED_DEMO": "0",
+            "MCIS_PORT": str(API_PORT),
+            "MCIS_API": API,
+            "PYTHONPATH": str(ROOT / "service"),
+        }
+        host = subprocess.Popen(
+            [HOST_PYTHON, "-u", str(HERE / "host.py")],
+            cwd=str(ROOT),
+            env=env,
+            stdout=host_log,
+            stderr=subprocess.STDOUT,
+            start_new_session=True,
+        )
+        wait_ready(host, "W3_TRANSCRIPT_UTC_READY")
+        seed = seed_registered_transcript()
+        (logs / "00-seed.json").write_text(json.dumps(seed, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        vite = subprocess.Popen(
+            [
+                "node",
+                "node_modules/vite/bin/vite.js",
+                "--host",
+                "127.0.0.1",
+                "--port",
+                str(WEB_PORT),
+                "--strictPort",
+            ],
+            cwd=str(ROOT / "web"),
+            env=env,
+            stdout=vite_log,
+            stderr=subprocess.STDOUT,
+            start_new_session=True,
+        )
+        wait_http(WEB + "/", timeout=40)
+        result = run_browser(seed, shots)
+        exit_doc.update(result)
+        print(
+            "PASS official sandboxed Chrome: unique exact UTC located turn 2; "
+            "near time did not guess; confirmed comparison jumped to turn 2; "
+            "wording is transcript Q&A time; no citation; no original-file read.",
+            flush=True,
+        )
+        return 0
+    except Exception as exc:  # noqa: BLE001 — record then fail
+        exit_doc["error"] = str(exc)
+        exit_doc["traceback"] = traceback.format_exc()
+        print(f"FAIL {exc}", flush=True)
+        traceback.print_exc()
+        return 1
+    finally:
+        exit_path = logs / "03-browser-exit.json"
+        exit_path.write_text(json.dumps(exit_doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        terminate(vite)
+        terminate(host)
+        host_log.close()
+        vite_log.close()
+
+
+if __name__ == "__main__":
+    sys.exit(main())
