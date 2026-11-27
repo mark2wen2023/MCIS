@@ -1,0 +1,9 @@
+staging files=8
+        40  CANDIDATE_SHA.txt
+        40  PARENT_SHA.txt
+       551  REPORT.md
+       105  TOKEN_SCAN.txt
+     13557  acceptance/HANDOFF.md
+       320  acceptance/README.md
+       809  candidate-commit-stat.txt
+     15012  candidate.diff

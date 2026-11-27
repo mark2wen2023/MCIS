@@ -1,0 +1,17 @@
+commit 51370ffb67bd9e28188068f2014aa234a2428ef0
+Author:     Mark Wen <mark@users.noreply.github.com>
+AuthorDate: Fri Nov 27 21:00:54 2026 +0800
+Commit:     Mark Wen <mark@users.noreply.github.com>
+CommitDate: Fri Nov 27 21:00:54 2026 +0800
+
+    docs(w12): formal analysis handoff for official wiring
+    
+    Independent documentation-only candidate from f141304. Records
+    mainline and candidate SHAs, the first official analysis breakpoint,
+    who confirms input versions, how old reports point at evidence, and
+    how W13/W21 can (or cannot) identify derived track versions. No
+    product, CI, contract, or write-path changes.
+
+ tests_acceptance/w12-formal-handoff/HANDOFF.md | 125 +++++++++++++++++++++++++
+ tests_acceptance/w12-formal-handoff/README.md  |   7 ++
+ 2 files changed, 132 insertions(+)
