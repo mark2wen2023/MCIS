@@ -8,6 +8,7 @@ import trimesh
 from shapely import LineString, Point, Polygon, box, set_precision, union_all
 from shapely.ops import polygonize
 from geometry import quality
+from core.drawing_parser import fingerprint
 from .mesh_io import write_solid
 from .annotations import LayoutIndex
 from .notes import normalized
@@ -199,7 +200,7 @@ def recover(drawings,notes,dest):
                 basis="printed" if thick["unit"] else "same_sheet_thickness_unit_hypothesis"
                 r["modeling_status"]="local_research_candidate"
                 lead["local_cell_status"]="closed_local_candidate"
-                results.append(dict(id=identifier,type=r["type"],asset=file,source_sha256=src,instance=r["instance"],leader=lead["handles"],
+                results.append(dict(id=identifier,type=r["type"],asset=file,asset_sha256=fingerprint(dest/file),source_sha256=src,instance=r["instance"],leader=lead["handles"],
                     method="polygonized_original_edges_and_normal_extrusion",coordinate_frame="local_plate_axes_metres",ship_position_m=None,
                     paper_origin_wcs=o.tolist(),contour=cell,scale=scale,frame_attachment=frame_attachment(cell,scale,idx,texts,t["height"]),thickness_raw=thick,modeled_thickness_m=thick["value"]*METRE[unit],
                     thickness_unit_basis=basis,unit_evidence_handles=unit_handles,surface_side="unknown",material=r["material"],

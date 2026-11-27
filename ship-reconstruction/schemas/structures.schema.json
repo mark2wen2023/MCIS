@@ -501,6 +501,9 @@
         },
         "quality": {
           "$ref": "#/$defs/quality"
+        },
+        "asset_sha256": {
+          "$ref": "#/$defs/sha"
         }
       },
       "required": [
@@ -527,7 +530,8 @@
               "quality",
               "face_source",
               "dimension_m",
-              "bounds_m"
+              "bounds_m",
+              "asset_sha256"
             ]
           }
         }
@@ -658,6 +662,9 @@
         },
         "estimated_volume_m3": {
           "type": "number"
+        },
+        "asset_sha256": {
+          "$ref": "#/$defs/sha"
         }
       },
       "required": [
@@ -680,7 +687,8 @@
         "quality",
         "unknowns",
         "engineering_approved",
-        "estimated_volume_m3"
+        "estimated_volume_m3",
+        "asset_sha256"
       ]
     }
   }

@@ -6,6 +6,8 @@ from jsonschema import Draft202012Validator
 import numpy as np
 import trimesh
 from geometry import quality
+from core.drawing_parser import fingerprint
+from s4lib.panels import solid,METRE
 
 SCHEMA=Path(__file__).resolve().parents[1]/"schemas/structures.schema.json"
 
@@ -35,7 +37,23 @@ def validate(path):
                 problems.append("未标注单位被升级为明示单位")
         target=path.parent/asset
         if not target.is_file() or target.is_symlink():problems.append("成品缺失或为链接");continue
-        actual=quality(trimesh.load_mesh(target,process=False))
+        if fingerprint(target)!=r.get("asset_sha256"):
+            problems.append("实体文件摘要不匹配")
+        mesh=trimesh.load_mesh(target,process=False)
+        if "coordinate_frame" in r:
+            dim=r["thickness_raw"];unit=dim["unit"]
+            if unit is None:
+                witnesses=[obs.get((r["source_sha256"],h)) for h in r["unit_evidence_handles"]]
+                units={d["unit"] for w in witnesses if w for d in w["dimensions"] if d["kind"]=="thickness" and d["unit"]}
+                unit=next(iter(units)) if len(units)==1 and all(witnesses) else None
+            if not unit or not np.isclose(r["modeled_thickness_m"],dim["value"]*METRE[unit],rtol=1e-12,atol=0):
+                problems.append("厚度缺乏原数值与单位证据");continue
+            origin,expected=solid(r["contour"]["contour_wcs"],r["modeled_thickness_m"],r["scale"]["m_per_drawing_unit"])
+            if not np.array_equal(origin,r["paper_origin_wcs"]) or not np.array_equal(expected.vertices,mesh.vertices) or not np.array_equal(expected.faces,mesh.faces):
+                problems.append("成品不符合原图轮廓、位置或挤出尺寸")
+        elif not np.allclose(mesh.bounds,r["bounds_m"],rtol=0,atol=1e-10):
+            problems.append("成品船轴位置与记录不符")
+        actual=quality(mesh)
         if not actual["closed_verified"] or not r["quality"]["closed_verified"] or not np.isclose(actual["signed_volume_m3"],r["quality"]["signed_volume_m3"],rtol=1e-9,atol=1e-15):
             problems.append("实体回读质量与记录不符")
     return problems

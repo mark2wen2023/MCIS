@@ -156,6 +156,7 @@ def compute(drawings, dest, hull=None):
             r["unknowns"].append("hull_attachment")
         r["asset"]=key+".ply"
         write_solid(dest/r["asset"],mesh)
+        r["asset_sha256"]=fingerprint(dest/r["asset"])
     return dict(schema_version="4.0",section_templates=sections.section_templates(notes),profile_matches=sections.profile_matches(notes),conflicts=conflicts,local_models=panels.recover(drawings,notes,dest),components=results,observations=notes,view_titles=view_titles,identity_candidates=annotations.associations(notes),hull_quality=hull_qa,engineering_approved=False,view_tolerance_m=LIMIT)
 
 

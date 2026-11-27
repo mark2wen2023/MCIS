@@ -35,3 +35,7 @@ class Notes(unittest.TestCase):
     def test_bulkhead_plate_abbreviated_on_drawing(self):
         for text,role in [("FR 2~FR 5 纵壁板 t=4","longitudinal_bulkhead"),("横向壁板","transverse_bulkhead")]:
             self.assertEqual(parse(text)["type"],role)
+
+    def test_each_profile_belongs_to_its_own_clause(self):
+        q=parse("斜撑L65x5 连接板-6x120x140")
+        self.assertEqual([v["owner_type"] for v in q["profiles"]],["brace","bracket"])

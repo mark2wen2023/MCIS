@@ -17,6 +17,7 @@ ALIASES = (
     ("deck",r"甲板|\bdeck\b"),
     ("tank",r"压载舱|(?:水|油)柜|液舱|\btank\b"),
     ("compartment",r"货舱|机舱|舱室|compartment|cargo\s*hold"),
+    ("brace",r"斜杆|斜撑|diagonal brace"),
     ("bracket",r"肘板|连接板|bracket|gusset"),
     ("plate",r"外板|舷板|底板|平板|钢板|板料|\bplate\b"),
 )
@@ -58,6 +59,17 @@ def parse(text):
         profiles.append(dict(family=m["family"].upper(),values=[None if v in ("?","？") else float(v) for v in re.findall(NUM+r"|[?？]",m["values"])],unit=UNIT_VALUE.get((m["unit"] or "").lower()),raw=m[0].strip()))
     for m in STOCK.finditer(s):
         profiles.append(dict(family="PL",values=[float(v) for v in m.groups()[:3] if v],unit=UNIT_VALUE.get((m[4] or "").lower()),raw=m[0].strip()))
+    # Bind each profile to its own preceding noun phrase. A compound note may
+    # describe a brace and a separate connecting plate with different sections.
+    cursor=0
+    for profile in sorted(profiles,key=lambda p:s.find(p["raw"])):
+        position=s.find(profile["raw"],cursor)
+        if position<0:continue
+        clause=s[cursor:position]
+        owners=[role for role,pattern in ALIASES if re.search(pattern,clause,re.I)]
+        profile["owner_type"]=owners[0] if owners else None
+        profile["owner_text"]=clause.strip() or None
+        cursor=position+len(profile["raw"])
     ranges=[dict(start=float(m[1]),end=float(m[2] or m[1]),raw=m[0]) for m in RANGE.finditer(s)]
     id_match=IDENT.search(s)
     if not id_match:
