@@ -41,7 +41,7 @@ def hits(x, pp):
     return a[ok, 1] + (x - a[ok, 0]) / (b[ok, 0] - a[ok, 0]) * (b[ok, 1] - a[ok, 1])
 
 
-def offset_match(frame, points, cells):
+def offset_match(frame, points, cells, curve=None):
     view = frame["view"]
     axes = {k: points @ np.array(v[:2]) + v[2] for k, v in frame["axes"].items()}
     if view == "YZ":
@@ -58,9 +58,20 @@ def offset_match(frame, points, cells):
         coord = "station_m"
     else:
         return []
+    from .intersections import section_envelope
+    cells = [c for c in cells if c["value_m"] is not None and c[key] is not None and c[coord] is not None and c["level_m"] is not None]
+    exact = None
+    if view == "YZ" and curve is not None and curve["type"] == "SPLINE":
+        exact = section_envelope(curve, frame["axes"], {c[coord] for c in cells})
+    expected = defaultdict(int)
     errors = defaultdict(list)
     for c in cells:
         if c["value_m"] is None or c[key] is None or c[coord] is None or c["level_m"] is None:
+            continue
+        expected[c[key]] += 1
+        if exact is not None:
+            if c[coord] in exact:
+                errors[c[key]].append((abs(exact[c[coord]]-c["value_m"]), c["instances"]))
             continue
         v = hits(c[coord], p)
         if len(v):
@@ -75,10 +86,12 @@ def offset_match(frame, points, cells):
                     fixed_m=level,
                     rms_m=rms,
                     n=len(err),
+                    expected=expected[level],
+                    method="original_spline_outer_intersection" if exact is not None else "sampled_intersection",
                     value_instances=[s for _, items in err for s in items],
                 )
             )
-    return sorted(scored, key=lambda r: r["rms_m"])[:3]
+    return sorted(scored, key=lambda r: (r["n"] < r["expected"], r["rms_m"]))[:3]
 
 
 def extract(data, inv, tables, frames):
@@ -147,7 +160,7 @@ def extract(data, inv, tables, frames):
                 tag = {"YZ": "section", "XY": "waterline", "XZ": "buttock"}[f["view"]]
                 candidates.append(dict(kind=tag, basis="view_family", view=f["view"]))
                 if c["type"] == "SPLINE":
-                    geometry_matches.extend(offset_match(f, pp, cells))
+                    geometry_matches.extend(offset_match(f, pp, cells, c))
         labels = []
         for t, kind in guide_labels:
             if t["layout"] != c["layout"]:
@@ -175,13 +188,14 @@ def extract(data, inv, tables, frames):
             key = (g["kind"], g["fixed_m"])
             if key not in by_key or by_key[key]["rms_m"] > g["rms_m"]:
                 by_key[key] = g
-        matches = sorted(by_key.values(), key=lambda g: g["rms_m"])
+        matches = sorted(by_key.values(), key=lambda g: (g["n"] < g["expected"], g["rms_m"]))
         kind = "unknown"
         confidence = "unknown"
         if (
             matches
+            and matches[0]["n"] == matches[0]["expected"]
             and matches[0]["rms_m"] < 0.025
-            and (len(matches) == 1 or matches[1]["rms_m"] > matches[0]["rms_m"] + 0.005)
+            and all(m["n"] != m["expected"] or m["rms_m"] > matches[0]["rms_m"] + 0.005 for m in matches[1:])
         ):
             kind = matches[0]["kind"]
             confidence = "cross_checked_candidate"
