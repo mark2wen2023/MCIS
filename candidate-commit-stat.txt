@@ -1,0 +1,38 @@
+commit b579b39cab2f2050c01ec4153170c4ae7dc9f603
+Author:     Mark Wen <mark@users.noreply.github.com>
+AuthorDate: Sat Nov 28 05:49:23 2026 +0800
+Commit:     Mark Wen <mark@users.noreply.github.com>
+CommitDate: Sat Nov 28 05:49:23 2026 +0800
+
+    test(w35): add theme-free reviewer handoff pack for blind labeling
+    
+    Adds tests_acceptance/W35_BLIND_REVIEWER_PACK only. The six frozen
+    transcripts at c826236 are unchanged; copies are SHA-verified.
+    Handoff has verbatim records, theme-free instructions, blank
+    extraction and contradiction tables, policy-freeze sheets, and a
+    SHA roster. Contradiction table is format-only; no control truth.
+    Not formal acceptance. No product changes.
+
+ .../W35_BLIND_REVIEWER_HANDOFF.zip                 | Bin 0 -> 21425 bytes
+ .../W35_BLIND_REVIEWER_PACK/check-summary.txt      |   8 +
+ .../W35_BLIND_REVIEWER_PACK/handoff/SHA256SUMS.txt |   6 +
+ .../W35_BLIND_REVIEWER_PACK/handoff/roster.csv     |   7 +
+ .../handoff/templates/contradiction-review.csv     |   1 +
+ .../handoff/templates/contradiction-review.json    |  65 ++++++
+ .../templates/policy-freeze-denominator.csv        |   1 +
+ .../templates/policy-freeze-denominator.json       |  44 ++++
+ .../handoff/templates/policy-freeze-dispute.csv    |   1 +
+ .../handoff/templates/policy-freeze-dispute.json   |  49 ++++
+ .../policy-freeze-miss-and-false-positive.csv      |   1 +
+ .../policy-freeze-miss-and-false-positive.json     |  40 ++++
+ .../handoff/templates/statement-extraction.csv     |   1 +
+ .../handoff/templates/statement-extraction.json    |  57 +++++
+ .../handoff/transcripts/IR-SYN-01.json             | 101 ++++++++
+ .../handoff/transcripts/IR-SYN-02.json             | 101 ++++++++
+ .../handoff/transcripts/IR-SYN-03.json             | 101 ++++++++
+ .../handoff/transcripts/IR-SYN-04.json             | 101 ++++++++
+ .../handoff/transcripts/IR-SYN-05.json             | 101 ++++++++
+ .../handoff/transcripts/IR-SYN-06.json             | 101 ++++++++
+ .../W35_BLIND_REVIEWER_PACK/handoff/操作说明.md    |  24 ++
+ .../W35_BLIND_REVIEWER_PACK/test_reviewer_pack.py  | 253 +++++++++++++++++++++
+ 22 files changed, 1164 insertions(+)

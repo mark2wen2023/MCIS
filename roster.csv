@@ -1,0 +1,7 @@
+recordId,file,sha256,intervieweeId,name,role,affiliation
+IR-SYN-01,transcripts/IR-SYN-01.json,e59a10fdebdd1e5b1c22a3dfa3f23eeb5dad9f811af95273da33434e01cbdb20,P-SYN-LS-OOW,陈海,二副（值班驾驶员）,虚构货轮「岚升」
+IR-SYN-02,transcripts/IR-SYN-02.json,0a15e3707428e8fd299ad7791277ae72c52c0d6736eb15e921e3a572b05a292d,P-SYN-LS-AB,周平,值班水手,虚构货轮「岚升」
+IR-SYN-03,transcripts/IR-SYN-03.json,78a34df5757c5384dc98efac629fe5a224b682007373481c77ed3eb0aae16bbc,P-SYN-LS-MASTER,吴岩,船长,虚构货轮「岚升」
+IR-SYN-04,transcripts/IR-SYN-04.json,bbd94918c93e69c099a29567cfb656434437fd8286ac4956304575813cd069c4,P-SYN-LS-ENGINEER,赵宁,值班轮机员,虚构货轮「岚升」
+IR-SYN-05,transcripts/IR-SYN-05.json,398c7e4c0ccc60a3420244f89cb93807ac654edff8b13fea8ccbe519f504cba5,P-SYN-QY-MASTER,陈海,船长,虚构渔船「青屿」
+IR-SYN-06,transcripts/IR-SYN-06.json,f6b26f29463e2acb63383d3a325c5ddda8e536fdbec2caa3c98b1609d1b5d89b,P-SYN-VTS-WATCH,孙牧,VTS 值班员,虚构岸台「青岚湾 VTS」
