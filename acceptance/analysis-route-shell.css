@@ -1,0 +1,101 @@
+/* Narrow-screen shell for the analysis route only.
+   Imported solely by AnalysisPage. Does not edit styles.css or Layout.tsx.
+   Rules apply only when html.w12-analysis-route is set and the viewport is narrow.
+   Do not use overflow:hidden on the page to mask leftover width. */
+@media (max-width: 600px) {
+  html.w12-analysis-route,
+  html.w12-analysis-route body,
+  html.w12-analysis-route #root {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  html.w12-analysis-route .app {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto minmax(0, 1fr);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  html.w12-analysis-route .sidebar {
+    grid-row: 1;
+    grid-column: 1;
+    max-height: min(32vh, 240px);
+    overflow-x: auto;
+    overflow-y: auto;
+    min-width: 0;
+  }
+
+  html.w12-analysis-route .topbar {
+    grid-row: 2;
+    grid-column: 1;
+    min-width: 0;
+    flex-wrap: wrap;
+    height: auto;
+    min-height: var(--topbar-h);
+    align-items: flex-start;
+  }
+
+  html.w12-analysis-route .topbar-left,
+  html.w12-analysis-route .topbar-right {
+    flex-wrap: wrap;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  html.w12-analysis-route .case-chip,
+  html.w12-analysis-route .watermark {
+    white-space: normal;
+    max-width: 100%;
+  }
+
+  html.w12-analysis-route .main {
+    grid-row: 3;
+    grid-column: 1;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  html.w12-analysis-route [data-testid="analysis-page"],
+  html.w12-analysis-route .p6-card,
+  html.w12-analysis-route .p6-note {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  html.w12-analysis-route .page-head,
+  html.w12-analysis-route .page-title {
+    flex-wrap: wrap;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  html.w12-analysis-route .page-actions {
+    flex-shrink: 1;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  html.w12-analysis-route [data-testid="case-switcher"],
+  html.w12-analysis-route .p6-seg,
+  html.w12-analysis-route .an-series-pick {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+
+  html.w12-analysis-route .an-top {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Keep necessary in-container scrolling for wide tables/charts; do not clip the page. */
+  html.w12-analysis-route [data-testid="analysis-page"] .panel-body {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+
+  html.w12-analysis-route .p6-note code {
+    overflow-wrap: anywhere;
+    word-break: break-all;
+  }
+}

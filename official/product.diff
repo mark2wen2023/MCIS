@@ -1,0 +1,186 @@
+diff --git a/web/src/analysis/AnalysisView.tsx b/web/src/analysis/AnalysisView.tsx
+index c8b64de..d567d60 100644
+--- a/web/src/analysis/AnalysisView.tsx
++++ b/web/src/analysis/AnalysisView.tsx
+@@ -1,5 +1,5 @@
+ // W12 分析页（原型第 08 页）：DCPA/TCPA 与距离曲线、关键时刻、W14 对比表 / 临界标注 / 天线敏感性、数据来源。
+-import { useMemo } from 'react'
++import { useMemo, type KeyboardEvent } from 'react'
+ import { EChart } from '../components/EChart'
+ import { Panel } from '../components/Panel'
+ import { BASELINE, curveOption, fmtM, fmtMoment, fmtNm, pickSeries, sensitivitySpan, shortSha, trackOption, vesselName, verdictTone } from './derive'
+@@ -16,6 +16,16 @@ export interface AnalysisViewProps {
+   charts?: boolean
+ }
+ 
++
++function activateOnKey(action: () => void) {
++  return (event: KeyboardEvent<HTMLElement>) => {
++    if (event.key === 'Enter' || event.key === ' ') {
++      event.preventDefault()
++      action()
++    }
++  }
++}
++
+ const CASE_LABEL: Record<string, string> = { 'lily-mary': 'Lily / Mary（虚构）', haili5: '海力5', yangze22: 'YANGZE 22' }
+ 
+ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, serviceAddr, charts = true }: AnalysisViewProps) {
+@@ -39,7 +49,7 @@ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, se
+         <div className="page-actions">
+           <span className="p6-seg" data-testid="case-switcher">
+             {cases.map((c) => (
+-              <span key={c.caseId} className={c.caseId === data.caseId ? 'on' : ''} onClick={() => onSwitchCase(c.caseId)} role="button" tabIndex={0}>
++              <span key={c.caseId} className={c.caseId === data.caseId ? 'on' : ''} onClick={() => onSwitchCase(c.caseId)} onKeyDown={activateOnKey(() => onSwitchCase(c.caseId))} role="button" tabIndex={0}>
+                 {CASE_LABEL[c.key] ?? c.title}
+               </span>
+             ))}
+@@ -56,11 +66,11 @@ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, se
+         <Panel title="两船距离 D(t)、DCPA(t)、TCPA(t) 时序曲线"
+           meta={<span>步长 {sel === BASELINE ? data.baseline.stepSec : w?.stepSec} s · 截至 {picked.series[picked.series.length - 1]?.clock ?? '—'}</span>}>
+           <div className="p6-seg an-series-pick" data-testid="series-pick">
+-            <span className={sel === BASELINE ? 'on' : ''} onClick={() => onSelect(BASELINE)} role="tab" tabIndex={0}>
++            <span className={sel === BASELINE ? 'on' : ''} onClick={() => onSelect(BASELINE)} onKeyDown={activateOnKey(() => onSelect(BASELINE))} role="tab" tabIndex={0}>
+               {data.key === 'yangze22' ? '原始（S0 重建）' : '案件航迹'}
+             </span>
+             {w?.rows.map((r) => (
+-              <span key={r.id} className={sel === r.id ? 'on' : ''} onClick={() => onSelect(r.id)} role="tab" tabIndex={0}>
++              <span key={r.id} className={sel === r.id ? 'on' : ''} onClick={() => onSelect(r.id)} onKeyDown={activateOnKey(() => onSelect(r.id))} role="tab" tabIndex={0}>
+                 {r.id}{r.isCritical ? ' ⚠' : ''}
+               </span>
+             ))}
+diff --git a/web/src/analysis/analysis-route-shell.css b/web/src/analysis/analysis-route-shell.css
+new file mode 100644
+index 0000000..d60dc27
+--- /dev/null
++++ b/web/src/analysis/analysis-route-shell.css
+@@ -0,0 +1,101 @@
++/* Narrow-screen shell for the analysis route only.
++   Imported solely by AnalysisPage. Does not edit styles.css or Layout.tsx.
++   Rules apply only when html.w12-analysis-route is set and the viewport is narrow.
++   Do not use overflow:hidden on the page to mask leftover width. */
++@media (max-width: 600px) {
++  html.w12-analysis-route,
++  html.w12-analysis-route body,
++  html.w12-analysis-route #root {
++    max-width: 100%;
++    min-width: 0;
++  }
++
++  html.w12-analysis-route .app {
++    grid-template-columns: minmax(0, 1fr);
++    grid-template-rows: auto auto minmax(0, 1fr);
++    width: 100%;
++    max-width: 100%;
++    min-width: 0;
++  }
++
++  html.w12-analysis-route .sidebar {
++    grid-row: 1;
++    grid-column: 1;
++    max-height: min(32vh, 240px);
++    overflow-x: auto;
++    overflow-y: auto;
++    min-width: 0;
++  }
++
++  html.w12-analysis-route .topbar {
++    grid-row: 2;
++    grid-column: 1;
++    min-width: 0;
++    flex-wrap: wrap;
++    height: auto;
++    min-height: var(--topbar-h);
++    align-items: flex-start;
++  }
++
++  html.w12-analysis-route .topbar-left,
++  html.w12-analysis-route .topbar-right {
++    flex-wrap: wrap;
++    min-width: 0;
++    max-width: 100%;
++  }
++
++  html.w12-analysis-route .case-chip,
++  html.w12-analysis-route .watermark {
++    white-space: normal;
++    max-width: 100%;
++  }
++
++  html.w12-analysis-route .main {
++    grid-row: 3;
++    grid-column: 1;
++    min-width: 0;
++    max-width: 100%;
++  }
++
++  html.w12-analysis-route [data-testid="analysis-page"],
++  html.w12-analysis-route .p6-card,
++  html.w12-analysis-route .p6-note {
++    min-width: 0;
++    max-width: 100%;
++  }
++
++  html.w12-analysis-route .page-head,
++  html.w12-analysis-route .page-title {
++    flex-wrap: wrap;
++    min-width: 0;
++    max-width: 100%;
++  }
++
++  html.w12-analysis-route .page-actions {
++    flex-shrink: 1;
++    min-width: 0;
++    max-width: 100%;
++  }
++
++  html.w12-analysis-route [data-testid="case-switcher"],
++  html.w12-analysis-route .p6-seg,
++  html.w12-analysis-route .an-series-pick {
++    flex-wrap: wrap;
++    max-width: 100%;
++  }
++
++  html.w12-analysis-route .an-top {
++    grid-template-columns: minmax(0, 1fr);
++  }
++
++  /* Keep necessary in-container scrolling for wide tables/charts; do not clip the page. */
++  html.w12-analysis-route [data-testid="analysis-page"] .panel-body {
++    overflow-x: auto;
++    max-width: 100%;
++  }
++
++  html.w12-analysis-route .p6-note code {
++    overflow-wrap: anywhere;
++    word-break: break-all;
++  }
++}
+diff --git a/web/src/pages/AnalysisPage.tsx b/web/src/pages/AnalysisPage.tsx
+index 89eb306..4a17f06 100644
+--- a/web/src/pages/AnalysisPage.tsx
++++ b/web/src/pages/AnalysisPage.tsx
+@@ -1,9 +1,11 @@
+ // W12 分析页（原型第 08 页）：数据来自服务 /analysis/cases 与 /cases/{caseId}/analysis（服务地址来自 config）。
++import { useEffect } from 'react'
+ import { useSearchParams } from 'react-router-dom'
+ import { CASE_ID } from '../api'
+ import { AnalysisView } from '../analysis/AnalysisView'
+ import { BASELINE } from '../analysis/derive'
+ import '../analysis/analysis.css'
++import '../analysis/analysis-route-shell.css'
+ import { useToast } from '../components/Toast'
+ import { SERVICE_ADDR } from '../config'
+ import { useAnalysisSnapshot } from '../analysis/useAnalysisSnapshot'
+@@ -11,6 +13,11 @@ import { useAnalysisSnapshot } from '../analysis/useAnalysisSnapshot'
+ export function AnalysisPage() {
+   const { show } = useToast()
+   const [params, setParams] = useSearchParams()
++  useEffect(() => {
++    const root = document.documentElement
++    root.classList.add('w12-analysis-route')
++    return () => { root.classList.remove('w12-analysis-route') }
++  }, [])
+   const caseId = params.get('case') || CASE_ID
+   const sel = params.get('scenario') || BASELINE
+   const { snapshot, error, reload } = useAnalysisSnapshot(caseId)

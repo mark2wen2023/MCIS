@@ -1,0 +1,14 @@
+# Official W12 narrow-layout
+# Time zone: Asia/Shanghai (CST, UTC+8)
+before: sandboxed Chrome measurement on unmodified 03a8e786 build, port 18773
+  390 complete documentElement.scrollWidth=941 (png 941x844)
+  390 waiting documentElement.scrollWidth=802 (png 802x844)
+  1440 complete documentElement.scrollWidth=1440
+after official: 2026-11-27T09:00:26+08:00 .. 2026-11-27T09:00:30+08:00 exit=0
+  timeout --signal=TERM --kill-after=10s 150s
+  390 complete/waiting documentElement.scrollWidth=390
+  1440 complete documentElement.scrollWidth=1440, before/after viewport PNGs pixel-identical (0/1296000)
+  keyboard: Tab order 24, Enter on case B control activates switch, enterOnCaseB=true
+sandbox=chromium_sandbox=True ; no --no-sandbox
+bind=127.0.0.1:18773
+pin=03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5

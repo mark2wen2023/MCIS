@@ -1,0 +1,34 @@
+{
+  "label": "before",
+  "pin": "03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5",
+  "seedSha256": "99a77875e6ac87383fb01d7dd59187cb6dafe0bed9c1033d9ff48bef37bd5324",
+  "sandbox": "chromium_sandbox=True",
+  "390Complete": {
+    "innerWidth": 390,
+    "innerHeight": 844,
+    "documentElementScrollWidth": 941,
+    "documentElementClientWidth": 390,
+    "bodyScrollWidth": 941,
+    "bodyClientWidth": 390,
+    "overflowing": true
+  },
+  "390Waiting": {
+    "innerWidth": 390,
+    "innerHeight": 844,
+    "documentElementScrollWidth": 802,
+    "documentElementClientWidth": 390,
+    "bodyScrollWidth": 802,
+    "bodyClientWidth": 390,
+    "overflowing": true
+  },
+  "1440Complete": {
+    "innerWidth": 1440,
+    "innerHeight": 900,
+    "documentElementScrollWidth": 1440,
+    "documentElementClientWidth": 1440,
+    "bodyScrollWidth": 1440,
+    "bodyClientWidth": 1440,
+    "overflowing": false
+  },
+  "keyboard": null
+}

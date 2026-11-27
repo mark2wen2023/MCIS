@@ -1,0 +1,80 @@
+{
+  "390": {
+    "beforeComplete": {
+      "innerWidth": 390,
+      "documentElementScrollWidth": 941,
+      "fullPagePngWidth": 941
+    },
+    "beforeWaiting": {
+      "innerWidth": 390,
+      "documentElementScrollWidth": 802,
+      "fullPagePngWidth": 802
+    },
+    "afterComplete": {
+      "innerWidth": 390,
+      "documentElementScrollWidth": 390,
+      "fullPagePngWidth": 390
+    },
+    "afterWaiting": {
+      "innerWidth": 390,
+      "documentElementScrollWidth": 390,
+      "fullPagePngWidth": 390
+    }
+  },
+  "1440": {
+    "beforeComplete": {
+      "innerWidth": 1440,
+      "documentElementScrollWidth": 1440,
+      "sidebarLeft": 0,
+      "sidebarWidth": 223,
+      "topbarLeft": 224,
+      "topbarWidth": 1216,
+      "analysisPageWidth": 1180
+    },
+    "afterComplete": {
+      "innerWidth": 1440,
+      "documentElementScrollWidth": 1440,
+      "sidebarLeft": 0,
+      "sidebarWidth": 223,
+      "topbarLeft": 224,
+      "topbarWidth": 1216,
+      "analysisPageWidth": 1180
+    },
+    "pixelCompare": {
+      "changedPixels": 0,
+      "total": 1296000,
+      "identical": true
+    }
+  },
+  "overflowSourcesBefore": [
+    {
+      "selector": "div.app / header.topbar / main.main",
+      "source": "web/src/styles.css and web/src/Layout.tsx @ 03a8e786",
+      "sha256_styles": "98dc5da4fa4b66603d2e556b4a45b7659bbdbe05307d6f34e73db960b987164c",
+      "sha256_layout": "12bad75304b2c849ae262c4f9301465fd4eb54e37faa3f9c1bcb62479e59379d",
+      "note": "Shared grid is sidebar 224px + 1fr with no narrow breakpoint; topbar case-chip/watermark nowrap. Not edited. Overridden only under html.w12-analysis-route at max-width 600px via a new route-only CSS file."
+    },
+    {
+      "selector": "div.page-head, div.page-actions, [data-testid=case-switcher], div.an-top, table[data-testid=sources]",
+      "source": "web/src/analysis/AnalysisView.tsx and web/src/analysis/analysis.css @ 03a8e786",
+      "sha256_view": "99aafc4d2ec59ef7e02724b2a890c20fa581f3b5f33dcde68e063a77a085348c",
+      "sha256_css": "dee05b5395192cd9e6b325c6a199e09981e0b742f4875b146cbcd01ab098c495",
+      "note": "Analysis page-head and two-column an-top plus nowrap tables contributed additional min-content width in the complete state."
+    }
+  ],
+  "fix": {
+    "files": [
+      "web/src/analysis/analysis-route-shell.css",
+      "web/src/pages/AnalysisPage.tsx",
+      "web/src/analysis/AnalysisView.tsx"
+    ],
+    "untouched": [
+      "web/src/styles.css",
+      "web/src/Layout.tsx",
+      "web/src/analysis/useAnalysisSnapshot.ts",
+      "web/src/analysis/derive.ts",
+      "web/src/analysis/types.ts",
+      "service/mcis_service/analysis/router.py"
+    ]
+  }
+}

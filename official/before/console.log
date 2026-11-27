@@ -1,0 +1,12 @@
+label=before; seed=99a77875e6ac87383fb01d7dd59187cb6dafe0bed9c1033d9ff48bef37bd5324
+390 complete state (case A loaded)
+screenshot /workspace/mcis-w12-narrow-layout-report/official/before/screenshots/390-complete-viewport.png full_page=False
+screenshot /workspace/mcis-w12-narrow-layout-report/official/before/screenshots/390-complete-fullpage.png full_page=True
+390 complete innerWidth=390 scrollWidth=941
+390 waiting state (B analysis held)
+screenshot /workspace/mcis-w12-narrow-layout-report/official/before/screenshots/390-waiting-viewport.png full_page=False
+screenshot /workspace/mcis-w12-narrow-layout-report/official/before/screenshots/390-waiting-fullpage.png full_page=True
+390 waiting innerWidth=390 scrollWidth=802
+1440 desktop complete state
+screenshot /workspace/mcis-w12-narrow-layout-report/official/before/screenshots/1440-complete-viewport.png full_page=False
+1440 innerWidth=1440 scrollWidth=1440
