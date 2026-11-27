@@ -160,7 +160,7 @@ def compute(drawings, dest, hull=None):
     return dict(schema_version="4.0",section_templates=sections.section_templates(notes),profile_matches=sections.profile_matches(notes),conflicts=conflicts,local_models=panels.recover(drawings,notes,dest),components=results,observations=notes,view_titles=view_titles,identity_candidates=annotations.associations(notes),hull_quality=hull_qa,engineering_approved=False,view_tolerance_m=LIMIT)
 
 
-def main():
+def main(extension=None):
     import tempfile
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("input",type=Path)
@@ -182,6 +182,8 @@ def main():
         result["sources"]=[dict(source_sha256=d["sha256"],dxf_sha256=d["dxf_sha256"],conversion=d["conversion"]) for d in drawings]
         result["hull_sha256"]=fingerprint(a.hull_glb) if a.hull_glb else None
     (a.out/"structures.json").write_text(json.dumps(result,ensure_ascii=False,indent=2,allow_nan=False))
+    if extension is not None:
+        extension(drawings,result,a.out)
     if a.mode=="observe":return 0 if result["observations"] else 4
     if not result["components"] and result["local_models"]:return 0
     return 0 if result["components"] and all(v["geometry_status"]=="research_geometry_verified" for v in result["components"]) else 4
