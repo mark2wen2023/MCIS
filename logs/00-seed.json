@@ -1,0 +1,23 @@
+{
+  "caseA": "SYN-W9-ENV-ZERO-A",
+  "caseB": "SYN-W9-ENV-UNK-B",
+  "observationA": {
+    "observationId": "ENV-SYN-W9-ZERO-A",
+    "caseId": "SYN-W9-ENV-ZERO-A",
+    "observedAtUtc": "2026-03-11T08:17:40Z",
+    "locationDescription": "合成台站-零值点",
+    "description": "合成观察，合法零风速，不是真实事故记录。",
+    "sourceLabel": "SYN-W9-ENV-SRC-ZERO",
+    "valueOrigin": "Direct",
+    "windSpeedMps": 0
+  },
+  "observationB": {
+    "observationId": "ENV-SYN-W9-UNK-B",
+    "caseId": "SYN-W9-ENV-UNK-B",
+    "observedAtUtc": "2026-04-22T19:03:11Z",
+    "locationDescription": "合成台站-未知风速点",
+    "description": "合成观察，风速按合同留空为未知，不是真实事故记录。",
+    "sourceLabel": "SYN-W9-ENV-SRC-UNK",
+    "valueOrigin": "Direct"
+  }
+}

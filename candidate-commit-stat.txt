@@ -1,0 +1,5 @@
+e32816b test(w9): add official environment-page read Chrome acceptance
+ tests_acceptance/w9-env-page-read/README.md |  16 ++
+ tests_acceptance/w9-env-page-read/host.py   |  28 +++
+ tests_acceptance/w9-env-page-read/run.py    | 369 ++++++++++++++++++++++++++++
+ 3 files changed, 413 insertions(+)

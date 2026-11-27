@@ -1,0 +1,229 @@
+{
+  "pass": true,
+  "chromiumSandbox": true,
+  "noSandboxArg": false,
+  "pin": "94d5e38c926fda232bb987b60fa9145e4bcf01a7",
+  "version": "Google Chrome 156.0.8078.47",
+  "desktop": {
+    "viewport": "desktop-1440",
+    "zeroRequest": {
+      "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-ZERO-A/environment-observations",
+      "status": 200,
+      "body": [
+        {
+          "observationId": "ENV-SYN-W9-ZERO-A",
+          "caseId": "SYN-W9-ENV-ZERO-A",
+          "observedAtUtc": "2026-03-11T08:17:40Z",
+          "locationDescription": "合成台站-零值点",
+          "description": "合成观察，合法零风速，不是真实事故记录。",
+          "sourceLabel": "SYN-W9-ENV-SRC-ZERO",
+          "valueOrigin": "Direct",
+          "windSpeedMps": 0
+        }
+      ]
+    },
+    "unknownRequest": {
+      "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-UNK-B/environment-observations",
+      "status": 200,
+      "body": [
+        {
+          "observationId": "ENV-SYN-W9-UNK-B",
+          "caseId": "SYN-W9-ENV-UNK-B",
+          "observedAtUtc": "2026-04-22T19:03:11Z",
+          "locationDescription": "合成台站-未知风速点",
+          "description": "合成观察，风速按合同留空为未知，不是真实事故记录。",
+          "sourceLabel": "SYN-W9-ENV-SRC-UNK",
+          "valueOrigin": "Direct"
+        }
+      ]
+    },
+    "browserApiRequests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-ZERO-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-ZERO-A/environment-observations",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-ZERO-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-ZERO-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-ZERO-A/environment-observations",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-UNK-B",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-UNK-B/environment-observations",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-UNK-B",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-UNK-B",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-UNK-B/environment-observations",
+        "resource": "fetch"
+      }
+    ],
+    "verificationWrites": [],
+    "pageErrors": [],
+    "screenshots": [
+      "01-desktop-zero.png",
+      "01-desktop-unknown.png"
+    ]
+  },
+  "narrow390": {
+    "viewport": "narrow-390",
+    "zeroRequest": {
+      "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-ZERO-A/environment-observations",
+      "status": 200,
+      "body": [
+        {
+          "observationId": "ENV-SYN-W9-ZERO-A",
+          "caseId": "SYN-W9-ENV-ZERO-A",
+          "observedAtUtc": "2026-03-11T08:17:40Z",
+          "locationDescription": "合成台站-零值点",
+          "description": "合成观察，合法零风速，不是真实事故记录。",
+          "sourceLabel": "SYN-W9-ENV-SRC-ZERO",
+          "valueOrigin": "Direct",
+          "windSpeedMps": 0
+        }
+      ]
+    },
+    "unknownRequest": {
+      "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-UNK-B/environment-observations",
+      "status": 200,
+      "body": [
+        {
+          "observationId": "ENV-SYN-W9-UNK-B",
+          "caseId": "SYN-W9-ENV-UNK-B",
+          "observedAtUtc": "2026-04-22T19:03:11Z",
+          "locationDescription": "合成台站-未知风速点",
+          "description": "合成观察，风速按合同留空为未知，不是真实事故记录。",
+          "sourceLabel": "SYN-W9-ENV-SRC-UNK",
+          "valueOrigin": "Direct"
+        }
+      ]
+    },
+    "browserApiRequests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-ZERO-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-ZERO-A/environment-observations",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-ZERO-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-ZERO-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-ZERO-A/environment-observations",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-UNK-B",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-UNK-B/environment-observations",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-UNK-B",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-UNK-B",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18797/api/v1/cases/SYN-W9-ENV-UNK-B/environment-observations",
+        "resource": "fetch"
+      }
+    ],
+    "verificationWrites": [],
+    "pageErrors": [],
+    "screenshots": [
+      "02-390-zero.png",
+      "02-390-unknown.png"
+    ]
+  },
+  "verificationWrites": [],
+  "pageErrors": [],
+  "screenshots": [
+    "01-desktop-zero.png",
+    "01-desktop-unknown.png",
+    "02-390-zero.png",
+    "02-390-unknown.png"
+  ]
+}

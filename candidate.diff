@@ -1,0 +1,431 @@
+diff --git a/tests_acceptance/w9-env-page-read/README.md b/tests_acceptance/w9-env-page-read/README.md
+new file mode 100644
+index 0000000..9b45d91
+--- /dev/null
++++ b/tests_acceptance/w9-env-page-read/README.md
+@@ -0,0 +1,16 @@
++# W9 正式环境页只读检索（同案观察、切案不串）
++
++只验收现有正式产品壳 `#/env` 页面，不改产品、不另造页面、不重跑 `3d0e46e` 隔离页保存恢复。
++
++固定产品 SHA：`94d5e38c926fda232bb987b60fa9145e4bcf01a7`。用已有 Linux、正常沙箱 Chrome、真实回环服务和临时 SQLite。工装在浏览前通过标准服务预置两件合成案件与观察；浏览阶段零写入。桌面与 390 各只跑同一条读链，报告需分段记录。
++
++```sh
++timeout --signal=TERM --kill-after=10s 150s env \
++  MCIS_HOST_PYTHON=/existing/service/.venv/bin/python \
++  MCIS_CHROMIUM=/existing/google-chrome \
++  MCIS_NODE_MODULES=/existing/web/node_modules \
++  MCIS_BROWSER_EVIDENCE_DIR=/new/w9-env-page-read-evidence \
++  /existing/playwright-venv/bin/python tests_acceptance/w9-env-page-read/run.py
++```
++
++此项不等于 W9 整包。不安装依赖、不关沙箱、不用真案或外部模型。
+diff --git a/tests_acceptance/w9-env-page-read/host.py b/tests_acceptance/w9-env-page-read/host.py
+new file mode 100644
+index 0000000..e6cdf41
+--- /dev/null
++++ b/tests_acceptance/w9-env-page-read/host.py
+@@ -0,0 +1,28 @@
++"""Official MCIS loopback host for the W9 official environment-page read gate.
++
++Listens on 127.0.0.1 only. Temporary data directory, no demo seed.
++Product code is unchanged.
++"""
++from __future__ import annotations
++
++import os
++from pathlib import Path
++
++import uvicorn
++from mcis_service.config import Settings
++from mcis_service.main import create_app
++
++DATA = Path(os.environ["MCIS_DATA_DIR"])
++PORT = int(os.environ.get("MCIS_PORT", "18796"))
++HOST = "127.0.0.1"
++
++app = create_app(Settings(data_dir=DATA, seed_demo=False, host=HOST, port=PORT))
++
++
++@app.on_event("startup")
++def _ready() -> None:
++    print(f"W9_ENV_PAGE_READY port={PORT}", flush=True)
++
++
++if __name__ == "__main__":
++    uvicorn.run(app, host=HOST, port=PORT, log_level="warning")
+diff --git a/tests_acceptance/w9-env-page-read/run.py b/tests_acceptance/w9-env-page-read/run.py
+new file mode 100644
+index 0000000..2d04347
+--- /dev/null
++++ b/tests_acceptance/w9-env-page-read/run.py
+@@ -0,0 +1,369 @@
++"""Official sandboxed Chrome gate: existing environment page, cross-case read.
++
++Uses the real MCIS service and the official `#/env` page. Does not change
++product code or invent a page. Pre-seeding uses the standard service;
++verification is read-only. Desktop and 390 each run the same read chain.
++"""
++from __future__ import annotations
++
++import json
++import os
++import signal
++import subprocess
++import sys
++import tempfile
++import time
++import traceback
++import urllib.error
++import urllib.parse
++import urllib.request
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++ROOT = HERE.parents[1]
++PIN = "94d5e38c926fda232bb987b60fa9145e4bcf01a7"
++API_PORT = int(os.environ.get("MCIS_PORT", "18796"))
++WEB_PORT = int(os.environ.get("MCIS_WEB_PORT", "18797"))
++API = f"http://127.0.0.1:{API_PORT}"
++WEB = f"http://127.0.0.1:{WEB_PORT}"
++HOST_PYTHON = os.environ.get("MCIS_HOST_PYTHON", sys.executable)
++CHROME = os.environ.get("MCIS_CHROMIUM", "/opt/google/chrome/google-chrome")
++EVIDENCE = Path(os.environ["MCIS_BROWSER_EVIDENCE_DIR"]).resolve()
++INVESTIGATOR = {
++    "Content-Type": "application/json",
++    "Accept": "application/json",
++    "X-MCIS-Role": "Investigator",
++    "X-MCIS-Operator": "LocalSyntheticInvestigator",
++}
++
++CASE_A = "SYN-W9-ENV-ZERO-A"
++CASE_B = "SYN-W9-ENV-UNK-B"
++OBS_A = "ENV-SYN-W9-ZERO-A"
++OBS_B = "ENV-SYN-W9-UNK-B"
++TITLE_A = "合成环境案-合法零值"
++TITLE_B = "合成环境案-风速未知"
++UTC_A = "2026-03-11T08:17:40Z"
++UTC_B = "2026-04-22T19:03:11Z"
++SRC_A = "SYN-W9-ENV-SRC-ZERO"
++SRC_B = "SYN-W9-ENV-SRC-UNK"
++LOC_A = "合成台站-零值点"
++LOC_B = "合成台站-未知风速点"
++ZERO_TEXT = "0 m/s"
++UNKNOWN_WIND = "未知"
++
++
++def _http(method: str, url: str, headers: dict, body: dict | None = None, expected: int | tuple[int, ...] = 200):
++    data = None if body is None else json.dumps(body, ensure_ascii=False).encode()
++    req = urllib.request.Request(url, data=data, headers=headers, method=method)
++    try:
++        with urllib.request.urlopen(req, timeout=15) as resp:
++            raw = resp.read()
++            status = resp.status
++            payload = json.loads(raw.decode()) if raw else None
++    except urllib.error.HTTPError as exc:
++        raw = exc.read()
++        raise RuntimeError(f"{method} {url} -> {exc.code}: {raw.decode('utf-8', 'replace')}") from exc
++    allowed = expected if isinstance(expected, tuple) else (expected,)
++    if status not in allowed:
++        raise RuntimeError(f"{method} {url} -> {status}, expected {allowed}")
++    return payload
++
++
++def wait_http(url: str, timeout: float = 40.0) -> None:
++    deadline = time.time() + timeout
++    last = None
++    while time.time() < deadline:
++        try:
++            urllib.request.urlopen(url, timeout=1).read()
++            return
++        except Exception as exc:  # noqa: BLE001
++            last = exc
++            time.sleep(0.1)
++    raise RuntimeError(f"startup failed for {url}: {last}")
++
++
++def wait_ready(proc: subprocess.Popen, timeout: float = 30.0) -> None:
++    deadline = time.time() + timeout
++    last = None
++    while time.time() < deadline:
++        if proc.poll() is not None:
++            raise RuntimeError(f"host exited {proc.returncode} before ready")
++        try:
++            urllib.request.urlopen(f"{API}/api/v1/health", timeout=0.4).read()
++            return
++        except Exception as exc:  # noqa: BLE001
++            last = exc
++            time.sleep(0.05)
++    raise RuntimeError(f"host ready timed out: {last}")
++
++
++def case_body(case_id: str, title: str) -> dict:
++    return {
++        "schemaVersion": "1.0.0",
++        "caseId": case_id,
++        "title": title,
++        "accidentType": "Collision",
++        "caseEpochUtc": "2026-01-01T00:00:00Z",
++        "incidentTimeUtc": "2026-01-01T00:00:00Z",
++        "incidentLocation": {"lonDeg": 0, "latDeg": 0},
++        "displayTimeZoneOffsetMinutes": 0,
++        "isFictionalDemo": True,
++    }
++
++
++def seed_observations() -> dict:
++    for case_id, title in ((CASE_A, TITLE_A), (CASE_B, TITLE_B)):
++        created = _http("POST", f"{API}/api/v1/cases", INVESTIGATOR, case_body(case_id, title), 201)
++        if created.get("caseId") != case_id:
++            raise RuntimeError(f"create case unexpected: {created!r}")
++    obs_a = {
++        "observationId": OBS_A,
++        "caseId": CASE_A,
++        "observedAtUtc": UTC_A,
++        "locationDescription": LOC_A,
++        "description": "合成观察，合法零风速，不是真实事故记录。",
++        "sourceLabel": SRC_A,
++        "valueOrigin": "Direct",
++        "windSpeedMps": 0,
++    }
++    obs_b = {
++        "observationId": OBS_B,
++        "caseId": CASE_B,
++        "observedAtUtc": UTC_B,
++        "locationDescription": LOC_B,
++        "description": "合成观察，风速按合同留空为未知，不是真实事故记录。",
++        "sourceLabel": SRC_B,
++        "valueOrigin": "Direct",
++    }
++    stored_a = _http("POST", f"{API}/api/v1/cases/{CASE_A}/environment-observations", INVESTIGATOR, obs_a, 201)
++    stored_b = _http("POST", f"{API}/api/v1/cases/{CASE_B}/environment-observations", INVESTIGATOR, obs_b, 201)
++    read_a = _http("GET", f"{API}/api/v1/cases/{CASE_A}/environment-observations", INVESTIGATOR)
++    read_b = _http("GET", f"{API}/api/v1/cases/{CASE_B}/environment-observations", INVESTIGATOR)
++    if read_a != [obs_a] or stored_a != obs_a:
++        raise RuntimeError(f"case A seed mismatch: {stored_a!r} {read_a!r}")
++    if read_b != [obs_b] or stored_b != obs_b or "windSpeedMps" in (read_b[0] or {}):
++        raise RuntimeError(f"case B seed mismatch: {stored_b!r} {read_b!r}")
++    return {"caseA": CASE_A, "caseB": CASE_B, "observationA": obs_a, "observationB": obs_b}
++
++
++def ensure_node_modules() -> None:
++    target = ROOT / "web" / "node_modules"
++    if target.exists():
++        return
++    src = os.environ.get("MCIS_NODE_MODULES")
++    if not src:
++        raise RuntimeError("web/node_modules missing and MCIS_NODE_MODULES unset; will not install")
++    target.symlink_to(src, target_is_directory=True)
++
++
++def terminate(proc: subprocess.Popen | None) -> None:
++    if proc is None or proc.poll() is not None:
++        return
++    try:
++        os.killpg(proc.pid, signal.SIGTERM)
++    except ProcessLookupError:
++        return
++    try:
++        proc.wait(timeout=8)
++    except subprocess.TimeoutExpired:
++        os.killpg(proc.pid, signal.SIGKILL)
++        proc.wait(timeout=5)
++
++
++def is_obs_get(url: str, case_id: str) -> bool:
++    path = urllib.parse.urlparse(url).path
++    return path.rstrip("/") == f"/api/v1/cases/{case_id}/environment-observations"
++
++
++def wind_dd_text(page) -> str:
++    rows = page.locator("article.w92-record dt")
++    for i in range(rows.count()):
++        if (rows.nth(i).inner_text() or "").strip() == "风速":
++            return (page.locator("article.w92-record dt").nth(i).locator("xpath=following-sibling::dd[1]").inner_text() or "").strip()
++    raise RuntimeError("wind speed row not found")
++
++
++def run_segment(context, seed: dict, viewport_name: str, shot_dir: Path, prefix: str) -> dict:
++    page = context.new_page()
++    page.set_default_timeout(20000)
++    page_errors: list[str] = []
++    requests: list[dict] = []
++    page.on("pageerror", lambda exc: page_errors.append(str(exc)))
++
++    def on_request(req):
++        requests.append({"method": req.method, "url": req.url, "resource": req.resource_type})
++
++    page.on("request", on_request)
++
++    def open_case(case_id: str) -> dict:
++        def match(resp) -> bool:
++            return resp.request.method == "GET" and is_obs_get(resp.url, case_id) and resp.ok
++
++        with page.expect_response(match, timeout=20000) as pending:
++            page.goto(f"{WEB}/#/env?case={case_id}")
++        resp = pending.value
++        page.get_by_role("heading", name="气象水文 · 观测记录").wait_for()
++        page.get_by_text("正在加载案件与环境记录…").wait_for(state="hidden")
++        body = resp.json()
++        return {"url": resp.url, "status": resp.status, "body": body}
++
++    # Set the official identity first so the measured case reads use Investigator.
++    page.goto(f"{WEB}/#/lobby")
++    page.locator('select[title="X-MCIS-Role"]').wait_for()
++    page.locator('select[title="X-MCIS-Role"]').select_option("Investigator")
++    first = open_case(CASE_A)
++    if first["body"] != [seed["observationA"]]:
++        raise RuntimeError(f"{viewport_name} case A request mismatch: {first['body']!r}")
++    main = page.locator("section.w92-page")
++    text_a = main.inner_text() or ""
++    assert CASE_A in text_a and TITLE_A in text_a, text_a
++    assert SRC_A in text_a and UTC_A in text_a and LOC_A in text_a and OBS_A in text_a, text_a
++    assert wind_dd_text(page) == ZERO_TEXT, wind_dd_text(page)
++    assert CASE_B not in text_a and TITLE_B not in text_a
++    assert SRC_B not in text_a and UTC_B not in text_a and LOC_B not in text_a and OBS_B not in text_a
++    page.screenshot(path=str(shot_dir / f"{prefix}-zero.png"), full_page=True)
++
++    second = open_case(CASE_B)
++    if second["body"] != [seed["observationB"]]:
++        raise RuntimeError(f"{viewport_name} case B request mismatch: {second['body']!r}")
++    text_b = main.inner_text() or ""
++    assert CASE_B in text_b and TITLE_B in text_b, text_b
++    assert SRC_B in text_b and UTC_B in text_b and LOC_B in text_b and OBS_B in text_b, text_b
++    assert wind_dd_text(page) == UNKNOWN_WIND, wind_dd_text(page)
++    assert ZERO_TEXT not in text_b, "legal zero leaked after switching cases"
++    assert CASE_A not in text_b and TITLE_A not in text_b
++    assert SRC_A not in text_b and UTC_A not in text_b and LOC_A not in text_b and OBS_A not in text_b
++    page.screenshot(path=str(shot_dir / f"{prefix}-unknown.png"), full_page=True)
++
++    writes = [r for r in requests if r["method"] not in ("GET", "HEAD", "OPTIONS") and "/api/v1/" in r["url"]]
++    assert not writes, f"{viewport_name} verification issued writes: {writes}"
++    assert not page_errors, page_errors
++    page.close()
++    return {
++        "viewport": viewport_name,
++        "zeroRequest": {"url": first["url"], "status": first["status"], "body": first["body"]},
++        "unknownRequest": {"url": second["url"], "status": second["status"], "body": second["body"]},
++        "browserApiRequests": [r for r in requests if "/api/v1/" in r["url"]],
++        "verificationWrites": writes,
++        "pageErrors": page_errors,
++        "screenshots": [f"{prefix}-zero.png", f"{prefix}-unknown.png"],
++    }
++
++
++def run_browser(seed: dict, shot_dir: Path) -> dict:
++    from playwright.sync_api import sync_playwright
++
++    shot_dir.mkdir(parents=True, exist_ok=True)
++    with sync_playwright() as pw, tempfile.TemporaryDirectory(prefix="w9-env-page-chrome-") as tmp:
++        browser = pw.chromium.launch(
++            executable_path=CHROME,
++            headless=True,
++            chromium_sandbox=True,
++            env={**os.environ, "HOME": tmp, "XDG_CONFIG_HOME": f"{tmp}/config"},
++        )
++        desktop_ctx = browser.new_context(viewport={"width": 1440, "height": 1100})
++        desktop = run_segment(desktop_ctx, seed, "desktop-1440", shot_dir, "01-desktop")
++        desktop_ctx.close()
++        narrow_ctx = browser.new_context(viewport={"width": 390, "height": 844})
++        narrow = run_segment(narrow_ctx, seed, "narrow-390", shot_dir, "02-390")
++        narrow_ctx.close()
++        version = browser.version
++        browser.close()
++    return {
++        "pass": True,
++        "version": f"Google Chrome {version}",
++        "chromiumSandbox": True,
++        "noSandboxArg": False,
++        "desktop": desktop,
++        "narrow390": narrow,
++        "verificationWrites": desktop["verificationWrites"] + narrow["verificationWrites"],
++        "pageErrors": desktop["pageErrors"] + narrow["pageErrors"],
++        "screenshots": desktop["screenshots"] + narrow["screenshots"],
++    }
++
++
++def main() -> int:
++    EVIDENCE.mkdir(parents=True, exist_ok=True)
++    logs = EVIDENCE / "logs"
++    shots = EVIDENCE / "screenshots"
++    logs.mkdir(parents=True, exist_ok=True)
++    shots.mkdir(parents=True, exist_ok=True)
++    head = subprocess.check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip()
++    if head != PIN:
++        base_ok = subprocess.run(["git", "-C", str(ROOT), "merge-base", "--is-ancestor", PIN, "HEAD"]).returncode == 0
++        if not base_ok:
++            raise SystemExit(f"HEAD {head} is not {PIN} or a descendant")
++        diff = subprocess.check_output(["git", "-C", str(ROOT), "diff", "--name-only", PIN, "HEAD"], text=True).splitlines()
++        allowed = "tests_acceptance/w9-env-page-read/"
++        if any(not path.startswith(allowed) for path in diff):
++            raise SystemExit(f"Unexpected changes versus pin: {diff}")
++    ensure_node_modules()
++    data_dir = Path(tempfile.mkdtemp(prefix="w9-env-page-sqlite-"))
++    host_log = (logs / "01-host.log").open("w", encoding="utf-8")
++    vite_log = (logs / "02-vite.log").open("w", encoding="utf-8")
++    host = vite = None
++    exit_doc: dict = {"pass": False, "chromiumSandbox": True, "noSandboxArg": False, "pin": PIN}
++    try:
++        env = {
++            **os.environ,
++            "MCIS_DATA_DIR": str(data_dir),
++            "MCIS_SEED_DEMO": "0",
++            "MCIS_PORT": str(API_PORT),
++            "MCIS_API": API,
++            "PYTHONPATH": str(ROOT / "service"),
++        }
++        host = subprocess.Popen(
++            [HOST_PYTHON, "-u", str(HERE / "host.py")],
++            cwd=str(ROOT),
++            env=env,
++            stdout=host_log,
++            stderr=subprocess.STDOUT,
++            start_new_session=True,
++        )
++        wait_ready(host)
++        seed = seed_observations()
++        (logs / "00-seed.json").write_text(json.dumps(seed, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++        vite = subprocess.Popen(
++            [
++                "node",
++                "node_modules/vite/bin/vite.js",
++                "--host",
++                "127.0.0.1",
++                "--port",
++                str(WEB_PORT),
++                "--strictPort",
++            ],
++            cwd=str(ROOT / "web"),
++            env=env,
++            stdout=vite_log,
++            stderr=subprocess.STDOUT,
++            start_new_session=True,
++        )
++        wait_http(WEB + "/", timeout=40)
++        result = run_browser(seed, shots)
++        exit_doc.update(result)
++        print(
++            "PASS official sandboxed Chrome: official env page read registered synthetic observations; "
++            "legal zero and unknown did not leak across cases after switching; desktop and 390 read-only.",
++            flush=True,
++        )
++        return 0
++    except Exception as exc:  # noqa: BLE001
++        exit_doc["error"] = str(exc)
++        exit_doc["traceback"] = traceback.format_exc()
++        print(f"FAIL {exc}", flush=True)
++        traceback.print_exc()
++        return 1
++    finally:
++        (logs / "03-browser-exit.json").write_text(
++            json.dumps(exit_doc, ensure_ascii=False, indent=2, default=str) + "\n",
++            encoding="utf-8",
++        )
++        terminate(vite)
++        terminate(host)
++        host_log.close()
++        vite_log.close()
++
++
++if __name__ == "__main__":
++    sys.exit(main())
