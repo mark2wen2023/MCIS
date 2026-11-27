@@ -31,3 +31,7 @@ class Notes(unittest.TestCase):
         self.assertEqual(r["dimensions"][0]["unit"],"in")
         self.assertEqual(r["frame_ranges"][0]["end"],-2)
         self.assertEqual(r["material"],"AH32")
+
+    def test_bulkhead_plate_abbreviated_on_drawing(self):
+        for text,role in [("FR 2~FR 5 纵壁板 t=4","longitudinal_bulkhead"),("横向壁板","transverse_bulkhead")]:
+            self.assertEqual(parse(text)["type"],role)

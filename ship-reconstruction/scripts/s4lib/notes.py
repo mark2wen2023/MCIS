@@ -5,8 +5,8 @@ from fractions import Fraction
 
 ALIASES = (
     ("strong_beam", r"强横梁|strong\s*(?:deck\s*)?beam|web\s*beam"),
-    ("transverse_bulkhead", r"横(?:向|水密)?(?:舱|隔)壁|transverse\s*bulkhead"),
-    ("longitudinal_bulkhead",r"纵(?:向|水密)?(?:舱|隔)壁|longitudinal\s*bulkhead"),
+    ("transverse_bulkhead", r"横(?:向|水密)?(?:舱|隔)壁|横(?:向)?壁板|transverse\s*bulkhead"),
+    ("longitudinal_bulkhead",r"纵(?:向|水密)?(?:舱|隔)壁|(?:内舷)?纵(?:向)?壁板|longitudinal\s*bulkhead"),
     ("floor",r"实肋板|肋板|solid\s*floor"),
     ("frame",r"肋骨|(?:web|transverse|ordinary)\s*frame|\bframe\b(?!\s*spacing)"),
     ("longitudinal",r"纵骨|纵桁|纵向加强筋|longitudinal(?:\s*stiffener)?"),
