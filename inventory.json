@@ -1,0 +1,97 @@
+{
+  "packageId": "W35-BLIND-LABEL-DRAFT-001",
+  "title": "W3/5 供调查员盲标的六份完整虚构笔录草案",
+  "notFormalAcceptance": true,
+  "draftStatus": "pending-human-review-and-freeze",
+  "scoringPaused": true,
+  "modelsNotUsed": true,
+  "productUnchanged": true,
+  "basePin": "94d5e38c926fda232bb987b60fa9145e4bcf01a7",
+  "caseId": "SYN-CASE-W35-2026-0612",
+  "syntheticDisclaimer": "本文件为虚构合成笔录草案，仅供调查员盲标准备使用。不代表真实案件、真实船舶或真实人员，不得当作正式验收原件或标准答案。",
+  "requiredThemeKeys": [
+    "direct-observation",
+    "hearsay",
+    "memory-uncertainty",
+    "approximate-time-and-units",
+    "same-name-roles-disambiguated"
+  ],
+  "themeKeyLabels": {
+    "direct-observation": "直接观察",
+    "hearsay": "转述",
+    "memory-uncertainty": "记忆不确定",
+    "approximate-time-and-units": "近似时间与单位",
+    "same-name-roles-disambiguated": "多个同名角色不混淆"
+  },
+  "sameNameNote": "姓名「陈海」出现在两名不同人员：P-SYN-LS-OOW（岚升二副，IR-SYN-01）与 P-SYN-QY-MASTER（青屿船长，IR-SYN-05）。此说明用于身份区分，不是抽取或矛盾判定的标准答案。",
+  "samples": [
+    {
+      "recordId": "IR-SYN-01",
+      "file": "samples/IR-SYN-01.json",
+      "intervieweeId": "P-SYN-LS-OOW",
+      "name": "陈海",
+      "role": "二副（值班驾驶员）",
+      "affiliation": "虚构货轮「岚升」",
+      "themeKeys": [
+        "direct-observation",
+        "same-name-roles-disambiguated"
+      ]
+    },
+    {
+      "recordId": "IR-SYN-02",
+      "file": "samples/IR-SYN-02.json",
+      "intervieweeId": "P-SYN-LS-AB",
+      "name": "周平",
+      "role": "值班水手",
+      "affiliation": "虚构货轮「岚升」",
+      "themeKeys": [
+        "hearsay"
+      ]
+    },
+    {
+      "recordId": "IR-SYN-03",
+      "file": "samples/IR-SYN-03.json",
+      "intervieweeId": "P-SYN-LS-MASTER",
+      "name": "吴岩",
+      "role": "船长",
+      "affiliation": "虚构货轮「岚升」",
+      "themeKeys": [
+        "memory-uncertainty"
+      ]
+    },
+    {
+      "recordId": "IR-SYN-04",
+      "file": "samples/IR-SYN-04.json",
+      "intervieweeId": "P-SYN-LS-ENGINEER",
+      "name": "赵宁",
+      "role": "值班轮机员",
+      "affiliation": "虚构货轮「岚升」",
+      "themeKeys": [
+        "approximate-time-and-units"
+      ]
+    },
+    {
+      "recordId": "IR-SYN-05",
+      "file": "samples/IR-SYN-05.json",
+      "intervieweeId": "P-SYN-QY-MASTER",
+      "name": "陈海",
+      "role": "船长",
+      "affiliation": "虚构渔船「青屿」",
+      "themeKeys": [
+        "direct-observation",
+        "same-name-roles-disambiguated"
+      ]
+    },
+    {
+      "recordId": "IR-SYN-06",
+      "file": "samples/IR-SYN-06.json",
+      "intervieweeId": "P-SYN-VTS-WATCH",
+      "name": "孙牧",
+      "role": "VTS 值班员",
+      "affiliation": "虚构岸台「青岚湾 VTS」",
+      "themeKeys": [
+        "hearsay"
+      ]
+    }
+  ]
+}

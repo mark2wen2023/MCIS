@@ -1,0 +1,20 @@
+W3/5 盲标样本草案检查摘要（不是正式验收，不含分数）
+packageId: W35-BLIND-LABEL-DRAFT-001
+basePin: 94d5e38c926fda232bb987b60fa9145e4bcf01a7
+caseId: SYN-CASE-W35-2026-0612
+draftStatus: pending-human-review-and-freeze
+scoringPaused: true
+modelsNotUsed: true
+
+样本清单:
+- IR-SYN-01: 陈海 / 二副（值班驾驶员） / 虚构货轮「岚升」 / intervieweeId=P-SYN-LS-OOW / 轮次=7 / 开始 2026-06-13T09:30:00+08:00 / 结束 2026-06-13T10:15:00+08:00 / 题材标签 direct-observation, same-name-roles-disambiguated
+- IR-SYN-02: 周平 / 值班水手 / 虚构货轮「岚升」 / intervieweeId=P-SYN-LS-AB / 轮次=7 / 开始 2026-06-13T10:40:00+08:00 / 结束 2026-06-13T11:20:00+08:00 / 题材标签 hearsay
+- IR-SYN-03: 吴岩 / 船长 / 虚构货轮「岚升」 / intervieweeId=P-SYN-LS-MASTER / 轮次=7 / 开始 2026-06-13T13:00:00+08:00 / 结束 2026-06-13T13:50:00+08:00 / 题材标签 memory-uncertainty
+- IR-SYN-04: 赵宁 / 值班轮机员 / 虚构货轮「岚升」 / intervieweeId=P-SYN-LS-ENGINEER / 轮次=7 / 开始 2026-06-13T14:10:00+08:00 / 结束 2026-06-13T14:45:00+08:00 / 题材标签 approximate-time-and-units
+- IR-SYN-05: 陈海 / 船长 / 虚构渔船「青屿」 / intervieweeId=P-SYN-QY-MASTER / 轮次=7 / 开始 2026-06-13T15:20:00+08:00 / 结束 2026-06-13T16:05:00+08:00 / 题材标签 direct-observation, same-name-roles-disambiguated
+- IR-SYN-06: 孙牧 / VTS 值班员 / 虚构岸台「青岚湾 VTS」 / intervieweeId=P-SYN-VTS-WATCH / 轮次=7 / 开始 2026-06-13T16:30:00+08:00 / 结束 2026-06-13T17:10:00+08:00 / 题材标签 hearsay
+
+已覆盖题材标签: approximate-time-and-units, direct-observation, hearsay, memory-uncertainty, same-name-roles-disambiguated
+同名区分: 陈海 → P-SYN-LS-OOW（IR-SYN-01，岚升二副）与 P-SYN-QY-MASTER（IR-SYN-05，青屿船长）
+空白标注模板: rows=[], CSV 仅表头；未预填答案。
+本摘要不计算一致率，不给出错漏清单或评分。

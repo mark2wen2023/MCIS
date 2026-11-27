@@ -1,0 +1,1261 @@
+diff --git a/tests_acceptance/W35_BLIND_LABEL/README.md b/tests_acceptance/W35_BLIND_LABEL/README.md
+new file mode 100644
+index 0000000..34811db
+--- /dev/null
++++ b/tests_acceptance/W35_BLIND_LABEL/README.md
+@@ -0,0 +1,37 @@
++# W3/5 盲标样本草案（不是正式验收）
++
++本目录只在独立候选上新增，供调查员对六份完整虚构笔录做盲标准备。
++不改已有 fixture 或产品，不提交期望答案、gold、自动标签或分数，不启用模型，不使用真实案件或用公开报告模拟真案。
++
++固定基线：`94d5e38c926fda232bb987b60fa9145e4bcf01a7`。
++案件编号：`SYN-CASE-W35-2026-0612`（虚构会遇，青岚湾口外，「岚升」与「青屿」）。
++草案状态：待人工复核并冻结原文。本准备不是产品试点，不称作正式验收。评分暂停。
++
++## 样本清单
++
++| 笔录 ID | 受询问人 | 职务 | 所属 | 题材差异（准备用标签，不是标注答案） |
++|---|---|---|---|---|
++| IR-SYN-01 | 陈海（P-SYN-LS-OOW） | 二副（值班驾驶员） | 虚构货轮「岚升」 | 直接观察；同名角色需与 IR-SYN-05 区分 |
++| IR-SYN-02 | 周平（P-SYN-LS-AB） | 值班水手 | 虚构货轮「岚升」 | 转述 |
++| IR-SYN-03 | 吴岩（P-SYN-LS-MASTER） | 船长 | 虚构货轮「岚升」 | 记忆不确定 |
++| IR-SYN-04 | 赵宁（P-SYN-LS-ENGINEER） | 值班轮机员 | 虚构货轮「岚升」 | 近似时间与单位 |
++| IR-SYN-05 | 陈海（P-SYN-QY-MASTER） | 船长 | 虚构渔船「青屿」 | 直接观察；与 IR-SYN-01 同名不同人 |
++| IR-SYN-06 | 孙牧（P-SYN-VTS-WATCH） | VTS 值班员 | 虚构岸台「青岚湾 VTS」 | 转述（岸台，非登轮观察） |
++
++每份注明合成，含 7 轮有上下文的问答、固定问答 ID（`IR-SYN-0N-T01` 起），以及船时东八区与 UTC 成对时标，可追溯钟域。
++姓名「陈海」对应两名人员，须用 `intervieweeId`、船舶与职务区分。
++
++## 空白标注模板
++
++见 `annotation_template/`。字段包括证据定位、陈述类型、待查、不具可比性。`rows` 为空，CSV 只有表头。
++分母、争议裁定、漏提/误提统计口径由评审人员确定并先冻结，见 `annotation_template/POLICY_TO_FREEZE.md`。不预填答案。
++
++## 检查（仅格式、ID 唯一性、完整性、清单摘要）
++
++在仓库根目录执行：
++
++```
++python3 tests_acceptance/W35_BLIND_LABEL/test_blind_sample_format.py
++```
++
++成功时退出码为 0，并在本目录写出 `checklist-summary.txt`。不计算一致率，不跑模型，不改产品。
+diff --git a/tests_acceptance/W35_BLIND_LABEL/annotation_template/POLICY_TO_FREEZE.md b/tests_acceptance/W35_BLIND_LABEL/annotation_template/POLICY_TO_FREEZE.md
+new file mode 100644
+index 0000000..49260e9
+--- /dev/null
++++ b/tests_acceptance/W35_BLIND_LABEL/annotation_template/POLICY_TO_FREEZE.md
+@@ -0,0 +1,11 @@
++# 评审人员须先冻结的口径（本页不预填答案）
++
++本页只列出需要评审人员先决定并冻结的事项，不含分母取值、裁定示例或标准答案。
++在口径冻结前，不应开始计分，也不应填写标注答案。本准备不是正式验收。
++
++1. 分母：哪些标注行计入一致率分母，哪些排除。
++2. 争议裁定：意见不一致时由谁裁定、如何记录。
++3. 漏提统计：何种情形计为漏提。
++4. 误提统计：何种情形计为误提。
++5. 陈述类型允许值：本模板不预设枚举答案，由评审人员确定后冻结。
++6. 「待查」与「不具可比性」如何影响是否进入分母。
+diff --git a/tests_acceptance/W35_BLIND_LABEL/annotation_template/blank-annotation-template.csv b/tests_acceptance/W35_BLIND_LABEL/annotation_template/blank-annotation-template.csv
+new file mode 100644
+index 0000000..a9730d6
+--- /dev/null
++++ b/tests_acceptance/W35_BLIND_LABEL/annotation_template/blank-annotation-template.csv
+@@ -0,0 +1 @@
++annotationId,recordId,turnId,evidenceLocator,statementType,pendingCheck,notComparable,notes
+diff --git a/tests_acceptance/W35_BLIND_LABEL/annotation_template/blank-annotation-template.json b/tests_acceptance/W35_BLIND_LABEL/annotation_template/blank-annotation-template.json
+new file mode 100644
+index 0000000..f00f208
+--- /dev/null
++++ b/tests_acceptance/W35_BLIND_LABEL/annotation_template/blank-annotation-template.json
+@@ -0,0 +1,64 @@
++{
++  "templateId": "W35-BLIND-ANNOTATION-V1",
++  "title": "空白标注模板（不预填答案）",
++  "notFormalAcceptance": true,
++  "answersPrefilled": false,
++  "purpose": "供评审人员在冻结统计口径之后，对六份虚构笔录草案做盲标。本文件不预填答案，不含 gold、期望抽取结果、自动标签或分数。",
++  "instructions": [
++    "分母、争议裁定、漏提与误提的统计口径由评审人员确定并先冻结，再开始标注。",
++    "每条标注应填写证据定位、陈述类型，并在需要时填写待查或不具可比性。",
++    "不得在本模板中预先填写标准答案或一致率。",
++    "原文草案后续需人工复核并冻结；本准备不称作正式验收。"
++  ],
++  "fields": [
++    {
++      "key": "annotationId",
++      "label": "标注行号",
++      "required": true,
++      "hint": "由标注员按冻结口径编号，本栏不预填。"
++    },
++    {
++      "key": "recordId",
++      "label": "笔录 ID",
++      "required": true,
++      "hint": "如 IR-SYN-01。"
++    },
++    {
++      "key": "turnId",
++      "label": "问答 ID",
++      "required": true,
++      "hint": "如 IR-SYN-01-T02，固定问答编号。"
++    },
++    {
++      "key": "evidenceLocator",
++      "label": "证据定位",
++      "required": true,
++      "hint": "问答 ID、字段（问/答）及原文起止或可复核摘录定位，由标注员填写。"
++    },
++    {
++      "key": "statementType",
++      "label": "陈述类型",
++      "required": true,
++      "hint": "允许值由评审人员在冻结口径时确定；本栏不预填、不预设枚举答案。"
++    },
++    {
++      "key": "pendingCheck",
++      "label": "待查",
++      "required": false,
++      "hint": "需要对照数据源或进一步查证时填写；可空。"
++    },
++    {
++      "key": "notComparable",
++      "label": "不具可比性",
++      "required": false,
++      "hint": "无法与数据源比较时填写原因；可空。"
++    },
++    {
++      "key": "notes",
++      "label": "备注",
++      "required": false,
++      "hint": "可选。不得当作标准答案栏。"
++    }
++  ],
++  "rows": []
++}
+diff --git a/tests_acceptance/W35_BLIND_LABEL/checklist-summary.txt b/tests_acceptance/W35_BLIND_LABEL/checklist-summary.txt
+new file mode 100644
+index 0000000..3489ab9
+--- /dev/null
++++ b/tests_acceptance/W35_BLIND_LABEL/checklist-summary.txt
+@@ -0,0 +1,20 @@
++W3/5 盲标样本草案检查摘要（不是正式验收，不含分数）
++packageId: W35-BLIND-LABEL-DRAFT-001
++basePin: 94d5e38c926fda232bb987b60fa9145e4bcf01a7
++caseId: SYN-CASE-W35-2026-0612
++draftStatus: pending-human-review-and-freeze
++scoringPaused: true
++modelsNotUsed: true
++
++样本清单:
++- IR-SYN-01: 陈海 / 二副（值班驾驶员） / 虚构货轮「岚升」 / intervieweeId=P-SYN-LS-OOW / 轮次=7 / 开始 2026-06-13T09:30:00+08:00 / 结束 2026-06-13T10:15:00+08:00 / 题材标签 direct-observation, same-name-roles-disambiguated
++- IR-SYN-02: 周平 / 值班水手 / 虚构货轮「岚升」 / intervieweeId=P-SYN-LS-AB / 轮次=7 / 开始 2026-06-13T10:40:00+08:00 / 结束 2026-06-13T11:20:00+08:00 / 题材标签 hearsay
++- IR-SYN-03: 吴岩 / 船长 / 虚构货轮「岚升」 / intervieweeId=P-SYN-LS-MASTER / 轮次=7 / 开始 2026-06-13T13:00:00+08:00 / 结束 2026-06-13T13:50:00+08:00 / 题材标签 memory-uncertainty
++- IR-SYN-04: 赵宁 / 值班轮机员 / 虚构货轮「岚升」 / intervieweeId=P-SYN-LS-ENGINEER / 轮次=7 / 开始 2026-06-13T14:10:00+08:00 / 结束 2026-06-13T14:45:00+08:00 / 题材标签 approximate-time-and-units
++- IR-SYN-05: 陈海 / 船长 / 虚构渔船「青屿」 / intervieweeId=P-SYN-QY-MASTER / 轮次=7 / 开始 2026-06-13T15:20:00+08:00 / 结束 2026-06-13T16:05:00+08:00 / 题材标签 direct-observation, same-name-roles-disambiguated
++- IR-SYN-06: 孙牧 / VTS 值班员 / 虚构岸台「青岚湾 VTS」 / intervieweeId=P-SYN-VTS-WATCH / 轮次=7 / 开始 2026-06-13T16:30:00+08:00 / 结束 2026-06-13T17:10:00+08:00 / 题材标签 hearsay
++
++已覆盖题材标签: approximate-time-and-units, direct-observation, hearsay, memory-uncertainty, same-name-roles-disambiguated
++同名区分: 陈海 → P-SYN-LS-OOW（IR-SYN-01，岚升二副）与 P-SYN-QY-MASTER（IR-SYN-05，青屿船长）
++空白标注模板: rows=[], CSV 仅表头；未预填答案。
++本摘要不计算一致率，不给出错漏清单或评分。
+diff --git a/tests_acceptance/W35_BLIND_LABEL/inventory.json b/tests_acceptance/W35_BLIND_LABEL/inventory.json
+new file mode 100644
+index 0000000..0daa724
+--- /dev/null
++++ b/tests_acceptance/W35_BLIND_LABEL/inventory.json
+@@ -0,0 +1,97 @@
++{
++  "packageId": "W35-BLIND-LABEL-DRAFT-001",
++  "title": "W3/5 供调查员盲标的六份完整虚构笔录草案",
++  "notFormalAcceptance": true,
++  "draftStatus": "pending-human-review-and-freeze",
++  "scoringPaused": true,
++  "modelsNotUsed": true,
++  "productUnchanged": true,
++  "basePin": "94d5e38c926fda232bb987b60fa9145e4bcf01a7",
++  "caseId": "SYN-CASE-W35-2026-0612",
++  "syntheticDisclaimer": "本文件为虚构合成笔录草案，仅供调查员盲标准备使用。不代表真实案件、真实船舶或真实人员，不得当作正式验收原件或标准答案。",
++  "requiredThemeKeys": [
++    "direct-observation",
++    "hearsay",
++    "memory-uncertainty",
++    "approximate-time-and-units",
++    "same-name-roles-disambiguated"
++  ],
++  "themeKeyLabels": {
++    "direct-observation": "直接观察",
++    "hearsay": "转述",
++    "memory-uncertainty": "记忆不确定",
++    "approximate-time-and-units": "近似时间与单位",
++    "same-name-roles-disambiguated": "多个同名角色不混淆"
++  },
++  "sameNameNote": "姓名「陈海」出现在两名不同人员：P-SYN-LS-OOW（岚升二副，IR-SYN-01）与 P-SYN-QY-MASTER（青屿船长，IR-SYN-05）。此说明用于身份区分，不是抽取或矛盾判定的标准答案。",
++  "samples": [
++    {
++      "recordId": "IR-SYN-01",
++      "file": "samples/IR-SYN-01.json",
++      "intervieweeId": "P-SYN-LS-OOW",
++      "name": "陈海",
++      "role": "二副（值班驾驶员）",
++      "affiliation": "虚构货轮「岚升」",
++      "themeKeys": [
++        "direct-observation",
++        "same-name-roles-disambiguated"
++      ]
++    },
++    {
++      "recordId": "IR-SYN-02",
++      "file": "samples/IR-SYN-02.json",
++      "intervieweeId": "P-SYN-LS-AB",
++      "name": "周平",
++      "role": "值班水手",
++      "affiliation": "虚构货轮「岚升」",
++      "themeKeys": [
++        "hearsay"
++      ]
++    },
++    {
++      "recordId": "IR-SYN-03",
++      "file": "samples/IR-SYN-03.json",
++      "intervieweeId": "P-SYN-LS-MASTER",
++      "name": "吴岩",
++      "role": "船长",
++      "affiliation": "虚构货轮「岚升」",
++      "themeKeys": [
++        "memory-uncertainty"
++      ]
++    },
++    {
++      "recordId": "IR-SYN-04",
++      "file": "samples/IR-SYN-04.json",
++      "intervieweeId": "P-SYN-LS-ENGINEER",
++      "name": "赵宁",
++      "role": "值班轮机员",
++      "affiliation": "虚构货轮「岚升」",
++      "themeKeys": [
++        "approximate-time-and-units"
++      ]
++    },
++    {
++      "recordId": "IR-SYN-05",
++      "file": "samples/IR-SYN-05.json",
++      "intervieweeId": "P-SYN-QY-MASTER",
++      "name": "陈海",
++      "role": "船长",
++      "affiliation": "虚构渔船「青屿」",
++      "themeKeys": [
++        "direct-observation",
++        "same-name-roles-disambiguated"
++      ]
++    },
++    {
++      "recordId": "IR-SYN-06",
++      "file": "samples/IR-SYN-06.json",
++      "intervieweeId": "P-SYN-VTS-WATCH",
++      "name": "孙牧",
++      "role": "VTS 值班员",
++      "affiliation": "虚构岸台「青岚湾 VTS」",
++      "themeKeys": [
++        "hearsay"
++      ]
++    }
++  ]
++}
+diff --git a/tests_acceptance/W35_BLIND_LABEL/samples/IR-SYN-01.json b/tests_acceptance/W35_BLIND_LABEL/samples/IR-SYN-01.json
+new file mode 100644
+index 0000000..400d429
+--- /dev/null
++++ b/tests_acceptance/W35_BLIND_LABEL/samples/IR-SYN-01.json
+@@ -0,0 +1,101 @@
++{
++  "synthetic": true,
++  "syntheticDisclaimer": "本文件为虚构合成笔录草案，仅供调查员盲标准备使用。不代表真实案件、真实船舶或真实人员，不得当作正式验收原件或标准答案。",
++  "draftStatus": "pending-human-review-and-freeze",
++  "notFormalAcceptance": true,
++  "recordId": "IR-SYN-01",
++  "caseId": "SYN-CASE-W35-2026-0612",
++  "caseTitle": "虚构会遇接近：货轮「岚升」与渔船「青屿」在青岚湾口外（合成样本）",
++  "clockDomain": {
++    "name": "ship-local",
++    "offset": "+08:00",
++    "iana": "Asia/Shanghai",
++    "label": "船时（东八区）",
++    "note": "笔录时标与谈话中未另注明的钟点均为此钟域。每个时标同时给出本地与 UTC，便于追溯。"
++  },
++  "interviewStartedAtLocal": "2026-06-13T09:30:00+08:00",
++  "interviewStartedAtUtc": "2026-06-13T01:30:00+00:00",
++  "interviewEndedAtLocal": "2026-06-13T10:15:00+08:00",
++  "interviewEndedAtUtc": "2026-06-13T02:15:00+00:00",
++  "durationMinutes": 45,
++  "signed": true,
++  "interviewee": {
++    "intervieweeId": "P-SYN-LS-OOW",
++    "name": "陈海",
++    "role": "二副（值班驾驶员）",
++    "affiliation": "虚构货轮「岚升」",
++    "nameDisambiguation": "与 IR-SYN-05 渔船「青屿」船长同名，以 intervieweeId、所属船舶与职务区分，不得合并为同一人。"
++  },
++  "turns": [
++    {
++      "turnId": "IR-SYN-01-T01",
++      "round": 1,
++      "askedAtLocal": "2026-06-13T09:31:00+08:00",
++      "askedAtUtc": "2026-06-13T01:31:00+00:00",
++      "answeredAtLocal": "2026-06-13T09:33:00+08:00",
++      "answeredAtUtc": "2026-06-13T01:33:00+00:00",
++      "question": "请说明当时你的职务、所在位置，以及你能不能直接看到海面情况。",
++      "answer": "我是货轮「岚升」的二副，6月12日下午值 12 时到 16 时班。事发前后我一直在驾驶台，站在左前窗附近，可以看见船首和左舷海面。船长当时还在自己的房间，没有和我一起在驾驶台上。"
++    },
++    {
++      "turnId": "IR-SYN-01-T02",
++      "round": 2,
++      "askedAtLocal": "2026-06-13T09:36:00+08:00",
++      "askedAtUtc": "2026-06-13T01:36:00+00:00",
++      "answeredAtLocal": "2026-06-13T09:39:00+08:00",
++      "answeredAtUtc": "2026-06-13T01:39:00+00:00",
++      "question": "你第一次看到他船是在什么时间？当时距离和方位怎样？这些是你自己观察的，还是听别人说的？",
++      "answer": "船时 15 点 04 分，我在左舷船首大约 2 点钟方向看到一艘渔船，后来知道叫「青屿」。我用雷达和目视对照，距离大约 2.8 海里，他船看起来是从左向右穿越我们前方。能见度不错，我看得见船体，不是只靠别人转告。"
++    },
++    {
++      "turnId": "IR-SYN-01-T03",
++      "round": 3,
++      "askedAtLocal": "2026-06-13T09:42:00+08:00",
++      "askedAtUtc": "2026-06-13T01:42:00+00:00",
++      "answeredAtLocal": "2026-06-13T09:45:00+08:00",
++      "answeredAtUtc": "2026-06-13T01:45:00+00:00",
++      "question": "你采取了什么避让行动？请尽量给出具体时间和舵令、车钟。",
++      "answer": "15 点 07 分我先把航速从大约 12.0 节减到大约 11 节，15 点 08 分下令右舵 15 度。这些时间是我当时看驾驶台时钟记下的，钟是船时，东八区。舵令是我亲自下的。"
++    },
++    {
++      "turnId": "IR-SYN-01-T04",
++      "round": 4,
++      "askedAtLocal": "2026-06-13T09:50:00+08:00",
++      "askedAtUtc": "2026-06-13T01:50:00+00:00",
++      "answeredAtLocal": "2026-06-13T09:54:00+08:00",
++      "answeredAtUtc": "2026-06-13T01:54:00+00:00",
++      "question": "有没有使用声号或甚高频联系？对方怎么说？",
++      "answer": "15 点 09 分我短声一笛。15 点 10 分我在甚高频 16 频道呼叫「青屿」，对方有人应答。对方报的距离和我在雷达上看到的不完全一样：他好像说还有 4 海里，但我自己雷达上看已经不到 3 海里。"
++    },
++    {
++      "turnId": "IR-SYN-01-T05",
++      "round": 5,
++      "askedAtLocal": "2026-06-13T09:57:00+08:00",
++      "askedAtUtc": "2026-06-13T01:57:00+00:00",
++      "answeredAtLocal": "2026-06-13T10:00:00+08:00",
++      "answeredAtUtc": "2026-06-13T02:00:00+00:00",
++      "question": "两船最近时的距离，你是怎么判断的？",
++      "answer": "15 点 12 分前后，我目视感觉最近距离大约 0.4 海里，雷达上也是这个量级。我没有把这个数交给别人代看，事后也没有马上回放记录，数字是当时的印象。"
++    },
++    {
++      "turnId": "IR-SYN-01-T06",
++      "round": 6,
++      "askedAtLocal": "2026-06-13T10:04:00+08:00",
++      "askedAtUtc": "2026-06-13T02:04:00+00:00",
++      "answeredAtLocal": "2026-06-13T10:07:00+08:00",
++      "answeredAtUtc": "2026-06-13T02:07:00+00:00",
++      "question": "是否还有与你同名的涉事人员？如何避免把人混淆？",
++      "answer": "本船没有第二个陈海。我后来听说渔船「青屿」的船长也叫陈海。我们不是同一个人。我所在的是「岚升」，职务是二副，人员编号是 P-SYN-LS-OOW。我没有登上「青屿」，也不能转述他在自己船上看到的情况。"
++    },
++    {
++      "turnId": "IR-SYN-01-T07",
++      "round": 7,
++      "askedAtLocal": "2026-06-13T10:11:00+08:00",
++      "askedAtUtc": "2026-06-13T02:11:00+00:00",
++      "answeredAtLocal": "2026-06-13T10:14:00+08:00",
++      "answeredAtUtc": "2026-06-13T02:14:00+00:00",
++      "question": "事发后还有谁、在什么时间上了驾驶台？",
++      "answer": "大约 15 点 11 分，水手去叫船长，船长大概 15 点 13 分到驾驶台。他进门的秒数我没有盯着记。船长到了以后由他接着指挥，我把已经采取的右舵 15 度和减速告诉了他。"
++    }
++  ]
++}
+diff --git a/tests_acceptance/W35_BLIND_LABEL/samples/IR-SYN-02.json b/tests_acceptance/W35_BLIND_LABEL/samples/IR-SYN-02.json
+new file mode 100644
+index 0000000..2651aab
+--- /dev/null
++++ b/tests_acceptance/W35_BLIND_LABEL/samples/IR-SYN-02.json
+@@ -0,0 +1,101 @@
++{
++  "synthetic": true,
++  "syntheticDisclaimer": "本文件为虚构合成笔录草案，仅供调查员盲标准备使用。不代表真实案件、真实船舶或真实人员，不得当作正式验收原件或标准答案。",
++  "draftStatus": "pending-human-review-and-freeze",
++  "notFormalAcceptance": true,
++  "recordId": "IR-SYN-02",
++  "caseId": "SYN-CASE-W35-2026-0612",
++  "caseTitle": "虚构会遇接近：货轮「岚升」与渔船「青屿」在青岚湾口外（合成样本）",
++  "clockDomain": {
++    "name": "ship-local",
++    "offset": "+08:00",
++    "iana": "Asia/Shanghai",
++    "label": "船时（东八区）",
++    "note": "笔录时标与谈话中未另注明的钟点均为此钟域。每个时标同时给出本地与 UTC，便于追溯。"
++  },
++  "interviewStartedAtLocal": "2026-06-13T10:40:00+08:00",
++  "interviewStartedAtUtc": "2026-06-13T02:40:00+00:00",
++  "interviewEndedAtLocal": "2026-06-13T11:20:00+08:00",
++  "interviewEndedAtUtc": "2026-06-13T03:20:00+00:00",
++  "durationMinutes": 40,
++  "signed": true,
++  "interviewee": {
++    "intervieweeId": "P-SYN-LS-AB",
++    "name": "周平",
++    "role": "值班水手",
++    "affiliation": "虚构货轮「岚升」",
++    "nameDisambiguation": "本记录受询问人不是陈海；谈话中出现的陈海需按其所属船舶与职务理解。"
++  },
++  "turns": [
++    {
++      "turnId": "IR-SYN-02-T01",
++      "round": 1,
++      "askedAtLocal": "2026-06-13T10:41:00+08:00",
++      "askedAtUtc": "2026-06-13T02:41:00+00:00",
++      "answeredAtLocal": "2026-06-13T10:43:00+08:00",
++      "answeredAtUtc": "2026-06-13T02:43:00+00:00",
++      "question": "请说明你当时的职务和所在位置，你能不能直接看到两船接近的情况。",
++      "answer": "我是「岚升」的值班水手。当时我不在驾驶台，而在左舷中部甲板做检查。驾驶台里的操作和雷达读数我没有亲眼看见。"
++    },
++    {
++      "turnId": "IR-SYN-02-T02",
++      "round": 2,
++      "askedAtLocal": "2026-06-13T10:46:00+08:00",
++      "askedAtUtc": "2026-06-13T02:46:00+00:00",
++      "answeredAtLocal": "2026-06-13T10:50:00+08:00",
++      "answeredAtUtc": "2026-06-13T02:50:00+00:00",
++      "question": "你是怎么知道附近有船的？距离是你自己判断的吗？",
++      "answer": "大约下午三点过一点，我听见驾驶台窗户那边二副陈海对外面喊，说左前方有一条渔船。我自己往海面看，阳光很刺，只能看到一个模模糊糊的影子，说不上距离。后来回舱，二副跟我说「大概还有三海里」。这是他告诉我的，不是我自己用雷达量的。"
++    },
++    {
++      "turnId": "IR-SYN-02-T03",
++      "round": 3,
++      "askedAtLocal": "2026-06-13T10:53:00+08:00",
++      "askedAtUtc": "2026-06-13T02:53:00+00:00",
++      "answeredAtLocal": "2026-06-13T10:56:00+08:00",
++      "answeredAtUtc": "2026-06-13T02:56:00+00:00",
++      "question": "关于舵令和车钟，你知道些什么？是亲眼所见还是听来的？",
++      "answer": "我没听见具体舵角。过后在走廊里听船长跟大副聊天，说二副好像下了右满舵。这是我听到他们的谈话，我不在现场，也不能肯定舵角就是满舵。车钟的事我完全不清楚。"
++    },
++    {
++      "turnId": "IR-SYN-02-T04",
++      "round": 4,
++      "askedAtLocal": "2026-06-13T11:00:00+08:00",
++      "askedAtUtc": "2026-06-13T03:00:00+00:00",
++      "answeredAtLocal": "2026-06-13T11:02:00+08:00",
++      "answeredAtUtc": "2026-06-13T03:02:00+00:00",
++      "question": "这些事情发生的时间，你怎么记得？",
++      "answer": "我当时没看钟。只记得是午饭后不久，有人说已经三点多了。具体是 15 点几分，我没法提供。"
++    },
++    {
++      "turnId": "IR-SYN-02-T05",
++      "round": 5,
++      "askedAtLocal": "2026-06-13T11:05:00+08:00",
++      "askedAtUtc": "2026-06-13T03:05:00+00:00",
++      "answeredAtLocal": "2026-06-13T11:08:00+08:00",
++      "answeredAtUtc": "2026-06-13T03:08:00+00:00",
++      "question": "最近会遇距离你听说过什么？",
++      "answer": "我没量过。晚上轮班时有人说「差不多两三个链」，我不知道这句话是谁先说的，也没问是哪一种链的算法，更没有换成海里。"
++    },
++    {
++      "turnId": "IR-SYN-02-T06",
++      "round": 6,
++      "askedAtLocal": "2026-06-13T11:11:00+08:00",
++      "askedAtUtc": "2026-06-13T03:11:00+00:00",
++      "answeredAtLocal": "2026-06-13T11:13:00+08:00",
++      "answeredAtUtc": "2026-06-13T03:13:00+00:00",
++      "question": "你是否把本船二副陈海和渔船船长陈海当成同一个人？",
++      "answer": "没有。我只认识本船二副陈海。渔船船长我也是事后听别人提起同名，我没见过他，更不能把两人的话混在一起。"
++    },
++    {
++      "turnId": "IR-SYN-02-T07",
++      "round": 7,
++      "askedAtLocal": "2026-06-13T11:16:00+08:00",
++      "askedAtUtc": "2026-06-13T03:16:00+00:00",
++      "answeredAtLocal": "2026-06-13T11:18:00+08:00",
++      "answeredAtUtc": "2026-06-13T03:18:00+00:00",
++      "question": "你有没有听到声号？",
++      "answer": "我在甲板确实隐约听到一声短笛，但当时甲板有风机声音，我不敢肯定是不是避让声号，也不知道是几点吹的。若要确切记录，需要问当时在驾驶台的人。"
++    }
++  ]
++}
+diff --git a/tests_acceptance/W35_BLIND_LABEL/samples/IR-SYN-03.json b/tests_acceptance/W35_BLIND_LABEL/samples/IR-SYN-03.json
+new file mode 100644
+index 0000000..ae4f816
+--- /dev/null
++++ b/tests_acceptance/W35_BLIND_LABEL/samples/IR-SYN-03.json
+@@ -0,0 +1,101 @@
++{
++  "synthetic": true,
++  "syntheticDisclaimer": "本文件为虚构合成笔录草案，仅供调查员盲标准备使用。不代表真实案件、真实船舶或真实人员，不得当作正式验收原件或标准答案。",
++  "draftStatus": "pending-human-review-and-freeze",
++  "notFormalAcceptance": true,
++  "recordId": "IR-SYN-03",
++  "caseId": "SYN-CASE-W35-2026-0612",
++  "caseTitle": "虚构会遇接近：货轮「岚升」与渔船「青屿」在青岚湾口外（合成样本）",
++  "clockDomain": {
++    "name": "ship-local",
++    "offset": "+08:00",
++    "iana": "Asia/Shanghai",
++    "label": "船时（东八区）",
++    "note": "笔录时标与谈话中未另注明的钟点均为此钟域。每个时标同时给出本地与 UTC，便于追溯。"
++  },
++  "interviewStartedAtLocal": "2026-06-13T13:00:00+08:00",
++  "interviewStartedAtUtc": "2026-06-13T05:00:00+00:00",
++  "interviewEndedAtLocal": "2026-06-13T13:50:00+08:00",
++  "interviewEndedAtUtc": "2026-06-13T05:50:00+00:00",
++  "durationMinutes": 50,
++  "signed": true,
++  "interviewee": {
++    "intervieweeId": "P-SYN-LS-MASTER",
++    "name": "吴岩",
++    "role": "船长",
++    "affiliation": "虚构货轮「岚升」",
++    "nameDisambiguation": "本记录受询问人不是陈海。"
++  },
++  "turns": [
++    {
++      "turnId": "IR-SYN-03-T01",
++      "round": 1,
++      "askedAtLocal": "2026-06-13T13:01:00+08:00",
++      "askedAtUtc": "2026-06-13T05:01:00+00:00",
++      "answeredAtLocal": "2026-06-13T13:05:00+08:00",
++      "answeredAtUtc": "2026-06-13T05:05:00+00:00",
++      "question": "事发时你在哪里？是怎么上驾驶台的？时间还记得吗？",
++      "answer": "我原来在自己的房间休息。有人敲门叫我，说左前方有船。我赶紧上驾驶台，可是被叫起来的准确时间我现在记不清了，大概是 15 点出头。我没有看自己手表，房间里那只钟有时候快，我不敢用它对时。"
++    },
++    {
++      "turnId": "IR-SYN-03-T02",
++      "round": 2,
++      "askedAtLocal": "2026-06-13T13:08:00+08:00",
++      "askedAtUtc": "2026-06-13T05:08:00+00:00",
++      "answeredAtLocal": "2026-06-13T13:12:00+08:00",
++      "answeredAtUtc": "2026-06-13T05:12:00+00:00",
++      "question": "你到驾驶台时，局面和已经采取的行动是怎样的？",
++      "answer": "我进驾驶台的时候，二副已经在操舵，好像是右舵，但舵角是 15 度还是更大，我印象模糊，不敢写死。海面上我看到他船已经比较近，具体几海里我说不准。"
++    },
++    {
++      "turnId": "IR-SYN-03-T03",
++      "round": 3,
++      "askedAtLocal": "2026-06-13T13:16:00+08:00",
++      "askedAtUtc": "2026-06-13T05:16:00+00:00",
++      "answeredAtLocal": "2026-06-13T13:19:00+08:00",
++      "answeredAtUtc": "2026-06-13T05:19:00+00:00",
++      "question": "当时航速你还记得吗？有多大把握？",
++      "answer": "我当时没先看车钟。事后回想，大概是十节出头吧，也许是 11 节，也许还要高一点。这个数我没有把握，需要对照车钟记录，我本人不能把它当成确定值。"
++    },
++    {
++      "turnId": "IR-SYN-03-T04",
++      "round": 4,
++      "askedAtLocal": "2026-06-13T13:23:00+08:00",
++      "askedAtUtc": "2026-06-13T05:23:00+00:00",
++      "answeredAtLocal": "2026-06-13T13:27:00+08:00",
++      "answeredAtUtc": "2026-06-13T05:27:00+00:00",
++      "question": "你是否亲自下转向令或联系他船？甚高频的前半段你在场吗？",
++      "answer": "我到驾驶台后不久接过指挥，但最初那一舵不是我下的。甚高频是谁先呼叫的，我到现在也有点混，好像是二副已经在通话，但内容我只听了后半段，前半段我没在场。"
++    },
++    {
++      "turnId": "IR-SYN-03-T05",
++      "round": 5,
++      "askedAtLocal": "2026-06-13T13:31:00+08:00",
++      "askedAtUtc": "2026-06-13T05:31:00+00:00",
++      "answeredAtLocal": "2026-06-13T13:35:00+08:00",
++      "answeredAtUtc": "2026-06-13T05:35:00+00:00",
++      "question": "最近距离和你进入驾驶台的时刻，你能不能给出确定数字？",
++      "answer": "最近距离我不敢给数字。我只记得感觉偏近，需要回头查雷达回放。时间上，我甚至不能肯定自己是 15:11、15:13 还是更晚才踏进驾驶台。"
++    },
++    {
++      "turnId": "IR-SYN-03-T06",
++      "round": 6,
++      "askedAtLocal": "2026-06-13T13:38:00+08:00",
++      "askedAtUtc": "2026-06-13T05:38:00+00:00",
++      "answeredAtLocal": "2026-06-13T13:41:00+08:00",
++      "answeredAtUtc": "2026-06-13T05:41:00+00:00",
++      "question": "船上或他船是否有与二副同名的人员？你会不会把他们的陈述合并？",
++      "answer": "我知道本船二副叫陈海。后来在交换联系方式时，才发现「青屿」船长也叫陈海。这两个人我都不会弄混：一个是我船上的二副，一个是他船船长。我没有把两人在不同船上的陈述并成一条。"
++    },
++    {
++      "turnId": "IR-SYN-03-T07",
++      "round": 7,
++      "askedAtLocal": "2026-06-13T13:45:00+08:00",
++      "askedAtUtc": "2026-06-13T05:45:00+00:00",
++      "answeredAtLocal": "2026-06-13T13:48:00+08:00",
++      "answeredAtUtc": "2026-06-13T05:48:00+00:00",
++      "question": "事后你有没有补过笔记？那些笔记能不能当作准确记录？",
++      "answer": "当天晚上我在笔记里写过「约 15 时上驾驶台，已右舵，距离不详」，这是大概的备忘，不是准确日志。如果和二副或轮机员的记忆不一致，应以需要查证的记录为准，我的记忆不能单独作为确定事实。"
++    }
++  ]
++}
+diff --git a/tests_acceptance/W35_BLIND_LABEL/samples/IR-SYN-04.json b/tests_acceptance/W35_BLIND_LABEL/samples/IR-SYN-04.json
+new file mode 100644
+index 0000000..f98aefe
+--- /dev/null
++++ b/tests_acceptance/W35_BLIND_LABEL/samples/IR-SYN-04.json
+@@ -0,0 +1,101 @@
++{
++  "synthetic": true,
++  "syntheticDisclaimer": "本文件为虚构合成笔录草案，仅供调查员盲标准备使用。不代表真实案件、真实船舶或真实人员，不得当作正式验收原件或标准答案。",
++  "draftStatus": "pending-human-review-and-freeze",
++  "notFormalAcceptance": true,
++  "recordId": "IR-SYN-04",
++  "caseId": "SYN-CASE-W35-2026-0612",
++  "caseTitle": "虚构会遇接近：货轮「岚升」与渔船「青屿」在青岚湾口外（合成样本）",
++  "clockDomain": {
++    "name": "ship-local",
++    "offset": "+08:00",
++    "iana": "Asia/Shanghai",
++    "label": "船时（东八区）",
++    "note": "笔录时标与谈话中未另注明的钟点均为此钟域。每个时标同时给出本地与 UTC，便于追溯。"
++  },
++  "interviewStartedAtLocal": "2026-06-13T14:10:00+08:00",
++  "interviewStartedAtUtc": "2026-06-13T06:10:00+00:00",
++  "interviewEndedAtLocal": "2026-06-13T14:45:00+08:00",
++  "interviewEndedAtUtc": "2026-06-13T06:45:00+00:00",
++  "durationMinutes": 35,
++  "signed": true,
++  "interviewee": {
++    "intervieweeId": "P-SYN-LS-ENGINEER",
++    "name": "赵宁",
++    "role": "值班轮机员",
++    "affiliation": "虚构货轮「岚升」",
++    "nameDisambiguation": "本记录受询问人不是陈海。机舱电话中的陈海是本船二副，不是「青屿」船长。"
++  },
++  "turns": [
++    {
++      "turnId": "IR-SYN-04-T01",
++      "round": 1,
++      "askedAtLocal": "2026-06-13T14:11:00+08:00",
++      "askedAtUtc": "2026-06-13T06:11:00+00:00",
++      "answeredAtLocal": "2026-06-13T14:13:00+08:00",
++      "answeredAtUtc": "2026-06-13T06:13:00+00:00",
++      "question": "你当时在哪里？能不能直接看到海面局面？",
++      "answer": "我在机舱值班，看不到海面，也没有雷达。驾驶台的避让动作我都是通过车钟和电话知道的。"
++    },
++    {
++      "turnId": "IR-SYN-04-T02",
++      "round": 2,
++      "askedAtLocal": "2026-06-13T14:16:00+08:00",
++      "askedAtUtc": "2026-06-13T06:16:00+00:00",
++      "answeredAtLocal": "2026-06-13T14:20:00+08:00",
++      "answeredAtUtc": "2026-06-13T06:20:00+00:00",
++      "question": "车钟有过什么变化？大约是什么时间？能精确到分秒吗？",
++      "answer": "大概 15 点前后，应该是三点刚过不久，车钟从海上航行速度往下收了一档。具体几分几秒我没有在机舱日志里同步到秒，只能说大约 15:05 到 15:10 这个区间。我的表和驾驶台钟有没有误差，我没对过。"
++    },
++    {
++      "turnId": "IR-SYN-04-T03",
++      "round": 3,
++      "askedAtLocal": "2026-06-13T14:23:00+08:00",
++      "askedAtUtc": "2026-06-13T06:23:00+00:00",
++      "answeredAtLocal": "2026-06-13T14:26:00+08:00",
++      "answeredAtUtc": "2026-06-13T06:26:00+00:00",
++      "question": "当时航速大约多少？你用的是什么单位？是计程仪读数还是估计？",
++      "answer": "减速前大约十二节左右，也可能是 11 到 13 节之间，我是按主机转速粗估的，不是驾驶台计程仪的读数。减速后大概十来节。单位我按「节」说，没有换算成米每秒。"
++    },
++    {
++      "turnId": "IR-SYN-04-T04",
++      "round": 4,
++      "askedAtLocal": "2026-06-13T14:29:00+08:00",
++      "askedAtUtc": "2026-06-13T06:29:00+00:00",
++      "answeredAtLocal": "2026-06-13T14:32:00+08:00",
++      "answeredAtUtc": "2026-06-13T06:32:00+00:00",
++      "question": "有没有人告诉你两船距离？单位说清楚了没有？",
++      "answer": "后来轮机员休息室有人说「大概两三海里」，还有人说「不到一海里了」。这些都是大概的说法，单位是海里还是链，当时没有人说清楚。我没有自己的观测。"
++    },
++    {
++      "turnId": "IR-SYN-04-T05",
++      "round": 5,
++      "askedAtLocal": "2026-06-13T14:34:00+08:00",
++      "askedAtUtc": "2026-06-13T06:34:00+00:00",
++      "answeredAtLocal": "2026-06-13T14:36:00+08:00",
++      "answeredAtUtc": "2026-06-13T06:36:00+00:00",
++      "question": "舵的情况你知道吗？时间怎么说？",
++      "answer": "机舱感觉到一次转向，时间也是 15 点左右，大约持续几分钟的样子。舵角我完全不知道，也不该由我估计度数。"
++    },
++    {
++      "turnId": "IR-SYN-04-T06",
++      "round": 6,
++      "askedAtLocal": "2026-06-13T14:38:00+08:00",
++      "askedAtUtc": "2026-06-13T06:38:00+00:00",
++      "answeredAtLocal": "2026-06-13T14:40:00+08:00",
++      "answeredAtUtc": "2026-06-13T06:40:00+00:00",
++      "question": "电话里跟你联系的是谁？会不会和同名的他船船长混淆？",
++      "answer": "电话里跟我联系的是驾驶台，我听声音是二副陈海。我听说渔船船长也叫陈海，但我没有和那位船长通过话，不会把机舱接到的车钟令记到他名下。"
++    },
++    {
++      "turnId": "IR-SYN-04-T07",
++      "round": 7,
++      "askedAtLocal": "2026-06-13T14:42:00+08:00",
++      "askedAtUtc": "2026-06-13T06:42:00+00:00",
++      "answeredAtLocal": "2026-06-13T14:44:00+08:00",
++      "answeredAtUtc": "2026-06-13T06:44:00+00:00",
++      "question": "你说的时间是哪个钟域？能不能追溯到 UTC？",
++      "answer": "我按船上工作钟来说，就是东八区的船时。我说的「15 点左右」都是这个钟。对应的 UTC 应该减 8 小时，也就是 07 点左右，这个换算我当时没有逐条记下。"
++    }
++  ]
++}
+diff --git a/tests_acceptance/W35_BLIND_LABEL/samples/IR-SYN-05.json b/tests_acceptance/W35_BLIND_LABEL/samples/IR-SYN-05.json
+new file mode 100644
+index 0000000..17f64b2
+--- /dev/null
++++ b/tests_acceptance/W35_BLIND_LABEL/samples/IR-SYN-05.json
+@@ -0,0 +1,101 @@
++{
++  "synthetic": true,
++  "syntheticDisclaimer": "本文件为虚构合成笔录草案，仅供调查员盲标准备使用。不代表真实案件、真实船舶或真实人员，不得当作正式验收原件或标准答案。",
++  "draftStatus": "pending-human-review-and-freeze",
++  "notFormalAcceptance": true,
++  "recordId": "IR-SYN-05",
++  "caseId": "SYN-CASE-W35-2026-0612",
++  "caseTitle": "虚构会遇接近：货轮「岚升」与渔船「青屿」在青岚湾口外（合成样本）",
++  "clockDomain": {
++    "name": "ship-local",
++    "offset": "+08:00",
++    "iana": "Asia/Shanghai",
++    "label": "船时（东八区）",
++    "note": "笔录时标与谈话中未另注明的钟点均为此钟域。每个时标同时给出本地与 UTC，便于追溯。"
++  },
++  "interviewStartedAtLocal": "2026-06-13T15:20:00+08:00",
++  "interviewStartedAtUtc": "2026-06-13T07:20:00+00:00",
++  "interviewEndedAtLocal": "2026-06-13T16:05:00+08:00",
++  "interviewEndedAtUtc": "2026-06-13T08:05:00+00:00",
++  "durationMinutes": 45,
++  "signed": true,
++  "interviewee": {
++    "intervieweeId": "P-SYN-QY-MASTER",
++    "name": "陈海",
++    "role": "船长",
++    "affiliation": "虚构渔船「青屿」",
++    "nameDisambiguation": "与 IR-SYN-01 货轮「岚升」二副同名，以 intervieweeId、所属船舶与职务区分，不得合并为同一人。"
++  },
++  "turns": [
++    {
++      "turnId": "IR-SYN-05-T01",
++      "round": 1,
++      "askedAtLocal": "2026-06-13T15:21:00+08:00",
++      "askedAtUtc": "2026-06-13T07:21:00+00:00",
++      "answeredAtLocal": "2026-06-13T15:24:00+08:00",
++      "answeredAtUtc": "2026-06-13T07:24:00+00:00",
++      "question": "请先说明你是谁、在哪条船、担任什么职务，避免和同名人员混淆。当时你能不能直接看到来船？",
++      "answer": "我是渔船「青屿」的船长，也叫陈海，人员编号是 P-SYN-QY-MASTER。我不是货轮「岚升」的二副。事发时我在「青屿」的驾驶台，面向本船船首，可以直接看到右舷前方的来船。"
++    },
++    {
++      "turnId": "IR-SYN-05-T02",
++      "round": 2,
++      "askedAtLocal": "2026-06-13T15:27:00+08:00",
++      "askedAtUtc": "2026-06-13T07:27:00+00:00",
++      "answeredAtLocal": "2026-06-13T15:31:00+08:00",
++      "answeredAtUtc": "2026-06-13T07:31:00+00:00",
++      "question": "你第一次发现「岚升」是在什么时间、什么距离？这是你自己观察的吗？",
++      "answer": "船时 15 点 03 分，我在右舷约 1 点钟方向看到一艘较大的货轮，后来确认是「岚升」。当时目视加上我们船上那部简易雷达，我估计距离大约 3.6 海里。这个数是我自己看的，不是听别人说的。"
++    },
++    {
++      "turnId": "IR-SYN-05-T03",
++      "round": 3,
++      "askedAtLocal": "2026-06-13T15:34:00+08:00",
++      "askedAtUtc": "2026-06-13T07:34:00+00:00",
++      "answeredAtLocal": "2026-06-13T15:38:00+08:00",
++      "answeredAtUtc": "2026-06-13T07:38:00+00:00",
++      "question": "你采取了什么行动？请说明时间和操作，并确认这是哪条船上的操作。",
++      "answer": "15 点 06 分我把油门收了一点，航速从大约 8 节降到 7 节上下。15 点 08 分我向左调整航向大约 10 度。这些是「青屿」船上的操作，与「岚升」二副陈海在他船上的舵令不是同一回事。"
++    },
++    {
++      "turnId": "IR-SYN-05-T04",
++      "round": 4,
++      "askedAtLocal": "2026-06-13T15:42:00+08:00",
++      "askedAtUtc": "2026-06-13T07:42:00+00:00",
++      "answeredAtLocal": "2026-06-13T15:46:00+08:00",
++      "answeredAtUtc": "2026-06-13T07:46:00+00:00",
++      "question": "甚高频是怎么联系的？你报过什么距离？",
++      "answer": "15 点 10 分左右有人在 16 频道呼叫「青屿」，我本人接听。我报过大约还有 3.5 海里，这是按我当时的判断。对方好像认为更近。频道有点杂音，个别数字我听得不是很死。"
++    },
++    {
++      "turnId": "IR-SYN-05-T05",
++      "round": 5,
++      "askedAtLocal": "2026-06-13T15:49:00+08:00",
++      "askedAtUtc": "2026-06-13T07:49:00+00:00",
++      "answeredAtLocal": "2026-06-13T15:52:00+08:00",
++      "answeredAtUtc": "2026-06-13T07:52:00+00:00",
++      "question": "最近会遇距离你怎么看？依据是什么？",
++      "answer": "15 点 13 分前后，我估计最近距离大约 0.6 海里。这是我在「青屿」驾驶台上的判断。我没有到「岚升」上看他们的雷达。"
++    },
++    {
++      "turnId": "IR-SYN-05-T06",
++      "round": 6,
++      "askedAtLocal": "2026-06-13T15:55:00+08:00",
++      "askedAtUtc": "2026-06-13T07:55:00+00:00",
++      "answeredAtLocal": "2026-06-13T15:58:00+08:00",
++      "answeredAtUtc": "2026-06-13T07:58:00+00:00",
++      "question": "你是否认识「岚升」上那位同名的二副？两人的陈述应当如何分开？",
++      "answer": "事发当时我只知道对方是一艘叫「岚升」的货轮。事后在联系时才知道对方二副也叫陈海。我们姓名相同，但分属不同船舶、不同职务，陈述不应写到同一人身上。我的所属是「青屿」，职务是船长。"
++    },
++    {
++      "turnId": "IR-SYN-05-T07",
++      "round": 7,
++      "askedAtLocal": "2026-06-13T16:01:00+08:00",
++      "askedAtUtc": "2026-06-13T08:01:00+00:00",
++      "answeredAtLocal": "2026-06-13T16:03:00+08:00",
++      "answeredAtUtc": "2026-06-13T08:03:00+00:00",
++      "question": "你船上的时钟如何对时？你给出的钟点属于哪个钟域？",
++      "answer": "我们用船时，东八区。事发当天下午开航前，我与岸上报时对过一次，当时相差不到一分钟。我说的 15:03、15:06 都是这个钟域。若要换算 UTC，需要减 8 小时。"
++    }
++  ]
++}
+diff --git a/tests_acceptance/W35_BLIND_LABEL/samples/IR-SYN-06.json b/tests_acceptance/W35_BLIND_LABEL/samples/IR-SYN-06.json
+new file mode 100644
+index 0000000..d21ab18
+--- /dev/null
++++ b/tests_acceptance/W35_BLIND_LABEL/samples/IR-SYN-06.json
+@@ -0,0 +1,101 @@
++{
++  "synthetic": true,
++  "syntheticDisclaimer": "本文件为虚构合成笔录草案，仅供调查员盲标准备使用。不代表真实案件、真实船舶或真实人员，不得当作正式验收原件或标准答案。",
++  "draftStatus": "pending-human-review-and-freeze",
++  "notFormalAcceptance": true,
++  "recordId": "IR-SYN-06",
++  "caseId": "SYN-CASE-W35-2026-0612",
++  "caseTitle": "虚构会遇接近：货轮「岚升」与渔船「青屿」在青岚湾口外（合成样本）",
++  "clockDomain": {
++    "name": "ship-local",
++    "offset": "+08:00",
++    "iana": "Asia/Shanghai",
++    "label": "船时（东八区）",
++    "note": "笔录时标与谈话中未另注明的钟点均为此钟域。每个时标同时给出本地与 UTC，便于追溯。"
++  },
++  "interviewStartedAtLocal": "2026-06-13T16:30:00+08:00",
++  "interviewStartedAtUtc": "2026-06-13T08:30:00+00:00",
++  "interviewEndedAtLocal": "2026-06-13T17:10:00+08:00",
++  "interviewEndedAtUtc": "2026-06-13T09:10:00+00:00",
++  "durationMinutes": 40,
++  "signed": true,
++  "interviewee": {
++    "intervieweeId": "P-SYN-VTS-WATCH",
++    "name": "孙牧",
++    "role": "VTS 值班员",
++    "affiliation": "虚构岸台「青岚湾 VTS」",
++    "nameDisambiguation": "本记录受询问人不是陈海。通话中出现的两名陈海分属不同船舶，不得合成一人。"
++  },
++  "turns": [
++    {
++      "turnId": "IR-SYN-06-T01",
++      "round": 1,
++      "askedAtLocal": "2026-06-13T16:31:00+08:00",
++      "askedAtUtc": "2026-06-13T08:31:00+00:00",
++      "answeredAtLocal": "2026-06-13T16:34:00+08:00",
++      "answeredAtUtc": "2026-06-13T08:34:00+00:00",
++      "question": "请说明你的位置和观察手段。你是否在涉事船上？",
++      "answer": "我是「青岚湾」VTS 当班值班员，在岸台值班。我没有在任何一艘涉事船上，不能提供登轮后的直接观察。我了解的情况来自甚高频通话和岸台雷达显示。"
++    },
++    {
++      "turnId": "IR-SYN-06-T02",
++      "round": 2,
++      "askedAtLocal": "2026-06-13T16:37:00+08:00",
++      "askedAtUtc": "2026-06-13T08:37:00+00:00",
++      "answeredAtLocal": "2026-06-13T16:41:00+08:00",
++      "answeredAtUtc": "2026-06-13T08:41:00+00:00",
++      "question": "你何时知道这两艘船接近？时间能精确到什么程度？",
++      "answer": "大约 15 点 08 分到 15 点 11 分之间，我听到 16 频道有「岚升」和「青屿」互相呼叫。具体哪一秒我是事后按录音去对的，当时值班日志只写了「15 时左右有近距离会遇呼叫」，没有精确到秒。"
++    },
++    {
++      "turnId": "IR-SYN-06-T03",
++      "round": 3,
++      "askedAtLocal": "2026-06-13T16:44:00+08:00",
++      "askedAtUtc": "2026-06-13T08:44:00+00:00",
++      "answeredAtLocal": "2026-06-13T16:48:00+08:00",
++      "answeredAtUtc": "2026-06-13T08:48:00+00:00",
++      "question": "岸台雷达上你看到什么？这和船上观测是不是同一套数据？",
++      "answer": "岸台雷达在 15 点 10 分前后有两个回波在青岚湾口外相互接近。以岸台量程估计，当时间距大概 1 到 2 海里这个范围。这只是岸台估计，和船上雷达或目视不是同一套数据，量程和位置基准都不同。"
++    },
++    {
++      "turnId": "IR-SYN-06-T04",
++      "round": 4,
++      "askedAtLocal": "2026-06-13T16:51:00+08:00",
++      "askedAtUtc": "2026-06-13T08:51:00+00:00",
++      "answeredAtLocal": "2026-06-13T16:56:00+08:00",
++      "answeredAtUtc": "2026-06-13T08:56:00+00:00",
++      "question": "通话里你听到哪些内容？其中哪些只是转述？同名人员你当时是否分辨清楚？",
++      "answer": "我听到有人自报「青屿」船长，也听到「岚升」驾驶台有人讲话。对方都提到「陈海」这个名字，当时我一度不确定是一个人还是两个人。事后才明白这是同名的两名船员，分别在两艘船上。我不能根据重名把两套陈述合成一条。距离数字我只记住有人说「还有三海里多」，有人说「不到三海里」，这些都是我从通话里听来的转述，不是我自己量的。"
++    },
++    {
++      "turnId": "IR-SYN-06-T05",
++      "round": 5,
++      "askedAtLocal": "2026-06-13T16:59:00+08:00",
++      "askedAtUtc": "2026-06-13T08:59:00+00:00",
++      "answeredAtLocal": "2026-06-13T17:01:00+08:00",
++      "answeredAtUtc": "2026-06-13T09:01:00+00:00",
++      "question": "你有没有给出航行指导？你能否目击谁先转向？",
++      "answer": "我在频道上提醒双方注意会遇，没有下达转向指令。具体谁先转向，我只能根据通话顺序做非常粗的判断，不能当作现场目击。"
++    },
++    {
++      "turnId": "IR-SYN-06-T06",
++      "round": 6,
++      "askedAtLocal": "2026-06-13T17:03:00+08:00",
++      "askedAtUtc": "2026-06-13T09:03:00+00:00",
++      "answeredAtLocal": "2026-06-13T17:05:00+08:00",
++      "answeredAtUtc": "2026-06-13T09:05:00+00:00",
++      "question": "你使用的是哪个钟域？怎样对应到 UTC？",
++      "answer": "岸台用的是北京时间，也就是东八区，和这次材料里船上说的船时按同一偏移记录。我说的「15 点左右」是这个钟。对应 UTC 是 07 点左右。录音上的精确时标需要回放设备才能逐秒确认，我这里只提供记忆和值班简记。"
++    },
++    {
++      "turnId": "IR-SYN-06-T07",
++      "round": 7,
++      "askedAtLocal": "2026-06-13T17:07:00+08:00",
++      "askedAtUtc": "2026-06-13T09:07:00+00:00",
++      "answeredAtLocal": "2026-06-13T17:09:00+08:00",
++      "answeredAtUtc": "2026-06-13T09:09:00+00:00",
++      "question": "还有哪些情况是你无法与船上数据比较的？",
++      "answer": "两船的舵角、车钟档位、驾驶台内部谁在什么位置，岸台都看不到，这类信息我不具有可比的观测。若需要那些内容，只能询问当时在各自船上的人员。"
++    }
++  ]
++}
+diff --git a/tests_acceptance/W35_BLIND_LABEL/test_blind_sample_format.py b/tests_acceptance/W35_BLIND_LABEL/test_blind_sample_format.py
+new file mode 100755
+index 0000000..26cf7b1
+--- /dev/null
++++ b/tests_acceptance/W35_BLIND_LABEL/test_blind_sample_format.py
+@@ -0,0 +1,347 @@
++#!/usr/bin/env python3
++"""Format, ID uniqueness, completeness, and checklist-summary checks only.
++
++Does not score agreement, start a model, or load gold / expected answers.
++Exit 0 on success. This package is not formal acceptance.
++"""
++from __future__ import annotations
++
++import json
++import re
++import sys
++from datetime import datetime, timedelta, timezone
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++REQUIRED_IDS = [f"IR-SYN-0{i}" for i in range(1, 7)]
++MIN_TURNS = 6
++REQUIRED_THEMES = {
++    "direct-observation",
++    "hearsay",
++    "memory-uncertainty",
++    "approximate-time-and-units",
++    "same-name-roles-disambiguated",
++}
++FORBIDDEN_FILE_PATTERNS = re.compile(
++    r"(gold|expected.?answer|auto.?label|agreement|consistency.rate|一致率|标准答案)",
++    re.I,
++)
++FORBIDDEN_RECORD_KEYS = {
++    "statements",
++    "gold",
++    "expectedAnswers",
++    "autoLabels",
++    "score",
++    "agreementRate",
++    "crossCheckResults",
++}
++TURN_REQUIRED = (
++    "turnId",
++    "round",
++    "askedAtLocal",
++    "askedAtUtc",
++    "answeredAtLocal",
++    "answeredAtUtc",
++    "question",
++    "answer",
++)
++TEMPLATE_FIELDS = (
++    "annotationId",
++    "recordId",
++    "turnId",
++    "evidenceLocator",
++    "statementType",
++    "pendingCheck",
++    "notComparable",
++    "notes",
++)
++OFFSET = timezone(timedelta(hours=8))
++
++
++class Failures(list):
++    def add(self, msg: str) -> None:
++        self.append(msg)
++
++
++def load_json(path: Path):
++    with path.open(encoding="utf-8") as f:
++        return json.load(f)
++
++
++def parse_iso(value: str, label: str, failures: Failures):
++    try:
++        dt = datetime.fromisoformat(value)
++    except (TypeError, ValueError):
++        failures.add(f"{label}: 无法解析时标 {value!r}")
++        return None
++    if dt.tzinfo is None:
++        failures.add(f"{label}: 时标缺少时区 {value!r}")
++        return None
++    return dt
++
++
++def check_clock_pair(local, utc, label: str, failures: Failures) -> None:
++    loc = parse_iso(local, f"{label}.local", failures)
++    u = parse_iso(utc, f"{label}.utc", failures)
++    if loc is None or u is None:
++        return
++    if loc.utcoffset() != timedelta(hours=8):
++        failures.add(f"{label}: 本地时标偏移不是 +08:00 ({local})")
++    if u.utcoffset() != timedelta(0):
++        failures.add(f"{label}: UTC 时标偏移不是 0 ({utc})")
++    if loc.astimezone(timezone.utc) != u.astimezone(timezone.utc):
++        failures.add(f"{label}: 本地与 UTC 不能互推 ({local} / {utc})")
++
++
++def check_record(path: Path, rec: dict, failures: Failures) -> None:
++    rid = rec.get("recordId", path.stem)
++    prefix = f"{path.name}"
++    if rec.get("recordId") != path.stem:
++        failures.add(f"{prefix}: recordId {rec.get('recordId')!r} 与文件名不一致")
++    for key in (
++        "synthetic",
++        "syntheticDisclaimer",
++        "draftStatus",
++        "notFormalAcceptance",
++        "recordId",
++        "caseId",
++        "clockDomain",
++        "interviewStartedAtLocal",
++        "interviewStartedAtUtc",
++        "interviewEndedAtLocal",
++        "interviewEndedAtUtc",
++        "interviewee",
++        "turns",
++    ):
++        if key not in rec:
++            failures.add(f"{prefix}: 缺字段 {key}")
++    if rec.get("synthetic") is not True:
++        failures.add(f"{prefix}: synthetic 必须为 true")
++    if rec.get("notFormalAcceptance") is not True:
++        failures.add(f"{prefix}: notFormalAcceptance 必须为 true")
++    disclaimer = rec.get("syntheticDisclaimer") or ""
++    if "虚构" not in disclaimer or "合成" not in disclaimer:
++        failures.add(f"{prefix}: 合成声明须同时写明虚构与合成")
++    if rec.get("draftStatus") != "pending-human-review-and-freeze":
++        failures.add(f"{prefix}: draftStatus 应为 pending-human-review-and-freeze")
++    if rec.get("caseId") != "SYN-CASE-W35-2026-0612":
++        failures.add(f"{prefix}: caseId 不符合清单")
++    for key in FORBIDDEN_RECORD_KEYS:
++        if key in rec:
++            failures.add(f"{prefix}: 不得包含 {key}")
++    clock = rec.get("clockDomain") or {}
++    if clock.get("offset") != "+08:00" or clock.get("iana") != "Asia/Shanghai":
++        failures.add(f"{prefix}: 钟域须为 Asia/Shanghai / +08:00")
++    check_clock_pair(
++        rec.get("interviewStartedAtLocal"),
++        rec.get("interviewStartedAtUtc"),
++        f"{rid}.interviewStart",
++        failures,
++    )
++    check_clock_pair(
++        rec.get("interviewEndedAtLocal"),
++        rec.get("interviewEndedAtUtc"),
++        f"{rid}.interviewEnd",
++        failures,
++    )
++    start = parse_iso(rec.get("interviewStartedAtLocal", ""), f"{rid}.start", failures)
++    end = parse_iso(rec.get("interviewEndedAtLocal", ""), f"{rid}.end", failures)
++    person = rec.get("interviewee") or {}
++    for key in ("intervieweeId", "name", "role", "affiliation", "nameDisambiguation"):
++        if not person.get(key):
++            failures.add(f"{prefix}: interviewee 缺 {key}")
++    turns = rec.get("turns")
++    if not isinstance(turns, list) or len(turns) < MIN_TURNS:
++        failures.add(f"{prefix}: 须至少 {MIN_TURNS} 轮有上下文问答，实际 {0 if not isinstance(turns, list) else len(turns)}")
++        return
++    rounds = []
++    for i, t in enumerate(turns, start=1):
++        for key in TURN_REQUIRED:
++            if key not in t:
++                failures.add(f"{prefix} 第 {i} 轮缺 {key}")
++        expected_id = f"{rid}-T{i:02d}"
++        if t.get("turnId") != expected_id:
++            failures.add(f"{prefix} 第 {i} 轮 turnId 应为 {expected_id}，实际 {t.get('turnId')!r}")
++        if t.get("round") != i:
++            failures.add(f"{prefix} 第 {i} 轮 round 应为 {i}")
++        if not (t.get("question") or "").strip() or not (t.get("answer") or "").strip():
++            failures.add(f"{prefix} 第 {i} 轮问答不能为空")
++        if len((t.get("question") or "")) < 8 or len((t.get("answer") or "")) < 20:
++            failures.add(f"{prefix} 第 {i} 轮问答过短，不足以构成有上下文的问答")
++        check_clock_pair(t.get("askedAtLocal"), t.get("askedAtUtc"), f"{t.get('turnId')}.asked", failures)
++        check_clock_pair(
++            t.get("answeredAtLocal"), t.get("answeredAtUtc"), f"{t.get('turnId')}.answered", failures
++        )
++        asked = parse_iso(t.get("askedAtLocal", ""), f"{t.get('turnId')}.asked", failures)
++        answered = parse_iso(t.get("answeredAtLocal", ""), f"{t.get('turnId')}.answered", failures)
++        if asked and answered and asked > answered:
++            failures.add(f"{t.get('turnId')}: 提问时标晚于作答时标")
++        if start and asked and asked < start:
++            failures.add(f"{t.get('turnId')}: 提问早于笔录开始")
++        if end and answered and answered > end:
++            failures.add(f"{t.get('turnId')}: 作答晚于笔录结束")
++        rounds.append(t.get("round"))
++    if rounds != list(range(1, len(turns) + 1)):
++        failures.add(f"{prefix}: 轮次必须从 1 连续编号")
++
++
++def check_template(failures: Failures) -> None:
++    tmpl_path = HERE / "annotation_template" / "blank-annotation-template.json"
++    csv_path = HERE / "annotation_template" / "blank-annotation-template.csv"
++    policy = HERE / "annotation_template" / "POLICY_TO_FREEZE.md"
++    if not tmpl_path.is_file():
++        failures.add("缺少空白标注模板 JSON")
++        return
++    tmpl = load_json(tmpl_path)
++    if tmpl.get("answersPrefilled") is not False:
++        failures.add("标注模板 answersPrefilled 必须为 false")
++    if tmpl.get("rows") != []:
++        failures.add("标注模板 rows 必须为空，不得预填答案")
++    keys = [f.get("key") for f in tmpl.get("fields") or []]
++    if keys != list(TEMPLATE_FIELDS):
++        failures.add(f"标注模板字段顺序或名称不符: {keys}")
++    required = {"evidenceLocator", "statementType"}
++    present = {f["key"] for f in tmpl.get("fields") or [] if f.get("key") in required}
++    if present != required:
++        failures.add("标注模板须包含证据定位与陈述类型字段")
++    pending_ok = {"pendingCheck", "notComparable"}.issubset(set(keys))
++    if not pending_ok:
++        failures.add("标注模板须包含待查与不具可比性字段")
++    # No pre-filled enum answers on statementType
++    for field in tmpl.get("fields") or []:
++        if field.get("key") == "statementType" and field.get("enum"):
++            failures.add("陈述类型不得预填枚举答案")
++        if field.get("exampleAnswer") or field.get("gold"):
++            failures.add(f"模板字段 {field.get('key')} 含预填答案")
++    if not csv_path.is_file():
++        failures.add("缺少空白标注模板 CSV")
++    else:
++        text = csv_path.read_text(encoding="utf-8")
++        lines = [ln for ln in text.splitlines() if ln.strip()]
++        if len(lines) != 1:
++            failures.add("CSV 模板只能有表头，不得有数据行")
++        else:
++            header = lines[0].split(",")
++            if header != list(TEMPLATE_FIELDS):
++                failures.add(f"CSV 表头不符: {header}")
++    if not policy.is_file() or "分母" not in policy.read_text(encoding="utf-8"):
++        failures.add("缺少评审口径冻结说明，或未列出分母等待决事项")
++
++
++def check_package_files(failures: Failures) -> None:
++    for path in HERE.rglob("*"):
++        if path.is_file() and FORBIDDEN_FILE_PATTERNS.search(path.name):
++            failures.add(f"不得提交疑似答案或计分文件: {path.relative_to(HERE)}")
++
++
++def build_summary(inventory: dict, records: list[dict]) -> str:
++    lines = [
++        "W3/5 盲标样本草案检查摘要（不是正式验收，不含分数）",
++        f"packageId: {inventory.get('packageId')}",
++        f"basePin: {inventory.get('basePin')}",
++        f"caseId: {inventory.get('caseId')}",
++        f"draftStatus: {inventory.get('draftStatus')}",
++        "scoringPaused: true",
++        "modelsNotUsed: true",
++        "",
++        "样本清单:",
++    ]
++    by_id = {r["recordId"]: r for r in records}
++    covered = set()
++    for item in inventory["samples"]:
++        rec = by_id[item["recordId"]]
++        themes = ", ".join(item["themeKeys"])
++        covered.update(item["themeKeys"])
++        person = rec["interviewee"]
++        lines.append(
++            f"- {rec['recordId']}: {person['name']} / {person['role']} / {person['affiliation']} "
++            f"/ intervieweeId={person['intervieweeId']} / 轮次={len(rec['turns'])} "
++            f"/ 开始 {rec['interviewStartedAtLocal']} / 结束 {rec['interviewEndedAtLocal']} "
++            f"/ 题材标签 {themes}"
++        )
++    lines.append("")
++    lines.append("已覆盖题材标签: " + ", ".join(sorted(covered)))
++    lines.append(
++        "同名区分: 陈海 → P-SYN-LS-OOW（IR-SYN-01，岚升二副）与 "
++        "P-SYN-QY-MASTER（IR-SYN-05，青屿船长）"
++    )
++    lines.append("空白标注模板: rows=[], CSV 仅表头；未预填答案。")
++    lines.append("本摘要不计算一致率，不给出错漏清单或评分。")
++    return "\n".join(lines) + "\n"
++
++
++def main() -> int:
++    failures = Failures()
++    check_package_files(failures)
++    inv_path = HERE / "inventory.json"
++    if not inv_path.is_file():
++        print("缺少 inventory.json", file=sys.stderr)
++        return 1
++    inventory = load_json(inv_path)
++    if inventory.get("notFormalAcceptance") is not True or inventory.get("scoringPaused") is not True:
++        failures.add("inventory 须声明非正式验收且暂停评分")
++    if set(inventory.get("requiredThemeKeys") or []) != REQUIRED_THEMES:
++        failures.add("inventory.requiredThemeKeys 与派遣要求的题材差异不一致")
++    listed = [s.get("recordId") for s in inventory.get("samples") or []]
++    if listed != REQUIRED_IDS:
++        failures.add(f"清单中的 recordId 应为 {REQUIRED_IDS}，实际 {listed}")
++
++    records = []
++    record_ids, turn_ids, interviewee_ids = [], [], []
++    names_by_id = {}
++    for item in inventory.get("samples") or []:
++        path = HERE / item["file"]
++        if not path.is_file():
++            failures.add(f"缺少样本文件 {item['file']}")
++            continue
++        rec = load_json(path)
++        check_record(path, rec, failures)
++        records.append(rec)
++        record_ids.append(rec.get("recordId"))
++        interviewee_ids.append((rec.get("interviewee") or {}).get("intervieweeId"))
++        names_by_id[(rec.get("interviewee") or {}).get("intervieweeId")] = (rec.get("interviewee") or {}).get("name")
++        for t in rec.get("turns") or []:
++            turn_ids.append(t.get("turnId"))
++        if rec.get("recordId") != item.get("recordId"):
++            failures.add(f"{item['file']} 与清单 recordId 不一致")
++        person = rec.get("interviewee") or {}
++        for field in ("intervieweeId", "name", "role", "affiliation"):
++            if item.get(field) and item.get(field) != person.get(field):
++                failures.add(f"{item['recordId']} 清单字段 {field} 与样本不一致")
++
++    if len(record_ids) != len(set(record_ids)):
++        failures.add(f"recordId 不唯一: {record_ids}")
++    if len(turn_ids) != len(set(turn_ids)):
++        failures.add("turnId 不唯一")
++    if len(interviewee_ids) != len(set(interviewee_ids)):
++        failures.add(f"intervieweeId 不唯一: {interviewee_ids}")
++
++    chen_ids = {i for i, n in names_by_id.items() if n == "陈海"}
++    if chen_ids != {"P-SYN-LS-OOW", "P-SYN-QY-MASTER"}:
++        failures.add(f"同名「陈海」须且仅对应 P-SYN-LS-OOW 与 P-SYN-QY-MASTER，实际 {chen_ids}")
++
++    covered = set()
++    for item in inventory.get("samples") or []:
++        covered.update(item.get("themeKeys") or [])
++    missing = REQUIRED_THEMES - covered
++    if missing:
++        failures.add(f"题材差异覆盖不全: {sorted(missing)}")
++
++    check_template(failures)
++
++    if failures:
++        print("检查未通过（退出码 1）：", file=sys.stderr)
++        for msg in failures:
++            print(f"- {msg}", file=sys.stderr)
++        return 1
++
++    summary = build_summary(inventory, records)
++    out = HERE / "checklist-summary.txt"
++    out.write_text(summary, encoding="utf-8")
++    sys.stdout.write(summary)
++    print(f"检查通过。退出码 0。摘要已写入 {out}")
++    return 0
++
++
++if __name__ == "__main__":
++    sys.exit(main())

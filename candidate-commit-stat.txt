@@ -1,0 +1,26 @@
+commit c826236f51485c3b380b191b86c5ef48bfb92224
+Author:     Mark Wen <mark@users.noreply.github.com>
+AuthorDate: Sat Nov 28 05:18:49 2026 +0800
+Commit:     Mark Wen <mark@users.noreply.github.com>
+CommitDate: Sat Nov 28 05:18:49 2026 +0800
+
+    test(w35): add six fictional interview drafts for blind labeling
+    
+    Isolated tests_acceptance/W35_BLIND_LABEL package on pin 94d5e38.
+    Blank annotation template only; no gold, scores, or product changes.
+    Not formal acceptance. Format/ID/completeness checks exit 0.
+
+ tests_acceptance/W35_BLIND_LABEL/README.md         |  37 +++
+ .../annotation_template/POLICY_TO_FREEZE.md        |  11 +
+ .../blank-annotation-template.csv                  |   1 +
+ .../blank-annotation-template.json                 |  64 ++++
+ .../W35_BLIND_LABEL/checklist-summary.txt          |  20 ++
+ tests_acceptance/W35_BLIND_LABEL/inventory.json    |  97 ++++++
+ .../W35_BLIND_LABEL/samples/IR-SYN-01.json         | 101 ++++++
+ .../W35_BLIND_LABEL/samples/IR-SYN-02.json         | 101 ++++++
+ .../W35_BLIND_LABEL/samples/IR-SYN-03.json         | 101 ++++++
+ .../W35_BLIND_LABEL/samples/IR-SYN-04.json         | 101 ++++++
+ .../W35_BLIND_LABEL/samples/IR-SYN-05.json         | 101 ++++++
+ .../W35_BLIND_LABEL/samples/IR-SYN-06.json         | 101 ++++++
+ .../W35_BLIND_LABEL/test_blind_sample_format.py    | 347 +++++++++++++++++++++
+ 13 files changed, 1183 insertions(+)
