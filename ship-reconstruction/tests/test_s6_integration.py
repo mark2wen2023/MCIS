@@ -10,6 +10,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/"scripts"))
 from geometry import read_exchange,exchange
 from coordinate_contract import contract,convert,joint_in_exchange,export_mesh,read_meta
+from s6_equipment.intake import read_articulation
 from s6_equipment.runtime import Runtime
 from s6_equipment.standard_export import convert as standard
 from s6 import run
@@ -52,3 +53,5 @@ class Integration(unittest.TestCase):
             np.testing.assert_array_equal(scene.graph["structure_hull"][0],fixed)
             with self.assertRaises(ValueError):rt.step("blade",3,1)
             with self.assertRaises(ValueError):standard(scene,cfg)
+            cfg["joints"][0]["control_enabled"]=False
+            with self.assertRaises(ValueError):read_articulation(out/a["file"],cfg)

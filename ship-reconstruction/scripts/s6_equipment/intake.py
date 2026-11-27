@@ -1,4 +1,5 @@
 """调用 S5 合成设备注记解析。证据与原始 DWG、转换件及 CAD 句柄分别绑定。"""
+import hashlib
 import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -12,8 +13,15 @@ from .runtime import Runtime
 from .structures import attach
 
 
+def articulation_digest(config):
+    fields={k:v for k,v in config.items() if k not in ("model_file","model_sha256")}
+    return hashlib.sha256(json.dumps(fields,sort_keys=True,separators=(",",":"),allow_nan=False).encode()).hexdigest()
+
+
 def read_articulation(path,config):
-    if fingerprint(path)!=config["model_sha256"] or read_meta(path).get("coordinates")!=config["coordinates"]:
+    extras=read_meta(path)
+    if (fingerprint(path)!=config["model_sha256"] or extras.get("coordinates")!=config["coordinates"]
+        or extras.get("articulation_sha256")!=articulation_digest(config)):
         raise ValueError("模型与关节旁件不匹配")
     if config["coordinates"]!=contract("vessel",[0,0,0]) or config["axes"]!="x_forward_y_up_z_starboard":
         raise ValueError("关节坐标声明无效")
@@ -51,8 +59,10 @@ def extract(files,out,oda,synthetic,hull=None):
                                             frame=c["axes"],transform=transform.tolist(),evidence={"source_sha256":sha})])
             meta=contract("vessel",[0,0,0])
             target=out/("equipment-"+sha[:16]+".glb")
-            target.write_bytes(trimesh.exchange.gltf.export_glb(scene,tree_postprocessor=lambda j:j["asset"].update(extras={"coordinates":meta})))
-            c.update(coordinates=meta,model_sha256=fingerprint(target),model_file=target.name,scope="synthetic_common_datum")
+            c.update(coordinates=meta,model_file=target.name,scope="synthetic_common_datum")
+            tags=dict(coordinates=meta,articulation_sha256=articulation_digest(c))
+            target.write_bytes(trimesh.exchange.gltf.export_glb(scene,tree_postprocessor=lambda j:j["asset"].update(extras=tags)))
+            c["model_sha256"]=fingerprint(target)
             scene2=read_articulation(target,c)
             for node in scene.graph.nodes_geometry:
                 a,key=scene.graph[node];b,key2=scene2.graph[node]
