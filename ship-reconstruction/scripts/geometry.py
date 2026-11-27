@@ -129,18 +129,18 @@ def build_shell(rows, curves, symmetric, closure, subdivisions=1):
 def quality(mesh):
     check=validate_mesh(mesh.vertices.tolist(),mesh.faces.tolist())
     topology={k:len(v) if isinstance(v,list) else v for k,v in check.items()}
-    intersections=None; manifold=None
+    intersections=None; manifold=None; verification_error=None
     try:
         import igl
         from igl.copyleft import cgal
         manifold=bool(igl.is_vertex_manifold(np.ascontiguousarray(mesh.faces,dtype=np.int64)).all())
         hits=cgal.remesh_self_intersections(np.ascontiguousarray(mesh.vertices),np.ascontiguousarray(mesh.faces,dtype=np.int64),detect_only=True)[2]
         intersections=len(hits)
-    except (ImportError,RuntimeError):
-        pass
+    except (ImportError,OSError,AttributeError,RuntimeError) as exc:
+        verification_error=f"{type(exc).__name__}: {exc}"
     angles=np.rad2deg(mesh.face_angles)
     longest=mesh.edges_unique_length.max()
-    return dict(vertex_manifold=manifold,min_angle_deg=float(angles.min()),max_edge_m=float(longest),topology=topology,self_intersection_pairs=intersections,components=int(mesh.body_count),
+    return dict(verification_status="environment_blocked" if verification_error else "executed", verification_error=verification_error, vertex_manifold=manifold,min_angle_deg=float(angles.min()),max_edge_m=float(longest),topology=topology,self_intersection_pairs=intersections,components=int(mesh.body_count),
                 signed_volume_m3=float(mesh.volume),area_m2=float(mesh.area),
                 closed_verified=bool(check["edge_closed_candidate"] and mesh.body_count==1 and
                     mesh.is_watertight and mesh.is_winding_consistent and mesh.is_volume and manifold and intersections==0))
