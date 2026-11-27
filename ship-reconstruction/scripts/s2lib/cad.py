@@ -21,7 +21,7 @@ def xyz(p):
 
 
 def read(doc):
-    data = dict(texts=[], segments=[], native=[], curves=[], issues=[], counts=Counter())
+    data = dict(texts=[], leaders=[], segments=[], native=[], curves=[], issues=[], counts=Counter())
 
     def walk(layout, name, parent, path, blocks):
         for e in layout:
@@ -77,6 +77,12 @@ def read(doc):
                             height=float(height) * parent.transform_direction((0, 1, 0)).magnitude,
                         )
                     )
+                continue
+            if typ == "LEADER":
+                vertices=[w(v) for v in e.vertices]
+                if len(vertices)>=2:
+                    annotation=e.dxf.get("annotation_handle","0")
+                    data["leaders"].append(dict(**ref,vertices=vertices,annotation="/".join([*path,annotation]) if annotation and annotation!="0" else None))
                 continue
             if typ == "ACAD_TABLE":
                 try:

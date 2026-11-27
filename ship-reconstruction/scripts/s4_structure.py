@@ -12,6 +12,7 @@ from core.drawing_parser import fingerprint
 from geometry import read_exchange, quality
 from parts import extrude_registered
 from s2lib import alignment, cad
+from s4lib import annotations
 
 ROLES={"deck","transverse_bulkhead","longitudinal_bulkhead","frame","longitudinal","strong_beam","stiffener","compartment","tank","double_bottom_plate"}
 PART=re.compile(r"PART\s+([\w.-]+)\s+(\w+)$",re.I)
@@ -24,7 +25,7 @@ def views(drawings):
     records=[]
     for d in drawings:
         doc=d["cad"]
-        data=cad.read(doc)
+        data=d["data"] if "data" in d else cad.read(doc)
         frames=alignment.datum_controls(data)
         texts=[t for t in data["texts"] if t["layout"]=="Model" and "/" not in t["instance"]]
         document_links=[]
@@ -80,6 +81,12 @@ def views(drawings):
 def compute(drawings, dest, hull=None):
     from shapely import MultiPoint
     import igl
+    notes=[];view_titles=[]
+    for drawing in drawings:
+        drawing["data"]=cad.read(drawing["cad"])
+        items,titles=annotations.observations(drawing["data"],drawing["sha256"])
+        notes.extend(items)
+        view_titles.extend(dict(source_sha256=drawing["sha256"],**t) for t in titles)
     observations=views(drawings)
     results=[]
     hull_qa=quality(hull) if hull is not None else None
@@ -130,7 +137,7 @@ def compute(drawings, dest, hull=None):
         else:
             r["unknowns"].append("hull_attachment")
         (dest/(key+".ply")).write_bytes(mesh.export(file_type="ply"))
-    return dict(components=results,hull_quality=hull_qa,engineering_approved=False,view_tolerance_m=LIMIT)
+    return dict(schema_version="4.0",components=results,observations=notes,view_titles=view_titles,identity_candidates=annotations.associations(notes),hull_quality=hull_qa,engineering_approved=False,view_tolerance_m=LIMIT)
 
 
 def main():
@@ -138,6 +145,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("input",type=Path)
     p.add_argument("--out",type=Path,required=True)
+    p.add_argument("--oda",type=Path)
     p.add_argument("--hull-glb",type=Path)
     a=p.parse_args()
     a.out.mkdir(parents=True,exist_ok=False)
@@ -146,10 +154,11 @@ def main():
         for path in sorted(a.input.iterdir()):
             if path.suffix.lower() in (".dxf",".dwg"):
                 sha=fingerprint(path)
-                converted,_=convert(path,Path(tmp),None)
-                drawings.append(dict(sha256=sha,cad=ezdxf.readfile(converted)))
+                converted,adapter=convert(path,Path(tmp),a.oda)
+                drawings.append(dict(sha256=sha,cad=ezdxf.readfile(converted),conversion=adapter,dxf_sha256=fingerprint(converted)))
                 if fingerprint(path)!=sha:raise ValueError("输入图纸已改变")
         result=compute(drawings,a.out,read_exchange(a.hull_glb) if a.hull_glb else None)
+        result["sources"]=[dict(source_sha256=d["sha256"],dxf_sha256=d["dxf_sha256"],conversion=d["conversion"]) for d in drawings]
         result["hull_sha256"]=fingerprint(a.hull_glb) if a.hull_glb else None
     (a.out/"structures.json").write_text(json.dumps(result,ensure_ascii=False,indent=2,allow_nan=False))
     return 0 if result["components"] and all(v["geometry_status"]=="research_geometry_verified" for v in result["components"]) else 4
