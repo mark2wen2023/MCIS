@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>W12 same-case pair select assembly</title>
+  <link rel="stylesheet" href="./analysis.css" />
+  <style>
+    html, body { margin: 0; max-width: 100%; overflow-x: hidden; background: #07111d; color: #e6f1ff; font-family: sans-serif; }
+    .banner { padding: 8px 16px; font-size: 12px; color: #8da4c4; }
+    .pair-bar { display: flex; gap: 8px; align-items: center; padding: 8px 16px; flex-wrap: wrap; }
+    .pair-bar button { cursor: pointer; padding: 4px 10px; }
+    .pair-bar button[aria-pressed="true"] { outline: 2px solid #3be3ff; }
+    .an-metric-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; }
+    .an-metric-table caption { caption-side: top; text-align: left; color: #8da4c4; font-size: 11px; padding: 4px 0 6px; }
+    .an-metric-table th, .an-metric-table td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #33506e; color: #e6f1ff; }
+    .mono { font-family: ui-monospace, monospace; font-size: 12px; }
+    #status-panel, #loading-panel, #error-panel { padding: 12px 16px; }
+  </style>
+</head>
+<body>
+  <div id="root">正在读取已确认配对目录…</div>
+  <script src="./app.js"></script>
+</body>
+</html>

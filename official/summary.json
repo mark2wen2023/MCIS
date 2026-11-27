@@ -1,0 +1,61 @@
+{
+  "ok": true,
+  "chromium_sandbox": true,
+  "listen": "127.0.0.1:18785",
+  "pairA": {
+    "sourceSha256": {
+      "SYN-VESSEL-A": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c",
+      "SYN-VESSEL-B": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca"
+    },
+    "coreAt120": {
+      "distanceNm": 1.070062,
+      "dcpaNm": 0.000226,
+      "tcpaMin": 2.918352,
+      "riskLevel": "Danger"
+    },
+    "coreAt130": {
+      "distanceNm": 1.008757,
+      "dcpaNm": 0.000213,
+      "tcpaMin": 2.751155,
+      "riskLevel": "Danger"
+    }
+  },
+  "pairB": {
+    "sourceSha256": {
+      "SYN-VESSEL-A": "8f3e61212730673589068e32383a1677f57255b84ee5879041e8bbd9058ca27a",
+      "SYN-VESSEL-B": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca"
+    },
+    "coreAt120": {
+      "distanceNm": 1.226641,
+      "dcpaNm": 0.599765,
+      "tcpaMin": 2.918219,
+      "riskLevel": "Warning"
+    },
+    "coreAt130": {
+      "distanceNm": 1.173535,
+      "dcpaNm": 0.599751,
+      "tcpaMin": 2.751011,
+      "riskLevel": "Warning"
+    }
+  },
+  "requestOrder": [
+    "pair-a",
+    "pair-b",
+    "pair-a",
+    "pair-b"
+  ],
+  "successfulFinishes": [
+    "pair-a",
+    "pair-a",
+    "pair-b",
+    "pair-b"
+  ],
+  "lateBDidNotOverwriteA": true,
+  "loadingClearedA": true,
+  "acceptsPins": false,
+  "started": "2026-11-27 20:04:03 CST",
+  "ended": "2026-11-27 20:04:17 CST",
+  "port": 18785,
+  "origin": "http://127.0.0.1:18785",
+  "coreDllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf"
+}

@@ -1,0 +1,1357 @@
+[
+  {
+    "event": "start",
+    "t": 1795781044.3342338,
+    "path": "/assembly/api/view",
+    "method": "GET",
+    "status": 0,
+    "query": {
+      "pair": "pair-a",
+      "sourceSha256": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c"
+    },
+    "pairLabel": "pair-a",
+    "delayMs": 0,
+    "accessBefore": null,
+    "accessAfter": null,
+    "deltaAccess": null,
+    "ok": null,
+    "reason": null,
+    "identities": null,
+    "coreAt120": null,
+    "entry": null,
+    "called": null,
+    "payload": {}
+  },
+  {
+    "event": "finish",
+    "t": 1795781044.3357682,
+    "path": "/assembly/api/view",
+    "method": "GET",
+    "status": 400,
+    "query": {
+      "pair": "pair-a",
+      "sourceSha256": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c"
+    },
+    "pairLabel": "pair-a",
+    "delayMs": 0,
+    "accessBefore": {
+      "evidence": 4,
+      "custody": 4,
+      "audit": 4,
+      "access": 0
+    },
+    "accessAfter": {
+      "evidence": 4,
+      "custody": 4,
+      "audit": 4,
+      "access": 0
+    },
+    "deltaAccess": 0,
+    "ok": false,
+    "reason": "PIN_NOT_ACCEPTED",
+    "identities": null,
+    "coreAt120": null,
+    "entry": "_load_registered_pair",
+    "called": false,
+    "payload": {
+      "ok": false,
+      "reason": "PIN_NOT_ACCEPTED",
+      "message": "server does not accept original pins; select a confirmed pair label",
+      "pairLabel": null,
+      "identities": null,
+      "accessBefore": {
+        "evidence": 4,
+        "custody": 4,
+        "audit": 4,
+        "access": 0
+      },
+      "accessAfter": {
+        "evidence": 4,
+        "custody": 4,
+        "audit": 4,
+        "access": 0
+      },
+      "deltaAccess": 0,
+      "entry": "_load_registered_pair",
+      "called": false
+    }
+  },
+  {
+    "event": "start",
+    "t": 1795781045.6655126,
+    "path": "/assembly/api/view",
+    "method": "GET",
+    "status": 0,
+    "query": {
+      "pair": "pair-a"
+    },
+    "pairLabel": "pair-a",
+    "delayMs": 0,
+    "accessBefore": null,
+    "accessAfter": null,
+    "deltaAccess": null,
+    "ok": null,
+    "reason": null,
+    "identities": null,
+    "coreAt120": null,
+    "entry": null,
+    "called": null,
+    "payload": {}
+  },
+  {
+    "event": "finish",
+    "t": 1795781046.1178277,
+    "path": "/assembly/api/view",
+    "method": "GET",
+    "status": 200,
+    "query": {
+      "pair": "pair-a"
+    },
+    "pairLabel": "pair-a",
+    "delayMs": 0,
+    "accessBefore": {
+      "evidence": 4,
+      "custody": 4,
+      "audit": 4,
+      "access": 0
+    },
+    "accessAfter": {
+      "evidence": 4,
+      "custody": 6,
+      "audit": 6,
+      "access": 2
+    },
+    "deltaAccess": 2,
+    "ok": true,
+    "reason": null,
+    "identities": [
+      {
+        "vesselId": "SYN-VESSEL-A",
+        "sourceSha256": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c"
+      },
+      {
+        "vesselId": "SYN-VESSEL-B",
+        "sourceSha256": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca"
+      }
+    ],
+    "coreAt120": {
+      "currentDistanceNm": 1.070062,
+      "dcpaNm": 0.000226,
+      "tcpaMin": 2.918352,
+      "riskLevel": "Danger"
+    },
+    "entry": "_load_registered_pair",
+    "called": true,
+    "payload": {
+      "ok": true,
+      "pairLabel": "pair-a",
+      "sampleStatus": [
+        {
+          "t": 120.0,
+          "queryUtc": "2026-02-01T12:02:00Z",
+          "clock": "20:02:00",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/9"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/14"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 12,
+            "courseKind": "recorded",
+            "courseDeg": 270
+          },
+          "cotemporalMeasured": true,
+          "pairMetricsAllowed": true
+        },
+        {
+          "t": 121.0,
+          "queryUtc": "2026-02-01T12:02:01Z",
+          "clock": "20:02:01",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/10"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "no_observation_at_time",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": null,
+            "gap": null
+          },
+          "cotemporalMeasured": false,
+          "pairMetricsAllowed": false
+        },
+        {
+          "t": 124.25,
+          "queryUtc": "2026-02-01T12:02:04.250Z",
+          "clock": "20:02:04.250",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "declared_gap",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": {
+              "jsonPointer": "/sampling/missingIntervals/1"
+            },
+            "gap": {
+              "startUtc": "2026-02-01T12:02:01.000Z",
+              "endUtc": "2026-02-01T12:02:07.500Z"
+            }
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "no_observation_at_time",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": null,
+            "gap": null
+          },
+          "cotemporalMeasured": false,
+          "pairMetricsAllowed": false
+        },
+        {
+          "t": 127.5,
+          "queryUtc": "2026-02-01T12:02:07.500Z",
+          "clock": "20:02:07.500",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/11"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "no_observation_at_time",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": null,
+            "gap": null
+          },
+          "cotemporalMeasured": false,
+          "pairMetricsAllowed": false
+        },
+        {
+          "t": 130.0,
+          "queryUtc": "2026-02-01T12:02:10Z",
+          "clock": "20:02:10",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/12"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/16"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 12,
+            "courseKind": "recorded",
+            "courseDeg": 270
+          },
+          "cotemporalMeasured": true,
+          "pairMetricsAllowed": true
+        }
+      ],
+      "coreCalls": [
+        {
+          "t": 120.0,
+          "queryUtc": "2026-02-01T12:02:00Z",
+          "coreVersion": "mcis-core/0.1.0",
+          "recalculatedIdentical": true,
+          "result": {
+            "pairId": "SYN-VESSEL-A|SYN-VESSEL-B@120",
+            "ownVesselId": "SYN-VESSEL-A",
+            "targetVesselId": "SYN-VESSEL-B",
+            "timeSec": 120,
+            "currentDistanceNm": 1.070062,
+            "trueBearingDeg": 90.01212,
+            "relativeCourseDeg": 270,
+            "relativeSpeedKn": 22,
+            "dcpaNm": 0.000226,
+            "tcpaMin": 2.918352,
+            "isDiverging": false,
+            "isDegenerate": false,
+            "riskLevel": "Danger"
+          }
+        },
+        {
+          "t": 130.0,
+          "queryUtc": "2026-02-01T12:02:10Z",
+          "coreVersion": "mcis-core/0.1.0",
+          "recalculatedIdentical": true,
+          "result": {
+            "pairId": "SYN-VESSEL-A|SYN-VESSEL-B@130",
+            "ownVesselId": "SYN-VESSEL-A",
+            "targetVesselId": "SYN-VESSEL-B",
+            "timeSec": 130,
+            "currentDistanceNm": 1.008757,
+            "trueBearingDeg": 90.012081,
+            "relativeCourseDeg": 270,
+            "relativeSpeedKn": 22,
+            "dcpaNm": 0.000213,
+            "tcpaMin": 2.751155,
+            "isDiverging": false,
+            "isDegenerate": false,
+            "riskLevel": "Danger"
+          }
+        }
+      ],
+      "coreVersion": "mcis-core/0.1.0",
+      "dllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+      "identities": [
+        {
+          "vesselId": "SYN-VESSEL-A",
+          "sourceSha256": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c"
+        },
+        {
+          "vesselId": "SYN-VESSEL-B",
+          "sourceSha256": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca"
+        }
+      ],
+      "coreAt120": {
+        "currentDistanceNm": 1.070062,
+        "dcpaNm": 0.000226,
+        "tcpaMin": 2.918352,
+        "riskLevel": "Danger"
+      },
+      "coreAt130": {
+        "currentDistanceNm": 1.008757,
+        "dcpaNm": 0.000213,
+        "tcpaMin": 2.751155,
+        "riskLevel": "Danger"
+      },
+      "accessBefore": {
+        "evidence": 4,
+        "custody": 4,
+        "audit": 4,
+        "access": 0
+      },
+      "accessAfter": {
+        "evidence": 4,
+        "custody": 6,
+        "audit": 6,
+        "access": 2
+      },
+      "deltaAccess": 2,
+      "entry": "_load_registered_pair",
+      "called": true,
+      "viewSummary": {
+        "caseId": "SYN-XREPO-001",
+        "title": "已登记同案配对 A（锁定原件）",
+        "pairLabel": "pair-a",
+        "identityCount": 2,
+        "hasMetrics": true
+      }
+    }
+  },
+  {
+    "event": "start",
+    "t": 1795781047.373626,
+    "path": "/assembly/api/view",
+    "method": "GET",
+    "status": 0,
+    "query": {
+      "pair": "pair-b",
+      "delayMs": "3500"
+    },
+    "pairLabel": "pair-b",
+    "delayMs": 3500,
+    "accessBefore": null,
+    "accessAfter": null,
+    "deltaAccess": null,
+    "ok": null,
+    "reason": null,
+    "identities": null,
+    "coreAt120": null,
+    "entry": null,
+    "called": null,
+    "payload": {}
+  },
+  {
+    "event": "start",
+    "t": 1795781047.7102716,
+    "path": "/assembly/api/view",
+    "method": "GET",
+    "status": 0,
+    "query": {
+      "pair": "pair-a"
+    },
+    "pairLabel": "pair-a",
+    "delayMs": 0,
+    "accessBefore": null,
+    "accessAfter": null,
+    "deltaAccess": null,
+    "ok": null,
+    "reason": null,
+    "identities": null,
+    "coreAt120": null,
+    "entry": null,
+    "called": null,
+    "payload": {}
+  },
+  {
+    "event": "finish",
+    "t": 1795781048.062175,
+    "path": "/assembly/api/view",
+    "method": "GET",
+    "status": 200,
+    "query": {
+      "pair": "pair-a"
+    },
+    "pairLabel": "pair-a",
+    "delayMs": 0,
+    "accessBefore": {
+      "evidence": 4,
+      "custody": 8,
+      "audit": 8,
+      "access": 4
+    },
+    "accessAfter": {
+      "evidence": 4,
+      "custody": 10,
+      "audit": 10,
+      "access": 6
+    },
+    "deltaAccess": 2,
+    "ok": true,
+    "reason": null,
+    "identities": [
+      {
+        "vesselId": "SYN-VESSEL-A",
+        "sourceSha256": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c"
+      },
+      {
+        "vesselId": "SYN-VESSEL-B",
+        "sourceSha256": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca"
+      }
+    ],
+    "coreAt120": {
+      "currentDistanceNm": 1.070062,
+      "dcpaNm": 0.000226,
+      "tcpaMin": 2.918352,
+      "riskLevel": "Danger"
+    },
+    "entry": "_load_registered_pair",
+    "called": true,
+    "payload": {
+      "ok": true,
+      "pairLabel": "pair-a",
+      "sampleStatus": [
+        {
+          "t": 120.0,
+          "queryUtc": "2026-02-01T12:02:00Z",
+          "clock": "20:02:00",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/9"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/14"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 12,
+            "courseKind": "recorded",
+            "courseDeg": 270
+          },
+          "cotemporalMeasured": true,
+          "pairMetricsAllowed": true
+        },
+        {
+          "t": 121.0,
+          "queryUtc": "2026-02-01T12:02:01Z",
+          "clock": "20:02:01",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/10"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "no_observation_at_time",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": null,
+            "gap": null
+          },
+          "cotemporalMeasured": false,
+          "pairMetricsAllowed": false
+        },
+        {
+          "t": 124.25,
+          "queryUtc": "2026-02-01T12:02:04.250Z",
+          "clock": "20:02:04.250",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "declared_gap",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": {
+              "jsonPointer": "/sampling/missingIntervals/1"
+            },
+            "gap": {
+              "startUtc": "2026-02-01T12:02:01.000Z",
+              "endUtc": "2026-02-01T12:02:07.500Z"
+            }
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "no_observation_at_time",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": null,
+            "gap": null
+          },
+          "cotemporalMeasured": false,
+          "pairMetricsAllowed": false
+        },
+        {
+          "t": 127.5,
+          "queryUtc": "2026-02-01T12:02:07.500Z",
+          "clock": "20:02:07.500",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/11"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "no_observation_at_time",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": null,
+            "gap": null
+          },
+          "cotemporalMeasured": false,
+          "pairMetricsAllowed": false
+        },
+        {
+          "t": 130.0,
+          "queryUtc": "2026-02-01T12:02:10Z",
+          "clock": "20:02:10",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/12"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/16"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 12,
+            "courseKind": "recorded",
+            "courseDeg": 270
+          },
+          "cotemporalMeasured": true,
+          "pairMetricsAllowed": true
+        }
+      ],
+      "coreCalls": [
+        {
+          "t": 120.0,
+          "queryUtc": "2026-02-01T12:02:00Z",
+          "coreVersion": "mcis-core/0.1.0",
+          "recalculatedIdentical": true,
+          "result": {
+            "pairId": "SYN-VESSEL-A|SYN-VESSEL-B@120",
+            "ownVesselId": "SYN-VESSEL-A",
+            "targetVesselId": "SYN-VESSEL-B",
+            "timeSec": 120,
+            "currentDistanceNm": 1.070062,
+            "trueBearingDeg": 90.01212,
+            "relativeCourseDeg": 270,
+            "relativeSpeedKn": 22,
+            "dcpaNm": 0.000226,
+            "tcpaMin": 2.918352,
+            "isDiverging": false,
+            "isDegenerate": false,
+            "riskLevel": "Danger"
+          }
+        },
+        {
+          "t": 130.0,
+          "queryUtc": "2026-02-01T12:02:10Z",
+          "coreVersion": "mcis-core/0.1.0",
+          "recalculatedIdentical": true,
+          "result": {
+            "pairId": "SYN-VESSEL-A|SYN-VESSEL-B@130",
+            "ownVesselId": "SYN-VESSEL-A",
+            "targetVesselId": "SYN-VESSEL-B",
+            "timeSec": 130,
+            "currentDistanceNm": 1.008757,
+            "trueBearingDeg": 90.012081,
+            "relativeCourseDeg": 270,
+            "relativeSpeedKn": 22,
+            "dcpaNm": 0.000213,
+            "tcpaMin": 2.751155,
+            "isDiverging": false,
+            "isDegenerate": false,
+            "riskLevel": "Danger"
+          }
+        }
+      ],
+      "coreVersion": "mcis-core/0.1.0",
+      "dllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+      "identities": [
+        {
+          "vesselId": "SYN-VESSEL-A",
+          "sourceSha256": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c"
+        },
+        {
+          "vesselId": "SYN-VESSEL-B",
+          "sourceSha256": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca"
+        }
+      ],
+      "coreAt120": {
+        "currentDistanceNm": 1.070062,
+        "dcpaNm": 0.000226,
+        "tcpaMin": 2.918352,
+        "riskLevel": "Danger"
+      },
+      "coreAt130": {
+        "currentDistanceNm": 1.008757,
+        "dcpaNm": 0.000213,
+        "tcpaMin": 2.751155,
+        "riskLevel": "Danger"
+      },
+      "accessBefore": {
+        "evidence": 4,
+        "custody": 8,
+        "audit": 8,
+        "access": 4
+      },
+      "accessAfter": {
+        "evidence": 4,
+        "custody": 10,
+        "audit": 10,
+        "access": 6
+      },
+      "deltaAccess": 2,
+      "entry": "_load_registered_pair",
+      "called": true,
+      "viewSummary": {
+        "caseId": "SYN-XREPO-001",
+        "title": "已登记同案配对 A（锁定原件）",
+        "pairLabel": "pair-a",
+        "identityCount": 2,
+        "hasMetrics": true
+      }
+    }
+  },
+  {
+    "event": "finish",
+    "t": 1795781051.210473,
+    "path": "/assembly/api/view",
+    "method": "GET",
+    "status": 200,
+    "query": {
+      "pair": "pair-b",
+      "delayMs": "3500"
+    },
+    "pairLabel": "pair-b",
+    "delayMs": 3500,
+    "accessBefore": {
+      "evidence": 4,
+      "custody": 6,
+      "audit": 6,
+      "access": 2
+    },
+    "accessAfter": {
+      "evidence": 4,
+      "custody": 8,
+      "audit": 8,
+      "access": 4
+    },
+    "deltaAccess": 2,
+    "ok": true,
+    "reason": null,
+    "identities": [
+      {
+        "vesselId": "SYN-VESSEL-A",
+        "sourceSha256": "8f3e61212730673589068e32383a1677f57255b84ee5879041e8bbd9058ca27a"
+      },
+      {
+        "vesselId": "SYN-VESSEL-B",
+        "sourceSha256": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca"
+      }
+    ],
+    "coreAt120": {
+      "currentDistanceNm": 1.226641,
+      "dcpaNm": 0.599765,
+      "tcpaMin": 2.918219,
+      "riskLevel": "Warning"
+    },
+    "entry": "_load_registered_pair",
+    "called": true,
+    "payload": {
+      "ok": true,
+      "pairLabel": "pair-b",
+      "sampleStatus": [
+        {
+          "t": 120.0,
+          "queryUtc": "2026-02-01T12:02:00Z",
+          "clock": "20:02:00",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/9"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/14"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 12,
+            "courseKind": "recorded",
+            "courseDeg": 270
+          },
+          "cotemporalMeasured": true,
+          "pairMetricsAllowed": true
+        },
+        {
+          "t": 121.0,
+          "queryUtc": "2026-02-01T12:02:01Z",
+          "clock": "20:02:01",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/10"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "no_observation_at_time",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": null,
+            "gap": null
+          },
+          "cotemporalMeasured": false,
+          "pairMetricsAllowed": false
+        },
+        {
+          "t": 124.25,
+          "queryUtc": "2026-02-01T12:02:04.250Z",
+          "clock": "20:02:04.250",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "declared_gap",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": {
+              "jsonPointer": "/sampling/missingIntervals/1"
+            },
+            "gap": {
+              "startUtc": "2026-02-01T12:02:01.000Z",
+              "endUtc": "2026-02-01T12:02:07.500Z"
+            }
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "no_observation_at_time",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": null,
+            "gap": null
+          },
+          "cotemporalMeasured": false,
+          "pairMetricsAllowed": false
+        },
+        {
+          "t": 127.5,
+          "queryUtc": "2026-02-01T12:02:07.500Z",
+          "clock": "20:02:07.500",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/11"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "no_observation_at_time",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": null,
+            "gap": null
+          },
+          "cotemporalMeasured": false,
+          "pairMetricsAllowed": false
+        },
+        {
+          "t": 130.0,
+          "queryUtc": "2026-02-01T12:02:10Z",
+          "clock": "20:02:10",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/12"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/16"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 12,
+            "courseKind": "recorded",
+            "courseDeg": 270
+          },
+          "cotemporalMeasured": true,
+          "pairMetricsAllowed": true
+        }
+      ],
+      "coreCalls": [
+        {
+          "t": 120.0,
+          "queryUtc": "2026-02-01T12:02:00Z",
+          "coreVersion": "mcis-core/0.1.0",
+          "recalculatedIdentical": true,
+          "result": {
+            "pairId": "SYN-VESSEL-A|SYN-VESSEL-B@120",
+            "ownVesselId": "SYN-VESSEL-A",
+            "targetVesselId": "SYN-VESSEL-B",
+            "timeSec": 120,
+            "currentDistanceNm": 1.226641,
+            "trueBearingDeg": 119.271536,
+            "relativeCourseDeg": 270,
+            "relativeSpeedKn": 22,
+            "dcpaNm": 0.599765,
+            "tcpaMin": 2.918219,
+            "isDiverging": false,
+            "isDegenerate": false,
+            "riskLevel": "Warning"
+          }
+        },
+        {
+          "t": 130.0,
+          "queryUtc": "2026-02-01T12:02:10Z",
+          "coreVersion": "mcis-core/0.1.0",
+          "recalculatedIdentical": true,
+          "result": {
+            "pairId": "SYN-VESSEL-A|SYN-VESSEL-B@130",
+            "ownVesselId": "SYN-VESSEL-A",
+            "targetVesselId": "SYN-VESSEL-B",
+            "timeSec": 130,
+            "currentDistanceNm": 1.173535,
+            "trueBearingDeg": 120.734703,
+            "relativeCourseDeg": 270,
+            "relativeSpeedKn": 22,
+            "dcpaNm": 0.599751,
+            "tcpaMin": 2.751011,
+            "isDiverging": false,
+            "isDegenerate": false,
+            "riskLevel": "Warning"
+          }
+        }
+      ],
+      "coreVersion": "mcis-core/0.1.0",
+      "dllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+      "identities": [
+        {
+          "vesselId": "SYN-VESSEL-A",
+          "sourceSha256": "8f3e61212730673589068e32383a1677f57255b84ee5879041e8bbd9058ca27a"
+        },
+        {
+          "vesselId": "SYN-VESSEL-B",
+          "sourceSha256": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca"
+        }
+      ],
+      "coreAt120": {
+        "currentDistanceNm": 1.226641,
+        "dcpaNm": 0.599765,
+        "tcpaMin": 2.918219,
+        "riskLevel": "Warning"
+      },
+      "coreAt130": {
+        "currentDistanceNm": 1.173535,
+        "dcpaNm": 0.599751,
+        "tcpaMin": 2.751011,
+        "riskLevel": "Warning"
+      },
+      "accessBefore": {
+        "evidence": 4,
+        "custody": 6,
+        "audit": 6,
+        "access": 2
+      },
+      "accessAfter": {
+        "evidence": 4,
+        "custody": 8,
+        "audit": 8,
+        "access": 4
+      },
+      "deltaAccess": 2,
+      "entry": "_load_registered_pair",
+      "called": true,
+      "viewSummary": {
+        "caseId": "SYN-XREPO-001",
+        "title": "已登记同案配对 B（独立登记原件）",
+        "pairLabel": "pair-b",
+        "identityCount": 2,
+        "hasMetrics": true
+      }
+    }
+  },
+  {
+    "event": "start",
+    "t": 1795781055.2432072,
+    "path": "/assembly/api/view",
+    "method": "GET",
+    "status": 0,
+    "query": {
+      "pair": "pair-b"
+    },
+    "pairLabel": "pair-b",
+    "delayMs": 0,
+    "accessBefore": null,
+    "accessAfter": null,
+    "deltaAccess": null,
+    "ok": null,
+    "reason": null,
+    "identities": null,
+    "coreAt120": null,
+    "entry": null,
+    "called": null,
+    "payload": {}
+  },
+  {
+    "event": "finish",
+    "t": 1795781055.699372,
+    "path": "/assembly/api/view",
+    "method": "GET",
+    "status": 200,
+    "query": {
+      "pair": "pair-b"
+    },
+    "pairLabel": "pair-b",
+    "delayMs": 0,
+    "accessBefore": {
+      "evidence": 4,
+      "custody": 10,
+      "audit": 10,
+      "access": 6
+    },
+    "accessAfter": {
+      "evidence": 4,
+      "custody": 12,
+      "audit": 12,
+      "access": 8
+    },
+    "deltaAccess": 2,
+    "ok": true,
+    "reason": null,
+    "identities": [
+      {
+        "vesselId": "SYN-VESSEL-A",
+        "sourceSha256": "8f3e61212730673589068e32383a1677f57255b84ee5879041e8bbd9058ca27a"
+      },
+      {
+        "vesselId": "SYN-VESSEL-B",
+        "sourceSha256": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca"
+      }
+    ],
+    "coreAt120": {
+      "currentDistanceNm": 1.226641,
+      "dcpaNm": 0.599765,
+      "tcpaMin": 2.918219,
+      "riskLevel": "Warning"
+    },
+    "entry": "_load_registered_pair",
+    "called": true,
+    "payload": {
+      "ok": true,
+      "pairLabel": "pair-b",
+      "sampleStatus": [
+        {
+          "t": 120.0,
+          "queryUtc": "2026-02-01T12:02:00Z",
+          "clock": "20:02:00",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/9"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/14"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 12,
+            "courseKind": "recorded",
+            "courseDeg": 270
+          },
+          "cotemporalMeasured": true,
+          "pairMetricsAllowed": true
+        },
+        {
+          "t": 121.0,
+          "queryUtc": "2026-02-01T12:02:01Z",
+          "clock": "20:02:01",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/10"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "no_observation_at_time",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": null,
+            "gap": null
+          },
+          "cotemporalMeasured": false,
+          "pairMetricsAllowed": false
+        },
+        {
+          "t": 124.25,
+          "queryUtc": "2026-02-01T12:02:04.250Z",
+          "clock": "20:02:04.250",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "declared_gap",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": {
+              "jsonPointer": "/sampling/missingIntervals/1"
+            },
+            "gap": {
+              "startUtc": "2026-02-01T12:02:01.000Z",
+              "endUtc": "2026-02-01T12:02:07.500Z"
+            }
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "no_observation_at_time",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": null,
+            "gap": null
+          },
+          "cotemporalMeasured": false,
+          "pairMetricsAllowed": false
+        },
+        {
+          "t": 127.5,
+          "queryUtc": "2026-02-01T12:02:07.500Z",
+          "clock": "20:02:07.500",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/11"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "no_observation_at_time",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": null,
+            "gap": null
+          },
+          "cotemporalMeasured": false,
+          "pairMetricsAllowed": false
+        },
+        {
+          "t": 130.0,
+          "queryUtc": "2026-02-01T12:02:10Z",
+          "clock": "20:02:10",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/12"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/16"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 12,
+            "courseKind": "recorded",
+            "courseDeg": 270
+          },
+          "cotemporalMeasured": true,
+          "pairMetricsAllowed": true
+        }
+      ],
+      "coreCalls": [
+        {
+          "t": 120.0,
+          "queryUtc": "2026-02-01T12:02:00Z",
+          "coreVersion": "mcis-core/0.1.0",
+          "recalculatedIdentical": true,
+          "result": {
+            "pairId": "SYN-VESSEL-A|SYN-VESSEL-B@120",
+            "ownVesselId": "SYN-VESSEL-A",
+            "targetVesselId": "SYN-VESSEL-B",
+            "timeSec": 120,
+            "currentDistanceNm": 1.226641,
+            "trueBearingDeg": 119.271536,
+            "relativeCourseDeg": 270,
+            "relativeSpeedKn": 22,
+            "dcpaNm": 0.599765,
+            "tcpaMin": 2.918219,
+            "isDiverging": false,
+            "isDegenerate": false,
+            "riskLevel": "Warning"
+          }
+        },
+        {
+          "t": 130.0,
+          "queryUtc": "2026-02-01T12:02:10Z",
+          "coreVersion": "mcis-core/0.1.0",
+          "recalculatedIdentical": true,
+          "result": {
+            "pairId": "SYN-VESSEL-A|SYN-VESSEL-B@130",
+            "ownVesselId": "SYN-VESSEL-A",
+            "targetVesselId": "SYN-VESSEL-B",
+            "timeSec": 130,
+            "currentDistanceNm": 1.173535,
+            "trueBearingDeg": 120.734703,
+            "relativeCourseDeg": 270,
+            "relativeSpeedKn": 22,
+            "dcpaNm": 0.599751,
+            "tcpaMin": 2.751011,
+            "isDiverging": false,
+            "isDegenerate": false,
+            "riskLevel": "Warning"
+          }
+        }
+      ],
+      "coreVersion": "mcis-core/0.1.0",
+      "dllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+      "identities": [
+        {
+          "vesselId": "SYN-VESSEL-A",
+          "sourceSha256": "8f3e61212730673589068e32383a1677f57255b84ee5879041e8bbd9058ca27a"
+        },
+        {
+          "vesselId": "SYN-VESSEL-B",
+          "sourceSha256": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca"
+        }
+      ],
+      "coreAt120": {
+        "currentDistanceNm": 1.226641,
+        "dcpaNm": 0.599765,
+        "tcpaMin": 2.918219,
+        "riskLevel": "Warning"
+      },
+      "coreAt130": {
+        "currentDistanceNm": 1.173535,
+        "dcpaNm": 0.599751,
+        "tcpaMin": 2.751011,
+        "riskLevel": "Warning"
+      },
+      "accessBefore": {
+        "evidence": 4,
+        "custody": 10,
+        "audit": 10,
+        "access": 6
+      },
+      "accessAfter": {
+        "evidence": 4,
+        "custody": 12,
+        "audit": 12,
+        "access": 8
+      },
+      "deltaAccess": 2,
+      "entry": "_load_registered_pair",
+      "called": true,
+      "viewSummary": {
+        "caseId": "SYN-XREPO-001",
+        "title": "已登记同案配对 B（独立登记原件）",
+        "pairLabel": "pair-b",
+        "identityCount": 2,
+        "hasMetrics": true
+      }
+    }
+  }
+]

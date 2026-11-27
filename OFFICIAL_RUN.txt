@@ -1,0 +1,21 @@
+official start 2026-11-27 20:04:03 CST
+locked official dll f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf
+node_modules present at /workspace/mcis-w12-pair-select-cand/web/node_modules
+esbuild /workspace/mcis-w12-pair-select-cand/web/node_modules/esbuild/bin/esbuild /workspace/mcis-w12-pair-select-cand/tests_acceptance/w12-same-case-pair-select/assembly/main.tsx --bundle --outfile=/workspace/mcis-w12-same-case-pair-select-report/official/assembly/app.js --format=iife --platform=browser --jsx=automatic --alias:react=/workspace/mcis-w12-pair-select-cand/web/node_modules/react --alias:react-dom=/workspace/mcis-w12-pair-select-cand/web/node_modules/react-dom --alias:react-dom/client=/workspace/mcis-w12-pair-select-cand/web/node_modules/react-dom/client --alias:react/jsx-runtime=/workspace/mcis-w12-pair-select-cand/web/node_modules/react/jsx-runtime --alias:echarts=/workspace/mcis-w12-pair-select-cand/web/node_modules/echarts --log-level=warning
+assembly app.js sha256=b8a63347aa05c468b180012fcfcfda9eeb6b25db66afd8883dd84fcd9cdc2eee
+materialize /workspace/mcis-w12-same-case-pair-select-report/official/w12-pair-src from /workspace/maritime-sim-design
+host /workspace/mcis-w17-871db66/service/.venv/bin/python -I -B /workspace/mcis-w12-pair-select-cand/tests_acceptance/w12-same-case-pair-select/host.py /workspace/mcis-w12-same-case-pair-select-report/official/assembly /workspace/mcis-w12-same-case-pair-select-report/official/w12-pair-src /workspace/mcis-w12-pair-select-cand/tests_acceptance/w12-registered-json-gap/fixtures /workspace/mcis-w12-pair-select-cand /workspace/mcis-w12-pair-select-cand/tests_acceptance/w12-registered-json-gap/core_norebuild.sh f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf 127.0.0.1 18785 /workspace/mcis-w12-same-case-pair-select-report/official/host-request-log.json
+/workspace/mcis-w12-pair-select-cand/tests_acceptance/w12-same-case-pair-select/host.py:189: DeprecationWarning:
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+
+  @app.on_event("startup")
+W12_PAIR_SELECT_READY=127.0.0.1:18785
+pair A shown; locked digests and d49a691 T+120/T+130 match
+loading B cleared pair A analysis
+switched back to A; late B did not overwrite A
+pair B shown; independent digest and recomputed T+120/T+130 match
+host exit=-15
+official end 2026-11-27 20:04:17 CST ok=True

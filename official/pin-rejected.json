@@ -1,0 +1,23 @@
+{
+  "ok": false,
+  "reason": "PIN_NOT_ACCEPTED",
+  "message": "server does not accept original pins; select a confirmed pair label",
+  "pairLabel": null,
+  "view": null,
+  "identities": null,
+  "accessBefore": {
+    "evidence": 4,
+    "custody": 4,
+    "audit": 4,
+    "access": 0
+  },
+  "accessAfter": {
+    "evidence": 4,
+    "custody": 4,
+    "audit": 4,
+    "access": 0
+  },
+  "deltaAccess": 0,
+  "entry": "_load_registered_pair",
+  "called": false
+}

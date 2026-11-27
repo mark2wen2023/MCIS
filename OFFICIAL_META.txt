@@ -1,0 +1,12 @@
+started: 2026-11-27 20:04:03 CST (Asia/Shanghai)
+ended: 2026-11-27 20:04:17 CST (Asia/Shanghai)
+exit: 0
+timeout: 150s TERM, kill-after 10
+listen: 127.0.0.1:18785
+browser: /opt/google/chrome/chrome
+python_run: /workspace/w17-pyplaywright-venv/bin/python
+python_host: /workspace/mcis-w17-871db66/service/.venv/bin/python
+chromium_sandbox: True (no --no-sandbox)
+dll: f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf
+candidate: f1413042624dedf8e08c1b516818e8c48c677480
+base: 688a7bb0eb16b29bb295d13376ab56f4cc7fd10b

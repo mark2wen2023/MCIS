@@ -1,0 +1,25 @@
+commit f1413042624dedf8e08c1b516818e8c48c677480
+Author:     Mark Wen <mark@users.noreply.github.com>
+AuthorDate: Fri Nov 27 20:04:34 2026 +0800
+Commit:     Mark Wen <mark@users.noreply.github.com>
+CommitDate: Fri Nov 27 20:04:34 2026 +0800
+
+    test(w12): isolated same-case pair select and recompute
+    
+    Independent read-only candidate from 688a7bb. Two legal synthetic
+    pairs are pre-registered in one temporary database by the afc72a1
+    method. The isolated host accepts only confirmed pair labels, not
+    original pins. The same AnalysisView and sandboxed Chrome first
+    show pair A, clear it while loading B, recompute B from a fresh
+    frozen read, and ignore a late B after switching back to A.
+    Official auth, routes, storage, contracts, and core are unchanged.
+
+ .../w12-same-case-pair-select/README.md            |    9 +
+ .../w12-same-case-pair-select/assembly/index.html  |   24 +
+ .../w12-same-case-pair-select/assembly/main.tsx    |  197 ++++
+ .../w12-same-case-pair-select/fixtures/SHA256SUMS  |    1 +
+ .../fixtures/vessel-a-pair-b.json                  | 1183 ++++++++++++++++++++
+ tests_acceptance/w12-same-case-pair-select/host.py |  262 +++++
+ .../w12-same-case-pair-select/pairs.py             |  216 ++++
+ tests_acceptance/w12-same-case-pair-select/run.py  |  567 ++++++++++
+ 8 files changed, 2459 insertions(+)
