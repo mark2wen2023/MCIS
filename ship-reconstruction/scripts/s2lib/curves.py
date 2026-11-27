@@ -68,6 +68,8 @@ def offset_match(frame, points, cells, curve=None):
     for c in cells:
         if c["value_m"] is None or c[key] is None or c[coord] is None or c["level_m"] is None:
             continue
+        if view == "XY" and not p[:,0].min()-1e-8 <= c[coord] <= p[:,0].max()+1e-8:
+            continue
         expected[c[key]] += 1
         if exact is not None:
             if c[coord] in exact:

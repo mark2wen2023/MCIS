@@ -187,6 +187,7 @@ def measured_frames(data, spacing, table_handles):
                 c["records"].append(
                     (val, unit, ca[j], ss[ids[j]]["instance"], t["instance"], low[j], high[j], h)
                 )
+            segment_index = {ss[i]["instance"]: i for i in ids}
             for g in clusters:
                 rec = g["records"]
                 if len({x[0] for x in rec}) < 3:
@@ -211,6 +212,20 @@ def measured_frames(data, spacing, table_handles):
                     continue
                 _, sc, ic, good, err = best
                 rr = [r for r, k in zip(rec, good) if k]
+                # The coarse angular bin is only a search index. Recover the
+                # actual axis normal from the observed, labelled grid lines.
+                indices = [segment_index[r[3]] for r in rr]
+                normals = np.column_stack((-D[indices, 1], D[indices, 0])) / ln[indices, None]
+                normals *= np.where(normals @ u < 0, -1., 1.)[:, None]
+                precise_u = np.average(normals, axis=0, weights=ln[indices])
+                precise_u /= np.linalg.norm(precise_u)
+                precise_pos = (A[indices] + B[indices]) @ precise_u / 2
+                origin = precise_pos.mean()
+                sc, at_origin = np.polyfit(precise_pos-origin, vals[good], 1)
+                ic = at_origin - sc*origin
+                precise_err = np.abs(sc*precise_pos + ic - vals[good])
+                if precise_err.max() > 1e-4:
+                    continue
                 corners = np.array(
                     [
                         u * x + v * y
@@ -222,7 +237,7 @@ def measured_frames(data, spacing, table_handles):
                     dict(
                         layout=layout,
                         axis=g["axis"],
-                        coef=[*(u * sc), ic],
+                        coef=[*(precise_u * sc), ic],
                         scale=abs(sc),
                         scale_basis="station_or_explicit_unit"
                         if all(r[1] for r in rr)
@@ -230,10 +245,9 @@ def measured_frames(data, spacing, table_handles):
                         bounds=[corners.min(0).tolist(), corners.max(0).tolist()],
                         ticks=[
                             dict(label=r[4], line=r[3], value_m=y, at=r[2])
-                            for r, y in zip(rec, vals)
-                            if good[rec.index(r)]
+                            for r, y in zip(rr, vals[good])
                         ],
-                        max_grid_residual_m=float(np.max(err[good])),
+                        max_grid_residual_m=float(np.max(precise_err)),
                     )
                 )
     frames = []
