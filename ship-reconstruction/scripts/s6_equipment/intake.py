@@ -30,7 +30,7 @@ def read_articulation(path,config):
     return scene
 
 
-def extract(files,out,oda,synthetic,hull=None):
+def extract(files,out,oda,synthetic,hull=None,*,hull_dir=None):
     if not np.array_equal(TO_GLTF,SHIP_TO_GLTF[:3,:3]):raise ValueError("交换轴矩阵不一致")
     assets=[];rejected=[];sources=[];count=0
     with TemporaryDirectory() as tmp:
@@ -51,16 +51,16 @@ def extract(files,out,oda,synthetic,hull=None):
             if hull is not None:
                 # Registration is explicitly declared by the synthetic case. Restore
                 # the centred hull's origin in the equipment's exchange basis once.
-                asset=hull["asset"];m=asset["coordinates"];path=out/asset["file"]
+                asset=hull["asset"];m=asset["coordinates"];path=(hull_dir or out)/asset["file"]
                 if fingerprint(path)!=asset["sha256"] or read_meta(path)["coordinates"]!=m or m["reference_frame"]!="vessel":
                     raise ValueError("船体交换坐标或凭据无效")
                 transform=np.eye(4);transform[:3,3]=TO_GLTF@np.array(m["origin_in_reference_m"])
                 scene,c=attach(scene,c,[dict(id="hull",asset=path,sha256=asset["sha256"],registration="synthetic_common_datum",
                                             frame=c["axes"],transform=transform.tolist(),evidence={"source_sha256":sha})])
             meta=contract("vessel",[0,0,0])
-            target=out/("equipment-"+sha[:16]+".glb")
-            c.update(coordinates=meta,model_file=target.name,scope="synthetic_common_datum")
-            tags=dict(coordinates=meta,articulation_sha256=articulation_digest(c))
+            target=out/("demo-equipment-"+sha[:16]+".glb")
+            c.update(mode="demo",formal_calculation_authorized=False,coordinates=meta,model_file=target.name,scope="synthetic_common_datum")
+            tags=dict(mode="demo",formal_calculation_authorized=False,coordinates=meta,articulation_sha256=articulation_digest(c))
             target.write_bytes(trimesh.exchange.gltf.export_glb(scene,tree_postprocessor=lambda j:j["asset"].update(extras=tags)))
             c["model_sha256"]=fingerprint(target)
             scene2=read_articulation(target,c)

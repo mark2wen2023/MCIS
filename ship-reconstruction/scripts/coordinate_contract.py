@@ -44,12 +44,12 @@ def read_meta(path):
     if typ!=b"JSON" or n>len(b)-20:raise ValueError("GLB描述截断")
     return json.loads(b[20:20+n])["asset"].get("extras",{})
 
-def export_mesh(path,mesh,meta):
+def export_mesh(path,mesh,meta,*,mode="strict"):
     out=mesh.copy()
     ref=meta["reference_frame"]
     out.vertices=convert(mesh.vertices,ref,"gltf_y_up",meta)
     scene=trimesh.Scene(out)
-    path.write_bytes(trimesh.exchange.gltf.export_glb(scene,tree_postprocessor=lambda j:j["asset"].update(extras={"coordinates":meta})))
+    path.write_bytes(trimesh.exchange.gltf.export_glb(scene,tree_postprocessor=lambda j:j["asset"].update(extras={"coordinates":meta,"mode":mode,"formal_calculation_authorized":False})))
     if read_meta(path).get("coordinates")!=meta:raise ValueError("GLB坐标旁件不一致")
     actual=trimesh.load_scene(path,process=False).to_geometry()
     actual.vertices=convert(actual.vertices,"gltf_y_up",ref,meta)
