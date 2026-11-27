@@ -389,7 +389,7 @@ def build_analysis_case(
         "whatif": None,
         "notes": [
             "视图快照只读，hover 不再读取原件。缺口取自已登记原件 sampling.missingIntervals，不从步长猜测。",
-            "仅 T+120 与 T+130 为双船同刻实测并调用既有 mcis-core cpa（对照 d49a691）。T+124.25 在 A 开区间内部，不显示 A 样位或双船指标。T+121 与 T+127.5 为 A 原始端点，不是双船同刻。",
+            "本轮只计算 T+120/130，并调用既有 mcis-core cpa（对照 d49a691）。T+124.25 在 A 开区间内部，不显示 A 样位或双船指标。T+121 与 T+127.5 为 A 原始端点，不是双船同刻。",
         ],
         "meta": {
             "seedSha256": "0" * 64,
@@ -407,7 +407,7 @@ def build_analysis_case(
             "distance": "mcis-core",
             "dcpa": "mcis-core",
             "tcpa": "mcis-core",
-            "note": "仅 T+120、T+130 为真实核心（d49a691 正对照，两次一致）。其它查询时刻无双船同刻实测，未回填、未用演示 CPA。DLL SHA-256 " + dll_sha + "。",
+            "note": "本轮只计算 T+120/130（真实核心，d49a691 正对照，两次一致）。未回填、未用演示 CPA。DLL SHA-256 " + dll_sha + "。",
         },
         "registeredIdentities": identities,
         "gapWiring": {
