@@ -38,7 +38,9 @@ def hits(x, pp):
         & (np.maximum(a[:, 0], b[:, 0]) >= x)
         & (np.abs(b[:, 0] - a[:, 0]) > 1e-12)
     )
-    return a[ok, 1] + (x - a[ok, 0]) / (b[ok, 0] - a[ok, 0]) * (b[ok, 1] - a[ok, 1])
+    inner = a[ok, 1] + (x - a[ok, 0]) / (b[ok, 0] - a[ok, 0]) * (b[ok, 1] - a[ok, 1])
+    ends = pp[np.abs(pp[:,0] - x) <= 1e-8, 1]
+    return np.unique(np.round(np.concatenate((inner, ends)), 10))
 
 
 def offset_match(frame, points, cells, curve=None):
@@ -93,7 +95,7 @@ def offset_match(frame, points, cells, curve=None):
                     value_instances=[s for _, items in err for s in items],
                 )
             )
-    return sorted(scored, key=lambda r: (r["n"] < r["expected"], r["rms_m"]))[:3]
+    return sorted(scored, key=lambda r: (r["kind"]=="section" and r["n"] < r["expected"], r["rms_m"]))[:3]
 
 
 def extract(data, inv, tables, frames):
@@ -190,14 +192,14 @@ def extract(data, inv, tables, frames):
             key = (g["kind"], g["fixed_m"])
             if key not in by_key or by_key[key]["rms_m"] > g["rms_m"]:
                 by_key[key] = g
-        matches = sorted(by_key.values(), key=lambda g: (g["n"] < g["expected"], g["rms_m"]))
+        matches = sorted(by_key.values(), key=lambda g: (g["kind"]=="section" and g["n"] < g["expected"], g["rms_m"]))
         kind = "unknown"
         confidence = "unknown"
         if (
             matches
-            and matches[0]["n"] == matches[0]["expected"]
+            and (matches[0]["kind"]!="section" or matches[0]["n"] == matches[0]["expected"])
             and matches[0]["rms_m"] < 0.025
-            and all(m["n"] != m["expected"] or m["rms_m"] > matches[0]["rms_m"] + 0.005 for m in matches[1:])
+            and all((m["kind"]=="section" and m["n"] != m["expected"]) or m["rms_m"] > matches[0]["rms_m"] + 0.005 for m in matches[1:])
         ):
             kind = matches[0]["kind"]
             confidence = "cross_checked_candidate"

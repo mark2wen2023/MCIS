@@ -1,0 +1,637 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "inventory",
+    "tables",
+    "curves",
+    "alignment",
+    "issues",
+    "relationships",
+    "validation",
+    "coordinate_system",
+    "topology_features",
+    "uncertainties",
+    "conflicts",
+    "modeling_admission"
+  ],
+  "$defs": {
+    "sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "source_sha256"
+      ],
+      "properties": {
+        "source_sha256": {
+          "$ref": "#/$defs/sha"
+        }
+      }
+    },
+    "point": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "number"
+      },
+      "maxItems": 3
+    },
+    "matrix": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "$ref": "#/$defs/point"
+      },
+      "maxItems": 3
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "source_sha256": {
+          "$ref": "#/$defs/sha"
+        },
+        "instance": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "source_sha256",
+        "instance"
+      ]
+    },
+    "region": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        },
+        "station_m": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "level_m": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "bounds_xz_m": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 4
+        }
+      },
+      "required": [
+        "scope",
+        "evidence"
+      ]
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "const": "2.1"
+    },
+    "inventory": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/source"
+          },
+          {
+            "required": [
+              "file",
+              "dxf_sha256",
+              "classes",
+              "regions"
+            ],
+            "properties": {
+              "dxf_sha256": {
+                "$ref": "#/$defs/sha"
+              },
+              "classes": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "enum": [
+                    "offset_table",
+                    "lines",
+                    "arrangement",
+                    "structure",
+                    "section",
+                    "capacity"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "tables": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/source"
+          },
+          {
+            "required": [
+              "cells",
+              "representation",
+              "layout"
+            ],
+            "properties": {
+              "cells": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "station_label",
+                    "field_label",
+                    "group",
+                    "raw_texts",
+                    "handles",
+                    "instances",
+                    "source_wcs",
+                    "row_header",
+                    "field_header",
+                    "value",
+                    "value_m",
+                    "status",
+                    "station_m",
+                    "level_m",
+                    "unit"
+                  ],
+                  "properties": {
+                    "value": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "value_m": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "status": {
+                      "enum": [
+                        "numeric",
+                        "zero",
+                        "blank_unknown",
+                        "duplicate",
+                        "conflict",
+                        "non_numeric",
+                        "merged_unknown",
+                        "boundary_ambiguous"
+                      ]
+                    },
+                    "station_m": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "level_m": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "raw_texts": {
+                      "type": "array",
+                      "minItems": 0,
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "instances": {
+                      "type": "array",
+                      "minItems": 0,
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "handles": {
+                      "type": "array",
+                      "minItems": 0,
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "unit": {
+                      "enum": [
+                        "mm",
+                        "cm",
+                        "m",
+                        null
+                      ]
+                    },
+                    "field_label": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "allOf": [
+                    {
+                      "if": {
+                        "properties": {
+                          "status": {
+                            "const": "zero"
+                          }
+                        }
+                      },
+                      "then": {
+                        "properties": {
+                          "value": {
+                            "const": 0
+                          }
+                        },
+                        "required": [
+                          "value"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "curves": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/source"
+          },
+          {
+            "required": [
+              "handle",
+              "instance",
+              "geometry",
+              "type",
+              "kind",
+              "confidence",
+              "ship_coordinates",
+              "candidates",
+              "ship_coordinate_candidates",
+              "samples"
+            ],
+            "properties": {
+              "type": {
+                "enum": [
+                  "SPLINE",
+                  "LWPOLYLINE",
+                  "POLYLINE",
+                  "LINE",
+                  "ARC",
+                  "ELLIPSE",
+                  "CIRCLE"
+                ]
+              },
+              "samples": {
+                "type": "array",
+                "minItems": 0,
+                "items": {
+                  "$ref": "#/$defs/point"
+                }
+              },
+              "ship_coordinate_candidates": {
+                "type": "array",
+                "minItems": 0,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "paper_to_ship_m": {
+                      "$ref": "#/$defs/matrix"
+                    },
+                    "y_sign": {
+                      "enum": [
+                        -1,
+                        1
+                      ]
+                    },
+                    "status": {
+                      "const": "candidate"
+                    }
+                  },
+                  "required": [
+                    "paper_to_ship_m",
+                    "status",
+                    "y_sign"
+                  ]
+                }
+              },
+              "geometry": {
+                "type": "object"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "type": {
+                      "const": "SPLINE"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "geometry": {
+                      "type": "object",
+                      "properties": {
+                        "degree": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "knots": {
+                          "type": "array",
+                          "minItems": 0,
+                          "items": {
+                            "type": "number"
+                          }
+                        },
+                        "weights": {
+                          "type": "array",
+                          "minItems": 0,
+                          "items": {
+                            "type": "number"
+                          }
+                        },
+                        "control_points": {
+                          "type": "array",
+                          "minItems": 0,
+                          "items": {
+                            "$ref": "#/$defs/point"
+                          }
+                        },
+                        "fit_points": {
+                          "type": "array",
+                          "minItems": 0,
+                          "items": {
+                            "$ref": "#/$defs/point"
+                          }
+                        }
+                      },
+                      "required": [
+                        "degree",
+                        "knots",
+                        "weights",
+                        "control_points",
+                        "fit_points"
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "alignment": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/source"
+          },
+          {
+            "required": [
+              "frames",
+              "status"
+            ],
+            "properties": {
+              "frames": {
+                "type": "array",
+                "minItems": 0,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "layout": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "method": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status": {
+                      "enum": [
+                        "verified",
+                        "candidate",
+                        "conflict"
+                      ]
+                    },
+                    "paper_to_ship_m": {
+                      "$ref": "#/$defs/matrix"
+                    }
+                  },
+                  "required": [
+                    "layout",
+                    "status",
+                    "method"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "issues": {
+      "type": "array"
+    },
+    "relationships": {
+      "type": "array"
+    },
+    "validation": {
+      "type": "object"
+    },
+    "coordinate_system": {
+      "type": "object",
+      "properties": {
+        "axes": {
+          "const": [
+            "x_forward",
+            "y_port",
+            "z_up"
+          ]
+        },
+        "length_unit": {
+          "const": "m"
+        },
+        "origin_evidence": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        }
+      },
+      "required": [
+        "axes",
+        "length_unit",
+        "origin_evidence"
+      ]
+    },
+    "topology_features": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "confidence": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/evidence"
+            }
+          }
+        },
+        "required": [
+          "kind",
+          "confidence",
+          "evidence"
+        ]
+      }
+    },
+    "uncertainties": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence": {
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/$defs/evidence"
+            }
+          }
+        },
+        "required": [
+          "kind",
+          "scope",
+          "evidence"
+        ]
+      }
+    },
+    "conflicts": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "station_m": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "level_m": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/evidence"
+            }
+          }
+        },
+        "required": [
+          "kind",
+          "station_m",
+          "level_m",
+          "evidence"
+        ]
+      }
+    },
+    "modeling_admission": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "enum": [
+            "full_research",
+            "local_symmetric",
+            "blocked"
+          ]
+        },
+        "engineering_approved": {
+          "const": false
+        },
+        "allowed_regions": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "#/$defs/region"
+          }
+        },
+        "blocked_regions": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "#/$defs/region"
+          }
+        }
+      },
+      "required": [
+        "state",
+        "engineering_approved",
+        "allowed_regions",
+        "blocked_regions"
+      ]
+    }
+  },
+  "$id": "urn:mcis:ship-reconstruction:geometry:2.1.0"
+}

@@ -1,0 +1,1202 @@
+{
+  "schema_version": "2.1",
+  "inventory": [
+    {
+      "classes": [
+        "offset_table"
+      ],
+      "regions": [
+        {
+          "kind": "offset_table",
+          "anchor": {
+            "handle": "49",
+            "instance": "49",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "OFFSET TABLE (m)",
+            "raw_cad_text": "OFFSET TABLE (m)",
+            "n": "offsettable(m)",
+            "p": [
+              2.0,
+              46.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "layout": "Model",
+          "basis": "printed_title",
+          "bounds_status": "anchor_only"
+        },
+        {
+          "kind": "offset_table",
+          "layout": "Model",
+          "basis": "grid_and_headers",
+          "anchor": {
+            "handle": "3C",
+            "instance": "3C",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "WL 2 m",
+            "raw_cad_text": "WL 2 m",
+            "n": "wl2m",
+            "p": [
+              50.0,
+              35.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "bounds_status": "enclosing_border_candidate",
+          "border_handles": [
+            "2F",
+            "33",
+            "34",
+            "38"
+          ],
+          "bounds_wcs": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              40.0
+            ],
+            [
+              64.0,
+              40.0
+            ],
+            [
+              64.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "kind": "datum_label",
+          "text": "SYMMETRIC ABOUT CENTERLINE. TABLE VALUES ARE HALF-BREADTHS.",
+          "evidence": {
+            "handle": "4B",
+            "instance": "4B",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "SYMMETRIC ABOUT CENTERLINE. TABLE VALUES ARE HALF-BREADTHS.",
+            "raw_cad_text": "SYMMETRIC ABOUT CENTERLINE. TABLE VALUES ARE HALF-BREADTHS.",
+            "n": "symmetricaboutcenterline.tablevaluesarehalf-breadths.",
+            "p": [
+              2.0,
+              52.0,
+              0.0
+            ],
+            "height": 1.0
+          }
+        },
+        {
+          "kind": "datum_label",
+          "text": "FRAME: X FORWARD, Y PORT, Z UP. ORIGIN: AFT TRANSOM / CENTERLINE / BASELINE.",
+          "evidence": {
+            "handle": "4D",
+            "instance": "4D",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "FRAME: X FORWARD, Y PORT, Z UP. ORIGIN: AFT TRANSOM / CENTERLINE / BASELINE.",
+            "raw_cad_text": "FRAME: X FORWARD, Y PORT, Z UP. ORIGIN: AFT TRANSOM / CENTERLINE / BASELINE.",
+            "n": "frame:xforward,yport,zup.origin:afttransom/centerline/baseline.",
+            "p": [
+              2.0,
+              64.0,
+              0.0
+            ],
+            "height": 1.0
+          }
+        }
+      ],
+      "entity_instances": {
+        "LINE": 10,
+        "TEXT": 22
+      },
+      "issues": [],
+      "source_sha256": "58da25d380263da41ff1f4f3004df1366b0a6d0aecdea0d572735bb38f6e3b16",
+      "file": "input.dxf",
+      "dxf_sha256": "58da25d380263da41ff1f4f3004df1366b0a6d0aecdea0d572735bb38f6e3b16",
+      "conversion": null,
+      "dimensions": [],
+      "document_ids": [],
+      "registration_notes": [
+        {
+          "instance": "4A",
+          "handle": "4A",
+          "layout": "Model",
+          "text": "HALF-BREADTH UNIT: m",
+          "p": [
+            2.0,
+            72.0,
+            0.0
+          ]
+        },
+        {
+          "instance": "4B",
+          "handle": "4B",
+          "layout": "Model",
+          "text": "SYMMETRIC ABOUT CENTERLINE. TABLE VALUES ARE HALF-BREADTHS.",
+          "p": [
+            2.0,
+            52.0,
+            0.0
+          ]
+        },
+        {
+          "instance": "4C",
+          "handle": "4C",
+          "layout": "Model",
+          "text": "OFFSET DOMAIN X 0 TO 6 Z 0 TO 2 M; FULL MOULDED HULL; FLAT CLOSURES",
+          "p": [
+            2.0,
+            58.0,
+            0.0
+          ]
+        },
+        {
+          "instance": "4D",
+          "handle": "4D",
+          "layout": "Model",
+          "text": "FRAME: X FORWARD, Y PORT, Z UP. ORIGIN: AFT TRANSOM / CENTERLINE / BASELINE.",
+          "p": [
+            2.0,
+            64.0,
+            0.0
+          ]
+        }
+      ],
+      "insertion_units_code": 6,
+      "coverage_warnings": [
+        "table_ambiguities"
+      ]
+    }
+  ],
+  "tables": [
+    {
+      "layout": "Model",
+      "representation": "ruled",
+      "cells": [
+        {
+          "station_label": "ST 0 m",
+          "field_label": "WL 2 m",
+          "group": null,
+          "raw_texts": [
+            "1.5"
+          ],
+          "handles": [
+            "40"
+          ],
+          "instances": [
+            "40"
+          ],
+          "source_wcs": [
+            [
+              50.0,
+              25.0,
+              0.0
+            ]
+          ],
+          "status": "numeric",
+          "value": 1.5,
+          "row_header": {
+            "handle": "3D",
+            "instance": "3D",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "ST 0 m",
+            "raw_cad_text": "ST 0 m",
+            "n": "st0m",
+            "p": [
+              2.0,
+              25.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "field_header": {
+            "handle": "3C",
+            "instance": "3C",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "WL 2 m",
+            "raw_cad_text": "WL 2 m",
+            "n": "wl2m",
+            "p": [
+              50.0,
+              35.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "group_header": null,
+          "grid_index": [
+            0,
+            2
+          ],
+          "edge_instances": [
+            [
+              "33"
+            ],
+            [
+              "32"
+            ],
+            [
+              "36"
+            ],
+            [
+              "37"
+            ]
+          ],
+          "cell_wcs": [
+            [
+              64.0,
+              20.0,
+              0.0
+            ],
+            [
+              48.0,
+              30.0,
+              0.0
+            ]
+          ],
+          "unit": "m",
+          "value_m": 1.5,
+          "level_m": 2.0,
+          "station_m": 0.0,
+          "value_basis": "original_text"
+        },
+        {
+          "station_label": "ST 0 m",
+          "field_label": "WL 1 m",
+          "group": null,
+          "raw_texts": [
+            "1.5"
+          ],
+          "handles": [
+            "3F"
+          ],
+          "instances": [
+            "3F"
+          ],
+          "source_wcs": [
+            [
+              34.0,
+              25.0,
+              0.0
+            ]
+          ],
+          "status": "numeric",
+          "value": 1.5,
+          "row_header": {
+            "handle": "3D",
+            "instance": "3D",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "ST 0 m",
+            "raw_cad_text": "ST 0 m",
+            "n": "st0m",
+            "p": [
+              2.0,
+              25.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "field_header": {
+            "handle": "3B",
+            "instance": "3B",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "WL 1 m",
+            "raw_cad_text": "WL 1 m",
+            "n": "wl1m",
+            "p": [
+              34.0,
+              35.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "group_header": null,
+          "grid_index": [
+            1,
+            2
+          ],
+          "edge_instances": [
+            [
+              "32"
+            ],
+            [
+              "31"
+            ],
+            [
+              "36"
+            ],
+            [
+              "37"
+            ]
+          ],
+          "cell_wcs": [
+            [
+              48.0,
+              20.0,
+              0.0
+            ],
+            [
+              32.0,
+              30.0,
+              0.0
+            ]
+          ],
+          "unit": "m",
+          "value_m": 1.5,
+          "level_m": 1.0,
+          "station_m": 0.0,
+          "value_basis": "original_text"
+        },
+        {
+          "station_label": "ST 0 m",
+          "field_label": "WL 0 m",
+          "group": null,
+          "raw_texts": [
+            "1.5"
+          ],
+          "handles": [
+            "3E"
+          ],
+          "instances": [
+            "3E"
+          ],
+          "source_wcs": [
+            [
+              18.0,
+              25.0,
+              0.0
+            ]
+          ],
+          "status": "numeric",
+          "value": 1.5,
+          "row_header": {
+            "handle": "3D",
+            "instance": "3D",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "ST 0 m",
+            "raw_cad_text": "ST 0 m",
+            "n": "st0m",
+            "p": [
+              2.0,
+              25.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "field_header": {
+            "handle": "3A",
+            "instance": "3A",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "WL 0 m",
+            "raw_cad_text": "WL 0 m",
+            "n": "wl0m",
+            "p": [
+              18.0,
+              35.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "group_header": null,
+          "grid_index": [
+            2,
+            2
+          ],
+          "edge_instances": [
+            [
+              "31"
+            ],
+            [
+              "30"
+            ],
+            [
+              "36"
+            ],
+            [
+              "37"
+            ]
+          ],
+          "cell_wcs": [
+            [
+              32.0,
+              20.0,
+              0.0
+            ],
+            [
+              16.0,
+              30.0,
+              0.0
+            ]
+          ],
+          "unit": "m",
+          "value_m": 1.5,
+          "level_m": 0.0,
+          "station_m": 0.0,
+          "value_basis": "original_text"
+        },
+        {
+          "station_label": "ST 3 m",
+          "field_label": "WL 2 m",
+          "group": null,
+          "raw_texts": [
+            "1.5"
+          ],
+          "handles": [
+            "44"
+          ],
+          "instances": [
+            "44"
+          ],
+          "source_wcs": [
+            [
+              50.0,
+              15.0,
+              0.0
+            ]
+          ],
+          "status": "numeric",
+          "value": 1.5,
+          "row_header": {
+            "handle": "41",
+            "instance": "41",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "ST 3 m",
+            "raw_cad_text": "ST 3 m",
+            "n": "st3m",
+            "p": [
+              2.0,
+              15.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "field_header": {
+            "handle": "3C",
+            "instance": "3C",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "WL 2 m",
+            "raw_cad_text": "WL 2 m",
+            "n": "wl2m",
+            "p": [
+              50.0,
+              35.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "group_header": null,
+          "grid_index": [
+            0,
+            1
+          ],
+          "edge_instances": [
+            [
+              "33"
+            ],
+            [
+              "32"
+            ],
+            [
+              "35"
+            ],
+            [
+              "36"
+            ]
+          ],
+          "cell_wcs": [
+            [
+              64.0,
+              10.0,
+              0.0
+            ],
+            [
+              48.0,
+              20.0,
+              0.0
+            ]
+          ],
+          "unit": "m",
+          "value_m": 1.5,
+          "level_m": 2.0,
+          "station_m": 3.0,
+          "value_basis": "original_text"
+        },
+        {
+          "station_label": "ST 3 m",
+          "field_label": "WL 1 m",
+          "group": null,
+          "raw_texts": [
+            "1.5",
+            "1.9"
+          ],
+          "handles": [
+            "43",
+            "4E"
+          ],
+          "instances": [
+            "43",
+            "4E"
+          ],
+          "source_wcs": [
+            [
+              34.0,
+              15.0,
+              0.0
+            ],
+            [
+              34.2,
+              15.2,
+              0.0
+            ]
+          ],
+          "status": "conflict",
+          "value": null,
+          "row_header": {
+            "handle": "41",
+            "instance": "41",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "ST 3 m",
+            "raw_cad_text": "ST 3 m",
+            "n": "st3m",
+            "p": [
+              2.0,
+              15.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "field_header": {
+            "handle": "3B",
+            "instance": "3B",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "WL 1 m",
+            "raw_cad_text": "WL 1 m",
+            "n": "wl1m",
+            "p": [
+              34.0,
+              35.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "group_header": null,
+          "grid_index": [
+            1,
+            1
+          ],
+          "edge_instances": [
+            [
+              "32"
+            ],
+            [
+              "31"
+            ],
+            [
+              "35"
+            ],
+            [
+              "36"
+            ]
+          ],
+          "cell_wcs": [
+            [
+              48.0,
+              10.0,
+              0.0
+            ],
+            [
+              32.0,
+              20.0,
+              0.0
+            ]
+          ],
+          "unit": "m",
+          "value_m": null,
+          "level_m": 1.0,
+          "station_m": 3.0,
+          "value_basis": "unknown"
+        },
+        {
+          "station_label": "ST 3 m",
+          "field_label": "WL 0 m",
+          "group": null,
+          "raw_texts": [
+            "1.5"
+          ],
+          "handles": [
+            "42"
+          ],
+          "instances": [
+            "42"
+          ],
+          "source_wcs": [
+            [
+              18.0,
+              15.0,
+              0.0
+            ]
+          ],
+          "status": "numeric",
+          "value": 1.5,
+          "row_header": {
+            "handle": "41",
+            "instance": "41",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "ST 3 m",
+            "raw_cad_text": "ST 3 m",
+            "n": "st3m",
+            "p": [
+              2.0,
+              15.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "field_header": {
+            "handle": "3A",
+            "instance": "3A",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "WL 0 m",
+            "raw_cad_text": "WL 0 m",
+            "n": "wl0m",
+            "p": [
+              18.0,
+              35.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "group_header": null,
+          "grid_index": [
+            2,
+            1
+          ],
+          "edge_instances": [
+            [
+              "31"
+            ],
+            [
+              "30"
+            ],
+            [
+              "35"
+            ],
+            [
+              "36"
+            ]
+          ],
+          "cell_wcs": [
+            [
+              32.0,
+              10.0,
+              0.0
+            ],
+            [
+              16.0,
+              20.0,
+              0.0
+            ]
+          ],
+          "unit": "m",
+          "value_m": 1.5,
+          "level_m": 0.0,
+          "station_m": 3.0,
+          "value_basis": "original_text"
+        },
+        {
+          "station_label": "ST 6 m",
+          "field_label": "WL 2 m",
+          "group": null,
+          "raw_texts": [
+            "1.5"
+          ],
+          "handles": [
+            "48"
+          ],
+          "instances": [
+            "48"
+          ],
+          "source_wcs": [
+            [
+              50.0,
+              5.0,
+              0.0
+            ]
+          ],
+          "status": "numeric",
+          "value": 1.5,
+          "row_header": {
+            "handle": "45",
+            "instance": "45",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "ST 6 m",
+            "raw_cad_text": "ST 6 m",
+            "n": "st6m",
+            "p": [
+              2.0,
+              5.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "field_header": {
+            "handle": "3C",
+            "instance": "3C",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "WL 2 m",
+            "raw_cad_text": "WL 2 m",
+            "n": "wl2m",
+            "p": [
+              50.0,
+              35.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "group_header": null,
+          "grid_index": [
+            0,
+            0
+          ],
+          "edge_instances": [
+            [
+              "33"
+            ],
+            [
+              "32"
+            ],
+            [
+              "34"
+            ],
+            [
+              "35"
+            ]
+          ],
+          "cell_wcs": [
+            [
+              64.0,
+              0.0,
+              0.0
+            ],
+            [
+              48.0,
+              10.0,
+              0.0
+            ]
+          ],
+          "unit": "m",
+          "value_m": 1.5,
+          "level_m": 2.0,
+          "station_m": 6.0,
+          "value_basis": "original_text"
+        },
+        {
+          "station_label": "ST 6 m",
+          "field_label": "WL 1 m",
+          "group": null,
+          "raw_texts": [
+            "1.5"
+          ],
+          "handles": [
+            "47"
+          ],
+          "instances": [
+            "47"
+          ],
+          "source_wcs": [
+            [
+              34.0,
+              5.0,
+              0.0
+            ]
+          ],
+          "status": "numeric",
+          "value": 1.5,
+          "row_header": {
+            "handle": "45",
+            "instance": "45",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "ST 6 m",
+            "raw_cad_text": "ST 6 m",
+            "n": "st6m",
+            "p": [
+              2.0,
+              5.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "field_header": {
+            "handle": "3B",
+            "instance": "3B",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "WL 1 m",
+            "raw_cad_text": "WL 1 m",
+            "n": "wl1m",
+            "p": [
+              34.0,
+              35.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "group_header": null,
+          "grid_index": [
+            1,
+            0
+          ],
+          "edge_instances": [
+            [
+              "32"
+            ],
+            [
+              "31"
+            ],
+            [
+              "34"
+            ],
+            [
+              "35"
+            ]
+          ],
+          "cell_wcs": [
+            [
+              48.0,
+              0.0,
+              0.0
+            ],
+            [
+              32.0,
+              10.0,
+              0.0
+            ]
+          ],
+          "unit": "m",
+          "value_m": 1.5,
+          "level_m": 1.0,
+          "station_m": 6.0,
+          "value_basis": "original_text"
+        },
+        {
+          "station_label": "ST 6 m",
+          "field_label": "WL 0 m",
+          "group": null,
+          "raw_texts": [
+            "1.5"
+          ],
+          "handles": [
+            "46"
+          ],
+          "instances": [
+            "46"
+          ],
+          "source_wcs": [
+            [
+              18.0,
+              5.0,
+              0.0
+            ]
+          ],
+          "status": "numeric",
+          "value": 1.5,
+          "row_header": {
+            "handle": "45",
+            "instance": "45",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "ST 6 m",
+            "raw_cad_text": "ST 6 m",
+            "n": "st6m",
+            "p": [
+              2.0,
+              5.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "field_header": {
+            "handle": "3A",
+            "instance": "3A",
+            "layout": "Model",
+            "baseline": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "text": "WL 0 m",
+            "raw_cad_text": "WL 0 m",
+            "n": "wl0m",
+            "p": [
+              18.0,
+              35.0,
+              0.0
+            ],
+            "height": 1.0
+          },
+          "group_header": null,
+          "grid_index": [
+            2,
+            0
+          ],
+          "edge_instances": [
+            [
+              "31"
+            ],
+            [
+              "30"
+            ],
+            [
+              "34"
+            ],
+            [
+              "35"
+            ]
+          ],
+          "cell_wcs": [
+            [
+              32.0,
+              0.0,
+              0.0
+            ],
+            [
+              16.0,
+              10.0,
+              0.0
+            ]
+          ],
+          "unit": "m",
+          "value_m": 1.5,
+          "level_m": 0.0,
+          "station_m": 6.0,
+          "value_basis": "original_text"
+        }
+      ],
+      "origin_wcs": [
+        0.0,
+        0.0
+      ],
+      "paper_basis": [
+        [
+          0.0,
+          1.0
+        ],
+        [
+          -1.0,
+          0.0
+        ]
+      ],
+      "unit": "m",
+      "unit_evidence": [
+        [
+          "m",
+          "4A"
+        ]
+      ],
+      "unit_status": "printed",
+      "source_sha256": "58da25d380263da41ff1f4f3004df1366b0a6d0aecdea0d572735bb38f6e3b16"
+    }
+  ],
+  "curves": [],
+  "alignment": [
+    {
+      "source_sha256": "58da25d380263da41ff1f4f3004df1366b0a6d0aecdea0d572735bb38f6e3b16",
+      "frames": [],
+      "axis_candidates": [],
+      "status": "unknown"
+    }
+  ],
+  "issues": [],
+  "relationships": [],
+  "coordinate_system": {
+    "axes": [
+      "x_forward",
+      "y_port",
+      "z_up"
+    ],
+    "length_unit": "m",
+    "origin_evidence": [
+      {
+        "source_sha256": "58da25d380263da41ff1f4f3004df1366b0a6d0aecdea0d572735bb38f6e3b16",
+        "instance": "4D"
+      }
+    ]
+  },
+  "topology_features": [],
+  "uncertainties": [
+    {
+      "kind": "sheet_local_side_annotation",
+      "scope": "same_view_only",
+      "evidence": [
+        {
+          "source_sha256": "58da25d380263da41ff1f4f3004df1366b0a6d0aecdea0d572735bb38f6e3b16",
+          "instance": "4D"
+        }
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "kind": "contradictory_printed_values",
+      "station_m": 3.0,
+      "level_m": 1.0,
+      "raw_values": [
+        "1.5",
+        "1.9"
+      ],
+      "evidence": [
+        {
+          "source_sha256": "58da25d380263da41ff1f4f3004df1366b0a6d0aecdea0d572735bb38f6e3b16",
+          "instance": "43"
+        },
+        {
+          "source_sha256": "58da25d380263da41ff1f4f3004df1366b0a6d0aecdea0d572735bb38f6e3b16",
+          "instance": "4E"
+        }
+      ]
+    }
+  ],
+  "modeling_admission": {
+    "state": "blocked",
+    "engineering_approved": false,
+    "allowed_regions": [],
+    "blocked_regions": [
+      {
+        "scope": "offset_cell",
+        "station_m": 3.0,
+        "level_m": 1.0,
+        "evidence": [
+          {
+            "source_sha256": "58da25d380263da41ff1f4f3004df1366b0a6d0aecdea0d572735bb38f6e3b16",
+            "instance": "43"
+          },
+          {
+            "source_sha256": "58da25d380263da41ff1f4f3004df1366b0a6d0aecdea0d572735bb38f6e3b16",
+            "instance": "4E"
+          }
+        ]
+      },
+      {
+        "scope": "whole_hull",
+        "evidence": []
+      }
+    ]
+  },
+  "validation": {
+    "valid": true,
+    "issues": [],
+    "cell_status_counts": {
+      "numeric": 8,
+      "conflict": 1
+    },
+    "engineering_approved": false,
+    "eligible_for_automatic_full_loft": false
+  }
+}

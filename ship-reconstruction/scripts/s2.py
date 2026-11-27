@@ -15,7 +15,7 @@ from jsonschema import Draft202012Validator
 
 from cad_input import convert
 from core.drawing_parser import fingerprint
-from s2lib import alignment, cad, curves, tables
+from s2lib import alignment, cad, curves, tables, contract
 
 TOOLS = {
     "drawing_inventory": "inventory",
@@ -164,7 +164,7 @@ def links(docs):
 def check(g):
     problems = []
     counts = Counter()
-    schema_path = Path(__file__).resolve().parents[1] / "schemas/s2-geometry.schema.json"
+    schema_path = Path(__file__).resolve().parents[1] / "schemas" / ("geometry.schema.json" if g.get("schema_version")=="2.1" else "s2-geometry.schema.json")
     errors = list(Draft202012Validator(json.loads(schema_path.read_bytes())).iter_errors(g))
     if errors:
         return dict(
@@ -239,6 +239,10 @@ def check(g):
                 )
                 if max(errors) > 1e-5:
                     problems.append("matrix_control_mismatch")
+    if g["schema_version"] == "2.1":
+        for k,v in contract.fields(g).items():
+            if g.get(k) != v:
+                problems.append("derived_contract_mismatch_"+k)
     if any(
         g.get("validation", {}).get(k) is True
         for k in ("engineering_approved", "eligible_for_automatic_full_loft")
@@ -262,7 +266,7 @@ def process(path, dest, oda):
         )
     )
 
-    g = dict(schema_version="2.0", inventory=[], tables=[], curves=[], alignment=[], issues=[])
+    g = dict(schema_version="2.1", inventory=[], tables=[], curves=[], alignment=[], issues=[])
     with tempfile.TemporaryDirectory() as tmp:
         if not sources:
             g["issues"].append(dict(code="no_cad_sources"))
@@ -319,6 +323,7 @@ def process(path, dest, oda):
                     conversion=adapter,
                     dimensions=dims,
                     document_ids=refs,
+                    registration_notes=contract.drawing_notes(data["texts"]),
                     insertion_units_code=doc.units,
                 )
                 excluded = {
@@ -400,6 +405,7 @@ def process(path, dest, oda):
                     )
                 )
     g["relationships"] = links(g["inventory"])
+    g.update(contract.fields(g))
     g["validation"] = {}
     g["validation"] = check(g)
     return g
