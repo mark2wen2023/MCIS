@@ -1,0 +1,40 @@
+{
+  "templateId": "policy-freeze-miss-and-false-positive",
+  "title": "漏提与误提口径冻结空表",
+  "purpose": "供评审员先确定并冻结漏提、误提的统计口径。本表不预填规则内容。",
+  "answersPrefilled": false,
+  "rows": [],
+  "fields": [
+    {
+      "key": "ruleId",
+      "label": "规则编号",
+      "required": true
+    },
+    {
+      "key": "category",
+      "label": "类别（漏提或误提）",
+      "required": true,
+      "hint": "由评审员填写，本表不预填行。"
+    },
+    {
+      "key": "ruleText",
+      "label": "口径说明",
+      "required": false
+    },
+    {
+      "key": "frozenBy",
+      "label": "冻结人",
+      "required": false
+    },
+    {
+      "key": "frozenAt",
+      "label": "冻结时间",
+      "required": false
+    },
+    {
+      "key": "notes",
+      "label": "备注",
+      "required": false
+    }
+  ]
+}

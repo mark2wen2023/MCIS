@@ -1,0 +1,49 @@
+{
+  "templateId": "policy-freeze-dispute",
+  "title": "争议裁定口径冻结空表",
+  "purpose": "供评审员先确定并冻结争议裁定办法。本表不预填规则内容。",
+  "answersPrefilled": false,
+  "rows": [],
+  "fields": [
+    {
+      "key": "itemId",
+      "label": "条目编号",
+      "required": true
+    },
+    {
+      "key": "trigger",
+      "label": "适用情形",
+      "required": false
+    },
+    {
+      "key": "decisionProcess",
+      "label": "裁定办法",
+      "required": false
+    },
+    {
+      "key": "decisionOwner",
+      "label": "裁定责任人",
+      "required": false
+    },
+    {
+      "key": "recordKeeping",
+      "label": "记录方式",
+      "required": false
+    },
+    {
+      "key": "frozenBy",
+      "label": "冻结人",
+      "required": false
+    },
+    {
+      "key": "frozenAt",
+      "label": "冻结时间",
+      "required": false
+    },
+    {
+      "key": "notes",
+      "label": "备注",
+      "required": false
+    }
+  ]
+}

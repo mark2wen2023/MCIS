@@ -1,0 +1,8 @@
+W3/5 盲标交件包检查摘要（不是正式验收，不含分数）
+originalPin: c826236f51485c3b380b191b86c5ef48bfb92224
+handoff: tests_acceptance/W35_BLIND_REVIEWER_PACK/handoff/
+six originals SHA verified against pin; copies byte-identical
+roster: IR-SYN-01..06, 42 unique turn IDs
+empty tables: statement-extraction, contradiction-review (format-only, no control truth), three policy-freeze tables
+no theme leakage in instructions, SHA list, roster, or templates
+exit 0

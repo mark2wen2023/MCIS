@@ -1,0 +1,57 @@
+{
+  "templateId": "statement-extraction",
+  "title": "陈述抽取/出处空白表",
+  "purpose": "供评审员填写从笔录中抽取的陈述及其出处。本表不预填答案。",
+  "answersPrefilled": false,
+  "rows": [],
+  "fields": [
+    {
+      "key": "annotationId",
+      "label": "标注行号",
+      "required": true
+    },
+    {
+      "key": "recordId",
+      "label": "笔录 ID",
+      "required": true
+    },
+    {
+      "key": "turnId",
+      "label": "问答 ID",
+      "required": true
+    },
+    {
+      "key": "sourceField",
+      "label": "出处字段",
+      "required": true,
+      "hint": "问或答。"
+    },
+    {
+      "key": "evidenceLocator",
+      "label": "证据定位",
+      "required": true,
+      "hint": "原文起止或可复核的出处定位。"
+    },
+    {
+      "key": "statementType",
+      "label": "陈述类型",
+      "required": true,
+      "hint": "允许值由评审口径冻结后确定，本栏不预填。"
+    },
+    {
+      "key": "extractedText",
+      "label": "抽取文本",
+      "required": false
+    },
+    {
+      "key": "pendingCheck",
+      "label": "待查",
+      "required": false
+    },
+    {
+      "key": "notes",
+      "label": "备注",
+      "required": false
+    }
+  ]
+}

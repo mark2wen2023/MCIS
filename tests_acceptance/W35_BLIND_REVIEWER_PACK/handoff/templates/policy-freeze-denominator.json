@@ -1,0 +1,44 @@
+{
+  "templateId": "policy-freeze-denominator",
+  "title": "分母口径冻结空表",
+  "purpose": "供评审员先确定并冻结一致率分母口径。本表不预填规则内容。",
+  "answersPrefilled": false,
+  "rows": [],
+  "fields": [
+    {
+      "key": "itemId",
+      "label": "条目编号",
+      "required": true
+    },
+    {
+      "key": "scope",
+      "label": "适用范围",
+      "required": false
+    },
+    {
+      "key": "includedInDenominator",
+      "label": "是否计入分母",
+      "required": false
+    },
+    {
+      "key": "ruleText",
+      "label": "口径说明",
+      "required": false
+    },
+    {
+      "key": "frozenBy",
+      "label": "冻结人",
+      "required": false
+    },
+    {
+      "key": "frozenAt",
+      "label": "冻结时间",
+      "required": false
+    },
+    {
+      "key": "notes",
+      "label": "备注",
+      "required": false
+    }
+  ]
+}

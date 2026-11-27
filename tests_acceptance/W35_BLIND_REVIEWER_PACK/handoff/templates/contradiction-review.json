@@ -1,0 +1,65 @@
+{
+  "templateId": "contradiction-review",
+  "title": "矛盾评审空白表",
+  "purpose": "供评审员在取得独立对照材料之后填写矛盾评审。本表不预填答案，不含对照真值。",
+  "answersPrefilled": false,
+  "rows": [],
+  "fields": [
+    {
+      "key": "annotationId",
+      "label": "标注行号",
+      "required": true
+    },
+    {
+      "key": "recordId",
+      "label": "笔录 ID",
+      "required": true
+    },
+    {
+      "key": "turnId",
+      "label": "问答 ID",
+      "required": true
+    },
+    {
+      "key": "evidenceLocator",
+      "label": "证据定位",
+      "required": true
+    },
+    {
+      "key": "controlSourceId",
+      "label": "对照来源 ID",
+      "required": true
+    },
+    {
+      "key": "controlVersionOrDigest",
+      "label": "对照版本或摘要",
+      "required": true
+    },
+    {
+      "key": "controlLocator",
+      "label": "对照定位",
+      "required": true
+    },
+    {
+      "key": "conclusion",
+      "label": "结论",
+      "required": false,
+      "hint": "空栏，由评审员填写；在取得独立对照材料前不要打分。"
+    },
+    {
+      "key": "notComparableReason",
+      "label": "不可比较原因",
+      "required": false
+    },
+    {
+      "key": "notes",
+      "label": "备注",
+      "required": false
+    }
+  ],
+  "independentControlMaterialsAvailable": false,
+  "formatOnly": true,
+  "scoringEnabled": false,
+  "controlGroundTruthIncluded": false,
+  "notice": "目前尚未取得独立对照材料。该表只备格式，暂不能打分。请勿生成或猜测对照真值。"
+}

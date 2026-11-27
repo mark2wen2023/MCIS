@@ -1,0 +1,101 @@
+{
+  "synthetic": true,
+  "syntheticDisclaimer": "本文件为虚构合成笔录草案，仅供调查员盲标准备使用。不代表真实案件、真实船舶或真实人员，不得当作正式验收原件或标准答案。",
+  "draftStatus": "pending-human-review-and-freeze",
+  "notFormalAcceptance": true,
+  "recordId": "IR-SYN-02",
+  "caseId": "SYN-CASE-W35-2026-0612",
+  "caseTitle": "虚构会遇接近：货轮「岚升」与渔船「青屿」在青岚湾口外（合成样本）",
+  "clockDomain": {
+    "name": "ship-local",
+    "offset": "+08:00",
+    "iana": "Asia/Shanghai",
+    "label": "船时（东八区）",
+    "note": "笔录时标与谈话中未另注明的钟点均为此钟域。每个时标同时给出本地与 UTC，便于追溯。"
+  },
+  "interviewStartedAtLocal": "2026-06-13T10:40:00+08:00",
+  "interviewStartedAtUtc": "2026-06-13T02:40:00+00:00",
+  "interviewEndedAtLocal": "2026-06-13T11:20:00+08:00",
+  "interviewEndedAtUtc": "2026-06-13T03:20:00+00:00",
+  "durationMinutes": 40,
+  "signed": true,
+  "interviewee": {
+    "intervieweeId": "P-SYN-LS-AB",
+    "name": "周平",
+    "role": "值班水手",
+    "affiliation": "虚构货轮「岚升」",
+    "nameDisambiguation": "本记录受询问人不是陈海；谈话中出现的陈海需按其所属船舶与职务理解。"
+  },
+  "turns": [
+    {
+      "turnId": "IR-SYN-02-T01",
+      "round": 1,
+      "askedAtLocal": "2026-06-13T10:41:00+08:00",
+      "askedAtUtc": "2026-06-13T02:41:00+00:00",
+      "answeredAtLocal": "2026-06-13T10:43:00+08:00",
+      "answeredAtUtc": "2026-06-13T02:43:00+00:00",
+      "question": "请说明你当时的职务和所在位置，你能不能直接看到两船接近的情况。",
+      "answer": "我是「岚升」的值班水手。当时我不在驾驶台，而在左舷中部甲板做检查。驾驶台里的操作和雷达读数我没有亲眼看见。"
+    },
+    {
+      "turnId": "IR-SYN-02-T02",
+      "round": 2,
+      "askedAtLocal": "2026-06-13T10:46:00+08:00",
+      "askedAtUtc": "2026-06-13T02:46:00+00:00",
+      "answeredAtLocal": "2026-06-13T10:50:00+08:00",
+      "answeredAtUtc": "2026-06-13T02:50:00+00:00",
+      "question": "你是怎么知道附近有船的？距离是你自己判断的吗？",
+      "answer": "大约下午三点过一点，我听见驾驶台窗户那边二副陈海对外面喊，说左前方有一条渔船。我自己往海面看，阳光很刺，只能看到一个模模糊糊的影子，说不上距离。后来回舱，二副跟我说「大概还有三海里」。这是他告诉我的，不是我自己用雷达量的。"
+    },
+    {
+      "turnId": "IR-SYN-02-T03",
+      "round": 3,
+      "askedAtLocal": "2026-06-13T10:53:00+08:00",
+      "askedAtUtc": "2026-06-13T02:53:00+00:00",
+      "answeredAtLocal": "2026-06-13T10:56:00+08:00",
+      "answeredAtUtc": "2026-06-13T02:56:00+00:00",
+      "question": "关于舵令和车钟，你知道些什么？是亲眼所见还是听来的？",
+      "answer": "我没听见具体舵角。过后在走廊里听船长跟大副聊天，说二副好像下了右满舵。这是我听到他们的谈话，我不在现场，也不能肯定舵角就是满舵。车钟的事我完全不清楚。"
+    },
+    {
+      "turnId": "IR-SYN-02-T04",
+      "round": 4,
+      "askedAtLocal": "2026-06-13T11:00:00+08:00",
+      "askedAtUtc": "2026-06-13T03:00:00+00:00",
+      "answeredAtLocal": "2026-06-13T11:02:00+08:00",
+      "answeredAtUtc": "2026-06-13T03:02:00+00:00",
+      "question": "这些事情发生的时间，你怎么记得？",
+      "answer": "我当时没看钟。只记得是午饭后不久，有人说已经三点多了。具体是 15 点几分，我没法提供。"
+    },
+    {
+      "turnId": "IR-SYN-02-T05",
+      "round": 5,
+      "askedAtLocal": "2026-06-13T11:05:00+08:00",
+      "askedAtUtc": "2026-06-13T03:05:00+00:00",
+      "answeredAtLocal": "2026-06-13T11:08:00+08:00",
+      "answeredAtUtc": "2026-06-13T03:08:00+00:00",
+      "question": "最近会遇距离你听说过什么？",
+      "answer": "我没量过。晚上轮班时有人说「差不多两三个链」，我不知道这句话是谁先说的，也没问是哪一种链的算法，更没有换成海里。"
+    },
+    {
+      "turnId": "IR-SYN-02-T06",
+      "round": 6,
+      "askedAtLocal": "2026-06-13T11:11:00+08:00",
+      "askedAtUtc": "2026-06-13T03:11:00+00:00",
+      "answeredAtLocal": "2026-06-13T11:13:00+08:00",
+      "answeredAtUtc": "2026-06-13T03:13:00+00:00",
+      "question": "你是否把本船二副陈海和渔船船长陈海当成同一个人？",
+      "answer": "没有。我只认识本船二副陈海。渔船船长我也是事后听别人提起同名，我没见过他，更不能把两人的话混在一起。"
+    },
+    {
+      "turnId": "IR-SYN-02-T07",
+      "round": 7,
+      "askedAtLocal": "2026-06-13T11:16:00+08:00",
+      "askedAtUtc": "2026-06-13T03:16:00+00:00",
+      "answeredAtLocal": "2026-06-13T11:18:00+08:00",
+      "answeredAtUtc": "2026-06-13T03:18:00+00:00",
+      "question": "你有没有听到声号？",
+      "answer": "我在甲板确实隐约听到一声短笛，但当时甲板有风机声音，我不敢肯定是不是避让声号，也不知道是几点吹的。若要确切记录，需要问当时在驾驶台的人。"
+    }
+  ]
+}
