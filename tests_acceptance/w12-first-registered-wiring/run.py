@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 import shutil
 import socket
@@ -35,7 +36,61 @@ def log(logs: list[str], msg: str) -> None:
 
 def write_json(path: Path, data: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+
+
+def json_strict(obj):
+    """Replace non-finite floats (ECharts Infinity) with null. Drop non-JSON values. Do not change runtime options."""
+    if obj is True or obj is False or obj is None:
+        return obj
+    if isinstance(obj, int) and not isinstance(obj, bool):
+        return obj
+    if isinstance(obj, float):
+        return obj if math.isfinite(obj) else None
+    if isinstance(obj, str):
+        return obj
+    if isinstance(obj, dict):
+        return {str(k): json_strict(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [json_strict(v) for v in obj]
+    return None
+
+
+def export_needed_option(option: dict) -> dict:
+    series_out = []
+    for s in option.get("series") or []:
+        if not isinstance(s, dict):
+            continue
+        series_out.append(json_strict({
+            "name": s.get("name"),
+            "type": s.get("type"),
+            "showSymbol": s.get("showSymbol"),
+            "showAllSymbol": s.get("showAllSymbol"),
+            "symbol": s.get("symbol"),
+            "symbolSize": s.get("symbolSize"),
+            "connectNulls": s.get("connectNulls"),
+            "yAxisIndex": s.get("yAxisIndex"),
+            "data": s.get("data"),
+        }))
+    xaxis = option.get("xAxis")
+    if isinstance(xaxis, list):
+        xaxis = xaxis[0] if xaxis else {}
+    x_out = None
+    if isinstance(xaxis, dict):
+        x_out = json_strict({"type": xaxis.get("type"), "data": xaxis.get("data")})
+    return {"xAxis": x_out, "series": series_out}
+
+
+EXPECTED_VISIBLE = {
+    10.0: {"distanceNm": 2.578139, "dcpaNm": 1.822610, "tcpaMin": 7.736156},
+    20.0: {"distanceNm": 2.147531, "dcpaNm": 1.881462, "tcpaMin": 4.392701},
+}
+
+
+def same6(actual, expected) -> bool:
+    if actual is None or expected is None:
+        return actual is None and expected is None
+    return round(float(actual), 6) == round(float(expected), 6)
 
 
 def sha256(path: Path) -> str:
@@ -285,9 +340,10 @@ def main() -> int:
                       };
                     }"""
                 )
-                write_json(official / "echarts-getoption-probe.json", {k: option_probe.get(k) for k in option_probe if k != "option"})
+                write_json(official / "echarts-getoption-probe.json", json_strict({k: option_probe.get(k) for k in option_probe if k != "option"}))
                 option = option_probe.get("option")
-                write_json(official / "echarts-getoption.json", option)
+                exported = export_needed_option(option) if isinstance(option, dict) else json_strict(option)
+                write_json(official / "echarts-getoption.json", exported)
                 write_json(official / "echart-handle-probe.json", handle_probe)
                 if not option:
                     page.screenshot(path=str(shots / "debug-no-option.png"), full_page=True)
@@ -302,6 +358,34 @@ def main() -> int:
                 # category axis: data arrays align with series order 0,10,15,20,30,40
                 expected_times = [0.0, 10.0, 15.0, 20.0, 30.0, 40.0]
                 chart_checks = {}
+                symbol_flags = []
+                for s in option.get("series") or []:
+                    if not isinstance(s, dict):
+                        continue
+                    name = s.get("name")
+                    if name in {"两船距离 D(t)", "DCPA(t)", "TCPA(t)"}:
+                        flags = {
+                            "name": name,
+                            "showSymbol": s.get("showSymbol"),
+                            "connectNulls": s.get("connectNulls"),
+                            "symbolSize": s.get("symbolSize"),
+                        }
+                        symbol_flags.append(flags)
+                        def unwrap(v):
+                            if isinstance(v, list) and v:
+                                return v[0]
+                            return v
+                        show = unwrap(s.get("showSymbol"))
+                        connect = unwrap(s.get("connectNulls"))
+                        flags["showSymbol"] = show
+                        flags["connectNulls"] = connect
+                        if show is not True:
+                            raise SystemExit(f"{name} showSymbol is {s.get('showSymbol')}, expected true for isolated registered points")
+                        if connect is True:
+                            raise SystemExit(f"{name} connectNulls is true; must not join across nulls")
+                if len(symbol_flags) != 3:
+                    raise SystemExit(f"expected 3 curve series flags, got {symbol_flags}")
+
                 for i, t in enumerate(expected_times):
                     row = series_by_t[t]
                     chart_checks[f"t{t:g}"] = {
@@ -318,38 +402,88 @@ def main() -> int:
                     else:
                         if dist[i] != row["distanceNm"] or dcpa[i] != row["dcpaNm"] or tcpa[i] != row["tcpaMin"]:
                             raise SystemExit(f"t={t} chart {dist[i], dcpa[i], tcpa[i]} != core {row['distanceNm'], row['dcpaNm'], row['tcpaMin']}")
+                        exp = EXPECTED_VISIBLE[t]
+                        if not (same6(dist[i], exp["distanceNm"]) and same6(dcpa[i], exp["dcpaNm"]) and same6(tcpa[i], exp["tcpaMin"])):
+                            raise SystemExit(f"t={t} chart did not match pinned visible values {exp}")
+
+                # T+15 sits between the two valid points; a null there proves the line cannot cross.
+                t15 = expected_times.index(15.0)
+                if dist[t15] not in (None, "-") or dcpa[t15] not in (None, "-") or tcpa[t15] not in (None, "-"):
+                    raise SystemExit("T+15 unexpectedly has a chart point")
+                if dist[expected_times.index(10.0)] in (None, "-") or dist[expected_times.index(20.0)] in (None, "-"):
+                    raise SystemExit("T+10 or T+20 missing a chart value")
+
+                table = page.locator('[data-testid="registered-metric-table"]')
+                expect(table).to_be_visible()
+                table.focus()
+                focused = page.evaluate("() => document.activeElement && document.activeElement.getAttribute('data-testid')")
+                if focused != "registered-metric-table":
+                    raise SystemExit(f"metric table did not take keyboard focus: {focused}")
+                table_text = table.inner_text()
+                row_count = page.locator('[data-testid="registered-metric-table"] tbody tr').count()
+                if row_count != 2:
+                    raise SystemExit(f"expected two readable metric rows, got {row_count}: {table_text}")
+                if "08:00:15" in table_text or "T+15" in table_text:
+                    raise SystemExit(f"T+15 appeared in the readable table: {table_text}")
+                for unit in ("nm", "min"):
+                    if unit not in table_text:
+                        raise SystemExit(f"unit {unit} missing from readable table: {table_text}")
+                table_rows = {}
+                for handle in page.locator('[data-testid="registered-metric-table"] tbody tr').all():
+                    t_attr = handle.get_attribute("data-t")
+                    cells = handle.locator("th, td").all_inner_texts()
+                    table_rows[float(t_attr)] = cells
+                table_checks = {}
+                for t, exp in EXPECTED_VISIBLE.items():
+                    if t not in table_rows:
+                        raise SystemExit(f"T+{t:g} missing from readable table rows {list(table_rows)}")
+                    cells = table_rows[t]
+                    joined = " ".join(cells)
+                    got = {}
+                    for key, unit in (("distanceNm", "nm"), ("dcpaNm", "nm"), ("tcpaMin", "min")):
+                        token = f"{exp[key]:.6f} {unit}"
+                        if token not in joined:
+                            raise SystemExit(f"T+{t:g} table missing {token} in {cells}")
+                        got[key] = token
+                    table_checks[f"t{t:g}"] = got
+                if 15.0 in table_rows:
+                    raise SystemExit("T+15 row present in readable table")
 
                 body = page.locator("body").inner_text()
                 identities = payload["complete"]["registeredIdentities"]
                 for ident in identities:
                     if ident["previewDigest"] not in body or ident["sourceSha256"] not in body or ident["reportSha256"] not in body:
                         raise SystemExit(f"identity for {ident['vesselId']} not shown")
-                if "真实核心" not in body or "装配占位" in body and "不得当作核心" not in page.locator('[data-testid="metric-caption"]').inner_text() and "既有 mcis-core" not in body:
-                    pass
+                sources = page.locator('[data-testid="sources"]').inner_text()
+                core_sha = payload["complete"]["meta"]["coreDll"]["sha256"]
+                if "mcis-core.dll" not in sources or core_sha not in sources:
+                    raise SystemExit(f"core source missing from registered sources table: {sources}")
+                if "已自检" in body or "未自检" in body:
+                    raise SystemExit("registered view still shows seed self-check wording")
+                if "种子生成" in body or "种子 sha256" in body:
+                    raise SystemExit("registered view still shows placeholder seed generation/hash")
+                if "ffffffff" in body.lower() or "ffff…" in body or "ffff..." in body:
+                    raise SystemExit("registered view still displays ffff placeholder seed")
+                if "装配占位" in body:
+                    raise SystemExit("registered view still shows assembly-placeholder wording")
                 caption = page.locator('[data-testid="metric-caption"]').inner_text()
                 provenance = page.locator('[data-testid="metric-provenance"]').inner_text()
                 gap = page.locator('[data-testid="gap-wiring"]').inner_text()
                 if "真实核心" not in caption and "真实核心" not in provenance:
                     raise SystemExit(f"caption/provenance missing core label: {caption} {provenance}")
-                if "装配占位" in caption or "由 mcis-core cpa 计算" in caption and "图区来源区分" not in caption:
+                if "装配占位" in caption or ("由 mcis-core cpa 计算" in caption and "图区来源区分" not in caption):
                     raise SystemExit(f"caption still claims placeholder or undifferentiated core: {caption}")
                 if "未接" not in gap or "显式缺口" not in gap:
                     raise SystemExit(f"gap wiring not explained: {gap}")
                 if LEAK in body:
                     raise SystemExit("live-entry leak value appeared on complete view")
-                # displayed core numbers
-                for t in (10.0, 20.0):
-                    row = series_by_t[t]
-                    for val in (row["distanceNm"], row["dcpaNm"], row["tcpaMin"]):
-                        # option already matched; also require a readable form on the page or in option only
-                        pass
 
-                page.locator('[data-testid="curve-panel"]') if False else None
                 page.screenshot(path=str(shots / "complete-fullpage.png"), full_page=True)
-                # crop first canvas
                 page.locator("canvas").first.screenshot(path=str(shots / "complete-curve.png"))
+                table.screenshot(path=str(shots / "complete-metric-table.png"))
                 page.locator('[data-testid="metric-provenance"]').screenshot(path=str(shots / "complete-provenance.png"))
                 page.locator('[data-testid="registered-identities"]').screenshot(path=str(shots / "complete-identities.png"))
+                page.locator('[data-testid="sources"]').screenshot(path=str(shots / "complete-sources.png"))
 
                 page.locator('[data-testid="assembly-switcher"] [data-view="missing"]').click()
                 expect(page.locator('[data-testid="w12-frw-assembly"]')).to_have_attribute("data-view", "missing")
@@ -376,10 +510,15 @@ def main() -> int:
                     "ok": True,
                     "handleProbe": handle_probe,
                     "chartChecks": chart_checks,
+                    "symbolFlags": symbol_flags,
+                    "tableChecks": table_checks,
+                    "tableFocused": focused,
+                    "tableRowCount": row_count,
                     "caption": caption,
                     "provenance": provenance,
                     "gapWiring": gap,
                     "identitiesShown": [i["previewDigest"] for i in identities],
+                    "sourcesHasCore": "mcis-core.dll" in sources,
                 }
                 log(logs, f"browser checks ok caption={caption!r}")
             finally:

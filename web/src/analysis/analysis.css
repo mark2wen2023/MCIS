@@ -12,3 +12,10 @@
 .an-inputs { margin: 6px 0; }
 .an-inputs summary { cursor: pointer; color: var(--text-sec); }
 .an-chart-placeholder { height: 300px; }
+
+/* Readable default table for registered isolated samples (assembly does not load styles.css). */
+.an-metric-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; }
+.an-metric-table caption { caption-side: top; text-align: left; color: #8da4c4; font-size: 11px; padding: 4px 0 6px; }
+.an-metric-table th, .an-metric-table td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #33506e; color: #e6f1ff; }
+.an-metric-table thead th { color: #8da4c4; font-weight: 600; }
+.an-metric-table:focus, .an-metric-table:focus-visible { outline: 2px solid #3be3ff; outline-offset: 2px; }

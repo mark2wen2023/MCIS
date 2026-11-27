@@ -2,7 +2,7 @@
 import { useMemo, type KeyboardEvent } from 'react'
 import { EChart } from '../components/EChart'
 import { Panel } from '../components/Panel'
-import { BASELINE, curveOption, fmtM, fmtMoment, fmtNm, metricCaption, pickSeries, provenanceLines, sensitivitySpan, shortSha, speedOption, trackOption, vesselName, verdictTone } from './derive'
+import { BASELINE, curveOption, fmtFixed, fmtM, fmtMoment, fmtNm, isRegisteredView, metricCaption, pickSeries, provenanceLines, registeredMetricRows, sensitivitySpan, shortSha, speedOption, tPlusLabel, trackOption, vesselName, verdictTone } from './derive'
 import type { AnalysisCase, AnalysisCaseListItem } from './types'
 
 export interface AnalysisViewProps {
@@ -39,6 +39,8 @@ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, se
   const badge = data.isFictionalDemo ? <span className="st st-warn">示例数据（虚构）</span> : <span className="st st-ok">真实案例 · 公开报告</span>
   const ant = w?.antennaSensitivity ?? null
   const antIds = w ? w.rows.map((r) => r.id) : []
+  const registered = isRegisteredView(data)
+  const metricRows = registered ? registeredMetricRows(picked.series) : []
 
   return (
     <div data-testid="analysis-page">
@@ -79,6 +81,29 @@ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, se
           {charts ? <EChart option={curve} height={300} /> : <div className="an-chart-placeholder" data-points={picked.series.length} />}
           {charts && speed ? <div data-testid="speed-panel"><EChart option={speed} height={190} /><div className="p6-note">船速（kn）：只按该船已声明的开区间断段，不改写对照船。</div></div> : null}
           <div className="p6-note" data-testid="series-label"><b>{picked.label}</b>{sel === BASELINE ? '' : ` · ${w?.curveNote ?? ''}`}</div>
+          {registered ? (
+            <table className="p6-table an-metric-table" data-testid="registered-metric-table" tabIndex={0} aria-label="已登记同刻样本，时间、距离、DCPA、TCPA">
+              <caption>已登记同刻样本（默认可读，可键盘读取）</caption>
+              <thead>
+                <tr>
+                  <th scope="col">时间</th>
+                  <th scope="col">距离 (nm)</th>
+                  <th scope="col">DCPA (nm)</th>
+                  <th scope="col">TCPA (min)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {metricRows.map((p) => (
+                  <tr key={p.t} data-t={String(p.t)}>
+                    <th scope="row" className="mono">{p.clock}（{tPlusLabel(p.t)}）</th>
+                    <td className="mono">{fmtFixed(p.distanceNm, 'nm')}</td>
+                    <td className="mono">{fmtFixed(p.dcpaNm, 'nm')}</td>
+                    <td className="mono">{fmtFixed(p.tcpaMin, 'min')}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : null}
           {data.metricProvenance ? (
             <div className="p6-note" data-testid="metric-provenance">
               {provenanceLines(data.metricProvenance).map((line) => <div key={line}>{line}</div>)}
@@ -179,21 +204,46 @@ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, se
         </Panel>
       )}
 
-      <Panel title="数据来源与校验" meta={<span>种子 sha256 {shortSha(data.meta.seedSha256)} · {data.meta.seedVerified ? '已自检' : '未自检'}</span>} style={{ marginTop: 12 }}>
-        <table className="p6-table" data-testid="sources">
-          <thead><tr><th>文件</th><th>用途</th><th>sha256</th></tr></thead>
-          <tbody>
-            {[...data.sourceRefs, ...(w ? [data.meta.w14Export, data.meta.w14Frozen] : []), data.meta.coreDll].map((s) => (
-              <tr key={s.path}><td className="mono">{s.path}</td><td>{s.role ?? (s.path.endsWith('.dll') ? `mcis-core（${data.meta.coreVersion}）` : '')}</td><td className="mono">{shortSha(s.sha256)}</td></tr>
-            ))}
-          </tbody>
-        </table>
+      <Panel title="数据来源与校验" meta={registered
+        ? <span>已登记回执 {data.registeredIdentities?.length} 份</span>
+        : <span>种子 sha256 {shortSha(data.meta.seedSha256)} · {data.meta.seedVerified ? '已自检' : '未自检'}</span>} style={{ marginTop: 12 }}>
+        {registered ? (
+          <table className="p6-table" data-testid="sources">
+            <thead><tr><th>文件 / 回执</th><th>用途</th><th>sha256</th></tr></thead>
+            <tbody>
+              <tr>
+                <td className="mono">{data.meta.coreDll.path}</td>
+                <td>官方 mcis-core（{data.meta.coreVersion}）</td>
+                <td className="mono">{data.meta.coreDll.sha256}</td>
+              </tr>
+              {data.registeredIdentities?.map((id) => (
+                <tr key={id.vesselId}>
+                  <td className="mono">{id.vesselId}</td>
+                  <td>已登记回执 previewDigest={id.previewDigest}</td>
+                  <td className="mono">sourceSha256={id.sourceSha256} reportSha256={id.reportSha256}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <table className="p6-table" data-testid="sources">
+            <thead><tr><th>文件</th><th>用途</th><th>sha256</th></tr></thead>
+            <tbody>
+              {[...data.sourceRefs, ...(w ? [data.meta.w14Export, data.meta.w14Frozen] : []), data.meta.coreDll].map((s) => (
+                <tr key={s.path}><td className="mono">{s.path}</td><td>{s.role ?? (s.path.endsWith('.dll') ? `mcis-core（${data.meta.coreVersion}）` : '')}</td><td className="mono">{shortSha(s.sha256)}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        )}
         <div className="p6-note">
-          {data.metricProvenance
-            ? <>图区数值来源见上方区分，不以装配占位冒称核心。核心版本仅在来源为 mcis-core 时有效：{data.meta.coreVersion}。</>
-            : <>曲线：mcis-core {data.meta.coreVersion}。</>}
+          {registered
+            ? <>图区数值来源见上方区分。核心版本：{data.meta.coreVersion}。</>
+            : data.metricProvenance
+              ? <>图区数值来源见上方区分，不以装配占位冒称核心。核心版本仅在来源为 mcis-core 时有效：{data.meta.coreVersion}。</>
+              : <>曲线：mcis-core {data.meta.coreVersion}。</>}
           {w && <>W14 数值与复测留档 {data.meta.crossCheck.against.join('、')} 逐项比对 {data.meta.crossCheck.valuesCompared} 个值，
-          最大偏差 {data.meta.crossCheck.maxAbsDiff}（容差 {data.meta.crossCheck.tolerance}）。</>}种子生成 {data.meta.generatedAt}。
+          最大偏差 {data.meta.crossCheck.maxAbsDiff}（容差 {data.meta.crossCheck.tolerance}）。</>}
+          {registered ? null : <>种子生成 {data.meta.generatedAt}。</>}
         </div>
         {data.notes.map((n) => <div key={n} className="p6-note">{n}</div>)}
         {w && w.inputs.length > 0 && (

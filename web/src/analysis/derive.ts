@@ -32,6 +32,28 @@ export function provenanceLines(p: MetricProvenance): string[] {
   ]
 }
 
+/** Registered-track assembly: isolated core samples must be drawn and listed, not inferred from seed. */
+export function isRegisteredView(c: AnalysisCase): boolean {
+  return Array.isArray(c.registeredIdentities) && c.registeredIdentities.length > 0
+}
+
+/** Rows with at least one finite core metric. Null / non-cotemporal samples stay out of the readable table. */
+export function registeredMetricRows(series: CurvePoint[]): CurvePoint[] {
+  return series.filter((p) =>
+    (p.distanceNm != null && Number.isFinite(p.distanceNm))
+    || (p.dcpaNm != null && Number.isFinite(p.dcpaNm))
+    || (p.tcpaMin != null && Number.isFinite(p.tcpaMin)))
+}
+
+export function fmtFixed(v: number | null | undefined, unit: string, digits = 6): string {
+  return v === null || v === undefined || Number.isNaN(v) || !Number.isFinite(v) ? '—' : `${v.toFixed(digits)} ${unit}`
+}
+
+export function tPlusLabel(t: number): string {
+  const n = Number.isInteger(t) ? String(t) : String(t)
+  return `T+${n}`
+}
+
 
 export function fmtM(v: number | null | undefined, d = 2): string {
   return v === null || v === undefined || Number.isNaN(v) ? '—' : `${v.toFixed(d)} m`
@@ -165,10 +187,18 @@ function gapTooltipFormatter(gaps: DeclaredOpenGap[], clockOf: (t: number) => st
   }
 }
 
+function curveLineFlags(c: AnalysisCase): { showSymbol: boolean; connectNulls: false; symbol?: string; symbolSize?: number; showAllSymbol?: boolean } {
+  if (isRegisteredView(c)) {
+    return { showSymbol: true, connectNulls: false, symbol: 'circle', symbolSize: 10, showAllSymbol: true }
+  }
+  return { showSymbol: false, connectNulls: false }
+}
+
 export function curveOption(c: AnalysisCase, series: CurvePoint[], moments: KeyMoment[]): EChartsOption {
   const danger = c.thresholds.dangerDcpaNm
   const shownMoments = moments.filter((m) => m.kind !== 'minDistanceSampled')
   const gaps = pairOpenGaps(c.declaredOpenGaps)
+  const flags = curveLineFlags(c)
   if (!hasDeclaredGaps(c)) {
     const x = series.map((p) => p.clock)
     const near = (t: number) => {
@@ -189,7 +219,7 @@ export function curveOption(c: AnalysisCase, series: CurvePoint[], moments: KeyM
       ],
       series: [
         {
-          name: '两船距离 D(t)', type: 'line', showSymbol: false, data: series.map((p) => p.distanceNm), lineStyle: { color: '#3be3ff', width: 2 }, itemStyle: { color: '#3be3ff' },
+          name: '两船距离 D(t)', type: 'line', ...flags, data: series.map((p) => p.distanceNm), lineStyle: { color: '#3be3ff', width: 2 }, itemStyle: { color: '#3be3ff' },
           markLine: {
             symbol: 'none', silent: true,
             label: { color: '#e6f1ff', fontSize: 10, position: 'insideEndTop', formatter: (p) => String((p as { name?: string }).name ?? '') },
@@ -197,11 +227,11 @@ export function curveOption(c: AnalysisCase, series: CurvePoint[], moments: KeyM
           },
         },
         {
-          name: 'DCPA(t)', type: 'line', showSymbol: false, data: series.map((p) => p.dcpaNm), lineStyle: { color: '#ffb020', width: 2 }, itemStyle: { color: '#ffb020' },
+          name: 'DCPA(t)', type: 'line', ...flags, data: series.map((p) => p.dcpaNm), lineStyle: { color: '#ffb020', width: 2 }, itemStyle: { color: '#ffb020' },
           markLine: danger !== undefined ? { symbol: 'none', silent: true, label: { color: '#ff8fa3', fontSize: 10, formatter: `危险 DCPA ${danger} nm` },
             data: [{ yAxis: danger, lineStyle: { color: '#ff3b5c', type: 'dotted' } }] } : undefined,
         },
-        { name: 'TCPA(t)', type: 'line', yAxisIndex: 1, showSymbol: false, data: series.map((p) => p.tcpaMin), lineStyle: { color: '#a78bfa', width: 1.5, type: 'dashed' }, itemStyle: { color: '#a78bfa' } },
+        { name: 'TCPA(t)', type: 'line', yAxisIndex: 1, ...flags, data: series.map((p) => p.tcpaMin), lineStyle: { color: '#a78bfa', width: 1.5, type: 'dashed' }, itemStyle: { color: '#a78bfa' } },
       ],
     }
   }
@@ -222,7 +252,7 @@ export function curveOption(c: AnalysisCase, series: CurvePoint[], moments: KeyM
     ],
     series: [
       {
-        name: '两船距离 D(t)', type: 'line', showSymbol: false, connectNulls: false, data: distance, lineStyle: { color: '#3be3ff', width: 2 }, itemStyle: { color: '#3be3ff' },
+        name: '两船距离 D(t)', type: 'line', ...flags, data: distance, lineStyle: { color: '#3be3ff', width: 2 }, itemStyle: { color: '#3be3ff' },
         markLine: {
           symbol: 'none', silent: true,
           label: { color: '#e6f1ff', fontSize: 10, position: 'insideEndTop', formatter: (p) => String((p as { name?: string }).name ?? '') },
@@ -230,11 +260,11 @@ export function curveOption(c: AnalysisCase, series: CurvePoint[], moments: KeyM
         },
       },
       {
-        name: 'DCPA(t)', type: 'line', showSymbol: false, connectNulls: false, data: dcpa, lineStyle: { color: '#ffb020', width: 2 }, itemStyle: { color: '#ffb020' },
+        name: 'DCPA(t)', type: 'line', ...flags, data: dcpa, lineStyle: { color: '#ffb020', width: 2 }, itemStyle: { color: '#ffb020' },
         markLine: danger !== undefined ? { symbol: 'none', silent: true, label: { color: '#ff8fa3', fontSize: 10, formatter: `危险 DCPA ${danger} nm` },
           data: [{ yAxis: danger, lineStyle: { color: '#ff3b5c', type: 'dotted' } }] } : undefined,
       },
-      { name: 'TCPA(t)', type: 'line', yAxisIndex: 1, showSymbol: false, connectNulls: false, data: tcpa, lineStyle: { color: '#a78bfa', width: 1.5, type: 'dashed' }, itemStyle: { color: '#a78bfa' } },
+      { name: 'TCPA(t)', type: 'line', yAxisIndex: 1, ...flags, data: tcpa, lineStyle: { color: '#a78bfa', width: 1.5, type: 'dashed' }, itemStyle: { color: '#a78bfa' } },
     ],
   }
 }
