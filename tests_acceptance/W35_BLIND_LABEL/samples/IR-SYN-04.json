@@ -1,0 +1,101 @@
+{
+  "synthetic": true,
+  "syntheticDisclaimer": "本文件为虚构合成笔录草案，仅供调查员盲标准备使用。不代表真实案件、真实船舶或真实人员，不得当作正式验收原件或标准答案。",
+  "draftStatus": "pending-human-review-and-freeze",
+  "notFormalAcceptance": true,
+  "recordId": "IR-SYN-04",
+  "caseId": "SYN-CASE-W35-2026-0612",
+  "caseTitle": "虚构会遇接近：货轮「岚升」与渔船「青屿」在青岚湾口外（合成样本）",
+  "clockDomain": {
+    "name": "ship-local",
+    "offset": "+08:00",
+    "iana": "Asia/Shanghai",
+    "label": "船时（东八区）",
+    "note": "笔录时标与谈话中未另注明的钟点均为此钟域。每个时标同时给出本地与 UTC，便于追溯。"
+  },
+  "interviewStartedAtLocal": "2026-06-13T14:10:00+08:00",
+  "interviewStartedAtUtc": "2026-06-13T06:10:00+00:00",
+  "interviewEndedAtLocal": "2026-06-13T14:45:00+08:00",
+  "interviewEndedAtUtc": "2026-06-13T06:45:00+00:00",
+  "durationMinutes": 35,
+  "signed": true,
+  "interviewee": {
+    "intervieweeId": "P-SYN-LS-ENGINEER",
+    "name": "赵宁",
+    "role": "值班轮机员",
+    "affiliation": "虚构货轮「岚升」",
+    "nameDisambiguation": "本记录受询问人不是陈海。机舱电话中的陈海是本船二副，不是「青屿」船长。"
+  },
+  "turns": [
+    {
+      "turnId": "IR-SYN-04-T01",
+      "round": 1,
+      "askedAtLocal": "2026-06-13T14:11:00+08:00",
+      "askedAtUtc": "2026-06-13T06:11:00+00:00",
+      "answeredAtLocal": "2026-06-13T14:13:00+08:00",
+      "answeredAtUtc": "2026-06-13T06:13:00+00:00",
+      "question": "你当时在哪里？能不能直接看到海面局面？",
+      "answer": "我在机舱值班，看不到海面，也没有雷达。驾驶台的避让动作我都是通过车钟和电话知道的。"
+    },
+    {
+      "turnId": "IR-SYN-04-T02",
+      "round": 2,
+      "askedAtLocal": "2026-06-13T14:16:00+08:00",
+      "askedAtUtc": "2026-06-13T06:16:00+00:00",
+      "answeredAtLocal": "2026-06-13T14:20:00+08:00",
+      "answeredAtUtc": "2026-06-13T06:20:00+00:00",
+      "question": "车钟有过什么变化？大约是什么时间？能精确到分秒吗？",
+      "answer": "大概 15 点前后，应该是三点刚过不久，车钟从海上航行速度往下收了一档。具体几分几秒我没有在机舱日志里同步到秒，只能说大约 15:05 到 15:10 这个区间。我的表和驾驶台钟有没有误差，我没对过。"
+    },
+    {
+      "turnId": "IR-SYN-04-T03",
+      "round": 3,
+      "askedAtLocal": "2026-06-13T14:23:00+08:00",
+      "askedAtUtc": "2026-06-13T06:23:00+00:00",
+      "answeredAtLocal": "2026-06-13T14:26:00+08:00",
+      "answeredAtUtc": "2026-06-13T06:26:00+00:00",
+      "question": "当时航速大约多少？你用的是什么单位？是计程仪读数还是估计？",
+      "answer": "减速前大约十二节左右，也可能是 11 到 13 节之间，我是按主机转速粗估的，不是驾驶台计程仪的读数。减速后大概十来节。单位我按「节」说，没有换算成米每秒。"
+    },
+    {
+      "turnId": "IR-SYN-04-T04",
+      "round": 4,
+      "askedAtLocal": "2026-06-13T14:29:00+08:00",
+      "askedAtUtc": "2026-06-13T06:29:00+00:00",
+      "answeredAtLocal": "2026-06-13T14:32:00+08:00",
+      "answeredAtUtc": "2026-06-13T06:32:00+00:00",
+      "question": "有没有人告诉你两船距离？单位说清楚了没有？",
+      "answer": "后来轮机员休息室有人说「大概两三海里」，还有人说「不到一海里了」。这些都是大概的说法，单位是海里还是链，当时没有人说清楚。我没有自己的观测。"
+    },
+    {
+      "turnId": "IR-SYN-04-T05",
+      "round": 5,
+      "askedAtLocal": "2026-06-13T14:34:00+08:00",
+      "askedAtUtc": "2026-06-13T06:34:00+00:00",
+      "answeredAtLocal": "2026-06-13T14:36:00+08:00",
+      "answeredAtUtc": "2026-06-13T06:36:00+00:00",
+      "question": "舵的情况你知道吗？时间怎么说？",
+      "answer": "机舱感觉到一次转向，时间也是 15 点左右，大约持续几分钟的样子。舵角我完全不知道，也不该由我估计度数。"
+    },
+    {
+      "turnId": "IR-SYN-04-T06",
+      "round": 6,
+      "askedAtLocal": "2026-06-13T14:38:00+08:00",
+      "askedAtUtc": "2026-06-13T06:38:00+00:00",
+      "answeredAtLocal": "2026-06-13T14:40:00+08:00",
+      "answeredAtUtc": "2026-06-13T06:40:00+00:00",
+      "question": "电话里跟你联系的是谁？会不会和同名的他船船长混淆？",
+      "answer": "电话里跟我联系的是驾驶台，我听声音是二副陈海。我听说渔船船长也叫陈海，但我没有和那位船长通过话，不会把机舱接到的车钟令记到他名下。"
+    },
+    {
+      "turnId": "IR-SYN-04-T07",
+      "round": 7,
+      "askedAtLocal": "2026-06-13T14:42:00+08:00",
+      "askedAtUtc": "2026-06-13T06:42:00+00:00",
+      "answeredAtLocal": "2026-06-13T14:44:00+08:00",
+      "answeredAtUtc": "2026-06-13T06:44:00+00:00",
+      "question": "你说的时间是哪个钟域？能不能追溯到 UTC？",
+      "answer": "我按船上工作钟来说，就是东八区的船时。我说的「15 点左右」都是这个钟。对应的 UTC 应该减 8 小时，也就是 07 点左右，这个换算我当时没有逐条记下。"
+    }
+  ]
+}

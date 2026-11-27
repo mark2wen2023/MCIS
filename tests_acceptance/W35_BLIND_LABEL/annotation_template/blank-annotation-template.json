@@ -1,0 +1,64 @@
+{
+  "templateId": "W35-BLIND-ANNOTATION-V1",
+  "title": "空白标注模板（不预填答案）",
+  "notFormalAcceptance": true,
+  "answersPrefilled": false,
+  "purpose": "供评审人员在冻结统计口径之后，对六份虚构笔录草案做盲标。本文件不预填答案，不含 gold、期望抽取结果、自动标签或分数。",
+  "instructions": [
+    "分母、争议裁定、漏提与误提的统计口径由评审人员确定并先冻结，再开始标注。",
+    "每条标注应填写证据定位、陈述类型，并在需要时填写待查或不具可比性。",
+    "不得在本模板中预先填写标准答案或一致率。",
+    "原文草案后续需人工复核并冻结；本准备不称作正式验收。"
+  ],
+  "fields": [
+    {
+      "key": "annotationId",
+      "label": "标注行号",
+      "required": true,
+      "hint": "由标注员按冻结口径编号，本栏不预填。"
+    },
+    {
+      "key": "recordId",
+      "label": "笔录 ID",
+      "required": true,
+      "hint": "如 IR-SYN-01。"
+    },
+    {
+      "key": "turnId",
+      "label": "问答 ID",
+      "required": true,
+      "hint": "如 IR-SYN-01-T02，固定问答编号。"
+    },
+    {
+      "key": "evidenceLocator",
+      "label": "证据定位",
+      "required": true,
+      "hint": "问答 ID、字段（问/答）及原文起止或可复核摘录定位，由标注员填写。"
+    },
+    {
+      "key": "statementType",
+      "label": "陈述类型",
+      "required": true,
+      "hint": "允许值由评审人员在冻结口径时确定；本栏不预填、不预设枚举答案。"
+    },
+    {
+      "key": "pendingCheck",
+      "label": "待查",
+      "required": false,
+      "hint": "需要对照数据源或进一步查证时填写；可空。"
+    },
+    {
+      "key": "notComparable",
+      "label": "不具可比性",
+      "required": false,
+      "hint": "无法与数据源比较时填写原因；可空。"
+    },
+    {
+      "key": "notes",
+      "label": "备注",
+      "required": false,
+      "hint": "可选。不得当作标准答案栏。"
+    }
+  ],
+  "rows": []
+}
