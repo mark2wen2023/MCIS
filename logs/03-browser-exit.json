@@ -1,0 +1,68 @@
+{
+  "pass": true,
+  "chromiumSandbox": true,
+  "noSandboxArg": false,
+  "pin": "94d5e38c926fda232bb987b60fa9145e4bcf01a7",
+  "version": "Google Chrome 156.0.8078.47",
+  "token": "SYN-W19-PAGE-7k4m2p",
+  "absent": "ZXQ-ABSENT-W19-PAGE-8n3q",
+  "uniqueRequest": {
+    "url": "http://127.0.0.1:18795/api/v1/knowledge/cards?status=Published&limit=20&offset=0&q=SYN-W19-PAGE-7k4m2p",
+    "status": 200,
+    "total": 1,
+    "cardIds": [
+      "KC-cde642f0c49c4b5ba1d2f5b52c2754f9"
+    ],
+    "source": {
+      "type": "Synthetic",
+      "title": "合成夹具-published",
+      "locator": "段落1",
+      "excerpt": "SYN-W19-PAGE-SRC-PUB",
+      "rightsNote": "测试作者构造，不含真实资料"
+    }
+  },
+  "absentRequest": {
+    "url": "http://127.0.0.1:18795/api/v1/knowledge/cards?status=Published&limit=20&offset=0&q=ZXQ-ABSENT-W19-PAGE-8n3q",
+    "status": 200,
+    "total": 0,
+    "items": []
+  },
+  "browserApiRequests": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18795/api/v1/cases/CASE-2026-DEMO-LILY-MARY",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18795/api/v1/cases/CASE-2026-DEMO-LILY-MARY",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18795/api/v1/knowledge/cards?status=Published&limit=20&offset=0",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18795/api/v1/knowledge/cards?status=Published&limit=20&offset=0",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18795/api/v1/knowledge/cards?status=Published&limit=20&offset=0&q=SYN-W19-PAGE-7k4m2p",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18795/api/v1/knowledge/cards?status=Published&limit=20&offset=0&q=ZXQ-ABSENT-W19-PAGE-8n3q",
+      "resource": "fetch"
+    }
+  ],
+  "verificationWrites": [],
+  "pageErrors": [],
+  "screenshots": [
+    "01-unique-term.png",
+    "02-absent-term.png"
+  ]
+}

@@ -1,0 +1,5 @@
+d70a824 test(w19): add existing-page keyword search Chrome acceptance
+ tests_acceptance/w19-page-search/README.md |  32 +++
+ tests_acceptance/w19-page-search/host.py   |  28 ++
+ tests_acceptance/w19-page-search/run.py    | 418 +++++++++++++++++++++++++++++
+ 3 files changed, 478 insertions(+)

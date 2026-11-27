@@ -1,0 +1,14 @@
+{
+  "published": "KC-cde642f0c49c4b5ba1d2f5b52c2754f9",
+  "pending": "KC-86bb766fe41c4b52aeb3815a9dc49888",
+  "withdrawn": "KC-cb16490cb22b44d797b98be5f75feaae",
+  "publishedSource": {
+    "type": "Synthetic",
+    "title": "合成夹具-published",
+    "locator": "段落1",
+    "excerpt": "SYN-W19-PAGE-SRC-PUB",
+    "rightsNote": "测试作者构造，不含真实资料"
+  },
+  "token": "SYN-W19-PAGE-7k4m2p",
+  "absent": "ZXQ-ABSENT-W19-PAGE-8n3q"
+}
