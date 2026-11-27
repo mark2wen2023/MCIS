@@ -69,3 +69,19 @@ class Structure(unittest.TestCase):
         code,r,file=self.trial("tank",wrong=True)
         self.assertEqual((code,file),(4,False))
         self.assertAlmostEqual(r["second_view_error_m"],.05)
+
+class NaturalPair(unittest.TestCase):
+    def test_named_pair_and_second_view_extrusion_direction(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);specimen(root,"deck")
+            for view in ("plan","side"):
+                path=root/(view+".dxf");doc=ezdxf.readfile(path);ms=doc.modelspace()
+                for e in list(ms.query("TEXT")):
+                    text=e.dxf.text
+                    if text=="PART P1 deck":e.dxf.text="主甲板 编号 D-5"+(" t=0.2 m" if view=="plan" else "")
+                    if text.startswith(("THICKNESS","NORMAL")):ms.delete_entity(e)
+                doc.saveas(path)
+            with patch.object(sys,"argv",["s4",str(root),"--out",str(root/"out")]):self.assertEqual(s4.main(),0)
+            result=json.loads((root/"out/structures.json").read_bytes())["components"][0]
+            self.assertAlmostEqual(result["quality"]["signed_volume_m3"],1.2)
+            self.assertTrue(any("normal_source" in r for r in result["sources"]))

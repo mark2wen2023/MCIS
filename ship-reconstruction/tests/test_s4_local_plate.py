@@ -24,3 +24,12 @@ class LocalPlate(unittest.TestCase):
         d=ezdxf.new();m=d.modelspace()
         for a,b in [((0,-10),(0,10)),((0,0),(10,0)),((0,3),(10,3))]:m.add_line(a,b)
         self.assertEqual(bounded_cells(LayoutIndex(cad.read(d)["curves"],[]),np.array([1,1]),2,set(),[]),[])
+
+    def test_different_points_on_one_shell_edge(self):
+        from s4lib.annotations import target_conflicts
+        def note(h,position,val):
+            return dict(source_sha256="1"*64,instance=h,dimensions=[dict(kind="thickness",unit="mm",value=val)],leaders=[dict(target_instances=["E"],tip_wcs=position,tolerance_wcs=.01)])
+        a=note("A",[0,0],8);b=note("B",[5,0],12)
+        self.assertEqual(target_conflicts([a,b]),[])
+        b["leaders"][0]["tip_wcs"]=[0,0]
+        self.assertEqual(len(target_conflicts([a,b])),1)

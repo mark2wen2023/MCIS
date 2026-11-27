@@ -52,10 +52,14 @@ def ruler_scale(tip,layout,data,height):
 def frame_attachment(cell,scale,idx,texts,height):
     """同一板边位于两支刻度之间的整数肋位；只有唯一解时报告局部肋号。"""
     if scale["basis"]!="printed_frame_pitch_and_three_nearby_labels":return None
-    ticks=[]
+    from itertools import product
+    pools=[]
+    first,last=(np.array(texts[k]["p"][:2]) for k in (scale["handles"][0],scale["handles"][2]))
+    u=last-first
+    if np.linalg.norm(u)<1e-10:return None
+    u=u/np.linalg.norm(u)
     for label in scale["handles"][:3]:
         note=texts[label];p=np.asarray(note["p"][:2])
-        u=np.asarray(note["baseline"][:2]);u/=np.linalg.norm(u)
         v=np.array([-u[1],u[0]]);h=note["height"]
         choices=[]
         for i in idx.around(p,2*h):
@@ -67,9 +71,16 @@ def frame_attachment(cell,scale,idx,texts,height):
             if abs(du)>h or dv>2*h:continue
             choices.append((float(np.hypot(du,dv)),float(np.mean(ends@u)),idx.curves[i]["instance"]))
         if not choices:return None
-        choices.sort()
-        if any(abs(k[0]-choices[0][0])<1e-5*h and abs(k[1]-choices[0][1])>1e-5*h for k in choices[1:]):return None
-        ticks.append((int(note["text"]),choices[0][1],choices[0][2]))
+        pools.append([(int(note["text"]),x,handle,x-p@u) for _,x,handle in choices])
+    solutions={}
+    for ticks in product(*pools):
+        if np.ptp([v[3] for v in ticks])>height*.002:continue
+        n0,n1,n2=[v[0] for v in ticks]
+        x0,x1,x2=[v[1] for v in ticks]
+        if abs(x1-x0-(x2-x0)*(n1-n0)/(n2-n0))>max(height*1e-4,1e-7):continue
+        solutions[tuple(round(v[1],7) for v in ticks)]=[(n,x,h) for n,x,h,_ in ticks]
+    if len(solutions)!=1:return None
+    ticks=next(iter(solutions.values()))
     n=np.array([a[0] for a in ticks]);x=np.array([a[1] for a in ticks])
     pitch=(x[-1]-x[0])/(n[-1]-n[0])
     if abs(pitch)<1e-10 or max(abs(x-(x[0]+(n-n[0])*pitch)))>abs(pitch)*1e-4:return None

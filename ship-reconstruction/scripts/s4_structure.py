@@ -12,7 +12,9 @@ from core.drawing_parser import fingerprint
 from geometry import read_exchange, quality
 from parts import extrude_registered
 from s2lib import alignment, cad
-from s4lib import annotations, panels
+from s4lib import annotations, panels, sections
+from s4lib.mesh_io import write_solid
+from s4lib.notes import parse
 
 ROLES={"deck","transverse_bulkhead","longitudinal_bulkhead","frame","longitudinal","strong_beam","stiffener","compartment","tank","double_bottom_plate"}
 PART=re.compile(r"PART\s+([\w.-]+)\s+(\w+)$",re.I)
@@ -30,6 +32,8 @@ def views(drawings):
         texts=[t for t in data["texts"] if t["layout"]=="Model" and "/" not in t["instance"]]
         document_links=[]
         for text in texts:
+            ordinary=re.match(r"(图号|参见|详见)\s*[:=：]?\s*([\w.-]+)(?:\s+(?:rev|版次)\.?\s*[:=]?\s*([\w.-]+))?",text["text"].strip(),re.I)
+            if ordinary:document_links.append(dict(role="DRAWING ID" if ordinary[1]=="图号" else "REF",id=ordinary[2].casefold(),revision=ordinary[3],instance=text["instance"]))
             link=re.fullmatch(r"(DRAWING ID|REF)\s*[:=]\s*([\w.-]+)",text["text"].strip(),re.I)
             if link:
                 document_links.append(dict(role=link[1].upper(),id=link[2].casefold(),instance=text["instance"]))
@@ -42,8 +46,9 @@ def views(drawings):
                     contours.append((e,pp,polygon))
         for t in texts:
             m=PART.fullmatch(t["text"].strip())
-            if not m: continue
-            row=dict(id=m[1],role=m[2].lower(),source_sha256=d["sha256"],part_handle=t["instance"],document_links=document_links,issues=[])
+            natural=None if m else parse(t["text"])
+            if not m and not (natural and natural["identity"] and natural["type"] in ROLES):continue
+            row=dict(id=m[1] if m else natural["identity"],role=m[2].lower() if m else natural["type"],natural_identity=not bool(m),source_sha256=d["sha256"],part_handle=t["instance"],document_links=document_links,issues=[])
             records.append(row)
             if row["role"] not in ROLES:row["issues"].append("unrecognized_role")
             matches=[v for v in contours if v[2].covers(Point(t["p"][:2]))]
@@ -68,7 +73,7 @@ def views(drawings):
             cross=np.cross(M[:,0],M[:,1])
             matrix[:3,2]=cross/np.linalg.norm(cross)
             matrix[:3,3]=M[:,2]
-            notes=[u for u in contained if MEASURE.match(u["text"].strip())]
+            notes=[u for u in contained if MEASURE.match(u["text"].strip()) or (natural and u["instance"]==t["instance"] and any(v["kind"] in ("thickness","height") for v in natural["dimensions"]))]
             normals=[(u,NORMAL.fullmatch(u["text"].strip())) for u in contained if NORMAL.fullmatch(u["text"].strip())]
             row.update(outline_handle=e.dxf.handle,controls=f["controls"],matrix=matrix.tolist(),measure_handles=[u["instance"] for u in notes],
                        normal_handles=[u["instance"] for u,_ in normals],points_m=(np.column_stack((pp,np.ones(len(pp))))@M.T).tolist())
@@ -103,18 +108,30 @@ def compute(drawings, dest, hull=None):
             links=lambda row,role:{v["id"] for v in row["document_links"] if v["role"]==role}
             if not (links(a,"REF") & links(b,"DRAWING ID") or links(b,"REF") & links(a,"DRAWING ID")):
                 issues.append("missing_cross_sheet_reference")
+        if not issues:
+            revisions=[{v.get("revision") for v in row["document_links"] if v.get("revision")} for row in rows]
+            if all(revisions) and revisions[0]!=revisions[1]:issues.append("revision_agreement_unresolved")
         if issues: continue
         primary=[v for v in rows if v["measure_handles"] or v["normal_handles"]]
-        if len(primary)!=1 or len(primary[0]["measure_handles"])!=1 or "normal" not in primary[0]:
+        if len(primary)!=1 or len(primary[0]["measure_handles"])!=1:
             issues.append("missing_or_ambiguous_signed_measure")
             continue
         a=primary[0];b=next(v for v in rows if v is not a)
         M=np.asarray(b["matrix"])
+        if "normal" not in a and a.get("natural_identity") and not a["normal_handles"]:
+            axis=np.asarray(a["matrix"])[:3,2]
+            elevations=(np.array(b["points_m"])-np.array(a["points_m"])[0])@axis
+            if abs(min(elevations))<=LIMIT and max(elevations)>LIMIT:a["normal"]=axis.tolist()
+            elif abs(max(elevations))<=LIMIT and min(elevations)<-LIMIT:a["normal"]=(-axis).tolist()
+            if "normal" in a:a["normal_source"]=dict(source_sha256=b["source_sha256"],outline_handle=b["outline_handle"],controls=b["controls"])
+        if "normal" not in a:
+            issues.append("missing_or_ambiguous_signed_measure")
+            continue
         normal=np.asarray(a["normal"])
         if abs(M[:3,2]@normal)>1e-7:
             issues.append("second_view_cannot_measure_extrusion")
             continue
-        spec=dict(role=a["role"],source_sha256=a["source_sha256"],outline_handle=a["outline_handle"],measure_handle=a["measure_handles"][0],matrix=a["matrix"],positive_normal=a["normal"])
+        spec=dict(natural_identity=a["natural_identity"],role=a["role"],source_sha256=a["source_sha256"],outline_handle=a["outline_handle"],measure_handle=a["measure_handles"][0],matrix=a["matrix"],positive_normal=a["normal"])
         try:
             item,mesh,handles,qa=extrude_registered(drawings,[spec])[0]
         except ValueError as exc:
@@ -137,8 +154,9 @@ def compute(drawings, dest, hull=None):
             r["hull_relation"]=dict(method="vertex_to_surface_distance",min_distance_m=float(np.sqrt(squared.min())),vertices_in_contact=int(np.count_nonzero(squared<=LIMIT**2)),tolerance_m=LIMIT)
         else:
             r["unknowns"].append("hull_attachment")
-        (dest/(key+".ply")).write_bytes(mesh.export(file_type="ply"))
-    return dict(schema_version="4.0",conflicts=conflicts,local_models=panels.recover(drawings,notes,dest),components=results,observations=notes,view_titles=view_titles,identity_candidates=annotations.associations(notes),hull_quality=hull_qa,engineering_approved=False,view_tolerance_m=LIMIT)
+        r["asset"]=key+".ply"
+        write_solid(dest/r["asset"],mesh)
+    return dict(schema_version="4.0",section_templates=sections.section_templates(notes),profile_matches=sections.profile_matches(notes),conflicts=conflicts,local_models=panels.recover(drawings,notes,dest),components=results,observations=notes,view_titles=view_titles,identity_candidates=annotations.associations(notes),hull_quality=hull_qa,engineering_approved=False,view_tolerance_m=LIMIT)
 
 
 def main():

@@ -136,13 +136,23 @@ def target_conflicts(rows):
                 by_target[(r["source_sha256"],leader["target_instances"][0])].append(r)
     conflicts=[]
     for (src,target),matches in by_target.items():
-        values=defaultdict(set)
-        for r in matches:
-            for d in r["dimensions"]:
-                if d["kind"]=="thickness":
-                    scale={"mm":.001,"cm":.01,"m":1.,"in":.0254}.get(d["unit"])
-                    values["metres" if scale else "unspecified"].add(round(d["value"]*(scale or 1),12))
-        if any(len(v)>1 for v in values.values()):
-            conflicts.append(dict(kind="inconsistent_thickness_at_same_entity",source_sha256=src,target=target,instances=sorted({r["instance"] for r in matches})))
-            for r in matches:r["modeling_status"]="conflicting_dimensions"
+        # A CAD edge can represent a long shell strake with several scantlings.
+        # Only co-located callouts assert incompatible values at the same point.
+        seen=set()
+        for i,r in enumerate(matches):
+            for other in matches[i+1:]:
+                if other["instance"]==r["instance"]:continue
+                tips=lambda q:[(np.asarray(l["tip_wcs"]),l["tolerance_wcs"]) for l in q["leaders"] if l["target_instances"]==[target]]
+                if not any(np.linalg.norm(a-b)<=min(e,f) for a,e in tips(r) for b,f in tips(other)):continue
+                values=defaultdict(set)
+                for q in (r,other):
+                    for d in q["dimensions"]:
+                        if d["kind"]!="thickness":continue
+                        scale={"mm":.001,"cm":.01,"m":1.,"in":.0254}.get(d["unit"])
+                        values["metres" if scale else "unspecified"].add(round(d["value"]*(scale or 1),12))
+                key=tuple(sorted([r["instance"],other["instance"]]))
+                if key not in seen and any(len(v)>1 for v in values.values()):
+                    seen.add(key)
+                    conflicts.append(dict(kind="inconsistent_thickness_at_same_entity",source_sha256=src,target=target,instances=list(key)))
+                    r["modeling_status"]=other["modeling_status"]="conflicting_dimensions"
     return conflicts

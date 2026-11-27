@@ -82,13 +82,23 @@ def extrude_registered(drawings, specs):
             raise ValueError("构件缺少原图厚度或高度注记")
         label = note.plain_text() if note.dxftype() == "MTEXT" else note.dxf.text
         match = re.fullmatch(r"\s*(厚度|高度|THICKNESS|HEIGHT)\s*[:=：]\s*([0-9]+(?:\.[0-9]+)?)\s*(mm|m|毫米|米)\s*", label, re.I)
-        if not match:
+        if match:
+            dimension, value, unit = match.groups()
+            is_height = dimension.lower() in ("height", "高度")
+            length = float(value) * (0.001 if unit.lower() in ("mm","毫米") else 1.)
+        elif spec.get("natural_identity"):
+            from s4lib.notes import parse
+            observation=parse(label)
+            dimensions=[v for v in (observation or {}).get("dimensions",[]) if v["kind"] in ("height","thickness")]
+            if len(dimensions)!=1 or not dimensions[0]["unit"]:
+                raise ValueError("构件尺寸标注的类型、数值或单位无法唯一确定")
+            value=dimensions[0]
+            length=value["value"]*{"mm":.001,"cm":.01,"m":1.,"in":.0254}[value["unit"]]
+            is_height=value["kind"]=="height"
+        else:
             raise ValueError("构件尺寸需要唯一数值、单位及明确的厚度或高度标注")
-        dimension, value, unit = match.groups()
-        is_height = dimension.lower() in ("height", "高度")
         if is_height != (spec["role"] in ("tank", "compartment")):
             raise ValueError("标注类型与构件用途不匹配")
-        length = float(value) * (0.001 if unit.lower() in ("mm","毫米") else 1.)
         if length <= 0:raise ValueError("挤出尺寸必须为正")
         matrix = spec["matrix"]
         scale = np.linalg.norm(np.asarray(matrix,dtype=float)[:3,:3],ord=2)
