@@ -1,0 +1,48 @@
+{
+  "dllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+  "coreVersion": "mcis-core/0.1.0",
+  "calls": [
+    {
+      "t": 120.0,
+      "queryUtc": "2026-02-01T12:02:00Z",
+      "coreVersion": "mcis-core/0.1.0",
+      "recalculatedIdentical": true,
+      "result": {
+        "pairId": "SYN-VESSEL-A|SYN-VESSEL-B@120",
+        "ownVesselId": "SYN-VESSEL-A",
+        "targetVesselId": "SYN-VESSEL-B",
+        "timeSec": 120,
+        "currentDistanceNm": 1.070062,
+        "trueBearingDeg": 90.01212,
+        "relativeCourseDeg": 270,
+        "relativeSpeedKn": 22,
+        "dcpaNm": 0.000226,
+        "tcpaMin": 2.918352,
+        "isDiverging": false,
+        "isDegenerate": false,
+        "riskLevel": "Danger"
+      }
+    },
+    {
+      "t": 130.0,
+      "queryUtc": "2026-02-01T12:02:10Z",
+      "coreVersion": "mcis-core/0.1.0",
+      "recalculatedIdentical": true,
+      "result": {
+        "pairId": "SYN-VESSEL-A|SYN-VESSEL-B@130",
+        "ownVesselId": "SYN-VESSEL-A",
+        "targetVesselId": "SYN-VESSEL-B",
+        "timeSec": 130,
+        "currentDistanceNm": 1.008757,
+        "trueBearingDeg": 90.012081,
+        "relativeCourseDeg": 270,
+        "relativeSpeedKn": 22,
+        "dcpaNm": 0.000213,
+        "tcpaMin": 2.751155,
+        "isDiverging": false,
+        "isDegenerate": false,
+        "riskLevel": "Danger"
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+official start 2026-11-27 16:10:31 CST
+locked official dll f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf
+symlinked node_modules -> /workspace/mcis-w12-narrow-cand/web/node_modules
+esbuild /workspace/mcis-w12-json-gap-cand/web/node_modules/esbuild/bin/esbuild /workspace/mcis-w12-json-gap-cand/web/tests/analysis-chart-gap.test.ts --bundle --platform=node --format=cjs --outfile=/workspace/mcis-w12-registered-json-gap-report/official/analysis-chart-gap.test.cjs --jsx=automatic --log-level=warning
+W12 chart-gap unit tests: 31 passed
+esbuild /workspace/mcis-w12-json-gap-cand/web/node_modules/esbuild/bin/esbuild /workspace/mcis-w12-json-gap-cand/web/tests/analysis-w12.test.tsx --bundle --platform=node --format=cjs --outfile=/workspace/mcis-w12-registered-json-gap-report/official/analysis-w12.test.cjs --jsx=automatic --log-level=warning
+W12 analysis tests: 96 passed
+esbuild /workspace/mcis-w12-json-gap-cand/web/node_modules/esbuild/bin/esbuild /workspace/mcis-w12-json-gap-cand/tests_acceptance/w12-registered-json-gap/assembly/main.tsx --bundle --outfile=/workspace/mcis-w12-registered-json-gap-report/official/assembly/app.js --format=iife --platform=browser --jsx=automatic --alias:react=/workspace/mcis-w12-json-gap-cand/web/node_modules/react --alias:react-dom=/workspace/mcis-w12-json-gap-cand/web/node_modules/react-dom --alias:react-dom/client=/workspace/mcis-w12-json-gap-cand/web/node_modules/react-dom/client --alias:react/jsx-runtime=/workspace/mcis-w12-json-gap-cand/web/node_modules/react/jsx-runtime --alias:echarts=/workspace/mcis-w12-json-gap-cand/web/node_modules/echarts --log-level=warning
+assembly app.js sha256=015117dc7734cc50ab0513ec7f0f0aed6551004e6210230c631dce34860cf89c
+UNCAUGHT ModuleNotFoundError: No module named 'sqlalchemy'

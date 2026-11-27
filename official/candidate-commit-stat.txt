@@ -1,0 +1,31 @@
+commit e80a49aba61336f8db7b1337b6a555de5c735857
+Author:     Mark Wen <mark@users.noreply.github.com>
+AuthorDate: Fri Nov 27 16:19:41 2026 +0800
+Commit:     Mark Wen <mark@users.noreply.github.com>
+CommitDate: Fri Nov 27 16:19:41 2026 +0800
+
+    feat(w12): wire registered declared-gap JSON into AnalysisView
+    
+    Independent candidate from c150548. Reuse frozen db90fdf
+    _load_registered_pair and afc72a1 pin tooling in an isolated
+    acceptance host. Originals are locked 2048c60 expanded A/B
+    bytes. Server holds the two pins; the public snapshot is
+    read-only. Optional evidenceId/requestDigest on
+    RegisteredIdentity; wrap source hashes at 390px.
+
+ .../w12-registered-json-gap/ALLOWLIST_SHA256SUMS   |   51 +
+ tests_acceptance/w12-registered-json-gap/README.md |   11 +
+ .../w12-registered-json-gap/assembly/index.html    |   24 +
+ .../w12-registered-json-gap/assembly/main.tsx      |  126 ++
+ .../w12-registered-json-gap/core_norebuild.sh      |    7 +
+ .../w12-registered-json-gap/fixtures/SHA256SUMS    |    2 +
+ .../w12-registered-json-gap/fixtures/vessel-a.json | 1183 +++++++++++++++++
+ .../w12-registered-json-gap/fixtures/vessel-b.json | 1362 ++++++++++++++++++++
+ tests_acceptance/w12-registered-json-gap/host.py   |   73 ++
+ .../w12-registered-json-gap/materialize.py         |   50 +
+ tests_acceptance/w12-registered-json-gap/run.py    |  557 ++++++++
+ .../w12-registered-json-gap/snapshot.py            |  606 +++++++++
+ web/src/analysis/AnalysisView.tsx                  |   12 +-
+ web/src/analysis/analysis.css                      |    8 +
+ web/src/analysis/types.ts                          |    6 +-
+ 15 files changed, 4072 insertions(+), 6 deletions(-)

@@ -1,0 +1,39 @@
+{
+  "successAccess": {
+    "before": {
+      "evidence": 2,
+      "custody": 2,
+      "audit": 2,
+      "access": 0
+    },
+    "after": {
+      "evidence": 2,
+      "custody": 4,
+      "audit": 4,
+      "access": 2
+    },
+    "deltaAccess": 2
+  },
+  "denied": {
+    "ok": false,
+    "reason": "policy-deny:403",
+    "metricsReturned": false,
+    "currentAnalysis": null,
+    "accessBefore": 2,
+    "accessAfter": 2
+  },
+  "unpaired": {
+    "ok": false,
+    "reason": "unpaired:TWO_PINS_REQUIRED",
+    "metricsReturned": false,
+    "currentAnalysis": null,
+    "accessBefore": 2,
+    "accessAfter": 2
+  },
+  "finalCounts": {
+    "evidence": 2,
+    "custody": 4,
+    "audit": 4,
+    "access": 2
+  }
+}

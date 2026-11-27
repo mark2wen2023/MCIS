@@ -1,0 +1,14 @@
+official start 2026-11-27 16:15:17 CST
+locked official dll f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf
+node_modules present at /workspace/mcis-w12-json-gap-cand/web/node_modules
+esbuild /workspace/mcis-w12-json-gap-cand/web/node_modules/esbuild/bin/esbuild /workspace/mcis-w12-json-gap-cand/web/tests/analysis-chart-gap.test.ts --bundle --platform=node --format=cjs --outfile=/workspace/mcis-w12-registered-json-gap-report/official/analysis-chart-gap.test.cjs --jsx=automatic --log-level=warning
+W12 chart-gap unit tests: 31 passed
+esbuild /workspace/mcis-w12-json-gap-cand/web/node_modules/esbuild/bin/esbuild /workspace/mcis-w12-json-gap-cand/web/tests/analysis-w12.test.tsx --bundle --platform=node --format=cjs --outfile=/workspace/mcis-w12-registered-json-gap-report/official/analysis-w12.test.cjs --jsx=automatic --log-level=warning
+W12 analysis tests: 96 passed
+esbuild /workspace/mcis-w12-json-gap-cand/web/node_modules/esbuild/bin/esbuild /workspace/mcis-w12-json-gap-cand/tests_acceptance/w12-registered-json-gap/assembly/main.tsx --bundle --outfile=/workspace/mcis-w12-registered-json-gap-report/official/assembly/app.js --format=iife --platform=browser --jsx=automatic --alias:react=/workspace/mcis-w12-json-gap-cand/web/node_modules/react --alias:react-dom=/workspace/mcis-w12-json-gap-cand/web/node_modules/react-dom --alias:react-dom/client=/workspace/mcis-w12-json-gap-cand/web/node_modules/react-dom/client --alias:react/jsx-runtime=/workspace/mcis-w12-json-gap-cand/web/node_modules/react/jsx-runtime --alias:echarts=/workspace/mcis-w12-json-gap-cand/web/node_modules/echarts --log-level=warning
+assembly app.js sha256=015117dc7734cc50ab0513ec7f0f0aed6551004e6210230c631dce34860cf89c
+assemble /workspace/mcis-w17-871db66/service/.venv/bin/python -I -B /workspace/mcis-w12-json-gap-cand/tests_acceptance/w12-registered-json-gap/snapshot.py --git-dir /workspace/maritime-sim-design --source /workspace/mcis-w12-registered-json-gap-report/official/w12-rjg-src-qy482467 --fixtures /workspace/mcis-w12-json-gap-cand/tests_acceptance/w12-registered-json-gap/fixtures --worktree /workspace/mcis-w12-json-gap-cand --core-cmd /workspace/mcis-w12-json-gap-cand/tests_acceptance/w12-registered-json-gap/core_norebuild.sh --dll-sha f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf --out /workspace/mcis-w12-registered-json-gap-report/official/raw-snapshot.json
+host /workspace/mcis-w17-871db66/service/.venv/bin/python -I -B /workspace/mcis-w12-json-gap-cand/tests_acceptance/w12-registered-json-gap/host.py /workspace/mcis-w12-registered-json-gap-report/official/assembly /workspace/mcis-w12-registered-json-gap-report/official/public-snapshot.json /workspace/mcis-w12-registered-json-gap-report/official/w12-rjg-src-qy482467 127.0.0.1 18782
+W12_RJG_READY=127.0.0.1:18782
+browser checks ok
+host exit=-15

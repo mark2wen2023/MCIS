@@ -1,0 +1,43 @@
+{
+  "ok": true,
+  "regression31": true,
+  "regression96": true,
+  "productAllowlist": "db90fdf73de7bd26ba75819f0102fc03d0789faf",
+  "browser": {
+    "ok": true,
+    "symbolFlags": [
+      {
+        "name": "两船距离 D(t)",
+        "showSymbol": true,
+        "connectNulls": false
+      },
+      {
+        "name": "DCPA(t)",
+        "showSymbol": true,
+        "connectNulls": false
+      },
+      {
+        "name": "TCPA(t)",
+        "showSymbol": true,
+        "connectNulls": false
+      }
+    ],
+    "hoverAccess": {
+      "evidence": 2,
+      "custody": 4,
+      "audit": 4,
+      "access": 2
+    },
+    "narrow390": {
+      "innerWidth": 390,
+      "documentElementScrollWidth": 390,
+      "bodyScrollWidth": 390
+    },
+    "caption": "图区来源区分：距离为既有 mcis-core cpa（真实核心）；DCPA 为既有 mcis-core cpa（真实核心）；TCPA 为既有 mcis-core cpa（真实核心）。仅 T+120、T+130 为真实核心（d49a691 正对照，两次一致）。其它查询时刻无双船同刻实测，未回填、未用演示 CPA。DLL SHA-256 f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf。时间均为北京时间（UTC+8）。"
+  },
+  "started": "2026-11-27 16:15:17 CST",
+  "ended": "2026-11-27 16:15:22 CST",
+  "port": 18782,
+  "origin": "http://127.0.0.1:18782",
+  "coreDllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf"
+}
