@@ -1,0 +1,24 @@
+[
+  {
+    "case": "original",
+    "exit": 0,
+    "issues": [],
+    "passed": true
+  },
+  {
+    "case": "unsupported_positive",
+    "exit": 4,
+    "issues": [
+      "unsupported_signed_registration"
+    ],
+    "passed": true
+  },
+  {
+    "case": "unsupported_negative",
+    "exit": 4,
+    "issues": [
+      "unsupported_signed_registration"
+    ],
+    "passed": true
+  }
+]

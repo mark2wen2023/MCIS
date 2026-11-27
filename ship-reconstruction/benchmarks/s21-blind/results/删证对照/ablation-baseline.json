@@ -1,0 +1,32 @@
+[
+  {
+    "case": "A",
+    "commit": "7dd34bbe282dabb3c2b71748fb8aa1e4ee2d559c",
+    "exit": 0,
+    "removed_controls": 50,
+    "verified_frames": 0,
+    "curves_with_confirmed_xyz": 0,
+    "curve_count": 20,
+    "correct_abstention": true
+  },
+  {
+    "case": "B",
+    "commit": "7dd34bbe282dabb3c2b71748fb8aa1e4ee2d559c",
+    "exit": 0,
+    "removed_controls": 55,
+    "verified_frames": 0,
+    "curves_with_confirmed_xyz": 0,
+    "curve_count": 22,
+    "correct_abstention": true
+  },
+  {
+    "case": "C",
+    "commit": "7dd34bbe282dabb3c2b71748fb8aa1e4ee2d559c",
+    "exit": 0,
+    "removed_controls": 65,
+    "verified_frames": 0,
+    "curves_with_confirmed_xyz": 0,
+    "curve_count": 26,
+    "correct_abstention": true
+  }
+]

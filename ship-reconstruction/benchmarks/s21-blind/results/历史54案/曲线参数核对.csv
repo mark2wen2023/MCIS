@@ -1,0 +1,11 @@
+﻿case,file,entity,handle,entity_found,original_geometry_match,semantic_kind,candidates
+T31,drawing-2.dxf,SPLINE,35,True,True,unknown,[]
+T32,drawing-1.dxf,POLYLINE,35,True,True,section,"[{""kind"": ""section"", ""basis"": ""single_feature_view"", ""label"": ""34""}]"
+T33,drawing-1.dxf,SPLINE,35,True,True,unknown,[]
+T34,drawing-1.dxf,LINE,35,True,True,buttock,"[{""kind"": ""buttock"", ""basis"": ""single_feature_view"", ""label"": ""34""}]"
+T35,drawing-1.dxf,ARC,35,True,True,unknown,[]
+T36,drawing-1.dxf,LWPOLYLINE,35,True,True,unknown,[]
+T53,profile.dxf,ELLIPSE,30,True,True,unknown,[]
+T53,profile.dxf,SPLINE,31,True,True,unknown,[]
+T54,profile.dxf,ARC,30,True,True,unknown,[]
+T54,profile.dxf,LWPOLYLINE,31,True,True,unknown,[]

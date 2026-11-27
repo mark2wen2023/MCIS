@@ -1,0 +1,82 @@
+[
+  {
+    "case": "A",
+    "commit": "a6ecfd4820e2fad5efc15dd7439f7173c37c0484",
+    "version": "2.1",
+    "json_schema_errors": [],
+    "formal_cli_exit": 0,
+    "formal_cli": {
+      "valid": true,
+      "issues": [],
+      "cell_status_counts": {
+        "zero": 6,
+        "numeric": 21
+      },
+      "engineering_approved": false,
+      "eligible_for_automatic_full_loft": false
+    },
+    "admission": "blocked",
+    "correct_research_scope": true,
+    "expected_conflict": false,
+    "reported_conflicts": 0,
+    "correct_conflict_count": true,
+    "evidence_checked": 2,
+    "bad_evidence": [],
+    "topology_features": 0,
+    "all_pass": true
+  },
+  {
+    "case": "B",
+    "commit": "a6ecfd4820e2fad5efc15dd7439f7173c37c0484",
+    "version": "2.1",
+    "json_schema_errors": [],
+    "formal_cli_exit": 0,
+    "formal_cli": {
+      "valid": true,
+      "issues": [],
+      "cell_status_counts": {
+        "numeric": 26,
+        "conflict": 1,
+        "zero": 3
+      },
+      "engineering_approved": false,
+      "eligible_for_automatic_full_loft": false
+    },
+    "admission": "blocked",
+    "correct_research_scope": true,
+    "expected_conflict": true,
+    "reported_conflicts": 1,
+    "correct_conflict_count": true,
+    "evidence_checked": 6,
+    "bad_evidence": [],
+    "topology_features": 0,
+    "all_pass": true
+  },
+  {
+    "case": "C",
+    "commit": "a6ecfd4820e2fad5efc15dd7439f7173c37c0484",
+    "version": "2.1",
+    "json_schema_errors": [],
+    "formal_cli_exit": 0,
+    "formal_cli": {
+      "valid": true,
+      "issues": [],
+      "cell_status_counts": {
+        "zero": 12,
+        "numeric": 59,
+        "blank_unknown": 1
+      },
+      "engineering_approved": false,
+      "eligible_for_automatic_full_loft": false
+    },
+    "admission": "blocked",
+    "correct_research_scope": true,
+    "expected_conflict": false,
+    "reported_conflicts": 0,
+    "correct_conflict_count": true,
+    "evidence_checked": 4,
+    "bad_evidence": [],
+    "topology_features": 0,
+    "all_pass": true
+  }
+]

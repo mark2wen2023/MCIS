@@ -1,0 +1,135 @@
+[
+  {
+    "case": "完整双图",
+    "expected_geometry": true,
+    "exit_code": 0,
+    "geometry_count": 1,
+    "status": [
+      "research_geometry_verified"
+    ],
+    "issues": [
+      []
+    ],
+    "correct": true
+  },
+  {
+    "case": "缺交叉引用",
+    "expected_geometry": false,
+    "exit_code": 4,
+    "geometry_count": 0,
+    "status": [
+      "blocked"
+    ],
+    "issues": [
+      [
+        "missing_cross_sheet_reference"
+      ]
+    ],
+    "correct": true
+  },
+  {
+    "case": "截面厚度冲突",
+    "expected_geometry": false,
+    "exit_code": 4,
+    "geometry_count": 0,
+    "status": [
+      "blocked"
+    ],
+    "issues": [
+      [
+        "independent_projection_conflict"
+      ]
+    ],
+    "correct": true
+  },
+  {
+    "case": "外法向反号",
+    "expected_geometry": false,
+    "exit_code": 4,
+    "geometry_count": 0,
+    "status": [
+      "blocked"
+    ],
+    "issues": [
+      [
+        "independent_projection_conflict"
+      ]
+    ],
+    "correct": true
+  },
+  {
+    "case": "标注落在部件外",
+    "expected_geometry": false,
+    "exit_code": 4,
+    "geometry_count": 0,
+    "status": [
+      "blocked"
+    ],
+    "issues": [
+      [
+        "missing_or_ambiguous_signed_measure"
+      ]
+    ],
+    "correct": true
+  },
+  {
+    "case": "多轮廓重叠",
+    "expected_geometry": false,
+    "exit_code": 4,
+    "geometry_count": 0,
+    "status": [
+      "blocked"
+    ],
+    "issues": [
+      [
+        "missing_or_ambiguous_outline"
+      ]
+    ],
+    "correct": true
+  },
+  {
+    "case": "役别不一致",
+    "expected_geometry": false,
+    "exit_code": 4,
+    "geometry_count": 0,
+    "status": [
+      "blocked"
+    ],
+    "issues": [
+      [
+        "two_unique_consistent_views_required"
+      ]
+    ],
+    "correct": true
+  },
+  {
+    "case": "次视图控制共线",
+    "expected_geometry": false,
+    "exit_code": 4,
+    "geometry_count": 0,
+    "status": [
+      "blocked"
+    ],
+    "issues": [
+      [
+        "missing_or_ambiguous_transform"
+      ]
+    ],
+    "correct": true
+  },
+  {
+    "case": "缺第二张图",
+    "expected_geometry": false,
+    "exit_code": 4,
+    "geometry_count": 0,
+    "status": [
+      "blocked"
+    ],
+    "issues": [
+      [
+        "two_unique_consistent_views_required"
+      ]
+    ],
+    "correct": true
+  }
+]

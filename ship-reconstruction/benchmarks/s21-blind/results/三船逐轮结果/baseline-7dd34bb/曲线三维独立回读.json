@@ -1,0 +1,21 @@
+{
+  "curves": 68,
+  "source_read_points": 22852,
+  "output_points": 8004,
+  "available_coordinate_max_error_m": 1.6190599083593465e-11,
+  "coordinate_matches": 68,
+  "source_vs_analytic_max_by_case_view": {
+    "A": {
+      "YZ": 2.3612663907490727e-11,
+      "XY": 0.00013956972227857634
+    },
+    "B": {
+      "YZ": 1.4834800055041342e-12,
+      "XY": 1.6192157806142798e-11
+    },
+    "C": {
+      "YZ": 0.015909276620368444,
+      "XY": 0.025134383340387492
+    }
+  }
+}

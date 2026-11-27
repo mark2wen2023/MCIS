@@ -1,0 +1,4377 @@
+[
+  {
+    "case": "A",
+    "files": [
+      {
+        "file": "offsets-port.dxf",
+        "sha256": "b03ccebdea68909abad9df26f8c77f76b4caba3b5530b66fe97ff3f68971f1d4",
+        "cells": [
+          {
+            "station_m": 0.0,
+            "level_m": 0.9,
+            "side": "port",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "54"
+            ],
+            "station_label": "ST 0 m",
+            "field_label": "WL 0.9 m"
+          },
+          {
+            "station_m": 0.0,
+            "level_m": 1.8,
+            "side": "port",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "55"
+            ],
+            "station_label": "ST 0 m",
+            "field_label": "WL 1.8 m"
+          },
+          {
+            "station_m": 0.0,
+            "level_m": 2.7,
+            "side": "port",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "56"
+            ],
+            "station_label": "ST 0 m",
+            "field_label": "WL 2.7 m"
+          },
+          {
+            "station_m": 1.92,
+            "level_m": 0.9,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 0.4738363385298341,
+            "handles": [
+              "57"
+            ],
+            "station_label": "ST 1.92 m",
+            "field_label": "WL 0.9 m"
+          },
+          {
+            "station_m": 1.92,
+            "level_m": 1.8,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 0.6203973966667671,
+            "handles": [
+              "58"
+            ],
+            "station_label": "ST 1.92 m",
+            "field_label": "WL 1.8 m"
+          },
+          {
+            "station_m": 1.92,
+            "level_m": 2.7,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 0.6936253760053964,
+            "handles": [
+              "59"
+            ],
+            "station_label": "ST 1.92 m",
+            "field_label": "WL 2.7 m"
+          },
+          {
+            "station_m": 5.44,
+            "level_m": 0.9,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 1.3088740004684798,
+            "handles": [
+              "5A"
+            ],
+            "station_label": "ST 5.44 m",
+            "field_label": "WL 0.9 m"
+          },
+          {
+            "station_m": 5.44,
+            "level_m": 1.8,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 1.7137183378018497,
+            "handles": [
+              "5B"
+            ],
+            "station_label": "ST 5.44 m",
+            "field_label": "WL 1.8 m"
+          },
+          {
+            "station_m": 5.44,
+            "level_m": 2.7,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 1.9159953488064418,
+            "handles": [
+              "5C"
+            ],
+            "station_label": "ST 5.44 m",
+            "field_label": "WL 2.7 m"
+          },
+          {
+            "station_m": 10.56,
+            "level_m": 0.9,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.291902146733106,
+            "handles": [
+              "5D"
+            ],
+            "station_label": "ST 10.56 m",
+            "field_label": "WL 0.9 m"
+          },
+          {
+            "station_m": 10.56,
+            "level_m": 1.8,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 3.0008043065246413,
+            "handles": [
+              "5E"
+            ],
+            "station_label": "ST 10.56 m",
+            "field_label": "WL 1.8 m"
+          },
+          {
+            "station_m": 10.56,
+            "level_m": 2.7,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 3.3550012082816068,
+            "handles": [
+              "5F"
+            ],
+            "station_label": "ST 10.56 m",
+            "field_label": "WL 2.7 m"
+          },
+          {
+            "station_m": 16.32,
+            "level_m": 0.9,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.7103697340447477,
+            "handles": [
+              "60"
+            ],
+            "station_label": "ST 16.32 m",
+            "field_label": "WL 0.9 m"
+          },
+          {
+            "station_m": 16.32,
+            "level_m": 1.8,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 3.5487069907363953,
+            "handles": [
+              "61"
+            ],
+            "station_label": "ST 16.32 m",
+            "field_label": "WL 1.8 m"
+          },
+          {
+            "station_m": 16.32,
+            "level_m": 2.7,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 3.9675750317576486,
+            "handles": [
+              "62"
+            ],
+            "station_label": "ST 16.32 m",
+            "field_label": "WL 2.7 m"
+          },
+          {
+            "station_m": 22.4,
+            "level_m": 0.9,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.1409093773249035,
+            "handles": [
+              "63"
+            ],
+            "station_label": "ST 22.4 m",
+            "field_label": "WL 0.9 m"
+          },
+          {
+            "station_m": 22.4,
+            "level_m": 1.8,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.803108365037755,
+            "handles": [
+              "64"
+            ],
+            "station_label": "ST 22.4 m",
+            "field_label": "WL 1.8 m"
+          },
+          {
+            "station_m": 22.4,
+            "level_m": 2.7,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 3.133970426261358,
+            "handles": [
+              "65"
+            ],
+            "station_label": "ST 22.4 m",
+            "field_label": "WL 2.7 m"
+          },
+          {
+            "station_m": 27.2,
+            "level_m": 0.9,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 1.1627551778492238,
+            "handles": [
+              "66"
+            ],
+            "station_label": "ST 27.2 m",
+            "field_label": "WL 0.9 m"
+          },
+          {
+            "station_m": 27.2,
+            "level_m": 1.8,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 1.522403890627402,
+            "handles": [
+              "67"
+            ],
+            "station_label": "ST 27.2 m",
+            "field_label": "WL 1.8 m"
+          },
+          {
+            "station_m": 27.2,
+            "level_m": 2.7,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 1.7020992943265132,
+            "handles": [
+              "68"
+            ],
+            "station_label": "ST 27.2 m",
+            "field_label": "WL 2.7 m"
+          },
+          {
+            "station_m": 30.4,
+            "level_m": 0.9,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 0.39526421007524765,
+            "handles": [
+              "69"
+            ],
+            "station_label": "ST 30.4 m",
+            "field_label": "WL 0.9 m"
+          },
+          {
+            "station_m": 30.4,
+            "level_m": 1.8,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 0.5175223320504997,
+            "handles": [
+              "6A"
+            ],
+            "station_label": "ST 30.4 m",
+            "field_label": "WL 1.8 m"
+          },
+          {
+            "station_m": 30.4,
+            "level_m": 2.7,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 0.5786075571695678,
+            "handles": [
+              "6B"
+            ],
+            "station_label": "ST 30.4 m",
+            "field_label": "WL 2.7 m"
+          },
+          {
+            "station_m": 32.0,
+            "level_m": 0.9,
+            "side": "port",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "6C"
+            ],
+            "station_label": "ST 32 m",
+            "field_label": "WL 0.9 m"
+          },
+          {
+            "station_m": 32.0,
+            "level_m": 1.8,
+            "side": "port",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "6D"
+            ],
+            "station_label": "ST 32 m",
+            "field_label": "WL 1.8 m"
+          },
+          {
+            "station_m": 32.0,
+            "level_m": 2.7,
+            "side": "port",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "6E"
+            ],
+            "station_label": "ST 32 m",
+            "field_label": "WL 2.7 m"
+          }
+        ],
+        "curves": [],
+        "controls": []
+      },
+      {
+        "file": "lines.dxf",
+        "sha256": "14d2a7cd1518beb83187f02aaf624eb58e977e048f50ad36960b0fcc7b9d6c04",
+        "cells": [],
+        "curves": [
+          {
+            "instance": "37/3F",
+            "handle": "3F",
+            "source_kind": "SPLINE",
+            "view": "YZ",
+            "station_m": 1.92,
+            "side": "port"
+          },
+          {
+            "instance": "37/40",
+            "handle": "40",
+            "source_kind": "SPLINE",
+            "view": "YZ",
+            "station_m": 1.92,
+            "side": "starboard"
+          },
+          {
+            "instance": "44/4C",
+            "handle": "4C",
+            "source_kind": "SPLINE",
+            "view": "YZ",
+            "station_m": 5.44,
+            "side": "port"
+          },
+          {
+            "instance": "44/4D",
+            "handle": "4D",
+            "source_kind": "SPLINE",
+            "view": "YZ",
+            "station_m": 5.44,
+            "side": "starboard"
+          },
+          {
+            "instance": "51/59",
+            "handle": "59",
+            "source_kind": "SPLINE",
+            "view": "YZ",
+            "station_m": 10.56,
+            "side": "port"
+          },
+          {
+            "instance": "51/5A",
+            "handle": "5A",
+            "source_kind": "SPLINE",
+            "view": "YZ",
+            "station_m": 10.56,
+            "side": "starboard"
+          },
+          {
+            "instance": "5E/66",
+            "handle": "66",
+            "source_kind": "SPLINE",
+            "view": "YZ",
+            "station_m": 16.32,
+            "side": "port"
+          },
+          {
+            "instance": "5E/67",
+            "handle": "67",
+            "source_kind": "SPLINE",
+            "view": "YZ",
+            "station_m": 16.32,
+            "side": "starboard"
+          },
+          {
+            "instance": "6B/73",
+            "handle": "73",
+            "source_kind": "SPLINE",
+            "view": "YZ",
+            "station_m": 22.4,
+            "side": "port"
+          },
+          {
+            "instance": "6B/74",
+            "handle": "74",
+            "source_kind": "SPLINE",
+            "view": "YZ",
+            "station_m": 22.4,
+            "side": "starboard"
+          },
+          {
+            "instance": "78/80",
+            "handle": "80",
+            "source_kind": "SPLINE",
+            "view": "YZ",
+            "station_m": 27.2,
+            "side": "port"
+          },
+          {
+            "instance": "78/81",
+            "handle": "81",
+            "source_kind": "SPLINE",
+            "view": "YZ",
+            "station_m": 27.2,
+            "side": "starboard"
+          },
+          {
+            "instance": "85/8D",
+            "handle": "8D",
+            "source_kind": "SPLINE",
+            "view": "YZ",
+            "station_m": 30.4,
+            "side": "port"
+          },
+          {
+            "instance": "85/8E",
+            "handle": "8E",
+            "source_kind": "SPLINE",
+            "view": "YZ",
+            "station_m": 30.4,
+            "side": "starboard"
+          },
+          {
+            "instance": "92/9A",
+            "handle": "9A",
+            "source_kind": "LWPOLYLINE",
+            "view": "XY",
+            "level_m": 0.9,
+            "side": "port"
+          },
+          {
+            "instance": "92/9B",
+            "handle": "9B",
+            "source_kind": "LWPOLYLINE",
+            "view": "XY",
+            "level_m": 0.9,
+            "side": "starboard"
+          },
+          {
+            "instance": "9F/A7",
+            "handle": "A7",
+            "source_kind": "LWPOLYLINE",
+            "view": "XY",
+            "level_m": 1.8,
+            "side": "port"
+          },
+          {
+            "instance": "9F/A8",
+            "handle": "A8",
+            "source_kind": "LWPOLYLINE",
+            "view": "XY",
+            "level_m": 1.8,
+            "side": "starboard"
+          },
+          {
+            "instance": "AC/B4",
+            "handle": "B4",
+            "source_kind": "LWPOLYLINE",
+            "view": "XY",
+            "level_m": 2.7,
+            "side": "port"
+          },
+          {
+            "instance": "AC/B5",
+            "handle": "B5",
+            "source_kind": "LWPOLYLINE",
+            "view": "XY",
+            "level_m": 2.7,
+            "side": "starboard"
+          }
+        ],
+        "controls": [
+          {
+            "instance": "37/3A",
+            "paper": [
+              50.0,
+              55.0
+            ],
+            "point": [
+              1.92,
+              -5.0,
+              0
+            ],
+            "frame": "37"
+          },
+          {
+            "instance": "37/3B",
+            "paper": [
+              80.0,
+              55.0
+            ],
+            "point": [
+              1.92,
+              5.0,
+              0
+            ],
+            "frame": "37"
+          },
+          {
+            "instance": "37/3C",
+            "paper": [
+              50.0,
+              70.0
+            ],
+            "point": [
+              1.92,
+              -5.0,
+              5.0
+            ],
+            "frame": "37"
+          },
+          {
+            "instance": "37/3D",
+            "paper": [
+              80.0,
+              70.0
+            ],
+            "point": [
+              1.92,
+              5.0,
+              5.0
+            ],
+            "frame": "37"
+          },
+          {
+            "instance": "37/3E",
+            "paper": [
+              67.1,
+              58.6
+            ],
+            "point": [
+              1.92,
+              0.7,
+              1.2
+            ],
+            "frame": "37"
+          },
+          {
+            "instance": "44/47",
+            "paper": [
+              115.0,
+              55.0
+            ],
+            "point": [
+              5.44,
+              -5.0,
+              0
+            ],
+            "frame": "44"
+          },
+          {
+            "instance": "44/48",
+            "paper": [
+              145.0,
+              55.0
+            ],
+            "point": [
+              5.44,
+              5.0,
+              0
+            ],
+            "frame": "44"
+          },
+          {
+            "instance": "44/49",
+            "paper": [
+              115.0,
+              70.0
+            ],
+            "point": [
+              5.44,
+              -5.0,
+              5.0
+            ],
+            "frame": "44"
+          },
+          {
+            "instance": "44/4A",
+            "paper": [
+              145.0,
+              70.0
+            ],
+            "point": [
+              5.44,
+              5.0,
+              5.0
+            ],
+            "frame": "44"
+          },
+          {
+            "instance": "44/4B",
+            "paper": [
+              132.1,
+              58.6
+            ],
+            "point": [
+              5.44,
+              0.7,
+              1.2
+            ],
+            "frame": "44"
+          },
+          {
+            "instance": "51/54",
+            "paper": [
+              180.0,
+              55.0
+            ],
+            "point": [
+              10.56,
+              -5.0,
+              0
+            ],
+            "frame": "51"
+          },
+          {
+            "instance": "51/55",
+            "paper": [
+              210.0,
+              55.0
+            ],
+            "point": [
+              10.56,
+              5.0,
+              0
+            ],
+            "frame": "51"
+          },
+          {
+            "instance": "51/56",
+            "paper": [
+              180.0,
+              70.0
+            ],
+            "point": [
+              10.56,
+              -5.0,
+              5.0
+            ],
+            "frame": "51"
+          },
+          {
+            "instance": "51/57",
+            "paper": [
+              210.0,
+              70.0
+            ],
+            "point": [
+              10.56,
+              5.0,
+              5.0
+            ],
+            "frame": "51"
+          },
+          {
+            "instance": "51/58",
+            "paper": [
+              197.1,
+              58.6
+            ],
+            "point": [
+              10.56,
+              0.7,
+              1.2
+            ],
+            "frame": "51"
+          },
+          {
+            "instance": "5E/61",
+            "paper": [
+              245.0,
+              55.0
+            ],
+            "point": [
+              16.32,
+              -5.0,
+              0
+            ],
+            "frame": "5E"
+          },
+          {
+            "instance": "5E/62",
+            "paper": [
+              275.0,
+              55.0
+            ],
+            "point": [
+              16.32,
+              5.0,
+              0
+            ],
+            "frame": "5E"
+          },
+          {
+            "instance": "5E/63",
+            "paper": [
+              245.0,
+              70.0
+            ],
+            "point": [
+              16.32,
+              -5.0,
+              5.0
+            ],
+            "frame": "5E"
+          },
+          {
+            "instance": "5E/64",
+            "paper": [
+              275.0,
+              70.0
+            ],
+            "point": [
+              16.32,
+              5.0,
+              5.0
+            ],
+            "frame": "5E"
+          },
+          {
+            "instance": "5E/65",
+            "paper": [
+              262.1,
+              58.6
+            ],
+            "point": [
+              16.32,
+              0.7,
+              1.2
+            ],
+            "frame": "5E"
+          },
+          {
+            "instance": "6B/6E",
+            "paper": [
+              310.0,
+              55.0
+            ],
+            "point": [
+              22.4,
+              -5.0,
+              0
+            ],
+            "frame": "6B"
+          },
+          {
+            "instance": "6B/6F",
+            "paper": [
+              340.0,
+              55.0
+            ],
+            "point": [
+              22.4,
+              5.0,
+              0
+            ],
+            "frame": "6B"
+          },
+          {
+            "instance": "6B/70",
+            "paper": [
+              310.0,
+              70.0
+            ],
+            "point": [
+              22.4,
+              -5.0,
+              5.0
+            ],
+            "frame": "6B"
+          },
+          {
+            "instance": "6B/71",
+            "paper": [
+              340.0,
+              70.0
+            ],
+            "point": [
+              22.4,
+              5.0,
+              5.0
+            ],
+            "frame": "6B"
+          },
+          {
+            "instance": "6B/72",
+            "paper": [
+              327.1,
+              58.6
+            ],
+            "point": [
+              22.4,
+              0.7,
+              1.2
+            ],
+            "frame": "6B"
+          },
+          {
+            "instance": "78/7B",
+            "paper": [
+              375.0,
+              55.0
+            ],
+            "point": [
+              27.2,
+              -5.0,
+              0
+            ],
+            "frame": "78"
+          },
+          {
+            "instance": "78/7C",
+            "paper": [
+              405.0,
+              55.0
+            ],
+            "point": [
+              27.2,
+              5.0,
+              0
+            ],
+            "frame": "78"
+          },
+          {
+            "instance": "78/7D",
+            "paper": [
+              375.0,
+              70.0
+            ],
+            "point": [
+              27.2,
+              -5.0,
+              5.0
+            ],
+            "frame": "78"
+          },
+          {
+            "instance": "78/7E",
+            "paper": [
+              405.0,
+              70.0
+            ],
+            "point": [
+              27.2,
+              5.0,
+              5.0
+            ],
+            "frame": "78"
+          },
+          {
+            "instance": "78/7F",
+            "paper": [
+              392.1,
+              58.6
+            ],
+            "point": [
+              27.2,
+              0.7,
+              1.2
+            ],
+            "frame": "78"
+          },
+          {
+            "instance": "85/88",
+            "paper": [
+              440.0,
+              55.0
+            ],
+            "point": [
+              30.4,
+              -5.0,
+              0
+            ],
+            "frame": "85"
+          },
+          {
+            "instance": "85/89",
+            "paper": [
+              470.0,
+              55.0
+            ],
+            "point": [
+              30.4,
+              5.0,
+              0
+            ],
+            "frame": "85"
+          },
+          {
+            "instance": "85/8A",
+            "paper": [
+              440.0,
+              70.0
+            ],
+            "point": [
+              30.4,
+              -5.0,
+              5.0
+            ],
+            "frame": "85"
+          },
+          {
+            "instance": "85/8B",
+            "paper": [
+              470.0,
+              70.0
+            ],
+            "point": [
+              30.4,
+              5.0,
+              5.0
+            ],
+            "frame": "85"
+          },
+          {
+            "instance": "85/8C",
+            "paper": [
+              457.1,
+              58.6
+            ],
+            "point": [
+              30.4,
+              0.7,
+              1.2
+            ],
+            "frame": "85"
+          },
+          {
+            "instance": "92/95",
+            "paper": [
+              0.0,
+              -77.0
+            ],
+            "point": [
+              0,
+              -6.0,
+              0.9
+            ],
+            "frame": "92"
+          },
+          {
+            "instance": "92/96",
+            "paper": [
+              64.0,
+              -77.0
+            ],
+            "point": [
+              32.0,
+              -6.0,
+              0.9
+            ],
+            "frame": "92"
+          },
+          {
+            "instance": "92/97",
+            "paper": [
+              0.0,
+              -53.0
+            ],
+            "point": [
+              0,
+              6.0,
+              0.9
+            ],
+            "frame": "92"
+          },
+          {
+            "instance": "92/98",
+            "paper": [
+              64.0,
+              -53.0
+            ],
+            "point": [
+              32.0,
+              6.0,
+              0.9
+            ],
+            "frame": "92"
+          },
+          {
+            "instance": "92/99",
+            "paper": [
+              24.32,
+              -64.4
+            ],
+            "point": [
+              12.16,
+              0.3,
+              0.9
+            ],
+            "frame": "92"
+          },
+          {
+            "instance": "9F/A2",
+            "paper": [
+              0.0,
+              -142.0
+            ],
+            "point": [
+              0,
+              -6.0,
+              1.8
+            ],
+            "frame": "9F"
+          },
+          {
+            "instance": "9F/A3",
+            "paper": [
+              64.0,
+              -142.0
+            ],
+            "point": [
+              32.0,
+              -6.0,
+              1.8
+            ],
+            "frame": "9F"
+          },
+          {
+            "instance": "9F/A4",
+            "paper": [
+              0.0,
+              -118.0
+            ],
+            "point": [
+              0,
+              6.0,
+              1.8
+            ],
+            "frame": "9F"
+          },
+          {
+            "instance": "9F/A5",
+            "paper": [
+              64.0,
+              -118.0
+            ],
+            "point": [
+              32.0,
+              6.0,
+              1.8
+            ],
+            "frame": "9F"
+          },
+          {
+            "instance": "9F/A6",
+            "paper": [
+              24.32,
+              -129.4
+            ],
+            "point": [
+              12.16,
+              0.3,
+              1.8
+            ],
+            "frame": "9F"
+          },
+          {
+            "instance": "AC/AF",
+            "paper": [
+              0.0,
+              -207.0
+            ],
+            "point": [
+              0,
+              -6.0,
+              2.7
+            ],
+            "frame": "AC"
+          },
+          {
+            "instance": "AC/B0",
+            "paper": [
+              64.0,
+              -207.0
+            ],
+            "point": [
+              32.0,
+              -6.0,
+              2.7
+            ],
+            "frame": "AC"
+          },
+          {
+            "instance": "AC/B1",
+            "paper": [
+              0.0,
+              -183.0
+            ],
+            "point": [
+              0,
+              6.0,
+              2.7
+            ],
+            "frame": "AC"
+          },
+          {
+            "instance": "AC/B2",
+            "paper": [
+              64.0,
+              -183.0
+            ],
+            "point": [
+              32.0,
+              6.0,
+              2.7
+            ],
+            "frame": "AC"
+          },
+          {
+            "instance": "AC/B3",
+            "paper": [
+              24.32,
+              -194.4
+            ],
+            "point": [
+              12.16,
+              0.3,
+              2.7
+            ],
+            "frame": "AC"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "B",
+    "files": [
+      {
+        "file": "offsets-port.dxf",
+        "sha256": "19ce734f3e06306dbcf0d73a8e85a9648b81a1925198391e62c4aa550d742204",
+        "cells": [
+          {
+            "station_m": 0.0,
+            "level_m": 0.74,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 1.96491976450799,
+            "handles": [
+              "56"
+            ],
+            "station_label": "ST 0 m",
+            "field_label": "WL 0.74 m"
+          },
+          {
+            "station_m": 0.0,
+            "level_m": 1.45,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.273521951219512,
+            "handles": [
+              "57"
+            ],
+            "station_label": "ST 0 m",
+            "field_label": "WL 1.45 m"
+          },
+          {
+            "station_m": 0.0,
+            "level_m": 2.3,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.571034482758621,
+            "handles": [
+              "58"
+            ],
+            "station_label": "ST 0 m",
+            "field_label": "WL 2.3 m"
+          },
+          {
+            "station_m": 2.585,
+            "level_m": 0.74,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.0631657527333895,
+            "handles": [
+              "59"
+            ],
+            "station_label": "ST 2.585 m",
+            "field_label": "WL 0.74 m"
+          },
+          {
+            "station_m": 2.585,
+            "level_m": 1.45,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.387198048780488,
+            "handles": [
+              "5A"
+            ],
+            "station_label": "ST 2.585 m",
+            "field_label": "WL 1.45 m"
+          },
+          {
+            "station_m": 2.585,
+            "level_m": 2.3,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.699586206896552,
+            "handles": [
+              "5B"
+            ],
+            "station_label": "ST 2.585 m",
+            "field_label": "WL 2.3 m"
+          },
+          {
+            "station_m": 5.875,
+            "level_m": 0.74,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.188206101383898,
+            "handles": [
+              "5C"
+            ],
+            "station_label": "ST 5.875 m",
+            "field_label": "WL 0.74 m"
+          },
+          {
+            "station_m": 5.875,
+            "level_m": 1.45,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.5318767184035478,
+            "handles": [
+              "5D"
+            ],
+            "station_label": "ST 5.875 m",
+            "field_label": "WL 1.45 m"
+          },
+          {
+            "station_m": 5.875,
+            "level_m": 2.3,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.8631974921630094,
+            "handles": [
+              "5E"
+            ],
+            "station_label": "ST 5.875 m",
+            "field_label": "WL 2.3 m"
+          },
+          {
+            "station_m": 9.4,
+            "level_m": 0.74,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.3221779035094428,
+            "handles": [
+              "5F"
+            ],
+            "station_label": "ST 9.4 m",
+            "field_label": "WL 0.74 m"
+          },
+          {
+            "station_m": 9.4,
+            "level_m": 1.45,
+            "side": "port",
+            "status": "conflict",
+            "value_m": null,
+            "handles": [
+              "60",
+              "61"
+            ],
+            "station_label": "ST 9.4 m",
+            "field_label": "WL 1.45 m"
+          },
+          {
+            "station_m": 9.4,
+            "level_m": 2.3,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 3.038495297805643,
+            "handles": [
+              "62"
+            ],
+            "station_label": "ST 9.4 m",
+            "field_label": "WL 2.3 m"
+          },
+          {
+            "station_m": 12.925,
+            "level_m": 0.74,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.4561497056349872,
+            "handles": [
+              "63"
+            ],
+            "station_label": "ST 12.925 m",
+            "field_label": "WL 0.74 m"
+          },
+          {
+            "station_m": 12.925,
+            "level_m": 1.45,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.84190243902439,
+            "handles": [
+              "64"
+            ],
+            "station_label": "ST 12.925 m",
+            "field_label": "WL 1.45 m"
+          },
+          {
+            "station_m": 12.925,
+            "level_m": 2.3,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 3.2137931034482756,
+            "handles": [
+              "65"
+            ],
+            "station_label": "ST 12.925 m",
+            "field_label": "WL 2.3 m"
+          },
+          {
+            "station_m": 15.98,
+            "level_m": 0.74,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.2517980501261565,
+            "handles": [
+              "66"
+            ],
+            "station_label": "ST 15.98 m",
+            "field_label": "WL 0.74 m"
+          },
+          {
+            "station_m": 15.98,
+            "level_m": 1.45,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.605456156097561,
+            "handles": [
+              "67"
+            ],
+            "station_label": "ST 15.98 m",
+            "field_label": "WL 1.45 m"
+          },
+          {
+            "station_m": 15.98,
+            "level_m": 2.3,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.9464055172413794,
+            "handles": [
+              "68"
+            ],
+            "station_label": "ST 15.98 m",
+            "field_label": "WL 2.3 m"
+          },
+          {
+            "station_m": 18.565,
+            "level_m": 0.74,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.0788851108494533,
+            "handles": [
+              "69"
+            ],
+            "station_label": "ST 18.565 m",
+            "field_label": "WL 0.74 m"
+          },
+          {
+            "station_m": 18.565,
+            "level_m": 1.45,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.4053862243902437,
+            "handles": [
+              "6A"
+            ],
+            "station_label": "ST 18.565 m",
+            "field_label": "WL 1.45 m"
+          },
+          {
+            "station_m": 18.565,
+            "level_m": 2.3,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.7201544827586206,
+            "handles": [
+              "6B"
+            ],
+            "station_label": "ST 18.565 m",
+            "field_label": "WL 2.3 m"
+          },
+          {
+            "station_m": 20.915,
+            "level_m": 0.74,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 1.134741164003364,
+            "handles": [
+              "6C"
+            ],
+            "station_label": "ST 20.915 m",
+            "field_label": "WL 0.74 m"
+          },
+          {
+            "station_m": 20.915,
+            "level_m": 1.45,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 1.312958926829268,
+            "handles": [
+              "6D"
+            ],
+            "station_label": "ST 20.915 m",
+            "field_label": "WL 1.45 m"
+          },
+          {
+            "station_m": 20.915,
+            "level_m": 2.3,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 1.4847724137931033,
+            "handles": [
+              "6E"
+            ],
+            "station_label": "ST 20.915 m",
+            "field_label": "WL 2.3 m"
+          },
+          {
+            "station_m": 22.794999999999998,
+            "level_m": 0.74,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 0.3094748629100086,
+            "handles": [
+              "6F"
+            ],
+            "station_label": "ST 22.795 m",
+            "field_label": "WL 0.74 m"
+          },
+          {
+            "station_m": 22.794999999999998,
+            "level_m": 1.45,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 0.3580797073170734,
+            "handles": [
+              "70"
+            ],
+            "station_label": "ST 22.795 m",
+            "field_label": "WL 1.45 m"
+          },
+          {
+            "station_m": 22.794999999999998,
+            "level_m": 2.3,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 0.40493793103448306,
+            "handles": [
+              "71"
+            ],
+            "station_label": "ST 22.795 m",
+            "field_label": "WL 2.3 m"
+          },
+          {
+            "station_m": 23.5,
+            "level_m": 0.74,
+            "side": "port",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "72"
+            ],
+            "station_label": "ST 23.5 m",
+            "field_label": "WL 0.74 m"
+          },
+          {
+            "station_m": 23.5,
+            "level_m": 1.45,
+            "side": "port",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "73"
+            ],
+            "station_label": "ST 23.5 m",
+            "field_label": "WL 1.45 m"
+          },
+          {
+            "station_m": 23.5,
+            "level_m": 2.3,
+            "side": "port",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "74"
+            ],
+            "station_label": "ST 23.5 m",
+            "field_label": "WL 2.3 m"
+          }
+        ],
+        "curves": [],
+        "controls": []
+      },
+      {
+        "file": "lines.dxf",
+        "sha256": "d0817f8d4c67c6ad34d56793b3efda5bde73d091f88577dd4cd134bcdfc8ac1b",
+        "cells": [],
+        "curves": [
+          {
+            "instance": "37/3F",
+            "handle": "3F",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 2.585,
+            "side": "port"
+          },
+          {
+            "instance": "37/40",
+            "handle": "40",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 2.585,
+            "side": "starboard"
+          },
+          {
+            "instance": "44/4C",
+            "handle": "4C",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 5.875,
+            "side": "port"
+          },
+          {
+            "instance": "44/4D",
+            "handle": "4D",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 5.875,
+            "side": "starboard"
+          },
+          {
+            "instance": "51/59",
+            "handle": "59",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 9.4,
+            "side": "port"
+          },
+          {
+            "instance": "51/5A",
+            "handle": "5A",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 9.4,
+            "side": "starboard"
+          },
+          {
+            "instance": "5E/66",
+            "handle": "66",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 12.925,
+            "side": "port"
+          },
+          {
+            "instance": "5E/67",
+            "handle": "67",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 12.925,
+            "side": "starboard"
+          },
+          {
+            "instance": "6B/73",
+            "handle": "73",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 15.98,
+            "side": "port"
+          },
+          {
+            "instance": "6B/74",
+            "handle": "74",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 15.98,
+            "side": "starboard"
+          },
+          {
+            "instance": "78/80",
+            "handle": "80",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 18.565,
+            "side": "port"
+          },
+          {
+            "instance": "78/81",
+            "handle": "81",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 18.565,
+            "side": "starboard"
+          },
+          {
+            "instance": "85/8D",
+            "handle": "8D",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 20.915,
+            "side": "port"
+          },
+          {
+            "instance": "85/8E",
+            "handle": "8E",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 20.915,
+            "side": "starboard"
+          },
+          {
+            "instance": "92/9A",
+            "handle": "9A",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 22.794999999999998,
+            "side": "port"
+          },
+          {
+            "instance": "92/9B",
+            "handle": "9B",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 22.794999999999998,
+            "side": "starboard"
+          },
+          {
+            "instance": "9F/A7",
+            "handle": "A7",
+            "source_kind": "LWPOLYLINE",
+            "view": "XY",
+            "level_m": 0.74,
+            "side": "port"
+          },
+          {
+            "instance": "9F/A8",
+            "handle": "A8",
+            "source_kind": "LWPOLYLINE",
+            "view": "XY",
+            "level_m": 0.74,
+            "side": "starboard"
+          },
+          {
+            "instance": "AC/B4",
+            "handle": "B4",
+            "source_kind": "LWPOLYLINE",
+            "view": "XY",
+            "level_m": 1.45,
+            "side": "port"
+          },
+          {
+            "instance": "AC/B5",
+            "handle": "B5",
+            "source_kind": "LWPOLYLINE",
+            "view": "XY",
+            "level_m": 1.45,
+            "side": "starboard"
+          },
+          {
+            "instance": "B9/C1",
+            "handle": "C1",
+            "source_kind": "LWPOLYLINE",
+            "view": "XY",
+            "level_m": 2.3,
+            "side": "port"
+          },
+          {
+            "instance": "B9/C2",
+            "handle": "C2",
+            "source_kind": "LWPOLYLINE",
+            "view": "XY",
+            "level_m": 2.3,
+            "side": "starboard"
+          }
+        ],
+        "controls": [
+          {
+            "instance": "37/3A",
+            "paper": [
+              50.0,
+              55.0
+            ],
+            "point": [
+              2.585,
+              -5.0,
+              0
+            ],
+            "frame": "37"
+          },
+          {
+            "instance": "37/3B",
+            "paper": [
+              80.0,
+              55.0
+            ],
+            "point": [
+              2.585,
+              5.0,
+              0
+            ],
+            "frame": "37"
+          },
+          {
+            "instance": "37/3C",
+            "paper": [
+              50.0,
+              70.0
+            ],
+            "point": [
+              2.585,
+              -5.0,
+              5.0
+            ],
+            "frame": "37"
+          },
+          {
+            "instance": "37/3D",
+            "paper": [
+              80.0,
+              70.0
+            ],
+            "point": [
+              2.585,
+              5.0,
+              5.0
+            ],
+            "frame": "37"
+          },
+          {
+            "instance": "37/3E",
+            "paper": [
+              67.1,
+              58.6
+            ],
+            "point": [
+              2.585,
+              0.7,
+              1.2
+            ],
+            "frame": "37"
+          },
+          {
+            "instance": "44/47",
+            "paper": [
+              115.0,
+              55.0
+            ],
+            "point": [
+              5.875,
+              -5.0,
+              0
+            ],
+            "frame": "44"
+          },
+          {
+            "instance": "44/48",
+            "paper": [
+              145.0,
+              55.0
+            ],
+            "point": [
+              5.875,
+              5.0,
+              0
+            ],
+            "frame": "44"
+          },
+          {
+            "instance": "44/49",
+            "paper": [
+              115.0,
+              70.0
+            ],
+            "point": [
+              5.875,
+              -5.0,
+              5.0
+            ],
+            "frame": "44"
+          },
+          {
+            "instance": "44/4A",
+            "paper": [
+              145.0,
+              70.0
+            ],
+            "point": [
+              5.875,
+              5.0,
+              5.0
+            ],
+            "frame": "44"
+          },
+          {
+            "instance": "44/4B",
+            "paper": [
+              132.1,
+              58.6
+            ],
+            "point": [
+              5.875,
+              0.7,
+              1.2
+            ],
+            "frame": "44"
+          },
+          {
+            "instance": "51/54",
+            "paper": [
+              180.0,
+              55.0
+            ],
+            "point": [
+              9.4,
+              -5.0,
+              0
+            ],
+            "frame": "51"
+          },
+          {
+            "instance": "51/55",
+            "paper": [
+              210.0,
+              55.0
+            ],
+            "point": [
+              9.4,
+              5.0,
+              0
+            ],
+            "frame": "51"
+          },
+          {
+            "instance": "51/56",
+            "paper": [
+              180.0,
+              70.0
+            ],
+            "point": [
+              9.4,
+              -5.0,
+              5.0
+            ],
+            "frame": "51"
+          },
+          {
+            "instance": "51/57",
+            "paper": [
+              210.0,
+              70.0
+            ],
+            "point": [
+              9.4,
+              5.0,
+              5.0
+            ],
+            "frame": "51"
+          },
+          {
+            "instance": "51/58",
+            "paper": [
+              197.1,
+              58.6
+            ],
+            "point": [
+              9.4,
+              0.7,
+              1.2
+            ],
+            "frame": "51"
+          },
+          {
+            "instance": "5E/61",
+            "paper": [
+              245.0,
+              55.0
+            ],
+            "point": [
+              12.925,
+              -5.0,
+              0
+            ],
+            "frame": "5E"
+          },
+          {
+            "instance": "5E/62",
+            "paper": [
+              275.0,
+              55.0
+            ],
+            "point": [
+              12.925,
+              5.0,
+              0
+            ],
+            "frame": "5E"
+          },
+          {
+            "instance": "5E/63",
+            "paper": [
+              245.0,
+              70.0
+            ],
+            "point": [
+              12.925,
+              -5.0,
+              5.0
+            ],
+            "frame": "5E"
+          },
+          {
+            "instance": "5E/64",
+            "paper": [
+              275.0,
+              70.0
+            ],
+            "point": [
+              12.925,
+              5.0,
+              5.0
+            ],
+            "frame": "5E"
+          },
+          {
+            "instance": "5E/65",
+            "paper": [
+              262.1,
+              58.6
+            ],
+            "point": [
+              12.925,
+              0.7,
+              1.2
+            ],
+            "frame": "5E"
+          },
+          {
+            "instance": "6B/6E",
+            "paper": [
+              310.0,
+              55.0
+            ],
+            "point": [
+              15.98,
+              -5.0,
+              0
+            ],
+            "frame": "6B"
+          },
+          {
+            "instance": "6B/6F",
+            "paper": [
+              340.0,
+              55.0
+            ],
+            "point": [
+              15.98,
+              5.0,
+              0
+            ],
+            "frame": "6B"
+          },
+          {
+            "instance": "6B/70",
+            "paper": [
+              310.0,
+              70.0
+            ],
+            "point": [
+              15.98,
+              -5.0,
+              5.0
+            ],
+            "frame": "6B"
+          },
+          {
+            "instance": "6B/71",
+            "paper": [
+              340.0,
+              70.0
+            ],
+            "point": [
+              15.98,
+              5.0,
+              5.0
+            ],
+            "frame": "6B"
+          },
+          {
+            "instance": "6B/72",
+            "paper": [
+              327.1,
+              58.6
+            ],
+            "point": [
+              15.98,
+              0.7,
+              1.2
+            ],
+            "frame": "6B"
+          },
+          {
+            "instance": "78/7B",
+            "paper": [
+              375.0,
+              55.0
+            ],
+            "point": [
+              18.565,
+              -5.0,
+              0
+            ],
+            "frame": "78"
+          },
+          {
+            "instance": "78/7C",
+            "paper": [
+              405.0,
+              55.0
+            ],
+            "point": [
+              18.565,
+              5.0,
+              0
+            ],
+            "frame": "78"
+          },
+          {
+            "instance": "78/7D",
+            "paper": [
+              375.0,
+              70.0
+            ],
+            "point": [
+              18.565,
+              -5.0,
+              5.0
+            ],
+            "frame": "78"
+          },
+          {
+            "instance": "78/7E",
+            "paper": [
+              405.0,
+              70.0
+            ],
+            "point": [
+              18.565,
+              5.0,
+              5.0
+            ],
+            "frame": "78"
+          },
+          {
+            "instance": "78/7F",
+            "paper": [
+              392.1,
+              58.6
+            ],
+            "point": [
+              18.565,
+              0.7,
+              1.2
+            ],
+            "frame": "78"
+          },
+          {
+            "instance": "85/88",
+            "paper": [
+              440.0,
+              55.0
+            ],
+            "point": [
+              20.915,
+              -5.0,
+              0
+            ],
+            "frame": "85"
+          },
+          {
+            "instance": "85/89",
+            "paper": [
+              470.0,
+              55.0
+            ],
+            "point": [
+              20.915,
+              5.0,
+              0
+            ],
+            "frame": "85"
+          },
+          {
+            "instance": "85/8A",
+            "paper": [
+              440.0,
+              70.0
+            ],
+            "point": [
+              20.915,
+              -5.0,
+              5.0
+            ],
+            "frame": "85"
+          },
+          {
+            "instance": "85/8B",
+            "paper": [
+              470.0,
+              70.0
+            ],
+            "point": [
+              20.915,
+              5.0,
+              5.0
+            ],
+            "frame": "85"
+          },
+          {
+            "instance": "85/8C",
+            "paper": [
+              457.1,
+              58.6
+            ],
+            "point": [
+              20.915,
+              0.7,
+              1.2
+            ],
+            "frame": "85"
+          },
+          {
+            "instance": "92/95",
+            "paper": [
+              505.0,
+              55.0
+            ],
+            "point": [
+              22.794999999999998,
+              -5.0,
+              0
+            ],
+            "frame": "92"
+          },
+          {
+            "instance": "92/96",
+            "paper": [
+              535.0,
+              55.0
+            ],
+            "point": [
+              22.794999999999998,
+              5.0,
+              0
+            ],
+            "frame": "92"
+          },
+          {
+            "instance": "92/97",
+            "paper": [
+              505.0,
+              70.0
+            ],
+            "point": [
+              22.794999999999998,
+              -5.0,
+              5.0
+            ],
+            "frame": "92"
+          },
+          {
+            "instance": "92/98",
+            "paper": [
+              535.0,
+              70.0
+            ],
+            "point": [
+              22.794999999999998,
+              5.0,
+              5.0
+            ],
+            "frame": "92"
+          },
+          {
+            "instance": "92/99",
+            "paper": [
+              522.1,
+              58.6
+            ],
+            "point": [
+              22.794999999999998,
+              0.7,
+              1.2
+            ],
+            "frame": "92"
+          },
+          {
+            "instance": "9F/A2",
+            "paper": [
+              0.0,
+              -77.0
+            ],
+            "point": [
+              0,
+              -6.0,
+              0.74
+            ],
+            "frame": "9F"
+          },
+          {
+            "instance": "9F/A3",
+            "paper": [
+              47.0,
+              -77.0
+            ],
+            "point": [
+              23.5,
+              -6.0,
+              0.74
+            ],
+            "frame": "9F"
+          },
+          {
+            "instance": "9F/A4",
+            "paper": [
+              0.0,
+              -53.0
+            ],
+            "point": [
+              0,
+              6.0,
+              0.74
+            ],
+            "frame": "9F"
+          },
+          {
+            "instance": "9F/A5",
+            "paper": [
+              47.0,
+              -53.0
+            ],
+            "point": [
+              23.5,
+              6.0,
+              0.74
+            ],
+            "frame": "9F"
+          },
+          {
+            "instance": "9F/A6",
+            "paper": [
+              17.86,
+              -64.4
+            ],
+            "point": [
+              8.93,
+              0.3,
+              0.74
+            ],
+            "frame": "9F"
+          },
+          {
+            "instance": "AC/AF",
+            "paper": [
+              0.0,
+              -142.0
+            ],
+            "point": [
+              0,
+              -6.0,
+              1.45
+            ],
+            "frame": "AC"
+          },
+          {
+            "instance": "AC/B0",
+            "paper": [
+              47.0,
+              -142.0
+            ],
+            "point": [
+              23.5,
+              -6.0,
+              1.45
+            ],
+            "frame": "AC"
+          },
+          {
+            "instance": "AC/B1",
+            "paper": [
+              0.0,
+              -118.0
+            ],
+            "point": [
+              0,
+              6.0,
+              1.45
+            ],
+            "frame": "AC"
+          },
+          {
+            "instance": "AC/B2",
+            "paper": [
+              47.0,
+              -118.0
+            ],
+            "point": [
+              23.5,
+              6.0,
+              1.45
+            ],
+            "frame": "AC"
+          },
+          {
+            "instance": "AC/B3",
+            "paper": [
+              17.86,
+              -129.4
+            ],
+            "point": [
+              8.93,
+              0.3,
+              1.45
+            ],
+            "frame": "AC"
+          },
+          {
+            "instance": "B9/BC",
+            "paper": [
+              0.0,
+              -207.0
+            ],
+            "point": [
+              0,
+              -6.0,
+              2.3
+            ],
+            "frame": "B9"
+          },
+          {
+            "instance": "B9/BD",
+            "paper": [
+              47.0,
+              -207.0
+            ],
+            "point": [
+              23.5,
+              -6.0,
+              2.3
+            ],
+            "frame": "B9"
+          },
+          {
+            "instance": "B9/BE",
+            "paper": [
+              0.0,
+              -183.0
+            ],
+            "point": [
+              0,
+              6.0,
+              2.3
+            ],
+            "frame": "B9"
+          },
+          {
+            "instance": "B9/BF",
+            "paper": [
+              47.0,
+              -183.0
+            ],
+            "point": [
+              23.5,
+              6.0,
+              2.3
+            ],
+            "frame": "B9"
+          },
+          {
+            "instance": "B9/C0",
+            "paper": [
+              17.86,
+              -194.4
+            ],
+            "point": [
+              8.93,
+              0.3,
+              2.3
+            ],
+            "frame": "B9"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "C",
+    "files": [
+      {
+        "file": "offsets-port.dxf",
+        "sha256": "9783f921cf3435485e3d9d84151e5443583bc2cc64d951dfec35372cd1dac58a",
+        "cells": [
+          {
+            "station_m": 0.0,
+            "level_m": 1.3,
+            "side": "port",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "5A"
+            ],
+            "station_label": "ST 0 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 0.0,
+            "level_m": 2.2,
+            "side": "port",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "5B"
+            ],
+            "station_label": "ST 0 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 0.0,
+            "level_m": 3.4,
+            "side": "port",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "5C"
+            ],
+            "station_label": "ST 0 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 1.0250000000000001,
+            "level_m": 1.3,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 0.3823381562637027,
+            "handles": [
+              "5D"
+            ],
+            "station_label": "ST 1.025 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 1.0250000000000001,
+            "level_m": 2.2,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 0.5252711170725455,
+            "handles": [
+              "5E"
+            ],
+            "station_label": "ST 1.025 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 1.0250000000000001,
+            "level_m": 3.4,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 0.6427071592979612,
+            "handles": [
+              "5F"
+            ],
+            "station_label": "ST 1.025 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 3.0749999999999997,
+            "level_m": 1.3,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 0.8925160090194543,
+            "handles": [
+              "60"
+            ],
+            "station_label": "ST 3.075 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 3.0749999999999997,
+            "level_m": 2.2,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 1.1908703730787473,
+            "handles": [
+              "61"
+            ],
+            "station_label": "ST 3.075 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 3.0749999999999997,
+            "level_m": 3.4,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 1.422826333322301,
+            "handles": [
+              "62"
+            ],
+            "station_label": "ST 3.075 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 6.1499999999999995,
+            "level_m": 1.3,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 1.5329355037625436,
+            "handles": [
+              "63"
+            ],
+            "station_label": "ST 6.15 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 6.1499999999999995,
+            "level_m": 2.2,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 1.993540793783209,
+            "handles": [
+              "64"
+            ],
+            "station_label": "ST 6.15 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 6.1499999999999995,
+            "level_m": 3.4,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.381076264118864,
+            "handles": [
+              "65"
+            ],
+            "station_label": "ST 6.15 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 11.889999999999999,
+            "level_m": 1.3,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.334241484164801,
+            "handles": [
+              "66"
+            ],
+            "station_label": "ST 11.89 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 11.889999999999999,
+            "level_m": 2.2,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 3.0490992836894812,
+            "handles": [
+              "67"
+            ],
+            "station_label": "ST 11.89 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 11.889999999999999,
+            "level_m": 3.4,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 3.740773749377459,
+            "handles": [
+              "68"
+            ],
+            "station_label": "ST 11.89 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 18.86,
+            "level_m": 1.3,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.735087686807031,
+            "handles": [
+              "69"
+            ],
+            "station_label": "ST 18.86 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 18.86,
+            "level_m": 2.2,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 3.5664749965796037,
+            "handles": [
+              "6A"
+            ],
+            "station_label": "ST 18.86 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 18.86,
+            "level_m": 3.4,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 4.366250239212935,
+            "handles": [
+              "6B"
+            ],
+            "station_label": "ST 18.86 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 25.419999999999998,
+            "level_m": 1.3,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.524101327848027,
+            "handles": [
+              "6C"
+            ],
+            "station_label": "ST 25.42 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 25.419999999999998,
+            "level_m": 2.2,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 3.268444710220201,
+            "handles": [
+              "6D"
+            ],
+            "station_label": "ST 25.42 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 25.419999999999998,
+            "level_m": 3.4,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 3.9648954697758074,
+            "handles": [
+              "6E"
+            ],
+            "station_label": "ST 25.42 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 31.16,
+            "level_m": 1.3,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 1.9621027432633846,
+            "handles": [
+              "6F"
+            ],
+            "station_label": "ST 31.16 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 31.16,
+            "level_m": 2.2,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.5002952138175125,
+            "handles": [
+              "70"
+            ],
+            "station_label": "ST 31.16 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 31.16,
+            "level_m": 3.4,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 3.0011990846628454,
+            "handles": [
+              "71"
+            ],
+            "station_label": "ST 31.16 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 35.26,
+            "level_m": 1.3,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 1.5341586590886056,
+            "handles": [
+              "72"
+            ],
+            "station_label": "ST 35.26 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 35.26,
+            "level_m": 2.2,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 1.732718087641744,
+            "handles": [
+              "73"
+            ],
+            "station_label": "ST 35.26 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 35.26,
+            "level_m": 3.4,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 2.051368358557823,
+            "handles": [
+              "74"
+            ],
+            "station_label": "ST 35.26 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 37.925000000000004,
+            "level_m": 1.3,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 0.8705862508974185,
+            "handles": [
+              "75"
+            ],
+            "station_label": "ST 37.925 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 37.925000000000004,
+            "level_m": 2.2,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 1.0905802824805335,
+            "handles": [
+              "76"
+            ],
+            "station_label": "ST 37.925 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 37.925000000000004,
+            "level_m": 3.4,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 1.2984563984512993,
+            "handles": [
+              "77"
+            ],
+            "station_label": "ST 37.925 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 39.769999999999996,
+            "level_m": 1.3,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 0.36668526326447454,
+            "handles": [
+              "78"
+            ],
+            "station_label": "ST 39.77 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 39.769999999999996,
+            "level_m": 2.2,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 0.5400136916096302,
+            "handles": [
+              "79"
+            ],
+            "station_label": "ST 39.77 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 39.769999999999996,
+            "level_m": 3.4,
+            "side": "port",
+            "status": "numeric",
+            "value_m": 0.6647959219484109,
+            "handles": [
+              "7A"
+            ],
+            "station_label": "ST 39.77 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 41.0,
+            "level_m": 1.3,
+            "side": "port",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "7B"
+            ],
+            "station_label": "ST 41 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 41.0,
+            "level_m": 2.2,
+            "side": "port",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "7C"
+            ],
+            "station_label": "ST 41 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 41.0,
+            "level_m": 3.4,
+            "side": "port",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "7D"
+            ],
+            "station_label": "ST 41 m",
+            "field_label": "WL 3.4 m"
+          }
+        ],
+        "curves": [],
+        "controls": []
+      },
+      {
+        "file": "offsets-starboard.dxf",
+        "sha256": "ce7c4e6409aa628061375e3e572d735ad2e731383ae73dca41f64d9261fd7ee2",
+        "cells": [
+          {
+            "station_m": 0.0,
+            "level_m": 1.3,
+            "side": "starboard",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "5A"
+            ],
+            "station_label": "ST 0 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 0.0,
+            "level_m": 2.2,
+            "side": "starboard",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "5B"
+            ],
+            "station_label": "ST 0 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 0.0,
+            "level_m": 3.4,
+            "side": "starboard",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "5C"
+            ],
+            "station_label": "ST 0 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 1.0250000000000001,
+            "level_m": 1.3,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 0.3677344000572966,
+            "handles": [
+              "5D"
+            ],
+            "station_label": "ST 1.025 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 1.0250000000000001,
+            "level_m": 2.2,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 0.49976562546085795,
+            "handles": [
+              "5E"
+            ],
+            "station_label": "ST 1.025 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 1.0250000000000001,
+            "level_m": 3.4,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 0.6021344967255206,
+            "handles": [
+              "5F"
+            ],
+            "station_label": "ST 1.025 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 3.0749999999999997,
+            "level_m": 1.3,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 0.814655444928454,
+            "handles": [
+              "60"
+            ],
+            "station_label": "ST 3.075 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 3.0749999999999997,
+            "level_m": 2.2,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 1.0594857014216033,
+            "handles": [
+              "61"
+            ],
+            "station_label": "ST 3.075 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 3.0749999999999997,
+            "level_m": 3.4,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 1.2174125305747905,
+            "handles": [
+              "62"
+            ],
+            "station_label": "ST 3.075 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 6.1499999999999995,
+            "level_m": 1.3,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 1.3698518596935254,
+            "handles": [
+              "63"
+            ],
+            "station_label": "ST 6.15 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 6.1499999999999995,
+            "level_m": 2.2,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 1.7299641850756928,
+            "handles": [
+              "64"
+            ],
+            "station_label": "ST 6.15 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 6.1499999999999995,
+            "level_m": 3.4,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 1.9784846277477945,
+            "handles": [
+              "65"
+            ],
+            "station_label": "ST 6.15 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 11.889999999999999,
+            "level_m": 1.3,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 2.1062080690350693,
+            "handles": [
+              "66"
+            ],
+            "station_label": "ST 11.89 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 11.889999999999999,
+            "level_m": 2.2,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 2.6848121948263235,
+            "handles": [
+              "67"
+            ],
+            "station_label": "ST 11.89 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 11.889999999999999,
+            "level_m": 3.4,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 3.1879561535074727,
+            "handles": [
+              "68"
+            ],
+            "station_label": "ST 11.89 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 18.86,
+            "level_m": 1.3,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 2.508286437644862,
+            "handles": [
+              "69"
+            ],
+            "station_label": "ST 18.86 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 18.86,
+            "level_m": 2.2,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 3.204009464282585,
+            "handles": [
+              "6A"
+            ],
+            "station_label": "ST 18.86 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 18.86,
+            "level_m": 3.4,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 3.816036227328175,
+            "handles": [
+              "6B"
+            ],
+            "station_label": "ST 18.86 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 25.419999999999998,
+            "level_m": 1.3,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 2.467254102511429,
+            "handles": [
+              "6C"
+            ],
+            "station_label": "ST 25.42 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 25.419999999999998,
+            "level_m": 2.2,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 3.1776445946119822,
+            "handles": [
+              "6D"
+            ],
+            "station_label": "ST 25.42 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 25.419999999999998,
+            "level_m": 3.4,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 3.8271171447265657,
+            "handles": [
+              "6E"
+            ],
+            "station_label": "ST 25.42 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 31.16,
+            "level_m": 1.3,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 2.0500721360926573,
+            "handles": [
+              "6F"
+            ],
+            "station_label": "ST 31.16 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 31.16,
+            "level_m": 2.2,
+            "side": "starboard",
+            "status": "blank_unknown",
+            "value_m": null,
+            "handles": [],
+            "station_label": "ST 31.16 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 31.16,
+            "level_m": 3.4,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 3.214006554640917,
+            "handles": [
+              "70"
+            ],
+            "station_label": "ST 31.16 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 35.26,
+            "level_m": 1.3,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 1.6442312369740328,
+            "handles": [
+              "71"
+            ],
+            "station_label": "ST 35.26 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 35.26,
+            "level_m": 2.2,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 1.9119644525330328,
+            "handles": [
+              "72"
+            ],
+            "station_label": "ST 35.26 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 35.26,
+            "level_m": 3.4,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 2.32622699828725,
+            "handles": [
+              "73"
+            ],
+            "station_label": "ST 35.26 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 37.925000000000004,
+            "level_m": 1.3,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 0.9422209328017626,
+            "handles": [
+              "74"
+            ],
+            "station_label": "ST 37.925 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 37.925000000000004,
+            "level_m": 2.2,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 1.2183029977556632,
+            "handles": [
+              "75"
+            ],
+            "station_label": "ST 37.925 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 37.925000000000004,
+            "level_m": 3.4,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 1.5035678003452873,
+            "handles": [
+              "76"
+            ],
+            "station_label": "ST 37.925 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 39.769999999999996,
+            "level_m": 1.3,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 0.39973260393680543,
+            "handles": [
+              "77"
+            ],
+            "station_label": "ST 39.77 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 39.769999999999996,
+            "level_m": 2.2,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 0.6052242986589021,
+            "handles": [
+              "78"
+            ],
+            "station_label": "ST 39.77 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 39.769999999999996,
+            "level_m": 3.4,
+            "side": "starboard",
+            "status": "numeric",
+            "value_m": 0.7741475089991847,
+            "handles": [
+              "79"
+            ],
+            "station_label": "ST 39.77 m",
+            "field_label": "WL 3.4 m"
+          },
+          {
+            "station_m": 41.0,
+            "level_m": 1.3,
+            "side": "starboard",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "7A"
+            ],
+            "station_label": "ST 41 m",
+            "field_label": "WL 1.3 m"
+          },
+          {
+            "station_m": 41.0,
+            "level_m": 2.2,
+            "side": "starboard",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "7B"
+            ],
+            "station_label": "ST 41 m",
+            "field_label": "WL 2.2 m"
+          },
+          {
+            "station_m": 41.0,
+            "level_m": 3.4,
+            "side": "starboard",
+            "status": "zero",
+            "value_m": 0.0,
+            "handles": [
+              "7C"
+            ],
+            "station_label": "ST 41 m",
+            "field_label": "WL 3.4 m"
+          }
+        ],
+        "curves": [],
+        "controls": []
+      },
+      {
+        "file": "lines.dxf",
+        "sha256": "88cf98cbc3f58c676f794e061408a7ab40544fa1e7152e0cba28c43c2f1b236b",
+        "cells": [],
+        "curves": [
+          {
+            "instance": "37/3F",
+            "handle": "3F",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 1.0250000000000001,
+            "side": "port"
+          },
+          {
+            "instance": "37/40",
+            "handle": "40",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 1.0250000000000001,
+            "side": "starboard"
+          },
+          {
+            "instance": "44/4C",
+            "handle": "4C",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 3.0749999999999997,
+            "side": "port"
+          },
+          {
+            "instance": "44/4D",
+            "handle": "4D",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 3.0749999999999997,
+            "side": "starboard"
+          },
+          {
+            "instance": "51/59",
+            "handle": "59",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 6.1499999999999995,
+            "side": "port"
+          },
+          {
+            "instance": "51/5A",
+            "handle": "5A",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 6.1499999999999995,
+            "side": "starboard"
+          },
+          {
+            "instance": "5E/66",
+            "handle": "66",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 11.889999999999999,
+            "side": "port"
+          },
+          {
+            "instance": "5E/67",
+            "handle": "67",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 11.889999999999999,
+            "side": "starboard"
+          },
+          {
+            "instance": "6B/73",
+            "handle": "73",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 18.86,
+            "side": "port"
+          },
+          {
+            "instance": "6B/74",
+            "handle": "74",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 18.86,
+            "side": "starboard"
+          },
+          {
+            "instance": "78/80",
+            "handle": "80",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 25.419999999999998,
+            "side": "port"
+          },
+          {
+            "instance": "78/81",
+            "handle": "81",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 25.419999999999998,
+            "side": "starboard"
+          },
+          {
+            "instance": "85/8D",
+            "handle": "8D",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 31.16,
+            "side": "port"
+          },
+          {
+            "instance": "85/8E",
+            "handle": "8E",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 31.16,
+            "side": "starboard"
+          },
+          {
+            "instance": "92/9A",
+            "handle": "9A",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 35.26,
+            "side": "port"
+          },
+          {
+            "instance": "92/9B",
+            "handle": "9B",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 35.26,
+            "side": "starboard"
+          },
+          {
+            "instance": "9F/A7",
+            "handle": "A7",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 37.925000000000004,
+            "side": "port"
+          },
+          {
+            "instance": "9F/A8",
+            "handle": "A8",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 37.925000000000004,
+            "side": "starboard"
+          },
+          {
+            "instance": "AC/B4",
+            "handle": "B4",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 39.769999999999996,
+            "side": "port"
+          },
+          {
+            "instance": "AC/B5",
+            "handle": "B5",
+            "source_kind": "LWPOLYLINE",
+            "view": "YZ",
+            "station_m": 39.769999999999996,
+            "side": "starboard"
+          },
+          {
+            "instance": "B9/C1",
+            "handle": "C1",
+            "source_kind": "LWPOLYLINE",
+            "view": "XY",
+            "level_m": 1.3,
+            "side": "port"
+          },
+          {
+            "instance": "B9/C2",
+            "handle": "C2",
+            "source_kind": "LWPOLYLINE",
+            "view": "XY",
+            "level_m": 1.3,
+            "side": "starboard"
+          },
+          {
+            "instance": "C6/CE",
+            "handle": "CE",
+            "source_kind": "LWPOLYLINE",
+            "view": "XY",
+            "level_m": 2.2,
+            "side": "port"
+          },
+          {
+            "instance": "C6/CF",
+            "handle": "CF",
+            "source_kind": "LWPOLYLINE",
+            "view": "XY",
+            "level_m": 2.2,
+            "side": "starboard"
+          },
+          {
+            "instance": "D3/DB",
+            "handle": "DB",
+            "source_kind": "LWPOLYLINE",
+            "view": "XY",
+            "level_m": 3.4,
+            "side": "port"
+          },
+          {
+            "instance": "D3/DC",
+            "handle": "DC",
+            "source_kind": "LWPOLYLINE",
+            "view": "XY",
+            "level_m": 3.4,
+            "side": "starboard"
+          }
+        ],
+        "controls": [
+          {
+            "instance": "37/3A",
+            "paper": [
+              50.0,
+              55.0
+            ],
+            "point": [
+              1.0250000000000001,
+              -5.0,
+              0
+            ],
+            "frame": "37"
+          },
+          {
+            "instance": "37/3B",
+            "paper": [
+              80.0,
+              55.0
+            ],
+            "point": [
+              1.0250000000000001,
+              5.0,
+              0
+            ],
+            "frame": "37"
+          },
+          {
+            "instance": "37/3C",
+            "paper": [
+              50.0,
+              70.0
+            ],
+            "point": [
+              1.0250000000000001,
+              -5.0,
+              5.0
+            ],
+            "frame": "37"
+          },
+          {
+            "instance": "37/3D",
+            "paper": [
+              80.0,
+              70.0
+            ],
+            "point": [
+              1.0250000000000001,
+              5.0,
+              5.0
+            ],
+            "frame": "37"
+          },
+          {
+            "instance": "37/3E",
+            "paper": [
+              67.1,
+              58.6
+            ],
+            "point": [
+              1.0250000000000001,
+              0.7,
+              1.2
+            ],
+            "frame": "37"
+          },
+          {
+            "instance": "44/47",
+            "paper": [
+              115.0,
+              55.0
+            ],
+            "point": [
+              3.0749999999999997,
+              -5.0,
+              0
+            ],
+            "frame": "44"
+          },
+          {
+            "instance": "44/48",
+            "paper": [
+              145.0,
+              55.0
+            ],
+            "point": [
+              3.0749999999999997,
+              5.0,
+              0
+            ],
+            "frame": "44"
+          },
+          {
+            "instance": "44/49",
+            "paper": [
+              115.0,
+              70.0
+            ],
+            "point": [
+              3.0749999999999997,
+              -5.0,
+              5.0
+            ],
+            "frame": "44"
+          },
+          {
+            "instance": "44/4A",
+            "paper": [
+              145.0,
+              70.0
+            ],
+            "point": [
+              3.0749999999999997,
+              5.0,
+              5.0
+            ],
+            "frame": "44"
+          },
+          {
+            "instance": "44/4B",
+            "paper": [
+              132.1,
+              58.6
+            ],
+            "point": [
+              3.0749999999999997,
+              0.7,
+              1.2
+            ],
+            "frame": "44"
+          },
+          {
+            "instance": "51/54",
+            "paper": [
+              180.0,
+              55.0
+            ],
+            "point": [
+              6.1499999999999995,
+              -5.0,
+              0
+            ],
+            "frame": "51"
+          },
+          {
+            "instance": "51/55",
+            "paper": [
+              210.0,
+              55.0
+            ],
+            "point": [
+              6.1499999999999995,
+              5.0,
+              0
+            ],
+            "frame": "51"
+          },
+          {
+            "instance": "51/56",
+            "paper": [
+              180.0,
+              70.0
+            ],
+            "point": [
+              6.1499999999999995,
+              -5.0,
+              5.0
+            ],
+            "frame": "51"
+          },
+          {
+            "instance": "51/57",
+            "paper": [
+              210.0,
+              70.0
+            ],
+            "point": [
+              6.1499999999999995,
+              5.0,
+              5.0
+            ],
+            "frame": "51"
+          },
+          {
+            "instance": "51/58",
+            "paper": [
+              197.1,
+              58.6
+            ],
+            "point": [
+              6.1499999999999995,
+              0.7,
+              1.2
+            ],
+            "frame": "51"
+          },
+          {
+            "instance": "5E/61",
+            "paper": [
+              245.0,
+              55.0
+            ],
+            "point": [
+              11.889999999999999,
+              -5.0,
+              0
+            ],
+            "frame": "5E"
+          },
+          {
+            "instance": "5E/62",
+            "paper": [
+              275.0,
+              55.0
+            ],
+            "point": [
+              11.889999999999999,
+              5.0,
+              0
+            ],
+            "frame": "5E"
+          },
+          {
+            "instance": "5E/63",
+            "paper": [
+              245.0,
+              70.0
+            ],
+            "point": [
+              11.889999999999999,
+              -5.0,
+              5.0
+            ],
+            "frame": "5E"
+          },
+          {
+            "instance": "5E/64",
+            "paper": [
+              275.0,
+              70.0
+            ],
+            "point": [
+              11.889999999999999,
+              5.0,
+              5.0
+            ],
+            "frame": "5E"
+          },
+          {
+            "instance": "5E/65",
+            "paper": [
+              262.1,
+              58.6
+            ],
+            "point": [
+              11.889999999999999,
+              0.7,
+              1.2
+            ],
+            "frame": "5E"
+          },
+          {
+            "instance": "6B/6E",
+            "paper": [
+              310.0,
+              55.0
+            ],
+            "point": [
+              18.86,
+              -5.0,
+              0
+            ],
+            "frame": "6B"
+          },
+          {
+            "instance": "6B/6F",
+            "paper": [
+              340.0,
+              55.0
+            ],
+            "point": [
+              18.86,
+              5.0,
+              0
+            ],
+            "frame": "6B"
+          },
+          {
+            "instance": "6B/70",
+            "paper": [
+              310.0,
+              70.0
+            ],
+            "point": [
+              18.86,
+              -5.0,
+              5.0
+            ],
+            "frame": "6B"
+          },
+          {
+            "instance": "6B/71",
+            "paper": [
+              340.0,
+              70.0
+            ],
+            "point": [
+              18.86,
+              5.0,
+              5.0
+            ],
+            "frame": "6B"
+          },
+          {
+            "instance": "6B/72",
+            "paper": [
+              327.1,
+              58.6
+            ],
+            "point": [
+              18.86,
+              0.7,
+              1.2
+            ],
+            "frame": "6B"
+          },
+          {
+            "instance": "78/7B",
+            "paper": [
+              375.0,
+              55.0
+            ],
+            "point": [
+              25.419999999999998,
+              -5.0,
+              0
+            ],
+            "frame": "78"
+          },
+          {
+            "instance": "78/7C",
+            "paper": [
+              405.0,
+              55.0
+            ],
+            "point": [
+              25.419999999999998,
+              5.0,
+              0
+            ],
+            "frame": "78"
+          },
+          {
+            "instance": "78/7D",
+            "paper": [
+              375.0,
+              70.0
+            ],
+            "point": [
+              25.419999999999998,
+              -5.0,
+              5.0
+            ],
+            "frame": "78"
+          },
+          {
+            "instance": "78/7E",
+            "paper": [
+              405.0,
+              70.0
+            ],
+            "point": [
+              25.419999999999998,
+              5.0,
+              5.0
+            ],
+            "frame": "78"
+          },
+          {
+            "instance": "78/7F",
+            "paper": [
+              392.1,
+              58.6
+            ],
+            "point": [
+              25.419999999999998,
+              0.7,
+              1.2
+            ],
+            "frame": "78"
+          },
+          {
+            "instance": "85/88",
+            "paper": [
+              440.0,
+              55.0
+            ],
+            "point": [
+              31.16,
+              -5.0,
+              0
+            ],
+            "frame": "85"
+          },
+          {
+            "instance": "85/89",
+            "paper": [
+              470.0,
+              55.0
+            ],
+            "point": [
+              31.16,
+              5.0,
+              0
+            ],
+            "frame": "85"
+          },
+          {
+            "instance": "85/8A",
+            "paper": [
+              440.0,
+              70.0
+            ],
+            "point": [
+              31.16,
+              -5.0,
+              5.0
+            ],
+            "frame": "85"
+          },
+          {
+            "instance": "85/8B",
+            "paper": [
+              470.0,
+              70.0
+            ],
+            "point": [
+              31.16,
+              5.0,
+              5.0
+            ],
+            "frame": "85"
+          },
+          {
+            "instance": "85/8C",
+            "paper": [
+              457.1,
+              58.6
+            ],
+            "point": [
+              31.16,
+              0.7,
+              1.2
+            ],
+            "frame": "85"
+          },
+          {
+            "instance": "92/95",
+            "paper": [
+              505.0,
+              55.0
+            ],
+            "point": [
+              35.26,
+              -5.0,
+              0
+            ],
+            "frame": "92"
+          },
+          {
+            "instance": "92/96",
+            "paper": [
+              535.0,
+              55.0
+            ],
+            "point": [
+              35.26,
+              5.0,
+              0
+            ],
+            "frame": "92"
+          },
+          {
+            "instance": "92/97",
+            "paper": [
+              505.0,
+              70.0
+            ],
+            "point": [
+              35.26,
+              -5.0,
+              5.0
+            ],
+            "frame": "92"
+          },
+          {
+            "instance": "92/98",
+            "paper": [
+              535.0,
+              70.0
+            ],
+            "point": [
+              35.26,
+              5.0,
+              5.0
+            ],
+            "frame": "92"
+          },
+          {
+            "instance": "92/99",
+            "paper": [
+              522.1,
+              58.6
+            ],
+            "point": [
+              35.26,
+              0.7,
+              1.2
+            ],
+            "frame": "92"
+          },
+          {
+            "instance": "9F/A2",
+            "paper": [
+              570.0,
+              55.0
+            ],
+            "point": [
+              37.925000000000004,
+              -5.0,
+              0
+            ],
+            "frame": "9F"
+          },
+          {
+            "instance": "9F/A3",
+            "paper": [
+              600.0,
+              55.0
+            ],
+            "point": [
+              37.925000000000004,
+              5.0,
+              0
+            ],
+            "frame": "9F"
+          },
+          {
+            "instance": "9F/A4",
+            "paper": [
+              570.0,
+              70.0
+            ],
+            "point": [
+              37.925000000000004,
+              -5.0,
+              5.0
+            ],
+            "frame": "9F"
+          },
+          {
+            "instance": "9F/A5",
+            "paper": [
+              600.0,
+              70.0
+            ],
+            "point": [
+              37.925000000000004,
+              5.0,
+              5.0
+            ],
+            "frame": "9F"
+          },
+          {
+            "instance": "9F/A6",
+            "paper": [
+              587.1,
+              58.6
+            ],
+            "point": [
+              37.925000000000004,
+              0.7,
+              1.2
+            ],
+            "frame": "9F"
+          },
+          {
+            "instance": "AC/AF",
+            "paper": [
+              635.0,
+              55.0
+            ],
+            "point": [
+              39.769999999999996,
+              -5.0,
+              0
+            ],
+            "frame": "AC"
+          },
+          {
+            "instance": "AC/B0",
+            "paper": [
+              665.0,
+              55.0
+            ],
+            "point": [
+              39.769999999999996,
+              5.0,
+              0
+            ],
+            "frame": "AC"
+          },
+          {
+            "instance": "AC/B1",
+            "paper": [
+              635.0,
+              70.0
+            ],
+            "point": [
+              39.769999999999996,
+              -5.0,
+              5.0
+            ],
+            "frame": "AC"
+          },
+          {
+            "instance": "AC/B2",
+            "paper": [
+              665.0,
+              70.0
+            ],
+            "point": [
+              39.769999999999996,
+              5.0,
+              5.0
+            ],
+            "frame": "AC"
+          },
+          {
+            "instance": "AC/B3",
+            "paper": [
+              652.1,
+              58.6
+            ],
+            "point": [
+              39.769999999999996,
+              0.7,
+              1.2
+            ],
+            "frame": "AC"
+          },
+          {
+            "instance": "B9/BC",
+            "paper": [
+              0.0,
+              -77.0
+            ],
+            "point": [
+              0,
+              -6.0,
+              1.3
+            ],
+            "frame": "B9"
+          },
+          {
+            "instance": "B9/BD",
+            "paper": [
+              82.0,
+              -77.0
+            ],
+            "point": [
+              41.0,
+              -6.0,
+              1.3
+            ],
+            "frame": "B9"
+          },
+          {
+            "instance": "B9/BE",
+            "paper": [
+              0.0,
+              -53.0
+            ],
+            "point": [
+              0,
+              6.0,
+              1.3
+            ],
+            "frame": "B9"
+          },
+          {
+            "instance": "B9/BF",
+            "paper": [
+              82.0,
+              -53.0
+            ],
+            "point": [
+              41.0,
+              6.0,
+              1.3
+            ],
+            "frame": "B9"
+          },
+          {
+            "instance": "B9/C0",
+            "paper": [
+              31.16,
+              -64.4
+            ],
+            "point": [
+              15.58,
+              0.3,
+              1.3
+            ],
+            "frame": "B9"
+          },
+          {
+            "instance": "C6/C9",
+            "paper": [
+              0.0,
+              -142.0
+            ],
+            "point": [
+              0,
+              -6.0,
+              2.2
+            ],
+            "frame": "C6"
+          },
+          {
+            "instance": "C6/CA",
+            "paper": [
+              82.0,
+              -142.0
+            ],
+            "point": [
+              41.0,
+              -6.0,
+              2.2
+            ],
+            "frame": "C6"
+          },
+          {
+            "instance": "C6/CB",
+            "paper": [
+              0.0,
+              -118.0
+            ],
+            "point": [
+              0,
+              6.0,
+              2.2
+            ],
+            "frame": "C6"
+          },
+          {
+            "instance": "C6/CC",
+            "paper": [
+              82.0,
+              -118.0
+            ],
+            "point": [
+              41.0,
+              6.0,
+              2.2
+            ],
+            "frame": "C6"
+          },
+          {
+            "instance": "C6/CD",
+            "paper": [
+              31.16,
+              -129.4
+            ],
+            "point": [
+              15.58,
+              0.3,
+              2.2
+            ],
+            "frame": "C6"
+          },
+          {
+            "instance": "D3/D6",
+            "paper": [
+              0.0,
+              -207.0
+            ],
+            "point": [
+              0,
+              -6.0,
+              3.4
+            ],
+            "frame": "D3"
+          },
+          {
+            "instance": "D3/D7",
+            "paper": [
+              82.0,
+              -207.0
+            ],
+            "point": [
+              41.0,
+              -6.0,
+              3.4
+            ],
+            "frame": "D3"
+          },
+          {
+            "instance": "D3/D8",
+            "paper": [
+              0.0,
+              -183.0
+            ],
+            "point": [
+              0,
+              6.0,
+              3.4
+            ],
+            "frame": "D3"
+          },
+          {
+            "instance": "D3/D9",
+            "paper": [
+              82.0,
+              -183.0
+            ],
+            "point": [
+              41.0,
+              6.0,
+              3.4
+            ],
+            "frame": "D3"
+          },
+          {
+            "instance": "D3/DA",
+            "paper": [
+              31.16,
+              -194.4
+            ],
+            "point": [
+              15.58,
+              0.3,
+              3.4
+            ],
+            "frame": "D3"
+          }
+        ]
+      }
+    ]
+  }
+]

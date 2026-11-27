@@ -1,0 +1,26 @@
+[
+  {
+    "case": "A",
+    "test_of_scoring_only": true,
+    "correct_oracle_accept": true,
+    "biased_oracle_reject": true,
+    "incomplete_reject": true,
+    "all_as_expected": true
+  },
+  {
+    "case": "B",
+    "test_of_scoring_only": true,
+    "correct_oracle_accept": true,
+    "biased_oracle_reject": true,
+    "incomplete_reject": true,
+    "all_as_expected": true
+  },
+  {
+    "case": "C",
+    "test_of_scoring_only": true,
+    "correct_oracle_accept": true,
+    "biased_oracle_reject": true,
+    "incomplete_reject": true,
+    "all_as_expected": true
+  }
+]

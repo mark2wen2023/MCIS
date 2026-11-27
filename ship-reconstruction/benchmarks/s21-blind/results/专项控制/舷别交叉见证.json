@@ -1,0 +1,65 @@
+[
+  {
+    "case": "negative_port_sign",
+    "want": -1,
+    "observed": -1,
+    "candidates_retained": 2,
+    "passed": true
+  },
+  {
+    "case": "only_one",
+    "want": null,
+    "observed": null,
+    "candidates_retained": 2,
+    "passed": true
+  },
+  {
+    "case": "unrelated",
+    "want": null,
+    "observed": null,
+    "candidates_retained": 2,
+    "passed": true
+  },
+  {
+    "case": "conflict",
+    "want": null,
+    "observed": null,
+    "candidates_retained": 2,
+    "passed": true
+  },
+  {
+    "case": "unrepeatable_pair",
+    "want": null,
+    "observed": null,
+    "candidates_retained": 2,
+    "passed": true
+  },
+  {
+    "case": "off_trace",
+    "want": null,
+    "observed": null,
+    "candidates_retained": 2,
+    "passed": true
+  },
+  {
+    "case": "out_of_bounds",
+    "want": null,
+    "observed": null,
+    "candidates_retained": 2,
+    "passed": true
+  },
+  {
+    "case": "centerline",
+    "want": null,
+    "observed": null,
+    "candidates_retained": 2,
+    "passed": true
+  },
+  {
+    "case": "repeated_names",
+    "want": null,
+    "observed": null,
+    "candidates_retained": 2,
+    "passed": true
+  }
+]

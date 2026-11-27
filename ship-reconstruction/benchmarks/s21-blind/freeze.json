@@ -1,0 +1,19 @@
+{
+  "forms.py": "0c6390a4e8f7f565e424b4e9a281b324f9305fe3c2a7f24e65881c68af041000",
+  "build.py": "bc833681ebc328e57968085ec347bf2e05b84016fbeded8ecb89090e47db198c",
+  "analytic.py": "f9b1ac1432af7ff5b4c9522222ae32d351d622dbac1991c546303b3bcc702284",
+  "score.py": "8d169542050362d6c29b71c1c04b78a327c8bb85408f97f00c22ef2721b943f8",
+  "criteria.md": "ff14f3a5fa979673b137d5b07b342389f6dc222057d30dd7b229a0cc53091b13",
+  "casebook/inputs/A/lines.dxf": "14d2a7cd1518beb83187f02aaf624eb58e977e048f50ad36960b0fcc7b9d6c04",
+  "casebook/inputs/A/offsets-port.dxf": "b03ccebdea68909abad9df26f8c77f76b4caba3b5530b66fe97ff3f68971f1d4",
+  "casebook/inputs/B/lines.dxf": "d0817f8d4c67c6ad34d56793b3efda5bde73d091f88577dd4cd134bcdfc8ac1b",
+  "casebook/inputs/B/offsets-port.dxf": "19ce734f3e06306dbcf0d73a8e85a9648b81a1925198391e62c4aa550d742204",
+  "casebook/inputs/C/lines.dxf": "88cf98cbc3f58c676f794e061408a7ab40544fa1e7152e0cba28c43c2f1b236b",
+  "casebook/inputs/C/offsets-port.dxf": "9783f921cf3435485e3d9d84151e5443583bc2cc64d951dfec35372cd1dac58a",
+  "casebook/inputs/C/offsets-starboard.dxf": "ce7c4e6409aa628061375e3e572d735ad2e731383ae73dca41f64d9261fd7ee2",
+  "casebook/geometry-truth.json": "b00df708995946372e0207f396be6aef8f06bf22b46df65cd599d8a22d06807d",
+  "casebook/source-truth.json": "a32304069b1a30ed7400ad9b6a14ac2bed61261affa38ea7cf3eb9a37657d1e7",
+  "casebook/areas.csv": "8dde141116a9c60741ec66dc4274fb32e3a37b9337ea0787c35e51cd2fbcbc1d",
+  "casebook/holdout.csv": "4479ae4ad217cc740118acb1c8affaf6cffde26dfa537dbeab333eefbc28b4de",
+  "casebook/hydro.csv": "574669bc06f36cc809f64c1ba216be9b2ea30f14697a6ac33030af60d0481d28"
+}

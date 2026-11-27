@@ -1,0 +1,118 @@
+{
+  "commit": "0cfbcb74ae7749e83a02baccab4ec68d71b134a4",
+  "workload": "3 independently generated cases, registered before target code",
+  "platform": "macOS-27.2.1-arm64-arm-64bit-Mach-O",
+  "python": "3.13.2",
+  "results": [
+    {
+      "case": "A",
+      "commit": "0cfbcb74ae7749e83a02baccab4ec68d71b134a4",
+      "exit_code": 0,
+      "wall_s": 0.5947857910068706,
+      "output": true,
+      "all_checks_pass": true,
+      "metrics": {
+        "研究门禁": [
+          1,
+          1
+        ],
+        "原件指纹": [
+          2,
+          2
+        ],
+        "有证型值": [
+          27,
+          27
+        ],
+        "原生曲线实体": [
+          20,
+          20
+        ],
+        "船轴定值与舷别": [
+          20,
+          20
+        ],
+        "控制点回投": [
+          50,
+          50
+        ]
+      }
+    },
+    {
+      "case": "B",
+      "commit": "0cfbcb74ae7749e83a02baccab4ec68d71b134a4",
+      "exit_code": 0,
+      "wall_s": 0.6306614579516463,
+      "output": true,
+      "all_checks_pass": true,
+      "metrics": {
+        "研究门禁": [
+          1,
+          1
+        ],
+        "原件指纹": [
+          2,
+          2
+        ],
+        "有证型值": [
+          29,
+          29
+        ],
+        "缺证保留": [
+          1,
+          1
+        ],
+        "原生曲线实体": [
+          22,
+          22
+        ],
+        "船轴定值与舷别": [
+          22,
+          22
+        ],
+        "控制点回投": [
+          55,
+          55
+        ]
+      }
+    },
+    {
+      "case": "C",
+      "commit": "0cfbcb74ae7749e83a02baccab4ec68d71b134a4",
+      "exit_code": 0,
+      "wall_s": 0.6951371249742806,
+      "output": true,
+      "all_checks_pass": true,
+      "metrics": {
+        "研究门禁": [
+          1,
+          1
+        ],
+        "原件指纹": [
+          3,
+          3
+        ],
+        "有证型值": [
+          71,
+          71
+        ],
+        "缺证保留": [
+          1,
+          1
+        ],
+        "原生曲线实体": [
+          26,
+          26
+        ],
+        "船轴定值与舷别": [
+          26,
+          26
+        ],
+        "控制点回投": [
+          65,
+          65
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "decisions": {
+    "passed": 53,
+    "indeterminate_unit_across_layouts": 1
+  },
+  "cell_totals": {
+    "cell_found": [
+      407,
+      407
+    ],
+    "status_ok": [
+      407,
+      407
+    ],
+    "si_ok": [
+      392,
+      407
+    ],
+    "handle_ok": [
+      403,
+      403
+    ],
+    "wcs_ok": [
+      388,
+      388
+    ]
+  },
+  "numeric_si": [
+    378,
+    393
+  ],
+  "unknown_preserved": [
+    14,
+    14
+  ],
+  "curve_parameter_equivalence": [
+    10,
+    10
+  ],
+  "registration_decisions": [
+    12,
+    12
+  ],
+  "max_matrix_error_m": 5.820766091346741e-11,
+  "max_leave_one_out_error_m": 3.197240723838366e-11,
+  "max_leave_one_out_report_disagreement_m": 6.328605217428017e-14,
+  "all_gates_closed": true
+}
