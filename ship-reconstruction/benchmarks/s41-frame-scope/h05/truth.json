@@ -1,0 +1,11 @@
+{
+  "note": "2F",
+  "rule": "30",
+  "explicit": [
+    12,
+    14,
+    16
+  ],
+  "ranges": [],
+  "placements": 0
+}
