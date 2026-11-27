@@ -173,8 +173,9 @@ def wait_ready(proc: subprocess.Popen, timeout: float, logs: list[str]) -> str:
     raise SystemExit(f"timeout waiting for host ready\n{buf}")
 
 
-def http_json(url: str) -> dict:
-    with urllib.request.urlopen(url, timeout=15) as resp:
+def http_json(url: str, headers: dict | None = None) -> dict:
+    req = urllib.request.Request(url, headers=headers or {})
+    with urllib.request.urlopen(req, timeout=15) as resp:
         return json.loads(resp.read().decode("utf-8"))
 
 
@@ -237,7 +238,7 @@ def main() -> int:
     parser.add_argument("--report", type=Path, required=True)
     parser.add_argument("--worktree", type=Path, default=DEFAULT_WORKTREE)
     parser.add_argument("--browser", type=Path, default=Path(CHROME))
-    parser.add_argument("--port", type=int, default=18783)
+    parser.add_argument("--port", type=int, default=18784)
     parser.add_argument("--core-dir", type=Path, default=Path("/workspace/mcis-w41-core-out"))
     parser.add_argument("--dotnet", default=os.path.expanduser("~/.dotnet/dotnet"))
     parser.add_argument("--git-dir", type=Path, default=Path("/workspace/maritime-sim-design"))
@@ -301,69 +302,7 @@ def main() -> int:
                 args=["--no-proxy-server"],
             )
             try:
-                # Session 1: unauthorized synthetic role context
-                denied_ctx = browser.new_context(
-                    viewport={"width": 1280, "height": 900},
-                    device_scale_factor=1,
-                    service_workers="block",
-                    extra_http_headers={ROLE_HEADER: ROLE_DENIED},
-                )
-                denied_ctx.route("**/*", lambda r: loopback_only(r, args.port))
-                denied_captures: list[dict] = []
-
-                def on_denied_response(resp):
-                    if urlsplit(resp.url).path == "/assembly/api/view":
-                        denied_captures.append({
-                            "url": resp.url, "status": resp.status,
-                            "body": resp.json(),
-                        })
-
-                denied_page = denied_ctx.new_page()
-                denied_page.on("response", on_denied_response)
-                denied_page.set_default_timeout(20000)
-                access_before_denied = http_json(origin + "/assembly/api/custody-counts")
-                denied_page.goto(origin + "/assembly/", wait_until="domcontentloaded")
-                expect(denied_page.locator('[data-testid="w12-rtr-assembly"]')).to_have_attribute("data-ok", "false")
-                expect(denied_page.locator('[data-testid="w12-rtr-assembly"]')).to_have_attribute("data-status", "403")
-                denied_text = denied_page.locator('[data-testid="denied-analysis"]').inner_text()
-                lowered = denied_text.lower()
-                if "policy" not in lowered or "deny" not in lowered or "403" not in denied_text or "metricsreturned=false" not in lowered:
-                    raise SystemExit(f"denied view incomplete: {denied_text!r}")
-                if denied_page.locator("canvas").count() != 0:
-                    raise SystemExit("denied view has a chart")
-                if denied_page.locator('[data-testid="registered-identities"]').count() != 0:
-                    raise SystemExit("denied view leaked evidence identity")
-                if denied_page.locator('[data-testid="registered-metric-table"]').count() != 0:
-                    raise SystemExit("denied view leaked metric table")
-                for exp in EXPECTED.values():
-                    for val in exp.values():
-                        if f"{val:.6f}" in denied_text:
-                            raise SystemExit(f"denied view leaked metric {val}")
-                access_after_denied = http_json(origin + "/assembly/api/custody-counts")
-                if access_after_denied["access"] != access_before_denied["access"]:
-                    raise SystemExit(f"unauthorized Access increased: {access_before_denied} -> {access_after_denied}")
-                if not denied_captures:
-                    raise SystemExit("no browser view request captured for denied session")
-                cap = denied_captures[0]
-                body = cap["body"]
-                if cap["status"] != 403 or body.get("ok") is not False:
-                    raise SystemExit(f"denied raw request unexpected: {cap}")
-                if body.get("view") is not None or body.get("registeredIdentities") or body.get("currentAnalysis") is not None:
-                    raise SystemExit(f"denied response contained snapshot or identity: {body}")
-                if "1.070062" in json.dumps(body) or "sourceSha256" in json.dumps(body):
-                    raise SystemExit("denied response leaked metrics or evidence hashes")
-                denied_page.screenshot(path=str(shots / "denied-fullpage.png"), full_page=True)
-                write_json(official / "denied-request.json", {
-                    "session": "synthetic-denied-reader",
-                    "roleContextKind": "synthetic-test-server-role",
-                    "notRealAuthentication": True,
-                    "accessBefore": access_before_denied,
-                    "accessAfter": access_after_denied,
-                    "raw": cap,
-                })
-                denied_ctx.close()
-
-                # Session 2: independent authorized synthetic role context
+                # Session 1: authorized synthetic context — must call frozen _load_registered_pair.
                 auth_ctx = browser.new_context(
                     viewport={"width": 1280, "height": 900},
                     device_scale_factor=1,
@@ -383,7 +322,7 @@ def main() -> int:
                 auth_page = auth_ctx.new_page()
                 auth_page.on("response", on_auth_response)
                 auth_page.set_default_timeout(30000)
-                access_before_auth = http_json(origin + "/assembly/api/custody-counts")
+                access_before_auth = http_json(origin + "/assembly/api/custody-counts", {ROLE_HEADER: ROLE_AUTHORIZED})
                 auth_page.goto(origin + "/assembly/", wait_until="domcontentloaded")
                 expect(auth_page.locator('[data-testid="w12-rtr-assembly"]')).to_have_attribute("data-ok", "true")
                 expect(auth_page.locator('[data-testid="w12-rtr-assembly"]')).to_have_attribute("data-status", "200")
@@ -396,9 +335,12 @@ def main() -> int:
                     raise SystemExit(f"authorized raw request unexpected: {acap}")
                 if "denied" in abody or "unpaired" in abody or abody.get("view") is None:
                     raise SystemExit("authorized response is not a single authorized view")
+                policy_ok = abody.get("policyResult") or {}
+                if policy_ok.get("called") is not True or policy_ok.get("entry") != "_load_registered_pair" or policy_ok.get("outcome") != "allowed":
+                    raise SystemExit(f"authorized request did not report frozen-entry allow: {policy_ok}")
                 if abody.get("deltaAccess") != 2:
                     raise SystemExit(f"authorized request did not add exactly 2 Access: {abody.get('deltaAccess')} {abody.get('accessBefore')} -> {abody.get('accessAfter')}")
-                access_after_auth = http_json(origin + "/assembly/api/custody-counts")
+                access_after_auth = http_json(origin + "/assembly/api/custody-counts", {ROLE_HEADER: ROLE_AUTHORIZED})
                 if access_after_auth["access"] - access_before_auth["access"] != 2:
                     raise SystemExit(f"authorized Access delta is not 2: {access_before_auth} -> {access_after_auth}")
                 if access_after_auth["access"] != abody["accessAfter"]["access"]:
@@ -446,7 +388,7 @@ def main() -> int:
                 auth_page.wait_for_timeout(300)
                 auth_page.mouse.move(box["x"] + box["width"] * 0.7, box["y"] + box["height"] * 0.5)
                 auth_page.wait_for_timeout(300)
-                after_hover = http_json(origin + "/assembly/api/custody-counts")
+                after_hover = http_json(origin + "/assembly/api/custody-counts", {ROLE_HEADER: ROLE_AUTHORIZED})
                 if after_hover["access"] != access_after_auth["access"]:
                     raise SystemExit(f"hover reread originals: {access_after_auth} -> {after_hover}")
 
@@ -461,6 +403,7 @@ def main() -> int:
                     "accessBefore": access_before_auth,
                     "accessAfter": access_after_auth,
                     "hoverAccess": after_hover,
+                    "policyResult": policy_ok,
                     "raw": {
                         "url": acap["url"],
                         "status": acap["status"],
@@ -474,9 +417,86 @@ def main() -> int:
                         "hasView": abody.get("view") is not None,
                         "hasDeniedFixture": "denied" in abody,
                         "hasUnpairedFixture": "unpaired" in abody,
+                        "policyResult": policy_ok,
                     },
                 })
                 auth_ctx.close()
+
+                # Session 2: brand-new browser session, independent synthetic deny context.
+                denied_ctx = browser.new_context(
+                    viewport={"width": 1280, "height": 900},
+                    device_scale_factor=1,
+                    service_workers="block",
+                    extra_http_headers={ROLE_HEADER: ROLE_DENIED},
+                )
+                denied_ctx.route("**/*", lambda r: loopback_only(r, args.port))
+                denied_captures: list[dict] = []
+
+                def on_denied_response(resp):
+                    if urlsplit(resp.url).path == "/assembly/api/view":
+                        denied_captures.append({
+                            "url": resp.url, "status": resp.status,
+                            "body": resp.json(),
+                        })
+
+                denied_page = denied_ctx.new_page()
+                denied_page.on("response", on_denied_response)
+                denied_page.set_default_timeout(20000)
+                access_before_denied = http_json(origin + "/assembly/api/custody-counts", {ROLE_HEADER: ROLE_DENIED})
+                denied_page.goto(origin + "/assembly/", wait_until="domcontentloaded")
+                expect(denied_page.locator('[data-testid="w12-rtr-assembly"]')).to_have_attribute("data-ok", "false")
+                expect(denied_page.locator('[data-testid="w12-rtr-assembly"]')).to_have_attribute("data-status", "403")
+                denied_text = denied_page.locator('[data-testid="denied-analysis"]').inner_text()
+                lowered = denied_text.lower()
+                if "policy" not in lowered or "deny" not in lowered or "403" not in denied_text or "metricsreturned=false" not in lowered:
+                    raise SystemExit(f"denied view incomplete: {denied_text!r}")
+                if denied_page.locator("canvas").count() != 0:
+                    raise SystemExit("denied view has a chart")
+                if denied_page.locator('[data-testid="registered-identities"]').count() != 0:
+                    raise SystemExit("denied view leaked evidence identity")
+                if denied_page.locator('[data-testid="registered-metric-table"]').count() != 0:
+                    raise SystemExit("denied view leaked metric table")
+                for exp in EXPECTED.values():
+                    for val in exp.values():
+                        if f"{val:.6f}" in denied_text:
+                            raise SystemExit(f"denied view leaked metric {val}")
+                access_after_denied = http_json(origin + "/assembly/api/custody-counts", {ROLE_HEADER: ROLE_DENIED})
+                if access_after_denied["access"] != access_before_denied["access"]:
+                    raise SystemExit(f"unauthorized Access increased: {access_before_denied} -> {access_after_denied}")
+                if access_after_denied["access"] != 0 or access_before_denied["access"] != 0:
+                    raise SystemExit(f"independent deny context Access was not 0->0: {access_before_denied} -> {access_after_denied}")
+                if not denied_captures:
+                    raise SystemExit("no browser view request captured for denied session")
+                cap = denied_captures[0]
+                body = cap["body"]
+                if cap["status"] != 403 or body.get("ok") is not False:
+                    raise SystemExit(f"denied raw request unexpected: {cap}")
+                if body.get("view") is not None or body.get("registeredIdentities") or body.get("currentAnalysis") is not None:
+                    raise SystemExit(f"denied response contained snapshot or identity: {body}")
+                dumped = json.dumps(body)
+                if "1.070062" in dumped or "sourceSha256" in dumped:
+                    raise SystemExit("denied response leaked metrics or evidence hashes")
+                policy_deny = body.get("policyResult") or {}
+                if policy_deny.get("called") is not True or policy_deny.get("entry") != "_load_registered_pair":
+                    raise SystemExit(f"deny path did not call frozen entry: {policy_deny}")
+                if policy_deny.get("outcome") != "evidence-policy-deny" or policy_deny.get("statusCode") != 403:
+                    raise SystemExit(f"deny path was not evidence-policy 403: {policy_deny}")
+                detail = policy_deny.get("detail") or {}
+                if not isinstance(detail, dict) or detail.get("code") != "FORBIDDEN":
+                    raise SystemExit(f"deny path missing FORBIDDEN policy detail: {policy_deny}")
+                denied_page.screenshot(path=str(shots / "denied-fullpage.png"), full_page=True)
+                write_json(official / "denied-request.json", {
+                    "session": "synthetic-denied-reader",
+                    "roleContextKind": "synthetic-test-server-role",
+                    "notRealAuthentication": True,
+                    "independentContext": True,
+                    "accessBefore": access_before_denied,
+                    "accessAfter": access_after_denied,
+                    "policyResult": policy_deny,
+                    "raw": cap,
+                })
+                denied_ctx.close()
+
             finally:
                 browser.close()
 

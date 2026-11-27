@@ -1,4 +1,4 @@
-"""Request-time authorized snapshot assembly. Pins stay on the server."""
+"""Request-time snapshot assembly via frozen _load_registered_pair. Pins stay on the server."""
 from __future__ import annotations
 
 import json
@@ -102,3 +102,75 @@ def assemble_authorized_view(
         "accessAfter": after,
         "deltaAccess": delta,
     }
+
+
+POLICY_DENY_SEED = "e80a49a set_deny_evidence: Investigator evidence_meta=Deny"
+
+
+def seed_synthetic_deny_policy(world: FrozenWorld, case_id: str) -> None:
+    """Reuse the e80a49a synthetic deny seed. Do not invent a new matrix."""
+    world.set_deny_evidence(case_id)
+
+
+def _http_detail(exc: BaseException) -> object:
+    return getattr(exc, "detail", None)
+
+
+def is_expected_evidence_policy_deny(world: FrozenWorld, exc: BaseException) -> bool:
+    """True only for the frozen evidence-policy 403 FORBIDDEN, not other failures."""
+    if not isinstance(exc, world.HTTPException):
+        return False
+    if getattr(exc, "status_code", None) != 403:
+        return False
+    detail = _http_detail(exc)
+    if isinstance(detail, dict):
+        return detail.get("code") == "FORBIDDEN"
+    return False
+
+
+def policy_result_from_exc(*, called: bool, exc: BaseException | None = None, outcome: str) -> dict[str, Any]:
+    detail = _http_detail(exc) if exc is not None else None
+    return {
+        "entry": "_load_registered_pair",
+        "called": called,
+        "outcome": outcome,
+        "seed": POLICY_DENY_SEED,
+        "exceptionType": type(exc).__name__ if exc is not None else None,
+        "statusCode": getattr(exc, "status_code", None) if exc is not None else None,
+        "detail": detail,
+    }
+
+
+def attempt_policy_denied_load(
+    world: FrozenWorld,
+    *,
+    case_id: str,
+    pins: list[dict[str, str]],
+) -> dict[str, Any]:
+    """Call the same frozen entry in this request. Map only expected policy deny to 403."""
+    before = world.counts(case_id)
+    try:
+        world.load_pair(case_id, pins, "Synthetic request-time policy-deny snapshot")
+    except Exception as exc:
+        after = world.counts(case_id)
+        if not is_expected_evidence_policy_deny(world, exc):
+            # Do not swallow unexpected failures as 403.
+            raise
+        if after["access"] != before["access"]:
+            raise RuntimeError(f"deny path recorded Access: {before} -> {after}") from exc
+        return {
+            "ok": False,
+            "reason": "policy-deny:403",
+            "metricsReturned": False,
+            "currentAnalysis": None,
+            "view": None,
+            "registeredIdentities": None,
+            "accessBefore": before,
+            "accessAfter": after,
+            "deltaAccess": 0,
+            "policyResult": policy_result_from_exc(called=True, exc=exc, outcome="evidence-policy-deny"),
+        }
+    after = world.counts(case_id)
+    raise RuntimeError(
+        f"deny-seeded context unexpectedly loaded the pair; access {before} -> {after}"
+    )
