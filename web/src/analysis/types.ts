@@ -137,6 +137,32 @@ export interface AnalysisCase {
   /** Test-assembly only. Absent on the live /analysis entry; never inferred from sample spacing. */
   declaredOpenGaps?: DeclaredOpenGap[]
   speedSeries?: VesselSpeedSeries[]
+  /** Explicit origin of chart metrics. Absent means the historical default caption is kept. Placeholders must never be labeled as core. */
+  metricProvenance?: MetricProvenance
+  registeredIdentities?: RegisteredIdentity[]
+  gapWiring?: GapWiringStatus
+}
+
+export type MetricOrigin = 'mcis-core' | 'assembly-placeholder' | 'geometric' | 'unavailable' | 'registered-track'
+
+export interface MetricProvenance {
+  distance: MetricOrigin
+  dcpa: MetricOrigin
+  tcpa: MetricOrigin
+  note?: string
+}
+
+export interface RegisteredIdentity {
+  vesselId: string
+  previewDigest: string
+  sourceSha256: string
+  reportSha256: string
+  pointCount?: number
+}
+
+export interface GapWiringStatus {
+  status: 'wired' | 'unwired'
+  reason: string
 }
 
 export interface AnalysisCaseListItem { caseId: string; key: string; title: string; isFictionalDemo: boolean; sourceLabel: string; hasWhatIf: boolean }

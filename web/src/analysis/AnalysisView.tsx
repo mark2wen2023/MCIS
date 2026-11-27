@@ -2,7 +2,7 @@
 import { useMemo, type KeyboardEvent } from 'react'
 import { EChart } from '../components/EChart'
 import { Panel } from '../components/Panel'
-import { BASELINE, curveOption, fmtM, fmtMoment, fmtNm, pickSeries, sensitivitySpan, shortSha, speedOption, trackOption, vesselName, verdictTone } from './derive'
+import { BASELINE, curveOption, fmtM, fmtMoment, fmtNm, metricCaption, pickSeries, provenanceLines, sensitivitySpan, shortSha, speedOption, trackOption, vesselName, verdictTone } from './derive'
 import type { AnalysisCase, AnalysisCaseListItem } from './types'
 
 export interface AnalysisViewProps {
@@ -45,7 +45,7 @@ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, se
       <div className="page-head">
         <div>
           <div className="page-title">碰撞量化分析 · DCPA/TCPA 与距离曲线 · 关键时刻 {badge}</div>
-          <div className="page-sub">两船距离 D(t)、DCPA(t)、TCPA(t) 由 mcis-core cpa 计算；What-if 对比、临界标注与天线敏感性来自 W14.2 输出。时间均为北京时间（UTC+8）。</div>
+          <div className="page-sub" data-testid="metric-caption">{metricCaption(data)}</div>
         </div>
         <div className="page-actions">
           <span className="p6-seg" data-testid="case-switcher">
@@ -76,9 +76,28 @@ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, se
               </span>
             ))}
           </div>
-          {charts ? <EChart option={curve} height={300} testId="curve-chart" /> : <div className="an-chart-placeholder" data-points={picked.series.length} />}
-          {charts && speed ? <div data-testid="speed-panel"><EChart option={speed} height={190} testId="speed-chart" /><div className="p6-note">船速（kn）：只按该船已声明的开区间断段，不改写对照船。</div></div> : null}
+          {charts ? <EChart option={curve} height={300} /> : <div className="an-chart-placeholder" data-points={picked.series.length} />}
+          {charts && speed ? <div data-testid="speed-panel"><EChart option={speed} height={190} /><div className="p6-note">船速（kn）：只按该船已声明的开区间断段，不改写对照船。</div></div> : null}
           <div className="p6-note" data-testid="series-label"><b>{picked.label}</b>{sel === BASELINE ? '' : ` · ${w?.curveNote ?? ''}`}</div>
+          {data.metricProvenance ? (
+            <div className="p6-note" data-testid="metric-provenance">
+              {provenanceLines(data.metricProvenance).map((line) => <div key={line}>{line}</div>)}
+              {data.metricProvenance.note ? <div>{data.metricProvenance.note}</div> : null}
+            </div>
+          ) : null}
+          {data.registeredIdentities?.length ? (
+            <div className="p6-note" data-testid="registered-identities">
+              已登记回执与输入身份：
+              {data.registeredIdentities.map((id) => (
+                <div key={id.vesselId} className="mono">
+                  {id.vesselId} previewDigest={id.previewDigest} sourceSha256={id.sourceSha256} reportSha256={id.reportSha256}
+                </div>
+              ))}
+            </div>
+          ) : null}
+          {data.gapWiring ? (
+            <div className="p6-note" data-testid="gap-wiring">缺口元数据：{data.gapWiring.status === 'wired' ? '已接' : '未接'}。{data.gapWiring.reason}</div>
+          ) : null}
         </Panel>
 
         <Panel title="关键时刻" meta={<span>{picked.moments.length} 项</span>}>
@@ -92,7 +111,7 @@ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, se
               ))}
             </tbody>
           </table>
-          {trackRow && charts && track && <EChart option={track} height={190} testId="track-chart" />}
+          {trackRow && charts && track && <EChart option={track} height={190} />}
           {trackRow && <div className="p6-note">航迹图：W14 情景 {trackRow.id}（东/北 m，碰撞情景截至接触）</div>}
           {!w && <div className="p6-note" data-testid="no-whatif">{data.notes[0]}</div>}
         </Panel>
@@ -170,7 +189,10 @@ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, se
           </tbody>
         </table>
         <div className="p6-note">
-          曲线：mcis-core {data.meta.coreVersion}。{w && <>W14 数值与复测留档 {data.meta.crossCheck.against.join('、')} 逐项比对 {data.meta.crossCheck.valuesCompared} 个值，
+          {data.metricProvenance
+            ? <>图区数值来源见上方区分，不以装配占位冒称核心。核心版本仅在来源为 mcis-core 时有效：{data.meta.coreVersion}。</>
+            : <>曲线：mcis-core {data.meta.coreVersion}。</>}
+          {w && <>W14 数值与复测留档 {data.meta.crossCheck.against.join('、')} 逐项比对 {data.meta.crossCheck.valuesCompared} 个值，
           最大偏差 {data.meta.crossCheck.maxAbsDiff}（容差 {data.meta.crossCheck.tolerance}）。</>}种子生成 {data.meta.generatedAt}。
         </div>
         {data.notes.map((n) => <div key={n} className="p6-note">{n}</div>)}

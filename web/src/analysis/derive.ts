@@ -1,8 +1,37 @@
 // W12 纯函数：选择曲线、格式化数字、ECharts 配置。数字只从服务输出读取，不在前端硬编。
 import type { EChartsOption } from 'echarts'
-import type { AnalysisCase, CurvePoint, DeclaredOpenGap, KeyMoment, ScenarioRow, VesselSpeedSeries } from './types'
+import type { AnalysisCase, CurvePoint, DeclaredOpenGap, KeyMoment, MetricOrigin, MetricProvenance, ScenarioRow, VesselSpeedSeries } from './types'
 
 export const BASELINE = 'baseline'
+
+const HISTORICAL_METRIC_CAPTION = '两船距离 D(t)、DCPA(t)、TCPA(t) 由 mcis-core cpa 计算；What-if 对比、临界标注与天线敏感性来自 W14.2 输出。时间均为北京时间（UTC+8）。'
+
+export function originLabel(kind: MetricOrigin): string {
+  switch (kind) {
+    case 'mcis-core': return '既有 mcis-core cpa（真实核心）'
+    case 'assembly-placeholder': return '装配占位（非核心，不得当作核心交付）'
+    case 'geometric': return '同刻几何（非核心）'
+    case 'unavailable': return '无（缺输入或无同刻样本，未回填）'
+    case 'registered-track': return '已登记航迹样本（非核心）'
+    default: return kind
+  }
+}
+
+export function metricCaption(c: AnalysisCase): string {
+  const p = c.metricProvenance
+  if (!p) return HISTORICAL_METRIC_CAPTION
+  const extra = p.note ? `${p.note}` : ''
+  return `图区来源区分：距离为${originLabel(p.distance)}；DCPA 为${originLabel(p.dcpa)}；TCPA 为${originLabel(p.tcpa)}。${extra}时间均为北京时间（UTC+8）。`
+}
+
+export function provenanceLines(p: MetricProvenance): string[] {
+  return [
+    `距离：${originLabel(p.distance)}`,
+    `DCPA：${originLabel(p.dcpa)}`,
+    `TCPA：${originLabel(p.tcpa)}`,
+  ]
+}
+
 
 export function fmtM(v: number | null | undefined, d = 2): string {
   return v === null || v === undefined || Number.isNaN(v) ? '—' : `${v.toFixed(d)} m`
