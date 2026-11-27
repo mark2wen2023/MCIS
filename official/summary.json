@@ -1,0 +1,20 @@
+{
+  "started": "2026-11-27T10:58:40+08:00",
+  "finished": "2026-11-27T10:58:42+08:00",
+  "pin": "03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5",
+  "head": "03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5",
+  "host": "127.0.0.1:18774",
+  "dataDir": "/tmp/mcis-w12-fr-nic1l9yr",
+  "coreDllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+  "coreVersion": "mcis-core/0.1.0",
+  "items": {
+    "item1": true,
+    "item2": true,
+    "item3": true
+  },
+  "gapCrossing": "未验",
+  "sameCaseVersionChange": "未验",
+  "browser": "未验",
+  "notWholeW12": true,
+  "exitCode": 0
+}

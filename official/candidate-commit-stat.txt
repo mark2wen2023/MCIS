@@ -1,0 +1,5 @@
+8266aba test(w12): add first-registered two-vessel CPA pilot
+ .../w12-first-registered-pilot/README.md           |   7 +
+ .../w12-first-registered-pilot/core_norebuild.sh   |   7 +
+ tests_acceptance/w12-first-registered-pilot/run.py | 530 +++++++++++++++++++++
+ 3 files changed, 544 insertions(+)

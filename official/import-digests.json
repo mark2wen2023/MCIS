@@ -1,0 +1,9 @@
+{
+  "complete": {
+    "SYN-OWN": "714bf0994afcd214a1756554b6951f0ffd705fbc7bf19f5688f98611a3f917f7",
+    "SYN-TGT": "49e7e15b1a76a238df4b83abde6be47ae12049b724f9b37097d818cd68a9edd7"
+  },
+  "incomplete": {
+    "SYN-OWN": "9f8828a032daa7c8e84b3f53ac885cb2c3db4191ac6a23cc9ed5b69597fd61e0"
+  }
+}

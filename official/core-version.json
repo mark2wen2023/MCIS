@@ -1,0 +1,19 @@
+{
+  "dotnet": "8.0.428",
+  "envelope": {
+    "ok": true,
+    "command": "version",
+    "coreVersion": "mcis-core/0.1.0",
+    "result": {
+      "coreVersion": "mcis-core/0.1.0",
+      "commands": [
+        "cpa",
+        "colreg",
+        "align",
+        "version"
+      ]
+    }
+  },
+  "dllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+  "cpaCommandSha256": "54de148e91e27a4ca39c693410722e42caf88fcb58e339dc3907161dc9210d6c"
+}

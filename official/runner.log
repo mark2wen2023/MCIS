@@ -1,0 +1,7 @@
+start=2026-11-27T10:58:40+08:00
+pin=03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5
+host=127.0.0.1:18774
+coreVersion=mcis-core/0.1.0 dll=f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf
+health=ok
+imported complete={'SYN-OWN': '714bf0994afcd214a1756554b6951f0ffd705fbc7bf19f5688f98611a3f917f7', 'SYN-TGT': '49e7e15b1a76a238df4b83abde6be47ae12049b724f9b37097d818cd68a9edd7'} incomplete={'SYN-OWN': '9f8828a032daa7c8e84b3f53ac885cb2c3db4191ac6a23cc9ed5b69597fd61e0'}
+stop=2026-11-27T10:58:42+08:00

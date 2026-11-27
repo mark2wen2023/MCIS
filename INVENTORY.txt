@@ -1,0 +1,24 @@
+# W12 first-registered pilot inventory
+# pin=03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5
+# candidate=8266abab95961bd537ede50505c58ea3e08d65c8
+# official=2026-11-27T10:58:40+08:00..2026-11-27T10:58:42+08:00 exit=0
+
+c3371b7eebd5c2032cd8a3c946df1459f61e0d263beaf1de9f18f5e806e89a32  CANDIDATE_SHA.txt  bytes=41
+ae17f578bcc9a3c2885528c14e283553dbd9f38779db8ac3500b1aa15f8c35c4  ISSUE_COMMENT_INPROGRESS.md  bytes=1208
+1040d63ee831f362447d4ba60722f5234dfa03a9b2036ae48f47e6db7d0cd028  OFFICIAL_COMMAND.sh  bytes=723
+bb04f8467e407bc63045a6fccf42bcc83aebf475ce3aee8da352d52d93c143e4  OFFICIAL_RUN.txt  bytes=722
+7e2f892a1a5e3609f363880e15ee9b0d45c68778e6342117a4a7214c8928ac28  REPORT.md  bytes=636
+d8640d4463ad50b7bb5b68fbdaccb689b1092dab9b1fb94ea65a65c32bc85cce  acceptance/README.md  bytes=843
+a19eea96864ef424ea9cd1a3541b1c845791d2fd2bb52a2f65b5bff9684096a8  acceptance/core_norebuild.sh  bytes=365
+47e77304251726579d4466b306d9b8ec1e61caadf60b6cfbdbf23eb6da6c86e0  acceptance/run.py  bytes=22092
+5465194b6c490d7f09928ade0dc6460f300f8ad5b59c0013d083b8460eed6b15  official/candidate-commit-stat.txt  bytes=297
+9642e47a370e117ddb436a6eb211dbd9af1bb44f547899f76e5d51264a71ceee  official/capture-complete.json  bytes=1067
+0b8c5f6662d4dc088d5c034125c6b7fce3f3326f34d9ee4642f4a4f9dff6ab85  official/core-version.json  bytes=458
+eedbc9fa1ba169553e06486ca69383c38a995e5ca5459b1bd6145605685e1240  official/fixtures/own.csv  bytes=290
+3e19e5ab75fbb20f05f5130ee17e97e2562221c3fa81de34b708dd2d5e4a75e7  official/fixtures/target.csv  bytes=240
+cbdca6a58baf3aeb325abed3d8e5c2cdbdeff3bdfd41c65f867abd36b0598d76  official/import-digests.json  bytes=294
+268b557388f8f816044eb9729486eb1b6d50b8615d6ee6eff5f7dbb619b4bc06  official/item1-inside-common.json  bytes=3979
+a0dfb7c64a556068294d8b60a5a2d8ac905a1f2cc802cf5399fbd9f5690eec25  official/item2-outside-common.json  bytes=1188
+630f40af28e6ce762f22758da7843d1941dea7673a65dbd1785e71068a23ce26  official/item3-missing-receipt.json  bytes=721
+f264891cfe50b7f7b78a3b9334926507f6f5e39032073d089f55b552215cbab1  official/runner.log  bytes=504
+9ff2bd3bbecdffb858c8f92c913386a8b607b95d137c4f87fb4231f46090c36c  official/summary.json  bytes=590

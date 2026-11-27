@@ -1,0 +1,140 @@
+{
+  "name": "item1-inside-common",
+  "passed": true,
+  "exitCode": 0,
+  "command": "core_client.run cpa x2 at t=10 exact samples",
+  "result": {
+    "metrics": {
+      "thresholds": {
+        "presetName": "Default",
+        "dangerDcpaNm": 0.3,
+        "dangerTcpaMin": 6,
+        "warningDcpaNm": 1,
+        "warningTcpaMin": 12
+      },
+      "results": [
+        {
+          "pairId": "SYN-OWN|SYN-TGT@10",
+          "ownVesselId": "SYN-OWN",
+          "targetVesselId": "SYN-TGT",
+          "timeSec": 10,
+          "currentDistanceNm": 2.578139,
+          "trueBearingDeg": 89.987124,
+          "relativeCourseDeg": 225,
+          "relativeSpeedKn": 14.142136,
+          "dcpaNm": 1.82261,
+          "tcpaMin": 7.736156,
+          "isDiverging": false,
+          "isDegenerate": false,
+          "riskLevel": "Safe"
+        }
+      ]
+    },
+    "coreVersion": "mcis-core/0.1.0",
+    "recalculatedIdentical": true,
+    "requestedTimes": [
+      10.0
+    ],
+    "missingTimes": [],
+    "identities": {
+      "SYN-OWN": {
+        "caseId": "SYN-W12-FR-AB",
+        "vesselId": "SYN-OWN",
+        "previewDigest": "714bf0994afcd214a1756554b6951f0ffd705fbc7bf19f5688f98611a3f917f7",
+        "sourceSha256": "eedbc9fa1ba169553e06486ca69383c38a995e5ca5459b1bd6145605685e1240",
+        "reportSha256": "e734d41b84e9e05c63c17f4c1d4c17ff51f773ebb22b79fc89c106a69ec24f86",
+        "pointCount": 4
+      },
+      "SYN-TGT": {
+        "caseId": "SYN-W12-FR-AB",
+        "vesselId": "SYN-TGT",
+        "previewDigest": "49e7e15b1a76a238df4b83abde6be47ae12049b724f9b37097d818cd68a9edd7",
+        "sourceSha256": "3e19e5ab75fbb20f05f5130ee17e97e2562221c3fa81de34b708dd2d5e4a75e7",
+        "reportSha256": "a9fa1f0fb7ac0afbfb34ae2b8ae19103a4dc29c649dd6ecc90efe3f9d818312c",
+        "pointCount": 3
+      }
+    },
+    "payloadPairs": [
+      {
+        "pairId": "SYN-OWN|SYN-TGT@10",
+        "timeSec": 10.0,
+        "own": {
+          "vesselId": "SYN-OWN",
+          "latDeg": 31.01,
+          "lonDeg": 121.0,
+          "speedKn": 10.0,
+          "courseDeg": 0.0
+        },
+        "target": {
+          "vesselId": "SYN-TGT",
+          "latDeg": 31.01,
+          "lonDeg": 121.05,
+          "speedKn": 10.0,
+          "courseDeg": 270.0
+        }
+      }
+    ],
+    "rawFirst": {
+      "ok": true,
+      "command": "cpa",
+      "coreVersion": "mcis-core/0.1.0",
+      "result": {
+        "thresholds": {
+          "presetName": "Default",
+          "dangerDcpaNm": 0.3,
+          "dangerTcpaMin": 6,
+          "warningDcpaNm": 1,
+          "warningTcpaMin": 12
+        },
+        "results": [
+          {
+            "pairId": "SYN-OWN|SYN-TGT@10",
+            "ownVesselId": "SYN-OWN",
+            "targetVesselId": "SYN-TGT",
+            "timeSec": 10,
+            "currentDistanceNm": 2.578139,
+            "trueBearingDeg": 89.987124,
+            "relativeCourseDeg": 225,
+            "relativeSpeedKn": 14.142136,
+            "dcpaNm": 1.82261,
+            "tcpaMin": 7.736156,
+            "isDiverging": false,
+            "isDegenerate": false,
+            "riskLevel": "Safe"
+          }
+        ]
+      }
+    },
+    "rawSecond": {
+      "ok": true,
+      "command": "cpa",
+      "coreVersion": "mcis-core/0.1.0",
+      "result": {
+        "thresholds": {
+          "presetName": "Default",
+          "dangerDcpaNm": 0.3,
+          "dangerTcpaMin": 6,
+          "warningDcpaNm": 1,
+          "warningTcpaMin": 12
+        },
+        "results": [
+          {
+            "pairId": "SYN-OWN|SYN-TGT@10",
+            "ownVesselId": "SYN-OWN",
+            "targetVesselId": "SYN-TGT",
+            "timeSec": 10,
+            "currentDistanceNm": 2.578139,
+            "trueBearingDeg": 89.987124,
+            "relativeCourseDeg": 225,
+            "relativeSpeedKn": 14.142136,
+            "dcpaNm": 1.82261,
+            "tcpaMin": 7.736156,
+            "isDiverging": false,
+            "isDegenerate": false,
+            "riskLevel": "Safe"
+          }
+        ]
+      }
+    }
+  }
+}

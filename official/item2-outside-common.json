@@ -1,0 +1,40 @@
+{
+  "name": "item2-outside-common",
+  "passed": true,
+  "exitCode": 0,
+  "command": "no core call; no exact common samples at 0/15/30/40",
+  "result": {
+    "metrics": null,
+    "reason": "no-exact-common-samples",
+    "requestedTimes": [
+      0.0,
+      15.0,
+      30.0,
+      40.0
+    ],
+    "missingTimes": [
+      0.0,
+      15.0,
+      30.0,
+      40.0
+    ],
+    "identities": {
+      "SYN-OWN": {
+        "caseId": "SYN-W12-FR-AB",
+        "vesselId": "SYN-OWN",
+        "previewDigest": "714bf0994afcd214a1756554b6951f0ffd705fbc7bf19f5688f98611a3f917f7",
+        "sourceSha256": "eedbc9fa1ba169553e06486ca69383c38a995e5ca5459b1bd6145605685e1240",
+        "reportSha256": "e734d41b84e9e05c63c17f4c1d4c17ff51f773ebb22b79fc89c106a69ec24f86",
+        "pointCount": 4
+      },
+      "SYN-TGT": {
+        "caseId": "SYN-W12-FR-AB",
+        "vesselId": "SYN-TGT",
+        "previewDigest": "49e7e15b1a76a238df4b83abde6be47ae12049b724f9b37097d818cd68a9edd7",
+        "sourceSha256": "3e19e5ab75fbb20f05f5130ee17e97e2562221c3fa81de34b708dd2d5e4a75e7",
+        "reportSha256": "a9fa1f0fb7ac0afbfb34ae2b8ae19103a4dc29c649dd6ecc90efe3f9d818312c",
+        "pointCount": 3
+      }
+    }
+  }
+}

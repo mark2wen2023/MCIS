@@ -1,0 +1,14 @@
+# Official W12 first-registered-input pilot
+# Time zone: Asia/Shanghai (CST, UTC+8)
+# 2026-11-27T10:58:40+08:00 .. 2026-11-27T10:58:42+08:00  exit=0
+# timeout --signal=TERM --kill-after=10s 150s
+# unshare -r -n ; ip link set lo up
+# 127.0.0.1:18774  temp SQLite  MCIS_SEED_DEMO=0
+# core: /workspace/mcis-w41-core-out/mcis-core.dll
+#   SHA-256 f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf
+#   built from 94d5e38; CpaCommand.cs SHA-256 matches 03a8e786
+#   coreVersion=mcis-core/0.1.0
+# items: 1 inside common PASS; 2 outside common PASS; 3 missing receipt PASS
+# gap crossing 未验; same-case version change 未验; browser 未验
+# not W12 whole package
+# pin=03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5

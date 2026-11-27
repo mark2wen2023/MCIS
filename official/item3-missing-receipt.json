@@ -1,0 +1,22 @@
+{
+  "name": "item3-missing-receipt",
+  "passed": true,
+  "exitCode": 0,
+  "command": "same-transaction capture requiring both receipts on incomplete case",
+  "result": {
+    "ok": false,
+    "reason": "missing-receipt:SYN-TGT",
+    "identities": {
+      "SYN-OWN": {
+        "caseId": "SYN-W12-FR-INCOMPLETE",
+        "vesselId": "SYN-OWN",
+        "previewDigest": "9f8828a032daa7c8e84b3f53ac885cb2c3db4191ac6a23cc9ed5b69597fd61e0",
+        "sourceSha256": "eedbc9fa1ba169553e06486ca69383c38a995e5ca5459b1bd6145605685e1240",
+        "reportSha256": "94c577d99a409a51d9dd2b350dde3ac336c422f4947613d7ec11f0378573a7f7",
+        "pointCount": 4
+      }
+    },
+    "currentAnalysis": null,
+    "metricsReturned": false
+  }
+}
