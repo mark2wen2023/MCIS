@@ -239,7 +239,8 @@ def check(g):
                 )
                 if max(errors) > 1e-5:
                     problems.append("matrix_control_mismatch")
-    if g["schema_version"] == "2.1":
+    # Derived admission and registration require all referenced source records.
+    if g["schema_version"] == "2.1" and "unlinked_source" not in problems:
         expected_signs=landmarks.decisions(g)
         for curve in g["curves"]:
             if curve.get("registration_decision")!=expected_signs.get((curve["source_sha256"],curve["instance"])):

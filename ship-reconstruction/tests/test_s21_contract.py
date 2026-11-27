@@ -21,6 +21,13 @@ class Contract(unittest.TestCase):
                 if name=="B": self.assertEqual(g["uncertainties"][-1]["candidate_y_multipliers"],[1,-1])
                 if name=="C": self.assertEqual(set(g["conflicts"][0]["raw_values"]),{"1.5","1.9"})
 
+    def test_reject_unlinked_table_source(self):
+        g=json.loads((ROOT/"examples/s21/A/geometry.json").read_bytes())
+        g["tables"][0]["source_sha256"]="0"*64
+        result=s2.check(g)
+        self.assertFalse(result["valid"])
+        self.assertIn("unlinked_source",result["issues"])
+
     def test_reject_forged_permission(self):
         g=json.loads((ROOT/"examples/s21/C/geometry.json").read_bytes())
         g["modeling_admission"]["state"]="full_research"
