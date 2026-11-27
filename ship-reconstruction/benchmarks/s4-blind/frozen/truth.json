@@ -1,0 +1,2001 @@
+[
+  {
+    "case": "S01",
+    "scenario": "甲板板厚",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "3a6e01d87e380c7149e0c7c650c803780c9df191c7847a192a160aef0e959e6b",
+        "layout": "Model",
+        "role": "deck",
+        "raw_text": "主甲板  t=9 mm",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": 9,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S02",
+    "scenario": "外板板厚",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "7f32923ced14d2e43363a136b29b881e29fbedb22d72559a16584a473518b0d0",
+        "layout": "Model",
+        "role": "shell_plate",
+        "raw_text": "舷侧外板  δ=11 mm",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": 11,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S03",
+    "scenario": "半角型材",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "64a7122eead8ce44514de068ebabfa586556a9d5ea75d85983bfff0d72df372d",
+        "layout": "Model",
+        "role": "frame",
+        "raw_text": "普通肋骨  L 75×50×6",
+        "annotation_handle": "38",
+        "specification": "L 75×50×6",
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S04",
+    "scenario": "等边角钢",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "b9560f5272c84e75a82870c0ce59fea91b8e6d90ed4be2327ff3bbb8d840f0cb",
+        "layout": "Model",
+        "role": "stiffener",
+        "raw_text": "舱壁扶强材  L 63×63×5",
+        "annotation_handle": "38",
+        "specification": "L 63×63×5",
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S05",
+    "scenario": "扁钢纵骨",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "917abd778ed2168af692449712f0b790e72fe8213cc585753324293bbf5621af",
+        "layout": "Model",
+        "role": "longitudinal",
+        "raw_text": "船底纵骨  FB 100×8",
+        "annotation_handle": "38",
+        "specification": "FB 100×8",
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S06",
+    "scenario": "球扁钢",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "2d38585603207c64c2e7010beab794c770f619161910a491cd7f0e9e7c0bb1f8",
+        "layout": "Model",
+        "role": "longitudinal",
+        "raw_text": "甲板纵骨  HP 120×7",
+        "annotation_handle": "38",
+        "specification": "HP 120×7",
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S07",
+    "scenario": "T型强横梁",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "f30db31bbe669e25299ba9e5ad59406aa7c1d2bbb739a57bbe508a534a1775a7",
+        "layout": "Model",
+        "role": "strong_beam",
+        "raw_text": "强横梁  T 180×8+90×10",
+        "annotation_handle": "38",
+        "specification": "T 180×8+90×10",
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S08",
+    "scenario": "水密横舱壁",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "6b68b2a6be7d2357e56b2d7abbc3a1a0371588e12eaa6636e9c6f39e94e8f6ce",
+        "layout": "Model",
+        "role": "transverse_bulkhead",
+        "raw_text": "水密横舱壁  t=7 mm  FR 18",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": 7,
+        "frame_range": [
+          18,
+          18
+        ],
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S09",
+    "scenario": "纵舱壁",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "79cc60ec2809bbcc0fc8abaaa86ac293092e30bb7572294778c3ac54aa72d4d5",
+        "layout": "Model",
+        "role": "longitudinal_bulkhead",
+        "raw_text": "纵舱壁  t=8 mm  FR 12～30",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": 8,
+        "frame_range": [
+          12,
+          30
+        ],
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S10",
+    "scenario": "内底板",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "deed8127ece3f2d3bbf125851d3627b58006bc9ceb559534b66716f59fbcbf62",
+        "layout": "Model",
+        "role": "double_bottom_plate",
+        "raw_text": "内底板  t=10 mm",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": 10,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S11",
+    "scenario": "厚度未注",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "90ba92644d08b81e5dc8d094ef0ed6db6b627fe96fdf904c12ee8d4486769d98",
+        "layout": "Model",
+        "role": "deck",
+        "raw_text": "主甲板",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "unknown_thickness",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S12",
+    "scenario": "型材尺寸缺项",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "9ac9522533d42b631ad19bcef108fd7b03089f3f6b96cea114e91206163068c8",
+        "layout": "Model",
+        "role": "longitudinal",
+        "raw_text": "甲板纵骨  FB 90×?",
+        "annotation_handle": "38",
+        "specification": "FB 90×?",
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "incomplete_section",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S13",
+    "scenario": "板材范围",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "6ba860c2c544677f8e27b28a03e3138a2c13a6f0ead30edb960325989d152742",
+        "layout": "Model",
+        "role": "shell_plate",
+        "raw_text": "舷侧外板  t=12 mm  FR 14～27",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": 12,
+        "frame_range": [
+          14,
+          27
+        ],
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S14",
+    "scenario": "MTEXT分行",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "d85b8b34428d9b1a657c12d086b19e0301553f839d5458637405bd9a3d596526",
+        "layout": "Model",
+        "role": "transverse_bulkhead",
+        "raw_text": "横舱壁\\Pt=9 mm\\PFR 17",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": 9,
+        "frame_range": [
+          17,
+          17
+        ],
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S15",
+    "scenario": "斜置文字",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "2bd2385b7c011236f05ca28c31c396bb3fc9be073fd3517506af557c7f1b4e06",
+        "layout": "Model",
+        "role": "frame",
+        "raw_text": "普通肋骨  L 70×45×5",
+        "annotation_handle": "38",
+        "specification": "L 70×45×5",
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S16",
+    "scenario": "90度视图",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "eb82dbc27948bdac03796e28ea70fce84f9301a0802b8649945be64e1ee79f1b",
+        "layout": "Model",
+        "role": "deck",
+        "raw_text": "主甲板  t=7 mm",
+        "annotation_handle": "3B",
+        "specification": null,
+        "thickness_mm": 7,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [
+              "3D"
+            ],
+            "expected_primary_tip_wcs": [
+              32.0,
+              67.0,
+              0
+            ],
+            "text_instances": [
+              "3D/3B"
+            ],
+            "leader_instances": [
+              "3D/3C"
+            ],
+            "target_instances": [
+              "3D/3A"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S17",
+    "scenario": "镜像插入",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "e3c16f555877972df726f5f6b12e005eebf61b47a3d5ec9c781f0c9f5f26fdef",
+        "layout": "Model",
+        "role": "longitudinal",
+        "raw_text": "船底纵骨  FB 85×7",
+        "annotation_handle": "3B",
+        "specification": "FB 85×7",
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [
+              "3D"
+            ],
+            "expected_primary_tip_wcs": [
+              -18.0,
+              17.0,
+              0
+            ],
+            "text_instances": [
+              "3D/3B"
+            ],
+            "leader_instances": [
+              "3D/3C"
+            ],
+            "target_instances": [
+              "3D/3A"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S18",
+    "scenario": "嵌套图块",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "361c535ddf264e089a9adeab75dfd9ca3e329f54b05a57b3086932bc509c8baf",
+        "layout": "Model",
+        "role": "stiffener",
+        "raw_text": "扶强材  L 60×40×5",
+        "annotation_handle": "3B",
+        "specification": "L 60×40×5",
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [
+              "42",
+              "40"
+            ],
+            "expected_primary_tip_wcs": [
+              86.0,
+              11.0,
+              0
+            ],
+            "text_instances": [
+              "42/40/3B"
+            ],
+            "leader_instances": [
+              "42/40/3C"
+            ],
+            "target_instances": [
+              "42/40/3A"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S19",
+    "scenario": "重复块不同插入",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "1d054d606b6a364def7b41fbe8223dca0271c803457f6c232d32c01bc0d599bd",
+        "layout": "Model",
+        "role": "frame",
+        "raw_text": "普通肋骨  L 65×45×6",
+        "annotation_handle": "3B",
+        "specification": "L 65×45×6",
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [
+              "3D"
+            ],
+            "expected_primary_tip_wcs": [
+              70.0,
+              18.0,
+              0
+            ],
+            "text_instances": [
+              "3D/3B"
+            ],
+            "leader_instances": [
+              "3D/3C"
+            ],
+            "target_instances": [
+              "3D/3A"
+            ]
+          },
+          {
+            "insert_path": [
+              "3F"
+            ],
+            "expected_primary_tip_wcs": [
+              215.0,
+              33.0,
+              0
+            ],
+            "text_instances": [
+              "3F/3B"
+            ],
+            "leader_instances": [
+              "3F/3C"
+            ],
+            "target_instances": [
+              "3F/3A"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S20",
+    "scenario": "板厚冲突",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "7a9beb1645c1b67438a8b175a0de3d6ba9b89d5afbdec8545af5f1a905bcc216",
+        "layout": "Model",
+        "role": "deck",
+        "raw_text": "主甲板  t=8 mm",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "conflicting_thickness",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38",
+              "3A"
+            ],
+            "leader_instances": [
+              "39",
+              "3B"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S21",
+    "scenario": "邻近不相关注记",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "e0daaf8a5dad46b39c0eb2729faac9b884ef92f373391ec3087369954b8def8b",
+        "layout": "Model",
+        "role": "double_bottom_plate",
+        "raw_text": "内底板",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "unknown_thickness",
+        "material": null,
+        "disregard_handles": [
+          "3A"
+        ],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S22",
+    "scenario": "重复同值",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "81927589a980fcf4c795729f794bdc64621ba26285b820bb81a02a762f67c75c",
+        "layout": "Model",
+        "role": "deck",
+        "raw_text": "主甲板  t=8 mm",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": 8,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38",
+              "3A"
+            ],
+            "leader_instances": [
+              "39",
+              "3B"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S23",
+    "scenario": "双箭头一注",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "7c8db3c1fd9dc08e6fa10941ec8bef0aa646aa59accf12e46e043245169eb9ab",
+        "layout": "Model",
+        "role": "longitudinal",
+        "raw_text": "甲板纵骨  FB 90×8",
+        "annotation_handle": "39",
+        "specification": "FB 90×8",
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "39"
+            ],
+            "leader_instances": [
+              "3A",
+              "3B"
+            ],
+            "target_instances": [
+              "37",
+              "38"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S24",
+    "scenario": "缺失箭头",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "b9783cd03cb9e0dbf3f1764a012fb5adfa4fe01d1840b57e1be6412ad452163c",
+        "layout": "Model",
+        "role": "frame",
+        "raw_text": "普通肋骨  L 80×50×6",
+        "annotation_handle": "38",
+        "specification": "L 80×50×6",
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "unbound_target",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S25",
+    "scenario": "落点两线相交",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "b9b06e87442d47ce509463f71b852f18ea79c2d1a24ce783be032f371747f412",
+        "layout": "Model",
+        "role": "shell_plate",
+        "raw_text": "舷侧外板  t=10 mm",
+        "annotation_handle": "39",
+        "specification": null,
+        "thickness_mm": 10,
+        "frame_range": null,
+        "status": "ambiguous_target",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "39"
+            ],
+            "leader_instances": [
+              "3A"
+            ],
+            "target_instances": [
+              "37",
+              "38"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S26",
+    "scenario": "双折引线",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "6017f9adc98f2f1c74340f81fcd68414e397c47a43fbbee3cde945c5bc70fdd5",
+        "layout": "Model",
+        "role": "stiffener",
+        "raw_text": "舱壁扶强材  FB 70×7",
+        "annotation_handle": "38",
+        "specification": "FB 70×7",
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S27",
+    "scenario": "折线代引线",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "e844fd7d0874e4276154e1b8c10553d8364e7ac6589e700215781ee1e51a7ef2",
+        "layout": "Model",
+        "role": "deck",
+        "raw_text": "甲板板  t=8 mm",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": 8,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S28",
+    "scenario": "英文甲板",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "ad77207950be9ffd1d2c39cc9d16934731dedc5e8ef574a6bfb8f69ad1515378",
+        "layout": "Model",
+        "role": "deck",
+        "raw_text": "MAIN DECK  THICKNESS 8 mm",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": 8,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S29",
+    "scenario": "英文肋骨",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "8991db5b9eeb678fcb7b896b74778fd99b285f911b56fb77aad1c4c31db60173",
+        "layout": "Model",
+        "role": "frame",
+        "raw_text": "WEB FRAME  L 85x55x8",
+        "annotation_handle": "38",
+        "specification": "L 85x55x8",
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S30",
+    "scenario": "组合跨图同版",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "9f5ce27af95440e4980fca063bc8b5661c751520040bbac93070dcf68c0374fa",
+        "layout": "Model",
+        "role": "double_bottom_plate",
+        "raw_text": "内底板  t=9 mm  PL-16",
+        "annotation_handle": "39",
+        "specification": null,
+        "thickness_mm": 9,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "39"
+            ],
+            "leader_instances": [
+              "3A"
+            ],
+            "target_instances": [
+              "38"
+            ]
+          }
+        ]
+      },
+      {
+        "file": "sheet-2.dxf",
+        "sha256": "5a3f7f3e8958a2493a7a9ad48d97a706f103db063035df4d25969d5cf8876cd0",
+        "layout": "Model",
+        "role": "double_bottom_plate",
+        "raw_text": "内底板  t=9 mm  PL-16",
+        "annotation_handle": "39",
+        "specification": null,
+        "thickness_mm": 9,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "39"
+            ],
+            "leader_instances": [
+              "3A"
+            ],
+            "target_instances": [
+              "38"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S31",
+    "scenario": "同件跨版冲突",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "bc83d9802d21c351146a8368c435e148c3bc2b0cf99ebc9c76b00df87bb958ce",
+        "layout": "Model",
+        "role": "deck",
+        "raw_text": "主甲板  t=8 mm  PL-16",
+        "annotation_handle": "39",
+        "specification": null,
+        "thickness_mm": 8,
+        "frame_range": null,
+        "status": "revisions_separate",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "39"
+            ],
+            "leader_instances": [
+              "3A"
+            ],
+            "target_instances": [
+              "38"
+            ]
+          }
+        ]
+      },
+      {
+        "file": "sheet-2.dxf",
+        "sha256": "cfb713b970262e772894ba2867871adffbe30294484f09ac3254221182bc9398",
+        "layout": "Model",
+        "role": "deck",
+        "raw_text": "主甲板  t=10 mm  PL-16",
+        "annotation_handle": "39",
+        "specification": null,
+        "thickness_mm": 10,
+        "frame_range": null,
+        "status": "revisions_separate",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "39"
+            ],
+            "leader_instances": [
+              "3A"
+            ],
+            "target_instances": [
+              "38"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S32",
+    "scenario": "肋位负号",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "d1514488e01e229f0cd48f67c6983c5a71ed9295ee4706897ffc168b7c88ffab",
+        "layout": "Model",
+        "role": "longitudinal_bulkhead",
+        "raw_text": "纵舱壁  t=7 mm  FR -3～9",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": 7,
+        "frame_range": [
+          -3,
+          9
+        ],
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S33",
+    "scenario": "阵列说明",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "aa08ba379d55ecc3b2518069ddeb64e8f901d489e00ad5904d3fa81f0ce9364d",
+        "layout": "Model",
+        "role": "longitudinal",
+        "raw_text": "纵骨  FB 90×8  FR 4～28  7 道 @ 580 mm",
+        "annotation_handle": "38",
+        "specification": "FB 90×8",
+        "thickness_mm": null,
+        "frame_range": [
+          4,
+          28
+        ],
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S34",
+    "scenario": "变间距",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "0043beba3a73338a3aa9e03b2381256347fb61044b43ced9d0fd10882c69a15f",
+        "layout": "Model",
+        "role": "strong_beam",
+        "raw_text": "强横梁  T 150×7+80×9  FR 8～20  FR 8–14 @ 510 mm; FR 14–20 @ 620 mm",
+        "annotation_handle": "38",
+        "specification": "T 150×7+80×9",
+        "thickness_mm": null,
+        "frame_range": [
+          8,
+          20
+        ],
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S35",
+    "scenario": "图纸空间",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "b8557323cc6c648eb2cfb5ddcca81b81a287ff04faf8f47d7b8375a8f3825c19",
+        "layout": "PAGE",
+        "role": "deck",
+        "raw_text": "主甲板  t=10 mm",
+        "annotation_handle": "3D",
+        "specification": null,
+        "thickness_mm": 10,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "3D"
+            ],
+            "leader_instances": [
+              "3E"
+            ],
+            "target_instances": [
+              "3C"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S36",
+    "scenario": "有单位小数",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "3852ba624c62c04e2e04308d97b8ded9af2c8f0ca5eee0831e98028f43794853",
+        "layout": "Model",
+        "role": "deck",
+        "raw_text": "甲板板  厚 0.75 cm",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": 7.5,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S37",
+    "scenario": "英寸单位",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "fada045cfec6ee86a2a2ce188297da3536514ba23847b4d8691e694d0393a20d",
+        "layout": "Model",
+        "role": "deck",
+        "raw_text": "主甲板  THK 3/8 in",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": 9.525,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S38",
+    "scenario": "双层结构不同规格",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "d2fe0846b65a5eab508911ad8a9d818057fdad7dc114c9d566c55604e3176534",
+        "layout": "Model",
+        "role": "double_bottom_plate",
+        "raw_text": "内底板  t=8 mm",
+        "annotation_handle": "3B",
+        "specification": null,
+        "thickness_mm": 8,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "3B"
+            ],
+            "leader_instances": [
+              "3C"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S39",
+    "scenario": "孤立厚度",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "6e931b1086c55c897837d661e461a04ef424a1f6aabd66257f629a1a84761bec",
+        "layout": "Model",
+        "role": "transverse_bulkhead",
+        "raw_text": "横舱壁",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "orphan_size",
+        "material": null,
+        "disregard_handles": [
+          "3A"
+        ],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S40",
+    "scenario": "旧图层线型",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "85d2ceabe9eac9bb82a761a2123f6825c1318766da785cc01cfc7a471721a2d0",
+        "layout": "Model",
+        "role": "longitudinal",
+        "raw_text": "甲板纵骨  HP 100×6",
+        "annotation_handle": "38",
+        "specification": "HP 100×6",
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S41",
+    "scenario": "双语注记",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "c0f0a693f0d3554def764a8d395108649252f2f21a7fc7460a9fdd12177b6925",
+        "layout": "Model",
+        "role": "transverse_bulkhead",
+        "raw_text": "横舱壁 / TRANSVERSE BULKHEAD  t=7 mm",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": 7,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S42",
+    "scenario": "舱室未注容积",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "b0434155c333213eef54ff9b722503ae67ed8ed804d56f353ec18a4d3c9e6faa",
+        "layout": "Model",
+        "role": "tank",
+        "raw_text": "压载舱  TANK No. 4P",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "unknown_volume",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S43",
+    "scenario": "有数无单位",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "e98651c8102f467f848c23f34fa0f48bda2053c4ba36ae94a302968c761d1206",
+        "layout": "Model",
+        "role": "deck",
+        "raw_text": "主甲板  t=8",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "unbound_unit",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S44",
+    "scenario": "材料明注",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "c736834afd3e08e205e993a9cd3c00d47a6f3a61de1182308894d4b819ad68b0",
+        "layout": "Model",
+        "role": "transverse_bulkhead",
+        "raw_text": "横舱壁  t=8 mm  材质 AH36",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": 8,
+        "frame_range": null,
+        "status": "supported",
+        "material": "AH36",
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S45",
+    "scenario": "材料未注",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "a6122e02d77d085d25814c95db738379c3b6594a66e22e44320b15f02dfde057",
+        "layout": "Model",
+        "role": "transverse_bulkhead",
+        "raw_text": "横舱壁  t=7 mm",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": 7,
+        "frame_range": null,
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S46",
+    "scenario": "只有单根肋位号",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "83802f637f73d4151aa716d25a5bcd4f157ed94200a72df4a93b8eeab8a5b2b4",
+        "layout": "Model",
+        "role": "frame",
+        "raw_text": "肋骨  L 80×50×6  FR 23",
+        "annotation_handle": "38",
+        "specification": "L 80×50×6",
+        "thickness_mm": null,
+        "frame_range": [
+          23,
+          23
+        ],
+        "status": "supported",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S47",
+    "scenario": "明确开口舱室",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "e85da9398a04d8cd620649c57c9ab0664291bd6a93378bb501626c475adec1e0",
+        "layout": "Model",
+        "role": "compartment",
+        "raw_text": "货舱",
+        "annotation_handle": "38",
+        "specification": null,
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "unknown_volume",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              0.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "S48",
+    "scenario": "离图孤线",
+    "files": [
+      {
+        "file": "sheet-1.dxf",
+        "sha256": "096f0606248312e12a1cbcbbc564f61dd306743da17dd928e454257dd5d5cafe",
+        "layout": "Model",
+        "role": "stiffener",
+        "raw_text": "扶强材  FB 82×6",
+        "annotation_handle": "38",
+        "specification": "FB 82×6",
+        "thickness_mm": null,
+        "frame_range": null,
+        "status": "unbound_target",
+        "material": null,
+        "disregard_handles": [],
+        "instances": [
+          {
+            "insert_path": [],
+            "expected_primary_tip_wcs": [
+              50.0,
+              -7.0,
+              0
+            ],
+            "text_instances": [
+              "38"
+            ],
+            "leader_instances": [
+              "39"
+            ],
+            "target_instances": [
+              "37"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

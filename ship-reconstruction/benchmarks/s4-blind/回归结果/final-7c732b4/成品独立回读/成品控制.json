@@ -1,0 +1,46 @@
+[
+  {
+    "case": "original",
+    "expected_valid": true,
+    "observed_valid": true,
+    "exit": 0,
+    "issues": [],
+    "correct": true
+  },
+  {
+    "case": "missing",
+    "expected_valid": false,
+    "observed_valid": false,
+    "exit": 4,
+    "issues": [
+      "成品缺失或为链接"
+    ],
+    "correct": true
+  },
+  {
+    "case": "scaled_volume",
+    "expected_valid": false,
+    "observed_valid": false,
+    "exit": 4,
+    "issues": [
+      "实体回读质量与记录不符"
+    ],
+    "correct": true
+  },
+  {
+    "case": "shift_equal_volume",
+    "expected_valid": false,
+    "observed_valid": true,
+    "exit": 0,
+    "issues": [],
+    "correct": false
+  },
+  {
+    "case": "reshaped_equal_volume",
+    "expected_valid": false,
+    "observed_valid": true,
+    "exit": 0,
+    "issues": [],
+    "correct": false
+  }
+]

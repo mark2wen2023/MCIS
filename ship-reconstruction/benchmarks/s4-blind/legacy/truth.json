@@ -1,0 +1,82 @@
+[
+  {
+    "id": "00",
+    "name": "完整双图",
+    "expected_geometry": true,
+    "fingerprints": {
+      "XZ.dxf": "d97661543a11a0d6dc4b8edfe7b5fea797f18fc0715a2f083406f345d14af5de",
+      "XY.dxf": "684931009df286d4d58ab1008d1a7b56908b4f5166f1e5f08db936201e61b1d6"
+    }
+  },
+  {
+    "id": "01",
+    "name": "缺交叉引用",
+    "expected_geometry": false,
+    "fingerprints": {
+      "XZ.dxf": "5edbb31c2150b2efde2188a5a329564ed89e66e34bef822020e21c8f8794e1e1",
+      "XY.dxf": "016b808f41f3a6a2ede804a471b3e2edef7112e3f13653700259f6a5efe0c9a6"
+    }
+  },
+  {
+    "id": "02",
+    "name": "截面厚度冲突",
+    "expected_geometry": false,
+    "fingerprints": {
+      "XZ.dxf": "065fc7b37bc7c92fa02ed0b4b28d1249b42187ec839b08017375a9d619deb58d",
+      "XY.dxf": "55e0bddce2dfe1a2057765edbfbb247f1d0f5b7eb2e7e6d4558fb22a7668bfd0"
+    }
+  },
+  {
+    "id": "03",
+    "name": "外法向反号",
+    "expected_geometry": false,
+    "fingerprints": {
+      "XZ.dxf": "6e9a3dd6f37af3c3c2881d3b742a697a07aca80b002a86157858f8cef045f384",
+      "XY.dxf": "062e9b12f75abb8e96323e1835a8bcf15a5ff8fd0a80e9dc5a352949b4207366"
+    }
+  },
+  {
+    "id": "04",
+    "name": "标注落在部件外",
+    "expected_geometry": false,
+    "fingerprints": {
+      "XZ.dxf": "29b38fc6d118fdbc1256b10caf95429a76fbd4dced5d5f6f47d2a3ed31822874",
+      "XY.dxf": "2c1eb2ae60a9e0569f21b5e0e19c70d251d41176e326c310848898acf17ffdfc"
+    }
+  },
+  {
+    "id": "05",
+    "name": "多轮廓重叠",
+    "expected_geometry": false,
+    "fingerprints": {
+      "XZ.dxf": "708b2c2d40d0b16ee87e607534a6d8c5d1ddf77702f46d162fd56812363b1924",
+      "XY.dxf": "8e32242bbb8bd2f177c2ce00d2ed7fe56a1f7107f818942ad7f69c3943f41e84"
+    }
+  },
+  {
+    "id": "06",
+    "name": "役别不一致",
+    "expected_geometry": false,
+    "fingerprints": {
+      "XZ.dxf": "64981a1646f66e53dc87bf2b184abef3b5504944a3a718a822f26ccb8c562482",
+      "XY.dxf": "3bfdfe1f32f2ba05c0bd87767630cee80d5092572a8738c872de526f5f6f059c"
+    }
+  },
+  {
+    "id": "07",
+    "name": "次视图控制共线",
+    "expected_geometry": false,
+    "fingerprints": {
+      "XZ.dxf": "ab9c3d76499463520c8b70498b78a8a975b60b4a40fb00f76d7279d0fe87cb99",
+      "XY.dxf": "77ec3f1cf8b040001e00755c5db78c6ffc5a98693e8763e4d0d444a45029fd1b"
+    }
+  },
+  {
+    "id": "08",
+    "name": "缺第二张图",
+    "expected_geometry": false,
+    "fingerprints": {
+      "XY.dxf": "f47c833fbff3cdb3b62a8f239cb9ae7eb0d2af0ab50850ba82385a27e338860d"
+    }
+  }
+]

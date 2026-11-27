@@ -1,0 +1,42 @@
+[
+  {
+    "case": "native_rectangular",
+    "required": 6,
+    "output": 6,
+    "distinct_instances": 6,
+    "anchors_matched": 6,
+    "inferred_assets": 0,
+    "passed": true,
+    "exit": 4
+  },
+  {
+    "case": "rotated_rectangular",
+    "required": 6,
+    "output": 6,
+    "distinct_instances": 6,
+    "anchors_matched": 6,
+    "inferred_assets": 0,
+    "passed": true,
+    "exit": 4
+  },
+  {
+    "case": "rotated_mirror",
+    "required": 6,
+    "output": 6,
+    "distinct_instances": 6,
+    "anchors_matched": 6,
+    "inferred_assets": 0,
+    "passed": true,
+    "exit": 4
+  },
+  {
+    "case": "text_pitch_only",
+    "required": 1,
+    "output": 1,
+    "distinct_instances": 1,
+    "anchors_matched": 1,
+    "inferred_assets": 0,
+    "passed": true,
+    "exit": 4
+  }
+]

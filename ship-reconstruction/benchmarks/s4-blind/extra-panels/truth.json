@@ -1,0 +1,71 @@
+[
+  {
+    "case": "compact_letters",
+    "source_sha256": "040a5b2b07d86958e7a96f6e68c5fc232dc43f5f3df6a83995c40ac436be636c",
+    "source_edges": [
+      "2F",
+      "30",
+      "31",
+      "32"
+    ],
+    "text": "33",
+    "leader": "34",
+    "expected_local_count": 1,
+    "expected_volume_m3": 2.1887999999999998e-05
+  },
+  {
+    "case": "large_letters",
+    "source_sha256": "5f58b3fbf18ee5eef33930c2edac1b20ff64dd91a938c984e2865319b6eacc06",
+    "source_edges": [
+      "2F",
+      "30",
+      "31",
+      "32"
+    ],
+    "text": "33",
+    "leader": "34",
+    "expected_local_count": 1,
+    "expected_volume_m3": 2.1887999999999998e-05
+  },
+  {
+    "case": "open_edge",
+    "source_sha256": "5fc332b07dec93f09f08e90ea46698f26a74b363f5643b21995b09a7359168d3",
+    "source_edges": [
+      "2F",
+      "30",
+      "31"
+    ],
+    "text": "32",
+    "leader": "33",
+    "expected_local_count": 0,
+    "expected_volume_m3": null
+  },
+  {
+    "case": "adjacent_cells",
+    "source_sha256": "96b073c370c91b93c350c1549e4b0b9c06f81580c1456e382e17aec35354e725",
+    "source_edges": [
+      "2F",
+      "30",
+      "31",
+      "32"
+    ],
+    "text": "36",
+    "leader": "37",
+    "expected_local_count": 0,
+    "expected_volume_m3": null
+  },
+  {
+    "case": "ambiguous_thickness",
+    "source_sha256": "26207dc9582dd34505064536ce64bca98172bac98fb381d466be538678e0bd45",
+    "source_edges": [
+      "2F",
+      "30",
+      "31",
+      "32"
+    ],
+    "text": "33",
+    "leader": "34",
+    "expected_local_count": 0,
+    "expected_volume_m3": null
+  }
+]

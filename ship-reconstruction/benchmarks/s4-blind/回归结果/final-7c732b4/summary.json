@@ -1,0 +1,105 @@
+{
+  "commit": "7c732b4e1b0a00e1d1ec52a2736036c7dd41e272",
+  "python": "3.13.2",
+  "platform": "macOS-27.2.1-arm64-arm-64bit-Mach-O",
+  "protocol_sha256": "2589cf17690f5bb5bc76d5c7024f1f0201d66e89b2fba8449ec30b4221a452ac",
+  "cases": 48,
+  "files": 50,
+  "direct_pass": 48,
+  "json_written": 48,
+  "rc_counts": {
+    "4": 48
+  },
+  "metrics": [
+    {
+      "metric": "observations_output",
+      "passes": 48,
+      "expected": 48
+    },
+    {
+      "metric": "engineering_gate",
+      "passes": 48,
+      "expected": 48
+    },
+    {
+      "metric": "no_unproved_3d",
+      "passes": 48,
+      "expected": 48
+    },
+    {
+      "metric": "annotation_instance",
+      "passes": 51,
+      "expected": 51
+    },
+    {
+      "metric": "raw_annotation",
+      "passes": 51,
+      "expected": 51
+    },
+    {
+      "metric": "original_wcs",
+      "passes": 51,
+      "expected": 51
+    },
+    {
+      "metric": "component_type",
+      "passes": 51,
+      "expected": 51
+    },
+    {
+      "metric": "printed_thickness",
+      "passes": 24,
+      "expected": 24
+    },
+    {
+      "metric": "leader_handle_and_tip",
+      "passes": 53,
+      "expected": 53
+    },
+    {
+      "metric": "leader_target_candidates",
+      "passes": 53,
+      "expected": 53
+    },
+    {
+      "metric": "profile_dimensions_and_printed_unit",
+      "passes": 20,
+      "expected": 20
+    },
+    {
+      "metric": "frame_scope",
+      "passes": 8,
+      "expected": 8
+    },
+    {
+      "metric": "do_not_borrow_thickness",
+      "passes": 3,
+      "expected": 3
+    },
+    {
+      "metric": "distinct_conflicting_evidence",
+      "passes": 1,
+      "expected": 1
+    },
+    {
+      "metric": "do_not_invent_leader",
+      "passes": 1,
+      "expected": 1
+    },
+    {
+      "metric": "unbound_printed_unit",
+      "passes": 1,
+      "expected": 1
+    },
+    {
+      "metric": "material_evidence",
+      "passes": 1,
+      "expected": 1
+    },
+    {
+      "metric": "unknown_material",
+      "passes": 1,
+      "expected": 1
+    }
+  ]
+}

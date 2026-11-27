@@ -1,0 +1,72 @@
+[
+  {
+    "case": "compact_letters",
+    "geometry_return": 4,
+    "expected_local": 1,
+    "actual_local": 0,
+    "volume_m3": null,
+    "volume_error_m3": null,
+    "edges": [],
+    "extraction_status": [
+      "no_bounded_cell"
+    ],
+    "passed": false
+  },
+  {
+    "case": "large_letters",
+    "geometry_return": 0,
+    "expected_local": 1,
+    "actual_local": 1,
+    "volume_m3": 2.188799998156801e-05,
+    "volume_error_m3": -1.8431989197735185e-14,
+    "edges": [
+      "2F",
+      "30",
+      "31",
+      "32"
+    ],
+    "extraction_status": [
+      "closed_local_candidate"
+    ],
+    "passed": true
+  },
+  {
+    "case": "open_edge",
+    "geometry_return": 4,
+    "expected_local": 0,
+    "actual_local": 0,
+    "volume_m3": null,
+    "volume_error_m3": null,
+    "edges": [],
+    "extraction_status": [
+      "no_bounded_cell"
+    ],
+    "passed": true
+  },
+  {
+    "case": "adjacent_cells",
+    "geometry_return": 4,
+    "expected_local": 0,
+    "actual_local": 0,
+    "volume_m3": null,
+    "volume_error_m3": null,
+    "edges": [],
+    "extraction_status": [
+      "ambiguous"
+    ],
+    "passed": true
+  },
+  {
+    "case": "ambiguous_thickness",
+    "geometry_return": 4,
+    "expected_local": 0,
+    "actual_local": 0,
+    "volume_m3": null,
+    "volume_error_m3": null,
+    "edges": [],
+    "extraction_status": [
+      "unknown_thickness_unit"
+    ],
+    "passed": true
+  }
+]

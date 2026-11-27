@@ -1,0 +1,44 @@
+[
+  {
+    "case": "S20",
+    "supplement": "同图同目标冲突有明确标记",
+    "observed_explicit_flag": true,
+    "n_candidates": 0,
+    "passed": true
+  },
+  {
+    "case": "S22",
+    "supplement": "重复同值未报为矛盾",
+    "observed_explicit_flag": false,
+    "n_candidates": 0,
+    "passed": true
+  },
+  {
+    "case": "S25",
+    "supplement": "相交处的双目标保留候选",
+    "observed_explicit_flag": false,
+    "n_candidates": 0,
+    "passed": true
+  },
+  {
+    "case": "S30",
+    "supplement": "同版双图同件身份有候选记录",
+    "observed_explicit_flag": false,
+    "n_candidates": 1,
+    "passed": true
+  },
+  {
+    "case": "S31",
+    "supplement": "跨版异值同号件有冲突或明确版次待核",
+    "observed_explicit_flag": true,
+    "n_candidates": 1,
+    "passed": true
+  },
+  {
+    "case": "S48",
+    "supplement": "悬空引线没有绑定附近原构件",
+    "observed_explicit_flag": false,
+    "n_candidates": 0,
+    "passed": true
+  }
+]

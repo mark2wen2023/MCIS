@@ -1,0 +1,120 @@
+{
+  "commit": "a3655bded2936e0790e46d196b9770ff680f6726",
+  "cases": [
+    {
+      "id": "00",
+      "case": "完整双图",
+      "expected": true,
+      "verified_asset_count": 1,
+      "exit": 0,
+      "issues": [
+        []
+      ],
+      "passed": true
+    },
+    {
+      "id": "01",
+      "case": "缺交叉引用",
+      "expected": false,
+      "verified_asset_count": 0,
+      "exit": 4,
+      "issues": [
+        [
+          "missing_cross_sheet_reference"
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "id": "02",
+      "case": "截面厚度冲突",
+      "expected": false,
+      "verified_asset_count": 0,
+      "exit": 4,
+      "issues": [
+        [
+          "independent_projection_conflict"
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "id": "03",
+      "case": "外法向反号",
+      "expected": false,
+      "verified_asset_count": 0,
+      "exit": 4,
+      "issues": [
+        [
+          "independent_projection_conflict"
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "id": "04",
+      "case": "标注落在部件外",
+      "expected": false,
+      "verified_asset_count": 0,
+      "exit": 4,
+      "issues": [
+        [
+          "missing_or_ambiguous_signed_measure"
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "id": "05",
+      "case": "多轮廓重叠",
+      "expected": false,
+      "verified_asset_count": 0,
+      "exit": 4,
+      "issues": [
+        [
+          "missing_or_ambiguous_outline"
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "id": "06",
+      "case": "役别不一致",
+      "expected": false,
+      "verified_asset_count": 0,
+      "exit": 4,
+      "issues": [
+        [
+          "two_unique_consistent_views_required"
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "id": "07",
+      "case": "次视图控制共线",
+      "expected": false,
+      "verified_asset_count": 0,
+      "exit": 4,
+      "issues": [
+        [
+          "missing_or_ambiguous_transform"
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "id": "08",
+      "case": "缺第二张图",
+      "expected": false,
+      "verified_asset_count": 0,
+      "exit": 4,
+      "issues": [
+        [
+          "two_unique_consistent_views_required"
+        ]
+      ],
+      "passed": true
+    }
+  ]
+}

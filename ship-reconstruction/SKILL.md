@@ -37,3 +37,7 @@ python -m unittest discover -s tests
 读取 schemas/geometry.schema.json 与 references/geometry-2.1.md，执行 geometry_data_validate 后读取 modeling_admission 及受阻区域。可参照 examples/s21 的三个完整接口样例。有争议的站位和舷别保留候选，保留甲板侧视与横剖端点各自证据。S3 消费方使用固定契约。S4 的二维构件试验入口与已支持的注记范围见 references/s4-preview.md。
 
 独立复验口径、工作范围与环境失败处理见 references/s21-acceptance.md。陌生样本交给提取端时只传图纸目录；独立评分端保管真值。
+
+### S4 自然结构图
+
+真实图纸从 scripts/s4_structure.py 开始。先按 observations 原图实例核对引线、型材词、单位和肋位，再查看 local_models 的局部候选及 components 的独立投影验证。用 scripts/s4_validate.py 读回交付文件。取得共同船轴与经验证的闭合船体后，可调用 scripts/s4_hull.py 对研究构件作裁切和闭合检查。命令、数据契约和未放行的定位条件见 references/s4-structure.md。
