@@ -39,3 +39,19 @@ class RegistrationEvidence(unittest.TestCase):
         import numpy as np
         from s2lib.curves import hits
         self.assertEqual(list(hits(0,np.array([[4e-12,2.],[1.,4.]]))),[2])
+
+class CrossDrawingMirror(unittest.TestCase):
+    def test_two_signed_witnesses_and_contradiction(self):
+        from s2lib.landmarks import decide
+        a,b="a"*64,"b"*64
+        labels=[dict(id=str(i),instance=str(i),layout="Model",p=[i,1,0]) for i in (1,2)]
+        frame=dict(layout="Model",status="verified",controls=["1","2","3","4"],hull_halfspaces=[[1,0,-5],[-1,0,0],[0,1,-5],[0,-1,-5]],paper_to_ship_m=[[1,0,0],[0,1,0],[0,0,0]])
+        m=lambda s:[[1,0,0],[0,s,0],[0,0,0]]
+        c=dict(source_sha256=a,layout="Model",samples=[[0,1,0],[3,1,0]],ship_coordinate_candidates=[dict(y_sign=s,paper_to_ship_m=m(s)) for s in (-1,1)])
+        import copy
+        g=dict(inventory=[dict(source_sha256=a,landmarks=labels),dict(source_sha256=b,landmarks=copy.deepcopy(labels),registration_notes=[dict(instance="D",layout="Model",text="X forward Y port Z up origin: stern")])],relationships=[dict(explicit_refs=[1],sources=[a,b])],alignment=[dict(source_sha256=b,frames=[frame])],curves=[c])
+        decide(g)
+        self.assertEqual(c["registration_decision"]["y_sign"],1)
+        g["inventory"][1]["landmarks"][1]["p"][1]=-1
+        decide(g)
+        self.assertIsNone(c["registration_decision"]["y_sign"])

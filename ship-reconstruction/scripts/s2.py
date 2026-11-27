@@ -15,7 +15,7 @@ from jsonschema import Draft202012Validator
 
 from cad_input import convert
 from core.drawing_parser import fingerprint
-from s2lib import alignment, cad, curves, tables, contract, corroboration
+from s2lib import alignment, cad, curves, tables, contract, corroboration, landmarks
 
 TOOLS = {
     "drawing_inventory": "inventory",
@@ -324,6 +324,7 @@ def process(path, dest, oda):
                     dimensions=dims,
                     document_ids=refs,
                     registration_notes=contract.drawing_notes(data["texts"]),
+                    landmarks=landmarks.collect(data["texts"]),
                     insertion_units_code=doc.units,
                 )
                 excluded = {
@@ -406,6 +407,7 @@ def process(path, dest, oda):
                     )
                 )
     g["relationships"] = links(g["inventory"])
+    landmarks.decide(g)
     g.update(contract.fields(g))
     g["validation"] = {}
     g["validation"] = check(g)

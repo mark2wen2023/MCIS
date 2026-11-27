@@ -186,6 +186,7 @@
           ]
         }
       ],
+      "landmarks": [],
       "insertion_units_code": 6,
       "coverage_warnings": [
         "table_ambiguities"
