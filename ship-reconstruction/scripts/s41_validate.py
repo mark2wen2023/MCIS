@@ -5,6 +5,7 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
+from jsonschema import Draft202012Validator
 from s4lib.evidence_graph import digest
 from s4_validate import validate as validate_solids
 
@@ -20,6 +21,9 @@ def load(path):
 
 def check(folder,source=None,oda=None,hull=None):
     graph=load(folder/"evidence-graph.json")
+    schema=load(Path(__file__).resolve().parents[1]/"schemas/structure-evidence-4.1.schema.json")
+    errors=[e.json_path+" "+e.message for e in Draft202012Validator(schema).iter_errors(graph)]
+    if errors:return errors
     structures=load(folder/"structures.json")
     issues=validate_solids(folder/"structures.json")
     if graph["version"]!="4.1" or graph["engineering_approved"] is not False:issues.append("版本或研究权限无效")

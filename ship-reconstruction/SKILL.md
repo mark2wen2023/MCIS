@@ -41,3 +41,7 @@ python -m unittest discover -s tests
 ### S4 自然结构图
 
 真实图纸从 scripts/s4_structure.py 开始。先按 observations 原图实例核对引线、型材词、单位和肋位，再查看 local_models 的局部候选及 components 的独立投影验证。用 scripts/s4_validate.py 读回交付文件。取得共同船轴与经验证的闭合船体后，可调用 scripts/s4_hull.py 对研究构件作裁切和闭合检查。命令、数据契约和未放行的定位条件见 references/s4-structure.md。
+
+### S4.1 结构安装关系
+
+需要确定构件的安装位置时，运行 scripts/s41.py；用 scripts/s41_validate.py 的 --source 选项重读原图。局部板件、船轴投影及完整定位分别记录。读取 references/s41.md 后再向下游传递安装关系。

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mcis:ship-reconstruction:structure-evidence:4.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version","engineering_approved","structures_content_sha256","nodes","edges","arrays","installations","chains","features"],
+  "properties": {
+    "version": {"const":"4.1"},
+    "engineering_approved": {"const":false},
+    "structures_content_sha256":{"type":"string","pattern":"^[0-9a-f]{64}$"},
+    "nodes":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["id","kind","attributes"],"properties":{"id":{"$ref":"#/$defs/id"},"kind":{"type":"string","minLength":1},"attributes":{"type":"object"}}}},
+    "edges":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["from","to","relation","basis","evidence"],"properties":{"from":{"$ref":"#/$defs/id"},"to":{"$ref":"#/$defs/id"},"relation":{"type":"string","minLength":1},"basis":{"enum":["direct","derived","candidate"]},"evidence":{"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string","pattern":"^cad-[0-9a-f]{64}$"}}}}},
+    "installations":{"type":"array","items":{"type":"object","required":["model_id","node","status"],"properties":{"node":{"$ref":"#/$defs/id"},"model_id":{"type":"string"},"status":{"enum":["local_only","partial_xz","registered_research"]}}}},
+    "arrays":{"type":"array","items":{"type":"object","required":["annotation","explicit_frames","intervals","rule","phase","inferred_frames","materialized_instances"],"properties":{"annotation":{"$ref":"#/$defs/id"},"explicit_frames":{"type":"array","items":{"type":"number"},"uniqueItems":true},"intervals":{"type":"array","items":{"type":"array","minItems":2,"maxItems":2,"items":{"type":"number"}}},"rule":{"type":["string","null"]},"phase":{"type":["integer","null"]},"inferred_frames":{"type":"array","items":{"type":"number"},"uniqueItems":true},"materialized_instances":{"const":[]}}}},
+    "chains":{"type":"array","items":{"type":"object","required":["annotation","role","leaders","issues"]}},
+    "features":{"type":"array","items":{"type":"object","required":["kind","source_sha256","note","evidence"],"properties":{"kind":{"enum":["rounded_opening_projection","nominal_tee_section","support_endpoint_on_section_curve"]},"source_sha256":{"type":"string","pattern":"^[0-9a-f]{64}$"},"note":{"type":"string","minLength":1},"evidence":{"type":"array","minItems":1,"items":{"type":"string","minLength":1}}}}}
+  },
+  "$defs":{"id":{"type":"string","pattern":"^[a-z_]+-[0-9a-f]{64}$"}}
+}
