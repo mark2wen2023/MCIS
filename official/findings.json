@@ -1,0 +1,29 @@
+{
+  "pin": "03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5",
+  "base": "94d5e38c926fda232bb987b60fa9145e4bcf01a7",
+  "conclusion": "no same-case track-version API; analysis still offline seedSha256",
+  "firstBreakpoint": {
+    "file": "service/mcis_service/analysis/router.py",
+    "sha": "03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5",
+    "sha256": "b3e91f7606b20da2c4ec1f07de396df0d041603dfbea694431a963f6e41bb4be",
+    "lines": "36-78"
+  },
+  "filesAtPin": {
+    "service/mcis_service/analysis/router.py": "b3e91f7606b20da2c4ec1f07de396df0d041603dfbea694431a963f6e41bb4be",
+    "service/mcis_service/analysis/build_seed.py": "b82788238d8a43b3f9637138e6875f8c9df6bb0ccfef5a9c6c00f169d07603be",
+    "service/mcis_service/tracks_import/router.py": "a89a366d003c2a991a1ba48a76cf0e75fdc219de03ce7e46fe78bde1571c9eb8",
+    "service/mcis_service/tracks_import/parser.py": "c33fc940cb82118a8893ced81953b10ec1b3838526ad13aacc45a16d9c564aab",
+    "service/mcis_service/track_history/router.py": "5eb2e4be12b8df150f931d4f51c9caa81ec180c48f34a5e3b0d80960c24e6b0d",
+    "service/mcis_service/track_history/service.py": "7e33fc744fd4ff7c4b17738d9f34079a7a6f94197c1d8723605e5fc4adee2655",
+    "service/mcis_service/track_history/models.py": "77e988b23a5e5522e244a6e2c5b0a87a324dae742ccc3a9b69f7fc90f6ab8c9a",
+    "service/mcis_service/cases/router.py": "8c1af5e9138d95c578bec6219debba063dbe90fefb5b434dcf6a8e56c8afe15f",
+    "service/mcis_service/cases/service.py": "e17e1c5709ec510cf5e443961039092d0315ad64f0342c67c38de684c706ebdf",
+    "service/mcis_service/colreg/router.py": "11e72064fd10b3961ad6afb0f0bdbe2e0de4532b39d13f2cc1732412bec73d21",
+    "web/src/analysis/types.ts": "608614a5ce1fafb39afa24e508ed4c169d2f116d969d0b81eab15c1d400a2f17",
+    "web/src/analysis/derive.ts": "abf69a5f53a6334e474b6af7278d4b29748128e1bcae5c11e7dc7832b6e05e53",
+    "web/src/analysis/useAnalysisSnapshot.ts": "ac9da6f6bc6fa8d01ff24aa3fc4247a6269a1bfe1756df109e607eb4e0a53910",
+    "web/src/pages/AnalysisPage.tsx": "793d8ebbcb30dddebbce27aa3843781f4cf60c99b0e013d57b34e6af10e3bfe2",
+    "contracts/W10.2-track-input.md": "51d2435d86553cdb869ded3642f20cfa5b515d76b869b6f06f7de51a220bc9de"
+  },
+  "httpAndBrowser": "not run this round"
+}

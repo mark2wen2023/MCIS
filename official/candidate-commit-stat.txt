@@ -1,0 +1,5 @@
+fe4803e docs(w12): record same-case track-version wiring check
+ .../w12-track-version-wiring/ACCEPTANCE.md         | 19 ++++++
+ .../w12-track-version-wiring/IMPLEMENTATION.md     | 75 ++++++++++++++++++++++
+ .../w12-track-version-wiring/README.md             |  9 +++
+ 3 files changed, 103 insertions(+)

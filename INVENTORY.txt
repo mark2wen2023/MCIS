@@ -1,0 +1,15 @@
+# W12 track-version wiring inventory
+# pin=03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5
+# base=94d5e38c926fda232bb987b60fa9145e4bcf01a7
+# candidate=fe4803e43ae83098261bf02623f4b3538ba5a11b
+
+c57c788a2ec85b9a3bac11eb1be1ce2b49c8024ddf14b5416c1678b776dd723d  CANDIDATE_SHA.txt  bytes=41
+e1124969231c93d478eddaf44589923cd43436ec9e647d80f0fd027b886f718c  INVENTORY.txt  bytes=1088
+2b57751c44fa8034a123e5e79fa3b6032cc967b853f083e3fccbb507e3627130  ISSUE_COMMENT_INPROGRESS.md  bytes=1102
+82edccb0d48863e5875f63b57cbccc561e54711c48ba8cac7fee22ac3044428e  OFFICIAL_RUN.txt  bytes=438
+07da6caf95bb219ff77980f0a55217b11edf40d5d56b7c167840a9fc13d65e64  REPORT.md  bytes=420
+44ade756f82d7766c35379c79de63f055d7b9656d4661bd91665a48bdeb9ad1a  acceptance/ACCEPTANCE.md  bytes=2100
+904ae07dae0c78899727c4493ce6fd52922a4e9673882491be21d0e93c4d8193  acceptance/IMPLEMENTATION.md  bytes=7520
+c0da13a825ed5bcc3cf334dae0971cca197f2dab793afc9e8c0b48bfac1d5901  acceptance/README.md  bytes=994
+0bbdd4bc9e20efff127cb6d79dee160b2bb0bc0c5159ae5bd0d7570ae846de72  official/candidate-commit-stat.txt  bytes=304
+0944e26dd8ea99dbcb0237866d1755a42b1897a3ef48a208ed65951c459f0346  official/findings.json  bytes=2203

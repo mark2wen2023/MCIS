@@ -1,0 +1,8 @@
+# W12 same-case track-version wiring check
+# Time zone: Asia/Shanghai (CST, UTC+8)
+# Static inspection only on pins:
+#   03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5
+#   94d5e38c926fda232bb987b60fa9145e4bcf01a7
+# No HTTP, no Chrome, no install, no product edit.
+# First breakpoint: service/mcis_service/analysis/router.py still returns offline seedSha256.
+# Worktree: /workspace/mcis-w12-track-cand  branch candidate/w12-track-version-wiring
