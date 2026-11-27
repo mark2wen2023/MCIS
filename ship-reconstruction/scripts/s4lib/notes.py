@@ -1,6 +1,7 @@
 """识别结构注记的字面证据。图面尺寸、图形单位和船轴定位分别处理。"""
 import re
 import unicodedata
+from fractions import Fraction
 
 ALIASES = (
     ("strong_beam", r"强横梁|strong\s*(?:deck\s*)?beam|web\s*beam"),
@@ -20,21 +21,21 @@ ALIASES = (
     ("plate",r"外板|舷板|底板|平板|钢板|板料|\bplate\b"),
 )
 NUM=r"(?:\d+(?:\.\d+)?|\.\d+)"
-UNIT=r"(?:mm|cm|m|毫米|厘米|米)"
+UNIT=r"(?:inches|inch|in\b|mm|cm|m|毫米|厘米|米)"
 SEP=r"\s*[x×*]\s*"
-UNIT_VALUE={"mm":"mm","毫米":"mm","cm":"cm","厘米":"cm","m":"m","米":"m"}
+UNIT_VALUE={"in":"in","inch":"in","inches":"in","mm":"mm","毫米":"mm","cm":"cm","厘米":"cm","m":"m","米":"m"}
 FR=r"(?:fr(?:ame)?\.?\s*#?|肋位\s*|肋号\s*|肋骨号\s*)"
-RANGE=re.compile(FR+r"("+NUM+r")\s*(?:[-~～—–至到]\s*(?:"+FR+r")?("+NUM+r"))?",re.I)
-PROFILE=re.compile(r"(?<![a-z])(?P<family>HP|FB|FLAT\s*BAR|BULB\s*FLAT|ANGLE|PL|L|T|I|H|Ø|Φ|∠|扁钢|球扁钢|角钢)\s*[-:]?\s*(?P<values>"+NUM+r"(?:(?:"+SEP+r"|\s*/\s*)"+NUM+r"){1,4})(?:\s*(?P<unit>"+UNIT+r"))?(?![\d.])",re.I)
+RANGE=re.compile(FR+r"([+-]?"+NUM+r")\s*(?:[-~～—–至到]\s*(?:"+FR+r")?([+-]?"+NUM+r"))?",re.I)
+PROFILE=re.compile(r"(?<![a-z])(?P<family>HP|FB|FLAT\s*BAR|BULB\s*FLAT|ANGLE|PL|L|T|I|H|Ø|Φ|∠|扁钢|球扁钢|角钢)\s*[-:]?\s*(?P<values>"+NUM+r"(?:(?:"+SEP+r"|\s*[/+]\s*)(?:"+NUM+r"|[?？])){1,4})(?:\s*(?P<unit>"+UNIT+r"))?(?![\d.])",re.I)
 QUANTITIES=(
-    ("thickness",r"(?<![a-z])(?:t|thk|thickness)\b\s*[:=]?|板厚\s*[:=]?|厚度?\s*[:=]?"),
+    ("thickness",r"(?<![a-z])(?:t|thk|thickness)\b\s*[:=]?|板厚\s*[:=]?|厚度?\s*[:=]?|δ\s*[:=]"),
     ("spacing",r"肋距\s*(?:s\s*=)?|间距\s*[:=]?|spacing\s*[:=]?|@\s*"),
     ("length",r"长度?\s*[:=]|length\s*[:=]"),
     ("width",r"宽度?\s*[:=]|width\s*[:=]"),
     ("height",r"高度?\s*[:=]|height\s*[:=]"),
 )
-SIZES=[(k,re.compile("(?:"+rg+")\\s*("+NUM+")\\s*("+UNIT+")?",re.I)) for k,rg in QUANTITIES]
-IDENT=re.compile(r"(?:构件编号|构件号|编号|\bID)\s*[:=#：]\s*([\w.-]+)",re.I)
+SIZES=[(k,re.compile("(?:"+rg+")\\s*("+NUM+"(?:/\\d+)?)(?![/\\d.])\\s*("+UNIT+")?",re.I)) for k,rg in QUANTITIES]
+IDENT=re.compile(r"(?:构件编号|构件号|编号|\bID)(?:\s*[:=#：]\s*|\s+)([\w.-]+)",re.I)
 STOCK=re.compile(r"(?<![a-zA-Z0-9.])[-−]\s*("+NUM+")"+SEP+"("+NUM+")(?:"+SEP+"("+NUM+"))?(?:\\s*("+UNIT+"))?",re.I)
 
 
@@ -49,16 +50,20 @@ def parse(text):
     dims=[]
     for kind,pattern in SIZES:
         for m in pattern.finditer(s):
-            dims.append(dict(kind=kind,value=float(m[1]),unit=UNIT_VALUE.get((m[2] or "").lower()),raw=m[0].strip()))
+            if re.match(r"\s*[x×*]",s[m.end():]):continue
+            if "/" in m[1] and int(m[1].split("/")[1])==0:continue
+            dims.append(dict(kind=kind,value=float(Fraction(m[1])),unit=UNIT_VALUE.get((m[2] or "").lower()),raw=m[0].strip()))
     profiles=[]
     for m in PROFILE.finditer(s):
-        profiles.append(dict(family=m["family"].upper(),values=[float(v) for v in re.findall(NUM,m["values"])],unit=UNIT_VALUE.get((m["unit"] or "").lower()),raw=m[0].strip()))
+        profiles.append(dict(family=m["family"].upper(),values=[None if v in ("?","？") else float(v) for v in re.findall(NUM+r"|[?？]",m["values"])],unit=UNIT_VALUE.get((m["unit"] or "").lower()),raw=m[0].strip()))
     for m in STOCK.finditer(s):
         profiles.append(dict(family="PL",values=[float(v) for v in m.groups()[:3] if v],unit=UNIT_VALUE.get((m[4] or "").lower()),raw=m[0].strip()))
     ranges=[dict(start=float(m[1]),end=float(m[2] or m[1]),raw=m[0]) for m in RANGE.finditer(s)]
     id_match=IDENT.search(s)
-    repeat=re.search(r"每(?:隔)?\s*(\d+)\s*(?:档|肋位|肋距)|隔肋设|每肋(?:位)?设|every\s+(\d+)\s+frames?",s,re.I)
-    material=re.search(r"(?:材料|材质|material|steel grade)\s*[:=：]\s*([A-Z][A-Z0-9-]*)\b",s,re.I)
+    if not id_match:
+        id_match=re.search(r"(?:^|\s)([A-Z]{1,8}-[A-Z0-9]+)(?!\s*[x×*]\s*\d)(?:$|\s)",s)
+    repeat=re.search(r"每(?:隔)?\s*(\d+)\s*(?:档|肋位|肋距)|\d+\s*道\s*@\s*"+NUM+r"|隔肋设|每肋(?:位)?设|every\s+(\d+)\s+frames?",s,re.I)
+    material=re.search(r"(?:材料|材质|material|steel grade)(?:\s*[:=：]\s*|\s+)([A-Z][A-Z0-9-]*)\b",s,re.I)
     if not any([roles,dims,profiles,ranges,id_match,repeat]):
         return None
     levels=[m[0] for m in re.finditer(r"主甲板|驾驶甲板|上甲板|下甲板|顶[篷蓬]甲板|走道甲板|内底板|main deck|upper deck|lower deck",compact,re.I)]

@@ -18,3 +18,16 @@ class Notes(unittest.TestCase):
 
     def test_deck_unit(self):
         self.assertEqual(parse("甲板t=7mm")["dimensions"][0]["unit"],"mm")
+
+    def test_section_with_flange_and_unknown(self):
+        for token,expected in [("T 160×7+60×8",[160,7,60,8]),("FB 65×?",[65,None])]:
+            r=parse(token)
+            self.assertEqual(r["profiles"][0]["values"],expected)
+            self.assertEqual(r["dimensions"],[])
+
+    def test_fraction_range_and_material(self):
+        r=parse("甲板 THK 1/4 in FR -4~-2 材质 AH32")
+        self.assertEqual(r["dimensions"][0]["value"],.25)
+        self.assertEqual(r["dimensions"][0]["unit"],"in")
+        self.assertEqual(r["frame_ranges"][0]["end"],-2)
+        self.assertEqual(r["material"],"AH32")

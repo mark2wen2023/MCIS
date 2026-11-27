@@ -11,7 +11,7 @@ def _context(instance):
 
 
 class LayoutIndex:
-    def __init__(self,curves,leaders):
+    def __init__(self,curves,leaders,arrows=()):
         self.curves=[]
         self.paths=[]
         self.lines=[]
@@ -26,6 +26,11 @@ class LayoutIndex:
             if c["type"]=="LINE":self.lines.append(i)
         self.tree=STRtree(self.paths)
         self.is_line=set(self.lines)
+        self.arrow_points=[(a,p) for a in arrows for p in a["vertices"]]
+        self.arrows=STRtree([Point(p[:2]) for _,p in self.arrow_points])
+        self.linked=defaultdict(list)
+        for i,leader in enumerate(leaders):
+            if leader.get("annotation"):self.linked[leader["annotation"]].append(i)
         self.leaders=leaders
         self.ends=STRtree([Point(v["vertices"][-1][:2]) for v in leaders])
 
@@ -42,11 +47,21 @@ class LayoutIndex:
             target=[self.curves[i]["instance"] for i in self.around(tip,eps) if self.curves[i]["instance"] not in handles and
                     self.paths[i].distance(Point(tip))<=eps]
             result.append(dict(method=method,handles=handles,tip_wcs=[float(v) for v in tip],target_instances=sorted(set(target)),tolerance_wcs=eps))
-        for i in self.ends.query(box(*(p-height*3),*(p+height*3))):
+        for i in sorted(set(self.linked[t["instance"]])|set(self.ends.query(box(*(p-height*3),*(p+height*3))))):
             lead=self.leaders[i]
             if lead.get("annotation") and lead["annotation"]!=t["instance"]:continue
             if _context(lead["instance"])!=_context(t["instance"]):continue
             add("native_leader",[lead["instance"]],lead["vertices"][0][:2])
+        if result:return result
+        for i in self.around(p,3*height):
+            c=self.curves[i]
+            if c["type"] not in ("LWPOLYLINE","POLYLINE") or c["geometry"].get("closed") or any(c["geometry"].get("bulges",[])) or _context(c["instance"])!=_context(t["instance"]):continue
+            ends=np.asarray(self.paths[i].coords)[[0,-1]]
+            for tip,tail in (ends,ends[::-1]):
+                if np.linalg.norm(tail-p)>3*height:continue
+                heads={self.arrow_points[j][0]["instance"] for j in self.arrows.query(Point(tip).buffer(eps)) if
+                       np.linalg.norm(np.asarray(self.arrow_points[j][1][:2])-tip)<=eps and _context(self.arrow_points[j][0]["instance"])==_context(c["instance"])}
+                if len(heads)==1:add("polyline_with_arrowhead",[c["instance"],*heads],tip)
         if result:return result
         # The shelf follows the text baseline, including rotated text. A nearby
         # curve is never accepted solely by distance to the text insertion point.
@@ -78,7 +93,7 @@ def observations(data,src):
     ents=defaultdict(list);native=defaultdict(list)
     for c in data["curves"]:ents[c["layout"]].append(c)
     for v in data.get("leaders",[]):native[v["layout"]].append(v)
-    indices={layout:LayoutIndex(curves,native[layout]) for layout,curves in ents.items()}
+    indices={layout:LayoutIndex(curves,native[layout],[a for a in data.get("arrowheads",[]) if a["layout"]==layout]) for layout,curves in ents.items()}
     rows=[]
     titles=[]
     for t in data["texts"]:
@@ -112,3 +127,22 @@ def associations(rows):
         candidates.append(dict(identity=key,status="conflict" if conflict else "shared_id_candidate",
                           evidence=[dict(source_sha256=r["source_sha256"],instance=r["instance"]) for r in group]))
     return candidates
+
+def target_conflicts(rows):
+    by_target=defaultdict(list)
+    for r in rows:
+        for leader in r["leaders"]:
+            if len(leader["target_instances"])==1:
+                by_target[(r["source_sha256"],leader["target_instances"][0])].append(r)
+    conflicts=[]
+    for (src,target),matches in by_target.items():
+        values=defaultdict(set)
+        for r in matches:
+            for d in r["dimensions"]:
+                if d["kind"]=="thickness":
+                    scale={"mm":.001,"cm":.01,"m":1.,"in":.0254}.get(d["unit"])
+                    values["metres" if scale else "unspecified"].add(round(d["value"]*(scale or 1),12))
+        if any(len(v)>1 for v in values.values()):
+            conflicts.append(dict(kind="inconsistent_thickness_at_same_entity",source_sha256=src,target=target,instances=sorted({r["instance"] for r in matches})))
+            for r in matches:r["modeling_status"]="conflicting_dimensions"
+    return conflicts

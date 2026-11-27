@@ -21,7 +21,7 @@ def xyz(p):
 
 
 def read(doc):
-    data = dict(texts=[], leaders=[], segments=[], native=[], curves=[], issues=[], counts=Counter())
+    data = dict(texts=[], leaders=[], arrowheads=[], segments=[], native=[], curves=[], issues=[], counts=Counter())
 
     def walk(layout, name, parent, path, blocks):
         for e in layout:
@@ -77,6 +77,11 @@ def read(doc):
                             height=float(height) * parent.transform_direction((0, 1, 0)).magnitude,
                         )
                     )
+                continue
+            if typ == "SOLID":
+                vs=[w(v) for v in e.wcs_vertices()]
+                if len({tuple(p) for p in vs})==3:
+                    data["arrowheads"].append(dict(**ref,vertices=vs))
                 continue
             if typ == "LEADER":
                 vertices=[w(v) for v in e.vertices]
