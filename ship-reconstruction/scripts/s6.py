@@ -3,6 +3,8 @@ import argparse
 import traceback
 import json
 from pathlib import Path
+import shutil
+from tempfile import TemporaryDirectory
 import subprocess
 import sys
 import numpy as np
@@ -116,11 +118,98 @@ def structure_stage(src,out,oda,before,reference,mode,assumptions):
     return result
 
 
+STAGES = ("hull", "structure", "equipment")
+
+
 def snapshot(src):
-    return {p.name:fingerprint(p) for p in sorted(src.iterdir()) if p.is_file() and p.suffix.lower() in (".dwg",".dxf")}
+    return {p.relative_to(src).as_posix(): fingerprint(p) for p in sorted(src.rglob("*"))
+            if p.is_file() and p.suffix.lower() in (".dwg", ".dxf")}
 
 
-def run(src,out,oda=None,reference=None,synthetic=False,*,mode=None,assumptions=()):
+def delivery_refs(report):
+    refs = {}
+    def add(stage, path, sha=None):
+        if path in refs or Path(path).is_absolute() or ".." in Path(path).parts:
+            raise ValueError("交付路径冲突或越界")
+        refs[path] = (stage, sha)
+
+    for stage in STAGES:
+        r = report[stage]
+        if r["status"] not in ("partial", "exported"):
+            continue
+        if stage == "hull":
+            a = r["asset"]
+            add(stage, a["file"], a["sha256"])
+        elif stage == "structure":
+            for item in r["partial_placements"]:
+                a = item["asset"]
+                add(stage, a["file"], a["sha256"])
+            for item in r["registered_components"]:
+                if item["geometry_status"] == "research_geometry_verified":
+                    add(stage, "structure/" + item["asset"], item["asset_sha256"])
+            ref = r.get("reference_readback", {})
+            if "file" in ref:
+                add(stage, ref["file"], ref["source_glb_sha256"])
+        else:
+            for a in r["assets"]:
+                add(stage, a["file"], a["sha256"])
+                add(stage, a["json"])
+    return refs
+
+
+def file_inventory(out, report):
+    refs = delivery_refs(report)
+    rows = []
+    roots = {root: stage for stage in STAGES for root in report[stage].get("published_roots", [])}
+    for path in sorted(out.rglob("*")):
+        rel = path.relative_to(out)
+        name = rel.as_posix()
+        if path.is_symlink():
+            raise ValueError("输出含符号链接：" + name)
+        if name == "manifest.json" or path.is_dir():
+            continue
+        if not path.is_file():
+            raise ValueError("输出含非普通文件：" + name)
+        root = rel.parts[0]
+        owner = roots.get(root, "run")
+        digest = fingerprint(path)
+        role = "intermediate_evidence"
+        if root in ("diagnostics", "invalidated") or path.suffix == ".log":
+            role = "diagnostic"
+            if root == "diagnostics" and len(rel.parts) > 1:
+                owner = Path(rel.parts[1]).stem
+        elif name in refs:
+            owner, expected = refs.pop(name)
+            if expected and digest != expected:
+                raise ValueError("交付指纹不一致：" + name)
+            role = "research_demo" if report["mode"] == "demo" else "strict_delivery"
+        rows.append(dict(path=name, bytes=path.stat().st_size, sha256=digest, role=role,
+                         stage=owner, mode=report["mode"]))
+    if refs:
+        raise ValueError("缺少交付文件：" + ", ".join(sorted(refs)))
+    return rows
+
+
+def verify(out):
+    report = json.loads((out / "manifest.json").read_bytes())
+    if report.get("sealed") is not True or report.get("inventory_version") != 1:
+        raise ValueError("运行清单尚未封存或版本不支持")
+    mode = report["mode"]
+    if mode not in ("strict", "demo") or bool(report["assumptions"]) != (mode == "demo"):
+        raise ValueError("模式与假设不符")
+    if (report["engineering_approved"] is not False or report["formal_calculation_authorized"] is not False
+            or any(report[s]["mode"] != mode or report[s]["formal_calculation_authorized"] is not False
+                   or report[s]["status"] not in ("partial", "exported", "blocked", "failed") for s in STAGES)):
+        raise ValueError("授权、模式或分项状态不符")
+    quality = json.loads((out / (mode + "-quality.json")).read_bytes())
+    if quality != {k: report[k] for k in (*STAGES, "mode", "assumptions", "status", "formal_calculation_authorized")}:
+        raise ValueError("质量记录与清单不符")
+    if report["files"] != file_inventory(out, report):
+        raise ValueError("递归文件、角色、尺寸或指纹与清单不符")
+    return report
+
+
+def run(src,out,oda=None,reference=None,synthetic=False,*,mode=None,assumptions=(),recover_from=None):
     mode=mode or ("demo" if synthetic else "strict")
     if mode not in ("strict","demo") or (mode=="strict" and (synthetic or assumptions)):
         raise ValueError("严格模式不能接收演示假设")
@@ -129,9 +218,32 @@ def run(src,out,oda=None,reference=None,synthetic=False,*,mode=None,assumptions=
     if any(not isinstance(n,str) or not n.strip() for n in notes):raise ValueError("假设必须为非空文字")
     if mode=="demo" and not notes:
         raise ValueError("演示模式需要明确假设")
+    intake_error = None
+    try:
+        inputs = snapshot(src)
+        ref_hash = fingerprint(reference) if reference else None
+    except OSError as exc:
+        inputs, ref_hash, intake_error = {}, None, str(exc)
+    identity = dict(drawings=inputs, reference_sha256=ref_hash,
+                    synthetic_common_datum=synthetic, mode=mode, assumptions=notes)
+    recovery = None
+    if recover_from is not None:
+        previous = recover_from / "manifest.json"
+        old = json.loads(previous.read_bytes())
+        if old.get("request") != identity:
+            raise ValueError("恢复要求相同原件、参考资产、模式与假设")
+        recovery = dict(previous_manifest_sha256=fingerprint(previous), strategy="full_replay")
     out.mkdir(parents=True,exist_ok=False)
-    report=dict(mode=mode,assumptions=notes,engineering_approved=False,formal_calculation_authorized=False)
-    stages=("hull","structure","equipment")
+    report=dict(mode=mode,assumptions=notes,engineering_approved=False,formal_calculation_authorized=False,
+                request=identity, recovery=recovery, sealed=False, inventory_version=1)
+    with TemporaryDirectory(prefix="s6-input-") as temporary:
+        return _execute(src, out, oda, reference, synthetic, report, Path(temporary), intake_error)
+
+
+def _execute(src, out, oda, reference, synthetic, report, frozen, intake_error):
+    inputs = report["request"]["drawings"]
+    mode, notes = report["mode"], report["assumptions"]
+    stages = STAGES
     for name in stages:report[name]=dict(status="pending",reason=None)
     def checkpoint():
         tmp=out/"manifest.tmp"
@@ -145,16 +257,41 @@ def run(src,out,oda=None,reference=None,synthetic=False,*,mode=None,assumptions=
         for name in stages:
             report[name].update(mode=mode,formal_calculation_authorized=False)
         save(out/(mode+"-quality.json"),{k:report[k] for k in (*stages,"mode","assumptions","status","formal_calculation_authorized")})
+        report["files"] = file_inventory(out, report)
+        report["sealed"] = True
         checkpoint()
         return report
+    checkpoint()
     try:
-        inputs=snapshot(src)
+        if intake_error:
+            raise ValueError(intake_error)
+        for name, sha in inputs.items():
+            target = frozen / "drawings" / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(src / name, target)
+            if fingerprint(target) != sha:
+                raise ValueError("原件在采集时改变")
+        ref_copy = None
+        if reference:
+            ref_copy = frozen / "reference.glb"
+            shutil.copyfile(reference, ref_copy)
+            if fingerprint(ref_copy) != report["request"]["reference_sha256"]:
+                raise ValueError("参考资产在采集时改变")
         before=sorted(inputs.values())
         if not before or len(set(before))!=len(before):raise ValueError("缺少图纸或输入重复")
     except (OSError,ValueError) as exc:
         for name in stages:report[name]=dict(status="blocked",reason=str(exc),category="input")
         return complete()
-    files=[src/name for name in inputs]
+    def inputs_match():
+        try:
+            return (snapshot(src) == inputs and
+                    (reference is None or fingerprint(reference) == report["request"]["reference_sha256"]))
+        except OSError:
+            return False
+
+    changed = False
+    frozen_src = frozen / "drawings"
+    files=[frozen_src/name for name in inputs]
     report.update(sources=before,json_frames={"geometry.json":"S2.1 per-field WCS or ship candidate",
             "structure/structures.json":"S4 local axes or verified projections; intermediate research evidence",
             "structure/evidence-graph.json":"WCS and partial XZ",
@@ -167,18 +304,19 @@ def run(src,out,oda=None,reference=None,synthetic=False,*,mode=None,assumptions=
         report[name]=dict(status="running",reason=None)
         checkpoint()
         try:
-            if name=="hull":result=hull_stage(src,stage,oda,before,mode)
-            elif name=="structure":result=structure_stage(src,stage,oda,before,reference,mode,notes)
+            if name=="hull":result=hull_stage(frozen_src,stage,oda,before,mode)
+            elif name=="structure":result=structure_stage(frozen_src,stage,oda,before,ref_copy,mode,notes)
             else:
                 hull=report["hull"]
                 registered=hull if hull.get("evidence",{}).get("absolute_frame") else None
                 result=extract_equipment(files,stage,oda,synthetic,registered,hull_dir=out)
                 if result["assets"]:result["status"]="partial" if result["rejected"] else "exported"
-            if snapshot(src)!=inputs:raise ValueError("输入图纸发生变化")
+
             for item in list(stage.iterdir()):
                 dest=out/item.name
                 if dest.exists():raise ValueError("分项输出文件重名")
                 item.rename(dest);moved.append(dest)
+            result["published_roots"]=sorted(v.name for v in moved)
             result["published_files"]=[v.name for v in moved if v.is_file()]
             if name=="structure":result["intermediate_source_evidence"]="structure/"
             stage.rmdir()
@@ -195,25 +333,32 @@ def run(src,out,oda=None,reference=None,synthetic=False,*,mode=None,assumptions=
                         reason=f"{type(exc).__name__}: {exc}",diagnostics=f"diagnostics/{name}.log")
         result["mode"]=mode
         result["formal_calculation_authorized"]=False
+        changed = not inputs_match() or changed
         report[name]=result
         if name=="structure" and "reference_readback" in result:report["reference_readback"]=result["reference_readback"]
         checkpoint()
-    try:stable=snapshot(src)==inputs
-    except OSError:stable=False
-    if not stable:
+    if changed or not inputs_match():
         folder=out/"invalidated";folder.mkdir()
         for dest in published:dest.rename(folder/dest.name)
         report.pop("reference_readback",None)
-        for name in stages:report[name]=dict(status="blocked",reason="原图身份改变，产物已隔离",category="input")
+        save(folder/"stage-outcomes.json",{name:report[name] for name in stages})
+        for name in stages:report[name]=dict(status="blocked",reason="输入身份改变，产物已隔离",category="input")
     return complete()
 
 if __name__=="__main__":
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument("drawings",type=Path);p.add_argument("--out",type=Path,required=True)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument("drawings",type=Path,nargs="?");p.add_argument("--out",type=Path,required=True)
     p.add_argument("--oda",type=Path);p.add_argument("--local-reference",type=Path)
     p.add_argument("--synthetic-common-datum",action="store_true",help="仅供已声明相同原点的合成输入")
+    p.add_argument("--recover-from",type=Path,help="绑定旧清单，在新目录从冻结输入完整重跑")
+    p.add_argument("--verify", action="store_true",help="校验 --out 中已封存的运行；无需指定图纸")
     p.add_argument("--mode",choices=["strict","demo"])
     p.add_argument("--assumption",action="append",default=[])
     a=p.parse_args()
-    result=run(a.drawings,a.out,a.oda,a.local_reference,a.synthetic_common_datum,mode=a.mode,assumptions=a.assumption)
+    if a.verify:
+        result=verify(a.out)
+        print(json.dumps(dict(verified=True, mode=result["mode"], files=len(result["files"]))))
+        raise SystemExit(0)
+    if a.drawings is None:p.error("运行需要图纸目录")
+    result=run(a.drawings,a.out,a.oda,a.local_reference,a.synthetic_common_datum,mode=a.mode,assumptions=a.assumption,recover_from=a.recover_from)
     print(json.dumps({k:result[k] for k in ("mode","status")}))
     raise SystemExit(1 if any(result[k]["status"]=="failed" for k in ("hull","structure","equipment")) else 4 if result["status"]=="blocked" else 0)

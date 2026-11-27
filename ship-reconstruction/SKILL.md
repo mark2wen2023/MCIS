@@ -49,3 +49,5 @@ python -m unittest discover -s tests
 ### S6 统一执行
 
 使用 scripts/s6.py 运行船体、局部结构及设备入口。输入为一个包含同一研究对象图纸的目录，输出使用新目录。落地数据、坐标恢复、关节、拒绝状态和复验命令见 references/s6.md。
+
+V1.0 研究候选交付前执行 `python scripts/s6.py --verify --out <运行目录>`，按封存清单中的角色交付。失败现场和恢复后的运行分别保留，恢复命令及四类文件定义见 [S6 清单与恢复约定](references/s6.md)。

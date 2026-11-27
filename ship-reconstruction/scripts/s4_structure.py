@@ -172,8 +172,8 @@ def main(extension=None):
     a.out.mkdir(parents=True,exist_ok=False)
     with tempfile.TemporaryDirectory() as tmp:
         drawings=[]
-        for path in sorted(a.input.iterdir()):
-            if path.suffix.lower() in (".dxf",".dwg"):
+        for path in sorted(a.input.rglob("*")):
+            if path.is_file() and path.suffix.lower() in (".dxf",".dwg"):
                 sha=fingerprint(path)
                 converted,adapter=convert(path,Path(tmp),a.oda)
                 drawings.append(dict(sha256=sha,cad=ezdxf.readfile(converted),conversion=adapter,dxf_sha256=fingerprint(converted)))
