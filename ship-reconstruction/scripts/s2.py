@@ -15,7 +15,7 @@ from jsonschema import Draft202012Validator
 
 from cad_input import convert
 from core.drawing_parser import fingerprint
-from s2lib import alignment, cad, curves, tables, contract
+from s2lib import alignment, cad, curves, tables, contract, corroboration
 
 TOOLS = {
     "drawing_inventory": "inventory",
@@ -362,6 +362,7 @@ def process(path, dest, oda):
                     warnings.append("candidate_alignment_only")
                 inv["coverage_warnings"] = warnings
                 curves.geometry_handoff(cr, frames, found)
+                corroboration.side_profile_observations(cr,frames,found)
                 for record in cr:
                     record["parameter_source"] = "converted_dxf" if adapter else "source_dxf"
                 if any(

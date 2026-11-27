@@ -5,7 +5,7 @@ from cad_input import declarations
 
 
 def drawing_notes(texts):
-    pattern = r"origin|原点|symmetric|symmetry|对称|asymmetr|half.breadth|左右舷|左舷|右舷|\bport\b|starboard|完整型值范围|offset domain|x\s+forward|y\s+port|z\s+up"
+    pattern = r"origin|原点|symmetric|symmetry|对称|asymmetr|half.breadth|左右舷|左舷|右舷|[左右][^\s]{0,12}(?:油柜|水柜)|\bport\b|starboard|完整型值范围|offset domain|x\s+forward|y\s+port|z\s+up"
     return [{k:t[k] for k in ("instance","handle","layout","text","p")} for t in texts if re.search(pattern,t["text"],re.I)]
 
 
@@ -42,7 +42,7 @@ def fields(g):
                 continue
             residual=obs["geometry_height_m"]-c["value_m"]
             if abs(residual)>0.025:
-                conflicts.append(dict(kind="deck_note_vs_section_endpoint",station_m=c["station_m"],level_m=None,printed_m=c["value_m"],section_endpoint_m=obs["geometry_height_m"],residual_m=residual,comparison_limit_m=0.025,evidence=evidence(src,[*c["instances"],obs["curve"]])))
+                conflicts.append(dict(kind="deck_note_vs_section_endpoint",station_m=c["station_m"],level_m=None,printed_m=c["value_m"],section_endpoint_m=obs["geometry_height_m"],residual_m=residual,comparison_limit_m=0.025,side_profile_candidates=obs.get("side_profile_candidates",[]),evidence=evidence(src,[*c["instances"],obs["curve"],*(h for p in obs.get("side_profile_candidates",[]) for h in [p["curve"],p["label"],*p["grid_handles"]])])))
     for item in conflicts:
         blocked.append(dict(scope="deck_to_section_join" if item["kind"].startswith("deck_") else "offset_cell",station_m=item["station_m"],level_m=item["level_m"],evidence=item["evidence"]))
     # Acceptance uses a complete, explicitly bounded half-breadth dataset. A general
