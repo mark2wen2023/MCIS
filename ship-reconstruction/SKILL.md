@@ -45,3 +45,7 @@ python -m unittest discover -s tests
 ### S4.1 结构安装关系
 
 需要确定构件的安装位置时，运行 scripts/s41.py；用 scripts/s41_validate.py 的 --source 选项重读原图。局部板件、船轴投影及完整定位分别记录。读取 references/s41.md 后再向下游传递安装关系。
+
+### S6 统一执行
+
+使用 scripts/s6.py 运行船体、局部结构及设备入口。输入为一个包含同一研究对象图纸的目录，输出使用新目录。落地数据、坐标恢复、关节、拒绝状态和复验命令见 references/s6.md。

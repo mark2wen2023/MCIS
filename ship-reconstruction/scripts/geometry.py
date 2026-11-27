@@ -147,7 +147,10 @@ def quality(mesh):
 
 
 def exchange(mesh):
+    if mesh.metadata.get("storage_frame")=="gltf_y_up":
+        raise ValueError("模型已采用glTF坐标")
     m=mesh.copy()
+    m.metadata["storage_frame"]="gltf_y_up"
     m.apply_transform([[1,0,0,0],[0,0,1,0],[0,-1,0,0],[0,0,0,1]])
     return m
 
@@ -156,6 +159,16 @@ def read_exchange(path):
     scene=trimesh.load_scene(path,process=False)
     mesh=scene.to_geometry()
     mesh.apply_transform([[1,0,0,0],[0,0,-1,0],[0,1,0,0],[0,0,0,1]])
+    from pathlib import Path
+    if Path(path).suffix.lower()==".glb":
+        from coordinate_contract import read_meta,contract
+        meta=read_meta(Path(path)).get("coordinates")
+        if meta is not None:
+            if meta!=contract(meta["reference_frame"],meta["origin_in_reference_m"]):
+                raise ValueError("未知的模型交换约定")
+            mesh.apply_translation(meta["origin_in_reference_m"])
+            mesh.metadata["reference_frame"]=meta["reference_frame"]
+    mesh.metadata["storage_frame"]="reference"
     return mesh
 
 

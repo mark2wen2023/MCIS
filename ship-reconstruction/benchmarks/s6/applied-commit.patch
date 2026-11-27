@@ -1,0 +1,53 @@
+From a247407618b177e10135f14e04bf707962091b87 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?MCIS=20=E7=8B=AC=E7=AB=8B=E9=AA=8C=E6=94=B6?=
+ <qa@local.invalid>
+Date: Sat, 28 Nov 2026 00:36:16 +0800
+Subject: [PATCH] =?UTF-8?q?=E5=9C=A8=20S3=20=E7=A0=94=E7=A9=B6=E6=A8=A1?=
+ =?UTF-8?q?=E5=9E=8B=E5=AF=BC=E5=87=BA=E6=97=B6=E9=AA=8C=E8=AF=81=E9=97=AD?=
+ =?UTF-8?q?=E5=90=88=E5=B9=B6=E5=BA=94=E7=94=A8=E4=BA=A4=E6=8D=A2=E5=9D=90?=
+ =?UTF-8?q?=E6=A0=87=E7=B3=BB?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ ship-reconstruction/scripts/s3_closure.py | 3 ++-
+ ship-reconstruction/scripts/s3_run.py     | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/ship-reconstruction/scripts/s3_closure.py b/ship-reconstruction/scripts/s3_closure.py
+index 04cfd16..161f273 100644
+--- a/ship-reconstruction/scripts/s3_closure.py
++++ b/ship-reconstruction/scripts/s3_closure.py
+@@ -15,5 +15,6 @@ def close_domain(x,z,y,*,boundary_evidence,source_handles):
+     mesh,faces,meta=build_shell(rows,[],True,True)
+     if not mesh.is_watertight or not mesh.is_winding_consistent or not mesh.is_volume or mesh.body_count!=1 or np.any(mesh.area_faces<=0): raise ValueError('closure topology rejected')
+     q=quality(mesh)
+-    if q['self_intersection_pairs'] not in (None,0) or q['vertex_manifold'] is False: raise ValueError('geometric validation rejected')
++    if not q['closed_verified']:
++        raise ValueError('closed solid requires verified manifold and self-intersection checks')
+     return mesh,dict(quality=q,face_evidence=faces,boundary_evidence=boundary_evidence,engineering_approved=False,closure_assumption='symmetric rectangular domain with planar boundary caps')
+diff --git a/ship-reconstruction/scripts/s3_run.py b/ship-reconstruction/scripts/s3_run.py
+index 222e898..5b2f106 100644
+--- a/ship-reconstruction/scripts/s3_run.py
++++ b/ship-reconstruction/scripts/s3_run.py
+@@ -4,6 +4,7 @@ Research only. Never imports the older S2 from the S3 checkout.
+ import argparse, hashlib, json, subprocess, sys
+ from pathlib import Path
+ from s3_s21 import reconstruct
++from geometry import exchange
+ 
+ FROZEN='0cfbcb74ae7749e83a02baccab4ec68d71b134a4'
+ 
+@@ -55,7 +56,7 @@ def run(root, source, out, python=sys.executable):
+     except ValueError as e:
+         report.update(status='blocked',reason=str(e))
+     else:
+-        mesh.export(out/'research.glb'); report.update(status='research_mesh',mesh_report=r)
++        exchange(mesh).export(out/'research.glb'); report.update(status='research_mesh',mesh_report=r)
+     (out/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2,allow_nan=False,default=lambda a:a.tolist()))
+     return report
+ 
+-- 
+2.54.0 (Apple Git-157)
+

@@ -1,0 +1,773 @@
+{
+  "source_commits": {
+    "original": "c9883e3060c1cee7a427a814d3a7735608e6c18b",
+    "patched": "a247407618b177e10135f14e04bf707962091b87",
+    "upstream": "0cfbcb74ae7749e83a02baccab4ec68d71b134a4"
+  },
+  "platform": {
+    "system": "Darwin",
+    "release": "27.2.0",
+    "arch": "arm64",
+    "python": "3.13.2"
+  },
+  "packages": {
+    "libigl": "2.6.3",
+    "trimesh": "4.8.3",
+    "numpy": "2.5.5",
+    "scipy": "1.18.1",
+    "ezdxf": "1.4.5",
+    "shapely": "2.1.1"
+  },
+  "envs": {
+    "full": {
+      "igl": true,
+      "cgal": true
+    },
+    "no-igl": {
+      "igl": false,
+      "cgal": false
+    },
+    "no-cgal": {
+      "igl": true,
+      "cgal": false
+    }
+  },
+  "suites": [
+    {
+      "version": "original",
+      "suite": "s3",
+      "tests": 55,
+      "seconds": 0.055,
+      "exit": 0
+    },
+    {
+      "version": "original",
+      "suite": "all",
+      "tests": 68,
+      "seconds": 2.574,
+      "exit": 0
+    },
+    {
+      "version": "patched",
+      "suite": "s3",
+      "tests": 55,
+      "seconds": 0.06,
+      "exit": 0
+    },
+    {
+      "version": "patched",
+      "suite": "all",
+      "tests": 68,
+      "seconds": 2.823,
+      "exit": 0
+    }
+  ],
+  "cli_cases": [
+    {
+      "version": "original",
+      "scenario": "A",
+      "environment": "full",
+      "exit": 0,
+      "input_sha256": "68f35a9974a3eaa336ca72fd3b71cd2b54b62fd7dafa553057bd3cbceaae916a",
+      "admission": "full_research",
+      "engineering_approved": false,
+      "outcome": "research_mesh",
+      "reason": null,
+      "wrote_glb": true,
+      "closed_verified": true,
+      "self_intersections": 0,
+      "vertex_manifold": true,
+      "absolute_frame": true,
+      "raw_decoder": {
+        "volume_m3": 18.0,
+        "waterplane_m2": 18.0,
+        "center_m": [
+          3.0,
+          0.0,
+          0.5
+        ],
+        "center_error_m": 0.0,
+        "sampled_surface_max_m": 1.790180836524724e-15,
+        "full_volume_m3": 36.0,
+        "bounds": [
+          [
+            0.0,
+            -1.5,
+            0.0
+          ],
+          [
+            6.0,
+            1.5,
+            2.0
+          ]
+        ],
+        "closed_verified": true
+      },
+      "exchange_decoder": {
+        "volume_m3": 30.0,
+        "waterplane_m2": 12.0,
+        "center_m": [
+          2.9999999999999996,
+          -1.0,
+          -0.2500000000000002
+        ],
+        "center_error_m": 1.2500000000000002,
+        "sampled_surface_max_m": 1.5811388300841898,
+        "full_volume_m3": 36.0,
+        "bounds": [
+          [
+            0.0,
+            -2.0,
+            -1.5
+          ],
+          [
+            6.0,
+            0.0,
+            1.5
+          ]
+        ],
+        "closed_verified": true
+      }
+    },
+    {
+      "version": "original",
+      "scenario": "A",
+      "environment": "no-igl",
+      "exit": 0,
+      "input_sha256": "68f35a9974a3eaa336ca72fd3b71cd2b54b62fd7dafa553057bd3cbceaae916a",
+      "admission": "full_research",
+      "engineering_approved": false,
+      "outcome": "research_mesh",
+      "reason": null,
+      "wrote_glb": true,
+      "closed_verified": false,
+      "self_intersections": null,
+      "vertex_manifold": null,
+      "absolute_frame": true
+    },
+    {
+      "version": "original",
+      "scenario": "A",
+      "environment": "no-cgal",
+      "exit": 0,
+      "input_sha256": "68f35a9974a3eaa336ca72fd3b71cd2b54b62fd7dafa553057bd3cbceaae916a",
+      "admission": "full_research",
+      "engineering_approved": false,
+      "outcome": "research_mesh",
+      "reason": null,
+      "wrote_glb": true,
+      "closed_verified": false,
+      "self_intersections": null,
+      "vertex_manifold": null,
+      "absolute_frame": true
+    },
+    {
+      "version": "original",
+      "scenario": "B",
+      "environment": "full",
+      "exit": 0,
+      "input_sha256": "b62dcb46b6d9011da55bdcfebe386598f34f1af89712c3bdb200bd92484beb19",
+      "admission": "local_symmetric",
+      "engineering_approved": false,
+      "outcome": "research_mesh",
+      "reason": null,
+      "wrote_glb": true,
+      "closed_verified": true,
+      "self_intersections": 0,
+      "vertex_manifold": true,
+      "absolute_frame": false,
+      "raw_decoder": {
+        "volume_m3": 18.0,
+        "waterplane_m2": 18.0,
+        "center_m": [
+          3.0,
+          0.0,
+          0.5
+        ],
+        "center_error_m": 0.0,
+        "sampled_surface_max_m": 1.790180836524724e-15,
+        "full_volume_m3": 36.0,
+        "bounds": [
+          [
+            0.0,
+            -1.5,
+            0.0
+          ],
+          [
+            6.0,
+            1.5,
+            2.0
+          ]
+        ],
+        "closed_verified": true
+      },
+      "exchange_decoder": {
+        "volume_m3": 30.0,
+        "waterplane_m2": 12.0,
+        "center_m": [
+          2.9999999999999996,
+          -1.0,
+          -0.2500000000000002
+        ],
+        "center_error_m": 1.2500000000000002,
+        "sampled_surface_max_m": 1.5811388300841898,
+        "full_volume_m3": 36.0,
+        "bounds": [
+          [
+            0.0,
+            -2.0,
+            -1.5
+          ],
+          [
+            6.0,
+            0.0,
+            1.5
+          ]
+        ],
+        "closed_verified": true
+      }
+    },
+    {
+      "version": "original",
+      "scenario": "C",
+      "environment": "full",
+      "exit": 0,
+      "input_sha256": "58da25d380263da41ff1f4f3004df1366b0a6d0aecdea0d572735bb38f6e3b16",
+      "admission": "blocked",
+      "engineering_approved": false,
+      "outcome": "blocked",
+      "reason": "modeling blocked",
+      "wrote_glb": false,
+      "closed_verified": null,
+      "self_intersections": null,
+      "vertex_manifold": null,
+      "absolute_frame": null
+    },
+    {
+      "version": "original",
+      "scenario": "asymmetric_drawing",
+      "environment": "full",
+      "exit": 0,
+      "input_sha256": "8a153cc8f68aa832dda57e4ae86d828ce6d96b5d6e5fbf61a377e95cbc47a785",
+      "admission": "blocked",
+      "engineering_approved": false,
+      "outcome": "blocked",
+      "reason": "modeling blocked",
+      "wrote_glb": false,
+      "closed_verified": null,
+      "self_intersections": null,
+      "vertex_manifold": null,
+      "absolute_frame": null
+    },
+    {
+      "version": "patched",
+      "scenario": "A",
+      "environment": "full",
+      "exit": 0,
+      "input_sha256": "68f35a9974a3eaa336ca72fd3b71cd2b54b62fd7dafa553057bd3cbceaae916a",
+      "admission": "full_research",
+      "engineering_approved": false,
+      "outcome": "research_mesh",
+      "reason": null,
+      "wrote_glb": true,
+      "closed_verified": true,
+      "self_intersections": 0,
+      "vertex_manifold": true,
+      "absolute_frame": true,
+      "raw_decoder": {
+        "volume_m3": 30.0,
+        "waterplane_m2": 12.0,
+        "center_m": [
+          3.0,
+          0.9999999999999999,
+          -0.2500000000000002
+        ],
+        "center_error_m": 1.25,
+        "sampled_surface_max_m": 1.5811388300841898,
+        "full_volume_m3": 36.0,
+        "bounds": [
+          [
+            0.0,
+            0.0,
+            -1.5
+          ],
+          [
+            6.0,
+            2.0,
+            1.5
+          ]
+        ],
+        "closed_verified": true
+      },
+      "exchange_decoder": {
+        "volume_m3": 18.0,
+        "waterplane_m2": 18.0,
+        "center_m": [
+          3.0,
+          0.0,
+          0.5
+        ],
+        "center_error_m": 0.0,
+        "sampled_surface_max_m": 1.790180836524724e-15,
+        "full_volume_m3": 36.0,
+        "bounds": [
+          [
+            0.0,
+            -1.5,
+            0.0
+          ],
+          [
+            6.0,
+            1.5,
+            2.0
+          ]
+        ],
+        "closed_verified": true
+      }
+    },
+    {
+      "version": "patched",
+      "scenario": "A",
+      "environment": "no-igl",
+      "exit": 0,
+      "input_sha256": "68f35a9974a3eaa336ca72fd3b71cd2b54b62fd7dafa553057bd3cbceaae916a",
+      "admission": "full_research",
+      "engineering_approved": false,
+      "outcome": "blocked",
+      "reason": "closed solid requires verified manifold and self-intersection checks",
+      "wrote_glb": false,
+      "closed_verified": null,
+      "self_intersections": null,
+      "vertex_manifold": null,
+      "absolute_frame": null
+    },
+    {
+      "version": "patched",
+      "scenario": "A",
+      "environment": "no-cgal",
+      "exit": 0,
+      "input_sha256": "68f35a9974a3eaa336ca72fd3b71cd2b54b62fd7dafa553057bd3cbceaae916a",
+      "admission": "full_research",
+      "engineering_approved": false,
+      "outcome": "blocked",
+      "reason": "closed solid requires verified manifold and self-intersection checks",
+      "wrote_glb": false,
+      "closed_verified": null,
+      "self_intersections": null,
+      "vertex_manifold": null,
+      "absolute_frame": null
+    },
+    {
+      "version": "patched",
+      "scenario": "B",
+      "environment": "full",
+      "exit": 0,
+      "input_sha256": "b62dcb46b6d9011da55bdcfebe386598f34f1af89712c3bdb200bd92484beb19",
+      "admission": "local_symmetric",
+      "engineering_approved": false,
+      "outcome": "research_mesh",
+      "reason": null,
+      "wrote_glb": true,
+      "closed_verified": true,
+      "self_intersections": 0,
+      "vertex_manifold": true,
+      "absolute_frame": false,
+      "raw_decoder": {
+        "volume_m3": 30.0,
+        "waterplane_m2": 12.0,
+        "center_m": [
+          3.0,
+          0.9999999999999999,
+          -0.2500000000000002
+        ],
+        "center_error_m": 1.25,
+        "sampled_surface_max_m": 1.5811388300841898,
+        "full_volume_m3": 36.0,
+        "bounds": [
+          [
+            0.0,
+            0.0,
+            -1.5
+          ],
+          [
+            6.0,
+            2.0,
+            1.5
+          ]
+        ],
+        "closed_verified": true
+      },
+      "exchange_decoder": {
+        "volume_m3": 18.0,
+        "waterplane_m2": 18.0,
+        "center_m": [
+          3.0,
+          0.0,
+          0.5
+        ],
+        "center_error_m": 0.0,
+        "sampled_surface_max_m": 1.790180836524724e-15,
+        "full_volume_m3": 36.0,
+        "bounds": [
+          [
+            0.0,
+            -1.5,
+            0.0
+          ],
+          [
+            6.0,
+            1.5,
+            2.0
+          ]
+        ],
+        "closed_verified": true
+      }
+    },
+    {
+      "version": "patched",
+      "scenario": "C",
+      "environment": "full",
+      "exit": 0,
+      "input_sha256": "58da25d380263da41ff1f4f3004df1366b0a6d0aecdea0d572735bb38f6e3b16",
+      "admission": "blocked",
+      "engineering_approved": false,
+      "outcome": "blocked",
+      "reason": "modeling blocked",
+      "wrote_glb": false,
+      "closed_verified": null,
+      "self_intersections": null,
+      "vertex_manifold": null,
+      "absolute_frame": null
+    },
+    {
+      "version": "patched",
+      "scenario": "asymmetric_drawing",
+      "environment": "full",
+      "exit": 0,
+      "input_sha256": "8a153cc8f68aa832dda57e4ae86d828ce6d96b5d6e5fbf61a377e95cbc47a785",
+      "admission": "blocked",
+      "engineering_approved": false,
+      "outcome": "blocked",
+      "reason": "modeling blocked",
+      "wrote_glb": false,
+      "closed_verified": null,
+      "self_intersections": null,
+      "vertex_manifold": null,
+      "absolute_frame": null
+    }
+  ],
+  "frame_cases": [
+    {
+      "origin": "zero",
+      "offset_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "route": "raw_direct_read",
+      "vertex_max_error_m": 0.0,
+      "sampled_surface_max_m": 4.585973723508303e-16,
+      "full_volume_m3": 7.5,
+      "expected_volume_m3": 7.5,
+      "wet_volume_m3": 6.5625,
+      "expected_wet_m3": 6.5625,
+      "waterplane_m2": 2.25,
+      "expected_waterplane_m2": 2.25,
+      "buoyancy_error_m": 4.742874840267547e-16,
+      "synthetic_coordinate_budget_m": 1e-06,
+      "within_coordinate_budget": true
+    },
+    {
+      "origin": "zero",
+      "offset_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "route": "raw_with_exchange_reader",
+      "vertex_max_error_m": 4.242640687119285,
+      "sampled_surface_max_m": 3.0,
+      "full_volume_m3": 7.5,
+      "expected_volume_m3": 7.5,
+      "wet_volume_m3": 6.223958333333333,
+      "expected_wet_m3": 6.5625,
+      "waterplane_m2": 2.1875,
+      "expected_waterplane_m2": 2.25,
+      "buoyancy_error_m": 1.4000536002410158,
+      "synthetic_coordinate_budget_m": 1e-06,
+      "within_coordinate_budget": false
+    },
+    {
+      "origin": "zero",
+      "offset_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "route": "paired_exchange_read",
+      "vertex_max_error_m": 0.0,
+      "sampled_surface_max_m": 4.585973723508303e-16,
+      "full_volume_m3": 7.5,
+      "expected_volume_m3": 7.5,
+      "wet_volume_m3": 6.5625,
+      "expected_wet_m3": 6.5625,
+      "waterplane_m2": 2.25,
+      "expected_waterplane_m2": 2.25,
+      "buoyancy_error_m": 4.742874840267547e-16,
+      "synthetic_coordinate_budget_m": 1e-06,
+      "within_coordinate_budget": true
+    },
+    {
+      "origin": "shifted",
+      "offset_m": [
+        7.25,
+        -8.5,
+        4.75
+      ],
+      "route": "raw_direct_read",
+      "vertex_max_error_m": 0.0,
+      "sampled_surface_max_m": 4.585973723508303e-16,
+      "full_volume_m3": 7.5,
+      "expected_volume_m3": 7.5,
+      "wet_volume_m3": 6.5625,
+      "expected_wet_m3": 6.5625,
+      "waterplane_m2": 2.25,
+      "expected_waterplane_m2": 2.25,
+      "buoyancy_error_m": 4.742874840267547e-16,
+      "synthetic_coordinate_budget_m": 1e-06,
+      "within_coordinate_budget": true
+    },
+    {
+      "origin": "shifted",
+      "offset_m": [
+        7.25,
+        -8.5,
+        4.75
+      ],
+      "route": "raw_with_exchange_reader",
+      "vertex_max_error_m": 16.343959128681153,
+      "sampled_surface_max_m": 13.75,
+      "full_volume_m3": 7.5,
+      "expected_volume_m3": 7.5,
+      "wet_volume_m3": 7.5,
+      "expected_wet_m3": 6.5625,
+      "waterplane_m2": null,
+      "expected_waterplane_m2": 2.25,
+      "buoyancy_error_m": 13.337403051308797,
+      "synthetic_coordinate_budget_m": 1e-06,
+      "within_coordinate_budget": false
+    },
+    {
+      "origin": "shifted",
+      "offset_m": [
+        7.25,
+        -8.5,
+        4.75
+      ],
+      "route": "paired_exchange_read",
+      "vertex_max_error_m": 0.0,
+      "sampled_surface_max_m": 4.585973723508303e-16,
+      "full_volume_m3": 7.5,
+      "expected_volume_m3": 7.5,
+      "wet_volume_m3": 6.5625,
+      "expected_wet_m3": 6.5625,
+      "waterplane_m2": 2.25,
+      "expected_waterplane_m2": 2.25,
+      "buoyancy_error_m": 4.742874840267547e-16,
+      "synthetic_coordinate_budget_m": 1e-06,
+      "within_coordinate_budget": true
+    },
+    {
+      "origin": "opposite",
+      "offset_m": [
+        -31.5,
+        17.75,
+        -2.0
+      ],
+      "route": "raw_direct_read",
+      "vertex_max_error_m": 0.0,
+      "sampled_surface_max_m": 4.585973723508303e-16,
+      "full_volume_m3": 7.5,
+      "expected_volume_m3": 7.5,
+      "wet_volume_m3": 6.5625,
+      "expected_wet_m3": 6.5625,
+      "waterplane_m2": 2.25,
+      "expected_waterplane_m2": 2.25,
+      "buoyancy_error_m": 4.742874840267547e-16,
+      "synthetic_coordinate_budget_m": 1e-06,
+      "within_coordinate_budget": true
+    },
+    {
+      "origin": "opposite",
+      "offset_m": [
+        -31.5,
+        17.75,
+        -2.0
+      ],
+      "route": "raw_with_exchange_reader",
+      "vertex_max_error_m": 29.480926037015866,
+      "sampled_surface_max_m": 27.23279273229244,
+      "full_volume_m3": 7.5,
+      "expected_volume_m3": 7.5,
+      "wet_volume_m3": 0.0,
+      "expected_wet_m3": 6.5625,
+      "waterplane_m2": 0.0,
+      "expected_waterplane_m2": 2.25,
+      "buoyancy_error_m": null,
+      "synthetic_coordinate_budget_m": 1e-06,
+      "within_coordinate_budget": false
+    },
+    {
+      "origin": "opposite",
+      "offset_m": [
+        -31.5,
+        17.75,
+        -2.0
+      ],
+      "route": "paired_exchange_read",
+      "vertex_max_error_m": 0.0,
+      "sampled_surface_max_m": 4.585973723508303e-16,
+      "full_volume_m3": 7.5,
+      "expected_volume_m3": 7.5,
+      "wet_volume_m3": 6.5625,
+      "expected_wet_m3": 6.5625,
+      "waterplane_m2": 2.25,
+      "expected_waterplane_m2": 2.25,
+      "buoyancy_error_m": 4.742874840267547e-16,
+      "synthetic_coordinate_budget_m": 1e-06,
+      "within_coordinate_budget": true
+    },
+    {
+      "origin": "decimal",
+      "offset_m": [
+        -0.12345,
+        0.23456,
+        -0.34567
+      ],
+      "route": "raw_direct_read",
+      "vertex_max_error_m": 1.9815237198514353e-07,
+      "sampled_surface_max_m": 1.9815237198514353e-07,
+      "full_volume_m3": 7.50000037811697,
+      "expected_volume_m3": 7.5,
+      "wet_volume_m3": 6.562500330219346,
+      "expected_wet_m3": 6.5625,
+      "waterplane_m2": 2.250000087625799,
+      "expected_waterplane_m2": 2.25,
+      "buoyancy_error_m": 5.0027906752538725e-08,
+      "synthetic_coordinate_budget_m": 1e-06,
+      "within_coordinate_budget": true
+    },
+    {
+      "origin": "decimal",
+      "offset_m": [
+        -0.12345,
+        0.23456,
+        -0.34567
+      ],
+      "route": "raw_with_exchange_reader",
+      "vertex_max_error_m": 4.60040566605905,
+      "sampled_surface_max_m": 2.946583139521387,
+      "full_volume_m3": 7.50000037811697,
+      "expected_volume_m3": 7.5,
+      "wet_volume_m3": 4.4873613229281855,
+      "expected_wet_m3": 6.5625,
+      "waterplane_m2": 3.878551523177317,
+      "expected_waterplane_m2": 2.25,
+      "buoyancy_error_m": 1.4033671453377814,
+      "synthetic_coordinate_budget_m": 1e-06,
+      "within_coordinate_budget": false
+    },
+    {
+      "origin": "decimal",
+      "offset_m": [
+        -0.12345,
+        0.23456,
+        -0.34567
+      ],
+      "route": "paired_exchange_read",
+      "vertex_max_error_m": 1.9815237198514353e-07,
+      "sampled_surface_max_m": 1.9815237198514353e-07,
+      "full_volume_m3": 7.50000037811697,
+      "expected_volume_m3": 7.5,
+      "wet_volume_m3": 6.562500330219346,
+      "expected_wet_m3": 6.5625,
+      "waterplane_m2": 2.250000087625799,
+      "expected_waterplane_m2": 2.25,
+      "buoyancy_error_m": 5.0027906752538725e-08,
+      "synthetic_coordinate_budget_m": 1e-06,
+      "within_coordinate_budget": true
+    },
+    {
+      "origin": "float32_boundary",
+      "offset_m": [
+        16777216.0,
+        -16777216.0,
+        16777216.0
+      ],
+      "route": "raw_direct_read",
+      "vertex_max_error_m": 1.0,
+      "sampled_surface_max_m": 0.9486832980505138,
+      "full_volume_m3": 6.0,
+      "expected_volume_m3": 7.5,
+      "wet_volume_m3": 5.68359375,
+      "expected_wet_m3": 6.5625,
+      "waterplane_m2": 1.265625,
+      "expected_waterplane_m2": 2.25,
+      "buoyancy_error_m": 0.2803978568080724,
+      "synthetic_coordinate_budget_m": 1e-06,
+      "within_coordinate_budget": false
+    },
+    {
+      "origin": "float32_boundary",
+      "offset_m": [
+        16777216.0,
+        -16777216.0,
+        16777216.0
+      ],
+      "route": "raw_with_exchange_reader",
+      "vertex_max_error_m": 33554434.50000003,
+      "sampled_surface_max_m": 33554432.00000006,
+      "full_volume_m3": 6.0,
+      "expected_volume_m3": 7.5,
+      "wet_volume_m3": 6.0,
+      "expected_wet_m3": 6.5625,
+      "waterplane_m2": null,
+      "expected_waterplane_m2": 2.25,
+      "buoyancy_error_m": 33554431.713293675,
+      "synthetic_coordinate_budget_m": 1e-06,
+      "within_coordinate_budget": false
+    },
+    {
+      "origin": "float32_boundary",
+      "offset_m": [
+        16777216.0,
+        -16777216.0,
+        16777216.0
+      ],
+      "route": "paired_exchange_read",
+      "vertex_max_error_m": 1.0,
+      "sampled_surface_max_m": 0.9486832980505138,
+      "full_volume_m3": 6.0,
+      "expected_volume_m3": 7.5,
+      "wet_volume_m3": 5.68359375,
+      "expected_wet_m3": 6.5625,
+      "waterplane_m2": 1.265625,
+      "expected_waterplane_m2": 2.25,
+      "buoyancy_error_m": 0.2803978568080724,
+      "synthetic_coordinate_budget_m": 1e-06,
+      "within_coordinate_budget": false
+    },
+    {
+      "origin": "float32_boundary",
+      "offset_m": [
+        16777216.0,
+        -16777216.0,
+        16777216.0
+      ],
+      "route": "local_float32_plus_external_double_origin",
+      "vertex_max_error_m": 0.0,
+      "within_coordinate_budget": true,
+      "synthetic_coordinate_budget_m": 1e-06
+    }
+  ]
+}

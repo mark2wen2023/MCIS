@@ -1,0 +1,140 @@
+[
+  {
+    "version": "original",
+    "paper_offset": [
+      0.0,
+      0.0
+    ],
+    "admission": "full_research",
+    "engineering_approved": false,
+    "correct_frame_readback_m": [
+      [
+        0.0,
+        -1.5,
+        0.0
+      ],
+      [
+        6.0,
+        1.5,
+        2.0
+      ]
+    ],
+    "wet_volume_m3": 18.0
+  },
+  {
+    "version": "patched",
+    "paper_offset": [
+      0.0,
+      0.0
+    ],
+    "admission": "full_research",
+    "engineering_approved": false,
+    "correct_frame_readback_m": [
+      [
+        0.0,
+        -1.5,
+        0.0
+      ],
+      [
+        6.0,
+        1.5,
+        2.0
+      ]
+    ],
+    "wet_volume_m3": 18.0,
+    "roundtrips": 5,
+    "maximum_incremental_drift_m": 0.0
+  },
+  {
+    "version": "original",
+    "paper_offset": [
+      211.25,
+      -94.5
+    ],
+    "admission": "full_research",
+    "engineering_approved": false,
+    "correct_frame_readback_m": [
+      [
+        0.0,
+        -1.5,
+        0.0
+      ],
+      [
+        6.0,
+        1.5,
+        2.0
+      ]
+    ],
+    "wet_volume_m3": 18.0
+  },
+  {
+    "version": "patched",
+    "paper_offset": [
+      211.25,
+      -94.5
+    ],
+    "admission": "full_research",
+    "engineering_approved": false,
+    "correct_frame_readback_m": [
+      [
+        0.0,
+        -1.5,
+        0.0
+      ],
+      [
+        6.0,
+        1.5,
+        2.0
+      ]
+    ],
+    "wet_volume_m3": 18.0,
+    "roundtrips": 5,
+    "maximum_incremental_drift_m": 0.0
+  },
+  {
+    "version": "original",
+    "paper_offset": [
+      -837.5,
+      412.75
+    ],
+    "admission": "full_research",
+    "engineering_approved": false,
+    "correct_frame_readback_m": [
+      [
+        0.0,
+        -1.5,
+        0.0
+      ],
+      [
+        6.0,
+        1.5,
+        2.0
+      ]
+    ],
+    "wet_volume_m3": 18.0
+  },
+  {
+    "version": "patched",
+    "paper_offset": [
+      -837.5,
+      412.75
+    ],
+    "admission": "full_research",
+    "engineering_approved": false,
+    "correct_frame_readback_m": [
+      [
+        0.0,
+        -1.5,
+        0.0
+      ],
+      [
+        6.0,
+        1.5,
+        2.0
+      ]
+    ],
+    "wet_volume_m3": 18.0,
+    "roundtrips": 5,
+    "maximum_incremental_drift_m": 0.0
+  }
+]

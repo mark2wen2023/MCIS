@@ -1,0 +1,29 @@
+{
+  "bundle": {
+    "file": "s63.git.bundle",
+    "bytes": 26248,
+    "sha256": "e4fbc3fe0e579d32f74dc12852d727d8eb5c0277578a83089daa1e9ad3ec07bd"
+  },
+  "zip": {
+    "file": "s63.zip",
+    "bytes": 30165,
+    "sha256": "57d7d7ed31a33f20c123940257ca361da8857057f8194e4e6fdeafe0e3bac2c9"
+  },
+  "head": "b546eda61fcef3bb76393afcc73ab1eee29b268f",
+  "full_history": [
+    "4d64ecde877e1ff60d190b13d435a25901c246bd S5.1 synthetic articulated assembly prototype",
+    "6694efdb53a12c1cd1cca018ac2f49e43b36bab5 S5.2 parameterize three equipment envelopes",
+    "2bc4d7db94d9daab1895ab314cb76e2397f44e7f S5.3 explicit DXF equipment contract and rejection controls",
+    "313cc02e182008a467758433896de1c86203db29 S5.4 research assembly and roundtrip motion controls",
+    "c0381c20f6eea8b42167c666b590f25bbc37ee42 S5.5 incremental variable-speed motion runtime",
+    "c58a7602987556fcd985922a1296ae9f64008f16 S6.1 explicit S3 exchange frame bridge",
+    "6baaeb7354b7484e7f960c338177a3bac759c4ef S6.2 preserve articulated motion in Y-up exchange",
+    "b546eda61fcef3bb76393afcc73ab1eee29b268f S6.3 preserve fixed structural identities in articulated assembly"
+  ],
+  "fsck_passed": true,
+  "archive_files_equal_to_git": 30,
+  "unit_tests": 11,
+  "timing_s": 0.061,
+  "platform": "macOS arm64, CPython 3.13.2",
+  "offline": true
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "origin_m": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "port_extreme_m": 2.0,
+    "starboard_extreme_m": -1.0,
+    "full_m3": 30.0,
+    "wet_m3": 15.0,
+    "waterplane_m2": 15.0,
+    "center_m": [
+      2.533333333333333,
+      0.4666666666666667,
+      0.5
+    ],
+    "center_error_m": 0.0,
+    "asymmetric_sign_preserved": true,
+    "independent_gltf_transform_verified": true,
+    "production_s3_modeler_used": false
+  },
+  {
+    "origin_m": [
+      17.125,
+      -6.25,
+      3.75
+    ],
+    "port_extreme_m": 2.0,
+    "starboard_extreme_m": -1.0,
+    "full_m3": 30.0,
+    "wet_m3": 15.0,
+    "waterplane_m2": 15.0,
+    "center_m": [
+      2.533333333333333,
+      0.4666666666666667,
+      0.5
+    ],
+    "center_error_m": 0.0,
+    "asymmetric_sign_preserved": true,
+    "independent_gltf_transform_verified": true,
+    "production_s3_modeler_used": false
+  },
+  {
+    "origin_m": [
+      -41.5,
+      15.25,
+      -7.25
+    ],
+    "port_extreme_m": 2.0,
+    "starboard_extreme_m": -1.0,
+    "full_m3": 30.0,
+    "wet_m3": 15.0,
+    "waterplane_m2": 15.0,
+    "center_m": [
+      2.533333333333333,
+      0.4666666666666667,
+      0.5
+    ],
+    "center_error_m": 0.0,
+    "asymmetric_sign_preserved": true,
+    "independent_gltf_transform_verified": true,
+    "production_s3_modeler_used": false
+  }
+]

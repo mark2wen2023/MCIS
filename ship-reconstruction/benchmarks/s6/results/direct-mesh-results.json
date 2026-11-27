@@ -1,0 +1,158 @@
+[
+  {
+    "case": "A",
+    "frame": "vessel",
+    "route": "direct_mesh",
+    "bounds_m": [
+      [
+        0.0,
+        -1.5,
+        0.0
+      ],
+      [
+        6.0,
+        1.5,
+        2.0
+      ]
+    ],
+    "direct_vertex_error_m": 0.0,
+    "closed": true,
+    "wet_m3": 18.0,
+    "waterplane_m2": 18.0,
+    "center_m": [
+      3.0,
+      0.0,
+      0.5
+    ]
+  },
+  {
+    "case": "A",
+    "frame": "vessel",
+    "route": "original_GLB",
+    "bounds_m": [
+      [
+        0.0,
+        -2.0,
+        -1.5
+      ],
+      [
+        6.0,
+        0.0,
+        1.5
+      ]
+    ],
+    "direct_vertex_error_m": 3.5355339059327378,
+    "closed": true,
+    "wet_m3": 30.0,
+    "waterplane_m2": 12.0,
+    "center_m": [
+      2.9999999999999996,
+      -1.0,
+      -0.2500000000000002
+    ]
+  },
+  {
+    "case": "A",
+    "frame": "vessel",
+    "route": "patched_GLB",
+    "bounds_m": [
+      [
+        0.0,
+        -1.5,
+        0.0
+      ],
+      [
+        6.0,
+        1.5,
+        2.0
+      ]
+    ],
+    "direct_vertex_error_m": 0.0,
+    "closed": true,
+    "wet_m3": 18.0,
+    "waterplane_m2": 18.0,
+    "center_m": [
+      3.0,
+      0.0,
+      0.5
+    ]
+  },
+  {
+    "case": "B",
+    "frame": "local_only",
+    "route": "direct_mesh",
+    "bounds_m": [
+      [
+        0.0,
+        -1.5,
+        0.0
+      ],
+      [
+        6.0,
+        1.5,
+        2.0
+      ]
+    ],
+    "direct_vertex_error_m": 0.0,
+    "closed": true,
+    "wet_m3": 18.0,
+    "waterplane_m2": 18.0,
+    "center_m": [
+      3.0,
+      0.0,
+      0.5
+    ]
+  },
+  {
+    "case": "B",
+    "frame": "local_only",
+    "route": "original_GLB",
+    "bounds_m": [
+      [
+        0.0,
+        -2.0,
+        -1.5
+      ],
+      [
+        6.0,
+        0.0,
+        1.5
+      ]
+    ],
+    "direct_vertex_error_m": 3.5355339059327378,
+    "closed": true,
+    "wet_m3": 30.0,
+    "waterplane_m2": 12.0,
+    "center_m": [
+      2.9999999999999996,
+      -1.0,
+      -0.2500000000000002
+    ]
+  },
+  {
+    "case": "B",
+    "frame": "local_only",
+    "route": "patched_GLB",
+    "bounds_m": [
+      [
+        0.0,
+        -1.5,
+        0.0
+      ],
+      [
+        6.0,
+        1.5,
+        2.0
+      ]
+    ],
+    "direct_vertex_error_m": 0.0,
+    "closed": true,
+    "wet_m3": 18.0,
+    "waterplane_m2": 18.0,
+    "center_m": [
+      3.0,
+      0.0,
+      0.5
+    ]
+  }
+]
