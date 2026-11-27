@@ -3,6 +3,8 @@ import hashlib
 import json
 import re
 from collections import defaultdict
+import numpy as np
+from .member_features import tee_sections, openings
 from .installation import array_evidence, project_section
 
 
@@ -15,9 +17,9 @@ def build(structures, drawings):
     nodes={}; edges={}; installations=[]; arrays=[]; chains=[]
     by_src={d["sha256"]:d["data"] for d in drawings}
     notes={}; cross=defaultdict(list)
-    def node(kind,key,**attributes):
-        ident=kind+"-"+digest(key)
-        record=dict(id=ident,kind=kind,attributes=attributes)
+    def node(node_kind,key,**attributes):
+        ident=node_kind+"-"+digest(key)
+        record=dict(id=ident,kind=node_kind,attributes=attributes)
         if ident in nodes and nodes[ident]!=record:raise ValueError("图谱实体标识冲突")
         nodes[ident]=record
         return ident
@@ -78,6 +80,42 @@ def build(structures, drawings):
             target=(match[1] or match[2]).strip()
             edge(n,node("installation_instruction",key,target_phrase=target,matched_component=None),
                  "names_support_condition","direct",[ref])
+    features=[]
+    for src,data in by_src.items():
+        curves={c["instance"]:c for c in data["curves"]}
+        texts={t["instance"]:t for t in data["texts"]}
+        for r in structures["observations"]:
+            if r["source_sha256"]!=src:continue
+            features.extend(tee_sections(r,curves))
+        features.extend(openings(data,src))
+        # An adjacent continuation beneath the same shelf is a scoped candidate.
+        # Its target phrase does not independently establish a weld or a side.
+        for m in structures["local_models"]:
+            if m["source_sha256"]!=src or not m["leader"]:continue
+            t=texts[m["instance"]];lead=curves.get(m["leader"][0])
+            if not lead or lead["type"]!="LINE":continue
+            u=np.array(t["baseline"][:2]);u=u/np.linalg.norm(u);v=np.array([-u[1],u[0]])
+            ends=np.array(lead["samples"])[:,:2];height=t["height"]
+            if height<=0 or np.ptp(ends@v)>height*.01:continue
+            candidates=[]
+            for h,b in texts.items():
+                if b["layout"]!=t["layout"] or h.rpartition("/")[0]!=m["instance"].rpartition("/")[0] or not re.search(r"对应.+处设|安装于|贴于|installed on",b["text"],re.I):continue
+                if (src,h) not in notes:continue
+                p=np.array(b["p"][:2])
+                if abs(p@v-(ends@v).mean())<=2*height and min(ends@u)-height<=p@u<=max(ends@u)+height:
+                    candidates.append(h)
+            if len(candidates)==1:
+                h=candidates[0];ref=entity(src,h)
+                obj="local_solid-"+digest(m["id"])
+                edge(notes[src,h],obj,"possible_installation_qualifier","candidate",[ref,entity(src,m["instance"]),entity(src,m["leader"][0])])
+    for feature in features:
+        s=feature["source_sha256"];refs=[entity(s,h) for h in feature["evidence"]]
+        f=node(feature["kind"],[s,feature["note"],feature["evidence"]],**feature)
+        n=notes.get((s,feature["note"]),refs[0])
+        edge(n,f,"supported_projection","derived",refs)
+        if feature["kind"]=="rounded_opening_projection":
+            key=("opening_dimensions_radius",*map(lambda v:round(v,8),feature["nominal_size_m"]),round(feature["radius_m"],8))
+            cross[key].append((s,f,refs[0]))
     for key,records in cross.items():
         if len({s for s,_,_ in records})<2:continue
         g=node("cross_sheet_candidate",key,criterion=list(key),instance_identity_verified=False)
@@ -101,4 +139,4 @@ def build(structures, drawings):
         for e in rr:edge(geom,e,"verified_against_projection","derived",rr)
         installations.append(dict(model_id=r["id"],node=geom,status="registered_research",basis="two_registered_projections"))
     return dict(version="4.1",engineering_approved=False,nodes=sorted(nodes.values(),key=lambda v:v["id"]),
-                edges=[edges[k] for k in sorted(edges)],installations=installations,arrays=arrays,chains=chains)
+                edges=[edges[k] for k in sorted(edges)],installations=installations,arrays=arrays,chains=chains,features=features)
