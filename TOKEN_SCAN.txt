@@ -1,0 +1,3 @@
+PASS
+scanned_files=6
+no env tokens or known credential patterns found in report/staging

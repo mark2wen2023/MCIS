@@ -1,0 +1,33 @@
+commit 7345c1eb5ee6fb76558d88ff6d75172145b53ea2
+Author: Mark Wen <mark@users.noreply.github.com>
+Date:   Fri Nov 27 16:50:43 2026 +0800
+
+    fix(w12): say this round only computed T+120/130
+    
+    Replace the assembly snapshot hint that called other
+    query instants “no dual-ship co-temporal measurement”.
+    Uncomputed originals may still have co-temporal points
+    (T+60 and T+100 do). No other product behavior change.
+
+diff --git a/tests_acceptance/w12-registered-json-gap/snapshot.py b/tests_acceptance/w12-registered-json-gap/snapshot.py
+index 34c1c7e..b86e82d 100644
+--- a/tests_acceptance/w12-registered-json-gap/snapshot.py
++++ b/tests_acceptance/w12-registered-json-gap/snapshot.py
+@@ -389,7 +389,7 @@ def build_analysis_case(
+         "whatif": None,
+         "notes": [
+             "视图快照只读，hover 不再读取原件。缺口取自已登记原件 sampling.missingIntervals，不从步长猜测。",
+-            "仅 T+120 与 T+130 为双船同刻实测并调用既有 mcis-core cpa（对照 d49a691）。T+124.25 在 A 开区间内部，不显示 A 样位或双船指标。T+121 与 T+127.5 为 A 原始端点，不是双船同刻。",
++            "本轮只计算 T+120/130，并调用既有 mcis-core cpa（对照 d49a691）。T+124.25 在 A 开区间内部，不显示 A 样位或双船指标。T+121 与 T+127.5 为 A 原始端点，不是双船同刻。",
+         ],
+         "meta": {
+             "seedSha256": "0" * 64,
+@@ -407,7 +407,7 @@ def build_analysis_case(
+             "distance": "mcis-core",
+             "dcpa": "mcis-core",
+             "tcpa": "mcis-core",
+-            "note": "仅 T+120、T+130 为真实核心（d49a691 正对照，两次一致）。其它查询时刻无双船同刻实测，未回填、未用演示 CPA。DLL SHA-256 " + dll_sha + "。",
++            "note": "本轮只计算 T+120/130（真实核心，d49a691 正对照，两次一致）。未回填、未用演示 CPA。DLL SHA-256 " + dll_sha + "。",
+         },
+         "registeredIdentities": identities,
+         "gapWiring": {

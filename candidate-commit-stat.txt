@@ -1,0 +1,15 @@
+commit 7345c1eb5ee6fb76558d88ff6d75172145b53ea2
+Author:     Mark Wen <mark@users.noreply.github.com>
+AuthorDate: Fri Nov 27 16:50:43 2026 +0800
+Commit:     Mark Wen <mark@users.noreply.github.com>
+CommitDate: Fri Nov 27 16:50:43 2026 +0800
+
+    fix(w12): say this round only computed T+120/130
+    
+    Replace the assembly snapshot hint that called other
+    query instants “no dual-ship co-temporal measurement”.
+    Uncomputed originals may still have co-temporal points
+    (T+60 and T+100 do). No other product behavior change.
+
+ tests_acceptance/w12-registered-json-gap/snapshot.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)

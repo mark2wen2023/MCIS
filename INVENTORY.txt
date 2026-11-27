@@ -1,0 +1,8 @@
+staging files=7
+        40  CANDIDATE_SHA.txt
+        40  PARENT_SHA.txt
+       851  REPORT.md
+        88  TOKEN_SCAN.txt
+       650  candidate-commit-stat.txt
+      2069  snapshot-wording.patch
+     28559  snapshot.py
