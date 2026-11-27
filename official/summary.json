@@ -1,0 +1,98 @@
+{
+  "cases": {
+    "SYN-W12-CHART-GAP-67": {
+      "ok": true,
+      "checks": {
+        "distanceNullBetweenGrid": true,
+        "dcpaNullBetweenGrid": true,
+        "tcpaNullBetweenGrid": true,
+        "connectNullsFalse": true,
+        "gappedSpeedBroken": true,
+        "controlSpeedUnbroken": true,
+        "endpoint6": true,
+        "endpoint7": true,
+        "controlAt65": true,
+        "distanceKeeps6": true,
+        "distanceKeeps7": true,
+        "distanceInteriorNull": true,
+        "tooltipOk": true,
+        "tooltipHasNoMetricPhrase": true,
+        "tooltipHasNoNumericMetric": true
+      },
+      "tooltip": "20:00:06.500\n缺口内无指标",
+      "probe": 6.5,
+      "shots": {
+        "curve": "/workspace/mcis-w12-chart-gap-report/official/shots/cross-6-7-curve.png",
+        "speed": "/workspace/mcis-w12-chart-gap-report/official/shots/cross-6-7-speed.png",
+        "fullpage": "/workspace/mcis-w12-chart-gap-report/official/shots/cross-6-7-fullpage.png",
+        "tooltip": "/workspace/mcis-w12-chart-gap-report/official/shots/cross-6-7-tooltip.png"
+      }
+    },
+    "SYN-W12-CHART-GAP-EXP": {
+      "ok": true,
+      "checks": {
+        "distanceNullBetweenGrid": true,
+        "dcpaNullBetweenGrid": true,
+        "tcpaNullBetweenGrid": true,
+        "connectNullsFalse": true,
+        "gappedSpeedBroken": true,
+        "controlSpeedUnbroken": true,
+        "grid125NotZero": true,
+        "distance120": true,
+        "distance130": true,
+        "noPairAt121": true,
+        "controlAt125": true,
+        "tooltipOk": true,
+        "tooltipHasNoMetricPhrase": true,
+        "tooltipHasNoNumericMetric": true
+      },
+      "tooltip": "20:02:04.250\n缺口内无指标",
+      "probe": 124.25,
+      "shots": {
+        "curve": "/workspace/mcis-w12-chart-gap-report/official/shots/expanded-6-5s-curve.png",
+        "speed": "/workspace/mcis-w12-chart-gap-report/official/shots/expanded-6-5s-speed.png",
+        "fullpage": "/workspace/mcis-w12-chart-gap-report/official/shots/expanded-6-5s-fullpage.png",
+        "tooltip": "/workspace/mcis-w12-chart-gap-report/official/shots/expanded-6-5s-tooltip.png"
+      }
+    },
+    "SYN-W12-CHART-GAP-12": {
+      "ok": true,
+      "checks": {
+        "distanceNullBetweenGrid": true,
+        "dcpaNullBetweenGrid": true,
+        "tcpaNullBetweenGrid": true,
+        "connectNullsFalse": true,
+        "gappedSpeedBroken": true,
+        "controlSpeedUnbroken": true,
+        "endpoint1speed": true,
+        "endpoint2speed": true,
+        "controlAt5": true,
+        "pairAt0": true,
+        "pairAt10": true,
+        "interiorNull": true,
+        "tooltipOk": true,
+        "tooltipHasNoMetricPhrase": true,
+        "tooltipHasNoNumericMetric": true
+      },
+      "tooltip": "20:00:01.500\n缺口内无指标",
+      "probe": 1.5,
+      "shots": {
+        "curve": "/workspace/mcis-w12-chart-gap-report/official/shots/offset-1-2-curve.png",
+        "speed": "/workspace/mcis-w12-chart-gap-report/official/shots/offset-1-2-speed.png",
+        "fullpage": "/workspace/mcis-w12-chart-gap-report/official/shots/offset-1-2-fullpage.png",
+        "tooltip": "/workspace/mcis-w12-chart-gap-report/official/shots/offset-1-2-tooltip.png"
+      }
+    }
+  },
+  "liveEntry": {
+    "caseId": "SYN-W12-LIVE-ENTRY",
+    "hasDeclaredOpenGapsField": false,
+    "declaredOpenGaps": null,
+    "ok": true
+  },
+  "ok": true,
+  "started": "2026-11-27 12:38:39 CST",
+  "ended": "2026-11-27 12:38:48 CST",
+  "port": 18776,
+  "origin": "http://127.0.0.1:18776"
+}

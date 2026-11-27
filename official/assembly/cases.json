@@ -1,0 +1,646 @@
+{
+  "schemaVersion": "synthetic-w12-chart-gap-1",
+  "fixturePin": "2048c60fd6650c6f2c99a76a16be463a3895655d",
+  "productPin": "309b0ccfdefd71b8c25603e62fbc4f720cb5d805",
+  "cases": [
+    {
+      "caseId": "SYN-W12-CHART-GAP-67",
+      "key": "gap-6-7",
+      "title": "一秒开区间 (6,7) 关键反例",
+      "isFictionalDemo": true,
+      "sourceLabel": "合成夹具（显式缺口元数据，非真实案卷）",
+      "sourceRefs": [
+        {
+          "path": "fixtures/shared-trajectory-cross-repo/vessel-a.json",
+          "sha256": "ddcca8bec01f1b42a6e3d10117ec4f701a75294c45807912d055647c50845575",
+          "role": "synthetic-fixture"
+        },
+        {
+          "path": "fixtures/shared-trajectory-cross-repo/vessel-b.json",
+          "sha256": "349a5fa53eeb3a23438019069a4962aa0e1140e9b305e0222fd9dfb71e09f581",
+          "role": "synthetic-fixture"
+        }
+      ],
+      "epochLocal": "2026-02-01 20:00:00",
+      "timeZone": "Asia/Shanghai",
+      "vessels": [
+        {
+          "vesselId": "SYNTHETIC-VESSEL-A",
+          "name": "合成船 A"
+        },
+        {
+          "vesselId": "SYNTHETIC-VESSEL-B",
+          "name": "合成船 B"
+        }
+      ],
+      "thresholds": {
+        "dangerDcpaNm": 0.25,
+        "dangerTcpaMin": 6
+      },
+      "baseline": {
+        "label": "一秒开区间 (6,7) 关键反例",
+        "stepSec": 5,
+        "cutAtSec": 14.0,
+        "series": [
+          {
+            "t": 0.0,
+            "clock": "20:00:00",
+            "distanceNm": 0.06004,
+            "dcpaNm": 0.034016,
+            "tcpaMin": 3.0,
+            "riskLevel": "Safe"
+          },
+          {
+            "t": 5.0,
+            "clock": "20:00:05",
+            "distanceNm": null,
+            "dcpaNm": null,
+            "tcpaMin": null,
+            "riskLevel": null
+          },
+          {
+            "t": 6.0,
+            "clock": "20:00:06",
+            "distanceNm": 0.06004,
+            "dcpaNm": 0.034016,
+            "tcpaMin": 3.0,
+            "riskLevel": "Safe"
+          },
+          {
+            "t": 6.5,
+            "clock": "20:00:06.500",
+            "distanceNm": null,
+            "dcpaNm": null,
+            "tcpaMin": null,
+            "riskLevel": null
+          },
+          {
+            "t": 7.0,
+            "clock": "20:00:07",
+            "distanceNm": 0.06004,
+            "dcpaNm": 0.034016,
+            "tcpaMin": 3.0,
+            "riskLevel": "Safe"
+          },
+          {
+            "t": 10.0,
+            "clock": "20:00:10",
+            "distanceNm": 0.06004,
+            "dcpaNm": 0.034016,
+            "tcpaMin": 3.0,
+            "riskLevel": "Safe"
+          },
+          {
+            "t": 14.0,
+            "clock": "20:00:14",
+            "distanceNm": 0.06004,
+            "dcpaNm": 0.034016,
+            "tcpaMin": 3.0,
+            "riskLevel": "Safe"
+          }
+        ],
+        "keyMoments": []
+      },
+      "whatif": null,
+      "notes": [
+        "关键反例：声明开区间 (6,7) 整个落在展示格点 5、10 之间；中点 7.5 不在区间内。",
+        "A 在 6、7 有原始点，端点保留；6.5 为缺口内部探测点，指标为 null。B 在 6.5 有原始点，船速不断段。",
+        "距离仅在两船同刻原始点给出（几何），DCPA/TCPA 为装配声明占位，非核心复算；不造零。"
+      ],
+      "declaredOpenGaps": [
+        {
+          "vesselId": "SYNTHETIC-VESSEL-A",
+          "startSec": 6.0,
+          "endSec": 7.0
+        }
+      ],
+      "speedSeries": [
+        {
+          "vesselId": "SYNTHETIC-VESSEL-A",
+          "name": "合成船 A",
+          "points": [
+            {
+              "t": 0.0,
+              "clock": "20:00:00",
+              "speedKn": 5.5
+            },
+            {
+              "t": 5.0,
+              "clock": "20:00:05",
+              "speedKn": 5.5
+            },
+            {
+              "t": 6.0,
+              "clock": "20:00:06",
+              "speedKn": 5.5
+            },
+            {
+              "t": 7.0,
+              "clock": "20:00:07",
+              "speedKn": 5.5
+            },
+            {
+              "t": 10.0,
+              "clock": "20:00:10",
+              "speedKn": 5.5
+            },
+            {
+              "t": 14.0,
+              "clock": "20:00:14",
+              "speedKn": 5.5
+            }
+          ]
+        },
+        {
+          "vesselId": "SYNTHETIC-VESSEL-B",
+          "name": "合成船 B",
+          "points": [
+            {
+              "t": 0.0,
+              "clock": "20:00:00",
+              "speedKn": 5.5
+            },
+            {
+              "t": 4.0,
+              "clock": "20:00:04",
+              "speedKn": 5.5
+            },
+            {
+              "t": 6.0,
+              "clock": "20:00:06",
+              "speedKn": 5.5
+            },
+            {
+              "t": 6.5,
+              "clock": "20:00:06.500",
+              "speedKn": 5.5
+            },
+            {
+              "t": 7.0,
+              "clock": "20:00:07",
+              "speedKn": 5.5
+            },
+            {
+              "t": 10.0,
+              "clock": "20:00:10",
+              "speedKn": 5.5
+            },
+            {
+              "t": 14.0,
+              "clock": "20:00:14",
+              "speedKn": 5.5
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "seedSha256": "1985a4d3a9f7ee22228e9c134594379f6bccc56aa0db88e34e9c1fdddab799e6",
+        "seedVerified": true,
+        "generatedAt": "2026-11-27T04:00:00Z",
+        "generator": "tests_acceptance/w12-chart-explicit-gap/build_cases.py",
+        "coreVersion": "assembly-declared/not-a-core-rerun",
+        "coreDll": {
+          "path": "synthetic/unused",
+          "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "role": "unused-placeholder"
+        },
+        "w14Export": {
+          "path": "synthetic/unused",
+          "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "role": "unused-placeholder"
+        },
+        "w14Frozen": {
+          "path": "synthetic/unused",
+          "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "role": "unused-placeholder"
+        },
+        "crossCheck": {
+          "against": [
+            "synthetic"
+          ],
+          "valuesCompared": 0,
+          "maxAbsDiff": 0,
+          "tolerance": 0,
+          "ok": true
+        },
+        "disclaimer": "隔离装配合成元数据。缺口区间由测试装配显式传入，不是分析入口推断，不是官方核心复算。"
+      }
+    },
+    {
+      "caseId": "SYN-W12-CHART-GAP-EXP",
+      "key": "gap-expanded-6-5s",
+      "title": "expanded 6.5 秒开区间对照",
+      "isFictionalDemo": true,
+      "sourceLabel": "合成夹具（显式缺口元数据，非真实案卷）",
+      "sourceRefs": [
+        {
+          "path": "fixtures/shared-trajectory-cross-repo-expanded/vessel-a.json",
+          "sha256": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c",
+          "role": "synthetic-fixture"
+        },
+        {
+          "path": "fixtures/shared-trajectory-cross-repo-expanded/vessel-b.json",
+          "sha256": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca",
+          "role": "synthetic-fixture"
+        }
+      ],
+      "epochLocal": "2026-02-01 20:00:00",
+      "timeZone": "Asia/Shanghai",
+      "vessels": [
+        {
+          "vesselId": "SYN-VESSEL-A",
+          "name": "合成船 A（expanded）"
+        },
+        {
+          "vesselId": "SYN-VESSEL-B",
+          "name": "合成船 B（expanded）"
+        }
+      ],
+      "thresholds": {
+        "dangerDcpaNm": 0.25,
+        "dangerTcpaMin": 6
+      },
+      "baseline": {
+        "label": "expanded 6.5 秒开区间对照",
+        "stepSec": 5,
+        "cutAtSec": 140.0,
+        "series": [
+          {
+            "t": 100.0,
+            "clock": "20:01:40",
+            "distanceNm": 1.189691,
+            "dcpaNm": 0.485876,
+            "tcpaMin": 3.0,
+            "riskLevel": "Safe"
+          },
+          {
+            "t": 110.0,
+            "clock": "20:01:50",
+            "distanceNm": 1.128538,
+            "dcpaNm": 0.461415,
+            "tcpaMin": 3.0,
+            "riskLevel": "Safe"
+          },
+          {
+            "t": 120.0,
+            "clock": "20:02:00",
+            "distanceNm": 1.067386,
+            "dcpaNm": 0.436954,
+            "tcpaMin": 3.0,
+            "riskLevel": "Safe"
+          },
+          {
+            "t": 121.0,
+            "clock": "20:02:01",
+            "distanceNm": null,
+            "dcpaNm": null,
+            "tcpaMin": null,
+            "riskLevel": null
+          },
+          {
+            "t": 124.25,
+            "clock": "20:02:04.250",
+            "distanceNm": null,
+            "dcpaNm": null,
+            "tcpaMin": null,
+            "riskLevel": null
+          },
+          {
+            "t": 125.0,
+            "clock": "20:02:05",
+            "distanceNm": null,
+            "dcpaNm": null,
+            "tcpaMin": null,
+            "riskLevel": null
+          },
+          {
+            "t": 127.5,
+            "clock": "20:02:07.500",
+            "distanceNm": null,
+            "dcpaNm": null,
+            "tcpaMin": null,
+            "riskLevel": null
+          },
+          {
+            "t": 130.0,
+            "clock": "20:02:10",
+            "distanceNm": 1.006234,
+            "dcpaNm": 0.412493,
+            "tcpaMin": 3.0,
+            "riskLevel": "Safe"
+          },
+          {
+            "t": 140.0,
+            "clock": "20:02:20",
+            "distanceNm": 0.945081,
+            "dcpaNm": 0.388033,
+            "tcpaMin": 3.0,
+            "riskLevel": "Safe"
+          }
+        ],
+        "keyMoments": []
+      },
+      "whatif": null,
+      "notes": [
+        "expanded 6.5 秒对照：声明开区间 (121, 127.5)；展示格 120/125/130 中 125 落在缺口内部，不得造零。",
+        "A 在 121、127.5 有原始位置（端点保留）但 B 无同刻点，故这对端点不给双船指标。T+124.250 为内部探测点。",
+        "距离仅同刻几何值；DCPA/TCPA 为装配声明占位，非本轮核心复算。同时保留 A 的 (60,100) 声明。"
+      ],
+      "declaredOpenGaps": [
+        {
+          "vesselId": "SYN-VESSEL-A",
+          "startSec": 60.0,
+          "endSec": 100.0
+        },
+        {
+          "vesselId": "SYN-VESSEL-A",
+          "startSec": 121.0,
+          "endSec": 127.5
+        }
+      ],
+      "speedSeries": [
+        {
+          "vesselId": "SYN-VESSEL-A",
+          "name": "合成船 A（expanded）",
+          "points": [
+            {
+              "t": 100.0,
+              "clock": "20:01:40",
+              "speedKn": 10
+            },
+            {
+              "t": 110.0,
+              "clock": "20:01:50",
+              "speedKn": 10
+            },
+            {
+              "t": 120.0,
+              "clock": "20:02:00",
+              "speedKn": 10
+            },
+            {
+              "t": 121.0,
+              "clock": "20:02:01",
+              "speedKn": 10
+            },
+            {
+              "t": 127.5,
+              "clock": "20:02:07.500",
+              "speedKn": 10
+            },
+            {
+              "t": 130.0,
+              "clock": "20:02:10",
+              "speedKn": 10
+            },
+            {
+              "t": 140.0,
+              "clock": "20:02:20",
+              "speedKn": 10
+            }
+          ]
+        },
+        {
+          "vesselId": "SYN-VESSEL-B",
+          "name": "合成船 B（expanded）",
+          "points": [
+            {
+              "t": 100.0,
+              "clock": "20:01:40",
+              "speedKn": 12
+            },
+            {
+              "t": 110.0,
+              "clock": "20:01:50",
+              "speedKn": 12
+            },
+            {
+              "t": 120.0,
+              "clock": "20:02:00",
+              "speedKn": 12
+            },
+            {
+              "t": 125.0,
+              "clock": "20:02:05",
+              "speedKn": 12
+            },
+            {
+              "t": 130.0,
+              "clock": "20:02:10",
+              "speedKn": 12
+            },
+            {
+              "t": 140.0,
+              "clock": "20:02:20",
+              "speedKn": 12
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "seedSha256": "1985a4d3a9f7ee22228e9c134594379f6bccc56aa0db88e34e9c1fdddab799e6",
+        "seedVerified": true,
+        "generatedAt": "2026-11-27T04:00:00Z",
+        "generator": "tests_acceptance/w12-chart-explicit-gap/build_cases.py",
+        "coreVersion": "assembly-declared/not-a-core-rerun",
+        "coreDll": {
+          "path": "synthetic/unused",
+          "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "role": "unused-placeholder"
+        },
+        "w14Export": {
+          "path": "synthetic/unused",
+          "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "role": "unused-placeholder"
+        },
+        "w14Frozen": {
+          "path": "synthetic/unused",
+          "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "role": "unused-placeholder"
+        },
+        "crossCheck": {
+          "against": [
+            "synthetic"
+          ],
+          "valuesCompared": 0,
+          "maxAbsDiff": 0,
+          "tolerance": 0,
+          "ok": true
+        },
+        "disclaimer": "隔离装配合成元数据。缺口区间由测试装配显式传入，不是分析入口推断，不是官方核心复算。"
+      }
+    },
+    {
+      "caseId": "SYN-W12-CHART-GAP-12",
+      "key": "gap-1-2-offset",
+      "title": "非居中开区间 (1,2) 反例",
+      "isFictionalDemo": true,
+      "sourceLabel": "合成夹具（显式缺口元数据，非真实案卷）",
+      "sourceRefs": [
+        {
+          "path": "synthetic/offset-1-2.json",
+          "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "role": "synthetic-fixture"
+        }
+      ],
+      "epochLocal": "2026-02-01 20:00:00",
+      "timeZone": "Asia/Shanghai",
+      "vessels": [
+        {
+          "vesselId": "SYN-OFFSET-A",
+          "name": "合成缺轨船"
+        },
+        {
+          "vesselId": "SYN-OFFSET-B",
+          "name": "合成对照船"
+        }
+      ],
+      "thresholds": {
+        "dangerDcpaNm": 0.25,
+        "dangerTcpaMin": 6
+      },
+      "baseline": {
+        "label": "非居中开区间 (1,2) 反例",
+        "stepSec": 10,
+        "cutAtSec": 10.0,
+        "series": [
+          {
+            "t": 0.0,
+            "clock": "20:00:00",
+            "distanceNm": 0.600405,
+            "dcpaNm": 0.250162,
+            "tcpaMin": 3.0,
+            "riskLevel": "Safe"
+          },
+          {
+            "t": 1.0,
+            "clock": "20:00:01",
+            "distanceNm": null,
+            "dcpaNm": null,
+            "tcpaMin": null,
+            "riskLevel": null
+          },
+          {
+            "t": 1.5,
+            "clock": "20:00:01.500",
+            "distanceNm": null,
+            "dcpaNm": null,
+            "tcpaMin": null,
+            "riskLevel": null
+          },
+          {
+            "t": 2.0,
+            "clock": "20:00:02",
+            "distanceNm": null,
+            "dcpaNm": null,
+            "tcpaMin": null,
+            "riskLevel": null
+          },
+          {
+            "t": 10.0,
+            "clock": "20:00:10",
+            "distanceNm": 0.594401,
+            "dcpaNm": 0.24776,
+            "tcpaMin": 3.0,
+            "riskLevel": "Safe"
+          }
+        ],
+        "keyMoments": []
+      },
+      "whatif": null,
+      "notes": [
+        "非居中反例：声明开区间 (1,2) 落在展示间隔 0/10 内；中点 5 不在区间内，不能靠探测中点或等待格点落入缺口。",
+        "缺轨船在 1、2 保留端点，内部 1.5 无指标。对照船在 0、5、10 连续，船速不断段。",
+        "本条为测试装配手造元数据，不是 2048c60 原件。"
+      ],
+      "declaredOpenGaps": [
+        {
+          "vesselId": "SYN-OFFSET-A",
+          "startSec": 1.0,
+          "endSec": 2.0
+        }
+      ],
+      "speedSeries": [
+        {
+          "vesselId": "SYN-OFFSET-A",
+          "name": "合成缺轨船",
+          "points": [
+            {
+              "t": 0.0,
+              "clock": "20:00:00",
+              "speedKn": 8.0
+            },
+            {
+              "t": 1.0,
+              "clock": "20:00:01",
+              "speedKn": 8.0
+            },
+            {
+              "t": 2.0,
+              "clock": "20:00:02",
+              "speedKn": 8.0
+            },
+            {
+              "t": 10.0,
+              "clock": "20:00:10",
+              "speedKn": 8.0
+            }
+          ]
+        },
+        {
+          "vesselId": "SYN-OFFSET-B",
+          "name": "合成对照船",
+          "points": [
+            {
+              "t": 0.0,
+              "clock": "20:00:00",
+              "speedKn": 9.0
+            },
+            {
+              "t": 5.0,
+              "clock": "20:00:05",
+              "speedKn": 9.0
+            },
+            {
+              "t": 10.0,
+              "clock": "20:00:10",
+              "speedKn": 9.0
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "seedSha256": "1985a4d3a9f7ee22228e9c134594379f6bccc56aa0db88e34e9c1fdddab799e6",
+        "seedVerified": true,
+        "generatedAt": "2026-11-27T04:00:00Z",
+        "generator": "tests_acceptance/w12-chart-explicit-gap/build_cases.py",
+        "coreVersion": "assembly-declared/not-a-core-rerun",
+        "coreDll": {
+          "path": "synthetic/unused",
+          "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "role": "unused-placeholder"
+        },
+        "w14Export": {
+          "path": "synthetic/unused",
+          "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "role": "unused-placeholder"
+        },
+        "w14Frozen": {
+          "path": "synthetic/unused",
+          "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "role": "unused-placeholder"
+        },
+        "crossCheck": {
+          "against": [
+            "synthetic"
+          ],
+          "valuesCompared": 0,
+          "maxAbsDiff": 0,
+          "tolerance": 0,
+          "ok": true
+        },
+        "disclaimer": "隔离装配合成元数据。缺口区间由测试装配显式传入，不是分析入口推断，不是官方核心复算。"
+      }
+    }
+  ]
+}

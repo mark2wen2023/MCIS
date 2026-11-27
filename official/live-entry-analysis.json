@@ -1,0 +1,97 @@
+{
+  "caseId": "SYN-W12-LIVE-ENTRY",
+  "key": "live-entry",
+  "title": "合成入口对照（无缺口字段）",
+  "isFictionalDemo": true,
+  "sourceLabel": "合成夹具（非真实案卷）",
+  "sourceRefs": [
+    {
+      "path": "synthetic/live-entry-unused",
+      "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "role": "unused-placeholder"
+    }
+  ],
+  "epochLocal": "2026-02-01 20:00:00",
+  "timeZone": "Asia/Shanghai",
+  "vessels": [
+    {
+      "vesselId": "live-own",
+      "name": "入口本船"
+    },
+    {
+      "vesselId": "live-tgt",
+      "name": "入口目标"
+    }
+  ],
+  "thresholds": {
+    "dangerDcpaNm": 0.25
+  },
+  "baseline": {
+    "label": "入口对照航迹",
+    "stepSec": 5,
+    "cutAtSec": 10,
+    "series": [
+      {
+        "t": 0,
+        "clock": "20:00:00",
+        "distanceNm": 1.0,
+        "dcpaNm": 0.4,
+        "tcpaMin": 3.0,
+        "riskLevel": "Safe"
+      },
+      {
+        "t": 5,
+        "clock": "20:00:05",
+        "distanceNm": 1.1,
+        "dcpaNm": 0.41,
+        "tcpaMin": 2.5,
+        "riskLevel": "Safe"
+      },
+      {
+        "t": 10,
+        "clock": "20:00:10",
+        "distanceNm": 1.2,
+        "dcpaNm": 0.42,
+        "tcpaMin": 2.0,
+        "riskLevel": "Safe"
+      }
+    ],
+    "keyMoments": []
+  },
+  "whatif": null,
+  "notes": [
+    "现场分析入口种子，不含 declaredOpenGaps，不得据此推断缺口。"
+  ],
+  "meta": {
+    "seedSha256": "eed44318e32d32cf8c92c4586adcca0a854c0a95cdd5e80cc28321450ce00821",
+    "seedVerified": true,
+    "generatedAt": "2026-02-01T04:00:00Z",
+    "generator": "tests_acceptance/w12-chart-explicit-gap/live_seed.py",
+    "coreVersion": "unused",
+    "coreDll": {
+      "path": "synthetic/live-entry-unused",
+      "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "role": "unused-placeholder"
+    },
+    "w14Export": {
+      "path": "synthetic/live-entry-unused",
+      "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "role": "unused-placeholder"
+    },
+    "w14Frozen": {
+      "path": "synthetic/live-entry-unused",
+      "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "role": "unused-placeholder"
+    },
+    "crossCheck": {
+      "against": [
+        "synthetic"
+      ],
+      "valuesCompared": 0,
+      "maxAbsDiff": 0,
+      "tolerance": 0,
+      "ok": true
+    },
+    "disclaimer": "合成入口对照。"
+  }
+}

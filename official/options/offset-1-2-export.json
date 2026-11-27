@@ -1,0 +1,465 @@
+{
+  "caseId": "SYN-W12-CHART-GAP-12",
+  "declaredOpenGaps": [
+    {
+      "vesselId": "SYN-OFFSET-A",
+      "startSec": 1,
+      "endSec": 2
+    }
+  ],
+  "curve": {
+    "backgroundColor": "transparent",
+    "animation": false,
+    "grid": {
+      "left": 52,
+      "right": 56,
+      "top": 40,
+      "bottom": 34
+    },
+    "legend": {
+      "top": 4,
+      "textStyle": {
+        "color": "#8da4c4",
+        "fontSize": 11
+      }
+    },
+    "tooltip": {
+      "trigger": "axis",
+      "className": "w12-gap-tooltip",
+      "formatter": null
+    },
+    "xAxis": {
+      "type": "value",
+      "name": "s",
+      "axisLabel": {
+        "color": "#8da4c4",
+        "fontSize": 10,
+        "formatter": null
+      },
+      "axisLine": {
+        "lineStyle": {
+          "color": "#33506e"
+        }
+      },
+      "splitLine": {
+        "lineStyle": {
+          "color": "rgba(141,164,196,0.12)"
+        }
+      }
+    },
+    "yAxis": [
+      {
+        "type": "value",
+        "name": "nm",
+        "nameTextStyle": {
+          "color": "#8da4c4"
+        },
+        "axisLabel": {
+          "color": "#8da4c4"
+        },
+        "splitLine": {
+          "lineStyle": {
+            "color": "rgba(141,164,196,0.12)"
+          }
+        }
+      },
+      {
+        "type": "value",
+        "name": "TCPA min",
+        "nameTextStyle": {
+          "color": "#8da4c4"
+        },
+        "axisLabel": {
+          "color": "#8da4c4"
+        },
+        "splitLine": {
+          "show": false
+        }
+      }
+    ],
+    "series": [
+      {
+        "name": "两船距离 D(t)",
+        "type": "line",
+        "showSymbol": false,
+        "connectNulls": false,
+        "data": [
+          [
+            0,
+            0.600405
+          ],
+          [
+            1,
+            null
+          ],
+          null,
+          [
+            1.5,
+            null
+          ],
+          null,
+          [
+            2,
+            null
+          ],
+          [
+            10,
+            0.594401
+          ]
+        ],
+        "lineStyle": {
+          "color": "#3be3ff",
+          "width": 2
+        },
+        "itemStyle": {
+          "color": "#3be3ff"
+        },
+        "markLine": {
+          "symbol": "none",
+          "silent": true,
+          "label": {
+            "color": "#e6f1ff",
+            "fontSize": 10,
+            "position": "insideEndTop",
+            "formatter": null
+          },
+          "data": []
+        }
+      },
+      {
+        "name": "DCPA(t)",
+        "type": "line",
+        "showSymbol": false,
+        "connectNulls": false,
+        "data": [
+          [
+            0,
+            0.250162
+          ],
+          [
+            1,
+            null
+          ],
+          null,
+          [
+            1.5,
+            null
+          ],
+          null,
+          [
+            2,
+            null
+          ],
+          [
+            10,
+            0.24776
+          ]
+        ],
+        "lineStyle": {
+          "color": "#ffb020",
+          "width": 2
+        },
+        "itemStyle": {
+          "color": "#ffb020"
+        },
+        "markLine": {
+          "symbol": "none",
+          "silent": true,
+          "label": {
+            "color": "#ff8fa3",
+            "fontSize": 10,
+            "formatter": "危险 DCPA 0.25 nm"
+          },
+          "data": [
+            {
+              "yAxis": 0.25,
+              "lineStyle": {
+                "color": "#ff3b5c",
+                "type": "dotted"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "TCPA(t)",
+        "type": "line",
+        "yAxisIndex": 1,
+        "showSymbol": false,
+        "connectNulls": false,
+        "data": [
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            null
+          ],
+          null,
+          [
+            1.5,
+            null
+          ],
+          null,
+          [
+            2,
+            null
+          ],
+          [
+            10,
+            3
+          ]
+        ],
+        "lineStyle": {
+          "color": "#a78bfa",
+          "width": 1.5,
+          "type": "dashed"
+        },
+        "itemStyle": {
+          "color": "#a78bfa"
+        }
+      }
+    ]
+  },
+  "speed": {
+    "backgroundColor": "transparent",
+    "animation": false,
+    "grid": {
+      "left": 52,
+      "right": 24,
+      "top": 30,
+      "bottom": 34
+    },
+    "legend": {
+      "top": 4,
+      "textStyle": {
+        "color": "#8da4c4",
+        "fontSize": 11
+      }
+    },
+    "tooltip": {
+      "trigger": "axis",
+      "formatter": null
+    },
+    "xAxis": {
+      "type": "value",
+      "name": "s",
+      "axisLabel": {
+        "color": "#8da4c4",
+        "fontSize": 10,
+        "formatter": null
+      },
+      "axisLine": {
+        "lineStyle": {
+          "color": "#33506e"
+        }
+      },
+      "splitLine": {
+        "lineStyle": {
+          "color": "rgba(141,164,196,0.12)"
+        }
+      }
+    },
+    "yAxis": {
+      "type": "value",
+      "name": "kn",
+      "nameTextStyle": {
+        "color": "#8da4c4"
+      },
+      "axisLabel": {
+        "color": "#8da4c4"
+      },
+      "splitLine": {
+        "lineStyle": {
+          "color": "rgba(141,164,196,0.12)"
+        }
+      }
+    },
+    "series": [
+      {
+        "name": "合成缺轨船",
+        "type": "line",
+        "showSymbol": false,
+        "connectNulls": false,
+        "data": [
+          [
+            0,
+            8
+          ],
+          [
+            1,
+            8
+          ],
+          null,
+          [
+            2,
+            8
+          ],
+          [
+            10,
+            8
+          ]
+        ],
+        "lineStyle": {
+          "color": "#3be3ff",
+          "width": 2
+        },
+        "itemStyle": {
+          "color": "#3be3ff"
+        }
+      },
+      {
+        "name": "合成对照船",
+        "type": "line",
+        "showSymbol": false,
+        "connectNulls": false,
+        "data": [
+          [
+            0,
+            9
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            10,
+            9
+          ]
+        ],
+        "lineStyle": {
+          "color": "#f97316",
+          "width": 2
+        },
+        "itemStyle": {
+          "color": "#f97316"
+        }
+      }
+    ]
+  },
+  "curveBreaks": {
+    "两船距离 D(t)": {
+      "nullBreaks": 2,
+      "points": [
+        [
+          0,
+          0.600405
+        ],
+        [
+          1,
+          null
+        ],
+        null,
+        [
+          1.5,
+          null
+        ],
+        null,
+        [
+          2,
+          null
+        ],
+        [
+          10,
+          0.594401
+        ]
+      ]
+    },
+    "DCPA(t)": {
+      "nullBreaks": 2,
+      "points": [
+        [
+          0,
+          0.250162
+        ],
+        [
+          1,
+          null
+        ],
+        null,
+        [
+          1.5,
+          null
+        ],
+        null,
+        [
+          2,
+          null
+        ],
+        [
+          10,
+          0.24776
+        ]
+      ]
+    },
+    "TCPA(t)": {
+      "nullBreaks": 2,
+      "points": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          null
+        ],
+        null,
+        [
+          1.5,
+          null
+        ],
+        null,
+        [
+          2,
+          null
+        ],
+        [
+          10,
+          3
+        ]
+      ]
+    }
+  },
+  "speedBreaks": {
+    "合成缺轨船": {
+      "nullBreaks": 1,
+      "points": [
+        [
+          0,
+          8
+        ],
+        [
+          1,
+          8
+        ],
+        null,
+        [
+          2,
+          8
+        ],
+        [
+          10,
+          8
+        ]
+      ]
+    },
+    "合成对照船": {
+      "nullBreaks": 0,
+      "points": [
+        [
+          0,
+          9
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          10,
+          9
+        ]
+      ]
+    }
+  }
+}

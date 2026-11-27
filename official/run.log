@@ -1,0 +1,24 @@
+official start 2026-11-27 12:38:39 CST
+worktree=/workspace/mcis-w12-chart-cand port=18776
+fixtures/shared-trajectory-cross-repo/vessel-a.json: OK
+fixtures/shared-trajectory-cross-repo/vessel-b.json: OK
+fixtures/shared-trajectory-cross-repo-expanded/vessel-a.json: OK
+fixtures/shared-trajectory-cross-repo-expanded/vessel-b.json: OK
+node_modules present at /workspace/mcis-w12-chart-cand/web/node_modules
+unit esbuild /workspace/mcis-w12-chart-cand/web/node_modules/esbuild/bin/esbuild /workspace/mcis-w12-chart-cand/web/tests/analysis-chart-gap.test.ts --bundle --platform=node --format=cjs --outfile=/workspace/mcis-w12-chart-gap-report/official/analysis-chart-gap.test.cjs --log-level=warning
+W12 chart-gap unit tests: 31 passed
+
+cases.json sha256=76647c36b192ded45673d4fd8546875e5cbf574be48f97de6219a3759486b907
+esbuild /workspace/mcis-w12-chart-cand/web/node_modules/esbuild/bin/esbuild /workspace/mcis-w12-chart-cand/tests_acceptance/w12-chart-explicit-gap/assembly/main.tsx --bundle --outfile=/workspace/mcis-w12-chart-gap-report/official/assembly/app.js --format=iife --platform=browser --jsx=automatic --alias:react=/workspace/mcis-w12-chart-cand/web/node_modules/react --alias:react-dom=/workspace/mcis-w12-chart-cand/web/node_modules/react-dom --alias:react-dom/client=/workspace/mcis-w12-chart-cand/web/node_modules/react-dom/client --alias:react/jsx-runtime=/workspace/mcis-w12-chart-cand/web/node_modules/react/jsx-runtime --alias:echarts=/workspace/mcis-w12-chart-cand/web/node_modules/echarts --log-level=warning
+assembly app.js sha256=22831c2b05e13be31921f2c870d98db101a3cd0b117af3cd63f36bc7fbb3ebc8 bytes=4341118
+live entry seed sha256=eed44318e32d32cf8c92c4586adcca0a854c0a95cdd5e80cc28321450ce00821
+host /workspace/mcis-w17-871db66/service/.venv/bin/python -I -B /workspace/mcis-w12-chart-cand/tests_acceptance/w12-chart-explicit-gap/host.py /workspace/mcis-w12-chart-gap-report/official/unused-assets /workspace/mcis-w12-chart-gap-report/official/tmp-store /workspace/mcis-w12-chart-gap-report/official/live-seed/w12-live-entry-seed.json /workspace/mcis-w12-chart-gap-report/official/live-seed/w12-live-entry-seed.sha256 /workspace/mcis-w12-chart-gap-report/official/assembly 127.0.0.1 18776 /workspace/mcis-w12-chart-cand/service
+assembly host ready
+live /analysis entry has no declaredOpenGaps
+case SYN-W12-CHART-GAP-67
+  checks={"distanceNullBetweenGrid": true, "dcpaNullBetweenGrid": true, "tcpaNullBetweenGrid": true, "connectNullsFalse": true, "gappedSpeedBroken": true, "controlSpeedUnbroken": true, "endpoint6": true, "endpoint7": true, "controlAt65": true, "distanceKeeps6": true, "distanceKeeps7": true, "distanceInteriorNull": true, "tooltipOk": true, "tooltipHasNoMetricPhrase": true, "tooltipHasNoNumericMetric": true} tooltip='20:00:06.500\n缺口内无指标' ok=True
+case SYN-W12-CHART-GAP-EXP
+  checks={"distanceNullBetweenGrid": true, "dcpaNullBetweenGrid": true, "tcpaNullBetweenGrid": true, "connectNullsFalse": true, "gappedSpeedBroken": true, "controlSpeedUnbroken": true, "grid125NotZero": true, "distance120": true, "distance130": true, "noPairAt121": true, "controlAt125": true, "tooltipOk": true, "tooltipHasNoMetricPhrase": true, "tooltipHasNoNumericMetric": true} tooltip='20:02:04.250\n缺口内无指标' ok=True
+case SYN-W12-CHART-GAP-12
+  checks={"distanceNullBetweenGrid": true, "dcpaNullBetweenGrid": true, "tcpaNullBetweenGrid": true, "connectNullsFalse": true, "gappedSpeedBroken": true, "controlSpeedUnbroken": true, "endpoint1speed": true, "endpoint2speed": true, "controlAt5": true, "pairAt0": true, "pairAt10": true, "interiorNull": true, "tooltipOk": true, "tooltipHasNoMetricPhrase": true, "tooltipHasNoNumericMetric": true} tooltip='20:00:01.500\n缺口内无指标' ok=True
+host exit=-15

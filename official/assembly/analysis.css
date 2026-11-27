@@ -1,0 +1,14 @@
+/* W12 分析页局部样式（不改共享 styles.css）。 */
+.an-top { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 12px; }
+@media (max-width: 1500px) { .an-top { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); } }
+.an-series-pick { margin-bottom: 6px; }
+.an-source { margin-bottom: 8px; }
+.an-dim { color: var(--text-muted); font-size: 11px; }
+.an-critical td { background: rgba(255, 176, 32, 0.08); }
+.an-critical-note { color: #ffd166; }
+.an-collision td { color: #ff8fa3; }
+.an-dimrow td { color: var(--text-muted); }
+.an-span td { border-top: 1px solid var(--border-line); color: var(--cyan); }
+.an-inputs { margin: 6px 0; }
+.an-inputs summary { cursor: pointer; color: var(--text-sec); }
+.an-chart-placeholder { height: 300px; }

@@ -1,0 +1,46 @@
+# W12 chart explicit-gap inventory
+# pin=309b0ccfdefd71b8c25603e62fbc4f720cb5d805
+# fixturePin=2048c60fd6650c6f2c99a76a16be463a3895655d
+# candidate=34d6acf1a64fb22d651e3de00fc851952488285e
+# official=2026-11-27T12:38:39+08:00..2026-11-27T12:38:48+08:00 exit=0
+
+e88fa8390d7101fee1134c42ffa10ae0547dfcd03f5d160e5fdf06ca3b26cd16  CANDIDATE_SHA.txt  bytes=41
+ec5ed0e829c395212d3484729d61abf44d7f5c63cee0fdee627b607cbf7f2ac6  ISSUE_COMMENT_INPROGRESS.md  bytes=798
+73e594a6c5ef0eb49b7ee9c370c36a0602c4ae79b9c7d725713659f7180f7f14  OFFICIAL_COMMAND.sh  bytes=718
+ff06cd6cb5935f47490aeb66e90a77514ccfbc640445c516c35e5d019a61d179  OFFICIAL_RUN.txt  bytes=3797
+9469d0bd151f9dec3089d5317703e6c501a641e6e7bae1689fc0791cd97b0ee3  REPORT.md  bytes=2108
+6032cfefde8ef7e7864faec206602460abbf75998530b2ed6ca93f661853ac96  acceptance/README.md  bytes=1680
+b8e1d62f1b66a7a815de0b3a6dbe4a6b3662473af6382e5103d40fd220b16a0e  acceptance/build_cases.py  bytes=12530
+7f40db1b02362bcff199a29ac2940398926643944fba8acb24a2ddcdf434e805  acceptance/host.py  bytes=1645
+074055b65b8d23f0e4f531cee6c383e844a7e0b216e381e2bbf7f9389966b42c  acceptance/live_seed.py  bytes=2973
+4f63d6f10925bb3dad38dc5b7b0e64ebb276b506a9e4b50ac155d9743774e88d  acceptance/run.py  bytes=20597
+a3f063146d4977ad8f51835d25f8fdeb1634625b78b3ad1f6cc6c1986101e136  official/analysis-chart-gap.test.cjs  bytes=17147
+dee05b5395192cd9e6b325c6a199e09981e0b742f4875b146cbcd01ab098c495  official/assembly/analysis.css  bytes=778
+22831c2b05e13be31921f2c870d98db101a3cd0b117af3cd63f36bc7fbb3ebc8  official/assembly/app.js  bytes=4341118
+76647c36b192ded45673d4fd8546875e5cbf574be48f97de6219a3759486b907  official/assembly/cases.json  bytes=18639
+e2f3668e00192eeaf251fc204c5e234915edb6f2c1d8dd66055a255f7fb5937c  official/assembly/index.html  bytes=735
+1babd2bfff84382218e6a82cbaccc854a74be8827ea5da0f5d22aa148f8acbee  official/candidate-commit-stat.txt  bytes=1218
+8336141273452932c034ed331874ad392b7e1fed0abba40c254b8e57532fe8b8  official/canvas/cross-6-7-curve.png  bytes=21139
+4708987cec9287f7974bb36e25d785230f33542074cbb13a4a4836bcd9667f82  official/canvas/expanded-6-5s-curve.png  bytes=24408
+531f4fc6d5d76c16fc2099a97a677563faf87c3fb73aeeac33d9544c4e232458  official/canvas/offset-1-2-curve.png  bytes=21810
+1f98ae7e0e5f0517169e5bb647a42d7d9396f745234d0528c8e3fb9913c5e8f8  official/host-log.txt  bytes=29
+1d2e99ea14d2d0a6c5a0fbd9c9f7d40aeff751f803f618a8dfd7fd775dd0ef1c  official/live-entry-analysis.json  bytes=2478
+eed44318e32d32cf8c92c4586adcca0a854c0a95cdd5e80cc28321450ce00821  official/live-seed/w12-live-entry-seed.json  bytes=2625
+003420fe7eeca1b5d295f9cb6255b0bb73da9a2e13adbcd2dc9c3364b990fec8  official/live-seed/w12-live-entry-seed.sha256  bytes=91
+24fcd549e1886a7a79b155e7b0f390fdbb1643d4c3ee88da1df87811d53a79ea  official/options/cross-6-7-export.json  bytes=9165
+f68b348de52b9fc245f1c97995a0f5b599d6438b10986ec91fa4355cf69902c5  official/options/expanded-6-5s-export.json  bytes=10179
+ca32833857c55e7c562b76914bb934365c5d2c5f2bf6f2fffc73db74fe01d218  official/options/offset-1-2-export.json  bytes=7851
+6afe7021fb34e3c3d5bc58e9620420bfc3cde29a9b353d623109ef88825db677  official/run.log  bytes=3752
+27b5136d3a4b67a19def8c5137fddd6a41c9510e1446756738f50f216e853ec6  official/shots/cross-6-7-curve.png  bytes=13682
+431bdcb01b214ed346e758a6eb7ac792a227bf5516655aaf2ca1d44899d5b576  official/shots/cross-6-7-fullpage.png  bytes=297424
+96bf753dfa3a42c27caca346e5a246bcafa2d9dfa4894e457ada03fd0e38f9b0  official/shots/cross-6-7-speed.png  bytes=8006
+b761587e2ca909ee38bf7f9b5b883a964fbf0ba10f84252197f36193df0efc01  official/shots/cross-6-7-tooltip.png  bytes=146589
+7dd42c71ee0f20b1c1c5be3b99134a28d6093c83226000ed04b37f03bdfa15bf  official/shots/expanded-6-5s-curve.png  bytes=16164
+cd372b17d064f3e6293cf3ad0de9a4100e345995a3f2f6f3079fc061297f3dca  official/shots/expanded-6-5s-fullpage.png  bytes=339463
+80c9b532585209d0de8b13b682a4fb000b32ff725410b4b984f2ed51630f6873  official/shots/expanded-6-5s-speed.png  bytes=9250
+f294528839eb29f3e2adbbd5d6ec92dbdf08167a5bb861b6990fb94c8993c9b4  official/shots/expanded-6-5s-tooltip.png  bytes=155056
+23a615524499bff5db2807799f1024ea481ab49cc94413924720f121142bbd32  official/shots/offset-1-2-curve.png  bytes=14321
+8d7cfd49dab7d6f88828db9097705d3c5a17421a360e7ea773cc4430850a3393  official/shots/offset-1-2-fullpage.png  bytes=266564
+ecdc33b1fde0d95571af83814e642bf50be0144ed0f25985b269b97a62a4a69a  official/shots/offset-1-2-speed.png  bytes=7959
+24cedc515a1106c4d85f467ceb559f98f8ee3d61a4f3cf05347bb56d76860ea3  official/shots/offset-1-2-tooltip.png  bytes=144120
+0472d3ee80029c6775f10f9a80149d8abf6b38940b9b94be7015f158b39d7fa2  official/summary.json  bytes=3513

@@ -1,0 +1,19 @@
+34d6acf feat(w12): break analysis charts on declared open gaps
+ tests_acceptance/w12-chart-explicit-gap/README.md  |   21 +
+ tests_acceptance/w12-chart-explicit-gap/SHA256SUMS |    4 +
+ .../w12-chart-explicit-gap/assembly/index.html     |   19 +
+ .../w12-chart-explicit-gap/assembly/main.tsx       |   89 ++
+ .../w12-chart-explicit-gap/build_cases.py          |  319 +++++
+ .../vessel-a.json                                  | 1183 +++++++++++++++++
+ .../vessel-b.json                                  | 1362 ++++++++++++++++++++
+ .../shared-trajectory-cross-repo/vessel-a.json     |  366 ++++++
+ .../shared-trajectory-cross-repo/vessel-b.json     |  406 ++++++
+ tests_acceptance/w12-chart-explicit-gap/host.py    |   43 +
+ .../w12-chart-explicit-gap/live_seed.py            |   61 +
+ tests_acceptance/w12-chart-explicit-gap/run.py     |  484 +++++++
+ web/src/analysis/AnalysisView.tsx                  |    8 +-
+ web/src/analysis/derive.ts                         |  217 +++-
+ web/src/analysis/types.ts                          |   26 +-
+ web/src/components/EChart.tsx                      |   13 +-
+ web/tests/analysis-chart-gap.test.ts               |  135 ++
+ 17 files changed, 4732 insertions(+), 24 deletions(-)
