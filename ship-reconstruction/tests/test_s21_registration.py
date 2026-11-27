@@ -55,3 +55,15 @@ class CrossDrawingMirror(unittest.TestCase):
         g["inventory"][1]["landmarks"][1]["p"][1]=-1
         decide(g)
         self.assertIsNone(c["registration_decision"]["y_sign"])
+
+class StationAssignment(unittest.TestCase):
+    def test_native_outer_width_selects_supported_station(self):
+        import numpy as np
+        from s2lib.curves import offset_match
+        curve={"type":"SPLINE","geometry":{"control_points":[[0,0,0],[2,0,0],[3,1,0],[4,2,0]],"degree":1,"knots":[0,0,1,2,3,3],"weights":[]}}
+        cells=[dict(station_m=st,level_m=z,value_m=value,instances=[str((st,z))]) for st,vals in [(7,[2,3,4]),(8,[0,3.05,4])] for z,value in enumerate(vals)]
+        frame={"view":"YZ","axes":{"Y":[1,0,0],"Z":[0,1,0]}}
+        result=offset_match(frame,np.array([[0.,0],[2,0],[3,1],[4,2]]),cells,curve)
+        self.assertEqual([v["fixed_m"] for v in result],[7,8])
+        self.assertEqual(result[0]["rms_m"],0)
+        self.assertEqual(result[0]["n"],3)

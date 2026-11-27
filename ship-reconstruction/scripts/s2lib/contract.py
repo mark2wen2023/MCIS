@@ -64,9 +64,11 @@ def fields(g):
         zs={c["level_m"] for c in cs}
         complete=(None not in xs|zs and len(xs)>=2 and len(zs)>=2 and len({(c["station_m"],c["level_m"]) for c in cs})==len(cs)==len(xs)*len(zs) and
                   all(c["status"] in ("numeric","zero","duplicate") and c["value_m"] is not None and c["value_m"]>=0 for c in cs))
-        if len(domain)==1 and complete and domain[0][1]==[min(xs),max(xs),min(zs),max(zs)] and decl["symmetric"]:
+        symmetric_hull=any(re.search(r"(?:hull\s+(?:is\s+)?)?symmetric about centerline[.]?\s*(?:table values are half-breadths|hull half-breadths)|船体关于中线对称",n["text"],re.I) for n in notes)
+        located_origin=any(re.search(r"origin\s*:\s*(?:aft transom|aft perpendicular)\s*/\s*cent(?:er|re)line\s*/\s*baseline\.?$",n["text"],re.I) for n in notes)
+        if len(domain)==1 and complete and domain[0][1]==[min(xs),max(xs),min(zs),max(zs)] and decl["symmetric"] and symmetric_hull:
             handles=[domain[0][0]["instance"],*decl["notes"],*(h for c in cs for h in c["instances"])]
-            if decl["frame"] and not seen_signs and len(g["inventory"])==1:
+            if decl["frame"] and located_origin and not seen_signs and len(g["inventory"])==1:
                 state="full_research"
             else:
                 state="local_symmetric"

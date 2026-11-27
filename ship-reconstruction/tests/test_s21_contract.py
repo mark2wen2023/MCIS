@@ -25,3 +25,10 @@ class Contract(unittest.TestCase):
         g=json.loads((ROOT/"examples/s21/C/geometry.json").read_bytes())
         g["modeling_admission"]["state"]="full_research"
         self.assertFalse(s2.check(g)["valid"])
+
+    def test_unknown_origin_remains_local(self):
+        from s2lib.contract import fields
+        g=json.loads((ROOT/"examples/s21/A/geometry.json").read_bytes())
+        note=next(n for n in g["inventory"][0]["registration_notes"] if "ORIGIN:" in n["text"])
+        note["text"]=note["text"].split("ORIGIN:")[0]+"ORIGIN: UNKNOWN"
+        self.assertEqual(fields(g)["modeling_admission"]["state"],"local_symmetric")
