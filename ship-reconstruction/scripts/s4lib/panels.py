@@ -156,7 +156,16 @@ def recover(drawings,notes,dest):
             for lead in r["leaders"]:
                 tip=np.array(lead["tip_wcs"][:2])
                 radius=max(t["height"]*3,1e-7)
-                cells=bounded_cells(idx,tip,radius,excluded,lead["target_instances"])
+                search_radius=radius
+                targets=set(lead["target_instances"])
+                if lead["method"] in ("native_leader","polyline_with_arrowhead") and targets:
+                    # A small drafting font cannot bound the extent of a real panel.
+                    # Use the actual directed-to edge span. Require original CAD edges
+                    # on every side at the larger extent, including the reverse side.
+                    spans=[idx.paths[j].length for j in idx.around(tip,lead["tolerance_wcs"]) if idx.curves[j]["instance"] in targets]
+                    if spans:search_radius=max(radius,2*max(spans))
+                cells=bounded_cells(idx,tip,search_radius,excluded,targets)
+                lead["contour_search_radius_wcs"]=search_radius
                 # Do not select the smaller of two enclosed faces incident to an edge.
                 if len(cells)!=1:
                     lead["local_cell_status"]="ambiguous" if cells else "no_bounded_cell"

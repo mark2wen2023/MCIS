@@ -1,0 +1,687 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "4.0"
+    },
+    "engineering_approved": {
+      "const": false
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/observation"
+      }
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/component"
+      }
+    },
+    "local_models": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/local_model"
+      }
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "section_templates": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "profile_matches": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "view_titles": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "identity_candidates": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "hull_sha256": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "view_tolerance_m": {
+      "type": "number"
+    },
+    "hull_quality": {
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "engineering_approved",
+    "sources",
+    "observations",
+    "components",
+    "local_models",
+    "conflicts",
+    "section_templates",
+    "profile_matches",
+    "view_titles",
+    "identity_candidates",
+    "hull_sha256",
+    "view_tolerance_m",
+    "hull_quality"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mcis:ship-reconstruction:structure:4.0.0",
+  "$defs": {
+    "sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "xyz": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "xy": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "instance": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "source_sha256",
+        "instance"
+      ]
+    },
+    "dimension": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "thickness",
+            "spacing",
+            "length",
+            "width",
+            "height"
+          ]
+        },
+        "value": {
+          "type": "number"
+        },
+        "raw": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unit": {
+          "enum": [
+            "mm",
+            "cm",
+            "m",
+            "in",
+            null
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "value",
+        "raw",
+        "unit"
+      ]
+    },
+    "profile": {
+      "type": "object",
+      "properties": {
+        "family": {
+          "type": "string",
+          "minLength": 1
+        },
+        "raw": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unit": {
+          "enum": [
+            "mm",
+            "cm",
+            "m",
+            "in",
+            null
+          ]
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        }
+      },
+      "required": [
+        "family",
+        "raw",
+        "unit",
+        "values"
+      ]
+    },
+    "leader": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "enum": [
+            "native_leader",
+            "shelf_and_branch",
+            "polyline_with_arrowhead"
+          ]
+        },
+        "handles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "tip_wcs": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "target_instances": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "tolerance_wcs": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "method",
+        "handles",
+        "tip_wcs",
+        "target_instances",
+        "tolerance_wcs"
+      ]
+    },
+    "quality": {
+      "type": "object",
+      "properties": {
+        "closed_verified": {
+          "type": "boolean"
+        },
+        "signed_volume_m3": {
+          "type": "number"
+        },
+        "vertex_manifold": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "self_intersection_pairs": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "closed_verified",
+        "signed_volume_m3",
+        "vertex_manifold",
+        "self_intersection_pairs"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "dxf_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "conversion": {
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "source_sha256",
+        "dxf_sha256",
+        "conversion"
+      ]
+    },
+    "observation": {
+      "type": "object",
+      "properties": {
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "instance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "handle": {
+          "type": "string",
+          "minLength": 1
+        },
+        "layout": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "anchor_wcs": {
+          "$ref": "#/$defs/xyz"
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "axis_direction": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "direction_basis": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "material": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "dimensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/dimension"
+          }
+        },
+        "profiles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/profile"
+          }
+        },
+        "frame_ranges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "start": {
+                "type": "number"
+              },
+              "end": {
+                "type": "number"
+              },
+              "raw": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "start",
+              "end",
+              "raw"
+            ]
+          }
+        },
+        "leaders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/leader"
+          }
+        },
+        "ship_position_m": {
+          "type": "null"
+        },
+        "deck_levels": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "repetition": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "modeling_status": {
+          "enum": [
+            "observed",
+            "conflicting_dimensions",
+            "local_research_candidate"
+          ]
+        }
+      },
+      "required": [
+        "source_sha256",
+        "instance",
+        "handle",
+        "layout",
+        "text",
+        "anchor_wcs",
+        "type",
+        "identity",
+        "axis_direction",
+        "direction_basis",
+        "material",
+        "dimensions",
+        "profiles",
+        "frame_ranges",
+        "leaders",
+        "ship_position_m",
+        "deck_levels",
+        "repetition",
+        "modeling_status"
+      ]
+    },
+    "component": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "unknowns": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "geometry_status": {
+          "enum": [
+            "research_geometry_verified",
+            "blocked"
+          ]
+        },
+        "asset": {
+          "type": "string",
+          "minLength": 1
+        },
+        "quality": {
+          "$ref": "#/$defs/quality"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "sources",
+        "unknowns",
+        "issues",
+        "assumptions",
+        "geometry_status"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "geometry_status": {
+                "const": "research_geometry_verified"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "asset",
+              "quality",
+              "face_source",
+              "dimension_m",
+              "bounds_m"
+            ]
+          }
+        }
+      ]
+    },
+    "local_model": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "instance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "asset": {
+          "type": "string",
+          "minLength": 1
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "leader": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "coordinate_frame": {
+          "const": "local_plate_axes_metres"
+        },
+        "paper_origin_wcs": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "ship_position_m": {
+          "type": "null"
+        },
+        "contour": {
+          "type": "object",
+          "properties": {
+            "contour_wcs": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              }
+            },
+            "boundary_handles": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1
+            },
+            "area_wcs2": {
+              "type": "number"
+            },
+            "tip_relation": {
+              "enum": [
+                "boundary",
+                "interior"
+              ]
+            }
+          },
+          "required": [
+            "contour_wcs",
+            "boundary_handles",
+            "area_wcs2",
+            "tip_relation"
+          ]
+        },
+        "scale": {
+          "type": "object"
+        },
+        "thickness_raw": {
+          "$ref": "#/$defs/dimension"
+        },
+        "modeled_thickness_m": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "unit_evidence_handles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "thickness_unit_basis": {
+          "enum": [
+            "printed",
+            "same_sheet_thickness_unit_hypothesis"
+          ]
+        },
+        "quality": {
+          "$ref": "#/$defs/quality"
+        },
+        "unknowns": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "engineering_approved": {
+          "const": false
+        },
+        "estimated_volume_m3": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "source_sha256",
+        "instance",
+        "asset",
+        "method",
+        "leader",
+        "coordinate_frame",
+        "paper_origin_wcs",
+        "ship_position_m",
+        "contour",
+        "scale",
+        "thickness_raw",
+        "modeled_thickness_m",
+        "unit_evidence_handles",
+        "thickness_unit_basis",
+        "quality",
+        "unknowns",
+        "engineering_approved",
+        "estimated_volume_m3"
+      ]
+    }
+  }
+}
