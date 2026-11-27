@@ -7,6 +7,7 @@ import trimesh
 from shapely import Polygon
 from core.drawing_parser import fingerprint
 from geometry import quality,read_exchange
+from s4lib.mesh_io import write_solid
 
 
 def load(path):
@@ -81,10 +82,10 @@ def main():
     a=p.parse_args();a.out.mkdir(parents=True,exist_ok=False)
     try:
         r,m=classify(load(a.hull),load(a.component),a.role)
+        if m is not None:write_solid(a.out/"clipped.ply",m)
     except (ImportError,OSError,RuntimeError,ValueError,AttributeError,IndexError) as exc:
         r=dict(state="blocked",closure_verified=False,metrics={},contact_area_m2=None,reason=str(exc),engineering_approved=False);m=None
     r.update(hull_sha256=fingerprint(a.hull),component_sha256=fingerprint(a.component),coordinates="ship_axes_metres")
-    if m is not None:(a.out/"clipped.ply").write_bytes(m.export(file_type="ply"))
     (a.out/"relation.json").write_text(json.dumps(r,ensure_ascii=False,allow_nan=False,indent=2))
     return 4 if r["state"]=="blocked" else 0
 
