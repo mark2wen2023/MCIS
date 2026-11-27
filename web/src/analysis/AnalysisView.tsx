@@ -115,7 +115,11 @@ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, se
               已登记回执与输入身份：
               {data.registeredIdentities.map((id) => (
                 <div key={id.vesselId} className="mono">
-                  {id.vesselId} previewDigest={id.previewDigest} sourceSha256={id.sourceSha256} reportSha256={id.reportSha256}
+                  {id.vesselId}
+                  {id.evidenceId ? ` evidenceId=${id.evidenceId}` : ''}
+                  {id.requestDigest ? ` requestDigest=${id.requestDigest}` : id.previewDigest ? ` previewDigest=${id.previewDigest}` : ''}
+                  {` sourceSha256=${id.sourceSha256}`}
+                  {id.reportSha256 ? ` reportSha256=${id.reportSha256}` : ''}
                 </div>
               ))}
             </div>
@@ -218,9 +222,9 @@ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, se
               </tr>
               {data.registeredIdentities?.map((id) => (
                 <tr key={id.vesselId}>
-                  <td className="mono">{id.vesselId}</td>
-                  <td>已登记回执 previewDigest={id.previewDigest}</td>
-                  <td className="mono">sourceSha256={id.sourceSha256} reportSha256={id.reportSha256}</td>
+                  <td className="mono">{id.vesselId}{id.evidenceId ? ` · ${id.evidenceId}` : ''}</td>
+                  <td>已登记回执 {id.requestDigest ? `requestDigest=${id.requestDigest}` : `previewDigest=${id.previewDigest}`}</td>
+                  <td className="mono">sourceSha256={id.sourceSha256}{id.reportSha256 ? ` reportSha256=${id.reportSha256}` : ''}</td>
                 </tr>
               ))}
             </tbody>

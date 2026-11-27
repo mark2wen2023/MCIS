@@ -154,9 +154,11 @@ export interface MetricProvenance {
 
 export interface RegisteredIdentity {
   vesselId: string
-  previewDigest: string
   sourceSha256: string
-  reportSha256: string
+  previewDigest?: string
+  reportSha256?: string
+  evidenceId?: string
+  requestDigest?: string
   pointCount?: number
 }
 

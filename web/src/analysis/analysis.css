@@ -19,3 +19,11 @@
 .an-metric-table th, .an-metric-table td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #33506e; color: #e6f1ff; }
 .an-metric-table thead th { color: #8da4c4; font-weight: 600; }
 .an-metric-table:focus, .an-metric-table:focus-visible { outline: 2px solid #3be3ff; outline-offset: 2px; }
+
+/* Registered JSON source summary must wrap in a 390px viewport; hashes must not force page-wide scroll. */
+html, body { max-width: 100%; }
+[data-testid="sources"] .mono,
+[data-testid="registered-identities"] .mono,
+[data-testid="sample-status-table"],
+[data-testid="registered-metric-table"] { overflow-wrap: anywhere; word-break: break-all; white-space: normal; }
+[data-testid="sources"], [data-testid="registered-identities"], [data-testid="analysis-page"], [data-testid="w12-rjg-assembly"] { max-width: 100%; overflow-x: hidden; }
