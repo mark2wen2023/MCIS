@@ -29,3 +29,9 @@ python -m unittest discover -s tests
 ```
 
 入口退出 4 表示待补证。对已生成的结果还须区分 bounded_model 和 partial_surface。基准程序遇到任何一项几何超限也退出 4，并保存全部评分。每项测试的失败须随交付保存。检查 references/lessons.md 中的失败判别方法后再修改算法。
+
+### S2.1 图纸配准与 S4 构件预研
+
+先运行 scripts/preflight.py 查看当前环境；离线安装使用 scripts/install_env.py --venv NEW --wheelhouse WHEELS。锁与已测平台见 references 下的 cp313.lock。DXF 提取仍可独立调用。涉及闭合、自交、点到网格误差的验收依赖 libigl/CGAL，无法执行时登记环境阻塞。
+
+读取 schemas/geometry.schema.json 与 references/geometry-2.1.md，执行 geometry_data_validate 后读取 modeling_admission 及受阻区域。可参照 examples/s21 的三个完整接口样例。有争议的站位和舷别保留候选，保留甲板侧视与横剖端点各自证据。S3 消费方使用固定契约。S4 的二维构件试验入口与已支持的注记范围见 references/s4-preview.md。
