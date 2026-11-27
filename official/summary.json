@@ -1,0 +1,23 @@
+{
+  "started": "2026-11-27T11:45:39+08:00",
+  "finished": "2026-11-27T11:45:42+08:00",
+  "pin": "03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5",
+  "fixturePin": "2048c60fd6650c6f2c99a76a16be463a3895655d",
+  "head": "03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5",
+  "host": "127.0.0.1:18775",
+  "health": true,
+  "dataDir": "/tmp/mcis-w12-gap-9h3lr3hk",
+  "fixtureSha256": {
+    "vessel-a.json": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c",
+    "vessel-b.json": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca"
+  },
+  "coreDllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+  "coreVersion": "mcis-core/0.1.0",
+  "timesMatchDot": true,
+  "statusMatchContract": true,
+  "corePositiveControl": true,
+  "curve": "未验",
+  "gapCrossingClaim": "未验（不宣称可跨或修复 6–7 秒缺口；本轮只按契约区分点状态）",
+  "notWholeW12": true,
+  "exitCode": 0
+}

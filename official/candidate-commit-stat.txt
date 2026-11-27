@@ -1,0 +1,8 @@
+05e775f test(w12): add explicit short-gap sampling contrast
+ .../w12-explicit-gap-sampling/README.md            |    5 +
+ .../w12-explicit-gap-sampling/core_norebuild.sh    |    7 +
+ .../w12-explicit-gap-sampling/fixtures/SHA256SUMS  |    2 +
+ .../fixtures/vessel-a.json                         | 1183 +++++++++++++++++
+ .../fixtures/vessel-b.json                         | 1362 ++++++++++++++++++++
+ tests_acceptance/w12-explicit-gap-sampling/run.py  |  465 +++++++
+ 6 files changed, 3024 insertions(+)

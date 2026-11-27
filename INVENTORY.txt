@@ -1,0 +1,22 @@
+# W12 explicit short-gap inventory
+# pin=03a8e7867fedbaaabbf8dd12fc9041d6a1a74cd5
+# fixturePin=2048c60fd6650c6f2c99a76a16be463a3895655d
+# candidate=05e775f287a9f1e06dc945bba6a84269966c16c8
+# official=2026-11-27T11:45:39+08:00..2026-11-27T11:45:42+08:00 exit=0
+
+63c8a7c051ebdf28308efeb9c265f6020926d7edbaee1c727b25115a2bf8c4e1  CANDIDATE_SHA.txt  bytes=41
+807ad83e58e20d3664f65233a26f3474d2757aca737c6907d1e4d056182043e6  ISSUE_COMMENT_INPROGRESS.md  bytes=1445
+1d5a7934ba29ab58e33fccfa128d634e4feeb6f5822f68a8e5bc163661f207b8  OFFICIAL_COMMAND.sh  bytes=714
+c1a764888f2d9afd1e9d60454f53547a917a6eaf70c1402316afb6999922f560  OFFICIAL_RUN.txt  bytes=832
+1f7dc0ad5fff53b8e985b92206ca985791263f6990eab6b588377634d3518cef  REPORT.md  bytes=537
+02f396be667484277198c1f3b7983adae3c6d4d1b58d4d83b1b407bb6d43d1f4  acceptance/README.md  bytes=787
+a19eea96864ef424ea9cd1a3541b1c845791d2fd2bb52a2f65b5bff9684096a8  acceptance/core_norebuild.sh  bytes=365
+a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c  acceptance/fixtures/vessel-a.json  bytes=35376
+07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca  acceptance/fixtures/vessel-b.json  bytes=40954
+5b16e1c1169c9faf9a060fd96aa6e06de9110afd24b50614cd0530a337211ca0  acceptance/run.py  bytes=19141
+f0336daabd2df286dc7c428938ce0cfca0d75fffc313ca961748608a83926e52  official/candidate-commit-stat.txt  bytes=504
+2750fa5a1a6b4803155c8b892dcbfd2fd8bfd52f442157e5c37f552b6ffa9f86  official/core-calls.json  bytes=7300
+9d74d4a2893c8dabe9c4942fc41e343fa4feeb2138d0374fc24622bfadc61cc2  official/core-version.json  bytes=368
+03963634691f22ee997086cda3a124f83d3879e432fdccfb5ecbb4abe86f7a36  official/per-time-status.json  bytes=10786
+5b7093557634e54a550705d4f97f394b530cbb03f8093f50cbb6a6682a7eb6a9  official/summary.json  bytes=933
+7ec75f06462c90aa3b425392822c2be10b0125d9b89526cead837745e003c909  official/utc-recount.json  bytes=1761

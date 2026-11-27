@@ -1,0 +1,254 @@
+{
+  "dllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+  "coreVersion": "mcis-core/0.1.0",
+  "origin": {
+    "latDeg": -40.0,
+    "lonDeg": -130.0
+  },
+  "calls": [
+    {
+      "t": 120.0,
+      "queryUtc": "2026-02-01T12:02:00.000Z",
+      "command": "mcis-core cpa (core_client.run, twice)",
+      "payload": {
+        "origin": {
+          "latDeg": -40.0,
+          "lonDeg": -130.0
+        },
+        "pairs": [
+          {
+            "pairId": "SYN-VESSEL-A|SYN-VESSEL-B@120",
+            "timeSec": 120.0,
+            "own": {
+              "vesselId": "SYN-VESSEL-A",
+              "latDeg": -40.0,
+              "lonDeg": -129.99274774,
+              "speedKn": 10,
+              "courseDeg": 90
+            },
+            "target": {
+              "vesselId": "SYN-VESSEL-B",
+              "latDeg": -40.0,
+              "lonDeg": -129.9695405,
+              "speedKn": 12,
+              "courseDeg": 270
+            }
+          }
+        ]
+      },
+      "coreVersion": "mcis-core/0.1.0",
+      "recalculatedIdentical": true,
+      "result": {
+        "thresholds": {
+          "presetName": "Default",
+          "dangerDcpaNm": 0.3,
+          "dangerTcpaMin": 6,
+          "warningDcpaNm": 1,
+          "warningTcpaMin": 12
+        },
+        "results": [
+          {
+            "pairId": "SYN-VESSEL-A|SYN-VESSEL-B@120",
+            "ownVesselId": "SYN-VESSEL-A",
+            "targetVesselId": "SYN-VESSEL-B",
+            "timeSec": 120,
+            "currentDistanceNm": 1.070062,
+            "trueBearingDeg": 90.01212,
+            "relativeCourseDeg": 270,
+            "relativeSpeedKn": 22,
+            "dcpaNm": 0.000226,
+            "tcpaMin": 2.918352,
+            "isDiverging": false,
+            "isDegenerate": false,
+            "riskLevel": "Danger"
+          }
+        ]
+      },
+      "rawFirst": {
+        "ok": true,
+        "command": "cpa",
+        "coreVersion": "mcis-core/0.1.0",
+        "result": {
+          "thresholds": {
+            "presetName": "Default",
+            "dangerDcpaNm": 0.3,
+            "dangerTcpaMin": 6,
+            "warningDcpaNm": 1,
+            "warningTcpaMin": 12
+          },
+          "results": [
+            {
+              "pairId": "SYN-VESSEL-A|SYN-VESSEL-B@120",
+              "ownVesselId": "SYN-VESSEL-A",
+              "targetVesselId": "SYN-VESSEL-B",
+              "timeSec": 120,
+              "currentDistanceNm": 1.070062,
+              "trueBearingDeg": 90.01212,
+              "relativeCourseDeg": 270,
+              "relativeSpeedKn": 22,
+              "dcpaNm": 0.000226,
+              "tcpaMin": 2.918352,
+              "isDiverging": false,
+              "isDegenerate": false,
+              "riskLevel": "Danger"
+            }
+          ]
+        }
+      },
+      "rawSecond": {
+        "ok": true,
+        "command": "cpa",
+        "coreVersion": "mcis-core/0.1.0",
+        "result": {
+          "thresholds": {
+            "presetName": "Default",
+            "dangerDcpaNm": 0.3,
+            "dangerTcpaMin": 6,
+            "warningDcpaNm": 1,
+            "warningTcpaMin": 12
+          },
+          "results": [
+            {
+              "pairId": "SYN-VESSEL-A|SYN-VESSEL-B@120",
+              "ownVesselId": "SYN-VESSEL-A",
+              "targetVesselId": "SYN-VESSEL-B",
+              "timeSec": 120,
+              "currentDistanceNm": 1.070062,
+              "trueBearingDeg": 90.01212,
+              "relativeCourseDeg": 270,
+              "relativeSpeedKn": 22,
+              "dcpaNm": 0.000226,
+              "tcpaMin": 2.918352,
+              "isDiverging": false,
+              "isDegenerate": false,
+              "riskLevel": "Danger"
+            }
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "t": 130.0,
+      "queryUtc": "2026-02-01T12:02:10.000Z",
+      "command": "mcis-core cpa (core_client.run, twice)",
+      "payload": {
+        "origin": {
+          "latDeg": -40.0,
+          "lonDeg": -130.0
+        },
+        "pairs": [
+          {
+            "pairId": "SYN-VESSEL-A|SYN-VESSEL-B@130",
+            "timeSec": 130.0,
+            "own": {
+              "vesselId": "SYN-VESSEL-A",
+              "latDeg": -40.0,
+              "lonDeg": -129.99214338,
+              "speedKn": 10,
+              "courseDeg": 90
+            },
+            "target": {
+              "vesselId": "SYN-VESSEL-B",
+              "latDeg": -40.0,
+              "lonDeg": -129.97026572,
+              "speedKn": 12,
+              "courseDeg": 270
+            }
+          }
+        ]
+      },
+      "coreVersion": "mcis-core/0.1.0",
+      "recalculatedIdentical": true,
+      "result": {
+        "thresholds": {
+          "presetName": "Default",
+          "dangerDcpaNm": 0.3,
+          "dangerTcpaMin": 6,
+          "warningDcpaNm": 1,
+          "warningTcpaMin": 12
+        },
+        "results": [
+          {
+            "pairId": "SYN-VESSEL-A|SYN-VESSEL-B@130",
+            "ownVesselId": "SYN-VESSEL-A",
+            "targetVesselId": "SYN-VESSEL-B",
+            "timeSec": 130,
+            "currentDistanceNm": 1.008757,
+            "trueBearingDeg": 90.012081,
+            "relativeCourseDeg": 270,
+            "relativeSpeedKn": 22,
+            "dcpaNm": 0.000213,
+            "tcpaMin": 2.751155,
+            "isDiverging": false,
+            "isDegenerate": false,
+            "riskLevel": "Danger"
+          }
+        ]
+      },
+      "rawFirst": {
+        "ok": true,
+        "command": "cpa",
+        "coreVersion": "mcis-core/0.1.0",
+        "result": {
+          "thresholds": {
+            "presetName": "Default",
+            "dangerDcpaNm": 0.3,
+            "dangerTcpaMin": 6,
+            "warningDcpaNm": 1,
+            "warningTcpaMin": 12
+          },
+          "results": [
+            {
+              "pairId": "SYN-VESSEL-A|SYN-VESSEL-B@130",
+              "ownVesselId": "SYN-VESSEL-A",
+              "targetVesselId": "SYN-VESSEL-B",
+              "timeSec": 130,
+              "currentDistanceNm": 1.008757,
+              "trueBearingDeg": 90.012081,
+              "relativeCourseDeg": 270,
+              "relativeSpeedKn": 22,
+              "dcpaNm": 0.000213,
+              "tcpaMin": 2.751155,
+              "isDiverging": false,
+              "isDegenerate": false,
+              "riskLevel": "Danger"
+            }
+          ]
+        }
+      },
+      "rawSecond": {
+        "ok": true,
+        "command": "cpa",
+        "coreVersion": "mcis-core/0.1.0",
+        "result": {
+          "thresholds": {
+            "presetName": "Default",
+            "dangerDcpaNm": 0.3,
+            "dangerTcpaMin": 6,
+            "warningDcpaNm": 1,
+            "warningTcpaMin": 12
+          },
+          "results": [
+            {
+              "pairId": "SYN-VESSEL-A|SYN-VESSEL-B@130",
+              "ownVesselId": "SYN-VESSEL-A",
+              "targetVesselId": "SYN-VESSEL-B",
+              "timeSec": 130,
+              "currentDistanceNm": 1.008757,
+              "trueBearingDeg": 90.012081,
+              "relativeCourseDeg": 270,
+              "relativeSpeedKn": 22,
+              "dcpaNm": 0.000213,
+              "tcpaMin": 2.751155,
+              "isDiverging": false,
+              "isDegenerate": false,
+              "riskLevel": "Danger"
+            }
+          ]
+        }
+      },
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "fixturePin": "2048c60fd6650c6f2c99a76a16be463a3895655d",
+  "sha256": {
+    "vessel-a.json": "a8f9109a33b8c80a6c41219473186e69c16fd59ee64ff325a5559c190028bb1c",
+    "vessel-b.json": "07e043fc227770b6aaa6f1b15a6118e46b85a52e5638ac1b514e9269c6b159ca"
+  },
+  "caseId": "SYN-XREPO-001",
+  "epoch": "2026-02-01T12:00:00.000Z",
+  "A": [
+    0.0,
+    10.0,
+    20.0,
+    30.0,
+    40.0,
+    50.0,
+    60.0,
+    100.0,
+    110.0,
+    120.0,
+    121.0,
+    127.5,
+    130.0,
+    140.0,
+    150.0,
+    160.0,
+    170.0,
+    180.0,
+    190.0,
+    200.0,
+    210.0,
+    220.0
+  ],
+  "B": [
+    0.0,
+    10.0,
+    20.0,
+    30.0,
+    40.0,
+    50.0,
+    60.0,
+    65.0,
+    70.0,
+    80.0,
+    90.0,
+    95.0,
+    100.0,
+    110.0,
+    120.0,
+    125.0,
+    130.0,
+    140.0,
+    150.0,
+    160.0,
+    170.0,
+    180.0,
+    190.0,
+    200.0,
+    210.0,
+    220.0
+  ],
+  "matchesReadmeAndDot": true,
+  "A_missingIntervals": [
+    {
+      "startUtc": "2026-02-01T12:01:00.000Z",
+      "endUtc": "2026-02-01T12:01:40.000Z",
+      "sourceIds": [
+        "synthetic-record"
+      ],
+      "reason": "Synthetic missing interior; endpoints observed; no interpolation across"
+    },
+    {
+      "startUtc": "2026-02-01T12:02:01.000Z",
+      "endUtc": "2026-02-01T12:02:07.500Z",
+      "sourceIds": [
+        "synthetic-record"
+      ],
+      "reason": "Synthetic missing interior; endpoints observed; no interpolation across"
+    }
+  ],
+  "B_missingIntervals": [],
+  "dotAgreement": {
+    "A_has_recorded_position_at_121_and_127_5": true,
+    "A_124_250_in_open_gap": true,
+    "B_no_exact_point_at_121_124_250_127_5": true,
+    "B_121_and_124_250_between_120_125": true,
+    "B_127_5_between_125_130": true,
+    "both_have_recorded_position_cog_sog_at_120_and_130": true
+  }
+}
