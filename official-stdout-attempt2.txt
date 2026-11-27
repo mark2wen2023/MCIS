@@ -1,0 +1,9 @@
+official start 2026-11-27 17:32:41 CST
+locked official dll f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf
+node_modules present at /workspace/mcis-w12-request-read-cand/web/node_modules
+esbuild /workspace/mcis-w12-request-read-cand/web/node_modules/esbuild/bin/esbuild /workspace/mcis-w12-request-read-cand/tests_acceptance/w12-request-time-read/assembly/main.tsx --bundle --outfile=/workspace/mcis-w12-request-time-read-report/official/assembly/app.js --format=iife --platform=browser --jsx=automatic --alias:react=/workspace/mcis-w12-request-read-cand/web/node_modules/react --alias:react-dom=/workspace/mcis-w12-request-read-cand/web/node_modules/react-dom --alias:react-dom/client=/workspace/mcis-w12-request-read-cand/web/node_modules/react-dom/client --alias:react/jsx-runtime=/workspace/mcis-w12-request-read-cand/web/node_modules/react/jsx-runtime --alias:echarts=/workspace/mcis-w12-request-read-cand/web/node_modules/echarts --log-level=warning
+assembly app.js sha256=2e79813836403a2a7c97c7995b2473e5177382dca2c903e250b4adde3c3a5d24
+materialize /workspace/mcis-w12-request-time-read-report/official/w12-rtr-src from /workspace/maritime-sim-design
+host /workspace/mcis-w17-871db66/service/.venv/bin/python -I -B /workspace/mcis-w12-request-read-cand/tests_acceptance/w12-request-time-read/host.py /workspace/mcis-w12-request-time-read-report/official/assembly /workspace/mcis-w12-request-time-read-report/official/w12-rtr-src /workspace/mcis-w12-request-read-cand/tests_acceptance/w12-registered-json-gap/fixtures /workspace/mcis-w12-request-read-cand /workspace/mcis-w12-request-read-cand/tests_acceptance/w12-registered-json-gap/core_norebuild.sh f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf 127.0.0.1 18783 /workspace/mcis-w12-request-time-read-report/official/host-request-log.json
+W12_RTR_READY=127.0.0.1:18783
+host exit=-15

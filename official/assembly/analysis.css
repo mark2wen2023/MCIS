@@ -1,0 +1,29 @@
+/* W12 分析页局部样式（不改共享 styles.css）。 */
+.an-top { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 12px; }
+@media (max-width: 1500px) { .an-top { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); } }
+.an-series-pick { margin-bottom: 6px; }
+.an-source { margin-bottom: 8px; }
+.an-dim { color: var(--text-muted); font-size: 11px; }
+.an-critical td { background: rgba(255, 176, 32, 0.08); }
+.an-critical-note { color: #ffd166; }
+.an-collision td { color: #ff8fa3; }
+.an-dimrow td { color: var(--text-muted); }
+.an-span td { border-top: 1px solid var(--border-line); color: var(--cyan); }
+.an-inputs { margin: 6px 0; }
+.an-inputs summary { cursor: pointer; color: var(--text-sec); }
+.an-chart-placeholder { height: 300px; }
+
+/* Readable default table for registered isolated samples (assembly does not load styles.css). */
+.an-metric-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; }
+.an-metric-table caption { caption-side: top; text-align: left; color: #8da4c4; font-size: 11px; padding: 4px 0 6px; }
+.an-metric-table th, .an-metric-table td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #33506e; color: #e6f1ff; }
+.an-metric-table thead th { color: #8da4c4; font-weight: 600; }
+.an-metric-table:focus, .an-metric-table:focus-visible { outline: 2px solid #3be3ff; outline-offset: 2px; }
+
+/* Registered JSON source summary must wrap in a 390px viewport; hashes must not force page-wide scroll. */
+html, body { max-width: 100%; }
+[data-testid="sources"] .mono,
+[data-testid="registered-identities"] .mono,
+[data-testid="sample-status-table"],
+[data-testid="registered-metric-table"] { overflow-wrap: anywhere; word-break: break-all; white-space: normal; }
+[data-testid="sources"], [data-testid="registered-identities"], [data-testid="analysis-page"], [data-testid="w12-rjg-assembly"] { max-width: 100%; overflow-x: hidden; }

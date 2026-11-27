@@ -1,0 +1,111 @@
+{
+  "ok": true,
+  "denied": {
+    "session": "synthetic-denied-reader",
+    "roleContextKind": "synthetic-test-server-role",
+    "notRealAuthentication": true,
+    "accessBefore": {
+      "evidence": 2,
+      "custody": 2,
+      "audit": 2,
+      "access": 0
+    },
+    "accessAfter": {
+      "evidence": 2,
+      "custody": 2,
+      "audit": 2,
+      "access": 0
+    },
+    "raw": {
+      "url": "http://127.0.0.1:18783/assembly/api/view",
+      "status": 403,
+      "body": {
+        "ok": false,
+        "reason": "policy-deny:403",
+        "roleContext": "synthetic-denied-reader",
+        "roleContextKind": "synthetic-test-server-role",
+        "roleContextNote": "合成测试服务端角色上下文，不是真实身份认证",
+        "metricsReturned": false,
+        "currentAnalysis": null,
+        "view": null,
+        "registeredIdentities": null,
+        "accessBefore": {
+          "evidence": 2,
+          "custody": 2,
+          "audit": 2,
+          "access": 0
+        },
+        "accessAfter": {
+          "evidence": 2,
+          "custody": 2,
+          "audit": 2,
+          "access": 0
+        },
+        "deltaAccess": 0
+      }
+    }
+  },
+  "authorized": {
+    "session": "synthetic-authorized-reader",
+    "roleContextKind": "synthetic-test-server-role",
+    "notRealAuthentication": true,
+    "accessBefore": {
+      "evidence": 2,
+      "custody": 2,
+      "audit": 2,
+      "access": 0
+    },
+    "accessAfter": {
+      "evidence": 2,
+      "custody": 4,
+      "audit": 4,
+      "access": 2
+    },
+    "hoverAccess": {
+      "evidence": 2,
+      "custody": 4,
+      "audit": 4,
+      "access": 2
+    },
+    "raw": {
+      "url": "http://127.0.0.1:18783/assembly/api/view",
+      "status": 200,
+      "ok": true,
+      "roleContext": "synthetic-authorized-reader",
+      "deltaAccess": 2,
+      "accessBefore": {
+        "evidence": 2,
+        "custody": 2,
+        "audit": 2,
+        "access": 0
+      },
+      "accessAfter": {
+        "evidence": 2,
+        "custody": 4,
+        "audit": 4,
+        "access": 2
+      },
+      "coreVersion": "mcis-core/0.1.0",
+      "declaredOpenGaps": [
+        {
+          "vesselId": "SYN-VESSEL-A",
+          "startSec": 60.0,
+          "endSec": 100.0
+        },
+        {
+          "vesselId": "SYN-VESSEL-A",
+          "startSec": 121.0,
+          "endSec": 127.5
+        }
+      ],
+      "hasView": true,
+      "hasDeniedFixture": false,
+      "hasUnpairedFixture": false
+    }
+  },
+  "started": "2026-11-27 17:33:15 CST",
+  "ended": "2026-11-27 17:33:19 CST",
+  "port": 18783,
+  "origin": "http://127.0.0.1:18783",
+  "coreDllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf"
+}

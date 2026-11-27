@@ -1,0 +1,45 @@
+{
+  "session": "synthetic-denied-reader",
+  "roleContextKind": "synthetic-test-server-role",
+  "notRealAuthentication": true,
+  "accessBefore": {
+    "evidence": 2,
+    "custody": 2,
+    "audit": 2,
+    "access": 0
+  },
+  "accessAfter": {
+    "evidence": 2,
+    "custody": 2,
+    "audit": 2,
+    "access": 0
+  },
+  "raw": {
+    "url": "http://127.0.0.1:18783/assembly/api/view",
+    "status": 403,
+    "body": {
+      "ok": false,
+      "reason": "policy-deny:403",
+      "roleContext": "synthetic-denied-reader",
+      "roleContextKind": "synthetic-test-server-role",
+      "roleContextNote": "合成测试服务端角色上下文，不是真实身份认证",
+      "metricsReturned": false,
+      "currentAnalysis": null,
+      "view": null,
+      "registeredIdentities": null,
+      "accessBefore": {
+        "evidence": 2,
+        "custody": 2,
+        "audit": 2,
+        "access": 0
+      },
+      "accessAfter": {
+        "evidence": 2,
+        "custody": 2,
+        "audit": 2,
+        "access": 0
+      },
+      "deltaAccess": 0
+    }
+  }
+}

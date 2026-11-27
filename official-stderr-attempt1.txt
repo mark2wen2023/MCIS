@@ -1,0 +1,1 @@
+denied view incomplete: '业务拒绝：不显示当前分析\n\npolicy-deny:403\n\ncurrentAnalysis=null metricsReturned=false\n\n不显示当前分析指标，不回填。响应不含有效快照、指标或证据身份。'

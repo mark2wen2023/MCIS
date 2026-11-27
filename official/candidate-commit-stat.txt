@@ -1,0 +1,24 @@
+commit f7b1f11e719f4ebba0a3a1f6146fadbe3ba8d346
+Author:     Mark Wen <mark@users.noreply.github.com>
+AuthorDate: Fri Nov 27 17:33:39 2026 +0800
+Commit:     Mark Wen <mark@users.noreply.github.com>
+CommitDate: Fri Nov 27 17:33:39 2026 +0800
+
+    feat(w12): assemble the registered snapshot inside the view request
+    
+    Independent isolated candidate from 7345c1e. The loopback host
+    holds the two pins and only calls frozen _load_registered_pair
+    when a synthetic authorized role context requests the view.
+    That request returns one authorized snapshot and adds two Access
+    records. A synthetic denied role gets a business reject with no
+    snapshot, metrics, or evidence identity, and Access does not
+    increase. Hover does not reread originals. Not real authentication.
+    Official routes, contracts, storage, and core are unchanged.
+
+ tests_acceptance/w12-request-time-read/README.md   |  11 +
+ .../w12-request-time-read/assembly/index.html      |  22 +
+ .../w12-request-time-read/assembly/main.tsx        | 145 ++++++
+ tests_acceptance/w12-request-time-read/host.py     | 200 ++++++++
+ tests_acceptance/w12-request-time-read/run.py      | 510 +++++++++++++++++++++
+ tests_acceptance/w12-request-time-read/view.py     | 104 +++++
+ 6 files changed, 992 insertions(+)

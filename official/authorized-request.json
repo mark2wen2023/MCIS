@@ -1,0 +1,58 @@
+{
+  "session": "synthetic-authorized-reader",
+  "roleContextKind": "synthetic-test-server-role",
+  "notRealAuthentication": true,
+  "accessBefore": {
+    "evidence": 2,
+    "custody": 2,
+    "audit": 2,
+    "access": 0
+  },
+  "accessAfter": {
+    "evidence": 2,
+    "custody": 4,
+    "audit": 4,
+    "access": 2
+  },
+  "hoverAccess": {
+    "evidence": 2,
+    "custody": 4,
+    "audit": 4,
+    "access": 2
+  },
+  "raw": {
+    "url": "http://127.0.0.1:18783/assembly/api/view",
+    "status": 200,
+    "ok": true,
+    "roleContext": "synthetic-authorized-reader",
+    "deltaAccess": 2,
+    "accessBefore": {
+      "evidence": 2,
+      "custody": 2,
+      "audit": 2,
+      "access": 0
+    },
+    "accessAfter": {
+      "evidence": 2,
+      "custody": 4,
+      "audit": 4,
+      "access": 2
+    },
+    "coreVersion": "mcis-core/0.1.0",
+    "declaredOpenGaps": [
+      {
+        "vesselId": "SYN-VESSEL-A",
+        "startSec": 60.0,
+        "endSec": 100.0
+      },
+      {
+        "vesselId": "SYN-VESSEL-A",
+        "startSec": 121.0,
+        "endSec": 127.5
+      }
+    ],
+    "hasView": true,
+    "hasDeniedFixture": false,
+    "hasUnpairedFixture": false
+  }
+}

@@ -1,0 +1,5 @@
+PASS
+scanned_files=30
+skipped_binary=5
+no env tokens or known credential patterns found in report/staging
+source field name pins in scripts is allowed; no pin payload files packed
