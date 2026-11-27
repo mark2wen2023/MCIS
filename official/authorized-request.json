@@ -1,0 +1,76 @@
+{
+  "session": "synthetic-authorized-reader",
+  "roleContextKind": "synthetic-test-server-role",
+  "notRealAuthentication": true,
+  "accessBefore": {
+    "evidence": 2,
+    "custody": 2,
+    "audit": 2,
+    "access": 0
+  },
+  "accessAfter": {
+    "evidence": 2,
+    "custody": 4,
+    "audit": 4,
+    "access": 2
+  },
+  "hoverAccess": {
+    "evidence": 2,
+    "custody": 4,
+    "audit": 4,
+    "access": 2
+  },
+  "policyResult": {
+    "entry": "_load_registered_pair",
+    "called": true,
+    "outcome": "allowed",
+    "seed": "default_policy Investigator evidence_meta=ReadWrite",
+    "exceptionType": null,
+    "statusCode": null,
+    "detail": null
+  },
+  "raw": {
+    "url": "http://127.0.0.1:18784/assembly/api/view",
+    "status": 200,
+    "ok": true,
+    "roleContext": "synthetic-authorized-reader",
+    "deltaAccess": 2,
+    "accessBefore": {
+      "evidence": 2,
+      "custody": 2,
+      "audit": 2,
+      "access": 0
+    },
+    "accessAfter": {
+      "evidence": 2,
+      "custody": 4,
+      "audit": 4,
+      "access": 2
+    },
+    "coreVersion": "mcis-core/0.1.0",
+    "declaredOpenGaps": [
+      {
+        "vesselId": "SYN-VESSEL-A",
+        "startSec": 60.0,
+        "endSec": 100.0
+      },
+      {
+        "vesselId": "SYN-VESSEL-A",
+        "startSec": 121.0,
+        "endSec": 127.5
+      }
+    ],
+    "hasView": true,
+    "hasDeniedFixture": false,
+    "hasUnpairedFixture": false,
+    "policyResult": {
+      "entry": "_load_registered_pair",
+      "called": true,
+      "outcome": "allowed",
+      "seed": "default_policy Investigator evidence_meta=ReadWrite",
+      "exceptionType": null,
+      "statusCode": null,
+      "detail": null
+    }
+  }
+}

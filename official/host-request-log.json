@@ -1,0 +1,306 @@
+[
+  {
+    "path": "/assembly/api/view",
+    "method": "GET",
+    "status": 200,
+    "roleHeader": "synthetic-authorized-reader",
+    "accessBefore": {
+      "evidence": 2,
+      "custody": 2,
+      "audit": 2,
+      "access": 0
+    },
+    "accessAfter": {
+      "evidence": 2,
+      "custody": 4,
+      "audit": 4,
+      "access": 2
+    },
+    "deltaAccess": 2,
+    "ok": true,
+    "reason": null,
+    "policyResult": {
+      "entry": "_load_registered_pair",
+      "called": true,
+      "outcome": "allowed",
+      "seed": "default_policy Investigator evidence_meta=ReadWrite",
+      "exceptionType": null,
+      "statusCode": null,
+      "detail": null
+    },
+    "payload": {
+      "ok": true,
+      "roleContext": "synthetic-authorized-reader",
+      "roleContextKind": "synthetic-test-server-role",
+      "roleContextNote": "合成测试服务端角色上下文，不是真实身份认证；本请求实际调用了冻结 _load_registered_pair",
+      "sampleStatus": [
+        {
+          "t": 120.0,
+          "queryUtc": "2026-02-01T12:02:00Z",
+          "clock": "20:02:00",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/9"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/14"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 12,
+            "courseKind": "recorded",
+            "courseDeg": 270
+          },
+          "cotemporalMeasured": true,
+          "pairMetricsAllowed": true
+        },
+        {
+          "t": 121.0,
+          "queryUtc": "2026-02-01T12:02:01Z",
+          "clock": "20:02:01",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/10"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "no_observation_at_time",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": null,
+            "gap": null
+          },
+          "cotemporalMeasured": false,
+          "pairMetricsAllowed": false
+        },
+        {
+          "t": 124.25,
+          "queryUtc": "2026-02-01T12:02:04.250Z",
+          "clock": "20:02:04.250",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "declared_gap",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": {
+              "jsonPointer": "/sampling/missingIntervals/1"
+            },
+            "gap": {
+              "startUtc": "2026-02-01T12:02:01.000Z",
+              "endUtc": "2026-02-01T12:02:07.500Z"
+            }
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "no_observation_at_time",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": null,
+            "gap": null
+          },
+          "cotemporalMeasured": false,
+          "pairMetricsAllowed": false
+        },
+        {
+          "t": 127.5,
+          "queryUtc": "2026-02-01T12:02:07.500Z",
+          "clock": "20:02:07.500",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/11"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "no_observation_at_time",
+            "hasPosition": false,
+            "positionKind": null,
+            "locator": null,
+            "gap": null
+          },
+          "cotemporalMeasured": false,
+          "pairMetricsAllowed": false
+        },
+        {
+          "t": 130.0,
+          "queryUtc": "2026-02-01T12:02:10Z",
+          "clock": "20:02:10",
+          "A": {
+            "vesselId": "SYN-VESSEL-A",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/12"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 10,
+            "courseKind": "recorded",
+            "courseDeg": 90
+          },
+          "B": {
+            "vesselId": "SYN-VESSEL-B",
+            "status": "input_point",
+            "hasPosition": true,
+            "positionKind": "recorded",
+            "locator": {
+              "jsonPointer": "/points/16"
+            },
+            "gap": null,
+            "speedKind": "recorded",
+            "speedKn": 12,
+            "courseKind": "recorded",
+            "courseDeg": 270
+          },
+          "cotemporalMeasured": true,
+          "pairMetricsAllowed": true
+        }
+      ],
+      "coreVersion": "mcis-core/0.1.0",
+      "dllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf",
+      "declaredOpenGaps": [
+        {
+          "vesselId": "SYN-VESSEL-A",
+          "startSec": 60.0,
+          "endSec": 100.0
+        },
+        {
+          "vesselId": "SYN-VESSEL-A",
+          "startSec": 121.0,
+          "endSec": 127.5
+        }
+      ],
+      "accessBefore": {
+        "evidence": 2,
+        "custody": 2,
+        "audit": 2,
+        "access": 0
+      },
+      "accessAfter": {
+        "evidence": 2,
+        "custody": 4,
+        "audit": 4,
+        "access": 2
+      },
+      "deltaAccess": 2,
+      "policyResult": {
+        "entry": "_load_registered_pair",
+        "called": true,
+        "outcome": "allowed",
+        "seed": "default_policy Investigator evidence_meta=ReadWrite",
+        "exceptionType": null,
+        "statusCode": null,
+        "detail": null
+      },
+      "viewSummary": {
+        "caseId": "SYN-XREPO-001",
+        "title": "已登记声明缺口 JSON（同刻核心）",
+        "identityCount": 2,
+        "hasMetrics": true
+      }
+    }
+  },
+  {
+    "path": "/assembly/api/view",
+    "method": "GET",
+    "status": 403,
+    "roleHeader": "synthetic-denied-reader",
+    "accessBefore": {
+      "evidence": 2,
+      "custody": 2,
+      "audit": 2,
+      "access": 0
+    },
+    "accessAfter": {
+      "evidence": 2,
+      "custody": 2,
+      "audit": 2,
+      "access": 0
+    },
+    "deltaAccess": 0,
+    "ok": false,
+    "reason": "policy-deny:403",
+    "policyResult": {
+      "entry": "_load_registered_pair",
+      "called": true,
+      "outcome": "evidence-policy-deny",
+      "seed": "e80a49a set_deny_evidence: Investigator evidence_meta=Deny",
+      "exceptionType": "HTTPException",
+      "statusCode": 403,
+      "detail": {
+        "code": "FORBIDDEN",
+        "message": "角色 Investigator 无权访问 evidence_meta"
+      }
+    },
+    "payload": {
+      "ok": false,
+      "reason": "policy-deny:403",
+      "roleContext": "synthetic-denied-reader",
+      "roleContextKind": "synthetic-test-server-role",
+      "roleContextNote": "合成测试服务端角色上下文，不是真实身份认证；拒绝须来自冻结读取入口的证据策略",
+      "metricsReturned": false,
+      "currentAnalysis": null,
+      "registeredIdentities": null,
+      "accessBefore": {
+        "evidence": 2,
+        "custody": 2,
+        "audit": 2,
+        "access": 0
+      },
+      "accessAfter": {
+        "evidence": 2,
+        "custody": 2,
+        "audit": 2,
+        "access": 0
+      },
+      "deltaAccess": 0,
+      "policyResult": {
+        "entry": "_load_registered_pair",
+        "called": true,
+        "outcome": "evidence-policy-deny",
+        "seed": "e80a49a set_deny_evidence: Investigator evidence_meta=Deny",
+        "exceptionType": "HTTPException",
+        "statusCode": 403,
+        "detail": {
+          "code": "FORBIDDEN",
+          "message": "角色 Investigator 无权访问 evidence_meta"
+        }
+      }
+    }
+  }
+]

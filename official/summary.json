@@ -1,0 +1,154 @@
+{
+  "ok": true,
+  "denied": {
+    "session": "synthetic-denied-reader",
+    "roleContextKind": "synthetic-test-server-role",
+    "notRealAuthentication": true,
+    "independentContext": true,
+    "accessBefore": {
+      "evidence": 2,
+      "custody": 2,
+      "audit": 2,
+      "access": 0
+    },
+    "accessAfter": {
+      "evidence": 2,
+      "custody": 2,
+      "audit": 2,
+      "access": 0
+    },
+    "policyResult": {
+      "entry": "_load_registered_pair",
+      "called": true,
+      "outcome": "evidence-policy-deny",
+      "seed": "e80a49a set_deny_evidence: Investigator evidence_meta=Deny",
+      "exceptionType": "HTTPException",
+      "statusCode": 403,
+      "detail": {
+        "code": "FORBIDDEN",
+        "message": "角色 Investigator 无权访问 evidence_meta"
+      }
+    },
+    "raw": {
+      "url": "http://127.0.0.1:18784/assembly/api/view",
+      "status": 403,
+      "body": {
+        "ok": false,
+        "reason": "policy-deny:403",
+        "roleContext": "synthetic-denied-reader",
+        "roleContextKind": "synthetic-test-server-role",
+        "roleContextNote": "合成测试服务端角色上下文，不是真实身份认证；拒绝须来自冻结读取入口的证据策略",
+        "metricsReturned": false,
+        "currentAnalysis": null,
+        "view": null,
+        "registeredIdentities": null,
+        "accessBefore": {
+          "evidence": 2,
+          "custody": 2,
+          "audit": 2,
+          "access": 0
+        },
+        "accessAfter": {
+          "evidence": 2,
+          "custody": 2,
+          "audit": 2,
+          "access": 0
+        },
+        "deltaAccess": 0,
+        "policyResult": {
+          "entry": "_load_registered_pair",
+          "called": true,
+          "outcome": "evidence-policy-deny",
+          "seed": "e80a49a set_deny_evidence: Investigator evidence_meta=Deny",
+          "exceptionType": "HTTPException",
+          "statusCode": 403,
+          "detail": {
+            "code": "FORBIDDEN",
+            "message": "角色 Investigator 无权访问 evidence_meta"
+          }
+        }
+      }
+    }
+  },
+  "authorized": {
+    "session": "synthetic-authorized-reader",
+    "roleContextKind": "synthetic-test-server-role",
+    "notRealAuthentication": true,
+    "accessBefore": {
+      "evidence": 2,
+      "custody": 2,
+      "audit": 2,
+      "access": 0
+    },
+    "accessAfter": {
+      "evidence": 2,
+      "custody": 4,
+      "audit": 4,
+      "access": 2
+    },
+    "hoverAccess": {
+      "evidence": 2,
+      "custody": 4,
+      "audit": 4,
+      "access": 2
+    },
+    "policyResult": {
+      "entry": "_load_registered_pair",
+      "called": true,
+      "outcome": "allowed",
+      "seed": "default_policy Investigator evidence_meta=ReadWrite",
+      "exceptionType": null,
+      "statusCode": null,
+      "detail": null
+    },
+    "raw": {
+      "url": "http://127.0.0.1:18784/assembly/api/view",
+      "status": 200,
+      "ok": true,
+      "roleContext": "synthetic-authorized-reader",
+      "deltaAccess": 2,
+      "accessBefore": {
+        "evidence": 2,
+        "custody": 2,
+        "audit": 2,
+        "access": 0
+      },
+      "accessAfter": {
+        "evidence": 2,
+        "custody": 4,
+        "audit": 4,
+        "access": 2
+      },
+      "coreVersion": "mcis-core/0.1.0",
+      "declaredOpenGaps": [
+        {
+          "vesselId": "SYN-VESSEL-A",
+          "startSec": 60.0,
+          "endSec": 100.0
+        },
+        {
+          "vesselId": "SYN-VESSEL-A",
+          "startSec": 121.0,
+          "endSec": 127.5
+        }
+      ],
+      "hasView": true,
+      "hasDeniedFixture": false,
+      "hasUnpairedFixture": false,
+      "policyResult": {
+        "entry": "_load_registered_pair",
+        "called": true,
+        "outcome": "allowed",
+        "seed": "default_policy Investigator evidence_meta=ReadWrite",
+        "exceptionType": null,
+        "statusCode": null,
+        "detail": null
+      }
+    }
+  },
+  "started": "2026-11-27 18:51:33 CST",
+  "ended": "2026-11-27 18:51:38 CST",
+  "port": 18784,
+  "origin": "http://127.0.0.1:18784",
+  "coreDllSha256": "f94197777acc45d7ff4e84f265ded9d43c32e773c17cac462d952574d77ac9cf"
+}

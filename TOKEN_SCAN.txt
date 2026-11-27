@@ -1,0 +1,4 @@
+PASS
+scanned_files=26
+skipped_binary=5
+no env tokens or known credential patterns found in report/staging

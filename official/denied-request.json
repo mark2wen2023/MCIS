@@ -1,0 +1,70 @@
+{
+  "session": "synthetic-denied-reader",
+  "roleContextKind": "synthetic-test-server-role",
+  "notRealAuthentication": true,
+  "independentContext": true,
+  "accessBefore": {
+    "evidence": 2,
+    "custody": 2,
+    "audit": 2,
+    "access": 0
+  },
+  "accessAfter": {
+    "evidence": 2,
+    "custody": 2,
+    "audit": 2,
+    "access": 0
+  },
+  "policyResult": {
+    "entry": "_load_registered_pair",
+    "called": true,
+    "outcome": "evidence-policy-deny",
+    "seed": "e80a49a set_deny_evidence: Investigator evidence_meta=Deny",
+    "exceptionType": "HTTPException",
+    "statusCode": 403,
+    "detail": {
+      "code": "FORBIDDEN",
+      "message": "角色 Investigator 无权访问 evidence_meta"
+    }
+  },
+  "raw": {
+    "url": "http://127.0.0.1:18784/assembly/api/view",
+    "status": 403,
+    "body": {
+      "ok": false,
+      "reason": "policy-deny:403",
+      "roleContext": "synthetic-denied-reader",
+      "roleContextKind": "synthetic-test-server-role",
+      "roleContextNote": "合成测试服务端角色上下文，不是真实身份认证；拒绝须来自冻结读取入口的证据策略",
+      "metricsReturned": false,
+      "currentAnalysis": null,
+      "view": null,
+      "registeredIdentities": null,
+      "accessBefore": {
+        "evidence": 2,
+        "custody": 2,
+        "audit": 2,
+        "access": 0
+      },
+      "accessAfter": {
+        "evidence": 2,
+        "custody": 2,
+        "audit": 2,
+        "access": 0
+      },
+      "deltaAccess": 0,
+      "policyResult": {
+        "entry": "_load_registered_pair",
+        "called": true,
+        "outcome": "evidence-policy-deny",
+        "seed": "e80a49a set_deny_evidence: Investigator evidence_meta=Deny",
+        "exceptionType": "HTTPException",
+        "statusCode": 403,
+        "detail": {
+          "code": "FORBIDDEN",
+          "message": "角色 Investigator 无权访问 evidence_meta"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+commit 688a7bb0eb16b29bb295d13376ab56f4cc7fd10b
+Author:     Mark Wen <mark@users.noreply.github.com>
+AuthorDate: Fri Nov 27 18:52:57 2026 +0800
+Commit:     Mark Wen <mark@users.noreply.github.com>
+CommitDate: Fri Nov 27 18:52:57 2026 +0800
+
+    fix(w12): run deny through frozen _load_registered_pair
+    
+    Independent candidate from f7b1f11. Both allow and deny test
+    contexts call the same frozen read entry in the isolated GET.
+    The deny context reuses the e80a49a synthetic evidence-policy
+    seed. Only that FORBIDDEN 403 is mapped to the HTTP 403; the
+    test role no longer pre-answers, and other errors are not
+    swallowed. Official auth, routes, storage, and contracts are
+    unchanged.
+
+ tests_acceptance/w12-request-time-read/README.md |  17 ++-
+ tests_acceptance/w12-request-time-read/host.py   | 142 ++++++++++++++------
+ tests_acceptance/w12-request-time-read/run.py    | 158 +++++++++++++----------
+ tests_acceptance/w12-request-time-read/view.py   |  74 ++++++++++-
+ 4 files changed, 273 insertions(+), 118 deletions(-)
