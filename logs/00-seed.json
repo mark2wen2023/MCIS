@@ -1,0 +1,21 @@
+{
+  "caseId": "SYN-W7-ROUND-001",
+  "rounds": [
+    {
+      "roundNo": 1,
+      "draftVersion": "SYN-DRAFT-R1",
+      "draftSha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "reply": "第一轮已登记回复（虚构）",
+      "isClosed": true
+    },
+    {
+      "roundNo": 2,
+      "draftVersion": "SYN-DRAFT-R2",
+      "draftSha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "reply": "第二轮已登记回复（虚构）",
+      "isClosed": false
+    }
+  ],
+  "openRound": 2,
+  "closedRound": 1
+}

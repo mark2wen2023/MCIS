@@ -1,0 +1,151 @@
+{
+  "pass": true,
+  "chromiumSandbox": true,
+  "noSandboxArg": false,
+  "version": "Google Chrome 156.0.8078.47",
+  "caseId": "SYN-W7-ROUND-001",
+  "delayedStaleArrival": {
+    "attempted": true,
+    "producibleAtOfficialEntry": false,
+    "reason": "official refresh clears the current-round editor and disables a second refresh while the real list GET is in flight; selecting a round does not issue a new GET. Overlapping a delayed prior rounds response after the current round remains on screen is not producible at this official entry.",
+    "cancelled": false,
+    "countedAsArrivalProtection": false,
+    "observedDuringOfficialRefresh": "step 04 already showed the official refresh going through the loading status and then restoring the selected round from the new real GET, with no second overlapping official read."
+  },
+  "browserApiRequests": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001/access-policy",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001/recommendations:board",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001/audit?category=SafetyRec&order=desc&limit=14",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001/audit?category=Consultation&order=desc&limit=6",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001/access-policy",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001/recommendations:board",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001/audit?category=SafetyRec&order=desc&limit=14",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001/audit?category=Consultation&order=desc&limit=6",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001/access-policy",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001/recommendations:board",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001/audit?category=SafetyRec&order=desc&limit=14",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001/audit?category=Consultation&order=desc&limit=6",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001/access-policy",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001/recommendations:board",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001/audit?category=SafetyRec&order=desc&limit=14",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001/audit?category=Consultation&order=desc&limit=6",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001/consultation/rounds",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001/access-policy",
+      "resource": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18793/api/v1/cases/SYN-W7-ROUND-001/consultation/rounds",
+      "resource": "fetch"
+    }
+  ],
+  "verificationWrites": [],
+  "pageErrors": [],
+  "screenshots": [
+    "01-default-round-2.png",
+    "02-switch-round-1.png",
+    "03-switch-round-2.png",
+    "04-refresh-keeps-round-1.png",
+    "05-after-delay-attempt.png"
+  ]
+}

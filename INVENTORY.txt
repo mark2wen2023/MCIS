@@ -1,0 +1,19 @@
+staging files=18
+        41  CANDIDATE_SHA.txt
+        41  PARENT_SHA.txt
+      2365  REPORT.md
+       106  TOKEN_SCAN.txt
+      1393  acceptance/README.md
+       733  acceptance/host.py
+     16574  acceptance/run.py
+       934  candidate-commit-stat.txt
+     19834  candidate.diff
+       568  logs/00-seed.json
+       367  logs/01-host.log
+        73  logs/02-vite.log
+      4932  logs/03-browser-exit.json
+    246922  screenshots/01-default-round-2.png
+    384927  screenshots/02-switch-round-1.png
+    246922  screenshots/03-switch-round-2.png
+    385581  screenshots/04-refresh-keeps-round-1.png
+    385581  screenshots/05-after-delay-attempt.png

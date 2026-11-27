@@ -1,0 +1,19 @@
+commit 7d85b68a5d681dd43308de32dd5b39f637966f7f
+Author:     Mark Wen <mark@users.noreply.github.com>
+AuthorDate: Sat Nov 28 00:56:12 2026 +0800
+Commit:     Mark Wen <mark@users.noreply.github.com>
+CommitDate: Sat Nov 28 00:56:12 2026 +0800
+
+    test(w7): add sandboxed Chrome gate for same-page round switch
+    
+    Verify one case with two synthetic registered consultation rounds on the
+    official recommendations page: switching and official refresh keep the
+    current-round content and source unmixed. Delayed stale arrival after
+    the current round remains on screen is not producible at this official
+    entry and is not counted as protection. No product, permission, CI, or
+    contract changes.
+
+ tests_acceptance/w7-round-switch/README.md |  23 ++
+ tests_acceptance/w7-round-switch/host.py   |  28 ++
+ tests_acceptance/w7-round-switch/run.py    | 422 +++++++++++++++++++++++++++++
+ 3 files changed, 473 insertions(+)
