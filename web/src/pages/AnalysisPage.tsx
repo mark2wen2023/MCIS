@@ -1,9 +1,11 @@
 // W12 分析页（原型第 08 页）：数据来自服务 /analysis/cases 与 /cases/{caseId}/analysis（服务地址来自 config）。
+import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { CASE_ID } from '../api'
 import { AnalysisView } from '../analysis/AnalysisView'
 import { BASELINE } from '../analysis/derive'
 import '../analysis/analysis.css'
+import '../analysis/analysis-route-shell.css'
 import { useToast } from '../components/Toast'
 import { SERVICE_ADDR } from '../config'
 import { useAnalysisSnapshot } from '../analysis/useAnalysisSnapshot'
@@ -11,6 +13,11 @@ import { useAnalysisSnapshot } from '../analysis/useAnalysisSnapshot'
 export function AnalysisPage() {
   const { show } = useToast()
   const [params, setParams] = useSearchParams()
+  useEffect(() => {
+    const root = document.documentElement
+    root.classList.add('w12-analysis-route')
+    return () => { root.classList.remove('w12-analysis-route') }
+  }, [])
   const caseId = params.get('case') || CASE_ID
   const sel = params.get('scenario') || BASELINE
   const { snapshot, error, reload } = useAnalysisSnapshot(caseId)

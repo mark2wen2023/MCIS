@@ -1,5 +1,5 @@
 // W12 分析页（原型第 08 页）：DCPA/TCPA 与距离曲线、关键时刻、W14 对比表 / 临界标注 / 天线敏感性、数据来源。
-import { useMemo } from 'react'
+import { useMemo, type KeyboardEvent } from 'react'
 import { EChart } from '../components/EChart'
 import { Panel } from '../components/Panel'
 import { BASELINE, curveOption, fmtM, fmtMoment, fmtNm, pickSeries, sensitivitySpan, shortSha, trackOption, vesselName, verdictTone } from './derive'
@@ -14,6 +14,16 @@ export interface AnalysisViewProps {
   serviceAddr?: string
   /** 测试/静态渲染时关闭 ECharts 画布 */
   charts?: boolean
+}
+
+
+function activateOnKey(action: () => void) {
+  return (event: KeyboardEvent<HTMLElement>) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      action()
+    }
+  }
 }
 
 const CASE_LABEL: Record<string, string> = { 'lily-mary': 'Lily / Mary（虚构）', haili5: '海力5', yangze22: 'YANGZE 22' }
@@ -39,7 +49,7 @@ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, se
         <div className="page-actions">
           <span className="p6-seg" data-testid="case-switcher">
             {cases.map((c) => (
-              <span key={c.caseId} className={c.caseId === data.caseId ? 'on' : ''} onClick={() => onSwitchCase(c.caseId)} role="button" tabIndex={0}>
+              <span key={c.caseId} className={c.caseId === data.caseId ? 'on' : ''} onClick={() => onSwitchCase(c.caseId)} onKeyDown={activateOnKey(() => onSwitchCase(c.caseId))} role="button" tabIndex={0}>
                 {CASE_LABEL[c.key] ?? c.title}
               </span>
             ))}
@@ -56,11 +66,11 @@ export function AnalysisView({ data, cases, selected, onSelect, onSwitchCase, se
         <Panel title="两船距离 D(t)、DCPA(t)、TCPA(t) 时序曲线"
           meta={<span>步长 {sel === BASELINE ? data.baseline.stepSec : w?.stepSec} s · 截至 {picked.series[picked.series.length - 1]?.clock ?? '—'}</span>}>
           <div className="p6-seg an-series-pick" data-testid="series-pick">
-            <span className={sel === BASELINE ? 'on' : ''} onClick={() => onSelect(BASELINE)} role="tab" tabIndex={0}>
+            <span className={sel === BASELINE ? 'on' : ''} onClick={() => onSelect(BASELINE)} onKeyDown={activateOnKey(() => onSelect(BASELINE))} role="tab" tabIndex={0}>
               {data.key === 'yangze22' ? '原始（S0 重建）' : '案件航迹'}
             </span>
             {w?.rows.map((r) => (
-              <span key={r.id} className={sel === r.id ? 'on' : ''} onClick={() => onSelect(r.id)} role="tab" tabIndex={0}>
+              <span key={r.id} className={sel === r.id ? 'on' : ''} onClick={() => onSelect(r.id)} onKeyDown={activateOnKey(() => onSelect(r.id))} role="tab" tabIndex={0}>
                 {r.id}{r.isCritical ? ' ⚠' : ''}
               </span>
             ))}
