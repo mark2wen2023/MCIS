@@ -1,0 +1,29 @@
+--- a/ship-reconstruction/scripts/s3_run.py
++++ b/ship-reconstruction/scripts/s3_run.py
+@@ -4,6 +4,7 @@
+ import argparse, hashlib, json, subprocess, sys
+ from pathlib import Path
+ from s3_s21 import reconstruct
++from geometry import exchange
+ 
+ FROZEN='0cfbcb74ae7749e83a02baccab4ec68d71b134a4'
+ 
+@@ -55,7 +56,7 @@
+     except ValueError as e:
+         report.update(status='blocked',reason=str(e))
+     else:
+-        mesh.export(out/'research.glb'); report.update(status='research_mesh',mesh_report=r)
++        exchange(mesh).export(out/'research.glb'); report.update(status='research_mesh',mesh_report=r)
+     (out/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2,allow_nan=False,default=lambda a:a.tolist()))
+     return report
+ 
+--- a/ship-reconstruction/scripts/s3_closure.py
++++ b/ship-reconstruction/scripts/s3_closure.py
+@@ -15,5 +15,6 @@
+     mesh,faces,meta=build_shell(rows,[],True,True)
+     if not mesh.is_watertight or not mesh.is_winding_consistent or not mesh.is_volume or mesh.body_count!=1 or np.any(mesh.area_faces<=0): raise ValueError('closure topology rejected')
+     q=quality(mesh)
+-    if q['self_intersection_pairs'] not in (None,0) or q['vertex_manifold'] is False: raise ValueError('geometric validation rejected')
++    if not q['closed_verified']:
++        raise ValueError('closed solid requires verified manifold and self-intersection checks')
+     return mesh,dict(quality=q,face_evidence=faces,boundary_evidence=boundary_evidence,engineering_approved=False,closure_assumption='symmetric rectangular domain with planar boundary caps')

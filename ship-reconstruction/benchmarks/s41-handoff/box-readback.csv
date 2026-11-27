@@ -1,0 +1,9 @@
+case,frame,experiment,source_curve_use,closed,self_intersections,full_volume_m3,analytic_surface_sample_max_m,half_draft_volume_m3,half_draft_waterplane_m2,half_draft_center_m,half_draft_center_error_m,bounds
+A,vessel,original_direct,0,True,0,36.0,1.790180836524724e-15,18.0,18.0,"[3.0, 0.0, 0.5]",0.0,"[[0.0, -1.5, 0.0], [6.0, 1.5, 2.0]]"
+A,vessel,original_exchange_reader,0,True,0,36.0,1.5811388300841898,30.0,12.0,"[2.9999999999999996, -1.0, -0.2500000000000002]",1.2500000000000002,"[[0.0, -2.0, -1.5], [6.0, 0.0, 1.5]]"
+A,vessel,patched_exchange_reader,0,True,0,36.0,1.790180836524724e-15,18.0,18.0,"[3.0, 0.0, 0.5]",0.0,"[[0.0, -1.5, 0.0], [6.0, 1.5, 2.0]]"
+A,vessel,isolated_current_upstream,0,True,0,36.0,1.790180836524724e-15,18.0,18.0,"[3.0, 0.0, 0.5]",0.0,"[[0.0, -1.5, 0.0], [6.0, 1.5, 2.0]]"
+B,local,original_direct,0,True,0,36.0,1.790180836524724e-15,18.0,18.0,"[3.0, 0.0, 0.5]",0.0,"[[0.0, -1.5, 0.0], [6.0, 1.5, 2.0]]"
+B,local,original_exchange_reader,0,True,0,36.0,1.5811388300841898,30.0,12.0,"[2.9999999999999996, -1.0, -0.2500000000000002]",1.2500000000000002,"[[0.0, -2.0, -1.5], [6.0, 0.0, 1.5]]"
+B,local,patched_exchange_reader,0,True,0,36.0,1.790180836524724e-15,18.0,18.0,"[3.0, 0.0, 0.5]",0.0,"[[0.0, -1.5, 0.0], [6.0, 1.5, 2.0]]"
+B,local,isolated_current_upstream,0,True,0,36.0,1.790180836524724e-15,18.0,18.0,"[3.0, 0.0, 0.5]",0.0,"[[0.0, -1.5, 0.0], [6.0, 1.5, 2.0]]"
