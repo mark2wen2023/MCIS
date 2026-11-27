@@ -1,0 +1,1 @@
+timeout --signal=TERM --kill-after=10 150 /workspace/w17-pyplaywright-venv/bin/python -I -B /workspace/mcis-w12-vis-cand/tests_acceptance/w12-first-registered-wiring/run.py --python /workspace/mcis-w17-871db66/service/.venv/bin/python --report /workspace/mcis-w12-registered-visibility-report --worktree /workspace/mcis-w12-vis-cand --port 18781 --browser /opt/google/chrome/chrome 

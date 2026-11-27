@@ -1,0 +1,27 @@
+{
+  "ok": true,
+  "reason": null,
+  "identities": {
+    "SYN-OWN": {
+      "caseId": "SYN-W12-FR-AB",
+      "vesselId": "SYN-OWN",
+      "previewDigest": "aafd3ff11885bec8b8ced593a0fbd8bf859270f6f137967b87c32e08a257c711",
+      "sourceSha256": "eedbc9fa1ba169553e06486ca69383c38a995e5ca5459b1bd6145605685e1240",
+      "reportSha256": "4c2ba9c23c9c4eeed31705e2f3ddd0b73bf509327bb2b97a241e4c5875ce7d5b",
+      "pointCount": 4
+    },
+    "SYN-TGT": {
+      "caseId": "SYN-W12-FR-AB",
+      "vesselId": "SYN-TGT",
+      "previewDigest": "36d5b473f9eab98dbcbc38521bcaa327ddd95e8350e260da6534776cc8258a81",
+      "sourceSha256": "3e19e5ab75fbb20f05f5130ee17e97e2562221c3fa81de34b708dd2d5e4a75e7",
+      "reportSha256": "72252d6e5c9f343b9b0835e9ee4d1a5cd165980b7dea0c6410ec3c444e0ddb4e",
+      "pointCount": 3
+    }
+  },
+  "commonTimes": [
+    10.0,
+    20.0
+  ],
+  "transaction": "WRITE_LOCK+BEGIN IMMEDIATE, read only"
+}

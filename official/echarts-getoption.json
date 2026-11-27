@@ -1,0 +1,69 @@
+{
+  "xAxis": {
+    "type": "category",
+    "data": [
+      "08:00:00",
+      "08:00:10",
+      "08:00:15",
+      "08:00:20",
+      "08:00:30",
+      "08:00:40"
+    ]
+  },
+  "series": [
+    {
+      "name": "两船距离 D(t)",
+      "type": "line",
+      "showSymbol": true,
+      "showAllSymbol": true,
+      "symbol": "circle",
+      "symbolSize": 10,
+      "connectNulls": false,
+      "yAxisIndex": null,
+      "data": [
+        null,
+        2.578139,
+        null,
+        2.147531,
+        null,
+        null
+      ]
+    },
+    {
+      "name": "DCPA(t)",
+      "type": "line",
+      "showSymbol": true,
+      "showAllSymbol": true,
+      "symbol": "circle",
+      "symbolSize": 10,
+      "connectNulls": false,
+      "yAxisIndex": null,
+      "data": [
+        null,
+        1.82261,
+        null,
+        1.881462,
+        null,
+        null
+      ]
+    },
+    {
+      "name": "TCPA(t)",
+      "type": "line",
+      "showSymbol": true,
+      "showAllSymbol": true,
+      "symbol": "circle",
+      "symbolSize": 10,
+      "connectNulls": false,
+      "yAxisIndex": 1,
+      "data": [
+        null,
+        7.736156,
+        null,
+        4.392701,
+        null,
+        null
+      ]
+    }
+  ]
+}

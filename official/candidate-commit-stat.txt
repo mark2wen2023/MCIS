@@ -1,0 +1,21 @@
+commit c150548c16516f5ad7319e3a00213e5fbe448497
+Author:     Mark Wen <mark@users.noreply.github.com>
+AuthorDate: Fri Nov 27 15:10:54 2026 +0800
+Commit:     Mark Wen <mark@users.noreply.github.com>
+CommitDate: Fri Nov 27 15:10:54 2026 +0800
+
+    fix(w12): show isolated registered points and drop placeholder seed labels
+    
+    Registered analysis mode draws isolated valid samples with symbols and
+    does not connect across nulls, and adds a default keyboard-readable two-row
+    table for T+10 and T+20. The registered sources panel reports only the two
+    real receipts and official core, and no longer shows placeholder seed
+    self-check, generation time, or assembly-placeholder wording. Offline seed
+    mode is unchanged. Official exports sanitize ECharts Infinity for strict JSON
+    without changing runtime option values.
+
+ .../w12-first-registered-wiring/run.py             | 167 +++++++++++++++++++--
+ web/src/analysis/AnalysisView.tsx                  |  78 ++++++++--
+ web/src/analysis/analysis.css                      |   7 +
+ web/src/analysis/derive.ts                         |  42 +++++-
+ 4 files changed, 260 insertions(+), 34 deletions(-)

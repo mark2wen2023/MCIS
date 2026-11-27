@@ -1,0 +1,22 @@
+{
+  "caseId": "SYN-W12-FR-INCOMPLETE",
+  "ok": false,
+  "reason": "missing-receipt:SYN-TGT",
+  "identities": {
+    "SYN-OWN": {
+      "caseId": "SYN-W12-FR-INCOMPLETE",
+      "vesselId": "SYN-OWN",
+      "previewDigest": "df304117eb7f84d24eb526e52889eeb000a6521de095c67d7b32bb948501009f",
+      "sourceSha256": "eedbc9fa1ba169553e06486ca69383c38a995e5ca5459b1bd6145605685e1240",
+      "reportSha256": "e19213a8f9c621bd80f4a7274034f8bc893f5a868d353b73bb68e8ed3916aedb",
+      "pointCount": 4
+    }
+  },
+  "currentAnalysis": null,
+  "metricsReturned": false,
+  "note": "缺一船已核验回执，不显示当前分析指标，未用离线种子补结果。",
+  "gapWiring": {
+    "status": "unwired",
+    "reason": "登记原件为 mcis-utc-v1 合成 CSV，没有授权的显式缺口元数据；保持未接，不从时间步长猜测，不新造契约。"
+  }
+}
