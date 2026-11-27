@@ -1,0 +1,19 @@
+staging files=18
+        40  CANDIDATE_SHA.txt
+        40  PARENT_SHA.txt
+      1524  REPORT.md
+       106  TOKEN_SCAN.txt
+      1827  acceptance/README.md
+      1401  acceptance/__pycache__/host.cpython-313.pyc
+     23058  acceptance/__pycache__/run.cpython-313.pyc
+       765  acceptance/host.py
+     16497  acceptance/run.py
+       851  candidate-commit-stat.txt
+     20773  candidate.diff
+       406  logs/00-seed.json
+       373  logs/01-host.log
+       225  logs/02-vite.log
+     10646  logs/03-browser-exit.json
+    254729  screenshots/01-unique-utc.png
+    260492  screenshots/02-no-nearest-guess.png
+    202422  screenshots/03-confirmed-compare-jump.png

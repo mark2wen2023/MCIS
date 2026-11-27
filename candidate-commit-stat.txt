@@ -1,0 +1,17 @@
+commit 8af8f3e8662c70b074cd9f0a5081d9a14ccdd4df
+Author:     Mark Wen <mark@users.noreply.github.com>
+AuthorDate: Fri Nov 27 23:44:59 2026 +0800
+Commit:     Mark Wen <mark@users.noreply.github.com>
+CommitDate: Fri Nov 27 23:44:59 2026 +0800
+
+    test(w3): add sandboxed Chrome gate for transcript UTC location
+    
+    Verify a first registered synthetic transcript on the official interview
+    page: a unique exact UTC locates the original turn, a missing cotemporal
+    time does not guess the nearest point, and a unique confirmed comparison
+    jumps back to that turn. No product, permission, CI, or contract changes.
+
+ tests_acceptance/w3-transcript-utc/README.md |  39 +++
+ tests_acceptance/w3-transcript-utc/host.py   |  28 ++
+ tests_acceptance/w3-transcript-utc/run.py    | 418 +++++++++++++++++++++++++++
+ 3 files changed, 485 insertions(+)

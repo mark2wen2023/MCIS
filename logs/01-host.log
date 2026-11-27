@@ -1,0 +1,8 @@
+/workspace/mcis-w3-transcript-utc-cand/tests_acceptance/w3-transcript-utc/host.py:22: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+W3_TRANSCRIPT_UTC_READY port=18790
