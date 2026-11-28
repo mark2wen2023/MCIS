@@ -1,0 +1,85 @@
+{
+ "chrome": "/opt/google/chrome/google-chrome",
+ "sandbox": "default (no --no-sandbox)",
+ "base": "http://127.0.0.1:15874",
+ "requests": [
+  "GET context",
+  "GET draft",
+  "POST preview"
+ ],
+ "blocked": [],
+ "console": [
+  "debug: [vite] connecting...",
+  "debug: [vite] connected.",
+  "info: %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"
+ ],
+ "pageerrors": [],
+ "posts": {
+  "preview": 1,
+  "save": 0
+ },
+ "checks": {
+  "beforeInputOrder_A_M_Z": true,
+  "afterTopological_Z_M_A": true,
+  "secondaryS_alignedWithA": true,
+  "conditionC1_atM_above": true,
+  "nodeTitlesUnchanged": true,
+  "noPendingShown": true,
+  "zeroSave": true,
+  "noPageErrors": true
+ },
+ "browserVersion": "156.0.8078.47",
+ "previewDraftEqualsSaved": true,
+ "before": {
+  "A": [
+   160,
+   270
+  ],
+  "M": [
+   450,
+   270
+  ],
+  "Z": [
+   740,
+   270
+  ],
+  "S": [
+   160,
+   440
+  ],
+  "C1": [
+   160,
+   100
+  ]
+ },
+ "after": {
+  "A": [
+   740,
+   270
+  ],
+  "M": [
+   450,
+   270
+  ],
+  "Z": [
+   160,
+   270
+  ],
+  "S": [
+   740,
+   440
+  ],
+  "C1": [
+   450,
+   100
+  ]
+ },
+ "statusText": "已按本地自动布局显示（§4.9.2）：主序列有时间按时间、无时间按连线拓扑序；次序列事件对齐其指向的主事件；条件置于关联节点附近。仅改显示坐标，案号、节点、连线、时间、引用与证据不变，不证明因果。",
+ "exitCode": 0,
+ "files": {
+  "01-before-schematic.png": "90fa4b143fe8613ce49c0f58afce92e3939eaafac29fe8c589f69ecf179160b1",
+  "01b-before-graph.png": "1a1fb69b78f75695aa175b6b1f7518aa43f1a1c70a6cd45277db42865c115c6b",
+  "02-after-auto-layout.png": "6fc3612ce26486e71c34bcb87fab41eac70b85b8e20f6d55f4340097f09614db",
+  "02b-after-graph.png": "8430f6c7c3da86ddc78eb921e1fd9cb334832fce157d9ebc09cb5747d07b895d"
+ }
+}

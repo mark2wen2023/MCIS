@@ -1,0 +1,3 @@
+ECFC auto-layout deterministic checks passed: 22
+ECFC 82 new model/strict JSON/render assertions passed
+exit=0

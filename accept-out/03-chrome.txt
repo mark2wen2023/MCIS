@@ -1,0 +1,3 @@
+{"beforeInputOrder_A_M_Z": true, "afterTopological_Z_M_A": true, "secondaryS_alignedWithA": true, "conditionC1_atM_above": true, "nodeTitlesUnchanged": true, "noPendingShown": true, "zeroSave": true, "noPageErrors": true}
+EXIT 0
+exit=0
