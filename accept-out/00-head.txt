@@ -1,0 +1,10 @@
+$ git rev-parse HEAD
+94cc3a33fbc521041a71b7a251b17d5e4bda973f
+$ git status --short (expect empty)
+$ git diff --stat 49bf8a5 HEAD
+ web/src/ecfcDrafts/layout.ts        | 11 +++++++----
+ web/tests/ecfc-auto-layout.test.tsx | 11 +++++++++++
+ 2 files changed, 18 insertions(+), 4 deletions(-)
+$ git diff 49bf8a5 HEAD -- original 22 checks (lines 1-56 of test) unchanged?
+first 51 lines identical
+$ every line of the 49bf8a5 test file present unchanged in HEAD: True missing= []
