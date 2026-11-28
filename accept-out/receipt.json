@@ -1,0 +1,393 @@
+{
+ "chrome": "/opt/google/chrome/google-chrome",
+ "sandbox": "chromium_sandbox=True, no --no-sandbox",
+ "apiDoubles": false,
+ "checks": {
+  "empty before any action": true,
+  "preview through real CLI is zero-write": true,
+  "one explicit save commits exactly once": true,
+  "saved revision 1 readable": true,
+  "service process restarted": true,
+  "same revision and digest after restart": true,
+  "same draft (scope, nodes, edges, times, evidence) after restart": true,
+  "same case and sources": true,
+  "page shows saved scope": true,
+  "page shows saved nodes": true,
+  "page shows saved edge endpoints": true,
+  "same graph nodes and edge rendered after restart": true,
+  "re-preview after restart is zero-write": true,
+  "audit shows exactly one save": true,
+  "database audit has exactly one row": true,
+  "exactly one save POST across both phases": true,
+  "no page errors, no external requests": true
+ },
+ "phases": {
+  "first": {
+   "apiPid": 921484,
+   "apiExit": -15
+  },
+  "restart": {
+   "apiPid": 921750,
+   "apiExit": -15
+  }
+ },
+ "console": [
+  "debug: [vite] connecting...",
+  "debug: [vite] connected.",
+  "info: %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+  "error: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "error: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "debug: [vite] connecting...",
+  "debug: [vite] connected.",
+  "info: %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+  "error: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "error: Failed to load resource: the server responded with a status of 404 (Not Found)"
+ ],
+ "pageerrors": [],
+ "blockedExternal": [],
+ "tempData": "/tmp/w11-ecfc-real-save-sttfdtzq",
+ "browserVersion": "156.0.8078.47",
+ "savedEnvelope": {
+  "status": 200,
+  "body": {
+   "profile": "MCIS-ECFC-DRAFT-1",
+   "caseId": "W11-REAL-SAVE-FICTIONAL",
+   "document": {
+    "caseId": "W11-REAL-SAVE-FICTIONAL",
+    "revision": 1,
+    "draft": {
+     "scope": "W11 fictional save/reopen hypothesis",
+     "nodes": [
+      {
+       "id": "N1",
+       "kind": "Event",
+       "text": "Fictional vessel alters course",
+       "timeSeconds": null,
+       "lane": 0,
+       "isPrimaryIncident": true,
+       "evidenceIds": []
+      },
+      {
+       "id": "N2",
+       "kind": "Condition",
+       "text": "Fictional restricted visibility",
+       "timeSeconds": null,
+       "lane": 0,
+       "isPrimaryIncident": false,
+       "evidenceIds": []
+      }
+     ],
+     "edges": [
+      {
+       "id": "E1",
+       "from": "N2",
+       "to": "N1"
+      }
+     ]
+    },
+    "sources": [
+     {
+      "evidenceId": "EV-901",
+      "title": "Fictional synthetic source (not a real case file)",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+     }
+    ],
+    "validation": {
+     "coreVersion": "mcis-ecfc-draft/1",
+     "nodes": [
+      {
+       "id": "N1",
+       "kind": "Event",
+       "text": "Fictional vessel alters course",
+       "timeSeconds": null,
+       "lane": 0,
+       "isPrimaryIncident": true,
+       "evidenceIds": [],
+       "isPresumptive": true
+      },
+      {
+       "id": "N2",
+       "kind": "Condition",
+       "text": "Fictional restricted visibility",
+       "timeSeconds": null,
+       "lane": 0,
+       "isPrimaryIncident": false,
+       "evidenceIds": [],
+       "isPresumptive": true
+      }
+     ],
+     "edges": [
+      {
+       "id": "E1",
+       "from": "N2",
+       "to": "N1",
+       "kind": "Influence",
+       "bold": false
+      }
+     ],
+     "issues": [
+      {
+       "code": "ECFC-W02",
+       "isError": false,
+       "message": "事件应尽量量化（表 4：Should be quantified as much as possible）。",
+       "nodeId": "N1",
+       "edgeId": null
+      },
+      {
+       "code": "ECFC-W03",
+       "isError": false,
+       "message": "事件在时间已知时应标明日期与时刻（表 4：indicate the date and time, when they are known）。",
+       "nodeId": "N1",
+       "edgeId": null
+      },
+      {
+       "code": "ECFC-W05",
+       "isError": false,
+       "message": "条件在可行时应予以量化（表 4：As practical, should be quantified）。",
+       "nodeId": "N2",
+       "edgeId": null
+      },
+      {
+       "code": "ECFC-W03",
+       "isError": false,
+       "message": "条件在可行/适用时应标明日期与时刻。",
+       "nodeId": "N2",
+       "edgeId": null
+      }
+     ]
+    },
+    "digest": "09333be9c0fefc7ed39ae9439648d3a5f566a290424e53df4eae5d6190171da9",
+    "status": "Draft",
+    "strength": "ToBeVerified",
+    "origin": "Investigator",
+    "savedBy": "Synthetic W11 Save",
+    "savedRole": "LeadInvestigator",
+    "savedUtc": "2026-11-28T11:18:55Z"
+   },
+   "sourceStatus": "unchanged",
+   "persisted": true,
+   "identityMode": "local-role-header"
+  }
+ },
+ "dbSha256BetweenRestarts": "352a9bb23c329c5a9bf235baf56917358b5b64b03f1a11d261fadae9c3cdb721",
+ "reopenedEnvelope": {
+  "status": 200,
+  "body": {
+   "profile": "MCIS-ECFC-DRAFT-1",
+   "caseId": "W11-REAL-SAVE-FICTIONAL",
+   "document": {
+    "caseId": "W11-REAL-SAVE-FICTIONAL",
+    "revision": 1,
+    "draft": {
+     "scope": "W11 fictional save/reopen hypothesis",
+     "nodes": [
+      {
+       "id": "N1",
+       "kind": "Event",
+       "text": "Fictional vessel alters course",
+       "timeSeconds": null,
+       "lane": 0,
+       "isPrimaryIncident": true,
+       "evidenceIds": []
+      },
+      {
+       "id": "N2",
+       "kind": "Condition",
+       "text": "Fictional restricted visibility",
+       "timeSeconds": null,
+       "lane": 0,
+       "isPrimaryIncident": false,
+       "evidenceIds": []
+      }
+     ],
+     "edges": [
+      {
+       "id": "E1",
+       "from": "N2",
+       "to": "N1"
+      }
+     ]
+    },
+    "sources": [
+     {
+      "evidenceId": "EV-901",
+      "title": "Fictional synthetic source (not a real case file)",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+     }
+    ],
+    "validation": {
+     "coreVersion": "mcis-ecfc-draft/1",
+     "nodes": [
+      {
+       "id": "N1",
+       "kind": "Event",
+       "text": "Fictional vessel alters course",
+       "timeSeconds": null,
+       "lane": 0,
+       "isPrimaryIncident": true,
+       "evidenceIds": [],
+       "isPresumptive": true
+      },
+      {
+       "id": "N2",
+       "kind": "Condition",
+       "text": "Fictional restricted visibility",
+       "timeSeconds": null,
+       "lane": 0,
+       "isPrimaryIncident": false,
+       "evidenceIds": [],
+       "isPresumptive": true
+      }
+     ],
+     "edges": [
+      {
+       "id": "E1",
+       "from": "N2",
+       "to": "N1",
+       "kind": "Influence",
+       "bold": false
+      }
+     ],
+     "issues": [
+      {
+       "code": "ECFC-W02",
+       "isError": false,
+       "message": "事件应尽量量化（表 4：Should be quantified as much as possible）。",
+       "nodeId": "N1",
+       "edgeId": null
+      },
+      {
+       "code": "ECFC-W03",
+       "isError": false,
+       "message": "事件在时间已知时应标明日期与时刻（表 4：indicate the date and time, when they are known）。",
+       "nodeId": "N1",
+       "edgeId": null
+      },
+      {
+       "code": "ECFC-W05",
+       "isError": false,
+       "message": "条件在可行时应予以量化（表 4：As practical, should be quantified）。",
+       "nodeId": "N2",
+       "edgeId": null
+      },
+      {
+       "code": "ECFC-W03",
+       "isError": false,
+       "message": "条件在可行/适用时应标明日期与时刻。",
+       "nodeId": "N2",
+       "edgeId": null
+      }
+     ]
+    },
+    "digest": "09333be9c0fefc7ed39ae9439648d3a5f566a290424e53df4eae5d6190171da9",
+    "status": "Draft",
+    "strength": "ToBeVerified",
+    "origin": "Investigator",
+    "savedBy": "Synthetic W11 Save",
+    "savedRole": "LeadInvestigator",
+    "savedUtc": "2026-11-28T11:18:55Z"
+   },
+   "sourceStatus": "unchanged",
+   "persisted": true,
+   "identityMode": "local-role-header"
+  }
+ },
+ "graphTitlesAfterRestart": [
+  "E1: N2 → N1 · Influence",
+  "N1：Fictional vessel alters course，待核验假设；泳道 0；相对秒 未知",
+  "N2：Fictional restricted visibility，待核验假设；泳道 0；相对秒 未知"
+ ],
+ "auditRows": [
+  {
+   "id": 1,
+   "case_id": "W11-REAL-SAVE-FICTIONAL",
+   "revision": 1,
+   "doc": "{\"caseId\": \"W11-REAL-SAVE-FICTIONAL\", \"revision\": 1, \"utc\": \"2026-11-28T11:18:55Z\", \"operator\": \"Synthetic W11 Save\", \"role\": \"LeadInvestigator\", \"action\": \"ecfc.draft.save\", \"requestId\": \"0aa8872a-e055-4972-aab8-44c8ebe62899\", \"beforeDigest\": null, \"afterDigest\": \"09333be9c0fefc7ed39ae9439648d3a5f566a290424e53df4eae5d6190171da9\", \"before\": null, \"after\": {\"caseId\": \"W11-REAL-SAVE-FICTIONAL\", \"revision\": 1, \"draft\": {\"scope\": \"W11 fictional save/reopen hypothesis\", \"nodes\": [{\"id\": \"N1\", \"kind\": \"Event\", \"text\": \"Fictional vessel alters course\", \"timeSeconds\": null, \"lane\": 0, \"isPrimaryIncident\": true, \"evidenceIds\": []}, {\"id\": \"N2\", \"kind\": \"Condition\", \"text\": \"Fictional restricted visibility\", \"timeSeconds\": null, \"lane\": 0, \"isPrimaryIncident\": false, \"evidenceIds\": []}], \"edges\": [{\"id\": \"E1\", \"from\": \"N2\", \"to\": \"N1\"}]}, \"sources\": [{\"evidenceId\": \"EV-901\", \"title\": \"Fictional synthetic source (not a real case file)\", \"sha256\": \"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}], \"validation\": {\"coreVersion\": \"mcis-ecfc-draft/1\", \"nodes\": [{\"id\": \"N1\", \"kind\": \"Event\", \"text\": \"Fictional vessel alters course\", \"timeSeconds\": null, \"lane\": 0, \"isPrimaryIncident\": true, \"evidenceIds\": [], \"isPresumptive\": true}, {\"id\": \"N2\", \"kind\": \"Condition\", \"text\": \"Fictional restricted visibility\", \"timeSeconds\": null, \"lane\": 0, \"isPrimaryIncident\": false, \"evidenceIds\": [], \"isPresumptive\": true}], \"edges\": [{\"id\": \"E1\", \"from\": \"N2\", \"to\": \"N1\", \"kind\": \"Influence\", \"bold\": false}], \"issues\": [{\"code\": \"ECFC-W02\", \"isError\": false, \"message\": \"\\u4e8b\\u4ef6\\u5e94\\u5c3d\\u91cf\\u91cf\\u5316\\uff08\\u8868 4\\uff1aShould be quantified as much as possible\\uff09\\u3002\", \"nodeId\": \"N1\", \"edgeId\": null}, {\"code\": \"ECFC-W03\", \"isError\": false, \"message\": \"\\u4e8b\\u4ef6\\u5728\\u65f6\\u95f4\\u5df2\\u77e5\\u65f6\\u5e94\\u6807\\u660e\\u65e5\\u671f\\u4e0e\\u65f6\\u523b\\uff08\\u8868 4\\uff1aindicate the date and time, when they are known\\uff09\\u3002\", \"nodeId\": \"N1\", \"edgeId\": null}, {\"code\": \"ECFC-W05\", \"isError\": false, \"message\": \"\\u6761\\u4ef6\\u5728\\u53ef\\u884c\\u65f6\\u5e94\\u4e88\\u4ee5\\u91cf\\u5316\\uff08\\u8868 4\\uff1aAs practical, should be quantified\\uff09\\u3002\", \"nodeId\": \"N2\", \"edgeId\": null}, {\"code\": \"ECFC-W03\", \"isError\": false, \"message\": \"\\u6761\\u4ef6\\u5728\\u53ef\\u884c/\\u9002\\u7528\\u65f6\\u5e94\\u6807\\u660e\\u65e5\\u671f\\u4e0e\\u65f6\\u523b\\u3002\", \"nodeId\": \"N2\", \"edgeId\": null}]}, \"digest\": \"09333be9c0fefc7ed39ae9439648d3a5f566a290424e53df4eae5d6190171da9\", \"status\": \"Draft\", \"strength\": \"ToBeVerified\", \"origin\": \"Investigator\", \"savedBy\": \"Synthetic W11 Save\", \"savedRole\": \"LeadInvestigator\", \"savedUtc\": \"2026-11-28T11:18:55Z\"}, \"prevHash\": \"0000000000000000000000000000000000000000000000000000000000000000\", \"hash\": \"cafa170519fecaa93de2b37a450e4ed58924b3e277ab7f3fb492efef8e0c2c1e\"}"
+  }
+ ],
+ "apiResponses": [
+  {
+   "method": "GET",
+   "path": "/api/v1/cases/CASE-2026-DEMO-LILY-MARY",
+   "status": 404
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/cases/CASE-2026-DEMO-LILY-MARY",
+   "status": 404
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/cases/W11-REAL-SAVE-FICTIONAL/ecfc/context",
+   "status": 200
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/cases/W11-REAL-SAVE-FICTIONAL/ecfc/draft",
+   "status": 200
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/cases/W11-REAL-SAVE-FICTIONAL/ecfc/preview",
+   "status": 200
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/cases/W11-REAL-SAVE-FICTIONAL/ecfc/save",
+   "status": 200
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/cases/W11-REAL-SAVE-FICTIONAL/ecfc/draft",
+   "status": 200
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/cases/CASE-2026-DEMO-LILY-MARY",
+   "status": 404
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/cases/CASE-2026-DEMO-LILY-MARY",
+   "status": 404
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/cases/W11-REAL-SAVE-FICTIONAL/ecfc/context",
+   "status": 200
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/cases/W11-REAL-SAVE-FICTIONAL/ecfc/draft",
+   "status": 200
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/cases/W11-REAL-SAVE-FICTIONAL/ecfc/draft",
+   "status": 200
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/cases/W11-REAL-SAVE-FICTIONAL/ecfc/preview",
+   "status": 200
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/cases/W11-REAL-SAVE-FICTIONAL/ecfc/audit",
+   "status": 200
+  }
+ ],
+ "saveCalls": 1,
+ "finalCounts": [
+  1,
+  1,
+  1
+ ],
+ "webExit": 143,
+ "exitCode": 0,
+ "files": {
+  "01-preview-zero-write.png": "3d7bb70b0d7e30a26bf0d94cf350381e42f6056982b31ea97740c4566979b05f",
+  "02-saved-receipt.png": "2818f1a1a80b5b72e8caf7ec0e1d6a0ec82c7e2e08ac0e8b0f3b8770fc79abc2",
+  "03-reopened-after-restart.png": "0a3fbcb1aad385cf9a6adecdb492f332b9205938a154abb7f56a7f1df23ee44f"
+ }
+}
