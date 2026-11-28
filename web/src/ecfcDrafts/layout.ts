@@ -5,8 +5,9 @@ import {validateDraft,type Draft,type Node} from './model'
  * Never mutates or returns a modified draft: case id, nodes, edge endpoints, times,
  * text, evidence and causal content are untouched. Spacing does not encode elapsed time.
  * - Main sequence (lane 0 events): all timed -> existing rule (time, then id);
- *   otherwise topological order of event sequence edges, ties by time when both known,
- *   else input order and the untimed tied nodes are reported as pending (never guessed).
+ *   otherwise topological order of event sequence edges; among simultaneously ready nodes,
+ *   untimed nodes keep their input slot and timed nodes fill the remaining slots by time then id
+ *   (stable, transitive); untimed tied nodes are reported as pending (time never guessed).
  * - Secondary-lane events align x with the main event they point to.
  * - Conditions sit in their own lane row nearest to the node they point to (greedy free slot).
  * - Supplied manual positions are kept as given and never overwritten.
@@ -38,9 +39,11 @@ export function autoLayout(draft:Draft,manual:ReadonlyMap<string,Point>=new Map(
   const seq=draft.edges.filter(e=>mainIds.has(e.from)&&mainIds.has(e.to))
   for(const e of seq)indeg.set(e.to,indeg.get(e.to)!+1)
   const ready=main.filter(n=>indeg.get(n.id)===0),flagged=new Set<string>();order=[]
-  const cmp=(a:Node,b:Node)=>a.timeSeconds!==null&&b.timeSeconds!==null?byTimeThenId(a,b):index.get(a.id)!-index.get(b.id)!
+  // Stable, transitive arrangement of the ready set: keep input slots; timed nodes are
+  // re-sorted by time then id among the slots timed nodes occupy; untimed nodes keep their slots.
+  const arrange=(set:Node[])=>{const slots=[...set].sort((a,b)=>index.get(a.id)!-index.get(b.id)!);const timedSorted=slots.filter(n=>n.timeSeconds!==null).sort(byTimeThenId);let t=0;return slots.map(n=>n.timeSeconds!==null?timedSorted[t++]!:n)}
   while(ready.length){
-   ready.sort(cmp)
+   ready.splice(0,ready.length,...arrange(ready))
    if(ready.length>1&&ready.some(n=>n.timeSeconds===null))for(const n of ready)if(n.timeSeconds===null&&!flagged.has(n.id)){flagged.add(n.id);pending.push({nodeId:n.id,reason:'主序列先后无法由连线或时间确定，按输入顺序暂排，待核'})}
    const n=ready.shift()!;order.push(n)
    for(const e of seq)if(e.from===n.id){indeg.set(e.to,indeg.get(e.to)!-1);if(indeg.get(e.to)===0)ready.push(node.get(e.to)!)}

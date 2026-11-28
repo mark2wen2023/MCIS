@@ -52,6 +52,17 @@ const bad=autoLayout(freeze({scope:'合成非法',nodes:[ev('A')],edges:[{id:'b1
 ok(bad.status==='invalid','dangling edge -> invalid')
 const bad2=autoLayout({scope:'合成非法2',nodes:[ev('A'),ev('A')],edges:[]})
 ok(bad2.status==='invalid','duplicate id -> invalid')
+// 9. Mixed times without topology: A=30s, U unknown, B=10s (input A,U,B) -> B before A, U pending; stable across input orders.
+const mixed=(order:string[])=>{const all:Record<string,Node>={A:ev('A',0,30),U:ev('U'),B:ev('B',0,10)};const d=freeze({scope:'合成混合时间',nodes:order.map(id=>all[id]!),edges:[]}) as Draft;return {d,r:laid(d)}}
+const m1=mixed(['A','U','B'])
+ok(col(m1.r.positions.get('B')!)<col(m1.r.positions.get('A')!),'mixed A,U,B: 10s B before 30s A')
+ok(m1.r.pending.map(x=>x.nodeId).join()==='U'&&m1.d.nodes.find(n=>n.id==='U')!.timeSeconds===null,'mixed: U pending, time not guessed')
+const perms=[['A','U','B'],['A','B','U'],['U','A','B'],['U','B','A'],['B','A','U'],['B','U','A']]
+ok(perms.every(o=>{const r=mixed(o).r;return col(r.positions.get('B')!)<col(r.positions.get('A')!)&&r.pending.map(x=>x.nodeId).join()==='U'}),'mixed: B before A and U pending for every input order')
+ok(perms.every(o=>{const a=mixed(o).r,b=mixed(o).r;return JSON.stringify([...a.positions])===JSON.stringify([...b.positions])}),'mixed: deterministic repeat per input order')
+// 10. Topology still overrides time: A(30s)->B(10s) keeps A before B.
+const topo=laid(freeze({scope:'合成拓扑优先',nodes:[ev('A',0,30),ev('U'),ev('B',0,10)],edges:[{id:'t1',from:'A',to:'B'}]}))
+ok(col(topo.positions.get('A')!)<col(topo.positions.get('B')!),'topological constraint A->B preserved over time order')
 // 8. Existing candidate UI: default stays input-order schematic, explicit control present.
 const html=renderToStaticMarkup(<Graph draft={doc.draft} validation={validation(doc.draft)}/>)
 ok(html.includes('自动布局（仅调整显示坐标）')&&html.includes('aria-pressed="false"'),'explicit layout control rendered, off by default')
