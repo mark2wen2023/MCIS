@@ -1,0 +1,62 @@
+{
+  "revision": "2447b14076bbf39db014b8bf4a3a3b350cbf0e05",
+  "component": "web/src/accimapPreview/Diagram.tsx",
+  "componentSha256": "d6f67ba6d80b19b7a1c212a02ee6ac0bfc7903f6d067affd2acba4e6210c875f",
+  "exportModule": "tests_acceptance/w15-accimap-svg-export/svgExport.ts",
+  "exportModuleSha256": "f2c219c36f1e2daf0c9ac816378dbee2d4128140162af72c78345ebc4576540c",
+  "browser": "Google Chrome 156.0.8078.47",
+  "sandboxRequested": true,
+  "passed": true,
+  "scope": "isolated local SVG export of the existing six-layer synthetic AcciMap sketch; not W15 whole package; not the past 9/9 core; not Bow-tie export",
+  "console": [
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"
+    }
+  ],
+  "pageErrors": [],
+  "blocked": [],
+  "bundleSha256": "df9e05f29a5c70c6ed42319a4e659b4cfe47997a150a9104eac8eeabdc68245f",
+  "browserRuntime": "156.0.8078.47",
+  "originHost": "127.0.0.1",
+  "screenshotPage": {
+    "width": 1440,
+    "height": 1106,
+    "bytes": 147072,
+    "sha256": "49bc5deeea2179fa6e93984754eb0d59b35fa9c88b3aea69dbb94ab0f207e524"
+  },
+  "suggestedFilename": "accimap-synthetic-draft.svg",
+  "svg": {
+    "bytes": 8393,
+    "sha256": "9b358a77003e4cf4bda2ab61c34df0a319c5b8f9624faae3dcc9b6c8ecf57f4b",
+    "layers": [
+      "政府与法规",
+      "监管",
+      "公司",
+      "船舶管理",
+      "船员行为",
+      "设备与环境"
+    ],
+    "markers": [
+      "待核验",
+      "证据状态未知",
+      "均非已证实因果"
+    ],
+    "solidRelationLines": 2,
+    "dashedInformationFlowLines": 1,
+    "fullIdsVerified": true,
+    "fullLabelsVerified": true
+  },
+  "openedFile": {
+    "root": "svg",
+    "ns": "http://www.w3.org/2000/svg",
+    "lineCount": 3
+  },
+  "screenshotOpened": {
+    "width": 1440,
+    "height": 900,
+    "bytes": 91688,
+    "sha256": "084997bc1f3af10cbd89559199e31ab3aadae93c6f55444d508ced9b36db5290"
+  },
+  "exitHint": 0
+}
