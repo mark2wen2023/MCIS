@@ -51,3 +51,5 @@ python -m unittest discover -s tests
 使用 scripts/s6.py 运行船体、局部结构及设备入口。输入为一个包含同一研究对象图纸的目录，输出使用新目录。落地数据、坐标恢复、关节、拒绝状态和复验命令见 references/s6.md。
 
 V1.0 研究候选交付前执行 `python scripts/s6.py --verify --out <运行目录>`，按封存清单中的角色交付。失败现场和恢复后的运行分别保留，恢复命令及四类文件定义见 [S6 清单与恢复约定](references/s6.md)。
+
+缺少完整型值表时，可用已复核的水线、独立横剖或纵剖运行 `python scripts/reconstruct.py 图纸目录 --curve-profile 区域配准.json --out 新目录`。见[局部曲面配准、留出和模型交付](references/curve-patches.md)。保留每条原图曲线的指纹、实体句柄、配准依据及采用范围。局部片体通过读回检查后仍须单独评价留出误差。

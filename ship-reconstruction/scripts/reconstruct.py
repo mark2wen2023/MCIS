@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """从工程 DWG/DXF 离线生成研究级几何及逐项证据。"""
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import tempfile
@@ -46,7 +47,15 @@ def geometry_input(directory, sources, out, oda, report):
 
 def write_asset(out,role,filename,mesh,report):
     path=out/filename
-    path.write_bytes(exchange(mesh).export(file_type="glb"))
+    exchanged=exchange(mesh)
+    if report.get("domain")=="registered_halfbreadth_patches":
+        from coordinate_contract import contract
+        extras=dict(mode=report.get("mode","strict"),engineering_approved=False,formal_calculation_authorized=False,
+                    domain="open_unsigned_halfbreadth",coordinates=contract("local_hull",[0,0,0]))
+        path.write_bytes(trimesh.exchange.gltf.export_glb(trimesh.Scene(exchanged),
+                         tree_postprocessor=lambda data:data["asset"].update(extras=extras)))
+    else:
+        path.write_bytes(exchanged.export(file_type="glb"))
     readback=read_exchange(path)
     if len(mesh.faces)!=len(readback.faces) or readback.vertices.shape!=mesh.vertices.shape:
         raise ValueError("GLB 读回拓扑变化")
@@ -179,7 +188,8 @@ def run(directory,files,out,profile,oda,report):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument("input",type=Path)
-    parser.add_argument("--out",type=Path,required=True);parser.add_argument("--profile",type=Path)
+    parser.add_argument("--out",type=Path,required=True);profiles=parser.add_mutually_exclusive_group();profiles.add_argument("--profile",type=Path)
+    profiles.add_argument("--curve-profile",type=Path,help="绑定原图及坐标证据的局部开片；允许无型值表")
     parser.add_argument("--oda",help="本机 ODAFileConverter 可执行路径")
     args=parser.parse_args();source=args.input.resolve(strict=True);dest=args.out.resolve()
     directory=source if source.is_dir() else source.parent
@@ -198,7 +208,16 @@ def main():
                 Draft202012Validator(schema).validate(profile)
                 report["profile_sha256"]=fingerprint(args.profile)
             files=sorted(source.rglob("*")) if source.is_dir() else [source]
-            run(directory,[p for p in files if p.is_file()],path,profile,args.oda,report)
+            inputs=[p for p in files if p.is_file()]
+            if args.curve_profile:
+                from curve_patch import deliver
+                content=args.curve_profile.read_bytes()
+                definition=json.loads(content)
+                report["profile_sha256"]=hashlib.sha256(content).hexdigest()
+                entries=geometry_input(directory,inputs,path,args.oda,report)
+                deliver(entries,definition,path,report,write_asset,save)
+            else:
+                run(directory,inputs,path,profile,args.oda,report)
         except Exception as exc:
             report["issues"].append({"stage_error":type(exc).__name__,"message":str(exc)[:2000]})
             report["status"]="needs_evidence"

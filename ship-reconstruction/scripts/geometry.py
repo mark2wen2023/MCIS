@@ -28,18 +28,29 @@ def read_curves(doc, specs):
         kind=spec["kind"]
         if kind not in ("waterline","buttock","section") or spec["use"] not in ("constraint","holdout"):
             raise ValueError("曲线用途或类型无效")
-        path=make_path(doc.entitydb[h])
+        entity=doc.entitydb[h]
         scale=np.linalg.norm(np.asarray(spec["matrix"],dtype=float)[:3,:3],ord=2)
         if not math.isfinite(scale) or scale<=0:
             raise ValueError("曲线坐标变换尺度无效")
-        raw=list(path.flattening(0.0001/scale,segments=12))
+        if entity.dxftype()=="POLYLINE" and entity.dxf.flags & 4:
+            # DXF spline-fit polylines store the control frame and display vertices
+            # in the same sequence. Joining both introduces a spurious return chord.
+            if not entity.is_2d_polyline or entity.is_closed:
+                raise ValueError("仅支持开放的二维拟合多段线")
+            raw=[p for v,p in zip(entity.vertices,entity.points_in_wcs()) if v.dxf.flags & 8]
+            if len(raw)<2:
+                raise ValueError("拟合多段线缺少已生成的曲线顶点")
+            sampling="original_fit_vertices"
+        else:
+            raw=list(make_path(entity).flattening(0.0001/scale,segments=12))
+            sampling="flattened_path"
         points=transform(spec["matrix"],raw)
         if spec.get("fold_halfbreadth") is True:
             points[:,1]=abs(points[:,1])
         fixed={"waterline":2,"buttock":1,"section":0}[kind]
         if len(points)<2 or np.ptp(points[:,fixed])>0.001 or not np.isfinite(points).all():
             raise ValueError("提取曲线的配准与所标注基准面不一致："+h)
-        records.append({**spec,"points_m":points.tolist(),"flattening_m":0.0001})
+        records.append({**spec,"points_m":points.tolist(),"sampling":sampling,"flattening_m":0.0001 if sampling=="flattened_path" else None})
     return records
 
 

@@ -70,6 +70,35 @@ def hull_stage(src,out,oda,before,mode):
     return dict(status="exported",reason=None,asset=asset,evidence=qa)
 
 
+def local_curve_fallback(upstream, files, src, stage, oda, mode, profile, expected):
+    from curve_patch import deliver
+    from reconstruct import geometry_input, write_asset
+    folder = stage / (mode + "-surfaces")
+    folder.mkdir()
+    receipt = dict(assets={}, vertex_budget_m=1e-5, mode=mode, engineering_approved=False,
+                   profile_sha256=expected)
+    if expected is None or not profile.is_file():
+        return {**upstream, "curve_reason":"缺少配准文件"}
+    copy = folder / "registration.json"
+    shutil.copyfile(profile, copy)
+    if fingerprint(copy)!=expected:
+        return {**upstream, "curve_reason":"配准文件在采集时改变"}
+    config = json.loads(copy.read_bytes())
+    hashes = {c["source_sha256"] for r in config["regions"] for c in r["curves"]}
+    sources = [f for f in files if fingerprint(f) in hashes]
+    entries = geometry_input(src,sources,folder,oda,receipt)
+    deliver(entries,config,folder,receipt,write_asset,save)
+    save(folder/"patch-report.json",receipt)
+    if not profile.is_file() or fingerprint(profile)!=expected:
+        raise ValueError("配准证据在计算中变化")
+    if not receipt["assets"]:
+        return {**upstream, "curve_regions":receipt["regions"]}
+    return dict(status="partial", reason="仅交付有约束的开放半宽片体；整船仍阻塞",
+                whole_hull=upstream, curve_regions=receipt["regions"],
+                patches=[dict(file=folder.name+"/"+a["path"],sha256=a["sha256"])
+                         for a in receipt["assets"].values()])
+
+
 def structure_stage(src,out,oda,before,reference,mode,assumptions):
     from igl.copyleft import cgal
     if not callable(getattr(cgal,"remesh_self_intersections",None)):
@@ -138,8 +167,12 @@ def delivery_refs(report):
         if r["status"] not in ("partial", "exported"):
             continue
         if stage == "hull":
-            a = r["asset"]
-            add(stage, a["file"], a["sha256"])
+            if "patches" in r:
+                for a in r["patches"]:
+                    add(stage, a["file"], a["sha256"])
+            else:
+                a = r["asset"]
+                add(stage, a["file"], a["sha256"])
         elif stage == "structure":
             for item in r["partial_placements"]:
                 a = item["asset"]
@@ -174,7 +207,7 @@ def file_inventory(out, report):
         owner = roots.get(root, "run")
         digest = fingerprint(path)
         role = "intermediate_evidence"
-        if root in ("diagnostics", "invalidated") or path.suffix == ".log":
+        if "diagnostics" in rel.parts[:-1] or root == "invalidated" or path.suffix == ".log":
             role = "diagnostic"
             if root == "diagnostics" and len(rel.parts) > 1:
                 owner = Path(rel.parts[1]).stem
@@ -209,7 +242,7 @@ def verify(out):
     return report
 
 
-def run(src,out,oda=None,reference=None,synthetic=False,*,mode=None,assumptions=(),recover_from=None):
+def run(src,out,oda=None,reference=None,synthetic=False,*,mode=None,assumptions=(),recover_from=None,curve_profile=None):
     mode=mode or ("demo" if synthetic else "strict")
     if mode not in ("strict","demo") or (mode=="strict" and (synthetic or assumptions)):
         raise ValueError("严格模式不能接收演示假设")
@@ -226,6 +259,8 @@ def run(src,out,oda=None,reference=None,synthetic=False,*,mode=None,assumptions=
         inputs, ref_hash, intake_error = {}, None, str(exc)
     identity = dict(drawings=inputs, reference_sha256=ref_hash,
                     synthetic_common_datum=synthetic, mode=mode, assumptions=notes)
+    if curve_profile is not None:
+        identity["curve_profile_sha256"] = fingerprint(curve_profile) if curve_profile.is_file() else None
     recovery = None
     if recover_from is not None:
         previous = recover_from / "manifest.json"
@@ -237,10 +272,10 @@ def run(src,out,oda=None,reference=None,synthetic=False,*,mode=None,assumptions=
     report=dict(mode=mode,assumptions=notes,engineering_approved=False,formal_calculation_authorized=False,
                 request=identity, recovery=recovery, sealed=False, inventory_version=1)
     with TemporaryDirectory(prefix="s6-input-") as temporary:
-        return _execute(src, out, oda, reference, synthetic, report, Path(temporary), intake_error)
+        return _execute(src, out, oda, reference, synthetic, report, Path(temporary), intake_error, curve_profile)
 
 
-def _execute(src, out, oda, reference, synthetic, report, frozen, intake_error):
+def _execute(src, out, oda, reference, synthetic, report, frozen, intake_error, curve_profile):
     inputs = report["request"]["drawings"]
     mode, notes = report["mode"], report["assumptions"]
     stages = STAGES
@@ -304,7 +339,11 @@ def _execute(src, out, oda, reference, synthetic, report, frozen, intake_error):
         report[name]=dict(status="running",reason=None)
         checkpoint()
         try:
-            if name=="hull":result=hull_stage(frozen_src,stage,oda,before,mode)
+            if name=="hull":
+                result=hull_stage(frozen_src,stage,oda,before,mode)
+                if curve_profile is not None and result["status"]=="blocked":
+                    result=local_curve_fallback(result, files, frozen_src, stage, oda, mode,
+                                                curve_profile, report["request"]["curve_profile_sha256"])
             elif name=="structure":result=structure_stage(frozen_src,stage,oda,before,ref_copy,mode,notes)
             else:
                 hull=report["hull"]
@@ -353,12 +392,13 @@ if __name__=="__main__":
     p.add_argument("--verify", action="store_true",help="校验 --out 中已封存的运行；无需指定图纸")
     p.add_argument("--mode",choices=["strict","demo"])
     p.add_argument("--assumption",action="append",default=[])
+    p.add_argument("--curve-profile",type=Path,help="整船阻塞时，按原图指纹及配准证据交付独立开片")
     a=p.parse_args()
     if a.verify:
         result=verify(a.out)
         print(json.dumps(dict(verified=True, mode=result["mode"], files=len(result["files"]))))
         raise SystemExit(0)
     if a.drawings is None:p.error("运行需要图纸目录")
-    result=run(a.drawings,a.out,a.oda,a.local_reference,a.synthetic_common_datum,mode=a.mode,assumptions=a.assumption,recover_from=a.recover_from)
+    result=run(a.drawings,a.out,a.oda,a.local_reference,a.synthetic_common_datum,mode=a.mode,assumptions=a.assumption,recover_from=a.recover_from,curve_profile=a.curve_profile)
     print(json.dumps({k:result[k] for k in ("mode","status")}))
     raise SystemExit(1 if any(result[k]["status"]=="failed" for k in ("hull","structure","equipment")) else 4 if result["status"]=="blocked" else 0)
