@@ -1,0 +1,852 @@
+{
+  "pass": true,
+  "pin": "9ff7a0488e30fad050d21bafc2bdc7d55d0043da",
+  "chromiumSandbox": true,
+  "noSandboxArg": false,
+  "api": "http://127.0.0.1:51617",
+  "web": "http://127.0.0.1:52135",
+  "version": "Google Chrome 156.0.8078.47",
+  "desktop": {
+    "viewport": "desktop-1440",
+    "visitA": {
+      "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/vessels",
+      "status": 200,
+      "body": [
+        {
+          "caseId": "SYN-W9-SHIP-A",
+          "vesselId": "SYN-V-A",
+          "name": "合成船甲",
+          "loaM": 96,
+          "draftForeM": 0,
+          "parameterSources": {
+            "loaM": {
+              "kind": "Direct",
+              "sourceLabel": "合成 Direct 来源甲"
+            },
+            "draftForeM": {
+              "kind": "Direct",
+              "sourceLabel": "合成 Direct 来源甲"
+            }
+          }
+        }
+      ]
+    },
+    "visitB": {
+      "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/vessels",
+      "status": 200,
+      "body": [
+        {
+          "caseId": "SYN-W9-SHIP-B",
+          "vesselId": "SYN-V-B",
+          "name": "合成船乙",
+          "loaM": 72,
+          "beamM": 12,
+          "parameterSources": {
+            "loaM": {
+              "kind": "Estimated",
+              "sourceLabel": "合成估计来源乙"
+            },
+            "beamM": {
+              "kind": "Estimated",
+              "sourceLabel": "合成估计来源乙"
+            }
+          }
+        }
+      ]
+    },
+    "visitAReturn": {
+      "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/vessels",
+      "status": 200,
+      "body": [
+        {
+          "caseId": "SYN-W9-SHIP-A",
+          "vesselId": "SYN-V-A",
+          "name": "合成船甲",
+          "loaM": 96,
+          "draftForeM": 0,
+          "parameterSources": {
+            "loaM": {
+              "kind": "Direct",
+              "sourceLabel": "合成 Direct 来源甲"
+            },
+            "draftForeM": {
+              "kind": "Direct",
+              "sourceLabel": "合成 Direct 来源甲"
+            }
+          }
+        }
+      ]
+    },
+    "browserApiRequests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/evidence",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/custody:verify-chain",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/timeline",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/conflicts",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/tracks",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/evidence",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/custody:verify-chain",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/timeline",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/conflicts",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/tracks",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/vessels",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/vessels",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/evidence",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/custody:verify-chain",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/timeline",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/conflicts",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/tracks",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/evidence",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/custody:verify-chain",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/timeline",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/conflicts",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/tracks",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/vessels",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/vessels",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/evidence",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/custody:verify-chain",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/timeline",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/conflicts",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/tracks",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/evidence",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/custody:verify-chain",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/timeline",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/conflicts",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/tracks",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/vessels",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/vessels",
+        "resource": "fetch"
+      }
+    ],
+    "verificationWrites": [],
+    "verificationWriteCount": 0,
+    "pageErrors": [],
+    "screenshots": [
+      "01-desktop-A.png",
+      "01-desktop-B.png",
+      "01-desktop-A-return.png"
+    ]
+  },
+  "narrow390": {
+    "viewport": "narrow-390",
+    "visitA": {
+      "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/vessels",
+      "status": 200,
+      "body": [
+        {
+          "caseId": "SYN-W9-SHIP-A",
+          "vesselId": "SYN-V-A",
+          "name": "合成船甲",
+          "loaM": 96,
+          "draftForeM": 0,
+          "parameterSources": {
+            "loaM": {
+              "kind": "Direct",
+              "sourceLabel": "合成 Direct 来源甲"
+            },
+            "draftForeM": {
+              "kind": "Direct",
+              "sourceLabel": "合成 Direct 来源甲"
+            }
+          }
+        }
+      ]
+    },
+    "visitB": {
+      "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/vessels",
+      "status": 200,
+      "body": [
+        {
+          "caseId": "SYN-W9-SHIP-B",
+          "vesselId": "SYN-V-B",
+          "name": "合成船乙",
+          "loaM": 72,
+          "beamM": 12,
+          "parameterSources": {
+            "loaM": {
+              "kind": "Estimated",
+              "sourceLabel": "合成估计来源乙"
+            },
+            "beamM": {
+              "kind": "Estimated",
+              "sourceLabel": "合成估计来源乙"
+            }
+          }
+        }
+      ]
+    },
+    "visitAReturn": {
+      "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/vessels",
+      "status": 200,
+      "body": [
+        {
+          "caseId": "SYN-W9-SHIP-A",
+          "vesselId": "SYN-V-A",
+          "name": "合成船甲",
+          "loaM": 96,
+          "draftForeM": 0,
+          "parameterSources": {
+            "loaM": {
+              "kind": "Direct",
+              "sourceLabel": "合成 Direct 来源甲"
+            },
+            "draftForeM": {
+              "kind": "Direct",
+              "sourceLabel": "合成 Direct 来源甲"
+            }
+          }
+        }
+      ]
+    },
+    "browserApiRequests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/evidence",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/custody:verify-chain",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/timeline",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/conflicts",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/tracks",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/evidence",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/custody:verify-chain",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/timeline",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/conflicts",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/tracks",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/vessels",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/vessels",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/evidence",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/custody:verify-chain",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/timeline",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/conflicts",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/tracks",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/evidence",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/custody:verify-chain",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/timeline",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/conflicts",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/tracks",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/vessels",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-B/vessels",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/evidence",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/custody:verify-chain",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/timeline",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/conflicts",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/tracks",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/evidence",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/custody:verify-chain",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/timeline",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/conflicts",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/tracks",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/vessels",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:52135/api/v1/cases/SYN-W9-SHIP-A/vessels",
+        "resource": "fetch"
+      }
+    ],
+    "verificationWrites": [],
+    "verificationWriteCount": 0,
+    "pageErrors": [],
+    "screenshots": [
+      "02-390-A.png",
+      "02-390-B.png",
+      "02-390-A-return.png"
+    ]
+  },
+  "verificationWrites": [],
+  "verificationWriteCount": 0,
+  "pageErrors": [],
+  "screenshots": [
+    "01-desktop-A.png",
+    "01-desktop-B.png",
+    "01-desktop-A-return.png",
+    "02-390-A.png",
+    "02-390-B.png",
+    "02-390-A-return.png"
+  ],
+  "sqliteAfterPreseedSha256": "352a9bb23c329c5a9bf235baf56917358b5b64b03f1a11d261fadae9c3cdb721",
+  "sqliteAfterBrowserSha256": "352a9bb23c329c5a9bf235baf56917358b5b64b03f1a11d261fadae9c3cdb721",
+  "hostWriteCountAfterPreseed": 4,
+  "hostWriteCountDuringBrowser": 0,
+  "preseedOperations": [
+    {
+      "method": "POST",
+      "path": "/api/v1/cases",
+      "status": 201,
+      "caseId": "SYN-W9-SHIP-A"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cases",
+      "status": 201,
+      "caseId": "SYN-W9-SHIP-B"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cases/SYN-W9-SHIP-A/vessels",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cases/SYN-W9-SHIP-B/vessels",
+      "status": 201
+    }
+  ]
+}

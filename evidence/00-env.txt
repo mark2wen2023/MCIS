@@ -1,0 +1,11 @@
+pin=9ff7a0488e30fad050d21bafc2bdc7d55d0043da
+candidate=5c0e83efcbb0cde619c1aa20be88d2d4ff19f4f0
+chrome=Google Chrome 156.0.8078.47
+chromiumSandbox=true
+noSandboxArg=false
+api=http://127.0.0.1:51617
+web=http://127.0.0.1:52135
+sqliteAfterPreseedSha256=352a9bb23c329c5a9bf235baf56917358b5b64b03f1a11d261fadae9c3cdb721
+hostWriteCountAfterPreseed=4
+hostWriteCountDuringBrowser=0
+time=2026-11-28 11:54 Asia/Shanghai
