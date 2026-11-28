@@ -71,7 +71,28 @@ class ResearchAssetAuditTests(unittest.TestCase):
         result = audit_surfaces(self.report, self.asset_root)
         self.assertTrue(result["integrity_passed"])
         self.assertFalse(result["engineering_approved"])
+        self.assertIsNone(result["precision_gate_passed"])
         self.assertEqual(result["blocked_count"], 1)
+
+    def test_failed_accuracy_gate_never_becomes_engineering_approval(self):
+        accuracy = {"holdout_policy_passed": False, "status": "rejected", "reason": "residual_limit"}
+        self.evidence.write_text(json.dumps({"accuracy": accuracy}), encoding="utf-8")
+        self.data["regions"][0]["accuracy"] = accuracy
+        self.data["regions"][0]["evidence_sha256"] = sha256(self.evidence)
+        self._write_report()
+        result = audit_surfaces(self.report, self.asset_root)
+        self.assertTrue(result["integrity_passed"])
+        self.assertFalse(result["precision_gate_passed"])
+        self.assertFalse(result["engineering_approved"])
+
+    def test_accuracy_gate_must_match_linked_evidence(self):
+        self.evidence.write_text(json.dumps({"accuracy": {"status": "passed", "holdout_policy_passed": True}}), encoding="utf-8")
+        self.data["regions"][0]["accuracy"] = {"status": "rejected", "holdout_policy_passed": False}
+        self.data["regions"][0]["evidence_sha256"] = sha256(self.evidence)
+        self._write_report()
+        result = audit_surfaces(self.report, self.asset_root)
+        self.assertFalse(result["integrity_passed"])
+        self.assertFalse(result["precision_gate_passed"])
 
     def test_rejects_empty_regions_and_empty_assets(self):
         self.data["regions"] = []

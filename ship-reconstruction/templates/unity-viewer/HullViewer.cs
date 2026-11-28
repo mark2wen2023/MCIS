@@ -15,6 +15,7 @@ public class HullViewer : MonoBehaviour
     Catalog catalog;
     readonly Dictionary<string,Transform> nodes=new Dictionary<string,Transform>();
     readonly Dictionary<string,Part> parts=new Dictionary<string,Part>();
+    readonly Dictionary<string,float> commands=new Dictionary<string,float>();
     readonly Dictionary<string,float> phases=new Dictionary<string,float>();
     readonly List<Material> materials=new List<Material>();
     GameObject model;
@@ -22,7 +23,7 @@ public class HullViewer : MonoBehaviour
     Camera cam;
     Bounds bounds;
     Vector3 target;
-    float distance,yaw=22,pitch=20,rpm,helm,cut;
+    float distance,yaw=22,pitch=20,cut;
     bool section, hideInternal, busy, error;
     int page;
     string status, selected;
@@ -43,7 +44,7 @@ public class HullViewer : MonoBehaviour
             if(model){model.SetActive(false);Destroy(model);}
             foreach(var material in materials)Destroy(material);
             materials.Clear();nodes.Clear();parts.Clear();phases.Clear();importer?.Dispose();importer=null;
-            rpm=helm=0;section=hideInternal=false;
+            commands.Clear();section=hideInternal=false;
             var dir=Application.streamingAssetsPath;var key=files[index];
             catalog=JsonUtility.FromJson<Catalog>(File.ReadAllText(Path.Combine(dir,key+".json")));
             var expectedModes=new[]{"demo","strict","unregistered_local_demo"};
@@ -91,7 +92,8 @@ public class HullViewer : MonoBehaviour
     void Pose(float dt){
         foreach(var t in catalog.tracks){
             phases.TryGetValue(t.node,out var angle);
-            angle=t.kind=="continuous"?Mathf.Repeat(angle+rpm*6*dt,360):Mathf.Clamp(helm,t.min,t.max);phases[t.node]=angle;
+            commands.TryGetValue(t.node,out var command);
+            angle=t.kind=="continuous"?Mathf.Repeat(angle+command*6*dt,360):Mathf.Clamp(command,t.min,t.max);phases[t.node]=angle;
             float u=(angle-t.min)/(t.max-t.min)*(t.rotations.Length-1);int k=Mathf.FloorToInt(u);
             var q=Quaternion.Slerp(t.rotations[k],t.rotations[Mathf.Min(k+1,t.rotations.Length-1)],u-k);
             // GLTFast mirrors the glTF X coordinate. Quaternion vector parts transform axially.
@@ -130,7 +132,7 @@ public class HullViewer : MonoBehaviour
             section=GUILayout.Toggle(section,"纵向剖切");if(section)cut=Slider("剖面位置（Unity X，m）",cut,bounds.min.x,bounds.max.x);
             hideInternal=GUILayout.Toggle(hideInternal,"隐藏内部结构");
             if(prev!=section || hidden!=hideInternal || last!=cut)ApplySection();
-            if(page==0){rpm=Slider("演示螺旋桨 rpm",rpm,-60,60);helm=Slider("演示舵角 °",helm,-25,25);if(GUILayout.Button("控制归零")){rpm=helm=0;phases.Clear();}}
+            if(page==0){foreach(var t in catalog.tracks){commands.TryGetValue(t.node,out var command);bool continuous=t.kind=="continuous";commands[t.node]=Slider(t.node+(continuous?" 演示 rpm":" 演示 °"),command,continuous?-60:t.min,continuous?60:t.max);}if(GUILayout.Button("控制归零")){commands.Clear();phases.Clear();}}
             if(parts.TryGetValue(selected??"",out var item)){
                 GUILayout.Label(item.title+" · "+item.installation);GUILayout.Label(item.grade);
                 GUILayout.Label(item.source);GUILayout.Label(item.parameters);
@@ -148,7 +150,8 @@ public class HullViewer : MonoBehaviour
             var movingRoots=catalog.tracks.Select(t=>nodes[t.node]).ToArray();
             var fixedBefore=parts.Values.Where(p=>!movingRoots.Any(root=>nodes[p.id].IsChildOf(root)))
                 .ToDictionary(p=>p.id,p=>nodes[p.id].localToWorldMatrix);
-            rpm=10;helm=18;Pose(.5f);
+            foreach(var t in catalog.tracks){commands.Clear();phases.Clear();Pose(0);var before=catalog.tracks.ToDictionary(x=>x.node,x=>nodes[x.node].localRotation);commands[t.node]=t.kind=="continuous"?10:Mathf.Clamp(18,t.min,t.max);Pose(.5f);if(Quaternion.Angle(before[t.node],nodes[t.node].localRotation)<1 || before.Any(k=>k.Key!=t.node && Quaternion.Angle(k.Value,nodes[k.Key].localRotation)>.01f))throw new Exception("独立关节控制失效 "+t.node);Debug.Log("V11 JOINT ISOLATION PASS node="+t.node);}
+            commands.Clear();phases.Clear();foreach(var t in catalog.tracks)commands[t.node]=t.kind=="continuous"?10:18;Pose(.5f);
             if(holders.Count==0||holders.Any(k=>Quaternion.Angle(k.Value,nodes[k.Key].localRotation)<1))throw new Exception("关节控制失效");
             if(fixedBefore.Any(k=>k.Value!=nodes[k.Key].localToWorldMatrix))throw new Exception("固定节点随动");
             section=hideInternal=true;cut=bounds.center.x;ApplySection();

@@ -3,6 +3,7 @@ import re
 import numpy as np
 from cad_input import fingerprint
 from geometry import build_shell, read_curves
+from accuracy_gate import assess
 
 
 def surfaces(entries, regions):
@@ -96,10 +97,11 @@ def deliver(entries, profile, out, report, write_asset, save):
                     normal=np.cross(b-a,d-a)
                     error=float(a[1]-(normal[0]*(x-a[0])+normal[2]*(z-a[2]))/normal[1]-y)
                 residual.append(dict(source=c["handle"],sample=i,xyz_m=[x,y,z],dy_m=error))
+        accuracy=assess(residual, profile.get("accuracy_policy"))
         path=out/(name+"-evidence.json")
         save(path,dict(asset=report["assets"][name]["sha256"],profile=report["profile_sha256"],
-                       faces=faces,construction=detail,holdout=residual))
+                       faces=faces,construction=detail,holdout=residual,accuracy=accuracy))
         report["regions"].append(dict(id=name,status="partial_surface",evidence=path.name,
-                                      evidence_sha256=fingerprint(path),faces=len(faces),
+                                      evidence_sha256=fingerprint(path),faces=len(faces),accuracy=accuracy,
                                       curves=[c["handle"] for c in curves]))
     report["status"]="partial_surface" if report["assets"] else "needs_evidence"

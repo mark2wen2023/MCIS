@@ -207,6 +207,7 @@ def audit_surfaces(report_path: Path, asset_root: Path) -> dict[str, Any]:
     regions = report.get("regions", [])
     checked = []
     errors = []
+    accuracy_states: list[bool] = []
     if not isinstance(regions, list) or not regions:
         errors.append("surface report must contain at least one region")
         regions = []
@@ -245,6 +246,20 @@ def audit_surfaces(report_path: Path, asset_root: Path) -> dict[str, Any]:
         if not evidence_path.is_file():
             errors.append(f"{region_id}: evidence file missing")
             continue
+        try:
+            evidence_data = json.loads(evidence_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            errors.append(f"{region_id}: invalid evidence JSON: {exc}")
+            continue
+        region_accuracy = region.get("accuracy")
+        evidence_accuracy = evidence_data.get("accuracy") if isinstance(evidence_data, dict) else None
+        if region_accuracy is not None or evidence_accuracy is not None:
+            if not isinstance(region_accuracy, dict) or region_accuracy != evidence_accuracy:
+                errors.append(f"{region_id}: reported accuracy gate differs from linked evidence")
+                accuracy_states.append(False)
+            else:
+                passed = region_accuracy.get("holdout_policy_passed") is True and region_accuracy.get("status") == "passed"
+                accuracy_states.append(passed)
         actual_hash = sha256(asset_path)
         try:
             actual_faces = glb_triangle_count(asset_path)
@@ -276,6 +291,7 @@ def audit_surfaces(report_path: Path, asset_root: Path) -> dict[str, Any]:
     return {
         "integrity_passed": not errors,
         "engineering_approved": False,
+        "precision_gate_passed": all(accuracy_states) if accuracy_states else None,
         "declared_engineering_approved": report.get("engineering_approved"),
         "strict_mode": report.get("mode") == "strict",
         "region_count": len(regions),
@@ -287,7 +303,7 @@ def audit_surfaces(report_path: Path, asset_root: Path) -> dict[str, Any]:
         ],
         "checked_assets": checked,
         "errors": errors,
-        "scope": "asset/evidence integrity only; does not approve geometry or release blocked regions",
+        "scope": "asset/evidence integrity only; precision_gate_passed reports A05 holdout policy status when present and never grants engineering approval or releases blocked regions",
     }
 
 

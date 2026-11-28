@@ -88,8 +88,10 @@ def build_shell(rows, curves, symmetric, closure, subdivisions=1):
                     conflicts.append(dict(x_m=x,z_m=z,raw_m=value,candidates=candidates))
                     # Drawing text survives as the reference hypothesis. Conflicting
                     # guide values do not fill blanks or modify a printed number.
-                elif value is None:
-                    value,h=candidates[0];source=[h];supplement.append(dict(x_m=x,z_m=z,breadth_m=value,handles=source))
+                else:
+                    source=sorted(set(source+[h for _,h in candidates]))
+                    if value is None:
+                        value=candidates[0][0];supplement.append(dict(x_m=x,z_m=z,breadth_m=value,handles=source,candidates=candidates))
             if value is None and raw is None:
                 a,b=original[i:i+2]
                 l,r=obs[a,z],obs[b,z]
