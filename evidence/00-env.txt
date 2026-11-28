@@ -1,0 +1,12 @@
+product=d4452bb6c8aac41f2ce99c157b02a7e501f4f4ba
+utc_pin=8af8f3e8662c70b074cd9f0a5081d9a14ccdd4df
+candidate=858e6dd20275e0caf67a526e04ea2c981fd43c1a
+chrome=Google Chrome 156.0.8078.47
+chromiumSandbox=true
+noSandboxArg=false
+exit=0
+time=2026-11-28 13:17 Asia/Shanghai
+entryTabCount=33
+located=round 2 IR-01 / IR-01-S01
+locatedFocusVisible=true
+afterTab=BUTTON 定位所选比对条目的原文问答

@@ -1,0 +1,21 @@
+{
+  "caseId": "SYN-W3-UTC-001",
+  "recordId": "IR-01",
+  "evidenceId": "EV-001",
+  "sourceSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "statementId": "IR-01-S01",
+  "pageTurns": [
+    {
+      "round": 1,
+      "utc": null
+    },
+    {
+      "round": 2,
+      "utc": "2026-02-01T12:01:40Z"
+    },
+    {
+      "round": 3,
+      "utc": "2026-02-01T12:01:40.125Z"
+    }
+  ]
+}
