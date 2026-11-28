@@ -53,3 +53,5 @@ python -m unittest discover -s tests
 V1.0 研究候选交付前执行 `python scripts/s6.py --verify --out <运行目录>`，按封存清单中的角色交付。失败现场和恢复后的运行分别保留，恢复命令及四类文件定义见 [S6 清单与恢复约定](references/s6.md)。
 
 缺少完整型值表时，可用已复核的水线、独立横剖或纵剖运行 `python scripts/reconstruct.py 图纸目录 --curve-profile 区域配准.json --out 新目录`。见[局部曲面配准、留出和模型交付](references/curve-patches.md)。保留每条原图曲线的指纹、实体句柄、配准依据及采用范围。局部片体通过读回检查后仍须单独评价留出误差。
+
+需要从未配准的 CAD 识别船舶视图时，先运行 S2 的 view_candidates，核对视图、单位、刻线及跨图证据，再决定可交给曲面阶段的输入。见 references/automatic-view-registration.md。

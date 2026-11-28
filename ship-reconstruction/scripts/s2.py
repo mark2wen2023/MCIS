@@ -262,7 +262,7 @@ def check(g):
     )
 
 
-def process(path, dest, oda):
+def process(path, dest, oda, view_records=None):
     sources = (
         [path]
         if path.is_file()
@@ -349,6 +349,9 @@ def process(path, dest, oda):
                     else ([], [])
                 )
                 frames.extend(derived)
+                if view_records is not None:
+                    from s2lib.view_registration import inspect
+                    view_records.append(inspect(data, inv, frames, axes))
                 cr = curves.extract(data, inv, found, frames)
                 warnings = []
                 if not inv["classes"]:
@@ -421,7 +424,7 @@ def process(path, dest, oda):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("tool", choices=["run", *TOOLS])
+    p.add_argument("tool", choices=["run", "view_candidates", *TOOLS])
     p.add_argument("input", type=Path)
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--oda")
@@ -444,9 +447,15 @@ def main():
             }
         rc = 0 if result["valid"] else 4
     else:
-        g = process(src, out, a.oda)
+        view_records = [] if a.tool == "view_candidates" else None
+        g = process(src, out, a.oda, view_records)
         g["elapsed_s"] = time.perf_counter() - start
-        result = g if a.tool == "run" else g[TOOLS[a.tool]]
+        if view_records is not None:
+            from s2lib.view_registration import crosscheck
+            result = dict(documents=view_records, issues=g["issues"], cross_checks=crosscheck(view_records),
+                          provenance="automatic_cad_only", engineering_approved=False)
+        else:
+            result = g if a.tool == "run" else g[TOOLS[a.tool]]
         rc = 4 if g["issues"] or not g["validation"]["valid"] else 0
     file = out / ("geometry.json" if a.tool == "run" else a.tool + ".json")
     file.write_text(
