@@ -6,7 +6,7 @@ import unittest
 import numpy as np
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
-from s2lib.view_registration import coordinate_controls
+from s2lib.view_registration import coordinate_controls,crosscheck
 
 
 class CoordinateCandidates(unittest.TestCase):
@@ -24,10 +24,20 @@ class CoordinateCandidates(unittest.TestCase):
         rows.append(dict(layout='Model',instance='bad',p=[* (transform@np.array([3.,4.])+[23.,-14.]),0],text='X=999, Y=-888 in'))
         return rows
 
+    def geometric_links(self, texts):
+        leaders=[];segments=[]
+        for t in texts:
+            p=t['p']
+            leaders.append(dict(layout='Model',instance='L'+t['instance'],annotation=t['instance'],
+                                vertices=[p,[p[0]+.5,p[1]+.5,0]]))
+            segments.append(dict(layout='Model',instance='G'+t['instance'],a=p,b=[p[0]+.1,p[1],0]))
+        return leaders,segments
+
     def test_rotated_and_mirrored_candidates_keep_parity_and_holdout(self):
         bounds=[-100,-100,100,100]
         for mirrored,expected in ((False,'unmirrored'),(True,'mirrored')):
-            result=coordinate_controls(self.texts(mirrored),bounds,'R1')[0]
+            texts=self.texts(mirrored);leaders,segments=self.geometric_links(texts)
+            result=coordinate_controls(texts,bounds,'R1',leaders,segments)[0]
             self.assertEqual(result['status'],'candidate')
             self.assertEqual(result['parity'],expected)
             self.assertEqual(result['inlier_count'],6)
@@ -41,18 +51,40 @@ class CoordinateCandidates(unittest.TestCase):
               for i,(x,y) in enumerate(((0,0),(1,0),(0,1),(1,1)))]
         self.assertEqual(coordinate_controls(rows,[-1,-1,2,2],'R2'),[])
 
+    def test_text_insertion_anchor_is_never_treated_as_geometric_control(self):
+        texts=self.texts()
+        result=coordinate_controls(texts,[-100,-100,100,100],'R2')[0]
+        self.assertEqual(result['status'],'annotation_only_unverified')
+        self.assertIsNone(result['paper_to_printed_xy_m'])
+        self.assertIn('no_coordinate_transform',result['unknown'])
+
     def test_fewer_than_four_points_cannot_claim_a_transform(self):
         rows=self.texts()[:3]
-        result=coordinate_controls(rows,[-100,-100,100,100],'R3')
-        self.assertEqual(result[0]['status'],'insufficient_controls')
+        leaders,segments=self.geometric_links(rows)
+        result=coordinate_controls(rows,[-100,-100,100,100],'R3',leaders,segments)
+        self.assertEqual(result[0]['status'],'insufficient_geometric_controls')
 
     def test_weak_consensus_remains_low_confidence(self):
         rows=self.texts()[:4]
         for i,(x,y) in enumerate(((2,3),(7,4),(5,8))):
             rows.append(dict(layout='Model',instance=f'bad{i}',p=[x,y,0],text=f'X={x*31}, Y={y*27} in'))
-        result=coordinate_controls(rows,[-100,-100,100,100],'R4')[0]
+        leaders,segments=self.geometric_links(rows)
+        result=coordinate_controls(rows,[-100,-100,100,100],'R4',leaders,segments)[0]
         self.assertEqual(result['status'],'low_confidence_candidate')
         self.assertEqual(result['confidence'],'low')
+
+    def test_cross_view_common_stations_compare_relative_paper_scale(self):
+        def region(rid,scale):
+            return dict(region_id=rid,registration=dict(series={'station':dict(
+                paper_to_label=[scale,0,0],ticks=[dict(value=x) for x in (0,1,2)])}))
+        docs=[]
+        for source,rid,scale in [('a','R1',2.),('b','R2',2.004)]:
+            docs.append(dict(source_sha256=source,layouts=[dict(layout='Model',series={},regions=[region(rid,scale)],ranked=[])]))
+        result=crosscheck(docs)
+        check=next(x for x in result if x['kind']=='region_shared_label_scale')
+        self.assertEqual(check['common_labels'],[0,1,2])
+        self.assertTrue(check['equal_paper_pitch'])
+        self.assertFalse(check['metric_authorization'])
 
 
 if __name__=='__main__':unittest.main()

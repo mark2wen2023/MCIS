@@ -23,9 +23,12 @@ COORDINATE_NOTE = re.compile(
 )
 
 
-def coordinate_controls(texts, bounds, region_id):
-    """Fit a local paper-to-printed-XY candidate; never authorizes vessel axes."""
-    rows=[]
+def coordinate_controls(texts, bounds, region_id, leaders=(), segments=()):
+    """Use only leader targets on CAD geometry as coordinate controls.
+
+    Text insertion anchors are annotation placement, never geometric controls.
+    """
+    rows=[];annotation_notes=[]
     factors={'mm':.001,'cm':.01,'m':1.,'in':.0254,'inch':.0254,'inches':.0254,
              'ft':.3048,'feet':.3048,"'":.3048}
     for t in texts:
@@ -36,12 +39,34 @@ def coordinate_controls(texts, bounds, region_id):
         unit={'inches':'in','inch':'in'}.get(unit,unit)
         factor=factors.get(unit)
         if factor is None:continue
-        p=np.asarray(t['p'][:2],dtype=float)
-        if not (bounds[0]<=p[0]<=bounds[2] and bounds[1]<=p[1]<=bounds[3]):continue
-        rows.append(dict(handle=t['instance'],paper_xy=p.tolist(),printed_xy_m=[float(match[1])*factor,float(match[2])*factor],unit=unit))
-    if not rows:return []
-    if len(rows)<4:return [dict(region_id=region_id,status='insufficient_controls',controls=rows,
-                                unknown=['at_least_four_noncollinear_coordinate_notes_required'])]
+        annotation_notes.append(t['instance'])
+        linked=[l for l in leaders if l.get('annotation')==t['instance'] and len(l.get('vertices',[]))>=2]
+        geometric=[]
+        for leader in linked:
+            for vertex in leader['vertices']:
+                p=np.asarray(vertex[:2],dtype=float)
+                for seg in segments:
+                    a=np.asarray(seg['a'][:2],dtype=float);b=np.asarray(seg['b'][:2],dtype=float);d=b-a
+                    den=float(d@d)
+                    if den<=1e-18:continue
+                    u=float(np.clip((p-a)@d/den,0,1));q=a+u*d
+                    if np.linalg.norm(p-q)<=max(1e-7,.01*float(t.get('height',0))):
+                        geometric.append((p,leader['instance'],seg['instance']))
+        unique={tuple(np.round(row[0],8)):row for row in geometric}
+        for p,leader_id,geometry_id in unique.values():
+            if not (bounds[0]<=p[0]<=bounds[2] and bounds[1]<=p[1]<=bounds[3]):continue
+            rows.append(dict(handle=t['instance'],leader_handle=leader_id,geometry_handle=geometry_id,
+                paper_xy=p.tolist(),printed_xy_m=[float(match[1])*factor,float(match[2])*factor],unit=unit,
+                control_source='leader_target_on_geometry'))
+    if not rows:
+        return ([dict(region_id=region_id,status='annotation_only_unverified',paper_to_printed_xy_m=None,
+                      annotation_handles=annotation_notes,
+                      note='text insertion anchors are not geometric controls',
+                      unknown=['leader_or_geometric_control_link_missing','no_coordinate_transform'])]
+                if annotation_notes else [])
+    if len(rows)<4:return [dict(region_id=region_id,status='insufficient_geometric_controls',controls=rows,
+                                ignored_text_anchors=sum(1 for t in texts if COORDINATE_NOTE.search(t.get('text',''))),
+                                unknown=['at_least_four_noncollinear_leader_targets_on_geometry_required'])]
     p=np.asarray([r['paper_xy'] for r in rows]);q=np.asarray([r['printed_xy_m'] for r in rows])
     scale=max(float(np.median([np.linalg.norm(p[i]-p[j]) for i,j in itertools.combinations(range(len(p)),2)])),1e-9)
     tol=max(2e-5,scale*2e-4)
@@ -247,6 +272,137 @@ def _overlap(a,b):
     return a[0]<=b[2] and b[0]<=a[2] and a[1]<=b[3] and b[1]<=a[3]
 
 
+def _fragment_chains(entities, tolerance, max_turn_deg=25.0):
+    """Recover candidate chains from fragmented straight CAD entities."""
+    segments=[];endpoint_rows=[]
+    for e in entities:
+        if 'LINE' not in e['types'] or len(e['records'])!=1:continue
+        pts=np.asarray(e['records'][0].get('samples',[]),dtype=float)
+        if pts.ndim!=2 or len(pts)<2:continue
+        a,b=pts[0,:2],pts[-1,:2];d=b-a;length=float(np.linalg.norm(d))
+        if length<=1e-10:continue
+        i=len(segments);segments.append((e,a,b,length))
+        endpoint_rows.extend([(i,0,a,(b-a)/length),(i,1,b,(a-b)/length)])
+    candidates=defaultdict(list);buckets=defaultdict(list);cell=max(tolerance,1e-9)
+    for i,(si,ei,pi,ui) in enumerate(endpoint_rows):
+        ix,iy=math.floor(pi[0]/cell),math.floor(pi[1]/cell)
+        for x in range(ix-1,ix+2):
+            for y in range(iy-1,iy+2):
+                for j in buckets[(x,y)]:
+                    sj,ej,pj,uj=endpoint_rows[j]
+                    if si==sj:continue
+                    gap=float(np.linalg.norm(pi-pj))
+                    if gap>tolerance:continue
+                    turn=math.degrees(math.acos(float(np.clip(-np.dot(ui,uj),-1,1))))
+                    if turn<=max_turn_deg:
+                        candidates[(si,ei)].append((gap,turn,sj,ej))
+                        candidates[(sj,ej)].append((gap,turn,si,ei))
+        buckets[(ix,iy)].append(i)
+    links=set()
+    for (i,ei),rows in candidates.items():
+        gap,turn,j,ej=min(rows,key=lambda r:(r[0],r[1],r[2],r[3]))
+        reverse=candidates.get((j,ej),[])
+        if reverse and min(reverse,key=lambda r:(r[0],r[1],r[2],r[3]))[2:]==(i,ei):
+            links.add(tuple(sorted((i,j))))
+    graph=defaultdict(set)
+    for i,j in links:graph[i].add(j);graph[j].add(i)
+    visited=set();paths=[]
+    for start in sorted(i for i in graph if len(graph[i])!=2):
+        for nxt in sorted(graph[start]):
+            edge=tuple(sorted((start,nxt)))
+            if edge in visited:continue
+            path=[start];prev=start;cur=nxt;visited.add(edge)
+            while True:
+                path.append(cur)
+                options=[k for k in graph[cur] if k!=prev and tuple(sorted((cur,k))) not in visited]
+                if len(graph[cur])!=2 or not options:break
+                follow=min(options);visited.add(tuple(sorted((cur,follow))));prev,cur=cur,follow
+            paths.append(path)
+    for i in sorted(graph):
+        for j in sorted(graph[i]):
+            edge=tuple(sorted((i,j)))
+            if edge in visited:continue
+            path=[i];prev=i;cur=j;visited.add(edge)
+            while cur!=i:
+                path.append(cur);options=[k for k in graph[cur] if k!=prev and tuple(sorted((cur,k))) not in visited]
+                if not options:break
+                follow=min(options);visited.add(tuple(sorted((cur,follow))));prev,cur=cur,follow
+            paths.append(path)
+    output=[]
+    for path in paths:
+        if len(path)<3:continue
+        rows=[segments[i] for i in path];points=np.asarray([p for _,a,b,_ in rows for p in (a,b)])
+        lengths=[r[3] for r in rows];turns=[]
+        for left,right in zip(rows,rows[1:]):
+            da=(left[2]-left[1])/left[3];db=(right[2]-right[1])/right[3]
+            turns.append(math.degrees(math.acos(float(np.clip(abs(np.dot(da,db)),-1,1)))))
+        span=points.max(0)-points.min(0);total=float(sum(lengths))
+        centered=points-points.mean(0);vals,vecs=np.linalg.eigh(centered.T@centered/max(1,len(points)))
+        major=vecs[:,int(np.argmax(vals))];aspect_pca=float(math.sqrt(max(vals)/max(min(vals),1e-12)))
+        output.append(dict(handles=[r[0]['instance'] for r in rows],bounds=_bounds(points),
+            total_length=total,segment_count=len(rows),span=[float(span[0]),float(span[1])],
+            aspect_ratio=aspect_pca,major_axis=[float(major[0]),float(major[1])],
+            max_tangent_turn_deg=max(turns,default=0.0),
+            curvature_proxy_deg_per_unit=max(turns,default=0.0)/max(float(np.median(lengths)),1e-12),
+            points=points.tolist()))
+    return output
+
+
+def _view_feature_scores(chains, texts, bounds):
+    """Return ordinal geometry cues; scores are not probabilities or approvals."""
+    if not chains:return []
+    long=[c for c in chains if c['segment_count']>=3]
+    baseline=sum(1 for t in texts if re.fullmatch(r'(?:bl|baseline|基线|cl|centerline|centreline|中心线)',t.get('n','')))
+    stations=[]
+    for t in texts:
+        if any(re.fullmatch(FAMILIES[k],t.get('n','')) for k in ('frame','station')):
+            if bounds[0]<=t['p'][0]<=bounds[2] and bounds[1]<=t['p'][1]<=bounds[3]:stations.append(t)
+    panel_notes=sum(bool(COORDINATE_NOTE.search(t.get('text',''))) for t in texts)
+    panel_penalty=min(1.0,panel_notes/5)
+    elong=max((min(1.0,math.log1p(c['aspect_ratio'])/math.log(10)) for c in long),default=0.0)
+    smooth=sum(1 for c in long if c['max_tangent_turn_deg']<=18)/max(1,len(long))
+    paired=0.0
+    for a,b in itertools.combinations(long,2):
+        ua=np.asarray(a['major_axis']);ub=np.asarray(b['major_axis'])
+        if abs(float(ua@ub))<.9:continue
+        axis=ua if ua[0]>=0 else -ua
+        pa=np.asarray(a['points'])@axis;pb=np.asarray(b['points'])@axis
+        overlap=max(0,min(pa.max(),pb.max())-max(pa.min(),pb.min()))
+        denom=max(1e-9,min(pa.max()-pa.min(),pb.max()-pb.min()))
+        align=min(1.0,overlap/denom)
+        if align>=.65:
+            normal=np.array([-axis[1],axis[0]])
+            grid=np.linspace(max(pa.min(),pb.min()),min(pa.max(),pb.max()),16)
+            def offsets(chain):
+                xy=np.asarray(chain['points']);along=xy@axis;across=xy@normal
+                order=np.argsort(along);return np.interp(grid,along[order],across[order])
+            va,vb=offsets(a),offsets(b);width=max(float(np.median(np.abs(va-vb))),1e-9)
+            centerline=(va+vb)/2;stability=max(0.0,1-float(np.std(centerline))/width)
+            balance=min(1.0,float(np.median(np.abs(va-vb)))/max(float(np.median(np.abs(va))+np.median(np.abs(vb))),1e-9))
+            paired=max(paired,align*min(1.0,min(a['total_length'],b['total_length'])/max(a['total_length'],b['total_length']))*stability*balance)
+    station_values={t.get('n','') for t in stations}
+    station_score=min(1.0,len(station_values)/5);baseline_score=min(1.0,baseline)
+    compactness=max(0.0,1-abs(float(np.median([c['aspect_ratio'] for c in long]))-1.5)/1.5) if long else 0.0
+    raw={'XY':1.5*paired+.8*station_score+.3*smooth-.9*panel_penalty,
+         'XZ':1.2*elong+1.4*baseline_score+.8*station_score+.3*smooth-.9*panel_penalty,
+         'YZ':1.2*compactness+.8*station_score+.3*smooth-.5*panel_penalty}
+    features=dict(long_chain_count=len(long),paired_outline_score=float(paired),
+        station_label_count=len(stations),station_score=float(station_score),
+        baseline_label_count=baseline,baseline_score=float(baseline_score),
+        panel_coordinate_note_count=panel_notes,panel_note_penalty=float(panel_penalty),
+        outline_pair_symmetry_score=float(paired),
+        elongation_score=float(elong),compactness_score=float(compactness),
+        smooth_chain_fraction=float(smooth),
+        scores={k:float(v) for k,v in raw.items()})
+    ranking=sorted(raw.items(),key=lambda x:(-x[1],x[0]))
+    margin=float(ranking[0][1]-ranking[1][1]) if len(ranking)>1 else 0.0
+    return [dict(view=k,score=float(v),score_kind='ordinal_geometry_evidence',
+                 status='ambiguous_candidate' if margin<.5 else 'weak_ranked_candidate',
+                 confidence='low',ranking_margin=margin,features=features,
+                 unknown=['view_projection_semantics','vessel_axis_orientation','unit_scale'])
+            for k,v in ranking]
+
+
 def _spatial_entities(data):
     """Build deterministic per-instance boxes from S2's existing CAD extraction."""
     rows={}
@@ -417,6 +573,11 @@ def partition(data, inv):
             # excluded above so they cannot collapse this distribution.
             cutoff=max(6*h,med+6*mad,float(np.quantile(line_sizes,.90)))
         else:cutoff=6*h
+        recovered=_fragment_chains(curves,max(.05*h,1e-8))
+        recovered=[c for c in recovered if c['total_length']>=max(10*h,.02*diagonal)]
+        for c in recovered:
+            token=f"{inv.get('source_sha256','')}/{layout}/{','.join(sorted(c['handles']))}"
+            c['candidate_id']='C-'+hashlib.sha256(token.encode()).hexdigest()[:12]
         core=[]
         for e in curves:
             b=e['bounds'];d=math.hypot(b[2]-b[0],b[3]-b[1])
@@ -553,6 +714,18 @@ def partition(data, inv):
                     geometry_types=dict(Counter(t for e in owned for t in e['types']))),
                 overlap_status='multiple_view_titles_same_region' if len(title_evidence)>1 else 'not_observed',
                 uncertainty=['view_type_requires_cross_view_or_title_confirmation'] if len(view_candidates)>1 else []))
+        for region in regions:
+            rh=set(region['handles'])
+            local_chains=[c for c in recovered if len(rh & set(c['handles']))>=3]
+            region['curve_chain_candidates']=[{k:v for k,v in c.items() if k!='points'} for c in local_chains]
+            region_texts=[x for x in data.get('texts',[]) if x['layout']==layout and x['instance'] in rh]
+            region['view_geometry_scores']=_view_feature_scores(local_chains,
+                region_texts,region['bounds'])
+            if not region['evidence']['title_matches'] and region['view_geometry_scores']:
+                region['view_type_candidates']=[dict(view=x['view'],confidence='low',
+                    score=x['score'],basis='ordinal_geometry_evidence',features=x['features'],
+                    handles=sorted({h for c in local_chains for h in c['handles']}))
+                    for x in region['view_geometry_scores']]
         for i,a in enumerate(regions):
             overlaps=[]
             for j,b in enumerate(regions):
@@ -564,7 +737,9 @@ def partition(data, inv):
                 a['overlap_status']='overlaps_other_candidate_regions'
                 a['overlapping_region_ids']=sorted(overlaps)
                 a['uncertainty']=sorted(set(a['uncertainty']+['candidate_region_bounds_overlap; split_or_shared_view_needs_review']))
-        result.append(dict(layout=layout,bounds=allbox,regions=regions,drawing_frame_handles=sorted(frame),
+        result.append(dict(layout=layout,bounds=allbox,regions=regions,
+                           curve_chain_candidates=[{k:v for k,v in c.items() if k!='points'} for c in recovered],
+                           drawing_frame_handles=sorted(frame),
                            cross_region_handles=sorted(cross),unassigned_handles=sorted(set(unassigned)),
                            partition_parameters=dict(median_text_height=h,cluster_radius=cluster_radius,
                                long_geometry_cutoff=cutoff,minimum_seed_entities=minimum)))
@@ -599,7 +774,9 @@ def inspect(data, inv, frames, axis_records):
                 cad_header=dict(code=header_code,unit=header_unit,scope='drawing_header_only'),
                 paper_scales=scales,unknown=['unit_or_scale_not_inferred_from_geometry'] if not printed_units and not declared_units else [])
             local_texts=[t for t in data.get('texts',[]) if t.get('layout')==part['layout'] and t.get('instance') in handles]
-            region['coordinate_registration_candidates']=coordinate_controls(local_texts,region['bounds'],region['region_id'])
+            region['coordinate_registration_candidates']=coordinate_controls(local_texts,region['bounds'],region['region_id'],
+                leaders=[l for l in data.get('leaders',[]) if l.get('layout')==part['layout']],
+                segments=[s for s in data.get('segments',[]) if s.get('layout')==part['layout']])
             sub={k:[x for x in data.get(k,[]) if x.get('layout')==part['layout'] and x.get('instance') in handles]
                  for k in entity_data}
             sub['counts']=data.get('counts',{})
@@ -631,6 +808,7 @@ def inspect(data, inv, frames, axis_records):
             unit=dict(state='region_scoped',regions={r['region_id']:r.get('registration',{}).get('unit',{}) for r in part['regions']})
         output.append(dict(layout=part['layout'],regions=part['regions'],ranked=[c for r in part['regions'] for c in r.get('registration',{}).get('ranked',[])],
             series=series,datum_labels=datum_labels,unit=unit,
+            curve_chain_candidates=part.get('curve_chain_candidates',[]),
             drawing_frame_handles=part['drawing_frame_handles'],cross_region_handles=part['cross_region_handles'],
             unassigned_handles=part['unassigned_handles'],partition_parameters=part['partition_parameters']))
     return dict(source_sha256=inv['source_sha256'],layouts=output,origin='automatic_cad_only',installation_authorized=False)
@@ -639,6 +817,24 @@ def inspect(data, inv, frames, axis_records):
 def crosscheck(documents):
     from itertools import combinations
     checks=[]
+    region_series=[]
+    for doc in documents:
+        for layout in doc['layouts']:
+            for region in layout.get('regions',[]):
+                for family,series in region.get('registration',{}).get('series',{}).items():
+                    region_series.append((doc,layout,region,family,series))
+    for left,right in combinations(region_series,2):
+        a,la,ra,fam_a,sa=left;b,lb,rb,fam_b,sb=right
+        if fam_a!=fam_b or (a is b and ra['region_id']==rb['region_id']):continue
+        va={t['value'] for t in sa.get('ticks',[])};vb={t['value'] for t in sb.get('ticks',[])}
+        common=sorted(va&vb)
+        if len(common)<2:continue
+        pa=np.linalg.norm(sa['paper_to_label'][:2]);pb=np.linalg.norm(sb['paper_to_label'][:2])
+        checks.append(dict(kind='region_shared_label_scale',sources=[a['source_sha256'],b['source_sha256']],
+            region_ids=[ra['region_id'],rb['region_id']],family=fam_a,common_labels=common,
+            paper_scale_ratio=float(pa/pb),equal_paper_pitch=bool(abs(pa/pb-1)<.005),
+            metric_authorization=False,installation_authorized=False,
+            note='shared labels test relative paper scale only; they do not establish vessel axes or units'))
     for a,b in combinations(documents,2):
         for left,right in itertools.product(a['layouts'],b['layouts']):
             for family in left['series'].keys() & right['series'].keys():

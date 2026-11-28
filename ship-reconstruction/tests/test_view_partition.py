@@ -104,6 +104,42 @@ class ViewPartition(unittest.TestCase):
         self.assertEqual(len(result["unassigned_handles"]),30)
         self.assertGreaterEqual(result["regions"][0]["evidence"]["seed_entity_count"],10)
 
+    def test_short_fragments_recover_as_tangent_continuous_chain(self):
+        doc=ezdxf.new();msp=doc.modelspace()
+        pts=[(0,0),(5,0.1),(10,0.4),(15,0.9),(20,1.6)]
+        for a,b in zip(pts,pts[1:]):
+            msp.add_line(a,b)
+        entities=list(view_registration._spatial_entities(cad.read(doc)).values())
+        chains=view_registration._fragment_chains(entities,.15)
+        self.assertEqual(len(chains),1)
+        self.assertEqual(chains[0]['segment_count'],4)
+        self.assertEqual(len(chains[0]['handles']),4)
+        self.assertLess(chains[0]['max_tangent_turn_deg'],15)
+
+    def test_right_angle_junction_is_not_joined_as_a_smooth_chain(self):
+        doc=ezdxf.new();msp=doc.modelspace()
+        for a,b in zip(((0,0),(5,0),(10,0),(10,5),(10,10)),((5,0),(10,0),(10,5),(10,10),(10,15))):
+            msp.add_line(a,b)
+        entities=list(view_registration._spatial_entities(cad.read(doc)).values())
+        chains=view_registration._fragment_chains(entities,.01)
+        self.assertEqual(len(chains),1)
+        self.assertEqual(chains[0]['segment_count'],3)
+        self.assertEqual(chains[0]['span'][0],0)
+        self.assertEqual(chains[0]['span'][1],15)
+
+    def test_view_scores_expose_outline_baseline_and_station_features(self):
+        chains=[dict(segment_count=4,aspect_ratio=12,major_axis=[1,0],span=[20,2],
+                     total_length=21,max_tangent_turn_deg=8,bounds=[0,y,20,y+.2],
+                     points=[[0,y],[20,y+.2]]) for y in (0,3)]
+        texts=[dict(n=f'fr{i}',text=f'Fr.{i}',p=[float(i),1,0]) for i in range(3)]
+        texts.append(dict(n='baseline',text='BASELINE',p=[0,0,0]))
+        scores=view_registration._view_feature_scores(chains,texts,[-1,-1,21,5])
+        self.assertEqual(scores[0]['view'],'XZ')
+        self.assertEqual(scores[0]['score_kind'],'ordinal_geometry_evidence')
+        self.assertEqual(scores[0]['features']['station_label_count'],3)
+        self.assertEqual(scores[0]['features']['baseline_label_count'],1)
+        self.assertGreater(scores[0]['features']['paired_outline_score'],.9)
+
 
 if __name__ == "__main__":
     unittest.main()
