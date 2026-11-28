@@ -1,0 +1,46 @@
+{
+  "webCandidate": "912d96a39f1a68e98008a7317a211f5e29ed3845",
+  "corePack": "8d108442f94901bee862ba5f53dd6343350b2718",
+  "productBase": "2c72d022f3d3275af637b0cdc6e545735e3200a9",
+  "sdk": "8.0.428",
+  "browser": {
+    "browserVersion": "156.0.8078.47",
+    "chromiumSandbox": true,
+    "noSandboxArg": false,
+    "preview": {
+      "status": 200,
+      "coreVersion": "mcis-bowtie/1",
+      "nodeCount": 5,
+      "edgeCount": 4,
+      "structureValid": true,
+      "persisted": false,
+      "inputSha256": "83c40c01aa3f47436a93ac5b9e4923afbdf256463320bd4c0f6b15497ebacee3"
+    },
+    "previewEvents": [
+      {
+        "event": "request",
+        "status": "-",
+        "url": "http://127.0.0.1:35767/api/v1/cases/SYN-W15-A/systemic/bowtie:preview"
+      },
+      {
+        "event": "response",
+        "status": 200,
+        "url": "http://127.0.0.1:35767/api/v1/cases/SYN-W15-A/systemic/bowtie:preview"
+      },
+      {
+        "event": "requestfinished",
+        "status": "-",
+        "url": "http://127.0.0.1:35767/api/v1/cases/SYN-W15-A/systemic/bowtie:preview"
+      }
+    ]
+  },
+  "reopen": {
+    "browserVersion": "156.0.8078.47",
+    "chromiumSandbox": true,
+    "noSandboxArg": false,
+    "reopenPreviewPosts": [],
+    "previewEvents": []
+  },
+  "sqliteUnchanged": true,
+  "passed": true
+}

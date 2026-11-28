@@ -1,0 +1,56 @@
+{
+  "model": {
+    "hazard": "合成危险源 🛳",
+    "topEvent": {
+      "id": "TOP",
+      "label": "假设失控事件"
+    },
+    "nodes": [
+      {
+        "id": "T",
+        "label": "合成 T",
+        "kind": "Threat",
+        "barrierId": null
+      },
+      {
+        "id": "P",
+        "label": "合成 P",
+        "kind": "PreventionBarrier",
+        "barrierId": null
+      },
+      {
+        "id": "M",
+        "label": "合成 M",
+        "kind": "MitigationBarrier",
+        "barrierId": null
+      },
+      {
+        "id": "C",
+        "label": "合成 C",
+        "kind": "Consequence",
+        "barrierId": null
+      }
+    ],
+    "edges": [
+      {
+        "fromId": "T",
+        "toId": "P"
+      },
+      {
+        "fromId": "P",
+        "toId": "TOP"
+      },
+      {
+        "fromId": "TOP",
+        "toId": "M"
+      },
+      {
+        "fromId": "M",
+        "toId": "C"
+      }
+    ]
+  },
+  "sourceEvidenceIds": [
+    "EV-001"
+  ]
+}

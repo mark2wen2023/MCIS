@@ -1,0 +1,8 @@
+interfaces_before_unshare=docker0,enp0s3,lo
+cmd=unshare -r -n env MCIS_DOTNET=/home/box/.dotnet/dotnet DOTNET_ROOT=/home/box/.dotnet DOTNET_CLI_TELEMETRY_OPTOUT=1 DOTNET_NOLOGO=1 NuGetAudit=false RestoreSources=/tmp/mcis-w15-page-core-ygx0qhy_/empty-feed RestoreFallbackFolders= NUGET_PACKAGES=/tmp/mcis-w15-page-core-ygx0qhy_/packages HOME=/home/box PATH=/home/box/.local/bin:/home/box/.local/bin:/home/box/bin:/home/box/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games PYTHONDONTWRITEBYTECODE=1 /workspace/w17-pyplaywright-venv/bin/python -B /tmp/mcis-w15-page-core-ygx0qhy_/fixed/tools/mcis-bowtie/build.py
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.27

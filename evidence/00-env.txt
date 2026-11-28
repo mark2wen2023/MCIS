@@ -1,0 +1,7 @@
+web_candidate=912d96a39f1a68e98008a7317a211f5e29ed3845
+core_pack=8d108442f94901bee862ba5f53dd6343350b2718
+product_base=2c72d022f3d3275af637b0cdc6e545735e3200a9
+dotnet=/home/box/.dotnet/dotnet 8.0.428
+origin=http://127.0.0.1:35767
+sqlite=/tmp/mcis-w15-page-core-ygx0qhy_/store/acceptance.sqlite
+baseline=03c2516e8b6497cb3564a7e8d635aa946de0e42257abacf251ded98ac6b92dc3
