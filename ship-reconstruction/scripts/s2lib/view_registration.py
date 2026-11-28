@@ -397,6 +397,9 @@ def partition(data, inv):
     }
     for layout,items in sorted(by_layout.items()):
         curves=[e for e in items if any(t not in ('TEXT','LEADER','ARROW','TABLE') for t in e['types'])]
+        degenerate={e['instance'] for e in curves if 'LINE' in e['types'] and
+                    math.hypot(e['bounds'][2]-e['bounds'][0],e['bounds'][3]-e['bounds'][1])<=1e-12}
+        curves=[e for e in curves if e['instance'] not in degenerate]
         texts=[e for e in items if 'TEXT' in e['types']]
         hs=[float(x.get('height',0)) for x in data.get('texts',[]) if x['layout']==layout and x.get('height',0)>0]
         h=float(np.median(hs)) if hs else max(1e-6, .002*max(max(e['bounds'][2] for e in items)-min(e['bounds'][0] for e in items),max(e['bounds'][3] for e in items)-min(e['bounds'][1] for e in items)))
@@ -405,10 +408,14 @@ def partition(data, inv):
         sizes=[];line_sizes=[]
         for e in curves:
             b=e['bounds'];sizes.append(math.hypot(b[2]-b[0],b[3]-b[1]))
-            if 'LINE' in e['types']:line_sizes.append(sizes[-1])
+            if 'LINE' in e['types'] and sizes[-1]>1e-12:line_sizes.append(sizes[-1])
         if line_sizes:
             med=float(np.median(line_sizes));mad=float(np.median(np.abs(np.asarray(line_sizes)-med)))
-            cutoff=max(6*h,med+6*mad)
+            # Fragmented hull outlines contain a real upper tail. Use its
+            # 90th percentile as the segment scale; isolated longer rails are
+            # still kept out of the seed graph. Zero-length CAD artifacts were
+            # excluded above so they cannot collapse this distribution.
+            cutoff=max(6*h,med+6*mad,float(np.quantile(line_sizes,.90)))
         else:cutoff=6*h
         core=[]
         for e in curves:
@@ -435,12 +442,19 @@ def partition(data, inv):
         for members,b in comp_rows:
             curves_count=sum(any(t not in ('TEXT','LEADER','ARROW','TABLE','LINE') for t in e['types']) for e in members)
             area=max(0,b[2]-b[0])*max(0,b[3]-b[1])
+            width,height=b[2]-b[0],b[3]-b[1]
+            aspect=max(width,height)/max(min(width,height),1e-9)
             nearby_title=False
             for t in texts:
                 rec=next((x for x in t['records'] if 'n' in x),{})
                 if any(p.search(str(rec.get('n',''))) for p in explicit.values()) and _gap(t['bounds'],b)<=max(14*h,.1*diagonal):
                     nearby_title=True;break
-            if len(members)>=minimum or (curves_count>=3 and len(members)>=5 and area>=.005*layout_area) or (nearby_title and len(members)>=3):
+            sparse_contour_view=(curves_count>=2 and len(members)>=4 and aspect>=2.2 and
+                                 max(width,height)>=10*h and area>=.001*layout_area)
+            sparse_compound_view=(curves_count>=3 and len(members)>=4 and max(width,height)>=10*h and
+                                  area>=.0005*layout_area)
+            if (len(members)>=minimum or (curves_count>=3 and len(members)>=5 and area>=.005*layout_area) or
+                sparse_contour_view or sparse_compound_view or (nearby_title and len(members)>=3)):
                 seeds.append((members,b))
         family_seeds=_parallel_line_families(curves,cutoff,h,allbox)
         family_shared=[];seed_instances={e['instance'] for members,_ in seeds for e in members}
@@ -468,7 +482,7 @@ def partition(data, inv):
         for members,indices in family_shared:
             for i in indices:
                 assigned[i]['shared'].update(e['instance'] for e in members)
-        frame=set();cross=set();unassigned=[]
+        frame=set();cross=set();unassigned=list(degenerate)
         # Long lines are evidence but never allowed to bridge otherwise separate views.
         for e in curves:
             if e in core:continue

@@ -79,6 +79,31 @@ class ViewPartition(unittest.TestCase):
         self.assertEqual(len(regions), 1)
         self.assertEqual(regions[0]["view_type_candidates"][0]["view"], "detail")
 
+    def test_sparse_multi_contour_view_is_retained_without_a_title(self):
+        doc=ezdxf.new();msp=doc.modelspace()
+        msp.add_lwpolyline([(0,3),(10,5),(20,5),(30,3)])
+        msp.add_lwpolyline([(0,1),(10,0),(20,0),(30,1)])
+        for x in (5,15,25):msp.add_line((x,1.5),(x,3.5))
+        regions=self.inspect(doc)["layouts"][0]["regions"]
+        self.assertEqual(len(regions),1)
+        self.assertEqual({v["view"] for v in regions[0]["view_type_candidates"]},{"XY","XZ","YZ"})
+        self.assertGreaterEqual(regions[0]["evidence"]["seed_entity_count"],5)
+
+    def test_zero_length_lines_do_not_hide_fragmented_hull_contours(self):
+        doc=ezdxf.new();msp=doc.modelspace()
+        for _ in range(30):msp.add_line((0,0),(0,0))
+        # Two broken contours with short transverse ribs form a sparse view.
+        for x in range(0,49,8):
+            x1=min(x+8,50)
+            msp.add_line((x,8),(x1,10 if x1<50 else 8))
+            msp.add_line((x,2),(x1,0 if x1<50 else 2))
+        for x in (8,16,24,32,40):msp.add_line((x,2),(x,8))
+        result=self.inspect(doc)["layouts"][0]
+        self.assertTrue(result["regions"])
+        self.assertTrue(result["unassigned_handles"])
+        self.assertEqual(len(result["unassigned_handles"]),30)
+        self.assertGreaterEqual(result["regions"][0]["evidence"]["seed_entity_count"],10)
+
 
 if __name__ == "__main__":
     unittest.main()
