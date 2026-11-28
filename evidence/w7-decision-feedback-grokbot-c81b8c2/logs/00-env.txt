@@ -1,0 +1,15 @@
+time: 2026-11-28 08:54 (Asia/Shanghai, UTC+8)
+product pin:             b2ecb50b32b721c9f171b74ecd576691c0048b94
+candidate branch:        candidate/w7-decision-feedback-browser
+candidate sha:           c81b8c2e7f0fa78aeb08df0c533683a03370d840
+diff vs product: only tests_acceptance/w7-decision-feedback/{README.md,host.py,run.py}
+pins OK: ConsultationPanel.tsx 492b65fc..., model.ts 462537d3..., recommendations/router.py aa39f644...
+chrome: Google Chrome 156.0.8078.47 (/opt/google/chrome/google-chrome)
+playwright: existing Python Playwright in /workspace/w17-pyplaywright-venv (chromiumSandbox true; no --no-sandbox)
+service python: existing /workspace/mcis-w17-871db66/service/.venv (fastapi 0.165.0 uvicorn 0.54.0)
+vite: 8.3.8 from existing /workspace/mcis-w7-deadline-1f329c3/web/node_modules (symlink only, not committed)
+chromium_sandbox: true; no --no-sandbox
+listen: service 127.0.0.1:18794; Vite 127.0.0.1:18795; synthetic case SYN-W7-DECISION-001
+http-only: not used
+official timeout 150 run.py: exit 0
+unmodified product: yes

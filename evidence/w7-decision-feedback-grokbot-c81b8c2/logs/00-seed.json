@@ -1,0 +1,42 @@
+{
+  "caseId": "SYN-W7-DECISION-001",
+  "roundNo": 1,
+  "draftVersion": "SYN-DRAFT-D1",
+  "commentId": "R1-C01",
+  "commentText": "合成待处理意见一条（虚构）。",
+  "replyText": "已登记合成回复（虚构），不发送。",
+  "auditBeforeBrowser": [
+    {
+      "seq": 2,
+      "caseId": "SYN-W7-DECISION-001",
+      "utc": "2026-11-28T00:54:25Z",
+      "operator": "首席调查官",
+      "role": "LeadInvestigator",
+      "action": "consultation.open",
+      "category": "Consultation",
+      "command": "发出征求意见 SYN-W7-DECISION-001 第 1 轮",
+      "before": "",
+      "after": "草案=SYN-DRAFT-D1（dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd）；各方=虚构相关方甲；期限=2026-12-28T00:54:25Z（请求指定 30 天；未标记商定）",
+      "entityType": "consultationRound",
+      "entityId": "1",
+      "prevHash": "9030ab83a2155dffaa277d5cd1829bf1481f29abef2970e0c391db4512d1d80c",
+      "line": "{\"utc\":\"2026-11-28T00:54:25Z\",\"operator\":\"首席调查官\",\"action\":\"consultation.open\",\"category\":\"Consultation\",\"command\":\"发出征求意见 SYN-W7-DECISION-001 第 1 轮\",\"before\":\"\",\"after\":\"草案=SYN-DRAFT-D1（dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd）；各方=虚构相关方甲；期限=2026-12-28T00:54:25Z（请求指定 30 天；未标记商定）\",\"seq\":2,\"role\":\"LeadInvestigator\",\"entity_type\":\"consultationRound\",\"entity_id\":\"1\",\"prev\":\"9030ab83a2155dffaa277d5cd1829bf1481f29abef2970e0c391db4512d1d80c\"}"
+    },
+    {
+      "seq": 3,
+      "caseId": "SYN-W7-DECISION-001",
+      "utc": "2026-11-28T00:54:25Z",
+      "operator": "首席调查官",
+      "role": "LeadInvestigator",
+      "action": "consultation.reply",
+      "category": "Consultation",
+      "command": "登记回复 SYN-W7-DECISION-001 第 1 轮 SYN-P-A",
+      "before": "Pending",
+      "after": "Replied；意见 1 条",
+      "entityType": "consultationRound",
+      "entityId": "1",
+      "prevHash": "1bde9ba2fd0441a61fabd00ada4c4e4240e1f254c52e0f11cda0714af7d0c24b",
+      "line": "{\"utc\":\"2026-11-28T00:54:25Z\",\"operator\":\"首席调查官\",\"action\":\"consultation.reply\",\"category\":\"Consultation\",\"command\":\"登记回复 SYN-W7-DECISION-001 第 1 轮 SYN-P-A\",\"before\":\"Pending\",\"after\":\"Replied；意见 1 条\",\"seq\":3,\"role\":\"LeadInvestigator\",\"entity_type\":\"consultationRound\",\"entity_id\":\"1\",\"prev\":\"1bde9ba2fd0441a61fabd00ada4c4e4240e1f254c52e0f11cda0714af7d0c24b\"}"
+    }
+  ]
+}

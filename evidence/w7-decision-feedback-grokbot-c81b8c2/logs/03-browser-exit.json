@@ -1,0 +1,407 @@
+{
+  "pass": true,
+  "productSha": "b2ecb50b32b721c9f171b74ecd576691c0048b94",
+  "chromiumSandbox": true,
+  "noSandboxArg": false,
+  "dataDir": "/tmp/w7-decision-sqlite-gpvfxd4n",
+  "seed": {
+    "caseId": "SYN-W7-DECISION-001",
+    "roundNo": 1,
+    "draftVersion": "SYN-DRAFT-D1",
+    "commentId": "R1-C01"
+  },
+  "decide": {
+    "pass": true,
+    "phase": "decide",
+    "version": "Google Chrome 156.0.8078.47",
+    "chromiumSandbox": true,
+    "noSandboxArg": false,
+    "commentId": "R1-C01",
+    "browserApiRequests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/recommendations:board",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/audit?category=SafetyRec&order=desc&limit=14",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/audit?category=Consultation&order=desc&limit=6",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/recommendations:board",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/audit?category=SafetyRec&order=desc&limit=14",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/audit?category=Consultation&order=desc&limit=6",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/recommendations:board",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/audit?category=SafetyRec&order=desc&limit=14",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/audit?category=Consultation&order=desc&limit=6",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/recommendations:board",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/audit?category=SafetyRec&order=desc&limit=14",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/audit?category=Consultation&order=desc&limit=6",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/consultation/rounds",
+        "resource": "fetch"
+      },
+      {
+        "method": "PATCH",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/consultation/rounds/1/comments/R1-C01",
+        "resource": "fetch",
+        "postData": "{\"decision\":\"PartiallyAdopted\",\"feedback\":\"合成部分采纳反馈：仅核对待处理意见的书面理由（虚构）。\"}"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/audit?category=SafetyRec&order=desc&limit=14",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/audit?category=Consultation&order=desc&limit=6",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/consultation/rounds",
+        "resource": "fetch"
+      }
+    ],
+    "consultationWrites": [
+      {
+        "method": "PATCH",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/consultation/rounds/1/comments/R1-C01",
+        "resource": "fetch",
+        "postData": "{\"decision\":\"PartiallyAdopted\",\"feedback\":\"合成部分采纳反馈：仅核对待处理意见的书面理由（虚构）。\"}"
+      }
+    ],
+    "pageErrors": [],
+    "screenshots": [
+      "01-partial-no-reason-blocked.png",
+      "02-partial-whitespace-blocked.png",
+      "03-partial-saved-once.png"
+    ]
+  },
+  "reopen": {
+    "pass": true,
+    "phase": "reopen",
+    "version": "Google Chrome 156.0.8078.47",
+    "chromiumSandbox": true,
+    "noSandboxArg": false,
+    "browserApiRequests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/recommendations:board",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/audit?category=SafetyRec&order=desc&limit=14",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/audit?category=Consultation&order=desc&limit=6",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/recommendations:board",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/audit?category=SafetyRec&order=desc&limit=14",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/audit?category=Consultation&order=desc&limit=6",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/recommendations:board",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/audit?category=SafetyRec&order=desc&limit=14",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/audit?category=Consultation&order=desc&limit=6",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/access-policy",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/recommendations:board",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/audit?category=SafetyRec&order=desc&limit=14",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/audit?category=Consultation&order=desc&limit=6",
+        "resource": "fetch"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:18795/api/v1/cases/SYN-W7-DECISION-001/consultation/rounds",
+        "resource": "fetch"
+      }
+    ],
+    "consultationWrites": [],
+    "pageErrors": [],
+    "screenshots": [
+      "04-reopen-same-db.png"
+    ]
+  },
+  "auditAfterSave": [
+    {
+      "seq": 2,
+      "caseId": "SYN-W7-DECISION-001",
+      "utc": "2026-11-28T00:54:25Z",
+      "operator": "首席调查官",
+      "role": "LeadInvestigator",
+      "action": "consultation.open",
+      "category": "Consultation",
+      "command": "发出征求意见 SYN-W7-DECISION-001 第 1 轮",
+      "before": "",
+      "after": "草案=SYN-DRAFT-D1（dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd）；各方=虚构相关方甲；期限=2026-12-28T00:54:25Z（请求指定 30 天；未标记商定）",
+      "entityType": "consultationRound",
+      "entityId": "1",
+      "prevHash": "9030ab83a2155dffaa277d5cd1829bf1481f29abef2970e0c391db4512d1d80c",
+      "line": "{\"utc\":\"2026-11-28T00:54:25Z\",\"operator\":\"首席调查官\",\"action\":\"consultation.open\",\"category\":\"Consultation\",\"command\":\"发出征求意见 SYN-W7-DECISION-001 第 1 轮\",\"before\":\"\",\"after\":\"草案=SYN-DRAFT-D1（dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd）；各方=虚构相关方甲；期限=2026-12-28T00:54:25Z（请求指定 30 天；未标记商定）\",\"seq\":2,\"role\":\"LeadInvestigator\",\"entity_type\":\"consultationRound\",\"entity_id\":\"1\",\"prev\":\"9030ab83a2155dffaa277d5cd1829bf1481f29abef2970e0c391db4512d1d80c\"}"
+    },
+    {
+      "seq": 3,
+      "caseId": "SYN-W7-DECISION-001",
+      "utc": "2026-11-28T00:54:25Z",
+      "operator": "首席调查官",
+      "role": "LeadInvestigator",
+      "action": "consultation.reply",
+      "category": "Consultation",
+      "command": "登记回复 SYN-W7-DECISION-001 第 1 轮 SYN-P-A",
+      "before": "Pending",
+      "after": "Replied；意见 1 条",
+      "entityType": "consultationRound",
+      "entityId": "1",
+      "prevHash": "1bde9ba2fd0441a61fabd00ada4c4e4240e1f254c52e0f11cda0714af7d0c24b",
+      "line": "{\"utc\":\"2026-11-28T00:54:25Z\",\"operator\":\"首席调查官\",\"action\":\"consultation.reply\",\"category\":\"Consultation\",\"command\":\"登记回复 SYN-W7-DECISION-001 第 1 轮 SYN-P-A\",\"before\":\"Pending\",\"after\":\"Replied；意见 1 条\",\"seq\":3,\"role\":\"LeadInvestigator\",\"entity_type\":\"consultationRound\",\"entity_id\":\"1\",\"prev\":\"1bde9ba2fd0441a61fabd00ada4c4e4240e1f254c52e0f11cda0714af7d0c24b\"}"
+    },
+    {
+      "seq": 4,
+      "caseId": "SYN-W7-DECISION-001",
+      "utc": "2026-11-28T00:54:28Z",
+      "operator": "首席调查官",
+      "role": "LeadInvestigator",
+      "action": "consultation.decide",
+      "category": "Consultation",
+      "command": "意见采纳决定 SYN-W7-DECISION-001 R1-C01",
+      "before": "Pending",
+      "after": "PartiallyAdopted；合成部分采纳反馈：仅核对待处理意见的书面理由（虚构）。",
+      "entityType": "consultationComment",
+      "entityId": "R1-C01",
+      "prevHash": "4ac38e255ffa9e8121953383b05712565c2aed7a0adb2c8ad6c8d03386cdecf7",
+      "line": "{\"utc\":\"2026-11-28T00:54:28Z\",\"operator\":\"首席调查官\",\"action\":\"consultation.decide\",\"category\":\"Consultation\",\"command\":\"意见采纳决定 SYN-W7-DECISION-001 R1-C01\",\"before\":\"Pending\",\"after\":\"PartiallyAdopted；合成部分采纳反馈：仅核对待处理意见的书面理由（虚构）。\",\"seq\":4,\"role\":\"LeadInvestigator\",\"entity_type\":\"consultationComment\",\"entity_id\":\"R1-C01\",\"prev\":\"4ac38e255ffa9e8121953383b05712565c2aed7a0adb2c8ad6c8d03386cdecf7\"}"
+    }
+  ],
+  "auditAfterReopen": [
+    {
+      "seq": 2,
+      "caseId": "SYN-W7-DECISION-001",
+      "utc": "2026-11-28T00:54:25Z",
+      "operator": "首席调查官",
+      "role": "LeadInvestigator",
+      "action": "consultation.open",
+      "category": "Consultation",
+      "command": "发出征求意见 SYN-W7-DECISION-001 第 1 轮",
+      "before": "",
+      "after": "草案=SYN-DRAFT-D1（dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd）；各方=虚构相关方甲；期限=2026-12-28T00:54:25Z（请求指定 30 天；未标记商定）",
+      "entityType": "consultationRound",
+      "entityId": "1",
+      "prevHash": "9030ab83a2155dffaa277d5cd1829bf1481f29abef2970e0c391db4512d1d80c",
+      "line": "{\"utc\":\"2026-11-28T00:54:25Z\",\"operator\":\"首席调查官\",\"action\":\"consultation.open\",\"category\":\"Consultation\",\"command\":\"发出征求意见 SYN-W7-DECISION-001 第 1 轮\",\"before\":\"\",\"after\":\"草案=SYN-DRAFT-D1（dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd）；各方=虚构相关方甲；期限=2026-12-28T00:54:25Z（请求指定 30 天；未标记商定）\",\"seq\":2,\"role\":\"LeadInvestigator\",\"entity_type\":\"consultationRound\",\"entity_id\":\"1\",\"prev\":\"9030ab83a2155dffaa277d5cd1829bf1481f29abef2970e0c391db4512d1d80c\"}"
+    },
+    {
+      "seq": 3,
+      "caseId": "SYN-W7-DECISION-001",
+      "utc": "2026-11-28T00:54:25Z",
+      "operator": "首席调查官",
+      "role": "LeadInvestigator",
+      "action": "consultation.reply",
+      "category": "Consultation",
+      "command": "登记回复 SYN-W7-DECISION-001 第 1 轮 SYN-P-A",
+      "before": "Pending",
+      "after": "Replied；意见 1 条",
+      "entityType": "consultationRound",
+      "entityId": "1",
+      "prevHash": "1bde9ba2fd0441a61fabd00ada4c4e4240e1f254c52e0f11cda0714af7d0c24b",
+      "line": "{\"utc\":\"2026-11-28T00:54:25Z\",\"operator\":\"首席调查官\",\"action\":\"consultation.reply\",\"category\":\"Consultation\",\"command\":\"登记回复 SYN-W7-DECISION-001 第 1 轮 SYN-P-A\",\"before\":\"Pending\",\"after\":\"Replied；意见 1 条\",\"seq\":3,\"role\":\"LeadInvestigator\",\"entity_type\":\"consultationRound\",\"entity_id\":\"1\",\"prev\":\"1bde9ba2fd0441a61fabd00ada4c4e4240e1f254c52e0f11cda0714af7d0c24b\"}"
+    },
+    {
+      "seq": 4,
+      "caseId": "SYN-W7-DECISION-001",
+      "utc": "2026-11-28T00:54:28Z",
+      "operator": "首席调查官",
+      "role": "LeadInvestigator",
+      "action": "consultation.decide",
+      "category": "Consultation",
+      "command": "意见采纳决定 SYN-W7-DECISION-001 R1-C01",
+      "before": "Pending",
+      "after": "PartiallyAdopted；合成部分采纳反馈：仅核对待处理意见的书面理由（虚构）。",
+      "entityType": "consultationComment",
+      "entityId": "R1-C01",
+      "prevHash": "4ac38e255ffa9e8121953383b05712565c2aed7a0adb2c8ad6c8d03386cdecf7",
+      "line": "{\"utc\":\"2026-11-28T00:54:28Z\",\"operator\":\"首席调查官\",\"action\":\"consultation.decide\",\"category\":\"Consultation\",\"command\":\"意见采纳决定 SYN-W7-DECISION-001 R1-C01\",\"before\":\"Pending\",\"after\":\"PartiallyAdopted；合成部分采纳反馈：仅核对待处理意见的书面理由（虚构）。\",\"seq\":4,\"role\":\"LeadInvestigator\",\"entity_type\":\"consultationComment\",\"entity_id\":\"R1-C01\",\"prev\":\"4ac38e255ffa9e8121953383b05712565c2aed7a0adb2c8ad6c8d03386cdecf7\"}"
+    }
+  ]
+}
