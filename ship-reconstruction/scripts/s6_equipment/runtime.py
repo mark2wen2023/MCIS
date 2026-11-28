@@ -25,3 +25,32 @@ class Runtime:
         self.scene.graph.update(frame_from=j['parent'],frame_to=j['node'],matrix=translation_matrix(j['pivot_parent_m'])@rotation_matrix(math.radians(angle%360),j['axis_local']))
         self.angles[key]=angle
         return angle
+
+
+def rotation_samples(scene, config, step_degrees=5):
+    """为查看器采样已有研究控制器的局部旋转，保持输入场景的零位。"""
+    from trimesh.transformations import quaternion_from_matrix
+    if not math.isfinite(step_degrees) or not 1 <= step_degrees <= 30:
+        raise ValueError("invalid angular sampling interval")
+    runtime = Runtime(scene.copy(), config)
+    tracks = []
+    for joint in config["joints"]:
+        if not joint.get("control_enabled"):
+            continue
+        continuous = joint["type"] == "continuous"
+        lo, hi = (0., 360.) if continuous else joint["limits_deg"]
+        if not math.isfinite(lo) or not math.isfinite(hi) or hi <= lo:
+            raise ValueError("invalid angle limits")
+        angles = np.linspace(lo, hi, math.ceil((hi-lo)/step_degrees)+1)
+        previous = 0.
+        rotations = []
+        for angle in angles:
+            command = (angle-previous)/6 if continuous else angle
+            runtime.step(joint["id"], command, 1.)
+            m, _ = runtime.scene.graph.get(joint["node"], joint["parent"])
+            w, x, y, z = quaternion_from_matrix(m)
+            rotations.append(dict(x=x,y=y,z=z,w=w))
+            previous = angle
+        tracks.append(dict(node=joint["node"],kind=joint["type"],min=float(lo),max=float(hi),
+                           rotations=rotations))
+    return tracks
