@@ -1,6 +1,7 @@
 """从图上控制点或注记对应的栅线建立可复核的视图变换。"""
 
 from collections import defaultdict, Counter
+from fractions import Fraction
 import itertools
 import math
 import re
@@ -45,6 +46,87 @@ def dimensions(texts):
                 _, v, value = min(items, key=lambda o: o[0])
                 out.append(dict(kind=key, value_m=value, handles=[note["instance"], v["instance"]]))
     return out
+
+
+_IMPERIAL_ATOM = r"(?:\d+\s+\d+\s*/\s*\d+|\d+\s*/\s*\d+|\d+\s*[½¼¾⅛⅜⅝⅞]|[½¼¾⅛⅜⅝⅞]|\d+(?:\.\d*)?|\.\d+)"
+_UNIT_FACTOR = {"in": 0.0254, "inch": 0.0254, "inches": 0.0254, "ft": 0.3048,
+                "foot": 0.3048, "feet": 0.3048, "mm": 0.001, "cm": 0.01, "m": 1.0,
+                "毫米": 0.001, "厘米": 0.01, "米": 1.0}
+
+
+def _fractional_number(value):
+    value = re.sub(r"\s+", " ", value.strip())
+    unicode_fractions={"½":.5,"¼":.25,"¾":.75,"⅛":.125,"⅜":.375,"⅝":.625,"⅞":.875}
+    if value[-1:] in unicode_fractions:
+        whole=value[:-1].strip()
+        return (float(whole) if whole else 0.0)+unicode_fractions[value[-1]]
+    if " " in value:
+        whole, fraction = value.split(" ", 1)
+        return float(Fraction(int(whole), 1) + Fraction(fraction.replace(" ", "")))
+    if "/" in value:
+        return float(Fraction(value.replace(" ", "")))
+    return float(value)
+
+
+def dimension_annotation(text):
+    """Parse one printed length or a two-axis size, retaining its original text."""
+    raw = str(text).strip().replace("′", "'").replace("’", "'").replace("″", '"').replace("”", '"').replace("–", "-").replace("−", "-")
+    scale = re.fullmatch(r"\s*(?:(?:scale|比例)\s*[:=：]?\s*)?1\s*[:/]\s*(\d+(?:\.\d+)?)\s*", raw, re.I)
+    if scale:
+        return dict(kind="paper_scale", denominator=float(scale[1]), unit=None, values=[], values_m=[], source_text=raw)
+    pair = re.search(rf"(?<![\w.])({_IMPERIAL_ATOM})\s*[x×]\s*({_IMPERIAL_ATOM})\s*(mm|cm|毫米|厘米|inches|inch|in|m|米)(?![a-z])", raw, re.I)
+    if pair:
+        unit = pair[3].lower()
+        vals = [_fractional_number(pair[1]), _fractional_number(pair[2])]
+        return dict(kind="dimension_pair", values=vals, unit=unit,
+                    values_m=[v * _UNIT_FACTOR[unit] for v in vals], source_text=raw)
+    feet = re.search(rf"(?<![\w.])({_IMPERIAL_ATOM})\s*(?:ft\.?|feet|foot|')\s*(?:-\s*)?({_IMPERIAL_ATOM})?\s*(?:inches|inch|in\.?|\x22)?", raw, re.I)
+    if feet and re.search(r"(?:ft\.?|feet|foot|')", feet[0], re.I):
+        ft = _fractional_number(feet[1])
+        inch = _fractional_number(feet[2]) if feet[2] else 0.0
+        suffix = feet[0][feet[0].find(feet[2]) + len(feet[2]):] if feet[2] else ""
+        if feet[2] and not re.search(r"(?:inches|inch|in\.?|\x22)\s*$", suffix, re.I):
+            feet = None
+        else:
+            return dict(kind="dimension", values=[ft, inch] if feet[2] else [ft], unit="ft_in",
+                        values_m=[ft * .3048 + inch * .0254], source_text=raw)
+    inch = re.search(rf"(?<![\w.])({_IMPERIAL_ATOM})\s*(?:inches|inch|in\.?|\x22)(?![A-Za-z])", raw, re.I)
+    if inch:
+        value = _fractional_number(inch[1])
+        return dict(kind="dimension", values=[value], unit="in", values_m=[value * .0254], source_text=raw)
+    metric = re.search(rf"(?<![\w.])({_IMPERIAL_ATOM})\s*(mm|cm|毫米|厘米|m|米)(?![a-z])", raw, re.I)
+    if metric:
+        unit = metric[2].lower()
+        value = _fractional_number(metric[1])
+        return dict(kind="dimension", values=[value], unit=unit,
+                    values_m=[value * _UNIT_FACTOR[unit]], source_text=raw)
+    return None
+
+def dimension_annotations(texts):
+    records=[]
+    for note in texts:
+        parsed=dimension_annotation(note.get("text", ""))
+        if parsed:
+            records.append(dict(**parsed, handle=note["instance"], layout=note["layout"],
+                                position=note["p"][:2], source="printed_CAD_text"))
+    return records
+
+
+def unit_declarations(texts):
+    records=[]
+    aliases={"millimeters":"mm","millimeter":"mm","millimetres":"mm","millimetre":"mm",
+             "millimeter":"mm","millimetre":"mm","inches":"in","inch":"in",
+             "feet":"ft","foot":"ft","m":"m","mm":"mm","cm":"cm",
+             "米":"m","毫米":"mm","厘米":"cm"}
+    for note in texts:
+        raw=str(note.get("text",""));normalized=raw.casefold().replace("′","'").replace("″",'"')
+        if not re.search(r"(?:units?|dimensions?|units\s+are|单位|尺寸单位)",normalized):continue
+        m=re.search(r"(?:units?|dimensions?|单位|尺寸单位)\s*(?:are\s*)?(?:in\s*)?[:=：为]?\s*(millimeters?|millimetres?|inches?|inch|in|feet|foot|ft|mm|cm|m|毫米|厘米|米)(?![a-z])",normalized,re.I)
+        if m:
+            unit=aliases.get(m[1].lower(),m[1].lower())
+            records.append(dict(unit=unit,handle=note["instance"],layout=note["layout"],
+                                source_text=raw,source="explicit_unit_declaration"))
+    return records
 
 
 def datum_controls(data):

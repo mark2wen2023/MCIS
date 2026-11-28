@@ -493,11 +493,31 @@ def partition(data, inv):
 
 def inspect(data, inv, frames, axis_records):
     """Partition each layout, then run existing registration logic per region."""
+    from . import alignment
+    all_dimensions=alignment.dimension_annotations(data.get('texts',[]))
+    all_declarations=alignment.unit_declarations(data.get('texts',[]))
     partitions=partition(data,inv); output=[]
     entity_data=('texts','leaders','arrowheads','native','curves','segments','issues')
     for part in partitions:
         for region in part['regions']:
             handles=set(region['handles'])
+            region_dimensions=[d for d in all_dimensions if d['layout']==part['layout'] and d['handle'] in handles]
+            region_declarations=[u for u in all_declarations if u['layout']==part['layout'] and u['handle'] in handles]
+            scales=[d for d in region_dimensions if d['kind']=='paper_scale']
+            measures=[d for d in region_dimensions if d['kind']!='paper_scale']
+            printed_units=sorted({u for d in measures for u in ((['ft','in'] if d['unit']=='ft_in' else [d['unit']]))})
+            declared_units=sorted({d['unit'] for d in region_declarations})
+            conflict=len(printed_units)>1 and not any(d['unit']=='ft_in' for d in measures)
+            if declared_units and printed_units:
+                if any(u not in printed_units and not (u in ('ft','in') and set(printed_units)>={'ft','in'}) for u in declared_units):
+                    conflict=True
+            header_code=inv.get('insertion_units_code')
+            header_unit=UNITS.get(header_code)
+            region['dimensions']=region_dimensions
+            region['unit_evidence']=dict(state='conflict' if conflict else 'evidenced' if printed_units or declared_units else 'unknown',
+                printed_units=printed_units,declared_units=declared_units,declarations=region_declarations,
+                cad_header=dict(code=header_code,unit=header_unit,scope='drawing_header_only'),
+                paper_scales=scales,unknown=['unit_or_scale_not_inferred_from_geometry'] if not printed_units and not declared_units else [])
             sub={k:[x for x in data.get(k,[]) if x.get('layout')==part['layout'] and x.get('instance') in handles]
                  for k in entity_data}
             sub['counts']=data.get('counts',{})
