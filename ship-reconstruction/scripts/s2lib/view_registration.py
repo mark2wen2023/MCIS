@@ -17,6 +17,72 @@ TITLE = {'XY': r'half.?breadth(plan)?|半宽水线图|半宽平面图',
          'XZ': r'profileview|sheerplan|纵剖线图|纵剖面图',
          'YZ': r'bodyplan|横剖线图|横剖面图'}
 UNITS = {1:'inch', 2:'foot', 4:'mm', 5:'cm', 6:'m'}
+COORDINATE_NOTE = re.compile(
+    r"\bX\s*=\s*(-?\d+(?:\.\d+)?)\s*[,; ]+Y\s*=\s*(-?\d+(?:\.\d+)?)\s*(mm|cm|m|in(?:ch(?:es)?)?|ft|feet|')?\b",
+    re.I,
+)
+
+
+def coordinate_controls(texts, bounds, region_id):
+    """Fit a local paper-to-printed-XY candidate; never authorizes vessel axes."""
+    rows=[]
+    factors={'mm':.001,'cm':.01,'m':1.,'in':.0254,'inch':.0254,'inches':.0254,
+             'ft':.3048,'feet':.3048,"'":.3048}
+    for t in texts:
+        if t.get('layout') is None or not COORDINATE_NOTE.search(t.get('text','')):continue
+        match=COORDINATE_NOTE.search(t['text'])
+        unit=(match[3] or '').lower()
+        if not unit:continue
+        unit={'inches':'in','inch':'in'}.get(unit,unit)
+        factor=factors.get(unit)
+        if factor is None:continue
+        p=np.asarray(t['p'][:2],dtype=float)
+        if not (bounds[0]<=p[0]<=bounds[2] and bounds[1]<=p[1]<=bounds[3]):continue
+        rows.append(dict(handle=t['instance'],paper_xy=p.tolist(),printed_xy_m=[float(match[1])*factor,float(match[2])*factor],unit=unit))
+    if not rows:return []
+    if len(rows)<4:return [dict(region_id=region_id,status='insufficient_controls',controls=rows,
+                                unknown=['at_least_four_noncollinear_coordinate_notes_required'])]
+    p=np.asarray([r['paper_xy'] for r in rows]);q=np.asarray([r['printed_xy_m'] for r in rows])
+    scale=max(float(np.median([np.linalg.norm(p[i]-p[j]) for i,j in itertools.combinations(range(len(p)),2)])),1e-9)
+    tol=max(2e-5,scale*2e-4)
+    # Fit and score every non-collinear three-note hypothesis. A robust consensus
+    # keeps one misplaced label from steering an otherwise coherent candidate.
+    best=None
+    for ids in itertools.combinations(range(len(p)),3):
+        x=np.column_stack((p[list(ids)],np.ones(3)))
+        if np.linalg.matrix_rank(x)<3:continue
+        fit=np.linalg.solve(x,q[list(ids)])
+        pred=np.column_stack((p,np.ones(len(p))))@fit
+        err=np.linalg.norm(pred-q,axis=1)
+        good=err<=tol
+        if good.sum()<4:continue
+        key=(int(good.sum()),-float(np.median(err[good])),-float(np.max(err[good])))
+        if best is None or key>best[0]:best=(key,good,err)
+    if best is None:return [dict(region_id=region_id,status='insufficient_consensus',controls=rows,unknown=['coordinate_note_semantics','vessel_axis_orientation'])]
+    _,good,err=best
+    pg=p[good];qg=q[good];design=np.column_stack((pg,np.ones(len(pg))))
+    fit=np.linalg.lstsq(design,qg,rcond=None)[0].T
+    held=[]
+    if len(pg)>=4:
+        for i in range(len(pg)):
+            mask=np.arange(len(pg))!=i
+            h=np.linalg.lstsq(design[mask],qg[mask],rcond=None)[0]
+            held.append(float(np.linalg.norm(design[i]@h-qg[i])))
+    linear=fit[:,:2]
+    max_holdout=max(held) if held else None
+    inlier_ratio=float(good.sum()/len(rows))
+    accepted_candidate=(len(held)>=4 and inlier_ratio>=.7 and max_holdout<=max(.002,2*tol))
+    return [dict(region_id=region_id,status='candidate' if accepted_candidate else 'low_confidence_candidate',
+                 confidence='candidate_only' if accepted_candidate else 'low',paper_to_printed_xy_m=fit.tolist(),
+                 parity='mirrored' if np.linalg.det(linear)<0 else 'unmirrored',
+                 control_handles=[rows[i]['handle'] for i in np.flatnonzero(good)],
+                 rejected_handles=[rows[i]['handle'] for i in np.flatnonzero(~good)],
+                 inlier_count=int(good.sum()),candidate_count=len(rows),
+                 max_consensus_residual_m=float(np.max(err[good])),
+                 leave_one_out_errors_m=held, max_holdout_residual_m=max_holdout,
+                 inlier_ratio=inlier_ratio,
+                 tolerance_m=tol, units=sorted({rows[i]['unit'] for i in np.flatnonzero(good)}),
+                 unknown=['coordinate_note_semantics','vessel_axis_orientation','datum_and_origin_confirmation'])]
 
 
 def measure_series(notes, segments):
@@ -518,6 +584,8 @@ def inspect(data, inv, frames, axis_records):
                 printed_units=printed_units,declared_units=declared_units,declarations=region_declarations,
                 cad_header=dict(code=header_code,unit=header_unit,scope='drawing_header_only'),
                 paper_scales=scales,unknown=['unit_or_scale_not_inferred_from_geometry'] if not printed_units and not declared_units else [])
+            local_texts=[t for t in data.get('texts',[]) if t.get('layout')==part['layout'] and t.get('instance') in handles]
+            region['coordinate_registration_candidates']=coordinate_controls(local_texts,region['bounds'],region['region_id'])
             sub={k:[x for x in data.get(k,[]) if x.get('layout')==part['layout'] and x.get('instance') in handles]
                  for k in entity_data}
             sub['counts']=data.get('counts',{})
